@@ -1314,15 +1314,19 @@ function selectAC(i){
   document.getElementById('inp-city').value = label;
   hideAC();
 }
+function normalizeQuery(s){
+  // Remplacer espaces par tirets + supprimer accents pour meilleur matching API
+  return s.replace(/ /g,'-').normalize('NFD').replace(/[̀-ͯ]/g,'');
+}
 function fetchAC(q){
   var hint=document.getElementById('city-hint');
   if(hint) hint.style.display='none';
-  var qHyphen = q.replace(/ /g,'-');
   var base='https://geocoding-api.open-meteo.com/v1/search?count=6&language=fr&name=';
   var p1=fetch(base+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(d){return d.results||[];});
-  // Si la requête contient des espaces, aussi tester avec tirets
-  var p2 = (q.indexOf(' ')>=0 && qHyphen!==q)
-    ? fetch(base+encodeURIComponent(qHyphen)).then(function(r){return r.json();}).then(function(d){return d.results||[];})
+  // Si espaces : aussi envoyer version normalisée (tirets + sans accents)
+  var qNorm = normalizeQuery(q);
+  var p2 = q.indexOf(' ')>=0
+    ? fetch(base+encodeURIComponent(qNorm)).then(function(r){return r.json();}).then(function(d){return d.results||[];})
     : Promise.resolve([]);
   Promise.all([p1,p2]).then(function(both){
     var seen={}, merged=[];
@@ -1330,7 +1334,6 @@ function fetchAC(q){
       var key=item.name+'|'+item.latitude+'|'+item.longitude;
       if(!seen[key]){seen[key]=1;merged.push(item);}
     });
-    // Trier par population
     merged.sort(function(a,b){return (b.population||0)-(a.population||0);});
     showAC(merged.slice(0,6));
   }).catch(function(){hideAC();});
