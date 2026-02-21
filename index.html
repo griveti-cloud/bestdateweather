@@ -1228,7 +1228,11 @@ function showResults(sc, rows, isForecast, noteText, diffDays) {
 
 /* AUTOCOMPLETE */
 var acTimer=null, acIdx=-1, acData=[], selectedLoc=null;
-function flagEmoji(code){if(!code||code.length!==2)return'\uD83C\uDF0D';try{return String.fromCodePoint(code.toUpperCase().charCodeAt(0)+127397)+String.fromCodePoint(code.toUpperCase().charCodeAt(1)+127397);}catch(e){return'\uD83C\uDF0D';}}
+function flagEmoji(code){
+  if(!code||code.length!==2) return '<img src="https://flagcdn.com/16x12/un.png" width="16" height="12" alt="" style="vertical-align:middle;margin-right:2px">';
+  var c=code.toLowerCase();
+  return '<img src="https://flagcdn.com/16x12/'+c+'.png" width="16" height="12" alt="'+code+'" style="vertical-align:middle;margin-right:2px" onerror="this.style.display='none'">';
+}
 function hideAC(){document.getElementById('ac-list').style.display='none';acIdx=-1;}
 function showAC(items){
   acData=items||[];acIdx=-1;var list=document.getElementById('ac-list');list.innerHTML='';
