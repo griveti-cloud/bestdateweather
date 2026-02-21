@@ -1250,12 +1250,7 @@ function isFranceMetro(item) {
   return lat >= 41 && lat <= 52 && lon >= -5.5 && lon <= 10;
 }
 function getAcSub(item) {
-  // Pour la France (métro + DOM-TOM) : on affiche juste "France", l'admin1 est inutile et parfois erronée
-  if (item.country_code === 'FR') {
-    return item.country || 'France';
-  }
-  var isDomTom = DOMTOM_CODES.indexOf(item.country_code) >= 0;
-  if (isDomTom) return item.country || item.country_code || '';
+  // Toujours afficher admin1 dans le dropdown pour aider l'user à distinguer les homonymes
   return (item.admin1 || '') + (item.admin1 && item.country ? ', ' : '') + (item.country || '');
 }
 
