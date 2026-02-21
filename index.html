@@ -22,7 +22,7 @@
 :root{
   --cream:#faf8f3;--cream2:#f2ede2;--navy:#1a1f2e;--navy2:#252d42;
   --gold:#e8940a;--gold2:#f5b020;--gold-light:#fef3d0;
-  --slate:#4a5568;--slate2:#718096;--slate3:#a0aec0;
+  --slate:#4a5568;--slate2:#5c687a;--slate3:#6b7a8d;
   --green:#1a7a4a;--green-bg:#e8f8f0;
   --blue:#1a5f9a;--blue-bg:#e8f2fc;
   --mist:#7a8fa8;--mist-bg:#eef3f8;
@@ -1233,9 +1233,18 @@ function hideAC(){document.getElementById('ac-list').style.display='none';acIdx=
 function showAC(items){
   acData=items||[];acIdx=-1;var list=document.getElementById('ac-list');list.innerHTML='';
   if(!acData.length){list.style.display='none';return;}
-  for(var i=0;i<acData.length;i++){(function(item,pos){var div=document.createElement('div');div.className='ac-item';var sub=(item.admin1||'')+(item.admin1&&item.country?', ':'')+(item.country||'');div.innerHTML='<span>'+flagEmoji(item.country_code)+' '+item.name+'</span><span class="ac-sub">'+sub+'</span>';div.onmousedown=function(e){e.preventDefault();selectAC(pos);};list.appendChild(div);})(acData[i],i);}
+  for(var i=0;i<acData.length;i++){(function(item,pos){var div=document.createElement('div');div.className='ac-item';var sub=getAcSub(item);div.innerHTML='<span>'+flagEmoji(item.country_code)+' '+item.name+'</span><span class="ac-sub">'+sub+'</span>';div.onmousedown=function(e){e.preventDefault();selectAC(pos);};list.appendChild(div);})(acData[i],i);}
   list.style.display='block';
 }
+
+function getAcSub(item) {
+  var DOMTOM = ['GP','MQ','RE','GF','YT','PM','NC','PF','WF','BL','MF'];
+  if (DOMTOM.indexOf(item.country_code) >= 0) {
+    return item.country || item.country_code || '';
+  }
+  return (item.admin1 || '') + (item.admin1 && item.country ? ', ' : '') + (item.country || '');
+}
+
 function selectAC(i){var item=acData[i];if(!item)return;selectedLoc={lat:item.latitude,lon:item.longitude,name:item.name,region:item.admin1||'',country:item.country||''};document.getElementById('inp-city').value=item.name+(item.admin1?', '+item.admin1:'')+' ('+(item.country||'')+')';hideAC();}
 function fetchAC(q){fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=6&language=fr').then(function(r){return r.json();}).then(function(d){showAC(d.results||[]);}).catch(function(){hideAC();});}
 
@@ -1383,7 +1392,7 @@ function showAnnAC(items) {
   for (var i = 0; i < annAcData.length; i++) {
     (function(item, pos) {
       var div = document.createElement('div'); div.className = 'ac-item';
-      var sub = (item.admin1 || '') + (item.admin1 && item.country ? ', ' : '') + (item.country || '');
+      var sub = getAcSub(item);
       div.innerHTML = '<span>' + flagEmoji(item.country_code) + ' ' + item.name + '</span><span class="ac-sub">' + sub + '</span>';
       div.onmousedown = function(e) { e.preventDefault(); selectAnnAC(pos); };
       list.appendChild(div);
