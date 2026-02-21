@@ -384,7 +384,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
         <div class="inp-wrap"><input class="inp" type="text" id="inp-city" placeholder="Paris, Barcelone, Tokyo…" autocomplete="off"/>
         <button class="inp-clear" id="inp-city-clear" tabindex="-1" onclick="clearCity()">×</button></div>
         <div class="ac-list" id="ac-list"></div>
-        <div style="font-size:10px;color:var(--slate3);margin-top:4px">Pour les villes composées, utilisez les tirets : <em>Pointe-à-Pitre</em></div>
+        <div id="city-hint" style="font-size:11px;color:var(--slate2);margin-top:5px;display:none">💡 Villes composées : utilisez les tirets — <em>Pointe-à-Pitre</em>, <em>Saint-Denis</em></div>
       </div>
       <div class="field-wrap">
         <label class="field-label" for="inp-date">
@@ -1314,7 +1314,11 @@ function selectAC(i){
   document.getElementById('inp-city').value = label;
   hideAC();
 }
-function fetchAC(q){fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=6&language=fr').then(function(r){return r.json();}).then(function(d){showAC(d.results||[]);}).catch(function(){hideAC();});}
+function fetchAC(q){
+  var hint=document.getElementById('city-hint');
+  if(hint) hint.style.display = q.indexOf(' ')>=0 ? 'block' : 'none';
+  fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=6&language=fr').then(function(r){return r.json();}).then(function(d){showAC(d.results||[]);}).catch(function(){hideAC();});
+}
 
 /* RUN */
 function run() {
