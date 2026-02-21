@@ -1229,17 +1229,10 @@ function showResults(sc, rows, isForecast, noteText, diffDays) {
 /* AUTOCOMPLETE */
 var acTimer=null, acIdx=-1, acData=[], selectedLoc=null;
 function flagEmoji(code){
-  if(!code||code.length!==2) return '';
-  // Tenter emoji (fonctionne sur Mac/Android/iOS, pas Windows)
-  try {
-    var f=String.fromCodePoint(code.toUpperCase().charCodeAt(0)+127397)+String.fromCodePoint(code.toUpperCase().charCodeAt(1)+127397);
-    // Tester si l'emoji est supporté (Windows affiche un carré blanc)
-    var isWin = navigator.userAgent.indexOf('Windows') >= 0;
-    if (!isWin) return f + ' ';
-  } catch(e) {}
-  // Fallback : badge 2 lettres stylé
-  return '<span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:13px;background:#e2e8f0;border-radius:2px;font-size:8px;font-weight:700;color:#4a5568;letter-spacing:0;margin-right:4px;vertical-align:middle;line-height:1">' + code.toUpperCase() + '</span>';
+  if(!code||code.length!==2)return'';
+  return '<span style="display:inline-block;min-width:20px;padding:0 3px;height:14px;line-height:14px;background:#e2e8f0;border-radius:2px;font-size:8px;font-weight:700;color:#4a5568;text-align:center;vertical-align:middle;margin-right:4px">'+code.toUpperCase()+'</span>';
 }
+
 function hideAC(){document.getElementById('ac-list').style.display='none';acIdx=-1;}
 function showAC(items){
   acData=items||[];acIdx=-1;var list=document.getElementById('ac-list');list.innerHTML='';
