@@ -14,7 +14,9 @@
 <title>BestDateWeather — La météo de vos grandes occasions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,900;1,900&display=swap" rel="stylesheet"/>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,900;1,900&display=swap"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,900;1,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,900;1,900&display=swap" rel="stylesheet"/></noscript>
 <style>
 :root{
   --cream:#faf8f3;--cream2:#f2ede2;--navy:#1a1f2e;--navy2:#252d42;
@@ -282,7 +284,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .month-card.is-rec{border-color:#1a7a4a;border-top:3px solid #1a7a4a!important;box-shadow:0 4px 20px rgba(26,122,74,.15)}
 .month-card.is-avoid{border-color:#f59e0b;border-top:3px solid #f59e0b!important}
 .annual-subtitle-uc{font-size:11px;font-weight:700;color:var(--gold);margin-top:4px;display:none}
-.month-best-badge{position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#e8940a,#f5b94a);color:white;font-size:9px;font-weight:800;padding:2px 8px;border-radius:10px;white-space:nowrap;letter-spacing:.3px;box-shadow:0 2px 6px rgba(232,148,10,.4)}
+.month-best-badge{display:block;text-align:center;background:linear-gradient(135deg,#e8940a,#f5b94a);color:white;font-size:9px;font-weight:800;padding:3px 8px;border-radius:8px;white-space:nowrap;letter-spacing:.3px;margin:6px 0 2px}
 .score-5{background:#d1fae5;color:#065f46}
 .score-4{background:#fef3c7;color:#92400e}
 .score-3{background:#fee2e2;color:#991b1b}
@@ -1655,7 +1657,6 @@ function renderAnnual(loc, monthly) {
     var tempStr = d.avgTemp != null ? Math.round(d.avgTemp) + '°' : '–';
 
     card.innerHTML =
-      badgeHtml +
       '<div class="month-name">' + MONTHS_FR[idx] + '</div>' +
       '<div class="month-icon">' + monthIconFromData(d) + '</div>' +
       '<div class="month-temp">' + tminStr + ' / ' + tmaxStr + '</div>' +
@@ -1665,7 +1666,7 @@ function renderAnnual(loc, monthly) {
         '<span class="month-stat">☀ ' + d.sunHrs + 'h</span>' +
       '</div>' +
       '<div class="month-bar"><div class="month-bar-fill" style="width:' + d.rainPct + '%"></div></div>' +
-      scoreNum + seasBadge;
+      scoreNum + badgeHtml + seasBadge;
 
     grid.appendChild(card);
   }
