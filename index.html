@@ -53,8 +53,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .inp{width:100%;background:white;border:2px solid var(--cream2);border-radius:var(--r-sm);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 40px 13px 16px;outline:none;transition:all .2s}
 .inp::placeholder{color:var(--slate3);font-weight:400}
 .inp:focus{border-color:var(--gold);background:white;box-shadow:0 0 0 4px rgba(232,148,10,.08)}
-.inp[type=date]{color:var(--slate3)}
-.inp[type=date].has-val{color:var(--navy)}
+.inp[type=date]{color:var(--navy)}
+.inp[type=date]::-webkit-datetime-edit-fields-wrapper{opacity:1}
+.inp[type=date]::-webkit-calendar-picker-indicator{opacity:0.6;cursor:pointer}
 
 .date-hint{font-size:11px;color:var(--slate3);font-weight:500;margin-top:5px;padding-left:2px}
 
@@ -391,7 +392,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           Date du projet
         </label>
-        <input class="inp" type="date" id="inp-date" placeholder="jj/mm/aaaa"/>
+        <input class="inp" type="date" id="inp-date" min="2026-02-22" max="2027-02-21"/>
         <div class="date-hint" id="date-hint">Jusqu'à 1 an à l'avance</div>
       </div>
     </div>
