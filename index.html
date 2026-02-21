@@ -1251,15 +1251,36 @@ function isFranceMetro(item) {
   var lat = parseFloat(item.latitude), lon = parseFloat(item.longitude);
   return lat >= 41 && lat <= 52 && lon >= -5.5 && lon <= 10;
 }
+
+function getFrTerritory(lat, lon) {
+  lat = parseFloat(lat); lon = parseFloat(lon);
+  // France métropolitaine
+  if (lat >= 41 && lat <= 52 && lon >= -5.5 && lon <= 10) return null;
+  // DOM-TOM par coordonnées
+  if (lat >= 14 && lat <= 18 && lon >= -63 && lon <= -60) return 'Guadeloupe';
+  if (lat >= 14 && lat <= 15 && lon >= -61.5 && lon <= -60.5) return 'Martinique';
+  if (lat >= -22 && lat <= -20 && lon >= 55 && lon <= 56) return 'La Réunion';
+  if (lat >= 2 && lat <= 6 && lon >= -55 && lon <= -51) return 'Guyane';
+  if (lat >= -14 && lat <= -12 && lon >= 44 && lon <= 46) return 'Mayotte';
+  if (lat >= -23 && lat <= -20 && lon >= 163 && lon <= 168) return 'Nouvelle-Calédonie';
+  if (lat >= -18 && lat <= -14 && lon >= -150 && lon <= -148) return 'Polynésie française';
+  if (lat >= 46 && lat <= 48 && lon >= -57 && lon <= -52) return 'Saint-Pierre-et-Miquelon';
+  return 'Outre-mer';
+}
+
 function getAcSub(item) {
-  // Toujours afficher admin1 dans le dropdown pour aider l'user à distinguer les homonymes
+  if (item.country_code === 'FR') {
+    var terr = getFrTerritory(item.latitude, item.longitude);
+    var region = terr || item.admin1 || '';
+    return region + (region ? ', ' : '') + (item.country || 'France');
+  }
   return (item.admin1 || '') + (item.admin1 && item.country ? ', ' : '') + (item.country || '');
 }
 
 function selectAC(i){
   var item=acData[i];if(!item)return;
   // Pour FR : ne jamais afficher admin1, juste le pays
-  var region = (item.country_code === 'FR') ? '' : (item.admin1 || '');
+  var region = (item.country_code === 'FR') ? '' : (item.admin1 || ''); // region masquée dans le champ résultat
   var country = item.country || item.country_code || '';
   selectedLoc={lat:item.latitude,lon:item.longitude,name:item.name,region:region,country:country};
   var label = item.name;
