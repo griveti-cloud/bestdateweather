@@ -1,24 +1,11 @@
 const CACHE = 'bdw-v1';
-const STATIC = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/manifest.json',
-  '/favicon.ico',
-  '/favicon.svg',
-  '/apple-touch-icon.png',
-  '/icon-192.png',
-  '/icon-512.png'
-];
 
-// Installation : mise en cache des ressources statiques
+// Installation légère — pas de précache pour ne pas ralentir le premier chargement
 self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(STATIC)).then(() => self.skipWaiting())
-  );
+  self.skipWaiting();
 });
 
-// Activation : suppression des anciens caches
+// Activation : supprimer anciens caches
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(keys =>
@@ -27,32 +14,21 @@ self.addEventListener('activate', e => {
   );
 });
 
-// Fetch : network-first pour l'app, cache-first pour les assets statiques
+// Fetch : network-first, mise en cache en arrière-plan (stale-while-revalidate)
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   
-  // Toujours réseau pour les appels API Open-Meteo
-  if (url.hostname.includes('open-meteo.com')) return;
+  // Ne pas intercepter les appels API externes
+  if (url.hostname !== self.location.hostname) return;
   
-  // Network-first pour index.html (toujours à jour)
-  if (url.pathname === '/' || url.pathname.endsWith('index.html')) {
-    e.respondWith(
-      fetch(e.request).catch(() => caches.match(e.request))
-    );
-    return;
-  }
-  
-  // Cache-first pour tout le reste (CSS, images, pages SEO)
+  // Network-first pour tout : réseau d'abord, cache en fallback
   e.respondWith(
-    caches.match(e.request).then(cached => {
-      if (cached) return cached;
-      return fetch(e.request).then(res => {
-        if (res.ok) {
-          const clone = res.clone();
-          caches.open(CACHE).then(c => c.put(e.request, clone));
-        }
-        return res;
-      });
-    })
+    fetch(e.request).then(res => {
+      if (res.ok && e.request.method === 'GET') {
+        const clone = res.clone();
+        caches.open(CACHE).then(c => c.put(e.request, clone));
+      }
+      return res;
+    }).catch(() => caches.match(e.request))
   );
 });
