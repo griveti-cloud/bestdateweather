@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://bestdateweather.com/</loc><lastmod>2026-02-21</lastmod><priority>1.0</priority></url>
-  <!-- SILO MARIAGE (10 pages) -->
-  <url><loc>https://bestdateweather.com/toscane-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/bali-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/santorin-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/riviera-maya-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/lisbonne-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/majorque-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/marrakech-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/mykonos-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/cote-azur-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/ibiza-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <!-- SILO MEILLEURE PÉRIODE (10 pages) -->
-  <url><loc>https://bestdateweather.com/meilleure-periode-toscane.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/meilleure-periode-bali.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/meilleure-periode-santorin.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/meilleure-periode-riviera-maya.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/meilleure-periode-lisbonne.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/meilleure-periode-majorque.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/meilleure-periode-marrakech.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/meilleure-periode-mykonos.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/meilleure-periode-cote-azur.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/meilleure-periode-ibiza.html</loc><lastmod>2026-02-21</lastmod><priority>0.9</priority></url>
-  <url><loc>https://bestdateweather.com/note_modele.html</loc><lastmod>2026-02-21</lastmod><priority>0.3</priority></url>
+  <!-- Homepage -->
+  <url><loc>https://bestdateweather.com/</loc><lastmod>2026-02-21</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <!-- Silo 1 : Mariage (16 pages) -->
+  <url><loc>https://bestdateweather.com/toscane-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/bali-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/santorin-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/riviera-maya-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/lisbonne-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/majorque-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/marrakech-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/mykonos-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/cote-azur-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/ibiza-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/sicile-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/crete-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/algarve-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/madere-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/dubai-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/amalfi-meteo-mariage.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <!-- Silo 2 : Meilleure période (16 pages) -->
+  <url><loc>https://bestdateweather.com/meilleure-periode-toscane.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-bali.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-santorin.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-riviera-maya.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-lisbonne.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-majorque.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-marrakech.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-mykonos.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-cote-azur.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-ibiza.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-sicile.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-crete.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-algarve.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-madere.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-dubai.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bestdateweather.com/meilleure-periode-amalfi.html</loc><lastmod>2026-02-21</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <!-- Utilitaire -->
+  <url><loc>https://bestdateweather.com/note_modele.html</loc><lastmod>2026-02-21</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>
