@@ -150,3 +150,21 @@ footer a{color:var(--gold2);text-decoration:none}
 .methodo-icon{font-size:20px;flex-shrink:0;margin-top:2px}
 .methodo-text{font-size:13px;color:var(--slate);line-height:1.75}
 .methodo-text a{color:var(--gold);font-weight:600}
+
+/* ── AMÉLIORATIONS v2 ─────────────────────────────── */
+/* Suppression Google Fonts render-blocking : polices système en fallback */
+body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+
+/* Section "selon votre projet" */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+.project-card{background:white;border:1px solid var(--cream2);border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:6px}
+.project-card .proj-icon{font-size:24px}
+.project-card .proj-title{font-weight:600;font-size:14px;color:var(--navy)}
+.project-card .proj-text{font-size:13px;color:var(--slate);line-height:1.5}
+
+/* Affiliation bloc */
+.affil-box{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:16px;padding:24px 28px;margin-top:16px;display:flex;flex-direction:column;gap:12px}
+.affil-box strong{font-size:16px;color:var(--navy)}
+.affil-btn{display:inline-block;background:#0070f3;color:white;font-weight:600;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;width:fit-content}
+.affil-btn:hover{background:#0060d0}
+.affil-note{font-size:12px;color:var(--slate2)}
