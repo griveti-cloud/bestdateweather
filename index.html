@@ -1316,8 +1316,24 @@ function selectAC(i){
 }
 function fetchAC(q){
   var hint=document.getElementById('city-hint');
-  if(hint) hint.style.display = q.indexOf(' ')>=0 ? 'block' : 'none';
-  fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=6&language=fr').then(function(r){return r.json();}).then(function(d){showAC(d.results||[]);}).catch(function(){hideAC();});
+  if(hint) hint.style.display='none';
+  var qHyphen = q.replace(/ /g,'-');
+  var base='https://geocoding-api.open-meteo.com/v1/search?count=6&language=fr&name=';
+  var p1=fetch(base+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(d){return d.results||[];});
+  // Si la requête contient des espaces, aussi tester avec tirets
+  var p2 = (q.indexOf(' ')>=0 && qHyphen!==q)
+    ? fetch(base+encodeURIComponent(qHyphen)).then(function(r){return r.json();}).then(function(d){return d.results||[];})
+    : Promise.resolve([]);
+  Promise.all([p1,p2]).then(function(both){
+    var seen={}, merged=[];
+    both[0].concat(both[1]).forEach(function(item){
+      var key=item.name+'|'+item.latitude+'|'+item.longitude;
+      if(!seen[key]){seen[key]=1;merged.push(item);}
+    });
+    // Trier par population
+    merged.sort(function(a,b){return (b.population||0)-(a.population||0);});
+    showAC(merged.slice(0,6));
+  }).catch(function(){hideAC();});
 }
 
 /* RUN */
