@@ -1241,6 +1241,7 @@ function showAC(items){
   list.style.display='block';
 }
 
+var DOMTOM_CODES = ['GP','MQ','RE','GF','YT','PM','NC','PF','WF','BL','MF'];
 function isFranceMetro(item) {
   // France métro : lat 41-52, lon -5.5 à 10
   if (item.country_code !== 'FR') return false;
@@ -1248,8 +1249,7 @@ function isFranceMetro(item) {
   return lat >= 41 && lat <= 52 && lon >= -5.5 && lon <= 10;
 }
 function getAcSub(item) {
-  var DOMTOM = ['GP','MQ','RE','GF','YT','PM','NC','PF','WF','BL','MF'];
-  var isDomTom = DOMTOM.indexOf(item.country_code) >= 0 || 
+  var isDomTom = DOMTOM_CODES.indexOf(item.country_code) >= 0 || 
                  (item.country_code === 'FR' && !isFranceMetro(item));
   if (isDomTom) {
     return item.country || item.country_code || '';
@@ -1260,7 +1260,7 @@ function getAcSub(item) {
 function selectAC(i){
   var item=acData[i];if(!item)return;
   selectedLoc={lat:item.latitude,lon:item.longitude,name:item.name,region:item.admin1||'',country:item.country||''};
-  var isDomTom = DOMTOM.indexOf(item.country_code) >= 0 || (item.country_code === 'FR' && !isFranceMetro(item));
+  var isDomTom = DOMTOM_CODES.indexOf(item.country_code) >= 0 || (item.country_code === 'FR' && !isFranceMetro(item));
   var region = isDomTom ? '' : (item.admin1 || '');
   var country = item.country || item.country_code || '';
   var label = item.name;
@@ -1425,7 +1425,7 @@ function showAnnAC(items) {
 }
 function selectAnnAC(i) {
   var item = annAcData[i]; if (!item) return;
-  var isDomTom2 = DOMTOM.indexOf(item.country_code) >= 0 || (item.country_code === 'FR' && !isFranceMetro(item));
+  var isDomTom2 = DOMTOM_CODES.indexOf(item.country_code) >= 0 || (item.country_code === 'FR' && !isFranceMetro(item));
   var region2 = isDomTom2 ? '' : (item.admin1 || '');
   var country2 = item.country || item.country_code || '';
   annSelectedLoc = { lat: item.latitude, lon: item.longitude, name: item.name, region: region2, country: country2 };
