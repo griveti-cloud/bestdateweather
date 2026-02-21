@@ -1236,7 +1236,9 @@ function flagEmoji(code){
 
 function hideAC(){document.getElementById('ac-list').style.display='none';acIdx=-1;}
 function showAC(items){
-  acData=items||[];acIdx=-1;var list=document.getElementById('ac-list');list.innerHTML='';
+  // Trier par population décroissante — la grande ville passe avant le hameau homonyme
+  var sorted = (items||[]).slice().sort(function(a,b){ return (b.population||0)-(a.population||0); });
+  acData=sorted;acIdx=-1;var list=document.getElementById('ac-list');list.innerHTML='';
   if(!acData.length){list.style.display='none';return;}
   for(var i=0;i<acData.length;i++){(function(item,pos){var div=document.createElement('div');div.className='ac-item';var sub=getAcSub(item);div.innerHTML='<span>'+flagEmoji(item.country_code)+' '+item.name+'</span><span class="ac-sub">'+sub+'</span>';div.onmousedown=function(e){e.preventDefault();selectAC(pos);};list.appendChild(div);})(acData[i],i);}
   list.style.display='block';
