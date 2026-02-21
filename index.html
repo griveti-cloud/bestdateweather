@@ -850,7 +850,8 @@ function geocode(city) {
     .then(function(d) {
       if (!d.results || !d.results.length) throw new Error('Ville introuvable');
       var r = d.results[0];
-      return { lat: r.latitude, lon: r.longitude, name: r.name, region: r.admin1 || '', country: r.country || '' };
+      var gRegion = (r.country_code === 'FR') ? '' : (r.admin1 || '');
+      return { lat: r.latitude, lon: r.longitude, name: r.name, region: gRegion, country: r.country || '' };
     });
 }
 
@@ -1303,6 +1304,13 @@ function run() {
   hideSection('hero');hideSection('sec-hourly');hideSection('sec-scenarios');
   document.getElementById('foot-note').style.display='none';
   progEl.style.display='block';setP(0,'Localisation…');
+  // Avertir si pas de sélection depuis la liste (risque de mauvaise ville)
+  if (!selectedLoc) {
+    var errEl2 = document.getElementById('err-box');
+    errEl2.textContent = '⚠ Sélectionnez une ville dans la liste déroulante pour garantir la bonne localisation.';
+    errEl2.style.display = 'block';
+    setTimeout(function(){errEl2.style.display='none';}, 4000);
+  }
   var locP=selectedLoc?Promise.resolve(selectedLoc):geocode(city);
   locP.then(function(loc){
     setP(5,loc.name+' trouvé…');
