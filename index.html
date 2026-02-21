@@ -1260,10 +1260,10 @@ function getAcSub(item) {
 
 function selectAC(i){
   var item=acData[i];if(!item)return;
-  selectedLoc={lat:item.latitude,lon:item.longitude,name:item.name,region:item.admin1||'',country:item.country||''};
-  var isDomTom = DOMTOM_CODES.indexOf(item.country_code) >= 0 || (item.country_code === 'FR' && !isFranceMetro(item));
-  var region = isDomTom ? '' : (item.admin1 || '');
+  // Pour FR : ne jamais afficher admin1, juste le pays
+  var region = (item.country_code === 'FR') ? '' : (item.admin1 || '');
   var country = item.country || item.country_code || '';
+  selectedLoc={lat:item.latitude,lon:item.longitude,name:item.name,region:region,country:country};
   var label = item.name;
   if (region) label += ', ' + region;
   if (country) label += ' (' + country + ')';
@@ -1426,8 +1426,7 @@ function showAnnAC(items) {
 }
 function selectAnnAC(i) {
   var item = annAcData[i]; if (!item) return;
-  var isDomTom2 = DOMTOM_CODES.indexOf(item.country_code) >= 0 || (item.country_code === 'FR' && !isFranceMetro(item));
-  var region2 = isDomTom2 ? '' : (item.admin1 || '');
+  var region2 = (item.country_code === 'FR') ? '' : (item.admin1 || '');
   var country2 = item.country || item.country_code || '';
   annSelectedLoc = { lat: item.latitude, lon: item.longitude, name: item.name, region: region2, country: country2 };
   var label2 = item.name;
