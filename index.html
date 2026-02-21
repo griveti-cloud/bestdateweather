@@ -384,6 +384,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
         <div class="inp-wrap"><input class="inp" type="text" id="inp-city" placeholder="Paris, Barcelone, Tokyo…" autocomplete="off"/>
         <button class="inp-clear" id="inp-city-clear" tabindex="-1" onclick="clearCity()">×</button></div>
         <div class="ac-list" id="ac-list"></div>
+        <div style="font-size:10px;color:var(--slate3);margin-top:4px">Pour les villes composées, utilisez les tirets : <em>Pointe-à-Pitre</em></div>
       </div>
       <div class="field-wrap">
         <label class="field-label" for="inp-date">
@@ -851,7 +852,7 @@ function geocode(city) {
       if (!d.results || !d.results.length) throw new Error('Ville introuvable');
       var r = d.results[0];
       var gRegion = (r.country_code === 'FR') ? '' : (r.admin1 || '');
-      return { lat: r.latitude, lon: r.longitude, name: r.name, region: gRegion, country: r.country || '' };
+      return { lat: r.latitude, lon: r.longitude, name: r.name, region: gRegion, country: r.country || COUNTRY_NAMES[r.country_code] || r.country_code || '' };
     });
 }
 
@@ -1244,12 +1245,36 @@ function showAC(items){
   list.style.display='block';
 }
 
+
+var COUNTRY_NAMES = {
+  'GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','GF':'Guyane',
+  'YT':'Mayotte','PM':'Saint-Pierre-et-Miquelon','NC':'Nouvelle-Calédonie',
+  'PF':'Polynésie française','WF':'Wallis-et-Futuna','BL':'Saint-Barthélemy','MF':'Saint-Martin'
+};
+function getCountryName(item) {
+  return item.country || COUNTRY_NAMES[item.country_code] || item.country_code || '';
+}
+
 var DOMTOM_CODES = ['GP','MQ','RE','GF','YT','PM','NC','PF','WF','BL','MF'];
 function isFranceMetro(item) {
   // France métro : lat 41-52, lon -5.5 à 10
   if (item.country_code !== 'FR') return false;
   var lat = parseFloat(item.latitude), lon = parseFloat(item.longitude);
   return lat >= 41 && lat <= 52 && lon >= -5.5 && lon <= 10;
+}
+
+
+var COUNTRY_NAMES = {
+  'GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','GF':'Guyane française',
+  'YT':'Mayotte','PM':'Saint-Pierre-et-Miquelon','NC':'Nouvelle-Calédonie',
+  'PF':'Polynésie française','WF':'Wallis-et-Futuna','BL':'Saint-Barthélemy',
+  'MF':'Saint-Martin','FR':'France','BE':'Belgique','CH':'Suisse','LU':'Luxembourg',
+  'CA':'Canada','US':'États-Unis','GB':'Royaume-Uni','DE':'Allemagne','ES':'Espagne',
+  'IT':'Italie','PT':'Portugal','NL':'Pays-Bas','MA':'Maroc','TN':'Tunisie',
+  'DZ':'Algérie','SN':'Sénégal','CI':'Côte d\'Ivoire','CM':'Cameroun'
+};
+function countryName(code, fallback) {
+  return COUNTRY_NAMES[code] || fallback || code || '';
 }
 
 function getFrTerritory(lat, lon) {
@@ -1281,7 +1306,7 @@ function selectAC(i){
   var item=acData[i];if(!item)return;
   // Pour FR : ne jamais afficher admin1, juste le pays
   var region = (item.country_code === 'FR') ? '' : (item.admin1 || ''); // region masquée dans le champ résultat
-  var country = item.country || item.country_code || '';
+  var country = getCountryName(item);
   selectedLoc={lat:item.latitude,lon:item.longitude,name:item.name,region:region,country:country};
   var label = item.name;
   if (region) label += ', ' + region;
@@ -1332,7 +1357,7 @@ function run() {
   var locP=selectedLoc?Promise.resolve(selectedLoc):geocode(city);
   locP.then(function(loc){
     setP(5,loc.name+' trouvé…');
-    document.getElementById('r-loc').textContent=loc.name+(loc.region?', '+loc.region:'')+' — '+loc.country;
+    document.getElementById('r-loc').textContent=loc.name+' — '+(loc.country||'');
     document.getElementById('r-date').textContent=new Date(yr,mo,da,12,0,0).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
     renderAstro(loc.lat,loc.lon,yr,mo,da);
     if(diffDays>=0&&diffDays<=7){
@@ -1453,7 +1478,7 @@ function showAnnAC(items) {
 function selectAnnAC(i) {
   var item = annAcData[i]; if (!item) return;
   var region2 = (item.country_code === 'FR') ? '' : (item.admin1 || '');
-  var country2 = item.country || item.country_code || '';
+  var country2 = getCountryName(item);
   annSelectedLoc = { lat: item.latitude, lon: item.longitude, name: item.name, region: region2, country: country2 };
   var label2 = item.name;
   if (region2) label2 += ', ' + region2;
