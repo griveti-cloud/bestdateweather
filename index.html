@@ -196,6 +196,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .uc-example{font-size:11px;color:var(--gold);font-weight:600;margin-top:6px}
 
 /* ── FOOTER ── */
+@media(max-width:768px){.desktop-only{display:none}}
 .app-footer{text-align:center;padding:20px 20px 40px;font-size:11px;color:var(--slate3)}
 
 /* ── MODE TOGGLE ── */
@@ -281,6 +282,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .month-card.is-rec{border-color:#1a7a4a;border-top:3px solid #1a7a4a!important;box-shadow:0 4px 20px rgba(26,122,74,.15)}
 .month-card.is-avoid{border-color:#f59e0b;border-top:3px solid #f59e0b!important}
 .annual-subtitle-uc{font-size:11px;font-weight:700;color:var(--gold);margin-top:4px;display:none}
+.month-best-badge{position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#e8940a,#f5b94a);color:white;font-size:9px;font-weight:800;padding:2px 8px;border-radius:10px;white-space:nowrap;letter-spacing:.3px;box-shadow:0 2px 6px rgba(232,148,10,.4)}
 .score-5{background:#d1fae5;color:#065f46}
 .score-4{background:#fef3c7;color:#92400e}
 .score-3{background:#fee2e2;color:#991b1b}
@@ -290,8 +292,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .hero,.sec-block,.annual-result{animation:fadeUp .35s ease both}
 @keyframes monthIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .month-card{animation:monthIn .3s ease both}
+
+/* SEO HUB toggle mobile */
+.seo-hub-toggle{display:none;width:100%;background:#f0ebe0;border:1.5px solid #e8e0d0;border-radius:12px;padding:14px 18px;font-size:14px;font-weight:700;color:#1a1f2e;text-align:left;cursor:pointer;align-items:center;justify-content:space-between}
+.seo-hub-toggle-icon{font-size:18px;transition:transform .3s;display:inline-block}
+.seo-hub-toggle.open .seo-hub-toggle-icon{transform:rotate(180deg)}
+@media(max-width:640px){
+  .seo-hub-toggle{display:flex}
+  #seo-hub{display:none!important;padding:28px 16px 36px}
+  #seo-hub.open{display:block!important}
+}
 </style>
-<link rel="icon" type="image/x-icon" href="favicon.ico"/><link rel="icon" type="image/svg+xml" href="favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/></head>
+<link rel="icon" type="image/x-icon" href="favicon.ico"/><link rel="icon" type="image/svg+xml" href="favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
+<link rel="manifest" href="manifest.json"/></head>
 <body>
 
 <div class="app-header">
@@ -349,6 +362,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
         <div class="annual-subtitle" id="annual-subtitle">Profil climatique mensuel · moyenne des 3 dernières années</div>
         <div class="annual-subtitle-uc" id="annual-subtitle-uc"></div>
       </div>
+      <div id="ann-narrative" style="display:none;margin:14px 0 4px;background:linear-gradient(135deg,#fef9f0,#fdf4e3);border:1.5px solid #f0d98a;border-radius:12px;padding:14px 16px;font-size:13px;color:#1a1f2e;line-height:1.6"></div>
       <div class="months-grid" id="months-grid"></div>
       <div class="note" id="ann-note" style="margin-top:14px"></div>
     </div>
@@ -538,7 +552,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
      BLOC SEO — Deux silos de destinations
      Crawlable par Google · Maillage interne complet
      ═══════════════════════════════════════════ -->
-<div id="seo-hub" style="background:#faf8f3;border-top:1px solid #e8e0d0;padding:52px 20px 60px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<button class="seo-hub-toggle" onclick="var h=document.getElementById('seo-hub');h.classList.toggle('open');this.classList.toggle('open');" aria-expanded="false" aria-controls="seo-hub">
+  🌍 Voir les guides destinations (22 destinations)
+  <span class="seo-hub-toggle-icon">⌄</span>
+</button>
+<div id="seo-hub" class="desktop-only" style="background:#faf8f3;border-top:1px solid #e8e0d0;padding:52px 20px 60px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
   <div style="max-width:900px;margin:0 auto">
 
     <p style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#e8940a;margin-bottom:12px">Guides destinations</p>
@@ -552,28 +570,28 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
         <div style="flex:1;height:2px;background:linear-gradient(90deg,#e8940a,#e8e0d0)"></div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px">
-        <a href="meilleure-periode-toscane.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇮🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Toscane</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-santorin.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇬🇷</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Santorin</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-majorque.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇪🇸</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Majorque</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-bali.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇮🇩</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Bali</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-crete.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇬🇷</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Crète</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-lisbonne.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇵🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Lisbonne</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-ibiza.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇪🇸</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Ibiza</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-marrakech.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇲🇦</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Marrakech</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-venise.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇮🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Venise</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-istanbul.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇹🇷</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Istanbul</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-cote-azur.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇫🇷</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Côte d'Azur</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-algarve.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇵🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Algarve</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-mykonos.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇬🇷</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Mykonos</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-sicile.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇮🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Sicile</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-dubai.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇦🇪</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Dubaï</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-riviera-maya.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇲🇽</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Riviera Maya</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-amalfi.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇮🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Côte Amalfitaine</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-madere.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇵🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Madère</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-canaries.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇪🇸</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Canaries</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-capri.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇮🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Capri</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-malte.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇲🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Malte</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-        <a href="meilleure-periode-ile-maurice.html" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇲🇺</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Île Maurice</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-toscane.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇮🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Toscane</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-santorin.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇬🇷</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Santorin</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-majorque.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇪🇸</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Majorque</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-bali.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇮🇩</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Bali</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-crete.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇬🇷</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Crète</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-lisbonne.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇵🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Lisbonne</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-ibiza.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇪🇸</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Ibiza</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-marrakech.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇲🇦</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Marrakech</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-venise.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇮🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Venise</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-istanbul.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇹🇷</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Istanbul</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-cote-azur.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇫🇷</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Côte d'Azur</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-algarve.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇵🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Algarve</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-mykonos.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇬🇷</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Mykonos</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-sicile.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇮🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Sicile</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-dubai.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇦🇪</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Dubaï</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-riviera-maya.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇲🇽</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Riviera Maya</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-amalfi.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇮🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Côte Amalfitaine</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-madere.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇵🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Madère</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-canaries.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇪🇸</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Canaries</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-capri.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇮🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Capri</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-malte.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇲🇹</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Malte</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+        <a href="meilleure-periode-ile-maurice.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><span style="font-size:20px">🇲🇺</span><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Île Maurice</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
       </div>
     </div>
 
@@ -1629,7 +1647,8 @@ function renderAnnual(loc, monthly) {
 
     var scoreNum = uc ? ('<div class="month-score score-num-uc" style="background:' + getScoreColor(score) + ';color:white;font-size:9px;border-radius:10px;padding:2px 6px;position:absolute;top:10px;right:8px;font-weight:700;opacity:.85">' + score + '</div>') : '';
     var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">Tendance saison</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
-    var badgeHtml = isRec ? '<div class="month-badge rec">Recommandé</div>' : (isAvoid ? '<div class="month-badge avoid">Moins favorable</div>' : '');
+    var isBest = uc && idx === sorted[0].idx && sorted[0].score >= 60;
+    var badgeHtml = isBest ? '<div class="month-best-badge">🔥 Meilleur mois</div>' : (isRec ? '<div class="month-badge rec">Recommandé</div>' : (isAvoid ? '<div class="month-badge avoid">Moins favorable</div>' : ''));
 
     var tmaxStr = d.avgTmax != null ? Math.round(d.avgTmax) + '°' : '–';
     var tminStr = d.avgTmin != null ? Math.round(d.avgTmin) + '°' : '–';
@@ -1652,6 +1671,51 @@ function renderAnnual(loc, monthly) {
   }
 
   document.getElementById('ann-note').innerHTML = '<strong>Profil climatique</strong> · moyenne 3 ans (archive Open-Meteo) · les mois marqués <span style="background:#dbeafe;color:#1e40af;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px">Tendance saison</span> intègrent une correction par le modèle saisonnier ECMWF. Valeurs indicatives.';
+
+  // ── Résumé narratif ──────────────────────────────────────────────────────
+  var narEl = document.getElementById('ann-narrative');
+  if (narEl) {
+    var MNAMES = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+    // Trouver les 2 meilleurs et 2 pires mois
+    var sorted2 = scores.slice().sort(function(a,b){return b.score-a.score;});
+    var best1 = sorted2[0], best2 = sorted2[1];
+    var worst1 = sorted2[11], worst2 = sorted2[10];
+    
+    // Construire fenêtre optimale (mois consécutifs avec score >= 60)
+    var goodMonths = scores.filter(function(s){return s.score >= 60;}).map(function(s){return s.idx;});
+    
+    var ucLabel = {'mariage':'cérémonie en extérieur','voyage':'voyager','festival':'votre festival','sport':'activités outdoor','travaux':'vos travaux','general':'partir'}[uc||'general'] || 'partir';
+    
+    var bestName1 = MNAMES[best1.idx];
+    var bestName2 = MNAMES[best2.idx];
+    var worstName = MNAMES[worst1.idx];
+    
+    var emoji = best1.score >= 75 ? '🌟' : best1.score >= 60 ? '✅' : '⚠️';
+    
+    var narrative = emoji + ' <strong>Meilleur mois : ' + bestName1.charAt(0).toUpperCase() + bestName1.slice(1);
+    if (best2.score >= 58) narrative += ' et ' + bestName2;
+    narrative += '</strong>';
+    
+    if (goodMonths.length >= 2) {
+      narrative += ' · Fenêtre favorable : <strong>' + goodMonths.length + ' mois</strong>';
+    }
+    
+    if (worst1.score < 45) {
+      narrative += ' · Éviter : <span style="color:#ef4444;font-weight:700">' + worstName + '</span>';
+      if (worst2.score < 45) narrative += ' et ' + MNAMES[worst2.idx];
+    }
+    
+    // Température indicative du meilleur mois
+    var bestData = monthly[best1.idx];
+    if (bestData && bestData.avgTmax) {
+      narrative += ' · ' + Math.round(bestData.avgTmax) + '°C max · ' + bestData.rainPct + '% pluie';
+    }
+    
+    narEl.innerHTML = narrative;
+    narEl.style.display = 'block';
+  }
+  // ── fin résumé narratif ──────────────────────────────────────────────────
+
   document.getElementById('annual-result').style.display = 'block';
 }
 
@@ -1761,6 +1825,18 @@ document.getElementById('inp-date').max=toISO(maxD);
     setTimeout(function() { runAnnual(); }, 100);
   }
 })();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(reg) {
+      console.log('SW enregistré:', reg.scope);
+    }).catch(function(err) {
+      console.log('SW erreur:', err);
+    });
+  });
+}
 </script>
 </body>
 </html>
