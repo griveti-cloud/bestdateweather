@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="style.css"/>
 <style>.hero-band{background:linear-gradient(160deg,#2a1a0a,#7a3a15 55%,#c06020);} .hero-title em{color:#fde68a;}</style>
 </head>
-<body>
+<body><script>window.scrollTo(0,0);</script>
 <nav><a class="nav-brand" href="index.html">Best<em>Date</em>Weather</a><a class="nav-cta" href="index.html">Tester l'application</a></nav>
 <header class="hero-band">
   <div class="dest-tag">🇲🇹 Malte, Malte</div>
@@ -80,7 +80,7 @@
   </section>
   <section class="widget-section">
     <div class="widget-label">Explorez vos dates précises</div>
-    <div class="widget-frame"><iframe src="index.html?city=Valletta&lat=35.9&lon=14.51&uc=mariage" title="Météo Malte" loading="lazy"></iframe></div>
+    <div class="widget-frame"><iframe tabindex="-1" src="index.html?city=Valletta&lat=35.9&lon=14.51&uc=mariage" title="Météo Malte" loading="lazy"></iframe></div>
   </section>
   <section class="section">
     <div class="section-label">FAQ</div>
@@ -97,6 +97,6 @@
 <a class="dest-card" href="cote-azur-meteo-mariage.html"><span class="dest-flag">🇫🇷</span><span><span class="dest-name">Côte d'Azur</span><span class="dest-country">France</span></span></a></div>
   </section>
 </main>
-<footer><p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600;margin-bottom:8px">bestdateweather.com</p><p>Données via <a href="https://open-meteo.com" rel="noopener">Open-Meteo</a> · Archive 10 ans · <a href="note_modele.html">Méthodologie</a></p></footer>
+<footer><p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600;margin-bottom:8px">bestdateweather.com</p><p>Données via <a href="https://open-meteo.com" rel="noopener">Open-Meteo</a> · Archive 10 ans · <a href="note_modele.html">Méthodologie</a></p><p style="margin-top:10px;font-size:11px;opacity:.6"><a href="mentions-legales.html" style="color:rgba(255,255,255,.7)">Mentions légales</a> · <a href="confidentialite.html" style="color:rgba(255,255,255,.7)">Confidentialité</a> · <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p></footer>
 <script>function toggleFaq(b){var i=b.parentElement;var w=i.classList.contains("open");document.querySelectorAll(".faq-item").forEach(function(e){e.classList.remove("open");});if(!w)i.classList.add("open");}</script>
 </body></html>
