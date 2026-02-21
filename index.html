@@ -1229,9 +1229,16 @@ function showResults(sc, rows, isForecast, noteText, diffDays) {
 /* AUTOCOMPLETE */
 var acTimer=null, acIdx=-1, acData=[], selectedLoc=null;
 function flagEmoji(code){
-  if(!code||code.length!==2) return '<img src="https://flagcdn.com/16x12/un.png" width="16" height="12" alt="" style="vertical-align:middle;margin-right:2px">';
-  var c=code.toLowerCase();
-  return '<img src="https://flagcdn.com/16x12/'+c+'.png" width="16" height="12" alt="'+code+'" style="vertical-align:middle;margin-right:2px" onerror="this.style.display='none'">';
+  if(!code||code.length!==2) return '';
+  // Tenter emoji (fonctionne sur Mac/Android/iOS, pas Windows)
+  try {
+    var f=String.fromCodePoint(code.toUpperCase().charCodeAt(0)+127397)+String.fromCodePoint(code.toUpperCase().charCodeAt(1)+127397);
+    // Tester si l'emoji est supporté (Windows affiche un carré blanc)
+    var isWin = navigator.userAgent.indexOf('Windows') >= 0;
+    if (!isWin) return f + ' ';
+  } catch(e) {}
+  // Fallback : badge 2 lettres stylé
+  return '<span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:13px;background:#e2e8f0;border-radius:2px;font-size:8px;font-weight:700;color:#4a5568;letter-spacing:0;margin-right:4px;vertical-align:middle;line-height:1">' + code.toUpperCase() + '</span>';
 }
 function hideAC(){document.getElementById('ac-list').style.display='none';acIdx=-1;}
 function showAC(items){
