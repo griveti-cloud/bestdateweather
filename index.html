@@ -392,7 +392,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           Date du projet
         </label>
-        <input class="inp" type="date" id="inp-date" min="2026-02-22" max="2027-02-21"/>
+        <div style="position:relative">
+          <input class="inp" type="date" id="inp-date" min="2026-02-22" max="2027-02-21" style="position:relative;z-index:1;background:transparent"/>
+          <div id="date-placeholder" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;padding:0 16px;font-size:15px;color:var(--slate3);pointer-events:none;z-index:0">jj/mm/aaaa</div>
+        </div>
         <div class="date-hint" id="date-hint">Jusqu'à 1 an à l'avance</div>
       </div>
     </div>
@@ -1892,6 +1895,8 @@ document.getElementById('annual-wrap').addEventListener('click', function() {
   }
 }, true);
 document.getElementById('inp-date').onchange=function(){
+  var ph=document.getElementById('date-placeholder');
+  if(ph) ph.style.display=this.value?'none':'flex';
   document.getElementById('date-hint').style.display=this.value?'none':'block';
   if(this.value){this.classList.add('has-val');}else{this.classList.remove('has-val');}
 };
