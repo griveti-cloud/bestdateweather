@@ -54,6 +54,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .inp::placeholder{color:var(--slate3);font-weight:400}
 .inp:focus{border-color:var(--gold);background:white;box-shadow:0 0 0 4px rgba(232,148,10,.08)}
 .inp[type=date]{color:var(--navy)}
+#inp-date:not(.has-val){color:var(--slate3)}
+#inp-date:not(.has-val)::-webkit-datetime-edit{color:var(--slate3)}
+#inp-date.has-val{color:var(--navy)}
 .inp[type=date]::-webkit-datetime-edit-fields-wrapper{opacity:1}
 .inp[type=date]::-webkit-calendar-picker-indicator{opacity:0.6;cursor:pointer}
 
@@ -396,8 +399,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
           Event date
         </label>
         <div style="position:relative">
-          <input class="inp" type="date" id="inp-date" min="2026-02-22" max="2027-02-21" style="position:relative;z-index:1;background:transparent"/>
-          <div id="date-placeholder" style="position:absolute;inset:3px;display:flex;align-items:center;padding:0 13px;font-size:15px;color:var(--slate3);pointer-events:none;z-index:2;background:white;border-radius:10px">mm/dd/yyyy</div>
+          <input class="inp" type="date" id="inp-date" min="2026-02-22" max="2027-02-21" style="position:relative;z-index:1"/>
+          
         </div>
         <div class="date-hint" id="date-hint">Up to 1 year ahead</div>
       </div>
@@ -1996,11 +1999,7 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
-<script>(function(){
-  var ph = document.getElementById('date-placeholder');
-  var inp = document.getElementById('inp-date');
-  if(ph && inp && inp.value) ph.style.display = 'none';
-})();</script>
+
 
 </body>
 </html>
