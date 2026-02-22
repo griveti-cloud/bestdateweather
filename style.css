@@ -65,6 +65,7 @@ p strong{color:var(--navy);font-weight:600}
 .widget-label::after{content:'';flex:1;height:1px;background:var(--cream2)}
 .widget-frame{border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid var(--cream2)}
 .widget-frame iframe{width:100%;height:820px;border:none;display:block}
+.widget-frame iframe{width:100%;height:820px;border:none;display:block}
 
 /* CTA BLOC */
 .cta-bloc{background:var(--navy);border-radius:16px;padding:32px 28px;margin:48px 0;text-align:center}
@@ -193,9 +194,9 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
     margin-bottom:4px;padding-bottom:6px!important;
     border-bottom:1px solid var(--cream2)!important
   }
-  /* Table mensuelle : scroll horizontal reste OK */
+  /* Table mensuelle : responsive sans scroll horizontal */
   .climate-table[aria-label*="mensuel"]{
-    min-width:520px;display:table
+    min-width:0;display:table;font-size:11px
   }
   .climate-table[aria-label*="mensuel"] thead{display:table-header-group}
   .climate-table[aria-label*="mensuel"] tbody{display:table-row-group}
@@ -204,13 +205,18 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
     padding:0;margin:0;box-shadow:none;flex-direction:unset
   }
   .climate-table[aria-label*="mensuel"] tbody td{
-    display:table-cell;padding:10px!important;
-    text-align:center!important
+    display:table-cell;padding:6px 4px!important;
+    text-align:center!important;font-size:11px
+  }
+  .climate-table[aria-label*="mensuel"] thead th{
+    padding:8px 4px!important;font-size:10px
   }
   .climate-table[aria-label*="mensuel"] tbody td:first-child{
+    padding-left:8px!important;font-size:11px;
     border-bottom:1px solid var(--cream2)!important
   }
-  .climate-table-wrap:has([aria-label*="mensuel"]){overflow-x:auto}
+  .climate-table-wrap:has([aria-label*="mensuel"]){overflow-x:visible}
+  .widget-frame iframe{height:580px}
 }
 
 /* Quick facts — table décision rapide remplacée par grille responsive */
