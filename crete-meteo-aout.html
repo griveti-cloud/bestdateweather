@@ -133,5 +133,18 @@
     <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a>
   </p>
 </footer>
-</body>
+
+<script>
+window.addEventListener('message', function(e){
+  if(e.data && e.data.type === 'bdw-resize'){
+    var frames = document.querySelectorAll('.widget-frame iframe');
+    frames.forEach(function(f){
+      if(f.contentWindow === e.source){
+        var h = Math.min(Math.max(e.data.height, 400), 1000);
+        f.closest('.widget-frame').style.height = h + 'px';
+      }
+    });
+  }
+});
+</script></body>
 </html>

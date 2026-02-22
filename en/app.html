@@ -2100,5 +2100,18 @@ if ('serviceWorker' in navigator) {
 
 
 
-</body>
+
+<script>
+function notifyParentHeight(){
+  var h = document.documentElement.scrollHeight;
+  if(window.parent !== window){
+    window.parent.postMessage({type:'bdw-resize',height:h},'*');
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(notifyParentHeight,300);});
+} else { setTimeout(notifyParentHeight,300); }
+new MutationObserver(function(){setTimeout(notifyParentHeight,100);}).observe(document.body,{childList:true,subtree:true,attributes:true});
+window.addEventListener('resize',notifyParentHeight);
+</script></body>
 </html>

@@ -197,5 +197,18 @@ footer a:hover{color:white;}
   <p>Weather data via <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a> · 10-year climate archive · Monthly updates</p>
   <p><a href="best-time-to-visit-cancun.html">Best time to visit Cancún</a> · <a href="../en/">All destinations</a> · <a href="../">French version</a></p>
 </footer>
-</body>
+
+<script>
+window.addEventListener('message', function(e){
+  if(e.data && e.data.type === 'bdw-resize'){
+    var frames = document.querySelectorAll('.widget-frame iframe');
+    frames.forEach(function(f){
+      if(f.contentWindow === e.source){
+        var h = Math.min(Math.max(e.data.height, 400), 1000);
+        f.closest('.widget-frame').style.height = h + 'px';
+      }
+    });
+  }
+});
+</script></body>
 </html>

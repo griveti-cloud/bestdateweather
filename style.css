@@ -217,6 +217,9 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
   }
   .climate-table-wrap:has([aria-label*="mensuel"]){overflow-x:visible}
   .widget-frame iframe{height:580px}
+  /* Masquer colonne Précip. mm sur mobile (5e th/td) */
+  .climate-table[aria-label*="mensuel"] th:nth-child(5),
+  .climate-table[aria-label*="mensuel"] td:nth-child(5){display:none}
 }
 
 /* Quick facts — table décision rapide remplacée par grille responsive */

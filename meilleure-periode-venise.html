@@ -101,4 +101,17 @@
 </main>
 <footer><p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600;margin-bottom:8px">bestdateweather.com</p><p>Données via <a href="https://open-meteo.com" rel="noopener">Open-Meteo</a> · Archive 10 ans · <a href="note_modele.html">Méthodologie</a></p><p style="margin-top:10px;font-size:11px;opacity:.6"><a href="mentions-legales.html" style="color:rgba(255,255,255,.7)">Mentions légales</a> · <a href="confidentialite.html" style="color:rgba(255,255,255,.7)">Confidentialité</a> · <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p></footer>
 <script>function toggleFaq(b){var i=b.parentElement;var w=i.classList.contains("open");document.querySelectorAll(".faq-item").forEach(function(e){e.classList.remove("open");});if(!w)i.classList.add("open");}</script>
-</body></html>
+
+<script>
+window.addEventListener('message', function(e){
+  if(e.data && e.data.type === 'bdw-resize'){
+    var frames = document.querySelectorAll('.widget-frame iframe');
+    frames.forEach(function(f){
+      if(f.contentWindow === e.source){
+        var h = Math.min(Math.max(e.data.height, 400), 1000);
+        f.closest('.widget-frame').style.height = h + 'px';
+      }
+    });
+  }
+});
+</script></body></html>
