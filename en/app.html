@@ -310,6 +310,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 
 #inp-date:not(.has-val){color:transparent}
 #inp-date.has-val{color:var(--navy)}
+
+.unit-toggle{display:flex;align-items:center;justify-content:center;gap:0;margin-top:10px;border-radius:20px;overflow:hidden;border:1.5px solid var(--cream2);width:fit-content;margin-left:auto;margin-right:auto}
+.unit-btn{background:white;border:none;padding:5px 14px;font-size:12px;font-weight:700;color:var(--slate3);cursor:pointer;transition:all .15s;letter-spacing:.3px}
+.unit-btn.active{background:var(--navy);color:white}
+.unit-btn:first-child{border-radius:18px 0 0 18px}
+.unit-btn:last-child{border-radius:0 18px 18px 0}
 </style>
 <link rel="icon" type="image/x-icon" href="favicon.ico"/><link rel="icon" type="image/svg+xml" href="favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><link rel="canonical" href="https://bestdateweather.com/en/app.html"/>
 <link rel="alternate" hreflang="fr" href="https://bestdateweather.com/"/>
@@ -320,6 +326,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 
 <div class="app-header">
   <h1 class="app-title">Best<em>Date</em>Weather</h1>
+  <div class="unit-toggle" id="unit-toggle">
+    <button class="unit-btn active" id="btn-metric" onclick="setUnits('metric')">°C · km/h</button>
+    <button class="unit-btn" id="btn-us" onclick="setUnits('us')">°F · mph</button>
+  </div>
 </div>
 
 <div class="wrap">
@@ -1099,6 +1109,58 @@ function renderScCard(sc, stripId, statsId) {
 
 
 /* ── SCORE MÉTÉO PROJET ── */
+
+// ── UNIT SYSTEM ─────────────────────────────────────────────────────────────
+var usUnits = (function(){
+  try { return localStorage.getItem('bdw-units') === 'us'; } catch(e) { return false; }
+})();
+
+function setUnits(sys) {
+  usUnits = (sys === 'us');
+  try { localStorage.setItem('bdw-units', sys); } catch(e) {}
+  document.getElementById('btn-metric').classList.toggle('active', !usUnits);
+  document.getElementById('btn-us').classList.toggle('active', usUnits);
+  // Re-render si résultats affichés
+  var inAnnual = document.getElementById('mode-annual').classList.contains('active');
+  if (inAnnual && _lastMonthly && _lastAnnLoc) {
+    renderAnnual(_lastAnnLoc, _lastMonthly);
+  } else if (!inAnnual && _lastRows && _lastSc) {
+    computeAndRenderScore(_lastSc, _lastRows);
+  }
+}
+
+function fmtTemp(c) {
+  if (c == null || c === '-') return c;
+  if (usUnits) return Math.round(c * 9/5 + 32) + '°F';
+  return Math.round(c) + '°C';
+}
+function fmtTempRaw(c) {
+  // Pour les affichages min/max sans unité répétée
+  if (c == null || c === '-') return c;
+  if (usUnits) return Math.round(c * 9/5 + 32) + '°';
+  return Math.round(c) + '°';
+}
+function fmtWind(kmh) {
+  if (kmh == null) return '–';
+  if (usUnits) return Math.round(kmh * 0.621) + ' mph';
+  return Math.round(kmh) + ' km/h';
+}
+function fmtPrecip(mm) {
+  if (mm == null) return '–';
+  if (usUnits) return (mm * 0.0394).toFixed(2) + ' in/day';
+  return mm + ' mm/day';
+}
+function fmtTempUnit() { return usUnits ? '°F' : '°C'; }
+function fmtWindUnit() { return usUnits ? 'mph' : 'km/h'; }
+
+// Init toggle state on load
+(function() {
+  if (usUnits) {
+    document.getElementById('btn-metric').classList.remove('active');
+    document.getElementById('btn-us').classList.add('active');
+  }
+})();
+
 var currentUseCase = 'general';
 var _lastRows = null, _lastSc = null;
 var _locTzOffset = 0; // global timezone offset from API
@@ -1179,9 +1241,9 @@ function getMainRisk(avgRain, avgTemp, avgWind, uc) {
   var risks = [];
   if (avgRain > 50) risks.push('Rain likely (' + Math.round(avgRain) + '%)');
   else if (avgRain > 30) risks.push('Shower risk (' + Math.round(avgRain) + '%)');
-  if (avgTemp < cfg.tempMin) risks.push('Cool temperature (' + Math.round(avgTemp) + '°C)');
-  else if (avgTemp > cfg.tempMax) risks.push('High heat (' + Math.round(avgTemp) + '°C)');
-  if (avgWind > 30) risks.push('Strong wind (' + Math.round(avgWind) + ' km/h)');
+  if (avgTemp < cfg.tempMin) risks.push('Cool temperature (' + fmtTemp(avgTemp) + ')');
+  else if (avgTemp > cfg.tempMax) risks.push('High heat (' + fmtTemp(avgTemp) + ')');
+  if (avgWind > 30) risks.push('Strong wind (' + fmtWind(avgWind) + ')');
   if (risks.length === 0) return 'No major risk identified';
   return 'Risk: ' + risks.join(' · ');
 }
@@ -1248,8 +1310,8 @@ function computeAndRenderScore(sc, rows) {
   // Detail chips — show actual values with colored dot
   var chips = [
     { lbl: 'Rain',   val: Math.round(avgRain)+'%',            score: sRain },
-    { lbl: 'Temp.',   val: avgTemp!=null?Math.round(avgTemp)+'°C':'–', score: sTemp },
-    { lbl: 'Wind',    val: Math.round(avgWind)+' km/h',         score: sWind }
+    { lbl: 'Temp.',   val: avgTemp!=null?fmtTemp(avgTemp):'–', score: sTemp },
+    { lbl: 'Wind',    val: fmtWind(avgWind), score: sWind }
   ];
   var chipsEl = document.getElementById('score-chips');
   chipsEl.innerHTML = '';
@@ -1275,12 +1337,16 @@ function updateHero(sc, rows) {
   var avgRain=Math.round(rSum/rows.length);
   var skyLbl;
   if(avgRain>55)skyLbl='Rainy';else if(avgRain>35)skyLbl='Cloudy';else if(peakSol>500&&avgRain<20)skyLbl='Full sun';else if(peakSol>250&&avgRain<30)skyLbl='Sunny';else if(peakSol>80)skyLbl='Hazy';else if(peakSol>15)skyLbl='Cloudy';else skyLbl='Overcast';
-  document.getElementById('r-temp').innerHTML=(main.temp||'-')+'<sup>\u00b0</sup>';
-  document.getElementById('r-range').textContent=tmin+'\u00b0 / '+tmax+'\u00b0 throughout the day';
+  document.getElementById('r-temp').innerHTML=fmtTempRaw(main.temp||0)+'<sup></sup>';
+  document.getElementById('r-range').textContent=(function(){
+  var mn=tmin!=='-'?(usUnits?Math.round(tmin*9/5+32):tmin):'-';
+  var mx=tmax!=='-'?(usUnits?Math.round(tmax*9/5+32):tmax):'-';
+  return mn+'° / '+mx+'° throughout the day';
+})();
   document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain);
   document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain);
   document.getElementById('r-rain').textContent=avgRain+'%';
-  document.getElementById('r-wind').textContent=Math.round(wSum/rows.length)+' km/h';
+  document.getElementById('r-wind').textContent=fmtWind(wSum/rows.length);
   document.getElementById('r-sky').textContent=skyLbl;
   computeAndRenderScore(sc, rows);
 }
@@ -1841,9 +1907,9 @@ function renderAnnual(loc, monthly) {
     var isBest = uc && idx === sorted[0].idx && sorted[0].score >= 60;
     var badgeHtml = isBest ? '<div class="month-best-badge">🔥 Best month</div>' : (isRec ? '<div class="month-badge rec">Recommended</div>' : (isAvoid ? '<div class="month-badge avoid">Less favourable</div>' : ''));
 
-    var tmaxStr = d.avgTmax != null ? Math.round(d.avgTmax) + '°' : '–';
-    var tminStr = d.avgTmin != null ? Math.round(d.avgTmin) + '°' : '–';
-    var tempStr = d.avgTemp != null ? Math.round(d.avgTemp) + '°' : '–';
+    var tmaxStr = d.avgTmax != null ? fmtTempRaw(d.avgTmax) : '–';
+    var tminStr = d.avgTmin != null ? fmtTempRaw(d.avgTmin) : '–';
+    var tempStr = d.avgTemp != null ? fmtTempRaw(d.avgTemp) : '–';
 
     card.innerHTML =
       '<div class="month-name">' + MONTHS_FR[idx] + '</div>' +
@@ -1898,7 +1964,7 @@ function renderAnnual(loc, monthly) {
     // Température indicative du meilleur mois
     var bestData = monthly[best1.idx];
     if (bestData && bestData.avgTmax) {
-      narrative += ' · ' + Math.round(bestData.avgTmax) + '°C max · ' + bestData.rainPct + '% pluie';
+      narrative += ' · ' + fmtTemp(bestData.avgTmax) + ' max · ' + bestData.rainPct + '% rain';
     }
     
     narEl.innerHTML = narrative;
