@@ -307,6 +307,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
   #seo-hub{display:none!important;padding:28px 16px 36px}
   #seo-hub.open{display:block!important}
 }
+
+#inp-date:not(.has-val){color:transparent}
+#inp-date.has-val{color:var(--navy)}
 </style>
 <link rel="icon" type="image/x-icon" href="favicon.ico"/><link rel="icon" type="image/svg+xml" href="favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
 <link rel="manifest" href="manifest.json"/></head>
@@ -395,8 +398,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
           Date du projet
         </label>
         <div style="position:relative">
-          <input class="inp" type="date" id="inp-date" min="2026-02-22" max="2027-02-21" />
-          <div id="date-placeholder" style="position:absolute;top:2px;left:2px;bottom:2px;right:44px;display:flex;align-items:center;padding:0 12px;font-size:15px;color:var(--slate3);pointer-events:none;z-index:2;background:white;border-radius:9px">jj/mm/aaaa</div>
+          <input class="inp" type="date" id="inp-date" min="2026-02-22" max="2027-02-21" style="position:relative;z-index:2;background:transparent" />
+          <div id="date-placeholder" style="position:absolute;inset:0;display:flex;align-items:center;padding:0 12px;font-size:15px;color:var(--slate3);pointer-events:none;z-index:1;background:white;border-radius:12px">jj/mm/aaaa</div>
           
         </div>
         <div class="date-hint" id="date-hint">Jusqu'à 1 an à l'avance</div>
@@ -1958,8 +1961,8 @@ document.getElementById('annual-wrap').addEventListener('click', function() {
 document.getElementById('inp-date').onchange=function(){
   var ph=document.getElementById('date-placeholder');
   if(ph) ph.style.display=this.value?'none':'flex';
-  document.getElementById('date-hint').style.display=this.value?'none':'block';
-  if(this.value){this.classList.add('has-val');}else{this.classList.remove('has-val');}
+  this.classList.toggle('has-val',!!this.value);
+}else{this.classList.remove('has-val');}
 };
 document.getElementById('inp-city').oninput=function(){
   selectedLoc=null;
