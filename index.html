@@ -75,6 +75,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .uc-row{display:flex;gap:6px;flex-wrap:nowrap;margin-bottom:0;overflow-x:auto}
 .uc-filter-wrap{padding:16px 0 4px;}
 .uc-filter-label{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--slate3);margin-bottom:10px}
+.uc-pills-row{display:flex;flex-wrap:wrap;gap:6px;}
 .uc-pill{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;background:var(--cream);border:1.5px solid var(--cream2);border-radius:20px;font-size:11px;font-weight:600;color:var(--slate);cursor:pointer;transition:all .18s;white-space:nowrap}
 .uc-pill:hover{border-color:var(--gold);background:var(--gold-light);color:var(--navy)}
 #date-form.uc-required{opacity:.45;pointer-events:none;user-select:none}
@@ -351,7 +352,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
     </div>
     <div style="padding:12px 0 4px">
       <div class="uc-filter-label" style="margin-bottom:8px">Affiner le score pour</div>
-      <div style="display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto">
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
         <button class="uc-pill uc-pill-neutral" data-uc="general" id="ann-uc-general" onclick="quickFill('general')">🌤️ Juste la météo</button>
         <button class="uc-pill" data-uc="voyage" onclick="quickFill('voyage')">✈️ Voyage</button>
         <button class="uc-pill" data-uc="sport" onclick="quickFill('sport')">🏔️ Outdoor</button>
@@ -640,6 +641,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .uc-row{display:flex;gap:6px;flex-wrap:nowrap;margin-bottom:0;overflow-x:auto}
 .uc-filter-wrap{padding:16px 0 4px;}
 .uc-filter-label{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--slate3);margin-bottom:10px}
+.uc-pills-row{display:flex;flex-wrap:wrap;gap:6px;}
 .uc-pill{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;background:var(--cream);border:1.5px solid var(--cream2);border-radius:20px;font-size:11px;font-weight:600;color:var(--slate);cursor:pointer;transition:all .18s;white-space:nowrap}
 .uc-pill:hover{border-color:var(--gold);background:var(--gold-light);color:var(--navy)}
 #date-form.uc-required{opacity:.45;pointer-events:none;user-select:none}
@@ -916,7 +918,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
     </div>
     <div style="padding:12px 0 4px">
       <div class="uc-filter-label" style="margin-bottom:8px">Affiner le score pour</div>
-      <div style="display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto">
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
         <button class="uc-pill uc-pill-neutral" data-uc="general" id="ann-uc-general" onclick="quickFill('general')">🌤️ Juste la météo</button>
         <button class="uc-pill" data-uc="voyage" onclick="quickFill('voyage')">✈️ Voyage</button>
         <button class="uc-pill" data-uc="sport" onclick="quickFill('sport')">🏔️ Outdoor</button>
