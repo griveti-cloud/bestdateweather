@@ -311,7 +311,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 #inp-date:not(.has-val){color:transparent}
 #inp-date.has-val{color:var(--navy)}
 
-.unit-toggle{display:flex;align-items:center;justify-content:center;gap:0;margin-top:10px;border-radius:20px;overflow:hidden;border:1.5px solid var(--cream2);width:fit-content;margin-left:auto;margin-right:auto}
+.unit-toggle{display:inline-flex;align-items:center;gap:0;border-radius:20px;overflow:hidden;border:1.5px solid var(--cream2)}
 .unit-btn{background:white;border:none;padding:5px 14px;font-size:12px;font-weight:700;color:var(--slate3);cursor:pointer;transition:all .15s;letter-spacing:.3px}
 .unit-btn.active{background:var(--navy);color:white}
 .unit-btn:first-child{border-radius:18px 0 0 18px}
@@ -326,10 +326,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 
 <div class="app-header">
   <h1 class="app-title">Best<em>Date</em>Weather</h1>
-  <div class="unit-toggle" id="unit-toggle">
-    <button class="unit-btn active" id="btn-metric" onclick="setUnits('metric')">°C · km/h</button>
-    <button class="unit-btn" id="btn-us" onclick="setUnits('us')">°F · mph</button>
-  </div>
 </div>
 
 <div class="wrap">
@@ -342,6 +338,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       <span><span class="mode-btn-title">12-Month View</span><span class="mode-btn-sub">Compare seasons</span></span>
     </button>
+  </div>
+  <div style="text-align:right;margin-top:-8px;margin-bottom:8px">
+    <div class="unit-toggle" id="unit-toggle">
+      <button class="unit-btn active" id="btn-metric" onclick="setUnits('metric')">°C · km/h</button>
+      <button class="unit-btn" id="btn-us" onclick="setUnits('us')">°F · mph</button>
+    </div>
   </div>
 
   <!-- ANNUAL VIEW -->
