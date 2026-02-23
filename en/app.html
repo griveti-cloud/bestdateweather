@@ -2305,7 +2305,7 @@ var _fpInstance = flatpickr(document.getElementById('inp-date'), {
   locale: 'en',
   minDate: 'today',
   maxDate: new Date(new Date().setFullYear(new Date().getFullYear()+1)),
-  disableMobile: false,
+  disableMobile: true,
   onChange: function(selectedDates, dateStr, instance) {
     var el = document.getElementById('inp-date');
     el.classList.toggle('has-val', selectedDates.length > 0);

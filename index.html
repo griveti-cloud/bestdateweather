@@ -312,7 +312,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 #inp-date.has-val{color:var(--navy)}
 </style>
 <link rel="icon" type="image/x-icon" href="favicon.ico"/><link rel="icon" type="image/svg+xml" href="favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
-<link rel="manifest" href="manifest.json"/></head>
+<link rel="manifest" href="manifest.json"/><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/fr.js"></script>
+</head>
 <body>
 
 <div class="app-header">
@@ -398,7 +401,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
           Date du projet
         </label>
         <div style="position:relative">
-          <input class="inp" type="date" id="inp-date" min="2026-02-23" max="2027-02-21" style="position:relative;z-index:2;background:white" />
+          <input class="inp" type="text" id="inp-date" placeholder="jj/mm/aaaa" readonly style="position:relative;z-index:2;background:white;cursor:pointer" />
           
         </div>
         <div class="date-hint" id="date-hint">Jusqu'à 1 an à l'avance</div>
@@ -1675,7 +1678,7 @@ function fetchAC(q){
 /* RUN */
 function run() {
   var city=document.getElementById('inp-city').value.trim();
-  var dval=document.getElementById('inp-date').value;
+  var _dateEl=document.getElementById('inp-date'); var dval=_dateEl._isoValue||_dateEl.value;
   var btnEl=document.getElementById('btn-go'), errEl=document.getElementById('err-box'), progEl=document.getElementById('prog-wrap');
   if(!city){
     errEl.textContent='⚠ Entrez une ville ou une destination avant de continuer.';
@@ -2235,11 +2238,23 @@ document.getElementById('annual-wrap').addEventListener('click', function() {
     }
   }
 }, true);
-document.getElementById('inp-date').onchange=function(){
-  var ph=document.getElementById('date-placeholder');
-  if(ph) ph.style.display=this.value?'none':'flex';
-  this.classList.toggle('has-val',!!this.value);
-};
+flatpickr(document.getElementById('inp-date'), {
+  dateFormat: 'd/m/Y',
+  locale: 'fr',
+  minDate: 'today',
+  maxDate: new Date(new Date().setFullYear(new Date().getFullYear()+1)),
+  disableMobile: true,
+  onChange: function(selectedDates, dateStr) {
+    var el = document.getElementById('inp-date');
+    el.classList.toggle('has-val', selectedDates.length > 0);
+    if (selectedDates.length > 0) {
+      var d = selectedDates[0];
+      el._isoValue = d.getFullYear()+'-'+(d.getMonth()<9?'0':'')+(d.getMonth()+1)+'-'+(d.getDate()<10?'0':'')+d.getDate();
+    } else {
+      el._isoValue = '';
+    }
+  }
+});
 document.getElementById('inp-city').oninput=function(){
   selectedLoc=null;
   // Don't reset use case when typing city — user keeps their project selection
@@ -2258,8 +2273,7 @@ document.getElementById('inp-city').onkeydown=function(e){
 };
 document.getElementById('inp-date').onkeydown=function(e){if(e.key==='Enter')run();};
 var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.getFullYear()+2);
-document.getElementById('inp-date').min=toISO(tom);
-document.getElementById('inp-date').max=toISO(maxD);
+// min/max gérés par flatpickr
 
 // ── URL PARAMS : pré-remplir ville + lancer vue annuelle ──────────────────
 (function() {
