@@ -398,11 +398,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
           Date du projet
         </label>
         <div style="position:relative">
-          <input class="inp" type="date" id="inp-date" min="2026-02-22" max="2027-02-21" style="position:relative;z-index:2;background:transparent" />
+          <input class="inp" type="date" id="inp-date" min="2026-02-23" max="2027-02-21" style="position:relative;z-index:2;background:transparent" />
           <div id="date-placeholder" style="position:absolute;inset:0;display:flex;align-items:center;padding:0 12px;font-size:15px;color:var(--slate3);pointer-events:none;z-index:1;background:white;border-radius:12px">jj/mm/aaaa</div>
+          <button type="button" onclick="(function(){var t=new Date();var iso=t.getFullYear()+'-'+(t.getMonth()<9?'0':'')+(t.getMonth()+1)+'-'+(t.getDate()<10?'0':'')+t.getDate();var el=document.getElementById('inp-date');el.value=iso;el.dispatchEvent(new Event('change'));document.getElementById('date-placeholder').style.display='none';})()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:3;background:var(--gold);color:white;border:none;border-radius:8px;padding:4px 9px;font-size:11px;font-weight:700;cursor:pointer;line-height:1.4">Aujourd'hui</button>
           
         </div>
-        <div class="date-hint" id="date-hint">Jusqu'à 1 an à l'avance</div>
+        <div class="date-hint" id="date-hint">Aujourd'hui · ou jusqu'à 1 an à l'avance</div>
       </div>
     </div>
 
@@ -777,11 +778,18 @@ function quickFill(type) {
 
 function fillUseCase(type) { currentUseCase = type; document.getElementById("score-block").style.display = "block"; quickFill(type); }
 
-function getIcon(h, temp, sol, rain, mm) {
+function getIcon(h, temp, sol, rain, mm, snow, p25) {
+  var night = sol < 15;
+  mm = mm || 0;
+  snow = snow || 0;
+  p25 = p25 != null ? p25 : temp;
+  // Snowfall direct ou nuits gelées (p25 ≤ 2°C)
+  var isSnowing = snow > 0.1 || (p25 != null && p25 <= 2 && mm > 0.1);
   var night = sol < 15;
   mm = mm || 0;
   if (night) {
     if (mm > 7 || (rain > 70 && mm > 2))  return IC.storm;
+    if (isSnowing && rain > 15)            return IC.nightsnow;
     if (temp <= 0 && rain > 20)            return IC.nightsnow;
     if (rain > 35 && mm >= 1.5)            return IC.nightrain;
     if (rain > 20 && mm >= 0.3)            return IC.nightshower;
@@ -789,6 +797,7 @@ function getIcon(h, temp, sol, rain, mm) {
     return IC.nightcloud;
   }
   if (mm > 7 || (rain > 70 && mm > 2))     return IC.storm;
+  if (isSnowing && rain > 15)               return IC.snow;
   if (temp <= 0 && rain > 20)              return IC.snow;
   if (rain > 55 && mm >= 3)               return IC.heavyrain;
   if (rain > 35 && mm >= 1.5)             return IC.rain;
@@ -801,11 +810,14 @@ function getIcon(h, temp, sol, rain, mm) {
   return IC.sun;
 }
 
-function getLabel(h, temp, sol, rain, mm) {
+function getLabel(h, temp, sol, rain, mm, snow, p25) {
   var night = sol < 15;
-  mm = mm || 0;
+  mm = mm || 0; snow = snow || 0;
+  p25 = p25 != null ? p25 : temp;
+  var isSnowing = snow > 0.1 || (p25 <= 2 && mm > 0.1);
   if (night) {
     if (mm > 7 || (rain > 70 && mm > 2))  return 'Orage';
+    if (isSnowing && rain > 15)            return 'Neige';
     if (temp <= 0 && rain > 20)            return 'Neige';
     if (rain > 35 && mm >= 1.5)            return 'Pluie';
     if (rain > 20 && mm >= 0.3)            return 'Averses';
@@ -813,6 +825,7 @@ function getLabel(h, temp, sol, rain, mm) {
     return 'Nuit nuageuse';
   }
   if (mm > 7 || (rain > 70 && mm > 2))     return 'Orage';
+  if (isSnowing && rain > 15)              return 'Neige';
   if (temp <= 0 && rain > 20)              return 'Neige';
   if (rain > 55 && mm >= 3)               return 'Fortes pluies';
   if (rain > 35 && mm >= 1.5)             return 'Pluie';
@@ -948,7 +961,11 @@ function applyHorizonWording(diffDays) {
   var btnTxt = btn.querySelector('span') || btn;
 
   var span = document.getElementById('btn-go-text');
-  if (diffDays >= 0 && diffDays <= 7) {
+  if (diffDays === 0) {
+    label.className = 'hero-horizon-label hl-real';
+    label.textContent = "Aujourd'hui — météo en direct";
+    if (span) span.textContent = "Vérifier aujourd'hui";
+  } else if (diffDays >= 1 && diffDays <= 7) {
     label.className = 'hero-horizon-label hl-real';
     label.textContent = 'Prévision météo réelle';
     if (span) span.textContent = 'Voir la météo';
@@ -1073,7 +1090,11 @@ function fetchMarineSST(lat, lon, yr, mo, da, slug) {
   if (diffDays > 7 || target < refDate) return tryFallback();
 
   var url;
-  if (diffDays >= 0 && diffDays <= 7) {
+  if (diffDays === 0) {
+    label.className = 'hero-horizon-label hl-real';
+    label.textContent = "Aujourd'hui — météo en direct";
+    if (span) span.textContent = "Vérifier aujourd'hui";
+  } else if (diffDays >= 1 && diffDays <= 7) {
     url = 'https://marine-api.open-meteo.com/v1/marine?latitude='+lat+'&longitude='+lon+'&hourly=sea_surface_temperature&forecast_days=8';
   } else {
     url = 'https://marine-api.open-meteo.com/v1/marine?latitude='+lat+'&longitude='+lon+'&hourly=sea_surface_temperature&start_date='+dateStr+'&end_date='+dateStr;
@@ -1086,7 +1107,11 @@ function fetchMarineSST(lat, lon, yr, mo, da, slug) {
       var vals = (d.hourly && d.hourly.sea_surface_temperature) || [];
       var times = (d.hourly && d.hourly.time) || [];
       var sst = null;
-      if (diffDays >= 0 && diffDays <= 7) {
+      if (diffDays === 0) {
+    label.className = 'hero-horizon-label hl-real';
+    label.textContent = "Aujourd'hui — météo en direct";
+    if (span) span.textContent = "Vérifier aujourd'hui";
+  } else if (diffDays >= 1 && diffDays <= 7) {
         var prefix = dateStr+'T12';
         for (var i=0;i<times.length;i++) {
           if (times[i].indexOf(prefix)===0 && vals[i]!=null) { sst=vals[i]; break; }
@@ -1118,7 +1143,7 @@ function renderSeaChip(sstResult) {
 }
 
 function fetchForecast(lat, lon, yr, mo, da) {
-  var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,precipitation,windspeed_10m,shortwave_radiation&timezone=auto&forecast_days=7';
+  var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,precipitation,snowfall,windspeed_10m,shortwave_radiation&timezone=auto&forecast_days=7';
   // _locTzOffset is global
   return fetch(url).then(function(r){if(!r.ok)throw new Error('Prévisions indisponibles');return r.json();}).then(function(data){
     if (data.utc_offset_seconds != null) _locTzOffset = data.utc_offset_seconds;
@@ -1129,9 +1154,10 @@ function fetchForecast(lat, lon, yr, mo, da) {
       var t=idx>=0&&data.hourly.temperature_2m[idx]!=null?parseFloat(data.hourly.temperature_2m[idx].toFixed(1)):null;
       var rn=idx>=0&&data.hourly.precipitation_probability[idx]!=null?data.hourly.precipitation_probability[idx]:0;
       var mm_val=idx>=0&&data.hourly.precipitation&&data.hourly.precipitation[idx]!=null?parseFloat(data.hourly.precipitation[idx].toFixed(2)):0;
+      var snow_val=idx>=0&&data.hourly.snowfall&&data.hourly.snowfall[idx]!=null?parseFloat(data.hourly.snowfall[idx].toFixed(2)):0;
       var w=idx>=0&&data.hourly.windspeed_10m[idx]!=null?parseFloat(data.hourly.windspeed_10m[idx].toFixed(1)):0;
       var s=idx>=0&&data.hourly.shortwave_radiation&&data.hourly.shortwave_radiation[idx]!=null?Math.max(0,data.hourly.shortwave_radiation[idx]):0;
-      rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:t,p50:t,p75:t,temp:t,rain:rn,mm:mm_val,windP50:w,solP25:s,solP50:s,solP75:s,sol:s,isForecast:true});
+      rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:t,p50:t,p75:t,temp:t,rain:rn,mm:mm_val,windP50:w,solP25:s,solP50:s,solP75:s,sol:s,snow:snow_val,isForecast:true});
     }
     return rows;
   });
@@ -1139,7 +1165,7 @@ function fetchForecast(lat, lon, yr, mo, da) {
 
 function fetchArchive(lat, lon, refDate) {
   var s=toISO(addDays(refDate,-10)), e=toISO(addDays(refDate,10));
-  return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&hourly=temperature_2m,precipitation,windspeed_10m,shortwave_radiation&timezone=auto').then(function(r){if(!r.ok)throw new Error('Archive error');return r.json();}).then(function(d){if(d.utc_offset_seconds!=null)_locTzOffset=d.utc_offset_seconds;return d;});
+  return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&hourly=temperature_2m,precipitation,snowfall,windspeed_10m,shortwave_radiation&timezone=auto').then(function(r){if(!r.ok)throw new Error('Archive error');return r.json();}).then(function(d){if(d.utc_offset_seconds!=null)_locTzOffset=d.utc_offset_seconds;return d;});
 }
 
 function buildClimatology(lat, lon, yr, mo, da) {
@@ -1147,14 +1173,14 @@ function buildClimatology(lat, lon, yr, mo, da) {
   var trend=Math.max(0,(target.getTime()-now.getTime())/(1000*60*60*24*365.25))*0.03;
   var endYr=now.getFullYear()-1, years=[];
   for(var y=endYr-9;y<=endYr;y++) years.push(y);
-  var buckets=[]; for(var h=0;h<24;h++) buckets.push({t:[],p:[],w:[],s:[]});
+  var buckets=[]; for(var h=0;h<24;h++) buckets.push({t:[],p:[],w:[],s:[],sn:[]});
   var idx=0;
   function step(){
     if(idx>=years.length) return Promise.resolve(buildRows(buckets,trend));
     var yr2=years[idx++];
     return fetchArchive(lat,lon,new Date(yr2,mo,da,12,0,0)).then(function(data){
-      var T=data.hourly.temperature_2m, P=data.hourly.precipitation, W=data.hourly.windspeed_10m, S=data.hourly.shortwave_radiation||[];
-      for(var i=0;i<data.hourly.time.length;i++){var hh=new Date(data.hourly.time[i]).getHours();if(T[i]!=null)buckets[hh].t.push(T[i]);if(P[i]!=null)buckets[hh].p.push(P[i]);if(W[i]!=null)buckets[hh].w.push(W[i]);if(S[i]!=null)buckets[hh].s.push(S[i]);}
+      var T=data.hourly.temperature_2m, P=data.hourly.precipitation, W=data.hourly.windspeed_10m, S=data.hourly.shortwave_radiation||[], SN=data.hourly.snowfall||[];
+      for(var i=0;i<data.hourly.time.length;i++){var hh=new Date(data.hourly.time[i]).getHours();if(T[i]!=null)buckets[hh].t.push(T[i]);if(P[i]!=null)buckets[hh].p.push(P[i]);if(W[i]!=null)buckets[hh].w.push(W[i]);if(S[i]!=null)buckets[hh].s.push(S[i]);if(SN[i]!=null)buckets[hh].sn.push(SN[i]);}
     }).catch(function(){}).then(function(){setP(Math.round((idx/years.length)*90),'Analyse '+yr2+'…');return new Promise(function(res){setTimeout(res,20);});}).then(step);
   }
   return step();
@@ -1166,7 +1192,8 @@ function buildRows(buckets, trend) {
     var b=buckets[h], wet=0;
     for(var i=0;i<b.p.length;i++) if(b.p[i]>0.1) wet++;
     var p25=pct(b.t,25), p50=pct(b.t,50), p75=pct(b.t,75);
-    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50!=null?parseFloat((p50+trend).toFixed(1)):null,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50!=null?parseFloat((p50+trend).toFixed(1)):null,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,mm:b.p.length>0?(b.p.reduce(function(s,v){return s+v;},0)/b.p.length):0,windP50:pct(b.w,50),solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0)});
+    var avgSnow = b.sn && b.sn.length > 0 ? b.sn.reduce(function(s,v){return s+v;},0)/b.sn.length : 0;
+    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50!=null?parseFloat((p50+trend).toFixed(1)):null,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50!=null?parseFloat((p50+trend).toFixed(1)):null,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,mm:b.p.length>0?(b.p.reduce(function(s,v){return s+v;},0)/b.p.length):0,snow:avgSnow,windP50:pct(b.w,50),solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0)});
   }
   return rows;
 }
@@ -1219,7 +1246,7 @@ function renderHourly(sc) {
     var r=sc[hours[i]]; if(!r) continue;
     var lbl=(hours[i]===23)?'00h':r.label;
     var cell=document.createElement('div'); cell.className='h-cell';
-    cell.innerHTML='<span class="h-hr">'+lbl+'</span><span class="h-ic">'+getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0)+'</span><span class="h-tp">'+(r.temp!=null?r.temp+'\u00b0':'-')+'</span><span class="h-lb">'+getLabel(r.h,r.temp,r.sol,r.rain,r.mm||0)+'</span><div class="h-rb"><div class="h-rf" style="width:'+r.rain+'%"></div></div>';
+    cell.innerHTML='<span class="h-hr">'+lbl+'</span><span class="h-ic">'+getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25)+'</span><span class="h-tp">'+(r.temp!=null?r.temp+'\u00b0':'-')+'</span><span class="h-lb">'+getLabel(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0)+'</span><div class="h-rb"><div class="h-rf" style="width:'+r.rain+'%"></div></div>';
     strip.appendChild(cell);
   }
 }
@@ -1274,7 +1301,7 @@ function renderScCard(sc, stripId, statsId) {
     var r=sc[hours[i]]; if(!r) continue;
     var lbl=(hours[i]===23)?'00h':r.label;
     var cell=document.createElement('div'); cell.className='sc-cell';
-    cell.innerHTML='<span class="sc-hr">'+lbl+'</span>'+getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0)+'<span class="sc-tp">'+(r.temp!=null?r.temp+'\u00b0':'-')+'</span>';
+    cell.innerHTML='<span class="sc-hr">'+lbl+'</span>'+getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25)+'<span class="sc-tp">'+(r.temp!=null?r.temp+'\u00b0':'-')+'</span>';
     strip.appendChild(cell);
   }
   var temps=[],rSum=0,wSum=0;
@@ -1444,16 +1471,19 @@ function computeAndRenderScore(sc, rows) {
 
   // Detail chips — show actual values with colored dot
   var totalMm = Math.round(mmSum * 10) / 10;
+  var totalSnow = 0; for (var _s=0; _s<rows.length; _s++) { totalSnow += (rows[_s].snow || 0); } totalSnow = Math.round(totalSnow * 10) / 10;
   var chips = [
     { lbl: 'Pluie',   val: Math.round(avgRain)+'%',            score: sRain },
     { lbl: 'Précip.', val: totalMm > 0 ? totalMm + ' mm' : '0 mm', score: sRain },
     { lbl: 'Temp.',   val: avgTemp!=null?Math.round(avgTemp)+'°C':'–', score: sTemp },
     { lbl: 'Vent',    val: Math.round(avgWind)+' km/h',         score: sWind }
+  
   ];
+  if (totalSnow > 0.5) chips.push({ lbl: 'Neige', val: totalSnow + ' cm', score: 0, color: '#6366f1' });
   var chipsEl = document.getElementById('score-chips');
   chipsEl.innerHTML = '';
   for (var b=0; b<chips.length; b++) {
-    var chipColor = getScoreColor(chips[b].score);
+    var chipColor = chips[b].color || getScoreColor(chips[b].score);
     var chip = document.createElement('div');
     chip.className = 'score-chip';
     chip.innerHTML =
@@ -1478,12 +1508,44 @@ function updateHero(sc, rows) {
   if(avgRain>55)skyLbl='Pluvieux';else if(avgRain>35)skyLbl='Nuageux';else if(peakSol>500&&avgRain<20)skyLbl='Plein soleil';else if(peakSol>250&&avgRain<30)skyLbl='Ensoleillé';else if(peakSol>80)skyLbl='Voilé';else if(peakSol>15)skyLbl='Nuageux';else skyLbl='Couvert';
   document.getElementById('r-temp').innerHTML=(main.temp||'-')+'<sup>\u00b0</sup>';
   document.getElementById('r-range').textContent=tmin+'\u00b0 / '+tmax+'\u00b0 dans la journée';
-  document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0);
-  document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0);
+  document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
+  document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
   document.getElementById('r-rain').textContent=avgRain+'%';
   document.getElementById('r-wind').textContent=Math.round(wSum/rows.length)+' km/h';
   document.getElementById('r-sky').textContent=skyLbl;
   computeAndRenderScore(sc, rows);
+
+  // Alerte neige
+  var _snowAlert = document.getElementById('snow-alert');
+  if (!_snowAlert) {
+    _snowAlert = document.createElement('div');
+    _snowAlert.id = 'snow-alert';
+    _snowAlert.style.cssText = 'background:#ede9fe;border:1.5px solid #6366f1;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;color:#4f46e5;display:none;margin-top:10px;text-align:center';
+    var heroTop = document.querySelector('.hero-top');
+    if (heroTop) heroTop.appendChild(_snowAlert);
+  }
+  var _snowRows = rows || sc;
+  var _snowTotal = 0; for (var _si=0; _si<_snowRows.length; _si++) _snowTotal += (_snowRows[_si].snow||0);
+  var _snowHours = 0;
+  if (_snowTotal < 0.5) {
+    for (var _si=0; _si<_snowRows.length; _si++) {
+      var _r = _snowRows[_si];
+      var _t = (_r.p25 != null ? _r.p25 : _r.temp) || 99;
+      if (_t <= 2 && (_r.mm||0) > 0.1 && (_r.rain||0) > 15) _snowHours++;
+    }
+  }
+  if (_snowTotal > 0.5) {
+    _snowAlert.style.display = 'block';
+    _snowAlert.textContent = '❄️ Neige prévue · ' + Math.round(_snowTotal*10)/10 + ' cm au total';
+  } else if (_snowHours >= 2) {
+    _snowAlert.style.display = 'block';
+    _snowAlert.textContent = '❄️ Neige probable · ' + _snowHours + 'h de précipitations sous 2°C';
+  } else if (_snowHours >= 1) {
+    _snowAlert.style.display = 'block';
+    _snowAlert.textContent = '❄️ Neige possible · températures proches du gel avec précipitations';
+  } else {
+    _snowAlert.style.display = 'none';
+  }
 }
 
 function showResults(sc, rows, isForecast, noteText, diffDays) {
@@ -1982,7 +2044,9 @@ function monthIconFromData(d) {
   var sun = d.sunHrs || 0;
 
   // Snow
-  if (d.avgTemp != null && d.avgTemp <= 0 && d.rainPct > 20) return IC.snow;
+  // Snow — use avgTmin (more robust: if nights freeze, snow is likely)
+  var snowTemp = d.avgTmin != null ? d.avgTmin : d.avgTemp;
+  if (snowTemp != null && snowTemp <= 2 && d.rainPct > 15) return IC.snow;
 
   // Soleil dominant (peu de pluie ET beaucoup de soleil)
   if (mm < 3 && sun >= 7) return IC.sun;
@@ -2199,9 +2263,13 @@ document.getElementById('inp-city').onkeydown=function(e){
   else if(e.key==='Escape'){hideAC();}
 };
 document.getElementById('inp-date').onkeydown=function(e){if(e.key==='Enter')run();};
-var tom=new Date(Date.now()+86400000), maxD=new Date();maxD.setFullYear(maxD.getFullYear()+2);
+var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.getFullYear()+2);
 document.getElementById('inp-date').min=toISO(tom);
 document.getElementById('inp-date').max=toISO(maxD);
+// Pre-fill today by default
+(function(){var t=new Date(),el=document.getElementById('inp-date'),ph=document.getElementById('date-placeholder');
+var iso=t.getFullYear()+'-'+(t.getMonth()<9?'0':'')+(t.getMonth()+1)+'-'+(t.getDate()<10?'0':'')+t.getDate();
+el.value=iso;if(ph)ph.style.display='none';if(el.classList)el.classList.add('has-val');})();
 
 // ── URL PARAMS : pré-remplir ville + lancer vue annuelle ──────────────────
 (function() {
