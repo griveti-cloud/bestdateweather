@@ -697,6 +697,8 @@ var IC = {
   moon:       '<svg viewBox="0 0 40 40" fill="none"><circle cx="29" cy="8" r="1.2" fill="#f0d080" opacity=".9"/><circle cx="34" cy="17" r=".9" fill="#f0d080" opacity=".7"/><circle cx="7" cy="11" r="1" fill="#f0d080" opacity=".5"/><circle cx="19" cy="21" r="12" fill="#d4c060"/><circle cx="24" cy="18" r="10" fill="#e8f0fc"/></svg>',
   nightcloud: '<svg viewBox="0 0 40 40" fill="none"><circle cx="33" cy="7" r="1" fill="#f0d080" opacity=".8"/><circle cx="10" cy="10" r="7" fill="#d4c060"/><circle cx="13" cy="8" r="5.8" fill="#e8f0fc"/><rect x="8" y="24" width="26" height="12" rx="6" fill="#8899b4"/><ellipse cx="18" cy="24" rx="8" ry="7" fill="#99aac4"/><ellipse cx="27" cy="25" rx="7" ry="6" fill="#aabbd4"/></svg>',
   nightrain:  '<svg viewBox="0 0 40 40" fill="none"><circle cx="9" cy="9" r="6" fill="#d4c060"/><circle cx="12" cy="7" r="5" fill="#e8f0fc"/><rect x="6" y="17" width="28" height="11" rx="5.5" fill="#5a7090"/><ellipse cx="17" cy="17" rx="8" ry="6.5" fill="#6a8090"/><ellipse cx="26" cy="18" rx="7" ry="5.5" fill="#7a90a0"/><g stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round"><line x1="13" y1="30" x2="11" y2="37"/><line x1="20" y1="30" x2="18" y2="37"/><line x1="27" y1="30" x2="25" y2="37"/></g></svg>',
+  shower:     '<svg viewBox="0 0 40 40" fill="none"><circle cx="15" cy="15" r="6" fill="#f59e0b" opacity=".9"/><g stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"><line x1="15" y1="5" x2="15" y2="8"/><line x1="5" y1="15" x2="8" y2="15"/><line x1="8.8" y1="8.8" x2="11" y2="11"/><line x1="21.2" y1="8.8" x2="19" y2="11"/></g><rect x="9" y="22" width="22" height="11" rx="5.5" fill="#6a92b0"/><ellipse cx="17" cy="22" rx="6" ry="5.5" fill="#7aa2c0"/><ellipse cx="23" cy="23" rx="5" ry="4.5" fill="#8ab4d0"/><g stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round"><line x1="20" y1="34" x2="18" y2="40"/></g></svg>',
+  nightshower:'<svg viewBox="0 0 40 40" fill="none"><circle cx="9" cy="9" r="6" fill="#d4c060"/><circle cx="12" cy="7" r="5" fill="#e8f0fc"/><rect x="6" y="17" width="28" height="11" rx="5.5" fill="#5a7090"/><ellipse cx="17" cy="17" rx="8" ry="6.5" fill="#6a8090"/><ellipse cx="26" cy="18" rx="7" ry="5.5" fill="#7a90a0"/><g stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round"><line x1="20" y1="30" x2="18" y2="36"/></g></svg>',
   nightsnow:  '<svg viewBox="0 0 40 40" fill="none"><circle cx="9" cy="9" r="6" fill="#d4c060"/><circle cx="12" cy="7" r="5" fill="#e8f0fc"/><rect x="6" y="17" width="28" height="11" rx="5.5" fill="#7090b0"/><ellipse cx="17" cy="17" rx="8" ry="6.5" fill="#80a0c0"/><ellipse cx="26" cy="18" rx="7" ry="5.5" fill="#90b0d0"/><g stroke="#60a0d0" stroke-width="2" stroke-linecap="round"><line x1="13" y1="31" x2="13" y2="38"/><line x1="10" y1="33.5" x2="16" y2="35.5"/><line x1="10" y1="35.5" x2="16" y2="33.5"/><line x1="22" y1="31" x2="22" y2="38"/><line x1="19" y1="33.5" x2="25" y2="35.5"/><line x1="19" y1="35.5" x2="25" y2="33.5"/></g></svg>'
 };
 
@@ -739,41 +741,49 @@ function quickFill(type) {
 
 function fillUseCase(type) { currentUseCase = type; document.getElementById("score-block").style.display = "block"; quickFill(type); }
 
-function getIcon(h, temp, sol, rain) {
+function getIcon(h, temp, sol, rain, mm) {
   var night = sol < 15;
+  mm = mm || 0;
   if (night) {
-    if (rain > 70)               return IC.storm;
-    if (temp <= 0 && rain > 20)  return IC.nightsnow;
-    if (rain > 30)               return IC.nightrain;
-    if (sol < 5)                 return IC.moon;
+    if (mm > 7 || (rain > 70 && mm > 2))  return IC.storm;
+    if (temp <= 0 && rain > 20)            return IC.nightsnow;
+    if (rain > 35 && mm >= 1.5)            return IC.nightrain;
+    if (rain > 20 && mm >= 0.3)            return IC.nightshower;
+    if (sol < 5)                           return IC.moon;
     return IC.nightcloud;
   }
-  if (rain > 70)               return IC.storm;
-  if (temp <= 0 && rain > 20)  return IC.snow;
-  if (rain > 55)               return IC.heavyrain;
-  if (rain > 40)               return IC.rain;
-  if (sol < 60 && temp < 8)   return IC.fog;
-  if (sol < 130)               return IC.cloud;
-  if (sol < 420)               return IC.partcloud;
+  if (mm > 7 || (rain > 70 && mm > 2))     return IC.storm;
+  if (temp <= 0 && rain > 20)              return IC.snow;
+  if (rain > 55 && mm >= 3)               return IC.heavyrain;
+  if (rain > 35 && mm >= 1.5)             return IC.rain;
+  if (rain > 20 && mm >= 0.3 && sol >= 150) return IC.shower;
+  if (rain > 35)                           return IC.rain;
+  if (sol < 60 && temp < 8)              return IC.fog;
+  if (sol < 130)                          return IC.cloud;
+  if (sol < 420)                          return IC.partcloud;
   return IC.sun;
 }
 
-function getLabel(h, temp, sol, rain) {
+function getLabel(h, temp, sol, rain, mm) {
   var night = sol < 15;
+  mm = mm || 0;
   if (night) {
-    if (rain > 70)               return 'Orage';
-    if (temp <= 0 && rain > 20)  return 'Neige';
-    if (rain > 30)               return 'Pluie';
-    if (sol < 5)                 return 'Nuit claire';
+    if (mm > 7 || (rain > 70 && mm > 2))  return 'Orage';
+    if (temp <= 0 && rain > 20)            return 'Neige';
+    if (rain > 35 && mm >= 1.5)            return 'Pluie';
+    if (rain > 20 && mm >= 0.3)            return 'Averses';
+    if (sol < 5)                           return 'Nuit claire';
     return 'Nuit nuageuse';
   }
-  if (rain > 70)               return 'Orage';
-  if (temp <= 0 && rain > 20)  return 'Neige';
-  if (rain > 55)               return 'Fortes pluies';
-  if (rain > 28)               return 'Pluie';
-  if (sol < 60 && temp < 8)   return 'Brume';
-  if (sol < 130)               return 'Nuageux';
-  if (sol < 420)               return 'Voilé';
+  if (mm > 7 || (rain > 70 && mm > 2))     return 'Orage';
+  if (temp <= 0 && rain > 20)              return 'Neige';
+  if (rain > 55 && mm >= 3)               return 'Fortes pluies';
+  if (rain > 35 && mm >= 1.5)             return 'Pluie';
+  if (rain > 20 && mm >= 0.3 && sol >= 150) return 'Averses';
+  if (rain > 35)                           return 'Pluie';
+  if (sol < 60 && temp < 8)              return 'Brouillard';
+  if (sol < 130)                          return 'Couvert';
+  if (sol < 420)                          return 'Partiellement nuageux';
   return 'Ensoleillé';
 }
 
@@ -1070,7 +1080,7 @@ function renderSeaChip(sstResult) {
 }
 
 function fetchForecast(lat, lon, yr, mo, da) {
-  var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,windspeed_10m,shortwave_radiation&timezone=auto&forecast_days=7';
+  var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,precipitation,windspeed_10m,shortwave_radiation&timezone=auto&forecast_days=7';
   // _locTzOffset is global
   return fetch(url).then(function(r){if(!r.ok)throw new Error('Prévisions indisponibles');return r.json();}).then(function(data){
     if (data.utc_offset_seconds != null) _locTzOffset = data.utc_offset_seconds;
@@ -1080,9 +1090,10 @@ function fetchForecast(lat, lon, yr, mo, da) {
       for(var i=0;i<data.hourly.time.length;i++){if(data.hourly.time[i]===ts){idx=i;break;}}
       var t=idx>=0&&data.hourly.temperature_2m[idx]!=null?parseFloat(data.hourly.temperature_2m[idx].toFixed(1)):null;
       var rn=idx>=0&&data.hourly.precipitation_probability[idx]!=null?data.hourly.precipitation_probability[idx]:0;
+      var mm_val=idx>=0&&data.hourly.precipitation&&data.hourly.precipitation[idx]!=null?parseFloat(data.hourly.precipitation[idx].toFixed(2)):0;
       var w=idx>=0&&data.hourly.windspeed_10m[idx]!=null?parseFloat(data.hourly.windspeed_10m[idx].toFixed(1)):0;
       var s=idx>=0&&data.hourly.shortwave_radiation&&data.hourly.shortwave_radiation[idx]!=null?Math.max(0,data.hourly.shortwave_radiation[idx]):0;
-      rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:t,p50:t,p75:t,temp:t,rain:rn,windP50:w,solP25:s,solP50:s,solP75:s,sol:s,isForecast:true});
+      rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:t,p50:t,p75:t,temp:t,rain:rn,mm:mm_val,windP50:w,solP25:s,solP50:s,solP75:s,sol:s,isForecast:true});
     }
     return rows;
   });
@@ -1117,7 +1128,7 @@ function buildRows(buckets, trend) {
     var b=buckets[h], wet=0;
     for(var i=0;i<b.p.length;i++) if(b.p[i]>0.1) wet++;
     var p25=pct(b.t,25), p50=pct(b.t,50), p75=pct(b.t,75);
-    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50!=null?parseFloat((p50+trend).toFixed(1)):null,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50!=null?parseFloat((p50+trend).toFixed(1)):null,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,windP50:pct(b.w,50),solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0)});
+    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50!=null?parseFloat((p50+trend).toFixed(1)):null,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50!=null?parseFloat((p50+trend).toFixed(1)):null,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,mm:pct(b.p,50)||0,windP50:pct(b.w,50),solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0)});
   }
   return rows;
 }
@@ -1170,7 +1181,7 @@ function renderHourly(sc) {
     var r=sc[hours[i]]; if(!r) continue;
     var lbl=(hours[i]===23)?'00h':r.label;
     var cell=document.createElement('div'); cell.className='h-cell';
-    cell.innerHTML='<span class="h-hr">'+lbl+'</span><span class="h-ic">'+getIcon(r.h,r.temp,r.sol,r.rain)+'</span><span class="h-tp">'+(r.temp!=null?r.temp+'\u00b0':'-')+'</span><span class="h-lb">'+getLabel(r.h,r.temp,r.sol,r.rain)+'</span><div class="h-rb"><div class="h-rf" style="width:'+r.rain+'%"></div></div>';
+    cell.innerHTML='<span class="h-hr">'+lbl+'</span><span class="h-ic">'+getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0)+'</span><span class="h-tp">'+(r.temp!=null?r.temp+'\u00b0':'-')+'</span><span class="h-lb">'+getLabel(r.h,r.temp,r.sol,r.rain,r.mm||0)+'</span><div class="h-rb"><div class="h-rf" style="width:'+r.rain+'%"></div></div>';
     strip.appendChild(cell);
   }
 }
@@ -1426,8 +1437,8 @@ function updateHero(sc, rows) {
   if(avgRain>55)skyLbl='Pluvieux';else if(avgRain>35)skyLbl='Nuageux';else if(peakSol>500&&avgRain<20)skyLbl='Plein soleil';else if(peakSol>250&&avgRain<30)skyLbl='Ensoleillé';else if(peakSol>80)skyLbl='Voilé';else if(peakSol>15)skyLbl='Nuageux';else skyLbl='Couvert';
   document.getElementById('r-temp').innerHTML=(main.temp||'-')+'<sup>\u00b0</sup>';
   document.getElementById('r-range').textContent=tmin+'\u00b0 / '+tmax+'\u00b0 dans la journée';
-  document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain);
-  document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain);
+  document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0);
+  document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0);
   document.getElementById('r-rain').textContent=avgRain+'%';
   document.getElementById('r-wind').textContent=Math.round(wSum/rows.length)+' km/h';
   document.getElementById('r-sky').textContent=skyLbl;
