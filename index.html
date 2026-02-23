@@ -1128,7 +1128,7 @@ function buildRows(buckets, trend) {
     var b=buckets[h], wet=0;
     for(var i=0;i<b.p.length;i++) if(b.p[i]>0.1) wet++;
     var p25=pct(b.t,25), p50=pct(b.t,50), p75=pct(b.t,75);
-    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50!=null?parseFloat((p50+trend).toFixed(1)):null,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50!=null?parseFloat((p50+trend).toFixed(1)):null,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,mm:pct(b.p,50)||0,windP50:pct(b.w,50),solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0)});
+    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50!=null?parseFloat((p50+trend).toFixed(1)):null,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50!=null?parseFloat((p50+trend).toFixed(1)):null,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,mm:b.p.length>0?(b.p.reduce(function(s,v){return s+v;},0)/b.p.length):0,windP50:pct(b.w,50),solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0)});
   }
   return rows;
 }
