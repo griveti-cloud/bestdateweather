@@ -930,6 +930,145 @@ function geocode(city) {
     });
 }
 
+/* ── SEA SURFACE TEMPERATURE ── */
+var SEA_NAME_MAP = {
+  'nice':'nice','marseille':'marseille','barcelone':'barcelona','rome':'rome',
+  'athènes':'athens','mykonos':'mykonos','santorin':'santorini','rhodes':'rhodes',
+  'ibiza':'ibiza','malte':'malta','vallette':'malta','la valette':'malta',
+  'lisbonne':'lisbon','porto':'porto','biarritz':'biarritz','tenerife':'tenerife',
+  'fuerteventura':'fuerteventura','lanzarote':'lanzarote',
+  'grande canarie':'gran-canaria','gran canaria':'gran-canaria',
+  'londres':'london','amsterdam':'amsterdam','rotterdam':'rotterdam',
+  'cancún':'cancun','cancun':'cancun','barbade':'barbados','maldives':'maldives',
+  'île maurice':'mauritius','maurice':'mauritius','zanzibar':'zanzibar',
+  'dubaï':'dubai','dubai':'dubai','goa':'goa','phuket':'phuket','bali':'bali',
+  'agadir':'agadir','le cap':'cape-town','cape town':'cape-town',
+  'miami':'miami','los angeles':'los-angeles','new york':'new-york',
+  'san francisco':'san-francisco','sydney':'sydney','melbourne':'melbourne',
+  'stockholm':'stockholm','dublin':'dublin','venise':'venice',
+  'split':'split','dubrovnik':'dubrovnik','kotor':'kotor','naples':'naples',
+  'palerme':'palermo','cagliari':'cagliari','bastia':'bastia','ajaccio':'ajaccio'
+};
+function slugFromName(name) {
+  if (!name) return null;
+  var n = name.toLowerCase()
+    .replace(/[àâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[îï]/g,'i')
+    .replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/ç/g,'c')
+    .replace(/[^a-z0-9 -]/g,'').trim();
+  return SEA_NAME_MAP[n] || SEA_CLIM_DATA[n] ? (SEA_NAME_MAP[n] || n) : null;
+}
+
+var SEA_CLIM_DATA = {
+  'nice':[13,13,13,15,18,22,25,26,24,21,18,15],
+  'marseille':[13,13,13,14,17,21,24,25,23,20,17,14],
+  'barcelona':[13,13,13,14,17,21,24,26,24,21,17,14],
+  'rome':[14,13,13,14,17,21,24,26,25,22,18,15],
+  'athens':[16,15,15,16,19,23,26,27,26,23,20,17],
+  'mykonos':[16,15,15,16,19,23,26,27,26,23,20,17],
+  'santorini':[16,15,15,16,19,23,26,27,26,23,20,17],
+  'rhodes':[18,17,17,18,21,25,27,28,27,24,22,19],
+  'ibiza':[14,13,13,14,17,22,25,26,25,22,17,15],
+  'malta':[15,14,14,15,18,22,26,27,26,23,19,16],
+  'lisbon':[16,15,15,15,17,19,21,22,21,20,18,16],
+  'porto':[14,14,14,15,17,19,21,22,21,19,17,15],
+  'biarritz':[13,13,13,14,16,19,21,22,21,19,16,14],
+  'tenerife':[20,19,19,20,21,22,23,24,24,23,22,21],
+  'fuerteventura':[20,19,19,20,21,22,23,24,24,23,22,21],
+  'lanzarote':[20,19,19,20,21,22,23,24,24,23,22,21],
+  'gran-canaria':[20,19,19,20,21,22,23,24,24,23,22,21],
+  'london':[9,8,9,10,13,16,18,19,17,14,11,9],
+  'amsterdam':[7,6,7,9,12,16,18,18,17,14,11,8],
+  'rotterdam':[7,6,7,9,12,16,18,18,17,14,11,8],
+  'cancun':[26,26,27,28,29,30,30,30,30,29,28,27],
+  'riviera-maya':[26,26,27,28,29,30,30,30,30,29,28,27],
+  'barbados':[27,26,27,27,28,28,29,29,29,28,28,27],
+  'maldives':[29,29,30,30,30,29,29,29,29,29,29,29],
+  'mauritius':[27,28,28,27,26,24,23,23,23,24,25,26],
+  'zanzibar':[28,28,28,28,27,25,24,24,24,26,27,28],
+  'dubai':[22,22,24,27,30,32,33,34,33,31,28,24],
+  'goa':[27,27,28,30,31,30,29,29,29,29,28,27],
+  'phuket':[28,28,29,30,30,29,29,29,29,28,28,28],
+  'bali':[28,28,28,28,28,27,27,27,27,28,28,28],
+  'agadir':[17,17,17,18,19,20,21,22,22,21,19,18],
+  'cape-town':[21,21,20,19,17,16,15,15,16,17,18,20],
+  'miami':[23,23,24,26,28,30,31,32,31,29,27,24],
+  'los-angeles':[16,16,16,17,18,19,20,21,20,19,18,17],
+  'new-york':[7,6,6,8,12,17,22,23,21,17,13,9],
+  'sydney':[22,23,22,20,18,16,15,14,15,17,19,21],
+  'melbourne':[18,19,18,16,14,13,12,12,12,14,15,17],
+  'stockholm':[3,2,2,4,9,14,17,17,14,10,7,4],
+  'dublin':[10,9,9,10,12,14,16,16,15,13,11,10]
+};
+
+function getSeaComfortFR(sst) {
+  if (sst >= 28) return {lbl:'Très chaude',    color:'#ef4444'};
+  if (sst >= 24) return {lbl:'Chaude · baignade agréable', color:'#f59e0b'};
+  if (sst >= 20) return {lbl:'Agréable',        color:'#16a34a'};
+  if (sst >= 17) return {lbl:'Fraîche',         color:'#0ea5e9'};
+  if (sst >= 14) return {lbl:'Froide',          color:'#6366f1'};
+  return              {lbl:'Très froide',        color:'#64748b'};
+}
+
+function fetchMarineSST(lat, lon, yr, mo, da, slug) {
+  var dateStr = yr+'-'+(mo<9?'0':'')+(mo+1)+'-'+(da<10?'0':'')+da;
+  var today = new Date(); today.setHours(0,0,0,0);
+  var target = new Date(yr,mo,da,0,0,0);
+  var diffDays = Math.round((target.getTime()-today.getTime())/86400000);
+
+  function tryFallback() {
+    var climData = slug && SEA_CLIM_DATA[slug] ? SEA_CLIM_DATA[slug] : null;
+    if (climData && climData[mo] !== null) return Promise.resolve({sst:climData[mo],fallback:true});
+    return Promise.resolve(null);
+  }
+
+  var refDate = new Date(2024,0,1);
+  if (diffDays > 7 || target < refDate) return tryFallback();
+
+  var url;
+  if (diffDays >= 0 && diffDays <= 7) {
+    url = 'https://marine-api.open-meteo.com/v1/marine?latitude='+lat+'&longitude='+lon+'&hourly=sea_surface_temperature&forecast_days=8';
+  } else {
+    url = 'https://marine-api.open-meteo.com/v1/marine?latitude='+lat+'&longitude='+lon+'&hourly=sea_surface_temperature&start_date='+dateStr+'&end_date='+dateStr;
+  }
+
+  return fetch(url)
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      if (!d || d.error) return tryFallback();
+      var vals = (d.hourly && d.hourly.sea_surface_temperature) || [];
+      var times = (d.hourly && d.hourly.time) || [];
+      var sst = null;
+      if (diffDays >= 0 && diffDays <= 7) {
+        var prefix = dateStr+'T12';
+        for (var i=0;i<times.length;i++) {
+          if (times[i].indexOf(prefix)===0 && vals[i]!=null) { sst=vals[i]; break; }
+        }
+        if (sst===null) for (var j=0;j<vals.length;j++) { if (vals[j]!=null) { sst=vals[j]; break; } }
+      } else {
+        for (var k=0;k<vals.length;k++) { if (vals[k]!=null) { sst=vals[k]; break; } }
+      }
+      if (sst===null) return tryFallback();
+      return {sst: Math.round(sst*10)/10, fallback:false};
+    })
+    .catch(function(){ return tryFallback(); });
+}
+
+function renderSeaChip(sstResult) {
+  if (!sstResult || sstResult.sst===null) return;
+  var comfort = getSeaComfortFR(sstResult.sst);
+  var lbl = sstResult.fallback ? '🌊 Mer (norm. sais.)' : '🌊 Mer';
+  var chip = document.createElement('div');
+  chip.className = 'score-chip';
+  chip.id = 'sea-chip';
+  chip.title = comfort.lbl;
+  chip.innerHTML =
+    '<span class="score-chip-dot" style="background:'+comfort.color+'"></span>'+
+    '<span class="score-chip-lbl">'+lbl+'</span>'+
+    '<span class="score-chip-val">'+sstResult.sst+'°C</span>';
+  var chipsEl = document.getElementById('score-chips');
+  if (chipsEl) chipsEl.appendChild(chip);
+}
+
 function fetchForecast(lat, lon, yr, mo, da) {
   var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,windspeed_10m,shortwave_radiation&timezone=auto&forecast_days=7';
   // _locTzOffset is global
@@ -1467,6 +1606,14 @@ function run() {
     document.getElementById('r-loc').textContent=loc.name+' — '+(loc.country||'');
     document.getElementById('r-date').textContent=new Date(yr,mo,da,12,0,0).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
     renderAstro(loc.lat,loc.lon,yr,mo,da);
+    // Lancer SST en parallèle (silencieux — n'affecte pas le score principal)
+    var slug = slugFromName(loc.name);
+    fetchMarineSST(loc.lat,loc.lon,yr,mo,da,slug).then(function(sstResult){
+      // Supprimer ancien chip mer s'il existe
+      var old = document.getElementById('sea-chip');
+      if (old) old.parentNode.removeChild(old);
+      renderSeaChip(sstResult);
+    });
     if(diffDays>=0&&diffDays<=7){
       setP(30,'Prévisions météo réelles…');
       return fetchForecast(loc.lat,loc.lon,yr,mo,da).then(function(rows){
