@@ -67,6 +67,16 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:14px 2
 @media(max-width:600px){.widget-frame{height:520px;}}
 footer{background:var(--navy);color:rgba(255,255,255,.6);text-align:center;padding:36px 20px;font-size:12px;line-height:1.8;}
 footer a{color:rgba(255,255,255,.7);text-decoration:none;}
+
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1.5px solid var(--cream2);border-radius:10px;overflow:hidden}
+.faq-q{width:100%;background:white;border:none;padding:14px 16px;text-align:left;font-weight:700;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.faq-q:hover{background:#faf8f3}
+.faq-icon{font-size:18px;font-weight:400;flex-shrink:0;transition:transform .2s}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{display:none;padding:0 16px 14px;color:var(--slate2);font-size:14px;line-height:1.6}
+.faq-item.open .faq-a{display:block}
+.sub-title{font-size:15px;font-weight:700;color:#1a1f2e;margin:18px 0 6px}
 </style>
 </head>
 <body>
@@ -107,6 +117,15 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
   </section>
 
   <section class="section">
+  <div class="section-label">By season</div>
+  <h2 class="section-title">What to expect in Berlin</h2>
+<h3 class="sub-title">🌸 Spring (Mar–May) — Acceptable</h3><p>Average high 14°C, 52% rainy days, 8.7h sunshine/day. Average score: 48/100.</p>
+<h3 class="sub-title">☀️ Summer (Jun–Aug) — Good</h3><p>Average high 25°C, 55% rainy days, 12.2h sunshine/day. Average score: 66/100.</p>
+<h3 class="sub-title">🍂 Autumn (Sep–Nov) — Difficult</h3><p>Average high 14°C, 55% rainy days, 6.4h sunshine/day. Average score: 42/100.</p>
+<h3 class="sub-title">❄️ Winter (Dec–Feb) — To avoid</h3><p>Average high 4°C, 57% rainy days, 2.6h sunshine/day. Average score: 18/100.</p>
+</section>
+
+<section class="section">
     <div class="section-label">Full climate table</div>
     <h2 class="section-title">Month-by-month comparison</h2>
     <div class="climate-table-wrap">
@@ -179,5 +198,13 @@ window.addEventListener('message', function(e){
     });
   }
 });
-</script></body>
+</script><script>
+function toggleFaq(btn){
+  var item=btn.parentElement;
+  var wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(el){el.classList.remove('open');});
+  if(!wasOpen) item.classList.add('open');
+}
+</script>
+</body>
 </html>
