@@ -400,10 +400,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
         <div style="position:relative">
           <input class="inp" type="date" id="inp-date" min="2026-02-23" max="2027-02-21" style="position:relative;z-index:2;background:transparent" />
           <div id="date-placeholder" style="position:absolute;inset:0;display:flex;align-items:center;padding:0 12px;font-size:15px;color:var(--slate3);pointer-events:none;z-index:1;background:white;border-radius:12px">jj/mm/aaaa</div>
-          
+          <button type="button" onclick="(function(){var t=new Date();var iso=t.getFullYear()+'-'+(t.getMonth()<9?'0':'')+(t.getMonth()+1)+'-'+(t.getDate()<10?'0':'')+t.getDate();var el=document.getElementById('inp-date');el.value=iso;el.dispatchEvent(new Event('change'));document.getElementById('date-placeholder').style.display='none';})()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:3;background:var(--gold);color:white;border:none;border-radius:8px;padding:4px 9px;font-size:11px;font-weight:700;cursor:pointer;line-height:1.4">Aujourd'hui</button>
           
         </div>
-        <div class="date-hint" id="date-hint">ou jusqu'à 1 an à l'avance · <button type="button" onclick="(function(){var t=new Date();var iso=t.getFullYear()+'-'+(t.getMonth()<9?'0':'')+( t.getMonth()+1)+'-'+(t.getDate()<10?'0':'')+t.getDate();var el=document.getElementById('inp-date');el.value=iso;el.dispatchEvent(new Event('change'));document.getElementById('date-placeholder').style.display='none';})()" style="background:none;border:none;color:var(--gold);font-weight:700;font-size:11px;cursor:pointer;padding:0;text-decoration:underline">Aujourd'hui</button></div>
+        <div class="date-hint" id="date-hint">Aujourd'hui · ou jusqu'à 1 an à l'avance</div>
       </div>
     </div>
 
@@ -1090,11 +1090,7 @@ function fetchMarineSST(lat, lon, yr, mo, da, slug) {
   if (diffDays > 7 || target < refDate) return tryFallback();
 
   var url;
-  if (diffDays === 0) {
-    label.className = 'hero-horizon-label hl-real';
-    label.textContent = "Aujourd'hui — météo en direct";
-    if (span) span.textContent = "Vérifier aujourd'hui";
-  } else if (diffDays >= 1 && diffDays <= 7) {
+  if (diffDays === 0 || (diffDays >= 1 && diffDays <= 7)) {
     url = 'https://marine-api.open-meteo.com/v1/marine?latitude='+lat+'&longitude='+lon+'&hourly=sea_surface_temperature&forecast_days=8';
   } else {
     url = 'https://marine-api.open-meteo.com/v1/marine?latitude='+lat+'&longitude='+lon+'&hourly=sea_surface_temperature&start_date='+dateStr+'&end_date='+dateStr;
@@ -1108,10 +1104,10 @@ function fetchMarineSST(lat, lon, yr, mo, da, slug) {
       var times = (d.hourly && d.hourly.time) || [];
       var sst = null;
       if (diffDays === 0) {
-    label.className = 'hero-horizon-label hl-real';
-    label.textContent = "Aujourd'hui — météo en direct";
-    if (span) span.textContent = "Vérifier aujourd'hui";
-  } else if (diffDays >= 1 && diffDays <= 7) {
+        var prefix = dateStr.slice(0,13);
+        for (var i=0;i<times.length;i++){if(times[i].indexOf(prefix)===0&&vals[i]!=null){sst=vals[i];break;}}
+        if(sst===null)for(var j=0;j<vals.length;j++){if(vals[j]!=null){sst=vals[j];break;}}
+      } else if (diffDays >= 1 && diffDays <= 7) {
         var prefix = dateStr+'T12';
         for (var i=0;i<times.length;i++) {
           if (times[i].indexOf(prefix)===0 && vals[i]!=null) { sst=vals[i]; break; }
