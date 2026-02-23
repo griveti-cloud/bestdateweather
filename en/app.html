@@ -1248,7 +1248,7 @@ function renderScCard(sc, stripId, statsId) {
     var r=sc[hours[i]]; if(!r) continue;
     var lbl=(hours[i]===23)?'00h':r.label;
     var cell=document.createElement('div'); cell.className='sc-cell';
-    cell.innerHTML='<span class="sc-hr">'+lbl+'</span>'+getIcon(r.h,r.temp,r.sol,r.rain)+'<span class="sc-tp">'+(r.temp!=null?r.temp+'\u00b0':'-')+'</span>';
+    cell.innerHTML='<span class="sc-hr">'+lbl+'</span>'+getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0)+'<span class="sc-tp">'+(r.temp!=null?r.temp+'\u00b0':'-')+'</span>';
     strip.appendChild(cell);
   }
   var temps=[],rSum=0,wSum=0;
@@ -2013,11 +2013,12 @@ function monthIconFromData(d) {
   if (mm < 3 && sun >= 7) return IC.sun;
   if (mm < 5 && sun >= 6) return IC.sun;
 
-  // Nuageux/averses avec soleil : pattern tropical typique
-  // Clé : si soleil >= 5h, on n'affiche jamais "pluie continue"
+  // Averses avec soleil (sun >= 4h ET précip modérée)
+  if (sun >= 4 && mm >= 0.3 && mm < 5) return IC.shower;
+  // Nuageux/averses sans beaucoup de soleil
   if (sun >= 5) return IC.partcloud;
 
-  // Peu de soleil : pluie significative ou couvert
+  // Peu de soleil
   if (mm < 3) return IC.cloud;
   if (mm < 8) return IC.cloud;
   return IC.rain;
