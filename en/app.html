@@ -1300,8 +1300,8 @@ function fmtWind(kmh) {
 }
 function fmtPrecip(mm) {
   if (mm == null) return '–';
-  if (usUnits) return (mm * 0.0394).toFixed(2) + ' in/day';
-  return mm + ' mm/day';
+  if (usUnits) return (mm * 0.0394).toFixed(2) + ' in';
+  return mm + ' mm';
 }
 function fmtTempUnit() { return usUnits ? '°F' : '°C'; }
 function fmtWindUnit() { return usUnits ? 'mph' : 'km/h'; }
@@ -1416,10 +1416,11 @@ function computeAndRenderScore(sc, rows) {
   var w = cfg.weights;
 
   // Compute daily averages
-  var rSum=0, wSum=0, tSum=0, tCnt=0, peakSol=0;
+  var rSum=0, wSum=0, tSum=0, tCnt=0, peakSol=0, mmSum=0;
   for (var i=0; i<rows.length; i++) {
     rSum += rows[i].rain;
     wSum += (rows[i].windP50 || 0);
+    mmSum += (rows[i].mm || 0);
     if (rows[i].temp != null) { tSum += rows[i].temp; tCnt++; }
   }
   for (var k=0; k<sc.length; k++) if ((sc[k].sol||0) > peakSol) peakSol = sc[k].sol;
@@ -1469,8 +1470,10 @@ function computeAndRenderScore(sc, rows) {
   document.getElementById('score-risk').textContent = getMainRisk(avgRain, avgTemp, avgWind, uc);
 
   // Detail chips — show actual values with colored dot
+  var totalMm = Math.round(mmSum * 10) / 10;
   var chips = [
     { lbl: 'Rain',   val: Math.round(avgRain)+'%',            score: sRain },
+    { lbl: 'Precip.', val: totalMm > 0 ? fmtPrecip(totalMm) : '0 mm', score: sRain },
     { lbl: 'Temp.',   val: avgTemp!=null?fmtTemp(avgTemp):'–', score: sTemp },
     { lbl: 'Wind',    val: fmtWind(avgWind), score: sWind }
   ];
