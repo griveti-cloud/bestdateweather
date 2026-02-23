@@ -1410,6 +1410,8 @@ function computeAndRenderScore(sc, rows) {
       '<span class="score-chip-val">' + chips[b].val + '</span>';
     chipsEl.appendChild(chip);
   }
+  // Ré-injecter le chip SST s'il a déjà été récupéré
+  if (window._lastSSTResult) renderSeaChip(window._lastSSTResult);
 }
 
 function updateHero(sc, rows) {
@@ -1607,9 +1609,10 @@ function run() {
     document.getElementById('r-date').textContent=new Date(yr,mo,da,12,0,0).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
     renderAstro(loc.lat,loc.lon,yr,mo,da);
     // Lancer SST en parallèle (silencieux — n'affecte pas le score principal)
+    window._lastSSTResult = null;
     var slug = slugFromName(loc.name);
     fetchMarineSST(loc.lat,loc.lon,yr,mo,da,slug).then(function(sstResult){
-      // Supprimer ancien chip mer s'il existe
+      window._lastSSTResult = sstResult;
       var old = document.getElementById('sea-chip');
       if (old) old.parentNode.removeChild(old);
       renderSeaChip(sstResult);
