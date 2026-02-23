@@ -398,7 +398,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
           Date du projet
         </label>
         <div style="position:relative">
-          <input class="inp" type="date" id="inp-date" min="2026-02-23" max="2027-02-21" style="position:relative;z-index:2;background:transparent" />
+          <input class="inp" type="date" id="inp-date" min="2026-02-23" max="2027-02-21" style="position:relative;z-index:2;background:white" />
           
         </div>
         <div class="date-hint" id="date-hint">Jusqu'à 1 an à l'avance</div>
@@ -2260,10 +2260,6 @@ document.getElementById('inp-date').onkeydown=function(e){if(e.key==='Enter')run
 var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.getFullYear()+2);
 document.getElementById('inp-date').min=toISO(tom);
 document.getElementById('inp-date').max=toISO(maxD);
-// Pre-fill today by default
-(function(){var t=new Date(),el=document.getElementById('inp-date'),ph=document.getElementById('date-placeholder');
-var iso=t.getFullYear()+'-'+(t.getMonth()<9?'0':'')+(t.getMonth()+1)+'-'+(t.getDate()<10?'0':'')+t.getDate();
-el.value=iso;if(ph)ph.style.display='none';if(el.classList)el.classList.add('has-val');})();
 
 // ── URL PARAMS : pré-remplir ville + lancer vue annuelle ──────────────────
 (function() {

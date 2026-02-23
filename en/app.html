@@ -308,7 +308,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
   #seo-hub.open{display:block!important}
 }
 
-#inp-date:not(.has-val){color:transparent}
+#inp-date:not(.has-val){color:var(--slate3)}
 #inp-date.has-val{color:var(--navy)}
 
 .unit-toggle{display:inline-flex;align-items:center;gap:0;border-radius:20px;overflow:hidden;border:1.5px solid var(--cream2)}
@@ -411,18 +411,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
           Date
         </label>
         <div style="position:relative">
-          <input class="inp" type="date" id="inp-date" min="2026-02-23" max="2027-02-21" style="position:relative;z-index:2;background:transparent" />
-          <div id="date-placeholder" style="position:absolute;inset:0;display:flex;align-items:center;padding:0 12px;font-size:15px;color:var(--slate3);pointer-events:none;z-index:1;background:white;border-radius:12px">mm/dd/yyyy</div>
-          <button type="button" onclick="(function(){var t=new Date();var iso=t.getFullYear()+'-'+(t.getMonth()<9?'0':'')+(t.getMonth()+1)+'-'+(t.getDate()<10?'0':'')+t.getDate();var el=document.getElementById('inp-date');el.value=iso;el.dispatchEvent(new Event('change'));document.getElementById('date-placeholder').style.display='none';})()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:3;background:var(--gold);color:white;border:none;border-radius:8px;padding:4px 9px;font-size:11px;font-weight:700;cursor:pointer;line-height:1.4">Today</button>
+          <input class="inp" type="date" id="inp-date" min="2026-02-23" max="2027-02-21" style="position:relative;z-index:2;background:white" />
           
         </div>
-        <div class="date-hint" id="date-hint">Today · or up to 1 year ahead</div>
+        <div class="date-hint" id="date-hint">Up to 1 year ahead</div>
       </div>
     </div>
 
     <button class="btn-go" id="btn-go" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <span id="btn-go-text">Check weather</span>
+      <span id="btn-go-text">Voir la météo</span>
     </button>
     <div class="prog-wrap" id="prog-wrap">
       <div class="prog-labels"><span id="prog-lbl">Loading…</span><span id="prog-pct">0%</span></div>
@@ -993,19 +991,19 @@ function applyHorizonWording(diffDays) {
   if (diffDays === 0) {
     label.className = 'hero-horizon-label hl-real';
     label.textContent = 'Today — live weather';
-    if (span) span.textContent = 'Check today';
+    if (span) span.textContent = 'Voir la météo';
   } else if (diffDays >= 1 && diffDays <= 7) {
     label.className = 'hero-horizon-label hl-real';
     label.textContent = 'Live weather forecast';
-    if (span) span.textContent = 'Check weather';
+    if (span) span.textContent = 'Voir la météo';
   } else if (diffDays <= 210) {
     label.className = 'hero-horizon-label hl-tendency';
     label.textContent = 'Seasonal trend — indicative';
-    if (span) span.textContent = 'Check conditions';
+    if (span) span.textContent = 'Voir la météo';
   } else {
     label.className = 'hero-horizon-label hl-profile';
     label.textContent = 'Historical climate profile';
-    if (span) span.textContent = 'View climate profile';
+    if (span) span.textContent = 'Voir la météo';
   }
 }
 function setConfBadge(diffDays) { /* badge supprimé */ }
@@ -2324,10 +2322,6 @@ document.getElementById('inp-date').onkeydown=function(e){if(e.key==='Enter')run
 var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.getFullYear()+2);
 document.getElementById('inp-date').min=toISO(tom);
 document.getElementById('inp-date').max=toISO(maxD);
-// Pre-fill today by default
-(function(){var t=new Date(),el=document.getElementById('inp-date'),ph=document.getElementById('date-placeholder');
-var iso=t.getFullYear()+'-'+(t.getMonth()<9?'0':'')+(t.getMonth()+1)+'-'+(t.getDate()<10?'0':'')+t.getDate();
-el.value=iso;if(ph)ph.style.display='none';if(el.classList)el.classList.add('has-val');})();
 
 // ── URL PARAMS : pré-remplir ville + lancer vue annuelle ──────────────────
 (function() {
