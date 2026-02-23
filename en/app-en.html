@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
@@ -11,8 +11,8 @@
 </script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<meta name="description" content="Planifiez voyages, vacances et événements en toute sérénité. Météo basée sur 10 ans de données historiques et modèles ECMWF. 22 destinations, prévisions jusqu'à 1 an."/>
-<title>BestDateWeather — La météo de vos grandes occasions</title>
+<meta name="description" content="Plan your trips, holidays and events with confidence. Weather based on 10 years of historical data and ECMWF models. 79 destinations, forecasts up to 1 year ahead."/>
+<title>BestDateWeather — Weather for your special dates</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,900;1,900&display=swap"/>
@@ -310,27 +310,40 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 
 #inp-date:not(.has-val){color:transparent}
 #inp-date.has-val{color:var(--navy)}
+
+.unit-toggle{display:inline-flex;align-items:center;gap:0;border-radius:20px;overflow:hidden;border:1.5px solid var(--cream2)}
+.unit-btn{background:white;border:none;padding:5px 14px;font-size:12px;font-weight:700;color:var(--slate3);cursor:pointer;transition:all .15s;letter-spacing:.3px}
+.unit-btn.active{background:var(--navy);color:white}
+.unit-btn:first-child{border-radius:18px 0 0 18px}
+.unit-btn:last-child{border-radius:0 18px 18px 0}
 </style>
-<link rel="icon" type="image/x-icon" href="favicon.ico"/><link rel="icon" type="image/svg+xml" href="favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
+<link rel="icon" type="image/x-icon" href="favicon.ico"/><link rel="icon" type="image/svg+xml" href="favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><link rel="canonical" href="https://bestdateweather.com/en/app.html"/>
+<link rel="alternate" hreflang="fr" href="https://bestdateweather.com/"/>
+<link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/app.html"/>
+<meta name="theme-color" content="#1a1f2e"/>
 <link rel="manifest" href="manifest.json"/></head>
 <body>
 
 <div class="app-header">
   <h1 class="app-title">Best<em>Date</em>Weather</h1>
-  <div style="text-align:center;margin-bottom:8px;font-size:11px"><span style="color:var(--slate3);padding:3px 8px;border-radius:10px;border:1px solid var(--cream2);font-weight:700">FR</span> <a href="en/app.html" style="color:var(--slate3);text-decoration:none;padding:3px 8px;border-radius:10px;border:1px solid var(--cream2)">EN</a></div>
-<p class="app-sub">Choisissez la meilleure date pour votre voyage, mariage ou événement — basée sur 10&nbsp;ans de données météo historiques et modèles ECMWF.</p>
 </div>
 
 <div class="wrap">
 <div class="mode-toggle">
     <button class="mode-btn active" id="mode-date" onclick="switchMode('date')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      <span><span class="mode-btn-title">Date précise</span><span class="mode-btn-sub">Mariage, voyage, événement</span></span>
+      <span><span class="mode-btn-title">Exact Date</span><span class="mode-btn-sub">Wedding, travel, event</span></span>
     </button>
     <button class="mode-btn" id="mode-annual" onclick="switchMode('annual')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span><span class="mode-btn-title">Vue 12 mois</span><span class="mode-btn-sub">Comparer les saisons</span></span>
+      <span><span class="mode-btn-title">12-Month View</span><span class="mode-btn-sub">Compare seasons</span></span>
     </button>
+  </div>
+  <div style="text-align:right;margin-top:-8px;margin-bottom:8px">
+    <div class="unit-toggle" id="unit-toggle">
+      <button class="unit-btn active" id="btn-metric" onclick="setUnits('metric')">°C · km/h</button>
+      <button class="unit-btn" id="btn-us" onclick="setUnits('us')">°F · mph</button>
+    </div>
   </div>
 
   <!-- ANNUAL VIEW -->
@@ -342,33 +355,33 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             Destination
           </label>
-          <div class="inp-wrap"><input class="inp" type="text" id="ann-city" placeholder="Paris, Lisbonne, Tokyo, Bali…" autocomplete="off"/>
+          <div class="inp-wrap"><input class="inp" type="text" id="ann-city" placeholder="Paris, Lisbon, Tokyo, Bali…" autocomplete="off"/>
           <button class="inp-clear" id="ann-city-clear" tabindex="-1" onclick="clearAnnCity()">×</button></div>
           <div class="ac-list" id="ann-ac-list"></div>
         </div>
-        <button class="annual-btn" id="ann-btn" onclick="runAnnual()">Voir l'année</button>
+        <button class="annual-btn" id="ann-btn" onclick="runAnnual()">View year</button>
       </div>
       <div class="prog-wrap" id="ann-prog-wrap">
-        <div class="prog-labels"><span id="ann-prog-lbl">Chargement…</span><span id="ann-prog-pct">0%</span></div>
+        <div class="prog-labels"><span id="ann-prog-lbl">Loading…</span><span id="ann-prog-pct">0%</span></div>
         <div class="prog-track"><div class="prog-bar" id="ann-prog-bar"></div></div>
       </div>
       <div class="err-box" id="ann-err-box"></div>
     </div>
     <div style="padding:12px 0 4px">
-      <div class="uc-filter-label" style="margin-bottom:8px">Affiner le score pour</div>
+      <div class="uc-filter-label" style="margin-bottom:8px">Refine score for</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px;">
-        <button class="uc-pill uc-pill-neutral" data-uc="general" id="ann-uc-general" onclick="quickFill('general')">🌤️ Juste la météo</button>
-        <button class="uc-pill" data-uc="voyage" onclick="quickFill('voyage')">✈️ Voyage</button>
+        <button class="uc-pill uc-pill-neutral" data-uc="general" id="ann-uc-general" onclick="quickFill('general')">🌤️ Just weather</button>
+        <button class="uc-pill" data-uc="voyage" onclick="quickFill('voyage')">✈️ Travel</button>
         <button class="uc-pill" data-uc="sport" onclick="quickFill('sport')">🏔️ Outdoor</button>
         <button class="uc-pill" data-uc="festival" onclick="quickFill('festival')">🎵 Festival</button>
-        <button class="uc-pill" data-uc="travaux" onclick="quickFill('travaux')">🏗️ Travaux</button>
-        <button class="uc-pill" data-uc="mariage" onclick="quickFill('mariage')">💍 Mariage</button>
+        <button class="uc-pill" data-uc="travaux" onclick="quickFill('travaux')">🏗️ Construction</button>
+        <button class="uc-pill" data-uc="mariage" onclick="quickFill('mariage')">💍 Wedding</button>
       </div>
     </div>
     <div class="annual-result" id="annual-result">
       <div class="annual-header">
         <div class="annual-city-name" id="ann-city-name"></div>
-        <div class="annual-subtitle" id="annual-subtitle">Profil climatique mensuel · moyenne des 3 dernières années</div>
+        <div class="annual-subtitle" id="annual-subtitle">Monthly climate profile · 3-year average</div>
         <div class="annual-subtitle-uc" id="annual-subtitle-uc"></div>
       </div>
       <div id="ann-narrative" style="display:none;margin:14px 0 4px;background:linear-gradient(135deg,#fef9f0,#fdf4e3);border:1.5px solid #f0d98a;border-radius:12px;padding:14px 16px;font-size:13px;color:#1a1f2e;line-height:1.6"></div>
@@ -385,33 +398,33 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
       <div class="field-wrap">
         <label class="field-label" for="inp-city">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Ville ou destination
+          City or destination
         </label>
-        <div class="inp-wrap"><input class="inp" type="text" id="inp-city" placeholder="Paris, Barcelone, Tokyo…" autocomplete="off"/>
+        <div class="inp-wrap"><input class="inp" type="text" id="inp-city" placeholder="Paris, Barcelona, Tokyo…" autocomplete="off"/>
         <button class="inp-clear" id="inp-city-clear" tabindex="-1" onclick="clearCity()">×</button></div>
         <div class="ac-list" id="ac-list"></div>
-        <div id="city-hint" style="font-size:11px;color:var(--slate2);margin-top:5px;display:none">💡 Villes composées : utilisez les tirets — <em>Pointe-à-Pitre</em>, <em>Saint-Denis</em></div>
+        <div id="city-hint" style="font-size:11px;color:var(--slate2);margin-top:5px;display:none">💡 Compound city names: use hyphens — <em>New-York</em>, <em>Tel-Aviv</em></div>
       </div>
       <div class="field-wrap">
         <label class="field-label" for="inp-date">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Date du projet
+          Event date
         </label>
         <div style="position:relative">
           <input class="inp" type="date" id="inp-date" min="2026-02-22" max="2027-02-21" style="position:relative;z-index:2;background:transparent" />
-          <div id="date-placeholder" style="position:absolute;inset:0;display:flex;align-items:center;padding:0 12px;font-size:15px;color:var(--slate3);pointer-events:none;z-index:1;background:white;border-radius:12px">jj/mm/aaaa</div>
+          <div id="date-placeholder" style="position:absolute;inset:0;display:flex;align-items:center;padding:0 12px;font-size:15px;color:var(--slate3);pointer-events:none;z-index:1;background:white;border-radius:12px">mm/dd/yyyy</div>
           
         </div>
-        <div class="date-hint" id="date-hint">Jusqu'à 1 an à l'avance</div>
+        <div class="date-hint" id="date-hint">Up to 1 year ahead</div>
       </div>
     </div>
 
     <button class="btn-go" id="btn-go" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <span id="btn-go-text">Voir la météo</span>
+      <span id="btn-go-text">Check weather</span>
     </button>
     <div class="prog-wrap" id="prog-wrap">
-      <div class="prog-labels"><span id="prog-lbl">Chargement…</span><span id="prog-pct">0%</span></div>
+      <div class="prog-labels"><span id="prog-lbl">Loading…</span><span id="prog-pct">0%</span></div>
       <div class="prog-track"><div class="prog-bar" id="prog-bar"></div></div>
     </div>
     <div class="err-box" id="err-box"></div>
@@ -419,15 +432,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 
   <!-- USE CASE FILTER PILLS -->
   <div class="uc-filter-wrap" id="uc-filter-wrap" style="display:none">
-    <div class="uc-filter-label">Affiner le score pour</div>
+    <div class="uc-filter-label">Refine score for</div>
     <div class="uc-row" id="uc-row">
       <div class="uc-row-line">
-        <button class="uc-pill uc-pill-neutral" data-uc="general" onclick="quickFill('general')">🌤️ Juste la météo</button>
-        <button class="uc-pill" data-uc="voyage" onclick="quickFill('voyage')">✈️ Voyage</button>
+        <button class="uc-pill uc-pill-neutral" data-uc="general" onclick="quickFill('general')">🌤️ Just weather</button>
+        <button class="uc-pill" data-uc="voyage" onclick="quickFill('voyage')">✈️ Travel</button>
         <button class="uc-pill" data-uc="sport" onclick="quickFill('sport')">🏔️ Outdoor</button>
         <button class="uc-pill" data-uc="festival" onclick="quickFill('festival')">🎵 Festival</button>
-        <button class="uc-pill" data-uc="travaux" onclick="quickFill('travaux')">🏗️ Travaux</button>
-        <button class="uc-pill" data-uc="mariage" onclick="quickFill('mariage')">💍 Mariage</button>
+        <button class="uc-pill" data-uc="travaux" onclick="quickFill('travaux')">🏗️ Construction</button>
+        <button class="uc-pill" data-uc="mariage" onclick="quickFill('mariage')">💍 Wedding</button>
       </div>
     </div>
   </div>
@@ -463,7 +476,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
         </div>
         <div class="score-info">
           <div style="display:flex;align-items:center;margin-bottom:4px">
-          <div class="score-usecase" id="score-usecase" style="margin-bottom:0">Météo générale</div>
+          <div class="score-usecase" id="score-usecase" style="margin-bottom:0">General weather</div>
           <div class="score-info-wrap">
             <button class="score-info-btn" id="score-info-btn" onclick="toggleScoreTooltip()">?</button>
             <div class="score-tooltip" id="score-tooltip"></div>
@@ -478,15 +491,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
     <div class="hero-stats">
       <div class="hstat">
         <div class="hstat-val" id="r-rain">–</div>
-        <div class="hstat-lbl">💧 Pluie probable</div>
+        <div class="hstat-lbl">💧 Rain chance</div>
       </div>
       <div class="hstat">
         <div class="hstat-val" id="r-wind">–</div>
-        <div class="hstat-lbl">💨 Vent moyen</div>
+        <div class="hstat-lbl">💨 Avg wind</div>
       </div>
       <div class="hstat">
         <div class="hstat-val" id="r-sky">–</div>
-        <div class="hstat-lbl">☁️ Ciel</div>
+        <div class="hstat-lbl">☁️ Sky</div>
       </div>
     </div>
     <div class="hero-astro">
@@ -494,21 +507,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
         <span class="astro-ico" id="astro-moon-ico"></span>
         <div>
           <div class="astro-val" id="astro-moon-name">–</div>
-          <div class="astro-lbl">Phase lunaire</div>
+          <div class="astro-lbl">Moon phase</div>
         </div>
       </div>
       <div class="astro-item">
         <span class="astro-ico"><svg viewBox="0 0 28 28" fill="none" width="22" height="22"><circle cx="14" cy="10" r="5" fill="#f8d76a" opacity=".95"/><g stroke="#f8d76a" stroke-width="1.8" stroke-linecap="round"><line x1="14" y1="2" x2="14" y2="5"/><line x1="7" y1="4.5" x2="9" y2="6.5"/><line x1="21" y1="4.5" x2="19" y2="6.5"/><line x1="4.5" y1="10" x2="7" y2="10"/><line x1="23.5" y1="10" x2="21" y2="10"/></g><line x1="4" y1="19" x2="24" y2="19" stroke="rgba(26,31,46,.2)" stroke-width="1.5" stroke-linecap="round"/><g stroke="rgba(26,31,46,.4)" stroke-width="1.8" stroke-linecap="round"><line x1="9" y1="23" x2="11" y2="19.5"/><line x1="14" y1="24" x2="14" y2="20"/><line x1="19" y1="23" x2="17" y2="19.5"/></g></svg></span>
         <div>
           <div class="astro-val" id="astro-rise">–</div>
-          <div class="astro-lbl">Lever soleil (UTC)</div>
+          <div class="astro-lbl">Sunrise (UTC)</div>
         </div>
       </div>
       <div class="astro-item">
         <span class="astro-ico"><svg viewBox="0 0 28 28" fill="none" width="22" height="22"><circle cx="14" cy="10" r="5" fill="#f8b84a" opacity=".9"/><g stroke="#f8b84a" stroke-width="1.8" stroke-linecap="round"><line x1="14" y1="2" x2="14" y2="5"/><line x1="7" y1="4.5" x2="9" y2="6.5"/><line x1="21" y1="4.5" x2="19" y2="6.5"/><line x1="4.5" y1="10" x2="7" y2="10"/><line x1="23.5" y1="10" x2="21" y2="10"/></g><line x1="4" y1="19" x2="24" y2="19" stroke="rgba(26,31,46,.2)" stroke-width="1.5" stroke-linecap="round"/><g stroke="rgba(26,31,46,.4)" stroke-width="1.8" stroke-linecap="round"><line x1="9" y1="19.5" x2="11" y2="23"/><line x1="14" y1="20" x2="14" y2="24"/><line x1="19" y1="19.5" x2="17" y2="23"/></g></svg></span>
         <div>
           <div class="astro-val" id="astro-set">–</div>
-          <div class="astro-lbl">Coucher soleil (UTC)</div>
+          <div class="astro-lbl">Sunset (UTC)</div>
         </div>
       </div>
     </div>
@@ -517,8 +530,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
   <!-- HOURLY -->
   <div class="sec-block" id="sec-hourly">
     <div class="sec-header">
-      <div class="sec-title">Heure par heure</div>
-      <div class="sec-hint">Températures & météo</div>
+      <div class="sec-title">Hourly</div>
+      <div class="sec-hint">Temperature & weather</div>
     </div>
     <div class="hourly-card"><div class="h-strip" id="h-strip"></div></div>
   </div>
@@ -526,14 +539,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
   <!-- SCENARIOS -->
   <div class="sec-block" id="sec-scenarios">
     <div class="sec-header">
-      <div class="sec-title">Scénarios extrêmes</div>
-      <div class="sec-hint">Enveloppes statistiques P10–P90</div>
+      <div class="sec-title">Extreme scenarios</div>
+      <div class="sec-hint">Statistical range P10–P90</div>
     </div>
     <div class="sc-row">
       <div class="sc-card pess">
         <div class="sc-head">
           <div>
-            <span class="sc-label pess">Hypothèse basse</span>
+            <span class="sc-label pess">Pessimistic</span>
             <div class="sc-ttl" id="sc-pess-ttl">Journée difficile</div>
             <div class="sc-sub"><span id="sc-pess-sub">Frais · pluie fréquente</span></div>
           </div>
@@ -544,7 +557,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
       <div class="sc-card opt">
         <div class="sc-head">
           <div>
-            <span class="sc-label opt">Hypothèse haute</span>
+            <span class="sc-label opt">Optimistic</span>
             <div class="sc-ttl" id="sc-opt-ttl">Belle journée</div>
             <div class="sc-sub"><span id="sc-opt-sub">Chaud · peu de pluie</span></div>
           </div>
@@ -567,108 +580,113 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
      Crawlable par Google · Maillage interne complet
      ═══════════════════════════════════════════ -->
 <button class="seo-hub-toggle" onclick="var h=document.getElementById('seo-hub');h.classList.toggle('open');this.classList.toggle('open');" aria-expanded="false" aria-controls="seo-hub">
-  🌍 Voir les guides destinations (71 destinations)
+  🌍 Browse destination guides (79 destinations)
   <span class="seo-hub-toggle-icon">⌄</span>
 </button>
 <div id="seo-hub" class="desktop-only" style="background:#faf8f3;border-top:1px solid #e8e0d0;padding:52px 20px 60px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
   <div style="max-width:900px;margin:0 auto">
 
-    <p style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#e8940a;margin-bottom:12px">Guides destinations</p>
-    <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:8px;letter-spacing:-.3px">Quand partir ? M&eacute;t&eacute;o mois par mois</h2>
-    <p style="color:#4a5568;font-size:14px;margin-bottom:16px;line-height:1.7">Données Open-Meteo 2015–2024 · Tableaux climatiques mensuels · 71 destinations</p>
-    <p style="max-width:720px;margin-bottom:40px;font-size:15px;line-height:1.8;color:#4a5568">Nos guides analysent températures, précipitations, ensoleillement et saisonnalité pour déterminer objectivement les meilleurs mois selon votre projet — voyage, mariage, festival ou événement.</p>
+    <p style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#e8940a;margin-bottom:12px">Destination Guides</p>
+    <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:8px;letter-spacing:-.3px">Best Time to Visit — Month by Month Weather</h2>
+    <p style="color:#4a5568;font-size:14px;margin-bottom:16px;line-height:1.7">Open-Meteo data 2015–2024 · Monthly climate tables · 79 destinations</p>
+    <p style="max-width:720px;margin-bottom:40px;font-size:15px;line-height:1.8;color:#4a5568">Our guides analyse temperatures, rainfall, sunshine and seasonality to objectively determine the best months for your project — travel, wedding, festival or event.</p>
 
     <!-- SILO 1 : MEILLEURE PERIODE - dominant -->
     <div style="margin-bottom:52px">
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">
-        <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">&#127758; Meilleure p&eacute;riode par destination</p>
+        <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">&#127758; Best time to visit by destination</p>
         <div style="flex:1;height:2px;background:linear-gradient(90deg,#e8940a,#e8e0d0)"></div>
       </div>
       <div style="margin-top:8px">
-
 <h3 style="font-size:13px;font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px">🇫🇷 France</h3>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:8px">
-<a href="meilleure-periode-paris.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Paris</span><span style="font-size:10px;color:#5a6478">Quand partir</span></span></a><a href="meilleure-periode-nice.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Nice</span><span style="font-size:10px;color:#5a6478">Quand partir</span></span></a><a href="meilleure-periode-marseille.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Marseille</span><span style="font-size:10px;color:#5a6478">Quand partir</span></span></a><a href="meilleure-periode-bordeaux.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Bordeaux</span><span style="font-size:10px;color:#5a6478">Quand partir</span></span></a><a href="meilleure-periode-lyon.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Lyon</span><span style="font-size:10px;color:#5a6478">Quand partir</span></span></a><a href="meilleure-periode-provence.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Provence</span><span style="font-size:10px;color:#5a6478">Quand partir</span></span></a><a href="meilleure-periode-corse.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Corse</span><span style="font-size:10px;color:#5a6478">Quand partir</span></span></a><a href="meilleure-periode-bretagne.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Bretagne</span><span style="font-size:10px;color:#5a6478">Quand partir</span></span></a>
+<a href="best-time-to-visit-paris.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Paris</span><span style="font-size:10px;color:#5a6478">Best: July</span></span></a><a href="best-time-to-visit-nice.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Nice</span><span style="font-size:10px;color:#5a6478">Best: July</span></span></a><a href="best-time-to-visit-marseille.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Marseille</span><span style="font-size:10px;color:#5a6478">Best: July</span></span></a><a href="best-time-to-visit-bordeaux.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Bordeaux</span><span style="font-size:10px;color:#5a6478">Best: July</span></span></a><a href="best-time-to-visit-lyon.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Lyon</span><span style="font-size:10px;color:#5a6478">Best: July</span></span></a><a href="best-time-to-visit-provence.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Provence</span><span style="font-size:10px;color:#5a6478">Best: June</span></span></a><a href="best-time-to-visit-corsica.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Corsica</span><span style="font-size:10px;color:#5a6478">Best: June</span></span></a><a href="best-time-to-visit-brittany.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/40x30/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Brittany</span><span style="font-size:10px;color:#5a6478">Best: July</span></span></a>
 </div>
-<h3 style="font-size:13px;font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px">🌊 Méditerranée & Europe du Sud</h3>
+<h3 style="font-size:13px;font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px">🌊 Mediterranean & Southern Europe</h3>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:8px">
-<a href="meilleure-periode-toscane.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Toscane</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-santorin.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gr.png" width="20" height="15" alt="GR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Santorin</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-majorque.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Majorque</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-ibiza.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Ibiza</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-crete.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gr.png" width="20" height="15" alt="GR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Crète</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-mykonos.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gr.png" width="20" height="15" alt="GR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Mykonos</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-sicile.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Sicile</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-sardaigne.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Sardaigne</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-venise.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Venise</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-capri.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Capri</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-amalfi.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Côte Amalfitaine</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-rome.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Rome</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-florence.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Florence</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-cote-azur.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Côte d'Azur</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-malte.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/mt.png" width="20" height="15" alt="MT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Malte</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-algarve.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/pt.png" width="20" height="15" alt="PT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Algarve</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-lisbonne.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/pt.png" width="20" height="15" alt="PT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Lisbonne</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-madere.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/pt.png" width="20" height="15" alt="PT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Madère</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-porto.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/pt.png" width="20" height="15" alt="PT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Porto</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-barcelone.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Barcelone</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-malaga.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Málaga</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-valence.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Valence</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-alicante.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Alicante</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-
-
-<a href="meilleure-periode-lanzarote.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Lanzarote</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-tenerife.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Tenerife</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-gran-canaria.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Gran Canaria</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-canaries.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Canaries</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-rhodes.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gr.png" width="20" height="15" alt="GR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Rhodes</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-corfou.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gr.png" width="20" height="15" alt="GR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Corfou</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-zante.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gr.png" width="20" height="15" alt="GR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Zakynthos</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-dubrovnik.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/hr.png" width="20" height="15" alt="HR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Dubrovnik</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-split.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/hr.png" width="20" height="15" alt="HR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Split</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-monaco.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/mc.png" width="20" height="15" alt="MC" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Monaco</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+<a href="/en/best-time-to-visit-santorini.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gr.png" width="20" height="15" alt="GR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Santorini</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-mykonos.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gr.png" width="20" height="15" alt="GR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Mykonos</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-crete.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gr.png" width="20" height="15" alt="GR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Crete</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-corfu.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gr.png" width="20" height="15" alt="GR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Corfu</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-rhodes.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gr.png" width="20" height="15" alt="GR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Rhodes</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-zante.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gr.png" width="20" height="15" alt="GR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Zakynthos</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-sicily.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Sicily</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-sardinia.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Sardinia</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-amalfi-coast.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Amalfi Coast</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-capri.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Capri</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-tuscany.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Tuscany</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-rome.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Rome</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-florence.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Florence</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-venice.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Venice</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-algarve.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/pt.png" width="20" height="15" alt="PT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Algarve</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-lisbon.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/pt.png" width="20" height="15" alt="PT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Lisbon</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-madeira.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/pt.png" width="20" height="15" alt="PT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Madeira</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-porto.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/pt.png" width="20" height="15" alt="PT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Porto</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-barcelona.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Barcelona</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-malaga.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Málaga</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-valencia.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Valencia</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-ibiza.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Ibiza</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-majorca.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Majorca</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-menorca.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Menorca</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-seville.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Seville</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-lanzarote.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Lanzarote</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-tenerife.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Tenerife</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-gran-canaria.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Gran Canaria</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-fuerteventura.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Fuerteventura</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-dubrovnik.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/hr.png" width="20" height="15" alt="HR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Dubrovnik</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-split.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/hr.png" width="20" height="15" alt="HR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Split</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-malta.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/mt.png" width="20" height="15" alt="MT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Malta</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-monaco.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/mc.png" width="20" height="15" alt="MC" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Monaco</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
 </div>
-<h3 style="font-size:13px;font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px">🏰 Europe du Nord & Centrale</h3>
+<h3 style="font-size:13px;font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px">🏰 Northern & Central Europe</h3>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:8px">
-<a href="meilleure-periode-amsterdam.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/nl.png" width="20" height="15" alt="NL" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Amsterdam</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-berlin.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/de.png" width="20" height="15" alt="DE" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Berlin</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-londres.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gb.png" width="20" height="15" alt="GB" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Londres</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-prague.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/cz.png" width="20" height="15" alt="CZ" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Prague</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-vienne.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/at.png" width="20" height="15" alt="AT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Vienne</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-istanbul.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/tr.png" width="20" height="15" alt="TR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Istanbul</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-edimbourg.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gb.png" width="20" height="15" alt="GB" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Édimbourg</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-reykjavik.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/is.png" width="20" height="15" alt="IS" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Reykjavik</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+<a href="/en/best-time-to-visit-amsterdam.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/nl.png" width="20" height="15" alt="NL" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Amsterdam</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-berlin.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/de.png" width="20" height="15" alt="DE" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Berlin</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-prague.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/cz.png" width="20" height="15" alt="CZ" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Prague</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-vienna.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/at.png" width="20" height="15" alt="AT" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Vienna</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-edinburgh.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gb.png" width="20" height="15" alt="GB" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Edinburgh</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-london.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/gb.png" width="20" height="15" alt="GB" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">London</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-reykjavik.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/is.png" width="20" height="15" alt="IS" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Reykjavik</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-istanbul.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/tr.png" width="20" height="15" alt="TR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Istanbul</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
 </div>
-<h3 style="font-size:13px;font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px">🌴 Afrique & Océan Indien</h3>
+<h3 style="font-size:13px;font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px">🌴 Africa & Indian Ocean</h3>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:8px">
-<a href="meilleure-periode-marrakech.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/ma.png" width="20" height="15" alt="MA" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Marrakech</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-agadir.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/ma.png" width="20" height="15" alt="MA" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Agadir</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-ile-maurice.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/mu.png" width="20" height="15" alt="MU" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Île Maurice</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-zanzibar.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/tz.png" width="20" height="15" alt="TZ" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Zanzibar</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-reunion.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/fr.png" width="20" height="15" alt="FR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">La Réunion</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-maldives.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/mv.png" width="20" height="15" alt="MV" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Maldives</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-seychelles.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/sc.png" width="20" height="15" alt="SC" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Seychelles</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+<a href="/en/best-time-to-visit-marrakech.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/ma.png" width="20" height="15" alt="MA" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Marrakech</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-agadir.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/ma.png" width="20" height="15" alt="MA" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Agadir</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-cape-town.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/za.png" width="20" height="15" alt="ZA" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Cape Town</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-zanzibar.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/tz.png" width="20" height="15" alt="TZ" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Zanzibar</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-seychelles.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/sc.png" width="20" height="15" alt="SC" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Seychelles</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-reunion.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/re.png" width="20" height="15" alt="RE" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Réunion</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-maldives.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/mv.png" width="20" height="15" alt="MV" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Maldives</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
 </div>
-<h3 style="font-size:13px;font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px">🏯 Asie & Moyen-Orient</h3>
+<h3 style="font-size:13px;font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px">🏯 Asia & Middle East</h3>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:8px">
-<a href="meilleure-periode-bali.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/id.png" width="20" height="15" alt="ID" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Bali</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-bangkok.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/th.png" width="20" height="15" alt="TH" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Bangkok</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-tokyo.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/jp.png" width="20" height="15" alt="JP" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Tokyo</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-phuket.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/th.png" width="20" height="15" alt="TH" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Phuket</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-dubai.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/ae.png" width="20" height="15" alt="AE" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Dubaï</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-hoi-an.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/vn.png" width="20" height="15" alt="VN" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Hôi An</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-siem-reap.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/kh.png" width="20" height="15" alt="KH" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Siem Reap</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-singapour.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/sg.png" width="20" height="15" alt="SG" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Singapour</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-katmandou.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/np.png" width="20" height="15" alt="NP" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Katmandou</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+<a href="/en/best-time-to-visit-dubai.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/ae.png" width="20" height="15" alt="AE" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Dubai</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-bali.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/id.png" width="20" height="15" alt="ID" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Bali</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-bangkok.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/th.png" width="20" height="15" alt="TH" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Bangkok</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-phuket.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/th.png" width="20" height="15" alt="TH" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Phuket</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-tokyo.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/jp.png" width="20" height="15" alt="JP" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Tokyo</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-singapore.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/sg.png" width="20" height="15" alt="SG" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Singapore</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-goa.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/in.png" width="20" height="15" alt="IN" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Goa</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-hoi-an.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/vn.png" width="20" height="15" alt="VN" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Hoi An</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-siem-reap.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/kh.png" width="20" height="15" alt="KH" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Siem Reap</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-kathmandu.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/np.png" width="20" height="15" alt="NP" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Kathmandu</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
 </div>
-<h3 style="font-size:13px;font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px">🌎 Amériques & Caraïbes</h3>
+<h3 style="font-size:13px;font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px">🌎 Americas & Caribbean</h3>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:8px">
-<a href="meilleure-periode-riviera-maya.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/mx.png" width="20" height="15" alt="MX" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Riviera Maya</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-cancun.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/mx.png" width="20" height="15" alt="MX" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Cancún</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-rio-de-janeiro.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/br.png" width="20" height="15" alt="BR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Rio de Janeiro</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-buenos-aires.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/ar.png" width="20" height="15" alt="AR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Buenos Aires</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-la-havane.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/cu.png" width="20" height="15" alt="CU" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">La Havane</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
-<a href="meilleure-periode-new-york.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/us.png" width="20" height="15" alt="US" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">New York</span><span style="font-size:10px;color:#a0aec0">Quand partir</span></span></a>
+<a href="/en/best-time-to-visit-new-york.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/us.png" width="20" height="15" alt="US" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">New York</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-miami.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/us.png" width="20" height="15" alt="US" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Miami</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-los-angeles.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/us.png" width="20" height="15" alt="US" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Los Angeles</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-hawaii-maui.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/us.png" width="20" height="15" alt="US" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Hawaii (Maui)</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-cancun.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/mx.png" width="20" height="15" alt="MX" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Cancún</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-riviera-maya.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/mx.png" width="20" height="15" alt="MX" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Riviera Maya</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-tulum.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/mx.png" width="20" height="15" alt="MX" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Tulum</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-havana.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/cu.png" width="20" height="15" alt="CU" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Havana</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-jamaica.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/jm.png" width="20" height="15" alt="JM" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Jamaica</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-barbados.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/bb.png" width="20" height="15" alt="BB" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Barbados</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-costa-rica.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/cr.png" width="20" height="15" alt="CR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Costa Rica</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-rio-de-janeiro.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/br.png" width="20" height="15" alt="BR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Rio de Janeiro</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
+<a href="/en/best-time-to-visit-buenos-aires.html" target="_top" style="background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:10px"><img src="https://flagcdn.com/20x15/ar.png" width="20" height="15" alt="AR" style="vertical-align:middle;margin-right:6px;border-radius:2px"><span><span style="font-size:12px;font-weight:700;color:#1a1f2e;display:block">Buenos Aires</span><span style="font-size:10px;color:#a0aec0">Best time</span></span></a>
 </div>
 </div>
     </div>
@@ -678,10 +696,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 
 <div class="app-footer">
   <div style="font-weight:700;font-size:13px;color:var(--slate2);margin-bottom:6px">bestdateweather.com</div>
-  <a href="https://open-meteo.com/" target="_blank" style="color:inherit;text-decoration:none">Données météo par Open-Meteo.com</a>
-  &nbsp;·&nbsp; Sources ECMWF, DWD, NOAA, Météo-France &nbsp;·&nbsp; CC BY 4.0
-  &nbsp;·&nbsp; <a href="note_modele.html" target="_blank" style="color:inherit;text-decoration:none">Méthodologie</a>
-  <div style="margin-top:8px"><a href="en/" style="color:inherit;text-decoration:none">🇬🇧 English version</a> &nbsp;·&nbsp; <a href="mentions-legales.html" style="color:inherit;text-decoration:none">Mentions légales</a> &nbsp;·&nbsp; <a href="confidentialite.html" style="color:inherit;text-decoration:none">Confidentialit&eacute;</a> &nbsp;·&nbsp; <a href="contact.html" style="color:inherit;text-decoration:none">Contact</a></div>
+  <a href="https://open-meteo.com/" target="_blank" style="color:inherit;text-decoration:none">Weather data by Open-Meteo.com</a>
+  &nbsp;·&nbsp; Sources: ECMWF, DWD, NOAA, Météo-France &nbsp;·&nbsp; CC BY 4.0
+  &nbsp;·&nbsp; <a href="methodology.html" target="_blank" style="color:inherit;text-decoration:none">Methodology</a>
+  <div style="margin-top:8px"><a href="legal.html" style="color:inherit;text-decoration:none">Legal notice</a> &nbsp;·&nbsp; <a href="privacy.html" style="color:inherit;text-decoration:none">Privacy</a> &nbsp;·&nbsp; <a href="contact.html" style="color:inherit;text-decoration:none">Contact</a></div>
 </div>
 
 <script>
@@ -715,10 +733,10 @@ function quickFill(type) {
   if (hintAnn) { hintAnn.style.display = 'none'; }
   var cityEl = document.getElementById('inp-city');
   var placeholders = {
-    mariage:'Lieu de la réception…', voyage:'Destination de voyage…',
-    festival:'Lieu du festival…', sport:'Lieu de votre sortie…', travaux:'Ville du chantier…'
+    mariage:'Wedding venue…', voyage:'Travel destination…',
+    festival:'Festival venue…', sport:'Outdoor location…', travaux:'Construction site city…'
   };
-  cityEl.placeholder = placeholders[type] || 'Paris, Barcelone, Tokyo…';
+  cityEl.placeholder = placeholders[type] || 'Paris, Barcelona, Tokyo…';
   // Re-score instantly if results already shown
   var inAnnualMode = document.getElementById('mode-annual').classList.contains('active');
   if (inAnnualMode && _lastMonthly && _lastAnnLoc) {
@@ -761,20 +779,20 @@ function getIcon(h, temp, sol, rain) {
 function getLabel(h, temp, sol, rain) {
   var night = sol < 15;
   if (night) {
-    if (rain > 70)               return 'Orage';
-    if (temp <= 0 && rain > 20)  return 'Neige';
-    if (rain > 30)               return 'Pluie';
-    if (sol < 5)                 return 'Nuit claire';
-    return 'Nuit nuageuse';
+    if (rain > 70)               return 'Storm';
+    if (temp <= 0 && rain > 20)  return 'Snow';
+    if (rain > 30)               return 'Rain';
+    if (sol < 5)                 return 'Clear night';
+    return 'Cloudy night';
   }
-  if (rain > 70)               return 'Orage';
-  if (temp <= 0 && rain > 20)  return 'Neige';
-  if (rain > 55)               return 'Fortes pluies';
-  if (rain > 28)               return 'Pluie';
-  if (sol < 60 && temp < 8)   return 'Brume';
-  if (sol < 130)               return 'Nuageux';
-  if (sol < 420)               return 'Voilé';
-  return 'Ensoleillé';
+  if (rain > 70)               return 'Storm';
+  if (temp <= 0 && rain > 20)  return 'Snow';
+  if (rain > 55)               return 'Heavy rain';
+  if (rain > 28)               return 'Rain';
+  if (sol < 60 && temp < 8)   return 'Mist';
+  if (sol < 130)               return 'Cloudy';
+  if (sol < 420)               return 'Partly cloudy';
+  return 'Sunny';
 }
 
 function pct(arr, p) {
@@ -902,11 +920,11 @@ function applyHorizonWording(diffDays) {
   var span = document.getElementById('btn-go-text');
   if (diffDays >= 0 && diffDays <= 7) {
     label.className = 'hero-horizon-label hl-real';
-    label.textContent = 'Prévision météo réelle';
-    if (span) span.textContent = 'Voir la météo';
+    label.textContent = 'Live weather forecast';
+    if (span) span.textContent = 'Check weather';
   } else if (diffDays <= 210) {
     label.className = 'hero-horizon-label hl-tendency';
-    label.textContent = 'Tendance saisonnière — indicatif';
+    label.textContent = 'Seasonal trend — indicative';
     if (span) span.textContent = 'Voir les conditions';
   } else {
     label.className = 'hero-horizon-label hl-profile';
@@ -933,7 +951,7 @@ function geocode(city) {
 function fetchForecast(lat, lon, yr, mo, da) {
   var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,windspeed_10m,shortwave_radiation&timezone=auto&forecast_days=7';
   // _locTzOffset is global
-  return fetch(url).then(function(r){if(!r.ok)throw new Error('Prévisions indisponibles');return r.json();}).then(function(data){
+  return fetch(url).then(function(r){if(!r.ok)throw new Error('Forecast unavailable');return r.json();}).then(function(data){
     if (data.utc_offset_seconds != null) _locTzOffset = data.utc_offset_seconds;
     var mo2=mo+1, prefix=yr+'-'+(mo2<10?'0':'')+mo2+'-'+(da<10?'0':'')+da, rows=[];
     for(var h=0;h<24;h++){
@@ -1050,18 +1068,18 @@ function scenarioLabel(rows, isOpt) {
   var title, sub;
   if (isOpt) {
     // Optimistic scenario
-    if (tmax !== null && tmax >= 38)      { title = 'Journée très chaude';  sub = 'Chaleur intense · peu de pluie'; }
-    else if (tmax !== null && tmax >= 32) { title = 'Journée chaude';        sub = 'Chaud · ensoleillé'; }
-    else if (tmax !== null && tmax <= 5)  { title = 'Journée froide';        sub = 'Froid · peu de précipitations'; }
-    else if (avgRain <= 15)               { title = 'Belle journée';          sub = 'Ensoleillé · peu de pluie'; }
-    else                                  { title = 'Journée correcte';       sub = 'Conditions acceptables'; }
+    if (tmax !== null && tmax >= 38)      { title = 'Very hot day';  sub = 'Intense heat · little rain'; }
+    else if (tmax !== null && tmax >= 32) { title = 'Hot day';        sub = 'Warm · sunny'; }
+    else if (tmax !== null && tmax <= 5)  { title = 'Cold day';        sub = 'Cold · little precipitation'; }
+    else if (avgRain <= 15)               { title = 'Nice day';          sub = 'Sunny · little rain'; }
+    else                                  { title = 'Decent day';       sub = 'Acceptable conditions'; }
   } else {
     // Pessimistic scenario
-    if (avgRain >= 60)                    { title = 'Journée très pluvieuse'; sub = 'Pluie fréquente'; }
-    else if (tmax !== null && tmax >= 38) { title = 'Canicule';               sub = 'Chaleur extrême · risque sanitaire'; }
-    else if (tmin !== null && tmin <= 0)  { title = 'Journée glaciale';       sub = 'Gel possible · conditions difficiles'; }
-    else if (avgRain >= 35)               { title = 'Journée difficile';       sub = 'Pluie · températures fraîches'; }
-    else                                  { title = 'Journée mitigée';         sub = "Nuageux · risque d'averses"; }
+    if (avgRain >= 60)                    { title = 'Very rainy day'; sub = 'Frequent rain'; }
+    else if (tmax !== null && tmax >= 38) { title = 'Heat wave';               sub = 'Extreme heat · health risk'; }
+    else if (tmin !== null && tmin <= 0)  { title = 'Freezing day';       sub = 'Frost possible · tough conditions'; }
+    else if (avgRain >= 35)               { title = 'Difficult day';       sub = 'Rain · cool temperatures'; }
+    else                                  { title = 'Mixed day';         sub = 'Cloudy · shower risk'; }
   }
   return { title: title, sub: sub };
 }
@@ -1097,18 +1115,70 @@ function renderScCard(sc, stripId, statsId) {
 
 
 /* ── SCORE MÉTÉO PROJET ── */
+
+// ── UNIT SYSTEM ─────────────────────────────────────────────────────────────
+var usUnits = (function(){
+  try { return localStorage.getItem('bdw-units') === 'us'; } catch(e) { return false; }
+})();
+
+function setUnits(sys) {
+  usUnits = (sys === 'us');
+  try { localStorage.setItem('bdw-units', sys); } catch(e) {}
+  document.getElementById('btn-metric').classList.toggle('active', !usUnits);
+  document.getElementById('btn-us').classList.toggle('active', usUnits);
+  // Re-render si résultats affichés
+  var inAnnual = document.getElementById('mode-annual').classList.contains('active');
+  if (inAnnual && _lastMonthly && _lastAnnLoc) {
+    renderAnnual(_lastAnnLoc, _lastMonthly);
+  } else if (!inAnnual && _lastRows && _lastSc) {
+    computeAndRenderScore(_lastSc, _lastRows);
+  }
+}
+
+function fmtTemp(c) {
+  if (c == null || c === '-') return c;
+  if (usUnits) return Math.round(c * 9/5 + 32) + '°F';
+  return Math.round(c) + '°C';
+}
+function fmtTempRaw(c) {
+  // Pour les affichages min/max sans unité répétée
+  if (c == null || c === '-') return c;
+  if (usUnits) return Math.round(c * 9/5 + 32) + '°';
+  return Math.round(c) + '°';
+}
+function fmtWind(kmh) {
+  if (kmh == null) return '–';
+  if (usUnits) return Math.round(kmh * 0.621) + ' mph';
+  return Math.round(kmh) + ' km/h';
+}
+function fmtPrecip(mm) {
+  if (mm == null) return '–';
+  if (usUnits) return (mm * 0.0394).toFixed(2) + ' in/day';
+  return mm + ' mm/day';
+}
+function fmtTempUnit() { return usUnits ? '°F' : '°C'; }
+function fmtWindUnit() { return usUnits ? 'mph' : 'km/h'; }
+
+// Init toggle state on load
+(function() {
+  if (usUnits) {
+    document.getElementById('btn-metric').classList.remove('active');
+    document.getElementById('btn-us').classList.add('active');
+  }
+})();
+
 var currentUseCase = 'general';
 var _lastRows = null, _lastSc = null;
 var _locTzOffset = 0; // global timezone offset from API
 var _lastMonthly = null, _lastAnnLoc = null;
 
 var UC_CONFIG = {
-  mariage:  { label:'Mariage & réception', tempMin:16, tempMax:28, weights:{rain:40,temp:30,wind:20,sun:10} },
-  voyage:   { label:'Voyage & tourisme',   tempMin:10, tempMax:32, weights:{rain:45,temp:25,wind:10,sun:20} },
-  festival: { label:'Festival & événement',tempMin:14, tempMax:30, weights:{rain:35,temp:25,wind:25,sun:15} },
+  mariage:  { label:'Wedding & reception', tempMin:16, tempMax:28, weights:{rain:40,temp:30,wind:20,sun:10} },
+  voyage:   { label:'Travel & tourism',   tempMin:10, tempMax:32, weights:{rain:45,temp:25,wind:10,sun:20} },
+  festival: { label:'Festival & event',tempMin:14, tempMax:30, weights:{rain:35,temp:25,wind:25,sun:15} },
   sport:    { label:'Sport & outdoor',     tempMin:8,  tempMax:26, weights:{rain:25,temp:20,wind:15,sun:25} },
-  travaux:  { label:'Chantier & travaux',  tempMin:5,  tempMax:32, weights:{rain:40,temp:15,wind:25,sun:10} },
-  general:  { label:'Météo générale',      tempMin:16, tempMax:28, weights:{rain:35,temp:25,wind:20,sun:20} }
+  travaux:  { label:'Building & construction',  tempMin:5,  tempMax:32, weights:{rain:40,temp:15,wind:25,sun:10} },
+  general:  { label:'General weather',      tempMin:16, tempMax:28, weights:{rain:35,temp:25,wind:20,sun:20} }
 };
 
 function scoreRain(pct) {
@@ -1119,8 +1189,6 @@ function scoreRain(pct) {
   return Math.max(0, 6 - (pct - 80) * 0.3);
 }
 function scoreRainSmart(pct, mmDay, avgTemp) {
-  // Destinations chaudes (>= 24°C) : averses courtes, rainPct surestime la gêne.
-  // On pondère selon l'intensité réelle (mm/j).
   var effective = pct;
   if (avgTemp >= 24 && mmDay != null && mmDay < 8) {
     var factor = 0.35 + (mmDay / 8) * 0.65;
@@ -1166,32 +1234,32 @@ function getScoreColor(score) {
 
 function getVerdict(score, avgRain) {
   // Rain > 60% = toujours journée difficile ou très pluvieuse
-  if (avgRain > 70) return 'Journée très pluvieuse';
-  if (avgRain > 45) return score >= 75 ? 'Journée pluvieuse — conditions acceptables' : 'Journée pluvieuse';
+  if (avgRain > 70) return 'Very rainy day';
+  if (avgRain > 45) return score >= 75 ? 'Rainy day — acceptable conditions' : 'Rainy day';
   // Rain 30–45% = averses possibles, score doit être élevé pour compenser
   if (avgRain > 30) {
-    if (score >= 78) return 'Bonnes conditions — averses possibles';
-    if (score >= 60) return 'Conditions mitigées — averses possibles';
-    return 'Conditions difficiles';
+    if (score >= 78) return 'Good conditions — showers possible';
+    if (score >= 60) return 'Mixed conditions — showers possible';
+    return 'Difficult conditions';
   }
   // Rain < 30% = verdict basé sur score
-  if (score >= 85) return 'Conditions excellentes';
-  if (score >= 70) return 'Bonnes conditions';
-  if (score >= 55) return 'Conditions acceptables';
-  if (score >= 40) return 'Conditions mitigées';
-  return 'Conditions difficiles';
+  if (score >= 85) return 'Excellent conditions';
+  if (score >= 70) return 'Good conditions';
+  if (score >= 55) return 'Acceptable conditions';
+  if (score >= 40) return 'Mixed conditions';
+  return 'Difficult conditions';
 }
 
 function getMainRisk(avgRain, avgTemp, avgWind, uc) {
   var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
   var risks = [];
-  if (avgRain > 50) risks.push('Pluie probable (' + Math.round(avgRain) + '%)');
-  else if (avgRain > 30) risks.push("Risque d'averses (" + Math.round(avgRain) + '%)');
-  if (avgTemp < cfg.tempMin) risks.push('Température fraîche (' + Math.round(avgTemp) + '°C)');
-  else if (avgTemp > cfg.tempMax) risks.push('Chaleur élevée (' + Math.round(avgTemp) + '°C)');
-  if (avgWind > 30) risks.push('Vent soutenu (' + Math.round(avgWind) + ' km/h)');
-  if (risks.length === 0) return 'Aucun risque majeur identifié';
-  return 'Risque : ' + risks.join(' · ');
+  if (avgRain > 50) risks.push('Rain likely (' + Math.round(avgRain) + '%)');
+  else if (avgRain > 30) risks.push('Shower risk (' + Math.round(avgRain) + '%)');
+  if (avgTemp < cfg.tempMin) risks.push('Cool temperature (' + fmtTemp(avgTemp) + ')');
+  else if (avgTemp > cfg.tempMax) risks.push('High heat (' + fmtTemp(avgTemp) + ')');
+  if (avgWind > 30) risks.push('Strong wind (' + fmtWind(avgWind) + ')');
+  if (risks.length === 0) return 'No major risk identified';
+  return 'Risk: ' + risks.join(' · ');
 }
 
 function computeAndRenderScore(sc, rows) {
@@ -1239,12 +1307,12 @@ function computeAndRenderScore(sc, rows) {
 
   document.getElementById('score-num').textContent = total;
   var ucLabels = {
-    mariage:'Score optimisé · Mariage', voyage:'Score optimisé · Voyage', festival:'Score optimisé · Festival',
-    sport:'Score optimisé · Outdoor', travaux:'Score optimisé · Travaux', general:'Météo générale'
+    mariage:'Optimised score · Wedding', voyage:'Optimised score · Travel', festival:'Optimised score · Festival',
+    sport:'Optimised score · Outdoor', travaux:'Optimised score · Construction', general:'General weather'
   };
   if (uc === 'general') {
-    document.getElementById('score-usecase').textContent = 'Score météo général';
-    document.getElementById('score-risk').innerHTML = '<span style="color:var(--gold);font-size:11px;font-weight:600">&#8593; Cliquez sur un projet pour un score personnalisé</span>';
+    document.getElementById('score-usecase').textContent = 'General weather score';
+    document.getElementById('score-risk').innerHTML = '<span style="color:var(--gold);font-size:11px;font-weight:600">&#8593; Click a project type for a personalised score</span>';
   } else {
     document.getElementById('score-usecase').textContent = ucLabels[uc] || cfg.label;
   }
@@ -1255,9 +1323,9 @@ function computeAndRenderScore(sc, rows) {
 
   // Detail chips — show actual values with colored dot
   var chips = [
-    { lbl: 'Pluie',   val: Math.round(avgRain)+'%',            score: sRain },
-    { lbl: 'Temp.',   val: avgTemp!=null?Math.round(avgTemp)+'°C':'–', score: sTemp },
-    { lbl: 'Vent',    val: Math.round(avgWind)+' km/h',         score: sWind }
+    { lbl: 'Rain',   val: Math.round(avgRain)+'%',            score: sRain },
+    { lbl: 'Temp.',   val: avgTemp!=null?fmtTemp(avgTemp):'–', score: sTemp },
+    { lbl: 'Wind',    val: fmtWind(avgWind), score: sWind }
   ];
   var chipsEl = document.getElementById('score-chips');
   chipsEl.innerHTML = '';
@@ -1282,13 +1350,17 @@ function updateHero(sc, rows) {
   for(var k=0;k<sc.length;k++) if((sc[k].sol||0)>peakSol) peakSol=sc[k].sol;
   var avgRain=Math.round(rSum/rows.length);
   var skyLbl;
-  if(avgRain>55)skyLbl='Pluvieux';else if(avgRain>35)skyLbl='Nuageux';else if(peakSol>500&&avgRain<20)skyLbl='Plein soleil';else if(peakSol>250&&avgRain<30)skyLbl='Ensoleillé';else if(peakSol>80)skyLbl='Voilé';else if(peakSol>15)skyLbl='Nuageux';else skyLbl='Couvert';
-  document.getElementById('r-temp').innerHTML=(main.temp||'-')+'<sup>\u00b0</sup>';
-  document.getElementById('r-range').textContent=tmin+'\u00b0 / '+tmax+'\u00b0 dans la journée';
+  if(avgRain>55)skyLbl='Rainy';else if(avgRain>35)skyLbl='Cloudy';else if(peakSol>500&&avgRain<20)skyLbl='Full sun';else if(peakSol>250&&avgRain<30)skyLbl='Sunny';else if(peakSol>80)skyLbl='Hazy';else if(peakSol>15)skyLbl='Cloudy';else skyLbl='Overcast';
+  document.getElementById('r-temp').innerHTML=fmtTempRaw(main.temp||0)+'<sup></sup>';
+  document.getElementById('r-range').textContent=(function(){
+  var mn=tmin!=='-'?(usUnits?Math.round(tmin*9/5+32):tmin):'-';
+  var mx=tmax!=='-'?(usUnits?Math.round(tmax*9/5+32):tmax):'-';
+  return mn+'° / '+mx+'° throughout the day';
+})();
   document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain);
   document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain);
   document.getElementById('r-rain').textContent=avgRain+'%';
-  document.getElementById('r-wind').textContent=Math.round(wSum/rows.length)+' km/h';
+  document.getElementById('r-wind').textContent=fmtWind(wSum/rows.length);
   document.getElementById('r-sky').textContent=skyLbl;
   computeAndRenderScore(sc, rows);
 }
@@ -1405,7 +1477,7 @@ function normalizeQuery(s){
 function fetchAC(q){
   var hint=document.getElementById('city-hint');
   if(hint) hint.style.display='none';
-  var base='https://geocoding-api.open-meteo.com/v1/search?count=6&language=fr&name=';
+  var base='https://geocoding-api.open-meteo.com/v1/search?count=6&language=en&name=';
   var p1=fetch(base+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(d){return d.results||[];});
   // Si espaces : aussi envoyer version normalisée (tirets + sans accents)
   var qNorm = normalizeQuery(q);
@@ -1429,7 +1501,7 @@ function run() {
   var dval=document.getElementById('inp-date').value;
   var btnEl=document.getElementById('btn-go'), errEl=document.getElementById('err-box'), progEl=document.getElementById('prog-wrap');
   if(!city){
-    errEl.textContent='⚠ Entrez une ville ou une destination avant de continuer.';
+    errEl.textContent='⚠ Please enter a city or destination before continuing.';
     errEl.style.display='block';
     var cityInp=document.getElementById('inp-city');
     cityInp.style.borderColor='#dc2626';cityInp.focus();
@@ -1437,7 +1509,7 @@ function run() {
     return;
   }
   if(!dval){
-    errEl.textContent='⚠ Choisissez une date pour votre projet.';
+    errEl.textContent='⚠ Please choose a date for your event.';
     errEl.style.display='block';
     var dateInp=document.getElementById('inp-date');
     dateInp.style.borderColor='#dc2626';dateInp.focus();
@@ -1445,7 +1517,7 @@ function run() {
     return;
   }
   var parts=dval.split('-');
-  if(parts.length!==3){errEl.textContent='⚠ Format de date invalide.';errEl.style.display='block';return;}
+  if(parts.length!==3){errEl.textContent='⚠ Invalid date format.';errEl.style.display='block';return;}
   var yr=parseInt(parts[0],10), mo=parseInt(parts[1],10)-1, da=parseInt(parts[2],10);
   var today=new Date();today.setHours(0,0,0,0);
   var target=new Date(yr,mo,da,0,0,0);
@@ -1453,35 +1525,35 @@ function run() {
   btnEl.disabled=true; errEl.style.display='none';
   hideSection('hero');hideSection('sec-hourly');hideSection('sec-scenarios');
   document.getElementById('foot-note').style.display='none';
-  progEl.style.display='block';setP(0,'Localisation…');
+  progEl.style.display='block';setP(0,'Locating…');
   // Avertir si pas de sélection depuis la liste (risque de mauvaise ville)
   if (!selectedLoc) {
     var errEl2 = document.getElementById('err-box');
-    errEl2.textContent = '⚠ Sélectionnez une ville dans la liste déroulante pour garantir la bonne localisation.';
+    errEl2.textContent = '⚠ Please select a city from the dropdown list for accurate location.';
     errEl2.style.display = 'block';
     setTimeout(function(){errEl2.style.display='none';}, 4000);
   }
   var locP=selectedLoc?Promise.resolve(selectedLoc):geocode(city);
   locP.then(function(loc){
-    setP(5,loc.name+' trouvé…');
+    setP(5,loc.name+' found…');
     document.getElementById('r-loc').textContent=loc.name+' — '+(loc.country||'');
-    document.getElementById('r-date').textContent=new Date(yr,mo,da,12,0,0).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    document.getElementById('r-date').textContent=new Date(yr,mo,da,12,0,0).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
     renderAstro(loc.lat,loc.lon,yr,mo,da);
     if(diffDays>=0&&diffDays<=7){
-      setP(30,'Prévisions météo réelles…');
+      setP(30,'Real-time forecast…');
       return fetchForecast(loc.lat,loc.lon,yr,mo,da).then(function(rows){
-        setP(100,'Terminé');updateHero(rows,rows);showResults(rows,rows,true,'<strong>Prévision réelle</strong> · données météo en temps réel, mise à jour toutes les heures.',diffDays);progEl.style.display='none';btnEl.disabled=false;
+        setP(100,'Done');updateHero(rows,rows);showResults(rows,rows,true,'<strong>Live forecast</strong> · real-time weather data, updated every hour.',diffDays);progEl.style.display='none';btnEl.disabled=false;
       });
     }
     return buildClimatology(loc.lat,loc.lon,yr,mo,da).then(function(rows){
-      if(diffDays>7&&diffDays<=210){setP(92,'Correction ECMWF saisonnière…');return fetchSeasonal(loc.lat,loc.lon,yr,mo,da).then(function(seas){return applySeasonalCorrection(rows,seas);});}
+      if(diffDays>7&&diffDays<=210){setP(92,'ECMWF seasonal correction…');return fetchSeasonal(loc.lat,loc.lon,yr,mo,da).then(function(seas){return applySeasonalCorrection(rows,seas);});}
       return rows;
     }).then(function(rows){
-      setP(100,'Terminé');seedRand(makeSeed(loc.lat,loc.lon,yr,mo,da));var sc=genMain(rows);updateHero(sc,rows);
-      var note=(diffDays>7&&diffDays<=210)?'<strong>Tendance saisonnière</strong> · climatologie 10 ans corrigée par le modèle ECMWF — indicatif, non garanti.':'<strong>Profil climatique</strong> · moyenne statistique des 10 dernières années pour cette date et ce lieu.';
+      setP(100,'Done');seedRand(makeSeed(loc.lat,loc.lon,yr,mo,da));var sc=genMain(rows);updateHero(sc,rows);
+      var note=(diffDays>7&&diffDays<=210)?'<strong>Seasonal trend</strong> · 10-year climatology corrected by ECMWF model — indicative, not guaranteed.':'<strong>Climate profile</strong> · statistical average of the last 10 years for this date and location.';
       showResults(sc,rows,false,note,diffDays);progEl.style.display='none';btnEl.disabled=false;
     });
-  }).catch(function(err){errEl.textContent='Erreur : '+err.message;errEl.style.display='block';progEl.style.display='none';showSection('empty');btnEl.disabled=false;});
+  }).catch(function(err){errEl.textContent='Error: '+err.message;errEl.style.display='block';progEl.style.display='none';showSection('empty');btnEl.disabled=false;});
 }
 
 
@@ -1506,14 +1578,14 @@ function updateScoreTooltip(uc) {
   var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
   var w = cfg.weights;
   var tt = document.getElementById('score-tooltip');
-  var ucName = {mariage:'Mariage',voyage:'Voyage',festival:'Festival',sport:'Outdoor',travaux:'Travaux',general:'Météo générale'}[uc] || uc;
+  var ucName = {mariage:'Wedding',voyage:'Travel',festival:'Festival',sport:'Outdoor',travaux:'Construction',general:'General weather'}[uc] || uc;
   tt.innerHTML =
     '<strong style="font-size:12px">Score · ' + ucName + '</strong><br>' +
-    '💧 Pluie &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.rain + '%<br>' +
-    '🌡 Température ' + w.temp + '%<br>' +
-    '💨 Vent &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.wind + '%<br>' +
-    '☀ Soleil &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.sun + '%<br>' +
-    '<span style="opacity:.6;font-size:10px">Plage idéale : ' + cfg.tempMin + '–' + cfg.tempMax + '°C</span>';
+    '💧 Rain &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.rain + '%<br>' +
+    '🌡 Temperature ' + w.temp + '%<br>' +
+    '💨 Wind &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.wind + '%<br>' +
+    '☀ Sun &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.sun + '%<br>' +
+    '<span style="opacity:.6;font-size:10px">Ideal range: ' + cfg.tempMin + '–' + cfg.tempMax + '°C</span>';
 }
 
 /* ── RECOMMENDED BADGES (annual view) ── */
@@ -1598,7 +1670,7 @@ function selectAnnAC(i) {
 function runAnnual() {
   var city = document.getElementById('ann-city').value.trim();
   if (!city) {
-    err.textContent = '⚠ Entrez une ville ou une destination avant de continuer.';
+    err.textContent = '⚠ Please enter a city or destination before continuing.';
     err.style.display = 'block';
     var annInp = document.getElementById('ann-city');
     annInp.style.borderColor = '#dc2626'; annInp.focus();
@@ -1610,11 +1682,11 @@ function runAnnual() {
   var err  = document.getElementById('ann-err-box');
   var res  = document.getElementById('annual-result');
   btn.disabled = true; err.style.display = 'none'; res.style.display = 'none'; prog.style.display = 'block';
-  setAnnP(0, 'Localisation…');
+  setAnnP(0, 'Locating…');
 
   var locP = annSelectedLoc ? Promise.resolve(annSelectedLoc) : geocode(city);
   locP.then(function(loc) {
-    setAnnP(10, 'Récupération des données + ECMWF…');
+    setAnnP(10, 'Fetching data + ECMWF…');
     var archiveP = fetchAnnualArchive(loc);
     var seasP = fetchAnnualSeasonal(loc.lat, loc.lon);
     return Promise.all([archiveP, seasP]).then(function(results) {
@@ -1638,13 +1710,13 @@ function runAnnual() {
         }
         clim.hasSeasonal = true;
       }
-      setAnnP(100, 'Terminé');
+      setAnnP(100, 'Done');
       renderAnnual(loc, monthly);
       prog.style.display = 'none';
       btn.disabled = false;
     });
   }).catch(function(e) {
-    err.textContent = 'Erreur : ' + e.message;
+    err.textContent = 'Error: ' + e.message;
     err.style.display = 'block';
     prog.style.display = 'none';
     btn.disabled = false;
@@ -1667,10 +1739,10 @@ function fetchAnnualArchive(loc) {
     '&start_date=' + startDate + '&end_date=' + endDate +
     '&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,shortwave_radiation_sum&timezone=auto';
   return fetch(url).then(function(r) {
-    if (!r.ok) throw new Error('Archive indisponible');
+    if (!r.ok) throw new Error('Archive unavailable');
     return r.json();
   }).then(function(data) {
-    setAnnP(70, 'Agrégation mensuelle…');
+    setAnnP(70, 'Monthly aggregation…');
     return aggregateByMonth(data);
   });
 }
@@ -1796,8 +1868,8 @@ function monthIconFromData(d) {
   return IC.rain;
 }
 
-var MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-var MONTHS_SHORT = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+var MONTHS_FR = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 function renderAnnual(loc, monthly) {
   _lastMonthly = monthly; _lastAnnLoc = loc;
@@ -1812,8 +1884,8 @@ function renderAnnual(loc, monthly) {
   var ucSubEl = document.getElementById('annual-subtitle-uc');
   if (uc && ucSubEl) {
     subEl.style.display = 'none';
-    var ucLabels = {mariage:'Meilleurs mois pour votre mariage',voyage:'Meilleurs mois pour voyager',festival:'Meilleurs mois pour votre festival',sport:'Meilleurs mois pour votre sortie outdoor',travaux:'Meilleurs mois pour vos travaux'};
-    ucSubEl.textContent = ucLabels[uc] || 'Score optimisé pour : ' + (ucNames[uc]||uc);
+    var ucLabels = {mariage:'Best months for your wedding',voyage:'Best months for travel',festival:'Best months for your festival',sport:'Best months for outdoor activities',travaux:'Best months for construction'};
+    ucSubEl.textContent = ucLabels[uc] || 'Optimised score for: ' + (ucNames[uc]||uc);
     ucSubEl.style.display = 'block';
   } else {
     if (subEl) subEl.style.display = 'block';
@@ -1845,19 +1917,19 @@ function renderAnnual(loc, monthly) {
     card.style.animationDelay = delay + 'ms';
 
     var scoreNum = uc ? ('<div class="month-score score-num-uc" style="background:' + getScoreColor(score) + ';color:white;font-size:9px;border-radius:10px;padding:2px 6px;position:absolute;top:10px;right:8px;font-weight:700;opacity:.85">' + score + '</div>') : '';
-    var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">Tendance saison</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
+    var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">Season trend</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
     var isBest = uc && idx === sorted[0].idx && sorted[0].score >= 60;
-    var badgeHtml = isBest ? '<div class="month-best-badge">🔥 Meilleur mois</div>' : (isRec ? '<div class="month-badge rec">Recommandé</div>' : (isAvoid ? '<div class="month-badge avoid">Moins favorable</div>' : ''));
+    var badgeHtml = isBest ? '<div class="month-best-badge">🔥 Best month</div>' : (isRec ? '<div class="month-badge rec">Recommended</div>' : (isAvoid ? '<div class="month-badge avoid">Less favourable</div>' : ''));
 
-    var tmaxStr = d.avgTmax != null ? Math.round(d.avgTmax) + '°' : '–';
-    var tminStr = d.avgTmin != null ? Math.round(d.avgTmin) + '°' : '–';
-    var tempStr = d.avgTemp != null ? Math.round(d.avgTemp) + '°' : '–';
+    var tmaxStr = d.avgTmax != null ? fmtTempRaw(d.avgTmax) : '–';
+    var tminStr = d.avgTmin != null ? fmtTempRaw(d.avgTmin) : '–';
+    var tempStr = d.avgTemp != null ? fmtTempRaw(d.avgTemp) : '–';
 
     card.innerHTML =
       '<div class="month-name">' + MONTHS_FR[idx] + '</div>' +
       '<div class="month-icon">' + monthIconFromData(d) + '</div>' +
       '<div class="month-temp">' + tminStr + ' / ' + tmaxStr + '</div>' +
-      '<div class="month-range">moy. ' + tempStr + '</div>' +
+      '<div class="month-range">avg. ' + tempStr + '</div>' +
       '<div class="month-stats">' +
         '<span class="month-stat">💧 ' + d.rainPct + '% <span style="font-weight:400;color:var(--slate3);font-size:10px">(' + d.avgPrecipMm + ' mm/j)</span></span>' +
         '<span class="month-stat">☀ ' + d.sunHrs + 'h</span>' +
@@ -1868,12 +1940,12 @@ function renderAnnual(loc, monthly) {
     grid.appendChild(card);
   }
 
-  document.getElementById('ann-note').innerHTML = '<strong>Profil climatique</strong> · moyenne 3 ans (archive Open-Meteo) · les mois marqués <span style="background:#dbeafe;color:#1e40af;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px">Tendance saison</span> intègrent une correction par le modèle saisonnier ECMWF. Valeurs indicatives.';
+  document.getElementById('ann-note').innerHTML = '<strong>Climate profile</strong> · 3-year average (Open-Meteo archive) · months marked <span style="background:#dbeafe;color:#1e40af;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px">Season trend</span> include a correction from the ECMWF seasonal model. Indicative values.';
 
   // ── Résumé narratif ──────────────────────────────────────────────────────
   var narEl = document.getElementById('ann-narrative');
   if (narEl) {
-    var MNAMES = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+    var MNAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     // Trouver les 2 meilleurs et 2 pires mois
     var sorted2 = scores.slice().sort(function(a,b){return b.score-a.score;});
     var best1 = sorted2[0], best2 = sorted2[1];
@@ -1882,7 +1954,7 @@ function renderAnnual(loc, monthly) {
     // Construire fenêtre optimale (mois consécutifs avec score >= 60)
     var goodMonths = scores.filter(function(s){return s.score >= 60;}).map(function(s){return s.idx;});
     
-    var ucLabel = {'mariage':'cérémonie en extérieur','voyage':'voyager','festival':'votre festival','sport':'activités outdoor','travaux':'vos travaux','general':'partir'}[uc||'general'] || 'partir';
+    var ucLabel = {'mariage':'outdoor ceremony','voyage':'travel','festival':'your festival','sport':'outdoor activities','travaux':'construction','general':'travel'}[uc||'general'] || 'travel';
     
     var bestName1 = MNAMES[best1.idx];
     var bestName2 = MNAMES[best2.idx];
@@ -1890,23 +1962,23 @@ function renderAnnual(loc, monthly) {
     
     var emoji = best1.score >= 75 ? '🌟' : best1.score >= 60 ? '✅' : '⚠️';
     
-    var narrative = emoji + ' <strong>Meilleur mois : ' + bestName1.charAt(0).toUpperCase() + bestName1.slice(1);
-    if (best2.score >= 58) narrative += ' et ' + bestName2;
+    var narrative = emoji + ' <strong>Best month: ' + bestName1;
+    if (best2.score >= 58) narrative += ' and ' + bestName2;
     narrative += '</strong>';
     
     if (goodMonths.length >= 2) {
-      narrative += ' · Fenêtre favorable : <strong>' + goodMonths.length + ' mois</strong>';
+      narrative += ' · Favourable window: <strong>' + goodMonths.length + ' months</strong>';
     }
     
     if (worst1.score < 45) {
-      narrative += ' · Éviter : <span style="color:#ef4444;font-weight:700">' + worstName + '</span>';
-      if (worst2.score < 45) narrative += ' et ' + MNAMES[worst2.idx];
+      narrative += ' · Avoid: <span style="color:#ef4444;font-weight:700">' + worstName + '</span>';
+      if (worst2.score < 45) narrative += ' and ' + MNAMES[worst2.idx];
     }
     
     // Température indicative du meilleur mois
     var bestData = monthly[best1.idx];
     if (bestData && bestData.avgTmax) {
-      narrative += ' · ' + Math.round(bestData.avgTmax) + '°C max · ' + bestData.rainPct + '% pluie';
+      narrative += ' · ' + fmtTemp(bestData.avgTmax) + ' max · ' + bestData.rainPct + '% rain';
     }
     
     narEl.innerHTML = narrative;
@@ -1936,7 +2008,7 @@ document.getElementById('ann-city').oninput=function(){
   annSelectedLoc=null;var q=this.value.trim();clearTimeout(annAcTimer);
   document.getElementById('ann-city-clear').classList.toggle('visible',q.length>0);
   if(q.length<2){hideAnnAC();return;}
-  annAcTimer=setTimeout(function(){fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=6&language=fr').then(function(r){return r.json();}).then(function(d){showAnnAC(d.results||[]);}).catch(function(){hideAnnAC();});},280);
+  annAcTimer=setTimeout(function(){fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=6&language=en').then(function(r){return r.json();}).then(function(d){showAnnAC(d.results||[]);}).catch(function(){hideAnnAC();});},280);
 };
 document.getElementById('ann-city').onblur=function(){setTimeout(hideAnnAC,180);};
 document.getElementById('ann-city').onkeydown=function(e){
@@ -2030,9 +2102,9 @@ document.getElementById('inp-date').max=toISO(maxD);
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('/sw.js').then(function(reg) {
-      console.log('SW enregistré:', reg.scope);
+      console.log('SW registered:', reg.scope);
     }).catch(function(err) {
-      console.log('SW erreur:', err);
+      console.log('SW error:', err);
     });
   });
 }
@@ -2042,7 +2114,6 @@ if ('serviceWorker' in navigator) {
 
 
 <script>
-// Auto-resize iframe parent
 function notifyParentHeight(){
   var h = document.documentElement.scrollHeight;
   if(window.parent !== window){
@@ -2050,10 +2121,9 @@ function notifyParentHeight(){
   }
 }
 if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded', function(){setTimeout(notifyParentHeight,300);});
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(notifyParentHeight,300);});
 } else { setTimeout(notifyParentHeight,300); }
 new MutationObserver(function(){setTimeout(notifyParentHeight,100);}).observe(document.body,{childList:true,subtree:true,attributes:true});
 window.addEventListener('resize',notifyParentHeight);
-</script>
-</body>
+</script></body>
 </html>
