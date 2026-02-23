@@ -1793,6 +1793,7 @@ function run() {
     if(diffDays>=0&&diffDays<=7){
       setP(30,'Real-time forecast…');
       return fetchForecast(loc.lat,loc.lon,yr,mo,da).then(function(rows){
+        renderAstro(loc.lat,loc.lon,yr,mo,da);
         setP(100,'Done');updateHero(rows,rows);showResults(rows,rows,true,'<strong>Live forecast</strong> · real-time weather data, updated every hour.',diffDays);progEl.style.display='none';btnEl.disabled=false;
       });
     }
@@ -1800,6 +1801,7 @@ function run() {
       if(diffDays>7&&diffDays<=210){setP(92,'ECMWF seasonal correction…');return fetchSeasonal(loc.lat,loc.lon,yr,mo,da).then(function(seas){return applySeasonalCorrection(rows,seas);});}
       return rows;
     }).then(function(rows){
+      renderAstro(loc.lat,loc.lon,yr,mo,da);
       setP(100,'Done');seedRand(makeSeed(loc.lat,loc.lon,yr,mo,da));var sc=genMain(rows);updateHero(sc,rows);
       var note=(diffDays>7&&diffDays<=210)?'<strong>Seasonal trend</strong> · 10-year climatology corrected by ECMWF model — indicative, not guaranteed.':'<strong>Climate profile</strong> · statistical average of the last 10 years for this date and location.';
       showResults(sc,rows,false,note,diffDays);progEl.style.display='none';btnEl.disabled=false;
