@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
@@ -420,7 +420,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 
     <button class="btn-go" id="btn-go" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <span id="btn-go-text">Voir la météo</span>
+      <span id="btn-go-text">Check the weather</span>
     </button>
     <div class="prog-wrap" id="prog-wrap">
       <div class="prog-labels"><span id="prog-lbl">Loading…</span><span id="prog-pct">0%</span></div>
@@ -991,19 +991,19 @@ function applyHorizonWording(diffDays) {
   if (diffDays === 0) {
     label.className = 'hero-horizon-label hl-real';
     label.textContent = 'Today — live weather';
-    if (span) span.textContent = 'Voir la météo';
+    if (span) span.textContent = 'Check the weather';
   } else if (diffDays >= 1 && diffDays <= 7) {
     label.className = 'hero-horizon-label hl-real';
     label.textContent = 'Live weather forecast';
-    if (span) span.textContent = 'Voir la météo';
+    if (span) span.textContent = 'Check the weather';
   } else if (diffDays <= 210) {
     label.className = 'hero-horizon-label hl-tendency';
     label.textContent = 'Seasonal trend — indicative';
-    if (span) span.textContent = 'Voir la météo';
+    if (span) span.textContent = 'Check the weather';
   } else {
     label.className = 'hero-horizon-label hl-profile';
     label.textContent = 'Historical climate profile';
-    if (span) span.textContent = 'Voir la météo';
+    if (span) span.textContent = 'Check the weather';
   }
 }
 function setConfBadge(diffDays) { /* badge supprimé */ }
