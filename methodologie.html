@@ -166,6 +166,7 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
       <li><a href="#sources">Nos sources de données</a></li>
       <li><a href="#horizons">Trois niveaux selon l'horizon temporel</a></li>
       <li><a href="#score">Comment fonctionne le score ?</a></li>
+      <li><a href="#formalisation">Formules de calcul détaillées</a></li>
       <li><a href="#limites">Ce que notre outil ne fait pas</a></li>
       <li><a href="#faq">Questions fréquentes</a></li>
     </ol>
@@ -306,6 +307,93 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
     <div class="callout green">
       <div class="callout-ico">✓</div>
       <div class="callout-body">La formule complète, les seuils exacts et les détails de calcul des sous-scores sont disponibles dans la <a href="note_modele.html" style="color:var(--green);font-weight:700;text-decoration:underline">note technique</a> à destination des développeurs et chercheurs.</div>
+    </div>
+  </section>
+
+  <!-- 4b. FORMALISATION MATHÉMATIQUE -->
+  <section class="section" id="formalisation">
+    <div class="section-num">4b</div>
+    <h2>Formalisation mathématique du modèle</h2>
+    <p>Cette section détaille les fonctions de normalisation exactes utilisées dans le calcul du score. Ces formules sont directement issues du code source de l'application.</p>
+
+    <h3>Formule générale du score</h3>
+    <div class="card" style="font-family:monospace;font-size:14px;line-height:2;background:#1a1f2e;color:#f5b020;border-left:4px solid var(--gold)">
+      <div style="color:#a0aec0;font-size:11px;margin-bottom:8px;font-family:'DM Sans',sans-serif;font-weight:600">FORMULE SCORE FINAL</div>
+      Score = W<sub style="font-size:10px">pluie</sub> × S<sub style="font-size:10px">pluie</sub> + W<sub style="font-size:10px">temp</sub> × S<sub style="font-size:10px">temp</sub> + W<sub style="font-size:10px">vent</sub> × S<sub style="font-size:10px">vent</sub> + W<sub style="font-size:10px">soleil</sub> × S<sub style="font-size:10px">soleil</sub>
+      <div style="color:#a0aec0;font-size:12px;margin-top:8px;font-family:'DM Sans',sans-serif">avec Σ W<sub style="font-size:10px">i</sub> = 100 et chaque S<sub style="font-size:10px">i</sub> ∈ [0, 100]</div>
+    </div>
+
+    <h3>Normalisation de la température — S<sub>temp</sub></h3>
+    <p>La plage idéale [T<sub>min</sub>, T<sub>max</sub>] est définie par profil (voir tableau section 4). Le score suit une fonction linéaire par morceaux :</p>
+    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
+      <span style="color:#c2720a">Si T ∈ [T<sub>min</sub>, T<sub>max</sub>] :</span> S = 100 − 20 × |T − T<sub>idéal</sub>| / (T<sub>range</sub>)<br>
+      <span style="color:#c2720a">Si T hors plage :</span> S = max(0, 80 − |écart| × 8)<br>
+      <span style="color:#888;font-size:11px">avec T<sub>idéal</sub> = (T<sub>min</sub>+T<sub>max</sub>)/2 et T<sub>range</sub> = (T<sub>max</sub>−T<sub>min</sub>)/2</span>
+    </div>
+    <p>Exemple : pour un mariage (16–28°C), T<sub>idéal</sub> = 22°C. À 18°C : S = 100 − 20 × 4/6 = <strong>87</strong>. À 12°C (hors plage) : S = max(0, 80 − 4×8) = <strong>48</strong>.</p>
+
+    <h3>Normalisation des précipitations — S<sub>pluie</sub></h3>
+    <p>Basée sur la probabilité de précipitation (%) en 5 paliers linéaires :</p>
+    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
+      <span style="color:#c2720a">0–10 % :</span> S = 100<br>
+      <span style="color:#c2720a">10–25 % :</span> S = 100 − (P−10) × 2<br>
+      <span style="color:#c2720a">25–50 % :</span> S = 70 − (P−25) × 1,6<br>
+      <span style="color:#c2720a">50–80 % :</span> S = 30 − (P−50) × 0,8<br>
+      <span style="color:#c2720a">80–100 % :</span> S = max(0, 6 − (P−80) × 0,3)
+    </div>
+    <p>Exemple : probabilité de pluie 40% → S = 70 − 15×1,6 = <strong>46</strong>.</p>
+
+    <h3>Normalisation du vent — S<sub>vent</sub></h3>
+    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
+      <span style="color:#c2720a">≤ 10 km/h :</span> S = 100<br>
+      <span style="color:#c2720a">10–20 km/h :</span> S = 100 − (V−10) × 3<br>
+      <span style="color:#c2720a">20–40 km/h :</span> S = 70 − (V−20) × 2,5<br>
+      <span style="color:#c2720a">> 40 km/h :</span> S = max(0, 20 − (V−40) × 1)
+    </div>
+
+    <h3>Normalisation de l'ensoleillement — S<sub>soleil</sub></h3>
+    <p>Basée sur le rayonnement solaire de pointe en W/m² :</p>
+    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
+      <span style="color:#c2720a">≥ 600 W/m² :</span> S = 100 &nbsp;&nbsp;<span style="color:#888;font-size:11px">(plein soleil)</span><br>
+      <span style="color:#c2720a">300–600 W/m² :</span> S = 60 + (R−300)/300 × 40<br>
+      <span style="color:#c2720a">100–300 W/m² :</span> S = 20 + (R−100)/200 × 40<br>
+      <span style="color:#c2720a">< 100 W/m² :</span> S = max(0, R/100 × 20) &nbsp;&nbsp;<span style="color:#888;font-size:11px">(couvert)</span>
+    </div>
+
+    <h3>Correction saisonnière ECMWF — mécanisme exact</h3>
+    <p>Lorsque l'horizon est entre J+8 et J+210, la climatologie historique est ajustée par le modèle saisonnier ECMWF selon trois mécanismes distincts :</p>
+    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
+      <div style="color:#1a5f9a;font-weight:700;font-family:'DM Sans',sans-serif;font-size:12px;margin-bottom:6px">TEMPÉRATURE — décalage additif</div>
+      T<sub>corrigée</sub> = T<sub>historique</sub> + (T<sub>moy_ECMWF</sub> − T<sub>moy_historique</sub>)<br><br>
+      <div style="color:#1a5f9a;font-weight:700;font-family:'DM Sans',sans-serif;font-size:12px;margin-bottom:6px">PRÉCIPITATIONS — pondération mixte 60/40</div>
+      P<sub>corrigée</sub> = P<sub>historique</sub> × f × 0,6 + P<sub>ECMWF</sub> × 0,4<br>
+      <span style="color:#888;font-size:11px">avec f = min(3, max(0,1 ; P<sub>ECMWF</sub> / P<sub>historique_moy</sub>))</span><br><br>
+      <div style="color:#1a5f9a;font-weight:700;font-family:'DM Sans',sans-serif;font-size:12px;margin-bottom:6px">VENT — différentiel additif</div>
+      V<sub>corrigé</sub> = V<sub>historique</sub> + (V<sub>moy_ECMWF</sub> − V<sub>moy_historique</sub>)
+    </div>
+    <p>La correction de température préserve la variabilité horaire historique (spread P25–P75) en appliquant un ratio d'échelle basé sur le rapport entre la dispersion ECMWF et la dispersion historique, plafonné entre 0,3 et 2,5.</p>
+
+    <h3>Précision indicative du modèle</h3>
+    <div class="card-grid">
+      <div class="card-mini">
+        <div class="label">Erreur typique J+2</div>
+        <div class="val">±0,5–1°C</div>
+        <div class="sub">Modèles NWP haute résolution</div>
+      </div>
+      <div class="card-mini">
+        <div class="label">Erreur typique J+5</div>
+        <div class="val">±1,5–2°C</div>
+        <div class="sub">Source : benchmarks Open-Meteo / ECMWF</div>
+      </div>
+      <div class="card-mini">
+        <div class="label">Tendance saisonnière</div>
+        <div class="val">±3–5°C</div>
+        <div class="sub">Variabilité interannuelle ERA5</div>
+      </div>
+    </div>
+    <div class="callout blue">
+      <div class="callout-ico">ℹ️</div>
+      <div class="callout-body">Ces chiffres reflètent les performances documentées des sources que nous utilisons (Open-Meteo, ERA5, ECMWF), pas un backtesting indépendant réalisé par BestDateWeather. Une calibration empirique complète est prévue.</div>
     </div>
   </section>
 
