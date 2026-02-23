@@ -1967,7 +1967,6 @@ document.getElementById('inp-date').onchange=function(){
   var ph=document.getElementById('date-placeholder');
   if(ph) ph.style.display=this.value?'none':'flex';
   this.classList.toggle('has-val',!!this.value);
-}else{this.classList.remove('has-val');}
 };
 document.getElementById('inp-city').oninput=function(){
   selectedLoc=null;
