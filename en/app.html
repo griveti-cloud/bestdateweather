@@ -854,14 +854,14 @@ function lunarPhase(year, month, day) {
   var p = (jd - 2461057.5375) % 29.53058867;
   if (p < 0) p += 29.53058867;
   var name, svg;
-  if      (p <  1.85) { name='Nouvelle lune';        svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#c8d8f0" opacity=".25" stroke="rgba(26,31,46,.3)" stroke-width="1"/><circle cx="12" cy="12" r="9" fill="#1a2a3a" opacity=".7"/></svg>'; }
-  else if (p <  7.38) { name='Croissant montant';     svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#c8d8f0" opacity=".15"/><path d="M12 3 A9 9 0 0 1 12 21 A5 9 0 0 0 12 3 Z" fill="#f0e8a0" opacity=".9"/></svg>'; }
-  else if (p <  9.22) { name='Premier quartier';      svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#1a2a3a" opacity=".5"/><path d="M12 3 A9 9 0 0 1 12 21 Z" fill="#f0e8a0" opacity=".9"/></svg>'; }
-  else if (p < 14.77) { name='Gibbeuse croissante';   svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#f0e8a0" opacity=".9"/><path d="M12 3 A9 9 0 0 0 12 21 A3 9 0 0 1 12 3 Z" fill="#1a2a3a" opacity=".6"/></svg>'; }
-  else if (p < 16.61) { name='Pleine lune';           svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#f0e8a0" opacity=".95"/><circle cx="9" cy="10" r="1.5" fill="#d4c060" opacity=".4"/><circle cx="15" cy="14" r="1" fill="#d4c060" opacity=".3"/><circle cx="11" cy="15" r="1.2" fill="#d4c060" opacity=".35"/></svg>'; }
-  else if (p < 22.15) { name='Gibbeuse décroissante'; svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#f0e8a0" opacity=".9"/><path d="M12 3 A9 9 0 0 1 12 21 A3 9 0 0 0 12 3 Z" fill="#1a2a3a" opacity=".6"/></svg>'; }
-  else if (p < 23.99) { name='Dernier quartier';      svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#1a2a3a" opacity=".5"/><path d="M12 3 A9 9 0 0 0 12 21 Z" fill="#f0e8a0" opacity=".9"/></svg>'; }
-  else                { name='Croissant décroissant'; svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#c8d8f0" opacity=".15"/><path d="M12 3 A9 9 0 0 0 12 21 A5 9 0 0 1 12 3 Z" fill="#f0e8a0" opacity=".9"/></svg>'; }
+  if      (p <  1.85) { name='New Moon';        svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#c8d8f0" opacity=".25" stroke="rgba(26,31,46,.3)" stroke-width="1"/><circle cx="12" cy="12" r="9" fill="#1a2a3a" opacity=".7"/></svg>'; }
+  else if (p <  7.38) { name='Waxing Crescent';     svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#c8d8f0" opacity=".15"/><path d="M12 3 A9 9 0 0 1 12 21 A5 9 0 0 0 12 3 Z" fill="#f0e8a0" opacity=".9"/></svg>'; }
+  else if (p <  9.22) { name='First Quarter';      svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#1a2a3a" opacity=".5"/><path d="M12 3 A9 9 0 0 1 12 21 Z" fill="#f0e8a0" opacity=".9"/></svg>'; }
+  else if (p < 14.77) { name='Waxing Gibbous';   svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#f0e8a0" opacity=".9"/><path d="M12 3 A9 9 0 0 0 12 21 A3 9 0 0 1 12 3 Z" fill="#1a2a3a" opacity=".6"/></svg>'; }
+  else if (p < 16.61) { name='Full Moon';           svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#f0e8a0" opacity=".95"/><circle cx="9" cy="10" r="1.5" fill="#d4c060" opacity=".4"/><circle cx="15" cy="14" r="1" fill="#d4c060" opacity=".3"/><circle cx="11" cy="15" r="1.2" fill="#d4c060" opacity=".35"/></svg>'; }
+  else if (p < 22.15) { name='Waning Gibbous'; svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#f0e8a0" opacity=".9"/><path d="M12 3 A9 9 0 0 1 12 21 A3 9 0 0 0 12 3 Z" fill="#1a2a3a" opacity=".6"/></svg>'; }
+  else if (p < 23.99) { name='Last Quarter';      svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#1a2a3a" opacity=".5"/><path d="M12 3 A9 9 0 0 0 12 21 Z" fill="#f0e8a0" opacity=".9"/></svg>'; }
+  else                { name='Waning Crescent'; svg='<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#c8d8f0" opacity=".15"/><path d="M12 3 A9 9 0 0 0 12 21 A5 9 0 0 1 12 3 Z" fill="#f0e8a0" opacity=".9"/></svg>'; }
   return { phase: p, name: name, svg: svg };
 }
 
@@ -879,18 +879,29 @@ function sunriseSunset(lat, lon, year, month, day) {
     var H=sr?(360-Math.acos(cosH)*180/Math.PI)/15:Math.acos(cosH)*180/Math.PI/15;
     var T=H+RA-0.06571*t-6.622; return ((T-lngHour)%24+24)%24;
   }
-  function fmt(h) { if (h==null) return '--:--'; var hh=Math.floor(h), mm=Math.floor((h-hh)*60); return (hh<10?'0':'')+hh+'h'+(mm<10?'0':'')+mm; }
+  function fmt(h) {
+    if (h==null) return '--';
+    var hh=Math.floor(h), mm=Math.floor((h-hh)*60);
+    var period=hh>=12?'PM':'AM', h12=hh%12||12;
+    return h12+':'+(mm<10?'0':'')+mm+' '+period;
+  }
   return { rise: fmt(calc(true)), set: fmt(calc(false)) };
 }
 
 function applyTzOffset(utcStr, offsetSec) {
-  // utcStr = "HHhMM", offsetSec = seconds east of UTC
-  if (!utcStr || utcStr === '--:--') return utcStr;
-  var parts = utcStr.split('h');
-  var totalMin = parseInt(parts[0]) * 60 + parseInt(parts[1] || 0) + Math.round(offsetSec / 60);
+  // utcStr = "H:MM AM/PM", offsetSec = seconds east of UTC
+  if (!utcStr || utcStr === '--') return utcStr;
+  // Parse AM/PM format back to minutes
+  var m = utcStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+  if (!m) return utcStr;
+  var h = parseInt(m[1]), mn = parseInt(m[2]), period = m[3].toUpperCase();
+  if (period === 'PM' && h !== 12) h += 12;
+  if (period === 'AM' && h === 12) h = 0;
+  var totalMin = h * 60 + mn + Math.round(offsetSec / 60);
   totalMin = ((totalMin % 1440) + 1440) % 1440;
   var hh = Math.floor(totalMin / 60), mm = totalMin % 60;
-  return (hh < 10 ? '0' : '') + hh + 'h' + (mm < 10 ? '0' : '') + mm;
+  var p2 = hh >= 12 ? 'PM' : 'AM', h12 = hh % 12 || 12;
+  return h12 + ':' + (mm < 10 ? '0' : '') + mm + '\u202f' + p2;
 }
 
 function renderAstro(lat, lon, yr, mo, da) {
@@ -907,8 +918,8 @@ function renderAstro(lat, lon, yr, mo, da) {
   var riseEl = document.getElementById('astro-rise').parentElement && document.getElementById('astro-rise').nextElementSibling;
   var lblEls = document.querySelectorAll('.astro-lbl');
   for (var i=0; i<lblEls.length; i++) {
-    if (lblEls[i].textContent.indexOf('Lever') >= 0) lblEls[i].textContent = 'Lever soleil (' + tzLabel + ')';
-    if (lblEls[i].textContent.indexOf('Coucher') >= 0) lblEls[i].textContent = 'Coucher soleil (' + tzLabel + ')';
+    if (lblEls[i].textContent.indexOf('Lever') >= 0 || lblEls[i].textContent.indexOf('Sunrise') >= 0) lblEls[i].textContent = 'Sunrise (' + tzLabel + ')';
+    if (lblEls[i].textContent.indexOf('Coucher') >= 0 || lblEls[i].textContent.indexOf('Sunset') >= 0) lblEls[i].textContent = 'Sunset (' + tzLabel + ')';
   }
 }
 
@@ -925,11 +936,11 @@ function applyHorizonWording(diffDays) {
   } else if (diffDays <= 210) {
     label.className = 'hero-horizon-label hl-tendency';
     label.textContent = 'Seasonal trend — indicative';
-    if (span) span.textContent = 'Voir les conditions';
+    if (span) span.textContent = 'Check conditions';
   } else {
     label.className = 'hero-horizon-label hl-profile';
-    label.textContent = 'Profil climatique historique';
-    if (span) span.textContent = 'Voir le profil climatique';
+    label.textContent = 'Historical climate profile';
+    if (span) span.textContent = 'View climate profile';
   }
 }
 function setConfBadge(diffDays) { /* badge supprimé */ }
@@ -1066,6 +1077,10 @@ function renderSeaChipEN(sstResult) {
   if(el) el.appendChild(chip);
 }
 
+function fmtHour(h) {
+  var period = h >= 12 ? 'PM' : 'AM', h12 = h % 12 || 12;
+  return h12 + (h===0||h===12?'':'')+' '+period;
+}
 function fetchForecast(lat, lon, yr, mo, da) {
   var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,windspeed_10m,shortwave_radiation&timezone=auto&forecast_days=7';
   // _locTzOffset is global
@@ -1079,7 +1094,7 @@ function fetchForecast(lat, lon, yr, mo, da) {
       var rn=idx>=0&&data.hourly.precipitation_probability[idx]!=null?data.hourly.precipitation_probability[idx]:0;
       var w=idx>=0&&data.hourly.windspeed_10m[idx]!=null?parseFloat(data.hourly.windspeed_10m[idx].toFixed(1)):0;
       var s=idx>=0&&data.hourly.shortwave_radiation&&data.hourly.shortwave_radiation[idx]!=null?Math.max(0,data.hourly.shortwave_radiation[idx]):0;
-      rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:t,p50:t,p75:t,temp:t,rain:rn,windP50:w,solP25:s,solP50:s,solP75:s,sol:s,isForecast:true});
+      rows.push({h:h,label:fmtHour(h),p25:t,p50:t,p75:t,temp:t,rain:rn,windP50:w,solP25:s,solP50:s,solP75:s,sol:s,isForecast:true});
     }
     return rows;
   });
@@ -1114,7 +1129,7 @@ function buildRows(buckets, trend) {
     var b=buckets[h], wet=0;
     for(var i=0;i<b.p.length;i++) if(b.p[i]>0.1) wet++;
     var p25=pct(b.t,25), p50=pct(b.t,50), p75=pct(b.t,75);
-    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50!=null?parseFloat((p50+trend).toFixed(1)):null,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50!=null?parseFloat((p50+trend).toFixed(1)):null,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,windP50:pct(b.w,50),solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0)});
+    rows.push({h:h,label:fmtHour(h),p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50!=null?parseFloat((p50+trend).toFixed(1)):null,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50!=null?parseFloat((p50+trend).toFixed(1)):null,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,windP50:pct(b.w,50),solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0)});
   }
   return rows;
 }
