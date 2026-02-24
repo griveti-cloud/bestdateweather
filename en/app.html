@@ -2231,16 +2231,16 @@ function renderAnnual(loc, monthly) {
     var emoji = best1.score >= 75 ? '🌟' : best1.score >= 60 ? '✅' : '⚠️';
     
     var narrative = emoji + ' <strong>Best month: ' + bestName1;
-    if (best2.score >= 58) narrative += ' and ' + bestName2;
+    if (best2.score >= 55) narrative += ' and ' + bestName2;
     narrative += '</strong>';
     
     if (goodMonths.length >= 2) {
       narrative += ' · Favourable window: <strong>' + goodMonths.length + ' months</strong>';
     }
     
-    if (worst1.score < 45) {
+    if (uc && worst1.score < 50) {
       narrative += ' · Avoid: <span style="color:#ef4444;font-weight:700">' + worstName + '</span>';
-      if (worst2.score < 45) narrative += ' and ' + MNAMES[worst2.idx];
+      if (worst2.score < 50) narrative += ' and ' + MNAMES[worst2.idx];
     }
     
     // Température indicative du meilleur mois
