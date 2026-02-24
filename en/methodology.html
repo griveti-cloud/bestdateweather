@@ -328,8 +328,10 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
     <p>The ideal range [T<sub>min</sub>, T<sub>max</sub>] is defined per profile (see table in section 4). The score follows a piecewise linear function:</p>
     <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
       <span style="color:#c2720a">If T ∈ [T<sub>min</sub>, T<sub>max</sub>] :</span> S = 100 − 20 × |T − T<sub>idéal</sub>| / (T<sub>range</sub>)<br>
-      <span style="color:#c2720a">If T outside range :</span> S = max(0, 80 − |écart| × 8)<br>
-      <span style="color:#888;font-size:11px">avec T<sub>idéal</sub> = (T<sub>min</sub>+T<sub>max</sub>)/2 et T<sub>range</sub> = (T<sub>max</sub>−T<sub>min</sub>)/2</span>
+      <span style="color:#c2720a">If T &lt; T<sub>min</sub> (too cold) :</span> S = max(0, 80 − (T<sub>min</sub>−T) × 8)<br>
+      <span style="color:#c2720a">If T &gt; T<sub>max</sub> (too hot) :</span> S = max(0, 80 − (T−T<sub>max</sub>) × 2)<br>
+      <span style="color:#888;font-size:11px">Asymmetric penalty: cold affects comfort more than heat — 8pts/°C below range, 2pts/°C above</span><br>
+      <span style="color:#888;font-size:11px">with T<sub>ideal</sub> = (T<sub>min</sub>+T<sub>max</sub>)/2 and T<sub>range</sub> = (T<sub>max</sub>−T<sub>min</sub>)/2</span>
     </div>
     <p>Example: for a wedding (16–28°C), T<sub>ideal</sub> = 22°C. At 18°C: S = 100 − 20 × 4/6 = <strong>87</strong>. At 12°C (outside range): S = max(0, 80 − 4×8) = <strong>48</strong>.</p>
 

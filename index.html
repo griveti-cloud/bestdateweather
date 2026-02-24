@@ -1355,9 +1355,14 @@ function scoreTemp(t, tMin, tMax) {
     // 100 at ideal, 80 at edges
     return 100 - 20 * Math.abs(t - ideal) / range;
   }
-  // Outside range: penalize
-  var excess = t < tMin ? tMin - t : t - tMax;
-  return Math.max(0, 80 - excess * 8);
+  // Outside range: asymmetric penalty
+  // Too cold = strong penalty (8pts/°C) — comfort strongly affected
+  // Too hot  = soft penalty  (2pts/°C) — still pleasant, just warm
+  if (t < tMin) {
+    return Math.max(0, 80 - (tMin - t) * 8);
+  } else {
+    return Math.max(0, 80 - (t - tMax) * 2);
+  }
 }
 
 function scoreWind(kmh) {

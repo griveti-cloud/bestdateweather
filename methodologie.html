@@ -327,7 +327,9 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
     <p>La plage idéale [T<sub>min</sub>, T<sub>max</sub>] est définie par profil (voir tableau section 4). Le score suit une fonction linéaire par morceaux :</p>
     <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
       <span style="color:#c2720a">Si T ∈ [T<sub>min</sub>, T<sub>max</sub>] :</span> S = 100 − 20 × |T − T<sub>idéal</sub>| / (T<sub>range</sub>)<br>
-      <span style="color:#c2720a">Si T hors plage :</span> S = max(0, 80 − |écart| × 8)<br>
+      <span style="color:#c2720a">Si T &lt; T<sub>min</sub> (trop froid) :</span> S = max(0, 80 − (T<sub>min</sub>−T) × 8)<br>
+      <span style="color:#c2720a">Si T &gt; T<sub>max</sub> (trop chaud) :</span> S = max(0, 80 − (T−T<sub>max</sub>) × 2)<br>
+      <span style="color:#888;font-size:11px">Pénalité asymétrique : le froid est plus pénalisant que la chaleur — 8pts/°C sous la plage, 2pts/°C au-dessus</span><br>
       <span style="color:#888;font-size:11px">avec T<sub>idéal</sub> = (T<sub>min</sub>+T<sub>max</sub>)/2 et T<sub>range</sub> = (T<sub>max</sub>−T<sub>min</sub>)/2</span>
     </div>
     <p>Exemple : pour un mariage (16–28°C), T<sub>idéal</sub> = 22°C. À 18°C : S = 100 − 20 × 4/6 = <strong>87</strong>. À 12°C (hors plage) : S = max(0, 80 − 4×8) = <strong>48</strong>.</p>
