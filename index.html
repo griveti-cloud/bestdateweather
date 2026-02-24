@@ -1606,7 +1606,7 @@ function showResults(sc, rows, isForecast, noteText, diffDays) {
 var acTimer=null, acIdx=-1, acData=[], selectedLoc=null;
 function flagEmoji(code){
   if(!code||code.length!==2)return'';
-  return '<span style="display:inline-block;min-width:20px;padding:0 3px;height:14px;line-height:14px;background:#e2e8f0;border-radius:2px;font-size:8px;font-weight:700;color:#4a5568;text-align:center;vertical-align:middle;margin-right:4px">'+code.toUpperCase()+'</span>';
+  return '<img src="flags/'+code.toLowerCase()+'.png" width="20" height="15" alt="'+code.toUpperCase()+'" style="vertical-align:middle;border-radius:2px;margin-right:4px" onerror="this.style.display=\'none\'">';
 }
 
 function hideAC(){document.getElementById('ac-list').style.display='none';acIdx=-1;}
