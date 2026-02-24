@@ -222,7 +222,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .score-ring-wrap svg{transform:rotate(-90deg)}
 .score-ring-bg{fill:none;stroke:var(--cream2);stroke-width:6}
 .score-ring-fill{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1),stroke .4s}
-.score-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy)}
+.score-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy)}
 .score-info{flex:1;min-width:0}
 .score-usecase{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--slate3);margin-bottom:4px}
 .score-verdict{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:3px}
@@ -1533,7 +1533,7 @@ function computeAndRenderScore(sc, rows) {
   ring.style.stroke = color;
   setTimeout(function() { ring.style.strokeDashoffset = offset; }, 50);
 
-  document.getElementById('score-num').textContent = total;
+  document.getElementById('score-num').textContent = (total/10).toFixed(1) + ' / 10';
   var ucLabels = {
     mariage:'Optimised score · Wedding', voyage:'Optimised score · Travel', festival:'Optimised score · Festival',
     sport:'Optimised score · Outdoor', travaux:'Optimised score · Construction', general:'General weather'
@@ -2210,7 +2210,7 @@ function renderAnnual(loc, monthly) {
     card.style.setProperty('--month-color', isRec ? '#1a7a4a' : (isAvoid ? '#ef4444' : color));
     card.style.animationDelay = delay + 'ms';
 
-    var scoreNum = '<div class="month-score score-num-uc" style="background:' + getScoreColor(score) + ';color:white;font-size:9px;border-radius:10px;padding:2px 6px;position:absolute;top:10px;right:8px;font-weight:700;opacity:.85">' + score + '</div>';
+    var scoreNum = '<div class="month-score score-num-uc" style="background:' + getScoreColor(score) + ';color:white;font-size:9px;border-radius:10px;padding:2px 6px;position:absolute;top:10px;right:8px;font-weight:700;opacity:.85">' + (score/10).toFixed(1) + '/10' + '</div>';
     var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">Season trend</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
     var isBest = uc && idx === sorted[0].idx && sorted[0].score >= 60;
     var badgeHtml = isBest ? '<div class="month-best-badge">🔥 Best month</div>' : (isRec ? '<div class="month-badge rec">Recommended</div>' : (isAvoid ? '<div class="month-badge avoid">Less favourable</div>' : ''));
