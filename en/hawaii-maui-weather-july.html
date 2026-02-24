@@ -15,9 +15,61 @@
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-NTCJTDPSJL");</script>
 <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
 <meta name="theme-color" content="#1a1f2e"/>
+<style>
+:root{--navy:#1a1f2e;--gold:#c49a2a;--cream:#faf8f3;--cream2:#e8e0d0;--slate:#4a5568;--slate2:#718096;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--cream);color:var(--navy);}
+nav{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--navy);position:sticky;top:0;z-index:100;}
+.nav-brand{font-size:17px;font-weight:800;color:white;text-decoration:none;letter-spacing:-.3px;}
+.nav-brand em{color:var(--gold);font-style:normal;}
+.nav-cta{background:var(--gold);color:var(--navy);padding:7px 16px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;}
+.hero-band{background:linear-gradient(160deg,#1a3a5a 0%,#2a5a8a 55%,#3a7aaa 100%);padding:44px 20px 36px;text-align:center;color:white;}
+.dest-tag{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.75;margin-bottom:14px;}
+.hero-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(24px,5vw,38px);font-weight:700;line-height:1.2;margin-bottom:10px;}
+.hero-title em{color:#fcd34d;font-style:italic;}
+.hero-sub{font-size:14px;opacity:.85;max-width:540px;margin:0 auto 20px;line-height:1.55;}
+.hero-stats{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;margin-top:8px;}
+.hstat-val{display:block;font-size:26px;font-weight:800;}
+.hstat-lbl{display:block;font-size:11px;opacity:.65;margin-top:2px;}
+.page{max-width:780px;margin:0 auto;padding:28px 16px 60px;}
+.section{margin-bottom:32px;}
+.section-label{font-size:11px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.section-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(18px,3vw,24px);font-weight:700;margin-bottom:16px;}
+.verdict-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-weight:700;font-size:14px;border:2px solid;margin-bottom:16px;}
+.quick-facts{border:1.5px solid var(--cream2);border-radius:12px;overflow:hidden;margin-bottom:8px;}
+.qf-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--cream2);}
+.qf-row:last-child{border-bottom:none;}
+.qf-row:nth-child(odd){background:white;}
+.qf-label{padding:12px 16px;font-size:13px;color:var(--slate);border-right:1px solid var(--cream2);}
+.qf-value{padding:12px 16px;font-size:13px;font-weight:700;}
+.month-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.month-nav a{background:white;border:1.5px solid var(--cream2);border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;color:var(--navy);text-decoration:none;}
+.widget-frame{border-radius:14px;overflow:hidden;border:1.5px solid var(--cream2);height:640px;}
+.widget-frame iframe{width:100%;height:100%;border:none;}
+footer{background:var(--navy);color:rgba(255,255,255,.8);text-align:center;padding:36px 20px;font-size:12px;line-height:1.9;}
+footer a{color:rgba(255,255,255,.9);text-decoration:none;}
+@media(max-width:600px){
+  .widget-frame{height:520px;}
+  .qf-row{grid-template-columns:1fr;}
+  .qf-label{border-right:none;border-bottom:1px solid var(--cream2);padding:10px 14px 6px;}
+  .qf-value{padding:6px 14px 10px;}
+}
+
+/* ── Added styles for parity with FR ── */
+.affil-box{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:16px;padding:24px 28px;margin-top:16px;display:flex;flex-direction:column;gap:12px}
+.affil-box strong{font-size:16px;color:var(--navy)}
+.affil-btn{display:inline-block;background:#0070f3;color:white;font-weight:600;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;width:fit-content}
+.affil-btn:hover{background:#0060d0}
+.affil-note{font-size:12px;color:var(--slate2)}
+.cta-box{background:var(--navy);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px 28px;color:white;margin:8px 0}
+.cta-box strong{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;display:block;margin-bottom:10px}
+.cta-box p{color:rgba(255,255,255,.7);margin:0 0 20px;line-height:1.75;font-size:14px}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),#e8940a);color:white;text-decoration:none;font-weight:800;border-radius:10px;padding:12px 22px;font-size:14px}
+.cta-sub{margin-top:12px;font-size:11px;color:rgba(255,255,255,.45)}
+.climate-table tbody tr.mid td{background:#fffbeb!important}
+.climate-table tbody tr.mid td:first-child{color:#d97706}
+</style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Should I book far in advance for Hawaii Maui in July?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — July is peak season in Hawaii Maui. Book accommodation and activities 2–3 months ahead to get good options at reasonable prices."}}, {"@type": "Question", "name": "Can you swim in Hawaii Maui in July?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, ideal swimming conditions in July (27°C). Some showers possible, but the sea stays enjoyable."}}]}</script>
-<link rel="stylesheet" href="style.css"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap"/>
 </head>
 <body>
 <nav>

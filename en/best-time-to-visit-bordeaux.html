@@ -15,8 +15,80 @@
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-NTCJTDPSJL");</script>
 <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
 <meta name="theme-color" content="#1a1f2e"/>
-<link rel="stylesheet" href="style.css"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap"/>
+<style>
+:root{--navy:#1a1f2e;--gold:#c49a2a;--cream:#faf8f3;--cream2:#e8e0d0;--slate:#4a5568;--slate2:#718096;--slate3:#5a6478;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--cream);color:var(--navy);}
+nav{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--navy);position:sticky;top:0;z-index:100;}
+.nav-brand{font-size:17px;font-weight:800;color:white;text-decoration:none;letter-spacing:-.3px;}
+.nav-brand em{color:var(--gold);font-style:normal;}
+.nav-cta{background:var(--gold);color:var(--navy);padding:7px 16px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;}
+.hero-band{background:linear-gradient(160deg,#1a3a5a 0%,#2a5a8a 55%,#3a7aaa 100%);padding:48px 20px 40px;text-align:center;color:white;}
+.hero-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(22px,5vw,36px);font-weight:700;line-height:1.2;margin-bottom:10px;}
+.hero-title em{color:#fcd34d;font-style:italic;}
+.hero-sub{font-size:15px;opacity:.85;max-width:580px;margin:0 auto 16px;line-height:1.55;}
+.page{max-width:780px;margin:0 auto;padding:32px 16px 60px;}
+.section{margin-bottom:32px;}
+.section-label{font-size:11px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;}
+.section-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(18px,3vw,24px);font-weight:700;margin-bottom:16px;}
+.quick-facts{border:1.5px solid var(--cream2);border-radius:12px;overflow:hidden;}
+.quick-facts-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--cream2);}
+.quick-facts-row:last-child{border-bottom:none;}
+.quick-facts-row:nth-child(odd){background:white;}
+.qf-label{padding:12px 16px;font-size:13px;color:var(--slate);border-right:1px solid var(--cream2);}
+.qf-value{padding:12px 16px;font-size:13px;font-weight:700;}
+.climate-table-wrap{overflow-x:auto;border-radius:10px;border:1.5px solid var(--cream2);}
+.climate-table{width:100%;border-collapse:collapse;font-size:13px;}
+.climate-table th{background:var(--navy);color:white;padding:10px;text-align:left;font-weight:600;font-size:11px;letter-spacing:.3px;}
+.climate-table td{padding:10px;border-bottom:1px solid var(--cream2);font-weight:500;}
+.climate-table tr.rec td{background:#f0fdf4;}
+.climate-table tr.rec td:first-child{color:#16a34a;font-weight:700;}
+.climate-table tr.avoid td{background:#fef2f2;}
+.climate-table tr.avoid td:first-child{color:#dc2626;font-weight:700;}
+.climate-table tr.mid td{background:#fffbeb;}
+.table-legend{display:flex;gap:16px;align-items:center;padding:10px 0;font-size:11px;color:var(--slate2);flex-wrap:wrap;}
+.legend-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px;}
+.widget-frame{border-radius:14px;overflow:hidden;border:1.5px solid var(--cream2);height:640px;}
+.widget-frame iframe{width:100%;height:100%;border:none;}
+footer{background:var(--navy);color:rgba(255,255,255,.8);text-align:center;padding:36px 20px;font-size:12px;line-height:1.9;}
+footer a{color:rgba(255,255,255,.9);text-decoration:none;}
+@media(max-width:600px){
+  .climate-table{font-size:11px;}
+  .climate-table th,.climate-table td{padding:6px 4px!important;}
+  .climate-table th{font-size:10px;}
+  .widget-frame{height:520px;}
+  .quick-facts-row{grid-template-columns:1fr;}
+  .qf-label{border-right:none;border-bottom:1px solid var(--cream2);}
+}
+
+.faq-list{display:flex;flex-direction:column;gap:8px}
+.faq-item{border:1.5px solid var(--cream2);border-radius:10px;overflow:hidden}
+.faq-q{width:100%;background:white;border:none;padding:14px 16px;text-align:left;font-weight:700;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.faq-q:hover{background:#faf8f3}
+.faq-icon{font-size:18px;font-weight:400;flex-shrink:0;transition:transform .2s}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{display:none;padding:0 16px 14px;color:var(--slate2);font-size:14px;line-height:1.6}
+.faq-item.open .faq-a{display:block}
+.sub-title{font-size:15px;font-weight:700;color:#1a1f2e;margin:18px 0 6px}
+
+/* ── Additional parity styles ── */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+.project-card{background:white;border:1px solid var(--cream2);border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:6px}
+.project-card .proj-icon{font-size:24px}
+.project-card .proj-title{font-weight:600;font-size:14px;color:var(--navy)}
+.project-card .proj-text{font-size:13px;color:var(--slate);line-height:1.5}
+.other-section{padding:40px 0 72px;border-top:1px solid var(--cream2);margin-top:16px}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-top:16px}
+.dest-card{background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid var(--cream2);transition:all .2s;display:flex;align-items:center;gap:10px}
+.dest-card:hover{border-color:var(--gold);background:var(--gold-light);transform:translateY(-2px)}
+.dest-flag{font-size:20px}
+.dest-name{font-size:12px;font-weight:700;color:var(--navy);display:block}
+.dest-country{font-size:10px;color:var(--slate3);font-weight:500}
+.mini-note{font-size:12px;color:var(--slate2);margin-top:10px;line-height:1.7}
+.faq-list{display:flex;flex-direction:column;gap:0;margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid var(--cream2)}
+.faq-item{background:white;border-bottom:1px solid var(--cream2)}
+.faq-item:last-child{border-bottom:none}
+</style>
 </head>
 <body>
 <nav>
