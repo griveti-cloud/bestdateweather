@@ -2115,27 +2115,39 @@ function monthColor(d) {
 }
 
 function monthIconFromData(d) {
-  var mm = d.avgPrecipMm || 0;
+  var mm  = d.avgPrecipMm || 0;
   var sun = d.sunHrs || 0;
+  var pct = d.rainPct || 0;
 
-  // Snow — use avgTmin (more robust: if nights freeze, snow is likely)
+  // Snow
   var snowTemp = d.avgTmin != null ? d.avgTmin : d.avgTemp;
-  if (snowTemp != null && snowTemp <= 2 && d.rainPct > 15) return IC.snow;
+  if (snowTemp != null && snowTemp <= 2 && pct > 15) return IC.snow;
 
-  // Soleil dominant (peu de pluie ET beaucoup de soleil)
-  if (mm < 3 && sun >= 7) return IC.sun;
-  if (mm < 5 && sun >= 6) return IC.sun;
+  // Pluie effective : même correction que scoreRainSmart
+  var effPct = pct;
+  if (mm < 3) {
+    effPct = pct * (0.40 + (mm / 3) * 0.30);
+  } else if (mm < 6) {
+    effPct = pct * (0.70 + ((mm - 3) / 3) * 0.30);
+  }
 
-  // Averses avec soleil (sun >= 4h ET précip modérée)
-  if (mm >= 0.3 && mm < 5 && sun >= 5) return IC.shower;
-  if (mm >= 0.3 && mm < 5) return IC.lightrain;
-  // Nuageux/averses sans beaucoup de soleil
-  if (sun >= 5) return IC.partcloud;
+  // ── Soleil dominant ─────────────────────────────────────────────
+  if (effPct <= 25 && sun >= 6) return IC.sun;
+  if (effPct <= 35 && sun >= 8) return IC.sun;
 
-  // Peu de soleil
-  if (mm < 3) return IC.cloud;
-  if (mm < 8) return IC.cloud;
-  return IC.rain;
+  // ── Averses avec soleil ─────────────────────────────────────────
+  if (effPct <= 55 && sun >= 7) return IC.shower;
+  if (effPct <= 45 && sun >= 5) return IC.shower;
+
+  // ── Partiellement nuageux ───────────────────────────────────────
+  if (effPct <= 45 && sun >= 3) return IC.partcloud;
+  if (effPct <= 35) return IC.partcloud;
+
+  // ── Pluie ───────────────────────────────────────────────────────
+  if (effPct <= 65 && sun >= 3) return IC.lightrain;
+  if (effPct <= 65) return IC.rain;
+  if (effPct <= 80) return IC.rain;
+  return IC.heavyrain;
 }
 
 var MONTHS_FR = ['January','February','March','April','May','June','July','August','September','October','November','December'];
