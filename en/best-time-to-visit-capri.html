@@ -78,19 +78,23 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
 .faq-item.open .faq-a{display:block}
 .sub-title{font-size:15px;font-weight:700;color:#1a1f2e;margin:18px 0 6px}
 
-/* ── Added styles for parity with FR ── */
-.affil-box{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:16px;padding:24px 28px;margin-top:16px;display:flex;flex-direction:column;gap:12px}
-.affil-box strong{font-size:16px;color:var(--navy)}
-.affil-btn{display:inline-block;background:#0070f3;color:white;font-weight:600;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;width:fit-content}
-.affil-btn:hover{background:#0060d0}
-.affil-note{font-size:12px;color:var(--slate2)}
-.cta-box{background:var(--navy);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px 28px;color:white;margin:8px 0}
-.cta-box strong{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;display:block;margin-bottom:10px}
-.cta-box p{color:rgba(255,255,255,.7);margin:0 0 20px;line-height:1.75;font-size:14px}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),#e8940a);color:white;text-decoration:none;font-weight:800;border-radius:10px;padding:12px 22px;font-size:14px}
-.cta-sub{margin-top:12px;font-size:11px;color:rgba(255,255,255,.45)}
-.climate-table tbody tr.mid td{background:#fffbeb!important}
-.climate-table tbody tr.mid td:first-child{color:#d97706}
+/* ── Additional parity styles ── */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+.project-card{background:white;border:1px solid var(--cream2);border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:6px}
+.project-card .proj-icon{font-size:24px}
+.project-card .proj-title{font-weight:600;font-size:14px;color:var(--navy)}
+.project-card .proj-text{font-size:13px;color:var(--slate);line-height:1.5}
+.other-section{padding:40px 0 72px;border-top:1px solid var(--cream2);margin-top:16px}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-top:16px}
+.dest-card{background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid var(--cream2);transition:all .2s;display:flex;align-items:center;gap:10px}
+.dest-card:hover{border-color:var(--gold);background:var(--gold-light);transform:translateY(-2px)}
+.dest-flag{font-size:20px}
+.dest-name{font-size:12px;font-weight:700;color:var(--navy);display:block}
+.dest-country{font-size:10px;color:var(--slate3);font-weight:500}
+.mini-note{font-size:12px;color:var(--slate2);margin-top:10px;line-height:1.7}
+.faq-list{display:flex;flex-direction:column;gap:0;margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid var(--cream2)}
+.faq-item{background:white;border-bottom:1px solid var(--cream2)}
+.faq-item:last-child{border-bottom:none}
 </style>
 </head>
 <body>
@@ -103,96 +107,88 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
   <h1 class="hero-title">Best Time to Visit <em>Capri</em></h1>
   <p class="hero-sub">The jewel of the Bay of Naples — Capri's Mediterranean climate peaks in early summer before the August crowds arrive. Best month: <strong>January</strong> — 28°C, score 7.2/10.</p>
   <div class="kicker">Open-Meteo archive 2015–2024 · 40.55°N 14.24°E</div>
-  <div class="hero-stats">
-    <div><span class="hstat-val">January</span><span class="hstat-lbl">Best month</span></div>
-    <div><span class="hstat-val">28°C</span><span class="hstat-lbl">Peak temp</span></div>
-    <div><span class="hstat-val">7.2/10</span><span class="hstat-lbl">Weather score</span></div>
+  <div class="hero-stats" style="margin-top:22px">
+    <div><span class="hstat-val">June / Sep</span><span class="hstat-lbl">Ideal windows</span></div>
+    <div><span class="hstat-val">Ferry</span><span class="hstat-lbl">Naples 50 min · Sorrento 20 min</span></div>
+    <div><span class="hstat-val">May–Oct</span><span class="hstat-lbl">Saison opene</span></div>
   </div>
 </header>
 <main class="page">
-  <section class="section">
+<section class="section">
     <div class="section-label">Quick summary</div>
     <h2 class="section-title">When to visit Capri</h2>
     <div class="quick-facts">
-      <div class="quick-facts-row"><div class="qf-label">📅 Best month</div><div class="qf-value"><strong>June</strong> — score 7.2/10</div></div>
+      <div class="quick-facts-row"><div class="qf-label">📅 Best month</div><div class="qf-value"><strong>June &amp; September</strong> — score 7.2/10</div></div>
       <div class="quick-facts-row"><div class="qf-label">✅ Best season</div><div class="qf-value"><strong>June &amp; September</strong></div></div>
       <div class="quick-facts-row"><div class="qf-label">🌡️ Peak temperature</div><div class="qf-value"><strong>28°C</strong> in January</div></div>
       <div class="quick-facts-row"><div class="qf-label">☀️ Most sunshine</div><div class="qf-value"><strong>13.4h/day</strong> in July</div></div>
       <div class="quick-facts-row"><div class="qf-label">🌧 Month to avoid</div><div class="qf-value"><strong>—</strong></div></div>
     </div>
   </section>
-
-  <section class="section">
-    <div class="section-label">Browse by month</div>
-    <h2 class="section-title">Monthly weather in Capri</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
-      <a href="capri-weather-january.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">10°C · 52%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="capri-weather-february.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">10°C · 46%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="capri-weather-march.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">12°C · 36%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="capri-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">16°C · 24%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="capri-weather-may.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">20°C · 16%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="capri-weather-june.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">24°C · 6%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="capri-weather-july.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">27°C · 2%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="capri-weather-august.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">28°C · 3%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="capri-weather-september.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">24°C · 8%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="capri-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">20°C · 30%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="capri-weather-november.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">14°C · 44%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="capri-weather-december.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">10°C · 50%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a>
-    </div>
-  </section>
-
-  <section class="section">
-  <div class="section-label">By season</div>
-  <h2 class="section-title">What to expect in Capri</h2>
-<h3 class="sub-title">🌸 Spring (Mar–May) — Good</h3><p>Average high 19°C, 38% rainy days, 9.7h sunshine/day. Average score: 61/100.</p>
-<h3 class="sub-title">☀️ Summer (Jun–Aug) — Excellent</h3><p>Average high 31°C, 17% rainy days, 13.0h sunshine/day. Average score: 78/100.</p>
-<h3 class="sub-title">🍂 Autumn (Sep–Nov) — Ideal</h3><p>Average high 22°C, 39% rainy days, 8.5h sunshine/day. Average score: 54/100.</p>
-<h3 class="sub-title">❄️ Winter (Dec–Feb) — Average</h3><p>Average high 13°C, 49% rainy days, 5.4h sunshine/day. Average score: 35/100.</p>
-</section>
-
 <section class="section">
-    <div class="section-label">Full climate table</div>
-    <h2 class="section-title">Month-by-month comparison</h2>
-    <div class="climate-table-wrap">
-      <table class="climate-table">
-        <thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead>
-        <tbody>
-<tr class="avoid"><td>January</td><td>6°C</td><td>13°C</td><td>52%</td><td>6.0</td><td>4.4</td><td>★★☆☆☆</td></tr>
-<tr class="mid"><td>February</td><td>6°C</td><td>14°C</td><td>46%</td><td>5.2</td><td>5.2</td><td>★★★☆☆</td></tr>
-<tr class="rec"><td>March</td><td>9°C</td><td>16°C</td><td>36%</td><td>4.0</td><td>6.8</td><td>★★★★☆</td></tr>
-<tr class="rec"><td>April</td><td>12°C</td><td>19°C</td><td>24%</td><td>2.6</td><td>8.4</td><td>★★★★★</td></tr>
-<tr class="rec"><td>May</td><td>16°C</td><td>23°C</td><td>16%</td><td>1.6</td><td>9.8</td><td>★★★★★</td></tr>
-<tr class="rec"><td>June</td><td>20°C</td><td>27°C</td><td>6%</td><td>0.6</td><td>11.0</td><td>★★★★★</td></tr>
-<tr class="rec"><td>July</td><td>23°C</td><td>31°C</td><td>2%</td><td>0.2</td><td>11.6</td><td>★★★★★</td></tr>
-<tr class="rec"><td>August</td><td>24°C</td><td>31°C</td><td>3%</td><td>0.3</td><td>11.0</td><td>★★★★★</td></tr>
-<tr class="rec"><td>September</td><td>21°C</td><td>28°C</td><td>8%</td><td>0.8</td><td>9.2</td><td>★★★★★</td></tr>
-<tr class="rec"><td>October</td><td>16°C</td><td>23°C</td><td>30%</td><td>3.2</td><td>7.0</td><td>★★★★★</td></tr>
-<tr class="mid"><td>November</td><td>11°C</td><td>17°C</td><td>44%</td><td>5.0</td><td>5.0</td><td>★★★☆☆</td></tr>
-<tr class="avoid"><td>December</td><td>7°C</td><td>13°C</td><td>50%</td><td>5.6</td><td>4.2</td><td>★★☆☆☆</td></tr>
-</tbody>
-      </table>
-    </div>
-    <div class="table-legend">
-      <span><span class="legend-dot" style="background:#16a34a"></span>Ideal</span>
-      <span><span class="legend-dot" style="background:#d97706"></span>Acceptable</span>
-      <span><span class="legend-dot" style="background:#dc2626"></span>Off season</span>
-      <span style="margin-left:auto;font-size:10px">Source: Open-Meteo 2015–2024</span>
-    </div>
+    <div class="section-label">By trip type</div>
+    <h2 class="section-title">Best time to visit Capri by trip type</h2>
+    <div class="project-grid"><div class="project-card"><span class="proj-icon">🔵</span><span class="proj-title">Blue Grotto</span><span class="proj-text">May-September — morning only, accessible by boat.</span></div>
+<div class="project-card"><span class="proj-icon">🏖️</span><span class="proj-title">Swimming & cove</span><span class="proj-text">June-September — Bagni di Tiberio, Marina Piccola.</span></div>
+<div class="project-card"><span class="proj-icon">💍</span><span class="proj-title">Wedding</span><span class="proj-text">June and September — see our Capri wedding guide.</span></div>
+<div class="project-card"><span class="proj-icon">🥾</span><span class="proj-title">Via Krupp & hiking</span><span class="proj-text">May or October — coastal trails, Faraglioni views.</span></div>
+<div class="project-card"><span class="proj-icon">🛍️</span><span class="proj-title">Shopping & dolce vita</span><span class="proj-text">July-August — Via Camerelle, luxury boutiques.</span></div>
+<div class="project-card"><span class="proj-icon">📸</span><span class="proj-title">Photography</span><span class="proj-text">September — golden light on the Faraglioni, deserted island.</span></div></div>
   </section>
-
-    <div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
+<section class="section">
+    <div class="section-label">Monthly climate table</div>
+    <h2 class="section-title">Weather in Capri month by month</h2>
+    <div class="climate-table-wrap"><table class="climate-table" aria-label="Monthly climate table Capri"><thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead><tbody><tr class="avoid"><td>January</td><td>6°C</td><td>13°C</td><td>52%</td><td>6.0</td><td>4.4</td><td>★★☆☆☆</td></tr><tr class="mid"><td>February</td><td>6°C</td><td>14°C</td><td>46%</td><td>5.2</td><td>5.2</td><td>★★★☆☆</td></tr><tr class="rec"><td>March</td><td>9°C</td><td>16°C</td><td>36%</td><td>4.0</td><td>6.8</td><td>★★★★☆</td></tr><tr class="rec"><td>April</td><td>12°C</td><td>19°C</td><td>24%</td><td>2.6</td><td>8.4</td><td>★★★★★</td></tr><tr class="rec"><td>May</td><td>16°C</td><td>23°C</td><td>16%</td><td>1.6</td><td>9.8</td><td>★★★★★</td></tr><tr class="rec"><td>June ✦✦</td><td>20°C</td><td>27°C</td><td>6%</td><td>0.6</td><td>11.0</td><td>★★★★★</td></tr><tr class="rec"><td>July</td><td>23°C</td><td>31°C</td><td>2%</td><td>0.2</td><td>11.6</td><td>★★★★★</td></tr><tr class="rec"><td>August</td><td>24°C</td><td>31°C</td><td>3%</td><td>0.3</td><td>11.0</td><td>★★★★★</td></tr><tr class="rec"><td>September ✦✦</td><td>21°C</td><td>28°C</td><td>8%</td><td>0.8</td><td>9.2</td><td>★★★★★</td></tr><tr class="rec"><td>October</td><td>16°C</td><td>23°C</td><td>30%</td><td>3.2</td><td>7.0</td><td>★★★★★</td></tr><tr class="mid"><td>November</td><td>11°C</td><td>17°C</td><td>44%</td><td>5.0</td><td>5.0</td><td>★★★☆☆</td></tr><tr class="avoid"><td>December</td><td>7°C</td><td>13°C</td><td>50%</td><td>5.6</td><td>4.2</td><td>★★☆☆☆</td></tr></tbody></table></div>
+    <div class="table-legend"><span><span class="legend-dot" style="background:var(--green)"></span>Ideal</span><span><span class="legend-dot" style="background:#d97706"></span>Acceptable</span><span><span class="legend-dot" style="background:var(--red)"></span>Off season</span></div>
+    <p class="mini-note">10 years of Open-Meteo archives (2015–2024). Statistically favourable window — not a day-specific forecast. <a href="methodology.html">Methodology →</a></p>
+  </section>
+<div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
     <strong style="color:var(--navy);display:block;margin-bottom:4px">📊 Data source</strong>
     Scores calculated from <strong>10 years of ERA5 data (2015–2024)</strong> via Open-Meteo, with ECMWF seasonal corrections.
     Capri has a <strong>temperate</strong> climate — temperatures range from 10°C in winter to 26°C in summer, average precipitation 26%.
-    Best month according to our model: <strong>Juin</strong> (score 96/100).
+    Best month according to our model: <strong>June</strong> (score 96/100).
     <a href="methodology.html" style="color:var(--gold);font-weight:600">See full methodology →</a>
   </div>
-    <section class="section">
+<section class="section">
+    <div class="section-label">Season by season</div>
+    <h2 class="section-title">What to expect in Capri</h2>
+    <h3 class="sub-title">🌸 Spring (Apr–May)</h3><p>Capri in spring is blooming and less touristy. The gardens of Villa San Michele are in full bloom. The Blue Grotto is accessible from late March. 19-23°C — ideal for walking.</p>
+<h3 class="sub-title">☀️ Summer (June–August)</h3><p>June is the sweet spot. July-August is beautiful but the island is overcrowded — the Piazzetta and Marina Grande are packed. Solution: book everything in advance and prioritize early morning outings.</p>
+<h3 class="sub-title">🍂 Autumn (Sept–Oct)</h3><p>Capri's secret season. Villas and restaurants reopen their terraces for regulars. Sea at 23-24°C, deserted coastal trails. Golden light on the Faraglioni.</p>
+<h3 class="sub-title">❄️ Winter (Nov–March)</h3><p>Most hotels and restaurants close. Off-season Capri has a wild and melancholic beauty. Ferries can be cancelled due to bad weather. Reserved for adventurers.</p>
+  </section>
+<section class="section">
     <div class="section-label">Accommodation</div>
     <h2 class="section-title">Find accommodation in Capri</h2>
-    <div class="affil-box">
-      <strong>Check availability for the recommended period</strong>
-      <p>Tip: comparing off-peak dates often saves 15–40% for identical weather conditions.</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-117501&dest_type=city&checkin=2026-06-01&checkout=2026-06-07" target="_blank" rel="noopener sponsored">View accommodation in Juin</a>
-      </div>
-      <span class="affil-note">Booking.com partner links · No price increase for you</span>
+    <div class="affil-box"><strong>Check availability for the recommended period</strong><p>Conseil : comparez le créneau hors pic — souvent 15-40% moins cher.</p><div style="display:flex;gap:12px;flex-wrap:wrap"><a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-117501&dest_type=city&checkin=2026-06-01&checkout=2026-06-07" target="_blank" rel="noopener sponsored">Voir en juin</a><a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-117501&dest_type=city&checkin=2026-09-01&checkout=2026-09-07" target="_blank" rel="noopener sponsored" style="background:#0095f7">Voir en septembre (−25%)</a></div><span class="affil-note">Booking.com partner links · No price increase for you</span></div>
+  </section>
+<section class="section">
+    <div class="section-label">Wedding guide</div>
+    <div class="cta-box"><strong>Planning a wedding in Capri?</strong><p>Our dedicated guide covers ideal months, venue costs and ceremony-specific tips.</p><a class="cta-btn" href="capri-weather-wedding.html">→ Wedding guide for Capri</a></div>
+  </section>
+<section class="section">
+    <div class="section-label">Browse by month</div>
+    <h2 class="section-title">Monthly weather in Capri</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
+      <a href="capri-weather-january.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">13°C · 48%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="capri-weather-february.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">13°C · 45%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="capri-weather-march.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">15°C · 44%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="capri-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">19°C · 38%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="capri-weather-may.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">24°C · 32%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="capri-weather-june.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">28°C · 20%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="capri-weather-july.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">32°C · 12%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="capri-weather-august.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">32°C · 18%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="capri-weather-september.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">27°C · 22%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="capri-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">23°C · 42%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="capri-weather-november.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">17°C · 52%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="capri-weather-december.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">14°C · 54%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a>
+    </div>
+  </section>
+<section class="widget-section">
+    <div class="cta-box" style="text-align:center">
+      <strong>📅 Live forecast — next 12 months</strong>
+      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
+      <a class="cta-btn" href="index.html?city=Capri&lat=40.55&lon=14.24">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Voir les prévisions pour Capri
+      </a>
+      <div class="cta-sub">Opens in new tab · next 12 months data</div>
     </div>
   </section>
 <section class="section" style="margin-top:32px">
     <div class="section-label">SIMILAR DESTINATIONS</div>
     <h2 class="section-title">Similar climate to Capri</h2>
     <p style="font-size:14px;color:var(--slate2);line-height:1.8;margin-bottom:16px">
-      The temperate climate profile of Capri is similar to <a href="best-time-to-visit-cote-azur.html" style="color:var(--gold);font-weight:600">la Côte d'Azur</a> and <a href="best-time-to-visit-amalfi-coast.html" style="color:var(--gold);font-weight:600">Amalfi Coast</a>.
+      The temperate climate profile of Capri is similar to <a href="best-time-to-visit-cote-azur.html" style="color:var(--gold);font-weight:600">la Côte d'Azur</a> and <a href="best-time-to-visit-amalfi-coast.html" style="color:var(--gold);font-weight:600">Côte Amalfitaine</a>.
       These destinations share comparable temperature ranges and precipitation levels, making them good alternatives depending on your travel dates.
       Find Capri in our <a href="en/best-destinations-weather-ranking-2026.html" style="color:var(--gold);font-weight:600">best destinations by weather</a>.
     </p>
@@ -201,49 +197,20 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
     </div>
   </section>
 <section class="section">
-    <div class="section-label">Frequently asked</div>
-    <h2 class="section-title">FAQ — Capri weather</h2>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What is the best time to visit Capri?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">January is the best month to visit Capri, with 28°C and a weather score of 7.2/10. The jewel of the Bay of Naples — Capri's Mediterranean climate peaks in early summer before the August crowds arrive.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What month should I avoid in Capri?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">If possible, avoid Capri in January — that's when conditions are at their least favourable.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">How accurate is this data?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">All figures are averages from 10 years of climate records (2015–2024) via the Open-Meteo API. They represent historical norms, not forecasts.</div>
-      </div>
-    </div>
-  
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">What is the worst month to visit Capri?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">Janvier is the least favourable month with a score of 40/100, temperatures around 10°C and 52% rainy days. Janvier, Décembre are also best avoided if weather comfort is a priority.</div></div>
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">When should I avoid rain in Capri?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">The rainiest months in Capri are Janvier. For the best chance of dry weather, aim for Juin with only 6% rainy days based on 2015–2024 climate data.</div></div>
-</section>
-  <section class="widget-section">
-    <div class="cta-box" style="text-align:center">
-      <strong>📅 Live forecast — next 12 months</strong>
-      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
-      <a class="cta-btn" href="app.html?city=Capri&lat=40.55&lon=14.24">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-        See forecast for Capri
-      </a>
-      <div class="cta-sub">Opens in a new tab · data for the next 12 months</div>
-    </div>
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Frequently asked questions</h2>
+    <div class="faq-list"><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the best time to visit Capri?<span class="faq-icon">+</span></button><div class="faq-a">June is ideal (6% rain). September is the connoisseur's season: perfect light, peaceful island, -20-25%.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do you get to Capri?<span class="faq-icon">+</span></button><div class="faq-a">Ferry or hydrofoil from Naples (50 min), Sorrento (20 min), Positano (40 min) or Amalfi (50 min). Ferries can be cancelled from November-March due to rough seas.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is Capri accessible on an average budget?<span class="faq-icon">+</span></button><div class="faq-a">No — Capri is one of the most expensive destinations in Italy. Hotels start at 200-300€/night in season. Stay in Sorrento or Naples and make day trips.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the worst month to visit Capri?<span class="faq-icon">+</span></button><div class="faq-a">January is the least favorable month with a score of 40/100, temperatures around 10°C and 52% of rainy days. January and December are also to be avoided if you are looking for the best weather comfort.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">When should you avoid rain in Capri?<span class="faq-icon">+</span></button><div class="faq-a">The rainiest months in Capri are January. To maximize your chances of good weather, choose June which shows only 6% of days with precipitation according to our 2015–2024 climate data.</div></div></div></section>
+<section class="other-section">
+    <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy)">Explore other destinations</h2>
+    <div class="dest-grid"><a class="dest-card" href="best-time-to-visit-amalfi-coast.html"><span class="dest-flag">🇮🇹</span><span><span class="dest-name">Amalfi Coast</span><span class="dest-country">Italy</span></span></a>
+<a class="dest-card" href="best-time-to-visit-sicily.html"><span class="dest-flag">🇮🇹</span><span><span class="dest-name">Sicily</span><span class="dest-country">Italy</span></span></a>
+<a class="dest-card" href="best-time-to-visit-venice.html"><span class="dest-flag">🇮🇹</span><span><span class="dest-name">Venice</span><span class="dest-country">Italy</span></span></a>
+<a class="dest-card" href="best-time-to-visit-santorini.html"><span class="dest-flag">🇬🇷</span><span><span class="dest-name">Santorini</span><span class="dest-country">Greece</span></span></a></div>
   </section>
-
-  <div style="margin-top:40px;padding:24px;background:#faf8f3;border-radius:12px;border:1.5px solid #e8e0d0">
-    <p style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e8940a;margin:0 0 10px">Weather rankings</p>
-    <h3 style="font-size:16px;font-weight:700;color:#1a1f2e;margin:0 0 14px">Compare destinations by weather</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px">
-      <a href="../en/best-destinations-weather-ranking-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌍 Global ranking 2026</a>
-      <a href="../en/best-destinations-summer-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">☀️ Best summer destinations</a>
-      <a href="../en/best-destinations-winter-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌴 Best winter sun</a>
-      <a href="../en/best-destinations-wedding-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">💍 Wedding weather</a>
-    </div>
-  </div>
-
 </main>
 <footer>
   <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600;margin-bottom:8px">bestdateweather.com</p>

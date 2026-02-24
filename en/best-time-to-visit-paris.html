@@ -71,19 +71,23 @@ footer a{color:rgba(255,255,255,.9);text-decoration:none;}
 .faq-item.open .faq-a{display:block}
 .sub-title{font-size:15px;font-weight:700;color:#1a1f2e;margin:18px 0 6px}
 
-/* ── Added styles for parity with FR ── */
-.affil-box{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:16px;padding:24px 28px;margin-top:16px;display:flex;flex-direction:column;gap:12px}
-.affil-box strong{font-size:16px;color:var(--navy)}
-.affil-btn{display:inline-block;background:#0070f3;color:white;font-weight:600;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;width:fit-content}
-.affil-btn:hover{background:#0060d0}
-.affil-note{font-size:12px;color:var(--slate2)}
-.cta-box{background:var(--navy);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px 28px;color:white;margin:8px 0}
-.cta-box strong{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;display:block;margin-bottom:10px}
-.cta-box p{color:rgba(255,255,255,.7);margin:0 0 20px;line-height:1.75;font-size:14px}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),#e8940a);color:white;text-decoration:none;font-weight:800;border-radius:10px;padding:12px 22px;font-size:14px}
-.cta-sub{margin-top:12px;font-size:11px;color:rgba(255,255,255,.45)}
-.climate-table tbody tr.mid td{background:#fffbeb!important}
-.climate-table tbody tr.mid td:first-child{color:#d97706}
+/* ── Additional parity styles ── */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+.project-card{background:white;border:1px solid var(--cream2);border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:6px}
+.project-card .proj-icon{font-size:24px}
+.project-card .proj-title{font-weight:600;font-size:14px;color:var(--navy)}
+.project-card .proj-text{font-size:13px;color:var(--slate);line-height:1.5}
+.other-section{padding:40px 0 72px;border-top:1px solid var(--cream2);margin-top:16px}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-top:16px}
+.dest-card{background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid var(--cream2);transition:all .2s;display:flex;align-items:center;gap:10px}
+.dest-card:hover{border-color:var(--gold);background:var(--gold-light);transform:translateY(-2px)}
+.dest-flag{font-size:20px}
+.dest-name{font-size:12px;font-weight:700;color:var(--navy);display:block}
+.dest-country{font-size:10px;color:var(--slate3);font-weight:500}
+.mini-note{font-size:12px;color:var(--slate2);margin-top:10px;line-height:1.7}
+.faq-list{display:flex;flex-direction:column;gap:0;margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid var(--cream2)}
+.faq-item{background:white;border-bottom:1px solid var(--cream2)}
+.faq-item:last-child{border-bottom:none}
 </style>
 </head>
 <body>
@@ -100,42 +104,23 @@ footer a{color:rgba(255,255,255,.9);text-decoration:none;}
 </header>
 
 <main class="page">
-  <section class="section">
+<section class="section">
     <div class="section-label">Quick summary</div>
     <h2 class="section-title">When to visit Paris</h2>
     <div class="quick-facts">
       <div class="quick-facts-row"><div class="qf-label">📅 Best month</div><div class="qf-value"><strong>July</strong> — score 9.2/10</div></div>
-      <div class="quick-facts-row"><div class="qf-label">✅ Good months</div><div class="qf-value"><strong>July</strong></div></div>
-      <div class="quick-facts-row"><div class="qf-label">❌ Off-season</div><div class="qf-value"><strong>January</strong></div></div>
-      <div class="quick-facts-row"><div class="qf-label">💡 Our tip</div><div class="qf-value">July-August for mild weather, April-May for blossoms, September for golden light without the crowdsule</div></div>
+      <div class="quick-facts-row"><div class="qf-label">🌡️ Peak temperature</div><div class="qf-value"><strong>26°C</strong> in July</div></div>
+      <div class="quick-facts-row"><div class="qf-label">☀️ Most sunshine</div><div class="qf-value"><strong>11.2h/day</strong> in July</div></div>
+      <div class="quick-facts-row"><div class="qf-label">🌧 Wettest month</div><div class="qf-value"><strong>March</strong> — 43% rainy days</div></div>
     </div>
   </section>
-
-  <section class="section">
-    <div class="section-label">Browse by month</div>
-    <h2 class="section-title">Monthly weather in Paris</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
-      <a href="paris-weather-january.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">4°C · 41%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="paris-weather-february.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">6°C · 40%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="paris-weather-march.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">8°C · 43%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="paris-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">11°C · 34%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="paris-weather-may.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">14°C · 41%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="paris-weather-june.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">18°C · 39%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="paris-weather-july.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">20°C · 29%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="paris-weather-august.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">20°C · 32%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="paris-weather-september.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">17°C · 30%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="paris-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">13°C · 39%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="paris-weather-november.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">8°C · 39%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="paris-weather-december.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">6°C · 42%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a>
-    </div>
-  </section>
-
-  <section class="section">
-  <div class="section-label">By season</div>
-  <h2 class="section-title">What to expect in Paris</h2>
-<h3 class="sub-title">🌸 Spring (Mar–May) — Good</h3><p>Average high 16°C, 39% rainy days, 8.9h sunshine/day. Average score: 60/100.</p>
-<h3 class="sub-title">☀️ Summer (Jun–Aug) — Excellent</h3><p>Average high 25°C, 33% rainy days, 10.9h sunshine/day. Average score: 84/100.</p>
-<h3 class="sub-title">🍂 Autumn (Sep–Nov) — Good</h3><p>Average high 17°C, 36% rainy days, 6.4h sunshine/day. Average score: 60/100.</p>
-<h3 class="sub-title">❄️ Winter (Dec–Feb) — Average</h3><p>Average high 9°C, 41% rainy days, 3.8h sunshine/day. Average score: 35/100.</p>
-</section>
-
 <section class="section">
-    <div class="section-label">Full climate table</div>
-    <h2 class="section-title">Month-by-month comparison</h2>
+    <div class="section-label">Monthly climate table</div>
+    <h2 class="section-title">Weather in Paris month by month</h2>
     <div class="climate-table-wrap">
-      <table class="climate-table">
+      <table class="climate-table" aria-label="Monthly climate table Paris">
         <thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead>
-        <tbody>
-<tr class="avoid"><td>January</td><td>2°C</td><td>7°C</td><td>41%</td><td>2.1 mm</td><td>3.3h</td><td>★★☆☆☆</td></tr>
+        <tbody><tr class="avoid"><td>January</td><td>2°C</td><td>7°C</td><td>41%</td><td>2.1 mm</td><td>3.3h</td><td>★★☆☆☆</td></tr>
 <tr class="mid"><td>February</td><td>2°C</td><td>10°C</td><td>40%</td><td>1.9 mm</td><td>5.0h</td><td>★★★☆☆</td></tr>
 <tr class="mid"><td>March</td><td>4°C</td><td>12°C</td><td>43%</td><td>2.3 mm</td><td>6.7h</td><td>★★★☆☆</td></tr>
 <tr class="rec"><td>April</td><td>6°C</td><td>16°C</td><td>34%</td><td>1.7 mm</td><td>9.6h</td><td>★★★★☆</td></tr>
@@ -157,57 +142,31 @@ footer a{color:rgba(255,255,255,.9);text-decoration:none;}
       <span style="margin-left:auto;font-size:10px">Source: Open-Meteo 2015–2024</span>
     </div>
   </section>
-
-    <div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
+<div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
     <strong style="color:var(--navy);display:block;margin-bottom:4px">📊 Data source</strong>
     Scores calculated from <strong>10 years of ERA5 data (2015–2024)</strong> via Open-Meteo, with ECMWF seasonal corrections.
     Paris has a <strong>cool temperate</strong> climate — temperatures range from 5°C in winter to 19°C in summer, average precipitation 37%.
-    Best month according to our model: <strong>Juillet</strong> (score 92/100).
+    Best month according to our model: <strong>July</strong> (score 92/100).
     <a href="methodology.html" style="color:var(--gold);font-weight:600">See full methodology →</a>
   </div>
 <section class="section">
-    <div class="section-label">Check your exact dates</div>
-    <h2 class="section-title">FAQ — Paris weather</h2>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What is the best time to visit Paris?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">July is the best month to visit Paris, with an average high of 26°C, only 29% rainy days and 11.2 hours of sunshine per day. Weather score: 9.2/10.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What month should I avoid in Paris?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">If possible, avoid Paris in December — the weather scores only 4.7/10 with 9°C and 42% rainy days.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">How accurate is this data?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">All figures are averages from 10 years of climate records (2015–2024) via the Open-Meteo API. They represent historical norms, not forecasts.</div>
-      </div>
+    <div class="section-label">Browse by month</div>
+    <h2 class="section-title">Monthly weather in Paris</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
+      <a href="paris-weather-january.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">7°C · 41%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="paris-weather-february.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">10°C · 40%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="paris-weather-march.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">12°C · 43%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="paris-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">16°C · 34%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="paris-weather-may.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">19°C · 41%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="paris-weather-june.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">23°C · 39%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="paris-weather-july.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">26°C · 29%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="paris-weather-august.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">25°C · 32%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="paris-weather-september.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">22°C · 30%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="paris-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">17°C · 39%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="paris-weather-november.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">11°C · 39%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="paris-weather-december.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">9°C · 42%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a>
     </div>
-  
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">What is the worst month to visit Paris?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">Janvier is the least favourable month with a score of 40/100, temperatures around 4°C and 41% rainy days. Janvier, Décembre are also best avoided if weather comfort is a priority.</div></div>
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">When should I avoid rain in Paris?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">The rainiest months in Paris are Janvier. For the best chance of dry weather, aim for Juillet with only 29% rainy days based on 2015–2024 climate data.</div></div>
-</section>
-
-  <section style="margin-bottom:32px">
-    <div class="section-label">Check your exact dates</div>
-    <div class="widget-frame">
-      <iframe tabindex="-1" src="app.html?city=Paris&lat=48.8566&lon=2.3522" title="Weather score Paris" loading="lazy"></iframe>
-    </div>
-      <p class="mini-note" style="margin-top:10px;font-size:11px;color:var(--slate3);line-height:1.6;border-top:1px solid var(--cream2);padding-top:10px">
-      ℹ️ <strong>Live view</strong> — real-time data with ECMWF seasonal corrections for the next 12 months from today. Scores may differ from the historical table above (2015–2024 average) — both approaches are complementary and reflect different time horizons.
-    </p>
   </section>
-
-  <div style="margin-top:40px;padding:24px;background:#faf8f3;border-radius:12px;border:1.5px solid #e8e0d0">
-    <p style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e8940a;margin:0 0 10px">Weather rankings</p>
-    <h3 style="font-size:16px;font-weight:700;color:#1a1f2e;margin:0 0 14px">Compare destinations by weather</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px">
-      <a href="../en/best-destinations-weather-ranking-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌍 Global ranking 2026</a>
-      <a href="../en/best-destinations-summer-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">☀️ Best summer destinations</a>
-      <a href="../en/best-destinations-winter-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌴 Best winter sun</a>
-      <a href="../en/best-destinations-wedding-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">💍 Wedding weather</a>
+<section class="widget-section">
+    <div class="cta-box" style="text-align:center">
+      <strong>📅 Live forecast — next 12 months</strong>
+      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
+      <a class="cta-btn" href="index.html?city=Paris&lat=48.8566&lon=2.3522">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Voir les prévisions pour Paris
+      </a>
+      <div class="cta-sub">Opens in new tab · next 12 months data</div>
     </div>
-  </div>
-
+  </section>
 </main>
 
 <footer>

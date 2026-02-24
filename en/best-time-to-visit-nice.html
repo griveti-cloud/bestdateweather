@@ -71,19 +71,23 @@ footer a{color:rgba(255,255,255,.9);text-decoration:none;}
 .faq-item.open .faq-a{display:block}
 .sub-title{font-size:15px;font-weight:700;color:#1a1f2e;margin:18px 0 6px}
 
-/* ── Added styles for parity with FR ── */
-.affil-box{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:16px;padding:24px 28px;margin-top:16px;display:flex;flex-direction:column;gap:12px}
-.affil-box strong{font-size:16px;color:var(--navy)}
-.affil-btn{display:inline-block;background:#0070f3;color:white;font-weight:600;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;width:fit-content}
-.affil-btn:hover{background:#0060d0}
-.affil-note{font-size:12px;color:var(--slate2)}
-.cta-box{background:var(--navy);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px 28px;color:white;margin:8px 0}
-.cta-box strong{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;display:block;margin-bottom:10px}
-.cta-box p{color:rgba(255,255,255,.7);margin:0 0 20px;line-height:1.75;font-size:14px}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),#e8940a);color:white;text-decoration:none;font-weight:800;border-radius:10px;padding:12px 22px;font-size:14px}
-.cta-sub{margin-top:12px;font-size:11px;color:rgba(255,255,255,.45)}
-.climate-table tbody tr.mid td{background:#fffbeb!important}
-.climate-table tbody tr.mid td:first-child{color:#d97706}
+/* ── Additional parity styles ── */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+.project-card{background:white;border:1px solid var(--cream2);border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:6px}
+.project-card .proj-icon{font-size:24px}
+.project-card .proj-title{font-weight:600;font-size:14px;color:var(--navy)}
+.project-card .proj-text{font-size:13px;color:var(--slate);line-height:1.5}
+.other-section{padding:40px 0 72px;border-top:1px solid var(--cream2);margin-top:16px}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-top:16px}
+.dest-card{background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid var(--cream2);transition:all .2s;display:flex;align-items:center;gap:10px}
+.dest-card:hover{border-color:var(--gold);background:var(--gold-light);transform:translateY(-2px)}
+.dest-flag{font-size:20px}
+.dest-name{font-size:12px;font-weight:700;color:var(--navy);display:block}
+.dest-country{font-size:10px;color:var(--slate3);font-weight:500}
+.mini-note{font-size:12px;color:var(--slate2);margin-top:10px;line-height:1.7}
+.faq-list{display:flex;flex-direction:column;gap:0;margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid var(--cream2)}
+.faq-item{background:white;border-bottom:1px solid var(--cream2)}
+.faq-item:last-child{border-bottom:none}
 </style>
 </head>
 <body>
@@ -100,42 +104,23 @@ footer a{color:rgba(255,255,255,.9);text-decoration:none;}
 </header>
 
 <main class="page">
-  <section class="section">
+<section class="section">
     <div class="section-label">Quick summary</div>
     <h2 class="section-title">When to visit Nice</h2>
     <div class="quick-facts">
       <div class="quick-facts-row"><div class="qf-label">📅 Best month</div><div class="qf-value"><strong>June, July, August &amp; September</strong> — score 10/10</div></div>
-      <div class="quick-facts-row"><div class="qf-label">✅ Good months</div><div class="qf-value"><strong>June, July, August &amp; September</strong></div></div>
-      <div class="quick-facts-row"><div class="qf-label">❌ Off-season</div><div class="qf-value"><strong>—</strong></div></div>
-      <div class="quick-facts-row"><div class="qf-label">💡 Our tip</div><div class="qf-value">May to October for the beach, April and October for tranquility and lower prices</div></div>
+      <div class="quick-facts-row"><div class="qf-label">🌡️ Peak temperature</div><div class="qf-value"><strong>29°C</strong> in August</div></div>
+      <div class="quick-facts-row"><div class="qf-label">☀️ Most sunshine</div><div class="qf-value"><strong>13.4h/day</strong> in July</div></div>
+      <div class="quick-facts-row"><div class="qf-label">🌧 Wettest month</div><div class="qf-value"><strong>November</strong> — 30% rainy days</div></div>
     </div>
   </section>
-
-  <section class="section">
-    <div class="section-label">Browse by month</div>
-    <h2 class="section-title">Monthly weather in Nice</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
-      <a href="nice-weather-january.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">9°C · 18%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="nice-weather-february.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">10°C · 24%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="nice-weather-march.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">12°C · 23%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="nice-weather-april.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">14°C · 26%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="nice-weather-may.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">18°C · 29%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="nice-weather-june.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">22°C · 24%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="nice-weather-july.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">24°C · 9%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="nice-weather-august.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">25°C · 13%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="nice-weather-september.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">22°C · 19%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="nice-weather-october.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">18°C · 29%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="nice-weather-november.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">12°C · 30%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="nice-weather-december.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">10°C · 19%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a>
-    </div>
-  </section>
-
-  <section class="section">
-  <div class="section-label">By season</div>
-  <h2 class="section-title">What to expect in Nice</h2>
-<h3 class="sub-title">🌸 Spring (Mar–May) — Excellent</h3><p>Average high 18°C, 26% rainy days, 10.5h sunshine/day. Average score: 78/100.</p>
-<h3 class="sub-title">☀️ Summer (Jun–Aug) — Excellent</h3><p>Average high 27°C, 15% rainy days, 12.9h sunshine/day. Average score: 90/100.</p>
-<h3 class="sub-title">🍂 Autumn (Sep–Nov) — Excellent</h3><p>Average high 21°C, 26% rainy days, 8.5h sunshine/day. Average score: 84/100.</p>
-<h3 class="sub-title">❄️ Winter (Dec–Feb) — Acceptable</h3><p>Average high 13°C, 20% rainy days, 7.0h sunshine/day. Average score: 55/100.</p>
-</section>
-
 <section class="section">
-    <div class="section-label">Full climate table</div>
-    <h2 class="section-title">Month-by-month comparison</h2>
+    <div class="section-label">Monthly climate table</div>
+    <h2 class="section-title">Weather in Nice month by month</h2>
     <div class="climate-table-wrap">
-      <table class="climate-table">
+      <table class="climate-table" aria-label="Monthly climate table Nice">
         <thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead>
-        <tbody>
-<tr class="rec"><td>January</td><td>5°C</td><td>13°C</td><td>18%</td><td>1.5 mm</td><td>6.8h</td><td>★★★★☆</td></tr>
+        <tbody><tr class="rec"><td>January</td><td>5°C</td><td>13°C</td><td>18%</td><td>1.5 mm</td><td>6.8h</td><td>★★★★☆</td></tr>
 <tr class="rec"><td>February</td><td>6°C</td><td>13°C</td><td>24%</td><td>2.6 mm</td><td>7.7h</td><td>★★★★☆</td></tr>
 <tr class="rec"><td>March</td><td>8°C</td><td>15°C</td><td>23%</td><td>2.5 mm</td><td>9.3h</td><td>★★★★☆</td></tr>
 <tr class="rec"><td>April</td><td>10°C</td><td>18°C</td><td>26%</td><td>2.1 mm</td><td>10.6h</td><td>★★★★★</td></tr>
@@ -157,57 +142,31 @@ footer a{color:rgba(255,255,255,.9);text-decoration:none;}
       <span style="margin-left:auto;font-size:10px">Source: Open-Meteo 2015–2024</span>
     </div>
   </section>
-
-    <div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
+<div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
     <strong style="color:var(--navy);display:block;margin-bottom:4px">📊 Data source</strong>
     Scores calculated from <strong>10 years of ERA5 data (2015–2024)</strong> via Open-Meteo, with ECMWF seasonal corrections.
     Nice has a <strong>temperate</strong> climate — temperatures range from 10°C in winter to 24°C in summer, average precipitation 22%.
-    Best month according to our model: <strong>Septembre</strong> (score 96/100).
+    Best month according to our model: <strong>September</strong> (score 96/100).
     <a href="methodology.html" style="color:var(--gold);font-weight:600">See full methodology →</a>
   </div>
 <section class="section">
-    <div class="section-label">Check your exact dates</div>
-    <h2 class="section-title">FAQ — Nice weather</h2>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What is the best time to visit Nice?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">July is the best month to visit Nice, with an average high of 28°C, only 9% rainy days and 13.4 hours of sunshine per day. Weather score: 10/10.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What month should I avoid in Nice?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">If possible, avoid Nice in December — the weather scores only 6.4/10 with 14°C and 19% rainy days.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">How accurate is this data?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">All figures are averages from 10 years of climate records (2015–2024) via the Open-Meteo API. They represent historical norms, not forecasts.</div>
-      </div>
+    <div class="section-label">Browse by month</div>
+    <h2 class="section-title">Monthly weather in Nice</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
+      <a href="nice-weather-january.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">13°C · 18%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="nice-weather-february.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">13°C · 24%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="nice-weather-march.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">15°C · 23%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="nice-weather-april.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">18°C · 26%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="nice-weather-may.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">21°C · 29%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="nice-weather-june.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">25°C · 24%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="nice-weather-july.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">28°C · 9%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="nice-weather-august.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">29°C · 13%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="nice-weather-september.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">25°C · 19%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="nice-weather-october.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">21°C · 29%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="nice-weather-november.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">16°C · 30%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="nice-weather-december.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">14°C · 19%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a>
     </div>
-  
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">What is the worst month to visit Nice?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">Février is the least favourable month with a score of 64/100, temperatures around 10°C and 24% rainy days. Février are also best avoided if weather comfort is a priority.</div></div>
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">When should I avoid rain in Nice?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">The rainiest months in Nice are Février. For the best chance of dry weather, aim for Septembre with only 19% rainy days based on 2015–2024 climate data.</div></div>
-</section>
-
-  <section style="margin-bottom:32px">
-    <div class="section-label">Check your exact dates</div>
-    <div class="widget-frame">
-      <iframe tabindex="-1" src="app.html?city=Nice&lat=43.7102&lon=7.262" title="Weather score Nice" loading="lazy"></iframe>
-    </div>
-      <p class="mini-note" style="margin-top:10px;font-size:11px;color:var(--slate3);line-height:1.6;border-top:1px solid var(--cream2);padding-top:10px">
-      ℹ️ <strong>Live view</strong> — real-time data with ECMWF seasonal corrections for the next 12 months from today. Scores may differ from the historical table above (2015–2024 average) — both approaches are complementary and reflect different time horizons.
-    </p>
   </section>
-
-  <div style="margin-top:40px;padding:24px;background:#faf8f3;border-radius:12px;border:1.5px solid #e8e0d0">
-    <p style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e8940a;margin:0 0 10px">Weather rankings</p>
-    <h3 style="font-size:16px;font-weight:700;color:#1a1f2e;margin:0 0 14px">Compare destinations by weather</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px">
-      <a href="../en/best-destinations-weather-ranking-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌍 Global ranking 2026</a>
-      <a href="../en/best-destinations-summer-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">☀️ Best summer destinations</a>
-      <a href="../en/best-destinations-winter-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌴 Best winter sun</a>
-      <a href="../en/best-destinations-wedding-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">💍 Wedding weather</a>
+<section class="widget-section">
+    <div class="cta-box" style="text-align:center">
+      <strong>📅 Live forecast — next 12 months</strong>
+      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
+      <a class="cta-btn" href="index.html?city=Nice&lat=43.7102&lon=7.262">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Voir les prévisions pour Nice
+      </a>
+      <div class="cta-sub">Opens in new tab · next 12 months data</div>
     </div>
-  </div>
-
+  </section>
 </main>
 
 <footer>

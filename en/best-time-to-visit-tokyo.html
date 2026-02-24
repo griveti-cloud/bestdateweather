@@ -93,19 +93,23 @@ footer a:hover{color:white;}
 .faq-item.open .faq-a{display:block}
 .sub-title{font-size:15px;font-weight:700;color:#1a1f2e;margin:18px 0 6px}
 
-/* ── Added styles for parity with FR ── */
-.affil-box{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:16px;padding:24px 28px;margin-top:16px;display:flex;flex-direction:column;gap:12px}
-.affil-box strong{font-size:16px;color:var(--navy)}
-.affil-btn{display:inline-block;background:#0070f3;color:white;font-weight:600;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;width:fit-content}
-.affil-btn:hover{background:#0060d0}
-.affil-note{font-size:12px;color:var(--slate2)}
-.cta-box{background:var(--navy);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px 28px;color:white;margin:8px 0}
-.cta-box strong{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;display:block;margin-bottom:10px}
-.cta-box p{color:rgba(255,255,255,.7);margin:0 0 20px;line-height:1.75;font-size:14px}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),#e8940a);color:white;text-decoration:none;font-weight:800;border-radius:10px;padding:12px 22px;font-size:14px}
-.cta-sub{margin-top:12px;font-size:11px;color:rgba(255,255,255,.45)}
-.climate-table tbody tr.mid td{background:#fffbeb!important}
-.climate-table tbody tr.mid td:first-child{color:#d97706}
+/* ── Additional parity styles ── */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+.project-card{background:white;border:1px solid var(--cream2);border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:6px}
+.project-card .proj-icon{font-size:24px}
+.project-card .proj-title{font-weight:600;font-size:14px;color:var(--navy)}
+.project-card .proj-text{font-size:13px;color:var(--slate);line-height:1.5}
+.other-section{padding:40px 0 72px;border-top:1px solid var(--cream2);margin-top:16px}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-top:16px}
+.dest-card{background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid var(--cream2);transition:all .2s;display:flex;align-items:center;gap:10px}
+.dest-card:hover{border-color:var(--gold);background:var(--gold-light);transform:translateY(-2px)}
+.dest-flag{font-size:20px}
+.dest-name{font-size:12px;font-weight:700;color:var(--navy);display:block}
+.dest-country{font-size:10px;color:var(--slate3);font-weight:500}
+.mini-note{font-size:12px;color:var(--slate2);margin-top:10px;line-height:1.7}
+.faq-list{display:flex;flex-direction:column;gap:0;margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid var(--cream2)}
+.faq-item{background:white;border-bottom:1px solid var(--cream2)}
+.faq-item:last-child{border-bottom:none}
 </style>
 </head>
 <body>
@@ -119,49 +123,30 @@ footer a:hover{color:white;}
   <p class="hero-sub">Tokyo, where tradition meets the future — cherry blossoms in April and autumn colours in November are unmissable.<br><span style="font-size:13px;color:var(--slate3)">Best month: <strong>May</strong> — 23°C, 51% rainy days, score 5.5/10.</span></p>
   <div class="kicker">Open-Meteo archive 2015–2024 · 35.68°N 139.69°E</div>
   <div class="hero-stats" style="margin-top:22px">
-    <div><span class="hstat-val">May</span><span class="hstat-lbl">Best month</span></div>
-    <div><span class="hstat-val">23°C</span><span class="hstat-lbl">Peak temp</span></div>
-    <div><span class="hstat-val">5.5/10</span><span class="hstat-lbl">Weather score</span></div>
+    <div><span class="hstat-val">May &amp; June</span><span class="hstat-lbl">Meilleurs mois</span></div>
+    <div><span class="hstat-val">23°C</span><span class="hstat-lbl">Température optimale</span></div>
+    <div><span class="hstat-val">51%</span><span class="hstat-lbl">Risque pluie in May</span></div>
   </div>
 </header>
 <main class="page">
-  <section class="section">
+<section class="section">
     <div class="section-label">Quick summary</div>
     <h2 class="section-title">When to visit Tokyo</h2>
     <div class="quick-facts">
-  <div class="quick-facts-row"><div class="qf-label">🌞 Best overall period</div><div class="qf-value"><strong>May</strong></div></div>
-  <div class="quick-facts-row"><div class="qf-label">🌡️ Optimal temperature</div><div class="qf-value"><strong>15–23°C</strong> in May</div></div>
-  <div class="quick-facts-row"><div class="qf-label">🌧 Least rain</div><div class="qf-value"><strong>51%</strong> rainy days in May</div></div>
-  <div class="quick-facts-row"><div class="qf-label">☁️ Off-season</div><div class="qf-value"><strong>—</strong></div></div>
-  <div class="quick-facts-row"><div class="qf-label">⭐ Overall score</div><div class="qf-value"><strong>5.5/10</strong> in May (rain/temp/sun)</div></div>
-</div>
-  </section>
-
-  <section class="section">
-    <div class="section-label">Browse by month</div>
-    <h2 class="section-title">Monthly weather in Tokyo</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
-      <a href="tokyo-weather-january.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">4°C · 31%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="tokyo-weather-february.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">6°C · 42%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="tokyo-weather-march.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">10°C · 54%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="tokyo-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">14°C · 55%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="tokyo-weather-may.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">19°C · 51%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="tokyo-weather-june.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">22°C · 69%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="tokyo-weather-july.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">26°C · 67%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="tokyo-weather-august.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">28°C · 71%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="tokyo-weather-september.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">24°C · 72%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="tokyo-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">18°C · 57%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="tokyo-weather-november.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">12°C · 44%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="tokyo-weather-december.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">7°C · 32%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a>
+      <div class="quick-facts-row"><div class="qf-label">📅 Best month</div><div class="qf-value"><strong>May</strong> — score 5.5/10</div></div>
+      <div class="quick-facts-row"><div class="qf-label">✅ Good months</div><div class="qf-value"><strong>May</strong></div></div>
+      <div class="quick-facts-row"><div class="qf-label">🌡️ Peak temperature</div><div class="qf-value"><strong>23°C</strong> in May</div></div>
+      <div class="quick-facts-row"><div class="qf-label">☀️ Most sunshine</div><div class="qf-value"><strong>8.8h/day</strong> in May</div></div>
+      <div class="quick-facts-row"><div class="qf-label">🌧 Wettest month</div><div class="qf-value"><strong>March</strong> — 54% rainy days</div></div>
     </div>
   </section>
-
-  <section class="section">
-  <div class="section-label">By season</div>
-  <h2 class="section-title">What to expect in Tokyo</h2>
-<h3 class="sub-title">🌸 Spring (Mar–May) — Acceptable</h3><p>Average high 19°C, 53% rainy days, 8.3h sunshine/day. Average score: 42/100.</p>
-<h3 class="sub-title">☀️ Summer (Jun–Aug) — Acceptable</h3><p>Average high 29°C, 69% rainy days, 8.7h sunshine/day. Average score: 42/100.</p>
-<h3 class="sub-title">🍂 Autumn (Sep–Nov) — Acceptable</h3><p>Average high 22°C, 58% rainy days, 7.0h sunshine/day. Average score: 42/100.</p>
-<h3 class="sub-title">❄️ Winter (Dec–Feb) — Average</h3><p>Average high 10°C, 35% rainy days, 7.5h sunshine/day. Average score: 35/100.</p>
-</section>
-
 <section class="section">
-    <div class="section-label">Full climate table</div>
-    <h2 class="section-title">Month-by-month comparison</h2>
+    <div class="section-label">Monthly climate table</div>
+    <h2 class="section-title">Weather in Tokyo month by month</h2>
     <div class="climate-table-wrap">
-      <table class="climate-table">
+      <table class="climate-table" aria-label="Monthly climate table Tokyo">
         <thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead>
-        <tbody>
-<tr class="mid"><td>January</td><td>0°C</td><td>9°C</td><td>31%</td><td>55.2</td><td>7.3</td><td>★★★☆☆</td></tr>
+        <tbody><tr class="mid"><td>January</td><td>0°C</td><td>9°C</td><td>31%</td><td>55.2</td><td>7.3</td><td>★★★☆☆</td></tr>
 <tr class="mid"><td>February</td><td>1°C</td><td>10°C</td><td>42%</td><td>59.9</td><td>7.8</td><td>★★★☆☆</td></tr>
 <tr class="mid"><td>March</td><td>5°C</td><td>14°C</td><td>54%</td><td>134.1</td><td>7.8</td><td>★★★☆☆</td></tr>
 <tr class="rec"><td>April</td><td>10°C</td><td>19°C</td><td>55%</td><td>131.4</td><td>8.3</td><td>★★★★☆</td></tr>
@@ -172,35 +157,60 @@ footer a:hover{color:white;}
 <tr class="rec"><td>September</td><td>21°C</td><td>27°C</td><td>72%</td><td>214.8</td><td>7.3</td><td>★★★★☆</td></tr>
 <tr class="rec"><td>October</td><td>14°C</td><td>21°C</td><td>57%</td><td>186.5</td><td>6.7</td><td>★★★★☆</td></tr>
 <tr class="rec"><td>November</td><td>8°C</td><td>17°C</td><td>44%</td><td>96.9</td><td>7.0</td><td>★★★★☆</td></tr>
-<tr class="mid"><td>December</td><td>3°C</td><td>11°C</td><td>32%</td><td>59.1</td><td>7.3</td><td>★★★☆☆</td></tr>
-</tbody>
+<tr class="mid"><td>December</td><td>3°C</td><td>11°C</td><td>32%</td><td>59.1</td><td>7.3</td><td>★★★☆☆</td></tr></tbody>
       </table>
     </div>
     <div class="table-legend">
-      <span><span class="legend-dot" style="background:#16a34a"></span>Ideal</span>
+      <span><span class="legend-dot" style="background:var(--green)"></span>Ideal</span>
       <span><span class="legend-dot" style="background:#d97706"></span>Acceptable</span>
-      <span><span class="legend-dot" style="background:#dc2626"></span>Off season</span>
-      <span style="margin-left:auto;font-size:10px">Source: Open-Meteo 2015–2024</span>
+      <span><span class="legend-dot" style="background:var(--red)"></span>Off season</span>
+      <span style="margin-left:auto">Source: Open-Meteo Archive · 2015–2024 · Tokyo 35.68°N 139.69°E</span>
     </div>
+    <p class="mini-note">10 years of Open-Meteo archives (2015–2024). Statistically favourable window — not a day-specific forecast. <a href="methodology.html">Methodology →</a></p>
   </section>
-
-    <div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
+<div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
     <strong style="color:var(--navy);display:block;margin-bottom:4px">📊 Data source</strong>
     Scores calculated from <strong>10 years of ERA5 data (2015–2024)</strong> via Open-Meteo, with ECMWF seasonal corrections.
     Tokyo has a <strong>continental</strong> climate — temperatures range from 6°C in winter to 26°C in summer, average precipitation 54%.
-    Best month according to our model: <strong>Mai</strong> (score 74/100).
+    Best month according to our model: <strong>May</strong> (score 74/100).
     <a href="methodology.html" style="color:var(--gold);font-weight:600">See full methodology →</a>
   </div>
-    <section class="section">
+<section class="section">
+    <div class="section-label">Season by season</div>
+    <h2 class="section-title">What to expect in Tokyo</h2>
+    <h3 class="sub-title">🌸 Spring (March–May) — Acceptable</h3><p>Average temperatures 19°C, 53% of days with rain, 8.3h of sunshine per day. Average score: 47/100.</p>
+<h3 class="sub-title">☀️ Summer (June–August) — Acceptable</h3><p>Average temperatures 29°C, 69% of days with rain, 8.7h of sunshine per day. Average score: 46/100.</p>
+<h3 class="sub-title">🍂 Autumn (September–November) — Acceptable</h3><p>Average temperatures 22°C, 58% of days with rain, 7.0h of sunshine per day. Average score: 47/100.</p>
+<h3 class="sub-title">❄️ Winter (December–February) — Acceptable</h3><p>Average temperatures 10°C, 35% of days with rain, 7.5h of sunshine per day. Average score: 45/100.</p>
+  </section>
+<section class="section">
     <div class="section-label">Accommodation</div>
     <h2 class="section-title">Find accommodation in Tokyo</h2>
     <div class="affil-box">
       <strong>Check availability for the recommended period</strong>
-      <p>Tip: comparing off-peak dates often saves 15–40% for identical weather conditions.</p>
+      <p>Conseil : comparez aussi le créneau hors pic — souvent 15-40% moins cher pour une météo identique.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-246227&dest_type=city&checkin=2026-05-01&checkout=2026-05-07" target="_blank" rel="noopener sponsored">View accommodation in Mai</a>
+        <a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-246227&dest_type=city&checkin=2026-05-01&checkout=2026-05-07" target="_blank" rel="noopener sponsored">View accommodation in May</a>
       </div>
       <span class="affil-note">Booking.com partner links · No price increase for you</span>
+    </div>
+  </section>
+<section class="section">
+    <div class="section-label">Browse by month</div>
+    <h2 class="section-title">Monthly weather in Tokyo</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
+      <a href="tokyo-weather-january.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">9°C · 31%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="tokyo-weather-february.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">10°C · 42%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="tokyo-weather-march.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">14°C · 54%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="tokyo-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">19°C · 55%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="tokyo-weather-may.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">23°C · 51%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="tokyo-weather-june.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">26°C · 69%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="tokyo-weather-july.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">30°C · 67%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="tokyo-weather-august.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">31°C · 71%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="tokyo-weather-september.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">27°C · 72%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="tokyo-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">21°C · 57%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="tokyo-weather-november.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">17°C · 44%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="tokyo-weather-december.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">11°C · 32%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a>
+    </div>
+  </section>
+<section class="widget-section">
+    <div class="cta-box" style="text-align:center">
+      <strong>📅 Live forecast — next 12 months</strong>
+      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
+      <a class="cta-btn" href="index.html?city=Tokyo&lat=35.68&lon=139.69">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Voir les prévisions pour Tokyo
+      </a>
+      <div class="cta-sub">Opens in new tab · next 12 months data</div>
     </div>
   </section>
 <section class="section" style="margin-top:32px">
@@ -216,49 +226,13 @@ footer a:hover{color:white;}
     </div>
   </section>
 <section class="section">
-    <div class="section-label">Frequently asked</div>
-    <h2 class="section-title">FAQ — Tokyo weather</h2>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What is the best time to visit Tokyo?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">May is the best month to visit Tokyo, with an average high of 23°C, only 51% rainy days and 8.8 hours of sunshine per day. Weather score: 5.5/10.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What month should I avoid in Tokyo?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">If possible, avoid Tokyo in March — the weather scores only 3.8/10 with 14°C and 54% rainy days.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">How accurate is this data?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">All figures are averages from 10 years of climate records (2015–2024) via the Open-Meteo API. They represent historical norms, not forecasts.</div>
-      </div>
-    </div>
-  
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">What is the worst month to visit Tokyo?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">Février is the least favourable month with a score of 49/100, temperatures around 6°C and 42% rainy days. Février are also best avoided if weather comfort is a priority.</div></div>
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">When should I avoid rain in Tokyo?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">The rainiest months in Tokyo are Septembre, Août, Juin. For the best chance of dry weather, aim for Mai with only 51% rainy days based on 2015–2024 climate data.</div></div>
-</section>
-  <section class="widget-section">
-    <div class="cta-box" style="text-align:center">
-      <strong>📅 Live forecast — next 12 months</strong>
-      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
-      <a class="cta-btn" href="app.html?city=Tokyo&lat=35.68&lon=139.69">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-        See forecast for Tokyo
-      </a>
-      <div class="cta-sub">Opens in a new tab · data for the next 12 months</div>
-    </div>
-  </section>
-
-  <div style="margin-top:40px;padding:24px;background:#faf8f3;border-radius:12px;border:1.5px solid #e8e0d0">
-    <p style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e8940a;margin:0 0 10px">Weather rankings</p>
-    <h3 style="font-size:16px;font-weight:700;color:#1a1f2e;margin:0 0 14px">Compare destinations by weather</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px">
-      <a href="../en/best-destinations-weather-ranking-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌍 Global ranking 2026</a>
-      <a href="../en/best-destinations-summer-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">☀️ Best summer destinations</a>
-      <a href="../en/best-destinations-winter-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌴 Best winter sun</a>
-      <a href="../en/best-destinations-wedding-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">💍 Wedding weather</a>
-    </div>
-  </div>
-
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Frequently asked questions</h2>
+    <div class="faq-list"><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the best time to visit Tokyo?<span class="faq-icon">+</span></button><div class="faq-a">May is ideal with 51% rainy days and 23°C. June offers comparable conditions.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the wettest month in Tokyo?<span class="faq-icon">+</span></button><div class="faq-a">September is the most humid with 72% of rainy days. Check our monthly table for better planning.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the hottest month in Tokyo?<span class="faq-icon">+</span></button><div class="faq-a">August is the hottest with an average of 31°C. May (23°C) offers better comfort.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the worst month to visit Tokyo?<span class="faq-icon">+</span></button><div class="faq-a">February is the least favorable month with a score of 49/100, temperatures around 6°C and 42% of rainy days. February should also be avoided if you are looking for the best weather comfort.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">When to avoid rain in Tokyo?<span class="faq-icon">+</span></button><div class="faq-a">The wettest months in Tokyo are September, August, June. To maximize your chances of good weather, prefer May which shows only 51% of days with precipitation according to our climate data 2015–2024.</div></div></div></section>
 </main>
 <footer>
   <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600;margin-bottom:8px">bestdateweather.com</p>

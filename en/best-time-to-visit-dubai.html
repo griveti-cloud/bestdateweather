@@ -93,19 +93,23 @@ footer a:hover{color:white;}
 .faq-item.open .faq-a{display:block}
 .sub-title{font-size:15px;font-weight:700;color:#1a1f2e;margin:18px 0 6px}
 
-/* ── Added styles for parity with FR ── */
-.affil-box{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:16px;padding:24px 28px;margin-top:16px;display:flex;flex-direction:column;gap:12px}
-.affil-box strong{font-size:16px;color:var(--navy)}
-.affil-btn{display:inline-block;background:#0070f3;color:white;font-weight:600;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;width:fit-content}
-.affil-btn:hover{background:#0060d0}
-.affil-note{font-size:12px;color:var(--slate2)}
-.cta-box{background:var(--navy);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px 28px;color:white;margin:8px 0}
-.cta-box strong{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;display:block;margin-bottom:10px}
-.cta-box p{color:rgba(255,255,255,.7);margin:0 0 20px;line-height:1.75;font-size:14px}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),#e8940a);color:white;text-decoration:none;font-weight:800;border-radius:10px;padding:12px 22px;font-size:14px}
-.cta-sub{margin-top:12px;font-size:11px;color:rgba(255,255,255,.45)}
-.climate-table tbody tr.mid td{background:#fffbeb!important}
-.climate-table tbody tr.mid td:first-child{color:#d97706}
+/* ── Additional parity styles ── */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+.project-card{background:white;border:1px solid var(--cream2);border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:6px}
+.project-card .proj-icon{font-size:24px}
+.project-card .proj-title{font-weight:600;font-size:14px;color:var(--navy)}
+.project-card .proj-text{font-size:13px;color:var(--slate);line-height:1.5}
+.other-section{padding:40px 0 72px;border-top:1px solid var(--cream2);margin-top:16px}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-top:16px}
+.dest-card{background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid var(--cream2);transition:all .2s;display:flex;align-items:center;gap:10px}
+.dest-card:hover{border-color:var(--gold);background:var(--gold-light);transform:translateY(-2px)}
+.dest-flag{font-size:20px}
+.dest-name{font-size:12px;font-weight:700;color:var(--navy);display:block}
+.dest-country{font-size:10px;color:var(--slate3);font-weight:500}
+.mini-note{font-size:12px;color:var(--slate2);margin-top:10px;line-height:1.7}
+.faq-list{display:flex;flex-direction:column;gap:0;margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid var(--cream2)}
+.faq-item{background:white;border-bottom:1px solid var(--cream2)}
+.faq-item:last-child{border-bottom:none}
 </style>
 </head>
 <body>
@@ -119,88 +123,80 @@ footer a:hover{color:white;}
   <p class="hero-sub">Dubai, the desert metropolis — November to March offers ideal weather; summer is extreme at 40°C+.<br><span style="font-size:13px;color:var(--slate3)">Best month: <strong>December</strong> — 26°C, 10% rainy days, score 8.5/10.</span></p>
   <div class="kicker">Open-Meteo archive 2015–2024 · 25.2°N 55.27°E</div>
   <div class="hero-stats" style="margin-top:22px">
-    <div><span class="hstat-val">December</span><span class="hstat-lbl">Best month</span></div>
-    <div><span class="hstat-val">26°C</span><span class="hstat-lbl">Peak temp</span></div>
-    <div><span class="hstat-val">8.5/10</span><span class="hstat-lbl">Weather score</span></div>
+    <div><span class="hstat-val">Nov–Apr</span><span class="hstat-lbl">Fenêtre perfect</span></div>
+    <div><span class="hstat-val">44-46°C</span><span class="hstat-lbl">June-August</span></div>
+    <div><span class="hstat-val">7h Paris</span><span class="hstat-lbl">Vol direct</span></div>
   </div>
 </header>
 <main class="page">
-  <section class="section">
+<section class="section">
     <div class="section-label">Quick summary</div>
     <h2 class="section-title">When to visit Dubai</h2>
     <div class="quick-facts">
-      <div class="quick-facts-row"><div class="qf-label">📅 Best month</div><div class="qf-value"><strong>March</strong> — score 8.5/10</div></div>
+      <div class="quick-facts-row"><div class="qf-label">📅 Best month</div><div class="qf-value"><strong>December</strong> — score 8.5/10</div></div>
       <div class="quick-facts-row"><div class="qf-label">✅ Good months</div><div class="qf-value"><strong>December</strong></div></div>
       <div class="quick-facts-row"><div class="qf-label">🌡️ Peak temperature</div><div class="qf-value"><strong>26°C</strong> in December</div></div>
       <div class="quick-facts-row"><div class="qf-label">☀️ Most sunshine</div><div class="qf-value"><strong>9.3h/day</strong> in December</div></div>
       <div class="quick-facts-row"><div class="qf-label">🌧 Wettest month</div><div class="qf-value"><strong>April</strong> — 6% rainy days</div></div>
     </div>
   </section>
-
-  <section class="section">
-    <div class="section-label">Browse by month</div>
-    <h2 class="section-title">Monthly weather in Dubai</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
-      <a href="dubai-weather-january.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">19°C · 4%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="dubai-weather-february.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">20°C · 4%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="dubai-weather-march.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">24°C · 4%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="dubai-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">28°C · 2%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-may.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">33°C · 1%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-june.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">36°C · 0%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-july.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">38°C · 0%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-august.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">38°C · 0%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-september.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">35°C · 0%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">31°C · 1%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-november.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">25°C · 2%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="dubai-weather-december.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">20°C · 4%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a>
-    </div>
-  </section>
-
-  <section class="section">
-  <div class="section-label">By season</div>
-  <h2 class="section-title">What to expect in Dubai</h2>
-<h3 class="sub-title">🌸 Spring (Mar–May) — Good</h3><p>Average high 33°C, 8% rainy days, 11.0h sunshine/day. Average score: 72/100.</p>
-<h3 class="sub-title">☀️ Summer (Jun–Aug) — Good</h3><p>Average high 41°C, 1% rainy days, 11.6h sunshine/day. Average score: 72/100.</p>
-<h3 class="sub-title">🍂 Autumn (Sep–Nov) — Good</h3><p>Average high 35°C, 5% rainy days, 10.3h sunshine/day. Average score: 66/100.</p>
-<h3 class="sub-title">❄️ Winter (Dec–Feb) — Excellent</h3><p>Average high 25°C, 13% rainy days, 9.4h sunshine/day. Average score: 90/100.</p>
-</section>
-
 <section class="section">
-    <div class="section-label">Full climate table</div>
-    <h2 class="section-title">Month-by-month comparison</h2>
-    <div class="climate-table-wrap">
-      <table class="climate-table">
-        <thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead>
-        <tbody>
-<tr class="rec"><td>January</td><td>14°C</td><td>24°C</td><td>4%</td><td>0.3</td><td>8.6</td><td>★★★★★</td></tr>
-<tr class="rec"><td>February</td><td>15°C</td><td>25°C</td><td>4%</td><td>0.3</td><td>9.2</td><td>★★★★★</td></tr>
-<tr class="rec"><td>March</td><td>18°C</td><td>29°C</td><td>4%</td><td>0.3</td><td>9.8</td><td>★★★★★</td></tr>
-<tr class="rec"><td>April</td><td>22°C</td><td>34°C</td><td>2%</td><td>0.1</td><td>10.4</td><td>★★★★★</td></tr>
-<tr class="rec"><td>May</td><td>27°C</td><td>39°C</td><td>1%</td><td>0.0</td><td>10.8</td><td>★★★★★</td></tr>
-<tr class="rec"><td>Juin ⚠</td><td>30°C</td><td>42°C</td><td>0%</td><td>0.0</td><td>11.2</td><td>★★★★★</td></tr>
-<tr class="rec"><td>Juillet ⚠</td><td>32°C</td><td>44°C</td><td>0%</td><td>0.0</td><td>11.4</td><td>★★★★★</td></tr>
-<tr class="rec"><td>Août ⚠</td><td>32°C</td><td>44°C</td><td>0%</td><td>0.0</td><td>10.8</td><td>★★★★★</td></tr>
-<tr class="rec"><td>September</td><td>29°C</td><td>41°C</td><td>0%</td><td>0.0</td><td>9.8</td><td>★★★★★</td></tr>
-<tr class="rec"><td>October</td><td>25°C</td><td>37°C</td><td>1%</td><td>0.0</td><td>9.4</td><td>★★★★★</td></tr>
-<tr class="rec"><td>November</td><td>19°C</td><td>31°C</td><td>2%</td><td>0.1</td><td>8.8</td><td>★★★★★</td></tr>
-<tr class="rec"><td>December</td><td>15°C</td><td>25°C</td><td>4%</td><td>0.3</td><td>8.2</td><td>★★★★★</td></tr>
-</tbody>
-      </table>
-    </div>
-    <div class="table-legend">
-      <span><span class="legend-dot" style="background:#16a34a"></span>Ideal</span>
-      <span><span class="legend-dot" style="background:#d97706"></span>Acceptable</span>
-      <span><span class="legend-dot" style="background:#dc2626"></span>Off season</span>
-      <span style="margin-left:auto;font-size:10px">Source: Open-Meteo 2015–2024</span>
-    </div>
+    <div class="section-label">By trip type</div>
+    <h2 class="section-title">Best time to visit Dubai by trip type</h2>
+    <div class="project-grid"><div class="project-card"><span class="proj-icon">🏖️</span><span class="proj-title">Beach & pool</span><span class="proj-text">November-April — Jumeirah Beach, Palm. Water 22-26°C.</span></div>
+<div class="project-card"><span class="proj-icon">🛍️</span><span class="proj-title">Shopping & luxury</span><span class="proj-text">January — Dubai Shopping Festival. December — festive atmosphere.</span></div>
+<div class="project-card"><span class="proj-icon">💍</span><span class="proj-title">Wedding</span><span class="proj-text">November-March — see our Dubai wedding guide.</span></div>
+<div class="project-card"><span class="proj-icon">🏙️</span><span class="proj-title">Architecture</span><span class="proj-text">November-March — Burj Khalifa, Dubai Museum, Frame.</span></div>
+<div class="project-card"><span class="proj-icon">👨‍👩‍👧</span><span class="proj-title">Family</span><span class="proj-text">December-March — Aquaventure, desert safari, indoor skiing.</span></div>
+<div class="project-card"><span class="proj-icon">🤿</span><span class="proj-title">Diving</span><span class="proj-text">November-April — excellent visibility, water 24-26°C.</span></div></div>
   </section>
-
-    <div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
+<section class="section">
+    <div class="section-label">Monthly climate table</div>
+    <h2 class="section-title">Weather in Dubai month by month</h2>
+    <div class="climate-table-wrap"><table class="climate-table" aria-label="Monthly climate table Dubai"><thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead><tbody><tr class="rec"><td>January ✦</td><td>14°C</td><td>24°C</td><td>4%</td><td>0.3</td><td>8.6</td><td>★★★★★</td></tr><tr class="rec"><td>February ✦</td><td>15°C</td><td>25°C</td><td>4%</td><td>0.3</td><td>9.2</td><td>★★★★★</td></tr><tr class="rec"><td>March ✦✦</td><td>18°C</td><td>29°C</td><td>4%</td><td>0.3</td><td>9.8</td><td>★★★★★</td></tr><tr class="rec"><td>April ✦</td><td>22°C</td><td>34°C</td><td>2%</td><td>0.1</td><td>10.4</td><td>★★★★★</td></tr><tr class="rec"><td>May</td><td>27°C</td><td>39°C</td><td>1%</td><td>0.0</td><td>10.8</td><td>★★★★★</td></tr><tr class="rec"><td>Juin ⚠</td><td>30°C</td><td>42°C</td><td>0%</td><td>0.0</td><td>11.2</td><td>★★★★★</td></tr><tr class="rec"><td>Juillet ⚠</td><td>32°C</td><td>44°C</td><td>0%</td><td>0.0</td><td>11.4</td><td>★★★★★</td></tr><tr class="rec"><td>Août ⚠</td><td>32°C</td><td>44°C</td><td>0%</td><td>0.0</td><td>10.8</td><td>★★★★★</td></tr><tr class="rec"><td>September</td><td>29°C</td><td>41°C</td><td>0%</td><td>0.0</td><td>9.8</td><td>★★★★★</td></tr><tr class="rec"><td>October</td><td>25°C</td><td>37°C</td><td>1%</td><td>0.0</td><td>9.4</td><td>★★★★★</td></tr><tr class="rec"><td>November ✦</td><td>19°C</td><td>31°C</td><td>2%</td><td>0.1</td><td>8.8</td><td>★★★★★</td></tr><tr class="rec"><td>December ✦</td><td>15°C</td><td>25°C</td><td>4%</td><td>0.3</td><td>8.2</td><td>★★★★★</td></tr></tbody></table></div>
+    <div class="table-legend"><span><span class="legend-dot" style="background:var(--green)"></span>Ideal</span><span><span class="legend-dot" style="background:#d97706"></span>Acceptable</span><span><span class="legend-dot" style="background:var(--red)"></span>Off season</span></div>
+    <p class="mini-note">10 years of Open-Meteo archives (2015–2024). Statistically favourable window — not a day-specific forecast. <a href="methodology.html">Methodology →</a></p>
+  </section>
+<div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
     <strong style="color:var(--navy);display:block;margin-bottom:4px">📊 Data source</strong>
     Scores calculated from <strong>10 years of ERA5 data (2015–2024)</strong> via Open-Meteo, with ECMWF seasonal corrections.
     Dubai has a <strong>Mediterranean</strong> climate — temperatures range from 20°C in winter to 37°C in summer, average precipitation 2%.
-    Best month according to our model: <strong>Mars</strong> (score 94/100).
+    Best month according to our model: <strong>March</strong> (score 94/100).
     <a href="methodology.html" style="color:var(--gold);font-weight:600">See full methodology →</a>
   </div>
-    <section class="section">
+<section class="section">
+    <div class="section-label">Season by season</div>
+    <h2 class="section-title">What to expect in Dubai</h2>
+    <h3 class="sub-title">☀️ Ideal season (Nov–Apr)</h3><p>14-32°C, virtually no rain. December most festive. March best climatically. Beaches, marina and souks in full swing.</p>
+<h3 class="sub-title">🌡 Transition (May, Oct)</h3><p>34-39°C — still manageable in morning and evening. Sea at 30°C in October. Mid-range prices.</p>
+<h3 class="sub-title">🔥 Summer (Jun–Sep): off-season</h3><p>44-46°C with 60-70% humidity. Dubai operates indoors. Dubai residents travel abroad in summer.</p>
+<h3 class="sub-title">🎄 December: peak festive season</h3><p>Marina lights, tourist influx, New Year fireworks. +40-60% higher prices but unique atmosphere.</p>
+  </section>
+<section class="section">
     <div class="section-label">Accommodation</div>
     <h2 class="section-title">Find accommodation in Dubai</h2>
-    <div class="affil-box">
-      <strong>Check availability for the recommended period</strong>
-      <p>Tip: comparing off-peak dates often saves 15–40% for identical weather conditions.</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-782831&dest_type=city&checkin=2026-03-01&checkout=2026-03-07" target="_blank" rel="noopener sponsored">View accommodation in Mars</a>
-      </div>
-      <span class="affil-note">Booking.com partner links · No price increase for you</span>
+    <div class="affil-box"><strong>Check availability for the recommended period</strong><p>Conseil : comparez le créneau hors pic — souvent 15-40% moins cher.</p><div style="display:flex;gap:12px;flex-wrap:wrap"><a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-782831&dest_type=city&checkin=2026-03-01&checkout=2026-03-07" target="_blank" rel="noopener sponsored">Voir en mars</a><a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-782831&dest_type=city&checkin=2026-11-01&checkout=2026-11-07" target="_blank" rel="noopener sponsored" style="background:#0095f7">Voir en novembre (−30%)</a></div><span class="affil-note">Booking.com partner links · No price increase for you</span></div>
+  </section>
+<section class="section">
+    <div class="section-label">Wedding guide</div>
+    <div class="cta-box"><strong>Planning a wedding in Dubai?</strong><p>Our dedicated guide covers ideal months, venue costs and ceremony-specific tips.</p><a class="cta-btn" href="dubai-weather-wedding.html">→ Wedding guide for Dubai</a></div>
+  </section>
+<section class="section">
+    <div class="section-label">Browse by month</div>
+    <h2 class="section-title">Monthly weather in Dubai</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
+      <a href="dubai-weather-january.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">24°C · 14%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="dubai-weather-february.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">25°C · 15%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="dubai-weather-march.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">28°C · 16%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="dubai-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">33°C · 6%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="dubai-weather-may.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">37°C · 2%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-june.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">40°C · 0%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-july.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">41°C · 3%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-august.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">41°C · 1%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-september.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">39°C · 2%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">35°C · 4%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="dubai-weather-november.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">31°C · 8%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="dubai-weather-december.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">26°C · 10%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a>
+    </div>
+  </section>
+<section class="widget-section">
+    <div class="cta-box" style="text-align:center">
+      <strong>📅 Live forecast — next 12 months</strong>
+      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
+      <a class="cta-btn" href="index.html?city=Dubai&lat=25.2&lon=55.27">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Voir les prévisions pour Dubai
+      </a>
+      <div class="cta-sub">Opens in new tab · next 12 months data</div>
     </div>
   </section>
 <section class="section" style="margin-top:32px">
@@ -216,49 +212,20 @@ footer a:hover{color:white;}
     </div>
   </section>
 <section class="section">
-    <div class="section-label">Frequently asked</div>
-    <h2 class="section-title">FAQ — Dubai weather</h2>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What is the best time to visit Dubai?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">December is the best month to visit Dubai, with an average high of 26°C, only 10% rainy days and 9.3 hours of sunshine per day. Weather score: 8.5/10.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What month should I avoid in Dubai?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">If possible, avoid Dubai in April — the weather scores only 6.4/10 with 33°C and 6% rainy days.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">How accurate is this data?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">All figures are averages from 10 years of climate records (2015–2024) via the Open-Meteo API. They represent historical norms, not forecasts.</div>
-      </div>
-    </div>
-  
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">What is the worst month to visit Dubai?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">Août is the least favourable month with a score of 83/100, temperatures around 38°C and 0% rainy days. Août are also best avoided if weather comfort is a priority.</div></div>
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">When should I avoid rain in Dubai?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">The rainiest months in Dubai are Août. For the best chance of dry weather, aim for Mars with only 4% rainy days based on 2015–2024 climate data.</div></div>
-</section>
-  <section class="widget-section">
-    <div class="cta-box" style="text-align:center">
-      <strong>📅 Live forecast — next 12 months</strong>
-      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
-      <a class="cta-btn" href="app.html?city=Dubai&lat=25.2&lon=55.27">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-        See forecast for Dubai
-      </a>
-      <div class="cta-sub">Opens in a new tab · data for the next 12 months</div>
-    </div>
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Frequently asked questions</h2>
+    <div class="faq-list"><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the best time to visit Dubai?<span class="faq-icon">+</span></button><div class="faq-a">March is ideal: 29°C, virtually no rain. December-January is peak festive season. November and April are good compromises.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is Dubai really unbearable in summer?<span class="faq-icon">+</span></button><div class="faq-a">Yes: 44-46°C with 60-70% humidity from June to August. Activities limited to malls.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is Dubai suitable for families?<span class="faq-icon">+</span></button><div class="faq-a">Perfectly Nov-Mar: Aquaventure, KidZania, desert safari, indoor skiing.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the worst month to visit Dubai?<span class="faq-icon">+</span></button><div class="faq-a">August is the least favorable month with a score of 83/100, temperatures around 38°C and 0% rainy days. August should also be avoided if you're looking for the best weather comfort.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">When to avoid rain in Dubai?<span class="faq-icon">+</span></button><div class="faq-a">The wettest months in Dubai are August. To maximize your chances of good weather, choose March which shows only 4% rainy days according to our climate data 2015–2024.</div></div></div></section>
+<section class="other-section">
+    <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy)">Explore other destinations</h2>
+    <div class="dest-grid"><a class="dest-card" href="best-time-to-visit-marrakech.html"><span class="dest-flag">🇲🇦</span><span><span class="dest-name">Marrakech</span><span class="dest-country">Morocco</span></span></a>
+<a class="dest-card" href="best-time-to-visit-bali.html"><span class="dest-flag">🇮🇩</span><span><span class="dest-name">Bali</span><span class="dest-country">Indonesia</span></span></a>
+<a class="dest-card" href="best-time-to-visit-riviera-maya.html"><span class="dest-flag">🇲🇽</span><span><span class="dest-name">Riviera Maya</span><span class="dest-country">Mexico</span></span></a>
+<a class="dest-card" href="best-time-to-visit-tuscany.html"><span class="dest-flag">🇮🇹</span><span><span class="dest-name">Tuscany</span><span class="dest-country">Italy</span></span></a></div>
   </section>
-
-  <div style="margin-top:40px;padding:24px;background:#faf8f3;border-radius:12px;border:1.5px solid #e8e0d0">
-    <p style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e8940a;margin:0 0 10px">Weather rankings</p>
-    <h3 style="font-size:16px;font-weight:700;color:#1a1f2e;margin:0 0 14px">Compare destinations by weather</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px">
-      <a href="../en/best-destinations-weather-ranking-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌍 Global ranking 2026</a>
-      <a href="../en/best-destinations-summer-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">☀️ Best summer destinations</a>
-      <a href="../en/best-destinations-winter-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌴 Best winter sun</a>
-      <a href="../en/best-destinations-wedding-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">💍 Wedding weather</a>
-    </div>
-  </div>
-
 </main>
 <footer>
   <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600;margin-bottom:8px">bestdateweather.com</p>

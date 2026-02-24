@@ -78,19 +78,23 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
 .faq-item.open .faq-a{display:block}
 .sub-title{font-size:15px;font-weight:700;color:#1a1f2e;margin:18px 0 6px}
 
-/* ── Added styles for parity with FR ── */
-.affil-box{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:16px;padding:24px 28px;margin-top:16px;display:flex;flex-direction:column;gap:12px}
-.affil-box strong{font-size:16px;color:var(--navy)}
-.affil-btn{display:inline-block;background:#0070f3;color:white;font-weight:600;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;width:fit-content}
-.affil-btn:hover{background:#0060d0}
-.affil-note{font-size:12px;color:var(--slate2)}
-.cta-box{background:var(--navy);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px 28px;color:white;margin:8px 0}
-.cta-box strong{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;display:block;margin-bottom:10px}
-.cta-box p{color:rgba(255,255,255,.7);margin:0 0 20px;line-height:1.75;font-size:14px}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),#e8940a);color:white;text-decoration:none;font-weight:800;border-radius:10px;padding:12px 22px;font-size:14px}
-.cta-sub{margin-top:12px;font-size:11px;color:rgba(255,255,255,.45)}
-.climate-table tbody tr.mid td{background:#fffbeb!important}
-.climate-table tbody tr.mid td:first-child{color:#d97706}
+/* ── Additional parity styles ── */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+.project-card{background:white;border:1px solid var(--cream2);border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:6px}
+.project-card .proj-icon{font-size:24px}
+.project-card .proj-title{font-weight:600;font-size:14px;color:var(--navy)}
+.project-card .proj-text{font-size:13px;color:var(--slate);line-height:1.5}
+.other-section{padding:40px 0 72px;border-top:1px solid var(--cream2);margin-top:16px}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-top:16px}
+.dest-card{background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid var(--cream2);transition:all .2s;display:flex;align-items:center;gap:10px}
+.dest-card:hover{border-color:var(--gold);background:var(--gold-light);transform:translateY(-2px)}
+.dest-flag{font-size:20px}
+.dest-name{font-size:12px;font-weight:700;color:var(--navy);display:block}
+.dest-country{font-size:10px;color:var(--slate3);font-weight:500}
+.mini-note{font-size:12px;color:var(--slate2);margin-top:10px;line-height:1.7}
+.faq-list{display:flex;flex-direction:column;gap:0;margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid var(--cream2)}
+.faq-item{background:white;border-bottom:1px solid var(--cream2)}
+.faq-item:last-child{border-bottom:none}
 </style>
 </head>
 <body>
@@ -103,50 +107,31 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
   <h1 class="hero-title">Best Time to Visit <em>Goa</em></h1>
   <p class="hero-sub">India's beach paradise — the dry winter months are essential, as the monsoon (Jun–Sep) brings extreme rainfall and rough seas. Best month: <strong>January</strong> — 32°C, score 8.0/10.</p>
   <div class="kicker">Open-Meteo archive 2015–2024 · 15.3°N 74.01°E</div>
-  <div class="hero-stats">
-    <div><span class="hstat-val">January</span><span class="hstat-lbl">Best month</span></div>
-    <div><span class="hstat-val">32°C</span><span class="hstat-lbl">Peak temp</span></div>
-    <div><span class="hstat-val">8.0/10</span><span class="hstat-lbl">Weather score</span></div>
+  <div class="hero-stats" style="margin-top:22px">
+    <div><span class="hstat-val">January &amp; December</span><span class="hstat-lbl">Meilleurs mois</span></div>
+    <div><span class="hstat-val">30°C</span><span class="hstat-lbl">Température optimale</span></div>
+    <div><span class="hstat-val">71%</span><span class="hstat-lbl">Risque pluie in January</span></div>
   </div>
 </header>
 <main class="page">
-  <section class="section">
+<section class="section">
     <div class="section-label">Quick summary</div>
     <h2 class="section-title">When to visit Goa</h2>
     <div class="quick-facts">
-  <div class="quick-facts-row"><div class="qf-label">🌞 Best overall period</div><div class="qf-value"><strong>February</strong></div></div>
-  <div class="quick-facts-row"><div class="qf-label">🌡️ Optimal temperature</div><div class="qf-value"><strong>25–30°C</strong> in January</div></div>
-  <div class="quick-facts-row"><div class="qf-label">🌧 Least rain</div><div class="qf-value"><strong>71%</strong> rainy days in January</div></div>
-  <div class="quick-facts-row"><div class="qf-label">🌧️ Rainy season</div><div class="qf-value"><strong>April &amp; March</strong></div></div>
-  <div class="quick-facts-row"><div class="qf-label">⭐ Overall score</div><div class="qf-value"><strong>5.0/10</strong> in January (rain/temp/sun)</div></div>
-</div>
-  </section>
-
-  <section class="section">
-    <div class="section-label">Browse by month</div>
-    <h2 class="section-title">Monthly weather in Goa</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
-      <a href="goa-weather-january.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">28°C · 71%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="goa-weather-february.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">28°C · 57%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="goa-weather-march.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">29°C · 60%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="goa-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">29°C · 86%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="goa-weather-may.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">28°C · 95%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="goa-weather-june.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">28°C · 90%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="goa-weather-july.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">28°C · 94%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="goa-weather-august.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">27°C · 94%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="goa-weather-september.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">27°C · 97%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="goa-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">27°C · 96%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="goa-weather-november.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">27°C · 97%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="goa-weather-december.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">27°C · 81%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a>
+      <div class="quick-facts-row"><div class="qf-label">📅 Best month</div><div class="qf-value"><strong>January, February, March, November &amp; December</strong> — score 8.0/10</div></div>
+      <div class="quick-facts-row"><div class="qf-label">✅ Best season</div><div class="qf-value"><strong>January, February, March, November &amp; December</strong></div></div>
+      <div class="quick-facts-row"><div class="qf-label">🌡️ Peak temperature</div><div class="qf-value"><strong>32°C</strong> in January</div></div>
+      <div class="quick-facts-row"><div class="qf-label">☀️ Most sunshine</div><div class="qf-value"><strong>13.2h/day</strong> in April</div></div>
+      <div class="quick-facts-row"><div class="qf-label">🌧 Month to avoid</div><div class="qf-value"><strong>—</strong></div></div>
     </div>
   </section>
-
-  <section class="section">
-  <div class="section-label">By season</div>
-  <h2 class="section-title">What to expect in Goa</h2>
-<h3 class="sub-title">🌸 Spring (Mar–May) — Good</h3><p>Average high 34°C, 10% rainy days, 12.8h sunshine/day. Average score: 72/100.</p>
-<h3 class="sub-title">☀️ Summer (Jun–Aug) — To avoid</h3><p>Average high 31°C, 91% rainy days, 6.1h sunshine/day. Average score: 18/100.</p>
-<h3 class="sub-title">🍂 Autumn (Sep–Nov) — Acceptable</h3><p>Average high 32°C, 51% rainy days, 9.2h sunshine/day. Average score: 42/100.</p>
-<h3 class="sub-title">❄️ Winter (Dec–Feb) — Excellent</h3><p>Average high 32°C, 3% rainy days, 11.6h sunshine/day. Average score: 90/100.</p>
-</section>
-
 <section class="section">
-    <div class="section-label">Full climate table</div>
-    <h2 class="section-title">Month-by-month comparison</h2>
+    <div class="section-label">Monthly climate table</div>
+    <h2 class="section-title">Weather in Phuket month by month</h2>
     <div class="climate-table-wrap">
-      <table class="climate-table">
+      <table class="climate-table" aria-label="Monthly climate table Phuket">
         <thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead>
-        <tbody>
-<tr class="rec"><td>January</td><td>25°C</td><td>30°C</td><td>71%</td><td>73.0</td><td>10.3</td><td>★★★★☆</td></tr>
+        <tbody><tr class="rec"><td>January</td><td>25°C</td><td>30°C</td><td>71%</td><td>73.0</td><td>10.3</td><td>★★★★☆</td></tr>
 <tr class="rec"><td>February</td><td>25°C</td><td>31°C</td><td>57%</td><td>31.2</td><td>10.7</td><td>★★★★★</td></tr>
 <tr class="rec"><td>March</td><td>26°C</td><td>32°C</td><td>60%</td><td>49.3</td><td>10.8</td><td>★★★★★</td></tr>
 <tr class="rec"><td>April</td><td>26°C</td><td>32°C</td><td>86%</td><td>104.7</td><td>10.4</td><td>★★★★☆</td></tr>
@@ -157,35 +142,60 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
 <tr class="mid"><td>September</td><td>25°C</td><td>29°C</td><td>97%</td><td>252.8</td><td>8.3</td><td>★★★☆☆</td></tr>
 <tr class="mid"><td>October</td><td>25°C</td><td>29°C</td><td>96%</td><td>260.5</td><td>8.5</td><td>★★★☆☆</td></tr>
 <tr class="mid"><td>November</td><td>25°C</td><td>29°C</td><td>97%</td><td>236.7</td><td>8.2</td><td>★★★☆☆</td></tr>
-<tr class="rec"><td>December</td><td>25°C</td><td>29°C</td><td>81%</td><td>132.3</td><td>9.4</td><td>★★★★☆</td></tr>
-</tbody>
+<tr class="rec"><td>December</td><td>25°C</td><td>29°C</td><td>81%</td><td>132.3</td><td>9.4</td><td>★★★★☆</td></tr></tbody>
       </table>
     </div>
     <div class="table-legend">
-      <span><span class="legend-dot" style="background:#16a34a"></span>Ideal</span>
+      <span><span class="legend-dot" style="background:var(--green)"></span>Ideal</span>
       <span><span class="legend-dot" style="background:#d97706"></span>Acceptable</span>
-      <span><span class="legend-dot" style="background:#dc2626"></span>Monsoon</span>
-      <span style="margin-left:auto;font-size:10px">Source: Open-Meteo 2015–2024</span>
+      <span><span class="legend-dot" style="background:var(--red)"></span>Mousson</span>
+      <span style="margin-left:auto">Source: Open-Meteo Archive · 2015–2024 · Phuket 7.88°N 98.39°E</span>
     </div>
+    <p class="mini-note">10 years of Open-Meteo archives (2015–2024). Statistically favourable window — not a day-specific forecast. <a href="methodology.html">Methodology →</a></p>
   </section>
-
-    <div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
+<div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
     <strong style="color:var(--navy);display:block;margin-bottom:4px">📊 Data source</strong>
     Scores calculated from <strong>10 years of ERA5 data (2015–2024)</strong> via Open-Meteo, with ECMWF seasonal corrections.
     Goa has a <strong>tropical humid</strong> climate — temperatures range from 27°C in winter to 29°C in summer, average precipitation 85%.
-    Best month according to our model: <strong>Février</strong> (score 80/100).
+    Best month according to our model: <strong>February</strong> (score 80/100).
     <a href="methodology.html" style="color:var(--gold);font-weight:600">See full methodology →</a>
   </div>
-    <section class="section">
+<section class="section">
+    <div class="section-label">Season by season</div>
+    <h2 class="section-title">What to expect in Phuket</h2>
+    <h3 class="sub-title">🌸 Spring (March–May) — Wet Season</h3><p>Average temperatures 31°C, 80% of days with rain, 10.2h of sunshine per day. Average score: 42/100.</p>
+<h3 class="sub-title">☀️ Summer (June–August) — Acceptable</h3><p>Average temperatures 29°C, 93% of days with rain, 9.0h of sunshine per day. Average score: 48/100.</p>
+<h3 class="sub-title">🍂 Fall (Sept–Nov) — Acceptable</h3><p>Average temperatures 29°C, 97% of days with rain, 8.3h of sunshine per day. Average score: 47/100.</p>
+<h3 class="sub-title">❄️ Winter (Dec–Feb) — Acceptable</h3><p>Average temperatures 30°C, 70% of days with rain, 10.1h of sunshine per day. Average score: 48/100.</p>
+  </section>
+<section class="section">
     <div class="section-label">Accommodation</div>
-    <h2 class="section-title">Find accommodation in Goa</h2>
+    <h2 class="section-title">Find accommodation in Phuket</h2>
     <div class="affil-box">
       <strong>Check availability for the recommended period</strong>
-      <p>Tip: comparing off-peak dates often saves 15–40% for identical weather conditions.</p>
+      <p>Conseil : comparez aussi le créneau hors pic — souvent 15-40% moins cher pour une météo identique.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-3247014&dest_type=city&checkin=2026-02-01&checkout=2026-02-07" target="_blank" rel="noopener sponsored">View accommodation in Février</a>
+        <a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-3247014&dest_type=city&checkin=2026-01-01&checkout=2026-01-07" target="_blank" rel="noopener sponsored">View accommodation in January</a>
       </div>
       <span class="affil-note">Booking.com partner links · No price increase for you</span>
+    </div>
+  </section>
+<section class="section">
+    <div class="section-label">Browse by month</div>
+    <h2 class="section-title">Monthly weather in Goa</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
+      <a href="goa-weather-january.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">32°C · 4%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="goa-weather-february.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">33°C · 2%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="goa-weather-march.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">33°C · 4%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="goa-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">35°C · 8%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="goa-weather-may.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">35°C · 18%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="goa-weather-june.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">32°C · 82%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★☆☆☆☆</div></a><a href="goa-weather-july.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">30°C · 95%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★☆☆☆☆</div></a><a href="goa-weather-august.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">30°C · 96%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★☆☆☆☆</div></a><a href="goa-weather-september.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">31°C · 88%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★☆☆☆☆</div></a><a href="goa-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">33°C · 52%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="goa-weather-november.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">32°C · 12%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="goa-weather-december.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">32°C · 4%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a>
+    </div>
+  </section>
+<section class="widget-section">
+    <div class="cta-box" style="text-align:center">
+      <strong>📅 Live forecast — next 12 months</strong>
+      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
+      <a class="cta-btn" href="index.html?city=Phuket&lat=7.88&lon=98.39">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Voir les prévisions pour Phuket
+      </a>
+      <div class="cta-sub">Opens in new tab · next 12 months data</div>
     </div>
   </section>
 <section class="section" style="margin-top:32px">
@@ -201,49 +211,13 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
     </div>
   </section>
 <section class="section">
-    <div class="section-label">Frequently asked</div>
-    <h2 class="section-title">FAQ — Goa weather</h2>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What is the best time to visit Goa?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">January is the best month to visit Goa, with 32°C and a weather score of 8.0/10. India's beach paradise — the dry winter months are essential, as the monsoon (Jun–Sep) brings extreme rainfall and rough seas.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What month should I avoid in Goa?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">If possible, avoid Goa in July — that's when conditions are at their least favourable.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">How accurate is this data?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">All figures are averages from 10 years of climate records (2015–2024) via the Open-Meteo API. They represent historical norms, not forecasts.</div>
-      </div>
-    </div>
-  
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">What is the worst month to visit Goa?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">Novembre is the least favourable month with a score of 58/100, temperatures around 27°C and 97% rainy days. Novembre are also best avoided if weather comfort is a priority.</div></div>
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">When should I avoid rain in Goa?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">The rainiest months in Goa are Septembre, Novembre, Octobre. For the best chance of dry weather, aim for Février with only 57% rainy days based on 2015–2024 climate data.</div></div>
-</section>
-  <section class="widget-section">
-    <div class="cta-box" style="text-align:center">
-      <strong>📅 Live forecast — next 12 months</strong>
-      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
-      <a class="cta-btn" href="app.html?city=Goa&lat=15.3&lon=74.01">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-        See forecast for Goa
-      </a>
-      <div class="cta-sub">Opens in a new tab · data for the next 12 months</div>
-    </div>
-  </section>
-
-  <div style="margin-top:40px;padding:24px;background:#faf8f3;border-radius:12px;border:1.5px solid #e8e0d0">
-    <p style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e8940a;margin:0 0 10px">Weather rankings</p>
-    <h3 style="font-size:16px;font-weight:700;color:#1a1f2e;margin:0 0 14px">Compare destinations by weather</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px">
-      <a href="../en/best-destinations-weather-ranking-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌍 Global ranking 2026</a>
-      <a href="../en/best-destinations-summer-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">☀️ Best summer destinations</a>
-      <a href="../en/best-destinations-winter-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌴 Best winter sun</a>
-      <a href="../en/best-destinations-wedding-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">💍 Wedding weather</a>
-    </div>
-  </div>
-
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Frequently asked questions</h2>
+    <div class="faq-list"><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the best time to visit Phuket?<span class="faq-icon">+</span></button><div class="faq-a">January is ideal with 71% rainy days and 30°C. December offers comparable conditions.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the wettest month in Phuket?<span class="faq-icon">+</span></button><div class="faq-a">September is the most humid with 97% of rainy days. Check our monthly table to plan better.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the hottest month in Phuket?<span class="faq-icon">+</span></button><div class="faq-a">March is the hottest with an average of 32°C. January (30°C) offers better comfort.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the worst month to visit Phuket?<span class="faq-icon">+</span></button><div class="faq-a">November is the least favorable month with a score of 58/100, temperatures around 27°C and 97% of rainy days. November should also be avoided if you are looking for the best weather comfort.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">When to avoid rain in Phuket?<span class="faq-icon">+</span></button><div class="faq-a">The wettest months in Phuket are September, November, October. To maximize your chances of good weather, choose February which shows only 57% of days with precipitation according to our climate data 2015–2024.</div></div></div></section>
 </main>
 <footer>
   <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600;margin-bottom:8px">bestdateweather.com</p>

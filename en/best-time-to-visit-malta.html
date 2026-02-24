@@ -78,19 +78,23 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
 .faq-item.open .faq-a{display:block}
 .sub-title{font-size:15px;font-weight:700;color:#1a1f2e;margin:18px 0 6px}
 
-/* ── Added styles for parity with FR ── */
-.affil-box{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:16px;padding:24px 28px;margin-top:16px;display:flex;flex-direction:column;gap:12px}
-.affil-box strong{font-size:16px;color:var(--navy)}
-.affil-btn{display:inline-block;background:#0070f3;color:white;font-weight:600;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;width:fit-content}
-.affil-btn:hover{background:#0060d0}
-.affil-note{font-size:12px;color:var(--slate2)}
-.cta-box{background:var(--navy);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px 28px;color:white;margin:8px 0}
-.cta-box strong{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;display:block;margin-bottom:10px}
-.cta-box p{color:rgba(255,255,255,.7);margin:0 0 20px;line-height:1.75;font-size:14px}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),#e8940a);color:white;text-decoration:none;font-weight:800;border-radius:10px;padding:12px 22px;font-size:14px}
-.cta-sub{margin-top:12px;font-size:11px;color:rgba(255,255,255,.45)}
-.climate-table tbody tr.mid td{background:#fffbeb!important}
-.climate-table tbody tr.mid td:first-child{color:#d97706}
+/* ── Additional parity styles ── */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+.project-card{background:white;border:1px solid var(--cream2);border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:6px}
+.project-card .proj-icon{font-size:24px}
+.project-card .proj-title{font-weight:600;font-size:14px;color:var(--navy)}
+.project-card .proj-text{font-size:13px;color:var(--slate);line-height:1.5}
+.other-section{padding:40px 0 72px;border-top:1px solid var(--cream2);margin-top:16px}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-top:16px}
+.dest-card{background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid var(--cream2);transition:all .2s;display:flex;align-items:center;gap:10px}
+.dest-card:hover{border-color:var(--gold);background:var(--gold-light);transform:translateY(-2px)}
+.dest-flag{font-size:20px}
+.dest-name{font-size:12px;font-weight:700;color:var(--navy);display:block}
+.dest-country{font-size:10px;color:var(--slate3);font-weight:500}
+.mini-note{font-size:12px;color:var(--slate2);margin-top:10px;line-height:1.7}
+.faq-list{display:flex;flex-direction:column;gap:0;margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid var(--cream2)}
+.faq-item{background:white;border-bottom:1px solid var(--cream2)}
+.faq-item:last-child{border-bottom:none}
 </style>
 </head>
 <body>
@@ -103,96 +107,88 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
   <h1 class="hero-title">Best Time to Visit <em>Malta</em></h1>
   <p class="hero-sub">One of Europe's sunniest destinations — Malta's rock-island climate is ideal in shoulder seasons, with 300 days of sunshine a year. Best month: <strong>January</strong> — 28°C, score 7.5/10.</p>
   <div class="kicker">Open-Meteo archive 2015–2024 · 35.9°N 14.51°E</div>
-  <div class="hero-stats">
-    <div><span class="hstat-val">January</span><span class="hstat-lbl">Best month</span></div>
-    <div><span class="hstat-val">28°C</span><span class="hstat-lbl">Peak temp</span></div>
-    <div><span class="hstat-val">7.5/10</span><span class="hstat-lbl">Weather score</span></div>
+  <div class="hero-stats" style="margin-top:22px">
+    <div><span class="hstat-val">June / Sep</span><span class="hstat-lbl">Ideal windows</span></div>
+    <div><span class="hstat-val">320 j/an</span><span class="hstat-lbl">Jours de soleil</span></div>
+    <div><span class="hstat-val">3h Paris</span><span class="hstat-lbl">Vol direct</span></div>
   </div>
 </header>
 <main class="page">
-  <section class="section">
+<section class="section">
     <div class="section-label">Quick summary</div>
     <h2 class="section-title">When to visit Malta</h2>
     <div class="quick-facts">
-      <div class="quick-facts-row"><div class="qf-label">📅 Best month</div><div class="qf-value"><strong>May</strong> — score 7.5/10</div></div>
+      <div class="quick-facts-row"><div class="qf-label">📅 Best month</div><div class="qf-value"><strong>May &amp; June</strong> — score 7.5/10</div></div>
       <div class="quick-facts-row"><div class="qf-label">✅ Best season</div><div class="qf-value"><strong>May &amp; June</strong></div></div>
       <div class="quick-facts-row"><div class="qf-label">🌡️ Peak temperature</div><div class="qf-value"><strong>28°C</strong> in January</div></div>
       <div class="quick-facts-row"><div class="qf-label">☀️ Most sunshine</div><div class="qf-value"><strong>14.2h/day</strong> in July</div></div>
       <div class="quick-facts-row"><div class="qf-label">🌧 Month to avoid</div><div class="qf-value"><strong>—</strong></div></div>
     </div>
   </section>
-
-  <section class="section">
-    <div class="section-label">Browse by month</div>
-    <h2 class="section-title">Monthly weather in Malta</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
-      <a href="malta-weather-january.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">12°C · 42%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="malta-weather-february.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">13°C · 36%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="malta-weather-march.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">14°C · 26%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="malta-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">17°C · 14%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="malta-weather-may.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">20°C · 6%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="malta-weather-june.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">25°C · 2%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="malta-weather-july.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">28°C · 1%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="malta-weather-august.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">28°C · 2%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="malta-weather-september.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">26°C · 6%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="malta-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">22°C · 20%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="malta-weather-november.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">17°C · 36%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="malta-weather-december.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">14°C · 44%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a>
-    </div>
-  </section>
-
-  <section class="section">
-  <div class="section-label">By season</div>
-  <h2 class="section-title">What to expect in Malta</h2>
-<h3 class="sub-title">🌸 Spring (Mar–May) — Good</h3><p>Average high 22°C, 19% rainy days, 10.9h sunshine/day. Average score: 72/100.</p>
-<h3 class="sub-title">☀️ Summer (Jun–Aug) — Good</h3><p>Average high 32°C, 3% rainy days, 13.8h sunshine/day. Average score: 61/100.</p>
-<h3 class="sub-title">🍂 Autumn (Sep–Nov) — Good</h3><p>Average high 24°C, 24% rainy days, 9.4h sunshine/day. Average score: 72/100.</p>
-<h3 class="sub-title">❄️ Winter (Dec–Feb) — Acceptable</h3><p>Average high 16°C, 36% rainy days, 6.6h sunshine/day. Average score: 48/100.</p>
-</section>
-
 <section class="section">
-    <div class="section-label">Full climate table</div>
-    <h2 class="section-title">Month-by-month comparison</h2>
-    <div class="climate-table-wrap">
-      <table class="climate-table">
-        <thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead>
-        <tbody>
-<tr class="mid"><td>January</td><td>10°C</td><td>15°C</td><td>42%</td><td>4.8</td><td>5.6</td><td>★★★☆☆</td></tr>
-<tr class="rec"><td>February</td><td>10°C</td><td>16°C</td><td>36%</td><td>4.0</td><td>6.4</td><td>★★★★☆</td></tr>
-<tr class="rec"><td>March</td><td>11°C</td><td>18°C</td><td>26%</td><td>2.8</td><td>7.6</td><td>★★★★★</td></tr>
-<tr class="rec"><td>April</td><td>13°C</td><td>21°C</td><td>14%</td><td>1.4</td><td>9.0</td><td>★★★★★</td></tr>
-<tr class="rec"><td>May</td><td>16°C</td><td>25°C</td><td>6%</td><td>0.5</td><td>10.4</td><td>★★★★★</td></tr>
-<tr class="rec"><td>June</td><td>20°C</td><td>30°C</td><td>2%</td><td>0.2</td><td>11.4</td><td>★★★★★</td></tr>
-<tr class="rec"><td>July</td><td>23°C</td><td>33°C</td><td>1%</td><td>0.1</td><td>11.8</td><td>★★★★★</td></tr>
-<tr class="rec"><td>August</td><td>24°C</td><td>33°C</td><td>2%</td><td>0.1</td><td>11.2</td><td>★★★★★</td></tr>
-<tr class="rec"><td>September</td><td>22°C</td><td>30°C</td><td>6%</td><td>0.5</td><td>9.4</td><td>★★★★★</td></tr>
-<tr class="rec"><td>October</td><td>18°C</td><td>25°C</td><td>20%</td><td>2.0</td><td>7.4</td><td>★★★★★</td></tr>
-<tr class="rec"><td>November</td><td>14°C</td><td>20°C</td><td>36%</td><td>4.0</td><td>5.8</td><td>★★★★☆</td></tr>
-<tr class="mid"><td>December</td><td>11°C</td><td>16°C</td><td>44%</td><td>4.8</td><td>5.0</td><td>★★★☆☆</td></tr>
-</tbody>
-      </table>
-    </div>
-    <div class="table-legend">
-      <span><span class="legend-dot" style="background:#16a34a"></span>Ideal</span>
-      <span><span class="legend-dot" style="background:#d97706"></span>Acceptable</span>
-      <span><span class="legend-dot" style="background:#dc2626"></span>Off season</span>
-      <span style="margin-left:auto;font-size:10px">Source: Open-Meteo 2015–2024</span>
-    </div>
+    <div class="section-label">By trip type</div>
+    <h2 class="section-title">Best time to visit Malta by trip type</h2>
+    <div class="project-grid"><div class="project-card"><span class="proj-icon">🏖️</span><span class="proj-title">Beach & snorkeling</span><span class="proj-text">June-September — Saint George's Bay, Blue Lagoon, Gozo.</span></div>
+<div class="project-card"><span class="proj-icon">🏰</span><span class="proj-title">Medieval culture</span><span class="proj-text">Year-round — Mdina, Valletta, Hal Saflieni Hypogeum.</span></div>
+<div class="project-card"><span class="proj-icon">💍</span><span class="proj-title">Wedding</span><span class="proj-text">June and September — see our Malta wedding guide.</span></div>
+<div class="project-card"><span class="proj-icon">🛥️</span><span class="proj-title">Comino & caves</span><span class="proj-text">May-September — Blue Lagoon, Blue Grotto of Malta.</span></div>
+<div class="project-card"><span class="proj-icon">👨‍👩‍👧</span><span class="proj-title">Family</span><span class="proj-text">June or September — sea at 24-26°C, historical sites, activities.</span></div>
+<div class="project-card"><span class="proj-icon">💰</span><span class="proj-title">Budget</span><span class="proj-text">November or March — decent weather, prices -40%, sites without queues.</span></div></div>
   </section>
-
-    <div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
+<section class="section">
+    <div class="section-label">Monthly climate table</div>
+    <h2 class="section-title">Weather in Malta month by month</h2>
+    <div class="climate-table-wrap"><table class="climate-table" aria-label="Monthly climate table Malta"><thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead><tbody><tr class="mid"><td>January</td><td>10°C</td><td>15°C</td><td>42%</td><td>4.8</td><td>5.6</td><td>★★★☆☆</td></tr><tr class="rec"><td>February</td><td>10°C</td><td>16°C</td><td>36%</td><td>4.0</td><td>6.4</td><td>★★★★☆</td></tr><tr class="rec"><td>March</td><td>11°C</td><td>18°C</td><td>26%</td><td>2.8</td><td>7.6</td><td>★★★★★</td></tr><tr class="rec"><td>April</td><td>13°C</td><td>21°C</td><td>14%</td><td>1.4</td><td>9.0</td><td>★★★★★</td></tr><tr class="rec"><td>May ✦</td><td>16°C</td><td>25°C</td><td>6%</td><td>0.5</td><td>10.4</td><td>★★★★★</td></tr><tr class="rec"><td>June ✦✦</td><td>20°C</td><td>30°C</td><td>2%</td><td>0.2</td><td>11.4</td><td>★★★★★</td></tr><tr class="rec"><td>July</td><td>23°C</td><td>33°C</td><td>1%</td><td>0.1</td><td>11.8</td><td>★★★★★</td></tr><tr class="rec"><td>August</td><td>24°C</td><td>33°C</td><td>2%</td><td>0.1</td><td>11.2</td><td>★★★★★</td></tr><tr class="rec"><td>September ✦✦</td><td>22°C</td><td>30°C</td><td>6%</td><td>0.5</td><td>9.4</td><td>★★★★★</td></tr><tr class="rec"><td>October</td><td>18°C</td><td>25°C</td><td>20%</td><td>2.0</td><td>7.4</td><td>★★★★★</td></tr><tr class="rec"><td>November</td><td>14°C</td><td>20°C</td><td>36%</td><td>4.0</td><td>5.8</td><td>★★★★☆</td></tr><tr class="mid"><td>December</td><td>11°C</td><td>16°C</td><td>44%</td><td>4.8</td><td>5.0</td><td>★★★☆☆</td></tr></tbody></table></div>
+    <div class="table-legend"><span><span class="legend-dot" style="background:var(--green)"></span>Ideal</span><span><span class="legend-dot" style="background:#d97706"></span>Acceptable</span><span><span class="legend-dot" style="background:var(--red)"></span>Off season</span></div>
+    <p class="mini-note">10 years of Open-Meteo archives (2015–2024). Statistically favourable window — not a day-specific forecast. <a href="methodology.html">Methodology →</a></p>
+  </section>
+<div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
     <strong style="color:var(--navy);display:block;margin-bottom:4px">📊 Data source</strong>
     Scores calculated from <strong>10 years of ERA5 data (2015–2024)</strong> via Open-Meteo, with ECMWF seasonal corrections.
     Malta has a <strong>Mediterranean</strong> climate — temperatures range from 13°C in winter to 27°C in summer, average precipitation 20%.
-    Best month according to our model: <strong>Mai</strong> (score 95/100).
+    Best month according to our model: <strong>May</strong> (score 95/100).
     <a href="methodology.html" style="color:var(--gold);font-weight:600">See full methodology →</a>
   </div>
-    <section class="section">
+<section class="section">
+    <div class="section-label">Season by season</div>
+    <h2 class="section-title">What to expect in Malta</h2>
+    <h3 class="sub-title">🌸 Spring (Apr–May)</h3><p>Malta in spring is lush (rare in summer) with wildflower fields. 21-25°C, 6-14% rain. Ideal for culture — Mdina and Valletta without crowds.</p>
+<h3 class="sub-title">☀️ Summer (June–August)</h3><p>June is the sweet spot (2% rain, 11 hours of sun). July-August is hot (33°C) but the sea (26°C) compensates. Comino's Blue Lagoon is beautiful but crowded in July-August — prefer June.</p>
+<h3 class="sub-title">🍂 Autumn (Sept–Oct)</h3><p>September combines all the qualities: sea at 26°C, reduced crowds, lower prices. October sees the first rains (20%) but remains excellent.</p>
+<h3 class="sub-title">❄️ Winter (Nov–Mar)</h3><p>Malta's winter is mild (10-18°C) — never freezing. Valletta is lively (opera, local festivals). Archaeological sites are empty. Ideal for cultural travelers.</p>
+  </section>
+<section class="section">
     <div class="section-label">Accommodation</div>
     <h2 class="section-title">Find accommodation in Malta</h2>
-    <div class="affil-box">
-      <strong>Check availability for the recommended period</strong>
-      <p>Tip: comparing off-peak dates often saves 15–40% for identical weather conditions.</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-856657&dest_type=country&checkin=2026-05-01&checkout=2026-05-07" target="_blank" rel="noopener sponsored">View accommodation in Mai</a>
-      </div>
-      <span class="affil-note">Booking.com partner links · No price increase for you</span>
+    <div class="affil-box"><strong>Check availability for the recommended period</strong><p>Conseil : comparez le créneau hors pic — souvent 15-40% moins cher.</p><div style="display:flex;gap:12px;flex-wrap:wrap"><a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-856657&dest_type=country&checkin=2026-06-01&checkout=2026-06-07" target="_blank" rel="noopener sponsored">Voir en juin</a><a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-856657&dest_type=country&checkin=2026-09-01&checkout=2026-09-07" target="_blank" rel="noopener sponsored" style="background:#0095f7">Voir en septembre (−20%)</a></div><span class="affil-note">Booking.com partner links · No price increase for you</span></div>
+  </section>
+<section class="section">
+    <div class="section-label">Wedding guide</div>
+    <div class="cta-box"><strong>Planning a wedding in Malta?</strong><p>Our dedicated guide covers ideal months, venue costs and ceremony-specific tips.</p><a class="cta-btn" href="malta-weather-wedding.html">→ Wedding guide for Malta</a></div>
+  </section>
+<section class="section">
+    <div class="section-label">Browse by month</div>
+    <h2 class="section-title">Monthly weather in Malta</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
+      <a href="malta-weather-january.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">16°C · 35%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="malta-weather-february.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">16°C · 32%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="malta-weather-march.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">18°C · 28%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="malta-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">22°C · 18%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="malta-weather-may.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">26°C · 12%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="malta-weather-june.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">30°C · 4%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="malta-weather-july.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">33°C · 2%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="malta-weather-august.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">33°C · 4%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="malta-weather-september.html" style="display:block;padding:12px;background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">30°C · 12%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="malta-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">24°C · 22%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="malta-weather-november.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">19°C · 38%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="malta-weather-december.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">17°C · 42%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a>
+    </div>
+  </section>
+<section class="widget-section">
+    <div class="cta-box" style="text-align:center">
+      <strong>📅 Live forecast — next 12 months</strong>
+      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
+      <a class="cta-btn" href="index.html?city=Valletta&lat=35.9&lon=14.51">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Voir les prévisions pour Valletta
+      </a>
+      <div class="cta-sub">Opens in new tab · next 12 months data</div>
     </div>
   </section>
 <section class="section" style="margin-top:32px">
     <div class="section-label">SIMILAR DESTINATIONS</div>
     <h2 class="section-title">Similar climate to Malta</h2>
     <p style="font-size:14px;color:var(--slate2);line-height:1.8;margin-bottom:16px">
-      The Mediterranean climate profile of Malta is similar to <a href="best-time-to-visit-mykonos.html" style="color:var(--gold);font-weight:600">Mykonos</a> and <a href="best-time-to-visit-santorini.html" style="color:var(--gold);font-weight:600">Santorini</a>.
+      The Mediterranean climate profile of Malta is similar to <a href="best-time-to-visit-mykonos.html" style="color:var(--gold);font-weight:600">Mykonos</a> and <a href="best-time-to-visit-santorini.html" style="color:var(--gold);font-weight:600">Santorin</a>.
       These destinations share comparable temperature ranges and precipitation levels, making them good alternatives depending on your travel dates.
       Find Malta in our <a href="en/best-destinations-summer-weather-2026.html" style="color:var(--gold);font-weight:600">best destinations for summer weather</a>.
     </p>
@@ -201,49 +197,20 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
     </div>
   </section>
 <section class="section">
-    <div class="section-label">Frequently asked</div>
-    <h2 class="section-title">FAQ — Malta weather</h2>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What is the best time to visit Malta?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">January is the best month to visit Malta, with 28°C and a weather score of 7.5/10. One of Europe's sunniest destinations — Malta's rock-island climate is ideal in shoulder seasons, with 300 days of sunshine a year.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What month should I avoid in Malta?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">If possible, avoid Malta in January — that's when conditions are at their least favourable.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">How accurate is this data?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">All figures are averages from 10 years of climate records (2015–2024) via the Open-Meteo API. They represent historical norms, not forecasts.</div>
-      </div>
-    </div>
-  
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">What is the worst month to visit Malta?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">Janvier is the least favourable month with a score of 57/100, temperatures around 12°C and 42% rainy days. Janvier are also best avoided if weather comfort is a priority.</div></div>
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">When should I avoid rain in Malta?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">The rainiest months in Malta are Janvier. For the best chance of dry weather, aim for Mai with only 6% rainy days based on 2015–2024 climate data.</div></div>
-</section>
-  <section class="widget-section">
-    <div class="cta-box" style="text-align:center">
-      <strong>📅 Live forecast — next 12 months</strong>
-      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
-      <a class="cta-btn" href="app.html?city=Malta&lat=35.9&lon=14.51">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-        See forecast for Malta
-      </a>
-      <div class="cta-sub">Opens in a new tab · data for the next 12 months</div>
-    </div>
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Frequently asked questions</h2>
+    <div class="faq-list"><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the best time to visit Malta?<span class="faq-icon">+</span></button><div class="faq-a">June is ideal (2% rain — the driest in the Mediterranean). September is nearly identical but 15-20% cheaper.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the wettest month in Malta?<span class="faq-icon">+</span></button><div class="faq-a">December-January (42-44%) — but even Malta's winter is well below northern Mediterranean average.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is Malta really worth the detour?<span class="faq-icon">+</span></button><div class="faq-a">Yes — UNESCO heritage, crystal-clear sea, underrated gastronomy, prices 25-35% lower than Mallorca or Ibiza for comparable conditions.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the worst month to visit Malta?<span class="faq-icon">+</span></button><div class="faq-a">January is the least favorable month with a score of 57/100, temperatures around 12°C and 42% rainy days. January should also be avoided if you seek the best weather comfort.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">When to avoid rain in Malta?<span class="faq-icon">+</span></button><div class="faq-a">The wettest months in Malta are January. To maximize your chances of good weather, choose May which has only 6% rainy days according to our climate data 2015–2024.</div></div></div></section>
+<section class="other-section">
+    <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy)">Explore other destinations</h2>
+    <div class="dest-grid"><a class="dest-card" href="best-time-to-visit-santorini.html"><span class="dest-flag">🇬🇷</span><span><span class="dest-name">Santorini</span><span class="dest-country">Greece</span></span></a>
+<a class="dest-card" href="best-time-to-visit-ibiza.html"><span class="dest-flag">🇪🇸</span><span><span class="dest-name">Menorca</span><span class="dest-country">Spain</span></span></a>
+<a class="dest-card" href="best-time-to-visit-sicily.html"><span class="dest-flag">🇮🇹</span><span><span class="dest-name">Sicily</span><span class="dest-country">Italy</span></span></a>
+<a class="dest-card" href="best-time-to-visit-cote-azur.html"><span class="dest-flag">🇫🇷</span><span><span class="dest-name">Côte d'Azur</span><span class="dest-country">France</span></span></a></div>
   </section>
-
-  <div style="margin-top:40px;padding:24px;background:#faf8f3;border-radius:12px;border:1.5px solid #e8e0d0">
-    <p style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e8940a;margin:0 0 10px">Weather rankings</p>
-    <h3 style="font-size:16px;font-weight:700;color:#1a1f2e;margin:0 0 14px">Compare destinations by weather</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px">
-      <a href="../en/best-destinations-weather-ranking-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌍 Global ranking 2026</a>
-      <a href="../en/best-destinations-summer-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">☀️ Best summer destinations</a>
-      <a href="../en/best-destinations-winter-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌴 Best winter sun</a>
-      <a href="../en/best-destinations-wedding-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">💍 Wedding weather</a>
-    </div>
-  </div>
-
 </main>
 <footer>
   <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600;margin-bottom:8px">bestdateweather.com</p>

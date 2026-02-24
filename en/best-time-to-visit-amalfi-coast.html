@@ -93,19 +93,23 @@ footer a:hover{color:white;}
 .faq-item.open .faq-a{display:block}
 .sub-title{font-size:15px;font-weight:700;color:#1a1f2e;margin:18px 0 6px}
 
-/* ── Added styles for parity with FR ── */
-.affil-box{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:16px;padding:24px 28px;margin-top:16px;display:flex;flex-direction:column;gap:12px}
-.affil-box strong{font-size:16px;color:var(--navy)}
-.affil-btn{display:inline-block;background:#0070f3;color:white;font-weight:600;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;width:fit-content}
-.affil-btn:hover{background:#0060d0}
-.affil-note{font-size:12px;color:var(--slate2)}
-.cta-box{background:var(--navy);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px 28px;color:white;margin:8px 0}
-.cta-box strong{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;display:block;margin-bottom:10px}
-.cta-box p{color:rgba(255,255,255,.7);margin:0 0 20px;line-height:1.75;font-size:14px}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),#e8940a);color:white;text-decoration:none;font-weight:800;border-radius:10px;padding:12px 22px;font-size:14px}
-.cta-sub{margin-top:12px;font-size:11px;color:rgba(255,255,255,.45)}
-.climate-table tbody tr.mid td{background:#fffbeb!important}
-.climate-table tbody tr.mid td:first-child{color:#d97706}
+/* ── Additional parity styles ── */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px}
+.project-card{background:white;border:1px solid var(--cream2);border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:6px}
+.project-card .proj-icon{font-size:24px}
+.project-card .proj-title{font-weight:600;font-size:14px;color:var(--navy)}
+.project-card .proj-text{font-size:13px;color:var(--slate);line-height:1.5}
+.other-section{padding:40px 0 72px;border-top:1px solid var(--cream2);margin-top:16px}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-top:16px}
+.dest-card{background:white;border-radius:12px;padding:14px 12px;text-decoration:none;border:1.5px solid var(--cream2);transition:all .2s;display:flex;align-items:center;gap:10px}
+.dest-card:hover{border-color:var(--gold);background:var(--gold-light);transform:translateY(-2px)}
+.dest-flag{font-size:20px}
+.dest-name{font-size:12px;font-weight:700;color:var(--navy);display:block}
+.dest-country{font-size:10px;color:var(--slate3);font-weight:500}
+.mini-note{font-size:12px;color:var(--slate2);margin-top:10px;line-height:1.7}
+.faq-list{display:flex;flex-direction:column;gap:0;margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid var(--cream2)}
+.faq-item{background:white;border-bottom:1px solid var(--cream2)}
+.faq-item:last-child{border-bottom:none}
 </style>
 </head>
 <body>
@@ -119,13 +123,13 @@ footer a:hover{color:white;}
   <p class="hero-sub">Month-by-month weather guide based on 10 years of climate data. Best month: <strong>June</strong> — 27°C, 43% rainy days, score 7.0/10.</p>
   <div class="kicker">Open-Meteo archive 2015–2024 · 40.63°N 14.6°E</div>
   <div class="hero-stats" style="margin-top:22px">
-    <div><span class="hstat-val">June</span><span class="hstat-lbl">Best month</span></div>
-    <div><span class="hstat-val">27°C</span><span class="hstat-lbl">Peak temp</span></div>
-    <div><span class="hstat-val">7.0/10</span><span class="hstat-lbl">Weather score</span></div>
+    <div><span class="hstat-val">June / Sep</span><span class="hstat-lbl">Ideal windows</span></div>
+    <div><span class="hstat-val">Bateau</span><span class="hstat-lbl">Solution Jul-August</span></div>
+    <div><span class="hstat-val">May–Oct</span><span class="hstat-lbl">Saison opene</span></div>
   </div>
 </header>
 <main class="page">
-  <section class="section">
+<section class="section">
     <div class="section-label">Quick summary</div>
     <h2 class="section-title">When to visit Amalfi Coast</h2>
     <div class="quick-facts">
@@ -136,78 +140,70 @@ footer a:hover{color:white;}
       <div class="quick-facts-row"><div class="qf-label">🌧 Wettest month</div><div class="qf-value"><strong>January</strong> — 59% rainy days</div></div>
     </div>
   </section>
-
-  <section class="section">
-    <div class="section-label">Browse by month</div>
-    <h2 class="section-title">Monthly weather in Amalfi Coast</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
-      <a href="amalfi-coast-weather-january.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">11°C · 54%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="amalfi-coast-weather-february.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">12°C · 48%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="amalfi-coast-weather-march.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">14°C · 38%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="amalfi-coast-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">16°C · 26%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="amalfi-coast-weather-may.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">20°C · 18%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="amalfi-coast-weather-june.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">24°C · 8%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="amalfi-coast-weather-july.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">28°C · 3%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="amalfi-coast-weather-august.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">28°C · 4%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="amalfi-coast-weather-september.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">25°C · 10%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★★</div></a><a href="amalfi-coast-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">20°C · 32%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="amalfi-coast-weather-november.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">15°C · 46%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="amalfi-coast-weather-december.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">12°C · 52%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a>
-    </div>
-  </section>
-
-  <section class="section">
-  <div class="section-label">By season</div>
-  <h2 class="section-title">What to expect in Amalfi Coast</h2>
-<h3 class="sub-title">🌸 Spring (Mar–May) — Ideal</h3><p>Average high 19°C, 56% rainy days, 10.4h sunshine/day. Average score: 48/100.</p>
-<h3 class="sub-title">☀️ Summer (Jun–Aug) — Good</h3><p>Average high 30°C, 38% rainy days, 13.0h sunshine/day. Average score: 61/100.</p>
-<h3 class="sub-title">🍂 Autumn (Sep–Nov) — Ideal</h3><p>Average high 22°C, 55% rainy days, 8.6h sunshine/day. Average score: 48/100.</p>
-<h3 class="sub-title">❄️ Winter (Dec–Feb) — Average</h3><p>Average high 14°C, 55% rainy days, 7.0h sunshine/day. Average score: 35/100.</p>
-</section>
-
 <section class="section">
-    <div class="section-label">Full climate table</div>
-    <h2 class="section-title">Month-by-month comparison</h2>
-    <div class="climate-table-wrap">
-      <table class="climate-table">
-        <thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead>
-        <tbody>
-<tr class="avoid"><td>January</td><td>8°C</td><td>14°C</td><td>54%</td><td>6.2</td><td>4.6</td><td>★★☆☆☆</td></tr>
-<tr class="mid"><td>February</td><td>8°C</td><td>15°C</td><td>48%</td><td>5.4</td><td>5.4</td><td>★★★☆☆</td></tr>
-<tr class="rec"><td>March</td><td>10°C</td><td>17°C</td><td>38%</td><td>4.0</td><td>6.8</td><td>★★★★☆</td></tr>
-<tr class="rec"><td>April</td><td>13°C</td><td>20°C</td><td>26%</td><td>2.6</td><td>8.4</td><td>★★★★★</td></tr>
-<tr class="rec"><td>May</td><td>17°C</td><td>24°C</td><td>18%</td><td>1.8</td><td>9.8</td><td>★★★★★</td></tr>
-<tr class="rec"><td>June</td><td>21°C</td><td>28°C</td><td>8%</td><td>0.7</td><td>11.0</td><td>★★★★★</td></tr>
-<tr class="rec"><td>July</td><td>24°C</td><td>32°C</td><td>3%</td><td>0.2</td><td>11.6</td><td>★★★★★</td></tr>
-<tr class="rec"><td>August</td><td>24°C</td><td>32°C</td><td>4%</td><td>0.3</td><td>11.0</td><td>★★★★★</td></tr>
-<tr class="rec"><td>September</td><td>21°C</td><td>29°C</td><td>10%</td><td>0.9</td><td>9.4</td><td>★★★★★</td></tr>
-<tr class="rec"><td>October</td><td>17°C</td><td>24°C</td><td>32%</td><td>3.4</td><td>7.0</td><td>★★★★★</td></tr>
-<tr class="rec"><td>November</td><td>12°C</td><td>18°C</td><td>46%</td><td>5.2</td><td>5.0</td><td>★★★★☆</td></tr>
-<tr class="mid"><td>December</td><td>9°C</td><td>14°C</td><td>52%</td><td>5.8</td><td>4.4</td><td>★★★☆☆</td></tr>
-</tbody>
-      </table>
-    </div>
-    <div class="table-legend">
-      <span><span class="legend-dot" style="background:#16a34a"></span>Ideal</span>
-      <span><span class="legend-dot" style="background:#d97706"></span>Acceptable</span>
-      <span><span class="legend-dot" style="background:#dc2626"></span>Off season</span>
-      <span style="margin-left:auto;font-size:10px">Source: Open-Meteo 2015–2024</span>
-    </div>
+    <div class="section-label">By trip type</div>
+    <h2 class="section-title">Best time to visit Amalfi Coast by trip type</h2>
+    <div class="project-grid"><div class="project-card"><span class="proj-icon">🏖️</span><span class="proj-title">Beach & swimming</span><span class="proj-text">June-September — beaches of Positano and Maiori, sea 24-26°C.</span></div>
+<div class="project-card"><span class="proj-icon">🥾</span><span class="proj-title">Path of the Gods</span><span class="proj-text">May or September-October — hiking Agerola-Positano.</span></div>
+<div class="project-card"><span class="proj-icon">💍</span><span class="proj-title">Wedding</span><span class="proj-text">June and September — see our Amalfi Coast wedding guide.</span></div>
+<div class="project-card"><span class="proj-icon">🚢</span><span class="proj-title">Boat excursion</span><span class="proj-text">June-September — Capri, Blue Grotto from Amalfi.</span></div>
+<div class="project-card"><span class="proj-icon">👨‍👩‍👧</span><span class="proj-title">Family</span><span class="proj-text">June — passable roads, reasonable crowds.</span></div>
+<div class="project-card"><span class="proj-icon">📸</span><span class="proj-title">Photography</span><span class="proj-text">September — golden light, empty terraces.</span></div></div>
   </section>
-
-    <div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
+<section class="section">
+    <div class="section-label">Monthly climate table</div>
+    <h2 class="section-title">Weather in Amalfi Coast month by month</h2>
+    <div class="climate-table-wrap"><table class="climate-table" aria-label="Monthly climate table Amalfi Coast"><thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead><tbody><tr class="avoid"><td>January</td><td>8°C</td><td>14°C</td><td>54%</td><td>6.2</td><td>4.6</td><td>★★☆☆☆</td></tr><tr class="mid"><td>February</td><td>8°C</td><td>15°C</td><td>48%</td><td>5.4</td><td>5.4</td><td>★★★☆☆</td></tr><tr class="rec"><td>March</td><td>10°C</td><td>17°C</td><td>38%</td><td>4.0</td><td>6.8</td><td>★★★★☆</td></tr><tr class="rec"><td>April</td><td>13°C</td><td>20°C</td><td>26%</td><td>2.6</td><td>8.4</td><td>★★★★★</td></tr><tr class="rec"><td>May</td><td>17°C</td><td>24°C</td><td>18%</td><td>1.8</td><td>9.8</td><td>★★★★★</td></tr><tr class="rec"><td>June ✦✦</td><td>21°C</td><td>28°C</td><td>8%</td><td>0.7</td><td>11.0</td><td>★★★★★</td></tr><tr class="rec"><td>July</td><td>24°C</td><td>32°C</td><td>3%</td><td>0.2</td><td>11.6</td><td>★★★★★</td></tr><tr class="rec"><td>August</td><td>24°C</td><td>32°C</td><td>4%</td><td>0.3</td><td>11.0</td><td>★★★★★</td></tr><tr class="rec"><td>September ✦✦</td><td>21°C</td><td>29°C</td><td>10%</td><td>0.9</td><td>9.4</td><td>★★★★★</td></tr><tr class="rec"><td>October</td><td>17°C</td><td>24°C</td><td>32%</td><td>3.4</td><td>7.0</td><td>★★★★★</td></tr><tr class="rec"><td>November</td><td>12°C</td><td>18°C</td><td>46%</td><td>5.2</td><td>5.0</td><td>★★★★☆</td></tr><tr class="mid"><td>December</td><td>9°C</td><td>14°C</td><td>52%</td><td>5.8</td><td>4.4</td><td>★★★☆☆</td></tr></tbody></table></div>
+    <div class="table-legend"><span><span class="legend-dot" style="background:var(--green)"></span>Ideal</span><span><span class="legend-dot" style="background:#d97706"></span>Acceptable</span><span><span class="legend-dot" style="background:var(--red)"></span>Off season</span></div>
+    <p class="mini-note">10 years of Open-Meteo archives (2015–2024). Statistically favourable window — not a day-specific forecast. <a href="methodology.html">Methodology →</a></p>
+  </section>
+<div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
     <strong style="color:var(--navy);display:block;margin-bottom:4px">📊 Data source</strong>
     Scores calculated from <strong>10 years of ERA5 data (2015–2024)</strong> via Open-Meteo, with ECMWF seasonal corrections.
     Amalfi Coast has a <strong>temperate</strong> climate — temperatures range from 12°C in winter to 27°C in summer, average precipitation 28%.
-    Best month according to our model: <strong>Juin</strong> (score 95/100).
+    Best month according to our model: <strong>June</strong> (score 95/100).
     <a href="methodology.html" style="color:var(--gold);font-weight:600">See full methodology →</a>
   </div>
-    <section class="section">
+<section class="section">
+    <div class="section-label">Season by season</div>
+    <h2 class="section-title">What to expect in Amalfi Coast</h2>
+    <h3 class="sub-title">🌸 Spring (Apr–May)</h3><p>Lemon trees in bloom, passable roads, 18-24°C. Ideal for the Path of the Gods and excursions to Capri.</p>
+<h3 class="sub-title">☀️ Summer (Jun–Aug)</h3><p>June is the sweet spot. July-August magnificent but SS163 closed — plan travel by boat or early morning.</p>
+<h3 class="sub-title">🍋 Autumn (Sep–Oct)</h3><p>The secret season. Deserted terraces, sea at 24-25°C, golden light on the cliffs.</p>
+<h3 class="sub-title">❄️ Winter (Nov–Mar)</h3><p>Almost deserted. Only Amalfi and Ravello have a few establishments open.</p>
+  </section>
+<section class="section">
     <div class="section-label">Accommodation</div>
     <h2 class="section-title">Find accommodation in Amalfi Coast</h2>
-    <div class="affil-box">
-      <strong>Check availability for the recommended period</strong>
-      <p>Tip: comparing off-peak dates often saves 15–40% for identical weather conditions.</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-118381&dest_type=region&checkin=2026-06-01&checkout=2026-06-07" target="_blank" rel="noopener sponsored">View accommodation in Juin</a>
-      </div>
-      <span class="affil-note">Booking.com partner links · No price increase for you</span>
+    <div class="affil-box"><strong>Check availability for the recommended period</strong><p>Conseil : comparez le créneau hors pic — souvent 15-40% moins cher.</p><div style="display:flex;gap:12px;flex-wrap:wrap"><a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-118381&dest_type=region&checkin=2026-06-01&checkout=2026-06-07" target="_blank" rel="noopener sponsored">Voir en juin</a><a class="affil-btn" href="https://www.booking.com/searchresults.en-gb.html?dest_id=-118381&dest_type=region&checkin=2026-09-01&checkout=2026-09-07" target="_blank" rel="noopener sponsored" style="background:#0095f7">Voir en septembre (−25%)</a></div><span class="affil-note">Booking.com partner links · No price increase for you</span></div>
+  </section>
+<section class="section">
+    <div class="section-label">Wedding guide</div>
+    <div class="cta-box"><strong>Planning a wedding in Amalfi Coast?</strong><p>Our dedicated guide covers ideal months, venue costs and ceremony-specific tips.</p><a class="cta-btn" href="amalfi-coast-weather-wedding.html">→ Wedding guide for Amalfi Coast</a></div>
+  </section>
+<section class="section">
+    <div class="section-label">Browse by month</div>
+    <h2 class="section-title">Monthly weather in Amalfi Coast</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
+      <a href="amalfi-coast-weather-january.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jan</div><div style="font-size:11px;color:#718096">13°C · 59%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="amalfi-coast-weather-february.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Feb</div><div style="font-size:11px;color:#718096">14°C · 55%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="amalfi-coast-weather-march.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Mar</div><div style="font-size:11px;color:#718096">16°C · 58%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="amalfi-coast-weather-april.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Apr</div><div style="font-size:11px;color:#718096">19°C · 52%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="amalfi-coast-weather-may.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">May</div><div style="font-size:11px;color:#718096">22°C · 59%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="amalfi-coast-weather-june.html" style="display:block;padding:12px;background:#fffbeb;border-radius:10px;border:1.5px solid #fde68a;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jun</div><div style="font-size:11px;color:#718096">27°C · 43%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★★☆</div></a><a href="amalfi-coast-weather-july.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Jul</div><div style="font-size:11px;color:#718096">31°C · 29%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="amalfi-coast-weather-august.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Aug</div><div style="font-size:11px;color:#718096">31°C · 43%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="amalfi-coast-weather-september.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Sep</div><div style="font-size:11px;color:#718096">26°C · 51%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="amalfi-coast-weather-october.html" style="display:block;padding:12px;background:white;border-radius:10px;border:1.5px solid #e8e0d0;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Oct</div><div style="font-size:11px;color:#718096">22°C · 52%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★★☆☆</div></a><a href="amalfi-coast-weather-november.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Nov</div><div style="font-size:11px;color:#718096">18°C · 63%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a><a href="amalfi-coast-weather-december.html" style="display:block;padding:12px;background:#fef2f2;border-radius:10px;border:1.5px solid #fca5a5;text-decoration:none;text-align:center"><div style="font-weight:700;font-size:13px;color:#1a1f2e">Dec</div><div style="font-size:11px;color:#718096">15°C · 52%☂</div><div style="font-size:12px;font-weight:700;margin-top:2px">★★☆☆☆</div></a>
+    </div>
+  </section>
+<section class="widget-section">
+    <div class="cta-box" style="text-align:center">
+      <strong>📅 Live forecast — next 12 months</strong>
+      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
+      <a class="cta-btn" href="index.html?city=Amalfi&lat=40.63&lon=14.6">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Voir les prévisions pour Amalfi
+      </a>
+      <div class="cta-sub">Opens in new tab · next 12 months data</div>
     </div>
   </section>
 <section class="section" style="margin-top:32px">
     <div class="section-label">SIMILAR DESTINATIONS</div>
     <h2 class="section-title">Similar climate to Amalfi Coast</h2>
     <p style="font-size:14px;color:var(--slate2);line-height:1.8;margin-bottom:16px">
-      The temperate climate profile of Amalfi Coast is similar to <a href="best-time-to-visit-majorca.html" style="color:var(--gold);font-weight:600">Majorca</a> and <a href="best-time-to-visit-menorca.html" style="color:var(--gold);font-weight:600">Ibiza</a>.
+      The temperate climate profile of Amalfi Coast is similar to <a href="best-time-to-visit-majorca.html" style="color:var(--gold);font-weight:600">Majorque</a> and <a href="best-time-to-visit-menorca.html" style="color:var(--gold);font-weight:600">Ibiza</a>.
       These destinations share comparable temperature ranges and precipitation levels, making them good alternatives depending on your travel dates.
       Find Amalfi Coast in our <a href="en/best-destinations-weather-ranking-2026.html" style="color:var(--gold);font-weight:600">best destinations by weather</a>.
     </p>
@@ -216,49 +212,20 @@ footer a:hover{color:white;}
     </div>
   </section>
 <section class="section">
-    <div class="section-label">Frequently asked</div>
-    <h2 class="section-title">FAQ — Amalfi Coast weather</h2>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What is the best time to visit Amalfi Coast?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">June is the best month to visit Amalfi Coast, with an average high of 27°C, only 43% rainy days and 13.2 hours of sunshine per day. Weather score: 7.0/10.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">What month should I avoid in Amalfi Coast?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">If possible, avoid Amalfi Coast in January — the weather scores only 3.3/10 with 13°C and 59% rainy days.</div>
-      </div>
-      <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px">
-        <div style="font-weight:700;margin-bottom:6px">How accurate is this data?</div>
-        <div style="color:var(--slate2);font-size:14px;line-height:1.6">All figures are averages from 10 years of climate records (2015–2024) via the Open-Meteo API. They represent historical norms, not forecasts.</div>
-      </div>
-    </div>
-  
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">What is the worst month to visit Amalfi Coast?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">Janvier is the least favourable month with a score of 44/100, temperatures around 11°C and 54% rainy days. Janvier are also best avoided if weather comfort is a priority.</div></div>
-<div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white"><div style="font-weight:700;margin-bottom:8px">When should I avoid rain in Amalfi Coast?</div><div style="color:var(--slate2);font-size:14px;line-height:1.6">The rainiest months in Amalfi Coast are Janvier. For the best chance of dry weather, aim for Juin with only 8% rainy days based on 2015–2024 climate data.</div></div>
-</section>
-  <section class="widget-section">
-    <div class="cta-box" style="text-align:center">
-      <strong>📅 Live forecast — next 12 months</strong>
-      <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
-      <a class="cta-btn" href="app.html?city=Amalfi+Coast&lat=40.63&lon=14.6">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-        See forecast for Amalfi Coast
-      </a>
-      <div class="cta-sub">Opens in a new tab · data for the next 12 months</div>
-    </div>
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Frequently asked questions</h2>
+    <div class="faq-list"><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the best time to visit the Amalfi Coast?<span class="faq-icon">+</span></button><div class="faq-a">June is ideal (8% rain, passable roads). September is the connoisseur's season.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is the SS163 road really closed?<span class="faq-icon">+</span></button><div class="faq-a">Yes in July-August. Solution: ferries and hydrofoils connecting Naples, Salerno, Positano and Amalfi.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the wettest month?<span class="faq-icon">+</span></button><div class="faq-a">January (54%) and December (52%).</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the worst month to visit Amalfi Coast?<span class="faq-icon">+</span></button><div class="faq-a">January is the least favorable month with a score of 44/100, temperatures around 11°C and 54% rainy days. January should also be avoided if you are looking for the best weather comfort.</div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">When to avoid rain on the Amalfi Coast?<span class="faq-icon">+</span></button><div class="faq-a">The wettest months on the Amalfi Coast are January. To maximize your chances of good weather, choose June which shows only 8% of days with precipitation according to our 2015–2024 climate data.</div></div></div></section>
+<section class="other-section">
+    <h2 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy)">Explore other destinations</h2>
+    <div class="dest-grid"><a class="dest-card" href="best-time-to-visit-tuscany.html"><span class="dest-flag">🇮🇹</span><span><span class="dest-name">Tuscany</span><span class="dest-country">Italy</span></span></a>
+<a class="dest-card" href="best-time-to-visit-sicily.html"><span class="dest-flag">🇮🇹</span><span><span class="dest-name">Sicily</span><span class="dest-country">Italy</span></span></a>
+<a class="dest-card" href="best-time-to-visit-santorini.html"><span class="dest-flag">🇬🇷</span><span><span class="dest-name">Santorini</span><span class="dest-country">Greece</span></span></a>
+<a class="dest-card" href="best-time-to-visit-ibiza.html"><span class="dest-flag">🇪🇸</span><span><span class="dest-name">Menorca</span><span class="dest-country">Spain</span></span></a></div>
   </section>
-
-  <div style="margin-top:40px;padding:24px;background:#faf8f3;border-radius:12px;border:1.5px solid #e8e0d0">
-    <p style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e8940a;margin:0 0 10px">Weather rankings</p>
-    <h3 style="font-size:16px;font-weight:700;color:#1a1f2e;margin:0 0 14px">Compare destinations by weather</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px">
-      <a href="../en/best-destinations-weather-ranking-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌍 Global ranking 2026</a>
-      <a href="../en/best-destinations-summer-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">☀️ Best summer destinations</a>
-      <a href="../en/best-destinations-winter-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">🌴 Best winter sun</a>
-      <a href="../en/best-destinations-wedding-weather-2026.html" style="background:white;border-radius:10px;padding:12px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#1a1f2e">💍 Wedding weather</a>
-    </div>
-  </div>
-
 </main>
 <footer>
   <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600;margin-bottom:8px">bestdateweather.com</p>
