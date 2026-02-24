@@ -91,9 +91,14 @@
     </div>
   </section>
   <section class="widget-section">
-    <div class="widget-label">Vérifiez vos dates exactes</div>
-    <div class="widget-frame">
-      <iframe tabindex="-1" src="index.html?city=Nice&lat=43.7102&lon=7.262" title="Météo Nice" loading="lazy"></iframe>
+    <div class="cta-box" style="text-align:center">
+      <strong>📅 Prévisions actualisées — 12 prochains mois</strong>
+      <p>Données temps réel avec corrections saisonnières ECMWF · mise à jour quotidienne</p>
+      <a class="cta-btn" href="index.html?city=Nice&lat=43.7102&lon=7.262" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Voir les prévisions pour Nice
+      </a>
+      <div class="cta-sub">S'ouvre dans un nouvel onglet · données des 12 prochains mois</div>
     </div>
   </section>
 </main>
@@ -102,5 +107,4 @@
   <p>Données météo via <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a> · Archive 10 ans (2015–2024)</p>
   <p><a href="index.html">Toutes les destinations</a> · <a href="meilleure-periode-nice.html">Toute l'année à Nice</a> · <a href="en/nice-weather-november.html">English</a></p>
 </footer>
-<script>window.addEventListener('message',function(e){if(e.data&&e.data.type==='bdw-resize'){var frames=document.querySelectorAll('.widget-frame iframe');frames.forEach(function(f){if(f.contentWindow===e.source){var h=Math.min(Math.max(e.data.height,400),1000);f.closest('.widget-frame').style.height=h+'px';}}); }});</script>
 </body></html>

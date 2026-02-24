@@ -167,11 +167,15 @@
       </a>
     </div>
   </section>
-
   <section class="widget-section">
-    <div class="widget-label">Vérifiez vos dates exactes</div>
-    <div class="widget-frame">
-      <iframe tabindex="-1" src="index.html?city=Split&lat=43.51&lon=16.44" title="Météo Split" loading="lazy"></iframe>
+    <div class="cta-box" style="text-align:center">
+      <strong>📅 Prévisions actualisées — 12 prochains mois</strong>
+      <p>Données temps réel avec corrections saisonnières ECMWF · mise à jour quotidienne</p>
+      <a class="cta-btn" href="index.html?city=Split&lat=43.51&lon=16.44" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        Voir les prévisions pour Split
+      </a>
+      <div class="cta-sub">S'ouvre dans un nouvel onglet · données des 12 prochains mois</div>
     </div>
   </section>
 </main>
@@ -184,19 +188,5 @@
     <a href="confidentialite.html" style="color:rgba(255,255,255,.7)">Confidentialité</a> ·
     <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a>
   </p>
-</footer>
-
-<script>
-window.addEventListener('message', function(e){
-  if(e.data && e.data.type === 'bdw-resize'){
-    var frames = document.querySelectorAll('.widget-frame iframe');
-    frames.forEach(function(f){
-      if(f.contentWindow === e.source){
-        var h = Math.min(Math.max(e.data.height, 400), 1000);
-        f.closest('.widget-frame').style.height = h + 'px';
-      }
-    });
-  }
-});
-</script></body>
+</footer></body>
 </html>
