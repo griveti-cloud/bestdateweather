@@ -1390,10 +1390,19 @@ function scoreRain(pct) {
   return Math.max(0, 6 - (pct - 80) * 0.3);
 }
 function scoreRainSmart(pct, mmDay, avgTemp) {
+  // Correction basée sur l'intensité réelle (mm/jour), indépendamment de la température.
+  // < 3mm/j = bruine/averses légères → forte correction (pluie peu gênante)
+  // 3–6mm/j = pluie modérée → correction partielle
+  // > 6mm/j = pluie sérieuse → pas de correction
   var effective = pct;
-  if (avgTemp >= 24 && mmDay != null && mmDay < 8) {
-    var factor = 0.35 + (mmDay / 8) * 0.65;
-    effective = pct * factor;
+  if (mmDay != null) {
+    if (mmDay < 3) {
+      var factor = 0.40 + (mmDay / 3) * 0.30;
+      effective = pct * factor;
+    } else if (mmDay < 6) {
+      var factor = 0.70 + ((mmDay - 3) / 3) * 0.30;
+      effective = pct * factor;
+    }
   }
   return scoreRain(effective);
 }
