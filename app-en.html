@@ -50,14 +50,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .field-wrap{position:relative}
 .field-label{font-size:11px;font-weight:700;color:var(--slate2);letter-spacing:.6px;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:6px}
 .field-label svg{opacity:.6}
-.inp{width:100%;background:white;border:2px solid var(--cream2);border-radius:var(--r-sm);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 40px 13px 16px;outline:none;transition:border-color .2s,box-shadow .2s}
+.inp{width:100%;background:white;border:2px solid var(--cream2);border-radius:var(--r-sm);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 40px 13px 16px;outline:none;transition:outline-color .2s,box-shadow .2s;outline:2px solid transparent}
 .inp::placeholder{color:var(--slate3);font-weight:400}
-.inp:focus{border-color:var(--gold);background:white;box-shadow:0 0 0 4px rgba(232,148,10,.08)}
+.inp:focus{outline-color:var(--gold);background:white;box-shadow:0 0 0 4px rgba(232,148,10,.08)}
 .inp[type=date]{color:var(--navy)}
 .inp[type=date]::-webkit-datetime-edit-fields-wrapper{opacity:1}
 .inp[type=date]::-webkit-calendar-picker-indicator{opacity:0.6;cursor:pointer}
 
-.date-hint{font-size:11px;color:var(--slate2);font-weight:500;margin-top:5px;padding-left:2px}
+.date-hint{font-size:11px;color:var(--slate);font-weight:500;margin-top:5px;padding-left:2px}
 
 /* Autocomplete */
 .inp-wrap{position:relative}
@@ -202,7 +202,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 
 /* ── FOOTER ── */
 @media(max-width:768px){.desktop-only{display:none}}
-.app-footer{text-align:center;padding:20px 20px 40px;font-size:11px;color:var(--slate3)}
+.app-footer{text-align:center;padding:20px 20px 40px;font-size:11px;color:var(--slate)}
 
 /* ── MODE TOGGLE ── */
 .mode-toggle{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
@@ -212,7 +212,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .mode-btn svg{width:20px;height:20px;flex-shrink:0;opacity:.7}
 .mode-btn.active svg{opacity:1}
 .mode-btn-title{font-size:13px;font-weight:700;line-height:1.2;display:block}
-.mode-btn-sub{font-size:10px;font-weight:400;line-height:1.3;display:block;margin-top:2px}
+.mode-btn-sub{font-size:10px;font-weight:500;line-height:1.3;display:block;margin-top:2px;color:var(--slate)}
 
 
 /* ── SCORE MÉTÉO ── */
@@ -312,7 +312,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 #inp-date.has-val{color:var(--navy)}
 
 .unit-toggle{display:inline-flex;align-items:center;gap:0;border-radius:20px;overflow:hidden;border:1.5px solid var(--cream2)}
-.unit-btn{background:white;border:none;padding:5px 14px;font-size:12px;font-weight:700;color:var(--slate2);cursor:pointer;transition:all .15s;letter-spacing:.3px}
+.unit-btn{background:white;border:none;padding:5px 14px;font-size:12px;font-weight:700;color:var(--slate);cursor:pointer;transition:all .15s;letter-spacing:.3px}
 .unit-btn.active{background:var(--navy);color:white}
 .unit-btn:first-child{border-radius:18px 0 0 18px}
 .unit-btn:last-child{border-radius:0 18px 18px 0}
