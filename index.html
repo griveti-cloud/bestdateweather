@@ -2148,8 +2148,7 @@ function renderAnnual(loc, monthly) {
     legendEl.style.cssText = 'display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--slate3);margin-top:10px;align-items:center;padding:0 2px';
     legendEl.innerHTML = '<span><span style="display:inline-block;width:12px;height:3px;background:#1a7a4a;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Recommandé</span>' +
       '<span><span style="display:inline-block;width:12px;height:3px;background:#ef4444;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Moins favorable</span>' +
-      '<span><span style="display:inline-block;width:12px;height:3px;background:#d1c9bc;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Acceptable</span>' +
-      '<span style="margin-left:auto;font-style:italic;font-size:10px">Couleur barre = température moyenne</span>';
+      '<span style="margin-left:auto;font-style:italic;font-size:10px">Couleur barre = température moyenne du mois</span>';
     grid.parentNode.insertBefore(legendEl, grid.nextSibling);
   }
 
