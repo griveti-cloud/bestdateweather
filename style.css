@@ -3,6 +3,8 @@
    bestdateweather.com
    ═══════════════════════════════════════════════════ */
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
 :root{
   --cream:#faf8f3;--cream2:#f0ebe0;--navy:#1a1f2e;
   --gold:#e8940a;--gold2:#f5b020;--gold-light:#fef3d0;
