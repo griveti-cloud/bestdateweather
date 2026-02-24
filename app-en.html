@@ -37,7 +37,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:center}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
 .app-title{font-family:'Fraunces',serif;font-size:clamp(28px,5vw,44px);font-weight:900;color:var(--navy);line-height:1.1;letter-spacing:-.5px;margin-bottom:10px}
-.app-title em{font-style:italic;color:var(--gold);font-weight:900}
+.app-title em{font-style:italic;color:#b06800;font-weight:900}
 .app-sub{font-size:14px;color:var(--slate2);font-weight:400;line-height:1.7;max-width:440px;margin:0 auto 32px}
 
 /* ── SEARCH CARD ── */
@@ -50,9 +50,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 .field-wrap{position:relative}
 .field-label{font-size:11px;font-weight:700;color:var(--slate2);letter-spacing:.6px;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:6px}
 .field-label svg{opacity:.6}
-.inp{width:100%;background:white;border:2px solid var(--cream2);border-radius:var(--r-sm);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 40px 13px 16px;outline:none;transition:outline-color .2s,box-shadow .2s;outline:2px solid transparent}
+.inp{width:100%;background:white;border:2px solid var(--cream2);border-radius:var(--r-sm);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 40px 13px 16px;outline:none;will-change:border-color}
 .inp::placeholder{color:var(--slate3);font-weight:400}
-.inp:focus{outline-color:var(--gold);background:white;box-shadow:0 0 0 4px rgba(232,148,10,.08)}
+#inp-date::placeholder{color:var(--slate2)}
+.inp:focus{border-color:var(--gold);background:white;box-shadow:0 0 0 4px rgba(232,148,10,.08)}
 .inp[type=date]{color:var(--navy)}
 .inp[type=date]::-webkit-datetime-edit-fields-wrapper{opacity:1}
 .inp[type=date]::-webkit-calendar-picker-indicator{opacity:0.6;cursor:pointer}
