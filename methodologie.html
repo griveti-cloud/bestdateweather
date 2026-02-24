@@ -136,7 +136,7 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
       "name": "Comment est calculé le score météo ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Le score sur 100 pondère quatre critères selon votre projet : précipitations (25–45%), température (15–30%), vent (10–25%) et ensoleillement (10–40%). Chaque critère est normalisé entre 0 et 100 avant pondération."
+        "text": "Le score sur 10 pondère quatre critères selon votre projet : précipitations (25–45%), température (15–30%), vent (10–25%) et ensoleillement (10–40%). Chaque critère est normalisé entre 0 et 100 avant pondération."
       }
     }
   ]
@@ -256,7 +256,7 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
   <section class="section" id="score">
     <div class="section-num">4</div>
     <h2>Comment fonctionne le score ?</h2>
-    <p>Le score sur 100 synthétise les conditions météo en fonction de votre projet. Il n'est pas universel : une bonne météo pour un mariage en plein air n'est pas la même que pour un chantier de travaux. Quatre critères sont pondérés différemment selon le profil sélectionné.</p>
+    <p>Le score sur 10 synthétise les conditions météo en fonction de votre projet. Il n'est pas universel : une bonne météo pour un mariage en plein air n'est pas la même que pour un chantier de travaux. Quatre critères sont pondérés différemment selon le profil sélectionné.</p>
 
     <h3>Pondérations par profil</h3>
     <table>
@@ -302,7 +302,7 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
     </div>
 
     <h3>Verdicts</h3>
-    <p>Le score final est converti en verdict qualitatif : <strong>Excellentes conditions</strong> (≥ 75), <strong>Bonnes conditions</strong> (60–74), <strong>Conditions correctes</strong> (45–59), <strong>Conditions difficiles</strong> (&lt; 45). Ces seuils sont identiques pour tous les profils.</p>
+    <p>Le score final est converti en verdict qualitatif : <strong>Idéal</strong> (≥ 8.0/10), <strong>Favorable</strong> (6.5–7.9/10), <strong>Acceptable</strong> (4.5–6.4/10), <strong>Hors saison</strong> (&lt; 4.5/10). Ces seuils sont identiques pour tous les profils.</p>
 
     <div class="callout green">
       <div class="callout-ico">✓</div>
@@ -459,8 +459,10 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
   </main>
 
   <footer>
-    <p>Données météo — <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> · Sources ECMWF, ERA5, DWD, NOAA, Météo-France · Licence CC BY 4.0</p>
-    <p style="margin-top:8px"><a href="note_modele.html">Documentation technique complète</a> · <a href="/">Retour à l'application</a></p>
+    <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
+    <p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Données météo par Open-Meteo.com</a> · Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
+    <p style="margin-top:8px"><a href="index.html" style="color:rgba(255,255,255,.7)">Application météo</a> · <a href="note_modele.html" style="color:rgba(255,255,255,.7)">Note technique</a> · <a href="en/methodology.html" style="color:rgba(255,255,255,.7)"><img src="flags/gb.png" width="20" height="15" alt="GB" style="vertical-align:middle;border-radius:2px"> English version</a></p>
+    <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="mentions-legales.html" style="color:rgba(255,255,255,.7)">Mentions légales</a> · <a href="confidentialite.html" style="color:rgba(255,255,255,.7)">Confidentialité</a> · <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p>
   </footer>
 
 </div>
