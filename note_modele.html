@@ -140,18 +140,20 @@ code{background:#f7f0e3;color:#c2720a;padding:2px 7px;border-radius:5px;font-siz
 
 <h2>5. Score météo projet</h2>
 <div class="section-card">
-<p>Score 0–100 calculé selon le use case sélectionné. Affiché par défaut en mode "Juste la météo" (pondérations neutres). Recalculé <strong>instantanément</strong> lors du changement de use case, sans nouvelle requête API.</p>
+<p>Score calculé en interne sur 0–100, <strong>affiché X.X/10</strong> dans l'interface. Calculé selon le use case sélectionné. Affiché par défaut en mode "Juste la météo" (pondérations neutres). Recalculé <strong>instantanément</strong> lors du changement de use case, sans nouvelle requête API.</p>
 
 <h3>Pondérations par use case</h3>
 <table>
   <thead><tr><th>Critère</th><th>Météo générale</th><th>Mariage</th><th>Voyage</th><th>Festival</th><th>Outdoor</th><th>Travaux</th></tr></thead>
   <tbody>
-    <tr><td>Pluie</td><td>35%</td><td>40%</td><td><strong>45%</strong></td><td>35%</td><td>25%</td><td>40%</td></tr>
-    <tr><td>Température</td><td>25%</td><td>30%</td><td>25%</td><td>25%</td><td>20%</td><td>15%</td></tr>
-    <tr><td>Vent</td><td>20%</td><td>20%</td><td><strong>10%</strong></td><td>25%</td><td>15%</td><td>25%</td></tr>
-    <tr><td>Soleil</td><td>20%</td><td>10%</td><td><strong>20%</strong></td><td>15%</td><td>40%</td><td>20%</td></tr>
+    <tr><td>Pluie</td><td>30%</td><td>40%</td><td><strong>45%</strong></td><td>35%</td><td>25%</td><td>40%</td></tr>
+    <tr><td>Température</td><td><strong>35%</strong></td><td>30%</td><td>25%</td><td>25%</td><td>20%</td><td>15%</td></tr>
+    <tr><td>Vent</td><td>15%</td><td>20%</td><td><strong>10%</strong></td><td>25%</td><td>15%</td><td>25%</td></tr>
+    <tr><td>Soleil</td><td>20%</td><td>10%</td><td><strong>20%</strong></td><td>15%</td><td>25%</td><td>10%</td></tr>
+    <tr><td><em>Total</em></td><td><em>100%</em></td><td><em>100%</em></td><td><em>100%</em></td><td><em>100%</em></td><td><em>85%</em></td><td><em>90%</em></td></tr>
   </tbody>
 </table>
+<p style="font-size:12px;color:#718096;margin-top:4px">⚠ Outdoor et Travaux : total &lt; 100% — pondérations non normalisées, score max théorique respectivement 85 et 90.</p>
 
 <h3>Plages de température idéales</h3>
 <table>
@@ -166,16 +168,17 @@ code{background:#f7f0e3;color:#c2720a;padding:2px 7px;border-radius:5px;font-siz
   </tbody>
 </table>
 
-<h3>Verdicts et seuils</h3>
-<p>Quand la probabilité de pluie est dominante, le verdict reflète en priorité la réalité météo :</p>
+<h3>Verdicts et seuils (getVerdict)</h3>
+<p>Verdicts de la recherche par date. La pluie prime sur le score quand elle est dominante :</p>
 <table>
-  <thead><tr><th>Pluie moyenne</th><th>Score</th><th>Verdict</th></tr></thead>
+  <thead><tr><th>Pluie moyenne</th><th>Score interne (0–100)</th><th>Verdict affiché</th></tr></thead>
   <tbody>
     <tr><td>&gt; 70%</td><td>—</td><td>Journée très pluvieuse</td></tr>
     <tr><td>45–70%</td><td>≥ 75</td><td>Journée pluvieuse — conditions acceptables</td></tr>
     <tr><td>45–70%</td><td>&lt; 75</td><td>Journée pluvieuse</td></tr>
     <tr><td>30–45%</td><td>≥ 78</td><td>Bonnes conditions — averses possibles</td></tr>
     <tr><td>30–45%</td><td>60–77</td><td>Conditions mitigées — averses possibles</td></tr>
+    <tr><td>30–45%</td><td>&lt; 60</td><td>Conditions difficiles</td></tr>
     <tr><td>&lt; 30%</td><td>≥ 85</td><td>Conditions excellentes</td></tr>
     <tr><td>&lt; 30%</td><td>70–84</td><td>Bonnes conditions</td></tr>
     <tr><td>&lt; 30%</td><td>55–69</td><td>Conditions acceptables</td></tr>
@@ -183,9 +186,17 @@ code{background:#f7f0e3;color:#c2720a;padding:2px 7px;border-radius:5px;font-siz
     <tr><td>&lt; 30%</td><td>&lt; 40</td><td>Conditions difficiles</td></tr>
   </tbody>
 </table>
-</div>
-
-<h2>6. Vue annuelle 12 mois</h2>
+<h3>Correction par intensité (scoreRainSmart)</h3>
+<p>Le score pluie n'utilise pas directement le <em>pourcentage</em> de jours pluvieux mais un <strong>pourcentage effectif corrigé</strong> selon l'intensité mm/jour :</p>
+<table>
+  <thead><tr><th>Intensité (mm/j)</th><th>Facteur correctif</th><th>Effet</th></tr></thead>
+  <tbody>
+    <tr><td>&lt; 3 mm/j</td><td>0,40 + (mm/3) × 0,30</td><td>Bruine/averses légères — forte réduction</td></tr>
+    <tr><td>3–6 mm/j</td><td>0,70 + ((mm−3)/3) × 0,30</td><td>Pluie modérée — réduction partielle</td></tr>
+    <tr><td>&gt; 6 mm/j</td><td>1,0 (pas de correction)</td><td>Pluie sérieuse — pénalité pleine</td></tr>
+  </tbody>
+</table>
+<p>Exemple : 60% jours pluvieux à 2 mm/j → effectif ≈ 42% → pénalise beaucoup moins qu'une pluie de 60% à 15 mm/j.</p>
 <div class="section-card">
 <p>Profil climatique mensuel pour comparer les saisons d'une destination. Requête archive couvrant les <strong>3 dernières années complètes</strong>, agrégées par mois. Pas de correction ECMWF.</p>
 
@@ -248,6 +259,7 @@ code{background:#f7f0e3;color:#c2720a;padding:2px 7px;border-radius:5px;font-siz
     <tr><td>Open-Meteo Archive</td><td>Historique 10 ans + Vue annuelle 3 ans</td><td><code>archive-api.open-meteo.com</code></td></tr>
     <tr><td>Open-Meteo Forecast</td><td>Prévisions J+0 à J+7 + offset UTC</td><td><code>api.open-meteo.com</code></td></tr>
     <tr><td>Open-Meteo Seasonal</td><td>ECMWF SEAS5 / EC46</td><td><code>seasonal-api.open-meteo.com</code></td></tr>
+    <tr><td>Open-Meteo Marine</td><td>Température de surface mer (SST)</td><td><code>marine-api.open-meteo.com</code></td></tr>
     <tr><td>Open-Meteo Geocoding</td><td>Géolocalisation villes</td><td><code>geocoding-api.open-meteo.com</code></td></tr>
     <tr><td>USNO Solar Algorithm</td><td>Lever/coucher soleil</td><td>edwilliams.org</td></tr>
   </tbody>
