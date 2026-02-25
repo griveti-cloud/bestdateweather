@@ -2281,6 +2281,15 @@ function monthIconFromData(d) {
     effPct = pct * (0.70 + ((mm - 3) / 3) * 0.30);
   }
 
+  // Correction tropicale : climat chaud = pluies convectives courtes
+  // La probabilité de pluie surestime l'impact visuel réel
+  var avgTemp = d.avgTemp != null ? d.avgTemp : (d.avgTmax != null ? d.avgTmax - 4 : null);
+  if (avgTemp != null && avgTemp >= 22 && sun >= 4) {
+    // Facteur 0.55 à 24°C+, 0.75 à 22°C
+    var tropFactor = avgTemp >= 24 ? 0.55 : 0.55 + (24 - avgTemp) / 2 * 0.10;
+    effPct = effPct * tropFactor;
+  }
+
   // ── Soleil dominant ─────────────────────────────────────────────
   if (effPct <= 25 && sun >= 6) return IC.sun;
   if (effPct <= 35 && sun >= 8) return IC.sun;
