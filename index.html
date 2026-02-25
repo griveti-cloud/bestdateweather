@@ -2321,7 +2321,7 @@ function renderAnnual(loc, monthly) {
     var scoreNum = '<div class="month-score score-num-uc" style="background:' + getScoreColor(score) + ';color:white">' + (score === 100 ? '10' : (score/10).toFixed(1)) + '</div>';
     var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">Tendance saison</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
     var isBest = uc && idx === sorted[0].idx && sorted[0].score >= 60;
-    var badgeHtml = isBest ? '<div class="month-best-badge">🔥 Meilleur mois</div>' : (isRec ? '<div class="month-badge rec">Recommandé</div>' : (isAvoid ? '<div class="month-badge avoid">Moins favorable</div>' : ''));
+    var badgeHtml = (isRec ? '<div class="month-badge rec">Recommandé</div>' : (isAvoid ? '<div class="month-badge avoid">Moins favorable</div>' : '')) + (isBest ? '<div class="month-best-badge">🔥 Meilleur mois</div>' : '');
 
     var tmaxStr = d.avgTmax != null ? Math.round(d.avgTmax) + '°' : '–';
     var tminStr = d.avgTmin != null ? Math.round(d.avgTmin) + '°' : '–';
