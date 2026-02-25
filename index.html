@@ -1673,10 +1673,9 @@ function updateHero(sc, rows) {
   var skyLbl;
   if(avgRain>55)skyLbl='Pluvieux';else if(avgRain>35)skyLbl='Nuageux';else if(peakSol>500&&avgRain<20)skyLbl='Plein soleil';else if(peakSol>250&&avgRain<30)skyLbl='Ensoleillé';else if(peakSol>80)skyLbl='Voilé';else if(peakSol>15)skyLbl='Nuageux';else skyLbl='Couvert';
   window._heroTemp = main.temp || null; document.getElementById('r-temp').innerHTML=(main.temp||'-')+'<sup>\u00b0</sup>';
-  window._heroIco  = getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
   document.getElementById('r-range').textContent=tmin+'\u00b0 / '+tmax+'\u00b0 dans la journée';
   document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
-  document.getElementById('r-icon').innerHTML=window._heroIco;
+  document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
   document.getElementById('r-rain').textContent=avgRain+'%';
   document.getElementById('r-wind').textContent=Math.round(wSum/rows.length)+' km/h';
   document.getElementById('r-sky').textContent=skyLbl;
@@ -1733,13 +1732,6 @@ function buildContextStrip(lat, lon, yr, mo, da) {
   });
   return Promise.all(promises).then(function(results) {
     function avg(arr) { return arr.length ? arr.reduce(function(a,b){return a+b;},0)/arr.length : null; }
-    function getIco(pr, ra) {
-      if (pr > 8)  return '🌧️';
-      if (pr > 3)  return '🌦️';
-      if (ra > 18) return '☀️';
-      if (ra > 8)  return '⛅';
-      return '☁️';
-    }
     var days = [];
     for (var i = 0; i < 7; i++) {
       var d = new Date(yr, mo, da);
@@ -1755,8 +1747,20 @@ function buildContextStrip(lat, lon, yr, mo, da) {
         if (r && r[i]!=null) rad.push(r[i]);
       });
       var tAvg = (tmx.length && tmn.length) ? Math.round((avg(tmx)+avg(tmn))/2) : null;
-      var pr = avg(prc)||0, ra = avg(rad)||0;
-      days.push({offset:i-3, date:d, temp:tAvg, ico:getIco(pr,ra)});
+      var tMin = tmn.length ? avg(tmn) : null;
+      var pr   = avg(prc) || 0;
+      var ra   = avg(rad) || 0;
+      // Conversion données journalières → paramètres de getIcon() (même logique que le hero)
+      // sol  : MJ/m²/j * 25 ≈ W/m² pic (20 MJ/j → 500 W/m², cohérent avec seuils getIcon)
+      // mm   : mm/j / 5 ≈ mm/h équivalent (durée pluie typique ~5h/j)
+      // rain : % d'années avec précip > 0.1mm = probabilité pluie
+      // snow : tmin < 0°C + précipitations
+      var sol      = ra * 25;
+      var mm_h     = pr / 5;
+      var rainPct  = prc.filter(function(v){ return v > 0.1; }).length / (prc.length || 1) * 100;
+      var snow_h   = (tMin !== null && tMin < 0 && pr > 0.1) ? mm_h * 0.3 : 0;
+      // h=12 → icône diurne ; p25=tMin (proxy température basse)
+      days.push({offset:i-3, date:d, temp:tAvg, ico:getIcon(12, tAvg, sol, rainPct, mm_h, snow_h, tMin)});
     }
     return days;
   });
@@ -1770,10 +1774,9 @@ function renderContextStrip(days) {
   cells.innerHTML = days.map(function(d) {
     var lbl = DAYS[d.date.getDay()]+'\u00a0'+d.date.getDate();
     var tmp = (d.offset===0 && window._heroTemp!=null) ? Math.round(window._heroTemp)+'\u00b0' : (d.temp!=null ? d.temp+'\u00b0' : '\u2013');
-    var ico = (d.offset===0 && window._heroIco)        ? window._heroIco                        : d.ico;
     var cls = 'ctx-cell' + (d.offset===0 ? ' ctx-center' : '');
     return '<div class="'+cls+'"><div class="ctx-day">'+lbl+'</div>'
-          +'<div class="ctx-ico">'+ico+'</div>'
+          +'<div class="ctx-ico">'+d.ico+'</div>'
           +'<div class="ctx-temp">'+tmp+'</div></div>';
   }).join('');
   strip.style.display = 'block';

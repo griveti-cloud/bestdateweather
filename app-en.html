@@ -1652,7 +1652,6 @@ function updateHero(sc, rows) {
   return mn+'° / '+mx+'° throughout the day';
 })();
   document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0);
-  window._heroIco = getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0);
   document.getElementById('r-icon').innerHTML=window._heroIco;
   document.getElementById('r-rain').textContent=avgRain+'%';
   document.getElementById('r-wind').textContent=fmtWind(wSum/rows.length);
@@ -1678,13 +1677,6 @@ function buildContextStrip(lat, lon, yr, mo, da) {
   });
   return Promise.all(promises).then(function(results) {
     function avg(arr) { return arr.length ? arr.reduce(function(a,b){return a+b;},0)/arr.length : null; }
-    function getIco(pr, ra) {
-      if (pr > 8)  return '🌧️';
-      if (pr > 3)  return '🌦️';
-      if (ra > 18) return '☀️';
-      if (ra > 8)  return '⛅';
-      return '☁️';
-    }
     var days = [];
     for (var i = 0; i < 7; i++) {
       var d = new Date(yr, mo, da);
@@ -1700,13 +1692,18 @@ function buildContextStrip(lat, lon, yr, mo, da) {
         if (r && r[i]!=null) rad.push(r[i]);
       });
       var tAvg = (tmx.length && tmn.length) ? Math.round((avg(tmx)+avg(tmn))/2) : null;
-      var pr = avg(prc)||0, ra = avg(rad)||0;
-      days.push({offset:i-3, date:d, temp:tAvg, ico:getIco(pr,ra)});
+      var tMin = tmn.length ? avg(tmn) : null;
+      var pr   = avg(prc) || 0;
+      var ra   = avg(rad) || 0;
+      var sol      = ra * 25;
+      var mm_h     = pr / 5;
+      var rainPct  = prc.filter(function(v){ return v > 0.1; }).length / (prc.length || 1) * 100;
+      var snow_h   = (tMin !== null && tMin < 0 && pr > 0.1) ? mm_h * 0.3 : 0;
+      days.push({offset:i-3, date:d, temp:tAvg, ico:getIcon(12, tAvg, sol, rainPct, mm_h, snow_h, tMin)});
     }
     return days;
   });
 }
-
 function renderContextStrip(days) {
   var strip = document.getElementById('ctx-strip');
   var cells = document.getElementById('ctx-strip-cells');
@@ -1717,7 +1714,7 @@ function renderContextStrip(days) {
     var tmp = (d.offset===0 && window._heroTemp!=null) ? Math.round(window._heroTemp)+'\u00b0' : (d.temp!=null ? d.temp+'\u00b0' : '\u2013');
     var cls = 'ctx-cell' + (d.offset===0 ? ' ctx-center' : '');
     return '<div class="'+cls+'"><div class="ctx-day">'+lbl+'</div>'
-          +'<div class="ctx-ico">'+((d.offset===0&&window._heroIco)?window._heroIco:d.ico)+'</div>'
+          +'<div class="ctx-ico">'+d.ico+'</div>'
           +'<div class="ctx-temp">'+tmp+'</div></div>';
   }).join('');
   strip.style.display = 'block';
