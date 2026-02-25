@@ -1378,6 +1378,79 @@ var UC_CONFIG = {
   general:  { label:'General weather',      tempMin:16, tempMax:28, weights:{rain:35,temp:25,wind:20,sun:20} }
 };
 
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SCORING MENSUEL — traduction directe de scoring.py (source de vérité Python)
+// Algorithme : ancrage sur classes rec/mid/avoid + normalisation min-max
+// Toute modification ici doit être répercutée dans scoring.py (et vice versa)
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Clés lat,lon des destinations à régime mousson.
+// scoring.py : TROPICAL_DESTINATIONS — synchroniser à chaque ajout.
+var TROPICAL_KEYS = {
+  "13.75,100.52": true,  // Bangkok   — mousson mai-oct
+  "7.88,98.39":   true,  // Phuket    — mousson mai-nov (côte Andaman)
+  "15.88,108.34": true,  // Hoi An    — mousson sept-déc
+  "13.36,103.86": true,  // Siem Reap — mousson mai-sept
+  "1.35,103.82":  true,  // Singapour — pluies mai-oct
+  "-6.17,39.2":   true,  // Zanzibar  — grande saison des pluies avr
+};
+
+// Plages score par classe — scoring.py : SCORE_RANGES
+var SCORE_RANGES_FICHE = { avoid:[0.5,3.9], mid:[4.0,6.9], rec:[7.0,10.0] };
+
+// scoring.py : t_ideal()
+function tIdeal(tmax) {
+  if (tmax <= 5)  return 0.0;
+  if (tmax <= 14) return (tmax - 5) / 9 * 0.3;
+  if (tmax <= 22) return 0.3 + (tmax - 14) / 8 * 0.5;
+  if (tmax <= 28) return 0.8 + (tmax - 22) / 6 * 0.2;
+  if (tmax <= 35) return 1.0 - (tmax - 28) / 7 * 0.4;
+  return Math.max(0, 0.6 - (tmax - 35) / 10 * 0.3);
+}
+
+// scoring.py : raw_score()  poids 40/35/25
+function rawScoreFiche(tmax, rain, sun) {
+  return 0.40 * tIdeal(tmax)
+       + 0.35 * Math.max(0, 1 - rain / 100)
+       + 0.25 * Math.min(1, sun / 15);
+}
+
+// Classification auto pour destinations sans fiche statique
+function autoClass(r) { return r >= 0.55 ? 'rec' : r >= 0.38 ? 'mid' : 'avoid'; }
+
+/**
+ * scoring.py : compute_scores() — version JS batch.
+ * Écrit monthly[i].ficheScore pour les mois où il est absent.
+ * Les mois déjà renseignés (destinations connues via FICHE_SCORES) sont préservés.
+ */
+function computeAnchoredScores(monthly, ficheKey) {
+  var isTropical = !!TROPICAL_KEYS[ficheKey];
+  if (monthly.every(function(m){ return m.ficheScore != null; })) return;
+
+  var items = monthly.map(function(m, i) {
+    var tmax = m.avgTmax != null ? m.avgTmax : (m.avgTemp || 20);
+    var rain = m.rainPct != null ? m.rainPct : 30;
+    var sun  = m.sunHrs  != null ? m.sunHrs  : 5;
+    var raw  = rawScoreFiche(tmax, rain, sun);
+    return { i: i, raw: raw, cls: autoClass(raw) };
+  });
+
+  ['avoid','mid','rec'].forEach(function(cls) {
+    var grp = items.filter(function(it){ return it.cls === cls; });
+    if (!grp.length) return;
+    var range = (isTropical && cls === 'avoid') ? SCORE_RANGES_FICHE.mid : SCORE_RANGES_FICHE[cls];
+    var lo = range[0], hi = range[1];
+    var raws = grp.map(function(it){ return it.raw; });
+    var mn = Math.min.apply(null, raws), mx = Math.max.apply(null, raws);
+    grp.forEach(function(it, j) {
+      if (monthly[it.i].ficheScore != null) return;
+      var norm  = mx !== mn ? (raws[j] - mn) / (mx - mn) : 0.5;
+      monthly[it.i].ficheScore = Math.round((lo + norm * (hi - lo)) * 10) / 10;
+    });
+  });
+}
+
 function scoreRain(pct) {
   if (pct <= 10) return 100;
   if (pct <= 25) return 100 - (pct - 10) * 2;
@@ -1974,6 +2047,8 @@ function runAnnual() {
       var _ficheKey = loc.lat + ',' + loc.lon;
       var _ficheRef = FICHE_SCORES[_ficheKey] || null;
       if (_ficheRef) { for (var _fi=0; _fi<12; _fi++) monthly[_fi].ficheScore = _ficheRef[_fi]; }
+      // Calcul ancré scoring.py pour destinations inconnues (ficheScore absent)
+      computeAnchoredScores(monthly, _ficheKey);
       // Blend seasonal correction into relevant months
       var now = new Date();
       var nowMo = now.getMonth();
@@ -2116,12 +2191,9 @@ function monthScoreForUC(d, uc) {
   var sRain = scoreRainSmart(d.rainPct, d.avgPrecipMm, d.avgTemp);
   var sSun  = scoreSun((d.sunHrs || 0) * 50);
   if (!uc || uc === 'general') {
-    var avgT = d.avgTemp, sT;
-    if (avgT == null) { sT = 50; }
-    else if (avgT >= 10 && avgT <= 32) { var ideal=21,rng=11; sT = 100 - 20*Math.abs(avgT-ideal)/rng; }
-    else if (avgT < 10) { sT = Math.max(0, 80 - (10 - avgT) * 18); }
-    else { sT = Math.max(0, 80 - (avgT - 32) * 2); }
-    return Math.round(sRain * 0.25 + sT * 0.45 + sSun * 0.30);
+    // ficheScore garanti par computeAnchoredScores (appelé dans runAnnual)
+    // scoring.py est la source de vérité — ne pas recalculer ici
+    return d.ficheScore != null ? Math.round(d.ficheScore * 10) : 50;
   }
   var sTemp = scoreTemp(d.avgTemp, cfg.tempMin, cfg.tempMax);
   var sWind = 85;
