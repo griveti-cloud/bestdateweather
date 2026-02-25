@@ -1431,6 +1431,28 @@ function autoClass(r) { return r >= 0.55 ? 'rec' : r >= 0.38 ? 'mid' : 'avoid'; 
  * Écrit monthly[i].ficheScore pour les mois où il est absent.
  * Les mois déjà renseignés (destinations connues via FICHE_SCORES) sont préservés.
  */
+
+/**
+ * Lookup FICHE_SCORES avec tolérance de proximité.
+ * Le géocodeur Open-Meteo retourne des coords légèrement différentes
+ * de celles stockées dans FICHE_SCORES (ex: Paris 48.85341 vs 48.8566).
+ * Seuil : 0.15° (~17km) — aucune ambiguïté entre destinations du catalogue.
+ * Retourne [key, scores] ou [null, null] si aucun match.
+ */
+function findFicheScores(lat, lon) {
+  var exact = lat + ',' + lon;
+  if (FICHE_SCORES[exact]) return [exact, FICHE_SCORES[exact]];
+  var best = null, bestDist = 0.15;  // seuil max 0.15°
+  for (var k in FICHE_SCORES) {
+    var parts = k.split(',');
+    var dlat = Math.abs(parseFloat(parts[0]) - lat);
+    var dlon = Math.abs(parseFloat(parts[1]) - lon);
+    var dist = Math.sqrt(dlat*dlat + dlon*dlon);
+    if (dist < bestDist) { bestDist = dist; best = k; }
+  }
+  return best ? [best, FICHE_SCORES[best]] : [null, null];
+}
+
 function computeAnchoredScores(monthly, ficheKey) {
   var isTropical = !!TROPICAL_KEYS[ficheKey];
   if (monthly.every(function(m){ return m.ficheScore != null; })) return;
@@ -2103,8 +2125,10 @@ function runAnnual() {
     return Promise.all([archiveP, seasP]).then(function(results) {
       var monthly = results[0], seasonal = results[1] || {};
       // Inject fiche reference scores when destination is known
-      var _ficheKey = loc.lat + ',' + loc.lon;
-      var _ficheRef = FICHE_SCORES[_ficheKey] || null;
+      // findFicheScores : lookup avec proximité 0.15° (géocodeur ≠ coords fiches)
+      var _ficheMatch = findFicheScores(loc.lat, loc.lon);
+      var _ficheKey   = _ficheMatch[0] || (loc.lat + ',' + loc.lon);
+      var _ficheRef   = _ficheMatch[1] || null;
       if (_ficheRef) { for (var _fi=0; _fi<12; _fi++) monthly[_fi].ficheScore = _ficheRef[_fi]; }
       // Calcul ancré scoring.py pour destinations inconnues (ficheScore absent)
       computeAnchoredScores(monthly, _ficheKey);
