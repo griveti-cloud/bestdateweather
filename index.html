@@ -1747,7 +1747,9 @@ function showResults(sc, rows, isForecast, noteText, diffDays) {
 var acTimer=null, acIdx=-1, acData=[], selectedLoc=null;
 function flagEmoji(code){
   if(!code||code.length!==2)return'';
-  return '<img src="flags/'+code.toLowerCase()+'.png" width="20" height="15" alt="'+code.toUpperCase()+'" style="vertical-align:middle;border-radius:2px;margin-right:4px" onerror="this.style.display=\'none\'">';
+  // DOM-TOM : pas de fichier drapeau propre, on utilise le drapeau FR
+  var display = {'GF':'FR','GP':'FR','MQ':'FR','RE':'FR','PM':'FR','YT':'FR','NC':'FR','PF':'FR','WF':'FR','MF':'FR','BL':'FR'}[code] || code;
+  return '<img src="flags/'+display.toLowerCase()+'.png" width="20" height="15" alt="'+code.toUpperCase()+'" style="vertical-align:middle;border-radius:2px;margin-right:4px" onerror="this.style.display=\'none\'">';
 }
 
 function hideAC(){document.getElementById('ac-list').style.display='none';acIdx=-1;}
@@ -1809,10 +1811,12 @@ function getFrTerritory(lat, lon) {
 }
 
 function getAcSub(item) {
-  if (item.country_code === 'FR') {
-    var terr = getFrTerritory(item.latitude, item.longitude);
+  var FR_TERRITORIES = {'GF':'Guyane française','GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'Nouvelle-Calédonie','PF':'Polynésie française'};
+  var isFrDom = !!FR_TERRITORIES[item.country_code];
+  if (item.country_code === 'FR' || isFrDom) {
+    var terr = isFrDom ? FR_TERRITORIES[item.country_code] : getFrTerritory(item.latitude, item.longitude);
     var region = terr || item.admin1 || '';
-    return region + (region ? ', ' : '') + (item.country || 'France');
+    return region + (region ? ', ' : '') + 'France';
   }
   return (item.admin1 || '') + (item.admin1 && item.country ? ', ' : '') + (item.country || '');
 }
@@ -1820,8 +1824,11 @@ function getAcSub(item) {
 function selectAC(i){
   var item=acData[i];if(!item)return;
   // Pour FR : ne jamais afficher admin1, juste le pays
-  var region = (item.country_code === 'FR') ? '' : (item.admin1 || ''); // region masquée dans le champ résultat
-  var country = getCountryName(item);
+  var FR_DOM = {'GF':1,'GP':1,'MQ':1,'RE':1,'PM':1,'YT':1,'NC':1,'PF':1};
+  var FR_TERRITORY_NAMES = {'GF':'Guyane française','GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'Nouvelle-Calédonie','PF':'Polynésie française'};
+  var isFrDom = !!FR_DOM[item.country_code];
+  var region = (item.country_code === 'FR' || isFrDom) ? (isFrDom ? FR_TERRITORY_NAMES[item.country_code] : '') : (item.admin1 || '');
+  var country = isFrDom ? 'France' : getCountryName(item);
   selectedLoc={lat:item.latitude,lon:item.longitude,name:item.name,region:region,country:country};
   var label = item.name;
   if (region) label += ', ' + region;
