@@ -2362,8 +2362,15 @@ function renderAnnual(loc, monthly) {
   var scores = [];
   for (var m = 0; m < 12; m++) scores.push({ idx: m, score: monthScoreForUC(monthly[m], uc || 'general') });
   var sorted = scores.slice().sort(function(a,b){ return b.score - a.score; });
-  var topIdxs   = sorted[0].score >= 55 ? (sorted[1].score >= 55 ? [sorted[0].idx, sorted[1].idx] : [sorted[0].idx]) : [];
-  var worstIdxs = sorted[11].score < 50 ? (sorted[10].score < 50 ? [sorted[10].idx, sorted[11].idx] : [sorted[11].idx]) : [];
+  // Ski : tous les mois >= 70 sont recommandés (pas seulement le top 2)
+  var topIdxs, worstIdxs;
+  if (uc === 'ski') {
+    topIdxs   = scores.filter(function(s){ return s.score >= 70; }).map(function(s){ return s.idx; });
+    worstIdxs = scores.filter(function(s){ return s.score < 40; }).map(function(s){ return s.idx; });
+  } else {
+    topIdxs   = sorted[0].score >= 55 ? (sorted[1].score >= 55 ? [sorted[0].idx, sorted[1].idx] : [sorted[0].idx]) : [];
+    worstIdxs = sorted[11].score < 50 ? (sorted[10].score < 50 ? [sorted[10].idx, sorted[11].idx] : [sorted[11].idx]) : [];
+  }
 
   var now = new Date();
   var startMonth = now.getMonth();
