@@ -1657,6 +1657,7 @@ function updateHero(sc, rows) {
   var skyLbl;
   if(avgRain>55)skyLbl='Pluvieux';else if(avgRain>35)skyLbl='Nuageux';else if(peakSol>500&&avgRain<20)skyLbl='Plein soleil';else if(peakSol>250&&avgRain<30)skyLbl='Ensoleillé';else if(peakSol>80)skyLbl='Voilé';else if(peakSol>15)skyLbl='Nuageux';else skyLbl='Couvert';
   window._heroTemp = main.temp || null;
+  document.getElementById('r-temp').innerHTML=(main.temp||'-')+'<sup>\u00b0</sup>';
   document.getElementById('r-range').textContent=tmin+'\u00b0 / '+tmax+'\u00b0 dans la journée';
   document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
   document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
