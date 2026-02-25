@@ -166,7 +166,8 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
       <li><a href="#sources">Nos sources de données</a></li>
       <li><a href="#horizons">Trois niveaux selon l'horizon temporel</a></li>
       <li><a href="#score">Comment fonctionne le score ?</a></li>
-      <li><a href="#formalisation">Formules de calcul détaillées</a></li>
+      <li><a href="#score-annuel">Score de référence annuel par destination</a></li>
+      <li><a href="#correction-ecmwf">Correction saisonnière ECMWF</a></li>
       <li><a href="#limites">Ce que notre outil ne fait pas</a></li>
       <li><a href="#faq">Questions fréquentes</a></li>
     </ol>
@@ -258,7 +259,8 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
     <h2>Comment fonctionne le score ?</h2>
     <p>Le score sur 10 synthétise les conditions météo en fonction de votre projet. Il n'est pas universel : une bonne météo pour un mariage en plein air n'est pas la même que pour un chantier de travaux. Quatre critères sont pondérés différemment selon le profil sélectionné.</p>
 
-    <h3>Pondérations par profil</h3>
+    <h3>Importance relative par profil</h3>
+    <p>Les quatre facteurs sont pondérés selon une calibration propre à chaque profil, reflétant l'importance relative de chaque critère dans le confort ressenti pour cette activité. À titre indicatif, voici comment les priorités s'articulent :</p>
     <table>
       <thead>
         <tr>
@@ -274,22 +276,23 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
       <tbody>
         <tr>
           <td>Précipitations</td>
-          <td>30 %</td><td>40 %</td><td><strong>45 %</strong></td><td>35 %</td><td>25 %</td><td>40 %</td>
+          <td>●●●</td><td>●●●●</td><td>●●●●●</td><td>●●●●</td><td>●●●</td><td>●●●●</td>
         </tr>
         <tr>
           <td>Température</td>
-          <td><strong>35 %</strong></td><td>30 %</td><td>25 %</td><td>25 %</td><td>20 %</td><td>15 %</td>
+          <td>●●●●</td><td>●●●</td><td>●●●</td><td>●●●</td><td>●●</td><td>●●</td>
         </tr>
         <tr>
           <td>Vent</td>
-          <td>15 %</td><td>20 %</td><td><strong>10 %</strong></td><td>25 %</td><td>15 %</td><td>25 %</td>
+          <td>●●</td><td>●●</td><td>●</td><td>●●●</td><td>●●</td><td>●●●</td>
         </tr>
         <tr>
           <td>Ensoleillement</td>
-          <td>20 %</td><td>10 %</td><td>20 %</td><td>15 %</td><td><strong>40 %</strong></td><td>20 %</td>
+          <td>●●</td><td>●</td><td>●●</td><td>●●</td><td>●●●●●</td><td>●●</td>
         </tr>
       </tbody>
     </table>
+    <p style="font-size:13px;color:var(--slate2);margin-top:10px">● = faible priorité · ●●●●● = priorité dominante. Les poids exacts sont issus d'une calibration interne et ne sont pas divulgués.</p>
 
     <h3>Plages de température idéales</h3>
     <p>Chaque profil définit une plage de température optimale. En dehors de cette plage, le sous-score température diminue progressivement.</p>
@@ -306,80 +309,42 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
 
     <div class="callout green">
       <div class="callout-ico">✓</div>
-      <div class="callout-body">La formule complète, les seuils exacts et les détails de calcul des sous-scores sont disponibles dans la <a href="note_modele.html" style="color:var(--green);font-weight:700;text-decoration:underline">note technique</a> à destination des développeurs et chercheurs.</div>
+      <div class="callout-body">Chaque sous-score est normalisé entre 0 et 100 avant pondération. Le score final est calculé en temps réel à chaque requête, en fonction des données climatiques disponibles pour la date et le lieu sélectionnés.</div>
     </div>
   </section>
 
-  <!-- 4b. FORMALISATION MATHÉMATIQUE -->
-  <section class="section" id="formalisation">
-    <div class="section-num">4b</div>
-    <h2>Formalisation mathématique du modèle</h2>
-    <p>Cette section détaille les fonctions de normalisation exactes utilisées dans le calcul du score. Ces formules sont directement issues du code source de l'application.</p>
+  <!-- 4b. SCORE ANNUEL DE RÉFÉRENCE -->
+  <section class="section" id="score-annuel">
+    <div class="section-num">5</div>
+    <h2>Score de référence annuel par destination</h2>
+    <p>Pour les destinations du catalogue (fiches climatiques), chaque mois de l'année dispose d'un <strong>score de référence</strong> distinct du score de l'application. Ce score reflète l'attractivité climatique intrinsèque du mois, indépendamment de tout profil d'usage.</p>
 
-    <h3>Formule générale du score</h3>
-    <div class="card" style="font-family:monospace;font-size:14px;line-height:2;background:#1a1f2e;color:#f5b020;border-left:4px solid var(--gold)">
-      <div style="color:#a0aec0;font-size:11px;margin-bottom:8px;font-family:'DM Sans',sans-serif;font-weight:600">FORMULE SCORE FINAL</div>
-      Score = W<sub style="font-size:10px">pluie</sub> × S<sub style="font-size:10px">pluie</sub> + W<sub style="font-size:10px">temp</sub> × S<sub style="font-size:10px">temp</sub> + W<sub style="font-size:10px">vent</sub> × S<sub style="font-size:10px">vent</sub> + W<sub style="font-size:10px">soleil</sub> × S<sub style="font-size:10px">soleil</sub>
-      <div style="color:#a0aec0;font-size:12px;margin-top:8px;font-family:'DM Sans',sans-serif">avec Σ W<sub style="font-size:10px">i</sub> = 100 et chaque S<sub style="font-size:10px">i</sub> ∈ [0, 100]</div>
+    <h3>Trois niveaux de saison</h3>
+    <p>Chaque mois est d'abord classé selon son caractère saisonnier global : <strong>recommandé</strong>, <strong>intermédiaire</strong> ou <strong>à éviter</strong>. Cette classification tient compte de la réalité locale au-delà des seules données numériques — par exemple, une destination tropicale en saison des pluies reste différente d'une destination nordique en hiver.</p>
+    <div class="card-grid">
+      <div class="card-mini"><div class="label" style="color:var(--green)">● Recommandé</div><div class="val">7,0 – 10,0</div><div class="sub">Conditions généralement idéales</div></div>
+      <div class="card-mini"><div class="label" style="color:var(--gold)">● Intermédiaire</div><div class="val">4,0 – 6,9</div><div class="sub">Conditions acceptables, quelques compromis</div></div>
+      <div class="card-mini"><div class="label" style="color:#dc2626">● À éviter</div><div class="val">0,5 – 3,9</div><div class="sub">Conditions difficiles ou déconseillées</div></div>
     </div>
 
-    <h3>Normalisation de la température — S<sub>temp</sub></h3>
-    <p>La plage idéale [T<sub>min</sub>, T<sub>max</sub>] est définie par profil (voir tableau section 4). Le score suit une fonction linéaire par morceaux :</p>
-    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
-      <span style="color:#c2720a">Si T ∈ [T<sub>min</sub>, T<sub>max</sub>] :</span> S = 100 − 20 × |T − T<sub>idéal</sub>| / (T<sub>range</sub>)<br>
-      <span style="color:#c2720a">Si T &lt; T<sub>min</sub> (trop froid) :</span> S = max(0, 80 − (T<sub>min</sub>−T) × 8)<br>
-      <span style="color:#c2720a">Si T &gt; T<sub>max</sub> (trop chaud) :</span> S = max(0, 80 − (T−T<sub>max</sub>) × 2)<br>
-      <span style="color:#888;font-size:11px">Pénalité asymétrique : le froid est plus pénalisant que la chaleur — 8pts/°C sous la plage, 2pts/°C au-dessus</span><br>
-      <span style="color:#888;font-size:11px">avec T<sub>idéal</sub> = (T<sub>min</sub>+T<sub>max</sub>)/2 et T<sub>range</sub> = (T<sub>max</sub>−T<sub>min</sub>)/2</span>
-    </div>
-    <p>Exemple : pour un mariage (16–28°C), T<sub>idéal</sub> = 22°C. À 18°C : S = 100 − 20 × 4/6 = <strong>87</strong>. À 12°C (hors plage) : S = max(0, 80 − 4×8) = <strong>48</strong>.</p>
+    <h3>Calibration multi-critères</h3>
+    <p>À l'intérieur de chaque niveau, les mois sont différenciés par une analyse combinée du confort thermique, des précipitations et de l'ensoleillement, calibrée sur 10 ans de données ERA5 (2015–2024). La pondération de ces critères et les fonctions de confort utilisées sont issues d'une calibration interne.</p>
 
-    <h3>Normalisation des précipitations — S<sub>pluie</sub></h3>
-    <p>Basée sur la probabilité de précipitation effective (P<sub>eff</sub>) en 5 paliers linéaires. Une <strong>correction d'intensité</strong> est appliquée selon les mm/jour : une pluie de faible intensité affecte moins le confort qu'une pluie prolongée.</p>
-    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
-      <div style="color:#a0aec0;font-size:11px;margin-bottom:6px;font-family:'DM Sans',sans-serif;font-weight:600">CORRECTION INTENSITÉ (mm/jour)</div>
-      <span style="color:#c2720a">mm/j &lt; 3 (bruine) :</span> P<sub>eff</sub> = P × (0,40 + mm/j × 0,10)<br>
-      <span style="color:#c2720a">3 ≤ mm/j &lt; 6 (modéré) :</span> P<sub>eff</sub> = P × (0,70 + (mm/j−3) × 0,10)<br>
-      <span style="color:#c2720a">mm/j ≥ 6 (sérieux) :</span> P<sub>eff</sub> = P (pas de correction)<br>
-      <div style="border-top:1px solid #e8d5b0;margin-top:8px;padding-top:8px">
-      <span style="color:#c2720a">0–10 % :</span> S = 100<br>
-      <span style="color:#c2720a">10–25 % :</span> S = 100 − (P<sub>eff</sub>−10) × 2<br>
-      <span style="color:#c2720a">25–50 % :</span> S = 70 − (P<sub>eff</sub>−25) × 1,6<br>
-      <span style="color:#c2720a">50–80 % :</span> S = 30 − (P<sub>eff</sub>−50) × 0,8<br>
-      <span style="color:#c2720a">80–100 % :</span> S = max(0, 6 − (P<sub>eff</sub>−80) × 0,3)
-      </div>
-    </div>
-    <p>Exemple : 50% pluie à 2,9 mm/j → P<sub>eff</sub> = 50 × 0,57 = 28,5% → S = 70 − 3,5×1,6 = <strong>64</strong> (vs 46 sans correction).</p>
+    <h3>Spécificités climatiques locales</h3>
+    <p>Certains régimes climatiques requièrent un traitement adapté. Les destinations à forte saisonnalité de mousson (Asie du Sud-Est, Afrique de l'Est) font l'objet d'un ajustement : la saison humide, bien que statistiquement défavorable, reste souvent voyageable grâce à des pluies courtes et intenses. Ce contexte est intégré dans la classification saisonnière de ces destinations.</p>
 
-    <h3>Normalisation du vent — S<sub>vent</sub></h3>
-    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
-      <span style="color:#c2720a">≤ 10 km/h :</span> S = 100<br>
-      <span style="color:#c2720a">10–20 km/h :</span> S = 100 − (V−10) × 3<br>
-      <span style="color:#c2720a">20–40 km/h :</span> S = 70 − (V−20) × 2,5<br>
-      <span style="color:#c2720a">> 40 km/h :</span> S = max(0, 20 − (V−40) × 1)
+    <div class="callout blue">
+      <div class="callout-ico">ℹ️</div>
+      <div class="callout-body">Le score de référence annuel est affiché dans la vue <strong>12 mois</strong> de l'application pour les destinations reconnues. Pour toute autre destination, un score est calculé à la volée selon la même approche multi-critères.</div>
     </div>
+  </section>
 
-    <h3>Normalisation de l'ensoleillement — S<sub>soleil</sub></h3>
-    <p>Basée sur le rayonnement solaire de pointe en W/m² :</p>
-    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
-      <span style="color:#c2720a">≥ 600 W/m² :</span> S = 100 &nbsp;&nbsp;<span style="color:#888;font-size:11px">(plein soleil)</span><br>
-      <span style="color:#c2720a">300–600 W/m² :</span> S = 60 + (R−300)/300 × 40<br>
-      <span style="color:#c2720a">100–300 W/m² :</span> S = 20 + (R−100)/200 × 40<br>
-      <span style="color:#c2720a">< 100 W/m² :</span> S = max(0, R/100 × 20) &nbsp;&nbsp;<span style="color:#888;font-size:11px">(couvert)</span>
-    </div>
-
-    <h3>Correction saisonnière ECMWF — mécanisme exact</h3>
-    <p>Lorsque l'horizon est entre J+8 et J+210, la climatologie historique est ajustée par le modèle saisonnier ECMWF selon trois mécanismes distincts :</p>
-    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
-      <div style="color:#1a5f9a;font-weight:700;font-family:'DM Sans',sans-serif;font-size:12px;margin-bottom:6px">TEMPÉRATURE — décalage additif</div>
-      T<sub>corrigée</sub> = T<sub>historique</sub> + (T<sub>moy_ECMWF</sub> − T<sub>moy_historique</sub>)<br><br>
-      <div style="color:#1a5f9a;font-weight:700;font-family:'DM Sans',sans-serif;font-size:12px;margin-bottom:6px">PRÉCIPITATIONS — pondération mixte 60/40</div>
-      P<sub>corrigée</sub> = P<sub>historique</sub> × f × 0,6 + P<sub>ECMWF</sub> × 0,4<br>
-      <span style="color:#888;font-size:11px">avec f = min(3, max(0,1 ; P<sub>ECMWF</sub> / P<sub>historique_moy</sub>))</span><br><br>
-      <div style="color:#1a5f9a;font-weight:700;font-family:'DM Sans',sans-serif;font-size:12px;margin-bottom:6px">VENT — différentiel additif</div>
-      V<sub>corrigé</sub> = V<sub>historique</sub> + (V<sub>moy_ECMWF</sub> − V<sub>moy_historique</sub>)
-    </div>
-    <p>La correction de température préserve la variabilité horaire historique (spread P25–P75) en appliquant un ratio d'échelle basé sur le rapport entre la dispersion ECMWF et la dispersion historique, plafonné entre 0,3 et 2,5.</p>
+  <!-- 4c. CORRECTION SAISONNIÈRE -->
+  <section class="section" id="correction-ecmwf">
+    <div class="section-num">6</div>
+    <h2>Correction saisonnière ECMWF</h2>
+    <p>Lorsque l'horizon est entre J+8 et J+210, la climatologie historique est ajustée par les signaux d'anomalie du modèle saisonnier ECMWF. Ce mécanisme fusionne progressivement les données historiques avec les tendances projetées, en traitant différemment la température, les précipitations et le vent selon leur prévisibilité respective à moyen terme.</p>
+    <p>L'objectif est de détecter les écarts significatifs par rapport à la normale — une saison anormalement humide, un hiver plus doux que la moyenne — sans prétendre à la précision d'une prévision court terme.</p>
 
     <h3>Précision indicative du modèle</h3>
     <div class="card-grid">
@@ -401,13 +366,13 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
     </div>
     <div class="callout blue">
       <div class="callout-ico">ℹ️</div>
-      <div class="callout-body">Ces chiffres reflètent les performances documentées des sources que nous utilisons (Open-Meteo, ERA5, ECMWF), pas un backtesting indépendant réalisé par BestDateWeather. Une calibration empirique complète est prévue.</div>
+      <div class="callout-body">Ces chiffres reflètent les performances documentées des sources que nous utilisons (Open-Meteo, ERA5, ECMWF), pas un backtesting indépendant réalisé par BestDateWeather.</div>
     </div>
   </section>
 
   <!-- 5. LIMITES -->
   <section class="section" id="limites">
-    <div class="section-num">5</div>
+    <div class="section-num">7</div>
     <h2>Ce que notre outil ne fait pas</h2>
     <p>Nous préférons être clairs sur les limites plutôt que de les minimiser.</p>
 
@@ -427,7 +392,7 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
 
   <!-- 6. FAQ -->
   <section class="section" id="faq">
-    <div class="section-num">6</div>
+    <div class="section-num">8</div>
     <h2>Questions fréquentes</h2>
 
     <div class="card">

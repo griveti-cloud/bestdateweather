@@ -167,7 +167,8 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
       <li><a href="#sources">Our data sources</a></li>
       <li><a href="#horizons">Three levels by time horizon</a></li>
       <li><a href="#score">How does the score work?</a></li>
-      <li><a href="#formalisation">Detailed calculation formulas</a></li>
+      <li><a href="#annual-score">Annual reference score by destination</a></li>
+      <li><a href="#ecmwf-correction">ECMWF seasonal correction</a></li>
       <li><a href="#limites">What our tool does not do</a></li>
       <li><a href="#faq">Frequently asked questions</a></li>
     </ol>
@@ -259,38 +260,28 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
     <h2>How does the score work?</h2>
     <p>The score out of 10 summarises weather conditions according to your project. It is not universal: good weather for an outdoor wedding is not the same as for a construction site. Four criteria are weighted differently depending on the selected profile.</p>
 
-    <h3>Weights by profile</h3>
+    <h3>Relative importance by profile</h3>
+    <p>The four factors are weighted according to a calibration specific to each profile, reflecting the relative importance of each criterion for the comfort felt during that activity.</p>
     <table>
       <thead>
         <tr>
           <th>Criterion</th>
-          <th>🌤 Général</th>
-          <th>💍 Mariage</th>
-          <th>✈️ Voyage</th>
+          <th>🌤 General</th>
+          <th>💍 Wedding</th>
+          <th>✈️ Travel</th>
           <th>🎵 Festival</th>
           <th>🏔 Outdoor</th>
-          <th>🏗 Construction</th>
+          <th>🏗 Work</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Precipitation</td>
-          <td>30 %</td><td>40 %</td><td><strong>45 %</strong></td><td>35 %</td><td>25 %</td><td>40 %</td>
-        </tr>
-        <tr>
-          <td>Temperature</td>
-          <td><strong>35 %</strong></td><td>30 %</td><td>25 %</td><td>25 %</td><td>20 %</td><td>15 %</td>
-        </tr>
-        <tr>
-          <td>Wind</td>
-          <td>15 %</td><td>20 %</td><td><strong>10 %</strong></td><td>25 %</td><td>15 %</td><td>25 %</td>
-        </tr>
-        <tr>
-          <td>Sunshine</td>
-          <td>20 %</td><td>10 %</td><td>20 %</td><td>15 %</td><td><strong>40 %</strong></td><td>20 %</td>
-        </tr>
+        <tr><td>Precipitation</td><td>●●●</td><td>●●●●</td><td>●●●●●</td><td>●●●●</td><td>●●●</td><td>●●●●</td></tr>
+        <tr><td>Temperature</td><td>●●●●</td><td>●●●</td><td>●●●</td><td>●●●</td><td>●●</td><td>●●</td></tr>
+        <tr><td>Wind</td><td>●●</td><td>●●</td><td>●</td><td>●●●</td><td>●●</td><td>●●●</td></tr>
+        <tr><td>Sunshine</td><td>●●</td><td>●</td><td>●●</td><td>●●</td><td>●●●●●</td><td>●●</td></tr>
       </tbody>
     </table>
+    <p style="font-size:13px;color:var(--slate2);margin-top:10px">● = low priority · ●●●●● = dominant priority. Exact weights are the result of internal calibration and are not disclosed.</p>
 
     <h3>Ideal temperature ranges</h3>
     <p>Each profile defines an optimal temperature range. Outside this range, the temperature sub-score decreases progressively.</p>
@@ -311,81 +302,49 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
     </div>
   </section>
 
-  <!-- 4b. FORMALISATION MATHÉMATIQUE -->
-  <section class="section" id="formalisation">
-    <div class="section-num">4b</div>
-    <h2>Mathematical formalization of the model</h2>
-    <p>This section details the exact normalization functions used in the score calculation. These formulas are drawn directly from the application source code.</p>
+    <!-- 4b. ANNUAL REFERENCE SCORE -->
+  <section class="section" id="annual-score">
+    <div class="section-num">5</div>
+    <h2>Annual reference score by destination</h2>
+    <p>For destinations in the catalogue (climate pages), each month of the year has a <strong>reference score</strong> distinct from the app score. This score reflects the intrinsic climatic attractiveness of the month, independently of any usage profile.</p>
 
-    <h3>General score formula</h3>
-    <div class="card" style="font-family:monospace;font-size:14px;line-height:2;background:#1a1f2e;color:#f5b020;border-left:4px solid var(--gold)">
-      <div style="color:#a0aec0;font-size:11px;margin-bottom:8px;font-family:'DM Sans',sans-serif;font-weight:600">FINAL SCORE FORMULA</div>
-      Score = W<sub style="font-size:10px">pluie</sub> × S<sub style="font-size:10px">pluie</sub> + W<sub style="font-size:10px">temp</sub> × S<sub style="font-size:10px">temp</sub> + W<sub style="font-size:10px">vent</sub> × S<sub style="font-size:10px">vent</sub> + W<sub style="font-size:10px">soleil</sub> × S<sub style="font-size:10px">soleil</sub>
-      <div style="color:#a0aec0;font-size:12px;margin-top:8px;font-family:'DM Sans',sans-serif">avec Σ W<sub style="font-size:10px">i</sub> = 100 et chaque S<sub style="font-size:10px">i</sub> ∈ [0, 100]</div>
+    <h3>Three seasonal levels</h3>
+    <p>Each month is first classified by its overall seasonal character: <strong>recommended</strong>, <strong>intermediate</strong>, or <strong>avoid</strong>. This classification accounts for local reality beyond raw numbers — a tropical destination during rainy season differs meaningfully from a northern destination in winter.</p>
+    <div class="card-grid">
+      <div class="card-mini"><div class="label" style="color:var(--green)">● Recommended</div><div class="val">7.0 – 10.0</div><div class="sub">Generally ideal conditions</div></div>
+      <div class="card-mini"><div class="label" style="color:var(--gold)">● Intermediate</div><div class="val">4.0 – 6.9</div><div class="sub">Acceptable conditions, some trade-offs</div></div>
+      <div class="card-mini"><div class="label" style="color:#dc2626">● Avoid</div><div class="val">0.5 – 3.9</div><div class="sub">Difficult or inadvisable conditions</div></div>
     </div>
 
-    <h3>Temperature normalization — S<sub>temp</sub></h3>
-    <p>The ideal range [T<sub>min</sub>, T<sub>max</sub>] is defined per profile (see table in section 4). The score follows a piecewise linear function:</p>
-    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
-      <span style="color:#c2720a">If T ∈ [T<sub>min</sub>, T<sub>max</sub>] :</span> S = 100 − 20 × |T − T<sub>idéal</sub>| / (T<sub>range</sub>)<br>
-      <span style="color:#c2720a">If T &lt; T<sub>min</sub> (too cold) :</span> S = max(0, 80 − (T<sub>min</sub>−T) × 8)<br>
-      <span style="color:#c2720a">If T &gt; T<sub>max</sub> (too hot) :</span> S = max(0, 80 − (T−T<sub>max</sub>) × 2)<br>
-      <span style="color:#888;font-size:11px">Asymmetric penalty: cold affects comfort more than heat — 8pts/°C below range, 2pts/°C above</span><br>
-      <span style="color:#888;font-size:11px">with T<sub>ideal</sub> = (T<sub>min</sub>+T<sub>max</sub>)/2 and T<sub>range</sub> = (T<sub>max</sub>−T<sub>min</sub>)/2</span>
-    </div>
-    <p>Example: for a wedding (16–28°C), T<sub>ideal</sub> = 22°C. At 18°C: S = 100 − 20 × 4/6 = <strong>87</strong>. At 12°C (outside range): S = max(0, 80 − 4×8) = <strong>48</strong>.</p>
+    <h3>Multi-criteria calibration</h3>
+    <p>Within each level, months are differentiated by a combined analysis of thermal comfort, precipitation, and sunshine, calibrated on 10 years of ERA5 data (2015–2024). The weighting of these criteria and the comfort functions used are the result of internal calibration.</p>
 
-    <h3>Precipitation normalization — S<sub>rain</sub></h3>
-        <p>Effective precipitation probability (P<sub>eff</sub>) across 5 linear segments. An <strong>intensity correction</strong> is applied based on mm/day (drizzle &lt;3mm/d → factor 0.40–0.70 ; moderate 3–6mm/d → 0.70–1.00 ; heavy ≥6mm/d → no correction). Same logic as scoring icons.</p>
-    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
-      <span style="color:#c2720a">0–10 % :</span> S = 100<br>
-      <span style="color:#c2720a">10–25 % :</span> S = 100 − (P−10) × 2<br>
-      <span style="color:#c2720a">25–50 % :</span> S = 70 − (P−25) × 1,6<br>
-      <span style="color:#c2720a">50–80 % :</span> S = 30 − (P−50) × 0,8<br>
-      <span style="color:#c2720a">80–100 % :</span> S = max(0, 6 − (P−80) × 0,3)
-    </div>
-    <p>Example: 40% rain probability → S = 70 − 15×1.6 = <strong>46</strong>.</p>
+    <h3>Local climate specifics</h3>
+    <p>Certain climate regimes require tailored treatment. Destinations with strong monsoon seasonality (Southeast Asia, East Africa) receive an adjustment: the wet season, while statistically unfavourable, often remains travelable thanks to short intense showers. This context is integrated into the seasonal classification of these destinations.</p>
 
-    <h3>Wind normalization — S<sub>wind</sub></h3>
-    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
-      <span style="color:#c2720a">≤ 10 km/h :</span> S = 100<br>
-      <span style="color:#c2720a">10–20 km/h :</span> S = 100 − (V−10) × 3<br>
-      <span style="color:#c2720a">20–40 km/h :</span> S = 70 − (V−20) × 2,5<br>
-      <span style="color:#c2720a">> 40 km/h :</span> S = max(0, 20 − (V−40) × 1)
+    <div class="callout blue">
+      <div class="callout-ico">ℹ️</div>
+      <div class="callout-body">The annual reference score is shown in the <strong>12-month view</strong> of the app for recognised destinations. For any other destination, a score is computed on the fly using the same multi-criteria approach.</div>
     </div>
+  </section>
 
-    <h3>Sunshine normalization — S<sub>sun</sub></h3>
-    <p>Based on peak solar radiation in W/m²:</p>
-    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
-      <span style="color:#c2720a">≥ 600 W/m² :</span> S = 100 &nbsp;&nbsp;<span style="color:#888;font-size:11px">(full sun)</span><br>
-      <span style="color:#c2720a">300–600 W/m² :</span> S = 60 + (R−300)/300 × 40<br>
-      <span style="color:#c2720a">100–300 W/m² :</span> S = 20 + (R−100)/200 × 40<br>
-      <span style="color:#c2720a">< 100 W/m² :</span> S = max(0, R/100 × 20) &nbsp;&nbsp;<span style="color:#888;font-size:11px">(overcast)</span>
-    </div>
-
-    <h3>ECMWF seasonal correction — exact mechanism</h3>
-    <p>When the horizon is between D+8 and D+210, the historical climatology is adjusted by the ECMWF seasonal model via three distinct mechanisms:</p>
-    <div class="card" style="font-family:monospace;font-size:13px;line-height:2;background:#f7f0e3">
-      <div style="color:#1a5f9a;font-weight:700;font-family:'DM Sans',sans-serif;font-size:12px;margin-bottom:6px">TEMPERATURE — additive offset</div>
-      T<sub>corrigée</sub> = T<sub>historique</sub> + (T<sub>moy_ECMWF</sub> − T<sub>moy_historique</sub>)<br><br>
-      <div style="color:#1a5f9a;font-weight:700;font-family:'DM Sans',sans-serif;font-size:12px;margin-bottom:6px">PRECIPITATION — mixed 60/40 weighting</div>
-      P<sub>corrigée</sub> = P<sub>historique</sub> × f × 0,6 + P<sub>ECMWF</sub> × 0,4<br>
-      <span style="color:#888;font-size:11px">avec f = min(3, max(0,1 ; P<sub>ECMWF</sub> / P<sub>historique_moy</sub>))</span><br><br>
-      <div style="color:#1a5f9a;font-weight:700;font-family:'DM Sans',sans-serif;font-size:12px;margin-bottom:6px">WIND — additive differential</div>
-      V<sub>corrigé</sub> = V<sub>historique</sub> + (V<sub>moy_ECMWF</sub> − V<sub>moy_historique</sub>)
-    </div>
-    <p>The temperature correction preserves the historical hourly variability (P25–P75 spread) by applying a scaling ratio based on the ECMWF-to-historical dispersion ratio, capped between 0.3 and 2.5.</p>
+  <!-- 4c. ECMWF CORRECTION -->
+  <section class="section" id="ecmwf-correction">
+    <div class="section-num">6</div>
+    <h2>ECMWF seasonal correction</h2>
+    <p>When the horizon is between D+8 and D+210, the historical climatology is adjusted by ECMWF seasonal model anomaly signals. This mechanism progressively blends historical data with projected trends, treating temperature, precipitation, and wind differently based on their respective predictability at medium range.</p>
+    <p>The goal is to detect significant departures from the norm — an abnormally wet season, a milder-than-average winter — without claiming the precision of a short-range forecast.</p>
 
     <h3>Indicative model accuracy</h3>
     <div class="card-grid">
       <div class="card-mini">
         <div class="label">Typical error D+2</div>
-        <div class="val">±0,5–1°C</div>
-        <div class="sub">High-resolution NWP models</div>
+        <div class="val">±0.5–1°C</div>
+        <div class="sub">High-res NWP models</div>
       </div>
       <div class="card-mini">
         <div class="label">Typical error D+5</div>
-        <div class="val">±1,5–2°C</div>
+        <div class="val">±1.5–2°C</div>
         <div class="sub">Source: Open-Meteo / ECMWF benchmarks</div>
       </div>
       <div class="card-mini">
@@ -396,7 +355,7 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
     </div>
     <div class="callout blue">
       <div class="callout-ico">ℹ️</div>
-      <div class="callout-body">These figures reflect the documented performance of the sources we use (Open-Meteo, ERA5, ECMWF), not an independent backtesting conducted by BestDateWeather. A full empirical calibration is planned.</div>
+      <div class="callout-body">These figures reflect the documented performance of our sources (Open-Meteo, ERA5, ECMWF), not an independent backtesting by BestDateWeather.</div>
     </div>
   </section>
 
