@@ -2334,7 +2334,7 @@ function renderAnnual(loc, monthly) {
       '<div class="month-range">moy. ' + tempStr + '</div>' +
       '<div class="month-stats">' +
         '<span class="month-stat">💧 ' + d.rainPct + '% <span style="font-weight:400;color:var(--slate3);font-size:10px">(' + d.avgPrecipMm + ' mm/j)</span></span>' +
-        '<span class="month-stat">☀ ' + d.sunHrs + 'h</span>' +
+        '<span class="month-stat">☀ ' + Math.round(d.sunHrs) + 'h</span>' +
       '</div>' +
       '<div class="month-bar"><div class="month-bar-fill" style="width:' + d.rainPct + '%"></div></div>' +
       scoreNum + badgeHtml + seasBadge;
