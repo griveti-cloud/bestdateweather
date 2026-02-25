@@ -1573,7 +1573,7 @@ function buildContextStrip(lat, lon, yr, mo, da) {
     var e = new Date(t); e.setDate(e.getDate()+3);
     var url = 'https://archive-api.open-meteo.com/v1/archive?latitude='+lat
       +'&longitude='+lon+'&start_date='+fmt(s)+'&end_date='+fmt(e)
-      +'&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,shortwave_radiation_sum&timezone=auto';
+      +'&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,shortwave_radiation_sum,sunshine_duration&timezone=auto';
     return fetch(url).then(function(r){return r.json();}).catch(function(){return null;});
   });
   return Promise.all(promises).then(function(results) {
@@ -2012,7 +2012,7 @@ function fetchAnnualArchive(loc) {
   var endDate   = endYr   + '-12-31';
   var url = 'https://archive-api.open-meteo.com/v1/archive?latitude=' + loc.lat + '&longitude=' + loc.lon +
     '&start_date=' + startDate + '&end_date=' + endDate +
-    '&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,shortwave_radiation_sum&timezone=auto';
+    '&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,shortwave_radiation_sum,sunshine_duration&timezone=auto';
   return fetch(url).then(function(r) {
     if (!r.ok) throw new Error('Archive unavailable');
     return r.json();
@@ -2068,13 +2068,14 @@ function fetchAnnualSeasonal(lat, lon) {
 function aggregateByMonth(data) {
   // buckets[0..11] for Jan..Dec
   var buckets = [];
-  for (var m = 0; m < 12; m++) buckets.push({ tmax: [], tmin: [], precip: [], rad: [] });
+  for (var m = 0; m < 12; m++) buckets.push({ tmax: [], tmin: [], precip: [], rad: [], sun: [] });
 
   var times = data.daily.time;
   var tmax  = data.daily.temperature_2m_max;
   var tmin  = data.daily.temperature_2m_min;
   var prec  = data.daily.precipitation_sum;
   var rad   = data.daily.shortwave_radiation_sum || [];
+  var sunD  = data.daily.sunshine_duration || [];  // seconds/day
 
   for (var i = 0; i < times.length; i++) {
     var mo = parseInt(times[i].split('-')[1], 10) - 1;
@@ -2082,6 +2083,7 @@ function aggregateByMonth(data) {
     if (tmin[i] != null) buckets[mo].tmin.push(tmin[i]);
     if (prec[i] != null) buckets[mo].precip.push(prec[i]);
     if (rad[i]  != null) buckets[mo].rad.push(rad[i]);
+    if (sunD[i] != null) buckets[mo].sun.push(sunD[i]);
   }
 
   return buckets.map(function(b, idx) {
@@ -2092,7 +2094,7 @@ function aggregateByMonth(data) {
     var rainPct  = b.precip.length ? Math.round(rainDays / b.precip.length * 100) : 0;
     var avgRad   = b.rad.length ? b.rad.reduce(function(a,v){return a+v;},0)/b.rad.length : 0;
     // Approx daily sunshine hours from MJ/m² (1 MJ/m² ≈ 0.28 kWh; peak ~1000W → rough sunshine hrs)
-    var sunHrs   = Math.min(14, Math.round(avgRad / 3.6));
+    var sunHrs   = b.sun.length ? Math.min(14, b.sun.reduce(function(a,v){return a+v;},0)/b.sun.length/3600) : Math.min(14, avgRad / 3.6);  // sunshine_duration (sec) → hours
     var avgPrecipMm = b.precip.length ? Math.round(b.precip.reduce(function(a,v){return a+v;},0)/b.precip.length * 10) / 10 : 0;
     return { month: idx, avgTmax: avgTmax, avgTmin: avgTmin, avgTemp: avgTemp, rainPct: rainPct, sunHrs: sunHrs, avgRad: avgRad, avgPrecipMm: avgPrecipMm };
   });
@@ -2101,11 +2103,22 @@ function aggregateByMonth(data) {
 function monthScoreForUC(d, uc) {
   var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
   var w = cfg.weights;
-  // Reuse scoring functions from date-precise score
+  // sunHrs now comes from sunshine_duration API field (hours/day, max ~14)
+  // scoreSun calibrated for W/m² peak: multiply sunHrs by 50 as empirical factor
   var sRain = scoreRainSmart(d.rainPct, d.avgPrecipMm, d.avgTemp);
+  var sSun  = scoreSun((d.sunHrs || 0) * 50);
+  // General UC: use calibrated params aligned with destination reference scores
+  // (k_cold=18, tMin=10/tMax=32, rain=25/temp=45/sun=30)
+  if (!uc || uc === 'general') {
+    var avgT = d.avgTemp, sT;
+    if (avgT == null) { sT = 50; }
+    else if (avgT >= 10 && avgT <= 32) { var ideal=21,rng=11; sT = 100 - 20*Math.abs(avgT-ideal)/rng; }
+    else if (avgT < 10) { sT = Math.max(0, 80 - (10 - avgT) * 18); }
+    else { sT = Math.max(0, 80 - (avgT - 32) * 2); }
+    return Math.round(sRain * 0.25 + sT * 0.45 + sSun * 0.30);
+  }
   var sTemp = scoreTemp(d.avgTemp, cfg.tempMin, cfg.tempMax);
-  var sWind = 85; // monthly data has no wind — assume neutral
-  var sSun  = scoreSun(d.avgRad); // avgRad en MJ/m²/jour (range 0-28)
+  var sWind = 85;
   return Math.round(sRain * w.rain/100 + sTemp * w.temp/100 + sWind * w.wind/100 + sSun * w.sun/100);
 }
 function monthScore(d) {
