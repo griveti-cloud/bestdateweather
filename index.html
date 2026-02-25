@@ -1735,12 +1735,10 @@ function buildContextStrip(lat, lon, yr, mo, da) {
       // Prévision réelle
       rowsPromise = fetchForecast(lat, lon, day.dy, day.dm, day.dd);
     } else {
-      // Climatologie ± correction ECMWF
+      // Climatologie + correction ECMWF du héro (déjà calculée, même mois)
       rowsPromise = buildClimatology(lat, lon, day.dy, day.dm, day.dd).then(function(rows) {
-        if (day.diff > 7 && day.diff <= 210) {
-          return fetchSeasonal(lat, lon, day.dy, day.dm, day.dd).then(function(seas) {
-            return applySeasonalCorrection(rows, seas);
-          });
+        if (day.diff > 7 && day.diff <= 210 && window._heroSeas) {
+          return applySeasonalCorrection(rows, window._heroSeas);
         }
         return rows;
       });
@@ -1961,6 +1959,7 @@ function run() {
     renderAstro(loc.lat,loc.lon,yr,mo,da);
     // Lancer SST en parallèle (silencieux — n'affecte pas le score principal)
     window._lastSSTResult = null;
+    window._heroSeas = null;
     var slug = slugFromName(loc.name);
     fetchMarineSST(loc.lat,loc.lon,yr,mo,da,slug).then(function(sstResult){
       window._lastSSTResult = sstResult;
@@ -1976,7 +1975,7 @@ function run() {
       });
     }
     return buildClimatology(loc.lat,loc.lon,yr,mo,da).then(function(rows){
-      if(diffDays>7&&diffDays<=210){setP(92,'Correction ECMWF saisonnière…');return fetchSeasonal(loc.lat,loc.lon,yr,mo,da).then(function(seas){return applySeasonalCorrection(rows,seas);});}
+      if(diffDays>7&&diffDays<=210){setP(92,'Correction ECMWF saisonnière…');return fetchSeasonal(loc.lat,loc.lon,yr,mo,da).then(function(seas){window._heroSeas=seas;return applySeasonalCorrection(rows,seas);});}
       return rows;
     }).then(function(rows){
       renderAstro(loc.lat,loc.lon,yr,mo,da);
