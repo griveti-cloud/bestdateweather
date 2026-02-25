@@ -1672,7 +1672,7 @@ function updateHero(sc, rows) {
   var avgRain=Math.round(rSum/rows.length);
   var skyLbl;
   if(avgRain>55)skyLbl='Pluvieux';else if(avgRain>35)skyLbl='Nuageux';else if(peakSol>500&&avgRain<20)skyLbl='Plein soleil';else if(peakSol>250&&avgRain<30)skyLbl='Ensoleillé';else if(peakSol>80)skyLbl='Voilé';else if(peakSol>15)skyLbl='Nuageux';else skyLbl='Couvert';
-  window._heroTemp = main.temp || null; document.getElementById('r-temp').innerHTML=(main.temp||'-')+'<sup>\u00b0</sup>';
+  window._heroTemp = main.temp || null; window._heroIcon = getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25); document.getElementById('r-temp').innerHTML=(main.temp||'-')+'<sup>\u00b0</sup>';
   document.getElementById('r-range').textContent=tmin+'\u00b0 / '+tmax+'\u00b0 dans la journée';
   document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
   document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
@@ -1770,7 +1770,7 @@ function renderContextStrip(days) {
     var tmp = (d.offset===0 && window._heroTemp!=null) ? Math.round(window._heroTemp)+'\u00b0' : (d.temp!=null ? d.temp+'\u00b0' : '\u2013');
     var cls = 'ctx-cell' + (d.offset===0 ? ' ctx-center' : '');
     return '<div class="'+cls+'"><div class="ctx-day">'+lbl+'</div>'
-          +'<div class="ctx-ico">'+d.ico+'</div>'
+          +'<div class="ctx-ico">'+(d.offset===0 && window._heroIcon ? window._heroIcon : d.ico)+'</div>'
           +'<div class="ctx-temp">'+tmp+'</div></div>';
   }).join('');
   strip.style.display = 'block';
@@ -1955,6 +1955,7 @@ function run() {
     // Lancer SST en parallèle (silencieux — n'affecte pas le score principal)
     window._lastSSTResult = null;
     window._heroSeas = null;
+    window._heroIcon = null;
     var slug = slugFromName(loc.name);
     fetchMarineSST(loc.lat,loc.lon,yr,mo,da,slug).then(function(sstResult){
       window._lastSSTResult = sstResult;
