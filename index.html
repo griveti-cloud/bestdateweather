@@ -1716,34 +1716,52 @@ function updateHero(sc, rows) {
 
 /* ── BANDE CONTEXTE ±3J (J+8 et au-delà) ── */
 function buildContextStrip(lat, lon, yr, mo, da) {
-  // Pipeline identique au héro : buildClimatology → buildRows → genMain → sc[13]
-  // Chaque jour de la bande passe par la même chaîne de calcul que la date principale.
+  // Pipeline identique au héro pour chaque jour de la bande :
+  // - diffDays <= 7  → fetchForecast (prévision réelle)
+  // - diffDays 8-210 → buildClimatology + fetchSeasonal + applySeasonalCorrection
+  // - diffDays > 210 → buildClimatology seule
+  var today = new Date(); today.setHours(0,0,0,0);
   var days = [];
   for (var i = 0; i < 7; i++) {
     var d = new Date(yr, mo, da);
     d.setDate(d.getDate() + (i - 3));
-    days.push({offset: i - 3, date: new Date(d)});
+    var diff = Math.round((d.getTime() - today.getTime()) / 86400000);
+    days.push({offset: i - 3, date: new Date(d), diff: diff,
+               dy: d.getFullYear(), dm: d.getMonth(), dd: d.getDate()});
   }
   var promises = days.map(function(day) {
-    return buildClimatology(lat, lon, day.date.getFullYear(), day.date.getMonth(), day.date.getDate())
-      .then(function(rows) {
-        var sc = genMain(rows);
-        var main = sc[13] || sc[12];
-        var temps = [];
-        for (var k = 0; k < sc.length; k++) if (sc[k].temp != null) temps.push(sc[k].temp);
-        var tAvg = temps.length ? Math.round(temps.reduce(function(a,b){return a+b;},0)/temps.length) : null;
-        return {
-          offset: day.offset,
-          date:   day.date,
-          temp:   tAvg,
-          ico:    getIcon(main.h, main.temp, main.sol, main.rain, main.mm||0, main.snow||0, main.p25)
-        };
-      }).catch(function() {
-        return {offset: day.offset, date: day.date, temp: null, ico: ''};
+    var rowsPromise;
+    if (day.diff >= 0 && day.diff <= 7) {
+      // Prévision réelle
+      rowsPromise = fetchForecast(lat, lon, day.dy, day.dm, day.dd);
+    } else {
+      // Climatologie ± correction ECMWF
+      rowsPromise = buildClimatology(lat, lon, day.dy, day.dm, day.dd).then(function(rows) {
+        if (day.diff > 7 && day.diff <= 210) {
+          return fetchSeasonal(lat, lon, day.dy, day.dm, day.dd).then(function(seas) {
+            return applySeasonalCorrection(rows, seas);
+          });
+        }
+        return rows;
       });
+    }
+    return rowsPromise.then(function(rows) {
+      var sc = genMain(rows);
+      var main = sc[13] || sc[12];
+      var temps = [];
+      for (var k = 0; k < sc.length; k++) if (sc[k].temp != null) temps.push(sc[k].temp);
+      var tAvg = temps.length ? Math.round(temps.reduce(function(a,b){return a+b;},0)/temps.length) : null;
+      return {
+        offset: day.offset,
+        date:   day.date,
+        temp:   tAvg,
+        ico:    getIcon(main.h, main.temp, main.sol, main.rain, main.mm||0, main.snow||0, main.p25)
+      };
+    }).catch(function() {
+      return {offset: day.offset, date: day.date, temp: null, ico: ''};
+    });
   });
   return Promise.all(promises).then(function(results) {
-    // Réordonner par offset croissant (Promise.all préserve l'ordre, mais sécurité)
     results.sort(function(a,b){return a.offset - b.offset;});
     return results;
   });
