@@ -1283,7 +1283,7 @@ function applySeasonalCorrection(rows, seas) {
     var ro=rows[j], newP50=ro.p50!=null?ro.p50+offset:null;
     var sp25=ro.p50!=null&&ro.p25!=null?ro.p50-ro.p25:0, sp75=ro.p50!=null&&ro.p75!=null?ro.p75-ro.p50:0;
     var newRain=ro.rain;
-    if(seas.rainProb!==null){var f=histRainAvg>0?Math.min(3,Math.max(0.1,seas.rainProb/histRainAvg)):1;newRain=Math.min(100,Math.max(0,Math.round(ro.rain*f*0.6+seas.rainProb*0.4)));}
+    if(seas.rainProb!==null){var anomalyRain=seas.rainProb-histRainAvg;newRain=Math.min(100,Math.max(0,Math.round(ro.rain+anomalyRain*0.25)));}
     var newWind=ro.windP50;
     if(seas.windMean!==null&&ro.windP50!=null){newWind=Math.max(0,parseFloat((ro.windP50+seas.windMean-histWindAvg).toFixed(1)));}
     out.push(cloneRow(ro,{p50:newP50!=null?parseFloat(newP50.toFixed(1)):null,p25:newP50!=null?parseFloat((newP50-sp25*ratio).toFixed(1)):null,p75:newP50!=null?parseFloat((newP50+sp75*ratio).toFixed(1)):null,temp:newP50!=null?parseFloat(newP50.toFixed(1)):null,sol:ro.solP50||0,rain:newRain,windP50:newWind}));
