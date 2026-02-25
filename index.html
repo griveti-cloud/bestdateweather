@@ -2111,18 +2111,41 @@ function setAnnP(p, lbl) {
 function fetchAnnualArchive(loc) {
   var now = new Date();
   var endYr = now.getFullYear() - 1;
-  var startYr = endYr - 9; // 10 years
+  var startYr = endYr - 4; // 5 years (lighter, more reliable)
   var startDate = startYr + '-01-01';
   var endDate   = endYr   + '-12-31';
   var url = 'https://archive-api.open-meteo.com/v1/archive?latitude=' + loc.lat + '&longitude=' + loc.lon +
     '&start_date=' + startDate + '&end_date=' + endDate +
     '&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,shortwave_radiation_sum,sunshine_duration&timezone=auto';
   return fetch(url).then(function(r) {
-    if (!r.ok) throw new Error('Archive indisponible');
+    if (!r.ok) {
+      return r.json().catch(function(){ return {}; }).then(function(body){
+        var reason = (body && body.reason) ? body.reason : ('HTTP ' + r.status);
+        throw new Error('Données météo indisponibles pour cette destination (' + reason + ')');
+      });
+    }
     return r.json();
   }).then(function(data) {
+    if (!data || !data.daily || !data.daily.time || data.daily.time.length === 0) {
+      throw new Error('Données météo indisponibles pour cette destination');
+    }
     setAnnP(70, 'Agrégation mensuelle…');
     return aggregateByMonth(data);
+  }).catch(function(e) {
+    // Fallback: retry without sunshine_duration
+    if (e.message && e.message.indexOf('sunshine') >= 0) {
+      var url2 = 'https://archive-api.open-meteo.com/v1/archive?latitude=' + loc.lat + '&longitude=' + loc.lon +
+        '&start_date=' + startDate + '&end_date=' + endDate +
+        '&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,shortwave_radiation_sum&timezone=auto';
+      return fetch(url2).then(function(r) {
+        if (!r.ok) throw new Error('Données météo indisponibles pour cette destination');
+        return r.json();
+      }).then(function(data) {
+        setAnnP(70, 'Agrégation mensuelle…');
+        return aggregateByMonth(data);
+      });
+    }
+    throw e;
   });
 }
 
