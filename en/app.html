@@ -2251,6 +2251,28 @@ function monthScoreForUC(d, uc) {
     // scoring.py est la source de vérité — ne pas recalculer ici
     return d.ficheScore != null ? Math.round(d.ficheScore * 10) : 50;
   }
+  // ── Ski : logique spécifique ──────────────────────────────────────────────
+  if (uc === 'ski') {
+    var tmax = d.avgTmax != null ? d.avgTmax : (d.avgTemp != null ? d.avgTemp + 4 : 5);
+    var tmin = d.avgTmin != null ? d.avgTmin : (d.avgTemp != null ? d.avgTemp - 4 : 0);
+    var rain = d.rainPct || 0;
+    var mm   = d.avgPrecipMm || 0;
+    var sun  = d.sunHrs || 0;
+    // Température : idéal -8 à 2°C (neige sèche) — trop chaud = 0 (pas de neige)
+    var sTempSki;
+    if (tmax > 10) sTempSki = 0;          // plus de neige garantie
+    else if (tmax > 5) sTempSki = Math.max(0, 50 - (tmax - 5) * 10); // dégel
+    else if (tmax >= -2) sTempSki = 90 + (2 - Math.abs(tmax)) * 2;   // idéal
+    else if (tmax >= -12) sTempSki = 90 - (Math.abs(tmax) - 2) * 3;  // froid acceptable
+    else sTempSki = Math.max(30, 90 - (Math.abs(tmax) - 2) * 3);     // très froid
+    // Neige : précipitations avec froid = bonus (enneigement probable)
+    var snowBonus = (tmin < 0 && mm > 2) ? Math.min(100, 60 + mm * 3) : (tmin < 0 && mm > 0 ? 55 : 20);
+    // Soleil : ciel bleu = excellent en ski
+    var sSunSki = Math.min(100, sun * 8);
+    // Pluie chaude (tmax > 2 et pluie) = très mauvais (neige fondue, verglas)
+    var sRainSki = tmax > 2 ? Math.max(0, 100 - rain * 1.5) : Math.max(40, 100 - rain * 0.3);
+    return Math.round(sRainSki * 0.15 + sTempSki * 0.40 + snowBonus * 0.20 + sSunSki * 0.25);
+  }
   var sTemp = scoreTemp(d.avgTemp, cfg.tempMin, cfg.tempMax);
   var sWind = 85;
   return Math.round(sRain * w.rain/100 + sTemp * w.temp/100 + sWind * w.wind/100 + sSun * w.sun/100);

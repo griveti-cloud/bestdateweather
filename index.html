@@ -385,6 +385,7 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
         <button class="uc-pill" data-uc="festival" onclick="quickFill('festival')">🎵 Festival</button>
         <button class="uc-pill" data-uc="travaux" onclick="quickFill('travaux')">🏗️ Travaux</button>
         <button class="uc-pill" data-uc="mariage" onclick="quickFill('mariage')">💍 Mariage</button>
+        <button class="uc-pill" data-uc="ski" onclick="quickFill('ski')">⛷️ Ski</button>
       </div>
     </div>
     <div class="annual-result" id="annual-result">
@@ -449,6 +450,7 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
         <button class="uc-pill" data-uc="festival" onclick="quickFill('festival')">🎵 Festival</button>
         <button class="uc-pill" data-uc="travaux" onclick="quickFill('travaux')">🏗️ Travaux</button>
         <button class="uc-pill" data-uc="mariage" onclick="quickFill('mariage')">💍 Mariage</button>
+        <button class="uc-pill" data-uc="ski" onclick="quickFill('ski')">⛷️ Ski</button>
       </div>
     </div>
   </div>
@@ -798,7 +800,7 @@ function quickFill(type) {
   var cityEl = document.getElementById('inp-city');
   var placeholders = {
     mariage:'Lieu de la réception…', voyage:'Destination de voyage…',
-    festival:'Lieu du festival…', sport:'Lieu de votre sortie…', travaux:'Ville du chantier…'
+    festival:'Lieu du festival…', sport:'Lieu de votre sortie…', travaux:'Ville du chantier…', ski:'Station de ski…'
   };
   cityEl.placeholder = placeholders[type] || 'Paris, Barcelone, Tokyo…';
   // Re-score instantly if results already shown
@@ -1366,7 +1368,8 @@ var UC_CONFIG = {
   festival: { label:'Festival & événement',tempMin:14, tempMax:30, weights:{rain:35,temp:25,wind:25,sun:15} },
   sport:    { label:'Sport & outdoor',     tempMin:8,  tempMax:26, weights:{rain:25,temp:20,wind:15,sun:25} },
   travaux:  { label:'Chantier & travaux',  tempMin:5,  tempMax:32, weights:{rain:40,temp:15,wind:25,sun:10} },
-  general:  { label:'Météo générale',      tempMin:16, tempMax:28, weights:{rain:30,temp:35,wind:15,sun:20} }
+  general:  { label:'Météo générale',      tempMin:16, tempMax:28, weights:{rain:30,temp:35,wind:15,sun:20} },
+  ski:      { label:'Ski & sports d\'hiver', tempMin:-8,  tempMax:2,  weights:{rain:20,temp:40,wind:10,sun:30} }
 };
 
 
@@ -1605,7 +1608,7 @@ function computeAndRenderScore(sc, rows) {
 
   document.getElementById('score-num').textContent = (total/10).toFixed(1) + ' / 10';
   var ucLabels = {
-    mariage:'Score optimisé · Mariage', voyage:'Score optimisé · Voyage', festival:'Score optimisé · Festival',
+    mariage:'Score optimisé · Mariage', voyage:'Score optimisé · Voyage', festival:'Score optimisé · Festival', ski:'Score optimisé · Ski',
     sport:'Score optimisé · Outdoor', travaux:'Score optimisé · Travaux', general:'Météo générale'
   };
   if (uc === 'general') {
@@ -1956,7 +1959,7 @@ function updateScoreTooltip(uc) {
   var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
   var w = cfg.weights;
   var tt = document.getElementById('score-tooltip');
-  var ucName = {mariage:'Mariage',voyage:'Voyage',festival:'Festival',sport:'Outdoor',travaux:'Travaux',general:'Météo générale'}[uc] || uc;
+  var ucName = {mariage:'Mariage',voyage:'Voyage',festival:'Festival',sport:'Outdoor',travaux:'Travaux',ski:'Ski',general:'Météo générale'}[uc] || uc;
   tt.innerHTML =
     '<strong style="font-size:12px">Score · ' + ucName + '</strong><br>' +
     '💧 Pluie &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.rain + '%<br>' +
@@ -2246,6 +2249,28 @@ function monthScoreForUC(d, uc) {
     // scoring.py est la source de vérité — ne pas recalculer ici
     return d.ficheScore != null ? Math.round(d.ficheScore * 10) : 50;
   }
+  // ── Ski : logique spécifique ──────────────────────────────────────────────
+  if (uc === 'ski') {
+    var tmax = d.avgTmax != null ? d.avgTmax : (d.avgTemp != null ? d.avgTemp + 4 : 5);
+    var tmin = d.avgTmin != null ? d.avgTmin : (d.avgTemp != null ? d.avgTemp - 4 : 0);
+    var rain = d.rainPct || 0;
+    var mm   = d.avgPrecipMm || 0;
+    var sun  = d.sunHrs || 0;
+    // Température : idéal -8 à 2°C (neige sèche) — trop chaud = 0 (pas de neige)
+    var sTempSki;
+    if (tmax > 10) sTempSki = 0;          // plus de neige garantie
+    else if (tmax > 5) sTempSki = Math.max(0, 50 - (tmax - 5) * 10); // dégel
+    else if (tmax >= -2) sTempSki = 90 + (2 - Math.abs(tmax)) * 2;   // idéal
+    else if (tmax >= -12) sTempSki = 90 - (Math.abs(tmax) - 2) * 3;  // froid acceptable
+    else sTempSki = Math.max(30, 90 - (Math.abs(tmax) - 2) * 3);     // très froid
+    // Neige : précipitations avec froid = bonus (enneigement probable)
+    var snowBonus = (tmin < 0 && mm > 2) ? Math.min(100, 60 + mm * 3) : (tmin < 0 && mm > 0 ? 55 : 20);
+    // Soleil : ciel bleu = excellent en ski
+    var sSunSki = Math.min(100, sun * 8);
+    // Pluie chaude (tmax > 2 et pluie) = très mauvais (neige fondue, verglas)
+    var sRainSki = tmax > 2 ? Math.max(0, 100 - rain * 1.5) : Math.max(40, 100 - rain * 0.3);
+    return Math.round(sRainSki * 0.15 + sTempSki * 0.40 + snowBonus * 0.20 + sSunSki * 0.25);
+  }
   var sTemp = scoreTemp(d.avgTemp, cfg.tempMin, cfg.tempMax);
   var sWind = 85;
   return Math.round(sRain * w.rain/100 + sTemp * w.temp/100 + sWind * w.wind/100 + sSun * w.sun/100);
@@ -2318,14 +2343,14 @@ function renderAnnual(loc, monthly) {
   var grid = document.getElementById('months-grid'); grid.innerHTML = '';
 
   var uc = currentUseCase !== 'general' ? currentUseCase : null;
-  var ucNames = {mariage:'mariage',voyage:'voyage',festival:'festival',sport:'outdoor',travaux:'travaux'};
+  var ucNames = {mariage:'mariage',voyage:'voyage',festival:'festival',sport:'outdoor',travaux:'travaux',ski:'ski'};
 
   // Update subtitle
   var subEl = document.getElementById('annual-subtitle');
   var ucSubEl = document.getElementById('annual-subtitle-uc');
   if (uc && ucSubEl) {
     subEl.style.display = 'none';
-    var ucLabels = {mariage:'Meilleurs mois pour votre mariage',voyage:'Meilleurs mois pour voyager',festival:'Meilleurs mois pour votre festival',sport:'Meilleurs mois pour votre sortie outdoor',travaux:'Meilleurs mois pour vos travaux'};
+    var ucLabels = {mariage:'Meilleurs mois pour votre mariage',voyage:'Meilleurs mois pour voyager',festival:'Meilleurs mois pour votre festival',sport:'Meilleurs mois pour votre sortie outdoor',travaux:'Meilleurs mois pour vos travaux',ski:'Meilleurs mois pour le ski'};
     ucSubEl.textContent = ucLabels[uc] || 'Score optimisé pour : ' + (ucNames[uc]||uc);
     ucSubEl.style.display = 'block';
   } else {
