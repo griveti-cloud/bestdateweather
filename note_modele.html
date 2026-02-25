@@ -4,10 +4,10 @@
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag("js", new Date());
-  gtag("config", "G-NTCJTDPSJL");
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag("js", new Date());
+ gtag("config", "G-NTCJTDPSJL");
 </script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -52,19 +52,19 @@ code{background:#f7f0e3;color:#c2720a;padding:2px 7px;border-radius:5px;font-siz
 
 /* ── MOBILE ── */
 @media(max-width:600px){
-  .page{padding:24px 16px 60px}
-  .doc-header{padding:24px 20px;border-radius:14px}
-  .doc-title{font-size:20px}
-  .doc-subtitle{font-size:13px}
-  .section-card{padding:16px 14px}
-  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:12px}
-  thead th{padding:8px 10px;font-size:11px}
-  tbody td{padding:8px 10px}
-  h2{font-size:17px;margin:28px 0 10px}
-  h3{font-size:13px}
-  p,ul li{font-size:13px}
-  .callout-body{font-size:13px}
-  .back{font-size:12px;padding:6px 12px}
+ .page{padding:24px 16px 60px}
+ .doc-header{padding:24px 20px;border-radius:14px}
+ .doc-title{font-size:20px}
+ .doc-subtitle{font-size:13px}
+ .section-card{padding:16px 14px}
+ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:12px}
+ thead th{padding:8px 10px;font-size:11px}
+ tbody td{padding:8px 10px}
+ h2{font-size:17px;margin:28px 0 10px}
+ h3{font-size:13px}
+ p,ul li{font-size:13px}
+ .callout-body{font-size:13px}
+ .back{font-size:12px;padding:6px 12px}
 }
 </style>
 <link rel="icon" type="image/x-icon" href="favicon.ico"/><link rel="icon" type="image/svg+xml" href="favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/></head>
@@ -72,25 +72,25 @@ code{background:#f7f0e3;color:#c2720a;padding:2px 7px;border-radius:5px;font-siz
 <div class="page">
 <a class="back" href="index.html">&#8592; Retour à l'application</a>
 <div class="doc-header">
-  <div class="doc-title">Modèle de prévision météorologique</div>
-  <div class="doc-subtitle">Note technique — Architecture et fonctionnement</div>
-  <div class="doc-date">Février 2026</div>
+ <div class="doc-title">Modèle de prévision météorologique</div>
+ <div class="doc-subtitle">Note technique — Architecture et fonctionnement</div>
+ <div class="doc-date">Février 2026</div>
 </div>
 
 <div class="callout info">
-  <div class="callout-ico">&#x2139;</div>
-  <div class="callout-body">Le modèle combine trois sources de données selon l'horizon : prévisions réelles (J+0–J+7), correction ECMWF (J+8–J+210), climatologie pure au-delà. Lever/coucher de soleil et phase lunaire sont calculés côté client, en heure locale.</div>
+ <div class="callout-ico">&#x2139;</div>
+ <div class="callout-body">Le modèle combine trois sources de données selon l'horizon : prévisions réelles (J+0–J+7), correction ECMWF (J+8–J+210), climatologie pure au-delà. Lever/coucher de soleil et phase lunaire sont calculés côté client, en heure locale.</div>
 </div>
 
 <h2>1. Architecture à trois niveaux</h2>
 <div class="section-card">
 <table>
-  <thead><tr><th>Niveau</th><th>Horizon</th><th>Source</th><th>Badge affiché</th></tr></thead>
-  <tbody>
-    <tr><td>1 — Réel</td><td>J+0 à J+7</td><td>Open-Meteo Forecast</td><td><span class="badge badge-green">Prévision météo réelle</span></td></tr>
-    <tr><td>2 — Hybride</td><td>J+8 à J+210</td><td>Climatologie + ECMWF SEAS5/EC46</td><td><span class="badge badge-blue">Tendance saisonnière</span></td></tr>
-    <tr><td>3 — Climatologie</td><td>Au-delà de J+210</td><td>Open-Meteo Archive</td><td><span class="badge badge-gray">Profil climatique historique</span></td></tr>
-  </tbody>
+ <thead><tr><th>Niveau</th><th>Horizon</th><th>Source</th><th>Badge affiché</th></tr></thead>
+ <tbody>
+ <tr><td>1 — Réel</td><td>J+0 à J+7</td><td>Open-Meteo Forecast</td><td><span class="badge badge-green">Prévision météo réelle</span></td></tr>
+ <tr><td>2 — Hybride</td><td>J+8 à J+210</td><td>Climatologie + ECMWF SEAS5/EC46</td><td><span class="badge badge-blue">Tendance saisonnière</span></td></tr>
+ <tr><td>3 — Climatologie</td><td>Au-delà de J+210</td><td>Open-Meteo Archive</td><td><span class="badge badge-gray">Profil climatique historique</span></td></tr>
+ </tbody>
 </table>
 <p>Le libellé du bouton et le badge dans la carte résultat s'adaptent automatiquement selon le niveau activé.</p>
 </div>
@@ -100,14 +100,14 @@ code{background:#f7f0e3;color:#c2720a;padding:2px 7px;border-radius:5px;font-siz
 <p>Prévisions numériques déterministes horaires via l'API Open-Meteo Forecast (<code>api.open-meteo.com</code>).</p>
 <h3>Variables restituées</h3>
 <table>
-  <thead><tr><th>Variable</th><th>Paramètre API</th></tr></thead>
-  <tbody>
-    <tr><td>Température 2m</td><td><code>temperature_2m</code></td></tr>
-    <tr><td>Probabilité précipitation</td><td><code>precipitation_probability</code></td></tr>
-    <tr><td>Vitesse vent 10m</td><td><code>windspeed_10m</code></td></tr>
-    <tr><td>Rayonnement solaire</td><td><code>shortwave_radiation</code> (W/m²)</td></tr>
-    <tr><td>Offset fuseau horaire</td><td><code>utc_offset_seconds</code> (pour heure locale)</td></tr>
-  </tbody>
+ <thead><tr><th>Variable</th><th>Paramètre API</th></tr></thead>
+ <tbody>
+ <tr><td>Température 2m</td><td><code>temperature_2m</code></td></tr>
+ <tr><td>Probabilité précipitation</td><td><code>precipitation_probability</code></td></tr>
+ <tr><td>Vitesse vent 10m</td><td><code>windspeed_10m</code></td></tr>
+ <tr><td>Rayonnement solaire</td><td><code>shortwave_radiation</code> (W/m²)</td></tr>
+ <tr><td>Offset fuseau horaire</td><td><code>utc_offset_seconds</code> (pour heure locale)</td></tr>
+ </tbody>
 </table>
 <p>Les scénarios extrêmes ne sont pas affichés à ce niveau. La limite J+7 correspond à la dégradation pratique des modèles déterministes — au-delà, la fiabilité chute de ~90% à ~50%.</p>
 </div>
@@ -121,13 +121,13 @@ code{background:#f7f0e3;color:#c2720a;padding:2px 7px;border-radius:5px;font-siz
 <h3>3.3 Correction saisonnière ECMWF</h3>
 <p>API Open-Meteo Seasonal : ECMWF SEAS5 + EC46, 51 membres, 36 km résolution.</p>
 <table>
-  <thead><tr><th>Variable</th><th>Formule</th></tr></thead>
-  <tbody>
-    <tr><td>Température</td><td><code>T_corr = T_hist + (SEAS_mean − Hist_mean)</code></td></tr>
-    <tr><td>Incertitude T</td><td><code>Ratio = SEAS_spread / Hist_spread (cap 0,3–2,5)</code></td></tr>
-    <tr><td>Pluie</td><td><code>P_corr = 60% × P_hist + 40% × SEAS_prob</code></td></tr>
-    <tr><td>Vent</td><td><code>W_corr = W_hist + (SEAS_mean − Hist_mean)</code></td></tr>
-  </tbody>
+ <thead><tr><th>Variable</th><th>Formule</th></tr></thead>
+ <tbody>
+ <tr><td>Température</td><td><code>T_corr = T_hist + (SEAS_mean − Hist_mean)</code></td></tr>
+ <tr><td>Incertitude T</td><td><code>Ratio = SEAS_spread / Hist_spread (cap 0,3–2,5)</code></td></tr>
+ <tr><td>Pluie</td><td><code>P_corr = 60% × P_hist + 40% × SEAS_prob</code></td></tr>
+ <tr><td>Vent</td><td><code>W_corr = W_hist + (SEAS_mean − Hist_mean)</code></td></tr>
+ </tbody>
 </table>
 <h3>3.4 Scénarios déterministes</h3>
 <p>Les deux scénarios (hypothèse basse / haute) sont générés avec un <strong>générateur pseudo-aléatoire seedé</strong> sur la combinaison lat/lon/année/mois/jour. Deux requêtes pour la même date produisent toujours les mêmes résultats.</p>
@@ -144,57 +144,57 @@ code{background:#f7f0e3;color:#c2720a;padding:2px 7px;border-radius:5px;font-siz
 
 <h3>Pondérations par use case</h3>
 <table>
-  <thead><tr><th>Critère</th><th>Météo générale</th><th>Mariage</th><th>Voyage</th><th>Festival</th><th>Outdoor</th><th>Travaux</th></tr></thead>
-  <tbody>
-    <tr><td>Pluie</td><td>30%</td><td>40%</td><td><strong>45%</strong></td><td>35%</td><td>25%</td><td>40%</td></tr>
-    <tr><td>Température</td><td><strong>35%</strong></td><td>30%</td><td>25%</td><td>25%</td><td>20%</td><td>15%</td></tr>
-    <tr><td>Vent</td><td>15%</td><td>20%</td><td><strong>10%</strong></td><td>25%</td><td>15%</td><td>25%</td></tr>
-    <tr><td>Soleil</td><td>20%</td><td>10%</td><td><strong>20%</strong></td><td>15%</td><td>25%</td><td>10%</td></tr>
-    <tr><td><em>Total</em></td><td><em>100%</em></td><td><em>100%</em></td><td><em>100%</em></td><td><em>100%</em></td><td><em>85%</em></td><td><em>90%</em></td></tr>
-  </tbody>
+ <thead><tr><th>Critère</th><th>Météo générale</th><th>Mariage</th><th>Voyage</th><th>Festival</th><th>Outdoor</th><th>Travaux</th></tr></thead>
+ <tbody>
+ <tr><td>Pluie</td><td>30%</td><td>40%</td><td><strong>45%</strong></td><td>35%</td><td>25%</td><td>40%</td></tr>
+ <tr><td>Température</td><td><strong>35%</strong></td><td>30%</td><td>25%</td><td>25%</td><td>20%</td><td>15%</td></tr>
+ <tr><td>Vent</td><td>15%</td><td>20%</td><td><strong>10%</strong></td><td>25%</td><td>15%</td><td>25%</td></tr>
+ <tr><td>Soleil</td><td>20%</td><td>10%</td><td><strong>20%</strong></td><td>15%</td><td>25%</td><td>10%</td></tr>
+ <tr><td><em>Total</em></td><td><em>100%</em></td><td><em>100%</em></td><td><em>100%</em></td><td><em>100%</em></td><td><em>85%</em></td><td><em>90%</em></td></tr>
+ </tbody>
 </table>
 <p style="font-size:12px;color:#718096;margin-top:4px">⚠ Outdoor et Travaux : total &lt; 100% — pondérations non normalisées, score max théorique respectivement 85 et 90.</p>
 
 <h3>Plages de température idéales</h3>
 <table>
-  <thead><tr><th>Use case</th><th>Temp. min</th><th>Temp. max</th></tr></thead>
-  <tbody>
-    <tr><td>Météo générale</td><td>16°C</td><td>28°C</td></tr>
-    <tr><td>Mariage</td><td>16°C</td><td>28°C</td></tr>
-    <tr><td>Voyage</td><td><strong>10°C</strong></td><td>32°C</td></tr>
-    <tr><td>Festival</td><td>14°C</td><td>30°C</td></tr>
-    <tr><td>Outdoor</td><td>8°C</td><td>26°C</td></tr>
-    <tr><td>Travaux</td><td>5°C</td><td>32°C</td></tr>
-  </tbody>
+ <thead><tr><th>Use case</th><th>Temp. min</th><th>Temp. max</th></tr></thead>
+ <tbody>
+ <tr><td>Météo générale</td><td>16°C</td><td>28°C</td></tr>
+ <tr><td>Mariage</td><td>16°C</td><td>28°C</td></tr>
+ <tr><td>Voyage</td><td><strong>10°C</strong></td><td>32°C</td></tr>
+ <tr><td>Festival</td><td>14°C</td><td>30°C</td></tr>
+ <tr><td>Outdoor</td><td>8°C</td><td>26°C</td></tr>
+ <tr><td>Travaux</td><td>5°C</td><td>32°C</td></tr>
+ </tbody>
 </table>
 
 <h3>Verdicts et seuils (getVerdict)</h3>
 <p>Verdicts de la recherche par date. La pluie prime sur le score quand elle est dominante :</p>
 <table>
-  <thead><tr><th>Pluie moyenne</th><th>Score interne (0–100)</th><th>Verdict affiché</th></tr></thead>
-  <tbody>
-    <tr><td>&gt; 70%</td><td>—</td><td>Journée très pluvieuse</td></tr>
-    <tr><td>45–70%</td><td>≥ 75</td><td>Journée pluvieuse — conditions acceptables</td></tr>
-    <tr><td>45–70%</td><td>&lt; 75</td><td>Journée pluvieuse</td></tr>
-    <tr><td>30–45%</td><td>≥ 78</td><td>Bonnes conditions — averses possibles</td></tr>
-    <tr><td>30–45%</td><td>60–77</td><td>Conditions mitigées — averses possibles</td></tr>
-    <tr><td>30–45%</td><td>&lt; 60</td><td>Conditions difficiles</td></tr>
-    <tr><td>&lt; 30%</td><td>≥ 85</td><td>Conditions excellentes</td></tr>
-    <tr><td>&lt; 30%</td><td>70–84</td><td>Bonnes conditions</td></tr>
-    <tr><td>&lt; 30%</td><td>55–69</td><td>Conditions acceptables</td></tr>
-    <tr><td>&lt; 30%</td><td>40–54</td><td>Conditions mitigées</td></tr>
-    <tr><td>&lt; 30%</td><td>&lt; 40</td><td>Conditions difficiles</td></tr>
-  </tbody>
+ <thead><tr><th>Pluie moyenne</th><th>Score interne (0–100)</th><th>Verdict affiché</th></tr></thead>
+ <tbody>
+ <tr><td>&gt; 70%</td><td>—</td><td>Journée très pluvieuse</td></tr>
+ <tr><td>45–70%</td><td>≥ 75</td><td>Journée pluvieuse — conditions acceptables</td></tr>
+ <tr><td>45–70%</td><td>&lt; 75</td><td>Journée pluvieuse</td></tr>
+ <tr><td>30–45%</td><td>≥ 78</td><td>Bonnes conditions — averses possibles</td></tr>
+ <tr><td>30–45%</td><td>60–77</td><td>Conditions mitigées — averses possibles</td></tr>
+ <tr><td>30–45%</td><td>&lt; 60</td><td>Conditions difficiles</td></tr>
+ <tr><td>&lt; 30%</td><td>≥ 85</td><td>Conditions excellentes</td></tr>
+ <tr><td>&lt; 30%</td><td>70–84</td><td>Bonnes conditions</td></tr>
+ <tr><td>&lt; 30%</td><td>55–69</td><td>Conditions acceptables</td></tr>
+ <tr><td>&lt; 30%</td><td>40–54</td><td>Conditions mitigées</td></tr>
+ <tr><td>&lt; 30%</td><td>&lt; 40</td><td>Conditions difficiles</td></tr>
+ </tbody>
 </table>
 <h3>Correction par intensité (scoreRainSmart)</h3>
 <p>Le score pluie n'utilise pas directement le <em>pourcentage</em> de jours pluvieux mais un <strong>pourcentage effectif corrigé</strong> selon l'intensité mm/jour :</p>
 <table>
-  <thead><tr><th>Intensité (mm/j)</th><th>Facteur correctif</th><th>Effet</th></tr></thead>
-  <tbody>
-    <tr><td>&lt; 3 mm/j</td><td>0,40 + (mm/3) × 0,30</td><td>Bruine/averses légères — forte réduction</td></tr>
-    <tr><td>3–6 mm/j</td><td>0,70 + ((mm−3)/3) × 0,30</td><td>Pluie modérée — réduction partielle</td></tr>
-    <tr><td>&gt; 6 mm/j</td><td>1,0 (pas de correction)</td><td>Pluie sérieuse — pénalité pleine</td></tr>
-  </tbody>
+ <thead><tr><th>Intensité (mm/j)</th><th>Facteur correctif</th><th>Effet</th></tr></thead>
+ <tbody>
+ <tr><td>&lt; 3 mm/j</td><td>0,40 + (mm/3) × 0,30</td><td>Bruine/averses légères — forte réduction</td></tr>
+ <tr><td>3–6 mm/j</td><td>0,70 + ((mm−3)/3) × 0,30</td><td>Pluie modérée — réduction partielle</td></tr>
+ <tr><td>&gt; 6 mm/j</td><td>1,0 (pas de correction)</td><td>Pluie sérieuse — pénalité pleine</td></tr>
+ </tbody>
 </table>
 <p>Exemple : 60% jours pluvieux à 2 mm/j → effectif ≈ 42% → pénalise beaucoup moins qu'une pluie de 60% à 15 mm/j.</p>
 <div class="section-card">
@@ -202,31 +202,31 @@ code{background:#f7f0e3;color:#c2720a;padding:2px 7px;border-radius:5px;font-siz
 
 <h3>Indicateurs mensuels</h3>
 <ul>
-  <li><strong>Pluie %</strong> : ratio jours &gt; 1 mm/jour</li>
-  <li><strong>mm/jour</strong> : cumul moyen journalier — contextualise la pluie (averse tropicale de 2 mm/j ≠ journée grise à 15 mm/j)</li>
-  <li><strong>Ensoleillement</strong> : <code>sunHrs ≈ rad_MJ/m² / 3,6</code> (cap 14h)</li>
-  <li><strong>Icône météo</strong> : basée sur l'<strong>intensité mm/jour</strong> (non la fréquence %) et le nombre d'heures de soleil</li>
+ <li><strong>Pluie %</strong> : ratio jours &gt; 1 mm/jour</li>
+ <li><strong>mm/jour</strong> : cumul moyen journalier — contextualise la pluie (averse tropicale de 2 mm/j ≠ journée grise à 15 mm/j)</li>
+ <li><strong>Ensoleillement</strong> : <code>sunHrs ≈ rad_MJ/m² / 3,6</code> (cap 14h)</li>
+ <li><strong>Icône météo</strong> : basée sur l'<strong>intensité mm/jour</strong> (non la fréquence %) et le nombre d'heures de soleil</li>
 </ul>
 
 <h3>Logique d'icône mensuelle</h3>
 <table>
-  <thead><tr><th>Intensité pluie</th><th>Ensoleillement</th><th>Icône</th></tr></thead>
-  <tbody>
-    <tr><td>&lt; 3 mm/j</td><td>≥ 7h</td><td>☀️ Soleil</td></tr>
-    <tr><td>&lt; 5 mm/j</td><td>≥ 6h</td><td>☀️ Soleil</td></tr>
-    <tr><td>tout</td><td>≥ 5h</td><td>⛅ Nuageux/averses</td></tr>
-    <tr><td>&lt; 3 mm/j</td><td>&lt; 5h</td><td>☁️ Couvert</td></tr>
-    <tr><td>3–8 mm/j</td><td>&lt; 5h</td><td>☁️ Couvert</td></tr>
-    <tr><td>&gt; 8 mm/j</td><td>&lt; 5h</td><td>🌧️ Pluie</td></tr>
-  </tbody>
+ <thead><tr><th>Intensité pluie</th><th>Ensoleillement</th><th>Icône</th></tr></thead>
+ <tbody>
+ <tr><td>&lt; 3 mm/j</td><td>≥ 7h</td><td>☀️ Soleil</td></tr>
+ <tr><td>&lt; 5 mm/j</td><td>≥ 6h</td><td>☀️ Soleil</td></tr>
+ <tr><td>tout</td><td>≥ 5h</td><td>⛅ Nuageux/averses</td></tr>
+ <tr><td>&lt; 3 mm/j</td><td>&lt; 5h</td><td>☁️ Couvert</td></tr>
+ <tr><td>3–8 mm/j</td><td>&lt; 5h</td><td>☁️ Couvert</td></tr>
+ <tr><td>&gt; 8 mm/j</td><td>&lt; 5h</td><td>🌧️ Pluie</td></tr>
+ </tbody>
 </table>
 
 <h3>Badges de recommandation</h3>
 <p>Actifs uniquement quand un use case autre que "Juste la météo" est sélectionné :</p>
 <ul>
-  <li><span style="color:#1a7a4a;font-weight:700">● Recommandé</span> : top 1–2 mois ET score ≥ 55</li>
-  <li><span style="color:#f59e0b;font-weight:700">● Moins favorable</span> : bottom 1–2 mois ET score &lt; 50</li>
-  <li>Si tous les mois sont &gt; 50 (ex. Marrakech) : aucun badge "Moins favorable" — la destination est globalement correcte toute l'année</li>
+ <li><span style="color:#1a7a4a;font-weight:700">● Recommandé</span> : top 1–2 mois ET score ≥ 55</li>
+ <li><span style="color:#f59e0b;font-weight:700">● Moins favorable</span> : bottom 1–2 mois ET score &lt; 50</li>
+ <li>Si tous les mois sont &gt; 50 (ex. Marrakech) : aucun badge "Moins favorable" — la destination est globalement correcte toute l'année</li>
 </ul>
 </div>
 
@@ -238,31 +238,31 @@ code{background:#f7f0e3;color:#c2720a;padding:2px 7px;border-radius:5px;font-siz
 
 <h2>8. Limites</h2>
 <div class="callout warn">
-  <div class="callout-ico">&#x26A0;</div>
-  <div class="callout-body">
-    <ul style="margin-left:16px">
-      <li>Au-delà de 14 jours : l'atmosphère est chaotique. Les prévisions saisonnières indiquent des anomalies (plus chaud/sec que la normale), pas la météo du jour précis.</li>
-      <li>Vue annuelle sur 3 ans : une année atypique peut biaiser les moyennes. En climatologie standard, 30 ans sont requis.</li>
-      <li>Correction tendance +0,03°C/an uniforme — pas de différenciation régionale.</li>
-      <li>Icônes mensuelles : si soleil ≥ 5h, l'icône pluie n'est jamais affichée — choix délibéré pour refléter le ressenti des régions tropicales (averses courtes + soleil), mais peut sous-estimer la pluie pour certains climatiques tempérés.</li>
-      <li>Le score projet est un outil d'aide à la décision, pas une garantie contractuelle.</li>
-      <li>Décalage horaire lever/coucher : précis pour les dates dans la fenêtre forecast (J+0–J+7). Pour les dates lointaines, l'offset est celui de la dernière requête archive.</li>
-    </ul>
-  </div>
+ <div class="callout-ico">&#x26A0;</div>
+ <div class="callout-body">
+ <ul style="margin-left:16px">
+ <li>Au-delà de 14 jours : l'atmosphère est chaotique. Les prévisions saisonnières indiquent des anomalies (plus chaud/sec que la normale), pas la météo du jour précis.</li>
+ <li>Vue annuelle sur 3 ans : une année atypique peut biaiser les moyennes. En climatologie standard, 30 ans sont requis.</li>
+ <li>Correction tendance +0,03°C/an uniforme — pas de différenciation régionale.</li>
+ <li>Icônes mensuelles : si soleil ≥ 5h, l'icône pluie n'est jamais affichée — choix délibéré pour refléter le ressenti des régions tropicales (averses courtes + soleil), mais peut sous-estimer la pluie pour certains climatiques tempérés.</li>
+ <li>Le score projet est un outil d'aide à la décision, pas une garantie contractuelle.</li>
+ <li>Décalage horaire lever/coucher : précis pour les dates dans la fenêtre forecast (J+0–J+7). Pour les dates lointaines, l'offset est celui de la dernière requête archive.</li>
+ </ul>
+ </div>
 </div>
 
 <h2>9. Sources</h2>
 <div class="section-card">
 <table>
-  <thead><tr><th>Source</th><th>Usage</th><th>Endpoint</th></tr></thead>
-  <tbody>
-    <tr><td>Open-Meteo Archive</td><td>Historique 10 ans + Vue annuelle 3 ans</td><td><code>archive-api.open-meteo.com</code></td></tr>
-    <tr><td>Open-Meteo Forecast</td><td>Prévisions J+0 à J+7 + offset UTC</td><td><code>api.open-meteo.com</code></td></tr>
-    <tr><td>Open-Meteo Seasonal</td><td>ECMWF SEAS5 / EC46</td><td><code>seasonal-api.open-meteo.com</code></td></tr>
-    <tr><td>Open-Meteo Marine</td><td>Température de surface mer (SST)</td><td><code>marine-api.open-meteo.com</code></td></tr>
-    <tr><td>Open-Meteo Geocoding</td><td>Géolocalisation villes</td><td><code>geocoding-api.open-meteo.com</code></td></tr>
-    <tr><td>USNO Solar Algorithm</td><td>Lever/coucher soleil</td><td>edwilliams.org</td></tr>
-  </tbody>
+ <thead><tr><th>Source</th><th>Usage</th><th>Endpoint</th></tr></thead>
+ <tbody>
+ <tr><td>Open-Meteo Archive</td><td>Historique 10 ans + Vue annuelle 3 ans</td><td><code>archive-api.open-meteo.com</code></td></tr>
+ <tr><td>Open-Meteo Forecast</td><td>Prévisions J+0 à J+7 + offset UTC</td><td><code>api.open-meteo.com</code></td></tr>
+ <tr><td>Open-Meteo Seasonal</td><td>ECMWF SEAS5 / EC46</td><td><code>seasonal-api.open-meteo.com</code></td></tr>
+ <tr><td>Open-Meteo Marine</td><td>Température de surface mer (SST)</td><td><code>marine-api.open-meteo.com</code></td></tr>
+ <tr><td>Open-Meteo Geocoding</td><td>Géolocalisation villes</td><td><code>geocoding-api.open-meteo.com</code></td></tr>
+ <tr><td>USNO Solar Algorithm</td><td>Lever/coucher soleil</td><td>edwilliams.org</td></tr>
+ </tbody>
 </table>
 </div>
 
@@ -270,10 +270,10 @@ code{background:#f7f0e3;color:#c2720a;padding:2px 7px;border-radius:5px;font-siz
 </div>
 
 <footer style="background:#1a1f2e;color:rgba(255,255,255,.7);padding:24px 20px;margin-top:40px;font-size:13px;text-align:center">
-  <p style="font-weight:700;margin-bottom:8px">bestdateweather.com</p>
-  <p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Données météo par Open-Meteo.com</a> · Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
-  <p style="margin-top:8px"><a href="index.html" style="color:rgba(255,255,255,.7)">Application météo</a> · <a href="methodologie.html" style="color:rgba(255,255,255,.7)">Méthodologie</a></p>
-  <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="mentions-legales.html" style="color:rgba(255,255,255,.7)">Mentions légales</a> · <a href="confidentialite.html" style="color:rgba(255,255,255,.7)">Confidentialité</a> · <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p>
+ <p style="font-weight:700;margin-bottom:8px">bestdateweather.com</p>
+ <p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Données météo par Open-Meteo.com</a> · Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
+ <p style="margin-top:8px"><a href="index.html" style="color:rgba(255,255,255,.7)">Application météo</a> · <a href="methodologie.html" style="color:rgba(255,255,255,.7)">Méthodologie</a></p>
+ <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="mentions-legales.html" style="color:rgba(255,255,255,.7)">Mentions légales</a> · <a href="confidentialite.html" style="color:rgba(255,255,255,.7)">Confidentialité</a> · <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p>
 </footer>
 </body>
 </html>
