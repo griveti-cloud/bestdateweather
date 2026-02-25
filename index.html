@@ -1475,7 +1475,7 @@ function computeAnchoredScores(monthly, ficheKey) {
     grp.forEach(function(it, j) {
       if (monthly[it.i].ficheScore != null) return;
       var norm  = mx !== mn ? (raws[j] - mn) / (mx - mn) : 0.5;
-      monthly[it.i].ficheScore = Math.round((lo + norm * (hi - lo)) * 10) / 10;
+      monthly[it.i].ficheScore = Math.round((lo + norm * (hi - lo)) * 10);  // échelle ×10 = cohérent avec FICHE_SCORES
     });
   });
 }
