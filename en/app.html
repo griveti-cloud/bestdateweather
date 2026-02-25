@@ -396,6 +396,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
         <button class="uc-pill" data-uc="festival" onclick="quickFill('festival')">🎵 Festival</button>
         <button class="uc-pill" data-uc="travaux" onclick="quickFill('travaux')">🏗️ Construction</button>
         <button class="uc-pill" data-uc="mariage" onclick="quickFill('mariage')">💍 Wedding</button>
+        <button class="uc-pill" data-uc="ski" onclick="quickFill('ski')">⛷️ Ski</button>
       </div>
     </div>
     <div class="annual-result" id="annual-result">
@@ -460,6 +461,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
         <button class="uc-pill" data-uc="festival" onclick="quickFill('festival')">🎵 Festival</button>
         <button class="uc-pill" data-uc="travaux" onclick="quickFill('travaux')">🏗️ Construction</button>
         <button class="uc-pill" data-uc="mariage" onclick="quickFill('mariage')">💍 Wedding</button>
+        <button class="uc-pill" data-uc="ski" onclick="quickFill('ski')">⛷️ Ski</button>
       </div>
     </div>
   </div>
@@ -1652,7 +1654,7 @@ function computeAndRenderScore(sc, rows) {
 
   document.getElementById('score-num').textContent = (total/10).toFixed(1) + ' / 10';
   var ucLabels = {
-    mariage:'Optimised score · Wedding', voyage:'Optimised score · Travel', festival:'Optimised score · Festival',
+    mariage:'Optimised score · Wedding', voyage:'Optimised score · Travel', festival:'Optimised score · Festival', ski:'Optimised score · Ski',
     sport:'Optimised score · Outdoor', travaux:'Optimised score · Construction', general:'General weather'
   };
   if (uc === 'general') {
@@ -2345,7 +2347,7 @@ function renderAnnual(loc, monthly) {
   var grid = document.getElementById('months-grid'); grid.innerHTML = '';
 
   var uc = currentUseCase !== 'general' ? currentUseCase : null;
-  var ucNames = {mariage:'mariage',voyage:'voyage',festival:'festival',sport:'outdoor',travaux:'travaux'};
+  var ucNames = {mariage:'mariage',voyage:'voyage',festival:'festival',sport:'outdoor',travaux:'travaux',ski:'ski'};
 
   // Update subtitle
   var subEl = document.getElementById('annual-subtitle');
