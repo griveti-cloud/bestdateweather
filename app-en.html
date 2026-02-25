@@ -1652,7 +1652,8 @@ function updateHero(sc, rows) {
   return mn+'° / '+mx+'° throughout the day';
 })();
   document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0);
-  document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0);
+  window._heroIco = getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0);
+  document.getElementById('r-icon').innerHTML=window._heroIco;
   document.getElementById('r-rain').textContent=avgRain+'%';
   document.getElementById('r-wind').textContent=fmtWind(wSum/rows.length);
   document.getElementById('r-sky').textContent=skyLbl;
@@ -1716,7 +1717,7 @@ function renderContextStrip(days) {
     var tmp = (d.offset===0 && window._heroTemp!=null) ? Math.round(window._heroTemp)+'\u00b0' : (d.temp!=null ? d.temp+'\u00b0' : '\u2013');
     var cls = 'ctx-cell' + (d.offset===0 ? ' ctx-center' : '');
     return '<div class="'+cls+'"><div class="ctx-day">'+lbl+'</div>'
-          +'<div class="ctx-ico">'+d.ico+'</div>'
+          +'<div class="ctx-ico">'+((d.offset===0&&window._heroIco)?window._heroIco:d.ico)+'</div>'
           +'<div class="ctx-temp">'+tmp+'</div></div>';
   }).join('');
   strip.style.display = 'block';
