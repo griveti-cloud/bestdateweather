@@ -1716,10 +1716,8 @@ function updateHero(sc, rows) {
 
 /* ── BANDE CONTEXTE ±3J (J+8 et au-delà) ── */
 function buildContextStrip(lat, lon, yr, mo, da) {
-  // Pipeline identique au héro pour chaque jour de la bande :
-  // - diffDays <= 7  → fetchForecast (prévision réelle)
-  // - diffDays 8-210 → buildClimatology + fetchSeasonal + applySeasonalCorrection
-  // - diffDays > 210 → buildClimatology seule
+  // Bande uniquement pour J+8 à J+16 : tous les jours utilisent fetchForecast
+  // (Open-Meteo forecast couvre jusqu'à J+16)
   var today = new Date(); today.setHours(0,0,0,0);
   var days = [];
   for (var i = 0; i < 7; i++) {
@@ -1730,30 +1728,24 @@ function buildContextStrip(lat, lon, yr, mo, da) {
                dy: d.getFullYear(), dm: d.getMonth(), dd: d.getDate()});
   }
   var promises = days.map(function(day) {
-    var rowsPromise;
-    if (day.diff >= 0 && day.diff <= 7) {
-      // Prévision réelle
-      rowsPromise = fetchForecast(lat, lon, day.dy, day.dm, day.dd);
-    } else {
-      // Climatologie brute — les jours ±1 à ±3 sont du contexte, pas des prévisions
-      // offset=0 est garanti cohérent via window._heroIcon dans renderContextStrip
-      rowsPromise = buildClimatology(lat, lon, day.dy, day.dm, day.dd);
-    }
-    return rowsPromise.then(function(rows) {
-      var sc = genMain(rows);
-      var main = sc[13] || sc[12];
-      var temps = [];
-      for (var k = 0; k < sc.length; k++) if (sc[k].temp != null) temps.push(sc[k].temp);
-      var tAvg = temps.length ? Math.round(temps.reduce(function(a,b){return a+b;},0)/temps.length) : null;
-      return {
-        offset: day.offset,
-        date:   day.date,
-        temp:   tAvg,
-        ico:    getIcon(main.h, main.temp, main.sol, main.rain, main.mm||0, main.snow||0, main.p25)
-      };
-    }).catch(function() {
-      return {offset: day.offset, date: day.date, temp: null, ico: ''};
-    });
+    // Tous les jours de la bande sont dans la fenêtre forecast (diff 5 à 19 environ)
+    // → fetchForecast pour avoir une vraie variation jour à jour
+    return fetchForecast(lat, lon, day.dy, day.dm, day.dd)
+      .then(function(rows) {
+        var sc = genMain(rows);
+        var main = sc[13] || sc[12];
+        var temps = [];
+        for (var k = 0; k < sc.length; k++) if (sc[k].temp != null) temps.push(sc[k].temp);
+        var tAvg = temps.length ? Math.round(temps.reduce(function(a,b){return a+b;},0)/temps.length) : null;
+        return {
+          offset: day.offset,
+          date:   day.date,
+          temp:   tAvg,
+          ico:    getIcon(main.h, main.temp, main.sol, main.rain, main.mm||0, main.snow||0, main.p25)
+        };
+      }).catch(function() {
+        return {offset: day.offset, date: day.date, temp: null, ico: ''};
+      });
   });
   return Promise.all(promises).then(function(results) {
     results.sort(function(a,b){return a.offset - b.offset;});
@@ -1979,9 +1971,9 @@ function run() {
       setP(100,'Terminé');seedRand(makeSeed(loc.lat,loc.lon,yr,mo,da));var sc=genMain(rows);updateHero(sc,rows);
       var note=(diffDays>7&&diffDays<=210)?'<strong>Tendance saisonnière</strong> · climatologie 10 ans corrigée par le modèle ECMWF — indicatif, non garanti.':'<strong>Profil climatique</strong> · moyenne statistique des 10 dernières années pour cette date et ce lieu.';
       showResults(sc,rows,false,note,diffDays);
-      // Bande contexte ±3j (uniquement J+8 et au-delà)
+      // Bande contexte ±3j uniquement J+8 à J+16 (données forecast réel disponibles)
       var _ctxStrip = document.getElementById('ctx-strip');
-      if (diffDays > 7) {
+      if (diffDays > 7 && diffDays <= 16) {
         buildContextStrip(loc.lat, loc.lon, yr, mo, da).then(renderContextStrip);
       } else {
         if (_ctxStrip) _ctxStrip.style.display = 'none';
