@@ -1644,6 +1644,53 @@ function updateHero(sc, rows) {
   document.getElementById('r-wind').textContent=fmtWind(wSum/rows.length);
   document.getElementById('r-sky').textContent=skyLbl;
   computeAndRenderScore(sc, rows);
+
+  // Snow alert
+  var _snowAlert = document.getElementById('snow-alert');
+  if (!_snowAlert) {
+    _snowAlert = document.createElement('div');
+    _snowAlert.id = 'snow-alert';
+    _snowAlert.style.cssText = 'background:#ede9fe;border:1.5px solid #6366f1;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;color:#4f46e5;display:none;margin-top:10px;text-align:center';
+    var heroTop = document.querySelector('.hero-top');
+    if (heroTop) heroTop.appendChild(_snowAlert);
+  }
+  var _snowRows = rows || sc;
+  var _snowTotal = 0; for (var _si=0; _si<_snowRows.length; _si++) _snowTotal += (_snowRows[_si].snow||0);
+  var _snowHours = 0, _snowFirstH = -1;
+  if (_snowTotal < 0.5) {
+    for (var _si=0; _si<_snowRows.length; _si++) {
+      var _r = _snowRows[_si];
+      var _t = (_r.p25 != null ? _r.p25 : _r.temp) || 99;
+      if (_t <= 2 && (_r.mm||0) > 0.1 && (_r.rain||0) > 15) {
+        _snowHours++;
+        if (_snowFirstH < 0) _snowFirstH = _r.h;
+      }
+    }
+  } else {
+    for (var _si=0; _si<_snowRows.length; _si++) {
+      if ((_snowRows[_si].snow||0) > 0 && _snowFirstH < 0) _snowFirstH = _snowRows[_si].h;
+    }
+  }
+  function _snowTimeLbl(h) {
+    if (h < 0) return '';
+    if (h >= 22 || h < 6) return ' · at night';
+    if (h < 10) return ' · in the morning';
+    if (h < 14) return ' · during the day';
+    return ' · in the afternoon';
+  }
+  var _timeLbl = (_snowFirstH >= 0) ? _snowTimeLbl(_snowFirstH) : '';
+  if (_snowTotal > 0.5) {
+    _snowAlert.style.display = 'block';
+    _snowAlert.textContent = '❄️ Snow forecast' + _timeLbl + ' · ' + Math.round(_snowTotal*10)/10 + ' cm total';
+  } else if (_snowHours >= 2) {
+    _snowAlert.style.display = 'block';
+    _snowAlert.textContent = '❄️ Snow likely' + _timeLbl + ' · ' + _snowHours + 'h of precipitation below 2°C';
+  } else if (_snowHours >= 1) {
+    _snowAlert.style.display = 'block';
+    _snowAlert.textContent = '❄️ Snow possible' + _timeLbl + ' · temperatures near freezing with precipitation';
+  } else {
+    _snowAlert.style.display = 'none';
+  }
 }
 
 /* ── BANDE CONTEXTE ±3J (J+8 et au-delà) ── */
