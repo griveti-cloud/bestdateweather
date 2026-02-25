@@ -2113,7 +2113,7 @@ function setAnnP(p, lbl) {
 function fetchAnnualArchive(loc) {
   var now = new Date();
   var endYr = now.getFullYear() - 1;
-  var startYr = endYr - 2; // 3 years
+  var startYr = endYr - 9; // 10 years
   var startDate = startYr + '-01-01';
   var endDate   = endYr   + '-12-31';
   var url = 'https://archive-api.open-meteo.com/v1/archive?latitude=' + loc.lat + '&longitude=' + loc.lon +
@@ -2211,7 +2211,7 @@ function monthScoreForUC(d, uc) {
   var sRain = scoreRainSmart(d.rainPct, d.avgPrecipMm, d.avgTemp);
   var sTemp = scoreTemp(d.avgTemp, cfg.tempMin, cfg.tempMax);
   var sWind = 85; // monthly data has no wind — assume neutral
-  var sSun  = scoreSun(d.avgRad);
+  var sSun  = scoreSun(d.avgRad * 93); // convert MJ/m²/day → W/m² equiv
   return Math.round(sRain * w.rain/100 + sTemp * w.temp/100 + sWind * w.wind/100 + sSun * w.sun/100);
 }
 function monthScore(d) {
