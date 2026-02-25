@@ -1735,11 +1735,9 @@ function buildContextStrip(lat, lon, yr, mo, da) {
       // Prévision réelle
       rowsPromise = fetchForecast(lat, lon, day.dy, day.dm, day.dd);
     } else {
-      // Climatologie + correction ECMWF du héro (même facteur, base climatologique différente par jour)
-      rowsPromise = buildClimatology(lat, lon, day.dy, day.dm, day.dd).then(function(rows) {
-        if (window._heroSeas) return applySeasonalCorrection(rows, window._heroSeas);
-        return rows;
-      });
+      // Climatologie brute — les jours ±1 à ±3 sont du contexte, pas des prévisions
+      // offset=0 est garanti cohérent via window._heroIcon dans renderContextStrip
+      rowsPromise = buildClimatology(lat, lon, day.dy, day.dm, day.dd);
     }
     return rowsPromise.then(function(rows) {
       var sc = genMain(rows);
