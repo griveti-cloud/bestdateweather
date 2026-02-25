@@ -1677,23 +1677,43 @@ function updateHero(sc, rows) {
   }
   var _snowRows = rows || sc;
   var _snowTotal = 0; for (var _si=0; _si<_snowRows.length; _si++) _snowTotal += (_snowRows[_si].snow||0);
-  var _snowHours = 0;
+  var _snowHours = 0, _snowFirstH = -1, _snowLastH = -1;
   if (_snowTotal < 0.5) {
     for (var _si=0; _si<_snowRows.length; _si++) {
       var _r = _snowRows[_si];
       var _t = (_r.p25 != null ? _r.p25 : _r.temp) || 99;
-      if (_t <= 2 && (_r.mm||0) > 0.1 && (_r.rain||0) > 15) _snowHours++;
+      if (_t <= 2 && (_r.mm||0) > 0.1 && (_r.rain||0) > 15) {
+        _snowHours++;
+        if (_snowFirstH < 0) _snowFirstH = _r.h;
+        _snowLastH = _r.h;
+      }
+    }
+  } else {
+    // find hours with actual snowfall
+    for (var _si=0; _si<_snowRows.length; _si++) {
+      if ((_snowRows[_si].snow||0) > 0) {
+        if (_snowFirstH < 0) _snowFirstH = _snowRows[_si].h;
+        _snowLastH = _snowRows[_si].h;
+      }
     }
   }
+  function _snowTimeLbl(h) {
+    if (h < 0) return '';
+    if (h >= 22 || h < 6) return ' · la nuit';
+    if (h < 10) return ' · le matin';
+    if (h < 14) return ' · en journée';
+    return ' · l'après-midi';
+  }
+  var _timeLbl = (_snowFirstH >= 0) ? _snowTimeLbl(_snowFirstH) : '';
   if (_snowTotal > 0.5) {
     _snowAlert.style.display = 'block';
-    _snowAlert.textContent = '❄️ Neige prévue · ' + Math.round(_snowTotal*10)/10 + ' cm au total';
+    _snowAlert.textContent = '❄️ Neige prévue' + _timeLbl + ' · ' + Math.round(_snowTotal*10)/10 + ' cm au total';
   } else if (_snowHours >= 2) {
     _snowAlert.style.display = 'block';
-    _snowAlert.textContent = '❄️ Neige probable · ' + _snowHours + 'h de précipitations sous 2°C';
+    _snowAlert.textContent = '❄️ Neige probable' + _timeLbl + ' · ' + _snowHours + 'h de précipitations sous 2°C';
   } else if (_snowHours >= 1) {
     _snowAlert.style.display = 'block';
-    _snowAlert.textContent = '❄️ Neige possible · températures proches du gel avec précipitations';
+    _snowAlert.textContent = '❄️ Neige possible' + _timeLbl + ' · températures proches du gel avec précipitations';
   } else {
     _snowAlert.style.display = 'none';
   }
