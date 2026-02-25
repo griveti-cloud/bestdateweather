@@ -1,0 +1,114 @@
+name: Refresh monthly cache
+
+on:
+  schedule:
+    - cron: '0 6 5 1 *'   # 5 janvier à 6h UTC (2025 complet dispo fin déc)
+  workflow_dispatch:        # déclenchement manuel possible depuis GitHub
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch monthly data (71 destinations, 10 ans)
+        run: |
+          python3 - << 'PYEOF'
+          import json, time, urllib.request, glob, re, os
+          from datetime import date
+
+          END_YR   = date.today().year - 1
+          START_YR = END_YR - 9   # 10 ans glissants
+          VARS = 'temperature_2m_max,temperature_2m_min,precipitation_sum,shortwave_radiation_sum,sunshine_duration'
+
+          # Extraire coords depuis les fiches HTML
+          fiches = glob.glob('*-meteo-janvier.html')
+          destinations = []
+          for f in sorted(fiches):
+              c = open(f).read()
+              m  = re.search(r'lat=([\d.-]+)&lon=([\d.-]+)', c)
+              sm = re.search(r'^(.+)-meteo-janvier\.html$', os.path.basename(f))
+              if m and sm:
+                  lat, lon = float(m.group(1)), float(m.group(2))
+                  destinations.append({'key': f'{lat},{lon}', 'lat': lat, 'lon': lon, 'name': sm.group(1)})
+          print(f'{len(destinations)} destinations à mettre à jour ({START_YR}–{END_YR})')
+
+          def fetch(lat, lon):
+              url = (f'https://archive-api.open-meteo.com/v1/archive'
+                     f'?latitude={lat}&longitude={lon}'
+                     f'&start_date={START_YR}-01-01&end_date={END_YR}-12-31'
+                     f'&daily={VARS}&timezone=auto')
+              with urllib.request.urlopen(url, timeout=30) as r:
+                  return json.loads(r.read())
+
+          def aggregate(data):
+              d = data['daily']
+              times, tmax_all, tmin_all = d['time'], d['temperature_2m_max'], d['temperature_2m_min']
+              precip, rad = d['precipitation_sum'], d['shortwave_radiation_sum']
+              sunshine = d.get('sunshine_duration', [None]*len(times))
+              buckets = [{'tmax':[],'tmin':[],'precip':[],'rad':[],'sun':[],'wet':0,'tot':0} for _ in range(12)]
+              for i, t in enumerate(times):
+                  mo = int(t[5:7])-1; b = buckets[mo]; b['tot'] += 1
+                  if tmax_all[i] is not None: b['tmax'].append(tmax_all[i])
+                  if tmin_all[i] is not None: b['tmin'].append(tmin_all[i])
+                  p = precip[i]
+                  if p is not None: b['precip'].append(p); b['wet'] += (1 if p > 1.0 else 0)
+                  if rad[i] is not None: b['rad'].append(rad[i])
+                  if sunshine[i] is not None: b['sun'].append(sunshine[i])
+              out = []
+              for b in buckets:
+                  avg = lambda a: sum(a)/len(a) if a else 0
+                  out.append({
+                      'avgTmax':     round(avg(b['tmax'])),
+                      'avgTmin':     round(avg(b['tmin'])),
+                      'avgTemp':     round((avg(b['tmax'] or [0]) + avg(b['tmin'] or [0])) / 2, 1),
+                      'rainPct':     round(b['wet']/b['tot']*100) if b['tot'] else 0,
+                      'avgPrecipMm': round(avg(b['precip']), 1),
+                      'sunHrs':      round(avg(b['sun'])/3600, 1) if b['sun'] else round(avg(b['rad'])/3.6/10, 1),
+                      'avgRad':      round(avg(b['rad']), 0),
+                  })
+              return out
+
+          results = {}
+          errors = []
+          for i, dest in enumerate(destinations):
+              print(f'[{i+1}/{len(destinations)}] {dest["name"]}...', end=' ', flush=True)
+              for attempt in range(3):
+                  try:
+                      results[dest['key']] = {'name': dest['name'], 'monthly': aggregate(fetch(dest['lat'], dest['lon']))}
+                      print('OK')
+                      time.sleep(0.6)
+                      break
+                  except Exception as e:
+                      if attempt < 2:
+                          print(f'retry ({e})...', end=' ', flush=True)
+                          time.sleep(5)
+                      else:
+                          print(f'FAILED: {e}')
+                          errors.append(dest['name'])
+
+          os.makedirs('data', exist_ok=True)
+          json.dump(results, open('data/monthly.json', 'w'), ensure_ascii=False)
+          print(f'\nRésultat : {len(results)} OK, {len(errors)} erreurs')
+          if errors:
+              print('Erreurs :', errors)
+              # Ne pas bloquer le commit si quelques erreurs mineures
+              if len(errors) > 10:
+                  raise SystemExit(f'{len(errors)} erreurs — abandon')
+          PYEOF
+
+      - name: Commit updated cache
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/monthly.json
+          git diff --cached --quiet && echo "Aucun changement" || (
+            git commit -m "auto: refresh monthly.json $(date +%Y) [skip ci]"
+            git push
+          )
