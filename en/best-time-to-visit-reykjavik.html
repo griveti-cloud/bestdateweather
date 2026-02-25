@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- SCORING: scoring.py v1.0 | slug=reykjavik | tropical=false -->
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
@@ -155,18 +156,18 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
     <div class="climate-table-wrap">
       <table class="climate-table" aria-label="Monthly climate table Reykjavik">
         <thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead>
-        <tbody><tr class="avoid"><td>January</td><td>-3°C</td><td>2°C</td><td>75%</td><td>147.2</td><td>1.1</td><td>0.5/10</td></tr>
-<tr class="avoid"><td>February</td><td>-3°C</td><td>2°C</td><td>76%</td><td>160.5</td><td>3.0</td><td>1.0/10</td></tr>
-<tr class="avoid"><td>March</td><td>-2°C</td><td>3°C</td><td>73%</td><td>128.8</td><td>5.7</td><td>1.9/10</td></tr>
-<tr class="avoid"><td>April</td><td>1°C</td><td>6°C</td><td>73%</td><td>131.9</td><td>7.1</td><td>2.5/10</td></tr>
-<tr class="avoid"><td>May</td><td>4°C</td><td>9°C</td><td>71%</td><td>118.0</td><td>9.1</td><td>3.9/10</td></tr>
-<tr class="mid"><td>June</td><td>7°C</td><td>11°C</td><td>72%</td><td>93.6</td><td>8.7</td><td>4.0/10</td></tr>
-<tr class="mid"><td>July</td><td>9°C</td><td>13°C</td><td>72%</td><td>82.5</td><td>9.1</td><td>5.9/10</td></tr>
-<tr class="mid"><td>August</td><td>8°C</td><td>13°C</td><td>64%</td><td>101.5</td><td>8.4</td><td>6.9/10</td></tr>
-<tr class="avoid"><td>September</td><td>6°C</td><td>10°C</td><td>77%</td><td>136.7</td><td>5.8</td><td>2.8/10</td></tr>
-<tr class="avoid"><td>October</td><td>3°C</td><td>7°C</td><td>75%</td><td>153.0</td><td>3.9</td><td>1.7/10</td></tr>
-<tr class="avoid"><td>November</td><td>0°C</td><td>4°C</td><td>70%</td><td>128.8</td><td>1.6</td><td>0.9/10</td></tr>
-<tr class="avoid"><td>December</td><td>-3°C</td><td>2°C</td><td>71%</td><td>130.3</td><td>0.8</td><td>0.7/10</td></tr></tbody>
+        <tbody><tr class="avoid" data-tmax="2" data-rain="75" data-sun="1.1"><td>January</td><td>-3°C</td><td>2°C</td><td>75%</td><td>147.2</td><td>1.1h</td><td>0.5/10</td></tr>
+<tr class="avoid" data-tmax="2" data-rain="76" data-sun="3.0"><td>February</td><td>-3°C</td><td>2°C</td><td>76%</td><td>160.5</td><td>3.0h</td><td>1.0/10</td></tr>
+<tr class="avoid" data-tmax="3" data-rain="73" data-sun="5.7"><td>March</td><td>-2°C</td><td>3°C</td><td>73%</td><td>128.8</td><td>5.7h</td><td>1.9/10</td></tr>
+<tr class="avoid" data-tmax="6" data-rain="73" data-sun="7.1"><td>April</td><td>1°C</td><td>6°C</td><td>73%</td><td>131.9</td><td>7.1h</td><td>2.5/10</td></tr>
+<tr class="avoid" data-tmax="9" data-rain="71" data-sun="9.1"><td>May</td><td>4°C</td><td>9°C</td><td>71%</td><td>118.0</td><td>9.1h</td><td>3.9/10</td></tr>
+<tr class="mid" data-tmax="11" data-rain="72" data-sun="8.7"><td>June</td><td>7°C</td><td>11°C</td><td>72%</td><td>93.6</td><td>8.7h</td><td>4.0/10</td></tr>
+<tr class="mid" data-tmax="13" data-rain="72" data-sun="9.1"><td>July</td><td>9°C</td><td>13°C</td><td>72%</td><td>82.5</td><td>9.1h</td><td>5.9/10</td></tr>
+<tr class="mid" data-tmax="13" data-rain="64" data-sun="8.4"><td>August</td><td>8°C</td><td>13°C</td><td>64%</td><td>101.5</td><td>8.4h</td><td>6.9/10</td></tr>
+<tr class="avoid" data-tmax="10" data-rain="77" data-sun="5.8"><td>September</td><td>6°C</td><td>10°C</td><td>77%</td><td>136.7</td><td>5.8h</td><td>2.8/10</td></tr>
+<tr class="avoid" data-tmax="7" data-rain="75" data-sun="3.9"><td>October</td><td>3°C</td><td>7°C</td><td>75%</td><td>153.0</td><td>3.9h</td><td>1.7/10</td></tr>
+<tr class="avoid" data-tmax="4" data-rain="70" data-sun="1.6"><td>November</td><td>0°C</td><td>4°C</td><td>70%</td><td>128.8</td><td>1.6h</td><td>0.9/10</td></tr>
+<tr class="avoid" data-tmax="2" data-rain="71" data-sun="0.8"><td>December</td><td>-3°C</td><td>2°C</td><td>71%</td><td>130.3</td><td>0.8h</td><td>0.7/10</td></tr></tbody>
       </table>
     </div>
     <div class="table-legend">

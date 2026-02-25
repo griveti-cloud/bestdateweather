@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<!-- SCORING: scoring.py v1.0 | slug=vienne | tropical=false -->
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <!-- Google tag (gtag.js) -->
@@ -98,18 +99,18 @@
     <div class="climate-table-wrap">
       <table class="climate-table" aria-label="Tableau climat mensuel Vienne">
         <thead><tr><th>Mois</th><th>T° min</th><th>T° max</th><th>Pluie %</th><th>Précip. mm</th><th>Soleil h/j</th><th>Score</th></tr></thead>
-        <tbody><tr class="avoid"><td>Janvier</td><td>-2°C</td><td>4°C</td><td>57%</td><td>39.3</td><td>4.2</td><td>0.5/10</td></tr>
-<tr class="mid"><td>Février</td><td>0°C</td><td>8°C</td><td>52%</td><td>38.4</td><td>6.0</td><td>4.0/10</td></tr>
-<tr class="mid"><td>Mars</td><td>2°C</td><td>11°C</td><td>46%</td><td>30.6</td><td>7.9</td><td>6.9/10</td></tr>
-<tr class="rec"><td>Avril</td><td>6°C</td><td>16°C</td><td>49%</td><td>50.3</td><td>9.4</td><td>7.4/10</td></tr>
-<tr class="rec"><td>Mai</td><td>11°C</td><td>20°C</td><td>68%</td><td>75.3</td><td>10.2</td><td>7.9/10</td></tr>
-<tr class="rec"><td>Juin</td><td>16°C</td><td>25°C</td><td>62%</td><td>69.4</td><td>12.0</td><td>9.4/10</td></tr>
-<tr class="rec"><td>Juillet</td><td>17°C</td><td>27°C</td><td>55%</td><td>58.3</td><td>12.1</td><td>10.0/10</td></tr>
-<tr class="rec"><td>Août</td><td>17°C</td><td>27°C</td><td>52%</td><td>59.3</td><td>10.9</td><td>9.9/10</td></tr>
-<tr class="rec"><td>Septembre</td><td>13°C</td><td>22°C</td><td>47%</td><td>84.3</td><td>8.9</td><td>9.0/10</td></tr>
-<tr class="rec"><td>Octobre</td><td>8°C</td><td>16°C</td><td>46%</td><td>54.3</td><td>6.6</td><td>7.0/10</td></tr>
-<tr class="avoid"><td>Novembre</td><td>3°C</td><td>9°C</td><td>49%</td><td>44.3</td><td>4.7</td><td>3.9/10</td></tr>
-<tr class="avoid"><td>Décembre</td><td>0°C</td><td>5°C</td><td>55%</td><td>44.5</td><td>3.9</td><td>0.6/10</td></tr></tbody>
+        <tbody><tr class="avoid" data-tmax="4" data-rain="57" data-sun="4.2"><td>Janvier</td><td>-2°C</td><td>4°C</td><td>57%</td><td>39.3</td><td>4.2h</td><td>0.5/10</td></tr>
+<tr class="mid" data-tmax="8" data-rain="52" data-sun="6.0"><td>Février</td><td>0°C</td><td>8°C</td><td>52%</td><td>38.4</td><td>6.0h</td><td>4.0/10</td></tr>
+<tr class="mid" data-tmax="11" data-rain="46" data-sun="7.9"><td>Mars</td><td>2°C</td><td>11°C</td><td>46%</td><td>30.6</td><td>7.9h</td><td>6.9/10</td></tr>
+<tr class="rec" data-tmax="16" data-rain="49" data-sun="9.4"><td>Avril</td><td>6°C</td><td>16°C</td><td>49%</td><td>50.3</td><td>9.4h</td><td>7.4/10</td></tr>
+<tr class="rec" data-tmax="20" data-rain="68" data-sun="10.2"><td>Mai</td><td>11°C</td><td>20°C</td><td>68%</td><td>75.3</td><td>10.2h</td><td>7.9/10</td></tr>
+<tr class="rec" data-tmax="25" data-rain="62" data-sun="12.0"><td>Juin</td><td>16°C</td><td>25°C</td><td>62%</td><td>69.4</td><td>12.0h</td><td>9.4/10</td></tr>
+<tr class="rec" data-tmax="27" data-rain="55" data-sun="12.1"><td>Juillet</td><td>17°C</td><td>27°C</td><td>55%</td><td>58.3</td><td>12.1h</td><td>10.0/10</td></tr>
+<tr class="rec" data-tmax="27" data-rain="52" data-sun="10.9"><td>Août</td><td>17°C</td><td>27°C</td><td>52%</td><td>59.3</td><td>10.9h</td><td>9.9/10</td></tr>
+<tr class="rec" data-tmax="22" data-rain="47" data-sun="8.9"><td>Septembre</td><td>13°C</td><td>22°C</td><td>47%</td><td>84.3</td><td>8.9h</td><td>9.0/10</td></tr>
+<tr class="rec" data-tmax="16" data-rain="46" data-sun="6.6"><td>Octobre</td><td>8°C</td><td>16°C</td><td>46%</td><td>54.3</td><td>6.6h</td><td>7.0/10</td></tr>
+<tr class="avoid" data-tmax="9" data-rain="49" data-sun="4.7"><td>Novembre</td><td>3°C</td><td>9°C</td><td>49%</td><td>44.3</td><td>4.7h</td><td>3.9/10</td></tr>
+<tr class="avoid" data-tmax="5" data-rain="55" data-sun="3.9"><td>Décembre</td><td>0°C</td><td>5°C</td><td>55%</td><td>44.5</td><td>3.9h</td><td>0.6/10</td></tr></tbody>
       </table>
     </div>
     <div class="table-legend">
