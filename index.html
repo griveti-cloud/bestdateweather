@@ -294,18 +294,6 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
 .score-3{background:#fee2e2;color:#991b1b}
 
 /* ── BANDE CONTEXTE ±3J ── */
-.ctx-strip{padding:12px 20px 14px;background:white;border-top:1px solid var(--cream2)}
-.ctx-strip-lbl{font-size:10px;font-weight:700;color:var(--slate3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
-.ctx-cells{display:flex;gap:4px}
-.ctx-cell{flex:1;text-align:center;padding:7px 3px;border-radius:8px;background:var(--cream);border:1.5px solid transparent}
-.ctx-center{background:var(--gold-light)!important;border-color:var(--gold)!important}
-.ctx-day{font-size:9px;font-weight:600;color:var(--slate3);letter-spacing:.2px;margin-bottom:3px;white-space:nowrap}
-.ctx-center .ctx-day{color:var(--gold);font-weight:700}
-.ctx-ico{font-size:16px;line-height:1;margin-bottom:3px}
-.ctx-temp{font-size:11px;font-weight:700;color:var(--navy)}
-.ctx-center .ctx-temp{font-size:12px;font-weight:800}
-@media(max-width:400px){.ctx-day{font-size:8px}.ctx-ico{font-size:14px}.ctx-temp{font-size:10px}}
-
 /* Animations */
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .hero,.sec-block,.annual-result{animation:fadeUp .35s ease both}
@@ -485,9 +473,6 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
         <div class="hero-icon" id="r-icon"></div>
       </div>
     </div>
-    <div class="ctx-strip" id="ctx-strip" style="display:none">
-      <div class="ctx-strip-lbl">Contexte météo — 7 jours</div>
-      <div class="ctx-cells" id="ctx-strip-cells"></div>
     </div>
     <div class="score-block" id="score-block" style="display:none">
       <div class="score-row">
@@ -1672,7 +1657,7 @@ function updateHero(sc, rows) {
   var avgRain=Math.round(rSum/rows.length);
   var skyLbl;
   if(avgRain>55)skyLbl='Pluvieux';else if(avgRain>35)skyLbl='Nuageux';else if(peakSol>500&&avgRain<20)skyLbl='Plein soleil';else if(peakSol>250&&avgRain<30)skyLbl='Ensoleillé';else if(peakSol>80)skyLbl='Voilé';else if(peakSol>15)skyLbl='Nuageux';else skyLbl='Couvert';
-  window._heroTemp = main.temp || null; window._heroIcon = getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25); document.getElementById('r-temp').innerHTML=(main.temp||'-')+'<sup>\u00b0</sup>';
+  window._heroTemp = main.temp || null;
   document.getElementById('r-range').textContent=tmin+'\u00b0 / '+tmax+'\u00b0 dans la journée';
   document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
   document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
@@ -1715,59 +1700,7 @@ function updateHero(sc, rows) {
 }
 
 /* ── BANDE CONTEXTE ±3J (J+8 et au-delà) ── */
-function buildContextStrip(lat, lon, yr, mo, da) {
-  // Bande uniquement pour J+8 à J+16 : tous les jours utilisent fetchForecast
-  // (Open-Meteo forecast couvre jusqu'à J+16)
-  var today = new Date(); today.setHours(0,0,0,0);
-  var days = [];
-  for (var i = 0; i < 7; i++) {
-    var d = new Date(yr, mo, da);
-    d.setDate(d.getDate() + (i - 3));
-    var diff = Math.round((d.getTime() - today.getTime()) / 86400000);
-    days.push({offset: i - 3, date: new Date(d), diff: diff,
-               dy: d.getFullYear(), dm: d.getMonth(), dd: d.getDate()});
-  }
-  var promises = days.map(function(day) {
-    // Tous les jours de la bande sont dans la fenêtre forecast (diff 5 à 19 environ)
-    // → fetchForecast pour avoir une vraie variation jour à jour
-    return fetchForecast(lat, lon, day.dy, day.dm, day.dd)
-      .then(function(rows) {
-        var sc = genMain(rows);
-        var main = sc[13] || sc[12];
-        var temps = [];
-        for (var k = 0; k < sc.length; k++) if (sc[k].temp != null) temps.push(sc[k].temp);
-        var tAvg = temps.length ? Math.round(temps.reduce(function(a,b){return a+b;},0)/temps.length) : null;
-        return {
-          offset: day.offset,
-          date:   day.date,
-          temp:   tAvg,
-          ico:    getIcon(main.h, main.temp, main.sol, main.rain, main.mm||0, main.snow||0, main.p25)
-        };
-      }).catch(function() {
-        return {offset: day.offset, date: day.date, temp: null, ico: ''};
-      });
-  });
-  return Promise.all(promises).then(function(results) {
-    results.sort(function(a,b){return a.offset - b.offset;});
-    return results;
-  });
-}
 
-function renderContextStrip(days) {
-  var strip = document.getElementById('ctx-strip');
-  var cells = document.getElementById('ctx-strip-cells');
-  if (!strip || !cells) return;
-  var DAYS = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
-  cells.innerHTML = days.map(function(d) {
-    var lbl = DAYS[d.date.getDay()]+'\u00a0'+d.date.getDate();
-    var tmp = (d.offset===0 && window._heroTemp!=null) ? Math.round(window._heroTemp)+'\u00b0' : (d.temp!=null ? d.temp+'\u00b0' : '\u2013');
-    var cls = 'ctx-cell' + (d.offset===0 ? ' ctx-center' : '');
-    return '<div class="'+cls+'"><div class="ctx-day">'+lbl+'</div>'
-          +'<div class="ctx-ico">'+(d.offset===0 && window._heroIcon ? window._heroIcon : d.ico)+'</div>'
-          +'<div class="ctx-temp">'+tmp+'</div></div>';
-  }).join('');
-  strip.style.display = 'block';
-}
 
 
 
@@ -1947,8 +1880,6 @@ function run() {
     renderAstro(loc.lat,loc.lon,yr,mo,da);
     // Lancer SST en parallèle (silencieux — n'affecte pas le score principal)
     window._lastSSTResult = null;
-    window._heroSeas = null;
-    window._heroIcon = null;
     var slug = slugFromName(loc.name);
     fetchMarineSST(loc.lat,loc.lon,yr,mo,da,slug).then(function(sstResult){
       window._lastSSTResult = sstResult;
@@ -1964,20 +1895,13 @@ function run() {
       });
     }
     return buildClimatology(loc.lat,loc.lon,yr,mo,da).then(function(rows){
-      if(diffDays>7&&diffDays<=210){setP(92,'Correction ECMWF saisonnière…');return fetchSeasonal(loc.lat,loc.lon,yr,mo,da).then(function(seas){window._heroSeas=seas;return applySeasonalCorrection(rows,seas);});}
+      if(diffDays>7&&diffDays<=210){setP(92,'Correction ECMWF saisonnière…');return fetchSeasonal(loc.lat,loc.lon,yr,mo,da).then(function(seas){return applySeasonalCorrection(rows,seas);});}
       return rows;
     }).then(function(rows){
       renderAstro(loc.lat,loc.lon,yr,mo,da);
       setP(100,'Terminé');seedRand(makeSeed(loc.lat,loc.lon,yr,mo,da));var sc=genMain(rows);updateHero(sc,rows);
       var note=(diffDays>7&&diffDays<=210)?'<strong>Tendance saisonnière</strong> · climatologie 10 ans corrigée par le modèle ECMWF — indicatif, non garanti.':'<strong>Profil climatique</strong> · moyenne statistique des 10 dernières années pour cette date et ce lieu.';
       showResults(sc,rows,false,note,diffDays);
-      // Bande contexte ±3j uniquement J+8 à J+16 (données forecast réel disponibles)
-      var _ctxStrip = document.getElementById('ctx-strip');
-      if (diffDays > 7 && diffDays <= 16) {
-        buildContextStrip(loc.lat, loc.lon, yr, mo, da).then(renderContextStrip);
-      } else {
-        if (_ctxStrip) _ctxStrip.style.display = 'none';
-      }
       progEl.style.display='none';btnEl.disabled=false;
     });
   }).catch(function(err){errEl.textContent='Erreur : '+err.message;errEl.style.display='block';progEl.style.display='none';showSection('empty');btnEl.disabled=false;});
