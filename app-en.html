@@ -2106,7 +2106,7 @@ function renderAnnual(loc, monthly) {
     card.style.setProperty('--month-color', isRec ? '#1a7a4a' : (isAvoid ? '#ef4444' : color));
     card.style.animationDelay = delay + 'ms';
 
-    var scoreNum = uc ? ('<div class="month-score score-num-uc" style="background:' + getScoreColor(score) + ';color:white;font-size:9px;border-radius:10px;padding:2px 6px;position:absolute;top:10px;right:8px;font-weight:700;opacity:.85">' + (score/10).toFixed(1) + '/10' + '</div>') : '';
+    var scoreNum = uc ? ('<div class="month-score score-num-uc" style="background:' + getScoreColor(score) + ';color:white;font-size:10px;border-radius:8px;padding:2px 7px;position:absolute;top:8px;right:6px;font-weight:700;white-space:nowrap">' + (score === 100 ? '10' : (score/10).toFixed(1)) + '</div>') : '';
     var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">Season trend</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
     var isBest = uc && idx === sorted[0].idx && sorted[0].score >= 60;
     var badgeHtml = isBest ? '<div class="month-best-badge">🔥 Best month</div>' : (isRec ? '<div class="month-badge rec">Recommended</div>' : (isAvoid ? '<div class="month-badge avoid">Less favourable</div>' : ''));
