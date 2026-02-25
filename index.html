@@ -1716,53 +1716,36 @@ function updateHero(sc, rows) {
 
 /* ── BANDE CONTEXTE ±3J (J+8 et au-delà) ── */
 function buildContextStrip(lat, lon, yr, mo, da) {
-  var endYr = new Date().getFullYear() - 1;
-  var years = [endYr, endYr-1, endYr-2, endYr-3, endYr-4];
-  function fmt(d) {
-    return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
+  // Pipeline identique au héro : buildClimatology → buildRows → genMain → sc[13]
+  // Chaque jour de la bande passe par la même chaîne de calcul que la date principale.
+  var days = [];
+  for (var i = 0; i < 7; i++) {
+    var d = new Date(yr, mo, da);
+    d.setDate(d.getDate() + (i - 3));
+    days.push({offset: i - 3, date: new Date(d)});
   }
-  var promises = years.map(function(pastYr) {
-    var t = new Date(pastYr, mo, da);
-    var s = new Date(t); s.setDate(s.getDate()-3);
-    var e = new Date(t); e.setDate(e.getDate()+3);
-    var url = 'https://archive-api.open-meteo.com/v1/archive?latitude='+lat
-      +'&longitude='+lon+'&start_date='+fmt(s)+'&end_date='+fmt(e)
-      +'&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,shortwave_radiation_sum,sunshine_duration&timezone=auto';
-    return fetch(url).then(function(r){return r.json();}).catch(function(){return null;});
+  var promises = days.map(function(day) {
+    return buildClimatology(lat, lon, day.date.getFullYear(), day.date.getMonth(), day.date.getDate())
+      .then(function(rows) {
+        var sc = genMain(rows);
+        var main = sc[13] || sc[12];
+        var temps = [];
+        for (var k = 0; k < sc.length; k++) if (sc[k].temp != null) temps.push(sc[k].temp);
+        var tAvg = temps.length ? Math.round(temps.reduce(function(a,b){return a+b;},0)/temps.length) : null;
+        return {
+          offset: day.offset,
+          date:   day.date,
+          temp:   tAvg,
+          ico:    getIcon(main.h, main.temp, main.sol, main.rain, main.mm||0, main.snow||0, main.p25)
+        };
+      }).catch(function() {
+        return {offset: day.offset, date: day.date, temp: null, ico: ''};
+      });
   });
   return Promise.all(promises).then(function(results) {
-    function avg(arr) { return arr.length ? arr.reduce(function(a,b){return a+b;},0)/arr.length : null; }
-    var days = [];
-    for (var i = 0; i < 7; i++) {
-      var d = new Date(yr, mo, da);
-      d.setDate(d.getDate() + (i-3));
-      var tmx=[],tmn=[],prc=[],rad=[];
-      results.forEach(function(data) {
-        if (!data || !data.daily) return;
-        var a=data.daily.temperature_2m_max, b=data.daily.temperature_2m_min;
-        var p=data.daily.precipitation_sum,  r=data.daily.shortwave_radiation_sum;
-        if (a && a[i]!=null) tmx.push(a[i]);
-        if (b && b[i]!=null) tmn.push(b[i]);
-        if (p && p[i]!=null) prc.push(p[i]);
-        if (r && r[i]!=null) rad.push(r[i]);
-      });
-      var tAvg = (tmx.length && tmn.length) ? Math.round((avg(tmx)+avg(tmn))/2) : null;
-      var tMin = tmn.length ? avg(tmn) : null;
-      var pr   = avg(prc) || 0;
-      var ra   = avg(rad) || 0;
-      // Conversion données journalières → paramètres de getIcon() (même logique que le hero)
-      // sol  : MJ/m²/j * 25 ≈ W/m² pic (20 MJ/j → 500 W/m², cohérent avec seuils getIcon)
-      // mm   : mm/j / 5 ≈ mm/h équivalent (durée pluie typique ~5h/j)
-      // rain : % d'années avec précip > 0.1mm = probabilité pluie
-      // snow : tmin < 0°C + précipitations
-      var sol      = ra * 25;
-      var mm_h     = pr / 5;
-      var rainPct  = prc.filter(function(v){ return v > 0.1; }).length / (prc.length || 1) * 100;
-      var snow_h   = (tMin !== null && tMin < 0 && pr > 0.1) ? mm_h * 0.3 : 0;
-      // h=12 → icône diurne ; p25=tMin (proxy température basse)
-      days.push({offset:i-3, date:d, temp:tAvg, ico:getIcon(12, tAvg, sol, rainPct, mm_h, snow_h, tMin)});
-    }
-    return days;
+    // Réordonner par offset croissant (Promise.all préserve l'ordre, mais sécurité)
+    results.sort(function(a,b){return a.offset - b.offset;});
+    return results;
   });
 }
 
