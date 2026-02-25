@@ -295,17 +295,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 
 
 /* ── BANDE CONTEXTE ±3J ── */
-.ctx-strip{padding:12px 20px 14px;background:white;border-top:1px solid var(--cream2)}
-.ctx-strip-lbl{font-size:10px;font-weight:700;color:var(--slate3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
-.ctx-cells{display:flex;gap:4px}
-.ctx-cell{flex:1;text-align:center;padding:7px 3px;border-radius:8px;background:var(--cream);border:1.5px solid transparent}
-.ctx-center{background:var(--gold-light)!important;border-color:var(--gold)!important}
-.ctx-day{font-size:9px;font-weight:600;color:var(--slate3);letter-spacing:.2px;margin-bottom:3px;white-space:nowrap}
-.ctx-center .ctx-day{color:var(--gold);font-weight:700}
-.ctx-ico{font-size:16px;line-height:1;margin-bottom:3px}
-.ctx-temp{font-size:11px;font-weight:700;color:var(--navy)}
-.ctx-center .ctx-temp{font-size:12px;font-weight:800}
-@media(max-width:400px){.ctx-day{font-size:8px}.ctx-ico{font-size:14px}.ctx-temp{font-size:10px}}
+@media(max-width:400px){}
 /* Animations */
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .hero,.sec-block,.annual-result{animation:fadeUp .35s ease both}
@@ -493,9 +483,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
         </div>
         <div class="hero-icon" id="r-icon"></div>
       </div>
-    <div class="ctx-strip" id="ctx-strip" style="display:none">
-      <div class="ctx-strip-lbl">Weather context — 7 days</div>
-      <div class="ctx-cells" id="ctx-strip-cells"></div>
     </div>
     <div class="score-block" id="score-block" style="display:none">
       <div class="score-row">
@@ -1765,65 +1752,6 @@ function updateHero(sc, rows) {
 }
 
 /* ── BANDE CONTEXTE ±3J (J+8 et au-delà) ── */
-function buildContextStrip(lat, lon, yr, mo, da) {
-  var endYr = new Date().getFullYear() - 1;
-  var years = [endYr, endYr-1, endYr-2, endYr-3, endYr-4];
-  function fmt(d) {
-    return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
-  }
-  var promises = years.map(function(pastYr) {
-    var t = new Date(pastYr, mo, da);
-    var s = new Date(t); s.setDate(s.getDate()-3);
-    var e = new Date(t); e.setDate(e.getDate()+3);
-    var url = 'https://archive-api.open-meteo.com/v1/archive?latitude='+lat
-      +'&longitude='+lon+'&start_date='+fmt(s)+'&end_date='+fmt(e)
-      +'&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,shortwave_radiation_sum,sunshine_duration&timezone=auto';
-    return fetch(url).then(function(r){return r.json();}).catch(function(){return null;});
-  });
-  return Promise.all(promises).then(function(results) {
-    function avg(arr) { return arr.length ? arr.reduce(function(a,b){return a+b;},0)/arr.length : null; }
-    var days = [];
-    for (var i = 0; i < 7; i++) {
-      var d = new Date(yr, mo, da);
-      d.setDate(d.getDate() + (i-3));
-      var tmx=[],tmn=[],prc=[],rad=[];
-      results.forEach(function(data) {
-        if (!data || !data.daily) return;
-        var a=data.daily.temperature_2m_max, b=data.daily.temperature_2m_min;
-        var p=data.daily.precipitation_sum,  r=data.daily.shortwave_radiation_sum;
-        if (a && a[i]!=null) tmx.push(a[i]);
-        if (b && b[i]!=null) tmn.push(b[i]);
-        if (p && p[i]!=null) prc.push(p[i]);
-        if (r && r[i]!=null) rad.push(r[i]);
-      });
-      var tAvg = (tmx.length && tmn.length) ? Math.round((avg(tmx)+avg(tmn))/2) : null;
-      var tMin = tmn.length ? avg(tmn) : null;
-      var pr   = avg(prc) || 0;
-      var ra   = avg(rad) || 0;
-      var sol      = ra * 25;
-      var mm_h     = pr / 5;
-      var rainPct  = prc.filter(function(v){ return v > 0.1; }).length / (prc.length || 1) * 100;
-      var snow_h   = (tMin !== null && tMin < 0 && pr > 0.1) ? mm_h * 0.3 : 0;
-      days.push({offset:i-3, date:d, temp:tAvg, ico:getIcon(12, tAvg, sol, rainPct, mm_h, snow_h, tMin)});
-    }
-    return days;
-  });
-}
-function renderContextStrip(days) {
-  var strip = document.getElementById('ctx-strip');
-  var cells = document.getElementById('ctx-strip-cells');
-  if (!strip || !cells) return;
-  var DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  cells.innerHTML = days.map(function(d) {
-    var lbl = DAYS[d.date.getDay()]+'\u00a0'+d.date.getDate();
-    var tmp = (d.offset===0 && window._heroTemp!=null) ? Math.round(window._heroTemp)+'\u00b0' : (d.temp!=null ? d.temp+'\u00b0' : '\u2013');
-    var cls = 'ctx-cell' + (d.offset===0 ? ' ctx-center' : '');
-    return '<div class="'+cls+'"><div class="ctx-day">'+lbl+'</div>'
-          +'<div class="ctx-ico">'+d.ico+'</div>'
-          +'<div class="ctx-temp">'+tmp+'</div></div>';
-  }).join('');
-  strip.style.display = 'block';
-}
 
 
 function showResults(sc, rows, isForecast, noteText, diffDays) {
@@ -2024,13 +1952,7 @@ function run() {
       setP(100,'Done');seedRand(makeSeed(loc.lat,loc.lon,yr,mo,da));var sc=genMain(rows);updateHero(sc,rows);
       var note=(diffDays>7&&diffDays<=210)?'<strong>Seasonal trend</strong> · 10-year climatology corrected by ECMWF model — indicative, not guaranteed.':'<strong>Climate profile</strong> · statistical average of the last 10 years for this date and location.';
       showResults(sc,rows,false,note,diffDays);
-      var _ctxStrip = document.getElementById('ctx-strip');
-      if (diffDays > 7) {
-        buildContextStrip(loc.lat, loc.lon, yr, mo, da).then(renderContextStrip);
-      } else {
-        if (_ctxStrip) _ctxStrip.style.display = 'none';
-      }
-      progEl.style.display='none';btnEl.disabled=false;
+progEl.style.display='none';btnEl.disabled=false;
     });
   }).catch(function(err){errEl.textContent='Error: '+err.message;errEl.style.display='block';progEl.style.display='none';showSection('empty');btnEl.disabled=false;});
 }
