@@ -2211,7 +2211,7 @@ function monthScoreForUC(d, uc) {
   var sRain = scoreRainSmart(d.rainPct, d.avgPrecipMm, d.avgTemp);
   var sTemp = scoreTemp(d.avgTemp, cfg.tempMin, cfg.tempMax);
   var sWind = 85; // monthly data has no wind — assume neutral
-  var sSun  = scoreSun(d.avgRad * 93); // convert MJ/m²/day → W/m² equiv
+  var sSun  = scoreSun(d.avgRad); // avgRad en MJ/m²/jour (range 0-28)
   return Math.round(sRain * w.rain/100 + sTemp * w.temp/100 + sWind * w.wind/100 + sSun * w.sun/100);
 }
 function monthScore(d) {
