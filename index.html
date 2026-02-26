@@ -1736,29 +1736,69 @@ function scoreSun(peakSol) {
 }
 
 function getScoreColor(score) {
- if (score >= 80) return '#1a7a4a'; // green
- if (score >= 65) return '#84cc16'; // lime
- if (score >= 50) return '#f59e0b'; // amber
- if (score >= 35) return '#f97316'; // orange
- return '#ef4444'; // red
+ if (score >= 86) return '#1a7a4a';
+ if (score >= 76) return '#2d9e60';
+ if (score >= 63) return '#84cc16';
+ if (score >= 50) return '#f59e0b';
+ if (score >= 35) return '#f97316';
+ return '#ef4444';
 }
 
-function getVerdict(score, avgRain) {
- // Rain > 60% = toujours journée difficile ou très pluvieuse
- if (avgRain > 70) return 'Journée très pluvieuse';
- if (avgRain > 45) return score >= 75 ? 'Journée pluvieuse — conditions acceptables' : 'Journée pluvieuse';
- // Rain 30–45% = averses possibles, score doit être élevé pour compenser
- if (avgRain > 30) {
- if (score >= 78) return 'Bonnes conditions — averses possibles';
- if (score >= 60) return 'Conditions mitigées — averses possibles';
- return 'Conditions difficiles';
+function getMainDriver(avgRain, avgTemp, avgWind, sRain, sTemp, sWind, uc) {
+ var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
+ var penalties = [
+  { key:'rain', score: sRain, test: avgRain > 35 },
+  { key:'temp_cold', score: sTemp, test: avgTemp != null && avgTemp < cfg.tempMin },
+  { key:'temp_hot', score: sTemp, test: avgTemp != null && avgTemp > cfg.tempMax },
+  { key:'wind', score: sWind, test: avgWind > 28 }
+ ];
+ var worst = null;
+ for (var i = 0; i < penalties.length; i++) {
+  if (penalties[i].test && (!worst || penalties[i].score < worst.score)) worst = penalties[i];
  }
- // Rain < 30% = verdict basé sur score
- if (score >= 85) return 'Conditions excellentes';
- if (score >= 70) return 'Bonnes conditions';
- if (score >= 55) return 'Conditions acceptables';
- if (score >= 40) return 'Conditions mitigées';
- return 'Conditions difficiles';
+ if (!worst) return null;
+ var labels = {
+  rain: 'risque de pluie élevé',
+  temp_cold: 'températures fraîches',
+  temp_hot: uc === 'plage' ? 'chaleur excessive' : 'chaleur élevée',
+  wind: 'vent fréquent'
+ };
+ return labels[worst.key];
+}
+
+function getVerdict(score, avgRain, avgTemp, avgWind, uc, isSeasonal) {
+ uc = uc || 'general';
+ var suffix = isSeasonal ? ' · tendance saisonnière' : '';
+ var label;
+ if (score >= 86) label = 'Idéal';
+ else if (score >= 76) label = 'Très favorable';
+ else if (score >= 63) label = 'Favorable';
+ else if (score >= 50) label = 'Variable';
+ else if (score >= 35) label = 'Peu favorable';
+ else label = 'Conditions défavorables';
+ var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
+ var driver = getMainDriver(avgRain, avgTemp, avgWind, scoreRain(avgRain), scoreTemp(avgTemp, cfg.tempMin, cfg.tempMax), scoreWind(avgWind), uc);
+ var action;
+ if (uc === 'ski') {
+  if (score >= 76) action = 'Bon enneigement probable';
+  else if (score >= 50) action = 'Vigilance — redoux possible';
+  else action = 'Enneigement insuffisant probable';
+  return label + ' · ' + action + suffix;
+ }
+ if (uc === 'plage') {
+  if (score >= 76) action = 'Température optimale pour la baignade';
+  else if (score >= 50) action = driver ? 'Attention — ' + driver : 'Eau fraîche ou conditions instables';
+  else action = driver ? 'Peu adapté — ' + driver : 'Température insuffisante ou conditions défavorables';
+  return label + ' · ' + action + suffix;
+ }
+ if (score >= 76) {
+  action = driver ? 'Réserver sereinement — ' + driver + ' résiduel' : 'Réserver sereinement';
+ } else if (score >= 50) {
+  action = driver ? 'Prévoir un plan B — ' + driver : 'Conditions variables — prévoir un plan B';
+ } else {
+  action = driver ? 'Période instable — ' + driver : 'Période instable';
+ }
+ return label + ' · ' + action + suffix;
 }
 
 function getMainRisk(avgRain, avgTemp, avgWind, uc) {
@@ -1860,7 +1900,8 @@ function computeAndRenderScore(sc, rows) {
  } else {
  document.getElementById('score-usecase').textContent = ucLabels[uc] || cfg.label;
  }
- document.getElementById('score-verdict').textContent = getVerdict(total, avgRain);
+ var _isSeas = window._lastDiff != null ? (window._lastDiff > 7) : false;
+ document.getElementById('score-verdict').textContent = getVerdict(total, avgRain, avgTemp, avgWind, uc, _isSeas);
  document.getElementById('score-verdict').style.color = color;
  updateScoreTooltip(uc);
  document.getElementById('score-risk').textContent = getMainRisk(avgRain, avgTemp, avgWind, uc);
@@ -2145,10 +2186,11 @@ function run() {
  var parts=dval.split('-');
  if(parts.length!==3){errEl.textContent='⚠ Format de date invalide.';errEl.style.display='block';return;}
  var yr=parseInt(parts[0],10), mo=parseInt(parts[1],10)-1, da=parseInt(parts[2],10);
- window._lastYr=yr; window._lastMo=mo; window._lastDa=da;
+ window._lastYr=yr; window._lastMo=mo; window._lastDa=da; window._lastDiff=null;
  var today=new Date();today.setHours(0,0,0,0);
  var target=new Date(yr,mo,da,0,0,0);
  var diffDays=Math.round((target.getTime()-today.getTime())/86400000);
+ window._lastDiff=diffDays;
  btnEl.disabled=true; errEl.style.display='none';
  hideSection('hero');hideSection('sec-hourly');hideSection('sec-scenarios');
  document.getElementById('foot-note').style.display='none';

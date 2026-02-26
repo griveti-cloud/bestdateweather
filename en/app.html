@@ -1573,11 +1573,12 @@ function scoreSun(peakSol) {
 }
 
 function getScoreColor(score) {
- if (score >= 80) return '#1a7a4a'; // green
- if (score >= 65) return '#84cc16'; // lime
- if (score >= 50) return '#f59e0b'; // amber
- if (score >= 35) return '#f97316'; // orange
- return '#ef4444'; // red
+ if (score >= 86) return '#1a7a4a';
+ if (score >= 76) return '#2d9e60';
+ if (score >= 63) return '#84cc16';
+ if (score >= 50) return '#f59e0b';
+ if (score >= 35) return '#f97316';
+ return '#ef4444';
 }
 
 function getVerdict(score, avgRain) {
