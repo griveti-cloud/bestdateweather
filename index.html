@@ -1853,7 +1853,7 @@ function getVerdict(score, avgRain, avgTemp, avgWind, uc, isSeasonal) {
  else if (score >= 35) label = 'Peu favorable';
  else label = 'Conditions défavorables';
  var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
- var driver = getMainDriver(avgRain, avgTemp, avgWind, sRain, scoreTemp(avgTemp, cfg.tempMin, cfg.tempMax), scoreWind(avgWind), uc);
+ var driver = getMainDriver(avgRain, avgTemp, avgWind, scoreRain(avgRain), scoreTemp(avgTemp, cfg.tempMin, cfg.tempMax), scoreWind(avgWind), uc);
  var action;
  if (uc === 'ski') {
   if (score >= 76) action = 'Bon enneigement probable';
