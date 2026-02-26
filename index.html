@@ -51,9 +51,9 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
 .field-wrap{position:relative}
 .field-label{font-size:11px;font-weight:700;color:var(--slate2);letter-spacing:.6px;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:6px}
 .field-label svg{opacity:.6}
-.inp{width:100%;background:white;border:2px solid var(--cream2);border-radius:var(--r-sm);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 40px 13px 16px;outline:none;transition:border-color .2s}
+.inp{width:100%;background:white;border:2px solid var(--cream2);border-radius:var(--r-sm);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 40px 13px 16px;outline:none;transition:box-shadow .2s,border-color .2s}
 .inp::placeholder{color:var(--slate3);font-weight:400}
-#inp-date::placeholder{color:var(--slate2)}
+#inp-date::placeholder{color:var(--slate2)}#inp-date{color:var(--navy)}
 .inp:focus{outline:3px solid rgba(232,148,10,.35);outline-offset:0;background:white;border-color:var(--gold)}
 .inp[type=date]{color:var(--navy)}
 .inp[type=date]::-webkit-datetime-edit-fields-wrapper{opacity:1}
@@ -349,6 +349,7 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
 <link rel="icon" type="image/x-icon" href="favicon.ico"/><link rel="icon" type="image/svg+xml" href="favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
 <link rel="manifest" href="manifest.json"/>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com"/>
+<link rel="preload" href="data/monthly.json" as="fetch" crossorigin/>
 
 <noscript></noscript>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
@@ -779,8 +780,8 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
  <a href="meilleure-periode-cancun.html" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:white;border:1px solid #e8e4dc;border-radius:10px;text-decoration:none;color:#1a1f2e;font-size:13px;font-weight:600"><img src="flags/mx.png" width="20" height="15" alt="MX" style="vertical-align:middle;border-radius:2px"> Cancún</a>
  </div>
  <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#1a1f2e;margin:0 0 12px">Comment ça marche</h3>
- <p style="font-size:14px;line-height:1.8;color:#5a6478;max-width:680px;margin-bottom:24px">Entrez une ville et une date — l'outil calcule un score météo de 0 à 10 selon les relevés historiques, puis l'affine avec les tendances saisonnières ECMWF. Le mode annuel permet de comparer tous les mois d'un coup pour trouver la fenêtre optimale. <a href="methodologie.html" style="color:#b8962e;font-weight:600">Voir la méthodologie complète →</a></p>
- <p style="font-size:12px;color:#8a95a8">Données : ERA5 · 10 ans via Open-Meteo · Corrections saisonnières ECMWF · Mis à jour quotidiennement</p>
+ <p style="font-size:14px;line-height:1.8;color:#5a6478;max-width:680px;margin-bottom:24px">Entrez une ville et une date — l'outil calcule un score météo de 0 à 10 selon les relevés historiques, puis l'affine avec les tendances saisonnières ECMWF. Le mode annuel permet de comparer tous les mois d'un coup pour trouver la fenêtre optimale. <a href="methodologie.html" style="color:#7a6012;font-weight:600">Voir la méthodologie complète →</a></p>
+ <p style="font-size:12px;color:#5c6478">Données : ERA5 · 10 ans via Open-Meteo · Corrections saisonnières ECMWF · Mis à jour quotidiennement</p>
  </div>
 </section>
 
