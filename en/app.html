@@ -941,6 +941,41 @@ var IC = {
 };
 
 /* QUICK FILL */
+/* ── UNITS TOGGLE ── */
+var _units = 'metric';
+
+function setUnits(sys) {
+ _units = sys;
+ document.getElementById('btn-metric').classList.toggle('active', sys === 'metric');
+ document.getElementById('btn-us').classList.toggle('active', sys === 'us');
+ // Re-render if results are visible
+ if (window._lastRows && window._lastSc) {
+  computeAndRenderScore(window._lastSc, window._lastRows);
+  updateHero(window._lastSc, window._lastRows);
+ }
+}
+
+function fmtTemp(c) {
+ if (c == null) return '–';
+ if (_units === 'us') return Math.round(c * 9/5 + 32) + '°F';
+ return Math.round(c) + '°C';
+}
+
+function fmtTempRaw(c) {
+ if (c == null) return null;
+ if (_units === 'us') return Math.round(c * 9/5 + 32);
+ return Math.round(c);
+}
+
+function fmtTempUnit() { return _units === 'us' ? '°F' : '°C'; }
+
+function fmtWind(kmh) {
+ if (kmh == null) return '–';
+ if (_units === 'us') return Math.round(kmh * 0.621371) + ' mph';
+ return Math.round(kmh) + ' km/h';
+}
+
+
 function toggleDetails() {
  var btn = document.getElementById('details-toggle');
  var panel = document.getElementById('details-panel');
