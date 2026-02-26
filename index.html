@@ -2229,6 +2229,13 @@ function fetchAnnualSeasonal(lat, lon) {
  }).catch(function() { return {}; });
 }
 
+function p50(arr) {
+  if (!arr || !arr.length) return null;
+  var s = arr.slice().sort(function(a,b){return a-b;});
+  var mid = Math.floor(s.length / 2);
+  return s.length % 2 ? s[mid] : (s[mid-1] + s[mid]) / 2;
+}
+
 function aggregateByMonth(data) {
  // buckets[0..11] for Jan..Dec
  var buckets = [];
@@ -2242,25 +2249,24 @@ function aggregateByMonth(data) {
  var sunD = data.daily.sunshine_duration || []; // seconds/day
 
  for (var i = 0; i < times.length; i++) {
- var mo = parseInt(times[i].split('-')[1], 10) - 1;
- if (tmax[i] != null) buckets[mo].tmax.push(tmax[i]);
- if (tmin[i] != null) buckets[mo].tmin.push(tmin[i]);
- if (prec[i] != null) buckets[mo].precip.push(prec[i]);
- if (rad[i] != null) buckets[mo].rad.push(rad[i]);
- if (sunD[i] != null) buckets[mo].sun.push(sunD[i]);
+   var mo = parseInt(times[i].split('-')[1], 10) - 1;
+   if (tmax[i] != null) buckets[mo].tmax.push(tmax[i]);
+   if (tmin[i] != null) buckets[mo].tmin.push(tmin[i]);
+   if (prec[i] != null) buckets[mo].precip.push(prec[i]);
+   if (rad[i] != null) buckets[mo].rad.push(rad[i]);
+   if (sunD[i] != null) buckets[mo].sun.push(sunD[i]);
  }
 
  return buckets.map(function(b, idx) {
- var avgTmax = b.tmax.length ? b.tmax.reduce(function(a,v){return a+v;},0)/b.tmax.length : null;
- var avgTmin = b.tmin.length ? b.tmin.reduce(function(a,v){return a+v;},0)/b.tmin.length : null;
- var avgTemp = (avgTmax != null && avgTmin != null) ? (avgTmax + avgTmin) / 2 : null;
- var rainDays = b.precip.filter(function(v){return v>1;}).length;
- var rainPct = b.precip.length ? Math.round(rainDays / b.precip.length * 100) : 0;
- var avgRad = b.rad.length ? b.rad.reduce(function(a,v){return a+v;},0)/b.rad.length : 0;
- // Approx daily sunshine hours from MJ/m² (1 MJ/m² ≈ 0.28 kWh; peak ~1000W → rough sunshine hrs)
- var sunHrs = b.sun.length ? Math.min(14, b.sun.reduce(function(a,v){return a+v;},0)/b.sun.length/3600) : Math.min(14, avgRad / 3.6); // sunshine_duration (sec) → hours
- var avgPrecipMm = b.precip.length ? Math.round(b.precip.reduce(function(a,v){return a+v;},0)/b.precip.length * 10) / 10 : 0;
- return { month: idx, avgTmax: avgTmax, avgTmin: avgTmin, avgTemp: avgTemp, rainPct: rainPct, sunHrs: sunHrs, avgRad: avgRad, avgPrecipMm: avgPrecipMm };
+   var avgTmax = p50(b.tmax);
+   var avgTmin = p50(b.tmin);
+   var avgTemp = (avgTmax != null && avgTmin != null) ? (avgTmax + avgTmin) / 2 : null;
+   var rainDays = b.precip.filter(function(v){return v>1;}).length;
+   var rainPct = b.precip.length ? Math.round(rainDays / b.precip.length * 100) : 0;
+   var medRad = p50(b.rad) || 0;
+   var sunHrs = b.sun.length ? Math.min(14, p50(b.sun) / 3600) : Math.min(14, medRad / 3.6);
+   var avgPrecipMm = b.precip.length ? Math.round((p50(b.precip) || 0) * 10) / 10 : 0;
+   return { month: idx, avgTmax: avgTmax, avgTmin: avgTmin, avgTemp: avgTemp, rainPct: rainPct, sunHrs: sunHrs, avgRad: medRad, avgPrecipMm: avgPrecipMm };
  });
 }
 
