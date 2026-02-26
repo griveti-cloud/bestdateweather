@@ -12,7 +12,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <meta name="description" content="Plan trips, weddings, events and outdoor projects with confidence. Weather scores based on 10 years of historical data and ECMWF models. Forecasts up to 1 year ahead."/>
-<title>BestDateWeather — La météo de vos grandes occasions</title>
+<title>BestDateWeather — Weather for your big moments</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,900;1,900&display=swap"/>
@@ -433,7 +433,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  <button class="inp-clear" id="ann-city-clear" tabindex="-1" onclick="clearAnnCity()">×</button></div>
  <div class="ac-list" id="ann-ac-list"></div>
  </div>
- <button class="annual-btn" id="ann-btn" onclick="runAnnual()">Voir l'année</button>
+ <button class="annual-btn" id="ann-btn" onclick="runAnnual()">View year</button>
  </div>
  <div class="prog-wrap" id="ann-prog-wrap">
  <div class="prog-labels"><span id="ann-prog-lbl">Chargement…</span><span id="ann-prog-pct">0%</span></div>
@@ -545,7 +545,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  </div>
  <div class="score-info">
  <div style="display:flex;align-items:center;margin-bottom:4px">
- <div class="score-usecase" id="score-usecase" style="margin-bottom:0">Météo générale</div>
+ <div class="score-usecase" id="score-usecase" style="margin-bottom:0">General weather</div>
  <div class="score-info-wrap">
  <button class="score-info-btn" id="score-info-btn" onclick="toggleScoreTooltip()">?</button>
  <div class="score-tooltip" id="score-tooltip"></div>
@@ -600,8 +600,8 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  <!-- HOURLY -->
  <div class="sec-block" id="sec-hourly">
  <div class="sec-header">
- <div class="sec-title">Heure par heure</div>
- <div class="sec-hint">Températures & météo</div>
+ <div class="sec-title">Hour by hour</div>
+ <div class="sec-hint">Temperatures & weather</div>
  </div>
  <div class="hourly-card"><div class="h-strip" id="h-strip"></div></div>
  </div>
@@ -609,16 +609,16 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  <!-- SCENARIOS -->
  <div class="sec-block" id="sec-scenarios">
  <div class="sec-header">
- <div class="sec-title">Scénarios extrêmes</div>
- <div class="sec-hint">Enveloppes statistiques P10–P90</div>
+ <div class="sec-title">Extreme scenarios</div>
+ <div class="sec-hint">Statistical ranges P10–P90</div>
  </div>
  <div class="sc-row">
  <div class="sc-card pess">
  <div class="sc-head">
  <div>
- <span class="sc-label pess">Hypothèse basse</span>
+ <span class="sc-label pess">Low estimate</span>
  <div class="sc-ttl" id="sc-pess-ttl">Difficult day</div>
- <div class="sc-sub"><span id="sc-pess-sub">Frais · pluie fréquente</span></div>
+ <div class="sc-sub"><span id="sc-pess-sub">Cool · frequent rain</span></div>
  </div>
  </div>
  <div class="sc-strip" id="sc-pess-strip"></div>
@@ -627,9 +627,9 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  <div class="sc-card opt">
  <div class="sc-head">
  <div>
- <span class="sc-label opt">Hypothèse haute</span>
- <div class="sc-ttl" id="sc-opt-ttl">Belle journée</div>
- <div class="sc-sub"><span id="sc-opt-sub">Chaud · peu de pluie</span></div>
+ <span class="sc-label opt">High estimate</span>
+ <div class="sc-ttl" id="sc-opt-ttl">Ideal day</div>
+ <div class="sc-sub"><span id="sc-opt-sub">Warm · little rain</span></div>
  </div>
  </div>
  <div class="sc-strip" id="sc-opt-strip"></div>
@@ -963,8 +963,8 @@ function quickFill(type) {
     _sdEl2.textContent = '❄ Altitude ' + elev + 'm — too low to assess snow cover';
     _sdEl2.style.color = '#94a3b8';
    } else if (res.depth != null) {
-    var elevStr = elev ? ' à ' + elev + 'm' : '';
-    _sdEl2.textContent = '❄ Estimated snow depth: ' + res.depth + ' cm' + elevStr + ' · mesure Open-Meteo (point géographique, non domaine skiable)';
+    var elevStr = elev ? ' to ' + elev + 'm' : '';
+    _sdEl2.textContent = '❄ Estimated snow depth: ' + res.depth + ' cm' + elevStr + ' · Open-Meteo measurement (geographic point, not ski resort)';
     _sdEl2.style.color = '#6366f1';
    } else {
     _sdEl2.textContent = '❄ Snow depth data unavailable for this date';
@@ -1039,7 +1039,7 @@ function getLabel(h, temp, sol, rain, mm, snow, p25) {
  if (rain > 55 && mm >= 3) return 'Heavy rain';
  if (rain > 35 && mm >= 1.5) return 'Rain';
  if (rain > 20 && mm >= 0.3 && sol >= 200) return 'Showers';
- if (rain > 20 && mm >= 0.3) return 'Pluie légère';
+ if (rain > 20 && mm >= 0.3) return 'Light rain';
  if (rain > 35) return 'Rain';
  if (sol < 60 && temp < 8) return 'Fog';
  if (sol < 130) return 'Couvert';
@@ -1172,19 +1172,19 @@ function applyHorizonWording(diffDays) {
  var span = document.getElementById('btn-go-text');
  if (diffDays === 0) {
  label.className = 'hero-horizon-label hl-real';
- label.textContent = "Aujourd'hui — météo en direct";
+ label.textContent = "Today — live forecast";
  if (span) span.textContent = "Check the weather";
  } else if (diffDays >= 1 && diffDays <= 7) {
  label.className = 'hero-horizon-label hl-real';
- label.textContent = 'Prévision météo réelle';
+ label.textContent = 'Live weather forecast';
  if (span) span.textContent = 'Check the weather';
  } else if (diffDays <= 210) {
  label.className = 'hero-horizon-label hl-tendency';
- label.textContent = 'Tendance ECMWF — indicatif';
+ label.textContent = 'ECMWF Trend — indicative';
  if (span) span.textContent = 'Check the weather';
  } else {
  label.className = 'hero-horizon-label hl-profile';
- label.textContent = 'Profil climatique historique';
+ label.textContent = 'Historical climate profile';
  if (span) span.textContent = 'Check the weather';
  }
 }
@@ -1269,12 +1269,12 @@ var SEA_CLIM_DATA_EN = {
 };
 
 function getSeaComfortFR(sst) {
- if (sst >= 28) return {lbl:'Très chaude', color:'#ef4444'};
- if (sst >= 24) return {lbl:'Chaude · baignade agréable', color:'#f59e0b'};
- if (sst >= 20) return {lbl:'Agréable', color:'#16a34a'};
- if (sst >= 17) return {lbl:'Fraîche', color:'#0ea5e9'};
+ if (sst >= 28) return {lbl:'Very warm', color:'#ef4444'};
+ if (sst >= 24) return {lbl:'Warm · good for swimming', color:'#f59e0b'};
+ if (sst >= 20) return {lbl:'Pleasant', color:'#16a34a'};
+ if (sst >= 17) return {lbl:'Cool', color:'#0ea5e9'};
  if (sst >= 14) return {lbl:'Froide', color:'#6366f1'};
- return {lbl:'Très froide', color:'#64748b'};
+ return {lbl:'Very cold', color:'#64748b'};
 }
 
 function fetchMarineSSTEN(lat, lon, yr, mo, da, slug) {
@@ -1422,7 +1422,7 @@ function buildClimatology(lat, lon, yr, mo, da) {
  return fetchArchive(lat,lon,new Date(yr2,mo,da,12,0,0)).then(function(data){
  var T=data.hourly.temperature_2m, P=data.hourly.precipitation, W=data.hourly.windspeed_10m, S=data.hourly.shortwave_radiation||[], SN=data.hourly.snowfall||[], RH=data.hourly.relative_humidity_2m||[];
  for(var i=0;i<data.hourly.time.length;i++){var hh=new Date(data.hourly.time[i]).getHours();if(T[i]!=null)buckets[hh].t.push(T[i]);if(P[i]!=null)buckets[hh].p.push(P[i]);if(W[i]!=null)buckets[hh].w.push(W[i]);if(S[i]!=null)buckets[hh].s.push(S[i]);if(SN[i]!=null)buckets[hh].sn.push(SN[i]);if(RH[i]!=null)buckets[hh].rh.push(RH[i]);}
- }).catch(function(){}).then(function(){setP(Math.round((idx/years.length)*90),'Analyse '+yr2+'…');return new Promise(function(res){setTimeout(res,20);});}).then(step);
+ }).catch(function(){}).then(function(){setP(Math.round((idx/years.length)*90),'Analysing '+yr2+'…');return new Promise(function(res){setTimeout(res,20);});}).then(step);
  }
  return step();
 }
@@ -1514,12 +1514,12 @@ function scenarioLabel(rows, isOpt) {
  if (tmax !== null && tmax >= 38) { title = 'Very hot day'; sub = 'Intense heat · little rain'; }
  else if (tmax !== null && tmax >= 32) { title = 'Hot day'; sub = 'Hot · sunny'; }
  else if (tmax !== null && tmax <= 5) { title = 'Cold day'; sub = 'Cold · little rain'; }
- else if (avgRain <= 15) { title = 'Belle journée'; sub = 'Ensoleillé · peu de pluie'; }
+ else if (avgRain <= 15) { title = 'Ideal day'; sub = 'Sunny · little rain'; }
  else { title = 'Good day'; sub = 'Acceptable conditions'; }
  } else {
  // Pessimistic scenario
  if (avgRain >= 60) { title = 'Very rainy day'; sub = 'Frequent rain'; }
- else if (tmax !== null && tmax >= 38) { title = 'Canicule'; sub = 'Chaleur extrême · risque sanitaire'; }
+ else if (tmax !== null && tmax >= 38) { title = 'Canicule'; sub = 'Extreme heat · health risk'; }
  else if (tmin !== null && tmin <= 0) { title = 'Freezing day'; sub = 'Possible frost · difficult conditions'; }
  else if (avgRain >= 35) { title = 'Difficult day'; sub = 'Rain · cool temperatures'; }
  else { title = 'Mixed day'; sub = 'Cloudy · possible showers'; }
@@ -1553,11 +1553,11 @@ function renderScCard(sc, stripId, statsId) {
  var temps=[],rSum=0,wSum=0;
  for(var j=0;j<sc.length;j++){if(sc[j].temp!=null)temps.push(sc[j].temp);rSum+=sc[j].rain;wSum+=(sc[j].windP50||0);}
  var tmin=temps.length?Math.min.apply(null,temps):'-', tmax=temps.length?Math.max.apply(null,temps):'-';
- document.getElementById(statsId).innerHTML='<div><div class="sc-stat-val">'+tmin+'\u00b0/'+tmax+'\u00b0</div><div class="sc-stat-lbl">Mini/Maxi</div></div><div><div class="sc-stat-val">'+Math.round(rSum/sc.length)+'%</div><div class="sc-stat-lbl">Pluie</div></div><div><div class="sc-stat-val">'+Math.round(wSum/sc.length)+' km/h</div><div class="sc-stat-lbl">Vent</div></div>';
+ document.getElementById(statsId).innerHTML='<div><div class="sc-stat-val">'+tmin+'\u00b0/'+tmax+'\u00b0</div><div class="sc-stat-lbl">Min/Max</div></div><div><div class="sc-stat-val">'+Math.round(rSum/sc.length)+'%</div><div class="sc-stat-lbl">Rain</div></div><div><div class="sc-stat-val">'+Math.round(wSum/sc.length)+' km/h</div><div class="sc-stat-lbl">Wind</div></div>';
 }
 
 
-/* ── SCORE MÉTÉO PROJET ── */
+/* ── WEATHER SCORE ── */
 var currentUseCase = 'general';
 var _lastRows = null, _lastSc = null;
 var _locTzOffset = 0; // global timezone offset from API
@@ -1769,10 +1769,10 @@ function getMainDriver(avgRain, avgTemp, avgWind, sRain, sTemp, sWind, uc) {
  }
  if (!worst) return null;
  var labels = {
-  rain: 'risque de pluie élevé',
-  temp_cold: 'températures fraîches',
-  temp_hot: uc === 'plage' ? 'chaleur excessive' : 'chaleur élevée',
-  wind: 'vent fréquent'
+  rain: 'high rain risk',
+  temp_cold: 'cool temperatures',
+  temp_hot: uc === 'plage' ? 'excessive heat' : 'high heat',
+  wind: 'frequent wind'
  };
  return labels[worst.key];
 }
@@ -1953,7 +1953,7 @@ function updateHero(sc, rows) {
  for(var k=0;k<sc.length;k++) if((sc[k].sol||0)>peakSol) peakSol=sc[k].sol;
  var avgRain=Math.round(rSum/rows.length);
  var skyLbl;
- if(avgRain>55)skyLbl='Pluvieux';else if(avgRain>35)skyLbl='Cloudy';else if(peakSol>500&&avgRain<20)skyLbl='Plein soleil';else if(peakSol>250&&avgRain<30)skyLbl='Sunny';else if(peakSol>80)skyLbl='Voilé';else if(peakSol>15)skyLbl='Cloudy';else skyLbl='Couvert';
+ if(avgRain>55)skyLbl='Pluvieux';else if(avgRain>35)skyLbl='Cloudy';else if(peakSol>500&&avgRain<20)skyLbl='Plein soleil';else if(peakSol>250&&avgRain<30)skyLbl='Sunny';else if(peakSol>80)skyLbl='Overcast';else if(peakSol>15)skyLbl='Cloudy';else skyLbl='Couvert';
  window._heroTemp = main.temp || null;
  document.getElementById('r-temp').innerHTML=(main.temp||'-')+'<sup>\u00b0</sup>';
  document.getElementById('r-range').textContent=tmin+'\u00b0 / '+tmax+'\u00b0 during the day';
@@ -2013,7 +2013,7 @@ function updateHero(sc, rows) {
  if (h < 0) return '';
  if (h >= 22 || h < 6) return ' · la nuit';
  if (h < 10) return ' · le matin';
- if (h < 14) return ' · en journée';
+ if (h < 14) return ' · during the day';
  return ' · l’après-midi';
  }
  var _timeLbl = (_snowFirstH >= 0) ? _snowTimeLbl(_snowFirstH) : '';
@@ -2025,7 +2025,7 @@ function updateHero(sc, rows) {
  _snowAlert.textContent = '❄️ Neige probable' + _timeLbl + ' · ' + _snowHours + 'h de précipitations sous 2°C';
  } else if (_snowHours >= 1) {
  _snowAlert.style.display = 'block';
- _snowAlert.textContent = '❄️ Neige possible' + _timeLbl + ' · températures proches du gel avec précipitations';
+ _snowAlert.textContent = '❄️ Neige possible' + _timeLbl + ' · near-freezing temperatures with precipitation';
  } else {
  _snowAlert.style.display = 'none';
  }
@@ -2076,9 +2076,9 @@ function showAC(items){
 
 
 var COUNTRY_NAMES = {
- 'GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','GF':'Guyane',
- 'YT':'Mayotte','PM':'Saint-Pierre-et-Miquelon','NC':'Nouvelle-Calédonie',
- 'PF':'Polynésie française','WF':'Wallis-et-Futuna','BL':'Saint-Barthélemy','MF':'Saint-Martin'
+ 'GP':'Guadeloupe','MQ':'Martinique','RE':'Réunion','GF':'Guyane',
+ 'YT':'Mayotte','PM':'Saint-Pierre-et-Miquelon','NC':'New Caledonia',
+ 'PF':'French Polynesia','WF':'Wallis-et-Futuna','BL':'Saint Barthélemy','MF':'Saint-Martin'
 };
 function getCountryName(item) {
  return item.country || COUNTRY_NAMES[item.country_code] || item.country_code || '';
@@ -2094,13 +2094,13 @@ function isFranceMetro(item) {
 
 
 var COUNTRY_NAMES = {
- 'GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','GF':'Guyane française',
- 'YT':'Mayotte','PM':'Saint-Pierre-et-Miquelon','NC':'Nouvelle-Calédonie',
- 'PF':'Polynésie française','WF':'Wallis-et-Futuna','BL':'Saint-Barthélemy',
+ 'GP':'Guadeloupe','MQ':'Martinique','RE':'Réunion','GF':'French Guiana',
+ 'YT':'Mayotte','PM':'Saint-Pierre-et-Miquelon','NC':'New Caledonia',
+ 'PF':'French Polynesia','WF':'Wallis-et-Futuna','BL':'Saint Barthélemy',
  'MF':'Saint-Martin','FR':'France','BE':'Belgique','CH':'Suisse','LU':'Luxembourg',
- 'CA':'Canada','US':'États-Unis','GB':'Royaume-Uni','DE':'Allemagne','ES':'Espagne',
+ 'CA':'Canada','US':'United States','GB':'Royaume-Uni','DE':'Allemagne','ES':'Espagne',
  'IT':'Italie','PT':'Portugal','NL':'Pays-Bas','MA':'Maroc','TN':'Tunisie',
- 'DZ':'Algérie','SN':'Sénégal','CI':'Côte d\'Ivoire','CM':'Cameroun'
+ 'DZ':'Algeria','SN':'Senegal','CI':'Côte d\'Ivoire','CM':'Cameroun'
 };
 function countryName(code, fallback) {
  return COUNTRY_NAMES[code] || fallback || code || '';
@@ -2113,17 +2113,17 @@ function getFrTerritory(lat, lon) {
  // DOM-TOM par coordonnées
  if (lat >= 14 && lat <= 18 && lon >= -63 && lon <= -60) return 'Guadeloupe';
  if (lat >= 14 && lat <= 15 && lon >= -61.5 && lon <= -60.5) return 'Martinique';
- if (lat >= -22 && lat <= -20 && lon >= 55 && lon <= 56) return 'La Réunion';
+ if (lat >= -22 && lat <= -20 && lon >= 55 && lon <= 56) return 'Réunion';
  if (lat >= 2 && lat <= 6 && lon >= -55 && lon <= -51) return 'Guyane';
  if (lat >= -14 && lat <= -12 && lon >= 44 && lon <= 46) return 'Mayotte';
- if (lat >= -23 && lat <= -20 && lon >= 163 && lon <= 168) return 'Nouvelle-Calédonie';
- if (lat >= -18 && lat <= -14 && lon >= -150 && lon <= -148) return 'Polynésie française';
+ if (lat >= -23 && lat <= -20 && lon >= 163 && lon <= 168) return 'New Caledonia';
+ if (lat >= -18 && lat <= -14 && lon >= -150 && lon <= -148) return 'French Polynesia';
  if (lat >= 46 && lat <= 48 && lon >= -57 && lon <= -52) return 'Saint-Pierre-et-Miquelon';
  return 'Outre-mer';
 }
 
 function getAcSub(item) {
- var FR_TERRITORIES = {'GF':'Guyane française','GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'Nouvelle-Calédonie','PF':'Polynésie française'};
+ var FR_TERRITORIES = {'GF':'French Guiana','GP':'Guadeloupe','MQ':'Martinique','RE':'Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'New Caledonia','PF':'French Polynesia'};
  var isFrDom = !!FR_TERRITORIES[item.country_code];
  if (item.country_code === 'FR' || isFrDom) {
  var terr = isFrDom ? FR_TERRITORIES[item.country_code] : getFrTerritory(item.latitude, item.longitude);
@@ -2137,7 +2137,7 @@ function selectAC(i){
  var item=acData[i];if(!item)return;
  // Pour FR : ne jamais afficher admin1, juste le pays
  var FR_DOM = {'GF':1,'GP':1,'MQ':1,'RE':1,'PM':1,'YT':1,'NC':1,'PF':1};
- var FR_TERRITORY_NAMES = {'GF':'Guyane française','GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'Nouvelle-Calédonie','PF':'Polynésie française'};
+ var FR_TERRITORY_NAMES = {'GF':'French Guiana','GP':'Guadeloupe','MQ':'Martinique','RE':'Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'New Caledonia','PF':'French Polynesia'};
  var isFrDom = !!FR_DOM[item.country_code];
  var region = (item.country_code === 'FR' || isFrDom) ? (isFrDom ? FR_TERRITORY_NAMES[item.country_code] : '') : (item.admin1 || '');
  var country = isFrDom ? 'France' : getCountryName(item);
@@ -2215,7 +2215,7 @@ function run() {
  }
  var locP=selectedLoc?Promise.resolve(selectedLoc):geocode(city);
  locP.then(function(loc){
- setP(5,loc.name+' trouvé…');
+ setP(5,loc.name+' found…');
  document.getElementById('r-loc').textContent=loc.name+' — '+(loc.country||'');
  document.getElementById('r-date').textContent=new Date(yr,mo,da,12,0,0).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
  renderAstro(loc.lat,loc.lon,yr,mo,da);
@@ -2241,7 +2241,7 @@ function run() {
  }).then(function(rows){
  renderAstro(loc.lat,loc.lon,yr,mo,da);
  setP(100,'Done');seedRand(makeSeed(loc.lat,loc.lon,yr,mo,da));var sc=genMain(rows);updateHero(sc,rows);
-    var note=(diffDays>7&&diffDays<=210)?'<strong>ECMWF Trend</strong> · climatologie 10 ans corrigée par le modèle ECMWF — indicatif, non garanti.':'<strong>Climate profile</strong> · statistical average of the last 10 years for this date and location.';
+    var note=(diffDays>7&&diffDays<=210)?'<strong>ECMWF Trend</strong> · 10-year climatology adjusted by the ECMWF model — indicative, not guaranteed.':'<strong>Climate profile</strong> · statistical average of the last 10 years for this date and location.';
     showResults(sc,rows,false,note,diffDays);
     // Snow depth — uniquement si UC ski, en parallèle (silencieux si erreur)
     var _sdEl = document.getElementById('snow-depth-info');
@@ -2254,8 +2254,8 @@ function run() {
        _sdEl.textContent = '❄ Altitude ' + elev + 'm — too low to assess snow cover';
        _sdEl.style.color = '#94a3b8';
       } else if (res.depth != null) {
-       var elevStr = elev ? ' à ' + elev + 'm' : '';
-       _sdEl.textContent = '❄ Estimated snow depth: ' + res.depth + ' cm' + elevStr + ' · mesure Open-Meteo (point géographique, non domaine skiable)';
+       var elevStr = elev ? ' to ' + elev + 'm' : '';
+       _sdEl.textContent = '❄ Estimated snow depth: ' + res.depth + ' cm' + elevStr + ' · Open-Meteo measurement (geographic point, not ski resort)';
        _sdEl.style.color = '#6366f1';
       } else {
        _sdEl.textContent = '❄ Snow depth data unavailable for this date';
@@ -2295,10 +2295,10 @@ function updateScoreTooltip(uc) {
  tt.innerHTML =
  '<strong style="font-size:12px">Score · ' + ucName + '</strong><br>' +
  '💧 Pluie &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.rain + '%<br>' +
- '🌡 Température ' + w.temp + '%<br>' +
+ '🌡 Temperature ' + w.temp + '%<br>' +
  '💨 Vent &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.wind + '%<br>' +
  '☀ Soleil &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.sun + '%<br>' +
- '<span style="opacity:.6;font-size:10px">Plage idéale : ' + cfg.tempMin + '–' + cfg.tempMax + '°C</span>';
+ '<span style="opacity:.6;font-size:10px">Ideal beach: ' + cfg.tempMin + '–' + cfg.tempMax + '°C</span>';
 }
 
 /* ── RECOMMENDED BADGES (annual view) ── */
@@ -2483,7 +2483,7 @@ function fetchAnnualArchive(loc) {
  if (!data || !data.daily || !data.daily.time || data.daily.time.length === 0) {
  throw new Error('Weather data unavailable for this destination');
  }
- setAnnP(70, 'Agrégation mensuelle…');
+ setAnnP(70, 'Monthly aggregation…');
  return aggregateByMonth(data);
  }).catch(function(e) {
  // Fallback: retry without sunshine_duration
@@ -2495,7 +2495,7 @@ function fetchAnnualArchive(loc) {
  if (!r.ok) throw new Error('Weather data unavailable for this destination');
  return r.json();
  }).then(function(data) {
- setAnnP(70, 'Agrégation mensuelle…');
+ setAnnP(70, 'Monthly aggregation…');
  return aggregateByMonth(data);
  });
  }
@@ -2695,8 +2695,8 @@ function monthIconFromData(d) {
  return IC.heavyrain;
 }
 
-var MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-var MONTHS_SHORT = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+var MONTHS_FR = ['Janvier','February','Mars','Avril','Mai','Juin','Juillet','August','Septembre','Octobre','Novembre','December'];
+var MONTHS_SHORT = ['Jan','Feb','Mar','Avr','Mai','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 function renderAnnual(loc, monthly) {
  _lastMonthly = monthly; _lastAnnLoc = loc;
@@ -2755,7 +2755,7 @@ function renderAnnual(loc, monthly) {
     if (d.seasTempDelta != null) seasParts.push((d.seasTempDelta > 0 ? '+' : '') + d.seasTempDelta + '°');
     if (d.seasRainDelta != null) seasParts.push((d.seasRainDelta > 0 ? '+' : '') + d.seasRainDelta + '% rain');
     var seasDetail = seasParts.length ? ' · ' + seasParts.join(' · ') : '';
-    var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">Tendance ECMWF' + (seasDetail ? '<br><span style="font-weight:500;text-transform:none;letter-spacing:0;color:#3b82f6">' + seasParts.join(' · ') + '</span>' : '') + '</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
+    var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">ECMWF Trend' + (seasDetail ? '<br><span style="font-weight:500;text-transform:none;letter-spacing:0;color:#3b82f6">' + seasParts.join(' · ') + '</span>' : '') + '</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
  var isBest = uc && idx === sorted[0].idx && sorted[0].score >= 60;
  var badgeHtml = (isRec ? '<div class="month-badge rec">Recommandé</div>' : (isAvoid ? '<div class="month-badge avoid">Moins favorable</div>' : '')) + (isBest ? '<div class="month-best-badge">🔥 Best month</div>' : '');
 
@@ -2777,14 +2777,14 @@ function renderAnnual(loc, monthly) {
 
  grid.appendChild(card);
  }
- // ── Légende grille ──
+ // ── Grid legend ──
  var legendEl = document.getElementById('annual-legend');
  if (!legendEl) {
  legendEl = document.createElement('div');
  legendEl.id = 'annual-legend';
  legendEl.style.cssText = 'display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--slate3);margin-top:10px;align-items:center;padding:0 2px';
  legendEl.innerHTML = '<span><span style="display:inline-block;width:12px;height:3px;background:#1a7a4a;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Recommandé</span>' +
- '<span><span style="display:inline-block;width:12px;height:3px;background:#ef4444;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Moins favorable</span>' +
+ '<span><span style="display:inline-block;width:12px;height:3px;background:#ef4444;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Less favourable</span>' +
  '<span style="margin-left:auto;font-style:italic;font-size:10px">Couleur barre = température moyenne du mois</span>';
  grid.parentNode.insertBefore(legendEl, grid.nextSibling);
  }
@@ -2795,7 +2795,7 @@ function renderAnnual(loc, monthly) {
  // ── Résumé narratif ──────────────────────────────────────────────────────
  var narEl = document.getElementById('ann-narrative');
  if (narEl) {
- var MNAMES = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+ var MNAMES = ['janvier','February','mars','avril','mai','juin','juillet','August','septembre','octobre','novembre','December'];
  // Trouver les 2 meilleurs et 2 pires mois
  var sorted2 = scores.slice().sort(function(a,b){return b.score-a.score;});
  var best1 = sorted2[0], best2 = sorted2[1];
@@ -2817,7 +2817,7 @@ function renderAnnual(loc, monthly) {
  narrative += '</strong>';
  
  if (goodMonths.length >= 2) {
- narrative += ' · Fenêtre favorable : <strong>' + goodMonths.length + ' mois</strong>';
+ narrative += ' · Best window: <strong>' + goodMonths.length + ' mois</strong>';
  }
  
  if (uc && worst1.score < 50) {
@@ -2869,7 +2869,7 @@ document.getElementById('ann-city').onkeydown=function(e){
  else if(e.key==='Escape'){hideAnnAC();}
 };
 document.getElementById('annual-wrap').style.display='none';
-// Pre-select "Juste la météo" by default
+// Pre-select "General weather" by default
 quickFill('general');
 // Show hint if user tries to interact before selecting use case
 document.getElementById('date-form').addEventListener('click', function() {
@@ -2965,7 +2965,7 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
 if ('serviceWorker' in navigator) {
  window.addEventListener('load', function() {
  navigator.serviceWorker.register('/sw.js').then(function(reg) {
- console.log('SW enregistré:', reg.scope);
+ console.log('Recorded SW:', reg.scope);
  }).catch(function(err) {
  console.log('SW erreur:', err);
  });
