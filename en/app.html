@@ -52,6 +52,9 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
 .app-disclaimer{display:inline-flex;align-items:center;gap:7px;background:white;border:1px solid var(--cream2);border-radius:20px;padding:5px 14px;font-size:11px;color:var(--slate2);max-width:440px;margin:0 auto 14px;line-height:1.4;animation:fadeUp .4s .2s ease both;white-space:nowrap}
 .app-disclaimer-ico{flex-shrink:0;opacity:.5;font-size:12px}
 
+.unit-toggle{display:flex;gap:6px;justify-content:center;margin:0 auto 20px}
+.unit-btn{background:none;border:1.5px solid var(--cream2);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--slate2);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.unit-btn.active{background:var(--navy);border-color:var(--navy);color:white}
 /* ── SEARCH CARD ── */
 .wrap{max-width:620px;margin:0 auto;padding:0 20px 80px}
 .search-card{background:white;border-radius:var(--r);box-shadow:var(--shadow-lg);padding:28px;border:1px solid rgba(26,31,46,.05);margin-bottom:20px}
@@ -1281,7 +1284,7 @@ function fetchMarineSSTEN(lat, lon, yr, mo, da, slug) {
  var diffDays = Math.round((target.getTime()-today.getTime())/86400000);
 
  function tryClimatology() {
-  var climData = slug && SEA_CLIM_DATA[slug] ? SEA_CLIM_DATA[slug] : null;
+  var climData = slug && SEA_CLIM_DATA_EN[slug] ? SEA_CLIM_DATA_EN[slug] : null;
   if (climData && climData[mo] !== null) return Promise.resolve({sst:climData[mo],fallback:true});
   // Fallback par archive marine (coordonnées) — 3 ans de données autour de la date
   var endYr2 = new Date().getFullYear()-1;
