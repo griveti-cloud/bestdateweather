@@ -1073,7 +1073,14 @@ var SEA_NAME_MAP = {
  'san francisco':'san-francisco','sydney':'sydney','melbourne':'melbourne',
  'stockholm':'stockholm','dublin':'dublin','venise':'venice',
  'split':'split','dubrovnik':'dubrovnik','kotor':'kotor','naples':'naples',
- 'palerme':'palermo','cagliari':'cagliari','bastia':'bastia','ajaccio':'ajaccio'
+ 'palerme':'palermo','cagliari':'cagliari','bastia':'bastia','ajaccio':'ajaccio',
+ 'cayenne':'cayenne','remire':'cayenne','remire-montjoly':'cayenne','kourou':'cayenne',
+ 'fort-de-france':'martinique','martinique':'martinique','le lamentin':'martinique',
+ 'pointe-a-pitre':'guadeloupe','guadeloupe':'guadeloupe','basse-terre':'guadeloupe',
+ 'saint-denis':'reunion','la reunion':'reunion','reunion':'reunion',
+ 'mamoudzou':'mayotte','mayotte':'mayotte',
+ 'noumea':'noumea','nouvelle-caledonie':'noumea',
+ 'papeete':'papeete','tahiti':'papeete','polynesie':'papeete'
 };
 function slugFromName(name) {
  if (!name) return null;
@@ -1123,7 +1130,14 @@ var SEA_CLIM_DATA = {
  'sydney':[22,23,22,20,18,16,15,14,15,17,19,21],
  'melbourne':[18,19,18,16,14,13,12,12,12,14,15,17],
  'stockholm':[3,2,2,4,9,14,17,17,14,10,7,4],
- 'dublin':[10,9,9,10,12,14,16,16,15,13,11,10]
+ 'dublin':[10,9,9,10,12,14,16,16,15,13,11,10],
+ 'cayenne':[27,27,27,27,27,27,27,27,27,28,28,27],
+ 'martinique':[27,27,27,27,28,28,29,29,29,28,28,27],
+ 'guadeloupe':[27,27,27,27,28,28,29,29,29,28,28,27],
+ 'reunion':[27,27,27,26,25,23,22,22,23,24,26,27],
+ 'mayotte':[28,28,28,28,27,26,25,24,25,26,27,28],
+ 'noumea':[27,27,26,25,24,23,22,22,22,23,24,26],
+ 'papeete':[29,29,29,29,28,27,27,27,27,27,28,28]
 };
 
 function getSeaComfortFR(sst) {
@@ -1141,14 +1155,27 @@ function fetchMarineSST(lat, lon, yr, mo, da, slug) {
  var target = new Date(yr,mo,da,0,0,0);
  var diffDays = Math.round((target.getTime()-today.getTime())/86400000);
 
- function tryFallback() {
- var climData = slug && SEA_CLIM_DATA[slug] ? SEA_CLIM_DATA[slug] : null;
- if (climData && climData[mo] !== null) return Promise.resolve({sst:climData[mo],fallback:true});
- return Promise.resolve(null);
+ function tryClimatology() {
+  var climData = slug && SEA_CLIM_DATA[slug] ? SEA_CLIM_DATA[slug] : null;
+  if (climData && climData[mo] !== null) return Promise.resolve({sst:climData[mo],fallback:true});
+  // Fallback par archive marine (coordonnées) — 3 ans de données autour de la date
+  var endYr2 = new Date().getFullYear()-1;
+  var s2 = (endYr2-2)+'-'+(mo<9?'0':'')+(mo+1)+'-'+(da<10?'0':'')+da;
+  var e2 = endYr2+'-'+(mo<9?'0':'')+(mo+1)+'-'+(da<10?'0':'')+da;
+  return fetch('https://marine-api.open-meteo.com/v1/marine?latitude='+lat+'&longitude='+lon+'&daily=sea_surface_temperature_max&start_date='+s2+'&end_date='+e2)
+   .then(function(r){return r.ok?r.json():null;})
+   .then(function(d){
+    if(!d||!d.daily||!d.daily.sea_surface_temperature_max) return null;
+    var vals=d.daily.sea_surface_temperature_max.filter(function(v){return v!=null;});
+    if(!vals.length) return null;
+    vals.sort(function(a,b){return a-b;});
+    var median=vals[Math.floor(vals.length/2)];
+    return {sst:Math.round(median*10)/10, fallback:true};
+   }).catch(function(){return null;});
  }
 
  var refDate = new Date(2024,0,1);
- if (diffDays > 7 || target < refDate) return tryFallback();
+ if (diffDays > 7 || target < refDate) return tryClimatology();
 
  var url;
  if (diffDays === 0 || (diffDays >= 1 && diffDays <= 7)) {
@@ -1160,7 +1187,7 @@ function fetchMarineSST(lat, lon, yr, mo, da, slug) {
  return fetch(url)
  .then(function(r){ return r.ok ? r.json() : null; })
  .then(function(d){
- if (!d || d.error) return tryFallback();
+ if (!d || d.error) return tryClimatology();
  var vals = (d.hourly && d.hourly.sea_surface_temperature) || [];
  var times = (d.hourly && d.hourly.time) || [];
  var sst = null;
@@ -1177,10 +1204,10 @@ function fetchMarineSST(lat, lon, yr, mo, da, slug) {
  } else {
  for (var k=0;k<vals.length;k++) { if (vals[k]!=null) { sst=vals[k]; break; } }
  }
- if (sst===null) return tryFallback();
+ if (sst===null) return tryClimatology();
  return {sst: Math.round(sst*10)/10, fallback:false};
  })
- .catch(function(){ return tryFallback(); });
+ .catch(function(){ return tryClimatology(); });
 }
 
 function renderSeaChip(sstResult) {
