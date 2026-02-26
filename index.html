@@ -380,11 +380,7 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
  <div class="uc-filter-label" style="margin-bottom:10px;font-size:12px;color:var(--navy);text-transform:none;letter-spacing:0;font-weight:700">Affiner le score pour :</div>
  <div style="display:flex;flex-wrap:wrap;gap:6px;">
  <button class="uc-pill uc-pill-neutral" data-uc="general" id="ann-uc-general" onclick="quickFill('general')">🌤️ Juste la météo</button>
- <button class="uc-pill" data-uc="voyage" onclick="quickFill('voyage')">✈️ Voyage</button>
- <button class="uc-pill" data-uc="sport" onclick="quickFill('sport')">🏔️ Outdoor</button>
- <button class="uc-pill" data-uc="festival" onclick="quickFill('festival')">🎵 Festival</button>
- <button class="uc-pill" data-uc="travaux" onclick="quickFill('travaux')">🏗️ Travaux</button>
- <button class="uc-pill" data-uc="mariage" onclick="quickFill('mariage')">💍 Mariage</button>
+ <button class="uc-pill" data-uc="plage" onclick="quickFill('plage')">🏖️ Plage</button>
  <button class="uc-pill" data-uc="ski" onclick="quickFill('ski')">⛷️ Ski</button>
  </div>
  </div>
@@ -445,11 +441,7 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
  <div class="uc-row" id="uc-row">
  <div class="uc-row-line">
  <button class="uc-pill uc-pill-neutral" data-uc="general" onclick="quickFill('general')">🌤️ Juste la météo</button>
- <button class="uc-pill" data-uc="voyage" onclick="quickFill('voyage')">✈️ Voyage</button>
- <button class="uc-pill" data-uc="sport" onclick="quickFill('sport')">🏔️ Outdoor</button>
- <button class="uc-pill" data-uc="festival" onclick="quickFill('festival')">🎵 Festival</button>
- <button class="uc-pill" data-uc="travaux" onclick="quickFill('travaux')">🏗️ Travaux</button>
- <button class="uc-pill" data-uc="mariage" onclick="quickFill('mariage')">💍 Mariage</button>
+ <button class="uc-pill" data-uc="plage" onclick="quickFill('plage')">🏖️ Plage</button>
  <button class="uc-pill" data-uc="ski" onclick="quickFill('ski')">⛷️ Ski</button>
  </div>
  </div>
@@ -801,8 +793,8 @@ function quickFill(type) {
  if (hintAnn) { hintAnn.style.display = 'none'; }
  var cityEl = document.getElementById('inp-city');
  var placeholders = {
- mariage:'Lieu de la réception…', voyage:'Destination de voyage…',
- festival:'Lieu du festival…', sport:'Lieu de votre sortie…', travaux:'Ville du chantier…', ski:'Station de ski…'
+ plage:'Destination plage…',
+ ski:'Station de ski…'
  };
  cityEl.placeholder = placeholders[type] || 'Paris, Barcelone, Tokyo…';
  // Re-score instantly if results already shown
@@ -1391,13 +1383,9 @@ function findCachedMonthly(lat, lon) {
 }
 
 var UC_CONFIG = {
- mariage: { label:'Mariage & réception', tempMin:16, tempMax:28, weights:{rain:40,temp:30,wind:20,sun:10} },
- voyage: { label:'Voyage & tourisme', tempMin:10, tempMax:32, weights:{rain:45,temp:25,wind:10,sun:20} },
- festival: { label:'Festival & événement',tempMin:14, tempMax:30, weights:{rain:35,temp:25,wind:25,sun:15} },
- sport: { label:'Sport & outdoor', tempMin:8, tempMax:26, weights:{rain:25,temp:20,wind:15,sun:25} },
- travaux: { label:'Chantier & travaux', tempMin:5, tempMax:32, weights:{rain:40,temp:15,wind:25,sun:10} },
  general: { label:'Météo générale', tempMin:16, tempMax:28, weights:{rain:30,temp:35,wind:15,sun:20} },
- ski: { label:'Ski & sports d\'hiver', tempMin:-8, tempMax:2, weights:{rain:20,temp:40,wind:10,sun:30} }
+ plage:   { label:'Plage & baignade', tempMin:22, tempMax:38, weights:{rain:30,temp:45,wind:10,sun:15} },
+ ski:     { label:'Ski & sports d\'hiver', tempMin:-8, tempMax:2, weights:{rain:20,temp:40,wind:10,sun:30} }
 };
 
 
@@ -1636,9 +1624,8 @@ function computeAndRenderScore(sc, rows) {
 
  document.getElementById('score-num').textContent = (total/10).toFixed(1) + ' / 10';
  var ucLabels = {
- mariage:'Score optimisé · Mariage', voyage:'Score optimisé · Voyage', festival:'Score optimisé · Festival', ski:'Score optimisé · Ski',
- sport:'Score optimisé · Outdoor', travaux:'Score optimisé · Travaux', general:'Météo générale'
- };
+    plage:'Score optimisé · Plage', ski:'Score optimisé · Ski', general:'Météo générale'
+   };
  if (uc === 'general') {
  document.getElementById('score-usecase').textContent = 'Score météo général';
  document.getElementById('score-risk').innerHTML = '<span style="color:var(--gold);font-size:11px;font-weight:600">&#8593; Cliquez sur un projet pour un score personnalisé</span>';
@@ -2001,7 +1988,7 @@ function updateScoreTooltip(uc) {
  var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
  var w = cfg.weights;
  var tt = document.getElementById('score-tooltip');
- var ucName = {mariage:'Mariage',voyage:'Voyage',festival:'Festival',sport:'Outdoor',travaux:'Travaux',ski:'Ski',general:'Météo générale'}[uc] || uc;
+ var ucName = {plage:'Plage',ski:'Ski',general:'Météo générale'}[uc] || uc;
  tt.innerHTML =
  '<strong style="font-size:12px">Score · ' + ucName + '</strong><br>' +
  '💧 Pluie &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.rain + '%<br>' +
@@ -2331,6 +2318,25 @@ function monthScoreForUC(d, uc) {
  var sRainSki = tmax > 2 ? Math.max(0, 100 - rain * 1.5) : Math.max(40, 100 - rain * 0.3);
  return Math.round(sRainSki * 0.15 + sTempSki * 0.40 + snowBonus * 0.20 + sSunSki * 0.25);
  }
+ // ── Plage : logique spécifique ───────────────────────────────────────────
+ if (uc === 'plage') {
+  var tmax = d.avgTmax != null ? d.avgTmax : (d.avgTemp != null ? d.avgTemp + 5 : 20);
+  var rain = d.rainPct || 0;
+  var sun = d.sunHrs || 0;
+  // Température : idéal 26-35°C pour tmax — en dessous de 22°C inapte à la plage
+  var sTempPlage;
+  if (tmax < 18) sTempPlage = 0;
+  else if (tmax < 22) sTempPlage = (tmax - 18) / 4 * 20;           // 0→20
+  else if (tmax < 26) sTempPlage = 20 + (tmax - 22) / 4 * 60;     // 20→80
+  else if (tmax <= 35) sTempPlage = 80 + (tmax - 26) / 9 * 20;    // 80→100
+  else if (tmax <= 40) sTempPlage = 100 - (tmax - 35) / 5 * 30;   // 100→70
+  else sTempPlage = Math.max(40, 70 - (tmax - 40) * 5);
+  // Pluie : très pénalisante (journée plage gâchée)
+  var sRainPlage = Math.max(0, 100 - rain * 1.8);
+  // Soleil : très important pour la plage
+  var sSunPlage = Math.min(100, sun * 8);
+  return Math.round(sRainPlage * 0.35 + sTempPlage * 0.45 + sSunPlage * 0.20);
+ }
  var sTemp = scoreTemp(d.avgTemp, cfg.tempMin, cfg.tempMax);
  var sWind = 85;
  return Math.round(sRain * w.rain/100 + sTemp * w.temp/100 + sWind * w.wind/100 + sSun * w.sun/100);
@@ -2395,14 +2401,14 @@ function renderAnnual(loc, monthly) {
  var grid = document.getElementById('months-grid'); grid.innerHTML = '';
 
  var uc = currentUseCase !== 'general' ? currentUseCase : null;
- var ucNames = {mariage:'mariage',voyage:'voyage',festival:'festival',sport:'outdoor',travaux:'travaux',ski:'ski'};
+ var ucNames = {plage:'plage',ski:'ski'};
 
  // Update subtitle
  var subEl = document.getElementById('annual-subtitle');
  var ucSubEl = document.getElementById('annual-subtitle-uc');
  if (uc && ucSubEl) {
  subEl.style.display = 'none';
- var ucLabels = {mariage:'Meilleurs mois pour votre mariage',voyage:'Meilleurs mois pour voyager',festival:'Meilleurs mois pour votre festival',sport:'Meilleurs mois pour votre sortie outdoor',travaux:'Meilleurs mois pour vos travaux',ski:'Meilleurs mois pour le ski'};
+ var ucLabels = {plage:'Meilleurs mois pour la plage',ski:'Meilleurs mois pour le ski'};
  ucSubEl.textContent = ucLabels[uc] || 'Score optimisé pour : ' + (ucNames[uc]||uc);
  ucSubEl.style.display = 'block';
  } else {
@@ -2495,7 +2501,7 @@ function renderAnnual(loc, monthly) {
  // Construire fenêtre optimale (mois consécutifs avec score >= 60)
  var goodMonths = scores.filter(function(s){return s.score >= 60;}).map(function(s){return s.idx;});
  
- var ucLabel = {'mariage':'cérémonie en extérieur','voyage':'voyager','festival':'votre festival','sport':'activités outdoor','travaux':'vos travaux','general':'partir'}[uc||'general'] || 'partir';
+ var ucLabel = {'plage':'aller à la plage','ski':'faire du ski','general':'partir'}[uc||'general'] || 'partir';
  
  var bestName1 = MNAMES[best1.idx];
  var bestName2 = MNAMES[best2.idx];

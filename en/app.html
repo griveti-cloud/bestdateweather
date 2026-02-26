@@ -2276,6 +2276,25 @@ function monthScoreForUC(d, uc) {
  var sRainSki = tmax > 2 ? Math.max(0, 100 - rain * 1.5) : Math.max(40, 100 - rain * 0.3);
  return Math.round(sRainSki * 0.15 + sTempSki * 0.40 + snowBonus * 0.20 + sSunSki * 0.25);
  }
+ // ── Plage : logique spécifique ───────────────────────────────────────────
+ if (uc === 'plage') {
+  var tmax = d.avgTmax != null ? d.avgTmax : (d.avgTemp != null ? d.avgTemp + 5 : 20);
+  var rain = d.rainPct || 0;
+  var sun = d.sunHrs || 0;
+  // Température : idéal 26-35°C pour tmax — en dessous de 22°C inapte à la plage
+  var sTempPlage;
+  if (tmax < 18) sTempPlage = 0;
+  else if (tmax < 22) sTempPlage = (tmax - 18) / 4 * 20;           // 0→20
+  else if (tmax < 26) sTempPlage = 20 + (tmax - 22) / 4 * 60;     // 20→80
+  else if (tmax <= 35) sTempPlage = 80 + (tmax - 26) / 9 * 20;    // 80→100
+  else if (tmax <= 40) sTempPlage = 100 - (tmax - 35) / 5 * 30;   // 100→70
+  else sTempPlage = Math.max(40, 70 - (tmax - 40) * 5);
+  // Pluie : très pénalisante (journée plage gâchée)
+  var sRainPlage = Math.max(0, 100 - rain * 1.8);
+  // Soleil : très important pour la plage
+  var sSunPlage = Math.min(100, sun * 8);
+  return Math.round(sRainPlage * 0.35 + sTempPlage * 0.45 + sSunPlage * 0.20);
+ }
  var sTemp = scoreTemp(d.avgTemp, cfg.tempMin, cfg.tempMax);
  var sWind = 85;
  return Math.round(sRain * w.rain/100 + sTemp * w.temp/100 + sWind * w.wind/100 + sSun * w.sun/100);
