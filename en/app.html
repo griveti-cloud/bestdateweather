@@ -1256,6 +1256,8 @@ function applySeasonalCorrection(rows, seas) {
  for(var i=0;i<rows.length;i++){var r=rows[i];if(r.p50!=null){histSum+=r.p50;histCnt++;}histRainSum+=r.rain;if(r.windP50)histWindSum+=r.windP50;if(r.p25!=null&&r.p75!=null){histSpreadSum+=(r.p75-r.p25)/2;spreadCnt++;}}
  if(!histCnt) return rows;
  var histMean=histSum/histCnt, offset=parseFloat((seas.tMean-histMean).toFixed(2));
+ window._seasTempOffset = offset;
+ window._seasRainOffset = seas.rainProb != null ? Math.round(seas.rainProb - (histRainSum/rows.length)) : null;
  var histSpreadAvg=spreadCnt?histSpreadSum/spreadCnt:1, seasSpread=(seas.tP75-seas.tP25)/2;
  var ratio=(histSpreadAvg>0.5&&seasSpread>0)?Math.min(2.5,Math.max(0.3,seasSpread/histSpreadAvg)):1;
  var histRainAvg=histRainSum/rows.length, histWindAvg=rows.length?histWindSum/rows.length:0;

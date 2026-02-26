@@ -472,6 +472,7 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
  <div class="hero-cond" id="r-cond"></div>
  <div class="hero-range" id="r-range"></div>
         <div id="r-tempfreq" style="display:none;font-size:11px;color:#94a3b8;margin-top:4px;letter-spacing:0.01em"></div>
+        <div id="r-seasinfo" style="display:none;font-size:11px;color:#94a3b8;margin-top:2px;letter-spacing:0.01em"></div>
  </div>
  <div class="hero-icon" id="r-icon"></div>
  </div>
@@ -1265,6 +1266,8 @@ function applySeasonalCorrection(rows, seas) {
  for(var i=0;i<rows.length;i++){var r=rows[i];if(r.p50!=null){histSum+=r.p50;histCnt++;}histRainSum+=r.rain;if(r.windP50)histWindSum+=r.windP50;if(r.p25!=null&&r.p75!=null){histSpreadSum+=(r.p75-r.p25)/2;spreadCnt++;}}
  if(!histCnt) return rows;
  var histMean=histSum/histCnt, offset=parseFloat((seas.tMean-histMean).toFixed(2));
+ window._seasTempOffset = offset;
+ window._seasRainOffset = seas.rainProb != null ? Math.round(seas.rainProb - (histRainSum/rows.length)) : null;
  var histSpreadAvg=spreadCnt?histSpreadSum/spreadCnt:1, seasSpread=(seas.tP75-seas.tP25)/2;
  var ratio=(histSpreadAvg>0.5&&seasSpread>0)?Math.min(2.5,Math.max(0.3,seasSpread/histSpreadAvg)):1;
  var histRainAvg=histRainSum/rows.length, histWindAvg=rows.length?histWindSum/rows.length:0;
@@ -1691,6 +1694,16 @@ function updateHero(sc, rows) {
  var _tf=(sc[13]||sc[12]||{}).tempFreq;
  if(_tf!=null&&_tfEl){_tfEl.textContent='Température similaire '+_tf+'% des années à cette date';_tfEl.style.display='block';}
  else if(_tfEl){_tfEl.style.display='none';}
+ var _siEl=document.getElementById('r-seasinfo');
+ if(_siEl){
+  var _to=window._seasTempOffset, _ro=window._seasRainOffset;
+  if(_to!=null && Math.abs(_to)>=0.3){
+   var _tSign=_to>0?'+':'', _parts=[_tSign+Math.round(_to*10)/10+'°C /ECMWF'];
+   if(_ro!=null && Math.abs(_ro)>=3) _parts.push((_ro>0?'+':'')+_ro+'% pluie');
+   _siEl.textContent='Correction saisonnière : '+_parts.join(' · ');
+   _siEl.style.display='block';
+  } else { _siEl.style.display='none'; }
+ }
  document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
  document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
  document.getElementById('r-rain').textContent=avgRain+'%';
