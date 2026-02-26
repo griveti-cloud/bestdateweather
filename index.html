@@ -1205,18 +1205,32 @@ function fetchArchive(lat, lon, refDate) {
 }
 
 function fetchSnowDepth(lat, lon, yr, mo, da) {
- var dateStr = yr + '-' + (mo<9?'0':'') + (mo+1) + '-' + (da<10?'0':'')+da;
- // Average over ±5 days to smooth out day-to-day variability
- var s = toISO(addDays(new Date(yr,mo,da), -5));
- var e = toISO(addDays(new Date(yr,mo,da), 5));
- return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&daily=snow_depth_max&timezone=auto')
-  .then(function(r){if(!r.ok)return null;return r.json();})
-  .then(function(d){
-   if(!d||!d.daily||!d.daily.snow_depth_max) return {depth:null, elevation:d?d.elevation:null};
-   var vals = d.daily.snow_depth_max.filter(function(v){return v!=null;});
-   var median = vals.length ? vals.slice().sort(function(a,b){return a-b;})[Math.floor(vals.length/2)] : null;
-   return {depth: median!=null ? Math.round(median*100) : null, elevation: d.elevation||null};
-  }).catch(function(){return {depth:null, elevation:null};});
+ // Utilise les 10 dernières années complètes (comme buildClimatology)
+ var now = new Date();
+ var endYr = now.getFullYear() - 1;
+ var years = []; for (var y = endYr-9; y <= endYr; y++) years.push(y);
+ var elevation = null;
+ var allDepths = [];
+ var idx = 0;
+ function step() {
+  if (idx >= years.length) {
+   var median = allDepths.length ? allDepths.slice().sort(function(a,b){return a-b;})[Math.floor(allDepths.length/2)] : null;
+   return Promise.resolve({depth: median!=null ? Math.round(median*100) : null, elevation: elevation});
+  }
+  var y2 = years[idx++];
+  var s = toISO(addDays(new Date(y2,mo,da), -3));
+  var e = toISO(addDays(new Date(y2,mo,da),  3));
+  return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&daily=snow_depth_max&timezone=auto')
+   .then(function(r){if(!r.ok)return null;return r.json();})
+   .then(function(d){
+    if (!d) return;
+    if (!elevation && d.elevation) elevation = d.elevation;
+    if (d.daily && d.daily.snow_depth_max) {
+     d.daily.snow_depth_max.forEach(function(v){if(v!=null) allDepths.push(v);});
+    }
+   }).catch(function(){}).then(step);
+ }
+ return step();
 }
 
 function buildClimatology(lat, lon, yr, mo, da) {
