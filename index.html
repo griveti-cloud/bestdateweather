@@ -312,6 +312,38 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
 
 #inp-date:not(.has-val){color:var(--slate3)}
 #inp-date.has-val{color:var(--navy)}
+
+/* ── Trust block ── */
+.trust-block{background:white;border-top:1px solid var(--cream2);padding:48px 20px}
+.trust-block-inner{max-width:700px;margin:0 auto}
+.trust-block h2{font-size:18px;font-weight:700;color:var(--navy);margin:0 0 6px;letter-spacing:-.3px}
+.trust-tagline{font-size:13px;color:var(--navy);font-weight:500;line-height:1.6;background:#f8f7f4;border-left:3px solid var(--gold);padding:10px 14px;border-radius:0 6px 6px 0;margin:0 0 28px}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:600px){.trust-grid{grid-template-columns:1fr}}
+.trust-item{background:var(--cream);border-radius:10px;padding:16px 18px;border:1px solid var(--cream2)}
+.trust-item-icon{font-size:20px;margin-bottom:8px}
+.trust-item h3{font-size:13px;font-weight:700;color:var(--navy);margin:0 0 6px;letter-spacing:-.1px}
+.trust-item p{font-size:12px;color:var(--slate2);line-height:1.6;margin:0}
+
+/* ── SEO content block ── */
+.seo-block{background:var(--cream);border-top:1px solid var(--cream2);padding:48px 20px}
+.seo-block-inner{max-width:700px;margin:0 auto}
+.seo-block h2{font-size:17px;font-weight:700;color:var(--navy);margin:0 0 12px;letter-spacing:-.3px}
+.seo-block h3{font-size:14px;font-weight:700;color:var(--navy);margin:24px 0 10px}
+.seo-block p{font-size:13px;color:var(--slate2);line-height:1.75;margin:0 0 12px}
+.seo-links{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.seo-link{font-size:12px;font-weight:500;color:var(--gold);text-decoration:none;background:white;border:1px solid var(--cream2);padding:5px 11px;border-radius:20px;transition:border-color .15s}
+.seo-link:hover{border-color:var(--gold)}
+
+/* ── Brand block ── */
+.brand-block{background:var(--navy);padding:40px 20px;text-align:center}
+.brand-block-inner{max-width:560px;margin:0 auto}
+.brand-block h2{font-size:20px;font-weight:700;color:white;margin:0 0 14px;letter-spacing:-.4px}
+.brand-block p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.75;margin:0 0 10px}
+.brand-block p:last-child{margin:0}
+
+/* ── Method note ── */
+.method-note{font-size:10px;color:var(--slate3);margin-top:8px;line-height:1.6}
 </style>
 <link rel="icon" type="image/x-icon" href="favicon.ico"/><link rel="icon" type="image/svg+xml" href="favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
 <link rel="manifest" href="manifest.json"/>
@@ -750,6 +782,88 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
  </div>
 </section>
 
+<!-- ── Trust block ── -->
+<section class="trust-block">
+ <div class="trust-block-inner">
+  <h2>Pourquoi ces estimations sont fiables ?</h2>
+  <p class="trust-tagline">BestDateWeather n'est pas une prévision météo à 1 an. Nous analysons les tendances climatiques saisonnières pour estimer les conditions les plus probables à une date donnée.</p>
+  <div class="trust-grid">
+   <div class="trust-item">
+    <div class="trust-item-icon">📊</div>
+    <h3>10 ans de données observées</h3>
+    <p>Chaque estimation s'appuie sur les relevés météo réels de 2016 à 2025 : températures, précipitations, ensoleillement et vent, heure par heure.</p>
+   </div>
+   <div class="trust-item">
+    <div class="trust-item-icon">🌍</div>
+    <h3>Modèle ECMWF intégré</h3>
+    <p>Pour les dates dans les 7 prochains mois, les tendances saisonnières du Centre européen de prévision météorologique corrigent les moyennes historiques.</p>
+   </div>
+   <div class="trust-item">
+    <div class="trust-item-icon">📐</div>
+    <h3>Score probabiliste P10–P90</h3>
+    <p>Le score sur 10 n'est pas une prévision exacte. Il quantifie la probabilité de bonnes conditions en agrégeant les 4 facteurs clés : pluie, température, vent, soleil.</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ── SEO block ── -->
+<section class="seo-block">
+ <div class="seo-block-inner">
+  <h2>Quelle est la meilleure période pour voyager ?</h2>
+  <p>Le choix de la date idéale dépend de bien plus qu'une simple prévision à 5 jours. Températures moyennes, risque de pluie, ensoleillement, vent — chaque destination a son propre rythme climatique. BestDateWeather analyse ces données pour vous donner une estimation probabiliste des conditions attendues, mois par mois ou jour par jour jusqu'à un an à l'avance.</p>
+
+  <h3>Destinations populaires — quand partir ?</h3>
+  <div class="seo-links">
+   <a class="seo-link" href="bali-meteo-juillet.html">Bali en juillet</a>
+   <a class="seo-link" href="tenerife-meteo-janvier.html">Tenerife en janvier</a>
+   <a class="seo-link" href="lisbonne-meteo-mai.html">Lisbonne en mai</a>
+   <a class="seo-link" href="barcelone-meteo-juin.html">Barcelone en juin</a>
+   <a class="seo-link" href="new-york-meteo-octobre.html">New York en octobre</a>
+   <a class="seo-link" href="phuket-meteo-mars.html">Phuket en mars</a>
+   <a class="seo-link" href="crete-meteo-septembre.html">Crète en septembre</a>
+   <a class="seo-link" href="marrakech-meteo-avril.html">Marrakech en avril</a>
+   <a class="seo-link" href="paris-meteo-juin.html">Paris en juin</a>
+   <a class="seo-link" href="tokyo-meteo-avril.html">Tokyo en avril</a>
+  </div>
+
+  <h3>Météo par mois — fiches détaillées</h3>
+  <div class="seo-links">
+   <a class="seo-link" href="nice-meteo-juillet.html">Nice en juillet</a>
+   <a class="seo-link" href="rome-meteo-mai.html">Rome en mai</a>
+   <a class="seo-link" href="dubai-meteo-novembre.html">Dubaï en novembre</a>
+   <a class="seo-link" href="cancun-meteo-decembre.html">Cancún en décembre</a>
+   <a class="seo-link" href="maldives-meteo-fevrier.html">Maldives en février</a>
+   <a class="seo-link" href="porto-meteo-mars.html">Porto en mars</a>
+   <a class="seo-link" href="corse-meteo-aout.html">Corse en août</a>
+   <a class="seo-link" href="ibiza-meteo-juin.html">Ibiza en juin</a>
+   <a class="seo-link" href="santorin-meteo-septembre.html">Santorin en septembre</a>
+   <a class="seo-link" href="ile-maurice-meteo-juillet.html">Île Maurice en juillet</a>
+  </div>
+
+  <h3>Comment interpréter le score météo ?</h3>
+  <p>Le score sur 10 intègre quatre composantes pondérées : la probabilité de pluie (poids le plus élevé pour les destinations plage et voyage), la température par rapport à la plage idéale selon l'activité, l'ensoleillement mesuré en heures de rayonnement direct, et la vitesse du vent. La médiane statistique (P50) est utilisée à la place de la moyenne pour éviter qu'un épisode exceptionnel — canicule, tempête ponctuelle — ne fausse l'estimation.</p>
+
+  <h3>Comparatifs destinations</h3>
+  <div class="seo-links">
+   <a class="seo-link" href="bali-meteo-juillet.html">Bali vs Phuket en été</a>
+   <a class="seo-link" href="tenerife-meteo-fevrier.html">Canaries en hiver</a>
+   <a class="seo-link" href="cote-azur-meteo-aout.html">Côte d'Azur en août</a>
+   <a class="seo-link" href="maldives-meteo-mars.html">Maldives hors saison</a>
+   <a class="seo-link" href="barcelone-meteo-octobre.html">Méditerranée en automne</a>
+  </div>
+ </div>
+</section>
+
+<!-- ── Brand block ── -->
+<section class="brand-block">
+ <div class="brand-block-inner">
+  <h2>La météo des grandes décisions</h2>
+  <p>Un mariage en extérieur, un voyage important, un tournage, un événement sportif — quand la météo compte vraiment, une simple application météo à 7 jours ne suffit pas.</p>
+  <p>BestDateWeather analyse les tendances climatiques saisonnières pour vous aider à choisir le moment le plus favorable, avec une méthode transparente et des données vérifiables.</p>
+ </div>
+</section>
+
 </main>
 
 <div class="app-footer">
@@ -758,6 +872,7 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
  &nbsp;·&nbsp; Sources ECMWF, DWD, NOAA, Météo-France &nbsp;·&nbsp; CC BY 4.0
  &nbsp;·&nbsp; <a href="methodologie.html" target="_blank" style="color:inherit;text-decoration:none">Méthodologie</a>
  <div style="margin-top:8px"><a href="en/app.html" style="color:inherit;text-decoration:none"><img src="flags/gb.png" width="20" height="15" alt="GB" style="vertical-align:middle;border-radius:2px"> English version</a> &nbsp;·&nbsp; <a href="mentions-legales.html" style="color:inherit;text-decoration:none">Mentions légales</a> &nbsp;·&nbsp; <a href="confidentialite.html" style="color:inherit;text-decoration:none">Confidentialit&eacute;</a> &nbsp;·&nbsp; <a href="contact.html" style="color:inherit;text-decoration:none">Contact</a></div>
+ <p class="method-note">Méthodologie basée sur données climatiques observées (2016–2025) et tendances saisonnières ECMWF. Agrégation P50 (médiane). Données brutes : Open-Meteo archive API (CC BY 4.0). Dernière mise à jour : janvier 2026.</p>
 </div>
 
 <script>
