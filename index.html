@@ -812,14 +812,14 @@ function quickFill(type) {
    if (!res) return;
    var elev = res.elevation ? Math.round(res.elevation) : null;
    if (elev && elev < 600) {
-    _sdEl2.textContent = '❄ Altitude ' + elev + 'm — trop basse pour évaluer l'enneigement';
+    _sdEl2.textContent = '❄ Altitude ' + elev + 'm — trop basse pour évaluer l\'enneigement';
     _sdEl2.style.color = '#94a3b8';
    } else if (res.depth != null) {
     var elevStr = elev ? ' à ' + elev + 'm' : '';
     _sdEl2.textContent = '❄ Enneigement estimé : ' + res.depth + ' cm' + elevStr + ' · mesure Open-Meteo (point géographique, non domaine skiable)';
     _sdEl2.style.color = '#6366f1';
    } else {
-    _sdEl2.textContent = '❄ Données d'enneigement indisponibles pour cette date';
+    _sdEl2.textContent = '❄ Données d\'enneigement indisponibles pour cette date';
     _sdEl2.style.color = '#94a3b8';
    }
    _sdEl2.style.display = 'block';
