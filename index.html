@@ -2148,7 +2148,7 @@ function setAnnP(p, lbl) {
 function fetchAnnualArchive(loc) {
  var now = new Date();
  var endYr = now.getFullYear() - 1;
- var startYr = endYr - 2; // 3 years — limite API Open-Meteo gratuite
+ var startYr = endYr - 9; // 10 years
  var startDate = startYr + '-01-01';
  var endDate = endYr + '-12-31';
  var url = 'https://archive-api.open-meteo.com/v1/archive?latitude=' + loc.lat + '&longitude=' + loc.lon +
