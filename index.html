@@ -1420,7 +1420,7 @@ function fetchForecast(lat, lon, yr, mo, da) {
 
 function fetchArchive(lat, lon, refDate) {
  var s=toISO(addDays(refDate,-10)), e=toISO(addDays(refDate,10));
- return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&hourly=temperature_2m,precipitation,snowfall,windspeed_10m,shortwave_radiation&timezone=auto').then(function(r){if(!r.ok)throw new Error('Archive error');return r.json();}).then(function(d){if(d.utc_offset_seconds!=null)_locTzOffset=d.utc_offset_seconds;return d;});
+ return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&hourly=temperature_2m,precipitation,snowfall,windspeed_10m,shortwave_radiation,relative_humidity_2m&timezone=auto').then(function(r){if(!r.ok)throw new Error('Archive error');return r.json();}).then(function(d){if(d.utc_offset_seconds!=null)_locTzOffset=d.utc_offset_seconds;return d;});
 }
 
 function fetchSnowDepth(lat, lon, yr, mo, da) {
@@ -1457,14 +1457,14 @@ function buildClimatology(lat, lon, yr, mo, da) {
  var trend=Math.max(0,(target.getTime()-now.getTime())/(1000*60*60*24*365.25))*0.03;
  var endYr=now.getFullYear()-1, years=[];
  for(var y=endYr-9;y<=endYr;y++) years.push(y);
- var buckets=[]; for(var h=0;h<24;h++) buckets.push({t:[],p:[],w:[],s:[],sn:[]});
+ var buckets=[]; for(var h=0;h<24;h++) buckets.push({t:[],p:[],w:[],s:[],sn:[],rh:[]});
  var idx=0;
  function step(){
  if(idx>=years.length) return Promise.resolve(buildRows(buckets,trend));
  var yr2=years[idx++];
  return fetchArchive(lat,lon,new Date(yr2,mo,da,12,0,0)).then(function(data){
- var T=data.hourly.temperature_2m, P=data.hourly.precipitation, W=data.hourly.windspeed_10m, S=data.hourly.shortwave_radiation||[], SN=data.hourly.snowfall||[];
- for(var i=0;i<data.hourly.time.length;i++){var hh=new Date(data.hourly.time[i]).getHours();if(T[i]!=null)buckets[hh].t.push(T[i]);if(P[i]!=null)buckets[hh].p.push(P[i]);if(W[i]!=null)buckets[hh].w.push(W[i]);if(S[i]!=null)buckets[hh].s.push(S[i]);if(SN[i]!=null)buckets[hh].sn.push(SN[i]);}
+ var T=data.hourly.temperature_2m, P=data.hourly.precipitation, W=data.hourly.windspeed_10m, S=data.hourly.shortwave_radiation||[], SN=data.hourly.snowfall||[], RH=data.hourly.relative_humidity_2m||[];
+ for(var i=0;i<data.hourly.time.length;i++){var hh=new Date(data.hourly.time[i]).getHours();if(T[i]!=null)buckets[hh].t.push(T[i]);if(P[i]!=null)buckets[hh].p.push(P[i]);if(W[i]!=null)buckets[hh].w.push(W[i]);if(S[i]!=null)buckets[hh].s.push(S[i]);if(SN[i]!=null)buckets[hh].sn.push(SN[i]);if(RH[i]!=null)buckets[hh].rh.push(RH[i]);}
  }).catch(function(){}).then(function(){setP(Math.round((idx/years.length)*90),'Analyse '+yr2+'…');return new Promise(function(res){setTimeout(res,20);});}).then(step);
  }
  return step();
@@ -1480,7 +1480,8 @@ function buildRows(buckets, trend) {
  var p50v=p50!=null?p50+trend:null;
     var tempFreq=null;
     if(p50v!=null&&b.t.length>0){var _inRange=0;for(var _ti=0;_ti<b.t.length;_ti++)if(Math.abs(b.t[_ti]-p50v)<=2)_inRange++;tempFreq=Math.round(_inRange/b.t.length*100);}
-    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50v,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50v,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,mm:b.p.length>0?(b.p.reduce(function(s,v){return s+v;},0)/b.p.length):0,snow:avgSnow,windP50:pct(b.w,50),solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0),tempFreq:tempFreq});
+    var avgRh = b.rh && b.rh.length > 0 ? b.rh.reduce(function(s,v){return s+v;},0)/b.rh.length : null;
+    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50v,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50v,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,mm:b.p.length>0?(b.p.reduce(function(s,v){return s+v;},0)/b.p.length):0,snow:avgSnow,windP50:pct(b.w,50),solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0),tempFreq:tempFreq,rh:avgRh});
  }
  return rows;
 }
@@ -1782,6 +1783,27 @@ function scoreWind(kmh) {
  return Math.max(0, 20 - (kmh - 40) * 1);
 }
 
+function scoreHumidity(rh, avgTemp) {
+ // Malus humidité : pertinent si chaud + humide (ressenti désagréable)
+ // Seuil : T > 24°C ET RH > 65% → malus progressif (jusqu'à -20pts à 38°C/95%)
+ // En dessous de 24°C, l'humidité n'est pas gênante
+ if (rh == null || avgTemp == null || avgTemp < 24) return 0;
+ if (rh <= 65) return 0;
+ var tempFactor = Math.min(1, (avgTemp - 24) / 14); // 0 à 24°C → 1 à 38°C
+ var rhFactor = Math.min(1, (rh - 65) / 30);        // 0 à 65% → 1 à 95%
+ return Math.round(20 * tempFactor * rhFactor);       // malus 0-20 pts
+}
+
+function scoreHumidityPlage(rh, avgTemp) {
+ // Plage : humidité acceptable même haute si T confortable
+ // Mais RH > 80% + T > 30°C = inconfort marqué (surtout tropiques)
+ if (rh == null || avgTemp == null || avgTemp < 26) return 0;
+ if (rh <= 75) return 0;
+ var tempFactor = Math.min(1, (avgTemp - 26) / 12);
+ var rhFactor = Math.min(1, (rh - 75) / 20);
+ return Math.round(15 * tempFactor * rhFactor);
+}
+
 function scoreSun(peakSol) {
  if (peakSol >= 600) return 100;
  if (peakSol >= 300) return 60 + (peakSol - 300) / 300 * 40;
@@ -1831,7 +1853,7 @@ function getVerdict(score, avgRain, avgTemp, avgWind, uc, isSeasonal) {
  else if (score >= 35) label = 'Peu favorable';
  else label = 'Conditions défavorables';
  var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
- var driver = getMainDriver(avgRain, avgTemp, avgWind, scoreRain(avgRain), scoreTemp(avgTemp, cfg.tempMin, cfg.tempMax), scoreWind(avgWind), uc);
+ var driver = getMainDriver(avgRain, avgTemp, avgWind, sRain, scoreTemp(avgTemp, cfg.tempMin, cfg.tempMax), scoreWind(avgWind), uc);
  var action;
  if (uc === 'ski') {
   if (score >= 76) action = 'Bon enneigement probable';
@@ -1886,9 +1908,12 @@ function computeAndRenderScore(sc, rows) {
  var avgRain = rSum / rows.length;
  var avgWind = wSum / rows.length;
  var avgTemp = tCnt ? tSum / tCnt : null;
+ var rhSum = 0, rhCnt = 0;
+ for (var j=0; j<rows.length; j++) { if (rows[j].rh != null) { rhSum += rows[j].rh; rhCnt++; } }
+ var avgRh = rhCnt ? rhSum / rhCnt : null;
 
  // Individual scores
- var sRain = scoreRain(avgRain);
+ var sRain = scoreRainSmart(avgRain, mmSum, avgTemp);
  var sTemp = scoreTemp(avgTemp, cfg.tempMin, cfg.tempMax);
  var sWind = scoreWind(avgWind);
  var sSun = scoreSun(peakSol);
@@ -1923,16 +1948,18 @@ function computeAndRenderScore(sc, rows) {
   else sTempPlage = Math.max(40, 70 - (tmax_plage - 40) * 5);
   var sRainPlage = Math.max(0, 100 - avgRain * 1.8);
   var sSunPlage = Math.min(100, (peakSol / 50) * 8);
-  total = Math.round(sRainPlage * 0.35 + sTempPlage * 0.45 + sSunPlage * 0.20);
+  var humMalusPlage = scoreHumidityPlage(avgRh, avgTemp);
+  total = Math.round(sRainPlage * 0.35 + sTempPlage * 0.45 + sSunPlage * 0.20) - humMalusPlage;
 
  // ── Général : pondération standard ──────────────────────────────────────
  } else {
+  var humMalus = scoreHumidity(avgRh, avgTemp);
   total = Math.round(
    sRain * w.rain / 100 +
    sTemp * w.temp / 100 +
    sWind * w.wind / 100 +
    sSun * w.sun / 100
-  );
+  ) - humMalus;
  }
  total = Math.min(100, Math.max(0, total));
 
@@ -1963,6 +1990,16 @@ function computeAndRenderScore(sc, rows) {
  // Detail chips — show actual values with colored dot
  var totalMm = Math.round(mmSum * 10) / 10;
  var totalSnow = 0; for (var _s=0; _s<rows.length; _s++) { totalSnow += (rows[_s].snow || 0); } totalSnow = Math.round(totalSnow * 10) / 10;
+ // Spread (variabilité) badge
+ var allTemps = [];
+ for (var _t=0; _t<rows.length; _t++) { if (rows[_t].p25 != null && rows[_t].p75 != null) { allTemps.push(rows[_t].p25); allTemps.push(rows[_t].p75); } }
+ var spreadLabel = null, spreadColor = null;
+ if (allTemps.length >= 4) {
+  allTemps.sort(function(a,b){return a-b;});
+  var spread = allTemps[allTemps.length-1] - allTemps[0];
+  if (spread <= 8) { spreadLabel = '🌡 Stable'; spreadColor = '#1a7a4a'; }
+  else if (spread >= 16) { spreadLabel = '🌡 Variable'; spreadColor = '#f97316'; }
+ }
  var chips = [
  { lbl: 'Pluie', val: Math.round(avgRain)+'%', score: sRain },
  { lbl: 'Précip.', val: totalMm > 0 ? totalMm + ' mm' : '0 mm', score: sRain },
@@ -1971,16 +2008,22 @@ function computeAndRenderScore(sc, rows) {
  
  ];
  if (totalSnow > 0.5) chips.push({ lbl: 'Neige', val: totalSnow + ' cm', score: 0, color: '#6366f1' });
+ if (avgRh != null && avgTemp != null && avgTemp > 22) {
+  var rhScore = Math.max(0, 100 - Math.max(0, avgRh - 50) * 1.5);
+  chips.push({ lbl: 'Humidité', val: Math.round(avgRh)+'%', score: rhScore });
+ }
+ if (spreadLabel) chips.push({ lbl: spreadLabel, val: '', score: -1, color: spreadColor, noDot: true });
  var chipsEl = document.getElementById('score-chips');
  chipsEl.innerHTML = '';
  for (var b=0; b<chips.length; b++) {
  var chipColor = chips[b].color || getScoreColor(chips[b].score);
  var chip = document.createElement('div');
  chip.className = 'score-chip';
- chip.innerHTML =
- '<span class="score-chip-dot" style="background:'+chipColor+'"></span>' +
- '<span class="score-chip-lbl">' + chips[b].lbl + '</span>' +
- '<span class="score-chip-val">' + chips[b].val + '</span>';
+ chip.innerHTML = chips[b].noDot
+ ? '<span class="score-chip-lbl" style="padding-left:2px">' + chips[b].lbl + '</span>'
+ : '<span class="score-chip-dot" style="background:'+chipColor+'"></span>' +
+   '<span class="score-chip-lbl">' + chips[b].lbl + '</span>' +
+   '<span class="score-chip-val">' + chips[b].val + '</span>';
  chipsEl.appendChild(chip);
  }
  // Ré-injecter le chip SST s'il a déjà été récupéré
