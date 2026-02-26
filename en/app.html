@@ -1330,7 +1330,7 @@ function getSeaComfortFR(sst) {
  if (sst >= 24) return {lbl:'Warm · good for swimming', color:'#f59e0b'};
  if (sst >= 20) return {lbl:'Pleasant', color:'#16a34a'};
  if (sst >= 17) return {lbl:'Cool', color:'#0ea5e9'};
- if (sst >= 14) return {lbl:'Froide', color:'#6366f1'};
+ if (sst >= 14) return {lbl:'Cold', color:'#6366f1'};
  return {lbl:'Very cold', color:'#64748b'};
 }
 
@@ -1397,7 +1397,7 @@ function fetchMarineSSTEN(lat, lon, yr, mo, da, slug) {
 
 function renderSeaChipEN(sstResult) {
  if (!sstResult || sstResult.sst===null) return;
- var comfort = getSeaComfortEN(sstResult.sst);
+ var comfort = getSeaComfortFR(sstResult.sst);
  var lbl = sstResult.fallback ? '🌊 Mer (norm. sais.)' : '🌊 Mer';
  var chip = document.createElement('div');
  chip.className = 'score-chip';
