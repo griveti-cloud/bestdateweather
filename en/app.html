@@ -1397,7 +1397,7 @@ function fetchMarineSSTEN(lat, lon, yr, mo, da, slug) {
 
 function renderSeaChipEN(sstResult) {
  if (!sstResult || sstResult.sst===null) return;
- var comfort = getSeaComfortFR(sstResult.sst);
+ var comfort = getSeaComfortEN(sstResult.sst);
  var lbl = sstResult.fallback ? '🌊 Mer (norm. sais.)' : '🌊 Mer';
  var chip = document.createElement('div');
  chip.className = 'score-chip';
@@ -1610,7 +1610,7 @@ function renderScCard(sc, stripId, statsId) {
  var temps=[],rSum=0,wSum=0;
  for(var j=0;j<sc.length;j++){if(sc[j].temp!=null)temps.push(sc[j].temp);rSum+=sc[j].rain;wSum+=(sc[j].windP50||0);}
  var tmin=temps.length?Math.min.apply(null,temps):'-', tmax=temps.length?Math.max.apply(null,temps):'-';
- document.getElementById(statsId).innerHTML='<div><div class="sc-stat-val">'+tmin+'\u00b0/'+tmax+'\u00b0</div><div class="sc-stat-lbl">Min/Max</div></div><div><div class="sc-stat-val">'+Math.round(rSum/sc.length)+'%</div><div class="sc-stat-lbl">Rain</div></div><div><div class="sc-stat-val">'+Math.round(wSum/sc.length)+' km/h</div><div class="sc-stat-lbl">Wind</div></div>';
+ document.getElementById(statsId).innerHTML='<div><div class="sc-stat-val">'+fmtTempRaw(tmin)+'°/'+fmtTempRaw(tmax)+'°</div><div class="sc-stat-lbl">Min/Max</div></div><div><div class="sc-stat-val">'+Math.round(rSum/sc.length)+'%</div><div class="sc-stat-lbl">Rain</div></div><div><div class="sc-stat-val">'+fmtWind(Math.round(wSum/sc.length))+'</div><div class="sc-stat-lbl">Wind</div></div>';
 }
 
 
@@ -1874,9 +1874,9 @@ function getMainRisk(avgRain, avgTemp, avgWind, uc) {
  var risks = [];
  if (avgRain > 50) risks.push('Rain likely (' + Math.round(avgRain) + '%)');
  else if (avgRain > 30) risks.push('Possible showers (' + Math.round(avgRain) + '%)');
- if (avgTemp < cfg.tempMin) risks.push('Cool temperature (' + Math.round(avgTemp) + '°C)');
- else if (avgTemp > cfg.tempMax) risks.push('High heat (' + Math.round(avgTemp) + '°C)');
- if (avgWind > 30) risks.push('Strong wind (' + Math.round(avgWind) + ' km/h)');
+ if (avgTemp < cfg.tempMin) risks.push('Cool temperature (' + fmtTemp(avgTemp) + ')');
+ else if (avgTemp > cfg.tempMax) risks.push('High heat (' + fmtTemp(avgTemp) + ')');
+ if (avgWind > 30) risks.push('Strong wind (' + fmtWind(avgWind) + ')');
  if (risks.length === 0) return 'No major risk identified';
  return 'Risk: ' + risks.join(' · ');
 }
@@ -1980,8 +1980,8 @@ function computeAndRenderScore(sc, rows) {
  var chips = [
  { lbl: 'Rain', val: Math.round(avgRain)+'%', score: sRain },
  { lbl: 'Precip.', val: totalMm > 0 ? totalMm + ' mm' : '0 mm', score: sRain },
- { lbl: 'Temp.', val: avgTemp!=null?Math.round(avgTemp)+'°C':'–', score: sTemp },
- { lbl: 'Wind', val: Math.round(avgWind)+' km/h', score: sWind }
+ { lbl: 'Temp.', val: avgTemp!=null?fmtTemp(avgTemp):'–', score: sTemp },
+ { lbl: 'Wind', val: fmtWind(avgWind), score: sWind }
  
  ];
  if (totalSnow > 0.5) chips.push({ lbl: 'Snow', val: totalSnow + ' cm', score: 0, color: '#6366f1' });
@@ -2016,13 +2016,13 @@ function updateHero(sc, rows) {
  document.getElementById('r-range').textContent=tmin+'\u00b0 / '+tmax+'\u00b0 during the day';
  var _tfEl=document.getElementById('r-tempfreq');
  var _tf=(sc[13]||sc[12]||{}).tempFreq;
- if(_tf!=null&&_tfEl){_tfEl.textContent='Temperature within ±2°C of '+Math.round(main.temp||0)+'° — '+_tf+'% of years on this date';_tfEl.style.display='block';}
+ if(_tf!=null&&_tfEl){_tfEl.textContent='Temperature within ±2'+fmtTempUnit()+' of '+fmtTempRaw(main.temp||0)+'° — '+_tf+'% of years on this date';_tfEl.style.display='block';}
  else if(_tfEl){_tfEl.style.display='none';}
  var _siEl=document.getElementById('r-seasinfo');
  if(_siEl){
   var _to=window._seasTempOffset, _ro=window._seasRainOffset;
   if(_to!=null && Math.abs(_to)>=0.3){
-   var _tSign=_to>0?'+':'', _parts=[_tSign+Math.round(_to*10)/10+'°C /ECMWF'];
+   var _tSign=_to>0?'+':'', _parts=[_tSign+Math.round(_to*10)/10+'° /ECMWF'];
    if(_ro!=null && Math.abs(_ro)>=3) _parts.push((_ro>0?'+':'')+_ro+'% rain');
    _siEl.textContent='Seasonal correction: '+_parts.join(' · ');
    _siEl.style.display='block';
@@ -2031,7 +2031,7 @@ function updateHero(sc, rows) {
  document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
  document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
  document.getElementById('r-rain').textContent=avgRain+'%';
- document.getElementById('r-wind').textContent=Math.round(wSum/rows.length)+' km/h';
+ document.getElementById('r-wind').textContent=fmtWind(Math.round(wSum/rows.length));
  document.getElementById('r-sky').textContent=skyLbl;
  computeAndRenderScore(sc, rows);
 
@@ -2079,7 +2079,7 @@ function updateHero(sc, rows) {
  _snowAlert.textContent = '❄️ Neige prévue' + _timeLbl + ' · ' + Math.round(_snowTotal*10)/10 + ' cm au total';
  } else if (_snowHours >= 2) {
  _snowAlert.style.display = 'block';
- _snowAlert.textContent = '❄️ Neige probable' + _timeLbl + ' · ' + _snowHours + 'h de précipitations sous 2°C';
+ _snowAlert.textContent = '❄️ Snow likely' + _timeLbl + ' · ' + _snowHours + 'h of precipitation below 2°C';
  } else if (_snowHours >= 1) {
  _snowAlert.style.display = 'block';
  _snowAlert.textContent = '❄️ Neige possible' + _timeLbl + ' · near-freezing temperatures with precipitation';
@@ -2885,7 +2885,7 @@ function renderAnnual(loc, monthly) {
  // Température indicative du meilleur mois
  var bestData = monthly[best1.idx];
  if (bestData && bestData.avgTmax) {
- narrative += ' · ' + Math.round(bestData.avgTmax) + '°C max · ' + bestData.rainPct + '% rain';
+ narrative += ' · ' + fmtTemp(bestData.avgTmax) + ' max · ' + bestData.rainPct + '% rain';
  }
  
  narEl.innerHTML = narrative;
