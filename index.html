@@ -38,8 +38,9 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
 .app-title{font-family:'Fraunces',serif;font-size:clamp(28px,5vw,44px);font-weight:900;color:var(--navy);line-height:1.1;letter-spacing:-.5px;margin-bottom:10px}
 .app-title em{font-style:italic;color:#b06800;font-weight:900}
-.app-sub{font-size:14px;color:var(--slate2);font-weight:400;line-height:1.7;max-width:440px;margin:0 auto 10px}
-.era5-badge{display:inline-block;font-size:11px;font-weight:600;color:var(--slate2);background:var(--cream2);border:1px solid #ddd8cc;padding:4px 12px;border-radius:20px;margin:0 auto 28px;letter-spacing:.1px}
+.app-sub{font-size:14px;color:var(--slate2);font-weight:400;line-height:1.7;max-width:440px;margin:0 auto 8px}
+.app-proof{font-size:12px;font-weight:600;color:var(--gold);letter-spacing:.2px;margin:0 auto 10px;max-width:440px}
+.app-disclaimer{font-size:11px;color:var(--slate2);font-style:italic;max-width:420px;margin:0 auto 28px;line-height:1.5;border-left:2px solid var(--cream2);padding-left:10px;text-align:left}
 
 /* ── SEARCH CARD ── */
 .wrap{max-width:620px;margin:0 auto;padding:0 20px 80px}
@@ -314,6 +315,14 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
 #inp-date:not(.has-val){color:var(--slate3)}
 #inp-date.has-val{color:var(--navy)}
 
+
+/* ── Accordion détails ── */
+.details-toggle{width:100%;background:none;border:none;border-top:1px solid var(--cream2);padding:10px 28px;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--slate2);letter-spacing:.3px}
+.details-toggle:hover{color:var(--navy)}
+.details-toggle-icon{font-size:14px;transition:transform .2s;display:inline-block}
+.details-toggle.open .details-toggle-icon{transform:rotate(180deg)}
+.details-panel{display:none}
+.details-panel.open{display:block}
 /* ── Trust block ── */
 .trust-block{background:white;border-top:1px solid var(--cream2);padding:48px 20px}
 .trust-block-inner{max-width:700px;margin:0 auto}
@@ -373,8 +382,9 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
 
 <header class="app-header">
  <h1 class="app-title">Best<em>Date</em>Weather</h1>
- <p class="app-sub">Choisissez la meilleure date pour votre voyage, mariage, tournage, événement sportif ou projet extérieur — basée sur 10&nbsp;ans de données météo historiques et modèles ECMWF.</p>
-<p class="era5-badge">🔬 Basé sur données ERA5&nbsp;/&nbsp;ECMWF + 10&nbsp;ans d'observations consolidées</p>
+ <p class="app-sub">Choisissez la meilleure date pour votre voyage, mariage, tournage, événement sportif ou projet extérieur.</p>
+<p class="app-proof">Score climatique comparatif · ERA5&nbsp;/&nbsp;ECMWF · 10&nbsp;ans de données observées</p>
+<p class="app-disclaimer">Ce n'est pas une prévision météo à long terme : c'est une tendance saisonnière probabiliste.</p>
 </header>
 
 <main>
@@ -528,7 +538,12 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
  <div class="score-chips" id="score-chips"></div>
  <div id="snow-depth-info" style="display:none;margin-top:8px;font-size:11px;color:#6366f1;font-weight:500"></div>
  </div>
- <div class="hero-stats">
+ <button class="details-toggle" id="details-toggle" onclick="toggleDetails()" aria-expanded="false">
+  <span>Voir les détails — heure par heure, scénarios, astro</span>
+  <span class="details-toggle-icon">&#8964;</span>
+ </button>
+ <div class="details-panel" id="details-panel">
+  <div class="hero-stats">
  <div class="hstat">
  <div class="hstat-val" id="r-rain">–</div>
  <div class="hstat-lbl">💧 Pluie probable</div>
@@ -604,6 +619,7 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
  </div>
  <div class="sc-strip" id="sc-opt-strip"></div>
  <div class="sc-stats" id="sc-opt-stats"></div>
+ </div>
  </div>
  </div>
  </div>
@@ -953,6 +969,14 @@ function quickFill(type) {
  pills[i].classList.remove('active');
  if (pills[i].dataset.uc === type) pills[i].classList.add('active');
  }
+}
+
+function toggleDetails() {
+ var btn = document.getElementById('details-toggle');
+ var panel = document.getElementById('details-panel');
+ var open = panel.classList.toggle('open');
+ btn.classList.toggle('open', open);
+ btn.setAttribute('aria-expanded', open);
 }
 
 function fillUseCase(type) { currentUseCase = type; document.getElementById("score-block").style.display = "block"; quickFill(type); }
