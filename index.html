@@ -391,7 +391,7 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
  <div class="annual-result" id="annual-result">
  <div class="annual-header">
  <div class="annual-city-name" id="ann-city-name"></div>
- <div class="annual-subtitle" id="annual-subtitle">Profil climatique mensuel · moyenne des 3 dernières années</div>
+ <div class="annual-subtitle" id="annual-subtitle">Profil climatique mensuel · moyenne des 10 dernières années</div>
  <div class="annual-subtitle-uc" id="annual-subtitle-uc"></div>
  </div>
  <div id="ann-narrative" style="display:none;margin:14px 0 4px;background:linear-gradient(135deg,#fef9f0,#fdf4e3);border:1.5px solid #f0d98a;border-radius:12px;padding:14px 16px;font-size:13px;color:#1a1f2e;line-height:1.6"></div>
@@ -2452,7 +2452,7 @@ function renderAnnual(loc, monthly) {
  }
 
 
- document.getElementById('ann-note').innerHTML = '<strong>Profil climatique</strong> · moyenne 3 ans (archive Open-Meteo) · les mois marqués <span style="background:#dbeafe;color:#1e40af;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px">Tendance saison</span> intègrent une correction par le modèle saisonnier ECMWF. Valeurs indicatives.';
+ document.getElementById('ann-note').innerHTML = '<strong>Profil climatique</strong> · moyenne 10 ans (archive Open-Meteo) · les mois marqués <span style="background:#dbeafe;color:#1e40af;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px">Tendance saison</span> intègrent une correction par le modèle saisonnier ECMWF. Valeurs indicatives.';
 
  // ── Résumé narratif ──────────────────────────────────────────────────────
  var narEl = document.getElementById('ann-narrative');
