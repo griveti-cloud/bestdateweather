@@ -2137,15 +2137,21 @@ function runAnnual() {
  var seas = seasonal[mi];
  var clim = monthly[mi];
  // Temperature: blend 60% clim + 40% seasonal forecast
- var delta = seas.tMean - clim.avgTemp;
- clim.avgTemp = Math.round((clim.avgTemp + delta * 0.4) * 10) / 10;
- clim.avgTmax = clim.avgTmax != null ? Math.round((clim.avgTmax + delta * 0.4) * 10) / 10 : null;
- clim.avgTmin = clim.avgTmin != null ? Math.round((clim.avgTmin + delta * 0.4) * 10) / 10 : null;
- // Rain: blend 60% clim + 40% seasonal
- if (seas.rainProb != null) {
- clim.rainPct = Math.min(100, Math.max(0, Math.round(clim.rainPct * 0.6 + seas.rainProb * 0.4)));
- }
- clim.hasSeasonal = true;
+    var delta = seas.tMean - clim.avgTemp;
+    var appliedTDelta = Math.round(delta * 0.4 * 10) / 10;
+    clim.avgTemp = Math.round((clim.avgTemp + delta * 0.4) * 10) / 10;
+    clim.avgTmax = clim.avgTmax != null ? Math.round((clim.avgTmax + delta * 0.4) * 10) / 10 : null;
+    clim.avgTmin = clim.avgTmin != null ? Math.round((clim.avgTmin + delta * 0.4) * 10) / 10 : null;
+    clim.seasTempDelta = Math.abs(appliedTDelta) >= 0.3 ? appliedTDelta : null;
+    // Rain: blend 60% clim + 40% seasonal
+    var appliedRainDelta = null;
+    if (seas.rainProb != null) {
+      var oldRain = clim.rainPct;
+      clim.rainPct = Math.min(100, Math.max(0, Math.round(clim.rainPct * 0.6 + seas.rainProb * 0.4)));
+      appliedRainDelta = clim.rainPct - oldRain;
+    }
+    clim.seasRainDelta = (appliedRainDelta != null && Math.abs(appliedRainDelta) >= 3) ? appliedRainDelta : null;
+    clim.hasSeasonal = true;
  }
  setAnnP(100, 'Terminé');
  renderAnnual(loc, monthly);
@@ -2436,7 +2442,11 @@ function renderAnnual(loc, monthly) {
  card.style.animationDelay = delay + 'ms';
 
  var scoreNum = '<div class="month-score score-num-uc" style="background:' + getScoreColor(score) + ';color:white">' + (score === 100 ? '10' : (score/10).toFixed(1)) + '</div>';
- var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">Tendance saison</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
+ var seasParts = [];
+    if (d.seasTempDelta != null) seasParts.push((d.seasTempDelta > 0 ? '+' : '') + d.seasTempDelta + '°');
+    if (d.seasRainDelta != null) seasParts.push((d.seasRainDelta > 0 ? '+' : '') + d.seasRainDelta + '% pluie');
+    var seasDetail = seasParts.length ? ' · ' + seasParts.join(' · ') : '';
+    var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">Tendance saison' + seasDetail + '</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
  var isBest = uc && idx === sorted[0].idx && sorted[0].score >= 60;
  var badgeHtml = (isRec ? '<div class="month-badge rec">Recommandé</div>' : (isAvoid ? '<div class="month-badge avoid">Moins favorable</div>' : '')) + (isBest ? '<div class="month-best-badge">🔥 Meilleur mois</div>' : '');
 
