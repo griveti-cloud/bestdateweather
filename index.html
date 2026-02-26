@@ -804,6 +804,27 @@ function quickFill(type) {
  renderAnnual(_lastAnnLoc, _lastMonthly);
  } else if (!inAnnualMode && _lastRows && _lastSc) {
  computeAndRenderScore(_lastSc, _lastRows);
+ // Snow depth : déclencher si switch vers ski avec résultats déjà affichés
+ var _sdEl2 = document.getElementById('snow-depth-info');
+ if (_sdEl2) _sdEl2.style.display = 'none';
+ if (type === 'ski' && _sdEl2 && selectedLoc && window._lastYr != null) {
+  fetchSnowDepth(selectedLoc.lat, selectedLoc.lon, window._lastYr, window._lastMo, window._lastDa).then(function(res) {
+   if (!res) return;
+   var elev = res.elevation ? Math.round(res.elevation) : null;
+   if (elev && elev < 600) {
+    _sdEl2.textContent = '❄ Altitude ' + elev + 'm — trop basse pour évaluer l'enneigement';
+    _sdEl2.style.color = '#94a3b8';
+   } else if (res.depth != null) {
+    var elevStr = elev ? ' à ' + elev + 'm' : '';
+    _sdEl2.textContent = '❄ Enneigement estimé : ' + res.depth + ' cm' + elevStr + ' · mesure Open-Meteo (point géographique, non domaine skiable)';
+    _sdEl2.style.color = '#6366f1';
+   } else {
+    _sdEl2.textContent = '❄ Données d'enneigement indisponibles pour cette date';
+    _sdEl2.style.color = '#94a3b8';
+   }
+   _sdEl2.style.display = 'block';
+  });
+ }
  } else {
  if (window === window.top) { cityEl.focus(); }
  selectedLoc = null;
@@ -1980,6 +2001,7 @@ function run() {
  var parts=dval.split('-');
  if(parts.length!==3){errEl.textContent='⚠ Format de date invalide.';errEl.style.display='block';return;}
  var yr=parseInt(parts[0],10), mo=parseInt(parts[1],10)-1, da=parseInt(parts[2],10);
+ window._lastYr=yr; window._lastMo=mo; window._lastDa=da;
  var today=new Date();today.setHours(0,0,0,0);
  var target=new Date(yr,mo,da,0,0,0);
  var diffDays=Math.round((target.getTime()-today.getTime())/86400000);
