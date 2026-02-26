@@ -34,13 +34,30 @@ html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;-webkit-font-smoothing:antialiased}
 
 /* ── HEADER ── */
-header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:center}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
-.app-title{font-family:'Fraunces',serif;font-size:clamp(28px,5vw,44px);font-weight:900;color:var(--navy);line-height:1.1;letter-spacing:-.5px;margin-bottom:10px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:center}
+
+/* Titre */
+.app-title{font-family:'Fraunces',serif;font-size:clamp(30px,5.5vw,48px);font-weight:900;color:var(--navy);line-height:1.05;letter-spacing:-.5px;margin-bottom:16px;animation:fadeUp .4s ease both}
 .app-title em{font-style:italic;color:#b06800;font-weight:900}
-.app-sub{font-size:14px;color:var(--slate2);font-weight:400;line-height:1.7;max-width:440px;margin:0 auto 8px}
-.app-proof{font-size:12px;font-weight:600;color:var(--gold);letter-spacing:.2px;margin:0 auto 10px;max-width:440px}
-.app-disclaimer{font-size:11px;color:var(--slate2);font-style:italic;max-width:420px;margin:0 auto 28px;line-height:1.5;border-left:2px solid var(--cream2);padding-left:10px;text-align:left}
+
+/* Séparateur décoratif sous le titre */
+.app-divider{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto 18px;max-width:260px}
+.app-divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--cream2))}
+.app-divider-line.r{background:linear-gradient(270deg,transparent,var(--cream2))}
+.app-divider-ico{font-size:15px;opacity:.7}
+
+/* Sous-titre */
+.app-sub{font-size:14px;color:var(--slate);font-weight:400;line-height:1.65;max-width:400px;margin:0 auto 14px;animation:fadeUp .4s .08s ease both}
+
+/* Ligne preuve — pill doré */
+.app-proof{display:inline-flex;align-items:center;gap:6px;background:var(--gold-light);border:1px solid rgba(232,148,10,.25);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;color:#7a5500;letter-spacing:.3px;margin:0 auto 12px;white-space:nowrap;animation:fadeUp .4s .14s ease both}
+.app-proof-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0}
+
+/* Disclaimer — pill neutre, horizontal */
+.app-disclaimer{display:inline-flex;align-items:center;gap:7px;background:white;border:1px solid var(--cream2);border-radius:20px;padding:5px 14px;font-size:11px;color:var(--slate2);max-width:440px;margin:0 auto 28px;line-height:1.4;animation:fadeUp .4s .2s ease both}
+.app-disclaimer-ico{flex-shrink:0;opacity:.5;font-size:12px}
 
 /* ── SEARCH CARD ── */
 .wrap{max-width:620px;margin:0 auto;padding:0 20px 80px}
@@ -382,9 +399,20 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
 
 <header class="app-header">
  <h1 class="app-title">Best<em>Date</em>Weather</h1>
+ <div class="app-divider">
+  <span class="app-divider-line"></span>
+  <span class="app-divider-ico">🌤</span>
+  <span class="app-divider-line r"></span>
+ </div>
  <p class="app-sub">Choisissez la meilleure date pour votre voyage, mariage, tournage, événement sportif ou projet extérieur.</p>
-<p class="app-proof">Score climatique comparatif · ERA5&nbsp;/&nbsp;ECMWF · 10&nbsp;ans de données observées</p>
-<p class="app-disclaimer">Tendance saisonnière probabiliste basée sur données observées — différent d'une prévision météo à 3 mois.</p>
+ <p class="app-proof">
+  <span class="app-proof-dot"></span>
+  Score climatique · ERA5&nbsp;/&nbsp;ECMWF · 10&nbsp;ans de données
+ </p>
+ <p class="app-disclaimer">
+  <span class="app-disclaimer-ico">📐</span>
+  Tendance saisonnière probabiliste — différent d'une prévision météo à 3 mois
+ </p>
 </header>
 
 <main>
