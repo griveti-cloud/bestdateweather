@@ -1692,7 +1692,7 @@ function updateHero(sc, rows) {
  document.getElementById('r-range').textContent=tmin+'\u00b0 / '+tmax+'\u00b0 dans la journée';
  var _tfEl=document.getElementById('r-tempfreq');
  var _tf=(sc[13]||sc[12]||{}).tempFreq;
- if(_tf!=null&&_tfEl){_tfEl.textContent='Température similaire '+_tf+'% des années à cette date';_tfEl.style.display='block';}
+ if(_tf!=null&&_tfEl){_tfEl.textContent='Température dans ±2°C de '+Math.round(main.temp||0)+'° — '+_tf+'% des années à cette date';_tfEl.style.display='block';}
  else if(_tfEl){_tfEl.style.display='none';}
  var _siEl=document.getElementById('r-seasinfo');
  if(_siEl){
