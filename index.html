@@ -2323,7 +2323,6 @@ function monthColor(d) {
 }
 
 function monthIconFromData(d) {
- var mm = d.avgPrecipMm || 0;
  var sun = d.sunHrs || 0;
  var pct = d.rainPct || 0;
 
@@ -2331,21 +2330,14 @@ function monthIconFromData(d) {
  var snowTemp = d.avgTmin != null ? d.avgTmin : d.avgTemp;
  if (snowTemp != null && snowTemp <= 2 && pct > 15) return IC.snow;
 
- // Pluie effective : même correction que scoreRainSmart
+ // effPct = rainPct brut (mm P50 ≈ 0 partout → inutilisable pour pondérer)
  var effPct = pct;
- if (mm < 3) {
- effPct = pct * (0.40 + (mm / 3) * 0.30);
- } else if (mm < 6) {
- effPct = pct * (0.70 + ((mm - 3) / 3) * 0.30);
- }
 
- // Correction tropicale : climat chaud = pluies convectives courtes
- // La probabilité de pluie surestime l'impact visuel réel
+ // Correction tropicale : pluies convectives courtes, soleil entre les averses
  var avgTemp = d.avgTemp != null ? d.avgTemp : (d.avgTmax != null ? d.avgTmax - 4 : null);
  if (avgTemp != null && avgTemp >= 22 && sun >= 4) {
- // Facteur 0.55 à 24°C+, 0.75 à 22°C
- var tropFactor = avgTemp >= 24 ? 0.55 : 0.55 + (24 - avgTemp) / 2 * 0.10;
- effPct = effPct * tropFactor;
+  var tropFactor = avgTemp >= 24 ? 0.55 : 0.55 + (24 - avgTemp) / 2 * 0.10;
+  effPct = effPct * tropFactor;
  }
 
  // ── Soleil dominant ─────────────────────────────────────────────
