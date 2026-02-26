@@ -34,12 +34,23 @@ html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;-webkit-font-smoothing:antialiased}
 
 /* ── HEADER ── */
-header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:center}
+/* app-header: see new CSS above */
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
 .app-title{font-family:'Fraunces',serif;font-size:clamp(28px,5vw,44px);font-weight:900;color:var(--navy);line-height:1.1;letter-spacing:-.5px;margin-bottom:10px}
 .app-title em{font-style:italic;color:#b06800;font-weight:900}
-.app-sub{font-size:14px;color:var(--slate2);font-weight:400;line-height:1.7;max-width:440px;margin:0 auto 10px}
-.era5-badge{display:inline-block;font-size:11px;font-weight:600;color:var(--slate2);background:var(--cream2);border:1px solid #ddd8cc;padding:4px 12px;border-radius:20px;margin:0 auto 28px;letter-spacing:.1px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:center}
+.app-title{font-family:'Fraunces',serif;font-size:clamp(30px,5.5vw,48px);font-weight:900;color:var(--navy);line-height:1.05;letter-spacing:-.5px;margin-bottom:16px;animation:fadeUp .4s ease both}
+.app-title em{font-style:italic;color:#b06800;font-weight:900}
+.app-divider{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto 18px;max-width:260px}
+.app-divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--cream2))}
+.app-divider-line.r{background:linear-gradient(270deg,transparent,var(--cream2))}
+.app-divider-ico{font-size:15px;opacity:.7}
+.app-sub{font-size:14px;color:var(--slate);font-weight:400;line-height:1.65;max-width:400px;margin:0 auto 14px;animation:fadeUp .4s .08s ease both}
+.app-proof{display:inline-flex;align-items:center;gap:6px;background:var(--gold-light);border:1px solid rgba(232,148,10,.25);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;color:#7a5500;letter-spacing:.3px;margin:0 auto 12px;white-space:nowrap;animation:fadeUp .4s .14s ease both}
+.app-proof-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0}
+.app-disclaimer{display:inline-flex;align-items:center;gap:7px;background:white;border:1px solid var(--cream2);border-radius:20px;padding:5px 14px;font-size:11px;color:var(--slate2);max-width:440px;margin:0 auto 14px;line-height:1.4;animation:fadeUp .4s .2s ease both;white-space:nowrap}
+.app-disclaimer-ico{flex-shrink:0;opacity:.5;font-size:12px}
 
 /* ── SEARCH CARD ── */
 .wrap{max-width:620px;margin:0 auto;padding:0 20px 80px}
@@ -373,9 +384,24 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
 
 <header class="app-header">
  <h1 class="app-title">Best<em>Date</em>Weather</h1>
- <p class="app-sub">Choose the best date for your trip, wedding, shoot, sports event or outdoor project — based on 10&nbsp;years of historical weather data and ECMWF models.</p>
-<div class="unit-toggle" id="unit-toggle"><button class="unit-btn active" id="btn-metric" onclick="setUnits('metric')">°C · km/h</button><button class="unit-btn" id="btn-us" onclick="setUnits('us')">°F · mph</button></div>
-<p class="era5-badge">🔬 Based on ERA5&nbsp;/&nbsp;ECMWF data + 10&nbsp;years of consolidated observations</p>
+ <div class="app-divider">
+  <span class="app-divider-line"></span>
+  <span class="app-divider-ico">🌤</span>
+  <span class="app-divider-line r"></span>
+ </div>
+ <p class="app-sub">Choose the best date for your trip, wedding,&nbsp;shoot, sports event or outdoor project.</p>
+ <p class="app-proof">
+  <span class="app-proof-dot"></span>
+  Climate score · ERA5&nbsp;/&nbsp;ECMWF · 10&nbsp;years of data
+ </p>
+ <p class="app-disclaimer">
+  <span class="app-disclaimer-ico"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+  Seasonal trend — not a weather forecast for 3 months
+ </p>
+ <div class="unit-toggle" id="unit-toggle">
+  <button class="unit-btn active" id="btn-metric" onclick="setUnits('metric')">°C · km/h</button>
+  <button class="unit-btn" id="btn-us" onclick="setUnits('us')">°F · mph</button>
+ </div>
 </header>
 
 <main>
@@ -456,7 +482,7 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
  <input class="inp" type="text" id="inp-date" placeholder="dd/mm/yyyy" readonly style="position:relative;z-index:2;background:white;cursor:pointer" />
  
  </div>
- <div class="date-hint" id="date-hint">Up to 1 year ahead</div>
+ <div class="date-hint" id="date-hint">Seasonal projection up to 12 months</div>
  </div>
  </div>
 
