@@ -1011,7 +1011,7 @@ function applyHorizonWording(diffDays) {
  if (span) span.textContent = 'Voir la météo';
  } else if (diffDays <= 210) {
  label.className = 'hero-horizon-label hl-tendency';
- label.textContent = 'Tendance saisonnière — indicatif';
+ label.textContent = 'Tendance ECMWF — indicatif';
  if (span) span.textContent = 'Voir la météo';
  } else {
  label.className = 'hero-horizon-label hl-profile';
@@ -2022,7 +2022,7 @@ function run() {
  }).then(function(rows){
  renderAstro(loc.lat,loc.lon,yr,mo,da);
  setP(100,'Terminé');seedRand(makeSeed(loc.lat,loc.lon,yr,mo,da));var sc=genMain(rows);updateHero(sc,rows);
-    var note=(diffDays>7&&diffDays<=210)?'<strong>Tendance saisonnière</strong> · climatologie 10 ans corrigée par le modèle ECMWF — indicatif, non garanti.':'<strong>Profil climatique</strong> · moyenne statistique des 10 dernières années pour cette date et ce lieu.';
+    var note=(diffDays>7&&diffDays<=210)?'<strong>Tendance ECMWF</strong> · climatologie 10 ans corrigée par le modèle ECMWF — indicatif, non garanti.':'<strong>Profil climatique</strong> · moyenne statistique des 10 dernières années pour cette date et ce lieu.';
     showResults(sc,rows,false,note,diffDays);
     // Snow depth — uniquement si UC ski, en parallèle (silencieux si erreur)
     var _sdEl = document.getElementById('snow-depth-info');
@@ -2536,7 +2536,7 @@ function renderAnnual(loc, monthly) {
     if (d.seasTempDelta != null) seasParts.push((d.seasTempDelta > 0 ? '+' : '') + d.seasTempDelta + '°');
     if (d.seasRainDelta != null) seasParts.push((d.seasRainDelta > 0 ? '+' : '') + d.seasRainDelta + '% pluie');
     var seasDetail = seasParts.length ? ' · ' + seasParts.join(' · ') : '';
-    var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">Tendance saison' + (seasDetail ? '<br><span style="font-weight:500;text-transform:none;letter-spacing:0;color:#3b82f6">' + seasParts.join(' · ') + '</span>' : '') + '</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
+    var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">Tendance ECMWF' + (seasDetail ? '<br><span style="font-weight:500;text-transform:none;letter-spacing:0;color:#3b82f6">' + seasParts.join(' · ') + '</span>' : '') + '</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
  var isBest = uc && idx === sorted[0].idx && sorted[0].score >= 60;
  var badgeHtml = (isRec ? '<div class="month-badge rec">Recommandé</div>' : (isAvoid ? '<div class="month-badge avoid">Moins favorable</div>' : '')) + (isBest ? '<div class="month-best-badge">🔥 Meilleur mois</div>' : '');
 
@@ -2571,7 +2571,7 @@ function renderAnnual(loc, monthly) {
  }
 
 
- document.getElementById('ann-note').innerHTML = '<strong>Profil climatique</strong> · moyenne 10 ans (archive Open-Meteo) · les mois marqués <span style="background:#dbeafe;color:#1e40af;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px">Tendance saison</span> intègrent une correction par le modèle saisonnier ECMWF. Valeurs indicatives.';
+ document.getElementById('ann-note').innerHTML = '<strong>Profil climatique</strong> · moyenne 10 ans (archive Open-Meteo) · les mois marqués <span style="background:#dbeafe;color:#1e40af;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px">Tendance ECMWF</span> intègrent une correction par le modèle saisonnier ECMWF. Valeurs indicatives.';
 
  // ── Résumé narratif ──────────────────────────────────────────────────────
  var narEl = document.getElementById('ann-narrative');
