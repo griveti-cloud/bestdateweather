@@ -491,6 +491,7 @@ header.app-header{max-width:620px;margin:0 auto;padding:40px 20px 0;text-align:c
  </div>
  </div>
  <div class="score-chips" id="score-chips"></div>
+ <div id="snow-depth-info" style="display:none;margin-top:8px;font-size:11px;color:#6366f1;font-weight:500"></div>
  </div>
  <div class="hero-stats">
  <div class="hstat">
@@ -1201,6 +1202,21 @@ function fetchForecast(lat, lon, yr, mo, da) {
 function fetchArchive(lat, lon, refDate) {
  var s=toISO(addDays(refDate,-10)), e=toISO(addDays(refDate,10));
  return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&hourly=temperature_2m,precipitation,snowfall,windspeed_10m,shortwave_radiation&timezone=auto').then(function(r){if(!r.ok)throw new Error('Archive error');return r.json();}).then(function(d){if(d.utc_offset_seconds!=null)_locTzOffset=d.utc_offset_seconds;return d;});
+}
+
+function fetchSnowDepth(lat, lon, yr, mo, da) {
+ var dateStr = yr + '-' + (mo<9?'0':'') + (mo+1) + '-' + (da<10?'0':'')+da;
+ // Average over ±5 days to smooth out day-to-day variability
+ var s = toISO(addDays(new Date(yr,mo,da), -5));
+ var e = toISO(addDays(new Date(yr,mo,da), 5));
+ return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&daily=snow_depth_max&timezone=auto')
+  .then(function(r){if(!r.ok)return null;return r.json();})
+  .then(function(d){
+   if(!d||!d.daily||!d.daily.snow_depth_max) return {depth:null, elevation:d?d.elevation:null};
+   var vals = d.daily.snow_depth_max.filter(function(v){return v!=null;});
+   var median = vals.length ? vals.slice().sort(function(a,b){return a-b;})[Math.floor(vals.length/2)] : null;
+   return {depth: median!=null ? Math.round(median*100) : null, elevation: d.elevation||null};
+  }).catch(function(){return {depth:null, elevation:null};});
 }
 
 function buildClimatology(lat, lon, yr, mo, da) {
@@ -1992,9 +2008,30 @@ function run() {
  }).then(function(rows){
  renderAstro(loc.lat,loc.lon,yr,mo,da);
  setP(100,'Terminé');seedRand(makeSeed(loc.lat,loc.lon,yr,mo,da));var sc=genMain(rows);updateHero(sc,rows);
- var note=(diffDays>7&&diffDays<=210)?'<strong>Tendance saisonnière</strong> · climatologie 10 ans corrigée par le modèle ECMWF — indicatif, non garanti.':'<strong>Profil climatique</strong> · moyenne statistique des 10 dernières années pour cette date et ce lieu.';
- showResults(sc,rows,false,note,diffDays);
- progEl.style.display='none';btnEl.disabled=false;
+    var note=(diffDays>7&&diffDays<=210)?'<strong>Tendance saisonnière</strong> · climatologie 10 ans corrigée par le modèle ECMWF — indicatif, non garanti.':'<strong>Profil climatique</strong> · moyenne statistique des 10 dernières années pour cette date et ce lieu.';
+    showResults(sc,rows,false,note,diffDays);
+    // Snow depth — uniquement si UC ski, en parallèle (silencieux si erreur)
+    var _sdEl = document.getElementById('snow-depth-info');
+    if (_sdEl) _sdEl.style.display = 'none';
+    if (currentUseCase === 'ski' && _sdEl) {
+     fetchSnowDepth(loc.lat, loc.lon, yr, mo, da).then(function(res) {
+      if (!res) return;
+      var elev = res.elevation ? Math.round(res.elevation) : null;
+      if (elev && elev < 600) {
+       _sdEl.textContent = '❄ Altitude ' + elev + 'm — trop basse pour évaluer l\'enneigement';
+       _sdEl.style.color = '#94a3b8';
+      } else if (res.depth != null) {
+       var elevStr = elev ? ' à ' + elev + 'm' : '';
+       _sdEl.textContent = '❄ Enneigement estimé : ' + res.depth + ' cm' + elevStr + ' · mesure Open-Meteo (point géographique, non domaine skiable)';
+       _sdEl.style.color = '#6366f1';
+      } else {
+       _sdEl.textContent = '❄ Données d\'enneigement indisponibles pour cette date';
+       _sdEl.style.color = '#94a3b8';
+      }
+      _sdEl.style.display = 'block';
+     });
+    }
+    progEl.style.display='none';btnEl.disabled=false;
  });
  }).catch(function(err){errEl.textContent='Erreur : '+err.message;errEl.style.display='block';progEl.style.display='none';showSection('empty');btnEl.disabled=false;});
 }
