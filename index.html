@@ -1205,32 +1205,32 @@ function fetchArchive(lat, lon, refDate) {
 }
 
 function fetchSnowDepth(lat, lon, yr, mo, da) {
- // Utilise les 10 dernières années complètes (comme buildClimatology)
+ // 10 années en parallèle — un seul appel couvrant toute la fenêtre
  var now = new Date();
  var endYr = now.getFullYear() - 1;
- var years = []; for (var y = endYr-9; y <= endYr; y++) years.push(y);
- var elevation = null;
- var allDepths = [];
- var idx = 0;
- function step() {
-  if (idx >= years.length) {
-   var median = allDepths.length ? allDepths.slice().sort(function(a,b){return a-b;})[Math.floor(allDepths.length/2)] : null;
-   return Promise.resolve({depth: median!=null ? Math.round(median*100) : null, elevation: elevation});
-  }
-  var y2 = years[idx++];
-  var s = toISO(addDays(new Date(y2,mo,da), -3));
-  var e = toISO(addDays(new Date(y2,mo,da),  3));
-  return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&daily=snow_depth_max&timezone=auto')
-   .then(function(r){if(!r.ok)return null;return r.json();})
-   .then(function(d){
-    if (!d) return;
-    if (!elevation && d.elevation) elevation = d.elevation;
-    if (d.daily && d.daily.snow_depth_max) {
-     d.daily.snow_depth_max.forEach(function(v){if(v!=null) allDepths.push(v);});
-    }
-   }).catch(function(){}).then(step);
- }
- return step();
+ // Construire une seule requête : start = (endYr-9)/mo/da-3j, end = endYr/mo/da+3j
+ // Open-Meteo accepte des plages pluriannuelles sur l'archive
+ var s = toISO(addDays(new Date(endYr-9, mo, da), -3));
+ var e = toISO(addDays(new Date(endYr,   mo, da),  3));
+ return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&daily=snow_depth_max&timezone=auto')
+  .then(function(r){if(!r.ok)return null;return r.json();})
+  .then(function(d){
+   if(!d||!d.daily||!d.daily.snow_depth_max) return {depth:null, elevation:d?d.elevation:null};
+   // Garder uniquement les valeurs autour de la date cible (±3j par année)
+   var times = d.daily.time;
+   var depths = d.daily.snow_depth_max;
+   var vals = [];
+   for (var i=0; i<times.length; i++) {
+    if (depths[i] == null) continue;
+    var parts = times[i].split('-');
+    // Comparer uniquement mois et jour (ignorer l'année)
+    var dMo = parseInt(parts[1])-1, dDa = parseInt(parts[2]);
+    var diff = Math.abs((dMo*31+dDa) - (mo*31+da));
+    if (diff <= 3) vals.push(depths[i]);
+   }
+   var median = vals.length ? vals.slice().sort(function(a,b){return a-b;})[Math.floor(vals.length/2)] : null;
+   return {depth: median!=null ? Math.round(median*100) : null, elevation: d.elevation||null};
+  }).catch(function(){return {depth:null, elevation:null};});
 }
 
 function buildClimatology(lat, lon, yr, mo, da) {

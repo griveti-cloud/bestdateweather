@@ -1211,23 +1211,13 @@ function buildClimatology(lat, lon, yr, mo, da) {
  for(var y=endYr-9;y<=endYr;y++) years.push(y);
  var buckets=[]; for(var h=0;h<24;h++) buckets.push({t:[],p:[],w:[],s:[],sn:[]});
  var idx=0;
- function step() {
-  if (idx >= years.length) {
-   var median = allDepths.length ? allDepths.slice().sort(function(a,b){return a-b;})[Math.floor(allDepths.length/2)] : null;
-   return Promise.resolve({depth: median!=null ? Math.round(median*100) : null, elevation: elevation});
-  }
-  var y2 = years[idx++];
-  var s = toISO(addDays(new Date(y2,mo,da), -3));
-  var e = toISO(addDays(new Date(y2,mo,da),  3));
-  return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&daily=snow_depth_max&timezone=auto')
-   .then(function(r){if(!r.ok)return null;return r.json();})
-   .then(function(d){
-    if (!d) return;
-    if (!elevation && d.elevation) elevation = d.elevation;
-    if (d.daily && d.daily.snow_depth_max) {
-     d.daily.snow_depth_max.forEach(function(v){if(v!=null) allDepths.push(v);});
-    }
-   }).catch(function(){}).then(step);
+ function step(){
+ if(idx>=years.length) return Promise.resolve(buildRows(buckets,trend));
+ var yr2=years[idx++];
+ return fetchArchive(lat,lon,new Date(yr2,mo,da,12,0,0)).then(function(data){
+ var T=data.hourly.temperature_2m, P=data.hourly.precipitation, W=data.hourly.windspeed_10m, S=data.hourly.shortwave_radiation||[], SN=data.hourly.snowfall||[];
+ for(var i=0;i<data.hourly.time.length;i++){var hh=new Date(data.hourly.time[i]).getHours();if(T[i]!=null)buckets[hh].t.push(T[i]);if(P[i]!=null)buckets[hh].p.push(P[i]);if(W[i]!=null)buckets[hh].w.push(W[i]);if(S[i]!=null)buckets[hh].s.push(S[i]);if(SN[i]!=null)buckets[hh].sn.push(SN[i]);}
+ }).catch(function(){}).then(function(){setP(Math.round((idx/years.length)*90),'Analyse '+yr2+'…');return new Promise(function(res){setTimeout(res,20);});}).then(step);
  }
  return step();
 }
