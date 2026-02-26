@@ -1099,8 +1099,8 @@ function getLabel(h, temp, sol, rain, mm, snow, p25) {
  if (rain > 20 && mm >= 0.3) return 'Light rain';
  if (rain > 35) return 'Rain';
  if (sol < 60 && temp < 8) return 'Fog';
- if (sol < 130) return 'Couvert';
- if (sol < 420) return 'Partiellement nuageux';
+ if (sol < 130) return 'Overcast';
+ if (sol < 420) return 'Partly cloudy';
  return 'Sunny';
 }
 
@@ -1549,7 +1549,7 @@ function renderHourly(sc) {
  var r=sc[hours[i]]; if(!r) continue;
  var lbl=(hours[i]===23)?'00h':r.label;
  var cell=document.createElement('div'); cell.className='h-cell';
- cell.innerHTML='<span class="h-hr">'+lbl+'</span><span class="h-ic">'+getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25)+'</span><span class="h-tp">'+(r.temp!=null?r.temp+'\u00b0':'-')+'</span><span class="h-lb">'+getLabel(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0)+'</span><div class="h-rb"><div class="h-rf" style="width:'+r.rain+'%"></div></div>';
+ cell.innerHTML='<span class="h-hr">'+lbl+'</span><span class="h-ic">'+getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25)+'</span><span class="h-tp">'+(r.temp!=null?fmtTempRaw(r.temp)+'°':'-')+'</span><span class="h-lb">'+getLabel(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0)+'</span><div class="h-rb"><div class="h-rf" style="width:'+r.rain+'%"></div></div>';
  strip.appendChild(cell);
  }
 }
@@ -1604,7 +1604,7 @@ function renderScCard(sc, stripId, statsId) {
  var r=sc[hours[i]]; if(!r) continue;
  var lbl=(hours[i]===23)?'00h':r.label;
  var cell=document.createElement('div'); cell.className='sc-cell';
- cell.innerHTML='<span class="sc-hr">'+lbl+'</span>'+getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25)+'<span class="sc-tp">'+(r.temp!=null?r.temp+'\u00b0':'-')+'</span>';
+ cell.innerHTML='<span class="sc-hr">'+lbl+'</span>'+getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25)+'<span class="sc-tp">'+(r.temp!=null?fmtTempRaw(r.temp)+'°':'-')+'</span>';
  strip.appendChild(cell);
  }
  var temps=[],rSum=0,wSum=0;
@@ -2010,10 +2010,10 @@ function updateHero(sc, rows) {
  for(var k=0;k<sc.length;k++) if((sc[k].sol||0)>peakSol) peakSol=sc[k].sol;
  var avgRain=Math.round(rSum/rows.length);
  var skyLbl;
- if(avgRain>55)skyLbl='Pluvieux';else if(avgRain>35)skyLbl='Cloudy';else if(peakSol>500&&avgRain<20)skyLbl='Plein soleil';else if(peakSol>250&&avgRain<30)skyLbl='Sunny';else if(peakSol>80)skyLbl='Overcast';else if(peakSol>15)skyLbl='Cloudy';else skyLbl='Couvert';
+ if(avgRain>55)skyLbl='Rainy';else if(avgRain>35)skyLbl='Cloudy';else if(peakSol>500&&avgRain<20)skyLbl='Clear sky';else if(peakSol>250&&avgRain<30)skyLbl='Sunny';else if(peakSol>80)skyLbl='Overcast';else if(peakSol>15)skyLbl='Cloudy';else skyLbl='Overcast';
  window._heroTemp = main.temp || null;
- document.getElementById('r-temp').innerHTML=(main.temp||'-')+'<sup>\u00b0</sup>';
- document.getElementById('r-range').textContent=tmin+'\u00b0 / '+tmax+'\u00b0 during the day';
+ document.getElementById('r-temp').innerHTML=fmtTempRaw(main.temp||0)+'<sup>\u00b0</sup>';
+ document.getElementById('r-range').textContent=fmtTempRaw(tmin)+'° / '+fmtTempRaw(tmax)+'° during the day';
  var _tfEl=document.getElementById('r-tempfreq');
  var _tf=(sc[13]||sc[12]||{}).tempFreq;
  if(_tf!=null&&_tfEl){_tfEl.textContent='Temperature within ±2'+fmtTempUnit()+' of '+fmtTempRaw(main.temp||0)+'° — '+_tf+'% of years on this date';_tfEl.style.display='block';}
@@ -2816,9 +2816,9 @@ function renderAnnual(loc, monthly) {
  var isBest = uc && idx === sorted[0].idx && sorted[0].score >= 60;
  var badgeHtml = (isRec ? '<div class="month-badge rec">Recommandé</div>' : (isAvoid ? '<div class="month-badge avoid">Moins favorable</div>' : '')) + (isBest ? '<div class="month-best-badge">🔥 Best month</div>' : '');
 
- var tmaxStr = d.avgTmax != null ? Math.round(d.avgTmax) + '°' : '–';
- var tminStr = d.avgTmin != null ? Math.round(d.avgTmin) + '°' : '–';
- var tempStr = d.avgTemp != null ? Math.round(d.avgTemp) + '°' : '–';
+ var tmaxStr = d.avgTmax != null ? fmtTempRaw(d.avgTmax) + '°' : '–';
+ var tminStr = d.avgTmin != null ? fmtTempRaw(d.avgTmin) + '°' : '–';
+ var tempStr = d.avgTemp != null ? fmtTempRaw(d.avgTemp) + '°' : '–';
 
  card.innerHTML =
  '<div class="month-name">' + MONTHS_FR[idx] + '</div>' +
