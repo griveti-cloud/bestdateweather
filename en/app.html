@@ -328,6 +328,12 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
 #inp-date:not(.has-val){color:var(--slate3)}
 #inp-date.has-val{color:var(--navy)}
 
+.details-toggle{width:100%;background:none;border:none;border-top:1px solid var(--cream2);padding:10px 28px;text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--slate2);letter-spacing:.3px}
+.details-toggle:hover{color:var(--navy)}
+.details-toggle-icon{font-size:14px;transition:transform .2s;display:inline-block}
+.details-toggle.open .details-toggle-icon{transform:rotate(180deg)}
+.details-panel{display:none}
+.details-panel.open{display:block}
 /* ── Trust block ── */
 .trust-block{background:white;border-top:1px solid var(--cream2);padding:48px 20px}
 .trust-block-inner{max-width:700px;margin:0 auto}
@@ -558,7 +564,12 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  <div class="score-chips" id="score-chips"></div>
  <div id="snow-depth-info" style="display:none;margin-top:8px;font-size:11px;color:#6366f1;font-weight:500"></div>
  </div>
- <div class="hero-stats">
+ <button class="details-toggle" id="details-toggle" onclick="toggleDetails()" aria-expanded="false">
+  <span>View details — hour by hour, scenarios, astro</span>
+  <span class="details-toggle-icon">&#8964;</span>
+ </button>
+ <div class="details-panel" id="details-panel">
+  <div class="hero-stats">
  <div class="hstat">
  <div class="hstat-val" id="r-rain">–</div>
  <div class="hstat-lbl">💧 Rain likely</div>
@@ -637,6 +648,8 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  </div>
  </div>
  </div>
+ </div> <!-- /details-panel -->
+
 
  <!-- NOTES -->
  <div class="note" id="foot-note" style="display:none"></div>
@@ -928,6 +941,15 @@ var IC = {
 };
 
 /* QUICK FILL */
+function toggleDetails() {
+ var btn = document.getElementById('details-toggle');
+ var panel = document.getElementById('details-panel');
+ var open = panel.classList.toggle('open');
+ btn.classList.toggle('open', open);
+ btn.setAttribute('aria-expanded', open);
+}
+
+
 function quickFill(type) {
  currentUseCase = type;
  document.getElementById('score-block').style.display = 'block';
