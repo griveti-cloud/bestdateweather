@@ -41,9 +41,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:14px 2
 .section-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
 .section-title{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:700;margin-bottom:16px;}
 @media(max-width:600px){
- .climate-table{font-size:11px;}
- .climate-table th, }
-.climate-table tr:last-child td{border-bottom:none;}
+  .climate-table tr:last-child td{border-bottom:none;}
 .table-legend{display:flex;gap:16px;font-size:11px;color:var(--slate3);padding:10px 4px;flex-wrap:wrap;}
 .legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;}
 .widget-section{margin-top:36px;}
@@ -143,7 +141,7 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;}
  <h2 class="section-title">Weather in Amsterdam month by month</h2>
  <div class="climate-table-wrap">
  <table class="climate-table" aria-label="Monthly climate table Amsterdam">
- <thead><tr><th>Month</th><th>Min</th><th>Max</th><th>Rain %</th><th>Precip.</th><th>Sun h/d</th><th>Score</th></tr></thead>
+ <thead><tr><th>Month</th><th>T° min</th><th>T° max</th><th>Rain days (%)</th><th>Precip. mm/j</th><th>Sun h/d</th><th>Score</th></tr></thead>
  <tbody><tr class="avoid" data-tmax="7" data-rain="68" data-sun="3.4"><td>January</td><td data-label="Min">2°C</td><td data-label="Max">7°C</td><td data-label="Rain days">68%</td><td data-label="Precip.">77.6</td><td data-label="Sun h/d">3.4h</td><td data-label="Score">0.5/10</td></tr>
 <tr class="avoid" data-tmax="8" data-rain="66" data-sun="5.1"><td>February</td><td data-label="Min">2°C</td><td data-label="Max">8°C</td><td data-label="Rain days">66%</td><td data-label="Precip.">81.8</td><td data-label="Sun h/d">5.1h</td><td data-label="Score">1.8/10</td></tr>
 <tr class="avoid" data-tmax="10" data-rain="61" data-sun="7.2"><td>March</td><td data-label="Min">3°C</td><td data-label="Max">10°C</td><td data-label="Rain days">61%</td><td data-label="Precip.">63.5</td><td data-label="Sun h/d">7.2h</td><td data-label="Score">3.9/10</td></tr>
