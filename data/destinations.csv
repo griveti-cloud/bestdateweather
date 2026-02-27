@@ -1,0 +1,84 @@
+slug_fr,slug_en,nom_fr,nom_bare,pays,flag,prep,lat,lon,tropical
+agadir,agadir,Agadir,Agadir,Maroc,ma,à,30.42,-9.6,False
+algarve,algarve,l'Algarve,Algarve,Portugal,pt,en,37.1,-8.68,False
+alicante,alicante,Alicante,Alicante,Espagne,es,à,38.35,-0.48,False
+amalfi,amalfi,la Côte Amalfitaine,Côte Amalfitaine,Italie,it,sur la,40.63,14.6,False
+amsterdam,amsterdam,Amsterdam,Amsterdam,Pays-Bas,nl,à,52.37,4.89,False
+bali,bali,Bali,Bali,Indonésie,id,à,-8.67,115.21,True
+bangkok,bangkok,Bangkok,Bangkok,Thaïlande,th,à,13.75,100.52,True
+barcelone,barcelona,Barcelone,Barcelone,Espagne,es,à,41.39,2.15,False
+berlin,berlin,Berlin,Berlin,Allemagne,de,à,52.52,13.4,False
+bordeaux,bordeaux,Bordeaux,Bordeaux,France,fr,à,44.84,-0.58,False
+bretagne,brittany,la Bretagne,Bretagne,France,fr,en,48.11,-1.68,False
+buenos-aires,buenos-aires,Buenos Aires,Buenos Aires,Argentine,ar,à,-34.61,-58.38,False
+cancun,cancun,Cancún,Cancún,Mexique,mx,à,21.16,-86.85,False
+capri,capri,Capri,Capri,Italie,it,à,40.55,14.24,False
+canaries,canary-islands,les Canaries,Canaries,Espagne,es,aux,28.29,-14.0,False
+corfou,corfu,Corfou,Corfou,Grèce,gr,à,39.62,19.92,False
+corse,corsica,la Corse,Corse,France,fr,en,42.04,9.01,False
+costa-rica,costa-rica,le Costa Rica,Costa Rica,Costa Rica,cr,au,9.93,-84.08,True
+cote-azur,cote-azur,la Côte d'Azur,Côte d'Azur,France,fr,sur la,43.7,7.27,False
+crete,crete,la Crète,Crète,Grèce,gr,en,35.24,25.01,False
+dubai,dubai,Dubaï,Dubaï,Émirats Arabes Unis,ae,à,25.2,55.27,False
+dubrovnik,dubrovnik,Dubrovnik,Dubrovnik,Croatie,hr,à,42.65,18.09,False
+edimbourg,edinburgh,Édimbourg,Édimbourg,Écosse,gb,à,55.95,-3.19,False
+florence,florence,Florence,Florence,Italie,it,à,43.77,11.26,False
+fuerteventura,fuerteventura,Fuerteventura,Fuerteventura,Espagne,es,à,28.36,-14.02,False
+goa,goa,Goa,Goa,Inde,in,à,15.49,73.82,True
+gran-canaria,gran-canaria,Gran Canaria,Gran Canaria,Espagne,es,à,27.92,-15.39,False
+hawaii,hawaii-maui,Hawaï / Maui,Hawaï / Maui,États-Unis,us,à,20.8,-156.33,False
+hoi-an,hoi-an,Hôi An,Hôi An,Viêt Nam,vn,à,15.88,108.33,True
+ibiza,ibiza,Ibiza,Ibiza,Espagne,es,à,38.91,1.43,False
+ile-maurice,mauritius,l'Île Maurice,Île Maurice,Maurice,mu,à,-20.35,57.55,True
+istanbul,istanbul,Istanbul,Istanbul,Turquie,tr,à,41.01,28.95,False
+jamaique,jamaica,la Jamaïque,Jamaïque,Jamaïque,jm,en,18.1,-77.3,True
+katmandou,kathmandu,Katmandou,Katmandou,Népal,np,à,27.72,85.32,False
+la-havane,havana,La Havane,La Havane,Cuba,cu,à,23.14,-82.36,True
+lanzarote,lanzarote,Lanzarote,Lanzarote,Espagne,es,à,29.04,-13.64,False
+le-cap,cape-town,Le Cap,Le Cap,Afrique du Sud,za,au,-33.92,18.42,False
+lisbonne,lisbon,Lisbonne,Lisbonne,Portugal,pt,à,38.72,-9.13,False
+londres,london,Londres,Londres,Royaume-Uni,gb,à,51.51,-0.13,False
+los-angeles,los-angeles,Los Angeles,Los Angeles,États-Unis,us,à,34.05,-118.24,False
+lyon,lyon,Lyon,Lyon,France,fr,à,45.75,4.83,False
+madere,madeira,Madère,Madère,Portugal,pt,à,32.66,-16.92,False
+majorque,mallorca,Majorque,Majorque,Espagne,es,à,39.57,2.65,False
+maldives,maldives,les Maldives,Maldives,Maldives,mv,aux,3.2,73.22,True
+malaga,malaga,Málaga,Málaga,Espagne,es,à,36.72,-4.42,False
+malte,malta,Malte,Malte,Malte,mt,à,35.9,14.51,False
+marrakech,marrakech,Marrakech,Marrakech,Maroc,ma,à,31.63,-8.0,False
+marseille,marseille,Marseille,Marseille,France,fr,à,43.3,5.37,False
+miami,miami,Miami,Miami,États-Unis,us,à,25.77,-80.19,False
+minorque,menorca,Minorque,Minorque,Espagne,es,à,39.97,4.07,False
+monaco,monaco,Monaco,Monaco,Monaco,mc,à,43.74,7.42,False
+mykonos,mykonos,Mykonos,Mykonos,Grèce,gr,à,37.44,25.37,False
+new-york,new-york,New York,New York,États-Unis,us,à,40.71,-74.01,False
+nice,nice,Nice,Nice,France,fr,à,43.71,7.26,False
+paris,paris,Paris,Paris,France,fr,à,48.85,2.35,False
+phuket,phuket,Phuket,Phuket,Thaïlande,th,à,7.88,98.39,True
+porto,porto,Porto,Porto,Portugal,pt,à,41.15,-8.61,False
+prague,prague,Prague,Prague,Tchéquie,cz,à,50.08,14.44,False
+provence,provence,la Provence,Provence,France,fr,en,43.94,5.03,False
+reunion,reunion,La Réunion,La Réunion,France,fr,à,-21.11,55.54,True
+reykjavik,reykjavik,Reykjavik,Reykjavik,Islande,is,à,64.15,-21.94,False
+rhodes,rhodes,Rhodes,Rhodes,Grèce,gr,à,36.43,28.22,False
+rio-de-janeiro,rio-de-janeiro,Rio de Janeiro,Rio de Janeiro,Brésil,br,à,-22.9,-43.17,True
+riviera-maya,riviera-maya,la Riviera Maya,Riviera Maya,Mexique,mx,en,20.62,-87.08,True
+rome,rome,Rome,Rome,Italie,it,à,41.9,12.5,False
+santorin,santorini,Santorin,Santorin,Grèce,gr,à,36.39,25.44,False
+sardaigne,sardinia,la Sardaigne,Sardaigne,Italie,it,en,40.12,9.01,False
+seville,seville,Séville,Séville,Espagne,es,à,37.39,-5.99,False
+seychelles,seychelles,les Seychelles,Seychelles,Seychelles,sc,aux,-4.68,55.49,True
+sicile,sicily,la Sicile,Sicile,Italie,it,en,37.6,14.02,False
+siem-reap,siem-reap,Siem Reap,Siem Reap,Cambodge,kh,à,13.36,103.86,True
+singapour,singapore,Singapour,Singapour,Singapour,sg,à,1.35,103.82,True
+split,split,Split,Split,Croatie,hr,à,43.51,16.44,False
+tenerife,tenerife,Tenerife,Tenerife,Espagne,es,à,28.46,-16.25,False
+tokyo,tokyo,Tokyo,Tokyo,Japon,jp,à,35.69,139.69,False
+toscane,tuscany,la Toscane,Toscane,Italie,it,en,43.77,11.26,False
+tulum,tulum,Tulum,Tulum,Mexique,mx,à,20.21,-87.46,False
+valence,valencia,Valence,Valence,Espagne,es,à,39.47,-0.38,False
+venise,venice,Venise,Venise,Italie,it,à,45.44,12.33,False
+vienne,vienna,Vienne,Vienne,Autriche,at,à,48.21,16.37,False
+zakynthos,zakynthos,Zakynthos,Zakynthos,Grèce,gr,à,37.78,20.9,False
+zanzibar,zanzibar,Zanzibar,Zanzibar,Tanzanie,tz,à,-6.16,39.2,True
+barbade,barbados,la Barbade,Barbade,Barbade,bb,à la,13.19,-59.54,True
