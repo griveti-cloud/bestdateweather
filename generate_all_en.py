@@ -86,7 +86,17 @@ def load_data(target_slug=None):
                 except ValueError:
                     print(f"[WARN] Invalid override: {slug}/{mi}/{champ}={val}")
 
-    return dests, climate, cards, overrides
+    # events.csv — local context per destination × month
+    events = {}
+    events_path = f'{DATA}/events.csv'
+    if os.path.exists(events_path):
+        for row in csv.DictReader(open(events_path, encoding='utf-8-sig')):
+            events[(row['slug'], int(row['month']))] = {
+                'fr': row['event_fr'],
+                'en': row['event_en'],
+            }
+
+    return dests, climate, cards, overrides, events
 
 
 # ── VALIDATION ──────────────────────────────────────────────────────────────
@@ -467,7 +477,113 @@ MONTHLY_GRAD = {
     11:'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
 }
 
-def gen_monthly(dest, months, mi):
+# ── SIMILARITY & CROSS-LINKING ──────────────────────────────────────────────
+
+def compute_all_similarities(dests, climate):
+    """Pre-compute 3 most similar destinations for each slug."""
+    profiles = {}
+    for slug, d in dests.items():
+        if slug not in climate or any(m is None for m in climate[slug]):
+            continue
+        months = climate[slug]
+        profiles[slug] = {
+            'scores': [m['score'] for m in months],
+            'tmaxs':  [m['tmax'] for m in months],
+        }
+
+    similarities = {}
+    for slug, p in profiles.items():
+        sims = []
+        for other_slug, op in profiles.items():
+            if other_slug == slug:
+                continue
+            score_diff = sum(abs(p['scores'][i] - op['scores'][i]) for i in range(12)) / 12
+            temp_diff  = sum(abs(p['tmaxs'][i]  - op['tmaxs'][i])  for i in range(12)) / 12
+            best_a = set(i for i in range(12) if p['scores'][i] >= max(p['scores']) - 1)
+            best_b = set(i for i in range(12) if op['scores'][i] >= max(op['scores']) - 1)
+            overlap = len(best_a & best_b) / max(len(best_a | best_b), 1)
+            sim = (1.0 - (score_diff / 5 + temp_diff / 15) / 2) * 0.6 + overlap * 0.4
+            sims.append((max(0, min(1, sim)), other_slug))
+        sims.sort(reverse=True)
+        similarities[slug] = sims[:3]
+    return similarities
+
+
+def context_paragraph_en(nom_en, m, mi, score, best_month, best_score, is_tropical, event_text=None):
+    """Generate a unique context paragraph per destination × month."""
+    month_en = MONTHS_EN[mi]
+    season = SEASONS[mi]
+    tmax, rain, sun = m['tmax'], m['rain_pct'], m['sun_h']
+
+    parts = []
+
+    if event_text:
+        parts.append(f"<strong>🎯 {event_text}</strong>")
+
+    if is_tropical and rain >= 50:
+        parts.append(f"{month_en} falls in the wet season in {nom_en}. Showers are often brief but intense.")
+    elif is_tropical and rain <= 20:
+        parts.append(f"{month_en} is peak dry season in {nom_en}. The air is warm and humidity more bearable than in the rainy season.")
+    elif season == 'Summer' and tmax >= 30:
+        parts.append(f"In the height of summer, {nom_en} sees high temperatures ({tmax}°C). Heat is a factor for outdoor activities.")
+    elif season == 'Summer' and tmax >= 22:
+        parts.append(f"Summer in {nom_en} brings pleasant temperatures ({tmax}°C) and long sunny days ({sun}h of sunshine).")
+    elif season == 'Winter' and tmax <= 10:
+        parts.append(f"Winter in {nom_en} is cool ({tmax}°C during the day). Days are short ({sun}h of sunshine) but the city reveals a different side.")
+    elif season == 'Winter' and tmax >= 20:
+        parts.append(f"Even in winter, {nom_en} enjoys {tmax}°C. A real asset for escaping the European cold.")
+    elif season == 'Spring':
+        parts.append(f"Spring marks the start of the good season in {nom_en}. Temperatures rise ({tmax}°C) and tourists have not yet arrived en masse.")
+    elif season == 'Autumn' and score >= 7:
+        parts.append(f"Autumn in {nom_en} is often underrated: {tmax}°C, golden light and declining crowds. An interesting window.")
+    elif season == 'Autumn':
+        parts.append(f"Autumn marks the end of peak season in {nom_en}. Temperatures drop ({tmax}°C) and rain returns ({rain}% of days).")
+    else:
+        parts.append(f"In {month_en}, {nom_en} sees {tmax}°C during the day with {sun}h of sunshine per day.")
+
+    if rain <= 10:
+        parts.append(f"Rain is virtually absent ({rain}% of days) — ideal for planning without a backup.")
+    elif rain <= 25:
+        parts.append(f"Rain risk remains low ({rain}% of days), leaving good room for outdoor activities.")
+    elif rain <= 45:
+        parts.append(f"Expect rain on {rain}% of days — a light raincoat in the bag is recommended.")
+    else:
+        parts.append(f"With {rain}% of rainy days, always have indoor alternatives planned.")
+
+    if score >= 9:
+        parts.append(f"This is one of the best times of year to visit {nom_en}.")
+    elif score >= 7.5:
+        parts.append(f"A good balance between weather and crowds, even if {best_month} ({best_score:.1f}/10) remains theoretically better.")
+    elif score >= 5.5:
+        parts.append(f"Not the best window, but acceptable if dates are constrained. {best_month} ({best_score:.1f}/10) is significantly better if possible.")
+
+    return ' '.join(parts)
+
+
+def _build_sim_cards_en(sim_list, all_dests, climate_for_sim, mi):
+    """Build cross-linking HTML cards for similar destinations (EN)."""
+    parts = []
+    for _, sim_slug in sim_list:
+        sd = all_dests.get(sim_slug)
+        if not sd:
+            continue
+        sc = climate_for_sim.get(sim_slug, {})
+        slug_en = sd.get('slug_en', sim_slug)
+        nom_en = sd.get('nom_en', sd.get('nom_bare', sim_slug))
+        parts.append(
+            f'<a href="{slug_en}-weather-{MONTH_URL[mi]}.html" style="flex:1;min-width:180px;'
+            f'padding:14px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;'
+            f'text-decoration:none;display:flex;flex-direction:column;gap:4px">'
+            f'<div style="font-weight:700;color:var(--navy);font-size:14px">'
+            f'<img src="../flags/{sd.get("flag","")}.png" width="16" height="12" '
+            f'alt="" style="vertical-align:middle;margin-right:4px;border-radius:1px">'
+            f'{nom_en}</div>'
+            f'<div style="font-size:12px;color:var(--slate2)">{MONTHS_EN[mi]}: {sc.get("score","?")}/10 · {sc.get("tmax","?")}°C</div>'
+            f'</a>')
+    return ''.join(parts)
+
+
+def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate=None, events=None):
     slug_fr  = dest['slug_fr']
     slug_en  = dest['slug_en']
     nom_en   = dest.get('nom_en', dest['nom_bare'])
@@ -713,6 +829,17 @@ def gen_monthly(dest, months, mi):
     else:
         h1_text = f"Visiting {nom_en}<br/><em>in {month_en}?</em>"
 
+    # Pre-compute context paragraph and cross-linking
+    _evt = (events or {}).get((slug_fr, mi+1), {}).get('en')
+    _ctx_para = context_paragraph_en(nom_en, m, mi, score, best_month, best_score, is_tropical, event_text=_evt)
+
+    _sim_climate = {}
+    for _, sim_slug in (similarities or {}).get(slug_fr, [])[:3]:
+        if all_climate and sim_slug in all_climate and all_climate[sim_slug][mi]:
+            sm = all_climate[sim_slug][mi]
+            _sim_climate[sim_slug] = {'score': f"{sm['score']:.1f}", 'tmax': sm['tmax']}
+    _sim_html = _build_sim_cards_en((similarities or {}).get(slug_fr, [])[:3], all_dests or {}, _sim_climate, mi)
+
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -797,6 +924,18 @@ def gen_monthly(dest, months, mi):
 
  <section class="section" style="border-left:3px solid var(--gold);padding-left:18px;margin-bottom:28px">
  <p style="font-size:14px;line-height:1.7"><strong>Our recommendation for {month_en}:</strong> {verdict_txt}</p>
+ </section>
+
+ <section class="section" style="border-left:3px solid var(--gold);padding-left:18px;margin-bottom:28px">
+ <div class="section-label">Local context</div>
+ <h2 class="section-title">What to expect in {month_en}</h2>
+ <p style="font-size:14px;line-height:1.8;color:var(--slate)">{_ctx_para}</p>
+ </section>
+
+ <section class="section">
+ <div class="section-label">Also explore</div>
+ <h2 class="section-title">Similar destinations in {month_en}</h2>
+ <div style="display:flex;gap:14px;flex-wrap:wrap">{_sim_html}</div>
  </section>
 
  <section class="section">
@@ -906,7 +1045,7 @@ def main():
     print(f"Mode: {'validate-only' if validate_only else 'dry-run' if dry_run else 'production'}")
     print(f"Target: {target or 'all destinations'}\n")
 
-    dests, climate, cards, overrides = load_data()
+    dests, climate, cards, overrides, events = load_data()
 
     errors = validate(dests, climate)
     if errors:
@@ -922,6 +1061,8 @@ def main():
 
     if validate_only:
         return
+
+    similarities = compute_all_similarities(dests, climate)
 
     slugs = [target] if target else list(dests.keys())
     total_annual = total_monthly = 0
@@ -953,7 +1094,7 @@ def main():
         # 12 monthly pages
         for mi in range(12):
             try:
-                html = gen_monthly(dest, months, mi)
+                html = gen_monthly(dest, months, mi, dests, similarities, climate, events)
                 out  = f"{OUT}/{slug_en}-weather-{MONTH_URL[mi]}.html"
                 if not dry_run:
                     open(out, 'w', encoding='utf-8').write(html)
