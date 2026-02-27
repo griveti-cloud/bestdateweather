@@ -256,11 +256,29 @@ def gen_annual(dest, months, dest_cards):
     best_rain  = best_m['rain_pct']
     best_tmax  = best_m['tmax']
 
-    # Meta
-    title = f"Meilleure période pour partir {prep} {nom_bare} [{YEAR}] — Météo & conseils"
-    desc  = (f"Quelle est la meilleure période pour visiter {nom_bare} ? "
-             f"{MONTHS_FR[best_idx]} offre {best_tmax}°C et {best_rain}% de jours pluvieux. "
-             f"Score météo : {best_score}/10. Données 10 ans Open-Meteo.")
+    # Meta — 3 patterns de title + description
+    title_var = hash(slug) % 3
+    if title_var == 0:
+        title = f"Meilleure période pour partir {prep} {nom_bare} [{YEAR}] — Météo & conseils"
+        h1_text = f"Meilleure période pour partir<br/><em>{prep} {nom_bare}</em>"
+    elif title_var == 1:
+        title = f"Quand partir {prep} {nom_bare} ? Climat mois par mois [{YEAR}]"
+        h1_text = f"Quand partir<br/><em>{prep} {nom_bare}</em> ?"
+    else:
+        title = f"{nom_bare} : meilleure saison pour voyager [{YEAR}] — Climat & météo"
+        h1_text = f"<em>{nom_bare}</em><br/>quelle saison choisir ?"
+
+    desc_var = hash(slug + 'desc') % 3
+    if desc_var == 0:
+        desc = (f"Quelle est la meilleure période pour visiter {nom_bare} ? "
+                f"{MONTHS_FR[best_idx]} offre {best_tmax}°C et {best_rain}% de jours pluvieux. "
+                f"Score météo : {best_score}/10. Données 10 ans Open-Meteo.")
+    elif desc_var == 1:
+        desc = (f"Quand partir {prep} {nom_bare} ? {MONTHS_FR[best_idx]} est le meilleur mois "
+                f"({best_score}/10) avec {best_tmax}°C. Analyse complète des 12 mois sur 10 ans de données.")
+    else:
+        desc = (f"{nom_bare} en {MONTHS_FR[best_idx].lower()} : {best_tmax}°C, {best_rain}% de pluie, "
+                f"score {best_score}/10. Découvrez le meilleur moment pour partir — données météo 10 ans.")
 
     # Climate table
     table_html = climate_table_html(months, nom_bare)
@@ -321,12 +339,18 @@ def gen_annual(dest, months, dest_cards):
                        f"&dest_id={booking_id}&dest_type=city"
                        f"&checkin={YEAR}-{best_idx+1:02d}-01&checkout={YEAR}-{best_idx+1:02d}-07"
                        f"&group_adults=2&no_rooms=1&lang=fr")
+        # Conseil budget contextualisé
+        off_months = [MONTHS_FR[i].lower() for i in range(12) if months[i]['score'] >= 6.5 and months[i]['score'] < best_score - 1.5]
+        if off_months:
+            budget_tip = f"Conseil : {', '.join(off_months[:2])} {'offrent' if len(off_months[:2]) > 1 else 'offre'} un bon compromis météo/prix — score correct avec moins d'affluence."
+        else:
+            budget_tip = f"Conseil : les mois hors pic ({MONTHS_FR[worst_idx].lower()}, {MONTHS_FR[(worst_idx+1)%12].lower()}) sont les moins chers mais la météo est nettement moins favorable."
         booking_section = f'''<section class="section">
  <div class="section-label">Hébergement</div>
  <h2 class="section-title">Trouver un hébergement {prep} {nom_bare}</h2>
  <div class="affil-box">
  <strong>Voir les disponibilités sur la période recommandée</strong>
- <p>Conseil : comparez aussi le créneau hors pic — souvent 15-40% moins cher pour une météo identique.</p>
+ <p>{budget_tip}</p>
  <div style="display:flex;gap:12px;flex-wrap:wrap">
  <a class="affil-btn" href="{booking_url}" target="_blank" rel="noopener">Booking.com →</a>
  </div>
@@ -429,7 +453,7 @@ def gen_annual(dest, months, dest_cards):
 {NAV}
 <header class="hero-band">
  <div class="dest-tag"><img src="flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" style="vertical-align:middle;margin-right:4px;border-radius:1px"> {nom_bare}, {pays}</div>
- <h1 class="hero-title">Meilleure période pour partir<br/><em>{prep} {nom_bare}</em></h1>
+ <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hero_sub}</p>
  <div class="kicker">Mis à jour : {date.today().strftime("%B %Y")} · Open-Meteo · 10 ans · {lat}°N {abs(lon)}°{"E" if lon >= 0 else "W"}</div>
  <div class="hero-stats" style="margin-top:22px">
@@ -509,37 +533,128 @@ def gen_monthly(dest, months, mi):
     act_beach = ('✅ Bon' if score >= 7.5 and m['tmax'] >= 25
                  else ('⚠️ Possible' if score >= 6.5 and m['tmax'] >= 20 else '❌ Déconseillé'))
 
-    # Hero sub
-    if score >= 8.5:
-        hero_sub = f"{month_fr} est l'une des meilleures périodes {prep} {nom_bare}."
-    elif score >= 7.0:
-        hero_sub = f"{month_fr} est une bonne période. {best_month} est légèrement meilleur."
-    else:
-        hero_sub = f"{month_fr} est difficile — {best_month} offre de bien meilleures conditions."
+    # ── Contexte destination pour diversification ──
+    is_tropical = dest.get('tropical', '0') == '1'
+    is_hot      = m['tmax'] >= 30
+    is_warm     = 22 <= m['tmax'] < 30
+    is_mild     = 15 <= m['tmax'] < 22
+    is_cold     = m['tmax'] < 15
+    is_rainy    = m['rain_pct'] >= 50
+    is_dry      = m['rain_pct'] <= 15
+    is_sunny    = m['sun_h'] >= 10
+    is_winter   = mi in (11, 0, 1)
+    is_summer   = mi in (5, 6, 7)
+    is_shoulder = mi in (3, 4, 8, 9)
+    hash_var    = (hash(slug + str(mi)) % 3)  # pour rotation patterns
 
-    # Verdict text
+    # Hero sub — 9 variantes
     if score >= 8.5:
-        verdict_txt = f"{month_fr} est une excellente période {prep} {nom_bare}. Conditions optimales."
+        hero_opts = [
+            f"{month_fr} est l'une des meilleures périodes {prep} {nom_bare}.",
+            f"{month_fr} {prep} {nom_bare} : conditions quasi idéales.",
+            f"Partir {prep} {nom_bare} en {month_fr.lower()} ? Excellente idée.",
+        ]
+        hero_sub = hero_opts[hash_var]
     elif score >= 7.0:
-        verdict_txt = f"{month_fr} est une bonne période {prep} {nom_bare}. {best_month} reste légèrement meilleur."
+        hero_opts = [
+            f"{month_fr} est une bonne période. {best_month} est légèrement meilleur.",
+            f"{nom_bare} en {month_fr.lower()} : solide, même si {best_month.lower()} reste le pic.",
+            f"Bonne fenêtre en {month_fr.lower()} — {best_month.lower()} est un cran au-dessus.",
+        ]
+        hero_sub = hero_opts[hash_var]
     else:
-        verdict_txt = f"{month_fr} est difficile {prep} {nom_bare}. {best_month} ({best_score}/10) est bien plus favorable."
+        hero_opts = [
+            f"{month_fr} est difficile — {best_month} offre de bien meilleures conditions.",
+            f"Période compliquée en {month_fr.lower()}. Préférez {best_month.lower()} si possible.",
+            f"{nom_bare} en {month_fr.lower()} ? Pas la meilleure fenêtre — visez {best_month.lower()}.",
+        ]
+        hero_sub = hero_opts[hash_var]
+
+    # Verdict text — enrichi avec contexte météo
+    if score >= 9.0:
+        verdict_opts = [
+            f"{month_fr} est une excellente période {prep} {nom_bare}. {m['tmax']}°C, {m['sun_h']}h de soleil — conditions optimales.",
+            f"Partir en {month_fr.lower()} {prep} {nom_bare} est un choix sûr : météo au top, {m['rain_pct']}% de risque de pluie seulement.",
+            f"{nom_bare} en {month_fr.lower()} coche toutes les cases : chaleur, soleil, peu de pluie.",
+        ]
+        verdict_txt = verdict_opts[hash_var]
+    elif score >= 7.0:
+        diff = round(best_score - score, 1)
+        verdict_opts = [
+            f"{month_fr} est une bonne période {prep} {nom_bare}. {best_month} reste légèrement meilleur (+{diff} pts).",
+            f"Conditions favorables en {month_fr.lower()} ({score:.1f}/10). {best_month} fait mieux mais l'écart est faible.",
+            f"{nom_bare} en {month_fr.lower()} : {m['tmax']}°C et {m['sun_h']}h de soleil. Correct, sans être le pic.",
+        ]
+        verdict_txt = verdict_opts[hash_var]
+    elif score >= 5.0:
+        verdict_opts = [
+            f"{month_fr} est une période moyenne {prep} {nom_bare}. {best_month} ({best_score}/10) est nettement préférable.",
+            f"Pas la meilleure fenêtre : {m['rain_pct']}% de risque de pluie et {m['sun_h']}h de soleil. {best_month} est bien plus sûr.",
+            f"{nom_bare} en {month_fr.lower()} reste possible mais {best_month} offre un score de {best_score}/10 contre {score:.1f}.",
+        ]
+        verdict_txt = verdict_opts[hash_var]
+    else:
+        verdict_opts = [
+            f"{month_fr} est difficile {prep} {nom_bare}. {best_month} ({best_score}/10) est bien plus favorable.",
+            f"Conditions défavorables en {month_fr.lower()} ({score:.1f}/10). Privilégiez {best_month.lower()} si vos dates sont flexibles.",
+            f"{nom_bare} en {month_fr.lower()} : {m['rain_pct']}% de pluie, {m['sun_h']}h de soleil. Mieux vaut reporter à {best_month.lower()}.",
+        ]
+        verdict_txt = verdict_opts[hash_var]
 
     # Bars
     rain_bar = bar_chart(m['rain_pct'])
     temp_bar = bar_chart(min(m['tmax'], 40), 40)
     sun_bar  = bar_chart(min(m['sun_h'], 14), 14)
 
-    # Oui / Non si
+    # Oui / Non si — 18+ variantes croisées (score × contexte)
     if score >= 8.0:
-        oui_si = "profiter d'un temps agréable pour toutes les activités."
-        non_si = "voyager avec un budget serré — les prix sont plus élevés."
+        if is_tropical and is_dry:
+            oui_si = "profiter de la saison sèche — conditions idéales pour la plage et les excursions."
+            non_si = "voyager à petit budget — c'est la haute saison, les prix sont au plus haut."
+        elif is_hot and is_sunny:
+            oui_si = f"chercher le plein soleil — {m['sun_h']}h par jour en moyenne."
+            non_si = "mal supporter la chaleur — les températures dépassent souvent 30°C."
+        elif is_warm and is_dry:
+            oui_si = f"combiner plage, visites et randonnées — météo polyvalente ({m['tmax']}°C, peu de pluie)."
+            non_si = "éviter l'affluence touristique — c'est la période la plus fréquentée."
+        elif is_summer:
+            oui_si = "profiter de longues journées ensoleillées et d'activités en plein air."
+            non_si = "fuir la foule estivale — c'est le pic de fréquentation."
+        elif is_shoulder:
+            oui_si = "combiner bonne météo et tarifs plus doux qu'en pleine saison."
+            non_si = "avoir une garantie absolue de beau temps — quelques jours mitigés possibles."
+        else:
+            oui_si = "profiter d'un temps agréable pour toutes les activités."
+            non_si = "voyager avec un budget serré — les prix sont plus élevés en haute saison."
     elif score >= 6.0:
-        oui_si = "visiter les sites culturels et la gastronomie locale."
-        non_si = "garantir du soleil pour vos photos ou activités extérieures."
+        if is_rainy:
+            oui_si = "accepter des averses en échange de prix réduits et moins de touristes."
+            non_si = "planifier des activités 100% extérieures — la pluie est fréquente."
+        elif is_cold:
+            oui_si = f"privilégier les musées et la gastronomie — il fait frais ({m['tmax']}°C)."
+            non_si = "chercher du soleil pour bronzer ou nager — ce n'est pas la bonne saison."
+        elif is_mild:
+            oui_si = "explorer la ville à pied sans souffrir de la chaleur."
+            non_si = "chercher une destination balnéaire — l'eau et l'air sont encore frais."
+        elif is_shoulder:
+            oui_si = f"profiter de l'entre-saison — moins de monde, {m['tmax']}°C agréables."
+            non_si = "garantir un ensoleillement maximal — des journées grises sont possibles."
+        else:
+            oui_si = "visiter les sites culturels et profiter de la gastronomie locale."
+            non_si = "garantir du soleil pour vos photos ou activités extérieures."
     else:
-        oui_si = "voyager hors saison avec des prix réduits."
-        non_si = "éviter la pluie ou chercher un temps estival."
+        if is_tropical and is_rainy:
+            oui_si = "découvrir une facette différente hors des sentiers battus, à prix cassés."
+            non_si = "craindre la pluie — c'est la mousson, les averses sont quotidiennes."
+        elif is_cold and is_winter:
+            oui_si = f"apprécier l'ambiance hivernale et les prix les plus bas de l'année."
+            non_si = "chercher le soleil ou les activités de plein air."
+        elif is_rainy:
+            oui_si = "voyager hors saison avec des prix réduits et très peu de touristes."
+            non_si = "éviter la pluie — plus d'un jour sur deux est pluvieux."
+        else:
+            oui_si = "profiter de tarifs bas et d'une fréquentation minimale."
+            non_si = "rechercher un temps estival — les conditions ne s'y prêtent pas."
 
     # Month nav
     month_nav = ''.join(
@@ -566,14 +681,33 @@ def gen_monthly(dest, months, mi):
     diff_r = round(bm['rain_pct'] - m['rain_pct'])
     diff_s = round(bm['sun_h'] - m['sun_h'], 1)
 
-    # FAQ
+    # FAQ — variées selon contexte
     faq_q1 = f"{nom_bare} en {month_fr.lower()} : est-ce une bonne période ?"
-    faq_a1 = (f"{'Oui, ' if score >= 7.5 else ''}{month_fr} est "
-              f"{'une excellente période' if score >= 9 else 'une bonne période' if score >= 7.5 else 'une période correcte'} "
-              f"({score:.1f}/10){'. Conditions optimales.' if score >= 9 else f'. {best_month} reste le meilleur mois ({best_score:.1f}/10).' if score < 8.5 else '.'}")
-    faq_q2 = f"Que faire {prep} {nom_bare} en {month_fr.lower()} ?"
-    faq_a2 = (f"Avec {m['tmax']}°C max et {m['sun_h']}h de soleil, "
-              f"{'les activités de plein air sont recommandées.' if score >= 8 else 'concentrez-vous sur les sites culturels et la gastronomie locale.' if score >= 6 else 'privilégiez les musées et activités couvertes.'}")
+    if score >= 9:
+        faq_a1 = f"Oui, {month_fr.lower()} est l'une des meilleures périodes {prep} {nom_bare} (score {score:.1f}/10). {m['tmax']}°C, {m['sun_h']}h de soleil et seulement {m['rain_pct']}% de jours pluvieux."
+    elif score >= 7.5:
+        faq_a1 = f"Oui, {month_fr.lower()} est une bonne période ({score:.1f}/10). Les conditions sont favorables même si {best_month.lower()} reste le mois optimal ({best_score:.1f}/10)."
+    elif score >= 5.5:
+        faq_a1 = f"{month_fr} est une période correcte ({score:.1f}/10) mais pas idéale. Attendez-vous à {m['rain_pct']}% de jours pluvieux. {best_month} ({best_score:.1f}/10) offre de meilleures garanties."
+    else:
+        faq_a1 = f"{month_fr} n'est pas recommandé {prep} {nom_bare} (score {score:.1f}/10). Avec {m['rain_pct']}% de jours pluvieux et {m['sun_h']}h de soleil, préférez {best_month.lower()} ({best_score:.1f}/10)."
+
+    # Q2 — varie selon le type de météo du mois
+    if is_hot and is_dry:
+        faq_q2 = f"Fait-il trop chaud {prep} {nom_bare} en {month_fr.lower()} ?"
+        faq_a2 = f"Les températures atteignent {m['tmax']}°C. {'C\'est intense mais gérable avec de la crème solaire et de l\'eau.' if m['tmax'] < 38 else 'La chaleur est extrême — limitez les activités aux heures fraîches.'} Ensoleillement : {m['sun_h']}h/jour."
+    elif is_rainy:
+        faq_q2 = f"Pleut-il beaucoup {prep} {nom_bare} en {month_fr.lower()} ?"
+        faq_a2 = f"Oui, {m['rain_pct']}% des jours connaissent de la pluie en {month_fr.lower()}. {'En zone tropicale, ce sont souvent des averses courtes mais intenses.' if is_tropical else 'Prévoyez des activités couvertes en alternative.'}"
+    elif is_cold:
+        faq_q2 = f"Quel temps fait-il {prep} {nom_bare} en {month_fr.lower()} ?"
+        faq_a2 = f"Il fait frais avec {m['tmax']}°C en journée et {m['tmin']}°C la nuit. {m['sun_h']}h de soleil par jour. Prévoyez des vêtements chauds et privilégiez les visites intérieures."
+    elif score >= 8:
+        faq_q2 = f"Que faire {prep} {nom_bare} en {month_fr.lower()} ?"
+        faq_a2 = f"Avec {m['tmax']}°C et {m['sun_h']}h de soleil, toutes les activités extérieures sont possibles : {'plage, snorkeling et excursions en bateau.' if is_tropical else 'randonnées, visites de sites et terrasses.'}"
+    else:
+        faq_q2 = f"Que faire {prep} {nom_bare} en {month_fr.lower()} ?"
+        faq_a2 = f"Avec {m['tmax']}°C max et {m['sun_h']}h de soleil, {'concentrez-vous sur les sites culturels, musées et gastronomie locale.' if score >= 6 else 'privilégiez les activités couvertes — musées, spas, gastronomie.'}"
 
     faq_schema = json.dumps({
         "@context": "https://schema.org", "@type": "FAQPage",
@@ -594,8 +728,29 @@ def gen_monthly(dest, months, mi):
             "@id": f"https://bestdateweather.com/{slug}-meteo-{month_url}.html"}
     }, ensure_ascii=False)
 
-    title = f"{nom_bare} en {month_fr.lower()} : météo, pluie ({m['rain_pct']}%) et faut-il partir ? [{YEAR}]"
-    desc  = f"Météo {prep} {nom_bare} en {month_fr.lower()} : {m['tmax']}°C max, {m['rain_pct']}% de jours pluvieux, {m['sun_h']}h de soleil/jour. Score {score:.1f}/10. Données 10 ans Open-Meteo."
+    title_var = hash(slug + str(mi)) % 3
+    if title_var == 0:
+        title = f"{nom_bare} en {month_fr.lower()} : météo, pluie ({m['rain_pct']}%) et faut-il partir ? [{YEAR}]"
+    elif title_var == 1:
+        title = f"Météo {prep} {nom_bare} en {month_fr.lower()} [{YEAR}] — {m['tmax']}°C, {m['rain_pct']}% pluie"
+    else:
+        title = f"Partir {prep} {nom_bare} en {month_fr.lower()} ? Score {score:.1f}/10 [{YEAR}]"
+
+    desc_var = hash(slug + str(mi) + 'd') % 3
+    if desc_var == 0:
+        desc = f"Météo {prep} {nom_bare} en {month_fr.lower()} : {m['tmax']}°C max, {m['rain_pct']}% de jours pluvieux, {m['sun_h']}h de soleil/jour. Score {score:.1f}/10. Données 10 ans Open-Meteo."
+    elif desc_var == 1:
+        desc = f"{nom_bare} en {month_fr.lower()} : {m['tmax']}°C, {m['sun_h']}h de soleil, {m['rain_pct']}% de pluie. {'Période recommandée.' if score >= 7.5 else 'Période moyenne.' if score >= 5.5 else 'Période déconseillée.'} Score {score:.1f}/10."
+    else:
+        desc = f"Faut-il partir {prep} {nom_bare} en {month_fr.lower()} ? {m['tmax']}°C et {m['rain_pct']}% de pluie — score météo {score:.1f}/10 sur 10 ans de données."
+
+    h1_var = hash(slug + str(mi) + 'h1') % 3
+    if h1_var == 0:
+        h1_text = f"Météo {prep} {nom_bare}<br/><em>en {month_fr.lower()}</em>"
+    elif h1_var == 1:
+        h1_text = f"{nom_bare} en {month_fr.lower()}<br/><em>quel temps fait-il ?</em>"
+    else:
+        h1_text = f"Partir {prep} {nom_bare}<br/><em>en {month_fr.lower()} ?</em>"
 
     html = f'''<!DOCTYPE html>
 <html lang="fr">
@@ -626,7 +781,7 @@ def gen_monthly(dest, months, mi):
 {NAV}
 <header class="hero-band">
  <div class="dest-tag"><img src="flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" style="vertical-align:middle;margin-right:4px;border-radius:1px"> {nom_bare} · {season}</div>
- <h1 class="hero-title">Météo <em>{prep} {nom_bare}</em><br/>en {month_fr.lower()}</h1>
+ <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hero_sub}</p>
  <div class="kicker">Open-Meteo · 10 ans · {lat:.2f}°N {abs(lon):.2f}°{"E" if lon >= 0 else "W"}</div>
  <div class="hero-stats" style="margin-top:22px">
