@@ -11,7 +11,7 @@
 </script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<meta name="description" content="Plan your trips, holidays and events with confidence. Weather based on 10 years of historical data and ECMWF models. 79 destinations, forecasts up to 1 year ahead."/>
+<meta name="description" content="Plan up to 12 months ahead. Compare every month of the year with 10+ years of climate data. 83 destinations, synthetic weather score."/>
 <title>BestDateWeather — Weather for your special dates</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -38,7 +38,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
 .app-title{font-family:'Fraunces',serif;font-size:clamp(28px,5vw,44px);font-weight:900;color:var(--navy);line-height:1.1;letter-spacing:-.5px;margin-bottom:10px}
 .app-title em{font-style:italic;color:#b06800;font-weight:900}
-.app-sub{font-size:14px;color:var(--slate2);font-weight:400;line-height:1.7;max-width:440px;margin:0 auto 32px}
+.app-sub{font-size:14px;color:var(--slate2);font-weight:400;line-height:1.7;max-width:440px;margin:0 auto 14px}
+.app-proof{display:inline-flex;align-items:center;gap:6px;background:var(--gold-light,#fef9f0);border:1px solid rgba(232,148,10,.25);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;color:#7a5500;letter-spacing:.3px;margin:0 auto 24px;white-space:nowrap}
+.app-proof-dot{width:5px;height:5px;background:var(--gold,#d4940a);border-radius:50%;flex-shrink:0}
 
 /* ── SEARCH CARD ── */
 .wrap{max-width:620px;margin:0 auto;padding:0 20px 80px}
@@ -344,6 +346,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);
 <main>
 <div class="app-header">
  <h1 class="app-title">Best<em>Date</em>Weather</h1>
+ <p class="app-sub"><strong>Plan up to 12 months ahead.</strong><br/>Compare every month of the year with 10+ years of climate data.</p>
+ <p class="app-proof">
+  <span class="app-proof-dot"></span>
+  83 destinations · 12 months compared · ERA5 / ECMWF climate score
+ </p>
 </div>
 
 <div class="wrap">
