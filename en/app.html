@@ -438,7 +438,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  <button class="annual-btn" id="ann-btn" onclick="runAnnual()">View year</button>
  </div>
  <div class="prog-wrap" id="ann-prog-wrap">
- <div class="prog-labels"><span id="ann-prog-lbl">Chargement…</span><span id="ann-prog-pct">0%</span></div>
+ <div class="prog-labels"><span id="ann-prog-lbl">Loading…</span><span id="ann-prog-pct">0%</span></div>
  <div class="prog-track"><div class="prog-bar" id="ann-prog-bar"></div></div>
  </div>
  <div class="err-box" id="ann-err-box"></div>
@@ -476,7 +476,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  <div class="inp-wrap"><input class="inp" type="text" id="inp-city" placeholder="Paris, Barcelona, Tokyo…" autocomplete="off"/>
  <button class="inp-clear" id="inp-city-clear" tabindex="-1" onclick="clearCity()">×</button></div>
  <div class="ac-list" id="ac-list"></div>
- <div id="city-hint" style="font-size:11px;color:var(--slate2);margin-top:5px;display:none">💡 Villes composées : utilisez les tirets — <em>Pointe-à-Pitre</em>, <em>Saint-Denis</em></div>
+ <div id="city-hint" style="font-size:11px;color:var(--slate2);margin-top:5px;display:none">💡 Compound names: use hyphens — <em>Pointe-à-Pitre</em>, <em>Saint-Denis</em></div>
  </div>
  <div class="field-wrap">
  <label class="field-label" for="inp-date">
@@ -496,7 +496,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  <span id="btn-go-text">Check the weather</span>
  </button>
  <div class="prog-wrap" id="prog-wrap">
- <div class="prog-labels"><span id="prog-lbl">Chargement…</span><span id="prog-pct">0%</span></div>
+ <div class="prog-labels"><span id="prog-lbl">Loading…</span><span id="prog-pct">0%</span></div>
  <div class="prog-track"><div class="prog-bar" id="prog-bar"></div></div>
  </div>
  <div class="err-box" id="err-box"></div>
@@ -504,7 +504,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
 
  <!-- USE CASE FILTER PILLS -->
  <div class="uc-filter-wrap" id="uc-filter-wrap" style="display:none">
- <div class="uc-filter-label">Affiner le score pour</div>
+ <div class="uc-filter-label">Refine score for</div>
  <div class="uc-row" id="uc-row">
  <div class="uc-row-line">
  <button class="uc-pill uc-pill-neutral" data-uc="general" onclick="quickFill('general')">🌤️ General weather</button>
@@ -1361,7 +1361,7 @@ function fetchMarineSSTEN(lat, lon, yr, mo, da, slug) {
  var diffDays = Math.round((target.getTime()-today.getTime())/86400000);
 
  function tryClimatology() {
-  var climData = slug && SEA_CLIM_DATA[slug] ? SEA_CLIM_DATA[slug] : null;
+  var climData = slug && SEA_CLIM_DATA_EN[slug] ? SEA_CLIM_DATA_EN[slug] : null;
   if (climData && climData[mo] !== null) return Promise.resolve({sst:climData[mo],fallback:true});
   // Fallback par archive marine (coordonnées) — 3 ans de données autour de la date
   var endYr2 = new Date().getFullYear()-1;
