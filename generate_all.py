@@ -592,7 +592,7 @@ def gen_annual(dest, months, dest_cards, all_dests, similarities):
  <div class="dest-tag"><img src="flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" style="vertical-align:middle;margin-right:4px;border-radius:1px"> {nom_bare}, {pays}</div>
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hero_sub}</p>
- <div class="kicker">Mis à jour : {date.today().strftime("%B %Y")} · Open-Meteo · 10 ans · {lat}°N {abs(lon)}°{"E" if lon >= 0 else "W"}</div>
+ <div class="kicker">Mis à jour : {MONTHS_FR[date.today().month - 1]} {date.today().year} · Open-Meteo · 10 ans · 12 mois comparés · {lat}°N {abs(lon)}°{"E" if lon >= 0 else "W"}</div>
  <div class="hero-stats" style="margin-top:22px">
  <div><span class="hstat-val">{best_str}</span><span class="hstat-lbl">Meilleur{'s mois' if len(bests) > 1 else ' mois'}</span></div>
  <div><span class="hstat-val">{best_tmax}°C</span><span class="hstat-lbl">Température optimale</span></div>
@@ -986,7 +986,7 @@ def gen_monthly(dest, months, mi, all_dests, similarities, all_climate, events=N
  <div class="dest-tag"><img src="flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" style="vertical-align:middle;margin-right:4px;border-radius:1px"> {nom_bare} · {season}</div>
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hero_sub}</p>
- <div class="kicker">Open-Meteo · 10 ans · {lat:.2f}°N {abs(lon):.2f}°{"E" if lon >= 0 else "W"}</div>
+ <div class="kicker">Open-Meteo · 10 ans · 12 mois comparés · {lat:.2f}°N {abs(lon):.2f}°{"E" if lon >= 0 else "W"}</div>
  <div class="hero-stats" style="margin-top:22px">
  <div><span class="hstat-val">{m['tmax']}°C</span><span class="hstat-lbl">Température max</span></div>
  <div><span class="hstat-val">{m['rain_pct']}%</span><span class="hstat-lbl">Jours pluvieux</span></div>
