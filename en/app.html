@@ -2015,8 +2015,8 @@ function computeAndRenderScore(sc, rows) {
  if (window._lastSSTResult) renderSeaChipEN(window._lastSSTResult);
 }
 
-function updateHero(sc, rows) {
- var main=sc[13]||sc[12];
+function updateHero(sc, rows, mainHour) {
+ var main=sc[mainHour!=null?mainHour:(13)]||sc[12];
  var temps=[]; for(var i=0;i<sc.length;i++) if(sc[i].temp!=null) temps.push(sc[i].temp);
  var tmin=temps.length?Math.min.apply(null,temps):'-', tmax=temps.length?Math.max.apply(null,temps):'-';
  var rSum=0,wSum=0,peakSol=0;
@@ -2303,7 +2303,7 @@ function run() {
  setP(30,'Fetching live forecast…');
  return fetchForecast(loc.lat,loc.lon,yr,mo,da).then(function(rows){
  renderAstro(loc.lat,loc.lon,yr,mo,da);
- setP(100,'Done');updateHero(rows,rows);showResults(rows,rows,true,'<strong>Live forecast</strong> · real-time weather data, updated hourly.',diffDays);progEl.style.display='none';btnEl.disabled=false;
+ setP(100,'Done');var _curH=13;if(diffDays===0){var _now=new Date(Date.now()+(_locTzOffset||0)*1000+new Date().getTimezoneOffset()*60000);_curH=_now.getHours();}updateHero(rows,rows,_curH);showResults(rows,rows,true,'<strong>Live forecast</strong> · real-time weather data, updated hourly.',diffDays);progEl.style.display='none';btnEl.disabled=false;
  });
  }
  return buildClimatology(loc.lat,loc.lon,yr,mo,da).then(function(rows){
