@@ -413,6 +413,13 @@ def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None):
  <div style="display:flex;gap:14px;flex-wrap:wrap">{sim_cards}</div>
 </section>'''
 
+    # Ranking pages section
+    ranking_section = '''<section class="section">
+ <div class="section-label">Weather rankings</div>
+ <h2 class="section-title">Compare destinations by weather</h2>
+ <div style="display:flex;gap:14px;flex-wrap:wrap"><a href="best-destinations-weather-ranking-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🌍 World ranking 2026</a><a href="best-europe-weather-ranking-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🇪🇺 Best in Europe</a></div>
+</section>'''
+
     article_schema = json.dumps({
         "@context": "https://schema.org", "@type": "Article",
         "headline": f"Best Time to Visit {nom_en}",
@@ -473,6 +480,7 @@ def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None):
 {monthly_section}
 {faq_section}
 {similar_section}
+{ranking_section}
 </main>
 {footer_html(slug_fr, slug_en, nom_en)}
 <script>
@@ -1041,6 +1049,12 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
  <div style="font-size:12px;color:var(--slate2)">{months[next_mi]['tmax']}°C · {months[next_mi]['rain_pct']}% rain</div>
  </a>
  </div>
+ </section>
+
+ <section class="section">
+ <div class="section-label">Weather rankings</div>
+ <h2 class="section-title">Compare destinations by weather</h2>
+ <div style="display:flex;gap:14px;flex-wrap:wrap"><a href="best-destinations-weather-ranking-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🌍 World ranking 2026</a><a href="best-europe-weather-ranking-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🇪🇺 Best in Europe</a></div>
  </section>
 
  <section class="widget-section">

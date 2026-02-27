@@ -537,6 +537,13 @@ def gen_annual(dest, months, dest_cards, all_dests, similarities):
     else:
         similar_section = ''
 
+    # Ranking pages section
+    ranking_section = '''<section class="section">
+ <div class="section-label">Classements météo</div>
+ <h2 class="section-title">Comparer les destinations par météo</h2>
+ <div style="display:flex;gap:14px;flex-wrap:wrap"><a href="classement-destinations-meteo-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🌍 Classement mondial 2026</a><a href="classement-destinations-meteo-ete-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🌞 Meilleures destinations été</a><a href="classement-destinations-meteo-hiver-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🌴 Destinations soleil hiver</a></div>
+</section>'''
+
     # Schema.org Article
     article_schema = json.dumps({
         "@context": "https://schema.org",
@@ -596,6 +603,7 @@ def gen_annual(dest, months, dest_cards, all_dests, similarities):
 {monthly_section}
 {faq_section}
 {similar_section}
+{ranking_section}
 </main>
 {footer_html(slug, nom_bare, prep, slug_en)}
 <script>
@@ -1102,6 +1110,12 @@ def gen_monthly(dest, months, mi, all_dests, similarities, all_climate, events=N
  <h2 class="section-title">Destinations similaires en {month_fr.lower()}</h2>
   <div style="display:flex;gap:14px;flex-wrap:wrap">''' + _build_sim_cards_fr(similarities.get(slug, [])[:3], all_dests, climate_for_sim, mi) + f'''</div>
   </section>
+
+ <section class="section">
+ <div class="section-label">Classements météo</div>
+ <h2 class="section-title">Comparer les destinations par météo</h2>
+ <div style="display:flex;gap:14px;flex-wrap:wrap"><a href="classement-destinations-meteo-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🌍 Classement mondial 2026</a><a href="classement-destinations-meteo-ete-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🌞 Meilleures destinations été</a><a href="classement-destinations-meteo-hiver-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🌴 Destinations soleil hiver</a></div>
+ </section>
 
  <section class="widget-section">
  <div class="cta-box" style="text-align:center">
