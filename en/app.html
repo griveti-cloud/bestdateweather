@@ -2772,8 +2772,8 @@ function monthIconFromData(d) {
  return IC.heavyrain;
 }
 
-var MONTHS_FR = ['Janvier','February','Mars','Avril','Mai','Juin','Juillet','August','Septembre','Octobre','Novembre','December'];
-var MONTHS_SHORT = ['Jan','Feb','Mar','Avr','Mai','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var MONTHS_FR = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 function renderAnnual(loc, monthly) {
  _lastMonthly = monthly; _lastAnnLoc = loc;
@@ -2788,7 +2788,7 @@ function renderAnnual(loc, monthly) {
  var ucSubEl = document.getElementById('annual-subtitle-uc');
  if (uc && ucSubEl) {
  subEl.style.display = 'none';
- var ucLabels = {plage:'Meilleurs mois pour la plage',ski:'Best months for skiing'};
+ var ucLabels = {plage:'Best months for beach',ski:'Best months for skiing'};
  ucSubEl.textContent = ucLabels[uc] || 'Optimised score for: ' + (ucNames[uc]||uc);
  ucSubEl.style.display = 'block';
  } else {
@@ -2834,7 +2834,7 @@ function renderAnnual(loc, monthly) {
     var seasDetail = seasParts.length ? ' · ' + seasParts.join(' · ') : '';
     var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">ECMWF Trend' + (seasDetail ? '<br><span style="font-weight:500;text-transform:none;letter-spacing:0;color:#3b82f6">' + seasParts.join(' · ') + '</span>' : '') + '</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
  var isBest = uc && idx === sorted[0].idx && sorted[0].score >= 60;
- var badgeHtml = (isRec ? '<div class="month-badge rec">Recommandé</div>' : (isAvoid ? '<div class="month-badge avoid">Moins favorable</div>' : '')) + (isBest ? '<div class="month-best-badge">🔥 Best month</div>' : '');
+ var badgeHtml = (isRec ? '<div class="month-badge rec">Recommended</div>' : (isAvoid ? '<div class="month-badge avoid">Less favourable</div>' : '')) + (isBest ? '<div class="month-best-badge">🔥 Best month</div>' : '');
 
  var tmaxStr = d.avgTmax != null ? fmtTempRaw(d.avgTmax) + '°' : '–';
  var tminStr = d.avgTmin != null ? fmtTempRaw(d.avgTmin) + '°' : '–';
@@ -2844,7 +2844,7 @@ function renderAnnual(loc, monthly) {
  '<div class="month-name">' + MONTHS_FR[idx] + '</div>' +
  '<div class="month-icon">' + monthIconFromData(d) + '</div>' +
  '<div class="month-temp">' + tminStr + ' / ' + tmaxStr + '</div>' +
- '<div class="month-range">moy. ' + tempStr + '</div>' +
+ '<div class="month-range">avg. ' + tempStr + '</div>' +
  '<div class="month-stats">' +
  '<span class="month-stat">💧 ' + d.rainPct + '% <span style="font-weight:400;color:var(--slate3);font-size:10px">(' + fmtPrecip(d.avgPrecipMm) + '/d)</span></span>' +
  '<span class="month-stat">☀ ' + Math.round(d.sunHrs) + 'h</span>' +
@@ -2860,9 +2860,9 @@ function renderAnnual(loc, monthly) {
  legendEl = document.createElement('div');
  legendEl.id = 'annual-legend';
  legendEl.style.cssText = 'display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--slate3);margin-top:10px;align-items:center;padding:0 2px';
- legendEl.innerHTML = '<span><span style="display:inline-block;width:12px;height:3px;background:#1a7a4a;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Recommandé</span>' +
+ legendEl.innerHTML = '<span><span style="display:inline-block;width:12px;height:3px;background:#1a7a4a;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Recommended</span>' +
  '<span><span style="display:inline-block;width:12px;height:3px;background:#ef4444;border-radius:2px;margin-right:5px;vertical-align:middle"></span>Less favourable</span>' +
- '<span style="margin-left:auto;font-style:italic;font-size:10px">Couleur barre = température moyenne du mois</span>';
+ '<span style="margin-left:auto;font-style:italic;font-size:10px">Bar colour = average monthly temperature</span>';
  grid.parentNode.insertBefore(legendEl, grid.nextSibling);
  }
 
@@ -2872,7 +2872,7 @@ function renderAnnual(loc, monthly) {
  // ── Résumé narratif ──────────────────────────────────────────────────────
  var narEl = document.getElementById('ann-narrative');
  if (narEl) {
- var MNAMES = ['janvier','February','mars','avril','mai','juin','juillet','August','septembre','octobre','novembre','December'];
+ var MNAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
  // Trouver les 2 meilleurs et 2 pires mois
  var sorted2 = scores.slice().sort(function(a,b){return b.score-a.score;});
  var best1 = sorted2[0], best2 = sorted2[1];
@@ -2889,17 +2889,17 @@ function renderAnnual(loc, monthly) {
  
  var emoji = best1.score >= 75 ? '🌟' : best1.score >= 60 ? '✅' : '⚠️';
  
- var narrative = emoji + ' <strong>Best month : ' + bestName1.charAt(0).toUpperCase() + bestName1.slice(1);
- if (best2.score >= 55) narrative += ' et ' + bestName2;
+ var narrative = emoji + ' <strong>Best month: ' + bestName1.charAt(0).toUpperCase() + bestName1.slice(1);
+ if (best2.score >= 55) narrative += ' and ' + bestName2;
  narrative += '</strong>';
  
  if (goodMonths.length >= 2) {
- narrative += ' · Best window: <strong>' + goodMonths.length + ' mois</strong>';
+ narrative += ' · Best window: <strong>' + goodMonths.length + ' months</strong>';
  }
  
  if (uc && worst1.score < 50) {
- narrative += ' · Éviter : <span style="color:#ef4444;font-weight:700">' + worstName + '</span>';
- if (worst2.score < 50) narrative += ' et ' + MNAMES[worst2.idx];
+ narrative += ' · Avoid: <span style="color:#ef4444;font-weight:700">' + worstName + '</span>';
+ if (worst2.score < 50) narrative += ' and ' + MNAMES[worst2.idx];
  }
  
  // Température indicative du meilleur mois
