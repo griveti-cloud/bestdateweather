@@ -1,4 +1,4 @@
-slug_fr,slug_en,nom_fr,nom_bare,pays,flag,prep,lat,lon,tropical,hero_sub,booking_dest_id
+﻿slug_fr,slug_en,nom_fr,nom_bare,pays,flag,prep,lat,lon,tropical,hero_sub,booking_dest_id
 agadir,agadir,Agadir,Agadir,Maroc,ma,à,30.42,-9.6,False,"Agadir, station balnéaire du Maroc — 300 jours de soleil par an, grande plage de sable fin et resort modernes.",-20029
 algarve,algarve,l'Algarve,Algarve,Portugal,pt,en,37.1,-8.68,False,"300 jours de soleil, falaises dorées et mer atlantique — l'Algarve est la destination côtière la plus accessible depuis la France.",1064
 alicante,alicante,Alicante,Alicante,Espagne,es,à,38.35,-0.48,False,"Alicante, Costa Blanca — l'une des villes les plus ensoleillées d'Europe, avec des plages de sable blanc à prix raisonnables.",-370210
