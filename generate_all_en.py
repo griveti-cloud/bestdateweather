@@ -259,6 +259,8 @@ def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None):
 
     table_html = climate_table_html(months, nom_en)
 
+    hero_sub = dest.get('hero_sub_en') or f"{nom_en}, a destination to discover based on weather data."
+
     # Quick facts
     worst_idx  = min(range(12), key=lambda i: months[i]['score'])
     worst_rain = months[worst_idx]['rain_pct']
@@ -463,7 +465,7 @@ def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None):
 <header class="hero-band">
  <div class="dest-tag"><img src="../flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" style="vertical-align:middle;margin-right:4px;border-radius:1px"> {nom_en}, {country}</div>
  <h1 class="hero-title">{h1_text}</h1>
- <p class="hero-sub">{desc}</p>
+ <p class="hero-sub">{hero_sub}</p>
  <div class="kicker">Updated: {date.today().strftime("%B %Y")} · Open-Meteo · 10 years · {lat}°N {abs(lon)}°{"E" if lon >= 0 else "W"}</div>
  <div class="hero-stats" style="margin-top:22px">
  <div><span class="hstat-val">{best_str}</span><span class="hstat-lbl">Best month{"s" if len(bests) > 1 else ""}</span></div>
