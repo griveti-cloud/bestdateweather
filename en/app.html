@@ -22,7 +22,7 @@
 :root{
  --cream:#faf8f3;--cream2:#f2ede2;--navy:#1a1f2e;--navy2:#252d42;
  --gold:#e8940a;--gold2:#f5b020;--gold-light:#fef3d0;
- --slate:#4a5568;--slate2:#5c687a;--slate3:#637085;
+ --slate:#4a5568;--slate2:#5c687a;--slate3:#5f6b7e;
  --green:#1a7a4a;--green-bg:#e8f8f0;
  --blue:#1a5f9a;--blue-bg:#e8f2fc;
  --mist:#7a8fa8;--mist-bg:#eef3f8;
@@ -665,7 +665,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
 <div id="seo-hub" class="desktop-only" style="background:#faf8f3;border-top:1px solid #e8e0d0;padding:52px 20px 60px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
  <div style="max-width:900px;margin:0 auto">
 
- <p style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#e8940a;margin-bottom:12px">Destination guides</p>
+ <p style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#8a5c06;margin-bottom:12px">Destination guides</p>
  <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:8px;letter-spacing:-.3px">When to go ? Monthly weather guide</h2>
  <p style="color:#4a5568;font-size:14px;margin-bottom:16px;line-height:1.7">Open-Meteo data · 10 years · Monthly climate tables · 83 destinations</p>
  <p style="max-width:720px;margin-bottom:40px;font-size:15px;line-height:1.8;color:#4a5568">Our guides analyse temperatures, rainfall, sunshine and seasonality to objectively determine the best months for your project — trip, wedding, festival or event.</p>
@@ -817,7 +817,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  </div>
 </div>
 
-<section aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
+<section inert style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
  <div style="max-width:860px;margin:0 auto">
  <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:16px">Choosing the best time to travel</h2>
  <p style="font-size:15px;line-height:1.8;color:#5a6478;max-width:680px">Our model analyses 10 years of ERA5 data to determine the ideal months based on three criteria: rainfall, temperatures and sunshine. Scores include ECMWF seasonal corrections to maximise accuracy at 1–6 months.</p>
@@ -868,7 +868,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
 </section>
 
 <!-- ── SEO block ── -->
-<section class="seo-block" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
+<section class="seo-block" inert style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
  <div class="seo-block-inner">
   <h2>What is the best time to travel?</h2>
   <p>Choosing the ideal date involves far more than a 5-day forecast. Average temperatures, rain risk, sunshine, wind — every destination has its own climate rhythm. BestDateWeather analyses this data to give you a probabilistic estimate of expected conditions, month by month or day by day up to a year ahead.</p>
@@ -3049,6 +3049,5 @@ if ('serviceWorker' in navigator) {
  });
 }
 </script>
-<script>document.querySelectorAll('[aria-hidden="true"] a,[aria-hidden="true"] button,[aria-hidden="true"] input').forEach(function(el){el.tabIndex=-1;});</script>
 </body>
 </html>

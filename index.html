@@ -22,7 +22,7 @@
 :root{
  --cream:#faf8f3;--cream2:#f2ede2;--navy:#1a1f2e;--navy2:#252d42;
  --gold:#e8940a;--gold2:#f5b020;--gold-light:#fef3d0;
- --slate:#4a5568;--slate2:#5c687a;--slate3:#637085;
+ --slate:#4a5568;--slate2:#5c687a;--slate3:#5f6b7e;
  --green:#1a7a4a;--green-bg:#e8f8f0;
  --blue:#1a5f9a;--blue-bg:#e8f2fc;
  --mist:#7a8fa8;--mist-bg:#eef3f8;
@@ -667,7 +667,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
 <div id="seo-hub" class="desktop-only" style="background:#faf8f3;border-top:1px solid #e8e0d0;padding:52px 20px 60px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
  <div style="max-width:900px;margin:0 auto">
 
- <p style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#e8940a;margin-bottom:12px">Guides destinations</p>
+ <p style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#8a5c06;margin-bottom:12px">Guides destinations</p>
  <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:8px;letter-spacing:-.3px">Quand partir ? M&eacute;t&eacute;o mois par mois</h2>
  <p style="color:#4a5568;font-size:14px;margin-bottom:16px;line-height:1.7">Données Open-Meteo · 10 ans · Tableaux climatiques mensuels · 83 destinations</p>
  <p style="max-width:720px;margin-bottom:40px;font-size:15px;line-height:1.8;color:#4a5568">Nos guides analysent températures, précipitations, ensoleillement et saisonnalité pour déterminer objectivement les meilleurs mois selon votre projet — voyage, mariage, festival ou événement.</p>
@@ -813,7 +813,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  </div>
 </div>
 
-<section aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
+<section inert style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
  <div style="max-width:860px;margin:0 auto">
  <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:16px">Choisir la meilleure période pour voyager</h2>
  <p style="font-size:15px;line-height:1.8;color:#5a6478;max-width:680px">Notre modèle analyse 10 ans de données ERA5 (10 dernières années) pour déterminer les mois idéaux selon trois critères : précipitations, températures et ensoleillement. Les scores intègrent des corrections saisonnières ECMWF pour maximiser la précision à 1–6 mois.</p>
@@ -864,7 +864,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
 </section>
 
 <!-- ── SEO block ── -->
-<section class="seo-block" aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
+<section class="seo-block" inert style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
  <div class="seo-block-inner">
   <h2>Quelle est la meilleure période pour voyager ?</h2>
   <p>Le choix de la date idéale dépend de bien plus qu'une simple prévision à 5 jours. Températures moyennes, risque de pluie, ensoleillement, vent — chaque destination a son propre rythme climatique. BestDateWeather analyse ces données pour vous donner une estimation probabiliste des conditions attendues, mois par mois ou jour par jour jusqu'à un an à l'avance.</p>
@@ -3066,6 +3066,5 @@ if ('serviceWorker' in navigator) {
  });
 }
 </script>
-<script>document.querySelectorAll('[aria-hidden="true"] a,[aria-hidden="true"] button,[aria-hidden="true"] input').forEach(function(el){el.tabIndex=-1;});</script>
 </body>
 </html>
