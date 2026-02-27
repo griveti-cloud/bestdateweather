@@ -1,190 +1,997 @@
-slug,month,event_fr,event_en
+﻿slug,month,event_fr,event_en
 agadir,1,Festival international du film d'Agadir et début de saison surf optimale,Agadir International Film Festival and start of prime surf season
+agadir,2,Conditions optimales de randonnée — 22°C et faible risque de pluie (12%),Optimal hiking conditions — 22°C and low rain risk (12%)
 agadir,3,Amande en fleurs dans la vallée du Paradis — excursion populaire à 1h d'Agadir,Almond blossoms in Paradise Valley — popular day trip 1h from Agadir
+agadir,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+agadir,5,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
 agadir,6,Début de la saison estivale avec les touristes marocains — plages animées,Start of summer season with Moroccan tourists — lively beaches
+agadir,7,Conditions optimales de randonnée — 26°C et faible risque de pluie (0%),Optimal hiking conditions — 26°C and low rain risk (0%)
+agadir,8,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+agadir,9,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+agadir,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+agadir,11,Température idéale pour la plage (25°C) — affluence encore modérée,Ideal beach temperature (25°C) — crowds still moderate
 agadir,12,Climat doux (21°C) pendant que l'Europe gèle — spot hivernal prisé des Européens,Mild weather (21°C) while Europe freezes — popular European winter escape
+algarve,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+algarve,2,"Houle hivernale — vagues plus puissantes, idéal pour surfeurs confirmés","Winter swell — more powerful waves, ideal for experienced surfers"
 algarve,3,Les amandiers en fleurs couvrent l'arrière-pays de blanc et rose — spectacle éphémère,Almond trees blanket the hinterland in white and pink — fleeting spectacle
+algarve,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+algarve,5,Température idéale pour la plage (24°C) — affluence encore modérée,Ideal beach temperature (24°C) — crowds still moderate
 algarve,6,Début de saison avec la Nortada (vent rafraîchissant) — plages accessibles avant la foule,Season starts with the Nortada breeze — beaches accessible before crowds
+algarve,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 algarve,8,Pic touristique — Praia da Marinha et Benagil bondées dès 10h. Réservez tôt,Peak tourist season — Praia da Marinha and Benagil crowded by 10am. Book early
+algarve,9,Température idéale pour la plage (26°C) — affluence encore modérée,Ideal beach temperature (26°C) — crowds still moderate
 algarve,10,Vendanges dans la région de Lagos — dégustation de vins régionaux,Grape harvest in the Lagos region — local wine tastings
+algarve,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+algarve,12,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+alicante,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+alicante,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
 alicante,3,Las Hogueras de San Juan se prépare — réservations d'hébergement en hausse,Las Hogueras de San Juan preparations underway — accommodation bookings rising
+alicante,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+alicante,5,Température idéale pour la plage (23°C) — affluence encore modérée,Ideal beach temperature (23°C) — crowds still moderate
 alicante,6,Hogueras de San Juan (20-24 juin) — feux géants sur la plage et feux d'artifice,Hogueras de San Juan (Jun 20-24) — giant bonfires on the beach and fireworks
+alicante,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 alicante,8,Température de la mer à 27°C — pic de baignade. Playa de San Juan très fréquentée,Sea temperature reaches 27°C — peak swimming. Playa de San Juan very busy
+alicante,9,Eau à 25°C et plages animées — septembre est un pic de baignade à Alicante,Water at 25°C and lively beaches — September is peak swimming season in Alicante
+alicante,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+alicante,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+alicante,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+amalfi,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+amalfi,2,Bonne fenêtre pour la randonnée — températures douces (15°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (15°C) and uncrowded trails
+amalfi,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+amalfi,4,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
 amalfi,5,Sentier des Dieux praticable sans chaleur — glycines en fleurs le long du parcours,Path of the Gods walkable without heat — wisteria in bloom along the trail
+amalfi,6,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 amalfi,7,Concerts en plein air dans les jardins de Ravello — festival de musique classique,Open-air concerts in the gardens of Ravello — classical music festival
+amalfi,8,Randonnées à privilégier tôt le matin — chaleur marquée dès 11h (31°C),Hike early morning to avoid the heat — temperatures reach 31°C by 11am
 amalfi,9,Lumière dorée sur la côte — foule divisée par deux par rapport à août,Golden light on the coast — crowds halved compared to August
+amalfi,10,Température idéale pour la plage (23°C) — affluence encore modérée,Ideal beach temperature (23°C) — crowds still moderate
+amalfi,11,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+amalfi,12,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+amsterdam,1,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+amsterdam,2,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+amsterdam,3,Hors saison — ambiance locale plus authentique dans les bars et restaurants,Off-season — more authentic local atmosphere in bars and restaurants
 amsterdam,4,King's Day (27 avril) — toute la ville en orange. Plus grande fête de rue d'Europe,King's Day (Apr 27) — city turns orange. Europe's biggest street party
 amsterdam,5,Tulipes en fin de floraison à Keukenhof (ferme mi-mai). Dernière chance,Late tulip bloom at Keukenhof (closes mid-May). Last chance
+amsterdam,6,Bonne fenêtre pour la randonnée — températures douces (20°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (20°C) and uncrowded trails
 amsterdam,7,Amsterdam Pride (fin juillet-début août) — canal parade et festivités,Amsterdam Pride (late July-early August) — canal parade and festivities
+amsterdam,8,"Saison haute — bars et clubs animés, terrasses ouvertes tard le soir","Peak season — bars and clubs buzzing, terraces open late into the evening"
+amsterdam,9,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+amsterdam,10,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+amsterdam,11,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
 amsterdam,12,Amsterdam Light Festival illumine les canaux (décembre-janvier),Amsterdam Light Festival illuminates the canals (December-January)
+bali,1,Eau à 26°C et plages animées — janvier est un pic de baignade à Bali,Water at 26°C and lively beaches — January is peak swimming season in Bali
+bali,2,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
 bali,3,Nyepi (jour du silence balinais) — l'île entière s'arrête 24h. Expérience unique,Nyepi (Balinese Day of Silence) — the entire island stops for 24h. Unique experience
+bali,4,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+bali,5,Eau à 26°C et plages animées — mai est un pic de baignade à Bali,Water at 26°C and lively beaches — May is peak swimming season in Bali
+bali,6,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
 bali,7,Saison sèche en plein pic — Ubud et Seminyak très fréquentés. Réservez 3 mois à l'avance,Peak dry season — Ubud and Seminyak very busy. Book 3 months ahead
+bali,8,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+bali,9,Eau à 26°C et plages animées — septembre est un pic de baignade à Bali,Water at 26°C and lively beaches — September is peak swimming season in Bali
 bali,10,Début de la mousson mais averses courtes — prix en chute et temples quasi vides,Monsoon starts but showers are brief — prices drop and temples nearly empty
+bali,11,Randonnées à privilégier tôt le matin — chaleur marquée dès 11h (30°C),Hike early morning to avoid the heat — temperatures reach 30°C by 11am
+bali,12,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+bangkok,1,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+bangkok,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+bangkok,3,Chaleur forte — privilégier les activités matinales et les espaces climatisés l'après-midi,Hot weather — prioritise morning activities and air-conditioned spaces in the afternoon
 bangkok,4,Songkran (13-15 avril) — festival de l'eau. Bataille d'eau géante dans les rues,Songkran (Apr 13-15) — water festival. Giant water fight in the streets
+bangkok,5,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+bangkok,6,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+bangkok,7,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+bangkok,8,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+bangkok,9,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+bangkok,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
 bangkok,11,Loi Krathong — lanternes flottantes sur le Chao Phraya. Atmosphère magique,Loi Krathong — floating lanterns on the Chao Phraya. Magical atmosphere
 bangkok,12,Marchés de Noël thaïlandais et soldes de fin d'année dans les malls,Thai Christmas markets and year-end sales in malls
+barbade,1,Eau à 27°C et plages animées — janvier est un pic de baignade à la Barbade,Water at 27°C and lively beaches — January is peak swimming season in Barbados
+barbade,2,Holetown Festival (mi-février) — célébration de l'arrivée des premiers colons,Holetown Festival (mid-February) — celebrating the arrival of the first settlers
+barbade,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+barbade,4,Bonne fenêtre pour la randonnée — températures douces (28°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (28°C) and uncrowded trails
+barbade,5,Température idéale pour la plage (26°C) — affluence encore modérée,Ideal beach temperature (26°C) — crowds still moderate
+barbade,6,Visibilité sous-marine optimale — eau claire et conditions de plongée idéales,Optimal underwater visibility — clear water and ideal diving conditions
+barbade,7,Crop Over Festival (juillet-août) — carnaval de la Barbade. Kadooment Day spectaculaire,Crop Over Festival (July-August) — Barbados carnival. Spectacular Kadooment Day
+barbade,8,Bonne fenêtre pour la randonnée — températures douces (24°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (24°C) and uncrowded trails
+barbade,9,Température idéale pour la plage (25°C) — affluence encore modérée,Ideal beach temperature (25°C) — crowds still moderate
+barbade,10,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+barbade,11,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+barbade,12,Randonnées à privilégier tôt le matin — chaleur marquée dès 11h (30°C),Hike early morning to avoid the heat — temperatures reach 30°C by 11am
+barcelone,1,Soldes d'hiver (Rebaixes) — bonnes affaires sur le Passeig de Gràcia,Winter sales (Rebaixes) — bargains on Passeig de Gràcia
+barcelone,2,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+barcelone,3,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+barcelone,4,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+barcelone,5,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
 barcelone,6,Festival Sónar (mi-juin) — musique électronique et arts numériques,Sónar Festival (mid-June) — electronic music and digital arts
+barcelone,7,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
 barcelone,8,Festa Major de Gràcia (mi-août) — rues décorées par les habitants. Gratuit,Festa Major de Gràcia (mid-August) — streets decorated by residents. Free
 barcelone,9,La Mercè (24 sept) — fête patronale avec castellers et correfocs (feux),La Mercè (Sep 24) — patron saint festival with human towers and fire runs
-barcelone,1,Soldes d'hiver (Rebaixes) — bonnes affaires sur le Passeig de Gràcia,Winter sales (Rebaixes) — bargains on Passeig de Gràcia
+barcelone,10,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+barcelone,11,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+barcelone,12,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+berlin,1,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+berlin,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+berlin,3,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+berlin,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+berlin,5,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+berlin,6,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
 berlin,7,Berlinale d'été et festivals open-air gratuits dans les parcs,Summer Berlinale and free open-air festivals in the parks
+berlin,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+berlin,9,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+berlin,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
 berlin,11,Chute du mur (9 nov) — commémorations et événements culturels,Fall of the Wall (Nov 9) — commemorations and cultural events
 berlin,12,Marchés de Noël historiques — Gendarmenmarkt parmi les plus beaux d'Europe,Historic Christmas markets — Gendarmenmarkt among Europe's finest
+bordeaux,1,Saison calme dans les vignobles — dégustations intimistes et tarifs réduits,Quiet season in the vineyards — intimate tastings and reduced prices
+bordeaux,2,Bonne fenêtre pour la randonnée — températures douces (13°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (13°C) and uncrowded trails
+bordeaux,3,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+bordeaux,4,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+bordeaux,5,Conditions de surf équilibrées — vagues régulières et moins de monde au lineup,Balanced surf conditions — consistent waves and fewer surfers in the lineup
 bordeaux,6,Fête du Vin (biennale en juin) — dégustations sur les quais,Wine Festival (biennial in June) — tastings on the waterfront
+bordeaux,7,Maturation des raisins — visites œnologiques et terrasses de dégustation en plein air,Grapes ripening — wine tours and outdoor tasting terraces
+bordeaux,8,Bonne fenêtre pour la randonnée — températures douces (27°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (27°C) and uncrowded trails
 bordeaux,9,Vendanges dans les châteaux du Médoc — portes ouvertes et dégustations,Harvest at Médoc châteaux — open doors and tastings
+bordeaux,10,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+bordeaux,11,"Houle hivernale — vagues plus puissantes, idéal pour surfeurs confirmés","Winter swell — more powerful waves, ideal for experienced surfers"
 bordeaux,12,Marché de Noël sur les allées de Tourny — vin chaud et foie gras,Christmas market on Allées de Tourny — mulled wine and foie gras
+bretagne,1,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+bretagne,2,Bonne fenêtre pour la randonnée — températures douces (11°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (11°C) and uncrowded trails
+bretagne,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+bretagne,4,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+bretagne,5,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+bretagne,6,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 bretagne,7,Festival des Vieilles Charrues (Carhaix) — plus grand festival de France,Vieilles Charrues Festival (Carhaix) — France's biggest music festival
 bretagne,8,Festival Interceltique de Lorient — 10 jours de musique celtique,Lorient Celtic Festival — 10 days of Celtic music
+bretagne,9,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+bretagne,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+bretagne,11,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+bretagne,12,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+buenos-aires,1,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
 buenos-aires,2,Carnaval de Buenos Aires (Murgas) — défilés dans les quartiers,Buenos Aires Carnival (Murgas) — neighbourhood parades
+buenos-aires,3,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+buenos-aires,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+buenos-aires,5,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+buenos-aires,6,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
 buenos-aires,7,Tango BA Festival y Mundial — compétitions mondiales de tango,Tango BA Festival y Mundial — world tango championships
+buenos-aires,8,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+buenos-aires,9,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+buenos-aires,10,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+buenos-aires,11,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+buenos-aires,12,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+canaries,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+canaries,2,Carnaval de Tenerife et Gran Canaria — parmi les plus grands du monde,Tenerife and Gran Canaria Carnival — among the world's biggest
+canaries,3,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+canaries,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+canaries,5,Température idéale pour la plage (25°C) — affluence encore modérée,Ideal beach temperature (25°C) — crowds still moderate
+canaries,6,Conditions optimales de randonnée — 27°C et faible risque de pluie (4%),Optimal hiking conditions — 27°C and low rain risk (4%)
+canaries,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+canaries,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+canaries,9,Eau à 26°C et plages animées — septembre est un pic de baignade aux Canaries,Water at 26°C and lively beaches — September is peak swimming season in Canary Islands
+canaries,10,Conditions optimales de randonnée — 26°C et faible risque de pluie (14%),Optimal hiking conditions — 26°C and low rain risk (14%)
+canaries,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+canaries,12,Climat stable à 22°C pendant les fêtes — alternative aux marchés de Noël européens,Steady 22°C during the holidays — alternative to European Christmas markets
+cancun,1,Eau à 25°C et plages animées — janvier est un pic de baignade à Cancún,Water at 25°C and lively beaches — January is peak swimming season in Cancún
+cancun,2,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
 cancun,3,Spring Break américain — fête intense en zone hotelière. Éviter si voyage calme,American Spring Break — intense partying in hotel zone. Avoid if seeking calm
+cancun,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+cancun,5,Eau à 29°C et plages animées — mai est un pic de baignade à Cancún,Water at 29°C and lively beaches — May is peak swimming season in Cancún
+cancun,6,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+cancun,7,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+cancun,8,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+cancun,9,Eau à 29°C et plages animées — septembre est un pic de baignade à Cancún,Water at 29°C and lively beaches — September is peak swimming season in Cancún
+cancun,10,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
 cancun,11,Día de los Muertos (1-2 nov) prolongé en zone maya — cérémonies Hanal Pixán,Día de los Muertos (Nov 1-2) extended in Maya zone — Hanal Pixán ceremonies
+cancun,12,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+capri,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+capri,2,Bonne fenêtre pour la randonnée — températures douces (14°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (14°C) and uncrowded trails
+capri,3,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+capri,4,Bonne fenêtre pour la randonnée — températures douces (16°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (16°C) and uncrowded trails
+capri,5,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+capri,6,Bonne fenêtre pour la randonnée — températures douces (24°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (24°C) and uncrowded trails
+capri,7,Température idéale pour la plage (27°C) — affluence encore modérée,Ideal beach temperature (27°C) — crowds still moderate
 capri,8,Pic absolu — file d'attente pour la Grotte Bleue dès 7h. Marina Grande saturée,Absolute peak — Blue Grotto queue from 7am. Marina Grande at capacity
+capri,9,Température idéale pour la plage (25°C) — affluence encore modérée,Ideal beach temperature (25°C) — crowds still moderate
 capri,10,Île calme — restaurants locaux réouvrent pour les Italiens. Prix divisés par deux,Quiet island — local restaurants reopen for Italians. Prices halved
+capri,11,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+capri,12,Bonne fenêtre pour la randonnée — températures douces (15°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (15°C) and uncrowded trails
+corfou,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+corfou,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+corfou,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
 corfou,4,Pâques orthodoxe — processions spectaculaires dans la vieille ville de Corfou,Orthodox Easter — spectacular processions in Corfu Old Town
+corfou,5,Température idéale pour la plage (23°C) — affluence encore modérée,Ideal beach temperature (23°C) — crowds still moderate
+corfou,6,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+corfou,7,Chaleur forte — privilégier les activités matinales et les espaces climatisés l'après-midi,Hot weather — prioritise morning activities and air-conditioned spaces in the afternoon
 corfou,8,Festival de musique de Corfou — concerts dans la Vieille Forteresse vénitienne,Corfu Music Festival — concerts in the Old Venetian Fortress
+corfou,9,Eau à 25°C et plages animées — septembre est un pic de baignade à Corfou,Water at 25°C and lively beaches — September is peak swimming season in Corfu
+corfou,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+corfou,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+corfou,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+corse,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+corse,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+corse,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+corse,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+corse,5,Température idéale pour la plage (22°C) — affluence encore modérée,Ideal beach temperature (22°C) — crowds still moderate
+corse,6,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
 corse,7,Nuits de la Guitare de Patrimonio — festival dans un amphithéâtre naturel,Patrimonio Guitar Nights — festival in a natural amphitheatre
+corse,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
 corse,9,Fiera di u Vinu à Luri — fête du vin corse. Fin de saison idéale,Fiera di u Vinu in Luri — Corsican wine festival. Ideal end of season
+corse,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+corse,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+corse,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+costa-rica,1,Température idéale pour la plage (26°C) — affluence encore modérée,Ideal beach temperature (26°C) — crowds still moderate
 costa-rica,2,Saison sèche optimale — observation des quetzals à Monteverde,Optimal dry season — quetzal watching in Monteverde
+costa-rica,3,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+costa-rica,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+costa-rica,5,Eau à 27°C et plages animées — mai est un pic de baignade au Costa Rica,Water at 27°C and lively beaches — May is peak swimming season in Costa Rica
+costa-rica,6,Haute saison surf — spots fréquentés mais conditions fiables,Peak surf season — busy spots but reliable conditions
+costa-rica,7,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+costa-rica,8,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
 costa-rica,9,Pic de la saison verte — cascades au maximum et forêts luxuriantes,Green season peak — waterfalls at maximum and lush forests
+costa-rica,10,"Houle hivernale — vagues plus puissantes, idéal pour surfeurs confirmés","Winter swell — more powerful waves, ideal for experienced surfers"
+costa-rica,11,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+costa-rica,12,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+cote-azur,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+cote-azur,2,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+cote-azur,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+cote-azur,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+cote-azur,5,Festival de Cannes (mi-mai) — glamour sur la Croisette. Hôtels en hausse,Cannes Film Festival (mid-May) — glamour on the Croisette. Hotel prices spike
+cote-azur,6,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+cote-azur,7,Nice Jazz Festival et feux d'artifice de Monaco — ambiance estivale Riviera,Nice Jazz Festival and Monaco fireworks — Riviera summer atmosphere
+cote-azur,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+cote-azur,9,Température idéale pour la plage (27°C) — affluence encore modérée,Ideal beach temperature (27°C) — crowds still moderate
+cote-azur,10,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+cote-azur,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+cote-azur,12,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+crete,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+crete,2,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+crete,3,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+crete,4,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
 crete,5,Bataille de Crète (20 mai) — commémorations à La Canée. Gorges de Samaria ouvertes,Battle of Crete (May 20) — commemorations in Chania. Samaria Gorge opens
+crete,6,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+crete,7,Température idéale pour la plage (24°C) — affluence encore modérée,Ideal beach temperature (24°C) — crowds still moderate
 crete,8,Festival de Renaissance d'Héraklion — théâtre et musique dans la Forteresse vénitienne,Heraklion Renaissance Festival — theatre and music in the Venetian Fortress
+crete,9,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+crete,10,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+crete,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+crete,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
 dubai,1,Dubai Shopping Festival (début janvier) — soldes massives dans les malls,Dubai Shopping Festival (early January) — massive mall sales
+dubai,2,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+dubai,3,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+dubai,4,Visibilité sous-marine optimale — eau claire et conditions de plongée idéales,Optimal underwater visibility — clear water and ideal diving conditions
+dubai,5,Eau à 34°C et plages animées — mai est un pic de baignade à Dubaï,Water at 34°C and lively beaches — May is peak swimming season in Dubai
+dubai,6,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+dubai,7,Chaleur forte — privilégier les activités matinales et les espaces climatisés l'après-midi,Hot weather — prioritise morning activities and air-conditioned spaces in the afternoon
+dubai,8,Visibilité sous-marine optimale — eau claire et conditions de plongée idéales,Optimal underwater visibility — clear water and ideal diving conditions
+dubai,9,Eau à 36°C et plages animées — septembre est un pic de baignade à Dubaï,Water at 36°C and lively beaches — September is peak swimming season in Dubai
+dubai,10,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+dubai,11,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 dubai,12,National Day (2 déc) et ambiance de fin d'année — feux d'artifice au Burj Khalifa,National Day (Dec 2) and year-end atmosphere — Burj Khalifa fireworks
+dubrovnik,1,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
 dubrovnik,2,Fête de Saint-Blaise (3 fév) — patron de Dubrovnik. Processions dans la vieille ville,Feast of St Blaise (Feb 3) — patron of Dubrovnik. Old town processions
+dubrovnik,3,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+dubrovnik,4,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+dubrovnik,5,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+dubrovnik,6,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
 dubrovnik,7,Dubrovnik Summer Festival — théâtre et musique dans les fortifications. Réservez tôt,Dubrovnik Summer Festival — theatre and music in the fortifications. Book early
-edimbourg,8,Edinburgh Fringe (tout août) — plus grand festival des arts au monde. 4000 spectacles,Edinburgh Fringe (all August) — world's largest arts festival. 4,000 shows
+dubrovnik,8,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+dubrovnik,9,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+dubrovnik,10,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+dubrovnik,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+dubrovnik,12,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+edimbourg,1,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+edimbourg,2,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+edimbourg,3,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+edimbourg,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+edimbourg,5,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+edimbourg,6,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+edimbourg,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+edimbourg,8,Edinburgh Fringe (tout août) — plus grand festival des arts au monde. 4000 spectacles,Edinburgh Fringe (all August) — world's largest arts festival. 4
+edimbourg,9,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+edimbourg,10,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+edimbourg,11,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
 edimbourg,12,Hogmanay (31 déc) — célébrations du Nouvel An parmi les plus spectaculaires au monde,Hogmanay (Dec 31) — one of the world's most spectacular New Year celebrations
+florence,1,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+florence,2,Saison calme dans les vignobles — dégustations intimistes et tarifs réduits,Quiet season in the vineyards — intimate tastings and reduced prices
+florence,3,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
 florence,4,Scoppio del Carro (Pâques) — feu d'artifice depuis la cathédrale. Tradition médiévale,Scoppio del Carro (Easter) — fireworks from the cathedral. Medieval tradition
+florence,5,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+florence,6,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+florence,7,Maturation des raisins — visites œnologiques et terrasses de dégustation en plein air,Grapes ripening — wine tours and outdoor tasting terraces
+florence,8,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
 florence,9,Vendanges dans le Chianti — paysages dorés et dégustations dans les domaines,Chianti grape harvest — golden landscapes and estate tastings
+florence,10,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
 florence,11,Saison des truffes blanches — marchés et menus spéciaux dans les trattorias,White truffle season — markets and special menus in trattorias
-fuerteventura,7,Windsurf World Championship à Sotavento — compétitions mondiales,Windsurf World Championship in Sotavento — world-class competition
+florence,12,Saison calme dans les vignobles — dégustations intimistes et tarifs réduits,Quiet season in the vineyards — intimate tastings and reduced prices
+fuerteventura,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
 fuerteventura,2,Carnaval de Fuerteventura — défilés costumés et musique dans les rues,Fuerteventura Carnival — costumed parades and street music
-goa,12,Sunburn Festival (fin déc) — plus grand festival de musique électronique d'Asie,Sunburn Festival (late Dec) — Asia's biggest electronic music festival
+fuerteventura,3,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+fuerteventura,4,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+fuerteventura,5,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+fuerteventura,6,Bonne fenêtre pour la randonnée — températures douces (24°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (24°C) and uncrowded trails
+fuerteventura,7,Windsurf World Championship à Sotavento — compétitions mondiales,Windsurf World Championship in Sotavento — world-class competition
+fuerteventura,8,Haute saison surf — spots fréquentés mais conditions fiables,Peak surf season — busy spots but reliable conditions
+fuerteventura,9,Visibilité sous-marine optimale — eau claire et conditions de plongée idéales,Optimal underwater visibility — clear water and ideal diving conditions
+fuerteventura,10,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+fuerteventura,11,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+fuerteventura,12,Bonne fenêtre pour la randonnée — températures douces (20°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (20°C) and uncrowded trails
 goa,1,Saison sèche optimale — fêtes du Nouvel An sur les plages et marchés aux puces,Peak dry season — New Year's beach parties and flea markets
+goa,2,"Saison haute — bars et clubs animés, terrasses ouvertes tard le soir","Peak season — bars and clubs buzzing, terraces open late into the evening"
+goa,3,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+goa,4,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+goa,5,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+goa,6,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+goa,7,Eau à 26°C et plages animées — juillet est un pic de baignade à Goa,Water at 26°C and lively beaches — July is peak swimming season in Goa
+goa,8,Hors saison — ambiance locale plus authentique dans les bars et restaurants,Off-season — more authentic local atmosphere in bars and restaurants
+goa,9,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+goa,10,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+goa,11,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+goa,12,Sunburn Festival (fin déc) — plus grand festival de musique électronique d'Asie,Sunburn Festival (late Dec) — Asia's biggest electronic music festival
+gran-canaria,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
 gran-canaria,2,Carnaval de Las Palmas — l'un des plus grands d'Espagne. Drag Queen Gala emblématique,Las Palmas Carnival — one of Spain's biggest. Iconic Drag Queen Gala
+gran-canaria,3,"Houle hivernale — vagues plus puissantes, idéal pour surfeurs confirmés","Winter swell — more powerful waves, ideal for experienced surfers"
+gran-canaria,4,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+gran-canaria,5,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+gran-canaria,6,Température idéale pour la plage (22°C) — affluence encore modérée,Ideal beach temperature (22°C) — crowds still moderate
+gran-canaria,7,Conditions optimales de randonnée — 27°C et faible risque de pluie (0%),Optimal hiking conditions — 27°C and low rain risk (0%)
+gran-canaria,8,Haute saison surf — spots fréquentés mais conditions fiables,Peak surf season — busy spots but reliable conditions
+gran-canaria,9,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+gran-canaria,10,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
 gran-canaria,11,Climat stable à 24°C — refuge hivernal européen. Golf et randonnée toute l'année,Steady 24°C climate — European winter refuge. Year-round golf and hiking
+gran-canaria,12,Bonne fenêtre pour la randonnée — températures douces (14°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (14°C) and uncrowded trails
 hawaii,1,Saison des baleines à bosse — observation depuis Maui et Big Island,Humpback whale season — watching from Maui and Big Island
+hawaii,2,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+hawaii,3,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+hawaii,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+hawaii,5,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+hawaii,6,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+hawaii,7,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+hawaii,8,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+hawaii,9,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+hawaii,10,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+hawaii,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
 hawaii,12,Vans Triple Crown of Surfing sur la North Shore d'Oahu — compétition légendaire,Vans Triple Crown of Surfing on Oahu's North Shore — legendary competition
+hoi-an,1,Température idéale pour la plage (24°C) — affluence encore modérée,Ideal beach temperature (24°C) — crowds still moderate
 hoi-an,2,Fête des lanternes (pleine lune) — vieille ville éclairée aux bougies. Pas de circulation,Lantern Festival (full moon) — old town lit by candlelight. No traffic
+hoi-an,3,Bonne fenêtre pour la randonnée — températures douces (28°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (28°C) and uncrowded trails
+hoi-an,4,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+hoi-an,5,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+hoi-an,6,Eau à 32°C et plages animées — juin est un pic de baignade à Hôi An,Water at 32°C and lively beaches — June is peak swimming season in Hoi An
+hoi-an,7,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+hoi-an,8,Randonnées à privilégier tôt le matin — chaleur marquée dès 11h (35°C),Hike early morning to avoid the heat — temperatures reach 35°C by 11am
 hoi-an,9,Saison des pluies mais My Son accessible — touristes rares et artisanat à prix réduits,Rainy season but My Son accessible — rare tourists and reduced craft prices
+hoi-an,10,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+hoi-an,11,Température idéale pour la plage (27°C) — affluence encore modérée,Ideal beach temperature (27°C) — crowds still moderate
+hoi-an,12,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+ibiza,1,Hors saison — ambiance locale plus authentique dans les bars et restaurants,Off-season — more authentic local atmosphere in bars and restaurants
+ibiza,2,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+ibiza,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+ibiza,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+ibiza,5,"Saison haute — bars et clubs animés, terrasses ouvertes tard le soir","Peak season — bars and clubs buzzing, terraces open late into the evening"
 ibiza,6,Ouverture des clubs (début juin) — Amnesia et Ushuaïa lancent leurs résidences,Club openings (early June) — Amnesia and Ushuaïa launch their residencies
+ibiza,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+ibiza,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+ibiza,9,"Saison haute — bars et clubs animés, terrasses ouvertes tard le soir","Peak season — bars and clubs buzzing, terraces open late into the evening"
 ibiza,10,Closing parties des clubs (début oct) — dernières fêtes de la saison,Club closing parties (early Oct) — last parties of the season
+ibiza,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+ibiza,12,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
 ile-maurice,1,Course de pirogues traditionnelles — fête nationale et événements culturels,Traditional pirogue racing — national holiday and cultural events
+ile-maurice,2,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+ile-maurice,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+ile-maurice,4,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+ile-maurice,5,Eau à 25°C et plages animées — mai est un pic de baignade à Île Maurice,Water at 25°C and lively beaches — May is peak swimming season in Mauritius
+ile-maurice,6,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+ile-maurice,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+ile-maurice,8,Bonne fenêtre pour la randonnée — températures douces (26°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (26°C) and uncrowded trails
 ile-maurice,9,Marathon de Maurice (mi-sept) et début de saison des baleines à bosse,Mauritius Marathon (mid-Sept) and start of humpback whale season
+ile-maurice,10,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+ile-maurice,11,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+ile-maurice,12,Randonnées à privilégier tôt le matin — chaleur marquée dès 11h (30°C),Hike early morning to avoid the heat — temperatures reach 30°C by 11am
+istanbul,1,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+istanbul,2,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+istanbul,3,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
 istanbul,4,Festival des tulipes d'Istanbul — millions de tulipes dans les parcs historiques,Istanbul Tulip Festival — millions of tulips in historic parks
+istanbul,5,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+istanbul,6,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+istanbul,7,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+istanbul,8,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+istanbul,9,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+istanbul,10,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
 istanbul,11,Biennale d'Istanbul (années impaires) — art contemporain dans des lieux historiques,Istanbul Biennial (odd years) — contemporary art in historic venues
+istanbul,12,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+jamaique,1,Eau à 25°C et plages animées — janvier est un pic de baignade en Jamaïque,Water at 25°C and lively beaches — January is peak swimming season in Jamaica
 jamaique,2,Reggae Sumfest (juillet en réalité) — mais février offre Bob Marley Birthday (6 fév),Bob Marley Birthday (Feb 6) — celebrations in Kingston and Nine Mile
+jamaique,3,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+jamaique,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+jamaique,5,Eau à 29°C et plages animées — mai est un pic de baignade en Jamaïque,Water at 29°C and lively beaches — May is peak swimming season in Jamaica
+jamaique,6,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
 jamaique,7,Reggae Sumfest à Montego Bay — plus grand festival reggae au monde,Reggae Sumfest in Montego Bay — world's biggest reggae festival
-katmandou,10,Dashain (oct) et Tihar (nov) — plus grandes fêtes népalaises. Temples décorés,Dashain (Oct) and Tihar (Nov) — Nepal's biggest festivals. Decorated temples
+jamaique,8,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+jamaique,9,Eau à 29°C et plages animées — septembre est un pic de baignade en Jamaïque,Water at 29°C and lively beaches — September is peak swimming season in Jamaica
+jamaique,10,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+jamaique,11,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+jamaique,12,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+katmandou,1,Conditions optimales de randonnée — 18°C et faible risque de pluie (2%),Optimal hiking conditions — 18°C and low rain risk (2%)
+katmandou,2,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+katmandou,3,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 katmandou,4,Nouvel An népalais (mi-avril) — processions et festivités dans Durbar Square,Nepali New Year (mid-April) — processions and festivities in Durbar Square
+katmandou,5,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+katmandou,6,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+katmandou,7,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+katmandou,8,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+katmandou,9,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+katmandou,10,Dashain (oct) et Tihar (nov) — plus grandes fêtes népalaises. Temples décorés,Dashain (Oct) and Tihar (Nov) — Nepal's biggest festivals. Decorated temples
+katmandou,11,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+katmandou,12,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+la-havane,1,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+la-havane,2,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
 la-havane,3,Festival del Habano — plus grand festival du cigare au monde,Festival del Habano — world's biggest cigar festival
+la-havane,4,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+la-havane,5,Chaleur forte — privilégier les activités matinales et les espaces climatisés l'après-midi,Hot weather — prioritise morning activities and air-conditioned spaces in the afternoon
+la-havane,6,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+la-havane,7,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+la-havane,8,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+la-havane,9,Eau à 29°C et plages animées — septembre est un pic de baignade à La Havane,Water at 29°C and lively beaches — September is peak swimming season in Havana
+la-havane,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+la-havane,11,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 la-havane,12,Festival del Nuevo Cine Latinoamericano — cinéma latino-américain dans La Havane,Festival del Nuevo Cine Latinoamericano — Latin American cinema in Havana
+lanzarote,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
 lanzarote,2,Carnaval d'Arrecife — influencé par le carnaval de Tenerife. Costumes et chars,Arrecife Carnival — influenced by Tenerife's carnival. Costumes and floats
+lanzarote,3,Vignobles en fleurs — route des vins agréable avant la chaleur estivale,Vineyards in bloom — wine route pleasant before summer heat
+lanzarote,4,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+lanzarote,5,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+lanzarote,6,Température idéale pour la plage (24°C) — affluence encore modérée,Ideal beach temperature (24°C) — crowds still moderate
+lanzarote,7,Conditions optimales de randonnée — 26°C et faible risque de pluie (0%),Optimal hiking conditions — 26°C and low rain risk (0%)
+lanzarote,8,Maturation des raisins — visites œnologiques et terrasses de dégustation en plein air,Grapes ripening — wine tours and outdoor tasting terraces
 lanzarote,9,Ironman Lanzarote preparation — l'île attire les triathlètes du monde entier,Ironman Lanzarote preparation — the island attracts triathletes worldwide
+lanzarote,10,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+lanzarote,11,Température idéale pour la plage (24°C) — affluence encore modérée,Ideal beach temperature (24°C) — crowds still moderate
+lanzarote,12,Conditions optimales de randonnée — 20°C et faible risque de pluie (6%),Optimal hiking conditions — 20°C and low rain risk (6%)
+le-cap,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
 le-cap,2,Vendanges dans les vignobles de Stellenbosch et Franschhoek — pick de la saison,Grape harvest in Stellenbosch and Franschhoek vineyards — season peak
+le-cap,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+le-cap,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+le-cap,5,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+le-cap,6,Maturation des raisins — visites œnologiques et terrasses de dégustation en plein air,Grapes ripening — wine tours and outdoor tasting terraces
+le-cap,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+le-cap,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+le-cap,9,Température idéale pour la plage (24°C) — affluence encore modérée,Ideal beach temperature (24°C) — crowds still moderate
+le-cap,10,"Vendanges — visites de domaines, dégustations et ambiance festive dans les vignobles","Grape harvest — winery visits, tastings and festive atmosphere in the vineyards"
+le-cap,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
 le-cap,12,Été austral — plages de Camps Bay animées et Kirstenbosch Summer Concerts,Southern summer — Camps Bay beaches lively and Kirstenbosch Summer Concerts
+lisbonne,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+lisbonne,2,"Houle hivernale — vagues plus puissantes, idéal pour surfeurs confirmés","Winter swell — more powerful waves, ideal for experienced surfers"
+lisbonne,3,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+lisbonne,4,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+lisbonne,5,Température idéale pour la plage (23°C) — affluence encore modérée,Ideal beach temperature (23°C) — crowds still moderate
 lisbonne,6,Festas de Lisboa (Santo António 12-13 juin) — sardines grillées et bal dans l'Alfama,Festas de Lisboa (Santo António Jun 12-13) — grilled sardines and dancing in Alfama
+lisbonne,7,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+lisbonne,8,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+lisbonne,9,Température idéale pour la plage (26°C) — affluence encore modérée,Ideal beach temperature (26°C) — crowds still moderate
 lisbonne,10,Web Summit (fin octobre) — la ville se remplit de techies. Hôtels en hausse,Web Summit (late October) — city fills with techies. Hotel prices rise
+lisbonne,11,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+lisbonne,12,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+londres,1,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+londres,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+londres,3,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+londres,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+londres,5,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
 londres,6,Trooping the Colour (anniversaire du Roi) — parade royale en juin,Trooping the Colour (King's Birthday) — royal parade in June
+londres,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+londres,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+londres,9,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+londres,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
 londres,11,Bonfire Night (5 nov) — feux d'artifice sur la Tamise et dans les parcs,Bonfire Night (Nov 5) — fireworks on the Thames and in the parks
 londres,12,Winter Wonderland à Hyde Park — marché de Noël géant et patinoire,Winter Wonderland in Hyde Park — giant Christmas market and ice rink
+los-angeles,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
 los-angeles,2,Oscars (fin février) — Hollywood en effervescence. Red carpet au Dolby Theatre,Oscars (late February) — Hollywood buzzes. Red carpet at Dolby Theatre
+los-angeles,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+los-angeles,4,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+los-angeles,5,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+los-angeles,6,Température idéale pour la plage (26°C) — affluence encore modérée,Ideal beach temperature (26°C) — crowds still moderate
 los-angeles,7,été californien classique — plages de Santa Monica et Venice Beach au pic,Classic Californian summer — Santa Monica and Venice Beach at peak
-lyon,12,Fête des Lumières (8 déc) — 4 nuits de projections monumentales. 2M de visiteurs,Festival of Lights (Dec 8) — 4 nights of monumental projections. 2M visitors
+los-angeles,8,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+los-angeles,9,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+los-angeles,10,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+los-angeles,11,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+los-angeles,12,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+lyon,1,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+lyon,2,Hors saison — ambiance locale plus authentique dans les bars et restaurants,Off-season — more authentic local atmosphere in bars and restaurants
+lyon,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+lyon,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+lyon,5,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+lyon,6,"Saison haute — bars et clubs animés, terrasses ouvertes tard le soir","Peak season — bars and clubs buzzing, terraces open late into the evening"
+lyon,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+lyon,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+lyon,9,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+lyon,10,Hors saison — ambiance locale plus authentique dans les bars et restaurants,Off-season — more authentic local atmosphere in bars and restaurants
 lyon,11,Beaujolais Nouveau (3e jeudi nov) — dégustations et fête dans les bouchons,Beaujolais Nouveau (3rd Thursday Nov) — tastings and celebrations in bouchons
+lyon,12,Fête des Lumières (8 déc) — 4 nuits de projections monumentales. 2M de visiteurs,Festival of Lights (Dec 8) — 4 nights of monumental projections. 2M visitors
 madere,1,Feux d'artifice du Nouvel An de Funchal — record Guinness parmi les plus grands au monde,Funchal New Year's fireworks — Guinness record among the world's largest
+madere,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+madere,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+madere,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
 madere,5,Festival des fleurs de Madère — chars fleuris dans les rues de Funchal,Madeira Flower Festival — flower floats through the streets of Funchal
+madere,6,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+madere,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+madere,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+madere,9,Conditions de surf équilibrées — vagues régulières et moins de monde au lineup,Balanced surf conditions — consistent waves and fewer surfers in the lineup
+madere,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+madere,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+madere,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+majorque,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
 majorque,2,Carnaval de Palma — Sa Rua défile dans le centre historique,Palma Carnival — Sa Rua parade through the historic centre
+majorque,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+majorque,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+majorque,5,Température idéale pour la plage (23°C) — affluence encore modérée,Ideal beach temperature (23°C) — crowds still moderate
 majorque,6,Nuit de Sant Joan (23 juin) — feux de joie sur les plages de Palma,Night of Sant Joan (Jun 23) — bonfires on Palma's beaches
-malaga,8,Feria de Málaga (mi-août) — plus grande fête d'Andalousie après Séville. Gratuit,Feria de Málaga (mid-August) — Andalusia's biggest party after Seville. Free
+majorque,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+majorque,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+majorque,9,Température idéale pour la plage (27°C) — affluence encore modérée,Ideal beach temperature (27°C) — crowds still moderate
+majorque,10,Bonne fenêtre pour la randonnée — températures douces (24°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (24°C) and uncrowded trails
+majorque,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+majorque,12,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+malaga,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+malaga,2,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
 malaga,3,Semana Santa (mars-avril) — processions spectaculaires dans le centre historique,Semana Santa (March-April) — spectacular processions in the historic centre
+malaga,4,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+malaga,5,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+malaga,6,Eau à 26°C et plages animées — juin est un pic de baignade à Málaga,Water at 26°C and lively beaches — June is peak swimming season in Malaga
+malaga,7,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+malaga,8,Feria de Málaga (mi-août) — plus grande fête d'Andalousie après Séville. Gratuit,Feria de Málaga (mid-August) — Andalusia's biggest party after Seville. Free
+malaga,9,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+malaga,10,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+malaga,11,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+malaga,12,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+maldives,1,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
 maldives,2,Saison sèche optimale — visibilité sous-marine maximale côté est,Peak dry season — maximum underwater visibility on the east side
+maldives,3,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+maldives,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+maldives,5,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
 maldives,6,Saison des raies manta — observation garantie dans les atolls du sud,Manta ray season — guaranteed sightings in the southern atolls
+maldives,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+maldives,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+maldives,9,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+maldives,10,Eau à 26°C et plages animées — octobre est un pic de baignade aux Maldives,Water at 26°C and lively beaches — October is peak swimming season in Maldives
+maldives,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+maldives,12,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+malte,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
 malte,2,Carnaval de Malte — chars et costumes à La Valette. Tradition depuis 1535,Malta Carnival — floats and costumes in Valletta. Tradition since 1535
+malte,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+malte,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+malte,5,Température idéale pour la plage (23°C) — affluence encore modérée,Ideal beach temperature (23°C) — crowds still moderate
 malte,6,Festa (été) — chaque village célèbre son saint patron avec feux d'artifice,Village festa (summer) — each village celebrates its patron saint with fireworks
+malte,7,Chaleur forte — privilégier les activités matinales et les espaces climatisés l'après-midi,Hot weather — prioritise morning activities and air-conditioned spaces in the afternoon
+malte,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+malte,9,Eau à 26°C et plages animées — septembre est un pic de baignade à Malte,Water at 26°C and lively beaches — September is peak swimming season in Malta
+malte,10,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+malte,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+malte,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
 marrakech,1,Marathon de Marrakech (fin janvier) — parcours à travers la médina et les jardins,Marrakech Marathon (late January) — route through the medina and gardens
+marrakech,2,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+marrakech,3,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 marrakech,4,Les roses du Dadès en fleurs — festival de la rose à Kelaat M'Gouna (1h30),Dadès roses in bloom — Rose Festival in Kelaat M'Gouna (1h30 away)
+marrakech,5,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+marrakech,6,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+marrakech,7,Chaleur forte — privilégier les activités matinales et les espaces climatisés l'après-midi,Hot weather — prioritise morning activities and air-conditioned spaces in the afternoon
+marrakech,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+marrakech,9,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+marrakech,10,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+marrakech,11,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+marrakech,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+marseille,1,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+marseille,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+marseille,3,Bonne fenêtre pour la randonnée — températures douces (15°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (15°C) and uncrowded trails
+marseille,4,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 marseille,5,Festival de Marseille (juin en réalité) mais mai = Calanques ouvertes et mer à 17°C,Calanques fully open and sea at 17°C — perfect hiking before summer heat
+marseille,6,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
 marseille,7,Festival de Marseille — danse et théâtre dans les lieux emblématiques de la ville,Festival de Marseille — dance and theatre in the city's iconic venues
+marseille,8,Bonne fenêtre pour la randonnée — températures douces (29°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (29°C) and uncrowded trails
+marseille,9,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+marseille,10,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+marseille,11,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+marseille,12,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+miami,1,Température idéale pour la plage (26°C) — affluence encore modérée,Ideal beach temperature (26°C) — crowds still moderate
+miami,2,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
 miami,3,Miami Music Week et Ultra Music Festival — la ville devient capitale de l'électro,Miami Music Week and Ultra Music Festival — city becomes electronic music capital
+miami,4,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+miami,5,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+miami,6,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+miami,7,Eau à 28°C et plages animées — juillet est un pic de baignade à Miami,Water at 28°C and lively beaches — July is peak swimming season in Miami
+miami,8,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+miami,9,Hors saison — ambiance locale plus authentique dans les bars et restaurants,Off-season — more authentic local atmosphere in bars and restaurants
+miami,10,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+miami,11,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
 miami,12,Art Basel Miami Beach (début déc) — art contemporain dans tout le Design District,Art Basel Miami Beach (early Dec) — contemporary art throughout the Design District
+minorque,1,Hors saison — ambiance locale plus authentique dans les bars et restaurants,Off-season — more authentic local atmosphere in bars and restaurants
+minorque,2,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+minorque,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+minorque,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+minorque,5,"Saison haute — bars et clubs animés, terrasses ouvertes tard le soir","Peak season — bars and clubs buzzing, terraces open late into the evening"
 minorque,6,Fêtes de Sant Joan à Ciutadella (23-24 juin) — chevaux dans les rues. Spectaculaire,Festes de Sant Joan in Ciutadella (Jun 23-24) — horses in the streets. Spectacular
+minorque,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+minorque,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
 minorque,9,Fin de saison — calas quasi désertes et température de la mer encore à 25°C,End of season — coves nearly deserted and sea still at 25°C
-monaco,5,Grand Prix de Monaco F1 (fin mai) — course dans les rues de la Principauté,Monaco F1 Grand Prix (late May) — race through the streets of the Principality
+minorque,10,Température idéale pour la plage (24°C) — affluence encore modérée,Ideal beach temperature (24°C) — crowds still moderate
+minorque,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+minorque,12,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
 monaco,1,Monte-Carlo Rally (fin janvier) — ambiance automobile dans la Principauté,Monte-Carlo Rally (late January) — motorsport atmosphere in the Principality
+monaco,2,Bonne fenêtre pour la randonnée — températures douces (13°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (13°C) and uncrowded trails
+monaco,3,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+monaco,4,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+monaco,5,Grand Prix de Monaco F1 (fin mai) — course dans les rues de la Principauté,Monaco F1 Grand Prix (late May) — race through the streets of the Principality
+monaco,6,"Saison haute — bars et clubs animés, terrasses ouvertes tard le soir","Peak season — bars and clubs buzzing, terraces open late into the evening"
+monaco,7,Conditions optimales de randonnée — 28°C et faible risque de pluie (9%),Optimal hiking conditions — 28°C and low rain risk (9%)
+monaco,8,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+monaco,9,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+monaco,10,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+monaco,11,Hors saison — ambiance locale plus authentique dans les bars et restaurants,Off-season — more authentic local atmosphere in bars and restaurants
+monaco,12,Bonne fenêtre pour la randonnée — températures douces (14°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (14°C) and uncrowded trails
+mykonos,1,Hors saison — ambiance locale plus authentique dans les bars et restaurants,Off-season — more authentic local atmosphere in bars and restaurants
+mykonos,2,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+mykonos,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+mykonos,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+mykonos,5,"Saison haute — bars et clubs animés, terrasses ouvertes tard le soir","Peak season — bars and clubs buzzing, terraces open late into the evening"
+mykonos,6,Visibilité sous-marine optimale — eau claire et conditions de plongée idéales,Optimal underwater visibility — clear water and ideal diving conditions
 mykonos,7,Pic de la saison clubs — Paradise et Super Paradise en pleine effervescence,Peak club season — Paradise and Super Paradise in full swing
+mykonos,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+mykonos,9,"Saison haute — bars et clubs animés, terrasses ouvertes tard le soir","Peak season — bars and clubs buzzing, terraces open late into the evening"
 mykonos,10,Closing parties — dernières soirées avant l'hiver. Prix divisés par trois,Closing parties — last events before winter. Prices divided by three
-new-york,12,Sapin du Rockefeller Center et patinoire — ambiance féerique de Noël à Manhattan,Rockefeller Center tree and ice rink — magical Christmas atmosphere in Manhattan
-new-york,10,Feuillage automnal à Central Park — peak foliage mi-octobre à début novembre,Autumn foliage in Central Park — peak foliage mid-October to early November
+mykonos,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+mykonos,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+new-york,1,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+new-york,2,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+new-york,3,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+new-york,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+new-york,5,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+new-york,6,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
 new-york,7,4th of July — feux d'artifice spectaculaires sur l'East River,4th of July — spectacular fireworks over the East River
+new-york,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+new-york,9,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+new-york,10,Feuillage automnal à Central Park — peak foliage mi-octobre à début novembre,Autumn foliage in Central Park — peak foliage mid-October to early November
+new-york,11,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+new-york,12,Sapin du Rockefeller Center et patinoire — ambiance féerique de Noël à Manhattan,Rockefeller Center tree and ice rink — magical Christmas atmosphere in Manhattan
+nice,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
 nice,2,Carnaval de Nice (fév-mars) — l'un des plus grands carnavals du monde. 2 semaines,Nice Carnival (Feb-Mar) — one of the world's largest carnivals. 2 weeks
+nice,3,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+nice,4,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+nice,5,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+nice,6,Température idéale pour la plage (26°C) — affluence encore modérée,Ideal beach temperature (26°C) — crowds still moderate
 nice,7,Nice Jazz Festival (mi-juillet) — concerts en plein air près de la Promenade,Nice Jazz Festival (mid-July) — outdoor concerts near the Promenade
-paris,7,14 Juillet — feux d'artifice sur la Tour Eiffel et défilé militaire aux Champs-Élysées,Bastille Day (Jul 14) — Eiffel Tower fireworks and military parade on Champs-Élysées
-paris,12,Marchés de Noël et illuminations — Champs-Élysées et Galeries Lafayette,Christmas markets and lights — Champs-Élysées and Galeries Lafayette
+nice,8,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+nice,9,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+nice,10,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+nice,11,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+nice,12,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+paris,1,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+paris,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+paris,3,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
 paris,4,Les cerisiers fleurissent au Trocadéro et dans les jardins — terrasses ouvertes,Cherry blossoms at Trocadéro and in the gardens — terraces open
+paris,5,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+paris,6,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+paris,7,14 Juillet — feux d'artifice sur la Tour Eiffel et défilé militaire aux Champs-Élysées,Bastille Day (Jul 14) — Eiffel Tower fireworks and military parade on Champs-Élysées
+paris,8,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
 paris,9,Journées du Patrimoine (3e week-end sept) — accès gratuit à des lieux normalement fermés,Heritage Days (3rd weekend Sep) — free access to normally closed venues
-phuket,11,Loi Krathong à Phuket — lanternes flottantes sur les plages de Kata et Karon,Loi Krathong in Phuket — floating lanterns on Kata and Karon beaches
+paris,10,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+paris,11,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+paris,12,Marchés de Noël et illuminations — Champs-Élysées et Galeries Lafayette,Christmas markets and lights — Champs-Élysées and Galeries Lafayette
+phuket,1,Eau à 28°C et plages animées — janvier est un pic de baignade à Phuket,Water at 28°C and lively beaches — January is peak swimming season in Phuket
+phuket,2,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+phuket,3,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
 phuket,4,Songkran à Phuket — bataille d'eau géante sur Bangla Road à Patong,Songkran in Phuket — giant water fight on Bangla Road in Patong
+phuket,5,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+phuket,6,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+phuket,7,Eau à 27°C et plages animées — juillet est un pic de baignade à Phuket,Water at 27°C and lively beaches — July is peak swimming season in Phuket
+phuket,8,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+phuket,9,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+phuket,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+phuket,11,Loi Krathong à Phuket — lanternes flottantes sur les plages de Kata et Karon,Loi Krathong in Phuket — floating lanterns on Kata and Karon beaches
+phuket,12,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+porto,1,Saison calme dans les vignobles — dégustations intimistes et tarifs réduits,Quiet season in the vineyards — intimate tastings and reduced prices
+porto,2,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+porto,3,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+porto,4,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+porto,5,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
 porto,6,Festa de São João (23-24 juin) — plus grande fête de Porto. Marteaux en plastique,Festa de São João (Jun 23-24) — Porto's biggest party. Plastic hammers tradition
+porto,7,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+porto,8,Conditions optimales de randonnée — 24°C et faible risque de pluie (6%),Optimal hiking conditions — 24°C and low rain risk (6%)
 porto,9,Vendanges dans la vallée du Douro — foulage du raisin et dégustations,Douro Valley grape harvest — grape treading and tastings
-prague,12,Marchés de Noël de la Place de la Vieille Ville — parmi les plus beaux d'Europe,Old Town Square Christmas markets — among the finest in Europe
+porto,10,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+porto,11,Saison calme dans les vignobles — dégustations intimistes et tarifs réduits,Quiet season in the vineyards — intimate tastings and reduced prices
+porto,12,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+prague,1,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+prague,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+prague,3,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+prague,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
 prague,5,Festival de musique du Printemps de Prague — concerts classiques dans des palais,Prague Spring Music Festival — classical concerts in palaces
+prague,6,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+prague,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+prague,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+prague,9,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+prague,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+prague,11,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+prague,12,Marchés de Noël de la Place de la Vieille Ville — parmi les plus beaux d'Europe,Old Town Square Christmas markets — among the finest in Europe
+provence,1,Bonne fenêtre pour la randonnée — températures douces (11°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (11°C) and uncrowded trails
+provence,2,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+provence,3,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+provence,4,Bonne fenêtre pour la randonnée — températures douces (19°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (19°C) and uncrowded trails
+provence,5,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+provence,6,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
 provence,7,Lavande en pleine floraison sur le Plateau de Valensole — pic mi-juillet,Lavender in full bloom on the Plateau de Valensole — peak mid-July
+provence,8,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 provence,9,Vendanges en Provence — route des vins du rosé AOP. Marchés de rentrée,Provence grape harvest — AOP rosé wine route. Back-to-school markets
+provence,10,Bonne fenêtre pour la randonnée — températures douces (21°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (21°C) and uncrowded trails
+provence,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+provence,12,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+reunion,1,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+reunion,2,"Houle hivernale — vagues plus puissantes, idéal pour surfeurs confirmés","Winter swell — more powerful waves, ideal for experienced surfers"
+reunion,3,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+reunion,4,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+reunion,5,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
 reunion,6,Début de la saison sèche — randonnées dans les cirques avec ciel dégagé,Start of dry season — cirque hiking under clear skies
+reunion,7,Haute saison surf — spots fréquentés mais conditions fiables,Peak surf season — busy spots but reliable conditions
+reunion,8,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+reunion,9,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 reunion,10,Piton de la Fournaise souvent en éruption (2-3 fois/an) — spectacle naturel,Piton de la Fournaise often erupting (2-3 times/year) — natural spectacle
-reykjavik,6,Soleil de minuit (mi-juin) — 24h de lumière. Randonnées possibles à toute heure,Midnight sun (mid-June) — 24h daylight. Hiking possible at any hour
+reunion,11,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+reunion,12,"Houle hivernale — vagues plus puissantes, idéal pour surfeurs confirmés","Winter swell — more powerful waves, ideal for experienced surfers"
+reykjavik,1,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
 reykjavik,2,Aurores boréales au pic — nuits longues et ciel souvent dégagé,Northern lights at peak — long nights and often clear skies
+reykjavik,3,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+reykjavik,4,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+reykjavik,5,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+reykjavik,6,Soleil de minuit (mi-juin) — 24h de lumière. Randonnées possibles à toute heure,Midnight sun (mid-June) — 24h daylight. Hiking possible at any hour
+reykjavik,7,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+reykjavik,8,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+reykjavik,9,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+reykjavik,10,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+reykjavik,11,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+reykjavik,12,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+rhodes,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+rhodes,2,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+rhodes,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+rhodes,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
 rhodes,5,Ouverture de la saison — plages quasi désertes et eau à 20°C. Prix d'avant-saison,Season opening — beaches nearly deserted and water at 20°C. Pre-season prices
+rhodes,6,Visibilité sous-marine optimale — eau claire et conditions de plongée idéales,Optimal underwater visibility — clear water and ideal diving conditions
 rhodes,7,Festival médiéval dans la vieille ville de Rhodes — reconstitutions et spectacles,Medieval festival in Rhodes Old Town — re-enactments and performances
+rhodes,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+rhodes,9,Eau à 28°C et plages animées — septembre est un pic de baignade à Rhodes,Water at 28°C and lively beaches — September is peak swimming season in Rhodes
+rhodes,10,Visibilité sous-marine optimale — eau claire et conditions de plongée idéales,Optimal underwater visibility — clear water and ideal diving conditions
+rhodes,11,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+rhodes,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+rio-de-janeiro,1,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
 rio-de-janeiro,2,Carnaval de Rio (fév-mars) — plus grand carnaval du monde. Sambódromo et blocos,Rio Carnival (Feb-Mar) — world's biggest carnival. Sambódromo and blocos
+rio-de-janeiro,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+rio-de-janeiro,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+rio-de-janeiro,5,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+rio-de-janeiro,6,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
 rio-de-janeiro,7,Hiver brésilien doux (22°C) — moins de touristes et ciel souvent bleu,Mild Brazilian winter (22°C) — fewer tourists and often blue skies
+rio-de-janeiro,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+rio-de-janeiro,9,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+rio-de-janeiro,10,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+rio-de-janeiro,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+rio-de-janeiro,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+riviera-maya,1,Température idéale pour la plage (27°C) — affluence encore modérée,Ideal beach temperature (27°C) — crowds still moderate
+riviera-maya,2,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+riviera-maya,3,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+riviera-maya,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
 riviera-maya,5,Début de la ponte des tortues marines — Akumal et Xcacel,Start of sea turtle nesting season — Akumal and Xcacel
+riviera-maya,6,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+riviera-maya,7,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+riviera-maya,8,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+riviera-maya,9,Eau à 29°C et plages animées — septembre est un pic de baignade en Riviera Maya,Water at 29°C and lively beaches — September is peak swimming season in Riviera Maya
+riviera-maya,10,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
 riviera-maya,11,Día de los Muertos — cérémonies mayas Hanal Pixán dans les cenotes sacrés,Día de los Muertos — Mayan Hanal Pixán ceremonies in sacred cenotes
-rome,4,Pâques au Vatican — messe papale et bénédiction Urbi et Orbi,Easter at the Vatican — papal mass and Urbi et Orbi blessing
-rome,10,Nuit Blanche de Rome (oct) — musées ouverts jusqu'à 2h du matin. 1€ l'entrée,Rome's White Night (Oct) — museums open until 2am. €1 entry
+riviera-maya,12,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+rome,1,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+rome,2,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
 rome,3,Marathon de Rome (mi-mars) — parcours passant par le Colisée et le Vatican,Rome Marathon (mid-March) — route passing the Colosseum and Vatican
+rome,4,Pâques au Vatican — messe papale et bénédiction Urbi et Orbi,Easter at the Vatican — papal mass and Urbi et Orbi blessing
+rome,5,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+rome,6,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+rome,7,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+rome,8,Chaleur forte — privilégier les activités matinales et les espaces climatisés l'après-midi,Hot weather — prioritise morning activities and air-conditioned spaces in the afternoon
+rome,9,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+rome,10,Nuit Blanche de Rome (oct) — musées ouverts jusqu'à 2h du matin. 1€ l'entrée,Rome's White Night (Oct) — museums open until 2am. €1 entry
+rome,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+rome,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+santorin,1,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+santorin,2,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+santorin,3,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+santorin,4,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+santorin,5,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
 santorin,6,Meilleur rapport lumière/affluence — couchers de soleil à Oia sans la foule de juillet,Best light-to-crowds ratio — Oia sunsets without July crowds
+santorin,7,Visibilité sous-marine optimale — eau claire et conditions de plongée idéales,Optimal underwater visibility — clear water and ideal diving conditions
+santorin,8,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+santorin,9,Visibilité sous-marine optimale — eau claire et conditions de plongée idéales,Optimal underwater visibility — clear water and ideal diving conditions
 santorin,10,Vendanges du Vinsanto — dégustation du vin de dessert unique de Santorin,Vinsanto grape harvest — tasting Santorini's unique dessert wine
+santorin,11,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+santorin,12,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+sardaigne,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+sardaigne,2,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+sardaigne,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+sardaigne,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
 sardaigne,5,Cavalcade sarde (mai) à Sassari — costumes traditionnels et chevaux,Sardinian Cavalcade (May) in Sassari — traditional costumes and horses
+sardaigne,6,Visibilité sous-marine optimale — eau claire et conditions de plongée idéales,Optimal underwater visibility — clear water and ideal diving conditions
+sardaigne,7,Chaleur forte — privilégier les activités matinales et les espaces climatisés l'après-midi,Hot weather — prioritise morning activities and air-conditioned spaces in the afternoon
 sardaigne,8,Ferragosto (15 août) — plages pleines mais fêtes de village authentiques,Ferragosto (Aug 15) — beaches full but authentic village festivals
-seville,4,Feria de Abril (2 semaines après Pâques) — casetas et flamenco. Réservez 6 mois avant,Feria de Abril (2 weeks after Easter) — casetas and flamenco. Book 6 months ahead
+sardaigne,9,Eau à 25°C et plages animées — septembre est un pic de baignade en Sardaigne,Water at 25°C and lively beaches — September is peak swimming season in Sardinia
+sardaigne,10,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+sardaigne,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+sardaigne,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+seville,1,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+seville,2,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
 seville,3,Semana Santa de Séville — processions les plus spectaculaires d'Espagne,Seville's Semana Santa — Spain's most spectacular processions
+seville,4,Feria de Abril (2 semaines après Pâques) — casetas et flamenco. Réservez 6 mois avant,Feria de Abril (2 weeks after Easter) — casetas and flamenco. Book 6 months ahead
+seville,5,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+seville,6,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+seville,7,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+seville,8,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+seville,9,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+seville,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+seville,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+seville,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+seychelles,1,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+seychelles,2,Température idéale pour la plage (26°C) — affluence encore modérée,Ideal beach temperature (26°C) — crowds still moderate
+seychelles,3,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
 seychelles,4,Festival Kreol (oct en réalité) mais avril = mer calme entre les moussons,Calm sea between monsoons — ideal underwater visibility
+seychelles,5,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+seychelles,6,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+seychelles,7,Température idéale pour la plage (24°C) — affluence encore modérée,Ideal beach temperature (24°C) — crowds still moderate
+seychelles,8,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+seychelles,9,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
 seychelles,10,Festival Kreol — musique et gastronomie créole sur toutes les îles,Kreol Festival — Creole music and food on all the islands
+seychelles,11,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+seychelles,12,Température idéale pour la plage (26°C) — affluence encore modérée,Ideal beach temperature (26°C) — crowds still moderate
+sicile,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+sicile,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+sicile,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+sicile,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+sicile,5,Température idéale pour la plage (22°C) — affluence encore modérée,Ideal beach temperature (22°C) — crowds still moderate
+sicile,6,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
 sicile,7,Festival grec de Syracuse — représentations théâtrales dans l'amphithéâtre antique,Greek Festival of Syracuse — theatre performances in the ancient amphitheatre
+sicile,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+sicile,9,Eau à 25°C et plages animées — septembre est un pic de baignade en Sicile,Water at 25°C and lively beaches — September is peak swimming season in Sicily
 sicile,10,Récolte des olives — huile nouvelle et marchés agricoles dans toute l'île,Olive harvest — new oil and farm markets across the island
-siem-reap,11,Bon Om Touk (fête de l'eau) — courses de bateaux sur le Tonlé Sap. Spectaculaire,Bon Om Touk (Water Festival) — boat races on Tonlé Sap. Spectacular
+sicile,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+sicile,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+siem-reap,1,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+siem-reap,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+siem-reap,3,Chaleur forte — privilégier les activités matinales et les espaces climatisés l'après-midi,Hot weather — prioritise morning activities and air-conditioned spaces in the afternoon
 siem-reap,4,Nouvel An khmer (13-16 avril) — Angkor en fête. Foule locale mais ambiance unique,Khmer New Year (Apr 13-16) — Angkor celebrates. Local crowds but unique atmosphere
+siem-reap,5,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+siem-reap,6,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+siem-reap,7,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+siem-reap,8,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+siem-reap,9,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+siem-reap,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+siem-reap,11,Bon Om Touk (fête de l'eau) — courses de bateaux sur le Tonlé Sap. Spectaculaire,Bon Om Touk (Water Festival) — boat races on Tonlé Sap. Spectacular
+siem-reap,12,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+singapour,1,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
 singapour,2,Nouvel An chinois — Chinatown illuminé et River Hongbao. Parades de dragons,Chinese New Year — Chinatown lit up and River Hongbao. Dragon parades
+singapour,3,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+singapour,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+singapour,5,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+singapour,6,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+singapour,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 singapour,8,National Day (9 août) — feux d'artifice et parade à Marina Bay. Ambiance patriotique,National Day (Aug 9) — fireworks and parade at Marina Bay. Patriotic atmosphere
+singapour,9,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+singapour,10,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+singapour,11,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+singapour,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+split,1,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+split,2,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+split,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+split,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+split,5,Température idéale pour la plage (22°C) — affluence encore modérée,Ideal beach temperature (22°C) — crowds still moderate
+split,6,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
 split,7,Ultra Europe Festival (mi-juillet) — musique électronique dans le stade Poljud,Ultra Europe Festival (mid-July) — electronic music at Poljud stadium
+split,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
 split,9,Fin de saison — Hvar et Brač accessibles sans la foule. Ferries moins chers,End of season — Hvar and Brač accessible without crowds. Cheaper ferries
+split,10,Bonne saison de plongée — eau à bonne température et visibilité satisfaisante,Good diving season — comfortable water temperature and satisfactory visibility
+split,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+split,12,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
+tenerife,1,Bonne fenêtre pour la randonnée — températures douces (8°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (8°C) and uncrowded trails
 tenerife,2,Carnaval de Santa Cruz (fév-mars) — 2e plus grand carnaval du monde après Rio,Santa Cruz Carnival (Feb-Mar) — world's 2nd biggest carnival after Rio
+tenerife,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+tenerife,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+tenerife,5,Bonne fenêtre pour la randonnée — températures douces (13°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (13°C) and uncrowded trails
+tenerife,6,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+tenerife,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 tenerife,8,Nuit de San Lorenzo (10 août) — observation des étoiles au Teide. Perséides,Night of San Lorenzo (Aug 10) — stargazing at Teide. Perseids
-tokyo,3,Sakura (fin mars-début avril) — cerisiers en fleurs. Hanami dans les parcs,Sakura (late March-early April) — cherry blossoms. Hanami in the parks
-tokyo,11,Kōyō — feuillage automnal spectaculaire à Nikko et Meiji Jingu,Kōyō — spectacular autumn foliage at Nikko and Meiji Jingu
+tenerife,9,Bonne fenêtre pour la randonnée — températures douces (17°C) et sentiers peu fréquentés,Good hiking window — mild temperatures (17°C) and uncrowded trails
+tenerife,10,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+tenerife,11,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+tenerife,12,Basse saison — tarifs au plus bas et promotions fréquentes sur les hébergements,Low season — lowest prices and frequent accommodation deals
 tokyo,1,Hatsumode — première visite au temple de l'année. Ambiance unique au Meiji Jingu,Hatsumode — first temple visit of the year. Unique atmosphere at Meiji Jingu
-toscane,10,Vendanges dans le Chianti — le moment le plus photogénique de l'année,Chianti grape harvest — the most photogenic time of year
+tokyo,2,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
+tokyo,3,Sakura (fin mars-début avril) — cerisiers en fleurs. Hanami dans les parcs,Sakura (late March-early April) — cherry blossoms. Hanami in the parks
+tokyo,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+tokyo,5,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+tokyo,6,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+tokyo,7,Chaleur forte — privilégier les activités matinales et les espaces climatisés l'après-midi,Hot weather — prioritise morning activities and air-conditioned spaces in the afternoon
+tokyo,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+tokyo,9,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+tokyo,10,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+tokyo,11,Kōyō — feuillage automnal spectaculaire à Nikko et Meiji Jingu,Kōyō — spectacular autumn foliage at Nikko and Meiji Jingu
+tokyo,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+toscane,1,Saison calme dans les vignobles — dégustations intimistes et tarifs réduits,Quiet season in the vineyards — intimate tastings and reduced prices
+toscane,2,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+toscane,3,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+toscane,4,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 toscane,5,Iris de Florence en fleurs au Giardino dell'Iris — vue sur le Duomo,Florence irises bloom at Giardino dell'Iris — view of the Duomo
+toscane,6,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+toscane,7,Randonnées à privilégier tôt le matin — chaleur marquée dès 11h (33°C),Hike early morning to avoid the heat — temperatures reach 33°C by 11am
+toscane,8,Chaleur forte — privilégier les activités matinales et les espaces climatisés l'après-midi,Hot weather — prioritise morning activities and air-conditioned spaces in the afternoon
+toscane,9,"Vendanges — visites de domaines, dégustations et ambiance festive dans les vignobles","Grape harvest — winery visits, tastings and festive atmosphere in the vineyards"
+toscane,10,Vendanges dans le Chianti — le moment le plus photogénique de l'année,Chianti grape harvest — the most photogenic time of year
+toscane,11,Sentiers praticables mais humides — prévoir des chaussures adaptées et des pauses abritées,Trails walkable but wet — bring proper footwear and plan sheltered breaks
+toscane,12,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+tulum,1,Température idéale pour la plage (26°C) — affluence encore modérée,Ideal beach temperature (26°C) — crowds still moderate
+tulum,2,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+tulum,3,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+tulum,4,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
 tulum,5,Début de la saison des tortues marines — ponte nocturne sur les plages,Start of sea turtle nesting season — nighttime nesting on beaches
+tulum,6,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+tulum,7,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+tulum,8,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+tulum,9,Eau à 27°C et plages animées — septembre est un pic de baignade à Tulum,Water at 27°C and lively beaches — September is peak swimming season in Tulum
+tulum,10,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+tulum,11,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 tulum,12,Zamna Festival et Art With Me — musique et art contemporain dans la jungle,Zamna Festival and Art With Me — music and contemporary art in the jungle
+valence,1,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+valence,2,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
 valence,3,Las Fallas (15-19 mars) — monuments en carton-pâte brûlés. UNESCO,Las Fallas (Mar 15-19) — papier-mâché monuments burned. UNESCO
+valence,4,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+valence,5,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+valence,6,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+valence,7,Eau à 27°C et plages animées — juillet est un pic de baignade à Valence,Water at 27°C and lively beaches — July is peak swimming season in Valencia
 valence,8,Tomatina de Buñol (dernier mercredi d'août) — à 40 min de Valence,Tomatina de Buñol (last Wednesday of August) — 40 min from Valencia
+valence,9,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+valence,10,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+valence,11,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+valence,12,Plages calmes et peu fréquentées — idéal pour les promenades côtières,Quiet uncrowded beaches — ideal for coastal walks
+venise,1,Basse saison touristique — musées et monuments sans file d'attente,Tourist low season — museums and monuments without queues
 venise,2,Carnaval de Venise (fév-mars) — masques et bals dans les palais. Réservez tôt,Venice Carnival (Feb-Mar) — masks and balls in palaces. Book early
+venise,3,Sites culturels moins fréquentés qu'en haute saison — visites plus agréables,Cultural sites less crowded than peak season — more enjoyable visits
+venise,4,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+venise,5,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+venise,6,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+venise,7,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+venise,8,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
 venise,9,Mostra de Venise (fin août-début sept) — festival de cinéma au Lido,Venice Film Festival (late Aug-early Sep) — film festival on the Lido
+venise,10,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
 venise,11,Début de l'acqua alta — Piazza San Marco peut être inondée. Passerelles installées,Start of acqua alta — Piazza San Marco may flood. Walkways installed
-vienne,12,Marchés de Noël viennois — Rathausplatz et Schönbrunn parmi les plus beaux au monde,Viennese Christmas markets — Rathausplatz and Schönbrunn among the world's finest
+venise,12,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
 vienne,1,Bal de l'Opéra de Vienne (fin janvier-fév) — le plus prestigieux bal du monde,Vienna Opera Ball (late Jan-Feb) — the world's most prestigious ball
+vienne,2,Plats d'hiver et spécialités réconfortantes dans les restaurants locaux,Winter dishes and comfort food specialities in local restaurants
+vienne,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+vienne,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
 vienne,5,Festival de Vienne (mai-juin) — concerts classiques et opéra en plein air,Vienna Festival (May-June) — classical concerts and outdoor opera
-zakynthos,6,Plage du Naufragé accessible — mer calme et foule encore raisonnable,Shipwreck Beach accessible — calm sea and reasonable crowds
+vienne,6,Terrasses ouvertes et marchés en plein air — meilleure saison pour manger dehors,Open terraces and outdoor markets — best season for al fresco dining
+vienne,7,Conditions idéales pour les familles — météo agréable et activités extérieures accessibles,Ideal conditions for families — pleasant weather and outdoor activities accessible
+vienne,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+vienne,9,Haute saison culturelle — musées et sites accessibles dans de bonnes conditions météo,Peak cultural season — museums and sites accessible in good weather conditions
+vienne,10,Saison des récoltes — produits locaux frais sur les marchés et dans les restaurants,Harvest season — fresh local produce at markets and restaurants
+vienne,11,Période calme pour les familles — moins de monde mais activités extérieures limitées,Quiet period for families — fewer crowds but limited outdoor activities
+vienne,12,Marchés de Noël viennois — Rathausplatz et Schönbrunn parmi les plus beaux au monde,Viennese Christmas markets — Rathausplatz and Schönbrunn among the world's finest
+zakynthos,1,Période acceptable — 16°C mais 39% de risque de pluie. Prévoir des alternatives,Acceptable period — 16°C but 39% rain risk. Plan alternatives
+zakynthos,2,Bonne période — 16°C avec un bon ensoleillement. Affluence raisonnable,Good period — 16°C with good sunshine. Reasonable crowds
+zakynthos,3,Bonne période — 18°C avec un bon ensoleillement. Affluence raisonnable,Good period — 18°C with good sunshine. Reasonable crowds
+zakynthos,4,Bonne période — 20°C avec un bon ensoleillement. Affluence raisonnable,Good period — 20°C with good sunshine. Reasonable crowds
 zakynthos,5,Début de la saison des tortues Caretta caretta — nidification à Gerakas,Start of Caretta caretta turtle season — nesting at Gerakas
+zakynthos,6,Plage du Naufragé accessible — mer calme et foule encore raisonnable,Shipwreck Beach accessible — calm sea and reasonable crowds
+zakynthos,7,"L'un des meilleurs mois — 36°C, ensoleillement maximal et conditions idéales","One of the best months — 36°C, maximum sunshine and ideal conditions"
+zakynthos,8,"L'un des meilleurs mois — 34°C, ensoleillement maximal et conditions idéales","One of the best months — 34°C, maximum sunshine and ideal conditions"
+zakynthos,9,"L'un des meilleurs mois — 29°C, ensoleillement maximal et conditions idéales","One of the best months — 29°C, maximum sunshine and ideal conditions"
+zakynthos,10,"L'un des meilleurs mois — 25°C, ensoleillement maximal et conditions idéales","One of the best months — 25°C, maximum sunshine and ideal conditions"
+zakynthos,11,Bonne période — 20°C avec un bon ensoleillement. Affluence raisonnable,Good period — 20°C with good sunshine. Reasonable crowds
+zakynthos,12,Bonne période — 16°C avec un bon ensoleillement. Affluence raisonnable,Good period — 16°C with good sunshine. Reasonable crowds
+zanzibar,1,Eau à 29°C et plages animées — janvier est un pic de baignade à Zanzibar,Water at 29°C and lively beaches — January is peak swimming season in Zanzibar
 zanzibar,2,Sauti za Busara (fév) — plus grand festival de musique d'Afrique de l'Est,Sauti za Busara (Feb) — East Africa's biggest music festival
+zanzibar,3,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+zanzibar,4,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices
+zanzibar,5,Eau à 25°C et plages animées — mai est un pic de baignade à Zanzibar,Water at 25°C and lively beaches — May is peak swimming season in Zanzibar
+zanzibar,6,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
 zanzibar,7,Saison sèche optimale — mer turquoise et plongée au pic. Nungwi idéal,Peak dry season — turquoise sea and diving at best. Nungwi ideal
-barbade,2,Holetown Festival (mi-février) — célébration de l'arrivée des premiers colons,Holetown Festival (mid-February) — celebrating the arrival of the first settlers
-barbade,7,Crop Over Festival (juillet-août) — carnaval de la Barbade. Kadooment Day spectaculaire,Crop Over Festival (July-August) — Barbados carnival. Spectacular Kadooment Day
-cote-azur,5,Festival de Cannes (mi-mai) — glamour sur la Croisette. Hôtels en hausse,Cannes Film Festival (mid-May) — glamour on the Croisette. Hotel prices spike
-cote-azur,7,Nice Jazz Festival et feux d'artifice de Monaco — ambiance estivale Riviera,Nice Jazz Festival and Monaco fireworks — Riviera summer atmosphere
-canaries,2,Carnaval de Tenerife et Gran Canaria — parmi les plus grands du monde,Tenerife and Gran Canaria Carnival — among the world's biggest
-canaries,12,Climat stable à 22°C pendant les fêtes — alternative aux marchés de Noël européens,Steady 22°C during the holidays — alternative to European Christmas markets
+zanzibar,8,Haute saison — réserver à l'avance pour les meilleurs tarifs. Prix hébergements au plus haut,Peak season — book ahead for best rates. Accommodation prices at their highest
+zanzibar,9,Eau à 26°C et plages animées — septembre est un pic de baignade à Zanzibar,Water at 26°C and lively beaches — September is peak swimming season in Zanzibar
+zanzibar,10,Plongée possible malgré la pluie — la visibilité sous-marine reste correcte en profondeur,Diving still possible despite rain — underwater visibility stays decent at depth
+zanzibar,11,Bonne période famille — températures correctes et sites accessibles sans foule,Good family period — decent temperatures and sites accessible without crowds
+zanzibar,12,Entre-saison — bon rapport qualité/prix avec des tarifs hébergement raisonnables,Shoulder season — good value with reasonable accommodation prices

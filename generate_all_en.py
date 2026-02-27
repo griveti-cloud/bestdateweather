@@ -213,7 +213,7 @@ def climate_table_html(months, nom_en):
 
 # ── ANNUAL PAGE GENERATOR ──────────────────────────────────────────────────
 
-def gen_annual(dest, months, dest_cards):
+def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None):
     slug_fr  = dest['slug_fr']
     slug_en  = dest['slug_en']
     nom_en   = dest.get('nom_en', dest['nom_bare'])
@@ -387,6 +387,32 @@ def gen_annual(dest, months, dest_cards):
  {faq_html}
 </section>'''
 
+    # Cross-linking: similar destinations
+    similar_section = ''
+    sim_list = (similarities or {}).get(slug_fr, [])
+    if sim_list and all_dests:
+        sim_cards = ''
+        for sim_score, sim_slug in sim_list[:3]:
+            sd = all_dests.get(sim_slug, {})
+            sn = sd.get('nom_en', sd.get('nom_bare', sim_slug))
+            sc = sd.get('country_en', sd.get('pays', ''))
+            sf = sd.get('flag', '')
+            se = sd.get('slug_en', sim_slug)
+            sim_cards += (
+                f'<a href="best-time-to-visit-{se}.html" style="flex:1;min-width:200px;'
+                f'padding:16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;'
+                f'text-decoration:none;display:flex;flex-direction:column;gap:6px">'
+                f'<div style="font-size:13px;color:var(--slate3)"><img src="../flags/{sf}.png" width="16" height="12" '
+                f'alt="{sf}" style="vertical-align:middle;margin-right:4px;border-radius:1px">{sc}</div>'
+                f'<div style="font-weight:700;color:var(--navy)">{sn}</div>'
+                f'<div style="font-size:12px;color:var(--slate2)">Similar climate · {sim_score:.0%} match</div>'
+                f'</a>')
+        similar_section = f'''<section class="section">
+ <div class="section-label">Also explore</div>
+ <h2 class="section-title">Destinations with similar climate</h2>
+ <div style="display:flex;gap:14px;flex-wrap:wrap">{sim_cards}</div>
+</section>'''
+
     article_schema = json.dumps({
         "@context": "https://schema.org", "@type": "Article",
         "headline": f"Best Time to Visit {nom_en}",
@@ -446,6 +472,7 @@ def gen_annual(dest, months, dest_cards):
 {booking_section}
 {monthly_section}
 {faq_section}
+{similar_section}
 </main>
 {footer_html(slug_fr, slug_en, nom_en)}
 <script>
@@ -1083,7 +1110,7 @@ def main():
 
         # Annual page
         try:
-            html = gen_annual(dest, months, dest_cards)
+            html = gen_annual(dest, months, dest_cards, dests, similarities)
             out  = f"{OUT}/best-time-to-visit-{slug_en}.html"
             if not dry_run:
                 open(out, 'w', encoding='utf-8').write(html)
