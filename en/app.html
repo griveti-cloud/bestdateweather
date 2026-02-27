@@ -1341,7 +1341,7 @@ function fetchMarineSSTEN(lat, lon, yr, mo, da, slug) {
  var diffDays = Math.round((target.getTime()-today.getTime())/86400000);
 
  function tryClimatology() {
-  var climData = slug && SEA_CLIM_DATA_EN[slug] ? SEA_CLIM_DATA_EN[slug] : null;
+  var climData = slug && SEA_CLIM_DATA[slug] ? SEA_CLIM_DATA[slug] : null;
   if (climData && climData[mo] !== null) return Promise.resolve({sst:climData[mo],fallback:true});
   // Fallback par archive marine (coordonnées) — 3 ans de données autour de la date
   var endYr2 = new Date().getFullYear()-1;
@@ -1479,7 +1479,7 @@ function buildClimatology(lat, lon, yr, mo, da) {
  return fetchArchive(lat,lon,new Date(yr2,mo,da,12,0,0)).then(function(data){
  var T=data.hourly.temperature_2m, P=data.hourly.precipitation, W=data.hourly.windspeed_10m, S=data.hourly.shortwave_radiation||[], SN=data.hourly.snowfall||[], RH=data.hourly.relative_humidity_2m||[];
  for(var i=0;i<data.hourly.time.length;i++){var hh=new Date(data.hourly.time[i]).getHours();if(T[i]!=null)buckets[hh].t.push(T[i]);if(P[i]!=null)buckets[hh].p.push(P[i]);if(W[i]!=null)buckets[hh].w.push(W[i]);if(S[i]!=null)buckets[hh].s.push(S[i]);if(SN[i]!=null)buckets[hh].sn.push(SN[i]);if(RH[i]!=null)buckets[hh].rh.push(RH[i]);}
- }).catch(function(){}).then(function(){setP(Math.round((idx/years.length)*90),'Analysing '+yr2+'…');return new Promise(function(res){setTimeout(res,20);});}).then(step);
+ }).catch(function(){}).then(function(){setP(Math.round((idx/years.length)*90),'Analyse '+yr2+'…');return new Promise(function(res){setTimeout(res,20);});}).then(step);
  }
  return step();
 }
@@ -1826,10 +1826,10 @@ function getMainDriver(avgRain, avgTemp, avgWind, sRain, sTemp, sWind, uc) {
  }
  if (!worst) return null;
  var labels = {
-  rain: 'high rain risk',
-  temp_cold: 'cool temperatures',
-  temp_hot: uc === 'plage' ? 'excessive heat' : 'high heat',
-  wind: 'frequent wind'
+  rain: 'risque de pluie élevé',
+  temp_cold: 'températures fraîches',
+  temp_hot: uc === 'plage' ? 'chaleur excessive' : 'chaleur élevée',
+  wind: 'vent fréquent'
  };
  return labels[worst.key];
 }
@@ -2170,17 +2170,17 @@ function getFrTerritory(lat, lon) {
  // DOM-TOM par coordonnées
  if (lat >= 14 && lat <= 18 && lon >= -63 && lon <= -60) return 'Guadeloupe';
  if (lat >= 14 && lat <= 15 && lon >= -61.5 && lon <= -60.5) return 'Martinique';
- if (lat >= -22 && lat <= -20 && lon >= 55 && lon <= 56) return 'Réunion';
+ if (lat >= -22 && lat <= -20 && lon >= 55 && lon <= 56) return 'La Réunion';
  if (lat >= 2 && lat <= 6 && lon >= -55 && lon <= -51) return 'Guyane';
  if (lat >= -14 && lat <= -12 && lon >= 44 && lon <= 46) return 'Mayotte';
- if (lat >= -23 && lat <= -20 && lon >= 163 && lon <= 168) return 'New Caledonia';
- if (lat >= -18 && lat <= -14 && lon >= -150 && lon <= -148) return 'French Polynesia';
+ if (lat >= -23 && lat <= -20 && lon >= 163 && lon <= 168) return 'Nouvelle-Calédonie';
+ if (lat >= -18 && lat <= -14 && lon >= -150 && lon <= -148) return 'Polynésie française';
  if (lat >= 46 && lat <= 48 && lon >= -57 && lon <= -52) return 'Saint-Pierre-et-Miquelon';
  return 'Outre-mer';
 }
 
 function getAcSub(item) {
- var FR_TERRITORIES = {'GF':'French Guiana','GP':'Guadeloupe','MQ':'Martinique','RE':'Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'New Caledonia','PF':'French Polynesia'};
+ var FR_TERRITORIES = {'GF':'Guyane française','GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'Nouvelle-Calédonie','PF':'Polynésie française'};
  var isFrDom = !!FR_TERRITORIES[item.country_code];
  if (item.country_code === 'FR' || isFrDom) {
  var terr = isFrDom ? FR_TERRITORIES[item.country_code] : getFrTerritory(item.latitude, item.longitude);
@@ -2194,7 +2194,7 @@ function selectAC(i){
  var item=acData[i];if(!item)return;
  // Pour FR : ne jamais afficher admin1, juste le pays
  var FR_DOM = {'GF':1,'GP':1,'MQ':1,'RE':1,'PM':1,'YT':1,'NC':1,'PF':1};
- var FR_TERRITORY_NAMES = {'GF':'French Guiana','GP':'Guadeloupe','MQ':'Martinique','RE':'Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'New Caledonia','PF':'French Polynesia'};
+ var FR_TERRITORY_NAMES = {'GF':'Guyane française','GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'Nouvelle-Calédonie','PF':'Polynésie française'};
  var isFrDom = !!FR_DOM[item.country_code];
  var region = (item.country_code === 'FR' || isFrDom) ? (isFrDom ? FR_TERRITORY_NAMES[item.country_code] : '') : (item.admin1 || '');
  var country = isFrDom ? 'France' : getCountryName(item);
