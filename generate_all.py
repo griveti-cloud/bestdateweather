@@ -458,11 +458,16 @@ def gen_annual(dest, months, dest_cards, all_dests, similarities):
     else:
         booking_section = ''
 
-    # Monthly nav section
+    # Monthly nav section — colored by score class
+    MONTH_BTN_STYLE = {
+        'rec':   'background:#e8f8f0;border:1.5px solid #86efac;',
+        'mid':   'background:#fffbeb;border:1.5px solid #fbbf24;',
+        'avoid': 'background:#fef2f2;border:1.5px solid #fca5a5;',
+    }
     monthly_links = ''.join(
         f'<a href="{slug}-meteo-{MONTH_URL[i]}.html" style="display:block;padding:10px 8px;'
-        f'background:#f0fdf4;border-radius:10px;border:1.5px solid #86efac;'
-        f'text-decoration:none;text-align:center">'
+        f'{MONTH_BTN_STYLE.get(months[i]["classe"], MONTH_BTN_STYLE["mid"])}'
+        f'border-radius:10px;text-decoration:none;text-align:center">'
         f'<div style="font-weight:700;font-size:13px;color:#1a1f2e">{MONTHS_FR[i]}</div>'
         f'</a>'
         for i in range(12)
@@ -811,10 +816,19 @@ def gen_monthly(dest, months, mi, all_dests, similarities, all_climate, events=N
             oui_si = "profiter de tarifs bas et d'une fréquentation minimale."
             non_si = "rechercher un temps estival — les conditions ne s'y prêtent pas."
 
-    # Month nav
+    # Month nav — colored by score class
+    MNAV_STYLE = {
+        'rec':   'background:#e8f8f0;border-color:#86efac;',
+        'mid':   'background:#fffbeb;border-color:#fbbf24;',
+        'avoid': 'background:#fef2f2;border-color:#fca5a5;',
+    }
+    def _mnav_attr(i):
+        if i == mi:
+            return ' class="active"'
+        s = MNAV_STYLE.get(months[i]['classe'], '')
+        return f' style="{s}"' if s else ''
     month_nav = ''.join(
-        f'<a href="{slug}-meteo-{MONTH_URL[i]}.html'
-        f'"{" class=\"active\"" if i == mi else ""}>{MONTH_ABBR[i]}</a>'
+        f'<a href="{slug}-meteo-{MONTH_URL[i]}.html"{_mnav_attr(i)}>{MONTH_ABBR[i]}</a>'
         for i in range(12)
     )
 
