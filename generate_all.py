@@ -408,7 +408,7 @@ def gen_annual(dest, months, dest_cards, all_dests, similarities):
  <div class="section-label">Selon votre projet</div>
  <h2 class="section-title">Meilleure période selon votre type de voyage</h2>
  <div class="project-grid">{cards_html}</div>
-</section>'''
+</section>''' if dest_cards else ''
 
     # Climate table section
     table_section = f'''<section class="section">
@@ -464,6 +464,7 @@ def gen_annual(dest, months, dest_cards, all_dests, similarities):
         'mid':   'background:#fffbeb;border:1.5px solid #fbbf24;',
         'avoid': 'background:#fef2f2;border:1.5px solid #fca5a5;',
     }
+    has_monthly = dest.get('monthly', 'True').strip().lower() in ('true', '1', 'yes', '')
     monthly_links = ''.join(
         f'<a href="{slug}-meteo-{MONTH_URL[i]}.html" style="display:block;padding:10px 8px;'
         f'{MONTH_BTN_STYLE.get(months[i]["classe"], MONTH_BTN_STYLE["mid"])}'
@@ -478,7 +479,7 @@ def gen_annual(dest, months, dest_cards, all_dests, similarities):
  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
  {monthly_links}
  </div>
-</section>'''
+</section>''' if has_monthly else ''
 
     # FAQ
     faq_items = [
@@ -647,6 +648,9 @@ def _build_sim_cards_fr(sim_list, all_dests, climate_for_sim, mi):
     for _, sim_slug in sim_list:
         sd = all_dests.get(sim_slug)
         if not sd:
+            continue
+        # Skip destinations without monthly pages
+        if sd.get('monthly', 'True').strip().lower() not in ('true', '1', 'yes', ''):
             continue
         sc = climate_for_sim.get(sim_slug, {})
         parts.append(
@@ -934,6 +938,9 @@ def gen_monthly(dest, months, mi, all_dests, similarities, all_climate, events=N
         if sim_slug not in all_dests:
             continue
         sd = all_dests[sim_slug]
+        # Skip destinations without monthly pages
+        if sd.get('monthly', 'True').strip().lower() not in ('true', '1', 'yes', ''):
+            continue
         sn = sd.get('nom_bare', sim_slug)
         sf = sd.get('flag', '')
         sc = climate_for_sim.get(sim_slug, {})
@@ -1208,19 +1215,22 @@ def main():
         except Exception as e:
             errors_gen.append(f"{slug}/annual: {e}")
 
-        # 12 monthly fiches
-        for mi in range(12):
-            try:
-                html = gen_monthly(dest, months, mi, dests, similarities, climate, events)
-                out  = f"{OUT}/{slug}-meteo-{MONTH_URL[mi]}.html"
-                if not dry_run:
-                    open(out, 'w', encoding='utf-8-sig').write(html)
-                total_monthly += 1
-            except Exception as e:
-                errors_gen.append(f"{slug}/{MONTHS_FR[mi]}: {e}")
+        # 12 monthly fiches (skip if monthly=False in destinations.csv)
+        gen_monthly_pages = dest.get('monthly', 'True').strip().lower() in ('true', '1', 'yes', '')
+        if gen_monthly_pages:
+            for mi in range(12):
+                try:
+                    html = gen_monthly(dest, months, mi, dests, similarities, climate, events)
+                    out  = f"{OUT}/{slug}-meteo-{MONTH_URL[mi]}.html"
+                    if not dry_run:
+                        open(out, 'w', encoding='utf-8-sig').write(html)
+                    total_monthly += 1
+                except Exception as e:
+                    errors_gen.append(f"{slug}/{MONTHS_FR[mi]}: {e}")
 
         if not dry_run:
-            print(f"✓ {slug}: 1 fiche annuelle + 12 fiches mensuelles")
+            monthly_msg = "12 fiches mensuelles" if gen_monthly_pages else "mensuelles ignorées (monthly=False)"
+            print(f"✓ {slug}: 1 fiche annuelle + {monthly_msg}")
 
     print(f"\n{'[DRY-RUN] ' if dry_run else ''}Généré: {total_annual} fiches annuelles + {total_monthly} fiches mensuelles")
     if errors_gen:

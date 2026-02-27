@@ -343,6 +343,7 @@ def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None):
         'mid':   'background:#fffbeb;border:1.5px solid #fbbf24;',
         'avoid': 'background:#fef2f2;border:1.5px solid #fca5a5;',
     }
+    has_monthly = dest.get('monthly', 'True').strip().lower() in ('true', '1', 'yes', '')
     monthly_links = ''.join(
         f'<a href="{slug_en}-weather-{MONTH_URL[i]}.html" style="display:block;padding:10px 8px;'
         f'{MONTH_BTN_STYLE.get(months[i]["classe"], MONTH_BTN_STYLE["mid"])}'
@@ -357,7 +358,7 @@ def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None):
  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
  {monthly_links}
  </div>
-</section>'''
+</section>''' if has_monthly else ''
 
     # FAQ
     faq_items = [
@@ -608,6 +609,9 @@ def _build_sim_cards_en(sim_list, all_dests, climate_for_sim, mi):
     for _, sim_slug in sim_list:
         sd = all_dests.get(sim_slug)
         if not sd:
+            continue
+        # Skip destinations without monthly pages
+        if sd.get('monthly', 'True').strip().lower() not in ('true', '1', 'yes', ''):
             continue
         sc = climate_for_sim.get(sim_slug, {})
         slug_en = sd.get('slug_en', sim_slug)
@@ -1149,19 +1153,22 @@ def main():
         except Exception as e:
             errors_gen.append(f"{slug}/annual: {e}")
 
-        # 12 monthly pages
-        for mi in range(12):
-            try:
-                html = gen_monthly(dest, months, mi, dests, similarities, climate, events)
-                out  = f"{OUT}/{slug_en}-weather-{MONTH_URL[mi]}.html"
-                if not dry_run:
-                    open(out, 'w', encoding='utf-8').write(html)
-                total_monthly += 1
-            except Exception as e:
-                errors_gen.append(f"{slug}/{MONTHS_EN[mi]}: {e}")
+        # 12 monthly pages (skip if monthly=False in destinations.csv)
+        gen_monthly_pages = dest.get('monthly', 'True').strip().lower() in ('true', '1', 'yes', '')
+        if gen_monthly_pages:
+            for mi in range(12):
+                try:
+                    html = gen_monthly(dest, months, mi, dests, similarities, climate, events)
+                    out  = f"{OUT}/{slug_en}-weather-{MONTH_URL[mi]}.html"
+                    if not dry_run:
+                        open(out, 'w', encoding='utf-8').write(html)
+                    total_monthly += 1
+                except Exception as e:
+                    errors_gen.append(f"{slug}/{MONTHS_EN[mi]}: {e}")
 
         if not dry_run:
-            print(f"✓ {slug_en}: 1 annual + 12 monthly pages")
+            monthly_msg = "12 monthly pages" if gen_monthly_pages else "monthly skipped (monthly=False)"
+            print(f"✓ {slug_en}: 1 annual + {monthly_msg}")
 
     print(f"\n{'[DRY-RUN] ' if dry_run else ''}Generated: {total_annual} annual + {total_monthly} monthly pages")
     if errors_gen:
