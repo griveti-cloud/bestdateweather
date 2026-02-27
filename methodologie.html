@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Comment fonctionne BestDateWeather ? — Méthodologie</title>
-<meta name="description" content="Comment BestDateWeather calcule-t-il ses prévisions météo ? Découvrez notre méthodologie : sources de données, modèle de score, horizons temporels et limites de l'outil."/>
+<title>Comment anticipons-nous la météo jusqu'à 12 mois ? — Méthodologie BestDateWeather</title>
+<meta name="description" content="Comment BestDateWeather anticipe-t-il la météo jusqu'à 12 mois à l'avance ? Découvrez notre méthodologie : sources de données, modèle de score, horizons temporels et limites de l'outil."/>
 <meta name="robots" content="index,follow"/>
 <link rel="canonical" href="https://bestdateweather.com/methodologie.html"/>
 <link rel="alternate" hreflang="fr" href="https://bestdateweather.com/methodologie.html"/>
+<link rel="alternate" hreflang="en" href="https://bestdateweather.com/methodology-en.html"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -154,7 +155,7 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
  <!-- HERO -->
  <header class="hero">
  <div class="hero-tag">Transparence &amp; méthode</div>
- <h1>Comment calculons-nous la météo de votre projet ?</h1>
+ <h1>Comment anticipons-nous la météo jusqu'à 12 mois à l'avance ?</h1>
  <p>Sources de données, modèle de score, horizons temporels — tout ce que vous devez savoir pour interpréter nos résultats avec le bon niveau de confiance.</p>
  </header>
 
@@ -384,7 +385,7 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
  <ul>
  <li><strong>Pas de microclimats.</strong> La résolution spatiale d'ERA5 est de 31 km — les variations locales (vallées, côtes, altitude) ne sont pas capturées. Une station balnéaire peut différer de 5°C de la ville voisine.</li>
  <li><strong>Pas de changement climatique modélisé.</strong> Notre fenêtre de 10 ans intègre partiellement le réchauffement récent, mais n'extrapole pas les tendances futures. Les projections à 2030+ dépassent notre périmètre.</li>
- <li><strong>Pas de prévision à plus de 7 mois.</strong> Au-delà de cette limite, même les modèles saisonniers ECMWF n'ont plus de valeur prédictive significative. Nous affichons alors un profil historique pur, sans correction.</li>
+ <li><strong>Pas de correction saisonnière ECMWF au-delà de 7 mois.</strong> Au-delà de J+210, le modèle saisonnier ECMWF n'a plus de valeur prédictive significative. Nous affichons alors un profil climatique historique basé sur 10 ans de données — toujours utile pour planifier, mais sans ajustement de tendance saisonnière.</li>
  <li><strong>Les événements extrêmes ne sont pas prévisibles.</strong> Cyclones, tempêtes exceptionnelles, canicules historiques — ces événements rares ne sont pas représentés dans les statistiques moyennes.</li>
  <li><strong>Pas de données horaires au-delà de J+7.</strong> Pour les dates futures, nous affichons un profil journalier horaire indicatif, pas des prévisions heure par heure.</li>
  </ul>
@@ -426,7 +427,7 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
  <footer>
  <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
  <p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Données météo par Open-Meteo.com</a> · Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
- <p style="margin-top:8px"><a href="index.html" style="color:rgba(255,255,255,.7)">Application météo</a> · <a href="note_modele.html" style="color:rgba(255,255,255,.7)">Note technique</a> · <a href="en/methodology.html" style="color:rgba(255,255,255,.7)"><img src="flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English version</a></p>
+ <p style="margin-top:8px"><a href="index.html" style="color:rgba(255,255,255,.7)">Application météo</a> · <a href="note_modele.html" style="color:rgba(255,255,255,.7)">Note technique</a> · <a href="methodology-en.html" style="color:rgba(255,255,255,.7)"><img src="flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English version</a></p>
  <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="mentions-legales.html" style="color:rgba(255,255,255,.7)">Mentions légales</a> · <a href="confidentialite.html" style="color:rgba(255,255,255,.7)">Confidentialité</a> · <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p>
  </footer>
 
