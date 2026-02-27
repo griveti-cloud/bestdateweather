@@ -989,6 +989,12 @@ function fmtWind(kmh) {
  return Math.round(kmh) + ' km/h';
 }
 
+function fmtPrecip(mm) {
+ if (mm == null) return '–';
+ if (_units === 'us') { var inches = mm * 0.0393701; return (inches < 0.1 ? inches.toFixed(2) : inches.toFixed(1)) + ' in'; }
+ return mm + ' mm';
+}
+
 
 function toggleDetails() {
  var btn = document.getElementById('details-toggle');
@@ -1412,7 +1418,7 @@ function fetchMarineSSTEN(lat, lon, yr, mo, da, slug) {
 function renderSeaChipEN(sstResult) {
  if (!sstResult || sstResult.sst===null) return;
  var comfort = getSeaComfortFR(sstResult.sst);
- var lbl = sstResult.fallback ? '🌊 Mer (norm. sais.)' : '🌊 Mer';
+ var lbl = sstResult.fallback ? '🌊 Sea (seasonal avg.)' : '🌊 Sea';
  var chip = document.createElement('div');
  chip.className = 'score-chip';
  chip.id = 'sea-chip';
@@ -1420,7 +1426,7 @@ function renderSeaChipEN(sstResult) {
  chip.innerHTML =
  '<span class="score-chip-dot" style="background:'+comfort.color+'"></span>'+
  '<span class="score-chip-lbl">'+lbl+'</span>'+
- '<span class="score-chip-val">'+sstResult.sst+'°C</span>';
+ '<span class="score-chip-val">'+fmtTemp(sstResult.sst)+'</span>';
  var chipsEl = document.getElementById('score-chips');
  if (chipsEl) chipsEl.appendChild(chip);
 }
@@ -1428,7 +1434,7 @@ function renderSeaChipEN(sstResult) {
 function fetchForecast(lat, lon, yr, mo, da) {
  var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,precipitation,snowfall,windspeed_10m,shortwave_radiation&timezone=auto&forecast_days=8';
  // _locTzOffset is global
- return fetch(url).then(function(r){if(!r.ok)throw new Error('Prévisions indisponibles');return r.json();}).then(function(data){
+ return fetch(url).then(function(r){if(!r.ok)throw new Error('Forecast unavailable');return r.json();}).then(function(data){
  if (data.utc_offset_seconds != null) _locTzOffset = data.utc_offset_seconds;
  var mo2=mo+1, prefix=yr+'-'+(mo2<10?'0':'')+mo2+'-'+(da<10?'0':'')+da, rows=[];
  for(var h=0;h<24;h++){
@@ -1840,10 +1846,10 @@ function getMainDriver(avgRain, avgTemp, avgWind, sRain, sTemp, sWind, uc) {
  }
  if (!worst) return null;
  var labels = {
-  rain: 'risque de pluie élevé',
-  temp_cold: 'températures fraîches',
-  temp_hot: uc === 'plage' ? 'chaleur excessive' : 'chaleur élevée',
-  wind: 'vent fréquent'
+  rain: 'high rain risk',
+  temp_cold: 'cool temperatures',
+  temp_hot: uc === 'plage' ? 'excessive heat' : 'high heat',
+  wind: 'frequent wind'
  };
  return labels[worst.key];
 }
@@ -1993,7 +1999,7 @@ function computeAndRenderScore(sc, rows) {
  var totalSnow = 0; for (var _s=0; _s<rows.length; _s++) { totalSnow += (rows[_s].snow || 0); } totalSnow = Math.round(totalSnow * 10) / 10;
  var chips = [
  { lbl: 'Rain', val: Math.round(avgRain)+'%', score: sRain },
- { lbl: 'Precip.', val: totalMm > 0 ? totalMm + ' mm' : '0 mm', score: sRain },
+ { lbl: 'Precip.', val: fmtPrecip(totalMm), score: sRain },
  { lbl: 'Temp.', val: avgTemp!=null?fmtTemp(avgTemp):'–', score: sTemp },
  { lbl: 'Wind', val: fmtWind(avgWind), score: sWind }
  
@@ -2090,13 +2096,13 @@ function updateHero(sc, rows, mainHour) {
  var _timeLbl = (_snowFirstH >= 0) ? _snowTimeLbl(_snowFirstH) : '';
  if (_snowTotal > 0.5) {
  _snowAlert.style.display = 'block';
- _snowAlert.textContent = '❄️ Neige prévue' + _timeLbl + ' · ' + Math.round(_snowTotal*10)/10 + ' cm au total';
+ _snowAlert.textContent = '❄️ Snow expected' + _timeLbl + ' · ' + Math.round(_snowTotal*10)/10 + ' cm total';
  } else if (_snowHours >= 2) {
  _snowAlert.style.display = 'block';
- _snowAlert.textContent = '❄️ Snow likely' + _timeLbl + ' · ' + _snowHours + 'h of precipitation below 2°C';
+ _snowAlert.textContent = '❄️ Snow likely' + _timeLbl + ' · ' + _snowHours + 'h of precipitation below ' + fmtTemp(2);
  } else if (_snowHours >= 1) {
  _snowAlert.style.display = 'block';
- _snowAlert.textContent = '❄️ Neige possible' + _timeLbl + ' · near-freezing temperatures with precipitation';
+ _snowAlert.textContent = '❄️ Snow possible' + _timeLbl + ' · near-freezing temperatures with precipitation';
  } else {
  _snowAlert.style.display = 'none';
  }
@@ -2288,7 +2294,7 @@ function run() {
  locP.then(function(loc){
  setP(5,loc.name+' found…');
  document.getElementById('r-loc').textContent=loc.name+' — '+(loc.country||'');
- document.getElementById('r-date').textContent=new Date(yr,mo,da,12,0,0).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+ document.getElementById('r-date').textContent=new Date(yr,mo,da,12,0,0).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
  renderAstro(loc.lat,loc.lon,yr,mo,da);
  // Lancer SST en parallèle (silencieux — n'affecte pas le score principal)
  window._lastSSTResult = null;
@@ -2337,7 +2343,7 @@ function run() {
     }
     progEl.style.display='none';btnEl.disabled=false;
  });
- }).catch(function(err){errEl.textContent='Erreur : '+err.message;errEl.style.display='block';progEl.style.display='none';showSection('empty');btnEl.disabled=false;});
+ }).catch(function(err){errEl.textContent='Error: '+err.message;errEl.style.display='block';progEl.style.display='none';showSection('empty');btnEl.disabled=false;});
 }
 
 
@@ -2362,14 +2368,14 @@ function updateScoreTooltip(uc) {
  var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
  var w = cfg.weights;
  var tt = document.getElementById('score-tooltip');
- var ucName = {plage:'Plage',ski:'Ski',general:'General weather'}[uc] || uc;
+ var ucName = {plage:'Beach',ski:'Ski',general:'General weather'}[uc] || uc;
  tt.innerHTML =
  '<strong style="font-size:12px">Score · ' + ucName + '</strong><br>' +
- '💧 Pluie &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.rain + '%<br>' +
+ '💧 Rain &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.rain + '%<br>' +
  '🌡 Temperature ' + w.temp + '%<br>' +
- '💨 Vent &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.wind + '%<br>' +
- '☀ Soleil &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.sun + '%<br>' +
- '<span style="opacity:.6;font-size:10px">Ideal beach: ' + cfg.tempMin + '–' + cfg.tempMax + '°C</span>';
+ '💨 Wind &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + w.wind + '%<br>' +
+ '☀ Sunshine &nbsp;&nbsp;&nbsp;' + w.sun + '%<br>' +
+ '<span style="opacity:.6;font-size:10px">Ideal range: ' + fmtTempRaw(cfg.tempMin) + '–' + fmtTempRaw(cfg.tempMax) + fmtTempUnit() + '</span>';
 }
 
 /* ── RECOMMENDED BADGES (annual view) ── */
@@ -2840,7 +2846,7 @@ function renderAnnual(loc, monthly) {
  '<div class="month-temp">' + tminStr + ' / ' + tmaxStr + '</div>' +
  '<div class="month-range">moy. ' + tempStr + '</div>' +
  '<div class="month-stats">' +
- '<span class="month-stat">💧 ' + d.rainPct + '% <span style="font-weight:400;color:var(--slate3);font-size:10px">(' + d.avgPrecipMm + ' mm/j)</span></span>' +
+ '<span class="month-stat">💧 ' + d.rainPct + '% <span style="font-weight:400;color:var(--slate3);font-size:10px">(' + fmtPrecip(d.avgPrecipMm) + '/d)</span></span>' +
  '<span class="month-stat">☀ ' + Math.round(d.sunHrs) + 'h</span>' +
  '</div>' +
  '<div class="month-bar"><div class="month-bar-fill" style="width:' + d.rainPct + '%"></div></div>' +
