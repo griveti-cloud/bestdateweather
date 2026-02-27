@@ -47,12 +47,12 @@ def load_data(target_slug=None):
 
     # destinations.csv
     dests = {}
-    for row in csv.DictReader(open(f'{DATA}/destinations.csv', encoding='utf-8')):
+    for row in csv.DictReader(open(f'{DATA}/destinations.csv', encoding='utf-8-sig')):
         dests[row['slug_fr']] = row
 
     # climate.csv
     climate = {}  # {slug: [month_dict × 12]}
-    for row in csv.DictReader(open(f'{DATA}/climate.csv', encoding='utf-8')):
+    for row in csv.DictReader(open(f'{DATA}/climate.csv', encoding='utf-8-sig')):
         slug = row['slug']
         if slug not in climate:
             climate[slug] = [None] * 12
@@ -70,13 +70,13 @@ def load_data(target_slug=None):
 
     # cards.csv
     cards = {}  # {slug: [card_dict]}
-    for row in csv.DictReader(open(f'{DATA}/cards.csv', encoding='utf-8')):
+    for row in csv.DictReader(open(f'{DATA}/cards.csv', encoding='utf-8-sig')):
         slug = row['slug']
         cards.setdefault(slug, []).append(row)
 
     # overrides.csv
     overrides = {}  # {(slug, mi, champ): valeur}
-    for row in csv.DictReader(open(f'{DATA}/overrides.csv', encoding='utf-8')):
+    for row in csv.DictReader(open(f'{DATA}/overrides.csv', encoding='utf-8-sig')):
         key = (row['slug'], int(row['mois_num']) - 1, row['champ'])
         overrides[key] = row['valeur']
 
@@ -830,7 +830,7 @@ def main():
             html = gen_annual(dest, months, dest_cards)
             out  = f"{OUT}/meilleure-periode-{slug}.html"
             if not dry_run:
-                open(out, 'w', encoding='utf-8').write(html)
+                open(out, 'w', encoding='utf-8-sig').write(html)
             total_annual += 1
         except Exception as e:
             errors_gen.append(f"{slug}/annual: {e}")
@@ -841,7 +841,7 @@ def main():
                 html = gen_monthly(dest, months, mi)
                 out  = f"{OUT}/{slug}-meteo-{MONTH_URL[mi]}.html"
                 if not dry_run:
-                    open(out, 'w', encoding='utf-8').write(html)
+                    open(out, 'w', encoding='utf-8-sig').write(html)
                 total_monthly += 1
             except Exception as e:
                 errors_gen.append(f"{slug}/{MONTHS_FR[mi]}: {e}")
