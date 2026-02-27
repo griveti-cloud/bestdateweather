@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bestdateweather.com/sitemap.xml
-Sitemap: https://bestdateweather.com/en/sitemap-en.xml
+Sitemap: https://bestdateweather.com/sitemap-index.xml
