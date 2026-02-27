@@ -13,7 +13,7 @@ Usage :
   python3 fetch_climate.py --years 2018-2023 istanbul  # période custom
 
 Source : ERA5 reanalysis via https://open-meteo.com/en/docs/historical-weather-api
-Période par défaut : 2019-2023 (5 ans complets)
+Période par défaut : 2016-2025 (10 ans complets)
 
 Classification automatique :
   Classes (rec/mid/avoid) assignées par raw_score depuis scoring.py.
@@ -50,8 +50,8 @@ RAIN_THRESHOLD_MM = 1.0  # WMO standard: jour pluvieux = précipitations >= 1mm
 CLS_REC_THRESHOLD   = 0.55
 CLS_AVOID_THRESHOLD = 0.35
 
-DEFAULT_START = '2019-01-01'
-DEFAULT_END   = '2023-12-31'
+DEFAULT_START = '2016-01-01'
+DEFAULT_END   = '2025-12-31'
 
 
 # ── DATA LOADING ─────────────────────────────────────────────────────────────
