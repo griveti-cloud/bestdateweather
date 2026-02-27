@@ -119,6 +119,17 @@ footer a:hover{color:white;}
 .faq-item{background:white;border-bottom:1px solid var(--cream2);}
 .faq-a{font-size:13px;line-height:1.82;color:var(--slate);padding:0 20px 17px;display:none;}
 .widget-label{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--slate3);margin-bottom:14px;}
+
+@media(max-width:680px){
+ .climate-table thead{display:none}
+ .climate-table tbody tr{display:grid;grid-template-columns:1fr 1fr;background:white;border-radius:12px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);overflow:hidden;border:1.5px solid #e8e0d0}
+ .climate-table tbody tr td{display:flex;flex-direction:column;padding:10px 14px;border-bottom:1px solid #e8e0d0;font-size:13px}
+ .climate-table tbody tr td::before{content:attr(data-label);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;margin-bottom:2px}
+ .climate-table tbody tr td:first-child{grid-column:1/-1;font-size:15px;font-weight:700;background:#f8f7f4;padding:12px 14px;border-bottom:1.5px solid #e8e0d0}
+ .climate-table tbody tr td:first-child::before{display:none}
+ .climate-table tr.rec td:first-child{color:#16a34a}
+ .climate-table tr.avoid td:first-child{color:#dc2626}
+}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[

@@ -59,6 +59,17 @@
 .climate-table tbody tr.rec td:first-child{color:#1a7a4a}
 .climate-table tbody tr.avoid td{background:#fef2f2!important}
 .climate-table tbody tr.avoid td:first-child{color:#dc2626}
+
+@media(max-width:680px){
+ .climate-table thead{display:none}
+ .climate-table tbody tr{display:grid;grid-template-columns:1fr 1fr;background:white;border-radius:12px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);overflow:hidden;border:1.5px solid #e8e0d0}
+ .climate-table tbody tr td{display:flex;flex-direction:column;padding:10px 14px;border-bottom:1px solid #e8e0d0;font-size:13px}
+ .climate-table tbody tr td::before{content:attr(data-label);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;margin-bottom:2px}
+ .climate-table tbody tr td:first-child{grid-column:1/-1;font-size:15px;font-weight:700;background:#f8f7f4;padding:12px 14px;border-bottom:1.5px solid #e8e0d0}
+ .climate-table tbody tr td:first-child::before{display:none}
+ .climate-table tr.rec td:first-child{color:#16a34a}
+ .climate-table tr.avoid td:first-child{color:#dc2626}
+}
 </style>
 <link rel="icon" type="image/x-icon" href="../favicon.ico"/><link rel="icon" type="image/svg+xml" href="../favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/><script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.js" crossorigin="anonymous"></script>
 <script>document.addEventListener("DOMContentLoaded",function(){twemoji.parse(document.body,{folder:"svg",ext:".svg"});});</script>
