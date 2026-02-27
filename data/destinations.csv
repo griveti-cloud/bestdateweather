@@ -1,84 +1,84 @@
-slug_fr,slug_en,nom_fr,nom_bare,pays,flag,prep,lat,lon,tropical
-agadir,agadir,Agadir,Agadir,Maroc,ma,à,30.42,-9.6,False
-algarve,algarve,l'Algarve,Algarve,Portugal,pt,en,37.1,-8.68,False
-alicante,alicante,Alicante,Alicante,Espagne,es,à,38.35,-0.48,False
-amalfi,amalfi,la Côte Amalfitaine,Côte Amalfitaine,Italie,it,sur la,40.63,14.6,False
-amsterdam,amsterdam,Amsterdam,Amsterdam,Pays-Bas,nl,à,52.37,4.89,False
-bali,bali,Bali,Bali,Indonésie,id,à,-8.67,115.21,True
-bangkok,bangkok,Bangkok,Bangkok,Thaïlande,th,à,13.75,100.52,True
-barcelone,barcelona,Barcelone,Barcelone,Espagne,es,à,41.39,2.15,False
-berlin,berlin,Berlin,Berlin,Allemagne,de,à,52.52,13.4,False
-bordeaux,bordeaux,Bordeaux,Bordeaux,France,fr,à,44.84,-0.58,False
-bretagne,brittany,la Bretagne,Bretagne,France,fr,en,48.11,-1.68,False
-buenos-aires,buenos-aires,Buenos Aires,Buenos Aires,Argentine,ar,à,-34.61,-58.38,False
-cancun,cancun,Cancún,Cancún,Mexique,mx,à,21.16,-86.85,False
-capri,capri,Capri,Capri,Italie,it,à,40.55,14.24,False
-canaries,canary-islands,les Canaries,Canaries,Espagne,es,aux,28.29,-14.0,False
-corfou,corfu,Corfou,Corfou,Grèce,gr,à,39.62,19.92,False
-corse,corsica,la Corse,Corse,France,fr,en,42.04,9.01,False
-costa-rica,costa-rica,le Costa Rica,Costa Rica,Costa Rica,cr,au,9.93,-84.08,True
-cote-azur,cote-azur,la Côte d'Azur,Côte d'Azur,France,fr,sur la,43.7,7.27,False
-crete,crete,la Crète,Crète,Grèce,gr,en,35.24,25.01,False
-dubai,dubai,Dubaï,Dubaï,Émirats Arabes Unis,ae,à,25.2,55.27,False
-dubrovnik,dubrovnik,Dubrovnik,Dubrovnik,Croatie,hr,à,42.65,18.09,False
-edimbourg,edinburgh,Édimbourg,Édimbourg,Écosse,gb,à,55.95,-3.19,False
-florence,florence,Florence,Florence,Italie,it,à,43.77,11.26,False
-fuerteventura,fuerteventura,Fuerteventura,Fuerteventura,Espagne,es,à,28.36,-14.02,False
-goa,goa,Goa,Goa,Inde,in,à,15.49,73.82,True
-gran-canaria,gran-canaria,Gran Canaria,Gran Canaria,Espagne,es,à,27.92,-15.39,False
-hawaii,hawaii-maui,Hawaï / Maui,Hawaï / Maui,États-Unis,us,à,20.8,-156.33,False
-hoi-an,hoi-an,Hôi An,Hôi An,Viêt Nam,vn,à,15.88,108.33,True
-ibiza,ibiza,Ibiza,Ibiza,Espagne,es,à,38.91,1.43,False
-ile-maurice,mauritius,l'Île Maurice,Île Maurice,Maurice,mu,à,-20.35,57.55,True
-istanbul,istanbul,Istanbul,Istanbul,Turquie,tr,à,41.01,28.95,False
-jamaique,jamaica,la Jamaïque,Jamaïque,Jamaïque,jm,en,18.1,-77.3,True
-katmandou,kathmandu,Katmandou,Katmandou,Népal,np,à,27.72,85.32,False
-la-havane,havana,La Havane,La Havane,Cuba,cu,à,23.14,-82.36,True
-lanzarote,lanzarote,Lanzarote,Lanzarote,Espagne,es,à,29.04,-13.64,False
-le-cap,cape-town,Le Cap,Le Cap,Afrique du Sud,za,au,-33.92,18.42,False
-lisbonne,lisbon,Lisbonne,Lisbonne,Portugal,pt,à,38.72,-9.13,False
-londres,london,Londres,Londres,Royaume-Uni,gb,à,51.51,-0.13,False
-los-angeles,los-angeles,Los Angeles,Los Angeles,États-Unis,us,à,34.05,-118.24,False
-lyon,lyon,Lyon,Lyon,France,fr,à,45.75,4.83,False
-madere,madeira,Madère,Madère,Portugal,pt,à,32.66,-16.92,False
-majorque,mallorca,Majorque,Majorque,Espagne,es,à,39.57,2.65,False
-maldives,maldives,les Maldives,Maldives,Maldives,mv,aux,3.2,73.22,True
-malaga,malaga,Málaga,Málaga,Espagne,es,à,36.72,-4.42,False
-malte,malta,Malte,Malte,Malte,mt,à,35.9,14.51,False
-marrakech,marrakech,Marrakech,Marrakech,Maroc,ma,à,31.63,-8.0,False
-marseille,marseille,Marseille,Marseille,France,fr,à,43.3,5.37,False
-miami,miami,Miami,Miami,États-Unis,us,à,25.77,-80.19,False
-minorque,menorca,Minorque,Minorque,Espagne,es,à,39.97,4.07,False
-monaco,monaco,Monaco,Monaco,Monaco,mc,à,43.74,7.42,False
-mykonos,mykonos,Mykonos,Mykonos,Grèce,gr,à,37.44,25.37,False
-new-york,new-york,New York,New York,États-Unis,us,à,40.71,-74.01,False
-nice,nice,Nice,Nice,France,fr,à,43.71,7.26,False
-paris,paris,Paris,Paris,France,fr,à,48.85,2.35,False
-phuket,phuket,Phuket,Phuket,Thaïlande,th,à,7.88,98.39,True
-porto,porto,Porto,Porto,Portugal,pt,à,41.15,-8.61,False
-prague,prague,Prague,Prague,Tchéquie,cz,à,50.08,14.44,False
-provence,provence,la Provence,Provence,France,fr,en,43.94,5.03,False
-reunion,reunion,La Réunion,La Réunion,France,fr,à,-21.11,55.54,True
-reykjavik,reykjavik,Reykjavik,Reykjavik,Islande,is,à,64.15,-21.94,False
-rhodes,rhodes,Rhodes,Rhodes,Grèce,gr,à,36.43,28.22,False
-rio-de-janeiro,rio-de-janeiro,Rio de Janeiro,Rio de Janeiro,Brésil,br,à,-22.9,-43.17,True
-riviera-maya,riviera-maya,la Riviera Maya,Riviera Maya,Mexique,mx,en,20.62,-87.08,True
-rome,rome,Rome,Rome,Italie,it,à,41.9,12.5,False
-santorin,santorini,Santorin,Santorin,Grèce,gr,à,36.39,25.44,False
-sardaigne,sardinia,la Sardaigne,Sardaigne,Italie,it,en,40.12,9.01,False
-seville,seville,Séville,Séville,Espagne,es,à,37.39,-5.99,False
-seychelles,seychelles,les Seychelles,Seychelles,Seychelles,sc,aux,-4.68,55.49,True
-sicile,sicily,la Sicile,Sicile,Italie,it,en,37.6,14.02,False
-siem-reap,siem-reap,Siem Reap,Siem Reap,Cambodge,kh,à,13.36,103.86,True
-singapour,singapore,Singapour,Singapour,Singapour,sg,à,1.35,103.82,True
-split,split,Split,Split,Croatie,hr,à,43.51,16.44,False
-tenerife,tenerife,Tenerife,Tenerife,Espagne,es,à,28.46,-16.25,False
-tokyo,tokyo,Tokyo,Tokyo,Japon,jp,à,35.69,139.69,False
-toscane,tuscany,la Toscane,Toscane,Italie,it,en,43.77,11.26,False
-tulum,tulum,Tulum,Tulum,Mexique,mx,à,20.21,-87.46,False
-valence,valencia,Valence,Valence,Espagne,es,à,39.47,-0.38,False
-venise,venice,Venise,Venise,Italie,it,à,45.44,12.33,False
-vienne,vienna,Vienne,Vienne,Autriche,at,à,48.21,16.37,False
-zakynthos,zakynthos,Zakynthos,Zakynthos,Grèce,gr,à,37.78,20.9,False
-zanzibar,zanzibar,Zanzibar,Zanzibar,Tanzanie,tz,à,-6.16,39.2,True
-barbade,barbados,la Barbade,Barbade,Barbade,bb,à la,13.19,-59.54,True
+slug_fr,slug_en,nom_fr,nom_bare,pays,flag,prep,lat,lon,tropical,hero_sub,booking_dest_id
+agadir,agadir,Agadir,Agadir,Maroc,ma,à,30.42,-9.6,False,"Agadir, station balnéaire du Maroc — 300 jours de soleil par an, grande plage de sable fin et resort modernes.",-20029
+algarve,algarve,l'Algarve,Algarve,Portugal,pt,en,37.1,-8.68,False,"300 jours de soleil, falaises dorées et mer atlantique — l'Algarve est la destination côtière la plus accessible depuis la France.",1064
+alicante,alicante,Alicante,Alicante,Espagne,es,à,38.35,-0.48,False,"Alicante, Costa Blanca — l'une des villes les plus ensoleillées d'Europe, avec des plages de sable blanc à prix raisonnables.",-370210
+amalfi,amalfi,la Côte Amalfitaine,Côte Amalfitaine,Italie,it,sur la,40.63,14.6,False,La côte la plus belle d'Italie — avec une contrainte logistique unique en juillet-août. Juin et septembre sont les fenêtres sans compromis.,898
+amsterdam,amsterdam,Amsterdam,Amsterdam,Pays-Bas,nl,à,52.37,4.89,False,"Amsterdam, canaux et tulipes — la météo capricieuse du nord joue un rôle crucial dans le choix de votre période.",-2140479
+bali,bali,Bali,Bali,Indonésie,id,à,-8.67,115.21,True,Bali est visitable toute l'année mais la mousson (nov-mars) multiplie par 6 les risques de pluie. 10 ans de données pour choisir selon votre projet.,835
+bangkok,bangkok,Bangkok,Bangkok,Thaïlande,th,à,13.75,100.52,True,"Bangkok, capitale de la Thaïlande — temples, street food et vie nocturne, mais la mousson conditionne tout.",-3414440
+barcelone,barcelona,Barcelone,Barcelone,Espagne,es,à,41.39,2.15,False,"Barcelone, entre Gaudí, plages et vie nocturne — une destination quatre saisons avec une météo qui change tout selon le mois.",-372490
+berlin,berlin,Berlin,Berlin,Allemagne,de,à,52.52,13.4,False,"Berlin, capitale de la créativité — street art, clubs légendaires et Histoire partout.",-1746443
+bordeaux,bordeaux,Bordeaux,Bordeaux,France,fr,à,44.84,-0.58,False,"Capitale mondiale du vin, architecture classée UNESCO.",
+bretagne,brittany,la Bretagne,Bretagne,France,fr,en,48.11,-1.68,False,"Côtes sauvages, crêperies et culture celtique authentique.",
+buenos-aires,buenos-aires,Buenos Aires,Buenos Aires,Argentine,ar,à,-34.61,-58.38,False,"Buenos Aires — tango, asado et architecture européenne en hémisphère sud. Les saisons sont inversées.",-979186
+cancun,cancun,Cancún,Cancún,Mexique,mx,à,21.16,-86.85,False,"Cancún — plages des Caraïbes, cenotes mayas et hôtels tout inclus. La saison des ouragans change tout.",-1655011
+capri,capri,Capri,Capri,Italie,it,à,40.55,14.24,False,"Capri est l'île du luxe et de la dolce vita. Accessible uniquement en ferry — mais les Faraglioni, la Grotte bleue et les villas privées en valent le détour.",-113213
+canaries,canary-islands,les Canaries,Canaries,Espagne,es,aux,28.29,-14.0,False,Les Canaries sont la seule destination 12 mois de ce guide : été tropical et hiver doux garantis. 10 ans de données pour choisir selon votre projet.,730
+corfou,corfu,Corfou,Corfou,Grèce,gr,à,39.62,19.92,False,"Corfou, l'île verte de la Grèce — végétation luxuriante, vieille ville vénitienne et mer ionienne cristalline.",-820069
+corse,corsica,la Corse,Corse,France,fr,en,42.04,9.01,False,"L'île de beauté, plages sauvages et maquis parfumé.",
+costa-rica,costa-rica,le Costa Rica,Costa Rica,Costa Rica,cr,au,9.93,-84.08,True,"Le Costa Rica, biodiversité exceptionnelle, volcans et plages — l'écotourisme à son meilleur.",
+cote-azur,cote-azur,la Côte d'Azur,Côte d'Azur,France,fr,sur la,43.7,7.27,False,La Côte d'Azur est accessible toute l'année. La longue fenêtre mai-septembre offre 5 mois de météo excellente — avec une fenêtre dorée en juin.,806
+crete,crete,la Crète,Crète,Grèce,gr,en,35.24,25.01,False,"La Crète est ouverte toute l'année. Plus grande, moins chère et plus diversifiée que Santorin ou Mykonos.",-821828
+dubai,dubai,Dubaï,Dubaï,Émirats Arabes Unis,ae,à,25.2,55.27,False,"Dubaï est invivable de juin à septembre. Mais de novembre à avril, c'est l'une des meilleures météos au monde.",-782831
+dubrovnik,dubrovnik,Dubrovnik,Dubrovnik,Croatie,hr,à,42.65,18.09,False,"Dubrovnik, la perle de l'Adriatique — remparts médiévaux, eaux turquoise et décor de Game of Thrones.",-79996
+edimbourg,edinburgh,Édimbourg,Édimbourg,Écosse,gb,à,55.95,-3.19,False,"Édimbourg — château sur rocher volcanique, Festival Fringe et whisky des Highlands. Météo imprévisible.",-2595386
+florence,florence,Florence,Florence,Italie,it,à,43.77,11.26,False,"Florence, capitale de la Renaissance — entre Uffizi, Duomo et Chianti, la météo conditionne l'expérience culturelle.",-117543
+fuerteventura,fuerteventura,Fuerteventura,Fuerteventura,Espagne,es,à,28.36,-14.02,False,"Fuerteventura, dunes et plages de sable fin aux Canaries — le paradis des sports nautiques.",
+goa,goa,Goa,Goa,Inde,in,à,15.49,73.82,True,"Goa, entre plages tropicales, cuisine épicée et héritage portugais — la perle de l'Inde.",
+gran-canaria,gran-canaria,Gran Canaria,Gran Canaria,Espagne,es,à,27.92,-15.39,False,"Gran Canaria, continent en miniature — plages de dunes, forêts de pins et villes animées dans la même île.",-388528
+hawaii,hawaii-maui,Hawaï / Maui,Hawaï / Maui,États-Unis,us,à,20.8,-156.33,False,"Maui, volcans, plages de lave noire et surf légendaire — Hawaï dans toute sa splendeur.",
+hoi-an,hoi-an,Hôi An,Hôi An,Viêt Nam,vn,à,15.88,108.33,True,"Hôi An, ville ancienne classée UNESCO — lanternes, tailleurs et plages à 4km, entre culture et farniente.",-3715584
+ibiza,ibiza,Ibiza,Ibiza,Espagne,es,à,38.91,1.43,False,"Ibiza n'est pas que les clubs. Calas sauvages, fincas et couchers de soleil iconiques — avec des mois très différents selon votre projet.",-385722
+ile-maurice,mauritius,l'Île Maurice,Île Maurice,Maurice,mu,à,-20.35,57.55,True,L'Île Maurice est une des plus belles destinations au monde — mais la saison cyclonique (janv-mars) impose de bien choisir sa date. 10 ans de données.,-1355419
+istanbul,istanbul,Istanbul,Istanbul,Turquie,tr,à,41.01,28.95,False,"Istanbul est la seule ville au monde sur deux continents. Bosphore, palais ottomans, bazars millénaires — une destination culturelle incomparable.",-755070
+jamaique,jamaica,la Jamaïque,Jamaïque,Jamaïque,jm,en,18.1,-77.3,True,"La Jamaïque, reggae, plages de sable blanc et cascades — l'âme des Caraïbes.",
+katmandou,kathmandu,Katmandou,Katmandou,Népal,np,à,27.72,85.32,False,"Katmandou, porte de l'Himalaya — temples bouddhistes, base-camp Everest et culture unique.",-1022136
+la-havane,havana,La Havane,La Havane,Cuba,cu,à,23.14,-82.36,True,"La Havane — voitures américaines des années 50, rhum, salsa et Malecón. Cuba hors du temps.",-1217458
+lanzarote,lanzarote,Lanzarote,Lanzarote,Espagne,es,à,29.04,-13.64,False,"Lanzarote, l'île volcanique des Canaries — paysages martiens, plages noires et soleil toute l'année.",-371574
+le-cap,cape-town,Le Cap,Le Cap,Afrique du Sud,za,au,-33.92,18.42,False,"Le Cap, entre Table Mountain, vignobles et paysages spectaculaires — la perle de l'Afrique du Sud.",
+lisbonne,lisbon,Lisbonne,Lisbonne,Portugal,pt,à,38.72,-9.13,False,Lisbonne bénéficie de ~300 jours de soleil par an et d'un accès facile depuis la France. 10 ans de données pour choisir selon votre projet.,-2167973
+londres,london,Londres,Londres,Royaume-Uni,gb,à,51.51,-0.13,False,"Londres — Big Ben, museums gratuits et pubs victoriens. La météo capricieuse est le principal enjeu.",-2601889
+los-angeles,los-angeles,Los Angeles,Los Angeles,États-Unis,us,à,34.05,-118.24,False,"Los Angeles, soleil californien, Hollywood et plages mythiques — la ville des rêves.",
+lyon,lyon,Lyon,Lyon,France,fr,à,45.75,4.83,False,"Capitale de la gastronomie française, ville romaine et Renaissance.",
+madere,madeira,Madère,Madère,Portugal,pt,à,32.66,-16.92,False,"Madère, île éternelle du printemps — un climat unique toute l'année grâce à l'Atlantique et l'altitude.",-2175497
+majorque,mallorca,Majorque,Majorque,Espagne,es,à,39.57,2.65,False,Majorque est accessible toute l'année mais juillet-août dépasse 34°C. Juin et septembre-octobre offrent le meilleur rapport météo-prix-tranquillité.,-395224
+maldives,maldives,les Maldives,Maldives,Maldives,mv,aux,3.2,73.22,True,"Maldives — atolls, bungalows sur pilotis et eaux turquoise. Le paradis tropical par définition.",4862
+malaga,malaga,Málaga,Málaga,Espagne,es,à,36.72,-4.42,False,"Málaga, porte de la Costa del Sol — 320 jours de soleil par an, Picasso et le meilleur rapport soleil/prix d'Europe.",-390787
+malte,malta,Malte,Malte,Malte,mt,à,35.9,14.51,False,"Malte est l'une des destinations les plus ensoleillées de Méditerranée — 320 jours de soleil par an. Bastions médiévaux, Baie Bleue de Comino, eaux cristallines.",-2107030
+marrakech,marrakech,Marrakech,Marrakech,Maroc,ma,à,31.63,-8.0,False,Marrakech à 3h de Paris — mais 41°C en juillet. Deux fenêtres idéales : mars-avril et octobre-novembre.,-38833
+marseille,marseille,Marseille,Marseille,France,fr,à,43.3,5.37,False,"La cité phocéenne, Calanques et culture méditerranéenne.",
+miami,miami,Miami,Miami,États-Unis,us,à,25.77,-80.19,False,"Miami, art déco, plages dorées et vie nocturne électrique — la capitale du soleil de Floride.",
+minorque,menorca,Minorque,Minorque,Espagne,es,à,39.97,4.07,False,"Minorque, criques sauvages et eaux cristallines — la plus préservée des Baléares.",
+monaco,monaco,Monaco,Monaco,Monaco,mc,à,43.74,7.42,False,"Monaco, le plus petit État du monde — Grand Prix, casino de Monte-Carlo et Méditerranée à portée de main.",-1451964
+mykonos,mykonos,Mykonos,Mykonos,Grèce,gr,à,37.44,25.37,False,Mykonos est ouverte 6 mois sur 12. Le Meltemi de juillet-août peut compliquer les activités en terrasse — juin et septembre restent les meilleurs mois.,-823958
+new-york,new-york,New York,New York,États-Unis,us,à,40.71,-74.01,False,"New York, la ville qui ne dort jamais — quatre saisons bien distinctes qui transforment radicalement l'expérience.",20088325
+nice,nice,Nice,Nice,France,fr,à,43.71,7.26,False,"La perle de la Côte d'Azur, mer bleue et vieille ville baroque.",
+paris,paris,Paris,Paris,France,fr,à,48.85,2.35,False,"La ville lumière, musées mondiaux et gastronomie.",
+phuket,phuket,Phuket,Phuket,Thaïlande,th,à,7.88,98.39,True,"Phuket, perle d'Andaman — plages cristallines et mer turquoise, mais la mousson divise l'année en deux.",-3253342
+porto,porto,Porto,Porto,Portugal,pt,à,41.15,-8.61,False,"Porto, capitale du vin — caves de porto, pont Dom Luís et gastronomie authentique sur le Douro.",-2173088
+prague,prague,Prague,Prague,Tchéquie,cz,à,50.08,14.44,False,"Prague, la ville dorée — château, pont Charles et bière artisanale. La météo influence fortement la fréquentation.",-553173
+provence,provence,la Provence,Provence,France,fr,en,43.94,5.03,False,"Lavandes, marchés provençaux et villages perchés.",
+reunion,reunion,La Réunion,La Réunion,France,fr,à,-21.11,55.54,True,"La Réunion, île intense — randonnées dans les cirques volcaniques, lagon turquoise et diversité climatique exceptionnelle.",-2171
+reykjavik,reykjavik,Reykjavik,Reykjavik,Islande,is,à,64.15,-21.94,False,"Reykjavik — aurores boréales, geysers et Northern Lights. La météo dicte tout dans cette destination extrême.",-2651804
+rhodes,rhodes,Rhodes,Rhodes,Grèce,gr,à,36.43,28.22,False,"Rhodes, l'île du soleil — la plus ensoleillée de Méditerranée avec plus de 300 jours de soleil par an.",213830
+rio-de-janeiro,rio-de-janeiro,Rio de Janeiro,Rio de Janeiro,Brésil,br,à,-22.9,-43.17,True,"Rio de Janeiro — Copacabana, Ipanema et le Christ Rédempteur. Le carnaval et la saison des pluies conditionnent tout.",-666610
+riviera-maya,riviera-maya,la Riviera Maya,Riviera Maya,Mexique,mx,en,20.62,-87.08,True,Décembre-avril est la fenêtre dorée sans risque. Sargasses mai-novembre et ouragans août-octobre à intégrer dans votre planning.,2816
+rome,rome,Rome,Rome,Italie,it,à,41.9,12.5,False,"Rome, la ville éternelle — Colisée, Vatican et trattorie. L'été y est étouffant, le printemps parfait.",-126693
+santorin,santorini,Santorin,Santorin,Grèce,gr,à,36.39,25.44,False,Santorin est fermée 6 mois sur 12. Juin et septembre sont les fenêtres idéales — le Meltemi de juillet-août peut perturber les activités en terrasse.,-829276
+sardaigne,sardinia,la Sardaigne,Sardaigne,Italie,it,en,40.12,9.01,False,"Sardaigne — Costa Smeralda, eau turquoise et dunes de sable blanc. La carte postale italienne par excellence.",908
+seville,seville,Séville,Séville,Espagne,es,à,37.39,-5.99,False,"Séville, flamenco, tapas et architecture mauresque — le joyau de l'Andalousie.",
+seychelles,seychelles,les Seychelles,Seychelles,Seychelles,sc,aux,-4.68,55.49,True,"Seychelles — rochers de granit, plages de sable blanc et eaux cristallines. Le dernier Eden.",-2239562
+sicile,sicily,la Sicile,Sicile,Italie,it,en,37.6,14.02,False,La Sicile bénéficie d'un des meilleurs climats de Méditerranée avec des prix inférieurs à l'Italie continentale.,909
+siem-reap,siem-reap,Siem Reap,Siem Reap,Cambodge,kh,à,13.36,103.86,True,"Siem Reap, porte d'Angkor — le plus grand complexe religieux du monde, entre jungle et art khmer.",-1032755
+singapour,singapore,Singapour,Singapour,Singapour,sg,à,1.35,103.82,True,"Singapour, cité-État futuriste — Gardens by the Bay, street food hallucinant et architecture iconique.",-73635
+split,split,Split,Split,Croatie,hr,à,43.51,16.44,False,"Split — le palais de Dioclétien, porte des îles dalmates et base idéale pour explorer la côte croate.",-96492
+tenerife,tenerife,Tenerife,Tenerife,Espagne,es,à,28.46,-16.25,False,"Tenerife, l'île du Teide — la plus grande des Canaries, avec un microclimat unique selon l'altitude et la côte.",-401686
+tokyo,tokyo,Tokyo,Tokyo,Japon,jp,à,35.69,139.69,False,"Tokyo — sakura, été humide, automne flamboyant : chaque saison offre une ville radicalement différente.",-246227
+toscane,tuscany,la Toscane,Toscane,Italie,it,en,43.77,11.26,False,La Toscane est accessible toute l'année mais juillet-août atteint 36-38°C. 10 ans de données pour choisir selon votre projet.,910
+tulum,tulum,Tulum,Tulum,Mexique,mx,à,20.21,-87.46,False,"Tulum, ruines mayas, cénotes et plages sauvages — la destination bohème du Yucatán.",
+valence,valencia,Valence,Valence,Espagne,es,à,39.47,-0.38,False,"Valence, capitale de la paella et de la Fallas — soleil méditerranéen avec moins de touristes que Barcelone.",-406131
+venise,venice,Venise,Venise,Italie,it,à,45.44,12.33,False,Venise est magnifique toute l'année — mais l'acqua alta en hiver et les 30 millions de touristes en été en font une destination à planifier avec soin.,-132007
+vienne,vienna,Vienne,Vienne,Autriche,at,à,48.21,16.37,False,"Vienne — Opéra, Schönbrunn et café viennois. La capitale autrichienne joue la culture toute l'année.",-1995499
+zakynthos,zakynthos,Zakynthos,Zakynthos,Grèce,gr,à,37.78,20.9,False,,
+zanzibar,zanzibar,Zanzibar,Zanzibar,Tanzanie,tz,à,-6.16,39.2,True,"Zanzibar, épices et coraux — Stone Town et plages de sable blanc dans l'océan Indien tanzanien.",-2574823
+barbade,barbados,la Barbade,Barbade,Barbade,bb,à la,13.19,-59.54,True,"La Barbade, plages de sable blanc et eau turquoise — une île des Caraïbes idéale toute l'année.",
