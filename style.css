@@ -197,31 +197,30 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
     border-bottom:1px solid var(--cream2)!important
   }
   /* Table mensuelle : responsive sans scroll horizontal */
-  .climate-table[aria-label*="mensuel"]{
+  .climate-table[aria-label*="mensuel"],.climate-table[aria-label*="Monthly climate table"]{
     min-width:0;display:table;font-size:11px
   }
-  .climate-table[aria-label*="mensuel"] thead{display:table-header-group}
-  .climate-table[aria-label*="mensuel"] tbody{display:table-row-group}
-  .climate-table[aria-label*="mensuel"] tbody tr{
+  .climate-table[aria-label*="mensuel"] thead,.climate-table[aria-label*="Monthly climate table"] thead{display:table-header-group}
+  .climate-table[aria-label*="mensuel"] tbody,.climate-table[aria-label*="Monthly climate table"] tbody{display:table-row-group}
+  .climate-table[aria-label*="mensuel"] tbody tr,.climate-table[aria-label*="Monthly climate table"] tbody tr{
     display:table-row;border:none;border-radius:0;
     padding:0;margin:0;box-shadow:none;flex-direction:unset
   }
-  .climate-table[aria-label*="mensuel"] tbody td{
+  .climate-table[aria-label*="mensuel"] tbody td,.climate-table[aria-label*="Monthly climate table"] tbody td{
     display:table-cell;padding:6px 4px!important;
     text-align:center!important;font-size:11px
   }
-  .climate-table[aria-label*="mensuel"] thead th{
+  .climate-table[aria-label*="mensuel"] thead th,.climate-table[aria-label*="Monthly climate table"] thead th{
     padding:8px 4px!important;font-size:10px
   }
-  .climate-table[aria-label*="mensuel"] tbody td:first-child{
+  .climate-table[aria-label*="mensuel"] tbody td:first-child,.climate-table[aria-label*="Monthly climate table"] tbody td:first-child{
     padding-left:8px!important;font-size:11px;
     border-bottom:1px solid var(--cream2)!important
   }
-  .climate-table-wrap:has([aria-label*="mensuel"]){overflow-x:visible}
+  .climate-table-wrap:has([aria-label*="mensuel"]),.climate-table-wrap:has([aria-label*="Monthly climate table"]){overflow-x:visible}
   .widget-frame iframe{height:580px}
   /* Masquer colonne Précip. mm sur mobile (5e th/td) */
-  .climate-table[aria-label*="mensuel"] th:nth-child(5),
-  .climate-table[aria-label*="mensuel"] td:nth-child(5){display:none}
+  .climate-table[aria-label*="mensuel"] th:nth-child(5),.climate-table[aria-label*="mensuel"] td:nth-child(5),.climate-table[aria-label*="Monthly climate table"] th:nth-child(5),.climate-table[aria-label*="Monthly climate table"] td:nth-child(5){display:none}
 }
 
 /* Quick facts — table décision rapide remplacée par grille responsive */
