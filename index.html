@@ -347,10 +347,18 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
 .dh-search{position:relative;margin-bottom:24px}
 .dh-search input{width:100%;padding:14px 16px 14px 44px;border:1.5px solid #e8e0d0;border-radius:12px;font-size:15px;font-family:inherit;background:#fff;color:#1a1f2e;outline:none;transition:border-color .2s;box-sizing:border-box}
 .dh-search input:focus{border-color:#e8940a}
+.dh-search:has(.dh-dropdown.show) input{border-radius:12px 12px 0 0;border-bottom-color:transparent}
 .dh-search input::placeholder{color:#9ca3af}
 .dh-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ca3af;pointer-events:none;font-size:18px}
 .dh-search-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:18px;color:#9ca3af;cursor:pointer;padding:4px;display:none}
 .dh-search-clear.show{display:block}
+.dh-dropdown{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid #e8e0d0;border-top:none;border-radius:0 0 12px 12px;box-shadow:0 8px 24px rgba(0,0,0,.1);z-index:100;max-height:320px;overflow-y:auto}
+.dh-dropdown.show{display:block}
+.dh-dropdown a{display:flex;align-items:center;gap:10px;padding:11px 16px;text-decoration:none;color:#1a1f2e;font-size:14px;font-weight:500;border-bottom:1px solid #f0ebe0;transition:background .15s}
+.dh-dropdown a:last-child{border-bottom:none}
+.dh-dropdown a:hover,.dh-dropdown a.dh-dd-active{background:#faf7f0}
+.dh-dropdown a img{border-radius:2px}
+.dh-dropdown a .dh-dd-country{color:#7a8fa8;font-size:12px;margin-left:auto}
 .dh-count{font-size:12px;color:#7a8fa8;margin:-16px 0 20px 4px;display:none}
 .dh-count.show{display:block}
 
@@ -734,7 +742,8 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
   </div>
 <div class="dh-search"><span class="dh-search-icon">🔍</span>
 <input type="text" id="dh-input" placeholder="Rechercher une destination…" autocomplete="off">
-<button id="dh-clear" class="dh-search-clear" aria-label="Clear">✕</button></div>
+<button id="dh-clear" class="dh-search-clear" aria-label="Clear">✕</button>
+<div id="dh-dropdown" class="dh-dropdown"></div></div>
 <div id="dh-count" class="dh-count"></div>
 <div class="dh-acc">
 <button class="dh-acc-head" aria-expanded="false">
@@ -1239,17 +1248,52 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  var inp=document.getElementById('dh-input'),
      clear=document.getElementById('dh-clear'),
      count=document.getElementById('dh-count'),
+     dropdown=document.getElementById('dh-dropdown'),
      cards=document.querySelectorAll('.dh-card'),
      accs=document.querySelectorAll('.dh-acc'),
      subs=document.querySelectorAll('.dh-sub'),
      noRes=document.getElementById('dh-no-results');
 
  function norm(s){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}
- var searching=false;
+ var searching=false,ddIdx=-1;
+
+ function buildDropdown(q){
+  dropdown.innerHTML='';ddIdx=-1;
+  if(!q){dropdown.className='dh-dropdown';return}
+  var matches=[];
+  cards.forEach(function(c){
+   var name=c.getAttribute('data-name')||'';
+   var country=c.getAttribute('data-country')||'';
+   if(norm(name).indexOf(q)>-1||norm(country).indexOf(q)>-1){
+    var img=c.querySelector('img');
+    matches.push({name:name,country:country,href:c.getAttribute('href'),flag:img?img.getAttribute('src'):''});
+   }
+  });
+  if(!matches.length){dropdown.className='dh-dropdown';return}
+  var max=Math.min(matches.length,8);
+  for(var i=0;i<max;i++){
+   var m=matches[i];
+   var a=document.createElement('a');
+   a.href=m.href;a.setAttribute('target','_top');
+   if(m.flag){var im=document.createElement('img');im.src=m.flag;im.width=20;im.height=15;im.alt='';a.appendChild(im)}
+   var sp=document.createElement('span');sp.textContent=m.name;a.appendChild(sp);
+   var co=document.createElement('span');co.className='dh-dd-country';co.textContent=m.country;a.appendChild(co);
+   a.addEventListener('mousedown',function(e){e.preventDefault()});
+   dropdown.appendChild(a);
+  }
+  if(matches.length>max){
+   var more=document.createElement('div');
+   more.style.cssText='padding:8px 16px;font-size:12px;color:#7a8fa8;text-align:center';
+   more.textContent='+ '+(matches.length-max)+' autres résultats ci-dessous';
+   dropdown.appendChild(more);
+  }
+  dropdown.className='dh-dropdown show';
+ }
 
  function doSearch(){
   var q=norm(inp.value.trim());
   clear.className='dh-search-clear'+(q?' show':'');
+  buildDropdown(q);
   if(!q){
    searching=false;
    cards.forEach(function(c){c.classList.remove('dh-hidden')});
@@ -1282,6 +1326,15 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  }
 
  inp.addEventListener('input',doSearch);
+ inp.addEventListener('blur',function(){setTimeout(function(){dropdown.className='dh-dropdown'},150)});
+ inp.addEventListener('focus',function(){if(inp.value.trim())buildDropdown(norm(inp.value.trim()))});
+ inp.addEventListener('keydown',function(e){
+  var items=dropdown.querySelectorAll('a');
+  if(!items.length)return;
+  if(e.key==='ArrowDown'){e.preventDefault();ddIdx=Math.min(ddIdx+1,items.length-1);items.forEach(function(a,i){a.className=i===ddIdx?'dh-dd-active':''})}
+  else if(e.key==='ArrowUp'){e.preventDefault();ddIdx=Math.max(ddIdx-1,0);items.forEach(function(a,i){a.className=i===ddIdx?'dh-dd-active':''})}
+  else if(e.key==='Enter'&&ddIdx>=0){e.preventDefault();items[ddIdx].click()}
+ });
  clear.addEventListener('click',function(){inp.value='';doSearch();inp.focus()});
 
  function toggleAcc(el,cls){
