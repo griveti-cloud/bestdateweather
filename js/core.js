@@ -1193,7 +1193,7 @@ function flagEmoji(code){
  if(!code||code.length!==2)return'';
  // DOM-TOM : pas de fichier drapeau propre, on utilise le drapeau FR
  var display = {'GF':'FR','GP':'FR','MQ':'FR','RE':'FR','PM':'FR','YT':'FR','NC':'FR','PF':'FR','WF':'FR','MF':'FR','BL':'FR'}[code] || code;
- return '<img src="'+CFG.flagBase+'display.toLowerCase()+'.png" width="20" height="15" alt="'+code.toUpperCase()+'" style="vertical-align:middle;border-radius:2px;margin-right:4px" onerror="this.style.display=\'none\'">';
+ return '<img src="'+CFG.flagBase+display.toLowerCase()+'.png" width="20" height="15" alt="'+code.toUpperCase()+'" style="vertical-align:middle;border-radius:2px;margin-right:4px" onerror="this.style.display=\'none\'">';
 }
 
 function hideAC(){document.getElementById('ac-list').style.display='none';acIdx=-1;}
@@ -1913,7 +1913,7 @@ function renderAnnual(loc, monthly) {
  legendEl.style.cssText = 'display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--slate3);margin-top:10px;align-items:center;padding:0 2px';
  legendEl.innerHTML = '<span><span style="display:inline-block;width:12px;height:3px;background:#1a7a4a;border-radius:2px;margin-right:5px;vertical-align:middle"></span>'+T.badgeRec+'</span>' +
  '<span><span style="display:inline-block;width:12px;height:3px;background:'+CFG.avoidColor+';border-radius:2px;margin-right:5px;vertical-align:middle"></span>'+T.badgeAvoid+'</span>' +
- '<span style="margin-left:auto;font-style:italic;font-size:10px"'>'+T.legendBarColor+'</span>';
+ '<span style="margin-left:auto;font-style:italic;font-size:10px">'+T.legendBarColor+'</span>';
  grid.parentNode.insertBefore(legendEl, grid.nextSibling);
  }
 
