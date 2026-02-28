@@ -54,7 +54,7 @@ window.BDW_T = {
  heroIdealDay: 'Ideal day', heroIdealDaySub: 'Sunny · little rain',
  heroGoodDay: 'Good day', heroGoodDaySub: 'Acceptable conditions',
  heroVeryRainy: 'Very rainy day', heroVeryRainySub: 'Frequent rain',
- heroCanicule: 'Canicule', heroChaniculeSub: 'Extreme heat · health risk',
+ heroCanicule: 'Heatwave', heroChaniculeSub: 'Extreme heat · health risk',
  heroFreezing: 'Freezing day', heroFreezingSub: 'Possible frost · difficult conditions',
  heroDifficult: 'Difficult day', heroDifficultSub: 'Rain · cool temperatures',
  heroMixed: 'Mixed day', heroMixedSub: 'Cloudy · possible showers',
@@ -238,8 +238,8 @@ window.BDW_CFG = {
  },
  countryShort: {},
  countryFull: {
- 'GP':'Guadeloupe','MQ':'Martinique','RE':'Réunion','GF':'Guyane',
- 'YT':'Mayotte','PM':'Saint-Pierre-et-Miquelon','NC':'New Caledonia',
- 'PF':'French Polynesia','WF':'Wallis-et-Futuna','BL':'Saint Barthélemy','MF':'Saint-Martin'
+ 'GP':'Guadeloupe','MQ':'Martinique','RE':'Réunion','GF':'French Guiana',
+ 'YT':'Mayotte','PM':'Saint Pierre and Miquelon','NC':'New Caledonia',
+ 'PF':'French Polynesia','WF':'Wallis and Futuna','BL':'Saint Barthélemy','MF':'Saint Martin'
 }
 };
