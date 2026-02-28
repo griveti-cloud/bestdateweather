@@ -207,7 +207,8 @@ def climate_table_html(months, nom_en, is_mountain=False):
                  f'<td>{m["sun_h"]}h</td>'
                  f'<td>{m["score"]:.1f}/10</td>{ski_col}</tr>\n')
     ski_header = '<th>Ski score 🎿</th>' if is_mountain else ''
-    return f'''<div class="climate-table-wrap">
+    wrap_class = 'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'
+    return f'''<div class="{wrap_class}">
  <table class="climate-table" aria-label="Monthly climate table {nom_en}">
  <thead><tr><th>Month</th><th>Min °C</th><th>Max °C</th><th>Rainy days (%)</th><th>Precip. mm/d</th><th>Sun h/d</th><th>Score</th>{ski_header}</tr></thead>
  <tbody>{rows}</tbody>
@@ -1135,7 +1136,7 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
  <section class="section">
  <div class="section-label">Annual overview</div>
  <h2 class="section-title">Month-by-month comparison</h2>
- <div class="climate-table-wrap">
+ <div class="{'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'}">
  <table class="climate-table" aria-label="Monthly climate table {nom_en}">
  <thead><tr><th>Month</th><th>Min °C</th><th>Max °C</th><th>Rain %</th><th>Precip. mm</th><th>Sun h/d</th><th>Score</th>{'<th>Ski score 🎿</th>' if is_mountain else ''}</tr></thead>
  <tbody>{table_rows}</tbody>
