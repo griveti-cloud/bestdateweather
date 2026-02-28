@@ -355,20 +355,28 @@ def footer_html(slug_fr, nom_bare, prep, slug_en=None):
  <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="mentions-legales.html" style="color:rgba(255,255,255,.7)">Mentions légales</a> · <a href="confidentialite.html" style="color:rgba(255,255,255,.7)">Confidentialité</a> · <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p>
 </footer>'''
 
-def climate_table_html(months, nom_bare):
+def climate_table_html(months, nom_bare, is_mountain=False):
     rows = ''
     for i, m in enumerate(months):
-        rows += (f'<tr class="{m["classe"]}" data-tmax="{m["tmax"]}" '
+        cls = m['classe']
+        ski_col = ''
+        if is_mountain:
+            from scoring import compute_ski_score, best_class
+            ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
+            cls = best_class(m['classe'], ski)
+            ski_col = f'<td>{ski:.1f}/10</td>'
+        rows += (f'<tr class="{cls}" data-tmax="{m["tmax"]}" '
                  f'data-rain="{m["rain_pct"]}" data-sun="{m["sun_h"]}">'
                  f'<td>{MONTHS_FR[i]}</td>'
                  f'<td>{m["tmin"]}°C</td><td>{m["tmax"]}°C</td>'
                  f'<td>{m["rain_pct"]}%</td>'
                  f'<td>{m["precip"]:.1f}</td>'
                  f'<td>{m["sun_h"]}h</td>'
-                 f'<td>{m["score"]:.1f}/10</td></tr>\n')
+                 f'<td>{m["score"]:.1f}/10</td>{ski_col}</tr>\n')
+    ski_header = '<th>Score ski 🎿</th>' if is_mountain else ''
     return f'''<div class="climate-table-wrap">
  <table class="climate-table" aria-label="Tableau climat mensuel {nom_bare}">
- <thead><tr><th>Mois</th><th>T° min</th><th>T° max</th><th>Jours de pluie (%)</th><th>Précip. mm/j</th><th>Soleil h/j</th><th>Score</th></tr></thead>
+ <thead><tr><th>Mois</th><th>T° min</th><th>T° max</th><th>Jours de pluie (%)</th><th>Précip. mm/j</th><th>Soleil h/j</th><th>Score</th>{ski_header}</tr></thead>
  <tbody>{rows}</tbody>
  </table>
 </div>
@@ -432,7 +440,8 @@ def gen_annual(dest, months, dest_cards, all_dests, similarities, comparison_ind
                 f"score {best_score}/10. Découvrez le meilleur moment pour partir — données météo 10 ans.")
 
     # Climate table
-    table_html = climate_table_html(months, nom_bare)
+    is_mountain = dest.get('mountain', 'False').strip() == 'True'
+    table_html = climate_table_html(months, nom_bare, is_mountain)
 
     # Quick facts section
     worst_idx  = min(range(12), key=lambda i: months[i]['score'])
@@ -954,16 +963,24 @@ def gen_monthly(dest, months, mi, all_dests, similarities, all_climate, events=N
     )
 
     # Annual table with current month highlighted
+    is_mountain = dest.get('mountain', 'False').strip() == 'True'
     table_rows = ''
     for i, mo in enumerate(months):
         highlight = ' style="background:#fef9c3;font-weight:700"' if i == mi else ''
-        table_rows += (f'<tr class="{mo["classe"]}"{highlight}>'
+        cls = mo['classe']
+        ski_col = ''
+        if is_mountain:
+            from scoring import compute_ski_score, best_class
+            ski = compute_ski_score(mo['tmax'], mo['rain_pct'], mo['sun_h'])
+            cls = best_class(mo['classe'], ski)
+            ski_col = f'<td>{ski:.1f}/10</td>'
+        table_rows += (f'<tr class="{cls}"{highlight}>'
                        f'<td>{MONTHS_FR[i]}</td>'
                        f'<td>{mo["tmin"]}°C</td><td>{mo["tmax"]}°C</td>'
                        f'<td>{mo["rain_pct"]}%</td>'
                        f'<td>{mo["precip"]:.1f}</td>'
                        f'<td>{mo["sun_h"]}h</td>'
-                       f'<td>{mo["score"]:.1f}/10</td></tr>\n')
+                       f'<td>{mo["score"]:.1f}/10</td>{ski_col}</tr>\n')
 
     # Best month diff
     bm = months[best_idx]
@@ -1196,7 +1213,7 @@ def gen_monthly(dest, months, mi, all_dests, similarities, all_climate, events=N
  <h2 class="section-title">Comparaison mois par mois</h2>
  <div class="climate-table-wrap">
  <table class="climate-table" aria-label="Tableau climat mensuel {nom_bare}">
- <thead><tr><th>Mois</th><th>T° min</th><th>T° max</th><th>Pluie %</th><th>Précip. mm</th><th>Soleil h/j</th><th>Score</th></tr></thead>
+ <thead><tr><th>Mois</th><th>T° min</th><th>T° max</th><th>Pluie %</th><th>Précip. mm</th><th>Soleil h/j</th><th>Score</th>{'<th>Score ski 🎿</th>' if is_mountain else ''}</tr></thead>
  <tbody>{table_rows}</tbody>
  </table>
  </div>

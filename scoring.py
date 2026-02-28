@@ -174,6 +174,74 @@ def compute_scores(months: list, slug: str = '') -> list:
     return scores
 
 
+# ── SCORING MONTAGNE / SKI ─────────────────────────────────────────────────
+#
+# Pour les destinations marquées mountain=True dans destinations.csv.
+# Le score ski s'affiche en seconde colonne à côté du score standard.
+# La classe de la ligne (couleur) prend le meilleur des deux scores.
+#
+# Principe : le froid est un atout, la neige un bonus, le soleil reste positif.
+# Score direct 0-10 sans passer par les classes rec/mid/avoid.
+
+def t_ideal_winter(tmax: float) -> float:
+    """
+    Confort ski normalisé [0, 1] en fonction de tmax (°C).
+
+    Sweet spot :    -5 à  5°C  →  0.9 – 1.0  (neige garantie, froid supportable)
+    Froid correct : -15 à -5°C →  0.3 – 0.9  (très froid mais skiable)
+    Trop froid :    ≤ -15°C     →  0.3  (conditions extrêmes)
+    Doux :           5 à 15°C  →  0.9 – 0.2  (neige fondante → pas de ski)
+    Chaud :         > 15°C      →  ≤ 0.2  (pas de neige)
+    """
+    if tmax <= -15:  return 0.3
+    if tmax <= -5:   return 0.3 + (tmax + 15) / 10 * 0.6
+    if tmax <= 5:    return 0.9 + (5 - abs(tmax)) / 5 * 0.1
+    if tmax <= 15:   return 0.9 - (tmax - 5) / 10 * 0.7
+    return max(0.0, 0.2 - (tmax - 15) / 10 * 0.2)
+
+
+def raw_score_winter(tmax: float, rain_pct: float, sun_h: float) -> float:
+    """
+    Score brut [0, 1] pour activités ski/montagne hiver.
+
+    Poids :
+      50%  température  → t_ideal_winter(tmax)
+      25%  précipitations → neutre si froid (neige), pénalisé si chaud (pluie)
+      25%  soleil       → sun_h / 12  (12h = max hivernal réaliste)
+    """
+    t = t_ideal_winter(tmax)
+
+    # Quand il fait ≤ 2°C, les précipitations tombent en neige → neutre/positif
+    if tmax <= 2:
+        precip_score = 0.7
+    elif tmax <= 8:
+        precip_score = max(0.2, 1.0 - rain_pct / 100.0)
+    else:
+        precip_score = max(0.0, 1.0 - rain_pct / 100.0)
+
+    sun = min(1.0, sun_h / 12.0)
+    return 0.50 * t + 0.25 * precip_score + 0.25 * sun
+
+
+def compute_ski_score(tmax: float, rain_pct: float, sun_h: float) -> float:
+    """Score ski direct /10 (pas de classes, mapping linéaire)."""
+    return round(raw_score_winter(tmax, rain_pct, sun_h) * 10, 1)
+
+
+def ski_class(score_10: float) -> str:
+    """Classe éditoriale dérivée du score ski."""
+    if score_10 >= 7.0: return 'rec'
+    if score_10 >= 4.0: return 'mid'
+    return 'avoid'
+
+
+def best_class(summer_cls: str, ski_score_10: float) -> str:
+    """Pour mountain destinations : prend la meilleure classe entre été et ski."""
+    rank = {'avoid': 0, 'mid': 1, 'rec': 2}
+    ski_cls = ski_class(ski_score_10)
+    return summer_cls if rank.get(summer_cls, 0) >= rank.get(ski_cls, 0) else ski_cls
+
+
 # ── UTILITAIRE DE VÉRIFICATION ─────────────────────────────────────────────
 
 def verify_destination(slug: str, rows_with_class: list, cur_scores_100: list) -> dict:
