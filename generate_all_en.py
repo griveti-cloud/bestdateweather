@@ -173,8 +173,8 @@ GTAG = '''<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJT
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-NTCJTDPSJL");</script>'''
 
 NAV = '''<nav>
- <a class="nav-brand" href="../app-en.html">Best<em>Date</em>Weather</a>
- <a class="nav-cta" href="../app-en.html">Try the app</a>
+ <a class="nav-brand" href="app.html">Best<em>Date</em>Weather</a>
+ <a class="nav-cta" href="app.html">Try the app</a>
 </nav>'''
 
 def footer_html(slug_fr, slug_en, nom_en):
@@ -182,7 +182,7 @@ def footer_html(slug_fr, slug_en, nom_en):
     return f'''<footer>
  <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
  <p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Weather data by Open-Meteo.com</a> · Sources: ECMWF, DWD, NOAA · CC BY 4.0</p>
- <p style="margin-top:8px"><a href="../methodology-en.html" style="color:rgba(255,255,255,.7)">Methodology</a> · <a href="../app-en.html" style="color:rgba(255,255,255,.7)">Weather app</a>{fr_link}</p>
+ <p style="margin-top:8px"><a href="../methodology-en.html" style="color:rgba(255,255,255,.7)">Methodology</a> · <a href="app.html" style="color:rgba(255,255,255,.7)">Weather app</a>{fr_link}</p>
  <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="../legal-en.html" style="color:rgba(255,255,255,.7)">Legal</a> · <a href="../privacy-en.html" style="color:rgba(255,255,255,.7)">Privacy</a> · <a href="../contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p>
 </footer>'''
 
@@ -1082,7 +1082,7 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
  <div class="cta-box" style="text-align:center">
  <strong>📅 Live forecast — next 12 months</strong>
  <p>Real-time data with ECMWF seasonal corrections · updated daily</p>
- <a class="cta-btn" href="../app-en.html">
+ <a class="cta-btn" href="app.html">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
  Try the weather app
  </a>
