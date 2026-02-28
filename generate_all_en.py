@@ -26,6 +26,8 @@ MONTHS_EN   = ['January','February','March','April','May','June',
                'July','August','September','October','November','December']
 MONTH_URL   = ['january','february','march','april','may','june',
                'july','august','september','october','november','december']
+MONTH_URL_FR = ['janvier','fevrier','mars','avril','mai','juin',
+                'juillet','aout','septembre','octobre','novembre','decembre']
 MONTH_ABBR  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 SEASONS     = {
     0:'Winter',1:'Winter',2:'Spring',3:'Spring',4:'Spring',
@@ -905,7 +907,7 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
 <title>{title}</title>
 <meta name="description" content="{desc}"/>
 <link rel="canonical" href="https://bestdateweather.com/en/{slug_en}-weather-{month_url}.html"/>
-<link rel="alternate" hreflang="fr" href="https://bestdateweather.com/{slug_fr}-meteo-{MONTH_URL[mi]}.html"/>
+<link rel="alternate" hreflang="fr" href="https://bestdateweather.com/{slug_fr}-meteo-{MONTH_URL_FR[mi]}.html"/>
 <link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/{slug_en}-weather-{month_url}.html"/>
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="{nom_en} in {month_en} — {m['tmax']}°C, {m['rain_pct']}% rain"/>

@@ -1444,10 +1444,12 @@ function markRecommendedMonths() {
  }
  if (!scores.length) return;
 
+ scores.sort(function(a, b) { return b.score - a.score; });
+
  // Mark strictly top 1 or 2 (by rank, not by threshold)
  var topIdxs = [];
- for (var k = 0; k < Math.min(2, sorted.length); k++) {
- if (sorted[k].score >= 55) topIdxs.push(sorted[k].idx);
+ for (var k = 0; k < Math.min(2, scores.length); k++) {
+ if (scores[k].score >= 55) topIdxs.push(scores[k].idx);
  }
 
  for (var j = 0; j < cards.length; j++) {

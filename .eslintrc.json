@@ -1,0 +1,27 @@
+{
+  "env": {
+    "browser": true,
+    "es2017": true
+  },
+  "globals": {
+    "flatpickr": "readonly",
+    "gtag": "readonly",
+    "dataLayer": "readonly"
+  },
+  "rules": {
+    "no-undef": "error",
+    "no-unused-vars": "off",
+    "no-dupe-keys": "error",
+    "no-duplicate-case": "error",
+    "no-unreachable": "error",
+    "no-constant-condition": "warn",
+    "no-irregular-whitespace": "error",
+    "no-unexpected-multiline": "error",
+    "valid-typeof": "error",
+    "no-redeclare": "off",
+    "eqeqeq": "off",
+    "semi": "off",
+    "quotes": "off",
+    "no-extra-semi": "warn"
+  }
+}

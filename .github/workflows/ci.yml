@@ -1,0 +1,145 @@
+name: CI – Lint & Validate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'js/**'
+      - 'index.html'
+      - 'en/app.html'
+      - 'generate_all*.py'
+      - 'data/**'
+  pull_request:
+    branches: [main]
+
+jobs:
+  js-lint:
+    name: JS Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check JS syntax (core.js + i18n)
+        run: |
+          echo "=== Checking JS syntax ==="
+          node --check js/core.js
+          node --check js/i18n-fr.js
+          node --check js/i18n-en.js
+          echo "✅ All JS files pass syntax check"
+
+      - name: Install ESLint
+        run: npm install eslint@8 --no-save
+
+      - name: Run ESLint
+        run: npx eslint js/core.js js/i18n-fr.js js/i18n-en.js
+
+  html-validate:
+    name: HTML Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check critical HTML elements
+        run: |
+          echo "=== index.html ==="
+          # Must have lang attribute
+          grep -q 'lang="fr"' index.html || { echo "❌ Missing lang=fr"; exit 1; }
+          # Must have meta description
+          grep -q 'meta name="description"' index.html || { echo "❌ Missing meta description"; exit 1; }
+          # Must have viewport
+          grep -q 'viewport' index.html || { echo "❌ Missing viewport"; exit 1; }
+          # Must have hreflang
+          grep -q 'hreflang' index.html || { echo "❌ Missing hreflang"; exit 1; }
+          # Must load external JS
+          grep -q 'src="js/core.js"' index.html || { echo "❌ core.js not loaded"; exit 1; }
+          grep -q 'src="js/i18n-fr.js"' index.html || { echo "❌ i18n-fr.js not loaded"; exit 1; }
+          echo "✅ index.html OK"
+
+          echo "=== en/app.html ==="
+          grep -q 'lang="en"' en/app.html || { echo "❌ Missing lang=en"; exit 1; }
+          grep -q 'meta name="description"' en/app.html || { echo "❌ Missing meta description"; exit 1; }
+          grep -q 'canonical' en/app.html || { echo "❌ Missing canonical"; exit 1; }
+          grep -q 'hreflang' en/app.html || { echo "❌ Missing hreflang"; exit 1; }
+          grep -q 'src="../js/core.js"' en/app.html || { echo "❌ core.js not loaded"; exit 1; }
+          grep -q 'src="../js/i18n-en.js"' en/app.html || { echo "❌ i18n-en.js not loaded"; exit 1; }
+          echo "✅ en/app.html OK"
+
+      - name: Check no inline JS > 1KB in app pages
+        run: |
+          python3 -c "
+          import re
+          for fname in ['index.html', 'en/app.html']:
+              with open(fname) as f:
+                  html = f.read()
+              blocks = re.findall(r'<script(?! src)[^>]*>(.*?)</script>', html, re.DOTALL)
+              big = [b for b in blocks if len(b.strip()) > 1024]
+              if big:
+                  print(f'⚠️  {fname}: {len(big)} inline JS block(s) > 1KB ({[len(b) for b in big]} bytes)')
+              else:
+                  print(f'✅ {fname}: no large inline JS')
+          "
+
+  generators-check:
+    name: Python Generators
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate CSV data files
+        run: |
+          python3 -c "
+          import csv, sys
+          errors = []
+          # destinations.csv
+          with open('data/destinations.csv', encoding='utf-8-sig') as f:
+              rows = list(csv.DictReader(f))
+          print(f'destinations.csv: {len(rows)} rows')
+          for r in rows:
+              if not r.get('hero_sub','').strip():
+                  errors.append(f\"  Missing hero_sub: {r['slug_fr']}\")
+              if not r.get('hero_sub_en','').strip():
+                  errors.append(f\"  Missing hero_sub_en: {r['slug_fr']}\")
+
+          # cards.csv
+          with open('data/cards.csv', encoding='utf-8-sig') as f:
+              cards = list(csv.DictReader(f))
+          slugs_with_cards = set(c['slug'] for c in cards)
+          dest_slugs = set(r['slug_fr'] for r in rows)
+          missing_cards = dest_slugs - slugs_with_cards
+          print(f'cards.csv: {len(cards)} cards for {len(slugs_with_cards)} destinations')
+          if missing_cards:
+              errors.append(f'  Destinations without cards: {missing_cards}')
+
+          # cards_en.csv
+          with open('data/cards_en.csv', encoding='utf-8-sig') as f:
+              cards_en = list(csv.DictReader(f))
+          slugs_en = set(c['slug'] for c in cards_en)
+          missing_en = dest_slugs - slugs_en
+          print(f'cards_en.csv: {len(cards_en)} cards for {len(slugs_en)} destinations')
+          if missing_en:
+              errors.append(f'  EN destinations without cards: {missing_en}')
+
+          if errors:
+              print('\\n❌ ERRORS:')
+              for e in errors:
+                  print(e)
+              sys.exit(1)
+          else:
+              print('\\n✅ All data files valid')
+          "
+
+      - name: Check Python generators syntax
+        run: |
+          python3 -c "import py_compile; py_compile.compile('generate_all.py', doraise=True)"
+          python3 -c "import py_compile; py_compile.compile('generate_all_en.py', doraise=True)"
+          echo "✅ Python generators compile OK"
