@@ -183,7 +183,7 @@ CSS = """
 """
 
 # ── JS ──
-JS = """
+JS_CORE = """
 (function(){
  var inp=document.getElementById('dh-input'),
      clear=document.getElementById('dh-clear'),
@@ -215,7 +215,7 @@ JS = """
    if(vis.length){a.classList.add('open','dh-search-mode');a.style.display=''}
    else{a.style.display='none'}
   });
-  count.textContent=n+' __FOUND__';
+  count.textContent=n+' '+__FOUND_FN__(n);
   count.className='dh-count show';
   noRes.className='dh-no-results'+(n===0?' show':'');
  }
@@ -232,6 +232,9 @@ JS = """
  });
 })();
 """
+
+JS_FR = JS_CORE.replace('__FOUND_FN__(n)', "(n>1?'destinations trouvées':'destination trouvée')")
+JS_EN = JS_CORE.replace('__FOUND_FN__(n)', "(n>1?'destinations found':'destination found')")
 
 
 def make_card(slug, name, bare, flag, country, prefix, is_fr):
@@ -330,8 +333,7 @@ def inject(filepath, destinations, is_fr=True):
 
     # Build new SILO 1
     hub = build_hub(destinations, is_fr)
-    found_label = "destination'+(n>1?'s':'')+' trouvée'+(n>1?'s':'')" if is_fr else "destination'+(n>1?'s':'')+' found"
-    js = JS.replace('__FOUND__', "destination'+(n>1?'s':'')+' trouvée'+(n>1?'s':'')" if is_fr else "destination'+(n>1?'s':'')+' found")
+    js = JS_FR if is_fr else JS_EN
     title = 'Meilleure p&eacute;riode par destination' if is_fr else 'Best time to visit by destination'
 
     new_silo = f"""<!-- SILO 1 : MEILLEURE PERIODE - dominant -->
