@@ -136,7 +136,16 @@ def budget_tier(score, all_scores):
     if score <= bottom: return '✅ Low season'
     return '🌿 Shoulder'
 
-def score_badge(score):
+def score_badge(score, classe=None):
+    """Badge verdict aligned with editorial class from CSV."""
+    if classe == 'rec':
+        if score >= 9.0: return '#dcfce7','#16a34a','✅ Excellent'
+        return '#dcfce7','#16a34a','✅ Good'
+    if classe == 'mid':
+        return '#fef9c3','#ca8a04','⚠️ Fair'
+    if classe == 'avoid':
+        return '#fee2e2','#dc2626','❌ Poor'
+    # Fallback
     if score >= 9.0: return '#dcfce7','#16a34a','✅ Excellent'
     if score >= 7.5: return '#dcfce7','#16a34a','✅ Good'
     if score >= 6.0: return '#fef9c3','#ca8a04','⚠️ Fair'
@@ -773,12 +782,19 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
     season   = SEASONS[mi]
     month_en = MONTHS_EN[mi]
     month_url= MONTH_URL[mi]
+    is_mountain = dest.get('mountain', 'False').strip() == 'True'
 
     all_scores = [mo['score'] for mo in months]
     best_idx   = max(range(12), key=lambda i: months[i]['score'])
     best_month = MONTHS_EN[best_idx]
     best_score = months[best_idx]['score']
-    bg, txt, verdict_lbl = score_badge(score)
+    # Effective class: use best_class for mountain destinations
+    eff_classe = m['classe']
+    if is_mountain:
+        from scoring import compute_ski_score, best_class
+        ski_sc = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
+        eff_classe = best_class(m['classe'], ski_sc)
+    bg, txt, verdict_lbl = score_badge(score, eff_classe)
     bud = budget_tier(score, all_scores)
 
     prev_mi = (mi - 1) % 12
@@ -928,7 +944,6 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
         for i in range(12)
     )
 
-    is_mountain = dest.get('mountain', 'False').strip() == 'True'
     table_rows = ''
     for i, mo in enumerate(months):
         highlight = ' style="background:#fef9c3;font-weight:700"' if i == mi else ''

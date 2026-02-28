@@ -300,7 +300,16 @@ def budget_tier(score, all_scores):
     if score <= bottom: return '✅ Prix bas'
     return '🌿 Épaule'
 
-def score_badge(score):
+def score_badge(score, classe=None):
+    """Badge verdict aligné sur la classe éditoriale du CSV."""
+    if classe == 'rec':
+        if score >= 9.0: return '#dcfce7','#16a34a','✅ Excellent'
+        return '#dcfce7','#16a34a','✅ Favorable'
+    if classe == 'mid':
+        return '#fef9c3','#ca8a04','⚠️ Acceptable'
+    if classe == 'avoid':
+        return '#fee2e2','#dc2626','❌ Peu favorable'
+    # Fallback si pas de classe
     if score >= 9.0: return '#dcfce7','#16a34a','✅ Excellent'
     if score >= 7.5: return '#dcfce7','#16a34a','✅ Favorable'
     if score >= 6.0: return '#fef9c3','#ca8a04','⚠️ Acceptable'
@@ -826,12 +835,19 @@ def gen_monthly(dest, months, mi, all_dests, similarities, all_climate, events=N
     season   = SEASONS[mi]
     month_fr = MONTHS_FR[mi]
     month_url= MONTH_URL[mi]
+    is_mountain = dest.get('mountain', 'False').strip() == 'True'
 
     all_scores = [mo['score'] for mo in months]
     best_idx   = max(range(12), key=lambda i: months[i]['score'])
     best_month = MONTHS_FR[best_idx]
     best_score = months[best_idx]['score']
-    bg, txt, verdict_lbl = score_badge(score)
+    # Effective class: use best_class for mountain destinations
+    eff_classe = m['classe']
+    if is_mountain:
+        from scoring import compute_ski_score, best_class
+        ski_sc = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
+        eff_classe = best_class(m['classe'], ski_sc)
+    bg, txt, verdict_lbl = score_badge(score, eff_classe)
     bud = budget_tier(score, all_scores)
 
     # Prev / next
@@ -984,7 +1000,6 @@ def gen_monthly(dest, months, mi, all_dests, similarities, all_climate, events=N
     )
 
     # Annual table with current month highlighted
-    is_mountain = dest.get('mountain', 'False').strip() == 'True'
     table_rows = ''
     for i, mo in enumerate(months):
         highlight = ' style="background:#fef9c3;font-weight:700"' if i == mi else ''
