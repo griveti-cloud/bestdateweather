@@ -213,3 +213,107 @@ el-nido,el-nido,El Nido,El Nido,Philippines,ph,à,11.19,119.39,True,,,El Nido,Ph
 cambodge,cambodia,le Cambodge,Cambodge,Cambodge,kh,au,12.57,104.99,True,,,Cambodia,Cambodia,,False
 nepal,nepal,le Népal,Népal,Népal,np,au,27.72,85.32,False,,,Nepal,Nepal,,False
 cuzco,cusco,Cuzco,Cuzco,Pérou,pe,à,-13.53,-71.97,False,,,Cusco,Peru,,False
+lefkada,lefkada,Leucade,Leucade,Grèce,gr,à,38.71,20.65,False,,,Lefkada,Greece,,False
+kos,kos,Kos,Kos,Grèce,gr,à,36.89,27.09,False,,,Kos,Greece,,False
+milos,milos,Milos,Milos,Grèce,gr,à,36.74,24.43,False,,,Milos,Greece,,False
+hydra,hydra,Hydra,Hydra,Grèce,gr,à,37.35,23.47,False,,,Hydra,Greece,,False
+turin,turin,Turin,Turin,Italie,it,à,45.07,7.69,False,,,Turin,Italy,,False
+bologne,bologna,Bologne,Bologne,Italie,it,à,44.49,11.34,False,,,Bologna,Italy,,False
+verone,verona,Vérone,Vérone,Italie,it,à,45.44,10.99,False,,,Verona,Italy,,False
+bilbao,bilbao,Bilbao,Bilbao,Espagne,es,à,43.26,-2.93,False,,,Bilbao,Spain,,False
+la-palma,la-palma,La Palma,La Palma,Espagne,es,à,28.68,-17.76,False,,,La Palma,Spain,,False
+la-gomera,la-gomera,La Gomera,La Gomera,Espagne,es,à,28.09,-17.11,False,,,La Gomera,Spain,,False
+sintra,sintra,Sintra,Sintra,Portugal,pt,à,38.8,-9.38,False,,,Sintra,Portugal,,False
+dordogne,dordogne,la Dordogne,Dordogne,France,fr,en,44.86,0.58,False,,,Dordogne,France,,False
+strasbourg,strasbourg,Strasbourg,Strasbourg,France,fr,à,48.57,7.75,False,,,Strasbourg,France,,False
+chamonix,chamonix,Chamonix,Chamonix,France,fr,à,45.92,6.87,False,,,Chamonix,France,,False
+montpellier,montpellier,Montpellier,Montpellier,France,fr,à,43.61,3.88,False,,,Montpellier,France,,False
+plitvice,plitvice,Plitvice,Plitvice,Croatie,hr,à,44.88,15.62,False,,,Plitvice,Croatia,,False
+zagreb,zagreb,Zagreb,Zagreb,Croatie,hr,à,45.81,15.98,False,,,Zagreb,Croatia,,False
+izmir,izmir,Izmir,Izmir,Turquie,tr,à,38.42,27.13,False,,,Izmir,Turkey,,False
+fethiye,fethiye,Fethiye,Fethiye,Turquie,tr,à,36.65,29.13,False,,,Fethiye,Turkey,,False
+hambourg,hamburg,Hambourg,Hambourg,Allemagne,de,à,53.55,9.99,False,,,Hamburg,Germany,,False
+francfort,frankfurt,Francfort,Francfort,Allemagne,de,à,50.11,8.68,False,,,Frankfurt,Germany,,False
+helsinki,helsinki,Helsinki,Helsinki,Finlande,fi,à,60.17,24.94,False,,,Helsinki,Finland,,False
+tromso,tromso,Tromsø,Tromsø,Norvège,no,à,69.65,18.96,False,,,Tromsø,Norway,,False
+bergen,bergen,Bergen,Bergen,Norvège,no,à,60.39,5.32,False,,,Bergen,Norway,,False
+varsovie,warsaw,Varsovie,Varsovie,Pologne,pl,à,52.23,21.01,False,,,Warsaw,Poland,,False
+bucarest,bucharest,Bucarest,Bucarest,Roumanie,ro,à,44.43,26.1,False,,,Bucharest,Romania,,False
+sofia,sofia,Sofia,Sofia,Bulgarie,bg,à,42.7,23.32,False,,,Sofia,Bulgaria,,False
+tallinn,tallinn,Tallinn,Tallinn,Estonie,ee,à,59.44,24.75,False,,,Tallinn,Estonia,,False
+riga,riga,Riga,Riga,Lettonie,lv,à,56.95,24.11,False,,,Riga,Latvia,,False
+vilnius,vilnius,Vilnius,Vilnius,Lituanie,lt,à,54.69,25.28,False,,,Vilnius,Lithuania,,False
+bratislava,bratislava,Bratislava,Bratislava,Slovaquie,sk,à,48.15,17.11,False,,,Bratislava,Slovakia,,False
+ljubljana,ljubljana,Ljubljana,Ljubljana,Slovénie,si,à,46.06,14.51,False,,,Ljubljana,Slovenia,,False
+paphos,paphos,Paphos,Paphos,Chypre,cy,à,34.78,32.42,False,,,Paphos,Cyprus,,False
+zurich,zurich,Zurich,Zurich,Suisse,ch,à,47.38,8.54,False,,,Zurich,Switzerland,,False
+geneve,geneva,Genève,Genève,Suisse,ch,à,46.2,6.14,False,,,Geneva,Switzerland,,False
+bruges,bruges,Bruges,Bruges,Belgique,be,à,51.21,3.22,False,,,Bruges,Belgium,,False
+gozo,gozo,Gozo,Gozo,Malte,mt,à,36.04,14.24,False,,,Gozo,Malta,,False
+chefchaouen,chefchaouen,Chefchaouen,Chefchaouen,Maroc,ma,à,35.17,-5.27,False,,,Chefchaouen,Morocco,,False
+ouarzazate,ouarzazate,Ouarzazate,Ouarzazate,Maroc,ma,à,30.92,-6.9,False,,,Ouarzazate,Morocco,,False
+hammamet,hammamet,Hammamet,Hammamet,Tunisie,tn,à,36.4,10.62,False,,,Hammamet,Tunisia,,False
+marsa-alam,marsa-alam,Marsa Alam,Marsa Alam,Égypte,eg,à,25.07,34.9,False,,,Marsa Alam,Egypt,,False
+doha,doha,Doha,Doha,Qatar,qa,à,25.29,51.53,False,,,Doha,Qatar,,False
+koh-phi-phi,koh-phi-phi,Koh Phi Phi,Koh Phi Phi,Thaïlande,th,à,7.74,98.78,True,,,Koh Phi Phi,Thailand,,False
+koh-tao,koh-tao,Koh Tao,Koh Tao,Thaïlande,th,à,10.1,99.84,True,,,Koh Tao,Thailand,,False
+pattaya,pattaya,Pattaya,Pattaya,Thaïlande,th,à,12.93,100.88,True,,,Pattaya,Thailand,,False
+gili,gili-islands,les Îles Gili,Îles Gili,Indonésie,id,aux,-8.35,116.04,True,,,Gili Islands,Indonesia,,False
+nusa-penida,nusa-penida,Nusa Penida,Nusa Penida,Indonésie,id,à,-8.73,115.54,True,,,Nusa Penida,Indonesia,,False
+komodo,komodo,Komodo,Komodo,Indonésie,id,à,-8.55,119.49,True,,,Komodo,Indonesia,,False
+okinawa,okinawa,Okinawa,Okinawa,Japon,jp,à,26.33,127.8,True,,,Okinawa,Japan,,False
+hiroshima,hiroshima,Hiroshima,Hiroshima,Japon,jp,à,34.4,132.46,False,,,Hiroshima,Japan,,False
+busan,busan,Busan,Busan,Corée du Sud,kr,à,35.18,129.08,False,,,Busan,South Korea,,False
+jeju,jeju,Jeju,Jeju,Corée du Sud,kr,à,33.5,126.53,False,,,Jeju,South Korea,,False
+cebu,cebu,Cebu,Cebu,Philippines,ph,à,10.32,123.89,True,,,Cebu,Philippines,,False
+boracay,boracay,Boracay,Boracay,Philippines,ph,à,11.97,121.92,True,,,Boracay,Philippines,,False
+langkawi,langkawi,Langkawi,Langkawi,Malaisie,my,à,6.35,99.73,True,,,Langkawi,Malaysia,,False
+penang,penang,Penang,Penang,Malaisie,my,à,5.42,100.33,True,,,Penang,Malaysia,,False
+myanmar,myanmar,le Myanmar,Myanmar,Myanmar,mm,au,16.87,96.2,True,,,Myanmar,Myanmar,,False
+luang-prabang,luang-prabang,Luang Prabang,Luang Prabang,Laos,la,à,19.89,102.13,True,,,Luang Prabang,Laos,,False
+ouzbekistan,uzbekistan,l'Ouzbékistan,Ouzbékistan,Ouzbékistan,uz,en,41.31,69.28,False,,,Uzbekistan,Uzbekistan,,False
+boston,boston,Boston,Boston,États-Unis,us,à,42.36,-71.06,False,,,Boston,USA,,False
+seattle,seattle,Seattle,Seattle,États-Unis,us,à,47.61,-122.33,False,,,Seattle,USA,,False
+key-west,key-west,Key West,Key West,États-Unis,us,à,24.56,-81.78,False,,,Key West,USA,,False
+yellowstone,yellowstone,Yellowstone,Yellowstone,États-Unis,us,à,44.43,-110.59,False,,,Yellowstone,USA,,False
+toronto,toronto,Toronto,Toronto,Canada,ca,à,43.65,-79.38,False,,,Toronto,Canada,,False
+quebec-ville,quebec-city,Québec,Québec,Canada,ca,à,46.81,-71.21,False,,,Quebec City,Canada,,False
+curacao,curacao,Curaçao,Curaçao,Curaçao,cw,à,12.17,-68.98,True,,,Curaçao,Curaçao,,False
+aruba,aruba,Aruba,Aruba,Aruba,aw,à,12.51,-69.97,True,,,Aruba,Aruba,,False
+porto-rico,puerto-rico,Porto Rico,Porto Rico,États-Unis,pr,à,18.47,-66.11,True,,,Puerto Rico,Puerto Rico,,False
+trinite-et-tobago,trinidad-and-tobago,Trinité-et-Tobago,Trinité-et-Tobago,Trinité-et-Tobago,tt,à,10.65,-61.5,True,,,Trinidad and Tobago,Trinidad and Tobago,,False
+antigua,antigua,Antigua,Antigua,Antigua-et-Barbuda,ag,à,17.12,-61.85,True,,,Antigua,Antigua and Barbuda,,False
+oaxaca,oaxaca,Oaxaca,Oaxaca,Mexique,mx,à,17.06,-96.73,True,,,Oaxaca,Mexico,,False
+guatemala,guatemala,le Guatemala,Guatemala,Guatemala,gt,au,14.63,-90.51,True,,,Guatemala,Guatemala,,False
+belize,belize,le Belize,Belize,Belize,bz,au,17.25,-88.77,True,,,Belize,Belize,,False
+nicaragua,nicaragua,le Nicaragua,Nicaragua,Nicaragua,ni,au,12.11,-86.27,True,,,Nicaragua,Nicaragua,,False
+santiago,santiago,Santiago du Chili,Santiago,Chili,cl,à,-33.45,-70.67,False,,,Santiago,Chile,,False
+equateur,ecuador,l'Équateur,Équateur,Équateur,ec,en,-0.18,-78.47,True,,,Ecuador,Ecuador,,False
+bolivie,bolivia,la Bolivie,Bolivie,Bolivie,bo,en,-16.5,-68.15,False,,,Bolivia,Bolivia,,False
+uruguay,uruguay,l'Uruguay,Uruguay,Uruguay,uy,en,-34.91,-56.19,False,,,Uruguay,Uruguay,,False
+gold-coast,gold-coast,la Gold Coast,Gold Coast,Australie,au,sur la,-28.02,153.43,False,,,Gold Coast,Australia,,False
+cairns,cairns,Cairns,Cairns,Australie,au,à,-16.92,145.77,True,,,Cairns,Australia,,False
+perth,perth,Perth,Perth,Australie,au,à,-31.95,115.86,False,,,Perth,Australia,,False
+rodrigues,rodrigues,Rodrigues,Rodrigues,Maurice,mu,à,-19.72,63.43,True,,,Rodrigues,Mauritius,,False
+nosybe,nosy-be,Nosy Be,Nosy Be,Madagascar,mg,à,-13.33,48.27,True,,,Nosy Be,Madagascar,,False
+wild-atlantic-way,wild-atlantic-way,le Wild Atlantic Way,Wild Atlantic Way,Irlande,ie,sur le,52.97,-9.43,False,,,Wild Atlantic Way,Ireland,,False
+gdansk,gdansk,Gdańsk,Gdańsk,Pologne,pl,à,54.35,18.65,False,,,Gdańsk,Poland,,False
+transylvanie,transylvania,la Transylvanie,Transylvanie,Roumanie,ro,en,46.77,23.6,False,,,Transylvania,Romania,,False
+da-lat,da-lat,Đà Lạt,Đà Lạt,Viêt Nam,vn,à,11.94,108.44,True,,,Da Lat,Vietnam,,False
+tbilissi,tbilisi,Tbilissi,Tbilissi,Géorgie,ge,à,41.72,44.79,False,,,Tbilisi,Georgia,,False
+canggu,canggu,Canggu,Canggu,Indonésie,id,à,-8.66,115.13,True,,,Canggu,Indonesia,,False
+el-hierro,el-hierro,El Hierro,El Hierro,Espagne,es,à,27.74,-18.01,False,,,El Hierro,Spain,,False
+guyane,french-guiana,la Guyane,Guyane,France,gf,en,4.94,-52.33,True,,,French Guiana,French Guiana,,False
+saint-pierre-et-miquelon,saint-pierre-and-miquelon,Saint-Pierre-et-Miquelon,Saint-Pierre-et-Miquelon,France,pm,à,46.78,-56.18,False,,,Saint-Pierre and Miquelon,Saint-Pierre and Miquelon,,False
+diani,diani-beach,Diani Beach,Diani Beach,Kenya,ke,à,-4.28,39.58,True,,,Diani Beach,Kenya,,False
+dakar,dakar,Dakar,Dakar,Sénégal,sn,à,14.69,-17.44,True,,,Dakar,Senegal,,False
+sapa,sapa,Sa Pa,Sa Pa,Viêt Nam,vn,à,22.34,103.84,False,,,Sa Pa,Vietnam,,False
+nha-trang,nha-trang,Nha Trang,Nha Trang,Viêt Nam,vn,à,12.24,109.19,True,,,Nha Trang,Vietnam,,False
+siargao,siargao,Siargao,Siargao,Philippines,ph,à,9.85,126.05,True,,,Siargao,Philippines,,False
+borneo,borneo,Bornéo,Bornéo,Malaisie,my,à,4.97,115.06,True,,,Borneo,Malaysia,,False
+macao,macau,Macao,Macao,Chine,cn,à,22.2,113.54,True,,,Macau,China,,False
+phnom-penh,phnom-penh,Phnom Penh,Phnom Penh,Cambodge,kh,à,11.56,104.92,True,,,Phnom Penh,Cambodia,,False
+bermudes,bermuda,les Bermudes,Bermudes,Royaume-Uni,bm,aux,32.32,-64.76,False,,,Bermuda,Bermuda,,False
+bogota,bogota,Bogota,Bogota,Colombie,co,à,4.71,-74.07,True,,,Bogota,Colombia,,False
+isla-holbox,isla-holbox,Isla Holbox,Holbox,Mexique,mx,à,21.52,-87.38,True,,,Isla Holbox,Mexico,,False
+valparaiso,valparaiso,Valparaíso,Valparaíso,Chili,cl,à,-33.05,-71.62,False,,,Valparaíso,Chile,,False
