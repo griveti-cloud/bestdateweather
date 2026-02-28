@@ -135,6 +135,21 @@ DOM_TOM_SLUGS = {
     'guyane', 'saint-pierre-et-miquelon',
 }
 
+# Override region tag par slug (priorité sur REGION_TAG par pays)
+SLUG_REGION_TAG = {
+    'reunion': 'Océan Indien',
+    'mayotte': 'Océan Indien',
+    'guadeloupe': 'Caraïbes',
+    'martinique': 'Caraïbes',
+    'saint-martin': 'Caraïbes',
+    'saint-barthelemy': 'Caraïbes',
+    'polynesie': 'Océanie',
+    'bora-bora': 'Océanie',
+    'nouvelle-caledonie': 'Océanie',
+    'guyane': 'Amérique du Sud',
+    'saint-pierre-et-miquelon': 'Amérique du Nord',
+}
+
 MOIS_FR = {1:'Janvier',2:'Février',3:'Mars',4:'Avril',5:'Mai',6:'Juin',
            7:'Juillet',8:'Août',9:'Septembre',10:'Octobre',11:'Novembre',12:'Décembre'}
 MOIS_EN = {1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',
@@ -313,8 +328,11 @@ def dest_link(slug, nom, lang):
     else:
         return f'../best-time-to-visit-{slug}.html'
 
-def region_tag(pays, lang):
-    tag = REGION_TAG.get(pays, '')
+def region_tag(pays, lang, slug=''):
+    # Slug-level override (DOM-TOM)
+    tag = SLUG_REGION_TAG.get(slug, '')
+    if not tag:
+        tag = REGION_TAG.get(pays, '')
     if not tag:
         return ''
     if lang == 'en':
@@ -336,7 +354,7 @@ def make_table_annual(entries, n, lang):
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang)}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
             f'<td>{mois[entry["best_month"]]}</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["sun_annual"]:.0f}h</td>'
@@ -360,7 +378,7 @@ def make_table_seasonal(entries, n, lang):
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang)}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["tmax_avg"]:.0f}°C</td>'
             f'<td>{entry["sun"]:.0f}h</td>'
@@ -384,7 +402,7 @@ def make_table_sun(entries, n, lang):
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang)}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
             f'<td>{entry["sun_annual"]:.0f}h</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["rain_avg"]:.0f}%</td></tr>'
@@ -407,7 +425,7 @@ def make_table_rain(entries, n, lang):
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang)}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
             f'<td>{entry["rain_avg"]:.0f}%</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["sun_annual"]:.0f}h</td></tr>'
@@ -431,7 +449,7 @@ def make_table_nomad(entries, n, lang):
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang)}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["stdev"]:.2f}</td>'
             f'<td>{mois[entry["worst_month"]]}</td>'
