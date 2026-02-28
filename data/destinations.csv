@@ -82,3 +82,50 @@ vienne,vienna,Vienne,Vienne,Autriche,at,à,48.21,16.37,False,"Vienne — Opéra,
 zakynthos,zakynthos,Zakynthos,Zakynthos,Grèce,gr,à,37.78,20.9,False,,,Zakynthos,Greece,"Zakynthos, Navagio Beach and the famous Shipwreck Cove — turquoise waters and dramatic cliffs in the Ionian Sea.",True
 zanzibar,zanzibar,Zanzibar,Zanzibar,Tanzanie,tz,à,-6.16,39.2,True,"Zanzibar, épices et coraux — Stone Town et plages de sable blanc dans l'océan Indien tanzanien.",-2574823,Zanzibar,Tanzania,"Zanzibar, spices and corals — Stone Town and white sand beaches in the Tanzanian Indian Ocean.",True
 barbade,barbados,la Barbade,Barbade,Barbade,bb,à la,13.19,-59.54,True,"La Barbade, plages de sable blanc et eau turquoise — une île des Caraïbes idéale toute l'année.",,Barbados,Barbados,"Barbados, white sand beaches and turquoise water — a Caribbean island ideal year-round.",True
+athenes,athens,Athènes,Athènes,Grèce,gr,à,37.98,23.73,False,,,Athens,Greece,,False
+milan,milan,Milan,Milan,Italie,it,à,45.46,9.19,False,,,Milan,Italy,,False
+naples,naples,Naples,Naples,Italie,it,à,40.85,14.27,False,,,Naples,Italy,,False
+lac-come,lake-como,le Lac de Côme,Lac de Côme,Italie,it,au,45.99,9.26,False,,,Lake Como,Italy,,False
+cinque-terre,cinque-terre,les Cinque Terre,Cinque Terre,Italie,it,aux,44.13,9.71,False,,,Cinque Terre,Italy,,False
+madrid,madrid,Madrid,Madrid,Espagne,es,à,40.42,-3.7,False,,,Madrid,Spain,,False
+grenade,granada,Grenade,Grenade,Espagne,es,à,37.18,-3.6,False,,,Granada,Spain,,False
+acores,azores,les Açores,Açores,Portugal,pt,aux,37.75,-25.67,False,,,Azores,Portugal,,False
+antalya,antalya,Antalya,Antalya,Turquie,tr,à,36.9,30.69,False,,,Antalya,Turkey,,False
+cappadoce,cappadocia,la Cappadoce,Cappadoce,Turquie,tr,en,38.64,34.83,False,,,Cappadocia,Turkey,,False
+copenhague,copenhagen,Copenhague,Copenhague,Danemark,dk,à,55.68,12.57,False,,,Copenhagen,Denmark,,False
+budapest,budapest,Budapest,Budapest,Hongrie,hu,à,47.5,19.04,False,,,Budapest,Hungary,,False
+cracovie,krakow,Cracovie,Cracovie,Pologne,pl,à,50.06,19.94,False,,,Krakow,Poland,,False
+montenegro,montenegro,le Monténégro,Monténégro,Monténégro,me,au,42.28,18.84,False,,,Montenegro,Montenegro,,False
+chypre,cyprus,Chypre,Chypre,Chypre,cy,à,34.71,33.02,False,,,Cyprus,Cyprus,,False
+fes,fes,Fès,Fès,Maroc,ma,à,34.03,-4.98,False,,,Fes,Morocco,,False
+djerba,djerba,Djerba,Djerba,Tunisie,tn,à,33.81,10.86,False,,,Djerba,Tunisia,,False
+le-caire,cairo,Le Caire,Caire,Égypte,eg,au,30.04,31.24,False,,,Cairo,Egypt,,False
+hurghada,hurghada,Hurghada,Hurghada,Égypte,eg,à,27.26,33.81,False,,,Hurghada,Egypt,,False
+jordanie,jordan,la Jordanie,Jordanie,Jordanie,jo,en,30.33,35.44,False,,,Jordan,Jordan,,False
+kenya,kenya,le Kenya,Kenya,Kenya,ke,au,-1.29,36.82,True,,,Kenya,Kenya,,False
+madagascar,madagascar,Madagascar,Madagascar,Madagascar,mg,à,-18.88,47.51,True,,,Madagascar,Madagascar,,False
+chiang-mai,chiang-mai,Chiang Mai,Chiang Mai,Thaïlande,th,à,18.79,98.98,True,,,Chiang Mai,Thailand,,False
+koh-samui,koh-samui,Koh Samui,Koh Samui,Thaïlande,th,à,9.51,100.06,True,,,Koh Samui,Thailand,,False
+hanoi,hanoi,Hanoï,Hanoï,Viêt Nam,vn,à,21.03,105.85,True,,,Hanoi,Vietnam,,False
+ho-chi-minh,ho-chi-minh,Hô Chi Minh-Ville,Hô Chi Minh-Ville,Viêt Nam,vn,à,10.82,106.63,True,,,Ho Chi Minh City,Vietnam,,False
+kyoto,kyoto,Kyoto,Kyoto,Japon,jp,à,35.01,135.77,False,,,Kyoto,Japan,,False
+hong-kong,hong-kong,Hong Kong,Hong Kong,Chine,cn,à,22.32,114.17,True,,,Hong Kong,China,,False
+seoul,seoul,Séoul,Séoul,Corée du Sud,kr,à,37.57,126.98,False,,,Seoul,South Korea,,False
+philippines,philippines,les Philippines,Philippines,Philippines,ph,aux,14.6,120.98,True,,,Philippines,Philippines,,False
+kuala-lumpur,kuala-lumpur,Kuala Lumpur,Kuala Lumpur,Malaisie,my,à,3.14,101.69,True,,,Kuala Lumpur,Malaysia,,False
+rajasthan,rajasthan,le Rajasthan,Rajasthan,Inde,in,au,26.92,75.79,True,,,Rajasthan,India,,False
+sri-lanka,sri-lanka,le Sri Lanka,Sri Lanka,Sri Lanka,lk,au,7.87,80.77,True,,,Sri Lanka,Sri Lanka,,False
+san-francisco,san-francisco,San Francisco,San Francisco,États-Unis,us,à,37.77,-122.42,False,,,San Francisco,USA,,False
+las-vegas,las-vegas,Las Vegas,Las Vegas,États-Unis,us,à,36.17,-115.14,False,,,Las Vegas,USA,,False
+guadeloupe,guadeloupe,la Guadeloupe,Guadeloupe,France,gp,en,16.25,-61.55,True,,,Guadeloupe,Guadeloupe,,False
+martinique,martinique,la Martinique,Martinique,France,mq,en,14.64,-61.02,True,,,Martinique,Martinique,,False
+republique-dominicaine,dominican-republic,la République Dominicaine,République Dominicaine,République Dominicaine,do,en,18.47,-69.9,True,,,Dominican Republic,Dominican Republic,,False
+punta-cana,punta-cana,Punta Cana,Punta Cana,République Dominicaine,do,à,18.58,-68.4,True,,,Punta Cana,Dominican Republic,,False
+perou,peru,le Pérou,Pérou,Pérou,pe,au,-12.05,-77.04,False,,,Peru,Peru,,False
+machu-picchu,machu-picchu,le Machu Picchu,Machu Picchu,Pérou,pe,au,-13.16,-72.55,False,,,Machu Picchu,Peru,,False
+colombie,colombia,la Colombie,Colombie,Colombie,co,en,4.6,-74.08,True,,,Colombia,Colombia,,False
+sydney,sydney,Sydney,Sydney,Australie,au,à,-33.87,151.21,False,,,Sydney,Australia,,False
+nouvelle-zelande,new-zealand,la Nouvelle-Zélande,Nouvelle-Zélande,Nouvelle-Zélande,nz,en,-41.29,174.78,False,,,New Zealand,New Zealand,,False
+polynesie,french-polynesia,la Polynésie Française,Polynésie,France,pf,en,-17.53,-149.57,True,,,French Polynesia,French Polynesia,,False
+bora-bora,bora-bora,Bora Bora,Bora Bora,France,pf,à,-16.5,-151.74,True,,,Bora Bora,French Polynesia,,False
+dublin,dublin,Dublin,Dublin,Irlande,ie,à,53.35,-6.26,False,,,Dublin,Ireland,,False
