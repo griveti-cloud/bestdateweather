@@ -444,6 +444,28 @@ def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None):
         }
     }, ensure_ascii=False)
 
+    breadcrumb_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://bestdateweather.com/en/app.html"},
+            {"@type": "ListItem", "position": 2, "name": nom_en, "item": f"https://bestdateweather.com/en/best-time-to-visit-{slug_en}.html"}
+        ]
+    }, ensure_ascii=False)
+
+    dataset_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "Dataset",
+        "name": f"Climate data for {nom_en} — monthly averages over 10 years",
+        "description": f"Monthly temperatures, precipitation, sunshine and wind for {nom_en}. Averages computed from 10 years of ERA5 data (Open-Meteo).",
+        "temporalCoverage": "2015/2024",
+        "spatialCoverage": {"@type": "Place", "name": nom_en},
+        "creator": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com"},
+        "license": "https://creativecommons.org/licenses/by-nc/4.0/",
+        "inLanguage": "en",
+        "variableMeasured": ["Temperature", "Precipitation", "Sunshine hours", "Wind speed"]
+    }, ensure_ascii=False)
+
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -462,6 +484,8 @@ def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None):
 <meta property="og:url" content="https://bestdateweather.com/en/best-time-to-visit-{slug_en}.html"/>
 <script type="application/ld+json">{article_schema}</script>
 <script type="application/ld+json">{faq_schema}</script>
+<script type="application/ld+json">{breadcrumb_schema}</script>
+<script type="application/ld+json">{dataset_schema}</script>
 {COMMON_HEAD_CSS}
 <style>
 .hero-band{{background:linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%);}}
@@ -863,6 +887,16 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
             "@id": f"https://bestdateweather.com/en/{slug_en}-weather-{month_url}.html"}
     }, ensure_ascii=False)
 
+    breadcrumb_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://bestdateweather.com/en/app.html"},
+            {"@type": "ListItem", "position": 2, "name": nom_en, "item": f"https://bestdateweather.com/en/best-time-to-visit-{slug_en}.html"},
+            {"@type": "ListItem", "position": 3, "name": month_en, "item": f"https://bestdateweather.com/en/{slug_en}-weather-{month_url}.html"}
+        ]
+    }, ensure_ascii=False)
+
     title_var = hash(slug_fr + str(mi)) % 3
     if title_var == 0:
         title = f"{nom_en} in {month_en}: Weather, Rain ({m['rain_pct']}%) — Is It Worth It? [{YEAR}]"
@@ -915,6 +949,7 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
 <meta property="og:url" content="https://bestdateweather.com/en/{slug_en}-weather-{month_url}.html"/>
 <script type="application/ld+json">{article_schema}</script>
 <script type="application/ld+json">{faq_schema}</script>
+<script type="application/ld+json">{breadcrumb_schema}</script>
 {COMMON_HEAD_CSS}
 <style>
 .hero-band{{background:{MONTHLY_GRAD[mi]};}}
