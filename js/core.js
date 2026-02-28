@@ -132,14 +132,11 @@ function toggleDetails() {
 function fillUseCase(type) { currentUseCase = type; document.getElementById("score-block").style.display = "block"; quickFill(type); }
 
 function getIcon(h, temp, sol, rain, mm, snow, p25) {
- var night = sol < 15;
  mm = mm || 0;
  snow = snow || 0;
  p25 = p25 != null ? p25 : temp;
- // Snowfall direct ou nuits gelées (p25 ≤ 2°C)
- var isSnowing = snow > 0.1 || (p25 != null && p25 <= 2 && mm > 0.1);
  var night = sol < 15;
- mm = mm || 0;
+ var isSnowing = snow > 0.1 || (p25 != null && p25 <= 2 && mm > 0.1);
  if (night) {
  if (mm > 7 || (rain > 70 && mm > 2)) return IC.storm;
  if (isSnowing && rain > 15) return IC.nightsnow;
@@ -156,7 +153,7 @@ function getIcon(h, temp, sol, rain, mm, snow, p25) {
  if (rain > 35 && mm >= 1.5) return IC.rain;
  if (rain > 20 && mm >= 0.3 && sol >= 200) return IC.shower;
  if (rain > 20 && mm >= 0.3) return IC.lightrain;
- if (rain > 35) return IC.rain;
+ // rain > 35% mais mm < 0.3 → pas de pluie mesurable, cascade vers sol
  if (sol < 60 && temp < 8) return IC.fog;
  if (sol < 130) return IC.cloud;
  if (sol < 420) return IC.partcloud;
@@ -164,9 +161,9 @@ function getIcon(h, temp, sol, rain, mm, snow, p25) {
 }
 
 function getLabel(h, temp, sol, rain, mm, snow, p25) {
- var night = sol < 15;
  mm = mm || 0; snow = snow || 0;
  p25 = p25 != null ? p25 : temp;
+ var night = sol < 15;
  var isSnowing = snow > 0.1 || (p25 <= 2 && mm > 0.1);
  if (night) {
  if (mm > 7 || (rain > 70 && mm > 2)) return T.storm;
@@ -184,7 +181,7 @@ function getLabel(h, temp, sol, rain, mm, snow, p25) {
  if (rain > 35 && mm >= 1.5) return T.rain;
  if (rain > 20 && mm >= 0.3 && sol >= 200) return T.showers;
  if (rain > 20 && mm >= 0.3) return T.lightRain;
- if (rain > 35) return T.rain;
+ // rain > 35% mais mm < 0.3 → pas de pluie mesurable, cascade vers sol
  if (sol < 60 && temp < 8) return T.fog;
  if (sol < 130) return T.overcast;
  if (sol < 420) return T.partlyCloudy;
