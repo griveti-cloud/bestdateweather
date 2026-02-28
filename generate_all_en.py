@@ -373,18 +373,38 @@ def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None, comp
 </section>''' if has_monthly else ''
 
     # FAQ
-    faq_items = [
-        (f"When is the best time to visit {nom_en}?",
-         f"{MONTHS_EN[best_idx]} is ideal with {best_rain}% rainy days and {best_tmax}°C. "
-         f"{'The months of ' + ' & '.join(bests[:2]) + ' offer comparable conditions.' if len(bests) > 1 else ''}"),
-        (f"What is the wettest month in {nom_en}?",
-         f"{MONTHS_EN[worst_idx]} is the wettest month with {worst_rain}% rainy days."),
-        (f"Is it hot in {nom_en} in {MONTHS_EN[best_idx]}?",
-         f"Yes, {MONTHS_EN[best_idx]} is the best month with an average of {best_tmax}°C."),
-        (f"Can you visit {nom_en} in winter?",
-         f"In winter, the average score is {seas['Winter']['score']}/10. "
-         f"{'Acceptable conditions for cultural visits.' if seas['Winter']['score'] >= 5.5 else 'Difficult period — prefer the peak season.'}"),
-    ]
+    if is_mountain:
+        from scoring import compute_ski_score
+        ski_scores = [(i, compute_ski_score(months[i]['tmax'], months[i]['rain_pct'], months[i]['sun_h'])) for i in range(12)]
+        best_ski_idx = max(ski_scores, key=lambda x: x[1])[0]
+        best_ski_score = ski_scores[best_ski_idx][1]
+        winter_ski_avg = round(sum(ski_scores[i][1] for i in (11, 0, 1)) / 3, 1)
+        faq_items = [
+            (f"When is the best time to visit {nom_en}?",
+             f"It depends on the activity. For skiing: {MONTHS_EN[best_ski_idx]} "
+             f"(ski score {best_ski_score}/10). For hiking/summer: {MONTHS_EN[best_idx]} "
+             f"({best_score}/10, {best_tmax}°C)."),
+            (f"Can you ski in {nom_en} in winter?",
+             f"Yes, it's peak ski season. Average ski score December–February: {winter_ski_avg}/10. "
+             f"Cold temperatures ({months[0]['tmax']}°C max in January) and frequent snowfall."),
+            (f"Is it warm in {nom_en} in summer?",
+             f"In {MONTHS_EN[best_idx]}, temperatures average {best_tmax}°C. Ideal for hiking and outdoor activities."),
+            (f"What is the wettest month in {nom_en}?",
+             f"{MONTHS_EN[worst_idx]} is the wettest month with {worst_rain}% rainy days."),
+        ]
+    else:
+        faq_items = [
+            (f"When is the best time to visit {nom_en}?",
+             f"{MONTHS_EN[best_idx]} is ideal with {best_rain}% rainy days and {best_tmax}°C. "
+             f"{'The months of ' + ' & '.join(bests[:2]) + ' offer comparable conditions.' if len(bests) > 1 else ''}"),
+            (f"What is the wettest month in {nom_en}?",
+             f"{MONTHS_EN[worst_idx]} is the wettest month with {worst_rain}% rainy days."),
+            (f"Is it hot in {nom_en} in {MONTHS_EN[best_idx]}?",
+             f"Yes, {MONTHS_EN[best_idx]} is the best month with an average of {best_tmax}°C."),
+            (f"Can you visit {nom_en} in winter?",
+             f"In winter, the average score is {seas['Winter']['score']}/10. "
+             f"{'Acceptable conditions for cultural visits.' if seas['Winter']['score'] >= 5.5 else 'Difficult period — prefer the peak season.'}"),
+        ]
     faq_html = '<div class="faq-list">' + ''.join(
         f'<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">'
         f'{q}<span class="faq-icon">+</span></button>'
@@ -934,7 +954,24 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
 
     # FAQ — varied by context
     faq_q1 = f"Is {month_en} a good time to visit {nom_en}?"
-    if score >= 9:
+    if is_mountain:
+        from scoring import compute_ski_score
+        ski_this = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
+        if ski_this >= 6.5 and score < 5:
+            faq_a1 = (f"For skiing, yes: ski score {ski_this}/10 in {month_en}. "
+                      f"Temperatures ({m['tmax']}°C max) ensure good snow conditions. "
+                      f"For summer hiking, prefer {best_month} ({best_score:.1f}/10).")
+        elif ski_this >= 5 and score < 5:
+            faq_a1 = (f"{month_en} is a fair period for skiing (ski score {ski_this}/10). "
+                      f"Conditions aren't ideal for hiking ({score:.1f}/10).")
+        elif score >= 9:
+            faq_a1 = f"Yes, {month_en} is one of the best times to visit {nom_en} (score {score:.1f}/10). {m['tmax']}°C, {m['sun_h']}h of sunshine — ideal for hiking."
+        elif score >= 7:
+            faq_a1 = f"Yes, {month_en} is a good time ({score:.1f}/10). Great for outdoor activities and hiking."
+        else:
+            faq_a1 = (f"Transition period with a summer score of {score:.1f}/10 and ski score of {ski_this}/10. "
+                      f"Neither the best ski nor summer season.")
+    elif score >= 9:
         faq_a1 = f"Yes, {month_en} is one of the best times to visit {nom_en} (score {score:.1f}/10). {m['tmax']}°C, {m['sun_h']}h of sunshine and only {m['rain_pct']}% rainy days."
     elif score >= 7.5:
         faq_a1 = f"Yes, {month_en} is a good time ({score:.1f}/10). Conditions are favourable though {best_month} remains the peak month ({best_score:.1f}/10)."
@@ -943,7 +980,15 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
     else:
         faq_a1 = f"{month_en} is not recommended for {nom_en} (score {score:.1f}/10). With {m['rain_pct']}% rainy days and {m['sun_h']}h of sunshine, consider {best_month} ({best_score:.1f}/10) instead."
 
-    if is_hot and is_dry:
+    if is_mountain and is_cold:
+        faq_q2 = f"Can you ski in {nom_en} in {month_en}?"
+        if ski_this >= 6.5:
+            faq_a2 = f"Yes, {month_en} is an excellent time for skiing (score {ski_this}/10). With {m['tmax']}°C max and {m['rain_pct']}% precipitation, snow conditions are good."
+        elif ski_this >= 4:
+            faq_a2 = f"Conditions are fair (ski score {ski_this}/10) but not optimal. Check slope conditions before going."
+        else:
+            faq_a2 = f"Skiing is not recommended in {month_en} (ski score {ski_this}/10). Temperatures ({m['tmax']}°C) limit snow cover."
+    elif is_hot and is_dry:
         faq_q2 = f"Is it too hot in {nom_en} in {month_en}?"
         faq_a2 = f"Temperatures reach {m['tmax']}°C. {'Intense but manageable with sun protection.' if m['tmax'] < 38 else 'Heat is extreme — limit activities to cooler hours.'} Sunshine: {m['sun_h']}h/day."
     elif is_rainy:
