@@ -215,7 +215,7 @@ def climate_table_html(months, nom_en):
 
 # ── ANNUAL PAGE GENERATOR ──────────────────────────────────────────────────
 
-def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None):
+def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None, comparison_index=None):
     slug_fr  = dest['slug_fr']
     slug_en  = dest['slug_en']
     nom_en   = dest.get('nom_en', dest['nom_bare'])
@@ -430,6 +430,34 @@ def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None):
  <div style="display:flex;gap:14px;flex-wrap:wrap"><a href="best-destinations-weather-ranking-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🌍 World ranking 2026</a><a href="best-europe-weather-ranking-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🇪🇺 Best in Europe</a></div>
 </section>'''
 
+    # Pillar page + comparison links (reverse maillage)
+    pillar_comp_cards_en = []
+    best_month_slug_en = MONTH_URL[best_idx]
+    best_month_name_en = MONTHS_EN[best_idx]
+    pillar_comp_cards_en.append(
+        f'<a href="where-to-go-in-{best_month_slug_en}.html" style="flex:1;min-width:180px;'
+        f'padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;'
+        f'text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">'
+        f'📅 Where to go in {best_month_name_en}</a>')
+    if comparison_index and slug_en in comparison_index:
+        for other_slug_en, comp_file in comparison_index[slug_en][:3]:
+            other_nom = other_slug_en
+            if all_dests:
+                for d in all_dests.values():
+                    if d.get('slug_en') == other_slug_en:
+                        other_nom = d.get('nom_en', d.get('nom_bare', other_slug_en))
+                        break
+            pillar_comp_cards_en.append(
+                f'<a href="{comp_file}" style="flex:1;min-width:180px;'
+                f'padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;'
+                f'text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">'
+                f'⚖️ {nom_en} vs {other_nom}</a>')
+    pillar_comparison_section = f'''<section class="section">
+ <div class="section-label">Guides & comparisons</div>
+ <h2 class="section-title">Explore by month or compare</h2>
+ <div style="display:flex;gap:14px;flex-wrap:wrap">{"".join(pillar_comp_cards_en)}</div>
+</section>'''
+
     article_schema = json.dumps({
         "@context": "https://schema.org", "@type": "Article",
         "headline": f"Best Time to Visit {nom_en}",
@@ -515,6 +543,7 @@ def gen_annual(dest, months, dest_cards, all_dests=None, similarities=None):
 {faq_section}
 {similar_section}
 {ranking_section}
+{pillar_comparison_section}
 </main>
 {footer_html(slug_fr, slug_en, nom_en)}
 <script>
@@ -547,6 +576,51 @@ MONTHLY_GRAD = {
 }
 
 # ── SIMILARITY & CROSS-LINKING ──────────────────────────────────────────────
+
+def build_comparison_index_en():
+    """Scan existing EN comparison files to build reverse lookup: slug_en → [(other_slug_en, filename)]."""
+    import glob
+    index = {}
+    for f in glob.glob(os.path.join(OUT, '*-vs-*-weather.html')):
+        fname = os.path.basename(f)
+        parts = fname.replace('-weather.html', '').split('-vs-')
+        if len(parts) == 2:
+            a, b = parts
+            index.setdefault(a, []).append((b, fname))
+            index.setdefault(b, []).append((a, fname))
+    return index
+
+def build_pillar_link_month_en(mi):
+    """Build single pillar link card for an EN monthly page."""
+    mname = MONTHS_EN[mi]
+    return (f'<a href="where-to-go-in-{MONTH_URL[mi]}.html" style="flex:1;min-width:170px;'
+            f'padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;'
+            f'text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">'
+            f'📅 Where to go in {mname} — top 25</a>')
+
+def build_comparison_links_en(slug_en, comp_index, all_dests):
+    """Build comparison link cards (HTML only, no section wrapper) for an EN page."""
+    comps = comp_index.get(slug_en, [])
+    if not comps:
+        return ''
+    # Find nom_en from slug_en
+    nom = slug_en
+    for d in all_dests.values():
+        if d.get('slug_en') == slug_en:
+            nom = d.get('nom_en', d.get('nom_bare', slug_en))
+            break
+    cards = ''
+    for other_slug_en, filename in comps[:2]:
+        other_nom = other_slug_en
+        for d in all_dests.values():
+            if d.get('slug_en') == other_slug_en:
+                other_nom = d.get('nom_en', d.get('nom_bare', other_slug_en))
+                break
+        cards += (f'<a href="{filename}" style="flex:1;min-width:180px;'
+                  f'padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;'
+                  f'text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">'
+                  f'⚖️ {nom} vs {other_nom}</a>')
+    return cards
 
 def compute_all_similarities(dests, climate):
     """Pre-compute 3 most similar destinations for each slug."""
@@ -655,7 +729,7 @@ def _build_sim_cards_en(sim_list, all_dests, climate_for_sim, mi):
     return ''.join(parts)
 
 
-def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate=None, events=None):
+def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate=None, events=None, comparison_index=None):
     slug_fr  = dest['slug_fr']
     slug_en  = dest['slug_en']
     nom_en   = dest.get('nom_en', dest['nom_bare'])
@@ -932,6 +1006,10 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
             _sim_climate[sim_slug] = {'score': f"{sm['score']:.1f}", 'tmax': sm['tmax']}
     _sim_html = _build_sim_cards_en((similarities or {}).get(slug_fr, [])[:3], all_dests or {}, _sim_climate, mi)
 
+    # Pillar + comparison reverse links for monthly page
+    pillar_link_en = build_pillar_link_month_en(mi)
+    comp_links_en = build_comparison_links_en(slug_en, comparison_index or {}, all_dests or {}) if comparison_index else ''
+
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1115,6 +1193,12 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
  <div style="display:flex;gap:14px;flex-wrap:wrap"><a href="best-destinations-weather-ranking-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🌍 World ranking 2026</a><a href="best-europe-weather-ranking-2026.html" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">🇪🇺 Best in Europe</a></div>
  </section>
 
+ <section class="section">
+ <div class="section-label">Guides & comparisons</div>
+ <h2 class="section-title">Explore or compare</h2>
+ <div style="display:flex;gap:14px;flex-wrap:wrap">{pillar_link_en}{comp_links_en}</div>
+ </section>
+
  <section class="widget-section">
  <div class="cta-box" style="text-align:center">
  <strong>📅 Live forecast — next 12 months</strong>
@@ -1162,6 +1246,7 @@ def main():
         return
 
     similarities = compute_all_similarities(dests, climate)
+    comparison_index_en = build_comparison_index_en()
 
     slugs = [target] if target else list(dests.keys())
     total_annual = total_monthly = 0
@@ -1182,7 +1267,7 @@ def main():
 
         # Annual page
         try:
-            html = gen_annual(dest, months, dest_cards, dests, similarities)
+            html = gen_annual(dest, months, dest_cards, dests, similarities, comparison_index_en)
             out  = f"{OUT}/best-time-to-visit-{slug_en}.html"
             if not dry_run:
                 open(out, 'w', encoding='utf-8').write(html)
@@ -1195,7 +1280,7 @@ def main():
         if gen_monthly_pages:
             for mi in range(12):
                 try:
-                    html = gen_monthly(dest, months, mi, dests, similarities, climate, events)
+                    html = gen_monthly(dest, months, mi, dests, similarities, climate, events, comparison_index_en)
                     out  = f"{OUT}/{slug_en}-weather-{MONTH_URL[mi]}.html"
                     if not dry_run:
                         open(out, 'w', encoding='utf-8').write(html)
