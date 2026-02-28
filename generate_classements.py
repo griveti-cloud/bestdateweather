@@ -128,6 +128,13 @@ EUROPE_COUNTRIES = {
     'Géorgie', 'Arménie', 'Azerbaïdjan',
 }
 
+# DOM-TOM: administrativement France, géographiquement hors Europe
+DOM_TOM_SLUGS = {
+    'reunion', 'guadeloupe', 'martinique', 'polynesie', 'bora-bora',
+    'saint-martin', 'nouvelle-caledonie', 'mayotte', 'saint-barthelemy',
+    'guyane', 'saint-pierre-et-miquelon',
+}
+
 MOIS_FR = {1:'Janvier',2:'Février',3:'Mars',4:'Avril',5:'Mai',6:'Juin',
            7:'Juillet',8:'Août',9:'Septembre',10:'Octobre',11:'Novembre',12:'Décembre'}
 MOIS_EN = {1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',
@@ -142,7 +149,7 @@ def compute_annual(climate, dests, europe_only=False):
         if slug not in dests:
             continue
         d = dests[slug]
-        if europe_only and d['pays'] not in EUROPE_COUNTRIES:
+        if europe_only and (d['pays'] not in EUROPE_COUNTRIES or slug in DOM_TOM_SLUGS):
             continue
         if len(monthly) < 12:
             continue
@@ -164,7 +171,7 @@ def compute_seasonal(climate, dests, months, europe_only=False):
         if slug not in dests:
             continue
         d = dests[slug]
-        if europe_only and d['pays'] not in EUROPE_COUNTRIES:
+        if europe_only and (d['pays'] not in EUROPE_COUNTRIES or slug in DOM_TOM_SLUGS):
             continue
         if not all(m in monthly for m in months):
             continue
