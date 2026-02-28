@@ -254,6 +254,12 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
 .score-chip{display:flex;align-items:center;gap:6px;padding:7px 12px;background:var(--cream);border-radius:20px;border:1.5px solid var(--cream2)}
 .score-chip-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .score-chip-lbl{font-size:11px;font-weight:600;color:var(--slate)}
+.details-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--cream);border:1.5px solid var(--cream2);border-radius:var(--r-sm);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--slate2);margin-top:12px;transition:background .2s}
+.details-toggle:hover{background:var(--cream2)}
+.details-toggle-icon{font-size:18px;transition:transform .25s;display:inline-block}
+.details-toggle.open .details-toggle-icon{transform:rotate(180deg)}
+.details-panel{display:none;margin-top:0}
+.details-panel.open{display:block}
 .score-chip-val{font-size:12px;font-weight:700;color:var(--navy)}
 
 
