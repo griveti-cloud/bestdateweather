@@ -458,3 +458,20 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  .dh-sub-body{padding:6px 6px 10px}
  .dh-acc-body{padding:10px 6px 14px}
 }
+
+/* ── 7-DAY FORECAST STRIP ── */
+#forecast-strip{margin-top:14px;padding:12px 0 0}
+.fs-label{font-size:11px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.fs-row{display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}
+.fs-row::-webkit-scrollbar{display:none}
+.fs-day{flex:1 0 0;min-width:42px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px 6px;border-radius:10px;background:var(--cream);border:1.5px solid var(--cream2);position:relative;transition:border-color .2s,background .2s}
+.fs-active{background:#fff;border-color:var(--gold);box-shadow:0 0 0 1px rgba(232,148,10,.15)}
+.fs-day-name{font-size:10px;font-weight:700;color:var(--slate);line-height:1}
+.fs-active .fs-day-name{color:var(--gold)}
+.fs-day-icon{font-size:16px;line-height:1;margin:2px 0}
+.fs-day-temp{font-size:12px;font-weight:700;color:var(--navy);line-height:1}
+.fs-day-min{font-size:10px;font-weight:500;color:var(--mist);line-height:1}
+.fs-rain-bar{position:absolute;bottom:0;left:20%;right:20%;height:3px;border-radius:2px}
+.fs-rain-heavy{background:#3b82f6}
+.fs-rain-light{background:#93c5fd}
+.fs-rain-maybe{background:#bfdbfe}

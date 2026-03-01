@@ -442,10 +442,12 @@ function renderSeaChip(sstResult) {
 }
 
 function fetchForecast(lat, lon, yr, mo, da) {
- var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,precipitation,snowfall,windspeed_10m,shortwave_radiation&timezone=auto&forecast_days=8';
+ var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,precipitation,snowfall,windspeed_10m,shortwave_radiation&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum&timezone=auto&forecast_days=8';
  // _locTzOffset is global
  return fetch(url).then(function(r){if(!r.ok)throw new Error(T.errForecast);return r.json();}).then(function(data){
  if (data.utc_offset_seconds != null) _locTzOffset = data.utc_offset_seconds;
+ // Store daily forecast for 7-day strip
+ window._forecastDaily = data.daily || null;
  var mo2=mo+1, prefix=yr+'-'+(mo2<10?'0':'')+mo2+'-'+(da<10?'0':'')+da, rows=[];
  for(var h=0;h<24;h++){
  var ts=prefix+'T'+(h<10?'0':'')+h+':00', idx=-1;
@@ -460,6 +462,64 @@ function fetchForecast(lat, lon, yr, mo, da) {
  }
  return rows;
  });
+}
+
+// ── 7-day forecast strip ─────────────────────────────────────────────────
+function wmoIcon(code) {
+ if (code <= 0) return '☀️';
+ if (code <= 2) return '🌤️';
+ if (code <= 3) return '☁️';
+ if (code <= 48) return '🌫️';
+ if (code <= 57) return '🌦️';
+ if (code <= 67) return '🌧️';
+ if (code <= 77) return '🌨️';
+ if (code <= 82) return '🌧️';
+ if (code <= 86) return '🌨️';
+ return '⛈️';
+}
+
+function render7DayStrip(diffDays) {
+ var el = document.getElementById('forecast-strip');
+ if (!el) return;
+ var d = window._forecastDaily;
+ if (!d || !d.time || d.time.length < 2) { el.style.display = 'none'; return; }
+ // Only show for today or dates within forecast window
+ if (diffDays == null || diffDays < 0 || diffDays > 7) { el.style.display = 'none'; return; }
+ var html = '<div class="fs-label">' + (T.forecast7dLabel || 'Prévisions 7 jours') + '</div><div class="fs-row">';
+ var dayLabels = (T.dayAbbr || 'Dim,Lun,Mar,Mer,Jeu,Ven,Sam').split(',');
+ var todayIdx = -1;
+ // Find today in the daily data
+ var now = new Date(); now.setHours(0,0,0,0);
+ for (var i = 0; i < d.time.length; i++) {
+  var parts = d.time[i].split('-');
+  var dd = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+  dd.setHours(0,0,0,0);
+  if (dd.getTime() === now.getTime()) { todayIdx = i; break; }
+ }
+ if (todayIdx < 0) todayIdx = 0;
+ for (var i = todayIdx; i < Math.min(d.time.length, todayIdx + 8); i++) {
+  var parts = d.time[i].split('-');
+  var dd = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+  var dayName = (i === todayIdx) ? (T.dayToday || 'Auj.') : dayLabels[dd.getDay()];
+  var tMax = d.temperature_2m_max[i] != null ? Math.round(d.temperature_2m_max[i]) : '–';
+  var tMin = d.temperature_2m_min[i] != null ? Math.round(d.temperature_2m_min[i]) : '–';
+  var wCode = d.weather_code ? (d.weather_code[i] || 0) : 0;
+  var rainP = d.precipitation_probability_max ? (d.precipitation_probability_max[i] || 0) : 0;
+  var precip = d.precipitation_sum ? (d.precipitation_sum[i] || 0) : 0;
+  var icon = wmoIcon(wCode);
+  var isActive = (i === todayIdx + diffDays);
+  var rainClass = precip > 5 ? 'fs-rain-heavy' : (precip > 0.5 ? 'fs-rain-light' : (rainP > 40 ? 'fs-rain-maybe' : ''));
+  html += '<div class="fs-day' + (isActive ? ' fs-active' : '') + '">';
+  html += '<span class="fs-day-name">' + dayName + '</span>';
+  html += '<span class="fs-day-icon">' + icon + '</span>';
+  html += '<span class="fs-day-temp">' + fmtTempRaw(tMax) + '°</span>';
+  html += '<span class="fs-day-min">' + fmtTempRaw(tMin) + '°</span>';
+  if (rainClass) html += '<span class="fs-rain-bar ' + rainClass + '"></span>';
+  html += '</div>';
+ }
+ html += '</div>';
+ el.innerHTML = html;
+ el.style.display = 'block';
 }
 
 function fetchArchive(lat, lon, refDate) {
@@ -1513,7 +1573,7 @@ function run() {
  setP(30,T.progFetching);
  return fetchForecast(loc.lat,loc.lon,yr,mo,da).then(function(rows){
  renderAstro(loc.lat,loc.lon,yr,mo,da);
- setP(100,T.progDone);var _curH=13;if(diffDays===0){var _now=new Date(Date.now()+(_locTzOffset||0)*1000+new Date().getTimezoneOffset()*60000);_curH=_now.getHours();}updateHero(rows,rows,_curH);showResults(rows,rows,true,T.noteLive,diffDays);progEl.style.display='none';btnEl.disabled=false;
+ setP(100,T.progDone);var _curH=13;if(diffDays===0){var _now=new Date(Date.now()+(_locTzOffset||0)*1000+new Date().getTimezoneOffset()*60000);_curH=_now.getHours();}updateHero(rows,rows,_curH);render7DayStrip(diffDays);showResults(rows,rows,true,T.noteLive,diffDays);progEl.style.display='none';btnEl.disabled=false;
  });
  }
  return buildClimatology(loc.lat,loc.lon,yr,mo,da).then(function(rows){
@@ -1522,6 +1582,7 @@ function run() {
  }).then(function(rows){
  renderAstro(loc.lat,loc.lon,yr,mo,da);
  setP(100,T.progDone);seedRand(makeSeed(loc.lat,loc.lon,yr,mo,da));var sc=genMain(rows);updateHero(sc,rows);
+    var _fsEl=document.getElementById('forecast-strip');if(_fsEl)_fsEl.style.display='none';
     var note=(diffDays>7&&diffDays<=210)?T.noteEcmwf:T.noteClimate;
     showResults(sc,rows,false,note,diffDays);
     // Snow depth — uniquement si UC ski, en parallèle (silencieux si erreur)

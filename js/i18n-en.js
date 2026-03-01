@@ -112,6 +112,8 @@ window.BDW_T = {
  chipRain: 'Rain', chipPrecip: 'Precip.', chipTemp: 'Temp.',
  chipWind: 'Wind', chipSnow: 'Snow', chipHumidity: 'Humidity',
  spreadStable: '🌡 Stable', spreadVariable: '🌡 Variable',
+ forecast7dLabel: '7-day forecast', dayToday: 'Today',
+ dayAbbr: 'Sun,Mon,Tue,Wed,Thu,Fri,Sat',
 
  // Sky labels
  skyRainy: 'Rainy', skyCloudy: 'Cloudy', skyClearSky: 'Clear sky',
