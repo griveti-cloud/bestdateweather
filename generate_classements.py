@@ -482,7 +482,7 @@ def make_jsonld(entries, n, title, lang):
 
 RELATED_FR = [
     ('classement-destinations-meteo-2026.html', '🏆 Classement global 2026', '318 destinations'),
-    ('classement-destinations-europe-meteo-2026.html', '🇪🇺 Top Europe météo 2026', 'Comparatif européen'),
+    ('classement-destinations-europe-meteo-2026.html', '<img src="flags/eu.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Top Europe météo 2026', 'Comparatif européen'),
     ('classement-destinations-meteo-ete-2026.html', '☀️ Meilleures destinations été', 'Juin–Juil–Août'),
     ('classement-destinations-meteo-hiver-2026.html', '❄️ Meilleures destinations hiver', 'Déc–Jan–Fév'),
     ('classement-destinations-meteo-nomades-2026.html', '💻 Meilleures destinations nomades', 'Régularité & confort'),
@@ -490,7 +490,7 @@ RELATED_FR = [
 
 RELATED_EN = [
     ('best-destinations-weather-ranking-2026.html', '🏆 Global ranking 2026', '318 destinations'),
-    ('best-europe-weather-ranking-2026.html', '🇪🇺 Europe weather ranking', 'European comparison'),
+    ('best-europe-weather-ranking-2026.html', '<img src="../flags/eu.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Europe weather ranking', 'European comparison'),
     ('best-destinations-summer-weather-2026.html', '☀️ Best summer destinations', 'June–July–August'),
     ('best-destinations-winter-weather-2026.html', '❄️ Best winter destinations', 'Dec–Jan–Feb'),
     ('best-destinations-digital-nomads-weather-2026.html', '💻 Best nomad destinations', 'Consistency & comfort'),
