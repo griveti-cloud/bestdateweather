@@ -9,6 +9,11 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--navy:#1a2332;--gold:#d4a853;--cream:#faf6ef;--cream2:#ede4d3;--text:#2c3e50;--slate:#5a6c7d;--slate2:#8899a6}
 body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--text);line-height:1.6}
+nav{background:white;border-bottom:1px solid var(--cream2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,31,46,.06)}
+.nav-brand{font-family:'Playfair Display',Georgia,serif;font-size:17px;font-weight:700;color:var(--navy);text-decoration:none}
+.nav-brand em{font-style:italic;color:var(--gold)}
+.nav-cta{background:var(--gold);color:white;border:none;border-radius:8px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;text-decoration:none;transition:all .2s;display:inline-block}
+.nav-cta:hover{opacity:.85;transform:translateY(-1px)}
 .hero{background:var(--navy);color:white;padding:48px 20px 36px;text-align:center}
 .hero-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);margin-bottom:12px;font-weight:700}
 .hero-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(24px,5vw,38px);margin-bottom:10px;line-height:1.2}
@@ -65,6 +70,10 @@ footer a{color:rgba(255,255,255,.8);text-decoration:none}
 <meta name="twitter:card" content="summary_large_image"/>
 </head>
 <body>
+<nav>
+ <a class="nav-brand" href="app.html">Best<em>Date</em>Weather</a>
+ <a class="nav-cta" href="app.html">Try the app</a>
+</nav>
 <header class="hero">
 <div class="hero-eyebrow">Independent climate study · 2026</div>
 <h1 class="hero-title">Best summer<br/><em>destinations 2026</em></h1>
