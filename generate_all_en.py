@@ -159,7 +159,7 @@ def footer_html(slug_fr, slug_en, nom_en):
     return f'''<footer>
  <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
  <p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Weather data by Open-Meteo.com</a> · Sources: ECMWF, DWD, NOAA · CC BY 4.0</p>
- <p style="margin-top:8px"><a href="../methodology-en.html" style="color:rgba(255,255,255,.7)">Methodology</a> · <a href="app.html" style="color:rgba(255,255,255,.7)">Weather app</a>{fr_link}</p>
+ <p style="margin-top:8px"><a href="methodology.html" style="color:rgba(255,255,255,.7)">Methodology</a> · <a href="app.html" style="color:rgba(255,255,255,.7)">Weather app</a>{fr_link}</p>
  <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="legal.html" style="color:rgba(255,255,255,.7)">Legal</a> · <a href="privacy.html" style="color:rgba(255,255,255,.7)">Privacy</a> · <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p>
 </footer>
 <script>function shareThis(){{if(navigator.share)navigator.share({{title:document.title,url:location.href}});else{{navigator.clipboard.writeText(location.href);var b=document.querySelector('.nav-share');b.style.color='#27ae60';setTimeout(function(){{b.style.color=''}},1200)}}}}</script>'''
@@ -1155,7 +1155,7 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
  Computed from <strong>10 years of ERA5 records</strong> via Open-Meteo, with ECMWF seasonal adjustment.
  In {month_en.lower()}, {nom_en} averages <strong>{m['tmax']}°C</strong>, {m['rain_pct']}% rainy days and {m['sun_h']}h of sunshine per day.
  Overall weather score: <strong>{score:.1f}/10</strong>.
- <a href="../methodology-en.html" style="color:var(--gold);font-weight:600">See methodology →</a>
+ <a href="methodology.html" style="color:var(--gold);font-weight:600">See methodology →</a>
  </div>
 
  <section class="section" style="margin-bottom:28px">

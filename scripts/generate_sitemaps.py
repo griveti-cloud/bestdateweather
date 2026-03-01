@@ -23,18 +23,18 @@ TODAY = date.today().isoformat()
 
 # ── Pages statiques avec leur mapping FR↔EN ──────────────────────────────
 STATIC_PAGES_FR = {
-    'index.html':       ('index.html', 'en/app.html', 1.0),
-    'methodology.html': ('methodology.html', 'en/methodology.html', 0.5),
-    'legal.html':       ('legal.html', 'en/legal.html', 0.3),
-    'privacy.html':     ('privacy.html', 'en/privacy.html', 0.3),
-    'contact.html':     ('contact.html', 'en/contact.html', 0.3),
+    'index.html':            ('index.html', 'en/app.html', 1.0),
+    'methodologie.html':     ('methodologie.html', 'en/methodology.html', 0.5),
+    'mentions-legales.html': ('mentions-legales.html', 'en/legal.html', 0.3),
+    'confidentialite.html':  ('confidentialite.html', 'en/privacy.html', 0.3),
+    'contact.html':          ('contact.html', 'en/contact.html', 0.3),
 }
 
 STATIC_PAGES_EN = {
     'en/app.html':          ('en/app.html', 'index.html', 0.9),
-    'en/methodology.html':  ('en/methodology.html', 'methodology.html', 0.5),
-    'en/legal.html':        ('en/legal.html', 'legal.html', 0.3),
-    'en/privacy.html':      ('en/privacy.html', 'privacy.html', 0.3),
+    'en/methodology.html':  ('en/methodology.html', 'methodologie.html', 0.5),
+    'en/legal.html':        ('en/legal.html', 'mentions-legales.html', 0.3),
+    'en/privacy.html':      ('en/privacy.html', 'confidentialite.html', 0.3),
     'en/contact.html':      ('en/contact.html', 'contact.html', 0.3),
 }
 

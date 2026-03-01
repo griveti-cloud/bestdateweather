@@ -9,6 +9,30 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/app.html" />
   </url>
   <url>
+    <loc>https://bestdateweather.com/methodologie.html</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/methodologie.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/methodology.html" />
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/mentions-legales.html</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/mentions-legales.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/legal.html" />
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/confidentialite.html</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/confidentialite.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/privacy.html" />
+  </url>
+  <url>
     <loc>https://bestdateweather.com/contact.html</loc>
     <lastmod>2026-03-01</lastmod>
     <changefreq>monthly</changefreq>

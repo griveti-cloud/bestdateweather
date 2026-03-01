@@ -36,6 +36,11 @@
       "source": "/en/",
       "destination": "/en/app.html",
       "permanent": false
+    },
+    {
+      "source": "/methodology-en.html",
+      "destination": "/en/methodology.html",
+      "permanent": true
     }
   ],
   "cleanUrls": false
