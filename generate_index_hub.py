@@ -340,19 +340,20 @@ JS_EN = JS_FR.replace("'destinations trouvées':'destination trouvée'",
                        "'destinations found':'destination found'")
 
 
-def make_card(slug, name, bare, flag, country, prefix, is_fr):
-    href = f'{prefix}meilleure-periode-{slug}.html' if is_fr else f'{prefix}best-time-to-visit-{slug}.html'
+def make_card(slug, name, bare, flag, country, asset_prefix, page_prefix, is_fr):
+    href = f'{page_prefix}meilleure-periode-{slug}.html' if is_fr else f'{page_prefix}best-time-to-visit-{slug}.html'
     sub = 'Quand partir' if is_fr else 'When to visit'
     return (
         f'<a href="{href}" target="_top" class="dh-card" '
         f'data-name="{html_mod.escape(bare)}" data-country="{html_mod.escape(country)}">'
-        f'<img src="{prefix}flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" style="border-radius:2px">'
+        f'<img src="{asset_prefix}flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" style="border-radius:2px">'
         f'<span><span class="dh-card-name">{html_mod.escape(name)}</span>'
         f'<span class="dh-card-sub">{sub}</span></span></a>')
 
 
 def build_hub(destinations, is_fr=True):
-    prefix = '' if is_fr else '../'
+    asset_prefix = '' if is_fr else '../'
+    page_prefix = ''  # pages are always in same dir as hub
     lang = 'fr' if is_fr else 'en'
 
     # Group: mega → sub → [dests]
@@ -413,7 +414,7 @@ def build_hub(destinations, is_fr=True):
                 for d in sorted(dests, key=lambda x: x['nom_bare']):
                     slug = d['slug_fr'] if is_fr else d['slug_en']
                     name = d['nom_fr'] if is_fr else d['nom_en']
-                    L.append(make_card(slug, name, d['nom_bare'], d['flag'], d['pays'], prefix, is_fr))
+                    L.append(make_card(slug, name, d['nom_bare'], d['flag'], d['pays'], asset_prefix, page_prefix, is_fr))
                 L.append(f'</div></div></div>')
         else:
             # Single sub-region: no sub-accordion, just grid
@@ -422,7 +423,7 @@ def build_hub(destinations, is_fr=True):
             for d in sorted(dests, key=lambda x: x['nom_bare']):
                 slug = d['slug_fr'] if is_fr else d['slug_en']
                 name = d['nom_fr'] if is_fr else d['nom_en']
-                L.append(make_card(slug, name, d['nom_bare'], d['flag'], d['pays'], prefix, is_fr))
+                L.append(make_card(slug, name, d['nom_bare'], d['flag'], d['pays'], asset_prefix, page_prefix, is_fr))
             L.append(f'</div>')
 
         L.append(f'</div></div>')
