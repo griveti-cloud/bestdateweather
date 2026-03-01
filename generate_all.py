@@ -1363,7 +1363,7 @@ def main():
             html = gen_annual(dest, months, dest_cards, dests, similarities, comp_index)
             out  = f"{OUT}/meilleure-periode-{slug}.html"
             if not dry_run:
-                open(out, 'w', encoding='utf-8-sig').write(html)
+                open(out, 'w', encoding='utf-8').write(html)
             total_annual += 1
         except Exception as e:
             errors_gen.append(f"{slug}/annual: {e}")
@@ -1376,7 +1376,7 @@ def main():
                     html = gen_monthly(dest, months, mi, dests, similarities, climate, events, comp_index)
                     out  = f"{OUT}/{slug}-meteo-{MONTH_URL[mi]}.html"
                     if not dry_run:
-                        open(out, 'w', encoding='utf-8-sig').write(html)
+                        open(out, 'w', encoding='utf-8').write(html)
                     total_monthly += 1
                 except Exception as e:
                     errors_gen.append(f"{slug}/{MONTHS_FR[mi]}: {e}")
