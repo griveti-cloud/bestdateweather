@@ -266,11 +266,13 @@ CSS = """
 .dh-no-results.show{display:block}
 
 @media(max-width:640px){
- .dh-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px}
+ .dh-grid{grid-template-columns:repeat(2,1fr);gap:6px}
  .dh-card{padding:9px 10px}
  .dh-acc-head{padding:14px 14px}
  .dh-acc-label{font-size:15px}
  .dh-sub-head{padding:10px 12px}
+ .dh-sub-body{padding:6px 6px 10px}
+ .dh-acc-body{padding:10px 6px 14px}
 }
 """
 
@@ -457,15 +459,7 @@ def inject(filepath, destinations, is_fr=True):
     content = re.sub(r'Destination guides · \d+ cities',
                      f'Destination guides · {total} cities', content)
 
-    # Inject/replace CSS
-    if '/* ── Destination Hub ── */' not in content:
-        content = content.replace(
-            '#inp-date.has-val{color:var(--navy)}',
-            '#inp-date.has-val{color:var(--navy)}\n' + CSS, 1)
-    else:
-        content = re.sub(
-            r'/\* ── Destination Hub ── \*/.*?(?=#inp-date|</style>)',
-            CSS, content, flags=re.DOTALL)
+    # CSS is now in style.css — no injection needed
 
     # Build new SILO 1
     hub = build_hub(destinations, is_fr)
