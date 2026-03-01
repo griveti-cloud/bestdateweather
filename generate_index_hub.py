@@ -445,8 +445,17 @@ def inject(filepath, destinations, is_fr=True):
     # Update counts
     content = re.sub(r'Voir les guides destinations \(\d+ destinations\)',
                      f'Voir les guides destinations ({total} destinations)', content)
+    content = re.sub(r'View destination guides \(\d+ destinations\)',
+                     f'View destination guides ({total} destinations)', content)
     content = re.sub(r'Tableaux climatiques mensuels · \d+ destinations',
                      f'Tableaux climatiques mensuels · {total} destinations', content)
+    content = re.sub(r'Monthly climate tables · \d+ destinations',
+                     f'Monthly climate tables · {total} destinations', content)
+    # Update guides shortcut counts
+    content = re.sub(r'Guides destinations · \d+ fiches',
+                     f'Guides destinations · {total} fiches', content)
+    content = re.sub(r'Destination guides · \d+ cities',
+                     f'Destination guides · {total} cities', content)
 
     # Inject/replace CSS
     if '/* ── Destination Hub ── */' not in content:
