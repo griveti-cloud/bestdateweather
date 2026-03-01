@@ -483,31 +483,25 @@ function render7DayStrip(diffDays) {
  if (!el) return;
  var d = window._forecastDaily;
  if (!d || !d.time || d.time.length < 2) { el.style.display = 'none'; return; }
- // Only show for today or dates within forecast window
  if (diffDays == null || diffDays < 0 || diffDays > 7) { el.style.display = 'none'; return; }
  var html = '<div class="fs-label">' + (T.forecast7dLabel || 'Prévisions 7 jours') + '</div><div class="fs-row">';
- var dayLabels = (T.dayAbbr || 'Dim,Lun,Mar,Mer,Jeu,Ven,Sam').split(',');
- var todayIdx = -1;
- // Find today in the daily data
- var now = new Date(); now.setHours(0,0,0,0);
- for (var i = 0; i < d.time.length; i++) {
-  var parts = d.time[i].split('-');
-  var dd = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
-  dd.setHours(0,0,0,0);
-  if (dd.getTime() === now.getTime()) { todayIdx = i; break; }
- }
+ var locale = CFG.dateLocale || 'fr-FR';
+ var todayStr = new Date().toISOString().slice(0, 10);
+ var todayIdx = d.time.indexOf(todayStr);
  if (todayIdx < 0) todayIdx = 0;
- for (var i = todayIdx; i < Math.min(d.time.length, todayIdx + 8); i++) {
-  var parts = d.time[i].split('-');
-  var dd = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
-  var dayName = (i === todayIdx) ? (T.dayToday || 'Auj.') : dayLabels[dd.getDay()];
-  var tMax = d.temperature_2m_max[i] != null ? Math.round(d.temperature_2m_max[i]) : '–';
-  var tMin = d.temperature_2m_min[i] != null ? Math.round(d.temperature_2m_min[i]) : '–';
-  var wCode = d.weather_code ? (d.weather_code[i] || 0) : 0;
-  var rainP = d.precipitation_probability_max ? (d.precipitation_probability_max[i] || 0) : 0;
-  var precip = d.precipitation_sum ? (d.precipitation_sum[i] || 0) : 0;
+ var count = Math.min(d.time.length - todayIdx, 8);
+ for (var i = 0; i < count; i++) {
+  var idx = todayIdx + i;
+  var parts = d.time[idx].split('-');
+  var dd = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+  var dayName = (i === 0) ? (T.dayToday || 'Auj.') : dd.toLocaleDateString(locale, { weekday: 'short' }).replace('.', '');
+  var tMax = d.temperature_2m_max[idx] != null ? Math.round(d.temperature_2m_max[idx]) : '–';
+  var tMin = d.temperature_2m_min[idx] != null ? Math.round(d.temperature_2m_min[idx]) : '–';
+  var wCode = d.weather_code ? (d.weather_code[idx] || 0) : 0;
+  var rainP = d.precipitation_probability_max ? (d.precipitation_probability_max[idx] || 0) : 0;
+  var precip = d.precipitation_sum ? (d.precipitation_sum[idx] || 0) : 0;
   var icon = wmoIcon(wCode);
-  var isActive = (i === todayIdx + diffDays);
+  var isActive = (i === diffDays);
   var rainClass = precip > 5 ? 'fs-rain-heavy' : (precip > 0.5 ? 'fs-rain-light' : (rainP > 40 ? 'fs-rain-maybe' : ''));
   html += '<div class="fs-day' + (isActive ? ' fs-active' : '') + '">';
   html += '<span class="fs-day-name">' + dayName + '</span>';
