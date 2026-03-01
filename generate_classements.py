@@ -557,7 +557,8 @@ FOOTER_EN = """<footer>
 # ── Page Assembly ─────────────────────────────────────────────────────────────
 
 def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
-              sections, jsonld_str, related_html, meth_html, footer_html, lang, canonical):
+              sections, jsonld_str, related_html, meth_html, footer_html, lang, canonical,
+              hreflang_fr='', hreflang_en=''):
     fonts = (
         '<link rel="preconnect" href="https://fonts.googleapis.com"/>'
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>'
@@ -582,6 +583,9 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 <title>{e(title)}</title>
 <meta name="description" content="{e(description)}"/>
 <link rel="canonical" href="{canonical}"/>
+{f'<link rel="alternate" hreflang="fr" href="{hreflang_fr}"/>' if hreflang_fr else ''}
+{f'<link rel="alternate" hreflang="en" href="{hreflang_en}"/>' if hreflang_en else ''}
+{f'<link rel="alternate" hreflang="x-default" href="{hreflang_en}"/>' if hreflang_en else ''}
 <style>{CSS}</style>
 {fonts}
 <script type="application/ld+json">{jsonld_str}</script>
@@ -678,7 +682,9 @@ def gen_mondial(dests, climate, lang):
         title=title, description=desc, h1=h1, hero_sub=hero_sub,
         stats_html=stats, insights_html=insights, sections=sections,
         jsonld_str=jsonld, related_html=related, meth_html=meth,
-        footer_html=footer, lang=lang, canonical=canonical
+        footer_html=footer, lang=lang, canonical=canonical,
+        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
+        hreflang_en=f'https://bestdateweather.com/en/{en_file}'
     )
     outfile.write_text(page, encoding='utf-8')
     print(f'  ✓ {outfile.name} ({n_dests} dests, top={top1["dest"]["nom_bare"]})')
@@ -736,7 +742,9 @@ def gen_europe(dests, climate, lang):
         title=title, description=desc, h1=h1, hero_sub=hero_sub,
         stats_html=stats, insights_html=insights, sections=sections,
         jsonld_str=jsonld, related_html=related, meth_html=meth,
-        footer_html=footer, lang=lang, canonical=canonical
+        footer_html=footer, lang=lang, canonical=canonical,
+        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
+        hreflang_en=f'https://bestdateweather.com/en/{en_file}'
     )
     outfile.write_text(page, encoding='utf-8')
     print(f'  ✓ {outfile.name} ({n_dests} dests Europe)')
@@ -788,7 +796,9 @@ def gen_ete(dests, climate, lang):
         title=title, description=desc, h1=h1, hero_sub=hero_sub,
         stats_html=stats, insights_html=insights, sections=sections,
         jsonld_str=jsonld, related_html=related, meth_html=meth,
-        footer_html=footer, lang=lang, canonical=canonical
+        footer_html=footer, lang=lang, canonical=canonical,
+        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
+        hreflang_en=f'https://bestdateweather.com/en/{en_file}'
     )
     outfile.write_text(page, encoding='utf-8')
     print(f'  ✓ {outfile.name} (été, top={top1["dest"]["nom_bare"]})')
@@ -840,7 +850,9 @@ def gen_hiver(dests, climate, lang):
         title=title, description=desc, h1=h1, hero_sub=hero_sub,
         stats_html=stats, insights_html=insights, sections=sections,
         jsonld_str=jsonld, related_html=related, meth_html=meth,
-        footer_html=footer, lang=lang, canonical=canonical
+        footer_html=footer, lang=lang, canonical=canonical,
+        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
+        hreflang_en=f'https://bestdateweather.com/en/{en_file}'
     )
     outfile.write_text(page, encoding='utf-8')
     print(f'  ✓ {outfile.name} (hiver, top={top1["dest"]["nom_bare"]})')
@@ -892,7 +904,9 @@ def gen_nomades(dests, climate, lang):
         title=title, description=desc, h1=h1, hero_sub=hero_sub,
         stats_html=stats, insights_html=insights, sections=sections,
         jsonld_str=jsonld, related_html=related, meth_html=meth,
-        footer_html=footer, lang=lang, canonical=canonical
+        footer_html=footer, lang=lang, canonical=canonical,
+        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
+        hreflang_en=f'https://bestdateweather.com/en/{en_file}'
     )
     outfile.write_text(page, encoding='utf-8')
     print(f'  ✓ {outfile.name} (nomades, top={top1["dest"]["nom_bare"]})')

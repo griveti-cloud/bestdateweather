@@ -432,6 +432,7 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
 <link rel="canonical" href="{canonical}"/>
 <link rel="alternate" hreflang="fr" href="{hreflang_fr}"/>
 <link rel="alternate" hreflang="en" href="{hreflang_en}"/>
+<link rel="alternate" hreflang="x-default" href="{hreflang_en}"/>
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="{e(title)}"/>
 <meta property="og:description" content="{e(desc)}"/>
@@ -493,6 +494,7 @@ def update_sitemaps(files):
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="{page['hreflang_fr']}"/>
     <xhtml:link rel="alternate" hreflang="en" href="{page['hreflang_en']}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{page['hreflang_en']}"/>
   </url>"""
             content = content.replace('</urlset>', entry + '\n</urlset>')
             added += 1

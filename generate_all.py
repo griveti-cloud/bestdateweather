@@ -641,6 +641,7 @@ def gen_annual(dest, months, dest_cards, all_dests, similarities, comparison_ind
 <link rel="canonical" href="https://bestdateweather.com/meilleure-periode-{slug}.html"/>
 <link rel="alternate" hreflang="fr" href="https://bestdateweather.com/meilleure-periode-{slug}.html"/>
 <link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/best-time-to-visit-{slug_en}.html"/>
+<link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/best-time-to-visit-{slug_en}.html"/>
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="Meilleure période {prep} {nom_bare} — météo &amp; conseils"/>
 <meta property="og:description" content="{desc}"/>
@@ -1114,6 +1115,7 @@ def gen_monthly(dest, months, mi, all_dests, similarities, all_climate, events=N
 <link rel="canonical" href="https://bestdateweather.com/{slug}-meteo-{month_url}.html"/>
 <link rel="alternate" hreflang="fr" href="https://bestdateweather.com/{slug}-meteo-{month_url}.html"/>
 <link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/{slug_en}-weather-{MONTH_URL_EN[mi]}.html"/>
+<link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/{slug_en}-weather-{MONTH_URL_EN[mi]}.html"/>
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="Météo {prep} {nom_bare} en {month_fr.lower()} — {m['tmax']}°C, {m['rain_pct']}% pluie"/>
 <meta property="og:description" content="{desc}"/>
