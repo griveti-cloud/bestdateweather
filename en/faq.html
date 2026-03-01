@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Frequently Asked Questions — BestDateWeather FAQ</title>
+<meta name="description" content="Answers to the most common questions about BestDateWeather: how to use the app, understand scores, choose your destination and plan your trip."/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://bestdateweather.com/en/faq.html"/>
+<link rel="alternate" hreflang="fr" href="https://bestdateweather.com/faq.html"/>
+<link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/faq.html"/>
+<link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/faq.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --cream:#faf8f3;--cream2:#f2ede2;--navy:#1a1f2e;--navy2:#252d42;
+ --gold:#e8940a;--gold2:#f5b020;--gold-light:#fef3d0;
+ --slate:#4a5568;--slate2:#718096;--slate3:#a0aec0;
+ --green:#1a7a4a;--green-bg:#e8f8f0;
+ --blue:#1a5f9a;--blue-bg:#e8f2fc;
+ --r:18px;--r-sm:12px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);line-height:1.7;-webkit-font-smoothing:antialiased}
+.page{max-width:800px;margin:0 auto;padding:40px 20px 80px}
+.back{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--gold);text-decoration:none;margin-bottom:32px;padding:8px 14px;background:white;border-radius:10px;box-shadow:0 2px 8px rgba(26,31,46,.07)}
+.back:hover{background:var(--gold-light)}
+.back svg{width:14px;height:14px}
+.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:24px;padding:40px 36px;color:white;margin-bottom:40px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;background:radial-gradient(circle,rgba(232,148,10,.25),transparent 70%);pointer-events:none}
+.hero-tag{display:inline-block;background:rgba(232,148,10,.2);border:1px solid rgba(232,148,10,.4);color:var(--gold2);font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:16px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,34px);font-weight:900;line-height:1.2;margin-bottom:12px}
+.hero p{font-size:15px;opacity:.75;max-width:560px;line-height:1.7}
+.section{margin-bottom:48px}
+.section-num{display:inline-block;background:var(--gold);color:white;font-size:11px;font-weight:800;letter-spacing:.5px;padding:3px 10px;border-radius:20px;margin-bottom:12px}
+h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:16px;line-height:1.3}
+h3{font-size:14px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin:24px 0 10px}
+p{font-size:15px;color:#4a5568;margin:10px 0;line-height:1.8}
+ul,ol{margin:10px 0 10px 20px}
+li{font-size:15px;color:#4a5568;line-height:1.8;margin:4px 0}
+strong{color:var(--navy);font-weight:700}
+.card{background:white;border-radius:var(--r);padding:24px 28px;box-shadow:0 2px 12px rgba(26,31,46,.06);margin:20px 0}
+.card-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:20px 0}
+@media(max-width:600px){.card-grid{grid-template-columns:1fr}}
+.card-mini{background:white;border-radius:var(--r-sm);padding:18px 20px;box-shadow:0 2px 8px rgba(26,31,46,.06);border-top:3px solid var(--gold)}
+.card-mini .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--slate2);margin-bottom:6px}
+.card-mini .val{font-size:22px;font-weight:800;color:var(--navy);line-height:1.2}
+.card-mini .sub{font-size:12px;color:var(--slate2);margin-top:4px}
+.callout{display:flex;gap:0;border-radius:12px;overflow:hidden;margin:20px 0;box-shadow:0 2px 8px rgba(26,31,46,.06)}
+.callout-ico{display:flex;align-items:center;justify-content:center;padding:0 16px;min-width:50px;font-size:18px}
+.callout-body{padding:14px 18px;font-size:14px;line-height:1.7;font-weight:500}
+.callout.gold .callout-ico{background:var(--gold);color:white}
+.callout.gold .callout-body{background:var(--gold-light);color:var(--navy)}
+.callout.green .callout-ico{background:var(--green);color:white}
+.callout.green .callout-body{background:var(--green-bg);color:#1a3a2a}
+.callout.blue .callout-ico{background:var(--blue);color:white}
+.callout.blue .callout-body{background:var(--blue-bg);color:#0f2a4a}
+.faq-item{background:white;border-radius:var(--r);padding:24px 28px;box-shadow:0 2px 12px rgba(26,31,46,.06);margin:16px 0}
+.faq-item h3{margin-top:0;color:var(--navy);text-transform:none;letter-spacing:0;font-size:16px}
+.faq-item p{margin:8px 0 0}
+.link-list{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}
+.link-chip{background:white;border:1.5px solid var(--cream2);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:var(--navy);text-decoration:none;transition:border-color .15s}
+.link-chip:hover{border-color:var(--gold)}
+footer{text-align:center;padding:32px 0 0;border-top:1px solid var(--cream2);margin-top:48px}
+footer p{font-size:12px;color:var(--slate2)}
+footer a{color:var(--gold);text-decoration:none;font-weight:600}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {"@type":"Question","name":"How does the 0-to-10 score work?","acceptedAnswer":{"@type":"Answer","text":"The score combines 7 climate parameters (temperature, rain, sunshine, humidity, wind, sea temperature, snow) weighted by destination type. A score of 8+ indicates ideal conditions, 6-8 favourable conditions, and below 5 unfavourable conditions."}},
+  {"@type":"Question","name":"Is the data reliable?","acceptedAnswer":{"@type":"Answer","text":"Scores are calculated from 10 years of historical climate data provided by Open-Meteo (sources: ECMWF, DWD, NOAA, Météo-France). They reflect statistical averages, not forecasts."}},
+  {"@type":"Question","name":"What is the difference between destination pages and the app?","acceptedAnswer":{"@type":"Answer","text":"Destination pages show historical monthly averages. The interactive app adds real-time forecasts (D+0 to D+7) and seasonal outlooks (D+30 to D+270) to refine recommendations."}},
+  {"@type":"Question","name":"Is BestDateWeather free?","acceptedAnswer":{"@type":"Answer","text":"Yes, BestDateWeather is completely free with no targeted advertising."}},
+  {"@type":"Question","name":"How do I choose between two destinations?","acceptedAnswer":{"@type":"Answer","text":"Compare scores for the same period on each destination's page. Monthly pages also include suggestions for similar destinations with comparable conditions."}}
+ ]
+}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-NTCJTDPSJL");</script>
+</head>
+<body>
+<div class="page">
+
+ <a href="app.html" class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to the app</a>
+
+ <header class="hero">
+  <div class="hero-tag">FAQ</div>
+  <h1>Frequently Asked Questions</h1>
+  <p>Everything you need to know to use BestDateWeather and plan your next trip.</p>
+ </header>
+
+ <main>
+
+  <section class="section">
+   <span class="section-num">01</span>
+   <h2>Understanding scores</h2>
+
+   <div class="faq-item">
+    <h3>How does the 0-to-10 score work?</h3>
+    <p>The score combines 7 climate parameters: maximum temperature, rainy days, sunshine hours, relative humidity, wind speed, sea temperature (coastal destinations) and snowfall (ski resorts). Each parameter is weighted according to destination type.</p>
+    <p>In practice: <strong>8+</strong> = ideal conditions · <strong>6 to 8</strong> = favourable · <strong>4 to 6</strong> = mixed · <strong>below 4</strong> = unfavourable.</p>
+   </div>
+
+   <div class="faq-item">
+    <h3>Why does a tropical destination score low in summer?</h3>
+    <p>In the tropics, summer often coincides with the rainy season. The score penalises heavy rainfall and high humidity, even when temperatures remain pleasant. This is deliberate: daily downpours are not an ideal travel experience for most visitors.</p>
+   </div>
+
+   <div class="faq-item">
+    <h3>Are scores the same on destination pages and in the app?</h3>
+    <p>Yes. Destination pages and the app use the same algorithm and baseline data. The app adds a real-time forecast layer, but the historical reference score is identical.</p>
+   </div>
+  </section>
+
+  <section class="section">
+   <span class="section-num">02</span>
+   <h2>Using the app</h2>
+
+   <div class="faq-item">
+    <h3>How do I search for a destination?</h3>
+    <p>Type a city name into the app's search bar. Autocomplete will suggest available destinations. Select one to see the month-by-month breakdown.</p>
+   </div>
+
+   <div class="faq-item">
+    <h3>What does "Seasonal outlook" mean in the app?</h3>
+    <p>This is the ECMWF long-range seasonal forecast (up to 9 months). It indicates whether upcoming months are likely to be warmer, cooler, drier or wetter than normal. It is a trend indicator, not a day-by-day prediction.</p>
+   </div>
+
+   <div class="faq-item">
+    <h3>Can I compare two destinations?</h3>
+    <p>Not directly in the app yet (feature planned). For now, open two destination pages in separate tabs and compare scores for the same period. Monthly pages include links to destinations with similar climates.</p>
+   </div>
+  </section>
+
+  <section class="section">
+   <span class="section-num">03</span>
+   <h2>Reliability and limitations</h2>
+
+   <div class="faq-item">
+    <h3>Is the data reliable?</h3>
+    <p>Scores are based on 10 years of historical climate data (Open-Meteo, sources: ECMWF, DWD, NOAA, Météo-France). They reflect <strong>statistical averages</strong>: they describe what typically happens during that period, not what will happen this specific year.</p>
+   </div>
+
+   <div class="faq-item">
+    <h3>What is the margin of error?</h3>
+    <p>Climate can deviate from its averages. A typically dry month may occasionally experience heavy rain (El Niño, extreme events). The score gives you the <strong>probability</strong> of good conditions, not a guarantee. The higher the score, the stronger that probability.</p>
+   </div>
+
+   <div class="faq-item">
+    <h3>Why is my destination not listed?</h3>
+    <p>We currently cover 512 destinations. If yours is missing, it has not yet been added to our database. We regularly expand coverage.</p>
+   </div>
+  </section>
+
+  <section class="section">
+   <span class="section-num">04</span>
+   <h2>The site</h2>
+
+   <div class="faq-item">
+    <h3>Is BestDateWeather free?</h3>
+    <p>Yes, completely free. No subscriptions, no paywalled content, no targeted advertising.</p>
+   </div>
+
+   <div class="faq-item">
+    <h3>Who is behind BestDateWeather?</h3>
+    <p>An independent French project, published by BestDateWeather EI micro, based in Chatou (Île-de-France, France). More details on the <a href="about.html" style="color:var(--gold);font-weight:600">About page</a>.</p>
+   </div>
+
+   <div class="faq-item">
+    <h3>How is my personal data used?</h3>
+    <p>BestDateWeather collects no personal data beyond anonymised traffic statistics (Google Analytics). No user account is required. Details in our <a href="privacy.html" style="color:var(--gold);font-weight:600">privacy policy</a>.</p>
+   </div>
+  </section>
+
+ </main>
+
+ <footer>
+  <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">bestdateweather.com</p>
+  <p><a href="https://open-meteo.com/" rel="noopener">Weather data by Open-Meteo.com</a> · Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
+  <p style="margin-top:8px"><a href="app.html">Weather app</a> · <a href="../faq.html"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Version française</a></p>
+  <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="legal.html">Legal notice</a> · <a href="privacy.html">Privacy</a> · <a href="contact.html">Contact</a></p>
+ </footer>
+
+</div>
+</body>
+</html>

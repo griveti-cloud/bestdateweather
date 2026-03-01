@@ -83,6 +83,8 @@ def build_config(lang):
             'sources': 'Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0' if is_fr else 'Sources: ECMWF, DWD, NOAA · CC BY 4.0',
             'methodology': ('methodologie.html', 'Méthodologie') if is_fr else ('methodology.html', 'Methodology'),
             'app': ('index.html', 'Application météo') if is_fr else ('app.html', 'Weather app'),
+            'about': ('a-propos.html', 'À propos') if is_fr else ('about.html', 'About'),
+            'faq': ('faq.html', 'FAQ') if is_fr else ('faq.html', 'FAQ'),
             'legal': ('mentions-legales.html', 'Mentions légales') if is_fr else ('legal.html', 'Legal'),
             'privacy': ('confidentialite.html', 'Confidentialité') if is_fr else ('privacy.html', 'Privacy'),
             'alt_lang_flag': 'gb' if is_fr else 'fr',

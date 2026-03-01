@@ -25,6 +25,8 @@ TODAY = date.today().isoformat()
 STATIC_PAGES_FR = {
     'index.html':            ('index.html', 'en/app.html', 1.0),
     'methodologie.html':     ('methodologie.html', 'en/methodology.html', 0.5),
+    'a-propos.html':         ('a-propos.html', 'en/about.html', 0.5),
+    'faq.html':              ('faq.html', 'en/faq.html', 0.5),
     'mentions-legales.html': ('mentions-legales.html', 'en/legal.html', 0.3),
     'confidentialite.html':  ('confidentialite.html', 'en/privacy.html', 0.3),
     'contact.html':          ('contact.html', 'en/contact.html', 0.3),
@@ -33,6 +35,8 @@ STATIC_PAGES_FR = {
 STATIC_PAGES_EN = {
     'en/app.html':          ('en/app.html', 'index.html', 0.9),
     'en/methodology.html':  ('en/methodology.html', 'methodologie.html', 0.5),
+    'en/about.html':        ('en/about.html', 'a-propos.html', 0.5),
+    'en/faq.html':          ('en/faq.html', 'faq.html', 0.5),
     'en/legal.html':        ('en/legal.html', 'mentions-legales.html', 0.3),
     'en/privacy.html':      ('en/privacy.html', 'confidentialite.html', 0.3),
     'en/contact.html':      ('en/contact.html', 'contact.html', 0.3),

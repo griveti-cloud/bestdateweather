@@ -262,13 +262,15 @@ def footer_html(cfg, dest):
 
     meth_url, meth_label = fc['methodology']
     app_url, app_label = fc['app']
+    about_url, about_label = fc['about']
+    faq_url, faq_label = fc['faq']
     legal_url, legal_label = fc['legal']
     priv_url, priv_label = fc['privacy']
 
     return f'''<footer>
  <p class="txt-muted-label">bestdateweather.com</p>
  <p><a href="https://open-meteo.com/" rel="noopener" class="txt-muted">{fc['data_by']}</a> · {fc['sources']}</p>
- <p class="mt-8"><a href="{meth_url}" class="txt-muted">{meth_label}</a> · <a href="{app_url}" class="txt-muted">{app_label}</a>{alt_link}</p>
+ <p class="mt-8"><a href="{meth_url}" class="txt-muted">{meth_label}</a> · <a href="{about_url}" class="txt-muted">{about_label}</a> · <a href="{faq_url}" class="txt-muted">{faq_label}</a> · <a href="{app_url}" class="txt-muted">{app_label}</a>{alt_link}</p>
  <p class="f11-muted"><a href="{legal_url}" class="txt-muted">{legal_label}</a> · <a href="{priv_url}" class="txt-muted">{priv_label}</a> · <a href="contact.html" class="txt-muted">Contact</a></p>
 </footer>
 <script>function shareThis(){{if(navigator.share)navigator.share({{title:document.title,url:location.href}});else{{navigator.clipboard.writeText(location.href);var b=document.querySelector('.nav-share');b.style.color='#27ae60';setTimeout(function(){{b.style.color=''}},1200)}}}}</script>'''

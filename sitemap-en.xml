@@ -17,6 +17,22 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/methodology.html" />
   </url>
   <url>
+    <loc>https://bestdateweather.com/en/about.html</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/a-propos.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/about.html" />
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/en/faq.html</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/faq.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/faq.html" />
+  </url>
+  <url>
     <loc>https://bestdateweather.com/en/legal.html</loc>
     <lastmod>2026-03-01</lastmod>
     <changefreq>monthly</changefreq>
