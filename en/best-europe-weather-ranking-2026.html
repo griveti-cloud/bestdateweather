@@ -14,6 +14,10 @@ nav{background:white;border-bottom:1px solid var(--cream2);padding:14px 24px;dis
 .nav-brand em{font-style:italic;color:var(--gold)}
 .nav-cta{background:var(--gold);color:white;border:none;border-radius:8px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;text-decoration:none;transition:all .2s;display:inline-block}
 .nav-cta:hover{opacity:.85;transform:translateY(-1px)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-share{background:none;border:1.5px solid #e8e0d0;border-radius:8px;padding:7px 9px;cursor:pointer;display:none;align-items:center;color:#5a6c7d}
+.nav-share:hover{border-color:var(--gold);color:var(--gold)}
+@media(hover:none){.nav-share{display:flex}}
 .hero{background:var(--navy);color:white;padding:48px 20px 36px;text-align:center}
 .hero-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);margin-bottom:12px;font-weight:700}
 .hero-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(24px,5vw,38px);margin-bottom:10px;line-height:1.2}
@@ -72,7 +76,10 @@ footer a{color:rgba(255,255,255,.8);text-decoration:none}
 <body>
 <nav>
  <a class="nav-brand" href="app.html">Best<em>Date</em>Weather</a>
- <a class="nav-cta" href="app.html">Try the app</a>
+ <div class="nav-actions">
+  <button class="nav-share" onclick="shareThis()" aria-label="Share"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+  <a class="nav-cta" href="app.html">Try the app</a>
+ </div>
 </nav>
 <header class="hero">
 <div class="hero-eyebrow">Independent climate study · 2026</div>
@@ -97,4 +104,5 @@ footer a{color:rgba(255,255,255,.8);text-decoration:none}
 <p style="margin-top:8px"><a href="../note_modele.html" style="color:rgba(255,255,255,.7)">Methodology</a> · <a href="app.html" style="color:rgba(255,255,255,.7)">Weather app</a> · <a href="../classement-destinations-europe-meteo-2026.html" style="color:rgba(255,255,255,.7)"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a></p>
 <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="../mentions-legales.html" style="color:rgba(255,255,255,.7)">Legal</a></p>
 </footer>
+<script>function shareThis(){if(navigator.share)navigator.share({title:document.title,url:location.href});else{navigator.clipboard.writeText(location.href);var b=document.querySelector('.nav-share');b.style.color='#27ae60';setTimeout(function(){b.style.color=''},1200)}}</script>
 </body></html>

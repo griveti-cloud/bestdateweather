@@ -144,6 +144,8 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .related-card span{font-size:11px;color:var(--slate2)}
 footer{background:var(--navy);color:rgba(255,255,255,.7);text-align:center;padding:36px 20px;font-size:12px;line-height:2}
 footer a{color:rgba(255,255,255,.8);text-decoration:none}
+.nav-share{display:none}
+@media(hover:none){.nav-share{display:flex}}
 @media(max-width:640px){.rt th:nth-child(5),.rt td:nth-child(5){display:none}.hero-stats{gap:20px}}
 """
 
@@ -383,7 +385,10 @@ def generate_page(mi, lang, dests, climate):
 <body>
 <nav style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;max-width:900px;margin:0 auto">
  <a href="{"index.html" if is_fr else "app.html"}" style="text-decoration:none;font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#1a2332">Best<em style="color:#d4a853;font-style:italic">Date</em>Weather</a>
- <a href="{"index.html" if is_fr else "app.html"}" style="display:inline-block;background:#d4a853;color:white;font-size:12px;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none">{"Tester l'application" if is_fr else "Try the app"}</a>
+ <div style="display:flex;align-items:center;gap:12px">
+  <button class="nav-share" onclick="shareThis()" aria-label="{"Partager" if is_fr else "Share"}" style="background:none;border:1.5px solid #e8e0d0;border-radius:8px;padding:8px 10px;cursor:pointer;align-items:center;color:#5a6c7d"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+  <a href="{"index.html" if is_fr else "app.html"}" style="display:inline-block;background:#d4a853;color:white;font-size:12px;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none">{"Tester l'application" if is_fr else "Try the app"}</a>
+ </div>
 </nav>
 <header class="hero">
 <div class="hero-eyebrow">{"Étude climatique · 10 ans de données · " if is_fr else "Climate study · 10 years of data · "}{YEAR}</div>
@@ -407,6 +412,7 @@ def generate_page(mi, lang, dests, climate):
 {related}
 </main>
 {footer}
+<script>function shareThis(){{if(navigator.share)navigator.share({{title:document.title,url:location.href}});else{{navigator.clipboard.writeText(location.href);var b=document.querySelector('.nav-share');b.style.color='#27ae60';setTimeout(function(){{b.style.color=''}},1200)}}}}</script>
 </body></html>"""
 
     filepath.parent.mkdir(parents=True, exist_ok=True)

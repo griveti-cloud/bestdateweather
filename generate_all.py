@@ -304,7 +304,10 @@ GTAG = '''<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJT
 
 NAV = '''<nav>
  <a class="nav-brand" href="index.html">Best<em>Date</em>Weather</a>
- <a class="nav-cta" href="index.html">Tester l'application</a>
+ <div class="nav-actions">
+  <button class="nav-share" onclick="shareThis()" aria-label="Partager"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+  <a class="nav-cta" href="index.html">Tester l'application</a>
+ </div>
 </nav>'''
 
 def footer_html(slug_fr, nom_bare, prep, slug_en=None):
@@ -316,7 +319,8 @@ def footer_html(slug_fr, nom_bare, prep, slug_en=None):
  <p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Données météo par Open-Meteo.com</a> · Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
  <p style="margin-top:8px"><a href="methodologie.html" style="color:rgba(255,255,255,.7)">Méthodologie</a> · <a href="index.html" style="color:rgba(255,255,255,.7)">Application météo</a>{en_link}</p>
  <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="mentions-legales.html" style="color:rgba(255,255,255,.7)">Mentions légales</a> · <a href="confidentialite.html" style="color:rgba(255,255,255,.7)">Confidentialité</a> · <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p>
-</footer>'''
+</footer>
+<script>function shareThis(){{if(navigator.share)navigator.share({{title:document.title,url:location.href}});else{{navigator.clipboard.writeText(location.href);var b=document.querySelector('.nav-share');b.style.color='#27ae60';setTimeout(function(){{b.style.color=''}},1200)}}}}</script>'''
 
 # climate_table_html → imported from lib.common (default L=LANG_FR)
 

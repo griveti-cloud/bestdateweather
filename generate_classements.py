@@ -277,6 +277,10 @@ nav{background:white;border-bottom:1px solid var(--cream2);padding:14px 24px;dis
 .nav-brand em{font-style:italic;color:var(--gold)}
 .nav-cta{background:var(--gold);color:white;border:none;border-radius:8px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;text-decoration:none;transition:all .2s;display:inline-block}
 .nav-cta:hover{opacity:.85;transform:translateY(-1px)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-share{background:none;border:1.5px solid #e8e0d0;border-radius:8px;padding:7px 9px;cursor:pointer;display:none;align-items:center;color:#5a6c7d}
+.nav-share:hover{border-color:var(--gold);color:var(--gold)}
+@media(hover:none){.nav-share{display:flex}}
 .hero{background:var(--navy);color:white;padding:48px 20px 36px;text-align:center}
 .hero-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);margin-bottom:12px;font-weight:700}
 .hero-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(24px,5vw,38px);margin-bottom:10px;line-height:1.2}
@@ -591,7 +595,10 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 <body>
 <nav>
  <a class="nav-brand" href="{"index.html" if lang == "fr" else "app.html"}">Best<em>Date</em>Weather</a>
- <a class="nav-cta" href="{"index.html" if lang == "fr" else "app.html"}">{"Tester l'application" if lang == "fr" else "Try the app"}</a>
+ <div class="nav-actions">
+  <button class="nav-share" onclick="shareThis()" aria-label="{"Partager" if lang == "fr" else "Share"}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+  <a class="nav-cta" href="{"index.html" if lang == "fr" else "app.html"}">{"Tester l'application" if lang == "fr" else "Try the app"}</a>
+ </div>
 </nav>
 <header class="hero">
 <div class="hero-eyebrow">{"Independent climate study · 2026" if lang == "en" else "Étude climatique indépendante · 2026"}</div>
@@ -606,6 +613,7 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 {related_html}
 </main>
 {footer_html}
+<script>function shareThis(){{if(navigator.share)navigator.share({{title:document.title,url:location.href}});else{{navigator.clipboard.writeText(location.href);var b=document.querySelector('.nav-share');b.style.color='#27ae60';setTimeout(function(){{b.style.color=''}},1200)}}}}</script>
 </body></html>"""
 
 
