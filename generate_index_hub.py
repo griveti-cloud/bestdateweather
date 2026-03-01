@@ -3,6 +3,34 @@
 import csv, re, os
 import html as html_mod
 
+# ── slug → (mega_region, sub_region) overrides ──
+# Priorité sur MAPPING[pays] pour les territoires géographiquement hors-métropole
+SLUG_OVERRIDE = {
+    # DOM-TOM français → régions géographiques
+    'guadeloupe':     ('ameriques', 'Caraïbes'),
+    'martinique':     ('ameriques', 'Caraïbes'),
+    'saint-martin':   ('ameriques', 'Caraïbes'),
+    'saint-barthelemy': ('ameriques', 'Caraïbes'),
+    'guyane':         ('ameriques', 'Amérique du Sud'),
+    'reunion':        ('afrique-mo', 'Océan Indien'),
+    'mayotte':        ('afrique-mo', 'Océan Indien'),
+    'polynesie':      ('oceanie', 'Pacifique & Outre-mer'),
+    'bora-bora':      ('oceanie', 'Pacifique & Outre-mer'),
+    'nouvelle-caledonie': ('oceanie', 'Pacifique & Outre-mer'),
+    'saint-pierre-et-miquelon': ('ameriques', 'Amérique du Nord'),
+    # Bermudes (Royaume-Uni) → Caraïbes
+    'bermudes':       ('ameriques', 'Caraïbes'),
+    # Canaries (Espagne) → Macaronésie
+    'canaries':       ('afrique-mo', 'Macaronésie'),
+    'tenerife':       ('afrique-mo', 'Macaronésie'),
+    'gran-canaria':   ('afrique-mo', 'Macaronésie'),
+    'fuerteventura':  ('afrique-mo', 'Macaronésie'),
+    'lanzarote':      ('afrique-mo', 'Macaronésie'),
+    'la-palma':       ('afrique-mo', 'Macaronésie'),
+    'la-gomera':      ('afrique-mo', 'Macaronésie'),
+    'el-hierro':      ('afrique-mo', 'Macaronésie'),
+}
+
 # ── pays → (mega_region, sub_region) ──
 MAPPING = {
     'France': ('france', 'France'),
@@ -56,8 +84,6 @@ MAPPING = {
     'Madagascar': ('afrique-mo', 'Océan Indien'),
     'Maurice': ('afrique-mo', 'Océan Indien'),
     'Seychelles': ('afrique-mo', 'Océan Indien'),
-    'Réunion': ('afrique-mo', 'Océan Indien'),
-    'Mayotte': ('afrique-mo', 'Océan Indien'),
     'Émirats Arabes Unis': ('afrique-mo', 'Moyen-Orient'),
     'Jordanie': ('afrique-mo', 'Moyen-Orient'),
     'Oman': ('afrique-mo', 'Moyen-Orient'),
@@ -86,16 +112,11 @@ MAPPING = {
     # AMÉRIQUES
     'États-Unis': ('ameriques', 'Amérique du Nord'),
     'Canada': ('ameriques', 'Amérique du Nord'),
-    'Guadeloupe': ('ameriques', 'Caraïbes'),
-    'Martinique': ('ameriques', 'Caraïbes'),
-    'Saint-Barthélemy': ('ameriques', 'Caraïbes'),
-    'Saint-Martin': ('ameriques', 'Caraïbes'),
     'République Dominicaine': ('ameriques', 'Caraïbes'),
     'Cuba': ('ameriques', 'Caraïbes'),
     'Jamaïque': ('ameriques', 'Caraïbes'),
     'Porto Rico': ('ameriques', 'Caraïbes'),
     'Bahamas': ('ameriques', 'Caraïbes'),
-    'Bermudes': ('ameriques', 'Caraïbes'),
     'Sainte-Lucie': ('ameriques', 'Caraïbes'),
     'Barbade': ('ameriques', 'Caraïbes'),
     'Antigua-et-Barbuda': ('ameriques', 'Caraïbes'),
@@ -119,16 +140,13 @@ MAPPING = {
     # OCÉANIE & OUTRE-MER
     'Australie': ('oceanie', 'Australie & Nouvelle-Zélande'),
     'Nouvelle-Zélande': ('oceanie', 'Australie & Nouvelle-Zélande'),
-    'Polynésie française': ('oceanie', 'Pacifique & Outre-mer'),
     'Fidji': ('oceanie', 'Pacifique & Outre-mer'),
-    'Nouvelle-Calédonie': ('oceanie', 'Pacifique & Outre-mer'),
-    'Guyane': ('oceanie', 'Pacifique & Outre-mer'),
-    'Saint-Pierre-et-Miquelon': ('oceanie', 'Pacifique & Outre-mer'),
 }
 
 # 6 mega-regions in order
 MEGAS = [
-    ('france',     1, {'fr': '🇫🇷 France',                       'en': '🇫🇷 France'}),
+    ('france',     1, {'fr': '<img src="flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> France',
+                       'en': '<img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> France'}),
     ('europe',     2, {'fr': '🌊 Europe',                         'en': '🌊 Europe'}),
     ('afrique-mo', 3, {'fr': '🌍 Afrique & Moyen-Orient',        'en': '🌍 Africa & Middle East'}),
     ('asie',       4, {'fr': '🌏 Asie',                           'en': '🌏 Asia'}),
@@ -149,6 +167,7 @@ SUB_ORDER = {
     'Afrique australe': 4,
     'Océan Indien': 5,
     'Moyen-Orient': 6,
+    'Macaronésie': 7,
     'Asie du Sud-Est': 1,
     "Asie de l'Est": 2,
     'Asie du Sud': 3,
@@ -297,11 +316,16 @@ def build_hub(destinations, is_fr=True):
     # Group: mega → sub → [dests]
     megas = {}
     for d in destinations:
+        slug = d['slug_fr']
         pays = d['pays']
-        if pays not in MAPPING:
+        # Slug override takes priority (DOM-TOM, Canaries, Bermuda…)
+        if slug in SLUG_OVERRIDE:
+            mega_id, sub_name = SLUG_OVERRIDE[slug]
+        elif pays not in MAPPING:
             print(f"  ⚠️  Pays sans mapping: {pays} ({d['nom_fr']})")
             continue
-        mega_id, sub_name = MAPPING[pays]
+        else:
+            mega_id, sub_name = MAPPING[pays]
         if mega_id not in megas:
             megas[mega_id] = {}
         if sub_name not in megas[mega_id]:
