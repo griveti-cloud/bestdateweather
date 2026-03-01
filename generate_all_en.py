@@ -14,6 +14,17 @@ Usage:
 
 import csv, re, os, sys, json
 from datetime import date
+from lib.common import (score_badge as _score_badge, best_months as _best_months,
+                        budget_tier as _budget_tier, seasonal_stats as _seasonal_stats,
+                        bar_chart, climate_table_html as _climate_table_html,
+                        LANG_EN)
+
+# Bind EN language for shared functions
+def score_badge(score, classe=None): return _score_badge(score, classe, L=LANG_EN)
+def best_months(months): return _best_months(months, L=LANG_EN)
+def budget_tier(score, all_scores): return _budget_tier(score, all_scores, L=LANG_EN)
+def seasonal_stats(months): return _seasonal_stats(months, L=LANG_EN)
+def climate_table_html(months, nom, is_mountain=False): return _climate_table_html(months, nom, is_mountain, L=LANG_EN)
 
 # ── PATHS ───────────────────────────────────────────────────────────────────
 DIR  = os.path.dirname(os.path.abspath(__file__))
@@ -121,56 +132,8 @@ def validate(dests, climate):
     return errors
 
 
-# ── DERIVED CALCULATIONS ────────────────────────────────────────────────────
-
-def best_months(months):
-    max_score = max(m['score'] for m in months)
-    return [MONTHS_EN[i] for i, m in enumerate(months) if m['score'] == max_score]
-
-def budget_tier(score, all_scores):
-    sorted_scores = sorted(all_scores, reverse=True)
-    n = len(sorted_scores)
-    top = sorted_scores[min(3, n-1)]
-    bottom = sorted_scores[max(n-5, 0)]
-    if score >= top:   return '💸 Peak season'
-    if score <= bottom: return '✅ Low season'
-    return '🌿 Shoulder'
-
-def score_badge(score, classe=None):
-    """Badge verdict aligned with editorial class from CSV."""
-    if classe == 'rec':
-        if score >= 9.0: return '#dcfce7','#16a34a','✅ Excellent'
-        return '#dcfce7','#16a34a','✅ Good'
-    if classe == 'mid':
-        return '#fef9c3','#ca8a04','⚠️ Fair'
-    if classe == 'avoid':
-        return '#fee2e2','#dc2626','❌ Poor'
-    # Fallback
-    if score >= 9.0: return '#dcfce7','#16a34a','✅ Excellent'
-    if score >= 7.5: return '#dcfce7','#16a34a','✅ Good'
-    if score >= 6.0: return '#fef9c3','#ca8a04','⚠️ Fair'
-    return '#fee2e2','#dc2626','❌ Poor'
-
-def seasonal_stats(months):
-    seasons = {'Spring':[2,3,4],'Summer':[5,6,7],'Autumn':[8,9,10],'Winter':[11,0,1]}
-    result = {}
-    for name, idxs in seasons.items():
-        ms = [months[i] for i in idxs]
-        avg_t  = round(sum(m['tmax'] for m in ms) / len(ms))
-        avg_r  = round(sum(m['rain_pct'] for m in ms) / len(ms))
-        avg_s  = round(sum(m['sun_h'] for m in ms) / len(ms), 1)
-        avg_sc = round(sum(m['score'] for m in ms) / len(ms), 1)
-        if avg_sc >= 8.5: verdict = 'Excellent time'
-        elif avg_sc >= 7.0: verdict = 'Good time'
-        elif avg_sc >= 5.5: verdict = 'Acceptable'
-        else: verdict = 'Not recommended'
-        result[name] = {'tmax': avg_t, 'rain_pct': avg_r, 'sun_h': avg_s,
-                        'score': avg_sc, 'verdict': verdict}
-    return result
-
-def bar_chart(pct, max_val=100):
-    filled = round((pct / max_val) * 10)
-    return '█' * filled + '░' * (10 - filled)
+# best_months, budget_tier, score_badge, seasonal_stats, bar_chart
+# → imported from lib.common (bound to LANG_EN at module level)
 
 
 # ── HTML TEMPLATES ──────────────────────────────────────────────────────────
@@ -197,38 +160,7 @@ def footer_html(slug_fr, slug_en, nom_en):
  <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="../legal-en.html" style="color:rgba(255,255,255,.7)">Legal</a> · <a href="../privacy-en.html" style="color:rgba(255,255,255,.7)">Privacy</a> · <a href="../contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p>
 </footer>'''
 
-def climate_table_html(months, nom_en, is_mountain=False):
-    rows = ''
-    for i, m in enumerate(months):
-        cls = m['classe']
-        ski_col = ''
-        if is_mountain:
-            from scoring import compute_ski_score, best_class
-            ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
-            cls = best_class(m['classe'], ski)
-            ski_col = f'<td>{ski:.1f}/10</td>'
-        rows += (f'<tr class="{cls}" data-tmax="{m["tmax"]}" '
-                 f'data-rain="{m["rain_pct"]}" data-sun="{m["sun_h"]}">'
-                 f'<td>{MONTHS_EN[i]}</td>'
-                 f'<td>{m["tmin"]}°C</td><td>{m["tmax"]}°C</td>'
-                 f'<td>{m["rain_pct"]}%</td>'
-                 f'<td>{m["precip"]:.1f}</td>'
-                 f'<td>{m["sun_h"]}h</td>'
-                 f'<td>{m["score"]:.1f}/10</td>{ski_col}</tr>\n')
-    ski_header = '<th>Ski score 🎿</th>' if is_mountain else ''
-    wrap_class = 'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'
-    return f'''<div class="{wrap_class}">
- <table class="climate-table" aria-label="Monthly climate table {nom_en}">
- <thead><tr><th>Month</th><th>Min °C</th><th>Max °C</th><th>Rainy days (%)</th><th>Precip. mm/d</th><th>Sun h/d</th><th>Score</th>{ski_header}</tr></thead>
- <tbody>{rows}</tbody>
- </table>
-</div>
-<div class="table-legend">
- <span><span class="legend-dot" style="background:#1a7a4a"></span>Ideal</span>
- <span><span class="legend-dot" style="background:#d97706"></span>Fair</span>
- <span><span class="legend-dot" style="background:#dc2626"></span>Off season</span>
- <span style="margin-left:auto">Source: Open-Meteo · 10 years</span>
-</div>'''
+# climate_table_html → imported from lib.common (bound to LANG_EN at module level)
 
 
 # ── ANNUAL PAGE GENERATOR ──────────────────────────────────────────────────

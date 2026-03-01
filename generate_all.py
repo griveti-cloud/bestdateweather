@@ -20,6 +20,9 @@ Workflow de modification :
 
 import csv, re, os, sys, json
 from datetime import date
+from lib.common import (score_badge, best_months, budget_tier,
+                        seasonal_stats, bar_chart, climate_table_html,
+                        LANG_FR)
 
 # ── CHEMINS ─────────────────────────────────────────────────────────────────
 DIR = os.path.dirname(os.path.abspath(__file__))
@@ -285,57 +288,8 @@ def validate(dests, climate, cards):
 
 # ── CALCULS DÉRIVÉS ──────────────────────────────────────────────────────────
 
-def best_months(months):
-    """Retourne la liste des mois ex-aequo avec le score max."""
-    max_score = max(m['score'] for m in months)
-    return [MONTHS_FR[i] for i, m in enumerate(months) if m['score'] == max_score]
-
-def budget_tier(score, all_scores):
-    """Tier relatif : top 4 = Haute saison, bottom 4 = Prix bas, reste = Épaule."""
-    sorted_scores = sorted(all_scores, reverse=True)
-    n = len(sorted_scores)
-    top = sorted_scores[min(3, n-1)]
-    bottom = sorted_scores[max(n-5, 0)]
-    if score >= top:   return '💸 Haute saison'
-    if score <= bottom: return '✅ Prix bas'
-    return '🌿 Épaule'
-
-def score_badge(score, classe=None):
-    """Badge verdict aligné sur la classe éditoriale du CSV."""
-    if classe == 'rec':
-        if score >= 9.0: return '#dcfce7','#16a34a','✅ Excellent'
-        return '#dcfce7','#16a34a','✅ Favorable'
-    if classe == 'mid':
-        return '#fef9c3','#ca8a04','⚠️ Acceptable'
-    if classe == 'avoid':
-        return '#fee2e2','#dc2626','❌ Peu favorable'
-    # Fallback si pas de classe
-    if score >= 9.0: return '#dcfce7','#16a34a','✅ Excellent'
-    if score >= 7.5: return '#dcfce7','#16a34a','✅ Favorable'
-    if score >= 6.0: return '#fef9c3','#ca8a04','⚠️ Acceptable'
-    return '#fee2e2','#dc2626','❌ Peu favorable'
-
-def seasonal_stats(months):
-    """Calcule stats par saison (Printemps/Été/Automne/Hiver)."""
-    seasons = {'Printemps':[2,3,4],'Été':[5,6,7],'Automne':[8,9,10],'Hiver':[11,0,1]}
-    result = {}
-    for name, idxs in seasons.items():
-        ms = [months[i] for i in idxs]
-        avg_t  = round(sum(m['tmax'] for m in ms) / len(ms))
-        avg_r  = round(sum(m['rain_pct'] for m in ms) / len(ms))
-        avg_s  = round(sum(m['sun_h'] for m in ms) / len(ms), 1)
-        avg_sc = round(sum(m['score'] for m in ms) / len(ms), 1)
-        if avg_sc >= 8.5: verdict = 'Excellente période'
-        elif avg_sc >= 7.0: verdict = 'Bonne période'
-        elif avg_sc >= 5.5: verdict = 'Période acceptable'
-        else: verdict = 'Période difficile'
-        result[name] = {'tmax': avg_t, 'rain_pct': avg_r, 'sun_h': avg_s,
-                        'score': avg_sc, 'verdict': verdict}
-    return result
-
-def bar_chart(pct, max_val=100):
-    filled = round((pct / max_val) * 10)
-    return '█' * filled + '░' * (10 - filled)
+# best_months, budget_tier, score_badge, seasonal_stats, bar_chart
+# → imported from lib.common (default L=LANG_FR)
 
 
 # ── TEMPLATES HTML ───────────────────────────────────────────────────────────
@@ -364,38 +318,7 @@ def footer_html(slug_fr, nom_bare, prep, slug_en=None):
  <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="mentions-legales.html" style="color:rgba(255,255,255,.7)">Mentions légales</a> · <a href="confidentialite.html" style="color:rgba(255,255,255,.7)">Confidentialité</a> · <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p>
 </footer>'''
 
-def climate_table_html(months, nom_bare, is_mountain=False):
-    rows = ''
-    for i, m in enumerate(months):
-        cls = m['classe']
-        ski_col = ''
-        if is_mountain:
-            from scoring import compute_ski_score, best_class
-            ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
-            cls = best_class(m['classe'], ski)
-            ski_col = f'<td>{ski:.1f}/10</td>'
-        rows += (f'<tr class="{cls}" data-tmax="{m["tmax"]}" '
-                 f'data-rain="{m["rain_pct"]}" data-sun="{m["sun_h"]}">'
-                 f'<td>{MONTHS_FR[i]}</td>'
-                 f'<td>{m["tmin"]}°C</td><td>{m["tmax"]}°C</td>'
-                 f'<td>{m["rain_pct"]}%</td>'
-                 f'<td>{m["precip"]:.1f}</td>'
-                 f'<td>{m["sun_h"]}h</td>'
-                 f'<td>{m["score"]:.1f}/10</td>{ski_col}</tr>\n')
-    ski_header = '<th>Score ski 🎿</th>' if is_mountain else ''
-    wrap_class = 'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'
-    return f'''<div class="{wrap_class}">
- <table class="climate-table" aria-label="Tableau climat mensuel {nom_bare}">
- <thead><tr><th>Mois</th><th>T° min</th><th>T° max</th><th>Jours de pluie (%)</th><th>Précip. mm/j</th><th>Soleil h/j</th><th>Score</th>{ski_header}</tr></thead>
- <tbody>{rows}</tbody>
- </table>
-</div>
-<div class="table-legend">
- <span><span class="legend-dot" style="background:#1a7a4a"></span>Idéal</span>
- <span><span class="legend-dot" style="background:#d97706"></span>Acceptable</span>
- <span><span class="legend-dot" style="background:#dc2626"></span>Hors saison</span>
- <span style="margin-left:auto">Source Open-Meteo · 10 ans</span>
-</div>'''
+# climate_table_html → imported from lib.common (default L=LANG_FR)
 
 
 # ── GÉNÉRATEUR FICHE ANNUELLE ────────────────────────────────────────────────
