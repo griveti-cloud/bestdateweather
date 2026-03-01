@@ -55,7 +55,7 @@
 <body>
 
 <header class="app-header">
- <h1 class="app-title">Best<em>Date</em>Weather</h1>
+ <h1 class="app-title">Météo voyage : quand partir ?</h1>
  <div class="app-divider">
   <span class="app-divider-line"></span>
   <span class="app-divider-ico">🌤</span>
@@ -1166,7 +1166,7 @@
  </div>
 </div>
 
-<section inert style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
+<section style="background:#faf8f3;padding:48px 24px">
  <div style="max-width:860px;margin:0 auto">
  <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:16px">Choisir la meilleure période pour voyager</h2>
  <p style="font-size:15px;line-height:1.8;color:#5a6478;max-width:680px">Notre modèle analyse 10 ans de données ERA5 (10 dernières années) pour déterminer les mois idéaux selon trois critères : précipitations, températures et ensoleillement. Les scores intègrent des corrections saisonnières ECMWF pour maximiser la précision à 1–6 mois.</p>
@@ -1217,7 +1217,7 @@
 </section>
 
 <!-- ── SEO block ── -->
-<section class="seo-block" inert style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
+<section class="seo-block" style="padding:48px 24px;background:#fff">
  <div class="seo-block-inner">
   <h2>Quelle est la meilleure période pour voyager ?</h2>
   <p>Le choix de la date idéale dépend de bien plus qu'une simple prévision à 5 jours. Températures moyennes, risque de pluie, ensoleillement, vent — chaque destination a son propre rythme climatique. BestDateWeather analyse ces données pour vous donner une estimation probabiliste des conditions attendues, mois par mois ou jour par jour jusqu'à un an à l'avance.</p>
@@ -1298,6 +1298,6 @@ if ('serviceWorker' in navigator) {
  });
 }
 </script>
-<script>document.querySelectorAll('[inert] a,[inert] button').forEach(function(el){el.tabIndex=-1})</script>
+
 </body>
 </html>
