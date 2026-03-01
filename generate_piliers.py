@@ -381,6 +381,10 @@ def generate_page(mi, lang, dests, climate):
 <script type="application/ld+json">{faq_schema}</script>
 </head>
 <body>
+<nav style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;max-width:900px;margin:0 auto">
+ <a href="{"index.html" if is_fr else "app.html"}" style="text-decoration:none;font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#1a2332">Best<em style="color:#d4a853;font-style:italic">Date</em>Weather</a>
+ <a href="{"index.html" if is_fr else "app.html"}" style="display:inline-block;background:#d4a853;color:white;font-size:12px;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none">{"Tester l'application" if is_fr else "Try the app"}</a>
+</nav>
 <header class="hero">
 <div class="hero-eyebrow">{"Étude climatique · 10 ans de données · " if is_fr else "Climate study · 10 years of data · "}{YEAR}</div>
 <h1 class="hero-title">{h1}</h1>
