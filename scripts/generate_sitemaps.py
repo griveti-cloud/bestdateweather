@@ -248,3 +248,20 @@ if __name__ == '__main__':
     n_fr = generate_sitemap('fr', dry_run)
     n_en = generate_sitemap('en', dry_run)
     print(f'\nTotal: {n_fr} FR + {n_en} EN = {n_fr + n_en} URLs')
+
+    # Update sitemap-index.xml
+    if not dry_run:
+        index_xml = f'''<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://bestdateweather.com/sitemap-fr.xml</loc>
+    <lastmod>{TODAY}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://bestdateweather.com/sitemap-en.xml</loc>
+    <lastmod>{TODAY}</lastmod>
+  </sitemap>
+</sitemapindex>'''
+        with open(os.path.join(DIR, 'sitemap-index.xml'), 'w', encoding='utf-8') as f:
+            f.write(index_xml)
+        print(f'sitemap-index.xml: lastmod={TODAY}')

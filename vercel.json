@@ -45,6 +45,106 @@
       "source": "/methodology-en.html",
       "destination": "/en/methodology.html",
       "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-danang.html",
+      "destination": "/meilleure-periode-da-nang.html",
+      "permanent": true
+    },
+    {
+      "source": "/danang-meteo-:month.html",
+      "destination": "/da-nang-meteo-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-danang.html",
+      "destination": "/en/best-time-to-visit-da-nang.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/danang-weather-:month.html",
+      "destination": "/en/da-nang-weather-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-la-nouvelle-orleans.html",
+      "destination": "/meilleure-periode-nouvelle-orleans.html",
+      "permanent": true
+    },
+    {
+      "source": "/la-nouvelle-orleans-meteo-:month.html",
+      "destination": "/nouvelle-orleans-meteo-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-la-nouvelle-orleans.html",
+      "destination": "/en/best-time-to-visit-nouvelle-orleans.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/la-nouvelle-orleans-weather-:month.html",
+      "destination": "/en/nouvelle-orleans-weather-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-cartagene.html",
+      "destination": "/meilleure-periode-cartagena.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagene-meteo-:month.html",
+      "destination": "/cartagena-meteo-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-cartagene.html",
+      "destination": "/en/best-time-to-visit-cartagena.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagene-weather-:month.html",
+      "destination": "/en/cartagena-weather-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-cuzco.html",
+      "destination": "/meilleure-periode-cusco.html",
+      "permanent": true
+    },
+    {
+      "source": "/cuzco-meteo-:month.html",
+      "destination": "/cusco-meteo-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-cuzco.html",
+      "destination": "/en/best-time-to-visit-cusco.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cuzco-weather-:month.html",
+      "destination": "/en/cusco-weather-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-zanzibar-ville.html",
+      "destination": "/meilleure-periode-stone-town.html",
+      "permanent": true
+    },
+    {
+      "source": "/zanzibar-ville-meteo-:month.html",
+      "destination": "/stone-town-meteo-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-zanzibar-ville.html",
+      "destination": "/en/best-time-to-visit-stone-town.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/zanzibar-ville-weather-:month.html",
+      "destination": "/en/stone-town-weather-:month.html",
+      "permanent": true
     }
   ],
   "cleanUrls": false
