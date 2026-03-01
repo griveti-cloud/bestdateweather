@@ -14,10 +14,10 @@
 #
 # Prerequisites: Python 3.8+, node (for JS syntax check)
 
-.PHONY: all destinations fr en pillar comparisons rankings test deploy check clean
+.PHONY: all destinations fr en pillar comparisons rankings sitemap test deploy check clean
 
 # ── Full rebuild ──────────────────────────────────────
-all: destinations pillar comparisons rankings
+all: destinations pillar comparisons rankings sitemap
 	@echo ""
 	@echo "✅ Full build complete"
 	@echo "   Run 'make test' to validate scoring consistency"
@@ -46,6 +46,11 @@ comparisons:
 rankings:
 	@echo "🏆 Generating ranking pages..."
 	python3 generate_classements.py
+
+# ── Sitemaps ──────────────────────────────────────────
+sitemap:
+	@echo "🗺️  Generating sitemaps from actual HTML files..."
+	python3 scripts/generate_sitemaps.py
 
 # ── Testing ───────────────────────────────────────────
 test:

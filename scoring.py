@@ -56,20 +56,30 @@ SCORE_RANGES = {
 }
 
 # ── CORRECTION TROPICALE ───────────────────────────────────────────────────
-# Pour ces destinations, les mois "avoid" (mousson) restent voyageables.
+# Pour les destinations marquées tropical=True dans destinations.csv,
+# les mois "avoid" (mousson) restent voyageables.
 # La plage avoid est remontée à la plage mid : (0.5–3.9) → (4.0–6.9)
 # Justification : pluies tropicales intenses mais courtes, pas de vrai obstacle
 # au voyage (≠ hiver nordique ou saison des typhons en côte exposée).
-TROPICAL_DESTINATIONS = {
-    'bangkok',    # Thaïlande — mousson mai-oct
-    'phuket',     # Thaïlande — mousson mai-nov (côte Andaman)
-    'hoi-an',     # Vietnam   — mousson sept-déc
-    'siem-reap',  # Cambodge  — mousson mai-sept
-    'singapour',  # Singapour — pluies mai-oct  [FR]
-    'singapore',  # Singapour — pluies mai-oct  [EN]
-    'zanzibar',   # Tanzanie  — grande saison des pluies avr
-    'goa',        # Inde      — mousson juin-sept
-}
+
+def _load_tropical_destinations():
+    """Charge les slugs FR+EN des destinations tropicales depuis destinations.csv."""
+    import csv, os
+    csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'destinations.csv')
+    slugs = set()
+    try:
+        with open(csv_path, encoding='utf-8-sig') as f:
+            for r in csv.DictReader(f):
+                if r.get('tropical', '').strip().lower() == 'true':
+                    slugs.add(r['slug_fr'].strip())
+                    slugs.add(r['slug_en'].strip())
+    except FileNotFoundError:
+        # Fallback minimal si le CSV n'est pas trouvé (ex: tests unitaires)
+        slugs = {'bangkok', 'phuket', 'hoi-an', 'siem-reap', 'singapour',
+                 'singapore', 'zanzibar', 'goa'}
+    return slugs
+
+TROPICAL_DESTINATIONS = _load_tropical_destinations()
 
 
 # ── FONCTIONS DE SCORE ─────────────────────────────────────────────────────
