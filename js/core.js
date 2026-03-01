@@ -465,17 +465,23 @@ function fetchForecast(lat, lon, yr, mo, da) {
 }
 
 // ── 7-day forecast strip ─────────────────────────────────────────────────
-function wmoIcon(code) {
- if (code <= 0) return '☀️';
- if (code <= 2) return '🌤️';
- if (code <= 3) return '☁️';
- if (code <= 48) return '🌫️';
- if (code <= 57) return '🌦️';
- if (code <= 67) return '🌧️';
- if (code <= 77) return '🌨️';
- if (code <= 82) return '🌧️';
- if (code <= 86) return '🌨️';
- return '⛈️';
+function wmoIcon(code, precip, rainP) {
+ // Override: if negligible precipitation, force non-rain icon
+ if (precip != null && precip < 0.2 && (rainP == null || rainP < 20)) {
+  if (code >= 51) code = (code >= 45 && code <= 48) ? 45 : 2; // keep fog, otherwise partly cloudy
+ }
+ // WMO 4677 codes used by Open-Meteo
+ if (code === 0) return '☀️';
+ if (code <= 2) return '⛅';
+ if (code === 3) return '☁️';
+ if (code === 45 || code === 48) return '🌫️';
+ if (code >= 51 && code <= 57) return '🌦️';
+ if (code >= 61 && code <= 67) return '🌧️';
+ if (code >= 71 && code <= 77) return '🌨️';
+ if (code >= 80 && code <= 82) return '🌦️';
+ if (code >= 85 && code <= 86) return '🌨️';
+ if (code >= 95) return '⛈️';
+ return '⛅';
 }
 
 function render7DayStrip(diffDays) {
@@ -500,7 +506,7 @@ function render7DayStrip(diffDays) {
   var wCode = d.weather_code ? (d.weather_code[idx] || 0) : 0;
   var rainP = d.precipitation_probability_max ? (d.precipitation_probability_max[idx] || 0) : 0;
   var precip = d.precipitation_sum ? (d.precipitation_sum[idx] || 0) : 0;
-  var icon = wmoIcon(wCode);
+  var icon = wmoIcon(wCode, precip, rainP);
   var isActive = (i === diffDays);
   var rainClass = precip > 5 ? 'fs-rain-heavy' : (precip > 0.5 ? 'fs-rain-light' : (rainP > 40 ? 'fs-rain-maybe' : ''));
   html += '<div class="fs-day' + (isActive ? ' fs-active' : '') + '">';
