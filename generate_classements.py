@@ -135,6 +135,13 @@ DOM_TOM_SLUGS = {
     'guyane', 'saint-pierre-et-miquelon',
 }
 
+# Territoires hors Europe géographique (malgré pays européen)
+NON_EUROPE_SLUGS = DOM_TOM_SLUGS | {
+    'bermudes',                                                          # Royaume-Uni, Atlantique
+    'canaries', 'tenerife', 'gran-canaria', 'fuerteventura',            # Espagne, Macaronésie
+    'lanzarote', 'la-palma', 'la-gomera', 'el-hierro',                  # Espagne, Macaronésie
+}
+
 # Override region tag par slug (priorité sur REGION_TAG par pays)
 SLUG_REGION_TAG = {
     'reunion': 'Océan Indien',
@@ -164,7 +171,7 @@ def compute_annual(climate, dests, europe_only=False):
         if slug not in dests:
             continue
         d = dests[slug]
-        if europe_only and (d['pays'] not in EUROPE_COUNTRIES or slug in DOM_TOM_SLUGS):
+        if europe_only and (d['pays'] not in EUROPE_COUNTRIES or slug in NON_EUROPE_SLUGS):
             continue
         if len(monthly) < 12:
             continue
@@ -186,7 +193,7 @@ def compute_seasonal(climate, dests, months, europe_only=False):
         if slug not in dests:
             continue
         d = dests[slug]
-        if europe_only and (d['pays'] not in EUROPE_COUNTRIES or slug in DOM_TOM_SLUGS):
+        if europe_only and (d['pays'] not in EUROPE_COUNTRIES or slug in NON_EUROPE_SLUGS):
             continue
         if not all(m in monthly for m in months):
             continue
