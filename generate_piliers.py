@@ -145,7 +145,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 footer{background:var(--navy);color:rgba(255,255,255,.7);text-align:center;padding:36px 20px;font-size:12px;line-height:2}
 footer a{color:rgba(255,255,255,.8);text-decoration:none}
 .nav-share{display:none}
-@media(hover:none){.nav-share{display:flex}}
+@media(pointer:coarse),(max-width:768px){.nav-share{display:flex}}
 @media(max-width:640px){.rt th:nth-child(5),.rt td:nth-child(5){display:none}.hero-stats{gap:20px}}
 """
 
