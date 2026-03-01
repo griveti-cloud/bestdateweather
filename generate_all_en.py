@@ -17,7 +17,7 @@ from datetime import date
 from lib.common import (score_badge as _score_badge, best_months as _best_months,
                         budget_tier as _budget_tier, seasonal_stats as _seasonal_stats,
                         bar_chart, climate_table_html as _climate_table_html,
-                        LANG_EN)
+                        weather_emoji, LANG_EN)
 
 # Bind EN language for shared functions
 def score_badge(score, classe=None): return _score_badge(score, classe, L=LANG_EN)
@@ -889,7 +889,7 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
             cls = best_class(mo['classe'], ski)
             ski_col = f'<td>{ski:.1f}/10</td>'
         table_rows += (f'<tr class="{cls}"{highlight}>'
-                       f'<td>{MONTHS_EN[i]}</td>'
+                       f'<td>{weather_emoji(mo["tmax"], mo["rain_pct"], mo["sun_h"])} {MONTHS_EN[i]}</td>'
                        f'<td>{mo["tmin"]}°C</td><td>{mo["tmax"]}°C</td>'
                        f'<td>{mo["rain_pct"]}%</td>'
                        f'<td>{mo["precip"]:.1f}</td>'

@@ -22,7 +22,7 @@ import csv, re, os, sys, json
 from datetime import date
 from lib.common import (score_badge, best_months, budget_tier,
                         seasonal_stats, bar_chart, climate_table_html,
-                        LANG_FR)
+                        weather_emoji, LANG_FR)
 
 # ── CHEMINS ─────────────────────────────────────────────────────────────────
 DIR = os.path.dirname(os.path.abspath(__file__))
@@ -936,7 +936,7 @@ def gen_monthly(dest, months, mi, all_dests, similarities, all_climate, events=N
             cls = best_class(mo['classe'], ski)
             ski_col = f'<td>{ski:.1f}/10</td>'
         table_rows += (f'<tr class="{cls}"{highlight}>'
-                       f'<td>{MONTHS_FR[i]}</td>'
+                       f'<td>{weather_emoji(mo["tmax"], mo["rain_pct"], mo["sun_h"])} {MONTHS_FR[i]}</td>'
                        f'<td>{mo["tmin"]}°C</td><td>{mo["tmax"]}°C</td>'
                        f'<td>{mo["rain_pct"]}%</td>'
                        f'<td>{mo["precip"]:.1f}</td>'

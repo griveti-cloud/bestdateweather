@@ -9,6 +9,45 @@ Usage:
 """
 
 
+# ── Weather emoji ─────────────────────────────────────────────────────────────
+
+def weather_emoji(tmax, rain_pct, sun_h=None):
+    """Return a weather emoji based on temperature, rain probability and sunshine.
+    Rain dominates above 50%. Temperature rules below 5°C.
+    Sunshine upgrades the emoji when conditions are borderline."""
+    if rain_pct >= 65:
+        return '⛈️'     # Monsoon / very heavy rain
+    if rain_pct >= 50:
+        return '🌧️'     # Rainy
+    if tmax < 0:
+        return '❄️'      # Freezing
+    if tmax <= 4:
+        return '🌨️'     # Cold / snow likely
+    if tmax >= 36:
+        return '🥵'     # Extreme heat
+    if tmax >= 25 and rain_pct < 25:
+        return '☀️'      # Sunny & warm
+    # Sunshine upgrade: warm + good sunshine despite moderate rain
+    if tmax >= 22 and rain_pct < 50 and sun_h is not None and sun_h >= 10:
+        return '🌤️'     # Fair (summer storms, but mostly sunny days)
+    if tmax >= 25 and rain_pct < 45 and sun_h is not None and sun_h >= 8:
+        return '🌤️'     # Fair (warm + decent sun)
+    if tmax >= 18 and rain_pct < 35:
+        return '🌤️'     # Fair weather
+    if tmax >= 18 and rain_pct < 45 and sun_h is not None and sun_h >= 9:
+        return '🌤️'     # Fair (enough sun to compensate moderate rain)
+    if rain_pct >= 40 and tmax >= 12:
+        return '🌦️'     # Mixed / showery
+    if tmax >= 15 and rain_pct < 40:
+        return '⛅'     # Variable / mild-warm
+    if tmax >= 12 and rain_pct < 40:
+        return '⛅'     # Variable / mild
+    if rain_pct >= 35 and tmax >= 5:
+        return '🌦️'     # Mixed
+    # 5-11°C, rain < 35%
+    return '🌫️'         # Grey / cool
+
+
 # ── Language configs ──────────────────────────────────────────────────────────
 
 MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin',
@@ -148,7 +187,7 @@ def climate_table_html(months, nom, is_mountain=False, L=LANG_FR):
             ski_col = f'<td>{ski:.1f}/10</td>'
         rows += (f'<tr class="{cls}" data-tmax="{m["tmax"]}" '
                  f'data-rain="{m["rain_pct"]}" data-sun="{m["sun_h"]}">'
-                 f'<td>{L["months"][i]}</td>'
+                 f'<td>{weather_emoji(m["tmax"], m["rain_pct"], m["sun_h"])} {L["months"][i]}</td>'
                  f'<td>{m["tmin"]}°C</td><td>{m["tmax"]}°C</td>'
                  f'<td>{m["rain_pct"]}%</td>'
                  f'<td>{m["precip"]:.1f}</td>'
