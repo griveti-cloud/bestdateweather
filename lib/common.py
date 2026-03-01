@@ -202,10 +202,10 @@ def climate_table_html(months, nom, is_mountain=False, L=LANG_FR):
  </table>
 </div>
 <div class="table-legend">
- <span><span class="legend-dot" style="background:#1a7a4a"></span>{L['legend_ideal']}</span>
- <span><span class="legend-dot" style="background:#d97706"></span>{L['legend_fair']}</span>
- <span><span class="legend-dot" style="background:#dc2626"></span>{L['legend_off']}</span>
- <span style="margin-left:auto">{L['legend_source']}</span>
+ <span><span class="legend-dot legend-rec"></span>{L['legend_ideal']}</span>
+ <span><span class="legend-dot legend-mid"></span>{L['legend_fair']}</span>
+ <span><span class="legend-dot legend-avoid"></span>{L['legend_off']}</span>
+ <span class="ml-auto">{L['legend_source']}</span>
 </div>'''
 
 

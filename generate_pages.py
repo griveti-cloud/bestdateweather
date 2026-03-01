@@ -216,20 +216,8 @@ MONTHLY_GRAD = {
     11:'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
 }
 
-MONTH_BTN_STYLE = {
-    'rec':   'background:#e8f8f0;border-color:#86efac;',
-    'mid':   'background:#fffbeb;border-color:#fbbf24;',
-    'avoid': 'background:#fef2f2;border-color:#fca5a5;',
-}
 
-MNAV_STYLE = {
-    'rec':   'background:#e8f8f0;border-color:#86efac;',
-    'mid':   'background:#fffbeb;border-color:#fbbf24;',
-    'avoid': 'background:#fef2f2;border-color:#fca5a5;',
-}
 
-LINK_CARD_STYLE = 'flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)'
-SIM_CARD_STYLE = 'flex:1;min-width:200px;padding:16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px'
 
 
 def head_css(cfg):
@@ -268,9 +256,9 @@ def footer_html(cfg, dest):
     slug_en = dest['slug_en']
 
     if cfg['is_fr']:
-        alt_link = f' · <a href="en/best-time-to-visit-{slug_en}.html" style="color:rgba(255,255,255,.7)"><img src="flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English</a>'
+        alt_link = f' · <a href="en/best-time-to-visit-{slug_en}.html" class="txt-muted"><img src="flags/gb.png" width="20" height="15" alt="" class="flag-icon-lg"> English</a>'
     else:
-        alt_link = f' · <a href="../meilleure-periode-{slug_fr}.html" style="color:rgba(255,255,255,.7)"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a>'
+        alt_link = f' · <a href="../meilleure-periode-{slug_fr}.html" class="txt-muted"><img src="../flags/fr.png" width="20" height="15" alt="" class="flag-icon-lg"> Français</a>'
 
     meth_url, meth_label = fc['methodology']
     app_url, app_label = fc['app']
@@ -278,10 +266,10 @@ def footer_html(cfg, dest):
     priv_url, priv_label = fc['privacy']
 
     return f'''<footer>
- <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
- <p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">{fc['data_by']}</a> · {fc['sources']}</p>
- <p style="margin-top:8px"><a href="{meth_url}" style="color:rgba(255,255,255,.7)">{meth_label}</a> · <a href="{app_url}" style="color:rgba(255,255,255,.7)">{app_label}</a>{alt_link}</p>
- <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="{legal_url}" style="color:rgba(255,255,255,.7)">{legal_label}</a> · <a href="{priv_url}" style="color:rgba(255,255,255,.7)">{priv_label}</a> · <a href="contact.html" style="color:rgba(255,255,255,.7)">Contact</a></p>
+ <p class="txt-muted-label">bestdateweather.com</p>
+ <p><a href="https://open-meteo.com/" rel="noopener" class="txt-muted">{fc['data_by']}</a> · {fc['sources']}</p>
+ <p class="mt-8"><a href="{meth_url}" class="txt-muted">{meth_label}</a> · <a href="{app_url}" class="txt-muted">{app_label}</a>{alt_link}</p>
+ <p class="f11-muted"><a href="{legal_url}" class="txt-muted">{legal_label}</a> · <a href="{priv_url}" class="txt-muted">{priv_label}</a> · <a href="contact.html" class="txt-muted">Contact</a></p>
 </footer>
 <script>function shareThis(){{if(navigator.share)navigator.share({{title:document.title,url:location.href}});else{{navigator.clipboard.writeText(location.href);var b=document.querySelector('.nav-share');b.style.color='#27ae60';setTimeout(function(){{b.style.color=''}},1200)}}}}</script>'''
 
@@ -444,18 +432,18 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 </section>'''
 
     # ── Monthly navigation ──
+    MONTH_BTN_CLS = {'rec': 'month-btn-rec', 'mid': 'month-btn-mid', 'avoid': 'month-btn-avoid'}
     monthly_links = ''.join(
-        f'<a href="{monthly_url(C, slug, i)}" style="display:block;padding:10px 8px;'
-        f'{MONTH_BTN_STYLE.get(months[i]["classe"], MONTH_BTN_STYLE["mid"])}'
-        f'border-radius:10px;text-decoration:none;text-align:center">'
-        f'<div style="font-weight:700;font-size:13px;color:#1a1f2e">{MONTHS[i]}</div>'
+        f'<a href="{monthly_url(C, slug, i)}" class="month-btn '
+        f'{MONTH_BTN_CLS.get(months[i]["classe"], "month-btn-mid")}">'
+        f'<div class="fw700-f13">{MONTHS[i]}</div>'
         f'</a>'
         for i in range(12)
     )
     monthly_section = f'''<section class="section">
  <div class="section-label">{C['lbl_monthly_section']}</div>
  <h2 class="section-title">{C['lbl_monthly_title']}</h2>
- <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px">
+ <div class="grid-months">
  {monthly_links}
  </div>
 </section>'''
@@ -555,31 +543,31 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
             sf = sd.get('flag', '')
             s_slug = dest_slug(C, sd) if sd else sim_slug
             sim_cards += (
-                f'<a href="{annual_url(C, s_slug)}" style="{SIM_CARD_STYLE}">'
-                f'<div style="font-size:13px;color:var(--slate3)"><img src="{pfx}flags/{sf}.png" width="16" height="12" '
-                f'alt="{sf}" style="vertical-align:middle;margin-right:4px;border-radius:1px">{sc}</div>'
-                f'<div style="font-weight:700;color:var(--navy)">{sn}</div>'
-                f'<div style="font-size:12px;color:var(--slate2)">{C["lbl_similar_match"].format(pct=f"{sim_score:.0%}")}</div>'
+                f'<a href="{annual_url(C, s_slug)}" class="sim-card">'
+                f'<div class="f13-slate3"><img src="{pfx}flags/{sf}.png" width="16" height="12" '
+                f'alt="{sf}" class="flag-icon">{sc}</div>'
+                f'<div class="fw700-navy">{sn}</div>'
+                f'<div class="f12-slate2">{C["lbl_similar_match"].format(pct=f"{sim_score:.0%}")}</div>'
                 f'</a>')
         similar_section = f'''<section class="section">
  <div class="section-label">{C['lbl_similar_section']}</div>
  <h2 class="section-title">{C['lbl_similar_title']}</h2>
- <div style="display:flex;gap:14px;flex-wrap:wrap">{sim_cards}</div>
+ <div class="flex-wrap-14">{sim_cards}</div>
 </section>'''
 
     # ── Rankings ──
-    rank_links = ''.join(f'<a href="{url}" style="{LINK_CARD_STYLE}">{label}</a>' for url, label in C['rankings'])
+    rank_links = ''.join(f'<a href="{url}" class="link-card">{label}</a>' for url, label in C['rankings'])
     ranking_section = f'''<section class="section">
  <div class="section-label">{C['lbl_ranking_section']}</div>
  <h2 class="section-title">{C['lbl_ranking_title']}</h2>
- <div style="display:flex;gap:14px;flex-wrap:wrap">{rank_links}</div>
+ <div class="flex-wrap-14">{rank_links}</div>
 </section>'''
 
     # ── Pillar + comparison ──
     pillar_comp_cards = []
     best_month_name = MONTHS[best_idx]
     pillar_comp_cards.append(
-        f'<a href="{pillar_url(C, best_idx)}" style="{LINK_CARD_STYLE}">'
+        f'<a href="{pillar_url(C, best_idx)}" class="link-card">'
         f'{C["lbl_pillar_tpl"].format(month=best_month_name.lower() if C["is_fr"] else best_month_name)}</a>')
     comp_slug = slug_fr if C['is_fr'] else slug_en
     if comparison_index and comp_slug in comparison_index:
@@ -593,12 +581,12 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
                         other_nom = d.get('nom_en', d.get('nom_bare', other_slug))
                         break
             pillar_comp_cards.append(
-                f'<a href="{comp_file}" style="{LINK_CARD_STYLE}">'
+                f'<a href="{comp_file}" class="link-card">'
                 f'{C["lbl_vs_tpl"].format(a=nom, b=other_nom)}</a>')
     pillar_comparison_section = f'''<section class="section">
  <div class="section-label">{C['lbl_guides_section']}</div>
  <h2 class="section-title">{C['lbl_guides_title']}</h2>
- <div style="display:flex;gap:14px;flex-wrap:wrap">{"".join(pillar_comp_cards)}</div>
+ <div class="flex-wrap-14">{"".join(pillar_comp_cards)}</div>
 </section>'''
 
     # ── Schema.org ──
@@ -689,11 +677,11 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <body><script>window.scrollTo(0,0);</script>
 {nav_html(C)}
 <header class="hero-band">
- <div class="dest-tag"><img src="{pfx}flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" style="vertical-align:middle;margin-right:4px;border-radius:1px"> {nom}, {country}</div>
+ <div class="dest-tag"><img src="{pfx}flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" class="flag-icon"> {nom}, {country}</div>
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hsub}</p>
  <div class="kicker">{kicker}</div>
- <div class="hero-stats" style="margin-top:22px">
+ <div class="hero-stats" class="mt-22">
  <div><span class="hstat-val">{best_str}</span><span class="hstat-lbl">{best_months_lbl}</span></div>
  <div><span class="hstat-val">{best_tmax}°C</span><span class="hstat-lbl">{C['lbl_optimal_temp_stat']}</span></div>
  <div><span class="hstat-val">{best_rain}%</span><span class="hstat-lbl">{C['lbl_rainy_days_stat']}</span></div>
@@ -844,14 +832,12 @@ def _build_sim_cards(cfg, sim_list, all_dests, climate_for_sim, mi):
             pfx = '../flags/'
             lbl = f"{MONTHS[mi]}: {sc.get('score','?')}/10 · {sc.get('tmax','?')}°C"
         parts.append(
-            f'<a href="{url}" style="flex:1;min-width:180px;'
-            f'padding:14px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;'
-            f'text-decoration:none;display:flex;flex-direction:column;gap:4px">'
-            f'<div style="font-weight:700;color:var(--navy);font-size:14px">'
+            f'<a href="{url}" class="sim-card-sm">'
+            f'<div class="fw700-navy-f14">'
             f'<img src="{pfx}{sd.get("flag","")}.png" width="16" height="12" '
-            f'alt="" style="vertical-align:middle;margin-right:4px;border-radius:1px">'
+            f'alt="" class="flag-icon">'
             f'{name}</div>'
-            f'<div style="font-size:12px;color:var(--slate2)">{lbl}</div>'
+            f'<div class="f12-slate2">{lbl}</div>'
             f'</a>')
     return ''.join(parts)
 
@@ -868,9 +854,7 @@ def _build_comp_cards_monthly(cfg, slug, nom, comparison_index, all_dests):
             other_nom = all_dests.get(other_slug, {}).get('nom_en', other_slug)
             label = f'⚖️ {nom} or {other_nom}?'
         cards.append(
-            f'<a href="{comp_file}" style="flex:1;min-width:180px;'
-            f'padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;'
-            f'text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">'
+            f'<a href="{comp_file}" class="link-card">'
             f'{label}</a>')
     return ''.join(cards)
 
@@ -1171,16 +1155,12 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
                 non_si = "you're looking for summer weather — conditions don't support it."
 
     # ── Month nav ──
-    MNAV_STYLE = {
-        'rec':   'background:#e8f8f0;border-color:#86efac;',
-        'mid':   'background:#fffbeb;border-color:#fbbf24;',
-        'avoid': 'background:#fef2f2;border-color:#fca5a5;',
-    }
+    MNAV_CLS = {'rec': 'mnav-rec', 'mid': 'mnav-mid', 'avoid': 'mnav-avoid'}
     def _mnav_attr(i):
         if i == mi:
             return ' class="active"'
-        s = MNAV_STYLE.get(months[i]['classe'], '')
-        return f' style="{s}"' if s else ''
+        c = MNAV_CLS.get(months[i]['classe'], '')
+        return f' class="{c}"' if c else ''
 
     if is_fr:
         month_nav = ''.join(
@@ -1194,7 +1174,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     # ── Annual table ──
     table_rows = ''
     for i, mo in enumerate(months):
-        highlight = ' style="background:#fef9c3;font-weight:700"' if i == mi else ''
+        highlight = ' class="row-highlight"' if i == mi else ''
         cls = mo['classe']
         ski_col = ''
         if is_mountain:
@@ -1445,14 +1425,10 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     # Pillar + comparison links
     if is_fr:
-        pillar_link = (f'<a href="ou-partir-en-{MONTH_URL_FR[mi]}.html" style="flex:1;min-width:180px;'
-                       f'padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;'
-                       f'text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">'
+        pillar_link = (f'<a href="ou-partir-en-{MONTH_URL_FR[mi]}.html" class="link-card">'
                        f'📅 Où partir en {month_lc} — top 25</a>')
     else:
-        pillar_link = (f'<a href="where-to-go-in-{MONTH_URL[mi]}.html" style="flex:1;min-width:180px;'
-                       f'padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;'
-                       f'text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">'
+        pillar_link = (f'<a href="where-to-go-in-{MONTH_URL[mi]}.html" class="link-card">'
                        f'📅 Where to go in {month} — top 25</a>')
     comp_links = _build_comp_cards_monthly(cfg, slug_fr, nom if not is_fr else nom_bare, comparison_index, all_dests) if comparison_index else ''
 
@@ -1489,7 +1465,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
             'src_text': f'Données calculées sur <strong>10 ans de relevés ERA5</strong> via Open-Meteo, avec ajustement saisonnier ECMWF. En {month_lc}, {nom_bare} affiche en moyenne <strong>{m["tmax"]}°C</strong>, {m["rain_pct"]}% de jours pluvieux et {m["sun_h"]}h de soleil par jour. Score météo global du mois : <strong>{score:.1f}/10</strong>.',
             'src_link_text': 'Voir la méthodologie →', 'src_link': 'methodologie.html',
             'sec_compare': 'Comparaison', 'sec_compare_title': f'{month} vs {best_month} (meilleur mois)',
-            'compare_intro': f'Le meilleur mois est <strong><a href="meilleure-periode-{slug_fr}.html" style="color:inherit">{best_month}</a></strong> (score {best_score:.1f}/10). Différence :',
+            'compare_intro': f'Le meilleur mois est <strong><a href="meilleure-periode-{slug_fr}.html" class="txt-inherit">{best_month}</a></strong> (score {best_score:.1f}/10). Différence :',
             'cmp_tmax': 'Température max', 'cmp_rain': 'Jours de pluie', 'cmp_sun': 'Ensoleillement',
             'sec_faq': 'Questions fréquentes', 'sec_faq_title': f'FAQ — {nom_bare} en {month_lc}',
             'prev_label': '← Mois précédent', 'next_label': 'Mois suivant →',
@@ -1530,7 +1506,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
             'src_text': f'Calculated from <strong>10 years of ERA5 records</strong> via Open-Meteo, with ECMWF seasonal adjustment. In {month}, {nom} averages <strong>{m["tmax"]}°C</strong>, {m["rain_pct"]}% rainy days and {m["sun_h"]}h sunshine per day. Overall weather score: <strong>{score:.1f}/10</strong>.',
             'src_link_text': 'See methodology →', 'src_link': 'methodology.html',
             'sec_compare': 'Comparison', 'sec_compare_title': f'{month} vs {best_month} (best month)',
-            'compare_intro': f'The best month is <strong><a href="best-time-to-visit-{slug_en}.html" style="color:inherit">{best_month}</a></strong> (score {best_score:.1f}/10). Difference:',
+            'compare_intro': f'The best month is <strong><a href="best-time-to-visit-{slug_en}.html" class="txt-inherit">{best_month}</a></strong> (score {best_score:.1f}/10). Difference:',
             'cmp_tmax': 'Max temperature', 'cmp_rain': 'Rainy days', 'cmp_sun': 'Sunshine',
             'sec_faq': 'Frequently asked', 'sec_faq_title': f'FAQ — {nom} in {month}',
             'prev_label': '← Previous month', 'next_label': 'Next month →',
@@ -1560,7 +1536,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         annual_link = f"best-time-to-visit-{slug_en}.html"
 
     rank_links_html = ''.join(
-        f'<a href="{url}" style="flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)">{label}</a>'
+        f'<a href="{url}" class="link-card">{label}</a>'
         for url, label in L['rank_links'])
 
     # ── HEAD CSS / NAV / FOOTER from gen_annual helpers ──
@@ -1598,11 +1574,11 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <body><script>window.scrollTo(0,0);</script>
 {NAV}
 <header class="hero-band">
- <div class="dest-tag"><img src="{pfx}flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" style="vertical-align:middle;margin-right:4px;border-radius:1px"> {nom} · {season}</div>
+ <div class="dest-tag"><img src="{pfx}flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" class="flag-icon"> {nom} · {season}</div>
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hero_sub}</p>
  <div class="kicker">{L['kicker']}</div>
- <div class="hero-stats" style="margin-top:22px">
+ <div class="hero-stats" class="mt-22">
  <div><span class="hstat-val">{m['tmax']}°C</span><span class="hstat-lbl">{L['hstat_tmax']}</span></div>
  <div><span class="hstat-val">{m['rain_pct']}%</span><span class="hstat-lbl">{L['hstat_rain']}</span></div>
  <div><span class="hstat-val">{m['sun_h']}h</span><span class="hstat-lbl">{L['hstat_sun']}</span></div>
@@ -1612,7 +1588,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <section class="section">
  <div class="section-label">{L['sec_summary']}</div>
  <h2 class="section-title">{L['sec_summary_title']}</h2>
- <div style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;background:{bg};color:{txt};border:1.5px solid {txt};margin-bottom:16px">{verdict_lbl}</div>
+ <div class="verdict-badge" style="background:{bg};color:{txt};border:1.5px solid {txt}">{verdict_lbl}</div>
  <div class="quick-facts">
  <div class="quick-facts-row"><div class="qf-label">🌡️ {L['qf_tminmax']}</div><div class="qf-value"><strong>{m['tmin']}°C – {m['tmax']}°C</strong></div></div>
  <div class="quick-facts-row"><div class="qf-label">🌧 {L['qf_rain']}</div><div class="qf-value"><strong>{m['rain_pct']}%</strong> {L['qf_rain_unit']}</div></div>
@@ -1623,37 +1599,37 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  </section>
 
- <section class="section" style="margin-bottom:28px">
+ <section class="section" class="mb-28">
  <div class="section-label">{L['sec_verdict']}</div>
  <h2 class="section-title">{L['sec_verdict_title']}</h2>
- <div style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;background:{bg};color:{txt};border:1.5px solid {txt};margin-bottom:16px">{verdict_lbl}</div>
- <div style="margin-bottom:14px;font-size:14px;line-height:1.7">
- <p style="margin-bottom:8px"><strong>{L['yes_lbl']}</strong> {oui_si}</p>
+ <div class="verdict-badge" style="background:{bg};color:{txt};border:1.5px solid {txt}">{verdict_lbl}</div>
+ <div class="f14-body-mb">
+ <p class="mb-8"><strong>{L['yes_lbl']}</strong> {oui_si}</p>
  <p><strong>{L['no_lbl']}</strong> {non_si}</p>
  </div>
- <div style="background:#f8f8f4;border-radius:10px;padding:14px;font-size:13px;line-height:1.9;margin-bottom:14px">
- <div>🌧 {L['bar_rain']} : {rain_bar} <span style="color:#718096">{m['rain_pct']}%</span></div>
- <div>🌡 {L['bar_temp']} : {temp_bar} <span style="color:#718096">{m['tmax']}°C</span></div>
- <div>☀️ {L['bar_sun']} : {sun_bar} <span style="color:#718096">{m['sun_h']}h/j</span></div>
+ <div class="bar-wrap">
+ <div>🌧 {L['bar_rain']} : {rain_bar} <span class="txt-gray">{m['rain_pct']}%</span></div>
+ <div>🌡 {L['bar_temp']} : {temp_bar} <span class="txt-gray">{m['tmax']}°C</span></div>
+ <div>☀️ {L['bar_sun']} : {sun_bar} <span class="txt-gray">{m['sun_h']}h/j</span></div>
  </div>
- <p style="font-size:14px;line-height:1.7;border-top:1px solid #e8e0d0;padding-top:14px"><strong>{L['verdict_intro']}</strong> {verdict_txt}</p>
+ <p class="f14-body-sep"><strong>{L['verdict_intro']}</strong> {verdict_txt}</p>
  </section>
 
- <section class="section" style="margin-bottom:28px">
+ <section class="section" class="mb-28">
  <div class="section-label">{L['sec_activity']}</div>
  <h2 class="section-title">{L['sec_activity_title']}</h2>
- <ul style="list-style:none;padding:0;border:1.5px solid var(--cream2);border-radius:12px;overflow:hidden;font-size:14px">
- <li style="padding:10px 16px;border-bottom:1px solid var(--cream2);background:white">🏙️ {L['act_city']} : <strong>{act_city}</strong></li>
- <li style="padding:10px 16px;border-bottom:1px solid var(--cream2)">🚶 {L['act_ext']} : <strong>{act_ext}</strong></li>
- <li style="padding:10px 16px;border-bottom:1px solid var(--cream2);background:white">🏖️ {L['act_beach']} : <strong>{act_beach}</strong></li>
- <li style="padding:10px 16px">💰 {L['act_budget']} : <strong>{bud}</strong></li>
+ <ul class="act-list">
+ <li class="act-item-odd">🏙️ {L['act_city']} : <strong>{act_city}</strong></li>
+ <li class="act-item-even">🚶 {L['act_ext']} : <strong>{act_ext}</strong></li>
+ <li class="act-item-odd">🏖️ {L['act_beach']} : <strong>{act_beach}</strong></li>
+ <li class="act-item-last">💰 {L['act_budget']} : <strong>{bud}</strong></li>
  </ul>
  </section>
 
- <section class="section" style="border-left:3px solid var(--gold);padding-left:18px;margin-bottom:28px">
+ <section class="section" class="ctx-section mb-28">
  <div class="section-label">{L['sec_context']}</div>
  <h2 class="section-title">{L['sec_context_title']}</h2>
- <p style="font-size:14px;line-height:1.8;color:var(--slate)">{ctx_para}</p>
+ <p class="f14-context">{ctx_para}</p>
  </section>
 
  <section class="section">
@@ -1672,62 +1648,62 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </table>
  </div>
  <div class="table-legend">
- <span><span class="legend-dot" style="background:#1a7a4a"></span>{L['legend_ideal']}</span>
- <span><span class="legend-dot" style="background:#d97706"></span>{L['legend_ok']}</span>
- <span><span class="legend-dot" style="background:#dc2626"></span>{L['legend_bad']}</span>
- <span style="margin-left:auto">{L['legend_note']}</span>
+ <span><span class="legend-dot legend-rec"></span>{L['legend_ideal']}</span>
+ <span><span class="legend-dot legend-mid"></span>{L['legend_ok']}</span>
+ <span><span class="legend-dot legend-avoid"></span>{L['legend_bad']}</span>
+ <span class="ml-auto">{L['legend_note']}</span>
  </div>
  </section>
 
- <div class="eeat-note" style="margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7">
- <strong style="color:var(--navy);display:block;margin-bottom:4px">{L['src_label']}</strong>
+ <div class="eeat-note" class="eeat-note">
+ <strong class="txt-navy-block">{L['src_label']}</strong>
  {L['src_text']}
- <a href="{L['src_link']}" style="color:var(--gold);font-weight:600">{L['src_link_text']}</a>
+ <a href="{L['src_link']}" class="txt-gold">{L['src_link_text']}</a>
  </div>
 
- <section class="section" style="margin-bottom:28px">
+ <section class="section" class="mb-28">
  <div class="section-label">{L['sec_compare']}</div>
  <h2 class="section-title">{L['sec_compare_title']}</h2>
- <p style="font-size:14px;margin-bottom:12px">{L['compare_intro']}</p>
- <ul style="list-style:none;padding:0;border:1.5px solid var(--cream2);border-radius:10px;overflow:hidden;font-size:14px">
- <li style="padding:10px 16px;border-bottom:1px solid var(--cream2);background:white">🌡️ {L['cmp_tmax']} : <strong>{'+' if diff_t >= 0 else ''}{diff_t}°C</strong></li>
- <li style="padding:10px 16px;border-bottom:1px solid var(--cream2)">🌧 {L['cmp_rain']} : <strong>{'+' if diff_r >= 0 else ''}{diff_r}%</strong></li>
- <li style="padding:10px 16px">☀️ {L['cmp_sun']} : <strong>{'+' if diff_s >= 0 else ''}{diff_s}h/jour</strong></li>
+ <p class="f14-mb12">{L['compare_intro']}</p>
+ <ul class="cmp-list">
+ <li class="act-item-odd">🌡️ {L['cmp_tmax']} : <strong>{'+' if diff_t >= 0 else ''}{diff_t}°C</strong></li>
+ <li class="act-item-even">🌧 {L['cmp_rain']} : <strong>{'+' if diff_r >= 0 else ''}{diff_r}%</strong></li>
+ <li class="act-item-last">☀️ {L['cmp_sun']} : <strong>{'+' if diff_s >= 0 else ''}{diff_s}h/jour</strong></li>
  </ul>
  </section>
 
- <section class="section" style="margin-bottom:28px">
+ <section class="section" class="mb-28">
  <div class="section-label">{L['sec_faq']}</div>
  <h2 class="section-title">{L['sec_faq_title']}</h2>
- <div style="display:flex;flex-direction:column;gap:12px">
- <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white">
- <div style="font-weight:700;margin-bottom:8px">{faq_q1}</div>
- <div style="color:var(--slate2);font-size:14px;line-height:1.65">{faq_a1}</div>
+ <div class="flex-col-12">
+ <div class="faq-card">
+ <div class="fw700-mb">{faq_q1}</div>
+ <div class="f14-detail">{faq_a1}</div>
  </div>
- <div style="border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white">
- <div style="font-weight:700;margin-bottom:8px">{faq_q2}</div>
- <div style="color:var(--slate2);font-size:14px;line-height:1.65">{faq_a2}</div>
+ <div class="faq-card">
+ <div class="fw700-mb">{faq_q2}</div>
+ <div class="f14-detail">{faq_a2}</div>
  </div>
  </div>
  </section>
 
  <section class="section">
  <div class="section-label">{L['prev_label'].split()[0]}</div>
- <div style="display:flex;gap:14px;flex-wrap:wrap">
- <a href="{prev_url}" style="flex:1;min-width:140px;padding:16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;text-align:center">
- <div style="font-size:11px;color:var(--slate3);margin-bottom:4px">{L['prev_label']}</div>
- <div style="font-weight:700;color:var(--navy)">{MONTHS[prev_mi]}</div>
- <div style="font-size:12px;color:var(--slate2)">{months[prev_mi]['tmax']}°C · {months[prev_mi]['rain_pct']}% {'pluie' if is_fr else 'rain'}</div>
+ <div class="flex-wrap-14">
+ <a href="{prev_url}" class="nav-card">
+ <div class="f11-slate3-mb">{L['prev_label']}</div>
+ <div class="fw700-navy">{MONTHS[prev_mi]}</div>
+ <div class="f12-slate2">{months[prev_mi]['tmax']}°C · {months[prev_mi]['rain_pct']}% {'pluie' if is_fr else 'rain'}</div>
  </a>
- <a href="{annual_link}" style="flex:1;min-width:140px;padding:16px;background:#fef9c3;border:1.5px solid var(--gold);border-radius:12px;text-decoration:none;text-align:center">
- <div style="font-size:11px;color:var(--slate3);margin-bottom:4px">{L['annual_label']}</div>
- <div style="font-weight:700;color:var(--navy)">{L['annual_text']}</div>
- <div style="font-size:12px;color:var(--slate2)">{L['annual_best']}</div>
+ <a href="{annual_link}" class="nav-card-active">
+ <div class="f11-slate3-mb">{L['annual_label']}</div>
+ <div class="fw700-navy">{L['annual_text']}</div>
+ <div class="f12-slate2">{L['annual_best']}</div>
  </a>
- <a href="{next_url}" style="flex:1;min-width:140px;padding:16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;text-align:center">
- <div style="font-size:11px;color:var(--slate3);margin-bottom:4px">{L['next_label']}</div>
- <div style="font-weight:700;color:var(--navy)">{MONTHS[next_mi]}</div>
- <div style="font-size:12px;color:var(--slate2)">{months[next_mi]['tmax']}°C · {months[next_mi]['rain_pct']}% {'pluie' if is_fr else 'rain'}</div>
+ <a href="{next_url}" class="nav-card">
+ <div class="f11-slate3-mb">{L['next_label']}</div>
+ <div class="fw700-navy">{MONTHS[next_mi]}</div>
+ <div class="f12-slate2">{months[next_mi]['tmax']}°C · {months[next_mi]['rain_pct']}% {'pluie' if is_fr else 'rain'}</div>
  </a>
  </div>
  </section>
@@ -1735,27 +1711,27 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <section class="section">
  <div class="section-label">{sim_section_label}</div>
  <h2 class="section-title">{sim_section_title}</h2>
- <div style="display:flex;gap:14px;flex-wrap:wrap">{sim_cards_html}</div>
+ <div class="flex-wrap-14">{sim_cards_html}</div>
  </section>
 
  <section class="section">
  <div class="section-label">{L['sec_rankings']}</div>
  <h2 class="section-title">{L['sec_rankings_title']}</h2>
- <div style="display:flex;gap:14px;flex-wrap:wrap">{rank_links_html}</div>
+ <div class="flex-wrap-14">{rank_links_html}</div>
  </section>
 
  <section class="section">
  <div class="section-label">{L['sec_guides']}</div>
  <h2 class="section-title">{L['sec_guides_title']}</h2>
- <div style="display:flex;gap:14px;flex-wrap:wrap">{pillar_link}{comp_links}</div>
+ <div class="flex-wrap-14">{pillar_link}{comp_links}</div>
  </section>
 
  <section class="widget-section">
- <div class="cta-box" style="text-align:center">
+ <div class="cta-box" class="text-center">
  <strong>{L['cta_title']}</strong>
  <p>{L['cta_text']}</p>
  <a class="cta-btn" href="{L['cta_link']}">
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:18px;height:18px"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="icon-18"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
  {L['cta_btn']}
  </a>
  </div>

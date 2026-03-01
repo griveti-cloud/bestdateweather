@@ -244,3 +244,100 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
   .qf-value{padding:8px 14px 12px}
   .quick-facts-row:not(:last-child){border-bottom:1px solid var(--cream2)}
 }
+
+/* ── Fix #13: Extracted inline styles ─────────────────────────────────── */
+
+/* Layout utilities */
+.flex-wrap-14{display:flex;gap:14px;flex-wrap:wrap}
+.flex-col-12{display:flex;flex-direction:column;gap:12px}
+.grid-months{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px}
+.mt-22{margin-top:22px}
+.mb-28{margin-bottom:28px}
+.mt-8{margin-top:8px}
+.text-center{text-align:center}
+
+/* Text utilities */
+.txt-muted{color:rgba(255,255,255,.7)}
+.txt-muted-label{color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px}
+.txt-slate{color:var(--slate)}
+.txt-slate2{color:var(--slate2)}
+.txt-slate3{color:var(--slate3)}
+.txt-gray{color:#718096}
+.txt-inherit{color:inherit}
+.txt-gold{color:var(--gold);font-weight:600}
+.txt-navy-block{color:var(--navy);display:block;margin-bottom:4px}
+
+/* Font combos */
+.f12-slate2{font-size:12px;color:var(--slate2)}
+.f11-slate3-mb{font-size:11px;color:var(--slate3);margin-bottom:4px}
+.f11-muted{margin-top:8px;font-size:11px;opacity:.6}
+.f13-slate3{font-size:13px;color:var(--slate3)}
+.f14-body{font-size:14px;line-height:1.7}
+.f14-body-mb{margin-bottom:14px;font-size:14px;line-height:1.7}
+.f14-body-sep{font-size:14px;line-height:1.7;border-top:1px solid #e8e0d0;padding-top:14px}
+.f14-context{font-size:14px;line-height:1.8;color:var(--slate)}
+.f14-mb12{font-size:14px;margin-bottom:12px}
+.f14-detail{color:var(--slate2);font-size:14px;line-height:1.65}
+.fw700-navy{font-weight:700;color:var(--navy)}
+.fw700-navy-f14{font-weight:700;color:var(--navy);font-size:14px}
+.fw700-mb{font-weight:700;margin-bottom:8px}
+.fw700-f13{font-weight:700;font-size:13px;color:#1a1f2e}
+.mb-8{margin-bottom:8px}
+
+/* Flag icons */
+.flag-icon{vertical-align:middle;margin-right:4px;border-radius:1px}
+.flag-icon-lg{vertical-align:middle;border-radius:2px}
+
+/* Cards */
+.link-card{flex:1;min-width:170px;padding:14px 16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;font-size:14px;font-weight:600;color:var(--navy)}
+.sim-card{flex:1;min-width:200px;padding:16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:6px}
+.nav-card{flex:1;min-width:140px;padding:16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;text-align:center}
+.nav-card-active{flex:1;min-width:140px;padding:16px;background:#fef9c3;border:1.5px solid var(--gold);border-radius:12px;text-decoration:none;text-align:center}
+.sim-card-sm{flex:1;min-width:180px;padding:14px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:4px}
+
+/* FAQ cards */
+.faq-card{border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white}
+
+/* Activity list */
+.act-list{list-style:none;padding:0;border:1.5px solid var(--cream2);border-radius:12px;overflow:hidden;font-size:14px}
+.act-item-odd{padding:10px 16px;border-bottom:1px solid var(--cream2);background:white}
+.act-item-even{padding:10px 16px;border-bottom:1px solid var(--cream2)}
+.act-item-last{padding:10px 16px}
+
+/* Compare list */
+.cmp-list{list-style:none;padding:0;border:1.5px solid var(--cream2);border-radius:10px;overflow:hidden;font-size:14px}
+
+/* Bars section */
+.bar-wrap{background:#f8f8f4;border-radius:10px;padding:14px;font-size:13px;line-height:1.9;margin-bottom:14px}
+
+/* Context section */
+.ctx-section{border-left:3px solid var(--gold);padding-left:18px}
+
+/* E-E-A-T note */
+.eeat-note{margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7}
+
+/* Legend dots */
+.legend-rec{background:#1a7a4a}
+.legend-mid{background:#d97706}
+.legend-avoid{background:#dc2626}
+
+/* Highlighted table row */
+.row-highlight{background:#fef9c3;font-weight:700}
+
+/* Month grid buttons */
+.month-btn{display:block;padding:10px 8px;border-radius:10px;text-decoration:none;text-align:center}
+.month-btn-rec{background:#e8f8f0;border-color:#86efac}
+.month-btn-mid{background:#fffbeb;border-color:#fbbf24}
+.month-btn-avoid{background:#fef2f2;border-color:#fca5a5}
+
+/* Month nav (monthly pages) */
+.mnav-rec{background:#e8f8f0;border-color:#86efac}
+.mnav-mid{background:#fffbeb;border-color:#fbbf24}
+.mnav-avoid{background:#fef2f2;border-color:#fca5a5}
+
+/* Verdict badge (base) */
+.verdict-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;margin-bottom:16px}
+
+/* Utility */
+.ml-auto{margin-left:auto}
+.icon-18{width:18px;height:18px}
