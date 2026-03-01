@@ -1182,6 +1182,7 @@ function showResults(sc, rows, isForecast, noteText, diffDays) {
  updateScenarioLabels(pessRows, optRows);
  }
  if(noteText){var fn=document.getElementById('foot-note');fn.innerHTML=noteText;fn.style.display='block';}
+ setTimeout(function(){var el=document.getElementById('uc-filter-wrap');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);
 }
 
 /* AUTOCOMPLETE */
@@ -1964,6 +1965,7 @@ function renderAnnual(loc, monthly) {
  // ── fin résumé narratif ──────────────────────────────────────────────────
 
  document.getElementById('annual-result').style.display = 'block';
+ setTimeout(function(){var el=document.getElementById('annual-result');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);
 }
 
 
