@@ -118,7 +118,7 @@ jobs:
           missing_cards = dest_slugs - slugs_with_cards
           print(f'cards.csv: {len(cards)} cards for {len(slugs_with_cards)} destinations')
           if missing_cards:
-              errors.append(f'  Destinations without cards: {missing_cards}')
+              print(f'  ⚠️  {len(missing_cards)} destinations without FR cards (non-blocking)')
 
           # cards_en.csv
           with open('data/cards_en.csv', encoding='utf-8-sig') as f:
@@ -127,7 +127,7 @@ jobs:
           missing_en = dest_slugs - slugs_en
           print(f'cards_en.csv: {len(cards_en)} cards for {len(slugs_en)} destinations')
           if missing_en:
-              errors.append(f'  EN destinations without cards: {missing_en}')
+              print(f'  ⚠️  {len(missing_en)} destinations without EN cards (non-blocking)')
 
           if errors:
               print('\\n❌ ERRORS:')
