@@ -274,6 +274,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
 .annual-wrap{display:none}
 .annual-city-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:0}
 .annual-city-row .field-wrap{flex:1}
+@media(max-width:600px){.annual-city-row{flex-direction:column;align-items:stretch}.annual-btn{width:100%;padding:15px 20px;font-size:15px}}
 .annual-btn{background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:var(--r-sm);color:white;font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;padding:13px 20px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .annual-btn:hover:not(:disabled){background:var(--navy2);transform:translateY(-1px)}
 .annual-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
