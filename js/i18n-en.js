@@ -150,7 +150,7 @@ window.BDW_T = {
  narBeach: 'go to the beach', narSki: 'go skiing', narGeneral: 'travel',
  narBestMonth: 'Best month:', narAnd: 'and',
  narWindow: 'Best window:', narMonths: 'months',
- narAvoid: 'Avoid:',
+ narAvoid: 'Least favourable:',
 
  // Notes
  noteLive: '<strong>Live forecast</strong> · real-time weather data, updated hourly.',

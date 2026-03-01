@@ -1139,7 +1139,7 @@ def gen_monthly(dest, months, mi, all_dests=None, similarities=None, all_climate
  <div class="table-legend">
  <span><span class="legend-dot" style="background:#1a7a4a"></span>Ideal</span>
  <span><span class="legend-dot" style="background:#d97706"></span>Fair</span>
- <span><span class="legend-dot" style="background:#dc2626"></span>Off season</span>
+ <span><span class="legend-dot" style="background:#dc2626"></span>Unfavourable</span>
  <span style="margin-left:auto">◀ Current month · Source: Open-Meteo · 10 years</span>
  </div>
  </section>

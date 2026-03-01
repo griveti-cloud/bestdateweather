@@ -150,7 +150,7 @@ window.BDW_T = {
  narBeach: 'aller à la plage', narSki: 'faire du ski', narGeneral: 'partir',
  narBestMonth: 'Meilleur mois :', narAnd: 'et',
  narWindow: 'Fenêtre favorable :', narMonths: 'mois',
- narAvoid: 'Éviter :',
+ narAvoid: 'Moins favorable :',
 
  // Notes
  noteLive: '<strong>Prévision réelle</strong> · données météo en temps réel, mise à jour toutes les heures.',
