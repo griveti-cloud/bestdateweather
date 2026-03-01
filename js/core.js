@@ -489,7 +489,7 @@ function render7DayStrip(diffDays) {
  if (!el) return;
  var d = window._forecastDaily;
  if (!d || !d.time || d.time.length < 2) { el.style.display = 'none'; return; }
- if (diffDays == null || diffDays < 0 || diffDays > 7) { el.style.display = 'none'; return; }
+ if (diffDays == null || diffDays !== 0) { el.style.display = 'none'; return; }
  var html = '<div class="fs-label">' + (T.forecast7dLabel || 'Prévisions 7 jours') + '</div><div class="fs-row">';
  var locale = CFG.dateLocale || 'fr-FR';
  var todayStr = new Date().toISOString().slice(0, 10);
