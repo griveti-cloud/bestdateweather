@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- SCORING: generate_all.py | slug=capri | tropical=False | generated=2026-02-28 -->
+<!-- SCORING: generate_all.py | slug=capri | tropical=False | generated=2026-03-01 -->
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
@@ -15,7 +15,7 @@
 <meta property="og:title" content="Meilleure période à Capri — météo &amp; conseils"/>
 <meta property="og:description" content="Quelle est la meilleure période pour visiter Capri ? Juin offre 24°C et 16% de jours pluvieux. Score météo : 10.0/10. Données 10 ans Open-Meteo."/>
 <meta property="og:url" content="https://bestdateweather.com/meilleure-periode-capri.html"/>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Meilleure période pour partir à Capri", "description": "Quelle est la meilleure période pour visiter Capri ? Juin offre 24°C et 16% de jours pluvieux. Score météo : 10.0/10. Données 10 ans Open-Meteo.", "author": {"@type": "Organization", "name": "BestDateWeather"}, "publisher": {"@type": "Organization", "name": "BestDateWeather"}, "dateModified": "2026-02-28", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://bestdateweather.com/meilleure-periode-capri.html"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Meilleure période pour partir à Capri", "description": "Quelle est la meilleure période pour visiter Capri ? Juin offre 24°C et 16% de jours pluvieux. Score météo : 10.0/10. Données 10 ans Open-Meteo.", "author": {"@type": "Organization", "name": "BestDateWeather"}, "publisher": {"@type": "Organization", "name": "BestDateWeather"}, "dateModified": "2026-03-01", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://bestdateweather.com/meilleure-periode-capri.html"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Quelle est la meilleure période pour partir à Capri ?", "acceptedAnswer": {"@type": "Answer", "text": "Juin est idéal avec 16% de jours pluvieux et 24°C. "}}, {"@type": "Question", "name": "Quel est le mois le plus pluvieux à Capri ?", "acceptedAnswer": {"@type": "Answer", "text": "Janvier est le mois le plus pluvieux avec 43% de jours de pluie."}}, {"@type": "Question", "name": "Fait-il chaud à Capri en juin ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, juin est le meilleur mois avec 24°C en moyenne."}}, {"@type": "Question", "name": "Peut-on partir à Capri en hiver ?", "acceptedAnswer": {"@type": "Answer", "text": "En hiver, le score moyen est 2.8/10. Période difficile — préférez la haute saison."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bestdateweather.com/"}, {"@type": "ListItem", "position": 2, "name": "Capri", "item": "https://bestdateweather.com/meilleure-periode-capri.html"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Données climatiques de Capri — moyennes mensuelles sur 10 ans", "description": "Températures, précipitations, ensoleillement et vent mensuels à Capri. Moyennes calculées sur 10 ans de données ERA5 (Open-Meteo).", "temporalCoverage": "2015/2024", "spatialCoverage": {"@type": "Place", "name": "Capri"}, "creator": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com"}, "license": "https://creativecommons.org/licenses/by-nc/4.0/", "variableMeasured": ["Temperature", "Precipitation", "Sunshine hours", "Wind speed"]}</script>
@@ -37,7 +37,7 @@
  <div class="dest-tag"><img src="flags/it.png" width="20" height="15" alt="IT" style="vertical-align:middle;margin-right:4px;border-radius:1px"> Capri, Italie</div>
  <h1 class="hero-title">Quand partir<br/><em>à Capri</em> ?</h1>
  <p class="hero-sub">Capri est l'île du luxe et de la dolce vita. Accessible uniquement en ferry — mais les Faraglioni, la Grotte bleue et les villas privées en valent le détour.</p>
- <div class="kicker">Mis à jour : Février 2026 · Open-Meteo · 10 ans · 12 mois comparés · 40.55°N 14.24°E</div>
+ <div class="kicker">Mis à jour : Mars 2026 · Open-Meteo · 10 ans · 12 mois comparés · 40.55°N 14.24°E</div>
  <div class="hero-stats" style="margin-top:22px">
  <div><span class="hstat-val">Juin</span><span class="hstat-lbl">Meilleur mois</span></div>
  <div><span class="hstat-val">24°C</span><span class="hstat-lbl">Température optimale</span></div>
@@ -150,8 +150,10 @@
 <script>
 function toggleFaq(btn){
   const a=btn.nextElementSibling;
-  a.style.display=a.style.display==="block"?"none":"block";
-  btn.querySelector(".faq-icon").textContent=a.style.display==="block"?"-":"+";
+  const opening=a.style.display!=="block";
+  a.style.display=opening?"block":"none";
+  btn.querySelector(".faq-icon").textContent=opening?"-":"+";
+  if(opening)setTimeout(function(){btn.scrollIntoView({behavior:'smooth',block:'start'})},80);
 }
 </script>
 </body>

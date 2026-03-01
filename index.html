@@ -723,7 +723,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  BLOC SEO — Deux silos de destinations
  Crawlable par Google · Maillage interne complet
  ═══════════════════════════════════════════ -->
-<button class="seo-hub-toggle" onclick="var h=document.getElementById('seo-hub');h.classList.toggle('open');this.classList.toggle('open');" aria-expanded="false" aria-controls="seo-hub">
+<button class="seo-hub-toggle" onclick="var h=document.getElementById('seo-hub');var o=h.classList.toggle('open');this.classList.toggle('open');if(o)setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);" aria-expanded="false" aria-controls="seo-hub">
  🌍 Voir les guides destinations (318 destinations)
  <span class="seo-hub-toggle-icon">⌄</span>
 </button>
@@ -1341,7 +1341,8 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  function toggleAcc(el,cls){
   el.addEventListener('click',function(){
    if(searching)return;
-   el.parentElement.classList.toggle('open');
+   var opened=el.parentElement.classList.toggle('open');
+   if(opened)setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'start'})},80);
   });
  }
  document.querySelectorAll('.dh-acc-head').forEach(function(h){toggleAcc(h)});

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- SCORING: generate_all.py | slug=la-gomera | tropical=False | generated=2026-02-28 -->
+<!-- SCORING: generate_all.py | slug=la-gomera | tropical=False | generated=2026-03-01 -->
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
@@ -15,7 +15,7 @@
 <meta property="og:title" content="Meilleure période à La Gomera — météo &amp; conseils"/>
 <meta property="og:description" content="Quand partir à La Gomera ? Juillet est le meilleur mois (10.0/10) avec 27°C. Analyse complète des 12 mois sur 10 ans de données."/>
 <meta property="og:url" content="https://bestdateweather.com/meilleure-periode-la-gomera.html"/>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Meilleure période pour partir à La Gomera", "description": "Quand partir à La Gomera ? Juillet est le meilleur mois (10.0/10) avec 27°C. Analyse complète des 12 mois sur 10 ans de données.", "author": {"@type": "Organization", "name": "BestDateWeather"}, "publisher": {"@type": "Organization", "name": "BestDateWeather"}, "dateModified": "2026-02-28", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://bestdateweather.com/meilleure-periode-la-gomera.html"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Meilleure période pour partir à La Gomera", "description": "Quand partir à La Gomera ? Juillet est le meilleur mois (10.0/10) avec 27°C. Analyse complète des 12 mois sur 10 ans de données.", "author": {"@type": "Organization", "name": "BestDateWeather"}, "publisher": {"@type": "Organization", "name": "BestDateWeather"}, "dateModified": "2026-03-01", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://bestdateweather.com/meilleure-periode-la-gomera.html"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Quelle est la meilleure période pour partir à La Gomera ?", "acceptedAnswer": {"@type": "Answer", "text": "Juillet est idéal avec 0% de jours pluvieux et 27°C. "}}, {"@type": "Question", "name": "Quel est le mois le plus pluvieux à La Gomera ?", "acceptedAnswer": {"@type": "Answer", "text": "Janvier est le mois le plus pluvieux avec 9% de jours de pluie."}}, {"@type": "Question", "name": "Fait-il chaud à La Gomera en juillet ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, juillet est le meilleur mois avec 27°C en moyenne."}}, {"@type": "Question", "name": "Peut-on partir à La Gomera en hiver ?", "acceptedAnswer": {"@type": "Answer", "text": "En hiver, le score moyen est 7.2/10. Conditions acceptables pour les visites culturelles."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bestdateweather.com/"}, {"@type": "ListItem", "position": 2, "name": "La Gomera", "item": "https://bestdateweather.com/meilleure-periode-la-gomera.html"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Données climatiques de La Gomera — moyennes mensuelles sur 10 ans", "description": "Températures, précipitations, ensoleillement et vent mensuels à La Gomera. Moyennes calculées sur 10 ans de données ERA5 (Open-Meteo).", "temporalCoverage": "2015/2024", "spatialCoverage": {"@type": "Place", "name": "La Gomera"}, "creator": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com"}, "license": "https://creativecommons.org/licenses/by-nc/4.0/", "variableMeasured": ["Temperature", "Precipitation", "Sunshine hours", "Wind speed"]}</script>
@@ -37,7 +37,7 @@
  <div class="dest-tag"><img src="flags/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;margin-right:4px;border-radius:1px"> La Gomera, Espagne</div>
  <h1 class="hero-title">Meilleure période pour partir<br/><em>à La Gomera</em></h1>
  <p class="hero-sub">La Gomera, île sauvage des Canaries — forêt de lauriers du Garajonay UNESCO et sentiers spectaculaires.</p>
- <div class="kicker">Mis à jour : Février 2026 · Open-Meteo · 10 ans · 12 mois comparés · 28.09°N 17.11°W</div>
+ <div class="kicker">Mis à jour : Mars 2026 · Open-Meteo · 10 ans · 12 mois comparés · 28.09°N 17.11°W</div>
  <div class="hero-stats" style="margin-top:22px">
  <div><span class="hstat-val">Juillet</span><span class="hstat-lbl">Meilleur mois</span></div>
  <div><span class="hstat-val">27°C</span><span class="hstat-lbl">Température optimale</span></div>
@@ -139,8 +139,10 @@
 <script>
 function toggleFaq(btn){
   const a=btn.nextElementSibling;
-  a.style.display=a.style.display==="block"?"none":"block";
-  btn.querySelector(".faq-icon").textContent=a.style.display==="block"?"-":"+";
+  const opening=a.style.display!=="block";
+  a.style.display=opening?"block":"none";
+  btn.querySelector(".faq-icon").textContent=opening?"-":"+";
+  if(opening)setTimeout(function(){btn.scrollIntoView({behavior:'smooth',block:'start'})},80);
 }
 </script>
 </body>

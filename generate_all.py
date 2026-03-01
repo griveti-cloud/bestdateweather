@@ -757,8 +757,10 @@ def gen_annual(dest, months, dest_cards, all_dests, similarities, comparison_ind
 <script>
 function toggleFaq(btn){{
   const a=btn.nextElementSibling;
-  a.style.display=a.style.display==="block"?"none":"block";
-  btn.querySelector(".faq-icon").textContent=a.style.display==="block"?"-":"+";
+  const opening=a.style.display!=="block";
+  a.style.display=opening?"block":"none";
+  btn.querySelector(".faq-icon").textContent=opening?"-":"+";
+  if(opening)setTimeout(function(){{btn.scrollIntoView({{behavior:'smooth',block:'start'}})}},80);
 }}
 </script>
 </body>

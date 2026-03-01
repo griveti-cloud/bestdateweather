@@ -127,6 +127,7 @@ function toggleDetails() {
  var open = panel.classList.toggle('open');
  btn.classList.toggle('open', open);
  btn.setAttribute('aria-expanded', open);
+ if(open)setTimeout(function(){btn.scrollIntoView({behavior:'smooth',block:'start'});},80);
 }
 
 function fillUseCase(type) { currentUseCase = type; document.getElementById("score-block").style.display = "block"; quickFill(type); }
