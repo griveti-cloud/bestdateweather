@@ -321,7 +321,7 @@ nav{background:white;border-bottom:1px solid var(--cream2);padding:14px 24px;dis
 .related-card span{font-size:11px;color:var(--slate2)}
 footer{background:var(--navy);color:rgba(255,255,255,.7);text-align:center;padding:36px 20px;font-size:12px;line-height:2}
 footer a{color:rgba(255,255,255,.8);text-decoration:none}
-@media(max-width:640px){.rt th:nth-child(5),.rt td:nth-child(5){display:none}.hero-stats{gap:20px}}
+@media(max-width:640px){.rt th:nth-child(5),.rt td:nth-child(5),.rt th:nth-child(6),.rt td:nth-child(6){display:none}.hero-stats{gap:20px}}
 """
 
 def e(s):
