@@ -478,3 +478,19 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
 .fs-rain-heavy{background:#3b82f6}
 .fs-rain-light{background:#93c5fd}
 .fs-rain-maybe{background:#bfdbfe}
+
+/* ── Mobile compact: destination hub ── */
+@media(max-width:768px){
+ #seo-hub.open{padding:20px 16px 28px!important}
+ .dh-intro-tag{margin-bottom:6px!important;font-size:10px!important}
+ #seo-hub .dh-intro-title{font-size:20px!important;margin-bottom:4px!important}
+ #seo-hub .dh-intro-sub{margin-bottom:6px!important;font-size:12px!important}
+ #seo-hub .dh-intro-desc{margin-bottom:16px!important;font-size:13px!important;line-height:1.6!important}
+ #seo-hub .dh-silo{margin-bottom:20px!important}
+ #seo-hub .dh-silo-head{margin-bottom:12px!important}
+ .dh-search{margin-bottom:14px}
+ .dh-acc{margin-bottom:5px}
+ .dh-acc-head{padding:11px 14px}
+ .dh-acc-label{font-size:14px}
+ .dh-acc-count{font-size:11px;padding:2px 8px}
+}
