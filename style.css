@@ -200,6 +200,25 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
     margin-bottom:4px;padding-bottom:6px!important;
     border-bottom:1px solid var(--cream2)!important
   }
+  /* Labels for card layout (not mensuel tables) */
+  .climate-table:not([aria-label*="mensuel"]):not([aria-label*="Monthly climate table"]) tbody td:nth-child(n+2){
+    display:flex!important;justify-content:space-between;align-items:center
+  }
+  .climate-table:not([aria-label*="mensuel"]):not([aria-label*="Monthly climate table"]) tbody td:nth-child(n+2)::before{
+    font-size:11px;font-weight:600;color:var(--slate3);margin-right:8px;white-space:nowrap
+  }
+  :lang(fr) .climate-table:not([aria-label*="mensuel"]) tbody td:nth-child(2)::before{content:"T° min"}
+  :lang(fr) .climate-table:not([aria-label*="mensuel"]) tbody td:nth-child(3)::before{content:"T° max"}
+  :lang(fr) .climate-table:not([aria-label*="mensuel"]) tbody td:nth-child(4)::before{content:"Pluie"}
+  :lang(fr) .climate-table:not([aria-label*="mensuel"]) tbody td:nth-child(5)::before{content:"Précip. mm/j"}
+  :lang(fr) .climate-table:not([aria-label*="mensuel"]) tbody td:nth-child(6)::before{content:"Soleil"}
+  :lang(fr) .climate-table:not([aria-label*="mensuel"]) tbody td:nth-child(7)::before{content:"Score"}
+  :lang(en) .climate-table:not([aria-label*="Monthly climate table"]) tbody td:nth-child(2)::before{content:"Min temp"}
+  :lang(en) .climate-table:not([aria-label*="Monthly climate table"]) tbody td:nth-child(3)::before{content:"Max temp"}
+  :lang(en) .climate-table:not([aria-label*="Monthly climate table"]) tbody td:nth-child(4)::before{content:"Rain"}
+  :lang(en) .climate-table:not([aria-label*="Monthly climate table"]) tbody td:nth-child(5)::before{content:"Precip. mm/d"}
+  :lang(en) .climate-table:not([aria-label*="Monthly climate table"]) tbody td:nth-child(6)::before{content:"Sunshine"}
+  :lang(en) .climate-table:not([aria-label*="Monthly climate table"]) tbody td:nth-child(7)::before{content:"Score"}
   /* Table mensuelle : responsive sans scroll horizontal */
   .climate-table[aria-label*="mensuel"],.climate-table[aria-label*="Monthly climate table"]{
     min-width:0;display:table;font-size:11px
