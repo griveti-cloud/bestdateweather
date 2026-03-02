@@ -708,7 +708,6 @@ function toggleFaq(btn){{
   const opening=a.style.display!=="block";
   a.style.display=opening?"block":"none";
   btn.querySelector(".faq-icon").textContent=opening?"-":"+";
-  if(opening)setTimeout(function(){{btn.scrollIntoView({{behavior:'smooth',block:'start'}})}},80);
 }}
 </script>
 </body>
