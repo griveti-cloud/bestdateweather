@@ -254,6 +254,46 @@ def compute_scores(months: list, slug: str = '') -> list:
     return scores
 
 
+# ── SCORING PLAGE / BEACH ──────────────────────────────────────────────────
+#
+# Score dédié plage : combine température air, température mer, pluie, soleil.
+# Uniquement pour les destinations côtières (sea_temp disponible).
+# Échelle : 0 – 10, normalisation globale comme le score principal.
+
+def t_beach(tmax: float) -> float:
+    """Confort thermique plage [0, 1]. Pic à 28-30°C, plus tolérant au chaud."""
+    if tmax <= 18:  return 0.0
+    if tmax <= 24:  return (tmax - 18) / 6 * 0.5
+    if tmax <= 30:  return 0.5 + (tmax - 24) / 6 * 0.5
+    if tmax <= 36:  return 1.0 - (tmax - 30) / 6 * 0.4
+    if tmax <= 42:  return 0.6 - (tmax - 36) / 6 * 0.4
+    return 0.0
+
+def t_sea(sea_temp: float) -> float:
+    """Score température mer [0, 1]. Idéal 24-28°C, baignable dès 20°C."""
+    if sea_temp < 16:   return 0.0
+    if sea_temp <= 20:  return (sea_temp - 16) / 4 * 0.3
+    if sea_temp <= 24:  return 0.3 + (sea_temp - 20) / 4 * 0.4
+    if sea_temp <= 28:  return 0.7 + (sea_temp - 24) / 4 * 0.3
+    if sea_temp <= 32:  return 1.0 - (sea_temp - 28) / 4 * 0.1
+    return max(0.5, 0.9 - (sea_temp - 32) / 4 * 0.4)
+
+def raw_beach_score(tmax: float, rain_pct: float, sun_h: float, sea_temp: float) -> float:
+    """
+    Score brut plage [0, 1].
+
+    Poids :
+      25%  température air  → t_beach(tmax)
+      25%  température mer  → t_sea(sea_temp)
+      30%  pluie            → 1 - rain_pct / 100 (pénalité forte, plage = extérieur)
+      20%  soleil           → sun_h / 15
+    """
+    return (0.25 * t_beach(tmax)
+          + 0.25 * t_sea(sea_temp)
+          + 0.30 * max(0.0, 1.0 - rain_pct / 100.0)
+          + 0.20 * min(1.0, sun_h / 15.0))
+
+
 # ── SCORING MONTAGNE / SKI ─────────────────────────────────────────────────
 #
 # Pour les destinations marquées mountain=True dans destinations.csv.

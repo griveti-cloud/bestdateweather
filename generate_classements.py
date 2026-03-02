@@ -19,7 +19,7 @@ def load_destinations():
     return dests
 
 def load_climate():
-    """Returns dict: slug -> list of {mois_num, score, classe, tmin, tmax, rain_pct, precip_mm, sun_h}"""
+    """Returns dict: slug -> list of {mois_num, score, classe, tmin, tmax, rain_pct, precip_mm, sun_h, sea_temp, beach_score}"""
     data = {}
     with open(ROOT / 'data/climate.csv', encoding='utf-8-sig') as f:
         for r in csv.DictReader(f):
@@ -35,6 +35,8 @@ def load_climate():
                 'rain_pct': float(r['rain_pct']),
                 'precip_mm': float(r['precip_mm']),
                 'sun_h': float(r['sun_h']),
+                'sea_temp': float(r['sea_temp']) if r.get('sea_temp') else None,
+                'beach_score': float(r['beach_score']) if r.get('beach_score') else None,
             }
     return data
 
@@ -230,6 +232,63 @@ def compute_nomad(climate, dests):
             'worst_score': worst_score, 'monthly': monthly,
         })
     results.sort(key=lambda x: -x['nomad_score'])
+    return results
+
+def compute_beach(climate, dests):
+    """Beach ranking: annual average beach_score for coastal destinations."""
+    MOIS_FR_SHORT = {1:'Jan',2:'Fév',3:'Mar',4:'Avr',5:'Mai',6:'Jun',
+                     7:'Jul',8:'Aoû',9:'Sep',10:'Oct',11:'Nov',12:'Déc'}
+    results = []
+    for slug, monthly in climate.items():
+        if slug not in dests:
+            continue
+        d = dests[slug]
+        # Only coastal destinations (have beach_score)
+        if not all(m in monthly for m in range(1,13)):
+            continue
+        if monthly[1].get('beach_score') is None:
+            continue
+        scores = [monthly[m]['beach_score'] for m in range(1,13)]
+        sea_temps = [monthly[m].get('sea_temp', 0) or 0 for m in range(1,13)]
+        avg = sum(scores) / 12
+        best_month = max(range(1,13), key=lambda m: monthly[m]['beach_score'])
+        best_score = monthly[best_month]['beach_score']
+        best_sea = monthly[best_month].get('sea_temp', 0) or 0
+        avg_sea = sum(sea_temps) / 12
+        # Months with beach_score >= 7.0
+        good_months = sum(1 for s in scores if s >= 7.0)
+        results.append({
+            'slug': slug, 'dest': d, 'avg': avg,
+            'best_month': best_month, 'best_score': best_score,
+            'best_sea': best_sea, 'avg_sea': avg_sea,
+            'good_months': good_months, 'monthly': monthly,
+        })
+    results.sort(key=lambda x: (-x['avg'], -x['good_months']))
+    return results
+
+def compute_beach_seasonal(climate, dests, months):
+    """Beach ranking for specific months."""
+    results = []
+    for slug, monthly in climate.items():
+        if slug not in dests:
+            continue
+        d = dests[slug]
+        if not all(m in monthly for m in months):
+            continue
+        if monthly[months[0]].get('beach_score') is None:
+            continue
+        avg = sum(monthly[m]['beach_score'] for m in months) / len(months)
+        avg_sea = sum((monthly[m].get('sea_temp') or 0) for m in months) / len(months)
+        avg_tmax = sum(monthly[m]['tmax'] for m in months) / len(months)
+        avg_rain = sum(monthly[m]['rain_pct'] for m in months) / len(months)
+        avg_sun = sum(monthly[m]['sun_h'] for m in months) / len(months)
+        results.append({
+            'slug': slug, 'dest': d, 'avg': avg,
+            'avg_sea': avg_sea, 'tmax_avg': avg_tmax,
+            'rain_avg': avg_rain, 'sun_avg': avg_sun,
+            'monthly': monthly,
+        })
+    results.sort(key=lambda x: -x['avg'])
     return results
 
 def compute_sunniest(climate, dests):
@@ -476,6 +535,56 @@ def make_table_nomad(entries, n, lang):
         f'<tbody>{"".join(rows)}</tbody></table>'
     )
 
+def make_table_beach(entries, n, lang):
+    headers = {
+        'fr': ('Rang','Destination','Score plage','Mer','Temp.','Soleil/j','Pluie'),
+        'en': ('Rank','Destination','Beach score','Sea','Temp.','Sun/day','Rain'),
+    }
+    h = headers[lang]
+    rows = []
+    for i, entry in enumerate(entries[:n], 1):
+        d = entry['dest']
+        nom = d['nom_en'] if lang == 'en' else d['nom_fr']
+        link = dest_link(entry['slug'], nom, lang)
+        rows.append(
+            f'<tr><td class="rank">{rank_icon(i)}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
+            f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
+            f'<td>{entry["avg_sea"]:.0f}°C</td>'
+            f'<td>{entry["tmax_avg"]:.0f}°C</td>'
+            f'<td>{entry["sun_avg"]:.1f}h</td>'
+            f'<td>{entry["rain_avg"]:.0f}%</td></tr>'
+        )
+    return (
+        f'<table class="rt"><thead><tr>{"".join(f"<th>{x}</th>" for x in h)}</tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody></table>'
+    )
+
+def make_table_beach_annual(entries, n, lang):
+    mois = MOIS_EN if lang == 'en' else MOIS_FR
+    headers = {
+        'fr': ('Rang','Destination','Score plage','Mer moy.','Meilleur mois','Mois ≥7/10'),
+        'en': ('Rank','Destination','Beach score','Avg. sea','Best month','Months ≥7/10'),
+    }
+    h = headers[lang]
+    rows = []
+    for i, entry in enumerate(entries[:n], 1):
+        d = entry['dest']
+        nom = d['nom_en'] if lang == 'en' else d['nom_fr']
+        link = dest_link(entry['slug'], nom, lang)
+        rows.append(
+            f'<tr><td class="rank">{rank_icon(i)}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
+            f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
+            f'<td>{entry["avg_sea"]:.0f}°C</td>'
+            f'<td>{mois[entry["best_month"]]} ({entry["best_score"]:.1f})</td>'
+            f'<td>{entry["good_months"]}</td></tr>'
+        )
+    return (
+        f'<table class="rt"><thead><tr>{"".join(f"<th>{x}</th>" for x in h)}</tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody></table>'
+    )
+
 # ── JSON-LD ───────────────────────────────────────────────────────────────────
 
 def make_jsonld(entries, n, title, lang):
@@ -502,6 +611,7 @@ RELATED_FR = [
     ('classement-destinations-meteo-ete-2026.html', '☀️ Meilleures destinations été', 'Juin–Juil–Août'),
     ('classement-destinations-meteo-hiver-2026.html', '❄️ Meilleures destinations hiver', 'Déc–Jan–Fév'),
     ('classement-destinations-meteo-nomades-2026.html', '💻 Meilleures destinations nomades', 'Régularité & confort'),
+    ('classement-destinations-plage-2026.html', '🏖️ Meilleures plages', 'Score plage & mer'),
 ]
 
 RELATED_EN = [
@@ -510,6 +620,7 @@ RELATED_EN = [
     ('best-destinations-summer-weather-2026.html', '☀️ Best summer destinations', 'June–July–August'),
     ('best-destinations-winter-weather-2026.html', '❄️ Best winter destinations', 'Dec–Jan–Feb'),
     ('best-destinations-digital-nomads-weather-2026.html', '💻 Best nomad destinations', 'Consistency & comfort'),
+    ('best-beach-destinations-weather-2026.html', '🏖️ Best beach destinations', 'Beach score & sea temp'),
 ]
 
 def make_related(lang, exclude_href=''):
@@ -912,6 +1023,108 @@ def gen_nomades(dests, climate, lang):
     print(f'  ✓ {outfile.name} (nomades, top={top1["dest"]["nom_bare"]})')
 
 
+def gen_beach(dests, climate, lang):
+    annual = compute_beach(climate, dests)
+    summer = compute_beach_seasonal(climate, dests, [6,7,8])
+    winter = compute_beach_seasonal(climate, dests, [12,1,2])
+    top1 = annual[0]
+    n_dests = len(annual)
+
+    if lang == 'fr':
+        nom1 = top1['dest']['nom_bare']
+        title = f'Meilleures destinations plage 2026 — Classement météo & mer'
+        desc = (f'Top {n_dests} destinations plage 2026. Classement basé sur température air + mer, '
+                f'ensoleillement et pluie. N°1 : {nom1} ({top1["avg"]:.1f}/10).')
+        h1 = 'Meilleures<br/><em>destinations plage 2026</em>'
+        hero_sub = f'{nom1} en tête avec {top1["avg"]:.1f}/10 · {top1["good_months"]} mois de plage.'
+        stats = (f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span>'
+                 f'<span class="hstat-lbl">Destinations côtières</span></div>'
+                 f'<div class="hstat"><span class="hstat-val">🏖️</span>'
+                 f'<span class="hstat-lbl">Score plage dédié</span></div></div>')
+        insights = (f'<div class="insights-bar"><div class="insights-inner">'
+                    f'<div class="insights-label">Points clés</div>'
+                    f'<div class="insights-grid">'
+                    f'<div class="insight-item"><strong>N°1 annuel</strong>{nom1} — {top1["avg"]:.1f}/10, mer {top1["avg_sea"]:.0f}°C.</div>'
+                    f'<div class="insight-item"><strong>N°1 été</strong>{summer[0]["dest"]["nom_bare"]} — {summer[0]["avg"]:.1f}/10.</div>'
+                    f'<div class="insight-item"><strong>N°1 hiver</strong>{winter[0]["dest"]["nom_bare"]} — {winter[0]["avg"]:.1f}/10.</div>'
+                    f'</div></div></div>')
+        sections = [
+            {'eyebrow':'Annuel', 'h2':'🏖️ Top 25 plages — Classement annuel',
+             'intro':f'Score plage moyen sur 12 mois. Intègre température air + mer, pluie et soleil. {n_dests} destinations côtières.',
+             'table': make_table_beach_annual(annual, 25, lang)},
+            {'eyebrow':'Été 2026', 'h2':'☀️ Top 20 plages — Été (juin–août)',
+             'intro':'Meilleures plages pour l\'été. Score plage moyen juin–août.',
+             'table': make_table_beach(summer, 20, lang)},
+            {'eyebrow':'Hiver 2026', 'h2':'❄️ Top 20 plages — Hiver (déc–fév)',
+             'intro':'Où se baigner en hiver ? Score plage moyen décembre–février.',
+             'table': make_table_beach(winter, 20, lang)},
+        ]
+        jsonld = make_jsonld(annual, 25, 'Meilleures destinations plage 2026', lang)
+        related = make_related(lang, 'classement-destinations-plage-2026.html')
+        fr_file = 'classement-destinations-plage-2026.html'
+        en_file = 'best-beach-destinations-weather-2026.html'
+        canonical = f'https://bestdateweather.com/{fr_file}'
+        footer = FOOTER_FR.format(en_file=en_file)
+        meth = ('<div class="meth"><strong>Méthodologie score plage</strong>'
+                '<p>Le score plage combine température air (25%), température de la mer (25%), '
+                'précipitations (30%) et ensoleillement (20%). '
+                'Température mer issue de l\'API Marine Open-Meteo (données 2024). '
+                'Seules les destinations côtières avec données marines sont incluses.</p></div>')
+        outfile = ROOT / fr_file
+    else:
+        nom1 = top1['dest']['nom_en']
+        title = f'Best beach destinations 2026 — Weather & sea ranking'
+        desc = (f'Top {n_dests} beach destinations 2026. Ranked by air + sea temperature, '
+                f'sunshine and rainfall. #1: {nom1} ({top1["avg"]:.1f}/10).')
+        h1 = 'Best beach<br/><em>destinations 2026</em>'
+        hero_sub = f'{nom1} leads with {top1["avg"]:.1f}/10 · {top1["good_months"]} beach months.'
+        stats = (f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span>'
+                 f'<span class="hstat-lbl">Coastal destinations</span></div>'
+                 f'<div class="hstat"><span class="hstat-val">🏖️</span>'
+                 f'<span class="hstat-lbl">Dedicated beach score</span></div></div>')
+        insights = (f'<div class="insights-bar"><div class="insights-inner">'
+                    f'<div class="insights-label">Key insights</div>'
+                    f'<div class="insights-grid">'
+                    f'<div class="insight-item"><strong>#1 annual</strong>{nom1} — {top1["avg"]:.1f}/10, sea {top1["avg_sea"]:.0f}°C.</div>'
+                    f'<div class="insight-item"><strong>#1 summer</strong>{summer[0]["dest"]["nom_en"]} — {summer[0]["avg"]:.1f}/10.</div>'
+                    f'<div class="insight-item"><strong>#1 winter</strong>{winter[0]["dest"]["nom_en"]} — {winter[0]["avg"]:.1f}/10.</div>'
+                    f'</div></div></div>')
+        sections = [
+            {'eyebrow':'Annual', 'h2':'🏖️ Top 25 beaches — Annual ranking',
+             'intro':f'Average beach score over 12 months. Combines air + sea temperature, rainfall and sunshine. {n_dests} coastal destinations.',
+             'table': make_table_beach_annual(annual, 25, lang)},
+            {'eyebrow':'Summer 2026', 'h2':'☀️ Top 20 beaches — Summer (June–Aug)',
+             'intro':'Best beaches for summer. Average beach score June–August.',
+             'table': make_table_beach(summer, 20, lang)},
+            {'eyebrow':'Winter 2026', 'h2':'❄️ Top 20 beaches — Winter (Dec–Feb)',
+             'intro':'Where to swim in winter? Average beach score December–February.',
+             'table': make_table_beach(winter, 20, lang)},
+        ]
+        jsonld = make_jsonld(annual, 25, 'Best beach destinations 2026', lang)
+        related = make_related(lang, 'best-beach-destinations-weather-2026.html')
+        fr_file = 'classement-destinations-plage-2026.html'
+        en_file = 'best-beach-destinations-weather-2026.html'
+        canonical = f'https://bestdateweather.com/en/{en_file}'
+        footer = FOOTER_EN.format(fr_file=fr_file)
+        meth = ('<div class="meth"><strong>Beach score methodology</strong>'
+                '<p>Beach score combines air temperature (25%), sea temperature (25%), '
+                'precipitation (30%) and sunshine (20%). '
+                'Sea temperature from Open-Meteo Marine API (2024 data). '
+                'Only coastal destinations with marine data are included.</p></div>')
+        outfile = ROOT / 'en' / en_file
+
+    page = make_page(
+        title=title, description=desc, h1=h1, hero_sub=hero_sub,
+        stats_html=stats, insights_html=insights, sections=sections,
+        jsonld_str=jsonld, related_html=related, meth_html=meth,
+        footer_html=footer, lang=lang, canonical=canonical,
+        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
+        hreflang_en=f'https://bestdateweather.com/en/{en_file}'
+    )
+    outfile.write_text(page, encoding='utf-8')
+    print(f'  ✓ {outfile.name} (plage, {n_dests} coastal, top={top1["dest"]["nom_bare"]})')
+
+
 # ══════════════════════════════════════════════════════════════════════════════
 # MAIN
 # ══════════════════════════════════════════════════════════════════════════════
@@ -928,6 +1141,7 @@ def main():
     gen_ete(dests, climate, 'fr')
     gen_hiver(dests, climate, 'fr')
     gen_nomades(dests, climate, 'fr')
+    gen_beach(dests, climate, 'fr')
 
     print('\nGenerating EN pages...')
     gen_mondial(dests, climate, 'en')
@@ -935,8 +1149,9 @@ def main():
     gen_ete(dests, climate, 'en')
     gen_hiver(dests, climate, 'en')
     gen_nomades(dests, climate, 'en')
+    gen_beach(dests, climate, 'en')
 
-    print('\n✅ All 10 ranking pages generated.')
+    print('\n✅ All 12 ranking pages generated.')
 
 if __name__ == '__main__':
     main()
