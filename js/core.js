@@ -2100,6 +2100,7 @@ function renderAnnual(loc, monthly) {
  // ── fin résumé narratif ──────────────────────────────────────────────────
 
  document.getElementById('annual-result').style.display = 'block';
+ var ucw=document.getElementById('ann-uc-wrap');if(ucw)ucw.style.display='';
  setTimeout(function(){var el=document.getElementById('annual-result');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);
 }
 
