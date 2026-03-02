@@ -2104,7 +2104,7 @@ function renderAnnual(loc, monthly) {
 
  document.getElementById('annual-result').style.display = 'block';
  var ucw=document.getElementById('ann-uc-wrap');if(ucw)ucw.style.display='';
- setTimeout(function(){var el=document.getElementById('annual-result');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);
+ setTimeout(function(){var el=document.getElementById('ann-uc-wrap');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);
 }
 
 
