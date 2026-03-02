@@ -448,6 +448,7 @@ function fetchForecast(lat, lon, yr, mo, da) {
  if (data.utc_offset_seconds != null) _locTzOffset = data.utc_offset_seconds;
  // Store daily forecast for 7-day strip
  window._forecastDaily = data.daily || null;
+ _modelElevation = data.elevation != null ? Math.round(data.elevation) : null;
  var mo2=mo+1, prefix=yr+'-'+(mo2<10?'0':'')+mo2+'-'+(da<10?'0':'')+da, rows=[];
  for(var h=0;h<24;h++){
  var ts=prefix+'T'+(h<10?'0':'')+h+':00', idx=-1;
@@ -524,7 +525,7 @@ function render7DayStrip(diffDays) {
 
 function fetchArchive(lat, lon, refDate) {
  var s=toISO(addDays(refDate,-10)), e=toISO(addDays(refDate,10));
- return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&hourly=temperature_2m,precipitation,snowfall,windspeed_10m,shortwave_radiation,relative_humidity_2m&timezone=auto').then(function(r){if(!r.ok)throw new Error('Archive error');return r.json();}).then(function(d){if(d.utc_offset_seconds!=null)_locTzOffset=d.utc_offset_seconds;return d;});
+ return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&hourly=temperature_2m,precipitation,snowfall,windspeed_10m,shortwave_radiation,relative_humidity_2m&timezone=auto').then(function(r){if(!r.ok)throw new Error('Archive error');return r.json();}).then(function(d){if(d.utc_offset_seconds!=null)_locTzOffset=d.utc_offset_seconds;if(d.elevation!=null)_modelElevation=Math.round(d.elevation);return d;});
 }
 
 function fetchSnowDepth(lat, lon, yr, mo, da) {
@@ -710,6 +711,19 @@ var currentUseCase = 'general';
 var _lastRows = null, _lastSc = null;
 var _locTzOffset = 0; // global timezone offset from API
 var _lastMonthly = null, _lastAnnLoc = null;
+var _modelElevation = null; // elevation of model grid cell (from API response)
+var _annModelElevation = null; // model elevation for annual mode
+
+// ── Altitude correction for ski scoring ──────────────────────────────────
+// Open-Meteo returns temperatures at model grid elevation, which can differ
+// significantly from the actual location elevation (especially in mountains).
+// Lapse rate: ~6.5°C per 1000m elevation gain.
+function altCorrection(temp, locElevation, modelElevation) {
+ if (temp == null || locElevation == null || modelElevation == null) return temp;
+ var delta = locElevation - modelElevation;
+ if (Math.abs(delta) < 50) return temp; // negligible difference
+ return temp - 6.5 * delta / 1000;
+}
 
 // Reference scores from destination pages
 // Used by annual view for consistency with static pages statiques
@@ -1025,6 +1039,11 @@ function computeAndRenderScore(sc, rows) {
  if (uc === 'ski') {
   var tmax_ski = rows.length ? Math.max.apply(null, rows.map(function(r){return r.temp||0;})) : (avgTemp||10);
   var tmin_ski = rows.length ? Math.min.apply(null, rows.map(function(r){return r.temp||0;})) : (avgTemp||5);
+  // Altitude correction: adjust temps from model grid elevation to actual location elevation
+  if (selectedLoc && selectedLoc.elevation != null && _modelElevation != null) {
+   tmax_ski = altCorrection(tmax_ski, selectedLoc.elevation, _modelElevation);
+   tmin_ski = altCorrection(tmin_ski, selectedLoc.elevation, _modelElevation);
+  }
   var avgMm = mmSum / rows.length;
   var sTempSki;
   if (tmax_ski > 10) sTempSki = 0;
@@ -1329,7 +1348,7 @@ function selectAC(i){
  var isFrDom = !!FR_DOM[item.country_code];
  var region = (item.country_code === 'FR' || isFrDom) ? (isFrDom ? FR_TERRITORY_NAMES[item.country_code] : '') : (item.admin1 || '');
  var country = isFrDom ? 'France' : getCountryName(item);
- selectedLoc={lat:item.latitude,lon:item.longitude,name:item.name,region:region,country:country};
+ selectedLoc={lat:item.latitude,lon:item.longitude,name:item.name,region:region,country:country,elevation:item.elevation||null};
  var label = item.name;
  if (region) label += ', ' + region;
  if (country) label += ' (' + country + ')';
@@ -1562,7 +1581,7 @@ function selectAnnAC(i) {
  var item = annAcData[i]; if (!item) return;
  var region2 = (item.country_code === 'FR') ? '' : (item.admin1 || '');
  var country2 = getCountryName(item);
- annSelectedLoc = { lat: item.latitude, lon: item.longitude, name: item.name, region: region2, country: country2 };
+ annSelectedLoc = { lat: item.latitude, lon: item.longitude, name: item.name, region: region2, country: country2, elevation: item.elevation||null };
  var label2 = item.name;
  if (region2) label2 += ', ' + region2;
  if (country2) label2 += ' (' + country2 + ')';
@@ -1675,6 +1694,7 @@ function fetchAnnualArchive(loc) {
  throw new Error(T.errData);
  }
  setAnnP(70, T.progAggregation);
+ _annModelElevation = data.elevation != null ? Math.round(data.elevation) : null;
  return aggregateByMonth(data);
  }).catch(function(e) {
  // Fallback: retry without sunshine_duration
@@ -1687,6 +1707,7 @@ function fetchAnnualArchive(loc) {
  return r.json();
  }).then(function(data) {
  setAnnP(70, T.progAggregation);
+ _annModelElevation = data.elevation != null ? Math.round(data.elevation) : null;
  return aggregateByMonth(data);
  });
  }
@@ -1794,6 +1815,12 @@ function monthScoreForUC(d, uc) {
  if (uc === 'ski') {
  var tmax = d.avgTmax != null ? d.avgTmax : (d.avgTemp != null ? d.avgTemp + 4 : 5);
  var tmin = d.avgTmin != null ? d.avgTmin : (d.avgTemp != null ? d.avgTemp - 4 : 0);
+ // Altitude correction: adjust temps from model grid elevation to actual location elevation
+ var _annLoc = _lastAnnLoc || annSelectedLoc;
+ if (_annLoc && _annLoc.elevation != null && _annModelElevation != null) {
+  tmax = altCorrection(tmax, _annLoc.elevation, _annModelElevation);
+  tmin = altCorrection(tmin, _annLoc.elevation, _annModelElevation);
+ }
  var rain = d.rainPct || 0;
  var mm = d.avgPrecipMm || 0;
  var sun = d.sunHrs || 0;
@@ -2152,7 +2179,7 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
  var el = document.getElementById('ann-city');
  el.value = city;
  document.getElementById('ann-city-clear').classList.add('visible');
- annSelectedLoc = { lat: parseFloat(lat), lon: parseFloat(lon), name: city, region: '', country: '' };
+ annSelectedLoc = { lat: parseFloat(lat), lon: parseFloat(lon), name: city, region: '', country: '', elevation: null };
  if (uc) { currentUseCase = uc; quickFill(uc); }
  setTimeout(function() { runAnnual(); }, 100);
  }
