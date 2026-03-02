@@ -4,6 +4,7 @@
     "es2017": true
   },
   "globals": {
+    "FICHE_SCORES": "readonly",
     "flatpickr": "readonly",
     "gtag": "readonly",
     "dataLayer": "readonly"

@@ -114,7 +114,6 @@ window.BDW_T = {
  chipWind: 'Vent', chipSnow: 'Neige', chipHumidity: 'Humidité',
  spreadStable: '🌡 Stable', spreadVariable: '🌡 Variable',
  forecast7dLabel: 'Prévisions 7 jours', dayToday: 'Auj.',
- dayAbbr: 'Dim,Lun,Mar,Mer,Jeu,Ven,Sam',
 
  // Sky labels
  skyRainy: 'Pluvieux', skyCloudy: 'Nuageux', skyClearSky: 'Plein soleil',
