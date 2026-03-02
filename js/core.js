@@ -715,10 +715,16 @@ var _lastMonthly = null, _lastAnnLoc = null;
 // Used by annual view for consistency with static pages statiques
 /* FICHE_SCORES loaded from fiche-scores.js */// Cache mensuel pré-calculé — chargé depuis data/monthly.json
 var MONTHLY_CACHE = null;
-var MONTHLY_CACHE_PROMISE = fetch(CFG.dataBase+'data/monthly.json')
- .then(function(r){ return r.ok ? r.json() : null; })
- .then(function(d){ MONTHLY_CACHE = d || {}; return MONTHLY_CACHE; })
- .catch(function(){ MONTHLY_CACHE = {}; return {}; });
+var _monthlyPromise = null;
+function getMonthlyCache() {
+ if (!_monthlyPromise) {
+  _monthlyPromise = fetch(CFG.dataBase+'data/monthly.json')
+   .then(function(r){ return r.ok ? r.json() : null; })
+   .then(function(d){ MONTHLY_CACHE = d || {}; return MONTHLY_CACHE; })
+   .catch(function(){ MONTHLY_CACHE = {}; return {}; });
+ }
+ return _monthlyPromise;
+}
 
 function findCachedMonthly(lat, lon) {
  if (!MONTHLY_CACHE) return null;
@@ -1584,7 +1590,7 @@ function runAnnual() {
  var cached = findCachedMonthly(loc.lat, loc.lon);
  var archiveP = cached
  ? (setAnnP(30, T.progCache), Promise.resolve(cached))
- : (setAnnP(10, T.progDownload), MONTHLY_CACHE_PROMISE.then(function(){
+ : (setAnnP(10, T.progDownload), getMonthlyCache().then(function(){
  var c2 = findCachedMonthly(loc.lat, loc.lon);
  return c2 ? c2 : fetchAnnualArchive(loc);
  }));
