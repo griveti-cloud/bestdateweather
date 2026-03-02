@@ -24,7 +24,8 @@ from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
                               dest_country, annual_url, monthly_url,
                               annual_url_cross, monthly_url_cross, hero_sub as _hero_sub,
                               pillar_url, MONTH_URL, MONTH_URL_FR,
-                              SEASON_ICONS, TODAY, YEAR)
+                              SEASON_ICONS, TODAY, YEAR, DATA_UPDATED,
+                              date_modified_for)
 
 # ── PATHS ───────────────────────────────────────────────────────────────────
 DIR  = os.path.dirname(os.path.abspath(__file__))
@@ -309,9 +310,13 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     worst_idx  = min(range(12), key=lambda i: months[i]['score'])
     worst_rain = months[worst_idx]['rain_pct']
 
-    # ── Title & description (3 variants each) ──
+    # ── Title & description (5 desc variants, 3 title variants) ──
     title_var = hash(slug_fr) % 3
-    desc_var  = hash(slug_fr + 'desc') % 3
+    desc_var  = hash(slug_fr + 'desc') % 5
+
+    # Best season name for richer descriptions
+    _best_season_name = max(seas, key=lambda s: seas[s]['score'])
+    best_sun = best_m['sun_h']
 
     if C['is_fr']:
         prep = dest.get('prep', 'à')
@@ -332,9 +337,17 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         elif desc_var == 1:
             desc = (f"Quand partir {prep} {nom_bare} ? {MONTHS[best_idx]} est le meilleur mois "
                     f"({best_score}/10) avec {best_tmax}°C. Analyse complète des 12 mois sur 10 ans de données.")
-        else:
+        elif desc_var == 2:
             desc = (f"{nom_bare} en {MONTHS[best_idx].lower()} : {best_tmax}°C, {best_rain}% de pluie, "
                     f"score {best_score}/10. Découvrez le meilleur moment pour partir — données météo 10 ans.")
+        elif desc_var == 3:
+            desc = (f"{MONTHS[best_idx]} est idéal {prep} {nom_bare} : {best_tmax}°C, "
+                    f"{best_sun}h de soleil et {best_rain}% de pluie. "
+                    f"Évitez {MONTHS[worst_idx].lower()} ({worst_rain}% pluvieux). Score {best_score}/10.")
+        else:
+            desc = (f"Climat {prep} {nom_bare} : profitez de {_best_season_name.lower()} "
+                    f"({best_m['tmin']}–{best_tmax}°C en {MONTHS[best_idx].lower()}). "
+                    f"Soleil {best_sun}h/j, pluie {best_rain}%. Analyse sur 10 ans.")
         og_title = f"Meilleure période {prep} {nom_bare} — météo &amp; conseils"
     else:
         if title_var == 0:
@@ -353,9 +366,17 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         elif desc_var == 1:
             desc = (f"When to visit {nom}? {MONTHS[best_idx]} is the best month "
                     f"({best_score}/10) with {best_tmax}°C. Full 12-month analysis based on 10 years of data.")
-        else:
+        elif desc_var == 2:
             desc = (f"{nom} in {MONTHS[best_idx]}: {best_tmax}°C, {best_rain}% rain, "
                     f"score {best_score}/10. Find the best time to go — 10-year weather data.")
+        elif desc_var == 3:
+            desc = (f"{MONTHS[best_idx]} is ideal for {nom}: {best_tmax}°C, "
+                    f"{best_sun}h sunshine and {best_rain}% rain. "
+                    f"Avoid {MONTHS[worst_idx]} ({worst_rain}% rainy). Score {best_score}/10.")
+        else:
+            desc = (f"{nom} climate: enjoy {_best_season_name.lower()} "
+                    f"({best_m['tmin']}–{best_tmax}°C in {MONTHS[best_idx]}). "
+                    f"Sunshine {best_sun}h/day, rain {best_rain}%. 10-year analysis.")
         og_title = f"Best time to visit {nom} — weather &amp; tips"
 
     # ── Climate table ──
@@ -390,10 +411,18 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 </section>''' if dest_cards else ''
 
     # ── Climate table section ──
+    is_tropical = dest.get('tropical', '').strip().lower() in ('true', '1')
+    tropical_note = ''
+    if is_tropical:
+        if C['is_fr']:
+            tropical_note = '<p class="tropical-note">🌴 Destination tropicale — les mois de forte pluie bénéficient d\'une correction algorithmique : les averses sont intenses mais courtes, et ne gâchent généralement pas le séjour.</p>'
+        else:
+            tropical_note = '<p class="tropical-note">🌴 Tropical destination — heavy rain months benefit from an algorithmic adjustment: tropical showers are intense but brief and usually don\'t ruin a trip.</p>'
     table_section = f'''<section class="section">
  <div class="section-label">{C['lbl_table_section']}</div>
  <h2 class="section-title">{C['lbl_table_title_tpl'].format(name=nom_f)}</h2>
  {table_html}
+ {tropical_note}
 </section>'''
 
     # ── Seasonal analysis ──
@@ -542,6 +571,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     if sim_list and all_dests:
         sim_cards = ''
         for sim_score, sim_slug in sim_list[:3]:
+            # Rescale cosine similarity: 0.975→0%, 1.0→100% for discriminating display
+            display_pct = max(0, min(1, (sim_score - 0.975) / 0.025))
             sd = all_dests.get(sim_slug, {})
             sn = dest_name(C, sd) if sd else sim_slug
             sc = dest_country(C, sd) if sd else ''
@@ -552,7 +583,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
                 f'<div class="f13-slate3"><img src="{pfx}flags/{sf}.png" width="16" height="12" '
                 f'alt="{sf}" class="flag-icon">{sc}</div>'
                 f'<div class="fw700-navy">{sn}</div>'
-                f'<div class="f12-slate2">{C["lbl_similar_match"].format(pct=f"{sim_score:.0%}")}</div>'
+                f'<div class="f12-slate2">{C["lbl_similar_match"].format(pct=f"{display_pct:.0%}")}</div>'
                 f'</a>')
         similar_section = f'''<section class="section">
  <div class="section-label">{C['lbl_similar_section']}</div>
@@ -609,7 +640,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         "headline": headline, "description": desc,
         "author": {"@type": "Organization", "name": "BestDateWeather"},
         "publisher": {"@type": "Organization", "name": "BestDateWeather"},
-        "dateModified": TODAY,
+        "dateModified": date_modified_for(slug_fr),
         **({"inLanguage": "en"} if not C['is_fr'] else {}),
         "mainEntityOfPage": {"@type": "WebPage", "@id": canonical}
     }, ensure_ascii=False)
@@ -679,7 +710,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 .hero-title em{{color:#93c5fd;}}
 </style>
 </head>
-<body><script>window.scrollTo(0,0);</script>
+<body>
 {nav_html(C)}
 <header class="hero-band">
  <div class="dest-tag"><img src="{pfx}flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" class="flag-icon"> {nom}, {country}</div>
@@ -1338,7 +1369,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         "description": article_desc,
         "author": {"@type": "Organization", "name": "BestDateWeather"},
         "publisher": {"@type": "Organization", "name": "BestDateWeather"},
-        "dateModified": TODAY,
+        "dateModified": date_modified_for(slug_fr, str(mi)),
         "mainEntityOfPage": {"@type": "WebPage", "@id": canonical}
     }, ensure_ascii=False)
 
@@ -1359,10 +1390,13 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         "itemListElement": bc_items
     }, ensure_ascii=False)
 
-    # ── Title / Desc / H1 (3 variants) ──
+    # ── Title / Desc / H1 (5 desc variants, 3 title variants) ──
     title_var = hash(slug_fr + str(mi)) % 3
-    desc_var  = hash(slug_fr + str(mi) + 'd') % 3
+    desc_var  = hash(slug_fr + str(mi) + 'd') % 5
     h1_var    = hash(slug_fr + str(mi) + 'h1') % 3
+
+    _verdict_fr = 'Période recommandée.' if score >= 7.5 else 'Période acceptable.' if score >= 5.5 else 'Période déconseillée.'
+    _verdict_en = 'Recommended period.' if score >= 7.5 else 'Average period.' if score >= 5.5 else 'Not recommended.'
 
     if is_fr:
         if title_var == 0:
@@ -1375,9 +1409,13 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         if desc_var == 0:
             desc = f"Météo {prep} {nom_bare} en {month_lc} : {m['tmax']}°C max, {m['rain_pct']}% de jours pluvieux, {m['sun_h']}h de soleil/jour. Score {score:.1f}/10. Données 10 ans Open-Meteo."
         elif desc_var == 1:
-            desc = f"{nom_bare} en {month_lc} : {m['tmax']}°C, {m['sun_h']}h de soleil, {m['rain_pct']}% de pluie. {'Période recommandée.' if score >= 7.5 else 'Période moyenne.' if score >= 5.5 else 'Période déconseillée.'} Score {score:.1f}/10."
-        else:
+            desc = f"{nom_bare} en {month_lc} : {m['tmax']}°C, {m['sun_h']}h de soleil, {m['rain_pct']}% de pluie. {_verdict_fr} Score {score:.1f}/10."
+        elif desc_var == 2:
             desc = f"Faut-il partir {prep} {nom_bare} en {month_lc} ? {m['tmax']}°C et {m['rain_pct']}% de pluie — score météo {score:.1f}/10 sur 10 ans de données."
+        elif desc_var == 3:
+            desc = f"{nom_bare} en {month_lc} : {m['sun_h']}h de soleil, {m['tmin']}–{m['tmax']}°C. {_verdict_fr} Climat analysé sur 10 ans de données ERA5."
+        else:
+            desc = f"{m['tmax']}°C et {m['rain_pct']}% de pluie en {month_lc} {prep} {nom_bare}. {m['sun_h']}h d'ensoleillement — score {score:.1f}/10."
 
         if h1_var == 0:
             h1_text = f"Météo {prep} {nom_bare}<br/><em>en {month_lc}</em>"
@@ -1398,9 +1436,13 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         if desc_var == 0:
             desc = f"{nom} weather in {month}: {m['tmax']}°C max, {m['rain_pct']}% rainy days, {m['sun_h']}h sunshine/day. Score {score:.1f}/10. Based on 10 years of Open-Meteo data."
         elif desc_var == 1:
-            desc = f"{nom} in {month}: {m['tmax']}°C, {m['sun_h']}h sunshine, {m['rain_pct']}% rain. {'Recommended period.' if score >= 7.5 else 'Average period.' if score >= 5.5 else 'Not recommended.'} Score {score:.1f}/10."
-        else:
+            desc = f"{nom} in {month}: {m['tmax']}°C, {m['sun_h']}h sunshine, {m['rain_pct']}% rain. {_verdict_en} Score {score:.1f}/10."
+        elif desc_var == 2:
             desc = f"Should you visit {nom} in {month}? {m['tmax']}°C and {m['rain_pct']}% rain — weather score {score:.1f}/10 based on 10 years of data."
+        elif desc_var == 3:
+            desc = f"{nom} in {month}: {m['sun_h']}h sunshine, {m['tmin']}–{m['tmax']}°C. {_verdict_en} Climate analysed from 10 years of ERA5 data."
+        else:
+            desc = f"{m['tmax']}°C and {m['rain_pct']}% rain in {month} in {nom}. {m['sun_h']}h sunshine — score {score:.1f}/10."
 
         if h1_var == 0:
             h1_text = f"{nom} weather<br/><em>in {month}</em>"
@@ -1575,7 +1617,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .month-nav a:hover{{border-color:var(--gold);}}
 </style>
 </head>
-<body><script>window.scrollTo(0,0);</script>
+<body>
 {NAV}
 <header class="hero-band">
  <div class="dest-tag"><img src="{pfx}flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" class="flag-icon"> {nom} · {season}</div>

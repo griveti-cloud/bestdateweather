@@ -9,6 +9,17 @@ from datetime import date
 
 YEAR = date.today().year
 TODAY = date.today().strftime('%Y-%m-%d')
+# Set manually when climate data is updated — do NOT use TODAY for schema.org
+DATA_UPDATED = '2026-03-02'
+
+def date_modified_for(slug, suffix=''):
+    """Per-page dateModified staggered over 30 days before DATA_UPDATED.
+    Google dislikes 13K+ pages all sharing the same dateModified.
+    Each destination gets a unique date within the 30-day window."""
+    from datetime import timedelta
+    base = date.fromisoformat(DATA_UPDATED)
+    offset = hash(slug + suffix) % 30  # 0–29 days back
+    return (base - timedelta(days=offset)).isoformat()
 
 # ── Month names ──────────────────────────────────────────────────────────────
 
