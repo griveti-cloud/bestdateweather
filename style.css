@@ -200,45 +200,31 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
     margin-bottom:4px;padding-bottom:6px!important;
     border-bottom:1px solid var(--cream2)!important
   }
-  /* Mobile card labels — annual comparison table only */
-  .climate-table[aria-label*="Comparaison"] tbody td:not(:first-child),
-  .climate-table[aria-label*="Month-by-month"] tbody td:not(:first-child){
-    display:flex!important;justify-content:space-between;align-items:center
-  }
-  .climate-table[aria-label*="Comparaison"] tbody td:not(:first-child)::before,
-  .climate-table[aria-label*="Month-by-month"] tbody td:not(:first-child)::before{
-    font-size:11px;font-weight:600;color:#78716c;margin-right:8px;flex-shrink:0
-  }
-  .climate-table[aria-label*="Comparaison"] tbody td:nth-child(2)::before{content:"T° min"}
-  .climate-table[aria-label*="Comparaison"] tbody td:nth-child(3)::before{content:"T° max"}
-  .climate-table[aria-label*="Comparaison"] tbody td:nth-child(4)::before{content:"Pluie"}
-  .climate-table[aria-label*="Comparaison"] tbody td:nth-child(5)::before{content:"Précip. mm/j"}
-  .climate-table[aria-label*="Comparaison"] tbody td:nth-child(6)::before{content:"Soleil"}
-  .climate-table[aria-label*="Comparaison"] tbody td:nth-child(7)::before{content:"Score"}
-  .climate-table[aria-label*="Month-by-month"] tbody td:nth-child(2)::before{content:"Min temp"}
-  .climate-table[aria-label*="Month-by-month"] tbody td:nth-child(3)::before{content:"Max temp"}
-  .climate-table[aria-label*="Month-by-month"] tbody td:nth-child(4)::before{content:"Rain"}
-  .climate-table[aria-label*="Month-by-month"] tbody td:nth-child(5)::before{content:"Precip. mm/d"}
-  .climate-table[aria-label*="Month-by-month"] tbody td:nth-child(6)::before{content:"Sunshine"}
-  .climate-table[aria-label*="Month-by-month"] tbody td:nth-child(7)::before{content:"Score"}
-  /* Table mensuelle : responsive sans scroll horizontal */
-  .climate-table[aria-label*="mensuel"],.climate-table[aria-label*="Monthly climate table"]{
+  /* Table mensuelle + comparaison : responsive sans scroll horizontal */
+  .climate-table[aria-label*="mensuel"],.climate-table[aria-label*="Monthly climate table"],
+  .climate-table[aria-label*="Comparaison"],.climate-table[aria-label*="Month-by-month"]{
     min-width:0;display:table;font-size:11px
   }
-  .climate-table[aria-label*="mensuel"] thead,.climate-table[aria-label*="Monthly climate table"] thead{display:table-header-group}
-  .climate-table[aria-label*="mensuel"] tbody,.climate-table[aria-label*="Monthly climate table"] tbody{display:table-row-group}
-  .climate-table[aria-label*="mensuel"] tbody tr,.climate-table[aria-label*="Monthly climate table"] tbody tr{
+  .climate-table[aria-label*="mensuel"] thead,.climate-table[aria-label*="Monthly climate table"] thead,
+  .climate-table[aria-label*="Comparaison"] thead,.climate-table[aria-label*="Month-by-month"] thead{display:table-header-group}
+  .climate-table[aria-label*="mensuel"] tbody,.climate-table[aria-label*="Monthly climate table"] tbody,
+  .climate-table[aria-label*="Comparaison"] tbody,.climate-table[aria-label*="Month-by-month"] tbody{display:table-row-group}
+  .climate-table[aria-label*="mensuel"] tbody tr,.climate-table[aria-label*="Monthly climate table"] tbody tr,
+  .climate-table[aria-label*="Comparaison"] tbody tr,.climate-table[aria-label*="Month-by-month"] tbody tr{
     display:table-row;border:none;border-radius:0;
     padding:0;margin:0;box-shadow:none;flex-direction:unset
   }
-  .climate-table[aria-label*="mensuel"] tbody td,.climate-table[aria-label*="Monthly climate table"] tbody td{
+  .climate-table[aria-label*="mensuel"] tbody td,.climate-table[aria-label*="Monthly climate table"] tbody td,
+  .climate-table[aria-label*="Comparaison"] tbody td,.climate-table[aria-label*="Month-by-month"] tbody td{
     display:table-cell;padding:6px 4px!important;
     text-align:center!important;font-size:11px
   }
-  .climate-table[aria-label*="mensuel"] thead th,.climate-table[aria-label*="Monthly climate table"] thead th{
+  .climate-table[aria-label*="mensuel"] thead th,.climate-table[aria-label*="Monthly climate table"] thead th,
+  .climate-table[aria-label*="Comparaison"] thead th,.climate-table[aria-label*="Month-by-month"] thead th{
     padding:8px 4px!important;font-size:10px
   }
-  .climate-table[aria-label*="mensuel"] tbody td:first-child,.climate-table[aria-label*="Monthly climate table"] tbody td:first-child{
+  .climate-table[aria-label*="mensuel"] tbody td:first-child,.climate-table[aria-label*="Monthly climate table"] tbody td:first-child,
+  .climate-table[aria-label*="Comparaison"] tbody td:first-child,.climate-table[aria-label*="Month-by-month"] tbody td:first-child{
     padding-left:8px!important;font-size:11px;white-space:nowrap;
     border-bottom:1px solid var(--cream2)!important
   }
