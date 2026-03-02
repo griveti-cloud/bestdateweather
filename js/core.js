@@ -784,6 +784,10 @@ var TROPICAL_KEYS = {"-8.67,115.21":true,"13.75,100.52":true,"9.93,-84.08":true,
 // Plages score par classe — scoring.py : SCORE_RANGES
 var SCORE_RANGES_FICHE = { avoid:[0.5,3.9], mid:[4.0,6.9], rec:[7.0,10.0] };
 
+// Bornes globales raw_score par classe — scoring.py : GLOBAL_RAW_BOUNDS
+var GLOBAL_RAW_BOUNDS = { rec:[0.403,0.965], mid:[0.306,0.695], avoid:[0.137,0.563] };
+var SCORE_POWER = 2.0;
+
 // scoring.py : t_ideal()
 function tIdeal(tmax) {
  if (tmax <= 5) return 0.0;
@@ -849,11 +853,13 @@ function computeAnchoredScores(monthly, ficheKey) {
  var range = (isTropical && cls === 'avoid') ? SCORE_RANGES_FICHE.mid : SCORE_RANGES_FICHE[cls];
  var lo = range[0], hi = range[1];
  var raws = grp.map(function(it){ return it.raw; });
- var mn = Math.min.apply(null, raws), mx = Math.max.apply(null, raws);
+ var gBounds = GLOBAL_RAW_BOUNDS[cls] || [0,1];
+ var gmn = gBounds[0], gmx = gBounds[1];
  grp.forEach(function(it, j) {
  if (monthly[it.i].ficheScore != null) return;
- var norm = mx !== mn ? (raws[j] - mn) / (mx - mn) : 0.5;
- monthly[it.i].ficheScore = Math.round((lo + norm * (hi - lo)) * 10); // échelle ×10 = cohérent avec FICHE_SCORES
+ var norm = gmx !== gmn ? Math.max(0, Math.min(1, (raws[j] - gmn) / (gmx - gmn))) : 0.5;
+ var stretched = Math.pow(norm, SCORE_POWER);
+ monthly[it.i].ficheScore = Math.round((lo + stretched * (hi - lo)) * 10);
  });
  });
 }

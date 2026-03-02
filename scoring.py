@@ -130,6 +130,50 @@ def _norm(values: list) -> list:
     return [(v - mn) / (mx - mn) for v in values]
 
 
+# ── NORMALISATION GLOBALE ──────────────────────────────────────────────────
+#
+# Au lieu de normaliser par destination (→ best mois = 10.0 pour TOUTES les
+# destinations), on normalise sur l'ensemble des ~4500 mois rec / ~1300 mid /
+# ~350 avoid de toutes les destinations.
+#
+# Avantage : les classements mensuels ("où partir en mai") ont des scores
+# différenciés. Paris juin ≠ Lisbonne juillet.
+#
+# Power curve (SCORE_POWER) : étire les différences dans le haut de l'échelle.
+# p=1 → linéaire, p=2 → quadratique (meilleure discrimination top destinations).
+#
+# Les bornes sont recalculées depuis climate.csv à chaque import.
+# Si climate.csv n'existe pas (tests unitaires), fallback sur bornes par défaut.
+
+SCORE_POWER = 2.0   # exposant de la courbe de puissance
+
+def _load_global_bounds():
+    """Calcule min/max raw_score par classe effective depuis climate.csv."""
+    import csv, os
+    csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'climate.csv')
+    bounds = {}
+    try:
+        by_class = {'rec': [], 'mid': [], 'avoid': []}
+        with open(csv_path, encoding='utf-8-sig') as f:
+            for r in csv.DictReader(f):
+                cls = r['classe']
+                raw = raw_score(float(r['tmax']), float(r['rain_pct']), float(r['sun_h']))
+                if cls in by_class:
+                    by_class[cls].append(raw)
+        for cls, raws in by_class.items():
+            if raws:
+                bounds[cls] = (min(raws), max(raws))
+    except FileNotFoundError:
+        pass
+    # Fallback si fichier absent ou classe vide
+    bounds.setdefault('rec',   (0.40, 0.97))
+    bounds.setdefault('mid',   (0.30, 0.70))
+    bounds.setdefault('avoid', (0.13, 0.57))
+    return bounds
+
+GLOBAL_RAW_BOUNDS = _load_global_bounds()
+
+
 def compute_scores(months: list, slug: str = '') -> list:
     """
     Calcule les scores /100 pour une liste de 12 mois.
@@ -150,12 +194,12 @@ def compute_scores(months: list, slug: str = '') -> list:
       [{'month': ..., 'score_100': int, 'score_10': float}, ...]
 
     Algorithme :
-      1. Séparer les mois par classe
+      1. Séparer les mois par classe (avec déclassement chaleur extrême)
       2. Calculer raw_score pour chaque mois
-      3. Normaliser min-max à l'intérieur de la classe
-      4. Mapper la position normalisée sur la plage [lo, hi] de la classe
-         (correction tropicale : avoid → plage mid pour TROPICAL_DESTINATIONS)
-      5. score_10 = arrondi à 1 décimale, score_100 = arrondi entier × 10
+      3. Normaliser sur les bornes GLOBALES de la classe (toutes destinations)
+      4. Appliquer courbe de puissance (SCORE_POWER) pour étirer le haut
+      5. Mapper sur la plage [lo, hi] de la classe
+      6. score_10 = arrondi à 1 décimale, score_100 = arrondi entier × 10
     """
     is_tropical = slug in TROPICAL_DESTINATIONS
 
@@ -189,11 +233,18 @@ def compute_scores(months: list, slug: str = '') -> list:
         if not idxs:
             continue
         lo, hi = get_range(cls)
+        glob_mn, glob_mx = GLOBAL_RAW_BOUNDS.get(cls, (0.0, 1.0))
         raws = [raw_score(effective_months[i]['tmax'], effective_months[i]['rain_pct'], effective_months[i]['sun_h'])
                 for i in idxs]
-        norms = _norm(raws)
         for j, i in enumerate(idxs):
-            val_10 = round(lo + norms[j] * (hi - lo), 1)
+            # Normalisation globale : position relative dans l'ensemble de la classe
+            if glob_mx > glob_mn:
+                norm = max(0.0, min(1.0, (raws[j] - glob_mn) / (glob_mx - glob_mn)))
+            else:
+                norm = 0.5
+            # Courbe de puissance : étire les différences en haut de l'échelle
+            stretched = norm ** SCORE_POWER
+            val_10 = round(lo + stretched * (hi - lo), 1)
             scores[i] = {
                 'month'     : effective_months[i].get('month', ''),
                 'score_10'  : val_10,
