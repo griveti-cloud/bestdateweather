@@ -1113,6 +1113,7 @@
    var acc=el.parentElement;
    var wasOpen=acc.classList.contains('open');
    acc.classList.toggle('open');
+   if(!wasOpen)setTimeout(function(){acc.scrollIntoView({behavior:'smooth',block:'start'})},80);
   });
  }
  document.querySelectorAll('.dh-acc-head').forEach(function(h){toggleAcc(h)});
