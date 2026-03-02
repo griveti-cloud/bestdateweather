@@ -442,28 +442,28 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 
     # ── Booking ──
     booking_section = ''
-    # Build Booking URL with or without dest_id
-    country_name = country  # already resolved via dest_country(C, dest)
-    ss_val = quote_plus(f"{nom}, {country_name}")
-    booking_params = (f"ss={ss_val}"
-                      f"&aid=304142"
-                      f"&lang={C['booking_lang']}"
-                      f"&checkin={YEAR}-{best_idx+1:02d}-01&checkout={YEAR}-{best_idx+1:02d}-07"
-                      f"&group_adults=2&no_rooms=1&group_children=0")
     if booking_id:
-        booking_params += f"&dest_id={booking_id}&dest_type=city"
-    booking_url = f"https://www.booking.com/{C['booking_domain']}?{booking_params}"
+        # Build Booking URL with dest_id for precise targeting
+        country_name = country  # already resolved via dest_country(C, dest)
+        ss_val = quote_plus(f"{nom}, {country_name}")
+        booking_params = (f"ss={ss_val}"
+                          f"&aid=304142"
+                          f"&lang={C['booking_lang']}"
+                          f"&checkin={YEAR}-{best_idx+1:02d}-01&checkout={YEAR}-{best_idx+1:02d}-07"
+                          f"&group_adults=2&no_rooms=1&group_children=0"
+                          f"&dest_id={booking_id}&dest_type=city")
+        booking_url = f"https://www.booking.com/{C['booking_domain']}?{booking_params}"
 
-    off_months = [MONTHS[i].lower() if C['is_fr'] else MONTHS[i]
-                  for i in range(12) if months[i]['score'] >= 6.5 and months[i]['score'] < best_score - 1.5]
-    if off_months:
-        verb = C['lbl_offer_pl'] if len(off_months[:2]) > 1 else C['lbl_offer_sg']
-        budget_tip = f"{C['lbl_tip_prefix']} : {C['lbl_tip_good_tpl'].format(months=', '.join(off_months[:2]), verb=verb)}"
-    else:
-        m1 = MONTHS[worst_idx].lower() if C['is_fr'] else MONTHS[worst_idx]
-        m2 = MONTHS[(worst_idx+1)%12].lower() if C['is_fr'] else MONTHS[(worst_idx+1)%12]
-        budget_tip = f"{C['lbl_tip_prefix']} : {C['lbl_tip_offpeak_tpl'].format(m1=m1, m2=m2)}"
-    booking_section = f'''<section class="section">
+        off_months = [MONTHS[i].lower() if C['is_fr'] else MONTHS[i]
+                      for i in range(12) if months[i]['score'] >= 6.5 and months[i]['score'] < best_score - 1.5]
+        if off_months:
+            verb = C['lbl_offer_pl'] if len(off_months[:2]) > 1 else C['lbl_offer_sg']
+            budget_tip = f"{C['lbl_tip_prefix']} : {C['lbl_tip_good_tpl'].format(months=', '.join(off_months[:2]), verb=verb)}"
+        else:
+            m1 = MONTHS[worst_idx].lower() if C['is_fr'] else MONTHS[worst_idx]
+            m2 = MONTHS[(worst_idx+1)%12].lower() if C['is_fr'] else MONTHS[(worst_idx+1)%12]
+            budget_tip = f"{C['lbl_tip_prefix']} : {C['lbl_tip_offpeak_tpl'].format(m1=m1, m2=m2)}"
+        booking_section = f'''<section class="section">
  <div class="section-label">{C['lbl_booking_section']}</div>
  <h2 class="section-title">{C['lbl_booking_title_tpl'].format(name=nom_f)}</h2>
  <div class="affil-box">
