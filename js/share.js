@@ -1,0 +1,1 @@
+function shareThis(){if(navigator.share)navigator.share({title:document.title,url:location.href});else{navigator.clipboard.writeText(location.href);var b=document.querySelector('.nav-share');b.style.color='#27ae60';setTimeout(function(){b.style.color=''},1200)}}

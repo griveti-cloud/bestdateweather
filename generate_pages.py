@@ -200,8 +200,9 @@ def compute_all_similarities(dests, climate):
 
 # ── HTML CONSTANTS ──────────────────────────────────────────────────────────
 
-GTAG = '''<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-NTCJTDPSJL");</script>'''
+def GTAG_HTML(pfx=''):
+    return f'''<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
+<script src="{pfx}js/ga.js"></script>'''
 
 MONTHLY_GRAD = {
     0:'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
@@ -278,7 +279,7 @@ def footer_html(cfg, dest):
  <p class="mt-8"><a href="{meth_url}" class="txt-muted">{meth_label}</a> · <a href="{about_url}" class="txt-muted">{about_label}</a> · <a href="{faq_url}" class="txt-muted">{faq_label}</a> · <a href="{app_url}" class="txt-muted">{app_label}</a>{alt_link}</p>
  <p class="f11-muted"><a href="{legal_url}" class="txt-muted">{legal_label}</a> · <a href="{priv_url}" class="txt-muted">{priv_label}</a> · <a href="contact.html" class="txt-muted">Contact</a></p>
 </footer>
-<script>function shareThis(){{if(navigator.share)navigator.share({{title:document.title,url:location.href}});else{{navigator.clipboard.writeText(location.href);var b=document.querySelector('.nav-share');b.style.color='#27ae60';setTimeout(function(){{b.style.color=''}},1200)}}}}</script>'''
+<script src="{cfg['asset_prefix']}js/share.js"></script>'''
 
 
 # ── ANNUAL PAGE GENERATOR ──────────────────────────────────────────────────
@@ -704,7 +705,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <!-- SCORING: generate_pages.py | lang={C['lang']} | slug={slug_fr} | tropical={dest["tropical"]} | generated={TODAY} -->
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-{GTAG}
+{GTAG_HTML(pfx)}
 <title>{title}</title>
 <meta name="description" content="{desc}"/>
 <link rel="canonical" href="{canonical}"/>
@@ -751,14 +752,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 {pillar_comparison_section}
 </main>
 {footer_html(C, dest)}
-<script>
-function toggleFaq(btn){{
-  const a=btn.nextElementSibling;
-  const opening=a.style.display!=="block";
-  a.style.display=opening?"block":"none";
-  btn.querySelector(".faq-icon").textContent=opening?"-":"+";
-}}
-</script>
+<script src="{pfx}js/faq.js"></script>
 </body>
 </html>'''
     return html
@@ -1608,7 +1602,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-{GTAG}
+{GTAG_HTML(pfx)}
 <title>{title}</title>
 <meta name="description" content="{desc}"/>
 <link rel="canonical" href="{canonical}"/>

@@ -413,7 +413,7 @@ def generate_page(mi, lang, dests, climate):
 {related}
 </main>
 {footer}
-<script>function shareThis(){{if(navigator.share)navigator.share({{title:document.title,url:location.href}});else{{navigator.clipboard.writeText(location.href);var b=document.querySelector('.nav-share');b.style.color='#27ae60';setTimeout(function(){{b.style.color=''}},1200)}}}}</script>
+<script src="{"js/share.js" if is_fr else "../js/share.js"}"></script>
 </body></html>"""
 
     filepath.parent.mkdir(parents=True, exist_ok=True)
