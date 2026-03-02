@@ -506,7 +506,7 @@ function render7DayStrip(diffDays) {
  var todayStr = new Date().toISOString().slice(0, 10);
  var todayIdx = d.time.indexOf(todayStr);
  if (todayIdx < 0) todayIdx = 0;
- var count = Math.min(d.time.length - todayIdx, 8);
+ var count = Math.min(d.time.length - todayIdx, 7);
  for (var i = 0; i < count; i++) {
   var idx = todayIdx + i;
   var parts = d.time[idx].split('-');
