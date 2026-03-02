@@ -1576,7 +1576,10 @@ function switchMode(mode) {
  var dateEls = ['date-form','hero','sec-hourly','sec-scenarios','empty','foot-note','uc-filter-wrap'];
  dateEls.forEach(function(id){
  var el = document.getElementById(id);
- if (el) el.style.display = isDate ? (id === 'empty' ? 'block' : el._wasDisplay || '') : 'none';
+ if (el) {
+  if (!isDate) el._wasDisplay = el.style.display;
+  el.style.display = isDate ? (el._wasDisplay != null ? el._wasDisplay : 'none') : 'none';
+ }
  });
  if (isDate) document.getElementById('empty').style.display = 'block';
 
