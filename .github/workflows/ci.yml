@@ -8,7 +8,11 @@ on:
       - 'index.html'
       - 'en/app.html'
       - 'generate_all*.py'
+      - 'generate_pages.py'
+      - 'scoring.py'
       - 'data/**'
+      - 'tests/**'
+      - 'scripts/**'
   pull_request:
     branches: [main]
 
@@ -24,10 +28,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Check JS syntax (core.js + i18n)
+      - name: Check JS syntax (core.js + i18n + fiche-scores)
         run: |
           echo "=== Checking JS syntax ==="
           node --check js/core.js
+          node --check js/fiche-scores.js
           node --check js/i18n-fr.js
           node --check js/i18n-en.js
           echo "✅ All JS files pass syntax check"
@@ -142,4 +147,71 @@ jobs:
         run: |
           python3 -c "import py_compile; py_compile.compile('generate_all.py', doraise=True)"
           python3 -c "import py_compile; py_compile.compile('generate_all_en.py', doraise=True)"
+          python3 -c "import py_compile; py_compile.compile('generate_pages.py', doraise=True)"
           echo "✅ Python generators compile OK"
+
+  scoring-tests:
+    name: Scoring Consistency
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run scoring consistency tests
+        run: python3 tests/test_scoring.py
+
+  sitemap-check:
+    name: Sitemap Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify sitemap coverage
+        run: |
+          python3 -c "
+          import re, glob, sys
+
+          # Parse sitemap URLs
+          fr_xml = open('sitemap-fr.xml').read()
+          en_xml = open('sitemap-en.xml').read()
+          fr_urls = set(re.findall(r'<loc>https://bestdateweather\.com/([^<]+)</loc>', fr_xml))
+          en_urls = set(re.findall(r'<loc>https://bestdateweather\.com/([^<]+)</loc>', en_xml))
+
+          # Expected: all meilleure-periode-*.html (non-redirect)
+          errors = []
+          for f in sorted(glob.glob('meilleure-periode-*.html')):
+              with open(f, 'r') as fh:
+                  if 'meta http-equiv=\"refresh\"' in fh.read(500):
+                      continue  # skip redirects
+              if f not in fr_urls:
+                  errors.append(f'Missing from sitemap-fr.xml: {f}')
+
+          for f in sorted(glob.glob('en/best-time-to-visit-*.html')):
+              with open(f, 'r') as fh:
+                  if 'meta http-equiv=\"refresh\"' in fh.read(500):
+                      continue
+              path = f
+              if path not in en_urls:
+                  errors.append(f'Missing from sitemap-en.xml: {path}')
+
+          if errors:
+              for e in errors:
+                  print(f'❌ {e}')
+              sys.exit(1)
+          else:
+              print(f'✅ Sitemap coverage OK (FR: {len(fr_urls)} URLs, EN: {len(en_urls)} URLs)')
+          "

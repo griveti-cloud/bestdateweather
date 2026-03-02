@@ -29,6 +29,7 @@ sys.path.insert(0, str(ROOT))
 from scoring import t_ideal, raw_score
 
 CORE_JS = ROOT / 'js' / 'core.js'
+FICHE_JS = ROOT / 'js' / 'fiche-scores.js'
 PASS = 0
 FAIL = 0
 
@@ -139,7 +140,7 @@ def test_fiche_scores():
             dest_coords[r['slug_fr']] = key
 
     # Load FICHE_SCORES from JS
-    js = CORE_JS.read_text(encoding='utf-8')
+    js = FICHE_JS.read_text(encoding='utf-8')
     m = re.search(r'var FICHE_SCORES = ({.*?});', js)
     fiche = json.loads(m.group(1))
 
