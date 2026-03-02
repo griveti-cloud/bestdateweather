@@ -222,7 +222,10 @@ MONTHLY_GRAD = {
 
 def head_css(cfg):
     pfx = cfg['asset_prefix']
-    return f'''<link rel="stylesheet" href="{pfx}style.css"/>
+    return f'''<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap"/>
+<link rel="stylesheet" href="{pfx}style.css"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''
@@ -683,7 +686,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hsub}</p>
  <div class="kicker">{kicker}</div>
- <div class="hero-stats" class="mt-22">
+ <div class="hero-stats mt-22">
  <div><span class="hstat-val">{best_str}</span><span class="hstat-lbl">{best_months_lbl}</span></div>
  <div><span class="hstat-val">{best_tmax}°C</span><span class="hstat-lbl">{C['lbl_optimal_temp_stat']}</span></div>
  <div><span class="hstat-val">{best_rain}%</span><span class="hstat-lbl">{C['lbl_rainy_days_stat']}</span></div>
@@ -1579,7 +1582,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hero_sub}</p>
  <div class="kicker">{L['kicker']}</div>
- <div class="hero-stats" class="mt-22">
+ <div class="hero-stats mt-22">
  <div><span class="hstat-val">{m['tmax']}°C</span><span class="hstat-lbl">{L['hstat_tmax']}</span></div>
  <div><span class="hstat-val">{m['rain_pct']}%</span><span class="hstat-lbl">{L['hstat_rain']}</span></div>
  <div><span class="hstat-val">{m['sun_h']}h</span><span class="hstat-lbl">{L['hstat_sun']}</span></div>
