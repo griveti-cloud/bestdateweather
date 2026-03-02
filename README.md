@@ -22,8 +22,7 @@ Plateforme météo et voyage — données climatiques et recommandations pour 31
 │   ├── events.csv          # Événements par destination/mois
 │   └── overrides.csv       # Corrections manuelles
 ├── scoring.py              # Algorithme de scoring (SOURCE DE VÉRITÉ)
-├── generate_all.py         # Générateur fiches destination FR
-├── generate_all_en.py      # Générateur fiches destination EN
+├── generate_pages.py       # Générateur unifié fiches destination FR+EN
 ├── generate_piliers.py     # Pages pilier (par continent/thème)
 ├── generate_comparatifs.py # Pages comparaison (ville A vs ville B)
 ├── generate_classements.py # Pages classement (top destinations)
@@ -64,7 +63,7 @@ make deploy       # Commit + push → Vercel
 
 | Chemin | Source | Moteur | Output |
 |---|---|---|---|
-| Fiches statiques | climate.csv | `scoring.py` → `generate_all.py` | Score /10 dans HTML |
+| Fiches statiques | climate.csv | `scoring.py` → `generate_pages.py` | Score /10 dans HTML |
 | App mode date | Open-Meteo API live | `core.js` (`computeAndRenderScore`) | Score /10 live |
 | App mode annuel | Open-Meteo archive | `core.js` (`rawScoreFiche` + `FICHE_SCORES`) | Score /100 ancré |
 

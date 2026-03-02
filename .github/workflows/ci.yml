@@ -7,7 +7,6 @@ on:
       - 'js/**'
       - 'index.html'
       - 'en/app.html'
-      - 'generate_all*.py'
       - 'generate_pages.py'
       - 'scoring.py'
       - 'data/**'
@@ -145,8 +144,6 @@ jobs:
 
       - name: Check Python generators syntax
         run: |
-          python3 -c "import py_compile; py_compile.compile('generate_all.py', doraise=True)"
-          python3 -c "import py_compile; py_compile.compile('generate_all_en.py', doraise=True)"
           python3 -c "import py_compile; py_compile.compile('generate_pages.py', doraise=True)"
           echo "✅ Python generators compile OK"
 

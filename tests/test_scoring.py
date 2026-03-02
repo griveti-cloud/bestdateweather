@@ -192,43 +192,27 @@ def test_tropical_keys():
           f"Missing: {list(missing)[:3]}, Extra: {list(extra)[:3]}")
 
 
-# ── Test 5: FR/EN generator function parity ───────────────────────────────
+# ── Test 5: Unified generator has required functions ──────────────────────
 def test_generator_parity():
-    print("5. FR/EN generator function parity")
+    print("5. generate_pages.py completeness")
 
-    fr = (ROOT / 'generate_all.py').read_text()
-    en = (ROOT / 'generate_all_en.py').read_text()
+    gen = (ROOT / 'generate_pages.py').read_text()
+    gen_fns = set(re.findall(r'^def (\w+)\(', gen, re.MULTILINE))
 
-    fr_fns = set(re.findall(r'^def (\w+)\(', fr, re.MULTILINE))
-    en_fns = set(re.findall(r'^def (\w+)\(', en, re.MULTILINE))
+    # Import block
+    import_block = re.search(r'from lib\.common import \((.*?)\)', gen, re.DOTALL)
+    gen_imports = set(re.findall(r'\b(\w+)\b', import_block.group(1))) if import_block else set()
+    gen_imports |= set(re.findall(r'from lib\.common import (\w+)', gen))
+    gen_available = gen_fns | gen_imports
 
-    # Functions available via import from lib.common count as present
-    # Handle multi-line imports: extract all names from import blocks
-    fr_import_block = re.search(r'from lib\.common import \((.*?)\)', fr, re.DOTALL)
-    fr_imports = set(re.findall(r'\b(\w+)\b', fr_import_block.group(1))) if fr_import_block else set()
-    # Also check single-line imports
-    fr_imports |= set(re.findall(r'from lib\.common import (\w+)', fr))
-
-    en_import_block = re.search(r'from lib\.common import \((.*?)\)', en, re.DOTALL)
-    en_imports = set(re.findall(r'\b(\w+)\b', en_import_block.group(1))) if en_import_block else set()
-    en_imports |= set(re.findall(r'from lib\.common import (\w+)', en))
-    # EN also uses aliased imports like "score_badge as _score_badge"
-    en_aliases = set(re.findall(r'(\w+) as _\w+', en))
-    en_imports |= en_aliases
-
-    fr_available = fr_fns | fr_imports
-    en_available = en_fns | en_imports
-
-    # Core functions that MUST exist in both (either defined or imported)
+    # Core functions that MUST exist (either defined or imported)
     required = {'load_data', 'validate', 'best_months', 'budget_tier',
                 'score_badge', 'seasonal_stats', 'bar_chart',
                 'climate_table_html', 'gen_annual', 'gen_monthly', 'main'}
 
     for fn in required:
-        check(f"FR has {fn}()", fn in fr_available,
-              f"Missing from generate_all.py (defined or imported)")
-        check(f"EN has {fn}()", fn in en_available,
-              f"Missing from generate_all_en.py (defined or imported)")
+        check(f"generate_pages.py has {fn}()", fn in gen_available,
+              f"Missing from generate_pages.py (defined or imported)")
 
     # Verify lib.common exists and has shared functions
     common = (ROOT / 'lib' / 'common.py').read_text()
@@ -239,6 +223,12 @@ def test_generator_parity():
     for fn in shared_expected:
         check(f"lib/common.py has {fn}()", fn in common_fns,
               f"Missing from lib/common.py")
+
+    # Verify generate_pages.py supports both FR and EN
+    check("Supports FR", "'fr'" in gen or '"fr"' in gen,
+          "No FR language support found")
+    check("Supports EN", "'en'" in gen or '"en"' in gen,
+          "No EN language support found")
 
 
 # ── Run all ───────────────────────────────────────────────────────────────
