@@ -8569,41 +8569,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/bermuda-weather-september.html" />
   </url>
   <url>
-    <loc>https://bestdateweather.com/en/best-destinations-digital-nomads-weather-2026.html</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/best-destinations-digital-nomads-weather-2026.html" />
-  </url>
-  <url>
-    <loc>https://bestdateweather.com/en/best-destinations-summer-weather-2026.html</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/best-destinations-summer-weather-2026.html" />
-  </url>
-  <url>
-    <loc>https://bestdateweather.com/en/best-destinations-weather-ranking-2026.html</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/best-destinations-weather-ranking-2026.html" />
-  </url>
-  <url>
-    <loc>https://bestdateweather.com/en/best-destinations-winter-weather-2026.html</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/best-destinations-winter-weather-2026.html" />
-  </url>
-  <url>
-    <loc>https://bestdateweather.com/en/best-europe-weather-ranking-2026.html</loc>
-    <lastmod>2026-03-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/best-europe-weather-ranking-2026.html" />
-  </url>
-  <url>
     <loc>https://bestdateweather.com/en/bhutan-weather-april.html</loc>
     <lastmod>2026-03-02</lastmod>
     <changefreq>monthly</changefreq>
@@ -53340,7 +53305,25 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/zurich-weather-september.html" />
   </url>
   <url>
+    <loc>https://bestdateweather.com/en/best-destinations-digital-nomads-weather-2026.html</loc>
+    <lastmod>2026-03-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/en/best-destinations-summer-weather-2026.html</loc>
+    <lastmod>2026-03-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://bestdateweather.com/en/best-destinations-weather-ranking-2026.html</loc>
+    <lastmod>2026-03-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/en/best-destinations-winter-weather-2026.html</loc>
     <lastmod>2026-03-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

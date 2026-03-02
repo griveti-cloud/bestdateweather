@@ -89,16 +89,26 @@ def find_en_pages():
         if not _is_redirect(f):
             pages.append('en/' + os.path.basename(f))
     for f in sorted(glob.glob(os.path.join(DIR, 'en', '*-weather-*.html'))):
+        basename = os.path.basename(f)
+        # Exclude ranking pages (handled separately)
+        if basename.startswith('best-') and not basename.startswith('best-time-to-visit-'):
+            continue
         if not _is_redirect(f):
-            pages.append('en/' + os.path.basename(f))
+            pages.append('en/' + basename)
     return pages
 
 
 def find_ranking_pages():
     """Trouve les pages classement/ranking FR et EN."""
     fr = sorted(glob.glob(os.path.join(DIR, 'classement-*.html')))
-    en = sorted(glob.glob(os.path.join(DIR, 'en', 'best-*-ranking-*.html')))
-    return [os.path.basename(f) for f in fr], ['en/' + os.path.basename(f) for f in en]
+    # EN rankings: best-*-ranking-*.html + best-destinations-*-weather-*.html
+    en_set = set()
+    for pattern in ['best-*-ranking-*.html', 'best-destinations-*-weather-*.html']:
+        for f in glob.glob(os.path.join(DIR, 'en', pattern)):
+            en_set.add('en/' + os.path.basename(f))
+    # Exclude destination pages (best-time-to-visit-*)
+    en = sorted(p for p in en_set if 'best-time-to-visit' not in p)
+    return [os.path.basename(f) for f in fr], en
 
 
 def find_comparison_pages():
