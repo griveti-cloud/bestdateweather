@@ -1,5 +1,6 @@
 #!/bin/sh
 # Pre-commit hook: JS syntax check + auto-minification
+# Install: cp scripts/pre-commit.sh .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
