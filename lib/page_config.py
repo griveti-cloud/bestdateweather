@@ -139,7 +139,9 @@ def build_config(lang):
 
         'lbl_similar_section': 'Explorer aussi' if is_fr else 'Also explore',
         'lbl_similar_title': 'Destinations au climat similaire' if is_fr else 'Destinations with similar climate',
-        'lbl_similar_match': 'Climat similaire · {pct} de correspondance' if is_fr else 'Similar climate · {pct} match',
+        'lbl_similar_very': 'Climat très similaire' if is_fr else 'Very similar climate',
+        'lbl_similar_mid': 'Climat similaire' if is_fr else 'Similar climate',
+        'lbl_similar_low': 'Climat assez similaire' if is_fr else 'Fairly similar climate',
 
         'lbl_ranking_section': 'Classements météo' if is_fr else 'Weather rankings',
         'lbl_ranking_title': 'Comparer les destinations par météo' if is_fr else 'Compare destinations by weather',

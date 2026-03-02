@@ -579,8 +579,15 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     if sim_list and all_dests:
         sim_cards = ''
         for sim_score, sim_slug in sim_list[:3]:
-            # Rescale cosine similarity: 0.975→0%, 1.0→100% for discriminating display
+            # Rescale cosine similarity: 0.975→0%, 1.0→100%
             display_pct = max(0, min(1, (sim_score - 0.975) / 0.025))
+            # Qualifier based on rescaled score
+            if display_pct >= 0.70:
+                sim_label = C['lbl_similar_very']
+            elif display_pct >= 0.35:
+                sim_label = C['lbl_similar_mid']
+            else:
+                sim_label = C['lbl_similar_low']
             sd = all_dests.get(sim_slug, {})
             sn = dest_name(C, sd) if sd else sim_slug
             sc = dest_country(C, sd) if sd else ''
@@ -591,7 +598,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
                 f'<div class="f13-slate3"><img src="{pfx}flags/{sf}.png" width="16" height="12" '
                 f'alt="{sf}" class="flag-icon">{sc}</div>'
                 f'<div class="fw700-navy">{sn}</div>'
-                f'<div class="f12-slate2">{C["lbl_similar_match"].format(pct=f"{display_pct:.0%}")}</div>'
+                f'<div class="f12-slate2">{sim_label}</div>'
                 f'</a>')
         similar_section = f'''<section class="section">
  <div class="section-label">{C['lbl_similar_section']}</div>
