@@ -58,23 +58,39 @@ def load_slug_mapping():
     return mapping
 
 
+def _is_redirect(filepath):
+    """Check if a page is just a redirect (meta refresh)."""
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            head = f.read(500)
+        return 'meta http-equiv="refresh"' in head
+    except:
+        return False
+
+
 def find_fr_pages():
-    """Trouve toutes les pages FR destination (annual + monthly)."""
+    """Trouve toutes les pages FR destination (annual + monthly), hors redirects."""
     pages = []
     for f in sorted(glob.glob(os.path.join(DIR, 'meilleure-periode-*.html'))):
-        pages.append(os.path.basename(f))
+        if not _is_redirect(f):
+            pages.append(os.path.basename(f))
     for f in sorted(glob.glob(os.path.join(DIR, '*-meteo-*.html'))):
-        pages.append(os.path.basename(f))
+        basename = os.path.basename(f)
+        if basename.startswith('classement-') or _is_redirect(f):
+            continue
+        pages.append(basename)
     return pages
 
 
 def find_en_pages():
-    """Trouve toutes les pages EN destination (annual + monthly)."""
+    """Trouve toutes les pages EN destination (annual + monthly), hors redirects."""
     pages = []
     for f in sorted(glob.glob(os.path.join(DIR, 'en', 'best-time-to-visit-*.html'))):
-        pages.append('en/' + os.path.basename(f))
+        if not _is_redirect(f):
+            pages.append('en/' + os.path.basename(f))
     for f in sorted(glob.glob(os.path.join(DIR, 'en', '*-weather-*.html'))):
-        pages.append('en/' + os.path.basename(f))
+        if not _is_redirect(f):
+            pages.append('en/' + os.path.basename(f))
     return pages
 
 
@@ -87,15 +103,15 @@ def find_ranking_pages():
 
 def find_comparison_pages():
     """Trouve les pages comparatif/comparison FR et EN."""
-    fr = sorted(glob.glob(os.path.join(DIR, 'comparatif-*.html')))
-    en = sorted(glob.glob(os.path.join(DIR, 'en', 'compare-*.html')))
+    fr = sorted(glob.glob(os.path.join(DIR, '*-ou-*-climat.html')))
+    en = sorted(glob.glob(os.path.join(DIR, 'en', '*-vs-*-weather.html')))
     return [os.path.basename(f) for f in fr], ['en/' + os.path.basename(f) for f in en]
 
 
 def find_pillar_pages():
     """Trouve les pages pilier/pillar FR et EN."""
-    fr = sorted(glob.glob(os.path.join(DIR, 'quand-partir-*.html')))
-    en = sorted(glob.glob(os.path.join(DIR, 'en', 'when-to-visit-*.html')))
+    fr = sorted(glob.glob(os.path.join(DIR, 'ou-partir-*.html')))
+    en = sorted(glob.glob(os.path.join(DIR, 'en', 'where-to-go-*.html')))
     return [os.path.basename(f) for f in fr], ['en/' + os.path.basename(f) for f in en]
 
 
