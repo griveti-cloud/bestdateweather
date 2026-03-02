@@ -91,6 +91,16 @@ function quickFill(type) {
  // Snow depth : déclencher si switch vers ski avec résultats déjà affichés
  var _sdEl2 = document.getElementById('snow-depth-info');
  if (_sdEl2) _sdEl2.style.display = 'none';
+ // Ski altitude warning on UC switch
+ var _skiWD2 = document.getElementById('ski-alt-warn-daily');
+ if (_skiWD2) {
+  if (type === 'ski' && selectedLoc && selectedLoc.elevation != null && selectedLoc.elevation < 800) {
+   _skiWD2.textContent = T.skiAltWarn.replace('{e}', Math.round(selectedLoc.elevation));
+   _skiWD2.style.display = 'block';
+  } else {
+   _skiWD2.style.display = 'none';
+  }
+ }
  if (type === 'ski' && _sdEl2 && selectedLoc && window._lastYr != null) {
   fetchSnowDepth(selectedLoc.lat, selectedLoc.lon, window._lastYr, window._lastMo, window._lastDa).then(function(res) {
    if (!res) return;
@@ -1454,6 +1464,20 @@ function run() {
     // Snow depth — uniquement si UC ski, en parallèle (silencieux si erreur)
     var _sdEl = document.getElementById('snow-depth-info');
     if (_sdEl) _sdEl.style.display = 'none';
+    // Ski altitude warning — vallée < 800m
+    var _skiWD = document.getElementById('ski-alt-warn-daily');
+    if (!_skiWD) {
+     _skiWD = document.createElement('div');
+     _skiWD.id = 'ski-alt-warn-daily';
+     _skiWD.style.cssText = 'display:none;margin-top:8px;background:#fef3c7;border:1.5px solid #f59e0b;border-radius:8px;padding:10px 12px;font-size:11.5px;color:#92400e;line-height:1.5';
+     if (_sdEl && _sdEl.parentNode) _sdEl.parentNode.insertBefore(_skiWD, _sdEl);
+    }
+    if (currentUseCase === 'ski' && selectedLoc && selectedLoc.elevation != null && selectedLoc.elevation < 800) {
+     _skiWD.textContent = T.skiAltWarn.replace('{e}', Math.round(selectedLoc.elevation));
+     _skiWD.style.display = 'block';
+    } else {
+     _skiWD.style.display = 'none';
+    }
     if (currentUseCase === 'ski' && _sdEl) {
      fetchSnowDepth(loc.lat, loc.lon, yr, mo, da).then(function(res) {
       if (!res) return;
@@ -1941,6 +1965,21 @@ function renderAnnual(loc, monthly) {
  } else {
  if (subEl) subEl.style.display = 'block';
  if (ucSubEl) ucSubEl.style.display = 'none';
+ }
+
+ // ── Ski altitude warning ──────────────────────────────────────────────────
+ var skiWarnEl = document.getElementById('ski-alt-warn');
+ if (!skiWarnEl) {
+  skiWarnEl = document.createElement('div');
+  skiWarnEl.id = 'ski-alt-warn';
+  skiWarnEl.style.cssText = 'display:none;margin:10px 0 6px;background:#fef3c7;border:1.5px solid #f59e0b;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#92400e;line-height:1.5';
+  grid.parentNode.insertBefore(skiWarnEl, grid);
+ }
+ if (uc === 'ski' && loc.elevation != null && loc.elevation < 800) {
+  skiWarnEl.textContent = T.skiAltWarn.replace('{e}', Math.round(loc.elevation));
+  skiWarnEl.style.display = 'block';
+ } else {
+  skiWarnEl.style.display = 'none';
  }
 
  // Compute scores for all 12 months

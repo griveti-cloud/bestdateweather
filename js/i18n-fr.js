@@ -33,6 +33,7 @@ window.BDW_T = {
  snowElevAt: ' à {e}m',
  snowEst: '❄ Enneigement estimé : {d} cm{e} · mesure Open-Meteo (point géographique, non domaine skiable)',
  snowNA: '❄ Données d\'enneigement indisponibles pour cette date',
+ skiAltWarn: '⛷ Altitude {e}m — cette localité est en vallée. Les scores reflètent la météo locale, pas celle des stations en altitude à proximité. Recherchez directement une station (ex : Val Thorens, Courchevel).',
  snowExpected: '❄️ Neige prévue',
  snowCmTotal: ' cm au total',
  snowLikely: '❄️ Neige probable',
