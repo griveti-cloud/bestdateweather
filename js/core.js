@@ -791,7 +791,7 @@ function tIdeal(tmax) {
  if (tmax <= 22) return 0.3 + (tmax - 14) / 8 * 0.5;
  if (tmax <= 28) return 0.8 + (tmax - 22) / 6 * 0.2;
  if (tmax <= 35) return 1.0 - (tmax - 28) / 7 * 0.4;
- return Math.max(0, 0.6 - (tmax - 35) / 10 * 0.3);
+ return Math.max(0, 0.6 - (tmax - 35) / 7 * 0.6);
 }
 
 // scoring.py : raw_score() poids 40/35/25

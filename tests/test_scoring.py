@@ -56,7 +56,7 @@ def test_t_ideal():
      if (tmax <= 22) return 0.3 + (tmax - 14) / 8 * 0.5;
      if (tmax <= 28) return 0.8 + (tmax - 22) / 6 * 0.2;
      if (tmax <= 35) return 1.0 - (tmax - 28) / 7 * 0.4;
-     return Math.max(0, 0.6 - (tmax - 35) / 10 * 0.3);
+     return Math.max(0, 0.6 - (tmax - 35) / 7 * 0.6);
     }
     var temps = %s;
     console.log(JSON.stringify(temps.map(tIdeal)));
@@ -95,7 +95,7 @@ def test_raw_score():
      if (tmax <= 22) return 0.3 + (tmax - 14) / 8 * 0.5;
      if (tmax <= 28) return 0.8 + (tmax - 22) / 6 * 0.2;
      if (tmax <= 35) return 1.0 - (tmax - 28) / 7 * 0.4;
-     return Math.max(0, 0.6 - (tmax - 35) / 10 * 0.3);
+     return Math.max(0, 0.6 - (tmax - 35) / 7 * 0.6);
     }
     function rawScoreFiche(tmax, rain, sun) {
      return 0.40 * tIdeal(tmax)

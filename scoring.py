@@ -93,14 +93,16 @@ def t_ideal(tmax: float) -> float:
     Froid :                5 – 14°C  →  score 0.0 – 0.3
     Très froid :          ≤ 5°C       →  0.0
     Chaud :               28 – 35°C  →  1.0 → 0.6 (pénalité progressive)
-    Très chaud :          > 35°C      →  ≤ 0.6 (pénalité forte)
+    Très chaud :          35 – 42°C  →  0.6 → 0.0 (pénalité forte, canicule)
+    Extrême :             > 42°C     →  0.0
     """
     if tmax <= 5:   return 0.0
     if tmax <= 14:  return (tmax - 5) / 9 * 0.3
     if tmax <= 22:  return 0.3 + (tmax - 14) / 8 * 0.5
     if tmax <= 28:  return 0.8 + (tmax - 22) / 6 * 0.2
     if tmax <= 35:  return 1.0 - (tmax - 28) / 7 * 0.4
-    return max(0.0, 0.6 - (tmax - 35) / 10 * 0.3)
+    # >35°C : chute rapide — 38°C ≈ 0.34, 40°C ≈ 0.17, 42°C = 0.0
+    return max(0.0, 0.60 - (tmax - 35) / 7 * 0.60)
 
 
 def raw_score(tmax: float, rain_pct: float, sun_h: float) -> float:
@@ -157,26 +159,43 @@ def compute_scores(months: list, slug: str = '') -> list:
     """
     is_tropical = slug in TROPICAL_DESTINATIONS
 
+    # ── Déclassement chaleur extrême ──────────────────────────────────────
+    # Un mois ne peut pas être "recommandé" si la température est dangereuse.
+    # Seuils : ≥42°C → avoid (alerte rouge canicule), ≥38°C → mid max.
+    HEAT_CAP_AVOID = 42  # °C — chaleur extrême, dangereux
+    HEAT_CAP_MID   = 38  # °C — chaleur forte, déconseillé "idéal"
+
+    effective_months = []
+    for m in months:
+        em = dict(m)  # copie pour ne pas muter l'original
+        tmax = em['tmax']
+        cls = em['cls']
+        if tmax >= HEAT_CAP_AVOID and cls != 'avoid':
+            em['cls'] = 'avoid'
+        elif tmax >= HEAT_CAP_MID and cls == 'rec':
+            em['cls'] = 'mid'
+        effective_months.append(em)
+
     # Plages effectives selon type de destination
     def get_range(cls: str) -> tuple:
         if is_tropical and cls == 'avoid':
             return SCORE_RANGES['mid']   # correction tropicale
         return SCORE_RANGES[cls]
 
-    scores = [None] * len(months)
+    scores = [None] * len(effective_months)
 
     for cls in ('avoid', 'mid', 'rec'):
-        idxs = [i for i, m in enumerate(months) if m['cls'] == cls]
+        idxs = [i for i, m in enumerate(effective_months) if m['cls'] == cls]
         if not idxs:
             continue
         lo, hi = get_range(cls)
-        raws = [raw_score(months[i]['tmax'], months[i]['rain_pct'], months[i]['sun_h'])
+        raws = [raw_score(effective_months[i]['tmax'], effective_months[i]['rain_pct'], effective_months[i]['sun_h'])
                 for i in idxs]
         norms = _norm(raws)
         for j, i in enumerate(idxs):
             val_10 = round(lo + norms[j] * (hi - lo), 1)
             scores[i] = {
-                'month'     : months[i].get('month', ''),
+                'month'     : effective_months[i].get('month', ''),
                 'score_10'  : val_10,
                 'score_100' : round(val_10 * 10),
             }
