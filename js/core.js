@@ -1032,10 +1032,14 @@ function computeAndRenderScore(sc, rows) {
   else if (tmax_ski >= -2) sTempSki = 90 + (2 - Math.abs(tmax_ski)) * 2;
   else if (tmax_ski >= -12) sTempSki = 90 - (Math.abs(tmax_ski) - 2) * 3;
   else sTempSki = Math.max(30, 90 - (Math.abs(tmax_ski) - 2) * 3);
-  var snowBonus = (tmin_ski < 0 && avgMm > 2) ? Math.min(100, 60 + avgMm * 3) : (tmin_ski < 0 && avgMm > 0 ? 55 : 20);
+  var snowBonus = (tmin_ski < 0 && avgMm > 2) ? Math.min(100, 60 + avgMm * 3) : (tmin_ski < 0 && avgMm > 0 ? 55 : (tmin_ski < 0 ? 15 : 0));
   var sSunSki = Math.min(100, (peakSol / 50) * 8);
+  if (tmax_ski > 10) sSunSki = 0;
+  else if (tmax_ski > 5) sSunSki = Math.round(sSunSki * 0.4);
   var sRainSki = tmax_ski > 2 ? Math.max(0, 100 - avgRain * 1.5) : Math.max(40, 100 - avgRain * 0.3);
   total = Math.round(sRainSki * 0.15 + sTempSki * 0.40 + snowBonus * 0.20 + sSunSki * 0.25);
+  if (tmax_ski > 15) total = Math.min(total, 5);
+  else if (tmax_ski > 10) total = Math.min(total, 10);
 
  // ── Plage : logique spécifique ───────────────────────────────────────────
  } else if (uc === 'plage') {
@@ -1800,13 +1804,19 @@ function monthScoreForUC(d, uc) {
  else if (tmax >= -2) sTempSki = 90 + (2 - Math.abs(tmax)) * 2; // idéal
  else if (tmax >= -12) sTempSki = 90 - (Math.abs(tmax) - 2) * 3; // froid acceptable
  else sTempSki = Math.max(30, 90 - (Math.abs(tmax) - 2) * 3); // très froid
- // Neige : précipitations avec froid = bonus (enneigement probable)
- var snowBonus = (tmin < 0 && mm > 2) ? Math.min(100, 60 + mm * 3) : (tmin < 0 && mm > 0 ? 55 : 20);
- // Soleil : ciel bleu = excellent en ski
+ // Neige : précipitations avec froid = bonus — 0 si pas de gel (neige fond)
+ var snowBonus = (tmin < 0 && mm > 2) ? Math.min(100, 60 + mm * 3) : (tmin < 0 && mm > 0 ? 55 : (tmin < 0 ? 15 : 0));
+ // Soleil : utile seulement s'il y a de la neige (tmax ≤ 5 = plein, 5-10 = réduit, >10 = inutile)
  var sSunSki = Math.min(100, sun * 8);
+ if (tmax > 10) sSunSki = 0;
+ else if (tmax > 5) sSunSki = Math.round(sSunSki * 0.4);
  // Pluie chaude (tmax > 2 et pluie) = très mauvais (neige fondue, verglas)
  var sRainSki = tmax > 2 ? Math.max(0, 100 - rain * 1.5) : Math.max(40, 100 - rain * 0.3);
- return Math.round(sRainSki * 0.15 + sTempSki * 0.40 + snowBonus * 0.20 + sSunSki * 0.25);
+ var total = Math.round(sRainSki * 0.15 + sTempSki * 0.40 + snowBonus * 0.20 + sSunSki * 0.25);
+ // Hard cap : ski impossible si trop chaud
+ if (tmax > 15) total = Math.min(total, 5);
+ else if (tmax > 10) total = Math.min(total, 10);
+ return total;
  }
  // ── Plage : logique spécifique ───────────────────────────────────────────
  if (uc === 'plage') {
