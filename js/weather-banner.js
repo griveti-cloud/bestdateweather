@@ -571,9 +571,9 @@
   }
 
   function replaySearch(r) {
-    var inputLabel = r.label || r.name;
-    // Clean name without region/country for geocoding fallback
+    console.log("[WB] replaySearch called, mode=", r.mode, "name=", r.name, "date=", r.date);
     var cleanName = r.name.replace(/\s*\([^)]*\)\s*$/, "").replace(/,.*$/, "").trim();
+    var inputLabel = r.label || cleanName;
 
     // Restore selectedLoc so core.js run() doesn't re-geocode
     if (r.lat != null && r.lon != null) {
@@ -585,41 +585,49 @@
         region: r.region || "",
         elevation: r.elevation || null
       };
+      console.log("[WB] selectedLoc restored:", window.selectedLoc);
     } else {
       window.selectedLoc = null;
+      console.log("[WB] no coords, selectedLoc=null, geocode will use:", cleanName);
     }
 
     if (r.mode === "annual") {
-      if (typeof switchMode === "function") switchMode("annual");
+      switchMode("annual");
       var annInput = document.getElementById("ann-city");
       if (annInput) {
-        // Use clean name when no coords (geocode-friendly), full label when we have coords
         annInput.value = r.lat != null ? inputLabel : cleanName;
         if (r.lat != null && r.lon != null) {
           window.annSelectedLoc = window.selectedLoc;
         }
-        if (typeof runAnnual === "function") setTimeout(runAnnual, 200);
+        console.log("[WB] calling runAnnual in 300ms");
+        setTimeout(function() { runAnnual(); }, 300);
       }
     } else {
-      if (typeof switchMode === "function") switchMode("date");
+      switchMode("date");
       var cityInput = document.getElementById("inp-city");
       var dateInput = document.getElementById("inp-date");
-      // Use clean name when no coords so geocode("Paris") works, not "Paris (France)"
-      if (cityInput) cityInput.value = r.lat != null ? inputLabel : cleanName;
+      if (cityInput) {
+        cityInput.value = r.lat != null ? inputLabel : cleanName;
+        console.log("[WB] cityInput set to:", cityInput.value);
+      }
       if (dateInput && r.date) {
-        // Parse dd/mm/yyyy → set both display value and ISO value
         var parts = r.date.match(/(\d{2})\/(\d{2})\/(\d{4})/);
         if (parts) {
           dateInput.value = r.date;
           dateInput._isoValue = parts[3] + "-" + parts[2] + "-" + parts[1];
           dateInput.classList.add("has-val");
+          console.log("[WB] dateInput set to:", dateInput.value, "_isoValue:", dateInput._isoValue);
+        } else {
+          console.log("[WB] ERROR: date regex didn't match:", r.date);
         }
+      } else {
+        console.log("[WB] WARNING: no dateInput or no r.date. dateInput=", !!dateInput, "r.date=", r.date);
       }
-      // Scroll form into view first, then trigger
-      var wrap = document.querySelector(".wrap");
-      if (wrap) wrap.scrollIntoView({ behavior: "smooth", block: "start" });
-      var btnGo = document.getElementById("btn-go");
-      if (btnGo) setTimeout(function() { btnGo.click(); }, 400);
+      console.log("[WB] calling run() in 300ms");
+      setTimeout(function() {
+        console.log("[WB] run() about to execute. city=", document.getElementById("inp-city").value, "_isoValue=", document.getElementById("inp-date")._isoValue);
+        run();
+      }, 300);
     }
   }
 
@@ -818,8 +826,11 @@
   };
 
   window.wbReplay = function(idx) {
+    console.log("[WB] wbReplay called, idx=", idx);
     var r = getRecent()[idx];
+    console.log("[WB] recent entry:", JSON.stringify(r));
     if (r) replaySearch(r);
+    else console.log("[WB] ERROR: no entry at index", idx);
   };
 
   window.wbRefreshUnits = function() {
