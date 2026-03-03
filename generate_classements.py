@@ -403,15 +403,35 @@ def dest_link(slug, nom, lang):
     else:
         return f'../best-time-to-visit-{slug}.html'
 
-def region_tag(pays, lang, slug=''):
-    # Slug-level override (DOM-TOM)
-    tag = SLUG_REGION_TAG.get(slug, '')
-    if not tag:
-        tag = REGION_TAG.get(pays, '')
+def country_tag(d, lang, slug=''):
+    """Show country name (or DOM-TOM territory) next to destination."""
+    # DOM-TOM: show territory name instead of "France"
+    SLUG_TERRITORY = {
+        'reunion': 'La Réunion', 'mayotte': 'Mayotte',
+        'guadeloupe': 'Guadeloupe', 'martinique': 'Martinique',
+        'saint-martin': 'Saint-Martin', 'saint-barthelemy': 'Saint-Barthélemy',
+        'polynesie': 'Polynésie', 'bora-bora': 'Polynésie',
+        'tahiti': 'Polynésie', 'moorea': 'Polynésie',
+        'nouvelle-caledonie': 'Nouvelle-Calédonie',
+        'guyane': 'Guyane', 'saint-pierre-et-miquelon': 'Saint-Pierre-et-Miquelon',
+    }
+    SLUG_TERRITORY_EN = {
+        'reunion': 'Réunion', 'mayotte': 'Mayotte',
+        'guadeloupe': 'Guadeloupe', 'martinique': 'Martinique',
+        'saint-martin': 'Saint Martin', 'saint-barthelemy': 'Saint Barthélemy',
+        'polynesie': 'French Polynesia', 'bora-bora': 'French Polynesia',
+        'tahiti': 'French Polynesia', 'moorea': 'French Polynesia',
+        'nouvelle-caledonie': 'New Caledonia',
+        'guyane': 'French Guiana', 'saint-pierre-et-miquelon': 'Saint Pierre & Miquelon',
+    }
+    if slug in SLUG_TERRITORY:
+        tag = SLUG_TERRITORY_EN[slug] if lang == 'en' else SLUG_TERRITORY[slug]
+    elif lang == 'en':
+        tag = d.get('country_en', '') or d.get('pays', '')
+    else:
+        tag = d.get('pays', '')
     if not tag:
         return ''
-    if lang == 'en':
-        tag = REGION_TAG_EN.get(tag, tag)
     return f'<span class="region-tag">{e(tag)}</span>'
 
 def make_table_annual(entries, n, lang):
@@ -429,7 +449,7 @@ def make_table_annual(entries, n, lang):
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td>{mois[entry["best_month"]]}</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["sun_annual"]:.0f}h</td>'
@@ -453,7 +473,7 @@ def make_table_seasonal(entries, n, lang):
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["tmax_avg"]:.0f}°C</td>'
             f'<td>{entry["sun"]:.0f}h</td>'
@@ -477,7 +497,7 @@ def make_table_sun(entries, n, lang):
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td>{entry["sun_annual"]:.0f}h</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["rain_avg"]:.0f}%</td></tr>'
@@ -500,7 +520,7 @@ def make_table_rain(entries, n, lang):
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td>{entry["rain_avg"]:.0f}%</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["sun_annual"]:.0f}h</td></tr>'
@@ -524,7 +544,7 @@ def make_table_nomad(entries, n, lang):
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["stdev"]:.2f}</td>'
             f'<td>{mois[entry["worst_month"]]}</td>'
@@ -548,7 +568,7 @@ def make_table_beach(entries, n, lang):
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["avg_sea"]:.0f}°C</td>'
             f'<td>{entry["tmax_avg"]:.0f}°C</td>'
@@ -574,7 +594,7 @@ def make_table_beach_annual(entries, n, lang):
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{region_tag(d["pays"], lang, entry["slug"])}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["avg_sea"]:.0f}°C</td>'
             f'<td>{mois[entry["best_month"]]} ({entry["best_score"]:.1f})</td>'
