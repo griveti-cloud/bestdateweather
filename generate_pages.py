@@ -32,6 +32,8 @@ from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
 DIR  = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(DIR, 'data')
 
+BOOKING_AID = '304142'  # TODO: replace with your CJ affiliate ID
+
 
 def _bind_lang(cfg):
     """Bind shared functions to the selected language."""
@@ -446,7 +448,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     country_name = country
     ss_val = quote_plus(f"{nom}, {country_name}")
     booking_params = (f"ss={ss_val}"
-                      f"&aid=304142"
+                      f"&aid={BOOKING_AID}"
                       f"&lang={C['booking_lang']}"
                       f"&sb=1&src=index&src_elem=sb"
                       f"&checkin={YEAR}-{best_idx+1:02d}-01&checkout={YEAR}-{best_idx+1:02d}-07"
@@ -1597,6 +1599,32 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     # ── HEAD CSS / NAV / FOOTER from gen_annual helpers ──
     NAV      = nav_html(cfg)
 
+    # ── Booking (monthly) ──
+    booking_id = dest.get('booking_dest_id', '')
+    country_name = dest_country(cfg, dest)
+    ss_val_m = quote_plus(f"{nom}, {country_name}")
+    bk_params = (f"ss={ss_val_m}"
+                 f"&aid={BOOKING_AID}"
+                 f"&lang={cfg['booking_lang']}"
+                 f"&sb=1&src=index&src_elem=sb"
+                 f"&checkin={YEAR}-{mi+1:02d}-01&checkout={YEAR}-{mi+1:02d}-07"
+                 f"&group_adults=2&no_rooms=1&group_children=0")
+    if booking_id:
+        bk_params += f"&dest_id={booking_id}&dest_type=city"
+    bk_url = f"https://www.booking.com/{cfg['booking_domain']}?{bk_params}"
+    if is_fr:
+        bk_cta = f"Voir les h\u00e9bergements {prep} {nom_bare} en {month_lc}"
+    else:
+        bk_cta = f"Find places to stay in {nom} in {month}"
+    booking_section = f'''<section class="section">
+ <div class="section-label">{cfg['lbl_booking_section']}</div>
+ <h2 class="section-title">{cfg['lbl_booking_title_tpl'].format(name=nom_f)}</h2>
+ <div class="affil-box">
+ <strong>{bk_cta}</strong>
+ <a href="{bk_url}" target="_blank" rel="sponsored noopener" class="affil-btn">{cfg['lbl_booking_btn']}</a>
+ </div>
+</section>'''
+
     html = f'''<!DOCTYPE html>
 <html lang="{L['html_lang']}">
 <head>
@@ -1741,6 +1769,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  </div>
  </section>
+
+{booking_section}
 
  <section class="section">
  <div class="section-label">{L['prev_label'].split()[0]}</div>
