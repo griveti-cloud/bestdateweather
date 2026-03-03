@@ -571,7 +571,6 @@
   }
 
   function replaySearch(r) {
-    console.log("[WB] replaySearch called, mode=", r.mode, "name=", r.name, "date=", r.date);
     var cleanName = r.name.replace(/\s*\([^)]*\)\s*$/, "").replace(/,.*$/, "").trim();
     var inputLabel = r.label || cleanName;
 
@@ -585,10 +584,8 @@
         region: r.region || "",
         elevation: r.elevation || null
       };
-      console.log("[WB] selectedLoc restored:", window.selectedLoc);
     } else {
       window.selectedLoc = null;
-      console.log("[WB] no coords, selectedLoc=null, geocode will use:", cleanName);
     }
 
     if (r.mode === "annual") {
@@ -599,7 +596,6 @@
         if (r.lat != null && r.lon != null) {
           window.annSelectedLoc = window.selectedLoc;
         }
-        console.log("[WB] calling runAnnual in 300ms");
         setTimeout(function() { runAnnual(); }, 300);
       }
     } else {
@@ -608,7 +604,6 @@
       var dateInput = document.getElementById("inp-date");
       if (cityInput) {
         cityInput.value = r.lat != null ? inputLabel : cleanName;
-        console.log("[WB] cityInput set to:", cityInput.value);
       }
       if (dateInput && r.date) {
         var parts = r.date.match(/(\d{2})\/(\d{2})\/(\d{4})/);
@@ -616,16 +611,9 @@
           dateInput.value = r.date;
           dateInput._isoValue = parts[3] + "-" + parts[2] + "-" + parts[1];
           dateInput.classList.add("has-val");
-          console.log("[WB] dateInput set to:", dateInput.value, "_isoValue:", dateInput._isoValue);
-        } else {
-          console.log("[WB] ERROR: date regex didn't match:", r.date);
         }
-      } else {
-        console.log("[WB] WARNING: no dateInput or no r.date. dateInput=", !!dateInput, "r.date=", r.date);
       }
-      console.log("[WB] calling run() in 300ms");
       setTimeout(function() {
-        console.log("[WB] run() about to execute. city=", document.getElementById("inp-city").value, "_isoValue=", document.getElementById("inp-date")._isoValue);
         run();
       }, 300);
     }
@@ -826,11 +814,8 @@
   };
 
   window.wbReplay = function(idx) {
-    console.log("[WB] wbReplay called, idx=", idx);
     var r = getRecent()[idx];
-    console.log("[WB] recent entry:", JSON.stringify(r));
     if (r) replaySearch(r);
-    else console.log("[WB] ERROR: no entry at index", idx);
   };
 
   window.wbRefreshUnits = function() {

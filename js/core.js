@@ -1577,20 +1577,18 @@ function markRecommendedMonths() {
 /* ── MODE SWITCH ── */
 function switchMode(mode) {
  var isDate = mode === 'date';
- document.getElementById('mode-date').className = 'mode-btn' + (isDate ? ' active' : '');
- document.getElementById('mode-annual').className = 'mode-btn' + (!isDate ? ' active' : '');
- document.getElementById('annual-wrap').style.display = isDate ? 'none' : 'block';
- // show/hide date-mode elements
+ var md = document.getElementById('mode-date');
+ var ma = document.getElementById('mode-annual');
+ var aw = document.getElementById('annual-wrap');
+ if (md) md.className = 'mode-btn' + (isDate ? ' active' : '');
+ if (ma) ma.className = 'mode-btn' + (!isDate ? ' active' : '');
+ if (aw) aw.style.display = isDate ? 'none' : 'block';
  var dateEls = ['date-form','hero','sec-hourly','sec-scenarios','empty','foot-note','uc-filter-wrap'];
  dateEls.forEach(function(id){
- var el = document.getElementById(id);
- if (el) {
-  if (!isDate) el._wasDisplay = el.style.display;
-  el.style.display = isDate ? '' : 'none';
- }
+  var el = document.getElementById(id);
+  if (el) el.style.display = isDate ? '' : 'none';
  });
- if (isDate) document.getElementById('empty').style.display = 'block';
-
+ if (isDate) { var empt = document.getElementById('empty'); if (empt) empt.style.display = 'block'; }
 }
 
 /* ── ANNUAL AUTOCOMPLETE ── */
