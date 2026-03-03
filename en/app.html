@@ -15,6 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,900;1,900&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
 <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,900;1,900&display=swap" rel="stylesheet"/></noscript>
 <link rel="stylesheet" href="../app.css"/>
+<link rel="stylesheet" href="../css/weather-banner.css"/>
 <style>
 /* EN overrides */
 .app-sub{max-width:400px}
@@ -75,6 +76,11 @@
   <button class="unit-btn" id="btn-us" onclick="setUnits('us')">°F · mph</button>
  </div>
 </header>
+
+<!-- ── Weather Banner ── -->
+<div id="wb-container"></div>
+<div id="wb-recent-section"></div>
+<div id="wb-suggest-section"></div>
 
 <main>
 <div class="wrap">
@@ -1232,5 +1238,6 @@
 
 <script src="../js/sw-register.js"></script>
 <script src="../js/a11y-inert.js"></script>
+<script defer src="../js/weather-banner.js"></script>
 </body>
 </html>
