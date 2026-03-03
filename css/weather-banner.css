@@ -88,10 +88,16 @@
 /* ── GEOLOCATION PROMPT ── */
 .wb-geo-prompt{margin:0 16px 12px;padding:14px 16px;background:linear-gradient(135deg,var(--navy),#2a3548);border-radius:var(--r);color:#fff;text-align:center;animation:fadeUp .35s ease both}
 .wb-geo-prompt p{font-size:13px;opacity:.8;margin-bottom:10px}
-.wb-geo-prompt-btns{display:flex;gap:8px;justify-content:center}
-.wb-geo-prompt-btn{padding:8px 16px;border-radius:var(--r-xs);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:opacity .15s}
-.wb-geo-prompt-btn.primary{background:var(--gold);color:#fff}
-.wb-geo-prompt-btn.secondary{background:rgba(255,255,255,.12);color:#fff}
+.wb-geo-input-wrap{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border-radius:var(--r-sm);padding:10px 14px;border:1.5px solid rgba(255,255,255,.15);transition:border-color .2s}
+.wb-geo-input-wrap:focus-within{border-color:var(--gold)}
+.wb-geo-input{border:none;outline:none;background:none;flex:1;font-size:14px;font-family:'DM Sans',sans-serif;color:#fff}
+.wb-geo-input::placeholder{color:rgba(255,255,255,.4)}
+.wb-geo-results{margin-top:6px;text-align:left}
+.wb-geo-result{display:flex;align-items:center;width:100%;padding:10px 14px;background:rgba(255,255,255,.08);border:none;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;color:#fff;text-align:left;transition:background .15s;border-radius:0}
+.wb-geo-result:first-child{border-radius:var(--r-sm) var(--r-sm) 0 0}
+.wb-geo-result:last-child{border-radius:0 0 var(--r-sm) var(--r-sm);border-bottom:none}
+.wb-geo-result:only-child{border-radius:var(--r-sm)}
+.wb-geo-result:hover{background:rgba(255,255,255,.15)}
 
 /* ── HIDDEN STATE ── */
 .wb-hidden{display:none}

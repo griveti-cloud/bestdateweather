@@ -23,7 +23,8 @@
       usePosition: "Utiliser ma position", currently: "Actuellement",
       recentTitle: "Recherches récentes", clearAll: "Tout effacer",
       suggestTitle: "Pour vous", suggestSub: "même région climatique",
-      geoPrompt: "Activez la géolocalisation pour voir la météo locale",
+      geoPrompt: "Où êtes-vous ? Entrez votre ville pour la météo locale",
+      geoPlaceholder: "Votre ville…",
       geoAllow: "Autoriser", geoSkip: "Plus tard",
       annual: "12 mois", date: "date",
       weatherDesc: {
@@ -43,7 +44,8 @@
       usePosition: "Use my location", currently: "Currently",
       recentTitle: "Recent searches", clearAll: "Clear all",
       suggestTitle: "For you", suggestSub: "similar climate region",
-      geoPrompt: "Enable geolocation to see local weather",
+      geoPrompt: "Where are you? Enter your city for local weather",
+      geoPlaceholder: "Your city…",
       geoAllow: "Allow", geoSkip: "Later",
       annual: "12 months", date: "date",
       weatherDesc: {
@@ -125,7 +127,7 @@
           state.geoState = "denied";
           renderGeoPrompt();
         },
-        { timeout: 8000, maximumAge: 300000 }
+        { timeout: 3000, maximumAge: 300000 }
       );
     } else {
       state.geoState = "denied";
@@ -374,11 +376,44 @@
     c.innerHTML =
       '<div class="wb-geo-prompt" id="wb-geo-prompt">' +
         '<p>' + t.geoPrompt + '</p>' +
-        '<div class="wb-geo-prompt-btns">' +
-          '<button class="wb-geo-prompt-btn primary" onclick="wbGeoAllow()">' + t.geoAllow + '</button>' +
-          '<button class="wb-geo-prompt-btn secondary" onclick="wbGeoSkip()">' + t.geoSkip + '</button>' +
+        '<div class="wb-geo-input-wrap">' +
+          '<span style="font-size:14px;opacity:.5">\ud83d\udd0d</span>' +
+          '<input class="wb-geo-input" id="wb-geo-input" placeholder="' + t.geoPlaceholder + '" autocomplete="off"/>' +
         '</div>' +
+        '<div class="wb-geo-results" id="wb-geo-results"></div>' +
       '</div>';
+
+    // Bind autocomplete on the input
+    var inp = document.getElementById("wb-geo-input");
+    if (inp) {
+      setTimeout(function() { inp.focus(); }, 200);
+      inp.addEventListener("input", function() {
+        searchCities(inp.value, function(results) {
+          var container = document.getElementById("wb-geo-results");
+          if (!container) return;
+          if (results.length === 0) { container.innerHTML = ""; return; }
+          var html = "";
+          for (var i = 0; i < results.length; i++) {
+            var r = results[i];
+            html +=
+              '<button class="wb-geo-result" data-lat="' + r.lat + '" data-lon="' + r.lon + '" data-name="' + escAttr(r.name) + '">' +
+                escHtml(r.name) + '<span style="opacity:.5;font-size:12px;margin-left:6px">' + escHtml(r.country) + '</span>' +
+              '</button>';
+          }
+          container.innerHTML = html;
+          var btns = container.querySelectorAll(".wb-geo-result");
+          for (var j = 0; j < btns.length; j++) {
+            btns[j].addEventListener("click", function() {
+              var name = this.getAttribute("data-name");
+              var lat = parseFloat(this.getAttribute("data-lat"));
+              var lon = parseFloat(this.getAttribute("data-lon"));
+              selectCity(name, lat, lon);
+            });
+          }
+        });
+      });
+    }
+
     renderRecent();
     renderSuggestions();
   }
@@ -700,7 +735,7 @@
         function() {
           renderGeoPrompt();
         },
-        { timeout: 8000 }
+        { timeout: 3000 }
       );
     }
   };
@@ -716,18 +751,16 @@
         },
         function() {
           state.geoState = "denied";
-          var prompt = document.getElementById("wb-geo-prompt");
-          if (prompt) prompt.remove();
+          renderGeoPrompt();
         },
-        { timeout: 8000 }
+        { timeout: 3000 }
       );
     }
   };
 
   window.wbGeoSkip = function() {
     state.geoState = "denied";
-    var prompt = document.getElementById("wb-geo-prompt");
-    if (prompt) prompt.remove();
+    renderGeoPrompt();
   };
 
   window.wbClearRecent = function() {
