@@ -164,6 +164,29 @@ MOIS_FR = {1:'Janvier',2:'Février',3:'Mars',4:'Avril',5:'Mai',6:'Juin',
 MOIS_EN = {1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',
            7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'}
 
+# ── Country-level deduplication ───────────────────────────────────────────────
+# Slugs that represent an entire country (not a city/region/island).
+# When a country-slug and a city from the same country both rank,
+# keep only the city (more specific / actionable for travelers).
+COUNTRY_SLUGS = {
+    'albanie', 'bahamas', 'bolivie', 'cambodge', 'cap-vert', 'chili', 'chypre',
+    'colombie', 'costa-rica', 'equateur', 'georgie', 'guatemala', 'iles-cook',
+    'jordanie', 'kenya', 'laos', 'madagascar', 'malte', 'montenegro', 'myanmar',
+    'namibie', 'nepal', 'nicaragua', 'nouvelle-zelande', 'oman', 'ouzbekistan',
+    'perou', 'philippines', 'republique-dominicaine', 'senegal', 'sri-lanka',
+    'tanzanie', 'uruguay',
+}
+
+def dedup_country(results, dests):
+    """Remove country-level entries when a sibling city from the same country is also ranked."""
+    # Collect which countries have city-level entries in results
+    countries_with_cities = set()
+    for r in results:
+        if r['slug'] not in COUNTRY_SLUGS:
+            countries_with_cities.add(r['dest']['pays'])
+    # Filter out country-level slugs whose country has a city sibling
+    return [r for r in results if r['slug'] not in COUNTRY_SLUGS or r['dest']['pays'] not in countries_with_cities]
+
 # ── Ranking Computations ─────────────────────────────────────────────────────
 
 def compute_annual(climate, dests, europe_only=False):
@@ -757,14 +780,14 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 # ══════════════════════════════════════════════════════════════════════════════
 
 def gen_mondial(dests, climate, lang):
-    annual = compute_annual(climate, dests)
-    sunniest = compute_sunniest(climate, dests)
-    driest = compute_driest(climate, dests)
+    annual = dedup_country(compute_annual(climate, dests), dests)
+    sunniest = dedup_country(compute_sunniest(climate, dests), dests)
+    driest = dedup_country(compute_driest(climate, dests), dests)
     top1 = annual[0]
     sun1 = sunniest[0]
     dry1 = driest[0]
     # Find top Europe
-    europe_annual = compute_annual(climate, dests, europe_only=True)
+    europe_annual = dedup_country(compute_annual(climate, dests, europe_only=True), dests)
     eu1 = europe_annual[0]
     n_dests = len(annual)
 
@@ -822,9 +845,9 @@ def gen_mondial(dests, climate, lang):
 
 
 def gen_europe(dests, climate, lang):
-    annual = compute_annual(climate, dests, europe_only=True)
-    summer = compute_seasonal(climate, dests, [6,7,8], europe_only=True)
-    winter = compute_seasonal(climate, dests, [12,1,2], europe_only=True)
+    annual = dedup_country(compute_annual(climate, dests, europe_only=True), dests)
+    summer = dedup_country(compute_seasonal(climate, dests, [6,7,8], europe_only=True), dests)
+    winter = dedup_country(compute_seasonal(climate, dests, [12,1,2], europe_only=True), dests)
     top1 = annual[0]
     n_dests = len(annual)
 
@@ -882,7 +905,7 @@ def gen_europe(dests, climate, lang):
 
 
 def gen_ete(dests, climate, lang):
-    summer = compute_seasonal(climate, dests, [6,7,8])
+    summer = dedup_country(compute_seasonal(climate, dests, [6,7,8]), dests)
     top1 = summer[0]
     n_dests = len(summer)
 
@@ -936,7 +959,7 @@ def gen_ete(dests, climate, lang):
 
 
 def gen_hiver(dests, climate, lang):
-    winter = compute_seasonal(climate, dests, [12,1,2])
+    winter = dedup_country(compute_seasonal(climate, dests, [12,1,2]), dests)
     top1 = winter[0]
     n_dests = len(winter)
 
@@ -990,7 +1013,7 @@ def gen_hiver(dests, climate, lang):
 
 
 def gen_nomades(dests, climate, lang):
-    nomad = compute_nomad(climate, dests)
+    nomad = dedup_country(compute_nomad(climate, dests), dests)
     top1 = nomad[0]
     n_dests = len(nomad)
 
@@ -1044,9 +1067,9 @@ def gen_nomades(dests, climate, lang):
 
 
 def gen_beach(dests, climate, lang):
-    annual = compute_beach(climate, dests)
-    summer = compute_beach_seasonal(climate, dests, [6,7,8])
-    winter = compute_beach_seasonal(climate, dests, [12,1,2])
+    annual = dedup_country(compute_beach(climate, dests), dests)
+    summer = dedup_country(compute_beach_seasonal(climate, dests, [6,7,8]), dests)
+    winter = dedup_country(compute_beach_seasonal(climate, dests, [12,1,2]), dests)
     top1 = annual[0]
     n_dests = len(annual)
 
