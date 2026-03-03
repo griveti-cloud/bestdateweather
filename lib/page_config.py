@@ -131,6 +131,18 @@ def build_config(lang):
         'lbl_booking_cta': 'Voir les disponibilités sur la période recommandée' if is_fr else 'Check availability during the recommended period',
         'lbl_booking_btn': 'Rechercher sur Booking.com' if is_fr else 'Search on Booking.com',
 
+        # Activities (GetYourGuide)
+        'lbl_activities_section': 'Activités & visites' if is_fr else 'Activities & tours',
+        'lbl_activities_title_tpl': 'Activités et visites {name}' if is_fr else 'Activities and tours in {name}',
+        'lbl_activities_cta': 'Excursions, visites guidées, billets coupe-file et expériences locales.' if is_fr else 'Guided tours, skip-the-line tickets and local experiences.',
+        'lbl_activities_btn': 'Voir les activités sur GetYourGuide' if is_fr else 'Browse activities on GetYourGuide',
+
+        # Flights (Kiwi via Travelpayouts)
+        'lbl_flights_section': 'Vols' if is_fr else 'Flights',
+        'lbl_flights_title_tpl': 'Trouver un vol vers {name}' if is_fr else 'Find a flight to {name}',
+        'lbl_flights_cta': 'Comparer les vols depuis toutes les compagnies.' if is_fr else 'Compare flights from all airlines.',
+        'lbl_flights_btn': 'Rechercher un vol' if is_fr else 'Search flights',
+
         'lbl_monthly_section': 'Météo par mois' if is_fr else 'Monthly weather',
         'lbl_monthly_title': 'Météo détaillée mois par mois' if is_fr else 'Detailed weather by month',
 

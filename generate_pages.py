@@ -33,6 +33,8 @@ DIR  = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(DIR, 'data')
 
 BOOKING_AID = '304142'  # TODO: replace with your CJ affiliate ID
+GYG_PARTNER_ID = 'XXXXX'  # TODO: replace with your GetYourGuide partner ID
+TP_MARKER = 'XXXXX'  # TODO: replace with your Travelpayouts marker ID
 
 
 def _bind_lang(cfg):
@@ -476,7 +478,32 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  </div>
 </section>'''
 
-    # ── Monthly navigation ──
+    # ── Activities (GetYourGuide) ──
+    gyg_domain = 'getyourguide.fr' if C['is_fr'] else 'getyourguide.com'
+    gyg_lang = 'fr' if C['is_fr'] else 'en'
+    gyg_dest = quote_plus(f"{nom}, {country_name}")
+    gyg_url = f"https://www.{gyg_domain}/s/?q={gyg_dest}&partner_id={GYG_PARTNER_ID}"
+    activities_section = f'''<section class="section">
+ <div class="section-label">{C['lbl_activities_section']}</div>
+ <h2 class="section-title">{C['lbl_activities_title_tpl'].format(name=nom_f)}</h2>
+ <div class="affil-box">
+ <strong>{C['lbl_activities_cta']}</strong>
+ <a href="{gyg_url}" target="_blank" rel="sponsored noopener" class="affil-btn">{C['lbl_activities_btn']}</a>
+ </div>
+</section>'''
+
+    # ── Flights (Kiwi via Travelpayouts) ──
+    kiwi_to = quote_plus(f"{nom}-{country_name}")
+    kiwi_deep = f"https://www.kiwi.com/deep?to={kiwi_to}&lang={gyg_lang}"
+    flights_url = f"https://c111.travelpayouts.com/click?shmarker={TP_MARKER}&promo_id=3791&source_type=customlink&type=click&custom_url={quote_plus(kiwi_deep)}"
+    flights_section = f'''<section class="section">
+ <div class="section-label">{C['lbl_flights_section']}</div>
+ <h2 class="section-title">{C['lbl_flights_title_tpl'].format(name=nom_f)}</h2>
+ <div class="affil-box">
+ <strong>{C['lbl_flights_cta']}</strong>
+ <a href="{flights_url}" target="_blank" rel="sponsored noopener" class="affil-btn">{C['lbl_flights_btn']}</a>
+ </div>
+</section>'''
     MONTH_BTN_CLS = {'rec': 'month-btn-rec', 'mid': 'month-btn-mid', 'avoid': 'month-btn-avoid'}
     monthly_links = ''.join(
         f'<a href="{monthly_url(C, slug, i)}" class="month-btn '
@@ -747,6 +774,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 {table_section}
 {seasonal_section}
 {booking_section}
+{activities_section}
+{flights_section}
 {monthly_section}
 {faq_section}
 {similar_section}
@@ -1625,6 +1654,33 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
 </section>'''
 
+    # ── Activities (GetYourGuide) – monthly ──
+    gyg_domain_m = 'getyourguide.fr' if is_fr else 'getyourguide.com'
+    gyg_lang_m = 'fr' if is_fr else 'en'
+    gyg_dest_m = quote_plus(f"{nom}, {country_name}")
+    gyg_url_m = f"https://www.{gyg_domain_m}/s/?q={gyg_dest_m}&partner_id={GYG_PARTNER_ID}"
+    activities_section = f'''<section class="section">
+ <div class="section-label">{cfg['lbl_activities_section']}</div>
+ <h2 class="section-title">{cfg['lbl_activities_title_tpl'].format(name=nom_f)}</h2>
+ <div class="affil-box">
+ <strong>{cfg['lbl_activities_cta']}</strong>
+ <a href="{gyg_url_m}" target="_blank" rel="sponsored noopener" class="affil-btn">{cfg['lbl_activities_btn']}</a>
+ </div>
+</section>'''
+
+    # ── Flights (Kiwi via Travelpayouts) – monthly ──
+    kiwi_to_m = quote_plus(f"{nom}-{country_name}")
+    kiwi_deep_m = f"https://www.kiwi.com/deep?to={kiwi_to_m}&departure={YEAR}-{mi+1:02d}-01&lang={gyg_lang_m}"
+    flights_url_m = f"https://c111.travelpayouts.com/click?shmarker={TP_MARKER}&promo_id=3791&source_type=customlink&type=click&custom_url={quote_plus(kiwi_deep_m)}"
+    flights_section = f'''<section class="section">
+ <div class="section-label">{cfg['lbl_flights_section']}</div>
+ <h2 class="section-title">{cfg['lbl_flights_title_tpl'].format(name=nom_f)}</h2>
+ <div class="affil-box">
+ <strong>{cfg['lbl_flights_cta']}</strong>
+ <a href="{flights_url_m}" target="_blank" rel="sponsored noopener" class="affil-btn">{cfg['lbl_flights_btn']}</a>
+ </div>
+</section>'''
+
     html = f'''<!DOCTYPE html>
 <html lang="{L['html_lang']}">
 <head>
@@ -1771,6 +1827,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </section>
 
 {booking_section}
+{activities_section}
+{flights_section}
 
  <section class="section">
  <div class="section-label">{L['prev_label'].split()[0]}</div>
