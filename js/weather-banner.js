@@ -178,9 +178,9 @@
         var label = (i === nowH) ? t.now : i + "h";
         hourly.push({
           h: label,
-          temp: Math.round(hTemps[i]),
+          temp: hTemps[i],
           icon: weatherEmoji(hCodes[i] || 0),
-          wind: Math.round(hWinds[i] || 0),
+          wind: hWinds[i] || 0,
           rain: Math.round(hRains[i] || 0)
         });
       }
@@ -188,17 +188,17 @@
       // Daily min/max
       var tMin = null, tMax = null;
       if (data.daily) {
-        if (data.daily.temperature_2m_max && data.daily.temperature_2m_max.length) tMax = Math.round(data.daily.temperature_2m_max[0]);
-        if (data.daily.temperature_2m_min && data.daily.temperature_2m_min.length) tMin = Math.round(data.daily.temperature_2m_min[0]);
+        if (data.daily.temperature_2m_max && data.daily.temperature_2m_max.length) tMax = data.daily.temperature_2m_max[0];
+        if (data.daily.temperature_2m_min && data.daily.temperature_2m_min.length) tMin = data.daily.temperature_2m_min[0];
       }
 
       state.weather = {
         city: cityName,
-        temp: Math.round(c.temperature_2m),
+        temp: c.temperature_2m,
         tMin: tMin,
         tMax: tMax,
-        feels: Math.round(c.apparent_temperature),
-        wind: Math.round(c.wind_speed_10m),
+        feels: c.apparent_temperature,
+        wind: c.wind_speed_10m,
         icon: weatherEmoji(c.weather_code),
         desc: t.weatherDesc[c.weather_code] || t.weatherDesc[0],
         humidity: Math.round(c.relative_humidity_2m || 0),
@@ -270,15 +270,18 @@
 
   /* ── SUGGESTIONS DATA (loaded from JSON) ── */
   var suggestionsData = null;
-  var FLAGS_PREFIX = LANG === "en" ? "../flags/" : "flags/";
 
   function flagImg(code) {
     if (!code) return "\ud83c\udf0d";
-    // 2-letter country code → img tag
-    if (/^[a-z]{2}$/.test(code)) {
-      return '<img src="' + FLAGS_PREFIX + code + '.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px">';
+    // 2-letter country code → emoji flag via regional indicator symbols
+    if (/^[a-zA-Z]{2}$/.test(code)) {
+      var upper = code.toUpperCase();
+      // DOM-TOM → use France flag
+      var domTom = {GF:1,GP:1,MQ:1,RE:1,PM:1,YT:1,NC:1,PF:1,WF:1,MF:1,BL:1};
+      if (domTom[upper]) upper = "FR";
+      return String.fromCodePoint(0x1F1E6 + upper.charCodeAt(0) - 65) +
+             String.fromCodePoint(0x1F1E6 + upper.charCodeAt(1) - 65);
     }
-    // Already an emoji or other format
     return code;
   }
 
@@ -449,15 +452,15 @@
           '<div class="wb-right">' +
             '<span class="wb-icon">' + w.icon + '</span>' +
             '<div class="wb-temps">' +
-              '<span class="wb-temp">' + w.temp + '\u00b0</span>' +
-              (w.tMin != null && w.tMax != null ? '<span class="wb-minmax">' + w.tMin + '\u00b0 / ' + w.tMax + '\u00b0</span>' : '') +
+              '<span class="wb-temp">' + fmtT(w.temp) + unitT() + '</span>' +
+              (w.tMin != null && w.tMax != null ? '<span class="wb-minmax">' + fmtT(w.tMin) + '\u00b0 / ' + fmtT(w.tMax) + '\u00b0</span>' : '') +
             '</div>' +
           '</div>' +
         '</div>' +
         '<div class="wb-meta">' +
-          '<span class="wb-meta-item">' + t.feels + ' ' + w.feels + '\u00b0</span>' +
+          '<span class="wb-meta-item">' + t.feels + ' ' + fmtT(w.feels) + '\u00b0</span>' +
           '<span class="wb-meta-dot">\u00b7</span>' +
-          '<span class="wb-meta-item">' + t.wind + ' ' + w.wind + ' km/h</span>' +
+          '<span class="wb-meta-item">' + t.wind + ' ' + fmtW(w.wind) + unitW() + '</span>' +
           '<span class="wb-meta-dot">\u00b7</span>' +
           '<span class="wb-meta-item">' + t.uv + ' ' + w.uv + '</span>' +
           '<span class="' + expandCls + '">\u25bc</span>' +
@@ -506,7 +509,7 @@
           '<div class="wb-h-time">' + escHtml(h.h) + '</div>' +
           '<div class="wb-h-ico">' + h.icon + '</div>' +
           '<div class="wb-h-bar" style="height:' + barH + 'px;background:' + barColor + '"></div>' +
-          '<div class="wb-h-temp">' + h.temp + '\u00b0</div>' +
+          '<div class="wb-h-temp">' + fmtT(h.temp) + '\u00b0</div>' +
           rainHtml +
         '</div>';
     }
@@ -817,6 +820,11 @@
     renderSuggestions();
   };
 
+  window.wbRefreshUnits = function() {
+    renderBanner();
+    renderHourlyPanel();
+  };
+
   /* ═════════════════════════════════════════════════
      AUTO-TRACKING — observe search results
      ═════════════════════════════════════════════════ */
@@ -895,26 +903,31 @@
     var flag = findFlagForSlug(slug);
 
     // Capture coordinates from selectedLoc if available
-    var lat = null, lon = null, country = "", region = "", elevation = null;
+    var lat = null, lon = null, country = "", region = "", elevation = null, cc = "";
     if (window.selectedLoc) {
       lat = window.selectedLoc.lat;
       lon = window.selectedLoc.lon;
       country = window.selectedLoc.country || "";
       region = window.selectedLoc.region || "";
       elevation = window.selectedLoc.elevation || null;
+      cc = window.selectedLoc.country_code || "";
     }
+
+    // Use country_code for flag if slug-based flag is empty
+    var flagCode = flag || cc.toLowerCase();
 
     window.wbAddRecent({
       name: displayName,
       label: fullLabel,
       slug: slug,
-      flag: flag,
+      flag: flagCode,
       mode: "date",
       date: dateInput ? dateInput.value : "",
       score: score,
       lat: lat,
       lon: lon,
       country: country,
+      country_code: cc,
       region: region,
       elevation: elevation,
     });
@@ -944,6 +957,19 @@
     renderRecent();
     renderSuggestions();
   };
+
+  /* ── UNIT CONVERSION ── */
+  function isUS() { return window._units === "us"; }
+  function fmtT(c) {
+    if (c == null) return "-";
+    return isUS() ? Math.round(c * 9/5 + 32) : Math.round(c);
+  }
+  function fmtW(kmh) {
+    if (kmh == null) return "-";
+    return isUS() ? Math.round(kmh * 0.621371) : Math.round(kmh);
+  }
+  function unitT() { return isUS() ? "\u00b0F" : "\u00b0"; }
+  function unitW() { return isUS() ? " mph" : " km/h"; }
 
   /* ── UTILS ── */
   function escHtml(s) {

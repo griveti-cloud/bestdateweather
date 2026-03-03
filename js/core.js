@@ -16,6 +16,8 @@ function setUnits(sys) {
   computeAndRenderScore(window._lastSc, window._lastRows);
   updateHero(window._lastSc, window._lastRows);
  }
+ // Refresh weather banner units
+ if (typeof window.wbRefreshUnits === 'function') window.wbRefreshUnits();
 }
 
 function fmtTemp(c) {
@@ -352,7 +354,7 @@ function geocode(city) {
  if (!d.results || !d.results.length) throw new Error('Ville introuvable');
  var r = d.results[0];
  var gRegion = (r.country_code === 'FR') ? '' : (r.admin1 || '');
- return { lat: r.latitude, lon: r.longitude, name: r.name, region: gRegion, country: r.country || COUNTRY_NAMES[r.country_code] || r.country_code || '' };
+ return { lat: r.latitude, lon: r.longitude, name: r.name, region: gRegion, country: r.country || COUNTRY_NAMES[r.country_code] || r.country_code || '', country_code: r.country_code || '' };
  });
 }
 
@@ -1364,7 +1366,7 @@ function selectAC(i){
  var isFrDom = !!FR_DOM[item.country_code];
  var region = (item.country_code === 'FR' || isFrDom) ? (isFrDom ? FR_TERRITORY_NAMES[item.country_code] : '') : (item.admin1 || '');
  var country = isFrDom ? 'France' : getCountryName(item);
- selectedLoc={lat:item.latitude,lon:item.longitude,name:item.name,region:region,country:country,elevation:item.elevation||null};
+ selectedLoc={lat:item.latitude,lon:item.longitude,name:item.name,region:region,country:country,country_code:item.country_code||"",elevation:item.elevation||null};
  var label = item.name;
  if (region) label += ', ' + region;
  if (country) label += ' (' + country + ')';
