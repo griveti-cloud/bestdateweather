@@ -137,12 +137,20 @@ def compute_monthly_averages(data):
         if not md['tmax'] or not md['tmin']:
             raise ValueError(f"No temperature data for month {m}")
 
-        tmin = round(sum(md['tmin']) / len(md['tmin']))
-        tmax = round(sum(md['tmax']) / len(md['tmax']))
+        # P50 (median) — more robust than mean against outlier days
+        sorted_tmin = sorted(md['tmin'])
+        sorted_tmax = sorted(md['tmax'])
+        sorted_sun  = sorted(s / 3600 for s in md['sun_s']) if md['sun_s'] else [0]
+        n_tmin, n_tmax, n_sun = len(sorted_tmin), len(sorted_tmax), len(sorted_sun)
+
+        tmin = round(sorted_tmin[n_tmin // 2] if n_tmin % 2 else (sorted_tmin[n_tmin // 2 - 1] + sorted_tmin[n_tmin // 2]) / 2)
+        tmax = round(sorted_tmax[n_tmax // 2] if n_tmax % 2 else (sorted_tmax[n_tmax // 2 - 1] + sorted_tmax[n_tmax // 2]) / 2)
         rain_pct = round(md['rain_days'] / max(md['total_days'], 1) * 100)
-        # precip_mm: average daily precipitation (matches existing format)
-        precip_mm = round(sum(md['precip']) / max(len(md['precip']), 1), 1)
-        sun_h = round(sum(s / 3600 for s in md['sun_s']) / max(len(md['sun_s']), 1), 1)
+        # precip_mm: median daily precipitation
+        sorted_precip = sorted(md['precip']) if md['precip'] else [0]
+        n_p = len(sorted_precip)
+        precip_mm = round(sorted_precip[n_p // 2] if n_p % 2 else (sorted_precip[n_p // 2 - 1] + sorted_precip[n_p // 2]) / 2, 1)
+        sun_h = round(sorted_sun[n_sun // 2] if n_sun % 2 else (sorted_sun[n_sun // 2 - 1] + sorted_sun[n_sun // 2]) / 2, 1)
 
         result.append({
             'tmin': tmin,
