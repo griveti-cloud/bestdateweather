@@ -787,7 +787,7 @@ var TROPICAL_KEYS = {"-8.67,115.21":true,"13.75,100.52":true,"9.93,-84.08":true,
 var SCORE_RANGES_FICHE = { avoid:[0.5,3.9], mid:[4.0,6.9], rec:[7.0,10.0] };
 
 // Bornes globales raw_score par classe — scoring.py : GLOBAL_RAW_BOUNDS
-var GLOBAL_RAW_BOUNDS = { rec:[0.403,0.965], mid:[0.306,0.695], avoid:[0.137,0.563] };
+var GLOBAL_RAW_BOUNDS = { rec:[0.403,0.965], mid:[0.306,0.646], avoid:[0.136,0.563] };
 var SCORE_POWER = 2.0;
 
 // scoring.py : t_ideal()
@@ -796,8 +796,9 @@ function tIdeal(tmax) {
  if (tmax <= 14) return (tmax - 5) / 9 * 0.3;
  if (tmax <= 22) return 0.3 + (tmax - 14) / 8 * 0.5;
  if (tmax <= 28) return 0.8 + (tmax - 22) / 6 * 0.2;
- if (tmax <= 35) return 1.0 - (tmax - 28) / 7 * 0.4;
- return Math.max(0, 0.6 - (tmax - 35) / 7 * 0.6);
+ if (tmax <= 32) return 1.0 - (tmax - 28) / 4 * 0.25;
+ if (tmax <= 36) return 0.75 - (tmax - 32) / 4 * 0.45;
+ return Math.max(0, 0.30 - (tmax - 36) / 6 * 0.30);
 }
 
 // scoring.py : raw_score() poids 40/35/25
@@ -896,17 +897,16 @@ function scoreTemp(t, tMin, tMax) {
  var ideal = (tMin + tMax) / 2;
  var range = (tMax - tMin) / 2;
  if (t >= tMin && t <= tMax) {
- // 100 at ideal, 80 at edges
  return 100 - 20 * Math.abs(t - ideal) / range;
  }
- // Outside range: asymmetric penalty
- // Too cold = strong penalty (8pts/°C) — comfort strongly affected
- // Too hot = soft penalty (2pts/°C) — still pleasant, just warm
  if (t < tMin) {
  return Math.max(0, 80 - (tMin - t) * 8);
- } else {
- return Math.max(0, 80 - (t - tMax) * 2);
  }
+ // Progressive heat penalty: accelerates above 32°C
+ var over = t - tMax;
+ if (over <= 4) return Math.max(0, 80 - over * 4);
+ if (over <= 8) return Math.max(0, 64 - (over - 4) * 7);
+ return Math.max(0, 36 - (over - 8) * 6);
 }
 
 function scoreWind(kmh) {

@@ -92,17 +92,19 @@ def t_ideal(tmax: float) -> float:
     Frais :               14 – 22°C  →  score 0.3 – 0.8
     Froid :                5 – 14°C  →  score 0.0 – 0.3
     Très froid :          ≤ 5°C       →  0.0
-    Chaud :               28 – 35°C  →  1.0 → 0.6 (pénalité progressive)
-    Très chaud :          35 – 42°C  →  0.6 → 0.0 (pénalité forte, canicule)
+    Chaud :               28 – 32°C  →  1.0 → 0.75 (pénalité douce)
+    Très chaud :          32 – 36°C  →  0.75 → 0.30 (pénalité accélérée)
+    Canicule :            36 – 42°C  →  0.30 → 0.0 (inhabitable)
     Extrême :             > 42°C     →  0.0
     """
     if tmax <= 5:   return 0.0
     if tmax <= 14:  return (tmax - 5) / 9 * 0.3
     if tmax <= 22:  return 0.3 + (tmax - 14) / 8 * 0.5
     if tmax <= 28:  return 0.8 + (tmax - 22) / 6 * 0.2
-    if tmax <= 35:  return 1.0 - (tmax - 28) / 7 * 0.4
-    # >35°C : chute rapide — 38°C ≈ 0.34, 40°C ≈ 0.17, 42°C = 0.0
-    return max(0.0, 0.60 - (tmax - 35) / 7 * 0.60)
+    if tmax <= 32:  return 1.0 - (tmax - 28) / 4 * 0.25
+    if tmax <= 36:  return 0.75 - (tmax - 32) / 4 * 0.45
+    # >36°C : chute rapide — 38°C ≈ 0.20, 40°C ≈ 0.10, 42°C = 0.0
+    return max(0.0, 0.30 - (tmax - 36) / 6 * 0.30)
 
 
 def raw_score(tmax: float, rain_pct: float, sun_h: float) -> float:
