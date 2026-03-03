@@ -1584,7 +1584,7 @@ function switchMode(mode) {
  var el = document.getElementById(id);
  if (el) {
   if (!isDate) el._wasDisplay = el.style.display;
-  el.style.display = isDate ? (el._wasDisplay != null ? el._wasDisplay : 'none') : 'none';
+  el.style.display = isDate ? '' : 'none';
  }
  });
  if (isDate) document.getElementById('empty').style.display = 'block';

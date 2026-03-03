@@ -494,3 +494,23 @@ header.app-header{max-width:580px;margin:0 auto;padding:44px 20px 0;text-align:c
  .dh-acc-label{font-size:14px}
  .dh-acc-count{font-size:11px;padding:2px 8px}
 }
+
+/* ── Mobile compact: above-fold fit ── */
+@media(max-width:640px){
+ header.app-header{padding-top:20px}
+ .app-title{margin-bottom:8px;font-size:clamp(26px,5vw,36px)}
+ .app-divider{margin-bottom:10px}
+ .app-sub{margin-bottom:8px;font-size:13px;line-height:1.5}
+ .app-proof{margin-bottom:6px;padding:3px 10px;font-size:10px}
+ .unit-toggle{margin-bottom:10px}
+ .mode-toggle{margin-bottom:14px;gap:8px}
+ .mode-btn{padding:10px 12px;gap:8px}
+ .mode-btn svg{width:18px;height:18px}
+ .mode-btn-title{font-size:13px}
+ .mode-btn-sub{font-size:10px}
+ .field-group{gap:10px;margin-bottom:12px}
+ .field-label{margin-bottom:5px}
+ .inp{padding:11px 36px 11px 14px;font-size:13px}
+ .btn-go{padding:14px;font-size:14px}
+ .date-hint{font-size:10px;margin-top:3px}
+}

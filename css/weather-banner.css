@@ -94,6 +94,18 @@
 /* ── HIDDEN STATE ── */
 .wb-hidden{display:none}
 
+/* ── MOBILE COMPACT ── */
+@media(max-width:640px){
+ .wb{margin:0 12px 8px;padding:10px 14px 8px}
+ .wb-city-btn{font-size:14px}
+ .wb-desc{font-size:11px;margin-top:1px}
+ .wb-icon{font-size:24px}
+ .wb-temp{font-size:28px}
+ .wb-meta{margin-top:6px;padding-top:6px}
+ .wb-meta-item{font-size:10px}
+ .wb-section{margin-bottom:10px}
+}
+
 /* ── RESPONSIVE ── */
 @media(min-width:640px){
  .wb,.wb-shimmer,.wb-hourly,.wb-geo-prompt{margin-left:auto;margin-right:auto;max-width:560px}
