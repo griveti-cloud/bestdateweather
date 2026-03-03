@@ -223,22 +223,46 @@
 
   var searchTimeout = null;
 
+  var FR_TERRITORIES = {GF:"Guyane française",GP:"Guadeloupe",MQ:"Martinique",RE:"La Réunion",PM:"Saint-Pierre-et-Miquelon",YT:"Mayotte",NC:"Nouvelle-Calédonie",PF:"Polynésie française"};
+
+  function acSub(r) {
+    var cc = r.country_code || "";
+    var isFrDom = !!FR_TERRITORIES[cc];
+    if (cc === "FR" || isFrDom) {
+      var terr = isFrDom ? FR_TERRITORIES[cc] : "";
+      var region = terr || r.admin1 || "";
+      return region + (region ? ", " : "") + "France";
+    }
+    return (r.admin1 || "") + (r.admin1 && r.country ? ", " : "") + (r.country || "");
+  }
+
   function searchCities(query, callback) {
     if (searchTimeout) clearTimeout(searchTimeout);
     if (query.length < 2) { callback([]); return; }
 
     searchTimeout = setTimeout(function() {
-      var url = GEOCODING_URL + "?name=" + encodeURIComponent(query) + "&count=5&language=" + LANG;
+      var url = GEOCODING_URL + "?name=" + encodeURIComponent(query) + "&count=6&language=" + LANG;
       fetch(url).then(function(r) { return r.json(); }).then(function(data) {
         var results = [];
         if (data && data.results) {
-          for (var i = 0; i < data.results.length; i++) {
-            var r = data.results[i];
+          // Sort by population descending
+          var sorted = data.results.slice().sort(function(a, b) { return (b.population || 0) - (a.population || 0); });
+          for (var i = 0; i < Math.min(sorted.length, 6); i++) {
+            var r = sorted[i];
+            var cc = (r.country_code || "").toUpperCase();
+            // DOM-TOM → FR flag
+            var domTom = {GF:1,GP:1,MQ:1,RE:1,PM:1,YT:1,NC:1,PF:1,WF:1,MF:1,BL:1};
+            var flagCC = domTom[cc] ? "FR" : cc;
             results.push({
               name: r.name,
               country: r.country || "",
+              country_code: cc,
+              admin1: r.admin1 || "",
+              sub: acSub(r),
+              flag: flagCC,
               lat: r.latitude,
-              lon: r.longitude
+              lon: r.longitude,
+              elevation: r.elevation || null
             });
           }
         }
@@ -403,7 +427,7 @@
             var r = results[i];
             html +=
               '<button class="wb-geo-result" data-lat="' + r.lat + '" data-lon="' + r.lon + '" data-name="' + escAttr(r.name) + '">' +
-                escHtml(r.name) + '<span style="opacity:.5;font-size:12px;margin-left:6px">' + escHtml(r.country) + '</span>' +
+                flagImg(r.flag || r.country_code || "") + " " + escHtml(r.name) + '<span style="opacity:.5;font-size:12px;margin-left:6px">' + escHtml(r.sub || r.country) + '</span>' +
               '</button>';
           }
           container.innerHTML = html;
@@ -714,8 +738,8 @@
               var r = results[i];
               html +=
                 '<button class="wb-modal-result" data-lat="' + r.lat + '" data-lon="' + r.lon + '" data-name="' + escAttr(r.name) + '">' +
-                  '<span style="font-weight:600">' + escHtml(r.name) + '</span>' +
-                  '<span class="wb-modal-result-sub">' + escHtml(r.country) + '</span>' +
+                  '<span style="font-weight:600">' + flagImg(r.flag || r.country_code || "") + ' ' + escHtml(r.name) + '</span>' +
+                  '<span class="wb-modal-result-sub">' + escHtml(r.sub || r.country) + '</span>' +
                 '</button>';
             }
             container.innerHTML = html;
