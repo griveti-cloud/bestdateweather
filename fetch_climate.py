@@ -74,7 +74,7 @@ def load_existing_climate_slugs():
 
 # ── API ──────────────────────────────────────────────────────────────────────
 
-def fetch_daily(lat, lon, start_date, end_date, max_retries=5):
+def fetch_daily(lat, lon, start_date, end_date, max_retries=8):
     """Fetch daily weather data from Open-Meteo ERA5 archive with retry."""
     url = (f'{API_BASE}?latitude={lat}&longitude={lon}'
            f'&start_date={start_date}&end_date={end_date}'
@@ -87,7 +87,7 @@ def fetch_daily(lat, lon, start_date, end_date, max_retries=5):
                 return json.loads(resp.read())
         except urllib.error.HTTPError as e:
             if e.code == 429 and attempt < max_retries - 1:
-                wait = 2 ** (attempt + 1)  # 2, 4, 8, 16, 32s
+                wait = 30 * (attempt + 1)  # 30, 60, 90, 120, 150, 180, 210s
                 print(f"  ⏳ Rate limited, retry in {wait}s... ({attempt + 1}/{max_retries})")
                 time.sleep(wait)
             else:
@@ -385,7 +385,7 @@ def main():
                 success += 1
             # Rate limiting: 1s between API calls (Open-Meteo free tier)
             if len(slugs) > 1:
-                time.sleep(3.0)
+                time.sleep(10.0)
         except Exception as e:
             print(f"  ❌ Erreur inattendue pour {slug}: {e}")
             errors += 1
