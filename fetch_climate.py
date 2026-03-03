@@ -385,7 +385,7 @@ def main():
                 success += 1
             # Rate limiting: 1s between API calls (Open-Meteo free tier)
             if len(slugs) > 1:
-                time.sleep(1.0)
+                time.sleep(3.0)
         except Exception as e:
             print(f"  ❌ Erreur inattendue pour {slug}: {e}")
             errors += 1
