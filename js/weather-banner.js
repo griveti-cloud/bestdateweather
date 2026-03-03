@@ -337,7 +337,10 @@
   /* ── SLUG / FLAG LOOKUP ── */
   function findSlugForName(name) {
     if (!suggestionsData || !name) return "";
-    var lower = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    // Strip "(Country)" and ", Region" suffixes from autocomplete labels
+    // e.g. "Barcelone, Catalogne (Espagne)" → "Barcelone"
+    var clean = name.replace(/\s*\([^)]*\)\s*$/, "").replace(/,.*$/, "").trim();
+    var lower = clean.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     for (var slug in suggestionsData) {
       var d = suggestionsData[slug];
       var fr = (d.fr || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -538,16 +541,8 @@
       var sColor = scoreColor(item.score || 0);
       var sBg = scoreBg(item.score || 0);
 
-      // Build URL for the destination
-      var href = "#";
-      if (item.slug) {
-        href = LANG === "en"
-          ? "/en/best-time-to-visit-" + item.slug + ".html"
-          : "/meilleure-periode-" + item.slug + ".html";
-      }
-
       cards +=
-        '<a href="' + href + '" class="wb-recent" style="animation-delay:' + (i * 80) + 'ms;text-decoration:none">' +
+        '<div class="wb-recent" data-idx="' + i + '" style="animation-delay:' + (i * 80) + 'ms">' +
           '<div class="wb-recent-left">' +
             '<span class="wb-recent-flag">' + flag + '</span>' +
             '<div class="wb-recent-info">' +
@@ -561,7 +556,7 @@
           '<div class="wb-score" style="color:' + sColor + ';background:' + sBg + '">' +
             (item.score ? item.score.toFixed(1) : "-") +
           '</div>' +
-        '</a>';
+        '</div>';
     }
 
     section.innerHTML =
@@ -572,6 +567,60 @@
         '</div>' +
         cards +
       '</div>';
+
+    // Bind click handlers to replay search
+    var recentCards = section.querySelectorAll(".wb-recent");
+    for (var k = 0; k < recentCards.length; k++) {
+      recentCards[k].addEventListener("click", function() {
+        var idx = parseInt(this.getAttribute("data-idx"));
+        var r = getRecent()[idx];
+        if (r) replaySearch(r);
+      });
+    }
+  }
+
+  function replaySearch(r) {
+    var inputLabel = r.label || r.name;
+
+    // Restore selectedLoc so core.js run() doesn't re-geocode
+    if (r.lat != null && r.lon != null) {
+      window.selectedLoc = {
+        lat: r.lat, lon: r.lon,
+        name: r.name,
+        country: r.country || "",
+        region: r.region || "",
+        elevation: r.elevation || null
+      };
+    } else {
+      window.selectedLoc = null;
+    }
+
+    if (r.mode === "annual") {
+      if (typeof switchMode === "function") switchMode("annual");
+      var annInput = document.getElementById("ann-city");
+      if (annInput) {
+        annInput.value = inputLabel;
+        // Also restore annSelectedLoc
+        if (r.lat != null && r.lon != null && window.annSelectedLoc !== undefined) {
+          window.annSelectedLoc = window.selectedLoc;
+        }
+        if (typeof runAnnual === "function") setTimeout(runAnnual, 200);
+      }
+    } else {
+      if (typeof switchMode === "function") switchMode("date");
+      var cityInput = document.getElementById("inp-city");
+      var dateInput = document.getElementById("inp-date");
+      if (cityInput) cityInput.value = inputLabel;
+      if (dateInput && r.date) {
+        dateInput.value = r.date;
+        dateInput.classList.add("has-val");
+        // Store ISO value for flatpickr compat
+        var parts = r.date.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+        if (parts) dateInput._isoValue = parts[3] + "-" + parts[2] + "-" + parts[1];
+      }
+      var btnGo = document.getElementById("btn-go");
+      if (btnGo) setTimeout(function() { btnGo.click(); }, 300);
+    }
   }
 
   function renderSuggestions() {
@@ -804,6 +853,10 @@
     if (!nameEl || !nameEl.textContent) return;
     var name = nameEl.textContent.trim();
 
+    // Keep full input label for replay
+    var annInput = document.getElementById("ann-city");
+    var fullLabel = annInput ? annInput.value.trim() : name;
+
     // Average score from month cards
     var score = 0, count = 0;
     var cards = document.querySelectorAll(".mcard-score");
@@ -818,6 +871,7 @@
 
     window.wbAddRecent({
       name: name,
+      label: fullLabel,
       slug: slug,
       flag: flag,
       mode: "annual",
@@ -835,17 +889,34 @@
     var score = scoreEl ? parseFloat(scoreEl.textContent) : 0;
     if (isNaN(score)) score = 0;
 
-    var name = cityInput.value.trim();
-    var slug = findSlugForName(name);
+    var fullLabel = cityInput.value.trim();
+    var displayName = fullLabel.replace(/\s*\([^)]*\)\s*$/, "").replace(/,.*$/, "").trim();
+    var slug = findSlugForName(fullLabel);
     var flag = findFlagForSlug(slug);
 
+    // Capture coordinates from selectedLoc if available
+    var lat = null, lon = null, country = "", region = "", elevation = null;
+    if (window.selectedLoc) {
+      lat = window.selectedLoc.lat;
+      lon = window.selectedLoc.lon;
+      country = window.selectedLoc.country || "";
+      region = window.selectedLoc.region || "";
+      elevation = window.selectedLoc.elevation || null;
+    }
+
     window.wbAddRecent({
-      name: name,
+      name: displayName,
+      label: fullLabel,
       slug: slug,
       flag: flag,
       mode: "date",
       date: dateInput ? dateInput.value : "",
       score: score,
+      lat: lat,
+      lon: lon,
+      country: country,
+      region: region,
+      elevation: elevation,
     });
   }
 
