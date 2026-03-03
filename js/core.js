@@ -347,7 +347,7 @@ function setConfBadge(diffDays) { /* badge supprimé */ }
 /* GEOCODE */
 function geocode(city) {
  // Strip formatting artifacts like 'Porto, Porto (Portugal)' → 'Porto'
- var clean = city.replace(/\s*\([^)]*\)/g, '').split(',')[0].trim();
+ var clean = city.replace(/\s*\([^)]*\)/g, '').split(/,|\s+[—–-]\s+/)[0].trim();
  return fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(clean) + '&count=5&language=fr')
  .then(function(r) { return r.json(); })
  .then(function(d) {
