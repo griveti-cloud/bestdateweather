@@ -545,7 +545,7 @@
       var sBg = scoreBg(item.score || 0);
 
       cards +=
-        '<div class="wb-recent" data-idx="' + i + '" style="animation-delay:' + (i * 80) + 'ms">' +
+        '<div class="wb-recent" onclick="wbReplay(' + i + ')" style="animation-delay:' + (i * 80) + 'ms">' +
           '<div class="wb-recent-left">' +
             '<span class="wb-recent-flag">' + flag + '</span>' +
             '<div class="wb-recent-info">' +
@@ -556,9 +556,7 @@
               '</div>' +
             '</div>' +
           '</div>' +
-          '<div class="wb-score" style="color:' + sColor + ';background:' + sBg + '">' +
-            (item.score ? item.score.toFixed(1) : "-") +
-          '</div>' +
+          (item.score ? '<div class="wb-score" style="color:' + sColor + ';background:' + sBg + '">' + item.score.toFixed(1) + '</div>' : '') +
         '</div>';
     }
 
@@ -570,27 +568,20 @@
         '</div>' +
         cards +
       '</div>';
-
-    // Bind click handlers to replay search
-    var recentCards = section.querySelectorAll(".wb-recent");
-    for (var k = 0; k < recentCards.length; k++) {
-      recentCards[k].addEventListener("click", function() {
-        var idx = parseInt(this.getAttribute("data-idx"));
-        var r = getRecent()[idx];
-        if (r) replaySearch(r);
-      });
-    }
   }
 
   function replaySearch(r) {
     var inputLabel = r.label || r.name;
+    // Clean name without region/country for geocoding fallback
+    var cleanName = r.name.replace(/\s*\([^)]*\)\s*$/, "").replace(/,.*$/, "").trim();
 
     // Restore selectedLoc so core.js run() doesn't re-geocode
     if (r.lat != null && r.lon != null) {
       window.selectedLoc = {
         lat: r.lat, lon: r.lon,
-        name: r.name,
+        name: cleanName,
         country: r.country || "",
+        country_code: r.country_code || "",
         region: r.region || "",
         elevation: r.elevation || null
       };
@@ -602,9 +593,9 @@
       if (typeof switchMode === "function") switchMode("annual");
       var annInput = document.getElementById("ann-city");
       if (annInput) {
-        annInput.value = inputLabel;
-        // Also restore annSelectedLoc
-        if (r.lat != null && r.lon != null && window.annSelectedLoc !== undefined) {
+        // Use clean name when no coords (geocode-friendly), full label when we have coords
+        annInput.value = r.lat != null ? inputLabel : cleanName;
+        if (r.lat != null && r.lon != null) {
           window.annSelectedLoc = window.selectedLoc;
         }
         if (typeof runAnnual === "function") setTimeout(runAnnual, 200);
@@ -613,16 +604,22 @@
       if (typeof switchMode === "function") switchMode("date");
       var cityInput = document.getElementById("inp-city");
       var dateInput = document.getElementById("inp-date");
-      if (cityInput) cityInput.value = inputLabel;
+      // Use clean name when no coords so geocode("Paris") works, not "Paris (France)"
+      if (cityInput) cityInput.value = r.lat != null ? inputLabel : cleanName;
       if (dateInput && r.date) {
-        dateInput.value = r.date;
-        dateInput.classList.add("has-val");
-        // Store ISO value for flatpickr compat
+        // Parse dd/mm/yyyy → set both display value and ISO value
         var parts = r.date.match(/(\d{2})\/(\d{2})\/(\d{4})/);
-        if (parts) dateInput._isoValue = parts[3] + "-" + parts[2] + "-" + parts[1];
+        if (parts) {
+          dateInput.value = r.date;
+          dateInput._isoValue = parts[3] + "-" + parts[2] + "-" + parts[1];
+          dateInput.classList.add("has-val");
+        }
       }
+      // Scroll form into view first, then trigger
+      var wrap = document.querySelector(".wrap");
+      if (wrap) wrap.scrollIntoView({ behavior: "smooth", block: "start" });
       var btnGo = document.getElementById("btn-go");
-      if (btnGo) setTimeout(function() { btnGo.click(); }, 300);
+      if (btnGo) setTimeout(function() { btnGo.click(); }, 400);
     }
   }
 
@@ -820,9 +817,14 @@
     renderSuggestions();
   };
 
+  window.wbReplay = function(idx) {
+    var r = getRecent()[idx];
+    if (r) replaySearch(r);
+  };
+
   window.wbRefreshUnits = function() {
     renderBanner();
-    renderHourlyPanel();
+    renderHourly();
   };
 
   /* ═════════════════════════════════════════════════
