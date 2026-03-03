@@ -156,6 +156,7 @@
       "?latitude=" + lat +
       "&longitude=" + lon +
       "&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability" +
+      "&daily=temperature_2m_max,temperature_2m_min" +
       "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,uv_index,relative_humidity_2m" +
       "&timezone=auto&forecast_days=1";
 
@@ -182,9 +183,18 @@
         });
       }
 
+      // Daily min/max
+      var tMin = null, tMax = null;
+      if (data.daily) {
+        if (data.daily.temperature_2m_max && data.daily.temperature_2m_max.length) tMax = Math.round(data.daily.temperature_2m_max[0]);
+        if (data.daily.temperature_2m_min && data.daily.temperature_2m_min.length) tMin = Math.round(data.daily.temperature_2m_min[0]);
+      }
+
       state.weather = {
         city: cityName,
         temp: Math.round(c.temperature_2m),
+        tMin: tMin,
+        tMax: tMax,
         feels: Math.round(c.apparent_temperature),
         wind: Math.round(c.wind_speed_10m),
         icon: weatherEmoji(c.weather_code),
@@ -400,7 +410,10 @@
           '</div>' +
           '<div class="wb-right">' +
             '<span class="wb-icon">' + w.icon + '</span>' +
-            '<span class="wb-temp">' + w.temp + '\u00b0</span>' +
+            '<div class="wb-temps">' +
+              '<span class="wb-temp">' + w.temp + '\u00b0</span>' +
+              (w.tMin != null && w.tMax != null ? '<span class="wb-minmax">' + w.tMin + '\u00b0 / ' + w.tMax + '\u00b0</span>' : '') +
+            '</div>' +
           '</div>' +
         '</div>' +
         '<div class="wb-meta">' +
