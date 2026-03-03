@@ -241,17 +241,37 @@
     if (query.length < 2) { callback([]); return; }
 
     searchTimeout = setTimeout(function() {
-      var url = GEOCODING_URL + "?name=" + encodeURIComponent(query) + "&count=6&language=" + LANG;
+      // Request more results to have room after dedup/filtering
+      var url = GEOCODING_URL + "?name=" + encodeURIComponent(query) + "&count=10&language=" + LANG;
       fetch(url).then(function(r) { return r.json(); }).then(function(data) {
         var results = [];
         if (data && data.results) {
+          // Filter out airports and non-populated places
+          var places = data.results.filter(function(r) {
+            return r.feature_code !== "AIRP" && r.feature_code !== "RSTN";
+          });
           // Sort by population descending
-          var sorted = data.results.slice().sort(function(a, b) { return (b.population || 0) - (a.population || 0); });
-          for (var i = 0; i < Math.min(sorted.length, 6); i++) {
-            var r = sorted[i];
+          places.sort(function(a, b) { return (b.population || 0) - (a.population || 0); });
+          // Deduplicate: if a name has a high-pop result, skip no-pop homonyms
+          var namePop = {}; // track max population per name
+          for (var j = 0; j < places.length; j++) {
+            var nm = places[j].name.toLowerCase();
+            var pop = places[j].population || 0;
+            if (!namePop[nm] || pop > namePop[nm]) namePop[nm] = pop;
+          }
+          var seen = {};
+          for (var i = 0; i < places.length && results.length < 6; i++) {
+            var r = places[i];
             var cc = (r.country_code || "").toUpperCase();
-            // DOM-TOM → FR flag
             var domTom = {GF:1,GP:1,MQ:1,RE:1,PM:1,YT:1,NC:1,PF:1,WF:1,MF:1,BL:1};
+            // Skip no-pop homonyms when a significant city exists with same name
+            var rName = r.name.toLowerCase();
+            if (namePop[rName] >= 5000 && !(r.population > 0)) continue;
+            // Also deduplicate exact same name + same territory
+            var territory = domTom[cc] ? cc : (cc === "FR" ? "FR" : cc);
+            var key = rName + "|" + territory;
+            if (seen[key]) continue;
+            seen[key] = true;
             var flagCC = domTom[cc] ? "FR" : cc;
             results.push({
               name: r.name,

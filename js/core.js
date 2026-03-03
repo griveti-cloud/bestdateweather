@@ -1380,7 +1380,7 @@ function normalizeQuery(s){
 function fetchAC(q){
  var hint=document.getElementById('city-hint');
  if(hint) hint.style.display='none';
- var base='https://geocoding-api.open-meteo.com/v1/search?count=6&language=fr&name=';
+ var base='https://geocoding-api.open-meteo.com/v1/search?count=10&language=fr&name=';
  var p1=fetch(base+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(d){return d.results||[];});
  // Si espaces : aussi envoyer version normalisée (tirets + sans accents)
  var qNorm = normalizeQuery(q);
@@ -1388,13 +1388,32 @@ function fetchAC(q){
  ? fetch(base+encodeURIComponent(qNorm)).then(function(r){return r.json();}).then(function(d){return d.results||[];})
  : Promise.resolve([]);
  Promise.all([p1,p2]).then(function(both){
- var seen={}, merged=[];
+ var coordSeen={}, merged=[];
  both[0].concat(both[1]).forEach(function(item){
+ // Filter airports
+ if(item.feature_code==='AIRP'||item.feature_code==='RSTN')return;
  var key=item.name+'|'+item.latitude+'|'+item.longitude;
- if(!seen[key]){seen[key]=1;merged.push(item);}
+ if(!coordSeen[key]){coordSeen[key]=1;merged.push(item);}
  });
  merged.sort(function(a,b){return (b.population||0)-(a.population||0);});
- showAC(merged.slice(0,6));
+ // Track max population per name
+ var namePop={};
+ for(var j=0;j<merged.length;j++){
+  var nm=merged[j].name.toLowerCase(), pop=merged[j].population||0;
+  if(!namePop[nm]||pop>namePop[nm]) namePop[nm]=pop;
+ }
+ // Deduplicate: skip no-pop homonyms when a significant city exists
+ var terrSeen={}, deduped=[];
+ var domTom={GF:1,GP:1,MQ:1,RE:1,PM:1,YT:1,NC:1,PF:1,WF:1,MF:1,BL:1};
+ for(var i=0;i<merged.length&&deduped.length<6;i++){
+  var rName=merged[i].name.toLowerCase();
+  if(namePop[rName]>=5000&&!(merged[i].population>0)) continue;
+  var cc=(merged[i].country_code||'').toUpperCase();
+  var territory=domTom[cc]?cc:(cc==='FR'?'FR':cc);
+  var tKey=rName+'|'+territory;
+  if(!terrSeen[tKey]){terrSeen[tKey]=1;deduped.push(merged[i]);}
+ }
+ showAC(deduped);
  }).catch(function(){hideAC();});
 }
 
@@ -2132,7 +2151,7 @@ document.getElementById('ann-city').oninput=function(){
  annSelectedLoc=null;var q=this.value.trim();clearTimeout(annAcTimer);
  document.getElementById('ann-city-clear').classList.toggle('visible',q.length>0);
  if(q.length<2){hideAnnAC();return;}
- annAcTimer=setTimeout(function(){fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=6&language=fr').then(function(r){return r.json();}).then(function(d){showAnnAC(d.results||[]);}).catch(function(){hideAnnAC();});},280);
+ annAcTimer=setTimeout(function(){fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=10&language=fr').then(function(r){return r.json();}).then(function(d){var items=(d.results||[]).filter(function(r){return r.feature_code!=='AIRP'&&r.feature_code!=='RSTN'});items.sort(function(a,b){return(b.population||0)-(a.population||0)});var np={};for(var j=0;j<items.length;j++){var nm=items[j].name.toLowerCase(),pop=items[j].population||0;if(!np[nm]||pop>np[nm])np[nm]=pop;}var dt={GF:1,GP:1,MQ:1,RE:1,PM:1,YT:1,NC:1,PF:1,WF:1,MF:1,BL:1},seen={},out=[];for(var i=0;i<items.length&&out.length<6;i++){var rn=items[i].name.toLowerCase();if(np[rn]>=5000&&!(items[i].population>0))continue;var cc=(items[i].country_code||'').toUpperCase(),terr=dt[cc]?cc:(cc==='FR'?'FR':cc),k=rn+'|'+terr;if(!seen[k]){seen[k]=1;out.push(items[i]);}}showAnnAC(out);}).catch(function(){hideAnnAC();});},280);
 };
 document.getElementById('ann-city').onblur=function(){setTimeout(hideAnnAC,180);};
 document.getElementById('ann-city').onkeydown=function(e){
