@@ -64,6 +64,7 @@ def build_config(lang):
         'lang': lang,
         'html_lang': loc['meta']['html_lang'],
         'is_fr': is_fr,  # kept for grammar-dependent logic
+        'cross_lang': cross_lang,
 
         # Months
         'months': loc['months'],

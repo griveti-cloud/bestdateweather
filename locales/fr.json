@@ -12,7 +12,8 @@
     "out_subdir": "",
     "lowercase_months": true,
     "in_language": null,
-    "gyg_lang": "fr"
+    "gyg_lang": "fr",
+    "cross_lang": "en"
   },
   "months": [
     "Janvier",
@@ -230,7 +231,7 @@
     "ranking_title": "Comparer les destinations par météo",
     "guides_section": "Guides & comparatifs",
     "guides_title": "Explorer par mois ou comparer",
-    "pillar_tpl": "📅 Où partir en {month_lc} — top 25",
+    "pillar_tpl": "📅 Où partir en {month} — top 25",
     "vs_tpl": "⚖️ {a} ou {b} ?",
     "breadcrumb_home": "Accueil",
     "updated_tpl": "Mis à jour : {date} · Open-Meteo · 10 ans · 12 mois comparés · {coords}",

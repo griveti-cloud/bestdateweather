@@ -12,7 +12,8 @@
     "out_subdir": "en",
     "lowercase_months": false,
     "in_language": "en",
-    "gyg_lang": "en"
+    "gyg_lang": "en",
+    "cross_lang": "fr"
   },
   "months": [
     "January",
