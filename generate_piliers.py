@@ -430,9 +430,8 @@ def update_sitemaps(fr_pages, en_pages):
 
         content = path.read_text(encoding='utf-8')
         added = 0
+        updated = 0
         for page in pages:
-            if page['canonical'] in content:
-                continue
             entry = f"""  <url>
     <loc>{page['canonical']}</loc>
     <lastmod>{TODAY}</lastmod>
@@ -442,6 +441,21 @@ def update_sitemaps(fr_pages, en_pages):
     <xhtml:link rel="alternate" hreflang="en" href="{page['hreflang_en']}"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="{page['hreflang_en']}"/>
   </url>"""
+            if page['canonical'] in content:
+                # Replace existing entry if it lacks hreflang
+                import re
+                pattern = (
+                    r'<url>\s*'
+                    + re.escape(f"<loc>{page['canonical']}</loc>") + r'\s*'
+                    + r'<lastmod>[^<]*</lastmod>\s*'
+                    + r'<changefreq>[^<]*</changefreq>\s*'
+                    + r'<priority>[^<]*</priority>\s*'
+                    + r'</url>'
+                )
+                if re.search(pattern, content):
+                    content = re.sub(pattern, entry, content)
+                    updated += 1
+                continue
             content = content.replace('</urlset>', entry + '\n</urlset>')
             added += 1
         path.write_text(content, encoding='utf-8')
