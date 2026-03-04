@@ -439,7 +439,7 @@ def dest_link(slug, nom, lang):
     if lang == 'fr':
         return f'meilleure-periode-{slug}.html'
     else:
-        return f'../best-time-to-visit-{slug}.html'
+        return f'best-time-to-visit-{slug}.html'
 
 def country_tag(d, lang, slug=''):
     """Show country name (or DOM-TOM territory) next to destination."""
