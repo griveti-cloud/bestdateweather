@@ -8,22 +8,16 @@ Each page shows side-by-side monthly climate, score comparison, and verdict.
 Usage: python3 generate_comparatifs.py
 """
 
-import csv, html as html_mod, json
+import csv, html as html_mod, json, sys, os
 from pathlib import Path
 from datetime import date
+
+sys.path.insert(0, str(Path(__file__).parent))
+from lib.page_config import load_locale
 
 ROOT = Path(__file__).parent
 TODAY = date.today().isoformat()
 YEAR = date.today().year
-
-MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin',
-             'Juillet','Août','Septembre','Octobre','Novembre','Décembre']
-MONTHS_EN = ['January','February','March','April','May','June',
-             'July','August','September','October','November','December']
-MONTH_URL_FR = ['janvier','fevrier','mars','avril','mai','juin',
-                'juillet','aout','septembre','octobre','novembre','decembre']
-MONTH_URL_EN = ['january','february','march','april','may','june',
-                'july','august','september','october','november','december']
 
 # ── Strategic comparison pairs ────────────────────────────────────────────────
 # Format: (slug_fr_a, slug_fr_b)
@@ -161,22 +155,22 @@ FONTS = (
 
 # ── Page Builders ─────────────────────────────────────────────────────────────
 
-def build_comparison_table(ca, cb, nom_a, nom_b, lang):
+def build_comparison_table(ca, cb, nom_a, nom_b, loc):
     """Build month-by-month comparison table."""
-    is_fr = lang == 'fr'
-    months = MONTHS_FR if is_fr else MONTHS_EN
+    months = loc['months']
+    comp = loc['comp']
     headers = (
-        f'<tr><th>{"Mois" if is_fr else "Month"}</th>'
+        f'<tr><th>{comp["th_month"]}</th>'
         f'<th colspan="2">{e(nom_a)}</th>'
         f'<th colspan="2">{e(nom_b)}</th>'
-        f'<th>{"Meilleur" if is_fr else "Better"}</th></tr>'
+        f'<th>{comp["th_better"]}</th></tr>'
     )
     subheaders = (
         f'<tr style="background:#f8f6f0"><td></td>'
         f'<td style="font-size:10px;text-align:center;color:var(--slate2)">Score</td>'
-        f'<td style="font-size:10px;text-align:center;color:var(--slate2)">{"Temp" if is_fr else "Temp"}</td>'
+        f'<td style="font-size:10px;text-align:center;color:var(--slate2)">Temp</td>'
         f'<td style="font-size:10px;text-align:center;color:var(--slate2)">Score</td>'
-        f'<td style="font-size:10px;text-align:center;color:var(--slate2)">{"Temp" if is_fr else "Temp"}</td>'
+        f'<td style="font-size:10px;text-align:center;color:var(--slate2)">Temp</td>'
         f'<td></td></tr>'
     )
     rows = ''
@@ -204,9 +198,9 @@ def build_comparison_table(ca, cb, nom_a, nom_b, lang):
     return f'<table class="ct"><thead>{headers}{subheaders}</thead><tbody>{rows}</tbody></table>'
 
 
-def compute_verdicts(ca, cb, nom_a, nom_b, lang):
+def compute_verdicts(ca, cb, nom_a, nom_b, loc):
     """Generate verdicts per season and overall."""
-    is_fr = lang == 'fr'
+    is_fr = loc['meta']['html_lang'] == 'fr'
     wins_a = sum(1 for mi in range(1, 13) if ca.get(mi, {}).get('score', 0) > cb.get(mi, {}).get('score', 0))
     wins_b = sum(1 for mi in range(1, 13) if cb.get(mi, {}).get('score', 0) > ca.get(mi, {}).get('score', 0))
     ties = 12 - wins_a - wins_b
@@ -218,28 +212,36 @@ def compute_verdicts(ca, cb, nom_a, nom_b, lang):
     best_a = max(range(1, 13), key=lambda mi: ca.get(mi, {}).get('score', 0))
     best_b = max(range(1, 13), key=lambda mi: cb.get(mi, {}).get('score', 0))
 
-    # Season analysis
-    seasons = {
-        ('hiver' if is_fr else 'winter'): [12, 1, 2],
-        ('printemps' if is_fr else 'spring'): [3, 4, 5],
-        ('été' if is_fr else 'summer'): [6, 7, 8],
-        ('automne' if is_fr else 'autumn'): [9, 10, 11],
-    }
+    # Season analysis — use locale season_order for names
+    season_map = {int(k): v for k, v in loc['seasons_map'].items()}
+    seasons = {}
+    for name in loc['season_order']:
+        months_in = [mi for mi in range(1, 13) if season_map.get(mi - 1, '') == name
+                     or season_map.get(mi % 12, '') == name]
+        if not months_in:
+            continue
+        seasons[name.lower()] = months_in
+
+    # Fallback if season_order mapping doesn't give month lists
+    if not seasons:
+        so = loc['season_order']
+        seasons = {so[3].lower(): [12, 1, 2], so[0].lower(): [3, 4, 5],
+                   so[1].lower(): [6, 7, 8], so[2].lower(): [9, 10, 11]}
+
     season_verdicts = []
     for season_name, month_list in seasons.items():
-        sa_avg = sum(ca.get(mi, {}).get('score', 0) for mi in month_list) / 3
-        sb_avg = sum(cb.get(mi, {}).get('score', 0) for mi in month_list) / 3
-        ta_avg = sum(ca.get(mi, {}).get('tmax', 0) for mi in month_list) / 3
-        tb_avg = sum(cb.get(mi, {}).get('tmax', 0) for mi in month_list) / 3
+        sa_avg = sum(ca.get(mi, {}).get('score', 0) for mi in month_list) / len(month_list)
+        sb_avg = sum(cb.get(mi, {}).get('score', 0) for mi in month_list) / len(month_list)
+        ta_avg = sum(ca.get(mi, {}).get('tmax', 0) for mi in month_list) / len(month_list)
+        tb_avg = sum(cb.get(mi, {}).get('tmax', 0) for mi in month_list) / len(month_list)
+        winner = nom_a if sa_avg > sb_avg else nom_b
         if is_fr:
-            winner = nom_a if sa_avg > sb_avg else nom_b
             detail = f"En {season_name}, <strong>{winner}</strong> l'emporte ({sa_avg:.1f} vs {sb_avg:.1f}). Températures : {nom_a} {ta_avg:.0f}°C, {nom_b} {tb_avg:.0f}°C."
         else:
-            winner = nom_a if sa_avg > sb_avg else nom_b
             detail = f"In {season_name}, <strong>{winner}</strong> wins ({sa_avg:.1f} vs {sb_avg:.1f}). Temperatures: {nom_a} {ta_avg:.0f}°C, {nom_b} {tb_avg:.0f}°C."
         season_verdicts.append(detail)
 
-    months = MONTHS_FR if is_fr else MONTHS_EN
+    months = loc['months']
     if is_fr:
         overall = (f"<strong>{nom_a}</strong> gagne {wins_a} mois sur 12, "
                    f"<strong>{nom_b}</strong> en gagne {wins_b}" +
@@ -270,25 +272,28 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
         return
 
     for lang in ('fr', 'en'):
-        is_fr = lang == 'fr'
+        loc = load_locale(lang)
+        gen = loc['gen']
+        comp = loc['comp']
+        is_fr = (lang == 'fr')
         nom_a = da['nom_bare'] if is_fr else da.get('nom_en', da['nom_bare'])
         nom_b = db['nom_bare'] if is_fr else db.get('nom_en', db['nom_bare'])
         slug_en_a = da.get('slug_en', slug_a)
         slug_en_b = db.get('slug_en', slug_b)
         flag_a, flag_b = da.get('flag', ''), db.get('flag', '')
 
+        filename = comp['file_tpl'].format(a=slug_a if is_fr else slug_en_a,
+                                            b=slug_b if is_fr else slug_en_b)
         if is_fr:
-            filename = f"{slug_a}-ou-{slug_b}-climat.html"
             filepath = ROOT / filename
             canonical = f"https://bestdateweather.com/{filename}"
-            alt_filename = f"{slug_en_a}-vs-{slug_en_b}-weather.html"
+            alt_filename = load_locale('en')['comp']['file_tpl'].format(a=slug_en_a, b=slug_en_b)
             hreflang_fr = canonical
             hreflang_en = f"https://bestdateweather.com/en/{alt_filename}"
         else:
-            filename = f"{slug_en_a}-vs-{slug_en_b}-weather.html"
             filepath = ROOT / 'en' / filename
             canonical = f"https://bestdateweather.com/en/{filename}"
-            alt_filename = f"{slug_a}-ou-{slug_b}-climat.html"
+            alt_filename = load_locale('fr')['comp']['file_tpl'].format(a=slug_a, b=slug_b)
             hreflang_fr = f"https://bestdateweather.com/{alt_filename}"
             hreflang_en = canonical
 
@@ -298,8 +303,8 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
         best_mi_a = max(range(1, 13), key=lambda mi: ca.get(mi, {}).get('score', 0))
         best_mi_b = max(range(1, 13), key=lambda mi: cb.get(mi, {}).get('score', 0))
 
-        months = MONTHS_FR if is_fr else MONTHS_EN
-        flag_prefix = '' if is_fr else '../'
+        months = loc['months']
+        flag_prefix = gen['asset_prefix']
 
         # Content
         if is_fr:
@@ -308,16 +313,16 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
                     f"sur 10 ans. {nom_a} : {avg_a_score:.1f}/10, {nom_b} : {avg_b_score:.1f}/10.")
             h1 = f"{nom_a} <em>ou</em> {nom_b} ?"
             hero_sub = f"Comparaison climatique complète — 12 mois, 10 ans de données, score objectif"
-            href_a = f"meilleure-periode-{slug_a}.html"
-            href_b = f"meilleure-periode-{slug_b}.html"
+            href_a = gen['annual_href_tpl'].format(slug=slug_a)
+            href_b = gen['annual_href_tpl'].format(slug=slug_b)
         else:
             title = f"{nom_a} vs {nom_b} — Weather Comparison [{YEAR}]"
             desc = (f"{nom_a} vs {nom_b}: which has better weather? Month-by-month comparison "
                     f"over 10 years. {nom_a}: {avg_a_score:.1f}/10, {nom_b}: {avg_b_score:.1f}/10.")
             h1 = f"{nom_a} <em>vs</em> {nom_b}"
             hero_sub = f"Complete climate comparison — 12 months, 10 years of data, objective scores"
-            href_a = f"best-time-to-visit-{slug_en_a}.html"
-            href_b = f"best-time-to-visit-{slug_en_b}.html"
+            href_a = gen['annual_href_tpl'].format(slug=slug_en_a)
+            href_b = gen['annual_href_tpl'].format(slug=slug_en_b)
 
         # VS cards
         vs_cards = f"""<div class="vs-grid">
@@ -325,28 +330,28 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
 <img src="{flag_prefix}flags/{flag_a}.png" width="24" height="18" alt="" style="border-radius:2px;margin-bottom:8px">
 <h3><a href="{href_a}" style="color:var(--navy);text-decoration:none">{e(nom_a)}</a></h3>
 <div class="big-score" style="color:{score_color(avg_a_score)}">{avg_a_score:.1f}<span style="font-size:16px;color:var(--slate2)">/10</span></div>
-<div class="vs-stat">{"Meilleur mois" if is_fr else "Best month"} : <strong>{months[best_mi_a-1]}</strong> ({ca[best_mi_a]['score']:.1f})</div>
-<div class="vs-stat">{"Temp. max" if is_fr else "Max temp"} : <strong>{ca[best_mi_a]['tmax']:.0f}°C</strong></div>
+<div class="vs-stat">{comp["best_month_label"]} : <strong>{months[best_mi_a-1]}</strong> ({ca[best_mi_a]['score']:.1f})</div>
+<div class="vs-stat">{comp["max_temp_label"]} : <strong>{ca[best_mi_a]['tmax']:.0f}°C</strong></div>
 </div>
 <div class="vs-sep">VS</div>
 <div class="vs-card">
 <img src="{flag_prefix}flags/{flag_b}.png" width="24" height="18" alt="" style="border-radius:2px;margin-bottom:8px">
 <h3><a href="{href_b}" style="color:var(--navy);text-decoration:none">{e(nom_b)}</a></h3>
 <div class="big-score" style="color:{score_color(avg_b_score)}">{avg_b_score:.1f}<span style="font-size:16px;color:var(--slate2)">/10</span></div>
-<div class="vs-stat">{"Meilleur mois" if is_fr else "Best month"} : <strong>{months[best_mi_b-1]}</strong> ({cb[best_mi_b]['score']:.1f})</div>
-<div class="vs-stat">{"Temp. max" if is_fr else "Max temp"} : <strong>{cb[best_mi_b]['tmax']:.0f}°C</strong></div>
+<div class="vs-stat">{comp["best_month_label"]} : <strong>{months[best_mi_b-1]}</strong> ({cb[best_mi_b]['score']:.1f})</div>
+<div class="vs-stat">{comp["max_temp_label"]} : <strong>{cb[best_mi_b]['tmax']:.0f}°C</strong></div>
 </div>
 </div>"""
 
-        table = build_comparison_table(ca, cb, nom_a, nom_b, lang)
-        overall, season_verdicts, _, _, _, _ = compute_verdicts(ca, cb, nom_a, nom_b, lang)
+        table = build_comparison_table(ca, cb, nom_a, nom_b, loc)
+        overall, season_verdicts, _, _, _, _ = compute_verdicts(ca, cb, nom_a, nom_b, loc)
 
         verdict_html = f"""<div class="verdict">
-<h3>{"🏆 Verdict global" if is_fr else "🏆 Overall Verdict"}</h3>
+<h3>{comp["verdict_title"]}</h3>
 <p>{overall}</p>
 </div>
 <div class="verdict">
-<h3>{"📅 Par saison" if is_fr else "📅 By Season"}</h3>
+<h3>{comp["season_title"]}</h3>
 {"".join(f'<p>{v}</p>' for v in season_verdicts)}
 </div>"""
 
@@ -355,10 +360,10 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
             "@context": "https://schema.org", "@type": "BreadcrumbList",
             "itemListElement": [
                 {"@type": "ListItem", "position": 1,
-                 "name": "Accueil" if is_fr else "Home",
-                 "item": "https://bestdateweather.com/" if is_fr else "https://bestdateweather.com/en/app.html"},
+                 "name": loc['labels']['breadcrumb_home'],
+                 "item": loc['meta']['schema_home_url']},
                 {"@type": "ListItem", "position": 2,
-                 "name": f"{nom_a} {'ou' if is_fr else 'vs'} {nom_b}", "item": canonical}
+                 "name": f"{nom_a} {comp['sep']} {nom_b}", "item": canonical}
             ]
         }, ensure_ascii=False)
 
@@ -387,40 +392,28 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
         related_cards = []
         for slug, nom in [(slug_a, nom_a), (slug_b, nom_b)]:
             if is_fr:
-                href = f"meilleure-periode-{slug}.html"
-                label = f"{"Meilleure période" } {nom}"
+                href = gen['annual_href_tpl'].format(slug=slug)
+                label = gen['best_period_tpl'].format(nom=nom)
             else:
                 sle = dests[slug].get('slug_en', slug)
-                href = f"best-time-to-visit-{sle}.html"
-                label = f"Best time to visit {nom}"
-            related_cards.append(f'<a href="{href}" class="related-card"><strong>{e(label)}</strong><span>{"Guide complet" if is_fr else "Full guide"}</span></a>')
+                href = gen['annual_href_tpl'].format(slug=sle)
+                label = gen['best_period_tpl'].format(nom=nom)
+            related_cards.append(f'<a href="{href}" class="related-card"><strong>{e(label)}</strong><span>{gen["guide_label"]}</span></a>')
 
-        related_html = (f'<div class="section"><div class="eyebrow">{"Explorer" if is_fr else "Explore"}</div>'
-                        f'<h2 class="sec-title">{"Guides détaillés" if is_fr else "Detailed Guides"}</h2>'
+        related_html = (f'<div class="section"><div class="eyebrow">{gen["explore_label"]}</div>'
+                        f'<h2 class="sec-title">{gen["guides_title"]}</h2>'
                         f'<div class="related-pages">{"".join(related_cards)}</div></div>')
 
         # CTA
-        if is_fr:
-            cta = '<div class="cta-box"><a href="index.html">🎯 Choisir une date précise pour votre voyage →</a></div>'
-        else:
-            cta = '<div class="cta-box"><a href="app.html">🎯 Choose a specific date for your trip →</a></div>'
+        cta = f'<div class="cta-box"><a href="{gen["home_url"]}">{gen["cta_choose"]}</a></div>'
 
         # Footer
-        if is_fr:
-            alt_link_file = f"en/{alt_filename}"
-            footer = f"""<footer>
+        alt_link = f'{gen["alt_link_prefix"]}{alt_filename}'
+        footer = f"""<footer>
 <p style="font-weight:700;margin-bottom:8px">bestdateweather.com</p>
-<p><a href="https://open-meteo.com/" rel="noopener">Données Open-Meteo</a> · ECMWF, DWD, NOAA · CC BY 4.0</p>
-<p style="margin-top:8px"><a href="index.html">Application météo</a> · <a href="{alt_link_file}"><img src="flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English</a></p>
-<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="mentions-legales.html">Mentions légales</a></p>
-</footer>"""
-        else:
-            alt_link_file = f"../{alt_filename}"
-            footer = f"""<footer>
-<p style="font-weight:700;margin-bottom:8px">bestdateweather.com</p>
-<p><a href="https://open-meteo.com/" rel="noopener">Data by Open-Meteo</a> · ECMWF, DWD, NOAA · CC BY 4.0</p>
-<p style="margin-top:8px"><a href="app.html">Weather app</a> · <a href="{alt_link_file}"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a></p>
-<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="../mentions-legales.html">Legal</a></p>
+<p><a href="https://open-meteo.com/" rel="noopener">{gen["data_credit"]}</a> · ECMWF, DWD, NOAA · CC BY 4.0</p>
+<p style="margin-top:8px"><a href="{gen["home_url"]}">{gen["home_label"]}</a> · <a href="{alt_link}"><img src="{gen["alt_flag_path"]}" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> {gen["alt_lang_label"]}</a></p>
+<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="{gen["legal_url"]}" style="color:rgba(255,255,255,.7)">{gen["legal_label"]}</a></p>
 </footer>"""
 
         page_html = f"""<!DOCTYPE html>
@@ -444,16 +437,16 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
 </head>
 <body>
 <header class="hero">
-<div class="hero-eyebrow">{"Comparatif climatique · 10 ans de données · " if is_fr else "Climate comparison · 10 years of data · "}{YEAR}</div>
+<div class="hero-eyebrow">{comp["hero_eyebrow_prefix"]}{YEAR}</div>
 <h1 class="hero-title">{h1}</h1>
 <p class="hero-sub">{hero_sub}</p>
 </header>
 <main class="page">
 {vs_cards}
 <div class="section">
-<div class="eyebrow">{"Mois par mois" if is_fr else "Month by month"}</div>
-<h2 class="sec-title">{"Comparaison climatique détaillée" if is_fr else "Detailed Climate Comparison"}</h2>
-<p class="sec-intro">{"Score météo sur 10, basé sur températures, pluie et ensoleillement. Données 10 ans Open-Meteo." if is_fr else "Weather score out of 10, based on temperature, rain and sunshine. 10-year Open-Meteo data."}</p>
+<div class="eyebrow">{comp["month_by_month"]}</div>
+<h2 class="sec-title">{comp["detailed_title"]}</h2>
+<p class="sec-intro">{comp["detailed_intro"]}</p>
 <div style="overflow-x:auto">{table}</div>
 </div>
 {verdict_html}
