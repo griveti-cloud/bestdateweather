@@ -33,7 +33,7 @@ DIR  = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(DIR, 'data')
 
 BOOKING_AID = '304142'  # TODO: replace with your CJ affiliate ID
-GYG_PARTNER_ID = 'XXXXX'  # TODO: replace with your GetYourGuide partner ID
+GYG_PARTNER_ID = '2MQKL00'
 TP_MARKER = 'XXXXX'  # TODO: replace with your Travelpayouts marker ID
 
 MONTHLY_GRAD = [
