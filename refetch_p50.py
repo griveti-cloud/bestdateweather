@@ -23,7 +23,7 @@ from fetch_climate import (
 )
 
 PROGRESS_FILE = os.path.join(DIR, 'data', 'p50_progress.json')
-DELAY_BETWEEN = 2.0  # seconds between API calls (Open-Meteo archive rate limit avoidance)
+DELAY_BETWEEN = 0.5  # seconds between API calls (avoid Open-Meteo 429)
 
 
 def load_progress():

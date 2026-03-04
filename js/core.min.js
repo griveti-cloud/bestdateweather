@@ -802,9 +802,22 @@ function tIdeal(tmax) {
 }
 
 // scoring.py : raw_score() poids 40/35/25
-function rawScoreFiche(tmax, rain, sun) {
+// scoring.py : effective_rain_pct() — bidirectional intensity correction
+function effectiveRainPct(pct, mmDay) {
+ if (mmDay == null) return pct;
+ var factor;
+ if (mmDay < 2) factor = 0.60 + (mmDay / 2) * 0.25;
+ else if (mmDay < 5) factor = 0.85 + ((mmDay - 2) / 3) * 0.15;
+ else if (mmDay < 10) factor = 1.0;
+ else if (mmDay < 20) factor = 1.0 + ((mmDay - 10) / 10) * 0.15;
+ else factor = Math.min(1.25, 1.15 + ((mmDay - 20) / 20) * 0.10);
+ return Math.min(100, pct * factor);
+}
+
+function rawScoreFiche(tmax, rain, sun, mm) {
+ var effRain = effectiveRainPct(rain, mm);
  return 0.40 * tIdeal(tmax)
- + 0.35 * Math.max(0, 1 - rain / 100)
+ + 0.35 * Math.max(0, 1 - effRain / 100)
  + 0.25 * Math.min(1, sun / 15);
 }
 
@@ -846,7 +859,8 @@ function computeAnchoredScores(monthly, ficheKey) {
  var tmax = m.avgTmax != null ? m.avgTmax : (m.avgTemp || 20);
  var rain = m.rainPct != null ? m.rainPct : 30;
  var sun = m.sunHrs != null ? m.sunHrs : 5;
- var raw = rawScoreFiche(tmax, rain, sun);
+ var mm = m.avgPrecipMm != null ? m.avgPrecipMm : null;
+ var raw = rawScoreFiche(tmax, rain, sun, mm);
  return { i: i, raw: raw, cls: autoClass(raw), tmax: tmax };
  });
 
@@ -881,19 +895,17 @@ function scoreRain(pct) {
  return Math.max(0, 6 - (pct - 80) * 0.3);
 }
 function scoreRainSmart(pct, mmDay, avgTemp) {
- // Correction basée sur l'intensité réelle (mm/jour), indépendamment de la température.
- // < 3mm/j = bruine/averses légères → forte correction (pluie peu gênante)
- // 3–6mm/j = pluie modérée → correction partielle
- // > 6mm/j = pluie sérieuse → pas de correction
+ // Bidirectional: bruine reduces effective rain, heavy storms increase it.
+ // Matches scoring.py effective_rain_pct().
  var effective = pct;
  if (mmDay != null) {
- if (mmDay < 3) {
- var factor = 0.40 + (mmDay / 3) * 0.30;
- effective = pct * factor;
- } else if (mmDay < 6) {
- var factor = 0.70 + ((mmDay - 3) / 3) * 0.30;
- effective = pct * factor;
- }
+ var factor;
+ if (mmDay < 2) { factor = 0.60 + (mmDay / 2) * 0.25; }       // 0.60-0.85
+ else if (mmDay < 5) { factor = 0.85 + ((mmDay - 2) / 3) * 0.15; } // 0.85-1.00
+ else if (mmDay < 10) { factor = 1.0; }                              // neutral
+ else if (mmDay < 20) { factor = 1.0 + ((mmDay - 10) / 10) * 0.15; } // 1.00-1.15
+ else { factor = Math.min(1.25, 1.15 + ((mmDay - 20) / 20) * 0.10); } // 1.15-1.25 cap
+ effective = Math.min(100, pct * factor);
  }
  return scoreRain(effective);
 }

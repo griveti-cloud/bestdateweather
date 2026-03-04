@@ -146,10 +146,9 @@ def compute_monthly_averages(data):
         tmin = round(sorted_tmin[n_tmin // 2] if n_tmin % 2 else (sorted_tmin[n_tmin // 2 - 1] + sorted_tmin[n_tmin // 2]) / 2)
         tmax = round(sorted_tmax[n_tmax // 2] if n_tmax % 2 else (sorted_tmax[n_tmax // 2 - 1] + sorted_tmax[n_tmax // 2]) / 2)
         rain_pct = round(md['rain_days'] / max(md['total_days'], 1) * 100)
-        # precip_mm: median daily precipitation
-        sorted_precip = sorted(md['precip']) if md['precip'] else [0]
-        n_p = len(sorted_precip)
-        precip_mm = round(sorted_precip[n_p // 2] if n_p % 2 else (sorted_precip[n_p // 2 - 1] + sorted_precip[n_p // 2]) / 2, 1)
+        # precip_mm: mean daily precipitation (sum/days, not P50)
+        # Mean captures real intensity; P50 was crushed to ~0 by dry days
+        precip_mm = round(sum(md['precip']) / max(len(md['precip']), 1), 1)
         sun_h = round(sorted_sun[n_sun // 2] if n_sun % 2 else (sorted_sun[n_sun // 2 - 1] + sorted_sun[n_sun // 2]) / 2, 1)
 
         result.append({
@@ -176,7 +175,7 @@ def auto_classify(monthly_data, slug=''):
     """
     classes = []
     for md in monthly_data:
-        rs = raw_score(md['tmax'], md['rain_pct'], md['sun_h'])
+        rs = raw_score(md['tmax'], md['rain_pct'], md['sun_h'], md.get('precip_mm'))
         if rs >= CLS_REC_THRESHOLD:
             classes.append('rec')
         elif rs >= CLS_AVOID_THRESHOLD:

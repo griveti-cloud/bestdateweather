@@ -107,20 +107,49 @@ def t_ideal(tmax: float) -> float:
     return max(0.0, 0.30 - (tmax - 36) / 6 * 0.30)
 
 
-def raw_score(tmax: float, rain_pct: float, sun_h: float) -> float:
+def effective_rain_pct(rain_pct: float, precip_mm: float = None) -> float:
+    """
+    Ajuste le rain_pct en fonction de l'intensité réelle (mm/jour moyen).
+
+    Bidirectionnel :
+    - Bruine (< 2mm/j)  : réduit le rain_pct effectif (pluie peu gênante)
+    - Modéré (2-5mm/j)  : légère réduction
+    - Normal (5-10mm/j) : pas d'ajustement
+    - Fort (10-20mm/j)  : augmente le rain_pct effectif (orages, perturbant)
+    - Extrême (> 20mm/j): forte augmentation (mousson, déluge)
+
+    Si precip_mm est None, retourne rain_pct inchangé (rétro-compatible).
+    """
+    if precip_mm is None:
+        return rain_pct
+    if precip_mm < 2:
+        factor = 0.60 + (precip_mm / 2) * 0.25       # 0.60 -> 0.85
+    elif precip_mm < 5:
+        factor = 0.85 + ((precip_mm - 2) / 3) * 0.15  # 0.85 -> 1.00
+    elif precip_mm < 10:
+        factor = 1.0                                    # neutre
+    elif precip_mm < 20:
+        factor = 1.0 + ((precip_mm - 10) / 10) * 0.15  # 1.00 -> 1.15
+    else:
+        factor = min(1.25, 1.15 + ((precip_mm - 20) / 20) * 0.10)  # 1.15 -> 1.25 cap
+    return min(100.0, rain_pct * factor)
+
+
+def raw_score(tmax: float, rain_pct: float, sun_h: float,
+              precip_mm: float = None) -> float:
     """
     Score brut [0, 1] AVANT ancrage sur la plage de classe.
 
     Poids :
-      40%  température  → t_ideal(tmax)
-      35%  pluie        → 1 - rain_pct / 100   (0% pluie = 1.0, 100% pluie = 0.0)
-      25%  soleil       → sun_h / 15            (15h/j = maximum théorique = 1.0)
+      40%  temperature  -> t_ideal(tmax)
+      35%  pluie        -> 1 - effective_rain_pct / 100
+      25%  soleil       -> sun_h / 15  (15h/j = maximum theorique = 1.0)
 
-    Ce score ne sert qu'à ordonner les mois à l'intérieur d'une classe.
-    Le score final /10 est déterminé par la position dans la plage de la classe.
+    Si precip_mm est fourni, rain_pct est ajuste par l'intensite reelle.
     """
+    eff_rain = effective_rain_pct(rain_pct, precip_mm)
     return (0.40 * t_ideal(tmax)
-          + 0.35 * max(0.0, 1.0 - rain_pct / 100.0)
+          + 0.35 * max(0.0, 1.0 - eff_rain / 100.0)
           + 0.25 * min(1.0, sun_h / 15.0))
 
 
@@ -159,7 +188,8 @@ def _load_global_bounds():
         with open(csv_path, encoding='utf-8-sig') as f:
             for r in csv.DictReader(f):
                 cls = r['classe']
-                raw = raw_score(float(r['tmax']), float(r['rain_pct']), float(r['sun_h']))
+                mm = float(r['precip_mm']) if r.get('precip_mm', '') not in ('', None) else None
+                raw = raw_score(float(r['tmax']), float(r['rain_pct']), float(r['sun_h']), mm)
                 if cls in by_class:
                     by_class[cls].append(raw)
         for cls, raws in by_class.items():
@@ -236,7 +266,8 @@ def compute_scores(months: list, slug: str = '') -> list:
             continue
         lo, hi = get_range(cls)
         glob_mn, glob_mx = GLOBAL_RAW_BOUNDS.get(cls, (0.0, 1.0))
-        raws = [raw_score(effective_months[i]['tmax'], effective_months[i]['rain_pct'], effective_months[i]['sun_h'])
+        raws = [raw_score(effective_months[i]['tmax'], effective_months[i]['rain_pct'], effective_months[i]['sun_h'],
+                         effective_months[i].get('precip_mm'))
                 for i in idxs]
         for j, i in enumerate(idxs):
             # Normalisation globale : position relative dans l'ensemble de la classe
