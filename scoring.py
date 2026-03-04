@@ -209,7 +209,7 @@ def compute_scores(months: list, slug: str = '') -> list:
     # Un mois ne peut pas être "recommandé" si la température est dangereuse.
     # Seuils : ≥42°C → avoid (alerte rouge canicule), ≥38°C → mid max.
     HEAT_CAP_AVOID = 42  # °C — chaleur extrême, dangereux
-    HEAT_CAP_MID   = 38  # °C — chaleur forte, déconseillé "idéal"
+    HEAT_CAP_MID   = 36  # °C — canicule (seuil Météo-France), déconseillé "idéal"
 
     effective_months = []
     for m in months:

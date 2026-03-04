@@ -787,7 +787,7 @@ var TROPICAL_KEYS = {"-8.67,115.21":true,"13.75,100.52":true,"9.93,-84.08":true,
 var SCORE_RANGES_FICHE = { avoid:[0.5,3.9], mid:[4.0,6.9], rec:[7.0,10.0] };
 
 // Bornes globales raw_score par classe — scoring.py : GLOBAL_RAW_BOUNDS
-var GLOBAL_RAW_BOUNDS = { rec:[0.403,0.965], mid:[0.306,0.646], avoid:[0.136,0.563] };
+var GLOBAL_RAW_BOUNDS = { rec:[0.506,0.965], mid:[0.350,0.688], avoid:[0.119,0.553] };
 var SCORE_POWER = 2.0;
 
 // scoring.py : t_ideal()
@@ -847,7 +847,13 @@ function computeAnchoredScores(monthly, ficheKey) {
  var rain = m.rainPct != null ? m.rainPct : 30;
  var sun = m.sunHrs != null ? m.sunHrs : 5;
  var raw = rawScoreFiche(tmax, rain, sun);
- return { i: i, raw: raw, cls: autoClass(raw) };
+ return { i: i, raw: raw, cls: autoClass(raw), tmax: tmax };
+ });
+
+ // Heat cap: canicule ≥36°C → mid max, extreme ≥42°C → avoid
+ items.forEach(function(it) {
+  if (it.tmax >= 42 && it.cls !== 'avoid') it.cls = 'avoid';
+  else if (it.tmax >= 36 && it.cls === 'rec') it.cls = 'mid';
  });
 
  ['avoid','mid','rec'].forEach(function(cls) {
