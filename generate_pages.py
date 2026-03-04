@@ -34,7 +34,7 @@ DATA = os.path.join(DIR, 'data')
 
 BOOKING_AID = '304142'  # TODO: replace with your CJ affiliate ID
 GYG_PARTNER_ID = '2MQKL00'
-TP_MARKER = 'XXXXX'  # TODO: replace with your Travelpayouts marker ID
+TP_MARKER = '708106'
 
 MONTHLY_GRAD = [
     'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
