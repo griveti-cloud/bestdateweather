@@ -64,6 +64,11 @@ def score_class(s):
     if s >= 6: return '#d4a853'
     return '#dc2626'
 
+REGION_CHILDREN = {
+    'canaries': {'lanzarote', 'fuerteventura', 'gran-canaria', 'tenerife',
+                 'la-palma', 'la-gomera', 'el-hierro'},
+}
+
 def get_rankings(climate, dests, month_idx):
     """Return top destinations for given month (1-indexed), sorted by score desc."""
     entries = []
@@ -85,6 +90,11 @@ def get_rankings(climate, dests, month_idx):
             'sun_h': m['sun_h'],
         })
     entries.sort(key=lambda x: (-x['score'], x['nom_bare']))
+    # Remove region parents when a child island is also ranked
+    ranked = {e['slug_fr'] for e in entries}
+    remove = {p for p, ch in REGION_CHILDREN.items() if p in ranked and ranked & ch}
+    if remove:
+        entries = [e for e in entries if e['slug_fr'] not in remove]
     return entries[:TOP_N]
 
 # ── CSS ───────────────────────────────────────────────────────────────────────

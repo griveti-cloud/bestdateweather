@@ -177,15 +177,30 @@ COUNTRY_SLUGS = {
     'tanzanie', 'uruguay',
 }
 
+# Region/archipelago slugs mapped to their child slugs.
+# Remove the parent when any child is also ranked.
+REGION_CHILDREN = {
+    'canaries': {'lanzarote', 'fuerteventura', 'gran-canaria', 'tenerife',
+                 'la-palma', 'la-gomera', 'el-hierro'},
+}
+
 def dedup_country(results, dests):
-    """Remove country-level entries when a sibling city from the same country is also ranked."""
+    """Remove country-level and region-level entries when a more specific sibling is also ranked."""
     # Collect which countries have city-level entries in results
     countries_with_cities = set()
     for r in results:
         if r['slug'] not in COUNTRY_SLUGS:
             countries_with_cities.add(r['dest']['pays'])
-    # Filter out country-level slugs whose country has a city sibling
-    return [r for r in results if r['slug'] not in COUNTRY_SLUGS or r['dest']['pays'] not in countries_with_cities]
+    # Collect which region parents should be removed
+    ranked_slugs = {r['slug'] for r in results}
+    regions_to_remove = set()
+    for parent, children in REGION_CHILDREN.items():
+        if parent in ranked_slugs and ranked_slugs & children:
+            regions_to_remove.add(parent)
+    # Filter
+    return [r for r in results
+            if (r['slug'] not in COUNTRY_SLUGS or r['dest']['pays'] not in countries_with_cities)
+            and r['slug'] not in regions_to_remove]
 
 # ── Ranking Computations ─────────────────────────────────────────────────────
 
