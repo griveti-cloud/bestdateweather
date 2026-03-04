@@ -9,13 +9,96 @@
     "canonical_prefix": "https://bestdateweather.com/en/",
     "schema_home_url": "https://bestdateweather.com/en/app.html"
   },
-  "months": ["January","February","March","April","May","June","July","August","September","October","November","December"],
-  "month_url": ["january","february","march","april","may","june","july","august","september","october","november","december"],
-  "month_abbr": ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
-  "seasons_map": {"0":"Winter","1":"Winter","2":"Spring","3":"Spring","4":"Spring","5":"Summer","6":"Summer","7":"Summer","8":"Autumn","9":"Autumn","10":"Autumn","11":"Winter"},
-  "season_order": ["Spring","Summer","Autumn","Winter"],
-  "season_range": {"Spring":"Mar–May","Summer":"Jun–Aug","Autumn":"Sep–Nov","Winter":"Dec–Feb"},
-  "season_months": {"Spring":[2,3,4],"Summer":[5,6,7],"Autumn":[8,9,10],"Winter":[11,0,1]},
+  "months": [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  "month_url": [
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december"
+  ],
+  "month_abbr": [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ],
+  "seasons_map": {
+    "0": "Winter",
+    "1": "Winter",
+    "2": "Spring",
+    "3": "Spring",
+    "4": "Spring",
+    "5": "Summer",
+    "6": "Summer",
+    "7": "Summer",
+    "8": "Autumn",
+    "9": "Autumn",
+    "10": "Autumn",
+    "11": "Winter"
+  },
+  "season_order": [
+    "Spring",
+    "Summer",
+    "Autumn",
+    "Winter"
+  ],
+  "season_range": {
+    "Spring": "Mar–May",
+    "Summer": "Jun–Aug",
+    "Autumn": "Sep–Nov",
+    "Winter": "Dec–Feb"
+  },
+  "season_months": {
+    "Spring": [
+      2,
+      3,
+      4
+    ],
+    "Summer": [
+      5,
+      6,
+      7
+    ],
+    "Autumn": [
+      8,
+      9,
+      10
+    ],
+    "Winter": [
+      11,
+      0,
+      1
+    ]
+  },
   "url": {
     "annual_prefix": "best-time-to-visit-",
     "annual_suffix": ".html",
@@ -24,35 +107,85 @@
     "cross_annual_prefix": "meilleure-periode-",
     "cross_monthly_sep": "-meteo-"
   },
-  "cards": {"file": "cards_en.csv", "title_key": "title", "text_key": "text"},
+  "cards": {
+    "file": "cards_en.csv",
+    "title_key": "title",
+    "text_key": "text"
+  },
   "footer": {
     "data_by": "Weather data by Open-Meteo.com",
     "sources": "Sources: ECMWF, DWD, NOAA · CC BY 4.0",
-    "methodology": ["methodology.html", "Methodology"],
-    "app": ["app.html", "Weather app"],
-    "about": ["about.html", "About"],
-    "faq": ["faq.html", "FAQ"],
-    "legal": ["legal.html", "Legal"],
-    "privacy": ["privacy.html", "Privacy"],
-    "contact": ["contact.html", "Contact"],
+    "methodology": [
+      "methodology.html",
+      "Methodology"
+    ],
+    "app": [
+      "app.html",
+      "Weather app"
+    ],
+    "about": [
+      "about.html",
+      "About"
+    ],
+    "faq": [
+      "faq.html",
+      "FAQ"
+    ],
+    "legal": [
+      "legal.html",
+      "Legal"
+    ],
+    "privacy": [
+      "privacy.html",
+      "Privacy"
+    ],
+    "contact": [
+      "contact.html",
+      "Contact"
+    ],
     "alt_lang_flag": "fr",
     "alt_lang_label": "Français"
   },
   "rankings": [
-    ["best-destinations-weather-ranking-2026.html", "🌍 World ranking 2026"],
-    ["best-europe-weather-ranking-2026.html", "🇪🇺 Best in Europe"]
+    [
+      "best-destinations-weather-ranking-2026.html",
+      "🌍 World ranking 2026"
+    ],
+    [
+      "best-europe-weather-ranking-2026.html",
+      "🇪🇺 Best in Europe"
+    ]
   ],
-  "badges": {"excellent": "✅ Excellent", "good": "✅ Good", "fair": "⚠️ Fair", "poor": "❌ Poor"},
-  "tiers": {"peak": "💸 Peak season", "low": "✅ Low season", "shoulder": "🌿 Shoulder"},
-  "verdicts": {"excellent": "Excellent time", "good": "Good time", "fair": "Acceptable", "poor": "Not recommended"},
+  "badges": {
+    "excellent": "✅ Excellent",
+    "good": "✅ Good",
+    "fair": "⚠️ Fair",
+    "poor": "❌ Poor"
+  },
+  "tiers": {
+    "peak": "💸 Peak season",
+    "low": "✅ Low season",
+    "shoulder": "🌿 Shoulder"
+  },
+  "verdicts": {
+    "excellent": "Excellent time",
+    "good": "Good time",
+    "fair": "Acceptable",
+    "poor": "Not recommended"
+  },
   "table": {
     "aria": "Monthly climate table {nom}",
     "headers": "<th>Month</th><th>Min °C</th><th>Max °C</th><th>Rainy days (%)</th><th>Precip. mm/d</th><th>Sun h/d</th><th>Score</th>",
     "ski_header": "<th>Ski score 🎿</th>",
-    "legend_ideal": "Ideal", "legend_fair": "Fair", "legend_off": "Unfavourable",
+    "legend_ideal": "Ideal",
+    "legend_fair": "Fair",
+    "legend_off": "Unfavourable",
     "legend_source": "Source: Open-Meteo · 10 years"
   },
-  "nav": {"cta_label": "Try the weather app", "cta_href": "app.html"},
+  "nav": {
+    "cta_label": "Try the weather app",
+    "cta_href": "app.html"
+  },
   "labels": {
     "quick_section": "Quick decision",
     "quick_title_tpl": "When to visit {name}?",
@@ -99,7 +232,15 @@
     "tip_good_tpl": "{months} {verb} a good weather/price balance — decent score with fewer crowds.",
     "tip_offpeak_tpl": "off-peak months ({m1}, {m2}) are cheapest but weather is significantly worse.",
     "offer_sg": "offers",
-    "offer_pl": "offer"
+    "offer_pl": "offer",
+    "activities_section": "Activities & tours",
+    "activities_title_tpl": "Activities and tours in {name}",
+    "activities_cta": "Guided tours, skip-the-line tickets and local experiences.",
+    "activities_btn": "Browse activities on GetYourGuide",
+    "flights_section": "Flights",
+    "flights_title_tpl": "Find a flight to {name}",
+    "flights_cta": "Compare flights from all airlines.",
+    "flights_btn": "Search flights"
   },
   "monthly": {
     "hero_tpl": "{name} weather in {month}",
@@ -110,21 +251,34 @@
     "cta_text": "Real-time data with ECMWF seasonal corrections · updated daily",
     "cta_btn": "Try the weather app",
     "cta_link": "app.html",
-    "act_city_good": "✅ Good", "act_city_ok": "⚠️ Possible",
-    "act_ext_good": "✅ Good", "act_ext_ok": "⚠️ Possible", "act_ext_bad": "❌ Not recommended",
-    "act_beach_good": "✅ Good", "act_beach_ok": "⚠️ Possible", "act_beach_bad": "❌ Not recommended",
+    "act_city_good": "✅ Good",
+    "act_city_ok": "⚠️ Possible",
+    "act_ext_good": "✅ Good",
+    "act_ext_ok": "⚠️ Possible",
+    "act_ext_bad": "❌ Not recommended",
+    "act_beach_good": "✅ Good",
+    "act_beach_ok": "⚠️ Possible",
+    "act_beach_bad": "❌ Not recommended",
     "act_budget_low": "✅ Low season",
     "lbl_city": "🏙️ City break / culture",
     "lbl_ext": "🚶 Outdoor activities",
     "lbl_beach": "🏖️ Beach / swimming",
     "lbl_budget": "💰 Budget",
-    "rain_unit": "of days", "sun_unit": "per day on average",
-    "qf_tminmax": "Temperature min / max", "qf_rain": "Rainy days", "qf_sun": "Sunshine",
-    "qf_season": "🌊 Season", "qf_score": "⭐ Weather score", "qf_best_month": "📅 Best month",
-    "hstat_tmax": "Max temperature", "hstat_rain": "Rainy days", "hstat_sun": "Sunshine / day",
+    "rain_unit": "of days",
+    "sun_unit": "per day on average",
+    "qf_tminmax": "Temperature min / max",
+    "qf_rain": "Rainy days",
+    "qf_sun": "Sunshine",
+    "qf_season": "🌊 Season",
+    "qf_score": "⭐ Weather score",
+    "qf_best_month": "📅 Best month",
+    "hstat_tmax": "Max temperature",
+    "hstat_rain": "Rainy days",
+    "hstat_sun": "Sunshine / day",
     "sec_decision": "Quick decision",
     "sec_decision_title_tpl": "Should you visit {name} in {month}?",
-    "yes_if": "✅ Yes if:", "no_if": "❌ No if:",
+    "yes_if": "✅ Yes if:",
+    "no_if": "❌ No if:",
     "our_opinion": "Our take:",
     "opinion_tpl": "{verdict_word} conditions in {month} ({score}/10). Consider {best_month} if your dates are flexible.",
     "sec_activities": "By trip type",
@@ -138,11 +292,15 @@
     "sec_compare": "Comparison",
     "sec_compare_title_tpl": "{month} vs {best_month} (best month)",
     "compare_intro_tpl": "The best month is <strong><a href=\"{annual_link}\" class=\"txt-inherit\">{best_month}</a></strong> (score {best_score}/10). Difference:",
-    "cmp_tmax": "Max temperature", "cmp_rain": "Rainy days", "cmp_sun": "Sunshine",
+    "cmp_tmax": "Max temperature",
+    "cmp_rain": "Rainy days",
+    "cmp_sun": "Sunshine",
     "sec_faq": "FAQ",
     "sec_faq_title_tpl": "FAQ — {name} in {month}",
-    "prev_label": "← Previous month", "next_label": "Next month →",
-    "annual_label": "📅 Annual view", "annual_text": "All months",
+    "prev_label": "← Previous month",
+    "next_label": "Next month →",
+    "annual_label": "📅 Annual view",
+    "annual_text": "All months",
     "annual_best_tpl": "Best: {month}",
     "sec_similar": "Also explore",
     "sec_similar_title_tpl": "Similar destinations in {month}",
@@ -156,7 +314,13 @@
     "context_poor": "This is not the best time for {name}.",
     "better_month_tpl": "Consider {month} ({score}/10) for better conditions.",
     "tropical_note": "In tropical areas, rain often comes as short, intense showers rather than grey days.",
-    "src_text_tpl": "Data based on <strong>10 years of ERA5 records</strong> via Open-Meteo, with ECMWF seasonal adjustment. In {month}, {name} averages <strong>{tmax}°C</strong>, {rain}% rainy days and {sun}h of sunshine per day. Overall weather score: <strong>{score}/10</strong>."
+    "src_text_tpl": "Data based on <strong>10 years of ERA5 records</strong> via Open-Meteo, with ECMWF seasonal adjustment. In {month}, {name} averages <strong>{tmax}°C</strong>, {rain}% rainy days and {sun}h of sunshine per day. Overall weather score: <strong>{score}/10</strong>.",
+    "temp_range": "Temperatures",
+    "rain_label": "Rain",
+    "sun_label": "Sun",
+    "temp_section_label": "Temperatures",
+    "rain_section_label": "Precipitation",
+    "sun_section_label": "Sunshine"
   },
   "narratives": {
     "tropical_rainy": "In {month}, {name} is in the middle of the rainy season ({rain}% rainy days). Tropical showers are usually short but intense — pack a light raincoat.",
@@ -210,7 +374,11 @@
     "no_heat": "avoiding intense heat — {tmax}°C on average.",
     "no_outdoor": "looking for sunshine or outdoor activities."
   },
-  "verdict_words": {"rec": "Favourable", "mid": "Acceptable", "avoid": "Unfavourable"},
+  "verdict_words": {
+    "rec": "Favourable",
+    "mid": "Acceptable",
+    "avoid": "Unfavourable"
+  },
   "console": {
     "title": "BestDateWeather — generate_pages.py",
     "target_all": "all destinations",

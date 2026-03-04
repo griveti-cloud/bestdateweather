@@ -20,7 +20,7 @@ from urllib.parse import quote_plus
 from lib.common import (score_badge as _score_badge, best_months as _best_months,
                         budget_tier as _budget_tier, seasonal_stats as _seasonal_stats,
                         bar_chart, climate_table_html as _climate_table_html,
-                        weather_emoji, LANG_FR, LANG_EN)
+                        weather_emoji, build_lang)
 from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
                               dest_country, annual_url, monthly_url,
                               annual_url_cross, monthly_url_cross, hero_sub as _hero_sub,
@@ -36,10 +36,25 @@ BOOKING_AID = '304142'  # TODO: replace with your CJ affiliate ID
 GYG_PARTNER_ID = 'XXXXX'  # TODO: replace with your GetYourGuide partner ID
 TP_MARKER = 'XXXXX'  # TODO: replace with your Travelpayouts marker ID
 
+MONTHLY_GRAD = [
+    'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
+    'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
+    'linear-gradient(160deg,#0a2a1a 0%,#1a4a2a 55%,#3a8a5a 100%)',
+    'linear-gradient(160deg,#0a2a1a 0%,#1a4a2a 55%,#3a8a5a 100%)',
+    'linear-gradient(160deg,#0a2a1a 0%,#1a4a2a 55%,#3a8a5a 100%)',
+    'linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%)',
+    'linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%)',
+    'linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%)',
+    'linear-gradient(160deg,#1a1a0a 0%,#4a3a0a 55%,#8a6a2a 100%)',
+    'linear-gradient(160deg,#1a1a0a 0%,#4a3a0a 55%,#8a6a2a 100%)',
+    'linear-gradient(160deg,#1a1a0a 0%,#4a3a0a 55%,#8a6a2a 100%)',
+    'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
+]
+
 
 def _bind_lang(cfg):
     """Bind shared functions to the selected language."""
-    L = LANG_FR if cfg['is_fr'] else LANG_EN
+    L = build_lang(cfg['lang'])
     return {
         'score_badge': lambda s, c=None: _score_badge(s, c, L=L),
         'best_months': lambda m: _best_months(m, L=L),
@@ -208,20 +223,7 @@ def GTAG_HTML(pfx=''):
     return f'''<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
 <script src="{pfx}js/ga.js"></script>'''
 
-MONTHLY_GRAD = {
-    0:'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
-    1:'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
-    2:'linear-gradient(160deg,#0a2a1a 0%,#1a4a2a 55%,#3a8a5a 100%)',
-    3:'linear-gradient(160deg,#0a2a1a 0%,#1a4a2a 55%,#3a8a5a 100%)',
-    4:'linear-gradient(160deg,#0a2a1a 0%,#1a4a2a 55%,#3a8a5a 100%)',
-    5:'linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%)',
-    6:'linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%)',
-    7:'linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%)',
-    8:'linear-gradient(160deg,#1a1a0a 0%,#4a3a0a 55%,#8a6a2a 100%)',
-    9:'linear-gradient(160deg,#1a1a0a 0%,#4a3a0a 55%,#8a6a2a 100%)',
-    10:'linear-gradient(160deg,#1a1a0a 0%,#4a3a0a 55%,#8a6a2a 100%)',
-    11:'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
-}
+
 
 
 
@@ -239,21 +241,14 @@ def head_css(cfg):
 
 
 def nav_html(cfg):
-    pfx = cfg['asset_prefix']
-    if cfg['is_fr']:
-        return f'''<nav>
- <a class="nav-brand" href="{pfx}index.html">Best<em>Date</em>Weather</a>
+    home_href = cfg['nav_cta_href']
+    cta_label = cfg['nav_cta_label']
+    share_label = 'Partager' if cfg['lang'] == 'fr' else 'Share'
+    return f'''<nav>
+ <a class="nav-brand" href="{home_href}">Best<em>Date</em>Weather</a>
  <div class="nav-actions">
-  <button class="nav-share" onclick="shareThis()" aria-label="Partager"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
-  <a class="nav-cta" href="{pfx}index.html">Tester l'application</a>
- </div>
-</nav>'''
-    else:
-        return f'''<nav>
- <a class="nav-brand" href="app.html">Best<em>Date</em>Weather</a>
- <div class="nav-actions">
-  <button class="nav-share" onclick="shareThis()" aria-label="Share"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
-  <a class="nav-cta" href="app.html">Try the weather app</a>
+  <button class="nav-share" onclick="shareThis()" aria-label="{share_label}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+  <a class="nav-cta" href="{home_href}">{cta_label}</a>
  </div>
 </nav>'''
 
@@ -936,35 +931,11 @@ def _build_comp_cards_monthly(cfg, slug, nom, comparison_index, all_dests):
 
 # ── MONTHLY PAGE GENERATOR ────────────────────────────────────────────────
 
-SEASONS_FR = ['Hiver','Hiver','Printemps','Printemps','Printemps','Été',
-              'Été','Été','Automne','Automne','Automne','Hiver']
-SEASONS_EN = ['Winter','Winter','Spring','Spring','Spring','Summer',
-              'Summer','Summer','Autumn','Autumn','Autumn','Winter']
-
-MONTHLY_GRAD = [
-    'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
-    'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
-    'linear-gradient(160deg,#0a2a1a 0%,#1a4a2a 55%,#3a8a5a 100%)',
-    'linear-gradient(160deg,#0a2a1a 0%,#1a4a2a 55%,#3a8a5a 100%)',
-    'linear-gradient(160deg,#0a2a1a 0%,#1a4a2a 55%,#3a8a5a 100%)',
-    'linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%)',
-    'linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%)',
-    'linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%)',
-    'linear-gradient(160deg,#1a1a0a 0%,#4a3a0a 55%,#8a6a2a 100%)',
-    'linear-gradient(160deg,#1a1a0a 0%,#4a3a0a 55%,#8a6a2a 100%)',
-    'linear-gradient(160deg,#1a1a0a 0%,#4a3a0a 55%,#8a6a2a 100%)',
-    'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
-]
-
-MONTH_ABBR_FR = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc']
-MONTH_ABBR_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-
-
 def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate, events=None, comparison_index=None):
     C = cfg
     is_fr   = C['is_fr']
     MONTHS  = C['months']
-    MABBR   = MONTH_ABBR_FR if is_fr else MONTH_ABBR_EN
+    MABBR   = C['month_abbr']
     slug_fr = dest['slug_fr']
     slug_en = dest['slug_en']
     slug    = dest_slug(C, dest)
@@ -977,7 +948,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     m        = months[mi]
     score    = m['score']
-    season   = (SEASONS_FR if is_fr else SEASONS_EN)[mi]
+    season   = C['seasons_map'][mi]
     month    = MONTHS[mi]
     month_url = MONTH_URL_FR[mi] if is_fr else MONTH_URL[mi]
     is_mountain = dest.get('mountain', 'False').strip() == 'True'

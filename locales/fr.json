@@ -1,6 +1,5 @@
 {
   "_comment": "BestDateWeather — French locale (fr)",
-
   "meta": {
     "html_lang": "fr",
     "booking_lang": "fr",
@@ -10,16 +9,96 @@
     "canonical_prefix": "https://bestdateweather.com/",
     "schema_home_url": "https://bestdateweather.com/"
   },
-
-  "months": ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"],
-  "month_url": ["janvier","fevrier","mars","avril","mai","juin","juillet","aout","septembre","octobre","novembre","decembre"],
-  "month_abbr": ["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"],
-
-  "seasons_map": {"0":"Hiver","1":"Hiver","2":"Printemps","3":"Printemps","4":"Printemps","5":"Été","6":"Été","7":"Été","8":"Automne","9":"Automne","10":"Automne","11":"Hiver"},
-  "season_order": ["Printemps","Été","Automne","Hiver"],
-  "season_range": {"Printemps":"mars–mai","Été":"juin–août","Automne":"sept–nov","Hiver":"déc–fév"},
-  "season_months": {"Printemps":[2,3,4],"Été":[5,6,7],"Automne":[8,9,10],"Hiver":[11,0,1]},
-
+  "months": [
+    "Janvier",
+    "Février",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Août",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Décembre"
+  ],
+  "month_url": [
+    "janvier",
+    "fevrier",
+    "mars",
+    "avril",
+    "mai",
+    "juin",
+    "juillet",
+    "aout",
+    "septembre",
+    "octobre",
+    "novembre",
+    "decembre"
+  ],
+  "month_abbr": [
+    "Jan",
+    "Fév",
+    "Mar",
+    "Avr",
+    "Mai",
+    "Jun",
+    "Jul",
+    "Aoû",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Déc"
+  ],
+  "seasons_map": {
+    "0": "Hiver",
+    "1": "Hiver",
+    "2": "Printemps",
+    "3": "Printemps",
+    "4": "Printemps",
+    "5": "Été",
+    "6": "Été",
+    "7": "Été",
+    "8": "Automne",
+    "9": "Automne",
+    "10": "Automne",
+    "11": "Hiver"
+  },
+  "season_order": [
+    "Printemps",
+    "Été",
+    "Automne",
+    "Hiver"
+  ],
+  "season_range": {
+    "Printemps": "mars–mai",
+    "Été": "juin–août",
+    "Automne": "sept–nov",
+    "Hiver": "déc–fév"
+  },
+  "season_months": {
+    "Printemps": [
+      2,
+      3,
+      4
+    ],
+    "Été": [
+      5,
+      6,
+      7
+    ],
+    "Automne": [
+      8,
+      9,
+      10
+    ],
+    "Hiver": [
+      11,
+      0,
+      1
+    ]
+  },
   "url": {
     "annual_prefix": "meilleure-periode-",
     "annual_suffix": ".html",
@@ -28,53 +107,76 @@
     "cross_annual_prefix": "best-time-to-visit-",
     "cross_monthly_sep": "-weather-"
   },
-
   "cards": {
     "file": "cards.csv",
     "title_key": "titre",
     "text_key": "texte"
   },
-
   "footer": {
     "data_by": "Données météo par Open-Meteo.com",
     "sources": "Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
-    "methodology": ["methodologie.html", "Méthodologie"],
-    "app": ["index.html", "Application météo"],
-    "about": ["a-propos.html", "À propos"],
-    "faq": ["faq.html", "FAQ"],
-    "legal": ["mentions-legales.html", "Mentions légales"],
-    "privacy": ["confidentialite.html", "Confidentialité"],
-    "contact": ["contact.html", "Contact"],
+    "methodology": [
+      "methodologie.html",
+      "Méthodologie"
+    ],
+    "app": [
+      "index.html",
+      "Application météo"
+    ],
+    "about": [
+      "a-propos.html",
+      "À propos"
+    ],
+    "faq": [
+      "faq.html",
+      "FAQ"
+    ],
+    "legal": [
+      "mentions-legales.html",
+      "Mentions légales"
+    ],
+    "privacy": [
+      "confidentialite.html",
+      "Confidentialité"
+    ],
+    "contact": [
+      "contact.html",
+      "Contact"
+    ],
     "alt_lang_flag": "gb",
     "alt_lang_label": "English"
   },
-
   "rankings": [
-    ["classement-destinations-meteo-2026.html", "🌍 Classement mondial 2026"],
-    ["classement-destinations-meteo-ete-2026.html", "🌞 Meilleures destinations été"],
-    ["classement-destinations-meteo-hiver-2026.html", "🌴 Destinations soleil hiver"]
+    [
+      "classement-destinations-meteo-2026.html",
+      "🌍 Classement mondial 2026"
+    ],
+    [
+      "classement-destinations-meteo-ete-2026.html",
+      "🌞 Meilleures destinations été"
+    ],
+    [
+      "classement-destinations-meteo-hiver-2026.html",
+      "🌴 Destinations soleil hiver"
+    ]
   ],
-
   "badges": {
     "excellent": "✅ Excellent",
     "good": "✅ Favorable",
     "fair": "⚠️ Acceptable",
     "poor": "❌ Peu favorable"
   },
-
   "tiers": {
     "peak": "💸 Haute saison",
     "low": "✅ Prix bas",
     "shoulder": "🌿 Épaule"
   },
-
   "verdicts": {
     "excellent": "Excellente période",
     "good": "Bonne période",
     "fair": "Période acceptable",
     "poor": "Période difficile"
   },
-
   "table": {
     "aria": "Tableau climat mensuel {nom}",
     "headers": "<th>Mois</th><th>T° min</th><th>T° max</th><th>Jours de pluie (%)</th><th>Précip. mm/j</th><th>Soleil h/j</th><th>Score</th>",
@@ -84,12 +186,10 @@
     "legend_off": "Défavorable",
     "legend_source": "Source Open-Meteo · 10 ans"
   },
-
   "nav": {
     "cta_label": "Tester l'application",
     "cta_href": "index.html"
   },
-
   "labels": {
     "quick_section": "Décision en 30 secondes",
     "quick_title_tpl": "Quand partir {name} ?",
@@ -100,56 +200,52 @@
     "best_score": "📅 Meilleur score",
     "rainy_days_in": "de jours pluvieux en",
     "in": "en",
-
     "cards_section": "Selon votre projet",
     "cards_title": "Meilleure période selon votre type de voyage",
-
     "table_section": "Tableau climatique mensuel",
     "table_title_tpl": "Météo {name} mois par mois",
-
     "season_section": "Analyse saison par saison",
     "season_title": "À quoi s'attendre selon la période",
     "season_temp_tpl": "Températures moyennes {tmax}°C, {rain}% de jours avec pluie, {sun}h de soleil par jour. Score moyen : {score}/10.",
-
     "booking_section": "Hébergement",
     "booking_title_tpl": "Trouver un hébergement {name}",
     "booking_cta": "Voir les disponibilités sur la période recommandée",
     "booking_btn": "Rechercher sur Booking.com",
-
     "monthly_section": "Météo par mois",
     "monthly_title": "Météo détaillée mois par mois",
-
     "faq_section": "FAQ",
     "faq_title": "Questions fréquentes",
-
     "similar_section": "Explorer aussi",
     "similar_title": "Destinations au climat similaire",
     "similar_very": "Climat très similaire",
     "similar_mid": "Climat similaire",
     "similar_low": "Climat assez similaire",
-
     "ranking_section": "Classements météo",
     "ranking_title": "Comparer les destinations par météo",
-
     "guides_section": "Guides & comparatifs",
     "guides_title": "Explorer par mois ou comparer",
     "pillar_tpl": "📅 Où partir en {month} — top 25",
     "vs_tpl": "⚖️ {a} ou {b} ?",
-
     "breadcrumb_home": "Accueil",
     "updated_tpl": "Mis à jour : {date} · Open-Meteo · 10 ans · 12 mois comparés · {coords}",
     "best_months": "Meilleur{s} mois",
     "optimal_temp_stat": "Température optimale",
     "rainy_days_stat": "Jours pluvieux",
     "hero_sub_default_tpl": "{name}, une destination à découvrir selon la météo.",
-
     "tip_prefix": "Conseil",
     "tip_good_tpl": "{months} {verb} un bon compromis météo/prix — score correct avec moins d'affluence.",
     "tip_offpeak_tpl": "les mois hors pic ({m1}, {m2}) sont les moins chers mais la météo est nettement moins favorable.",
     "offer_sg": "offre",
-    "offer_pl": "offrent"
+    "offer_pl": "offrent",
+    "activities_section": "Activités & visites",
+    "activities_title_tpl": "Activités et visites {name}",
+    "activities_cta": "Excursions, visites guidées, billets coupe-file et expériences locales.",
+    "activities_btn": "Voir les activités sur GetYourGuide",
+    "flights_section": "Vols",
+    "flights_title_tpl": "Trouver un vol vers {name}",
+    "flights_cta": "Comparer les vols depuis toutes les compagnies.",
+    "flights_btn": "Rechercher un vol"
   },
-
   "monthly": {
     "hero_tpl": "Météo {name} en {month}",
     "score_label": "Score météo",
@@ -171,19 +267,16 @@
     "compare_title": "Guides et comparaisons",
     "back_annual_tpl": "← Meilleure période {name}",
     "month_nav_tpl": "Météo en {month}",
-
     "context_excellent": "C'est le meilleur mois de l'année {name}.",
     "context_good": "C'est une bonne période pour visiter {name}.",
     "context_fair": "Les conditions sont acceptables {name}.",
     "context_poor": "Ce n'est pas la meilleure période {name}.",
     "better_month_tpl": "Préférez {month} ({score}/10) pour de meilleures conditions.",
     "tropical_note": "En zone tropicale, la pluie prend souvent la forme d'averses courtes et intenses plutôt que de journées grises.",
-
     "cta_title": "📅 Prévisions actualisées — 12 prochains mois",
     "cta_text": "Données temps réel avec corrections saisonnières ECMWF · mise à jour quotidienne",
     "cta_btn": "Tester l'application météo",
     "cta_link": "index.html",
-
     "act_city_good": "✅ Bon",
     "act_city_ok": "⚠️ Possible",
     "act_ext_good": "✅ Bon",
@@ -193,12 +286,10 @@
     "act_beach_ok": "⚠️ Possible",
     "act_beach_bad": "❌ Déconseillé",
     "act_budget_low": "✅ Prix bas",
-
     "lbl_city": "🏙️ City-trip / culture",
     "lbl_ext": "🚶 Activités extérieures",
     "lbl_beach": "🏖️ Plage / baignade",
     "lbl_budget": "💰 Budget",
-
     "rain_unit": "des jours",
     "sun_unit": "par jour en moyenne",
     "qf_tminmax": "Température min / max",
@@ -210,54 +301,47 @@
     "hstat_tmax": "Température max",
     "hstat_rain": "Jours pluvieux",
     "hstat_sun": "Soleil / jour",
-
     "sec_decision": "Décision rapide",
     "sec_decision_title_tpl": "Faut-il partir {name} en {month} ?",
     "yes_if": "✅ Oui si :",
     "no_if": "❌ Non si :",
     "our_opinion": "Notre avis :",
     "opinion_tpl": "Conditions {verdict_word} en {month} ({score}/10). Privilégiez {best_month} si vos dates sont flexibles.",
-
     "sec_activities": "Selon votre projet",
     "sec_activities_title_tpl": "{name} en {month} selon votre type de voyage",
-
     "sec_context": "Contexte local",
     "sec_context_title": "À quoi s'attendre en {month}",
-
     "sec_table": "Tableau annuel",
     "sec_table_title": "Comparaison mois par mois",
-
     "src_label": "📊 Source des données",
     "src_link_text": "Voir la méthodologie →",
-
     "sec_compare": "Comparaison",
     "sec_compare_title_tpl": "{month} vs {best_month} (meilleur mois)",
     "compare_intro_tpl": "Le meilleur mois est <strong><a href=\"{annual_link}\" class=\"txt-inherit\">{best_month}</a></strong> (score {best_score}/10). Différence :",
     "cmp_tmax": "Température max",
     "cmp_rain": "Jours de pluie",
     "cmp_sun": "Ensoleillement",
-
     "sec_faq": "Questions fréquentes",
     "sec_faq_title_tpl": "FAQ — {name} en {month}",
-
     "prev_label": "← Mois précédent",
     "next_label": "Mois suivant →",
     "annual_label": "📅 Vue annuelle",
     "annual_text": "Tous les mois",
     "annual_best_tpl": "Meilleur : {month}",
-
     "sec_similar": "Explorer aussi",
     "sec_similar_title_tpl": "Destinations similaires en {month}",
-
     "sec_rankings": "Classements météo",
     "sec_rankings_title": "Comparer les destinations par météo",
-
     "sec_guides": "Guides & comparatifs",
     "sec_guides_title": "Explorer ou comparer",
-
-    "src_text_tpl": "Données calculées sur <strong>10 ans de relevés ERA5</strong> via Open-Meteo, avec ajustement saisonnier ECMWF. En {month}, {name} affiche en moyenne <strong>{tmax}°C</strong>, {rain}% de jours pluvieux et {sun}h de soleil par jour. Score météo global du mois : <strong>{score}/10</strong>."
+    "src_text_tpl": "Données calculées sur <strong>10 ans de relevés ERA5</strong> via Open-Meteo, avec ajustement saisonnier ECMWF. En {month}, {name} affiche en moyenne <strong>{tmax}°C</strong>, {rain}% de jours pluvieux et {sun}h de soleil par jour. Score météo global du mois : <strong>{score}/10</strong>.",
+    "temp_range": "Températures",
+    "rain_label": "Pluie",
+    "sun_label": "Soleil",
+    "temp_section_label": "Températures",
+    "rain_section_label": "Précipitations",
+    "sun_section_label": "Ensoleillement"
   },
-
   "narratives": {
     "tropical_rainy": "En {month}, {name} est en pleine saison des pluies ({rain}% de jours pluvieux). Les averses tropicales sont généralement courtes mais intenses — prévoyez un imperméable léger.",
     "tropical_dry": "{month} correspond à la saison sèche {name}. Avec seulement {rain}% de jours pluvieux et {sun}h de soleil, c'est une période optimale.",
@@ -279,33 +363,26 @@
     "ski_fair": "Le ski est possible {name} en {month}, mais les conditions ne sont pas optimales. Vérifiez l'état des pistes avant de partir.",
     "ski_bad": "Le ski n'est pas recommandé en {month} {name}. Les températures ({tmax}°C) limitent l'enneigement."
   },
-
   "faq_templates": {
     "good_period_q": "{name} en {month} : est-ce une bonne période ?",
     "good_period_a_rec": "{month} est une excellente période {name} (score {score}/10). Avec {tmax}°C, {sun}h de soleil et {rain}% de pluie, les conditions sont très favorables.",
     "good_period_a_mid": "{month} est une période acceptable {name} (score {score}/10). Les conditions sont correctes mais pas optimales — préférez {best_month} ({best_score}/10) si possible.",
     "good_period_a_avoid": "{month} n'est pas recommandé {name} (score {score}/10). Avec {rain}% de jours pluvieux et {sun}h de soleil, préférez {best_month} ({best_score}/10).",
-
     "weather_q_hot": "Fait-il trop chaud {name} en {month} ?",
     "weather_a_hot_intense": "Les températures atteignent {tmax}°C. La chaleur est extrême — limitez les activités aux heures fraîches. Ensoleillement : {sun}h/jour.",
     "weather_a_hot_ok": "Les températures atteignent {tmax}°C. C'est intense mais gérable avec de la crème solaire et de l'eau. Ensoleillement : {sun}h/jour.",
-
     "weather_q_rain": "Pleut-il beaucoup {name} en {month} ?",
     "weather_a_rain_tropical": "Oui, {rain}% des jours connaissent de la pluie en {month}. En zone tropicale, ce sont souvent des averses courtes mais intenses.",
     "weather_a_rain_normal": "Oui, {rain}% des jours connaissent de la pluie en {month}. Prévoyez des activités couvertes en alternative.",
-
     "weather_q_cold": "Quel temps fait-il {name} en {month} ?",
     "weather_a_cold": "Il fait frais avec {tmax}°C en journée et {tmin}°C la nuit. {sun}h de soleil par jour. Prévoyez des vêtements chauds et privilégiez les visites intérieures.",
-
     "weather_q_default": "Quel temps fait-il {name} en {month} ?",
     "weather_a_default": "En {month}, {name} affiche {tmax}°C en journée, {sun}h de soleil et {rain}% de jours pluvieux.",
-
     "ski_q": "Peut-on skier {name} en {month} ?",
     "ski_a_good": "Oui, {month} est une excellente période pour le ski (score {ski}/10). Avec {tmax}°C max et {rain}% de précipitations, les conditions d'enneigement sont bonnes.",
     "ski_a_fair": "Les conditions sont correctes (score ski {ski}/10) mais pas optimales. Vérifiez l'état des pistes avant de partir.",
     "ski_a_bad": "Le ski n'est pas recommandé en {month} (score ski {ski}/10). Les températures ({tmax}°C) limitent l'enneigement."
   },
-
   "decision": {
     "yes_hot_beach": "profiter du soleil et de la plage.",
     "yes_warm_outdoor": "explorer en plein air avec des températures agréables.",
@@ -317,13 +394,11 @@
     "no_heat": "éviter la chaleur intense — {tmax}°C en moyenne.",
     "no_outdoor": "chercher le soleil ou les activités de plein air."
   },
-
   "verdict_words": {
     "rec": "favorables",
     "mid": "acceptables",
     "avoid": "défavorables"
   },
-
   "console": {
     "title": "BestDateWeather — generate_pages.py",
     "target_all": "toutes les destinations",
@@ -334,7 +409,6 @@
     "monthly_skip": "mensuelles ignorées (monthly=False)",
     "no_errors": "✅ Aucune erreur de génération"
   },
-
   "validation": {
     "missing_months": "[P0] {slug}: mois manquants: {missing}",
     "score_range": "[P0] {slug}/{month}: score hors plage ({score})",
@@ -343,7 +417,6 @@
     "no_climate": "[P1] {slug}: dans destinations.csv mais pas de données climat",
     "card_missing": "[P2] {slug}: pas de card projet"
   },
-
   "dest_fields": {
     "name_key": "nom_bare",
     "slug_key": "slug_fr",

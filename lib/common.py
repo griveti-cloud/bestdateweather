@@ -1,124 +1,104 @@
 """
 BestDateWeather — Shared generation utilities
 ==============================================
-Common functions used by both generate_all.py (FR) and generate_all_en.py (EN).
+Common functions used by generate_pages.py.
 Each function takes a `L` (lang config dict) parameter for language-specific strings.
 
-Usage:
-    from lib.common import score_badge, best_months, budget_tier, ...
+Language dicts are built from locales/{lang}.json.
 """
+
+import json, os
+
+_LOCALE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'locales')
+_locale_cache = {}
+
+def _load_locale(lang):
+    if lang not in _locale_cache:
+        path = os.path.join(_LOCALE_DIR, f'{lang}.json')
+        with open(path, encoding='utf-8') as f:
+            _locale_cache[lang] = json.load(f)
+    return _locale_cache[lang]
+
+
+def build_lang(lang):
+    """Build a lang dict for shared functions from locale JSON."""
+    loc = _load_locale(lang)
+    return {
+        'months': loc['months'],
+        'badge_excellent': loc['badges']['excellent'],
+        'badge_good': loc['badges']['good'],
+        'badge_fair': loc['badges']['fair'],
+        'badge_poor': loc['badges']['poor'],
+        'tier_peak': loc['tiers']['peak'],
+        'tier_low': loc['tiers']['low'],
+        'tier_shoulder': loc['tiers']['shoulder'],
+        'seasons': loc['season_months'],
+        'verdict_excellent': loc['verdicts']['excellent'],
+        'verdict_good': loc['verdicts']['good'],
+        'verdict_fair': loc['verdicts']['fair'],
+        'verdict_poor': loc['verdicts']['poor'],
+        'table_aria': loc['table']['aria'],
+        'table_headers': loc['table']['headers'],
+        'table_ski_header': loc['table']['ski_header'],
+        'legend_ideal': loc['table']['legend_ideal'],
+        'legend_fair': loc['table']['legend_fair'],
+        'legend_off': loc['table']['legend_off'],
+        'legend_source': loc['table']['legend_source'],
+        'val_missing_months': loc['validation']['missing_months'],
+        'val_score_range': loc['validation']['score_range'],
+        'val_class_invalid': loc['validation']['class_invalid'],
+        'val_score_class': loc['validation']['score_class'],
+        'val_no_climate': loc['validation']['no_climate'],
+        'val_card_missing': loc['validation']['card_missing'],
+    }
+
+
+# Backward-compatible exports
+LANG_FR = build_lang('fr')
+LANG_EN = build_lang('en')
 
 
 # ── Weather emoji ─────────────────────────────────────────────────────────────
 
 def weather_emoji(tmax, rain_pct, sun_h=None):
-    """Return a weather emoji based on temperature, rain probability and sunshine.
-    Rain dominates above 50%. Temperature rules below 5°C.
-    Sunshine upgrades the emoji when conditions are borderline."""
+    """Return a weather emoji based on temperature, rain probability and sunshine."""
     if rain_pct >= 65:
-        return '⛈️'     # Monsoon / very heavy rain
+        return '⛈️'
     if rain_pct >= 50:
-        return '🌧️'     # Rainy
+        return '🌧️'
     if tmax < 0:
-        return '❄️'      # Freezing
+        return '❄️'
     if tmax <= 4:
-        return '🌨️'     # Cold / snow likely
+        return '🌨️'
     if tmax >= 36:
-        return '🥵'     # Extreme heat
+        return '🥵'
     if tmax >= 25 and rain_pct < 25:
-        return '☀️'      # Sunny & warm
-    # Sunshine upgrade: warm + good sunshine despite moderate rain
+        return '☀️'
     if tmax >= 22 and rain_pct < 50 and sun_h is not None and sun_h >= 10:
-        return '🌤️'     # Fair (summer storms, but mostly sunny days)
+        return '🌤️'
     if tmax >= 25 and rain_pct < 45 and sun_h is not None and sun_h >= 8:
-        return '🌤️'     # Fair (warm + decent sun)
+        return '🌤️'
     if tmax >= 18 and rain_pct < 35:
-        return '🌤️'     # Fair weather
+        return '🌤️'
     if tmax >= 18 and rain_pct < 45 and sun_h is not None and sun_h >= 9:
-        return '🌤️'     # Fair (enough sun to compensate moderate rain)
+        return '🌤️'
     if rain_pct >= 40 and tmax >= 12:
-        return '🌦️'     # Mixed / showery
+        return '🌦️'
     if tmax >= 15 and rain_pct < 40:
-        return '⛅'     # Variable / mild-warm
+        return '⛅'
     if tmax >= 12 and rain_pct < 40:
-        return '⛅'     # Variable / mild
+        return '⛅'
     if rain_pct >= 35 and tmax >= 5:
-        return '🌦️'     # Mixed
-    # 5-11°C, rain < 35%
-    return '🌫️'         # Grey / cool
-
-
-# ── Language configs ──────────────────────────────────────────────────────────
-
-MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin',
-             'Juillet','Août','Septembre','Octobre','Novembre','Décembre']
-
-MONTHS_EN = ['January','February','March','April','May','June',
-             'July','August','September','October','November','December']
-
-LANG_FR = {
-    'months': MONTHS_FR,
-    'badge_excellent': '✅ Excellent',
-    'badge_good': '✅ Favorable',
-    'badge_fair': '⚠️ Acceptable',
-    'badge_poor': '❌ Peu favorable',
-    'tier_peak': '💸 Haute saison',
-    'tier_low': '✅ Prix bas',
-    'tier_shoulder': '🌿 Épaule',
-    'seasons': {'Printemps': [2,3,4], 'Été': [5,6,7], 'Automne': [8,9,10], 'Hiver': [11,0,1]},
-    'verdict_excellent': 'Excellente période',
-    'verdict_good': 'Bonne période',
-    'verdict_fair': 'Période acceptable',
-    'verdict_poor': 'Période difficile',
-    'table_aria': 'Tableau climat mensuel {}',
-    'table_headers': '<th>Mois</th><th>T° min</th><th>T° max</th><th>Jours de pluie (%)</th><th>Précip. mm/j</th><th>Soleil h/j</th><th>Score</th>',
-    'table_ski_header': '<th>Score ski 🎿</th>',
-    'legend_ideal': 'Idéal',
-    'legend_fair': 'Acceptable',
-    'legend_off': 'Défavorable',
-    'legend_source': 'Source Open-Meteo · 10 ans',
-    'val_missing_months': '[P0] {slug}: mois manquants: {missing}',
-    'val_score_range': '[P0] {slug}/{month}: score hors plage ({score})',
-    'val_class_invalid': '[P0] {slug}/{month}: classe invalide ({cls})',
-    'val_score_class': '[P1] {slug}/{month}: score {score} incohérent avec classe {cls}',
-    'val_no_climate': '[P1] {slug}: dans destinations.csv mais pas de données climat',
-    'val_card_missing': '[P2] {slug}: pas de card projet',
-}
-
-LANG_EN = {
-    'months': MONTHS_EN,
-    'badge_excellent': '✅ Excellent',
-    'badge_good': '✅ Good',
-    'badge_fair': '⚠️ Fair',
-    'badge_poor': '❌ Poor',
-    'tier_peak': '💸 Peak season',
-    'tier_low': '✅ Low season',
-    'tier_shoulder': '🌿 Shoulder',
-    'seasons': {'Spring': [2,3,4], 'Summer': [5,6,7], 'Autumn': [8,9,10], 'Winter': [11,0,1]},
-    'verdict_excellent': 'Excellent time',
-    'verdict_good': 'Good time',
-    'verdict_fair': 'Acceptable',
-    'verdict_poor': 'Not recommended',
-    'table_aria': 'Monthly climate table {}',
-    'table_headers': '<th>Month</th><th>Min °C</th><th>Max °C</th><th>Rainy days (%)</th><th>Precip. mm/d</th><th>Sun h/d</th><th>Score</th>',
-    'table_ski_header': '<th>Ski score 🎿</th>',
-    'legend_ideal': 'Ideal',
-    'legend_fair': 'Fair',
-    'legend_off': 'Unfavourable',
-    'legend_source': 'Source: Open-Meteo · 10 years',
-    'val_missing_months': '[P0] {slug}: missing months: {missing}',
-    'val_score_range': '[P0] {slug}/{month}: score out of range ({score})',
-    'val_class_invalid': '[P0] {slug}/{month}: invalid class ({cls})',
-    'val_score_class': '[P1] {slug}/{month}: score {score} inconsistent with class {cls}',
-    'val_no_climate': '[P1] {slug}: in destinations.csv but no climate data',
-    'val_card_missing': '[P2] {slug}: no project card',
-}
+        return '🌦️'
+    return '🌫️'
 
 
 # ── Shared functions ──────────────────────────────────────────────────────────
 
-def score_badge(score, classe=None, L=LANG_FR):
+def score_badge(score, classe=None, L=None):
     """Badge verdict aligned with editorial class from CSV."""
+    if L is None:
+        L = LANG_FR
     if classe == 'rec':
         if score >= 9.0: return '#dcfce7', '#16a34a', L['badge_excellent']
         return '#dcfce7', '#16a34a', L['badge_good']
@@ -126,21 +106,24 @@ def score_badge(score, classe=None, L=LANG_FR):
         return '#fef9c3', '#ca8a04', L['badge_fair']
     if classe == 'avoid':
         return '#fee2e2', '#dc2626', L['badge_poor']
-    # Fallback if no class
     if score >= 9.0: return '#dcfce7', '#16a34a', L['badge_excellent']
     if score >= 7.5: return '#dcfce7', '#16a34a', L['badge_good']
     if score >= 6.0: return '#fef9c3', '#ca8a04', L['badge_fair']
     return '#fee2e2', '#dc2626', L['badge_poor']
 
 
-def best_months(months, L=LANG_FR):
+def best_months(months, L=None):
     """Return list of months tied for highest score."""
+    if L is None:
+        L = LANG_FR
     max_score = max(m['score'] for m in months)
     return [L['months'][i] for i, m in enumerate(months) if m['score'] == max_score]
 
 
-def budget_tier(score, all_scores, L=LANG_FR):
+def budget_tier(score, all_scores, L=None):
     """Relative tier: top 4 = Peak, bottom 4 = Low, rest = Shoulder."""
+    if L is None:
+        L = LANG_FR
     sorted_scores = sorted(all_scores, reverse=True)
     n = len(sorted_scores)
     top = sorted_scores[min(3, n-1)]
@@ -150,8 +133,10 @@ def budget_tier(score, all_scores, L=LANG_FR):
     return L['tier_shoulder']
 
 
-def seasonal_stats(months, L=LANG_FR):
+def seasonal_stats(months, L=None):
     """Compute stats per season."""
+    if L is None:
+        L = LANG_FR
     result = {}
     for name, idxs in L['seasons'].items():
         ms = [months[i] for i in idxs]
@@ -174,8 +159,10 @@ def bar_chart(pct, max_val=100):
     return '█' * filled + '░' * (10 - filled)
 
 
-def climate_table_html(months, nom, is_mountain=False, L=LANG_FR):
+def climate_table_html(months, nom, is_mountain=False, L=None):
     """Generate climate table HTML."""
+    if L is None:
+        L = LANG_FR
     rows = ''
     for i, m in enumerate(months):
         cls = m['classe']
@@ -196,7 +183,7 @@ def climate_table_html(months, nom, is_mountain=False, L=LANG_FR):
     ski_header = L['table_ski_header'] if is_mountain else ''
     wrap_class = 'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'
     return f'''<div class="{wrap_class}">
- <table class="climate-table" aria-label="{L['table_aria'].format(nom)}">
+ <table class="climate-table" aria-label="{L['table_aria'].format(nom=nom)}">
  <thead><tr>{L['table_headers']}{ski_header}</tr></thead>
  <tbody>{rows}</tbody>
  </table>
@@ -209,8 +196,10 @@ def climate_table_html(months, nom, is_mountain=False, L=LANG_FR):
 </div>'''
 
 
-def validate_climate(climate, months_list, L=LANG_FR):
+def validate_climate(climate, months_list, L=None):
     """Validate climate data consistency. Returns list of error strings."""
+    if L is None:
+        L = LANG_FR
     errors = []
     for slug, months in climate.items():
         if None in months:
@@ -227,7 +216,6 @@ def validate_climate(climate, months_list, L=LANG_FR):
                 errors.append(L['val_score_range'].format(slug=slug, month=month, score=s))
             if c not in ('rec', 'mid', 'avoid'):
                 errors.append(L['val_class_invalid'].format(slug=slug, month=month, cls=c))
-            # Score/class coherence
             if c == 'rec' and s < 6.5:
                 errors.append(L['val_score_class'].format(slug=slug, month=month, score=s, cls=c))
             elif c == 'avoid' and s > 4.5:
