@@ -8,33 +8,16 @@ Each page ranks top 25 destinations for that month by weather score.
 Usage: python3 generate_piliers.py
 """
 
-import csv, html as html_mod, json
+import csv, html as html_mod, json, sys, os
 from pathlib import Path
 from datetime import date
+
+sys.path.insert(0, str(Path(__file__).parent))
+from lib.page_config import load_locale
 
 ROOT = Path(__file__).parent
 TODAY = date.today().isoformat()
 YEAR = date.today().year
-
-# ── Constants ─────────────────────────────────────────────────────────────────
-
-MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin',
-             'Juillet','Août','Septembre','Octobre','Novembre','Décembre']
-MONTHS_EN = ['January','February','March','April','May','June',
-             'July','August','September','October','November','December']
-MONTH_SLUG_FR = ['janvier','fevrier','mars','avril','mai','juin',
-                 'juillet','aout','septembre','octobre','novembre','decembre']
-MONTH_SLUG_EN = ['january','february','march','april','may','june',
-                 'july','august','september','october','november','december']
-MONTH_URL_FR = ['janvier','fevrier','mars','avril','mai','juin',
-                'juillet','aout','septembre','octobre','novembre','decembre']
-MONTH_URL_EN = ['january','february','march','april','may','june',
-                'july','august','september','october','november','december']
-
-SEASON_FR = {0:'hiver',1:'hiver',2:'printemps',3:'printemps',4:'printemps',5:'été',
-             6:'été',7:'été',8:'automne',9:'automne',10:'automne',11:'hiver'}
-SEASON_EN = {0:'winter',1:'winter',2:'spring',3:'spring',4:'spring',5:'summer',
-             6:'summer',7:'summer',8:'autumn',9:'autumn',10:'autumn',11:'winter'}
 
 TOP_N = 25
 
@@ -158,16 +141,18 @@ FONTS = (
 
 # ── Page Builders ─────────────────────────────────────────────────────────────
 
-def build_table(entries, lang, mi):
+def build_table(entries, loc, mi):
     """Build ranking table for a given month."""
-    is_fr = lang == 'fr'
+    is_fr = loc['meta']['html_lang'] == 'fr'
+    gen = loc['gen']
+    pil = loc['pilier']
+    month_url = loc['month_url']
     rows = ''
     for i, entry in enumerate(entries, 1):
         slug = entry['slug_fr'] if is_fr else entry['slug_en']
         nom = entry['nom_bare'] if is_fr else entry['nom_en']
-        month_slug = MONTH_URL_FR[mi] if is_fr else MONTH_URL_EN[mi]
-        href = f"{slug}-meteo-{month_slug}.html" if is_fr else f"{slug}-weather-{month_slug}.html"
-        flag_img = f'<img src="{"" if is_fr else "../"}flags/{entry["flag"]}.png" width="16" height="12" alt="" style="vertical-align:middle;margin-right:6px;border-radius:1px">'
+        href = gen['monthly_href_tpl'].format(slug=slug, month_slug=month_url[mi])
+        flag_img = f'<img src="{gen["asset_prefix"]}flags/{entry["flag"]}.png" width="16" height="12" alt="" style="vertical-align:middle;margin-right:6px;border-radius:1px">'
         sc = entry['score']
         sc_color = score_class(sc)
         rows += (
@@ -180,55 +165,55 @@ def build_table(entries, lang, mi):
             f'<td>{entry["sun_h"]:.1f}h</td>'
             f'</tr>'
         )
-    headers = {
-        'fr': ('#', 'Destination', 'Score', 'Temp.', 'Pluie', 'Soleil/j'),
-        'en': ('#', 'Destination', 'Score', 'Temp.', 'Rain', 'Sun/day'),
-    }
-    h = headers[lang]
+    h = pil['th']
     return (
-        f'<table class="rt" aria-label="{"Classement" if is_fr else "Ranking"}">'
+        f'<table class="rt" aria-label="{pil["ranking_label"]}">'
         f'<thead><tr>{"".join(f"<th>{c}</th>" for c in h)}</tr></thead>'
         f'<tbody>{rows}</tbody></table>'
     )
 
-def build_month_nav(mi, lang):
+def build_month_nav(mi, loc):
     """Build month navigation bar."""
-    is_fr = lang == 'fr'
-    months = MONTHS_FR if is_fr else MONTHS_EN
-    slugs = MONTH_SLUG_FR if is_fr else MONTH_SLUG_EN
-    prefix = 'ou-partir-en-' if is_fr else 'where-to-go-in-'
+    months = loc['months']
+    month_url = loc['month_url']
+    pil = loc['pilier']
+    prefix = pil['pillar_prefix']
     links = ''
     for i in range(12):
         active = ' class="active"' if i == mi else ''
-        links += f'<a href="{prefix}{slugs[i]}.html"{active}>{months[i][:3]}</a>'
-    return f'<nav class="month-nav" aria-label="{"Mois" if is_fr else "Months"}">{links}</nav>'
+        links += f'<a href="{prefix}{month_url[i]}.html"{active}>{months[i][:3]}</a>'
+    return f'<nav class="month-nav" aria-label="{pil["months_label"]}">{links}</nav>'
 
-def build_related(mi, lang):
+def build_related(mi, loc):
     """Build related ranking cards."""
-    is_fr = lang == 'fr'
+    months = loc['months']
+    month_url = loc['month_url']
+    pil = loc['pilier']
+    prefix = pil['pillar_prefix']
     cards = []
     # Adjacent months
     for offset in [-1, 1]:
         adj = (mi + offset) % 12
-        month_name = MONTHS_FR[adj] if is_fr else MONTHS_EN[adj]
-        slug = MONTH_SLUG_FR[adj] if is_fr else MONTH_SLUG_EN[adj]
-        prefix = 'ou-partir-en-' if is_fr else 'where-to-go-in-'
-        label = f'{"Où partir en" if is_fr else "Where to go in"} {month_name.lower()}'
-        cards.append(f'<a href="{prefix}{slug}.html" class="related-card"><strong>{label}</strong><span>Top {TOP_N} {"destinations" if is_fr else "destinations"}</span></a>')
+        month_name = months[adj]
+        label = pil['where_to_go_tpl'].format(month=month_name.lower() if loc['meta'].get('lowercase_months') else month_name)
+        cards.append(f'<a href="{prefix}{month_url[adj]}.html" class="related-card"><strong>{label}</strong><span>Top {TOP_N} {pil["top_n_label"]}</span></a>')
     # General ranking
-    if is_fr:
-        cards.append('<a href="classement-destinations-meteo-2026.html" class="related-card"><strong>🌍 Classement mondial 2026</strong><span>Toutes destinations</span></a>')
-    else:
-        cards.append('<a href="best-destinations-weather-ranking-2026.html" class="related-card"><strong>🌍 World ranking 2026</strong><span>All destinations</span></a>')
-    return f'<div class="section"><div class="eyebrow">{"Explorer aussi" if is_fr else "Also explore"}</div><h2 class="sec-title">{"Autres classements" if is_fr else "Other rankings"}</h2><div class="related-pages">{"".join(cards)}</div></div>'
+    cards.append(f'<a href="{pil["world_ranking_url"]}" class="related-card"><strong>{pil["world_ranking_label"]}</strong><span>{pil["world_ranking_sub"]}</span></a>')
+    return f'<div class="section"><div class="eyebrow">{pil["also_explore"]}</div><h2 class="sec-title">{pil["other_rankings"]}</h2><div class="related-pages">{"".join(cards)}</div></div>'
 
 
 def generate_page(mi, lang, dests, climate):
     """Generate one pillar page for month mi (0-indexed) in given language."""
-    is_fr = lang == 'fr'
-    month_name = MONTHS_FR[mi] if is_fr else MONTHS_EN[mi]
-    month_slug = MONTH_SLUG_FR[mi] if is_fr else MONTH_SLUG_EN[mi]
-    season = SEASON_FR[mi] if is_fr else SEASON_EN[mi]
+    loc = load_locale(lang)
+    gen = loc['gen']
+    pil = loc['pilier']
+    is_fr = (lang == 'fr')
+    months = loc['months']
+    month_url = loc['month_url']
+    month_name = months[mi]
+    month_slug = month_url[mi]
+    season_map = {int(k): v for k, v in loc['seasons_map'].items()}
+    season = season_map.get(mi, '')
 
     entries = get_rankings(climate, dests, mi + 1)  # climate.csv is 1-indexed
     if not entries:
@@ -240,36 +225,40 @@ def generate_page(mi, lang, dests, climate):
     avg_temp = sum(x['tmax'] for x in entries[:10]) / 10
 
     # File paths
+    cross_loc = load_locale('en' if is_fr else 'fr')
+    cross_month_url = cross_loc['month_url']
+    cross_prefix = cross_loc['pilier']['pillar_prefix']
+
+    filename = f'{pil["pillar_prefix"]}{month_slug}.html'
+    alt_file = f'{cross_prefix}{cross_month_url[mi]}.html'
     if is_fr:
-        filename = f'ou-partir-en-{month_slug}.html'
         filepath = ROOT / filename
         canonical = f'https://bestdateweather.com/{filename}'
-        alt_file = f'where-to-go-in-{MONTH_SLUG_EN[mi]}.html'
         hreflang_fr = canonical
         hreflang_en = f'https://bestdateweather.com/en/{alt_file}'
     else:
-        filename = f'where-to-go-in-{month_slug}.html'
         filepath = ROOT / 'en' / filename
         canonical = f'https://bestdateweather.com/en/{filename}'
-        alt_file = f'ou-partir-en-{MONTH_SLUG_FR[mi]}.html'
         hreflang_fr = f'https://bestdateweather.com/{alt_file}'
         hreflang_en = canonical
 
-    # Content
+    # Month name for display (lowercase in FR)
+    mn_lc = month_name.lower() if loc['meta'].get('lowercase_months') else month_name
+
+    # Content — keep is_fr for complex text blocks
     if is_fr:
-        title = f"Où partir en {month_name.lower()} {YEAR} ? Top {TOP_N} destinations météo"
-        desc = (f"Où partir en {month_name.lower()} {YEAR} ? Classement des {TOP_N} meilleures destinations "
+        title = f"Où partir en {mn_lc} {YEAR} ? Top {TOP_N} destinations météo"
+        desc = (f"Où partir en {mn_lc} {YEAR} ? Classement des {TOP_N} meilleures destinations "
                 f"par score météo. N°1 : {top['nom_bare']} ({top['score']:.1f}/10, {top['tmax']:.0f}°C). "
                 f"Données 10 ans Open-Meteo.")
-        h1 = f"Où partir en <em>{month_name.lower()}</em> ?"
-        hero_sub = (f"Les {TOP_N} meilleures destinations météo pour {month_name.lower()} {YEAR}, "
+        h1 = f"Où partir en <em>{mn_lc}</em> ?"
+        hero_sub = (f"Les {TOP_N} meilleures destinations météo pour {mn_lc} {YEAR}, "
                     f"classées par score climatique sur 10 ans de données.")
         sec_eyebrow = f"Classement {month_name} {YEAR}"
-        sec_title = f"Top {TOP_N} destinations en {month_name.lower()}"
+        sec_title = f"Top {TOP_N} destinations en {mn_lc}"
         sec_intro = (f"Score moyen du top 10 : <strong>{avg_score:.1f}/10</strong> · "
                      f"Température moyenne : <strong>{avg_temp:.0f}°C</strong>")
-        cta_text = f"🎯 Choisir une date précise pour votre voyage en {month_name.lower()}"
-        cta_href = "index.html"
+        cta_text = f"🎯 Choisir une date précise pour votre voyage en {mn_lc}"
     else:
         title = f"Where to Go in {month_name} {YEAR} — Top {TOP_N} Weather Destinations"
         desc = (f"Where to go in {month_name} {YEAR}? Top {TOP_N} destinations ranked by weather score. "
@@ -283,23 +272,24 @@ def generate_page(mi, lang, dests, climate):
         sec_intro = (f"Top 10 average score: <strong>{avg_score:.1f}/10</strong> · "
                      f"Average temperature: <strong>{avg_temp:.0f}°C</strong>")
         cta_text = f"🎯 Choose a specific date for your {month_name} trip"
-        cta_href = "app.html"
 
-    table = build_table(entries, lang, mi)
-    month_nav = build_month_nav(mi, lang)
-    related = build_related(mi, lang)
+    cta_href = gen['home_url']
+
+    table = build_table(entries, loc, mi)
+    month_nav = build_month_nav(mi, loc)
+    related = build_related(mi, loc)
 
     # Schema.org
+    breadcrumb_name = pil['where_to_go_tpl'].format(month=mn_lc)
     breadcrumb = json.dumps({
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
             {"@type": "ListItem", "position": 1,
-             "name": "Accueil" if is_fr else "Home",
-             "item": "https://bestdateweather.com/" if is_fr else "https://bestdateweather.com/en/app.html"},
+             "name": loc['labels']['breadcrumb_home'],
+             "item": loc['meta']['schema_home_url']},
             {"@type": "ListItem", "position": 2,
-             "name": f"{'Où partir en' if is_fr else 'Where to go in'} {month_name.lower() if is_fr else month_name}",
-             "item": canonical}
+             "name": breadcrumb_name, "item": canonical}
         ]
     }, ensure_ascii=False)
 
@@ -313,23 +303,25 @@ def generate_page(mi, lang, dests, climate):
                 "@type": "ListItem",
                 "position": i + 1,
                 "name": entry['nom_bare'] if is_fr else entry['nom_en'],
-                "url": (f"https://bestdateweather.com/{entry['slug_fr']}-meteo-{MONTH_URL_FR[mi]}.html" if is_fr
-                        else f"https://bestdateweather.com/en/{entry['slug_en']}-weather-{MONTH_URL_EN[mi]}.html")
+                "url": loc['meta']['canonical_prefix'] + gen['monthly_href_tpl'].format(
+                    slug=entry['slug_fr'] if is_fr else entry['slug_en'],
+                    month_slug=month_url[mi])
             }
             for i, entry in enumerate(entries)
         ]
     }, ensure_ascii=False)
 
+    # FAQ — keep is_fr for complex content
     faq_items = []
     if is_fr:
         faq_items.append({"@type": "Question",
-            "name": f"Quelle est la meilleure destination en {month_name.lower()} ?",
+            "name": f"Quelle est la meilleure destination en {mn_lc} ?",
             "acceptedAnswer": {"@type": "Answer",
-                "text": f"{top['nom_bare']} est la destination n°1 en {month_name.lower()} avec un score de {top['score']:.1f}/10 et {top['tmax']:.0f}°C."}})
+                "text": f"{top['nom_bare']} est la destination n°1 en {mn_lc} avec un score de {top['score']:.1f}/10 et {top['tmax']:.0f}°C."}})
         faq_items.append({"@type": "Question",
-            "name": f"Où partir au soleil en {month_name.lower()} ?",
+            "name": f"Où partir au soleil en {mn_lc} ?",
             "acceptedAnswer": {"@type": "Answer",
-                "text": f"Les destinations les plus ensoleillées en {month_name.lower()} sont {entries[0]['nom_bare']}, {entries[1]['nom_bare']} et {entries[2]['nom_bare']}, avec des scores de {entries[0]['score']:.1f} à {entries[2]['score']:.1f}/10."}})
+                "text": f"Les destinations les plus ensoleillées en {mn_lc} sont {entries[0]['nom_bare']}, {entries[1]['nom_bare']} et {entries[2]['nom_bare']}, avec des scores de {entries[0]['score']:.1f} à {entries[2]['score']:.1f}/10."}})
     else:
         faq_items.append({"@type": "Question",
             "name": f"What is the best destination in {month_name}?",
@@ -346,22 +338,15 @@ def generate_page(mi, lang, dests, climate):
     }, ensure_ascii=False)
 
     # Footer
-    if is_fr:
-        footer = f"""<footer>
+    alt_link = f'{gen["alt_link_prefix"]}{alt_file}'
+    footer = f"""<footer>
 <p style="font-weight:700;margin-bottom:8px">bestdateweather.com</p>
-<p><a href="https://open-meteo.com/" rel="noopener">Données Open-Meteo</a> · ECMWF, DWD, NOAA · CC BY 4.0</p>
-<p style="margin-top:8px"><a href="index.html">Application météo</a> · <a href="en/{alt_file}"><img src="flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English</a></p>
-<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="mentions-legales.html">Mentions légales</a></p>
-</footer>"""
-    else:
-        footer = f"""<footer>
-<p style="font-weight:700;margin-bottom:8px">bestdateweather.com</p>
-<p><a href="https://open-meteo.com/" rel="noopener">Data by Open-Meteo</a> · ECMWF, DWD, NOAA · CC BY 4.0</p>
-<p style="margin-top:8px"><a href="app.html">Weather app</a> · <a href="../{alt_file}"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a></p>
-<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="../mentions-legales.html">Legal</a></p>
+<p><a href="https://open-meteo.com/" rel="noopener">{gen["data_credit"]}</a> · ECMWF, DWD, NOAA · CC BY 4.0</p>
+<p style="margin-top:8px"><a href="{gen["home_url"]}">{gen["home_label"]}</a> · <a href="{alt_link}"><img src="{gen["alt_flag_path"]}" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> {gen["alt_lang_label"]}</a></p>
+<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="{gen["legal_url"]}" style="color:rgba(255,255,255,.7)">{gen["legal_label"]}</a></p>
 </footer>"""
 
-    flag_prefix = '' if is_fr else '../'
+    flag_prefix = gen['asset_prefix']
 
     page_html = f"""<!DOCTYPE html>
 <html lang="{lang}">
@@ -385,20 +370,20 @@ def generate_page(mi, lang, dests, climate):
 </head>
 <body>
 <nav style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;max-width:900px;margin:0 auto">
- <a href="{"index.html" if is_fr else "app.html"}" style="text-decoration:none;font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#1a2332">Best<em style="color:#d4a853;font-style:italic">Date</em>Weather</a>
+ <a href="{gen["home_url"]}" style="text-decoration:none;font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#1a2332">Best<em style="color:#d4a853;font-style:italic">Date</em>Weather</a>
  <div style="display:flex;align-items:center;gap:12px">
-  <button class="nav-share" onclick="shareThis()" aria-label="{"Partager" if is_fr else "Share"}" style="background:none;border:1.5px solid #e8e0d0;border-radius:8px;padding:8px 10px;cursor:pointer;align-items:center;color:#5a6c7d"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
-  <a href="{"index.html" if is_fr else "app.html"}" style="display:inline-block;background:#d4a853;color:white;font-size:12px;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none">{"Tester l'application" if is_fr else "Try the app"}</a>
+  <button class="nav-share" onclick="shareThis()" aria-label="{gen["share_label"]}" style="background:none;border:1.5px solid #e8e0d0;border-radius:8px;padding:8px 10px;cursor:pointer;align-items:center;color:#5a6c7d"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+  <a href="{gen["home_url"]}" style="display:inline-block;background:#d4a853;color:white;font-size:12px;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none">{gen["try_app_label"]}</a>
  </div>
 </nav>
 <header class="hero">
-<div class="hero-eyebrow">{"Étude climatique · 10 ans de données · " if is_fr else "Climate study · 10 years of data · "}{YEAR}</div>
+<div class="hero-eyebrow">{pil["hero_eyebrow_prefix"]}{YEAR}</div>
 <h1 class="hero-title">{h1}</h1>
 <p class="hero-sub">{hero_sub}</p>
 <div class="hero-stats">
-<div class="hstat"><span class="hstat-val">{top['score']:.1f}</span><span class="hstat-lbl">{"Score n°1" if is_fr else "#1 Score"}</span></div>
+<div class="hstat"><span class="hstat-val">{top['score']:.1f}</span><span class="hstat-lbl">{pil["score_n1"]}</span></div>
 <div class="hstat"><span class="hstat-val">{TOP_N}</span><span class="hstat-lbl">Destinations</span></div>
-<div class="hstat"><span class="hstat-val">{avg_temp:.0f}°C</span><span class="hstat-lbl">{"Moy. top 10" if is_fr else "Top 10 avg"}</span></div>
+<div class="hstat"><span class="hstat-val">{avg_temp:.0f}°C</span><span class="hstat-lbl">{pil["top10_avg"]}</span></div>
 </div>
 </header>
 <main class="page">
@@ -413,7 +398,7 @@ def generate_page(mi, lang, dests, climate):
 {related}
 </main>
 {footer}
-<script src="{"js/share.js" if is_fr else "../js/share.js"}"></script>
+<script src="{gen['asset_prefix']}js/share.js"></script>
 </body></html>"""
 
     filepath.parent.mkdir(parents=True, exist_ok=True)
