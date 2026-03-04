@@ -180,6 +180,13 @@ def build_config(lang):
     cfg['monthly_oui_si'] = loc.get('monthly_oui_si', {})
     cfg['context_paragraphs'] = loc.get('context_paragraphs', {})
 
+    # Content templates (monthly titles/descs/h1s)
+    cfg['monthly_titles'] = loc.get('monthly_titles', [])
+    cfg['monthly_descs'] = loc.get('monthly_descs', [])
+    cfg['monthly_h1s'] = loc.get('monthly_h1s', [])
+    cfg['monthly_article_headline_tpl'] = loc.get('monthly_article_headline_tpl', '')
+    cfg['monthly_article_desc_tpl'] = loc.get('monthly_article_desc_tpl', '')
+
     return cfg
 
 

@@ -315,7 +315,7 @@
     "next_label": "Next month →",
     "annual_label": "📅 Annual view",
     "annual_text": "All months",
-    "annual_best_tpl": "Best: {month}",
+    "annual_best_tpl": "Best: {best_month}",
     "sec_similar": "Also explore",
     "sec_similar_title_tpl": "Similar destinations in {month}",
     "sec_rankings": "Weather rankings",
@@ -334,7 +334,31 @@
     "sun_label": "Sun",
     "temp_section_label": "Temperatures",
     "rain_section_label": "Precipitation",
-    "sun_section_label": "Sunshine"
+    "sun_section_label": "Sunshine",
+    "sec_summary": "Month summary",
+    "sec_summary_title_tpl": "{nom} weather in {month}",
+    "bar_rain": "Rain",
+    "bar_temp": "Temperature",
+    "bar_sun": "Sunshine",
+    "sec_nav": "Browse by month",
+    "sec_nav_title_tpl": "All months for {nom}",
+    "th_month": "Month",
+    "th_tmin": "Min °C",
+    "th_tmax": "Max °C",
+    "th_rain": "Rain %",
+    "th_precip": "Precip mm",
+    "th_sun": "Sun h/d",
+    "th_score": "Score",
+    "th_ski": "Ski score 🎿",
+    "legend_note": "◀ Current month · Source Open-Meteo · 10 years",
+    "src_link": "methodology.html",
+    "kicker_tpl": "Open-Meteo · 10 years · 12 months compared · {lat}°N {lon}°{dir}",
+    "og_title_tpl": "{nom} in {month} — {tmax}°C, {rain}% rain",
+    "bk_cta_tpl": "Find places to stay in {nom} in {month}",
+    "sim_label": "Explore also",
+    "verdict_period_rec": "Recommended period.",
+    "verdict_period_avg": "Average period.",
+    "verdict_period_bad": "Not recommended."
   },
   "narratives": {
     "tropical_rainy": "In {month}, {name} is in the middle of the rainy season ({rain}% rainy days). Tropical showers are usually short but intense — pack a light raincoat.",
@@ -564,5 +588,24 @@
     "score_top": "This is one of the best times of year to visit {nom}.",
     "score_good": "A good balance between weather and crowds, even if {best_month} ({best_score}/10) remains theoretically better.",
     "score_fair": "Not the best window, but acceptable if dates are constrained. {best_month} ({best_score}/10) is significantly better if possible."
-  }
+  },
+  "monthly_titles": [
+    "{nom} in {month}: weather, rain ({rain}%) and should you go? [{year}]",
+    "{nom} weather in {month} [{year}] — {tmax}°C, {rain}% rain",
+    "Visit {nom} in {month}? Score {score}/10 [{year}]"
+  ],
+  "monthly_descs": [
+    "{nom} weather in {month}: {tmax}°C max, {rain}% rainy days, {sun}h sunshine/day. Score {score}/10. Based on 10 years of Open-Meteo data.",
+    "{nom} in {month}: {tmax}°C, {sun}h sunshine, {rain}% rain. {verdict} Score {score}/10.",
+    "Should you visit {nom} in {month}? {tmax}°C and {rain}% rain — weather score {score}/10 based on 10 years of data.",
+    "{nom} in {month}: {sun}h sunshine, {tmin}–{tmax}°C. {verdict} Climate analysed from 10 years of ERA5 data.",
+    "{tmax}°C and {rain}% rain in {month} in {nom}. {sun}h sunshine — score {score}/10."
+  ],
+  "monthly_h1s": [
+    "{nom} weather<br/><em>in {month}</em>",
+    "{nom} in {month}<br/><em>what's the weather like?</em>",
+    "Visit {nom}<br/><em>in {month}?</em>"
+  ],
+  "monthly_article_headline_tpl": "{nom} weather in {month} — Temperature, rain and tips",
+  "monthly_article_desc_tpl": "{nom} weather in {month}: {tmax}°C, {rain}% rainy days. Score {score}/10."
 }

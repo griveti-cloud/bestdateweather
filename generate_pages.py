@@ -889,10 +889,14 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     # Template vars for locale lookups
     tpl = dict(month=month, month_lc=mlc, nom=nom, nom_bare=nom_bare, prep=prep,
+               name=nom, year=YEAR, tmin=m['tmin'],
                best_month=best_month, best_month_lc=month_lc(C, best_month),
                tmax=m['tmax'], rain=m['rain_pct'], sun=m['sun_h'],
-               score=f"{score:.1f}", best_score=best_score,
-               diff=round(best_score - score, 1))
+               score=f"{score:.1f}", best_score=f"{best_score:.1f}",
+               diff=round(best_score - score, 1),
+               lat=f"{lat:.2f}", lon=f"{abs(lon):.2f}",
+               dir="E" if lon >= 0 else "W",
+               annual_link=annual_url(C, slug))
 
     # ── Hero sub ──
     tier = 'excellent' if score >= 8.5 else ('good' if score >= 7.0 else 'poor')
@@ -1085,20 +1089,13 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         ]
     }, ensure_ascii=False)
 
-    if is_fr:
-        canonical = f"https://bestdateweather.com/{slug_fr}-meteo-{m_url}.html"
-        cross_url = f"https://bestdateweather.com/en/{slug_en}-weather-{MONTH_URL[mi]}.html"
-        hreflang_fr = canonical
-        hreflang_en = cross_url
-        article_headline = f"Météo {prep} {nom_bare} en {mlc} — Températures, pluie et conseils"
-        article_desc = f"Météo {prep} {nom_bare} en {mlc} : {m['tmax']}°C, {m['rain_pct']}% de jours pluvieux. Score {score:.1f}/10."
-    else:
-        canonical = f"https://bestdateweather.com/en/{slug_en}-weather-{m_url}.html"
-        cross_url = f"https://bestdateweather.com/{slug_fr}-meteo-{MONTH_URL_FR[mi]}.html"
-        hreflang_fr = cross_url
-        hreflang_en = canonical
-        article_headline = f"{nom} weather in {month} — Temperature, rain and tips"
-        article_desc = f"{nom} weather in {month}: {m['tmax']}°C, {m['rain_pct']}% rainy days. Score {score:.1f}/10."
+    canonical = C['canonical_prefix'] + monthly_url(C, slug, mi)
+    cross_url = C['base_url_cross'] + monthly_url_cross(C, dest, mi)
+    _hreflangs = {C['html_lang']: canonical, ('en' if is_fr else 'fr'): cross_url}
+    hreflang_fr = _hreflangs['fr']
+    hreflang_en = _hreflangs['en']
+    article_headline = C['monthly_article_headline_tpl'].format(**tpl)
+    article_desc = C['monthly_article_desc_tpl'].format(**tpl)
 
     article_schema = json.dumps({
         "@context": "https://schema.org", "@type": "Article",
@@ -1110,85 +1107,28 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         "mainEntityOfPage": {"@type": "WebPage", "@id": canonical}
     }, ensure_ascii=False)
 
-    if is_fr:
-        bc_items = [
-            {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bestdateweather.com/"},
-            {"@type": "ListItem", "position": 2, "name": nom_bare, "item": f"https://bestdateweather.com/meilleure-periode-{slug_fr}.html"},
-            {"@type": "ListItem", "position": 3, "name": month, "item": canonical}
-        ]
-    else:
-        bc_items = [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://bestdateweather.com/en/"},
-            {"@type": "ListItem", "position": 2, "name": nom, "item": f"https://bestdateweather.com/en/best-time-to-visit-{slug_en}.html"},
-            {"@type": "ListItem", "position": 3, "name": month, "item": canonical}
-        ]
+    bc_items = [
+        {"@type": "ListItem", "position": 1, "name": C['lbl_breadcrumb_home'], "item": C['base_url']},
+        {"@type": "ListItem", "position": 2, "name": nom, "item": C['canonical_prefix'] + annual_url(C, slug)},
+        {"@type": "ListItem", "position": 3, "name": month, "item": canonical}
+    ]
     breadcrumb_schema = json.dumps({
         "@context": "https://schema.org", "@type": "BreadcrumbList",
         "itemListElement": bc_items
     }, ensure_ascii=False)
 
-    # ── Title / Desc / H1 (5 desc variants, 3 title variants) ──
+    # ── Title / Desc / H1 (from locale template arrays) ──
     title_var = hash(slug_fr + str(mi)) % 3
     desc_var  = hash(slug_fr + str(mi) + 'd') % 5
     h1_var    = hash(slug_fr + str(mi) + 'h1') % 3
 
-    _verdict_fr = 'Période recommandée.' if score >= 7.5 else 'Période acceptable.' if score >= 5.5 else 'Période déconseillée.'
-    _verdict_en = 'Recommended period.' if score >= 7.5 else 'Average period.' if score >= 5.5 else 'Not recommended.'
+    _verdict = C['lbl_m_verdict_period_rec'] if score >= 7.5 else C['lbl_m_verdict_period_avg'] if score >= 5.5 else C['lbl_m_verdict_period_bad']
+    tpl['verdict'] = _verdict
 
-    if is_fr:
-        if title_var == 0:
-            title = f"{nom_bare} en {mlc} : météo, pluie ({m['rain_pct']}%) et faut-il partir ? [{YEAR}]"
-        elif title_var == 1:
-            title = f"Météo {prep} {nom_bare} en {mlc} [{YEAR}] — {m['tmax']}°C, {m['rain_pct']}% pluie"
-        else:
-            title = f"Partir {prep} {nom_bare} en {mlc} ? Score {score:.1f}/10 [{YEAR}]"
-
-        if desc_var == 0:
-            desc = f"Météo {prep} {nom_bare} en {mlc} : {m['tmax']}°C max, {m['rain_pct']}% de jours pluvieux, {m['sun_h']}h de soleil/jour. Score {score:.1f}/10. Données 10 ans Open-Meteo."
-        elif desc_var == 1:
-            desc = f"{nom_bare} en {mlc} : {m['tmax']}°C, {m['sun_h']}h de soleil, {m['rain_pct']}% de pluie. {_verdict_fr} Score {score:.1f}/10."
-        elif desc_var == 2:
-            desc = f"Faut-il partir {prep} {nom_bare} en {mlc} ? {m['tmax']}°C et {m['rain_pct']}% de pluie — score météo {score:.1f}/10 sur 10 ans de données."
-        elif desc_var == 3:
-            desc = f"{nom_bare} en {mlc} : {m['sun_h']}h de soleil, {m['tmin']}–{m['tmax']}°C. {_verdict_fr} Climat analysé sur 10 ans de données ERA5."
-        else:
-            desc = f"{m['tmax']}°C et {m['rain_pct']}% de pluie en {mlc} {prep} {nom_bare}. {m['sun_h']}h d'ensoleillement — score {score:.1f}/10."
-
-        if h1_var == 0:
-            h1_text = f"Météo {prep} {nom_bare}<br/><em>en {mlc}</em>"
-        elif h1_var == 1:
-            h1_text = f"{nom_bare} en {mlc}<br/><em>quel temps fait-il ?</em>"
-        else:
-            h1_text = f"Partir {prep} {nom_bare}<br/><em>en {mlc} ?</em>"
-
-        og_title = f"Météo {prep} {nom_bare} en {mlc} — {m['tmax']}°C, {m['rain_pct']}% pluie"
-    else:
-        if title_var == 0:
-            title = f"{nom} in {month}: weather, rain ({m['rain_pct']}%) and should you go? [{YEAR}]"
-        elif title_var == 1:
-            title = f"{nom} weather in {month} [{YEAR}] — {m['tmax']}°C, {m['rain_pct']}% rain"
-        else:
-            title = f"Visit {nom} in {month}? Score {score:.1f}/10 [{YEAR}]"
-
-        if desc_var == 0:
-            desc = f"{nom} weather in {month}: {m['tmax']}°C max, {m['rain_pct']}% rainy days, {m['sun_h']}h sunshine/day. Score {score:.1f}/10. Based on 10 years of Open-Meteo data."
-        elif desc_var == 1:
-            desc = f"{nom} in {month}: {m['tmax']}°C, {m['sun_h']}h sunshine, {m['rain_pct']}% rain. {_verdict_en} Score {score:.1f}/10."
-        elif desc_var == 2:
-            desc = f"Should you visit {nom} in {month}? {m['tmax']}°C and {m['rain_pct']}% rain — weather score {score:.1f}/10 based on 10 years of data."
-        elif desc_var == 3:
-            desc = f"{nom} in {month}: {m['sun_h']}h sunshine, {m['tmin']}–{m['tmax']}°C. {_verdict_en} Climate analysed from 10 years of ERA5 data."
-        else:
-            desc = f"{m['tmax']}°C and {m['rain_pct']}% rain in {month} in {nom}. {m['sun_h']}h sunshine — score {score:.1f}/10."
-
-        if h1_var == 0:
-            h1_text = f"{nom} weather<br/><em>in {month}</em>"
-        elif h1_var == 1:
-            h1_text = f"{nom} in {month}<br/><em>what's the weather like?</em>"
-        else:
-            h1_text = f"Visit {nom}<br/><em>in {month}?</em>"
-
-        og_title = f"{nom} in {month} — {m['tmax']}°C, {m['rain_pct']}% rain"
+    title   = C['monthly_titles'][title_var].format(**tpl)
+    desc    = C['monthly_descs'][desc_var].format(**tpl)
+    h1_text = C['monthly_h1s'][h1_var].format(**tpl)
+    og_title = C['lbl_m_og_title_tpl'].format(**tpl)
 
     # ── Cross-linking similar destinations ──
     climate_for_sim = {}
@@ -1199,124 +1139,102 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     sim_cards_html = _build_sim_cards(cfg, similarities.get(slug_fr, [])[:3], all_dests, climate_for_sim, mi)
 
-    if is_fr:
-        sim_section_title = f"Destinations similaires en {mlc}"
-        sim_section_label = "Explorer aussi"
-    else:
-        sim_section_title = f"Similar destinations in {month}"
-        sim_section_label = "Explore also"
+    sim_section_title = C['lbl_m_sec_similar_title_tpl'].format(**tpl)
+    sim_section_label = C['lbl_m_sim_label']
 
     # Pillar + comparison links
-    if is_fr:
-        pillar_link = (f'<a href="ou-partir-en-{MONTH_URL_FR[mi]}.html" class="link-card">'
-                       f'📅 Où partir en {mlc} — top 25</a>')
-    else:
-        pillar_link = (f'<a href="where-to-go-in-{MONTH_URL[mi]}.html" class="link-card">'
-                       f'📅 Where to go in {month} — top 25</a>')
-    comp_links = _build_comp_cards_monthly(cfg, slug_fr, nom if not is_fr else nom_bare, comparison_index, all_dests) if comparison_index else ''
+    pillar_link = (f'<a href="{pillar_url(C, mi)}" class="link-card">'
+                   f'{C["lbl_pillar_tpl"].format(**tpl)}</a>')
+    comp_links = _build_comp_cards_monthly(cfg, slug_fr, nom, comparison_index, all_dests) if comparison_index else ''
 
     # ── Context paragraph ──
-    event_text = (events or {}).get((slug_fr, mi+1), {}).get('fr' if is_fr else 'en')
-    ctx_para = context_paragraph(cfg, nom if not is_fr else nom_bare,
+    event_text = (events or {}).get((slug_fr, mi+1), {}).get(C['lang'])
+    ctx_para = context_paragraph(cfg, nom,
                                  nom_f, m, mi, score, best_month, best_score,
                                  dest.get('tropical', '0') == '1', event_text)
 
     # ── Labels ──
-    lang = 'fr' if is_fr else 'en'
+    # ── Labels (built from locale config) ──
     L = {
-        'fr': {
-            'html_lang': 'fr',
-            'hstat_tmax': 'Température max', 'hstat_rain': 'Jours pluvieux', 'hstat_sun': 'Soleil / jour',
-            'sec_summary': 'Résumé du mois', 'sec_summary_title': f'Météo {prep} {nom_bare} en {mlc}',
-            'qf_tminmax': 'Température min / max', 'qf_rain': 'Jours pluvieux', 'qf_rain_unit': 'des jours',
-            'qf_sun': 'Soleil', 'qf_sun_unit': 'par jour en moyenne', 'qf_season': 'Saison',
-            'qf_score': 'Score météo', 'qf_best': 'Meilleur mois',
-            'sec_verdict': 'Décision rapide', 'sec_verdict_title': f'Faut-il partir {prep} {nom_bare} en {mlc} ?',
-            'yes_lbl': '✅ Oui si :', 'no_lbl': '❌ Non si :',
-            'bar_rain': 'Pluie', 'bar_temp': 'Température', 'bar_sun': 'Soleil',
-            'verdict_intro': 'Notre avis :',
-            'sec_activity': 'Selon votre projet', 'sec_activity_title': f'{nom_bare} en {mlc} selon votre type de voyage',
-            'act_city': 'City-trip / culture', 'act_ext': 'Activités extérieures', 'act_beach': 'Plage / baignade', 'act_budget': 'Budget',
-            'sec_context': 'Contexte local', 'sec_context_title': f"À quoi s'attendre en {mlc}",
-            'sec_nav': 'Naviguer par mois', 'sec_nav_title': f'Tous les mois {prep} {nom_bare}',
-            'sec_table': 'Tableau annuel', 'sec_table_title': 'Comparaison mois par mois',
-            'th_month': 'Mois', 'th_tmin': 'T° min', 'th_tmax': 'T° max', 'th_rain': 'Pluie %',
-            'th_precip': 'Précip. mm', 'th_sun': 'Soleil h/j', 'th_score': 'Score', 'th_ski': 'Score ski 🎿',
-            'legend_ideal': 'Idéal', 'legend_ok': 'Acceptable', 'legend_bad': 'Défavorable',
-            'legend_note': '◀ Mois consulté · Source Open-Meteo · 10 ans',
-            'src_label': '📊 Source des données',
-            'src_text': f'Données calculées sur <strong>10 ans de relevés ERA5</strong> via Open-Meteo, avec ajustement saisonnier ECMWF. En {mlc}, {nom_bare} affiche en moyenne <strong>{m["tmax"]}°C</strong>, {m["rain_pct"]}% de jours pluvieux et {m["sun_h"]}h de soleil par jour. Score météo global du mois : <strong>{score:.1f}/10</strong>.',
-            'src_link_text': 'Voir la méthodologie →', 'src_link': 'methodologie.html',
-            'sec_compare': 'Comparaison', 'sec_compare_title': f'{month} vs {best_month} (meilleur mois)',
-            'compare_intro': f'Le meilleur mois est <strong><a href="meilleure-periode-{slug_fr}.html" class="txt-inherit">{best_month}</a></strong> (score {best_score:.1f}/10). Différence :',
-            'cmp_tmax': 'Température max', 'cmp_rain': 'Jours de pluie', 'cmp_sun': 'Ensoleillement',
-            'sec_faq': 'Questions fréquentes', 'sec_faq_title': f'FAQ — {nom_bare} en {mlc}',
-            'prev_label': '← Mois précédent', 'next_label': 'Mois suivant →',
-            'annual_label': '📅 Vue annuelle', 'annual_text': 'Tous les mois', 'annual_best': f'Meilleur : {best_month.lower()}',
-            'sec_rankings': 'Classements météo', 'sec_rankings_title': 'Comparer les destinations par météo',
-            'rank_links': [
-                ('classement-destinations-meteo-2026.html', '🌍 Classement mondial 2026'),
-                ('classement-destinations-meteo-ete-2026.html', '🌞 Meilleures destinations été'),
-                ('classement-destinations-meteo-hiver-2026.html', '🌴 Destinations soleil hiver'),
-            ],
-            'sec_guides': 'Guides & comparatifs', 'sec_guides_title': 'Explorer ou comparer',
-            'cta_title': '📅 Prévisions actualisées — 12 prochains mois',
-            'cta_text': 'Données temps réel avec corrections saisonnières ECMWF · mise à jour quotidienne',
-            'cta_btn': 'Tester l\'application météo', 'cta_link': 'index.html',
-            'kicker': f'Open-Meteo · 10 ans · 12 mois comparés · {lat:.2f}°N {abs(lon):.2f}°{"E" if lon >= 0 else "W"}',
-        },
-        'en': {
-            'html_lang': 'en',
-            'hstat_tmax': 'Max temperature', 'hstat_rain': 'Rainy days', 'hstat_sun': 'Sunshine / day',
-            'sec_summary': 'Month summary', 'sec_summary_title': f'{nom} weather in {month}',
-            'qf_tminmax': 'Temperature min / max', 'qf_rain': 'Rainy days', 'qf_rain_unit': 'of days',
-            'qf_sun': 'Sunshine', 'qf_sun_unit': 'per day average', 'qf_season': 'Season',
-            'qf_score': 'Weather score', 'qf_best': 'Best month',
-            'sec_verdict': 'Quick verdict', 'sec_verdict_title': f'Should you visit {nom} in {month}?',
-            'yes_lbl': '✅ Yes if:', 'no_lbl': '❌ No if:',
-            'bar_rain': 'Rain', 'bar_temp': 'Temperature', 'bar_sun': 'Sunshine',
-            'verdict_intro': 'Our verdict:',
-            'sec_activity': 'By trip type', 'sec_activity_title': f'{nom} in {month} by trip type',
-            'act_city': 'City-trip / culture', 'act_ext': 'Outdoor activities', 'act_beach': 'Beach / swimming', 'act_budget': 'Budget',
-            'sec_context': 'Local context', 'sec_context_title': f'What to expect in {month}',
-            'sec_nav': 'Browse by month', 'sec_nav_title': f'All months for {nom}',
-            'sec_table': 'Annual table', 'sec_table_title': 'Month-by-month comparison',
-            'th_month': 'Month', 'th_tmin': 'Min °C', 'th_tmax': 'Max °C', 'th_rain': 'Rain %',
-            'th_precip': 'Precip mm', 'th_sun': 'Sun h/d', 'th_score': 'Score', 'th_ski': 'Ski score 🎿',
-            'legend_ideal': 'Ideal', 'legend_ok': 'Acceptable', 'legend_bad': 'Unfavourable',
-            'legend_note': '◀ Current month · Source Open-Meteo · 10 years',
-            'src_label': '📊 Data source',
-            'src_text': f'Calculated from <strong>10 years of ERA5 records</strong> via Open-Meteo, with ECMWF seasonal adjustment. In {month}, {nom} averages <strong>{m["tmax"]}°C</strong>, {m["rain_pct"]}% rainy days and {m["sun_h"]}h sunshine per day. Overall weather score: <strong>{score:.1f}/10</strong>.',
-            'src_link_text': 'See methodology →', 'src_link': 'methodology.html',
-            'sec_compare': 'Comparison', 'sec_compare_title': f'{month} vs {best_month} (best month)',
-            'compare_intro': f'The best month is <strong><a href="best-time-to-visit-{slug_en}.html" class="txt-inherit">{best_month}</a></strong> (score {best_score:.1f}/10). Difference:',
-            'cmp_tmax': 'Max temperature', 'cmp_rain': 'Rainy days', 'cmp_sun': 'Sunshine',
-            'sec_faq': 'Frequently asked', 'sec_faq_title': f'FAQ — {nom} in {month}',
-            'prev_label': '← Previous month', 'next_label': 'Next month →',
-            'annual_label': '📅 Annual view', 'annual_text': 'All months', 'annual_best': f'Best: {best_month}',
-            'sec_rankings': 'Weather rankings', 'sec_rankings_title': 'Compare destinations by weather',
-            'rank_links': [
-                ('best-weather-destinations-2026.html', '🌍 World ranking 2026'),
-                ('best-summer-destinations-2026.html', '🌞 Best summer destinations'),
-                ('best-winter-sun-destinations-2026.html', '🌴 Winter sun destinations'),
-            ],
-            'sec_guides': 'Guides & comparisons', 'sec_guides_title': 'Explore or compare',
-            'cta_title': '📅 Live forecast — next 12 months',
-            'cta_text': 'Real-time data with ECMWF seasonal corrections · updated daily',
-            'cta_btn': 'Try the weather app', 'cta_link': 'app.html',
-            'kicker': f'Open-Meteo · 10 years · 12 months compared · {lat:.2f}°N {abs(lon):.2f}°{"E" if lon >= 0 else "W"}',
-        }
-    }[lang]
+        'html_lang':      C['html_lang'],
+        'hstat_tmax':     C['lbl_m_hstat_tmax'],
+        'hstat_rain':     C['lbl_m_hstat_rain'],
+        'hstat_sun':      C['lbl_m_hstat_sun'],
+        'sec_summary':    C['lbl_m_sec_summary'],
+        'sec_summary_title': C['lbl_m_sec_summary_title_tpl'].format(**tpl),
+        'qf_tminmax':     C['lbl_m_qf_tminmax'],
+        'qf_rain':        C['lbl_m_qf_rain'],
+        'qf_rain_unit':   C['lbl_m_rain_unit'],
+        'qf_sun':         C['lbl_m_qf_sun'],
+        'qf_sun_unit':    C['lbl_m_sun_unit'],
+        'qf_season':      C['lbl_m_qf_season'],
+        'qf_score':       C['lbl_m_qf_score'],
+        'qf_best':        C['lbl_m_qf_best_month'],
+        'sec_verdict':    C['lbl_m_sec_decision'],
+        'sec_verdict_title': C['lbl_m_sec_decision_title_tpl'].format(**tpl),
+        'yes_lbl':        C['lbl_m_yes_if'],
+        'no_lbl':         C['lbl_m_no_if'],
+        'bar_rain':       C['lbl_m_bar_rain'],
+        'bar_temp':       C['lbl_m_bar_temp'],
+        'bar_sun':        C['lbl_m_bar_sun'],
+        'verdict_intro':  C['lbl_m_our_opinion'],
+        'sec_activity':   C['lbl_m_sec_activities'],
+        'sec_activity_title': C['lbl_m_sec_activities_title_tpl'].format(**tpl),
+        'act_city':       C['lbl_m_lbl_city'],
+        'act_ext':        C['lbl_m_lbl_ext'],
+        'act_beach':      C['lbl_m_lbl_beach'],
+        'act_budget':     C['lbl_m_lbl_budget'],
+        'sec_context':    C['lbl_m_sec_context'],
+        'sec_context_title': C['lbl_m_sec_context_title'].format(**tpl),
+        'sec_nav':        C['lbl_m_sec_nav'],
+        'sec_nav_title':  C['lbl_m_sec_nav_title_tpl'].format(**tpl),
+        'sec_table':      C['lbl_m_sec_table'],
+        'sec_table_title': C['lbl_m_sec_table_title'],
+        'th_month':       C['lbl_m_th_month'],
+        'th_tmin':        C['lbl_m_th_tmin'],
+        'th_tmax':        C['lbl_m_th_tmax'],
+        'th_rain':        C['lbl_m_th_rain'],
+        'th_precip':      C['lbl_m_th_precip'],
+        'th_sun':         C['lbl_m_th_sun'],
+        'th_score':       C['lbl_m_th_score'],
+        'th_ski':         C['lbl_m_th_ski'],
+        'legend_ideal':   C['table_legend_ideal'],
+        'legend_ok':      C['table_legend_fair'],
+        'legend_bad':     C['table_legend_off'],
+        'legend_note':    C['lbl_m_legend_note'],
+        'src_label':      C['lbl_m_src_label'],
+        'src_text':       C['lbl_m_src_text_tpl'].format(**tpl),
+        'src_link_text':  C['lbl_m_src_link_text'],
+        'src_link':       C['lbl_m_src_link'],
+        'sec_compare':    C['lbl_m_sec_compare'],
+        'sec_compare_title': C['lbl_m_sec_compare_title_tpl'].format(**tpl),
+        'compare_intro':  C['lbl_m_compare_intro_tpl'].format(**tpl),
+        'cmp_tmax':       C['lbl_m_cmp_tmax'],
+        'cmp_rain':       C['lbl_m_cmp_rain'],
+        'cmp_sun':        C['lbl_m_cmp_sun'],
+        'sec_faq':        C['lbl_m_sec_faq'],
+        'sec_faq_title':  C['lbl_m_sec_faq_title_tpl'].format(**tpl),
+        'prev_label':     C['lbl_m_prev_label'],
+        'next_label':     C['lbl_m_next_label'],
+        'annual_label':   C['lbl_m_annual_label'],
+        'annual_text':    C['lbl_m_annual_text'],
+        'annual_best':    C['lbl_m_annual_best_tpl'].format(**tpl),
+        'sec_rankings':   C['lbl_m_sec_rankings'],
+        'sec_rankings_title': C['lbl_m_sec_rankings_title'],
+        'rank_links':     C['rankings'],
+        'sec_guides':     C['lbl_m_sec_guides'],
+        'sec_guides_title': C['lbl_m_sec_guides_title'],
+        'cta_title':      C['lbl_m_cta_title'],
+        'cta_text':       C['lbl_m_cta_text'],
+        'cta_btn':        C['lbl_m_cta_btn'],
+        'cta_link':       C['lbl_m_cta_link'],
+        'kicker':         C['lbl_m_kicker_tpl'].format(**tpl),
+    }
 
     # ── Prev/Next URLs ──
-    if is_fr:
-        prev_url = f"{slug_fr}-meteo-{MONTH_URL_FR[prev_mi]}.html"
-        next_url = f"{slug_fr}-meteo-{MONTH_URL_FR[next_mi]}.html"
-        annual_link = f"meilleure-periode-{slug_fr}.html"
-    else:
-        prev_url = f"{slug_en}-weather-{MONTH_URL[prev_mi]}.html"
-        next_url = f"{slug_en}-weather-{MONTH_URL[next_mi]}.html"
-        annual_link = f"best-time-to-visit-{slug_en}.html"
+    prev_url = monthly_url(C, slug, prev_mi)
+    next_url = monthly_url(C, slug, next_mi)
+    annual_link = annual_url(C, slug)
 
     rank_links_html = ''.join(
         f'<a href="{url}" class="link-card">{label}</a>'
@@ -1338,10 +1256,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     if booking_id:
         bk_params += f"&dest_id={booking_id}&dest_type=city"
     bk_url = f"https://www.booking.com/{cfg['booking_domain']}?{bk_params}"
-    if is_fr:
-        bk_cta = f"Voir les h\u00e9bergements {prep} {nom_bare} en {mlc}"
-    else:
-        bk_cta = f"Find places to stay in {nom} in {month}"
+    bk_cta = C['lbl_m_bk_cta_tpl'].format(**tpl)
     booking_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_booking_section']}</div>
  <h2 class="section-title">{cfg['lbl_booking_title_tpl'].format(name=nom_f)}</h2>
