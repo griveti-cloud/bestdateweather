@@ -628,5 +628,70 @@
     "Partir {prep} {nom_bare}<br/><em>en {month_lc} ?</em>"
   ],
   "monthly_article_headline_tpl": "Météo {prep} {nom_bare} en {month_lc} — Températures, pluie et conseils",
-  "monthly_article_desc_tpl": "Météo {prep} {nom_bare} en {month_lc} : {tmax}°C, {rain}% de jours pluvieux. Score {score}/10."
+  "monthly_article_desc_tpl": "Météo {prep} {nom_bare} en {month_lc} : {tmax}°C, {rain}% de jours pluvieux. Score {score}/10.",
+  "gen": {
+    "asset_prefix": "",
+    "home_url": "index.html",
+    "home_label": "Application météo",
+    "data_credit": "Données Open-Meteo",
+    "legal_url": "mentions-legales.html",
+    "legal_label": "Mentions légales",
+    "share_label": "Partager",
+    "try_app_label": "Tester l'application",
+    "annual_href_tpl": "meilleure-periode-{slug}.html",
+    "monthly_href_tpl": "{slug}-meteo-{month_slug}.html",
+    "alt_flag_path": "flags/gb.png",
+    "alt_lang_label": "English",
+    "alt_link_prefix": "en/",
+    "guide_label": "Guide complet",
+    "explore_label": "Explorer",
+    "best_period_tpl": "Meilleure période {nom}",
+    "guides_title": "Guides détaillés",
+    "cta_choose": "🎯 Choisir une date précise pour votre voyage →"
+  },
+  "hub": {
+    "search_placeholder": "Rechercher une destination…",
+    "no_results": "Aucune destination trouvée.",
+    "card_sub": "Quand partir",
+    "title": "Meilleure période par destination",
+    "count_plural": "destinations trouvées",
+    "count_singular": "destination trouvée"
+  },
+  "comp": {
+    "th_month": "Mois",
+    "th_better": "Meilleur",
+    "sep": "ou",
+    "best_month_label": "Meilleur mois",
+    "max_temp_label": "Temp. max",
+    "verdict_title": "🏆 Verdict global",
+    "season_title": "📅 Par saison",
+    "month_by_month": "Mois par mois",
+    "detailed_title": "Comparaison climatique détaillée",
+    "detailed_intro": "Score météo sur 10, basé sur températures, pluie et ensoleillement. Données 10 ans Open-Meteo.",
+    "hero_eyebrow_prefix": "Comparatif climatique · 10 ans de données · ",
+    "file_tpl": "{a}-ou-{b}-climat.html"
+  },
+  "pilier": {
+    "th": [
+      "#",
+      "Destination",
+      "Score",
+      "Temp.",
+      "Pluie",
+      "Soleil/j"
+    ],
+    "ranking_label": "Classement",
+    "months_label": "Mois",
+    "pillar_prefix": "ou-partir-en-",
+    "where_to_go_tpl": "Où partir en {month}",
+    "top_n_label": "destinations",
+    "world_ranking_label": "🌍 Classement mondial 2026",
+    "world_ranking_sub": "Toutes destinations",
+    "world_ranking_url": "classement-destinations-meteo-2026.html",
+    "also_explore": "Explorer aussi",
+    "other_rankings": "Autres classements",
+    "hero_eyebrow_prefix": "Étude climatique · 10 ans de données · ",
+    "score_n1": "Score n°1",
+    "top10_avg": "Moy. top 10"
+  }
 }

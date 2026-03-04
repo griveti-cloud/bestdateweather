@@ -277,7 +277,7 @@ CSS = """
 """
 
 # ── JS ──
-JS_FR = """
+JS_TEMPLATE = """
 (function(){
  var inp=document.getElementById('dh-input'),
      clear=document.getElementById('dh-clear'),
@@ -319,7 +319,7 @@ JS_FR = """
    if(vis.length){a.classList.add('open','dh-sm');a.style.display=''}
    else{a.style.display='none'}
   });
-  count.textContent=n+' '+(n>1?'destinations trouvées':'destination trouvée');
+  count.textContent=n+' '+(n>1?'COUNT_PLURAL':'COUNT_SINGULAR');
   count.className='dh-count show';
   noRes.className='dh-no-results'+(n===0?' show':'');
  }
@@ -341,13 +341,10 @@ JS_FR = """
 })();
 """
 
-JS_EN = JS_FR.replace("'destinations trouvées':'destination trouvée'",
-                       "'destinations found':'destination found'")
 
-
-def make_card(slug, name, bare, flag, country, asset_prefix, page_prefix, is_fr):
-    href = f'{page_prefix}meilleure-periode-{slug}.html' if is_fr else f'{page_prefix}best-time-to-visit-{slug}.html'
-    sub = 'Quand partir' if is_fr else 'When to visit'
+def make_card(slug, name, bare, flag, country, asset_prefix, page_prefix, loc):
+    href = f'{page_prefix}{loc["gen"]["annual_href_tpl"].format(slug=slug)}'
+    sub = loc['hub']['card_sub']
     return (
         f'<a href="{href}" target="_top" class="dh-card" '
         f'data-name="{html_mod.escape(bare)}" data-country="{html_mod.escape(country)}">'
@@ -356,10 +353,13 @@ def make_card(slug, name, bare, flag, country, asset_prefix, page_prefix, is_fr)
         f'<span class="dh-card-sub">{sub}</span></span></a>')
 
 
-def build_hub(destinations, is_fr=True):
-    asset_prefix = '' if is_fr else '../'
+def build_hub(destinations, loc):
+    asset_prefix = loc['gen']['asset_prefix']
     page_prefix = ''  # pages are always in same dir as hub
-    lang = 'fr' if is_fr else 'en'
+    lang = loc['meta']['html_lang']
+    is_fr = (lang == 'fr')
+    slug_key = 'slug_fr' if is_fr else 'slug_en'
+    name_key = 'nom_fr' if is_fr else 'nom_en'
 
     # Group: mega → sub → [dests]
     megas = {}
@@ -383,7 +383,7 @@ def build_hub(destinations, is_fr=True):
     L = []
 
     # Search bar
-    ph = 'Rechercher une destination…' if is_fr else 'Search a destination…'
+    ph = loc['hub']['search_placeholder']
     L.append(f'<div class="dh-search"><span class="dh-search-icon">🔍</span>')
     L.append(f'<input type="text" id="dh-input" placeholder="{ph}" autocomplete="off">')
     L.append(f'<button id="dh-clear" class="dh-search-clear" aria-label="Clear">✕</button></div>')
@@ -417,28 +417,28 @@ def build_hub(destinations, is_fr=True):
                 L.append(f'<span class="dh-sub-chev">▾</span></span></button>')
                 L.append(f'<div class="dh-sub-body"><div class="dh-grid">')
                 for d in sorted(dests, key=lambda x: x['nom_bare']):
-                    slug = d['slug_fr'] if is_fr else d['slug_en']
-                    name = d['nom_fr'] if is_fr else d['nom_en']
-                    L.append(make_card(slug, name, d['nom_bare'], d['flag'], d['pays'], asset_prefix, page_prefix, is_fr))
+                    slug = d[slug_key]
+                    name = d[name_key]
+                    L.append(make_card(slug, name, d['nom_bare'], d['flag'], d['pays'], asset_prefix, page_prefix, loc))
                 L.append(f'</div></div></div>')
         else:
             # Single sub-region: no sub-accordion, just grid
             dests = list(subs_data.values())[0]
             L.append(f'<div class="dh-grid">')
             for d in sorted(dests, key=lambda x: x['nom_bare']):
-                slug = d['slug_fr'] if is_fr else d['slug_en']
-                name = d['nom_fr'] if is_fr else d['nom_en']
-                L.append(make_card(slug, name, d['nom_bare'], d['flag'], d['pays'], asset_prefix, page_prefix, is_fr))
+                slug = d[slug_key]
+                name = d[name_key]
+                L.append(make_card(slug, name, d['nom_bare'], d['flag'], d['pays'], asset_prefix, page_prefix, loc))
             L.append(f'</div>')
 
         L.append(f'</div></div>')
 
-    no_msg = 'Aucune destination trouvée.' if is_fr else 'No destinations found.'
+    no_msg = loc['hub']['no_results']
     L.append(f'<div id="dh-no-results" class="dh-no-results">{no_msg}</div>')
     return '\n'.join(L)
 
 
-def inject(filepath, destinations, is_fr=True):
+def inject(filepath, destinations, loc):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
@@ -462,9 +462,12 @@ def inject(filepath, destinations, is_fr=True):
     # CSS is now in style.css — no injection needed
 
     # Build new SILO 1
-    hub = build_hub(destinations, is_fr)
-    js = JS_FR if is_fr else JS_EN
-    title = 'Meilleure p&eacute;riode par destination' if is_fr else 'Best time to visit by destination'
+    hub = build_hub(destinations, loc)
+    count_plural = loc['hub']['count_plural']
+    count_singular = loc['hub']['count_singular']
+    js = JS_TEMPLATE.replace("'COUNT_PLURAL':'COUNT_SINGULAR'",
+                              f"'{count_plural}':'{count_singular}'")
+    title = loc['hub']['title']
 
     new_silo = f"""<!-- SILO 1 : MEILLEURE PERIODE - dominant -->
  <div style="margin-bottom:52px">
@@ -495,21 +498,27 @@ def inject(filepath, destinations, is_fr=True):
 
 
 # ── Main ──
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from lib.page_config import load_locale
+
 dests = []
 with open('data/destinations.csv', encoding='utf-8-sig') as f:
     for r in csv.DictReader(f):
         dests.append(r)
 print(f"📦 {len(dests)} destinations")
 
+loc_fr = load_locale('fr')
 print("\n🇫🇷 index.html...")
-if inject('index.html', dests, True):
+if inject('index.html', dests, loc_fr):
     c = len(re.findall(r'meilleure-periode-', open('index.html').read()))
     print(f"  ✅ {c} liens")
 
 if os.path.exists('en/app.html'):
+    loc_en = load_locale('en')
     print("\n🇬🇧 en/app.html...")
     if 'SILO 1' in open('en/app.html').read():
-        if inject('en/app.html', dests, False):
+        if inject('en/app.html', dests, loc_en):
             c = len(re.findall(r'best-time-to-visit-', open('en/app.html').read()))
             print(f"  ✅ {c} liens")
 

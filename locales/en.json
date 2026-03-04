@@ -608,5 +608,70 @@
     "Visit {nom}<br/><em>in {month}?</em>"
   ],
   "monthly_article_headline_tpl": "{nom} weather in {month} — Temperature, rain and tips",
-  "monthly_article_desc_tpl": "{nom} weather in {month}: {tmax}°C, {rain}% rainy days. Score {score}/10."
+  "monthly_article_desc_tpl": "{nom} weather in {month}: {tmax}°C, {rain}% rainy days. Score {score}/10.",
+  "gen": {
+    "asset_prefix": "../",
+    "home_url": "app.html",
+    "home_label": "Weather app",
+    "data_credit": "Data by Open-Meteo",
+    "legal_url": "../mentions-legales.html",
+    "legal_label": "Legal",
+    "share_label": "Share",
+    "try_app_label": "Try the app",
+    "annual_href_tpl": "best-time-to-visit-{slug}.html",
+    "monthly_href_tpl": "{slug}-weather-{month_slug}.html",
+    "alt_flag_path": "../flags/fr.png",
+    "alt_lang_label": "Français",
+    "alt_link_prefix": "../",
+    "guide_label": "Full guide",
+    "explore_label": "Explore",
+    "best_period_tpl": "Best time to visit {nom}",
+    "guides_title": "Detailed Guides",
+    "cta_choose": "🎯 Choose a specific date for your trip →"
+  },
+  "hub": {
+    "search_placeholder": "Search a destination…",
+    "no_results": "No destinations found.",
+    "card_sub": "When to visit",
+    "title": "Best time to visit by destination",
+    "count_plural": "destinations found",
+    "count_singular": "destination found"
+  },
+  "comp": {
+    "th_month": "Month",
+    "th_better": "Better",
+    "sep": "vs",
+    "best_month_label": "Best month",
+    "max_temp_label": "Max temp",
+    "verdict_title": "🏆 Overall Verdict",
+    "season_title": "📅 By Season",
+    "month_by_month": "Month by month",
+    "detailed_title": "Detailed Climate Comparison",
+    "detailed_intro": "Weather score out of 10, based on temperature, rain and sunshine. 10-year Open-Meteo data.",
+    "hero_eyebrow_prefix": "Climate comparison · 10 years of data · ",
+    "file_tpl": "{a}-vs-{b}-weather.html"
+  },
+  "pilier": {
+    "th": [
+      "#",
+      "Destination",
+      "Score",
+      "Temp.",
+      "Rain",
+      "Sun/day"
+    ],
+    "ranking_label": "Ranking",
+    "months_label": "Months",
+    "pillar_prefix": "where-to-go-in-",
+    "where_to_go_tpl": "Where to go in {month}",
+    "top_n_label": "destinations",
+    "world_ranking_label": "🌍 World ranking 2026",
+    "world_ranking_sub": "All destinations",
+    "world_ranking_url": "best-destinations-weather-ranking-2026.html",
+    "also_explore": "Also explore",
+    "other_rankings": "Other rankings",
+    "hero_eyebrow_prefix": "Climate study · 10 years of data · ",
+    "score_n1": "#1 Score",
+    "top10_avg": "Top 10 avg"
+  }
 }

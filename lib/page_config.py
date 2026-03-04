@@ -26,6 +26,9 @@ def _load_locale(lang):
             _locale_cache[lang] = json.load(f)
     return _locale_cache[lang]
 
+# Public alias for use by other generators
+load_locale = _load_locale
+
 
 # Cross-language mapping for hreflang
 _CROSS_LANG = {'fr': 'en', 'en': 'fr'}
