@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /en/app.html?
+Disallow: /app.html?
 
 Sitemap: https://bestdateweather.com/sitemap-index.xml
