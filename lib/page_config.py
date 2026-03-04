@@ -158,7 +158,34 @@ def build_config(lang):
     cfg['val_score_range'] = loc['validation']['score_range']
     cfg['val_no_climate'] = loc['validation']['no_climate']
 
+    # Affiliate / partner
+    cfg['gyg_domain'] = loc['meta']['gyg_domain']
+    cfg['gyg_lang'] = loc['meta']['gyg_lang']
+    cfg['out_subdir'] = loc['meta']['out_subdir']
+    cfg['lowercase_months'] = loc['meta']['lowercase_months']
+    cfg['in_language'] = loc['meta'].get('in_language')
+
+    # Content templates (annual)
+    cfg['annual_titles'] = loc.get('annual_titles', [])
+    cfg['annual_h1s'] = loc.get('annual_h1s', [])
+    cfg['annual_descs'] = loc.get('annual_descs', [])
+    cfg['annual_faq_mountain'] = loc.get('annual_faq_mountain', [])
+    cfg['annual_faq_standard'] = loc.get('annual_faq_standard', [])
+    cfg['annual_faq_winter_verdicts'] = loc.get('annual_faq_winter_verdicts', {})
+    cfg['annual_faq_bests_suffix'] = loc.get('annual_faq_bests_suffix', '')
+
+    # Content templates (monthly)
+    cfg['monthly_hero_subs'] = loc.get('monthly_hero_subs', {})
+    cfg['monthly_verdicts'] = loc.get('monthly_verdicts', {})
+    cfg['monthly_oui_si'] = loc.get('monthly_oui_si', {})
+    cfg['context_paragraphs'] = loc.get('context_paragraphs', {})
+
     return cfg
+
+
+def month_lc(cfg, name):
+    """Lowercase month name for FR ('en janvier'), keep as-is for EN ('in January')."""
+    return name.lower() if cfg['lowercase_months'] else name
 
 
 def dest_name(cfg, dest):

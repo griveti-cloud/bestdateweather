@@ -7,7 +7,12 @@
     "asset_prefix": "",
     "base_url": "https://bestdateweather.com/",
     "canonical_prefix": "https://bestdateweather.com/",
-    "schema_home_url": "https://bestdateweather.com/"
+    "schema_home_url": "https://bestdateweather.com/",
+    "gyg_domain": "getyourguide.fr",
+    "out_subdir": "",
+    "lowercase_months": true,
+    "in_language": null,
+    "gyg_lang": "fr"
   },
   "months": [
     "Janvier",
@@ -105,7 +110,8 @@
     "monthly_sep": "-meteo-",
     "pillar_prefix": "ou-partir-en-",
     "cross_annual_prefix": "best-time-to-visit-",
-    "cross_monthly_sep": "-weather-"
+    "cross_monthly_sep": "-weather-",
+    "comparison_tpl": "{a}-ou-{b}-climat.html"
   },
   "cards": {
     "file": "cards.csv",
@@ -244,7 +250,15 @@
     "flights_section": "Vols",
     "flights_title_tpl": "Trouver un vol vers {name}",
     "flights_cta": "Comparer les vols depuis toutes les compagnies.",
-    "flights_btn": "Rechercher un vol"
+    "flights_btn": "Rechercher un vol",
+    "rain_word": "pluie",
+    "tropical_note_html": "<p class=\"tropical-note\">🌴 Destination tropicale — les mois de forte pluie bénéficient d'une correction algorithmique : les averses sont intenses mais courtes, et ne gâchent généralement pas le séjour.</p>",
+    "headline_tpl": "Meilleure période pour partir {prep} {nom_bare}",
+    "og_title_tpl": "Meilleure période {prep} {nom_bare} — météo &amp; conseils",
+    "dataset_name_tpl": "Données climatiques de {nom} — moyennes mensuelles sur 10 ans",
+    "dataset_desc_tpl": "Températures, précipitations, ensoleillement et vent mensuels {nom_f}. Moyennes calculées sur 10 ans de données ERA5 (Open-Meteo).",
+    "best_months_lbl_tpl": "Meilleur{s} mois",
+    "or_word": "ou"
   },
   "monthly": {
     "hero_tpl": "Météo {name} en {month}",
@@ -422,5 +436,153 @@
     "slug_key": "slug_fr",
     "country_key": "pays",
     "hero_sub_key": "hero_sub"
+  },
+  "annual_titles": [
+    "Meilleure période pour partir {prep} {nom_bare} [{year}] — Météo & conseils",
+    "Quand partir {prep} {nom_bare} ? Climat mois par mois [{year}]",
+    "{nom_bare} : meilleure saison pour voyager [{year}] — Climat & météo"
+  ],
+  "annual_h1s": [
+    "Meilleure période pour partir<br/><em>{prep} {nom_bare}</em>",
+    "Quand partir<br/><em>{prep} {nom_bare}</em> ?",
+    "<em>{nom_bare}</em><br/>quelle saison choisir ?"
+  ],
+  "annual_descs": [
+    "Quelle est la meilleure période pour visiter {nom_bare} ? {best_month} offre {best_tmax}°C et {best_rain}% de jours pluvieux. Score météo : {best_score}/10. Données 10 ans Open-Meteo.",
+    "Quand partir {prep} {nom_bare} ? {best_month} est le meilleur mois ({best_score}/10) avec {best_tmax}°C. Analyse complète des 12 mois sur 10 ans de données.",
+    "{nom_bare} en {best_month_lc} : {best_tmax}°C, {best_rain}% de pluie, score {best_score}/10. Découvrez le meilleur moment pour partir — données météo 10 ans.",
+    "{best_month} est idéal {prep} {nom_bare} : {best_tmax}°C, {best_sun}h de soleil et {best_rain}% de pluie. Évitez {worst_month_lc} ({worst_rain}% pluvieux). Score {best_score}/10.",
+    "Climat {prep} {nom_bare} : profitez de {best_season_lc} ({best_tmin}–{best_tmax}°C en {best_month_lc}). Soleil {best_sun}h/j, pluie {best_rain}%. Analyse sur 10 ans."
+  ],
+  "annual_faq_mountain": [
+    {
+      "q": "Quelle est la meilleure période pour partir {prep} {nom_bare} ?",
+      "a": "Ça dépend de l'activité. Pour le ski : {best_ski_month_lc} (score ski {best_ski_score}/10). Pour la randonnée/été : {best_month_lc} ({best_score}/10, {best_tmax}°C)."
+    },
+    {
+      "q": "Peut-on skier {prep} {nom_bare} en hiver ?",
+      "a": "Oui, c'est la pleine saison. Score ski moyen décembre-février : {winter_ski_avg}/10. Températures froides ({jan_tmax}°C max en janvier) et neige fréquente."
+    },
+    {
+      "q": "Fait-il chaud {prep} {nom_bare} en été ?",
+      "a": "En {best_month_lc}, il fait {best_tmax}°C en moyenne. Idéal pour la randonnée et les activités outdoor."
+    },
+    {
+      "q": "Quel est le mois le plus pluvieux {prep} {nom_bare} ?",
+      "a": "{worst_month} est le mois le plus pluvieux avec {worst_rain}% de jours de pluie."
+    }
+  ],
+  "annual_faq_standard": [
+    {
+      "q": "Quelle est la meilleure période pour partir {prep} {nom_bare} ?",
+      "a": "{best_month} est idéal avec {best_rain}% de jours pluvieux et {best_tmax}°C. {bests_suffix}"
+    },
+    {
+      "q": "Quel est le mois le plus pluvieux {prep} {nom_bare} ?",
+      "a": "{worst_month} est le mois le plus pluvieux avec {worst_rain}% de jours de pluie."
+    },
+    {
+      "q": "Fait-il chaud {prep} {nom_bare} en {best_month_lc} ?",
+      "a": "Oui, {best_month_lc} est le meilleur mois avec {best_tmax}°C en moyenne."
+    },
+    {
+      "q": "Peut-on partir {prep} {nom_bare} en hiver ?",
+      "a": "En hiver, le score moyen est {winter_score}/10. {winter_verdict}"
+    }
+  ],
+  "annual_faq_winter_verdicts": {
+    "ok": "Conditions acceptables pour les visites culturelles.",
+    "bad": "Période difficile — préférez la haute saison."
+  },
+  "annual_faq_bests_suffix": "La période {bests_str} offre des conditions comparables.",
+  "monthly_hero_subs": {
+    "excellent": [
+      "{month} est l'une des meilleures périodes {prep} {nom_bare}.",
+      "{month} {prep} {nom_bare} : conditions quasi idéales.",
+      "Partir {prep} {nom_bare} en {month_lc} ? Excellente idée."
+    ],
+    "good": [
+      "{month} est une bonne période. {best_month} est légèrement meilleur.",
+      "{nom_bare} en {month_lc} : solide, même si {best_month_lc} reste le pic.",
+      "Bonne fenêtre en {month_lc} — {best_month_lc} est un cran au-dessus."
+    ],
+    "poor": [
+      "{month} est difficile — {best_month} offre de bien meilleures conditions.",
+      "Période compliquée en {month_lc}. Préférez {best_month_lc} si possible.",
+      "{nom_bare} en {month_lc} ? Pas la meilleure fenêtre — visez {best_month_lc}."
+    ]
+  },
+  "monthly_verdicts": {
+    "excellent": [
+      "{month} est une excellente période {prep} {nom_bare}. {tmax}°C, {sun}h de soleil — conditions optimales.",
+      "Partir en {month_lc} {prep} {nom_bare} est un choix sûr : météo au top, {rain}% de risque de pluie seulement.",
+      "{nom_bare} en {month_lc} coche toutes les cases : chaleur, soleil, peu de pluie."
+    ],
+    "good": [
+      "{month} est une bonne période {prep} {nom_bare}. {best_month} reste légèrement meilleur (+{diff} pts).",
+      "Conditions favorables en {month_lc} ({score}/10). {best_month} fait mieux mais l'écart est faible.",
+      "{nom_bare} en {month_lc} : {tmax}°C et {sun}h de soleil. Correct, sans être le pic."
+    ],
+    "fair": [
+      "{month} est une période moyenne {prep} {nom_bare}. {best_month} ({best_score}/10) est nettement préférable.",
+      "Pas la meilleure fenêtre : {rain}% de risque de pluie et {sun}h de soleil. {best_month} est bien plus sûr.",
+      "{nom_bare} en {month_lc} reste possible mais {best_month} offre un score de {best_score}/10 contre {score}."
+    ],
+    "poor": [
+      "{month} est difficile {prep} {nom_bare}. {best_month} ({best_score}/10) est bien plus favorable.",
+      "Conditions défavorables en {month_lc} ({score}/10). Privilégiez {best_month_lc} si vos dates sont flexibles.",
+      "{nom_bare} en {month_lc} : {rain}% de pluie, {sun}h de soleil. Mieux vaut reporter à {best_month_lc}."
+    ]
+  },
+  "monthly_oui_si": {
+    "high_tropical_dry_yes": "profiter de la saison sèche — conditions idéales pour la plage et les excursions.",
+    "high_tropical_dry_no": "voyager à petit budget — c'est la haute saison, les prix sont au plus haut.",
+    "high_hot_sunny_yes": "chercher le plein soleil — {sun}h par jour en moyenne.",
+    "high_hot_sunny_no": "mal supporter la chaleur — les températures dépassent souvent 30°C.",
+    "high_warm_dry_yes": "combiner plage, visites et randonnées — météo polyvalente ({tmax}°C, peu de pluie).",
+    "high_warm_dry_no": "éviter l'affluence touristique — c'est la période la plus fréquentée.",
+    "high_summer_yes": "profiter de longues journées ensoleillées et d'activités en plein air.",
+    "high_summer_no": "fuir la foule estivale — c'est le pic de fréquentation.",
+    "high_shoulder_yes": "combiner bonne météo et tarifs plus doux qu'en pleine saison.",
+    "high_shoulder_no": "avoir une garantie absolue de beau temps — quelques jours mitigés possibles.",
+    "high_default_yes": "profiter d'un temps agréable pour toutes les activités.",
+    "high_default_no": "voyager avec un budget serré — les prix sont plus élevés en haute saison.",
+    "mid_rainy_yes": "accepter des averses en échange de prix réduits et moins de touristes.",
+    "mid_rainy_no": "planifier des activités 100% extérieures — la pluie est fréquente.",
+    "mid_cold_yes": "privilégier les musées et la gastronomie — il fait frais ({tmax}°C).",
+    "mid_cold_no": "chercher du soleil pour bronzer ou nager — ce n'est pas la bonne saison.",
+    "mid_mild_yes": "explorer la ville à pied sans souffrir de la chaleur.",
+    "mid_mild_no": "chercher une destination balnéaire — l'eau et l'air sont encore frais.",
+    "mid_shoulder_yes": "profiter de l'entre-saison — moins de monde, {tmax}°C agréables.",
+    "mid_shoulder_no": "garantir un ensoleillement maximal — des journées grises sont possibles.",
+    "mid_default_yes": "visiter les sites culturels et profiter de la gastronomie locale.",
+    "mid_default_no": "garantir du soleil pour vos photos ou activités extérieures.",
+    "low_tropical_rainy_yes": "découvrir une facette différente hors des sentiers battus, à prix cassés.",
+    "low_tropical_rainy_no": "craindre la pluie — c'est la mousson, les averses sont quotidiennes.",
+    "low_cold_winter_yes": "apprécier l'ambiance hivernale et les prix les plus bas de l'année.",
+    "low_cold_winter_no": "chercher le soleil ou les activités de plein air.",
+    "low_rainy_yes": "voyager hors saison avec des prix réduits et très peu de touristes.",
+    "low_rainy_no": "éviter la pluie — plus d'un jour sur deux est pluvieux.",
+    "low_default_yes": "profiter de tarifs bas et d'une fréquentation minimale.",
+    "low_default_no": "rechercher un temps estival — les conditions ne s'y prêtent pas."
+  },
+  "context_paragraphs": {
+    "tropical_wet": "{month} correspond à la saison humide {nom_f}. Les averses, souvent brèves mais intenses, rythment les journées.",
+    "tropical_dry": "{month} tombe en pleine saison sèche {nom_f}. L'air est chaud et l'humidité plus supportable qu'en saison des pluies.",
+    "summer_hot": "En plein été, {nom} connaît des températures élevées ({tmax}°C). La chaleur est un facteur à prendre en compte pour les activités en extérieur.",
+    "summer_warm": "L'été {nom_f} offre des températures agréables ({tmax}°C) et de longues journées ensoleillées ({sun}h de soleil).",
+    "winter_cold": "L'hiver {nom_f} est frais ({tmax}°C en journée). Les journées sont courtes ({sun}h de soleil) mais la ville se découvre sous un autre angle.",
+    "winter_warm": "Même en hiver, {nom} affiche {tmax}°C. Un atout pour ceux qui fuient le froid européen.",
+    "spring": "Le printemps marque le début de la bonne saison {nom_f}. Les températures remontent ({tmax}°C) et les touristes ne sont pas encore là en masse.",
+    "autumn_good": "L'automne {nom_f} est souvent sous-estimé : {tmax}°C, lumière dorée et affluence en baisse. Une fenêtre intéressante.",
+    "autumn_bad": "L'automne marque la fin de la haute saison {nom_f}. Les températures baissent ({tmax}°C) et la pluie revient ({rain}% des jours).",
+    "default": "En {month_lc}, {nom} affiche {tmax}°C en journée avec {sun}h de soleil par jour.",
+    "rain_none": "La pluie est quasi absente ({rain}% des jours) — idéal pour planifier sans plan B.",
+    "rain_low": "Le risque de pluie reste faible ({rain}% des jours), ce qui laisse une bonne marge pour les activités extérieures.",
+    "rain_mid": "Comptez {rain}% de jours avec pluie — un imperméable léger dans le sac est recommandé.",
+    "rain_high": "Avec {rain}% de jours pluvieux, prévoyez systématiquement des alternatives couvertes.",
+    "score_top": "C'est l'un des meilleurs moments de l'année pour visiter {nom}.",
+    "score_good": "Un bon compromis entre météo et affluence, même si {best_month_lc} ({best_score}/10) reste théoriquement meilleur.",
+    "score_fair": "Pas le meilleur créneau, mais acceptable pour qui a des contraintes de dates. {best_month} ({best_score}/10) est nettement préférable si possible."
   }
 }

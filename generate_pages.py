@@ -24,7 +24,7 @@ from lib.common import (score_badge as _score_badge, best_months as _best_months
 from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
                               dest_country, annual_url, monthly_url,
                               annual_url_cross, monthly_url_cross, hero_sub as _hero_sub,
-                              pillar_url, MONTH_URL, MONTH_URL_FR,
+                              pillar_url, month_lc, MONTH_URL, MONTH_URL_FR,
                               SEASON_ICONS, TODAY, YEAR, DATA_UPDATED,
                               date_modified_for)
 
@@ -84,14 +84,15 @@ COMPARISON_PAIRS = [
 
 def build_comparison_index(cfg, all_dests=None):
     """Build reverse index for comparison links."""
-    if cfg['is_fr']:
+    lang = cfg['lang']
+    if lang == 'fr':
         idx = {}
         for a, b in COMPARISON_PAIRS:
             idx.setdefault(a, []).append((b, f"{a}-ou-{b}-climat.html"))
             idx.setdefault(b, []).append((a, f"{a}-ou-{b}-climat.html"))
         return idx
     else:
-        out_dir = os.path.join(DIR, 'en')
+        out_dir = os.path.join(DIR, cfg['out_subdir'])
         idx = {}
         for f in glob.glob(os.path.join(out_dir, '*-vs-*-weather.html')):
             fname = os.path.basename(f)
@@ -260,7 +261,7 @@ def footer_html(cfg, dest):
     slug_fr = dest['slug_fr']
     slug_en = dest['slug_en']
 
-    if cfg['is_fr']:
+    if cfg['lang'] == 'fr':
         alt_link = f' · <a href="en/best-time-to-visit-{slug_en}.html" class="txt-muted"><img src="flags/gb.png" width="20" height="15" alt="" class="flag-icon-lg"> English</a>'
     else:
         alt_link = f' · <a href="../meilleure-periode-{slug_fr}.html" class="txt-muted"><img src="../flags/fr.png" width="20" height="15" alt="" class="flag-icon-lg"> Français</a>'
@@ -279,6 +280,21 @@ def footer_html(cfg, dest):
  <p class="f11-muted"><a href="{legal_url}" class="txt-muted">{legal_label}</a> · <a href="{priv_url}" class="txt-muted">{priv_label}</a> · <a href="contact.html" class="txt-muted">Contact</a></p>
 </footer>
 <script src="{cfg['asset_prefix']}js/share.js"></script>'''
+
+
+def _resolve_dest_name(cfg, slug, all_dests):
+    """Resolve a destination name from its slug (FR or EN) using dest_fields."""
+    name_key = cfg['dest_fields']['name_key']
+    slug_key = cfg['dest_fields']['slug_key']
+    # Try direct lookup by slug_fr first (FR comparison index uses slug_fr)
+    d = all_dests.get(slug, {})
+    if d:
+        return d.get(name_key, d.get('nom_bare', slug))
+    # For EN, search by slug_en
+    for d in all_dests.values():
+        if d.get(slug_key) == slug:
+            return d.get(name_key, d.get('nom_bare', slug))
+    return slug
 
 
 # ── ANNUAL PAGE GENERATOR ──────────────────────────────────────────────────
@@ -319,66 +335,25 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     _best_season_name = max(seas, key=lambda s: seas[s]['score'])
     best_sun = best_m['sun_h']
 
-    if C['is_fr']:
+    if C['lang'] == 'fr':
         prep = dest.get('prep', 'à')
         nom_bare = dest.get('nom_bare', slug_fr)
-        if title_var == 0:
-            title = f"Meilleure période pour partir {prep} {nom_bare} [{YEAR}] — Météo & conseils"
-            h1_text = f"Meilleure période pour partir<br/><em>{prep} {nom_bare}</em>"
-        elif title_var == 1:
-            title = f"Quand partir {prep} {nom_bare} ? Climat mois par mois [{YEAR}]"
-            h1_text = f"Quand partir<br/><em>{prep} {nom_bare}</em> ?"
-        else:
-            title = f"{nom_bare} : meilleure saison pour voyager [{YEAR}] — Climat & météo"
-            h1_text = f"<em>{nom_bare}</em><br/>quelle saison choisir ?"
-        if desc_var == 0:
-            desc = (f"Quelle est la meilleure période pour visiter {nom_bare} ? "
-                    f"{MONTHS[best_idx]} offre {best_tmax}°C et {best_rain}% de jours pluvieux. "
-                    f"Score météo : {best_score}/10. Données 10 ans Open-Meteo.")
-        elif desc_var == 1:
-            desc = (f"Quand partir {prep} {nom_bare} ? {MONTHS[best_idx]} est le meilleur mois "
-                    f"({best_score}/10) avec {best_tmax}°C. Analyse complète des 12 mois sur 10 ans de données.")
-        elif desc_var == 2:
-            desc = (f"{nom_bare} en {MONTHS[best_idx].lower()} : {best_tmax}°C, {best_rain}% de pluie, "
-                    f"score {best_score}/10. Découvrez le meilleur moment pour partir — données météo 10 ans.")
-        elif desc_var == 3:
-            desc = (f"{MONTHS[best_idx]} est idéal {prep} {nom_bare} : {best_tmax}°C, "
-                    f"{best_sun}h de soleil et {best_rain}% de pluie. "
-                    f"Évitez {MONTHS[worst_idx].lower()} ({worst_rain}% pluvieux). Score {best_score}/10.")
-        else:
-            desc = (f"Climat {prep} {nom_bare} : profitez de {_best_season_name.lower()} "
-                    f"({best_m['tmin']}–{best_tmax}°C en {MONTHS[best_idx].lower()}). "
-                    f"Soleil {best_sun}h/j, pluie {best_rain}%. Analyse sur 10 ans.")
-        og_title = f"Meilleure période {prep} {nom_bare} — météo &amp; conseils"
     else:
-        if title_var == 0:
-            title = f"Best Time to Visit {nom} [{YEAR}] — Weather & Tips"
-            h1_text = f"Best Time to Visit<br/><em>{nom}</em>"
-        elif title_var == 1:
-            title = f"When to Visit {nom}? Month-by-Month Climate [{YEAR}]"
-            h1_text = f"When to Visit<br/><em>{nom}</em>?"
-        else:
-            title = f"{nom}: Best Season to Travel [{YEAR}] — Climate & Weather"
-            h1_text = f"<em>{nom}</em><br/>Which Season to Choose?"
-        if desc_var == 0:
-            desc = (f"When is the best time to visit {nom}? "
-                    f"{MONTHS[best_idx]} offers {best_tmax}°C and {best_rain}% rainy days. "
-                    f"Weather score: {best_score}/10. 10-year Open-Meteo data.")
-        elif desc_var == 1:
-            desc = (f"When to visit {nom}? {MONTHS[best_idx]} is the best month "
-                    f"({best_score}/10) with {best_tmax}°C. Full 12-month analysis based on 10 years of data.")
-        elif desc_var == 2:
-            desc = (f"{nom} in {MONTHS[best_idx]}: {best_tmax}°C, {best_rain}% rain, "
-                    f"score {best_score}/10. Find the best time to go — 10-year weather data.")
-        elif desc_var == 3:
-            desc = (f"{MONTHS[best_idx]} is ideal for {nom}: {best_tmax}°C, "
-                    f"{best_sun}h sunshine and {best_rain}% rain. "
-                    f"Avoid {MONTHS[worst_idx]} ({worst_rain}% rainy). Score {best_score}/10.")
-        else:
-            desc = (f"{nom} climate: enjoy {_best_season_name.lower()} "
-                    f"({best_m['tmin']}–{best_tmax}°C in {MONTHS[best_idx]}). "
-                    f"Sunshine {best_sun}h/day, rain {best_rain}%. 10-year analysis.")
-        og_title = f"Best time to visit {nom} — weather &amp; tips"
+        prep = ''
+        nom_bare = nom
+
+    tpl_vars = dict(prep=prep, nom_bare=nom_bare, nom=nom, year=YEAR,
+                    best_month=MONTHS[best_idx], best_month_lc=month_lc(C, MONTHS[best_idx]),
+                    best_tmax=best_tmax, best_rain=best_rain, best_score=best_score,
+                    best_sun=best_sun, best_tmin=best_m['tmin'],
+                    worst_month=MONTHS[worst_idx], worst_month_lc=month_lc(C, MONTHS[worst_idx]),
+                    worst_rain=worst_rain,
+                    best_season_lc=_best_season_name.lower())
+
+    title = C['annual_titles'][title_var].format(**tpl_vars)
+    h1_text = C['annual_h1s'][title_var].format(**tpl_vars)
+    desc = C['annual_descs'][desc_var].format(**tpl_vars)
+    og_title = C['lbl_og_title_tpl'].format(**tpl_vars)
 
     # ── Climate table ──
     table_html = fn['climate_table_html'](months, nom, is_mountain)
@@ -390,8 +365,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <h2 class="section-title">{C['lbl_quick_title_tpl'].format(name=nom_f)}</h2>
  <div class="quick-facts">
  <div class="quick-facts-row"><div class="qf-label">{C['lbl_best_overall']}</div><div class="qf-value"><strong>{MONTHS[best_idx]}</strong></div></div>
- <div class="quick-facts-row"><div class="qf-label">{C['lbl_optimal_temp']}</div><div class="qf-value"><strong>{best_m["tmin"]}–{best_m["tmax"]}°C</strong> {C['lbl_in']} {MONTHS[best_idx].lower() if C['is_fr'] else MONTHS[best_idx]}</div></div>
- <div class="quick-facts-row"><div class="qf-label">{C['lbl_least_rain']}</div><div class="qf-value"><strong>{best_rain}%</strong> {C['lbl_rainy_days_in']} {MONTHS[best_idx].lower() if C['is_fr'] else MONTHS[best_idx]}</div></div>
+ <div class="quick-facts-row"><div class="qf-label">{C['lbl_optimal_temp']}</div><div class="qf-value"><strong>{best_m["tmin"]}–{best_m["tmax"]}°C</strong> {C['lbl_in']} {month_lc(C, MONTHS[best_idx])}</div></div>
+ <div class="quick-facts-row"><div class="qf-label">{C['lbl_least_rain']}</div><div class="qf-value"><strong>{best_rain}%</strong> {C['lbl_rainy_days_in']} {month_lc(C, MONTHS[best_idx])}</div></div>
  <div class="quick-facts-row"><div class="qf-label">{C['lbl_wettest']}</div><div class="qf-value"><strong>{MONTHS[worst_idx]}</strong> ({worst_rain}%)</div></div>
  <div class="quick-facts-row"><div class="qf-label">{C['lbl_best_score']}</div><div class="qf-value"><strong>{best_score}/10</strong></div></div>
  </div>
@@ -415,10 +390,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     is_tropical = dest.get('tropical', '').strip().lower() in ('true', '1')
     tropical_note = ''
     if is_tropical:
-        if C['is_fr']:
-            tropical_note = '<p class="tropical-note">🌴 Destination tropicale — les mois de forte pluie bénéficient d\'une correction algorithmique : les averses sont intenses mais courtes, et ne gâchent généralement pas le séjour.</p>'
-        else:
-            tropical_note = '<p class="tropical-note">🌴 Tropical destination — heavy rain months benefit from an algorithmic adjustment: tropical showers are intense but brief and usually don\'t ruin a trip.</p>'
+        tropical_note = C['lbl_tropical_note_html']
     table_section = f'''<section class="section">
  <div class="section-label">{C['lbl_table_section']}</div>
  <h2 class="section-title">{C['lbl_table_title_tpl'].format(name=nom_f)}</h2>
@@ -454,14 +426,14 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         booking_params += f"&dest_id={booking_id}&dest_type=city"
     booking_url = f"https://www.booking.com/{C['booking_domain']}?{booking_params}"
 
-    off_months = [MONTHS[i].lower() if C['is_fr'] else MONTHS[i]
+    off_months = [month_lc(C, MONTHS[i])
                   for i in range(12) if months[i]['score'] >= 6.5 and months[i]['score'] < best_score - 1.5]
     if off_months:
         verb = C['lbl_offer_pl'] if len(off_months[:2]) > 1 else C['lbl_offer_sg']
         budget_tip = f"{C['lbl_tip_prefix']} : {C['lbl_tip_good_tpl'].format(months=', '.join(off_months[:2]), verb=verb)}"
     else:
-        m1 = MONTHS[worst_idx].lower() if C['is_fr'] else MONTHS[worst_idx]
-        m2 = MONTHS[(worst_idx+1)%12].lower() if C['is_fr'] else MONTHS[(worst_idx+1)%12]
+        m1 = month_lc(C, MONTHS[worst_idx])
+        m2 = month_lc(C, MONTHS[(worst_idx+1)%12])
         budget_tip = f"{C['lbl_tip_prefix']} : {C['lbl_tip_offpeak_tpl'].format(m1=m1, m2=m2)}"
     booking_section = f'''<section class="section">
  <div class="section-label">{C['lbl_booking_section']}</div>
@@ -474,8 +446,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 </section>'''
 
     # ── Activities (GetYourGuide) ──
-    gyg_domain = 'getyourguide.fr' if C['is_fr'] else 'getyourguide.com'
-    gyg_lang = 'fr' if C['is_fr'] else 'en'
+    gyg_domain = C['gyg_domain']
+    gyg_lang = C['lang']
     gyg_dest = quote_plus(f"{nom}, {country_name}")
     gyg_url = f"https://www.{gyg_domain}/s/?q={gyg_dest}&partner_id={GYG_PARTNER_ID}"
     activities_section = f'''<section class="section">
@@ -516,70 +488,38 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 </section>'''
 
     # ── FAQ ──
-    winter_key = 'Hiver' if C['is_fr'] else 'Winter'
+    winter_key = C['season_order'][-1]  # 'Hiver' (FR) or 'Winter' (EN)
     if is_mountain:
         from scoring import compute_ski_score
         best_ski_idx = max(range(12), key=lambda i: compute_ski_score(months[i]['tmax'], months[i]['rain_pct'], months[i]['sun_h']))
         best_ski_score = f"{compute_ski_score(months[best_ski_idx]['tmax'], months[best_ski_idx]['rain_pct'], months[best_ski_idx]['sun_h']):.1f}"
         winter_months_ski = [compute_ski_score(months[i]['tmax'], months[i]['rain_pct'], months[i]['sun_h']) for i in (11, 0, 1)]
         winter_ski_avg = f"{sum(winter_months_ski)/3:.1f}"
-        if C['is_fr']:
-            faq_items = [
-                (f"Quelle est la meilleure période pour partir {dest.get('prep','à')} {dest.get('nom_bare',slug_fr)} ?",
-                 f"Ça dépend de l'activité. Pour le ski : {MONTHS[best_ski_idx].lower()} "
-                 f"(score ski {best_ski_score}/10). Pour la randonnée/été : {MONTHS[best_idx].lower()} "
-                 f"({best_score}/10, {best_tmax}°C)."),
-                (f"Peut-on skier {dest.get('prep','à')} {dest.get('nom_bare',slug_fr)} en hiver ?",
-                 f"Oui, c'est la pleine saison. Score ski moyen décembre-février : {winter_ski_avg}/10. "
-                 f"Températures froides ({months[0]['tmax']}°C max en janvier) et neige fréquente."),
-                (f"Fait-il chaud {dest.get('prep','à')} {dest.get('nom_bare',slug_fr)} en été ?",
-                 f"En {MONTHS[best_idx].lower()}, il fait {best_tmax}°C en moyenne. Idéal pour la randonnée et les activités outdoor."),
-                (f"Quel est le mois le plus pluvieux {dest.get('prep','à')} {dest.get('nom_bare',slug_fr)} ?",
-                 f"{MONTHS[worst_idx]} est le mois le plus pluvieux avec {worst_rain}% de jours de pluie."),
-            ]
-        else:
-            faq_items = [
-                (f"When is the best time to visit {nom}?",
-                 f"It depends on the activity. For skiing: {MONTHS[best_ski_idx]} "
-                 f"(ski score {best_ski_score}/10). For hiking/summer: {MONTHS[best_idx]} "
-                 f"({best_score}/10, {best_tmax}°C)."),
-                (f"Can you ski in {nom} in winter?",
-                 f"Yes, it's peak ski season. Average ski score December–February: {winter_ski_avg}/10. "
-                 f"Cold temperatures ({months[0]['tmax']}°C max in January) and frequent snowfall."),
-                (f"Is it warm in {nom} in summer?",
-                 f"In {MONTHS[best_idx]}, temperatures average {best_tmax}°C. Ideal for hiking and outdoor activities."),
-                (f"What is the wettest month in {nom}?",
-                 f"{MONTHS[worst_idx]} is the wettest month with {worst_rain}% rainy days."),
-            ]
+        faq_vars = dict(prep=prep, nom_bare=nom_bare, nom=nom,
+                        best_ski_month=MONTHS[best_ski_idx],
+                        best_ski_month_lc=month_lc(C, MONTHS[best_ski_idx]),
+                        best_ski_score=best_ski_score,
+                        best_month=MONTHS[best_idx], best_month_lc=month_lc(C, MONTHS[best_idx]),
+                        best_score=best_score, best_tmax=best_tmax,
+                        worst_month=MONTHS[worst_idx], worst_rain=worst_rain,
+                        winter_ski_avg=winter_ski_avg, jan_tmax=months[0]['tmax'])
+        faq_items = [(item['q'].format(**faq_vars), item['a'].format(**faq_vars))
+                     for item in C['annual_faq_mountain']]
     else:
-        if C['is_fr']:
-            prep = dest.get('prep', 'à')
-            nb = dest.get('nom_bare', slug_fr)
-            faq_items = [
-                (f"Quelle est la meilleure période pour partir {prep} {nb} ?",
-                 f"{MONTHS[best_idx]} est idéal avec {best_rain}% de jours pluvieux et {best_tmax}°C. "
-                 f"{'La période ' + ' & '.join(bests[:2]) + ' offre des conditions comparables.' if len(bests) > 1 else ''}"),
-                (f"Quel est le mois le plus pluvieux {prep} {nb} ?",
-                 f"{MONTHS[worst_idx]} est le mois le plus pluvieux avec {worst_rain}% de jours de pluie."),
-                (f"Fait-il chaud {prep} {nb} en {MONTHS[best_idx].lower()} ?",
-                 f"Oui, {MONTHS[best_idx].lower()} est le meilleur mois avec {best_tmax}°C en moyenne."),
-                (f"Peut-on partir {prep} {nb} en hiver ?",
-                 f"En hiver, le score moyen est {seas[winter_key]['score']}/10. "
-                 f"{'Conditions acceptables pour les visites culturelles.' if seas[winter_key]['score'] >= 5.5 else 'Période difficile — préférez la haute saison.'}"),
-            ]
-        else:
-            faq_items = [
-                (f"When is the best time to visit {nom}?",
-                 f"{MONTHS[best_idx]} is ideal with {best_rain}% rainy days and {best_tmax}°C. "
-                 f"{'The months of ' + ' & '.join(bests[:2]) + ' offer comparable conditions.' if len(bests) > 1 else ''}"),
-                (f"What is the wettest month in {nom}?",
-                 f"{MONTHS[worst_idx]} is the wettest month with {worst_rain}% rainy days."),
-                (f"Is it hot in {nom} in {MONTHS[best_idx]}?",
-                 f"Yes, {MONTHS[best_idx]} is the best month with an average of {best_tmax}°C."),
-                (f"Can you visit {nom} in winter?",
-                 f"In winter, the average score is {seas[winter_key]['score']}/10. "
-                 f"{'Acceptable conditions for cultural visits.' if seas[winter_key]['score'] >= 5.5 else 'Difficult period — prefer the peak season.'}"),
-            ]
+        # Bests suffix
+        bests_suffix = ''
+        if len(bests) > 1:
+            bests_suffix = C['annual_faq_bests_suffix'].format(bests_str=' & '.join(bests[:2]))
+        winter_score = seas[winter_key]['score']
+        winter_verdict = C['annual_faq_winter_verdicts']['ok'] if winter_score >= 5.5 else C['annual_faq_winter_verdicts']['bad']
+        faq_vars = dict(prep=prep, nom_bare=nom_bare, nom=nom,
+                        best_month=MONTHS[best_idx], best_month_lc=month_lc(C, MONTHS[best_idx]),
+                        best_score=best_score, best_rain=best_rain, best_tmax=best_tmax,
+                        worst_month=MONTHS[worst_idx], worst_rain=worst_rain,
+                        bests_suffix=bests_suffix,
+                        winter_score=winter_score, winter_verdict=winter_verdict)
+        faq_items = [(item['q'].format(**faq_vars), item['a'].format(**faq_vars))
+                     for item in C['annual_faq_standard']]
 
     faq_html = '<div class="faq-list">' + ''.join(
         f'<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">'
@@ -644,18 +584,11 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     best_month_name = MONTHS[best_idx]
     pillar_comp_cards.append(
         f'<a href="{pillar_url(C, best_idx)}" class="link-card">'
-        f'{C["lbl_pillar_tpl"].format(month=best_month_name.lower() if C["is_fr"] else best_month_name)}</a>')
-    comp_slug = slug_fr if C['is_fr'] else slug_en
+        f'{C["lbl_pillar_tpl"].format(month=month_lc(C, best_month_name))}</a>')
+    comp_slug = dest_slug(C, dest)
     if comparison_index and comp_slug in comparison_index:
         for other_slug, comp_file in comparison_index[comp_slug][:3]:
-            if C['is_fr']:
-                other_nom = all_dests.get(other_slug, {}).get('nom_bare', other_slug)
-            else:
-                other_nom = other_slug
-                for d in all_dests.values():
-                    if d.get('slug_en') == other_slug:
-                        other_nom = d.get('nom_en', d.get('nom_bare', other_slug))
-                        break
+            other_nom = _resolve_dest_name(C, other_slug, all_dests)
             pillar_comp_cards.append(
                 f'<a href="{comp_file}" class="link-card">'
                 f'{C["lbl_vs_tpl"].format(a=nom, b=other_nom)}</a>')
@@ -670,18 +603,16 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     hreflang_fr = f"https://bestdateweather.com/meilleure-periode-{slug_fr}.html"
     hreflang_en = f"https://bestdateweather.com/en/best-time-to-visit-{slug_en}.html"
 
-    if C['is_fr']:
-        headline = f"Meilleure période pour partir {dest.get('prep','à')} {dest.get('nom_bare',slug_fr)}"
-    else:
-        headline = f"Best Time to Visit {nom}"
+    headline = C['lbl_headline_tpl'].format(prep=prep, nom_bare=nom_bare, nom=nom)
 
+    _inlang = {"inLanguage": C['in_language']} if C['in_language'] else {}
     article_schema = json.dumps({
         "@context": "https://schema.org", "@type": "Article",
         "headline": headline, "description": desc,
         "author": {"@type": "Organization", "name": "BestDateWeather"},
         "publisher": {"@type": "Organization", "name": "BestDateWeather"},
         "dateModified": date_modified_for(slug_fr),
-        **({"inLanguage": "en"} if not C['is_fr'] else {}),
+        **_inlang,
         "mainEntityOfPage": {"@type": "WebPage", "@id": canonical}
     }, ensure_ascii=False)
 
@@ -693,12 +624,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         ]
     }, ensure_ascii=False)
 
-    if C['is_fr']:
-        ds_name = f"Données climatiques de {nom} — moyennes mensuelles sur 10 ans"
-        ds_desc = f"Températures, précipitations, ensoleillement et vent mensuels {nom_f}. Moyennes calculées sur 10 ans de données ERA5 (Open-Meteo)."
-    else:
-        ds_name = f"Climate data for {nom} — monthly averages over 10 years"
-        ds_desc = f"Monthly temperatures, precipitation, sunshine and wind for {nom}. Averages computed from 10 years of ERA5 data (Open-Meteo)."
+    ds_name = C['lbl_dataset_name_tpl'].format(nom=nom)
+    ds_desc = C['lbl_dataset_desc_tpl'].format(nom=nom, nom_f=nom_f)
 
     dataset_schema = json.dumps({
         "@context": "https://schema.org", "@type": "Dataset",
@@ -707,17 +634,16 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         "spatialCoverage": {"@type": "Place", "name": nom},
         "creator": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com"},
         "license": "https://creativecommons.org/licenses/by-nc/4.0/",
-        **({"inLanguage": "en"} if not C['is_fr'] else {}),
+        **_inlang,
         "variableMeasured": ["Temperature", "Precipitation", "Sunshine hours", "Wind speed"]
     }, ensure_ascii=False)
 
     # ── Hero stats ──
-    if C['is_fr']:
-        best_months_lbl = f"Meilleur{'s mois' if len(bests) > 1 else ' mois'}"
-        updated_date = f"{MONTHS[date.today().month - 1]} {date.today().year}"
+    if len(bests) > 1:
+        best_months_lbl = C['lbl_best_months_lbl_tpl'].replace('{s}', 's')
     else:
-        best_months_lbl = f"Best month{'s' if len(bests) > 1 else ''}"
-        updated_date = date.today().strftime("%B %Y")
+        best_months_lbl = C['lbl_best_months_lbl_tpl'].replace('{s}', '')
+    updated_date = f"{MONTHS[date.today().month - 1]} {date.today().year}"
 
     coords = f"{lat}°N {abs(lon)}°{'E' if lon >= 0 else 'W'}"
     kicker = C['lbl_updated_tpl'].format(date=updated_date, coords=coords)
@@ -794,86 +720,60 @@ def context_paragraph(cfg, nom, nom_f, m, mi, score, best_month, best_score, is_
     season_map = C['seasons_map']
     season = season_map[mi]
     tmax, rain, sun = m['tmax'], m['rain_pct'], m['sun_h']
+    cp = C['context_paragraphs']
+
+    # Season names from locale
+    season_order = C['season_order']  # [Spring/Printemps, Summer/Été, Autumn/Automne, Winter/Hiver]
+    season_spring, season_summer, season_autumn, season_winter = season_order
+
+    fvars = dict(month=month, month_lc=month_lc(C, month), nom=nom, nom_f=nom_f,
+                 tmax=tmax, rain=rain, sun=sun, score=score,
+                 best_month=best_month, best_month_lc=month_lc(C, best_month),
+                 best_score=f"{best_score:.1f}")
 
     parts = []
     if event_text:
         parts.append(f"<strong>🎯 {event_text}</strong>")
 
-    if C['is_fr']:
-        season_summer, season_winter = 'Été', 'Hiver'
-        season_spring, season_autumn = 'Printemps', 'Automne'
-        ml = month.lower()
-        if is_tropical and rain >= 50:
-            parts.append(f"{month} correspond à la saison humide {nom_f}. Les averses, souvent brèves mais intenses, rythment les journées.")
-        elif is_tropical and rain <= 20:
-            parts.append(f"{month} tombe en pleine saison sèche {nom_f}. L'air est chaud et l'humidité plus supportable qu'en saison des pluies.")
-        elif season == season_summer and tmax >= 30:
-            parts.append(f"En plein été, {nom} connaît des températures élevées ({tmax}°C). La chaleur est un facteur à prendre en compte pour les activités en extérieur.")
-        elif season == season_summer and tmax >= 22:
-            parts.append(f"L'été {nom_f} offre des températures agréables ({tmax}°C) et de longues journées ensoleillées ({sun}h de soleil).")
-        elif season == season_winter and tmax <= 10:
-            parts.append(f"L'hiver {nom_f} est frais ({tmax}°C en journée). Les journées sont courtes ({sun}h de soleil) mais la ville se découvre sous un autre angle.")
-        elif season == season_winter and tmax >= 20:
-            parts.append(f"Même en hiver, {nom} affiche {tmax}°C. Un atout pour ceux qui fuient le froid européen.")
-        elif season == season_spring:
-            parts.append(f"Le printemps marque le début de la bonne saison {nom_f}. Les températures remontent ({tmax}°C) et les touristes ne sont pas encore là en masse.")
-        elif season == season_autumn and score >= 7:
-            parts.append(f"L'automne {nom_f} est souvent sous-estimé : {tmax}°C, lumière dorée et affluence en baisse. Une fenêtre intéressante.")
-        elif season == season_autumn:
-            parts.append(f"L'automne marque la fin de la haute saison {nom_f}. Les températures baissent ({tmax}°C) et la pluie revient ({rain}% des jours).")
-        else:
-            parts.append(f"En {ml}, {nom} affiche {tmax}°C en journée avec {sun}h de soleil par jour.")
-        # Rain
-        if rain <= 10:
-            parts.append(f"La pluie est quasi absente ({rain}% des jours) — idéal pour planifier sans plan B.")
-        elif rain <= 25:
-            parts.append(f"Le risque de pluie reste faible ({rain}% des jours), ce qui laisse une bonne marge pour les activités extérieures.")
-        elif rain <= 45:
-            parts.append(f"Comptez {rain}% de jours avec pluie — un imperméable léger dans le sac est recommandé.")
-        else:
-            parts.append(f"Avec {rain}% de jours pluvieux, prévoyez systématiquement des alternatives couvertes.")
-        # Best month comparison
-        if score >= 9:
-            parts.append(f"C'est l'un des meilleurs moments de l'année pour visiter {nom}.")
-        elif score >= 7.5:
-            parts.append(f"Un bon compromis entre météo et affluence, même si {best_month.lower()} ({best_score:.1f}/10) reste théoriquement meilleur.")
-        elif score >= 5.5:
-            parts.append(f"Pas le meilleur créneau, mais acceptable pour qui a des contraintes de dates. {best_month} ({best_score:.1f}/10) est nettement préférable si possible.")
+    # Main condition
+    if is_tropical and rain >= 50:
+        parts.append(cp['tropical_wet'].format(**fvars))
+    elif is_tropical and rain <= 20:
+        parts.append(cp['tropical_dry'].format(**fvars))
+    elif season == season_summer and tmax >= 30:
+        parts.append(cp['summer_hot'].format(**fvars))
+    elif season == season_summer and tmax >= 22:
+        parts.append(cp['summer_warm'].format(**fvars))
+    elif season == season_winter and tmax <= 10:
+        parts.append(cp['winter_cold'].format(**fvars))
+    elif season == season_winter and tmax >= 20:
+        parts.append(cp['winter_warm'].format(**fvars))
+    elif season == season_spring:
+        parts.append(cp['spring'].format(**fvars))
+    elif season == season_autumn and score >= 7:
+        parts.append(cp['autumn_good'].format(**fvars))
+    elif season == season_autumn:
+        parts.append(cp['autumn_bad'].format(**fvars))
     else:
-        if is_tropical and rain >= 50:
-            parts.append(f"{month} falls in the wet season in {nom}. Showers are often brief but intense.")
-        elif is_tropical and rain <= 20:
-            parts.append(f"{month} is peak dry season in {nom}. The air is warm and humidity more bearable than in the rainy season.")
-        elif season == 'Summer' and tmax >= 30:
-            parts.append(f"In the height of summer, {nom} sees high temperatures ({tmax}°C). Heat is a factor for outdoor activities.")
-        elif season == 'Summer' and tmax >= 22:
-            parts.append(f"Summer in {nom} brings pleasant temperatures ({tmax}°C) and long sunny days ({sun}h of sunshine).")
-        elif season == 'Winter' and tmax <= 10:
-            parts.append(f"Winter in {nom} is cool ({tmax}°C during the day). Days are short ({sun}h of sunshine) but the city reveals a different side.")
-        elif season == 'Winter' and tmax >= 20:
-            parts.append(f"Even in winter, {nom} enjoys {tmax}°C. A real asset for escaping the European cold.")
-        elif season == 'Spring':
-            parts.append(f"Spring marks the start of the good season in {nom}. Temperatures rise ({tmax}°C) and tourists have not yet arrived en masse.")
-        elif season == 'Autumn' and score >= 7:
-            parts.append(f"Autumn in {nom} is often underrated: {tmax}°C, golden light and declining crowds. An interesting window.")
-        elif season == 'Autumn':
-            parts.append(f"Autumn marks the end of peak season in {nom}. Temperatures drop ({tmax}°C) and rain returns ({rain}% of days).")
-        else:
-            parts.append(f"In {month}, {nom} sees {tmax}°C during the day with {sun}h of sunshine per day.")
-        if rain <= 10:
-            parts.append(f"Rain is virtually absent ({rain}% of days) — ideal for planning without a backup.")
-        elif rain <= 25:
-            parts.append(f"Rain risk remains low ({rain}% of days), leaving good room for outdoor activities.")
-        elif rain <= 45:
-            parts.append(f"Expect rain on {rain}% of days — a light raincoat in the bag is recommended.")
-        else:
-            parts.append(f"With {rain}% of rainy days, always have indoor alternatives planned.")
-        if score >= 9:
-            parts.append(f"This is one of the best times of year to visit {nom}.")
-        elif score >= 7.5:
-            parts.append(f"A good balance between weather and crowds, even if {best_month} ({best_score:.1f}/10) remains theoretically better.")
-        elif score >= 5.5:
-            parts.append(f"Not the best window, but acceptable if dates are constrained. {best_month} ({best_score:.1f}/10) is significantly better if possible.")
+        parts.append(cp['default'].format(**fvars))
+
+    # Rain
+    if rain <= 10:
+        parts.append(cp['rain_none'].format(**fvars))
+    elif rain <= 25:
+        parts.append(cp['rain_low'].format(**fvars))
+    elif rain <= 45:
+        parts.append(cp['rain_mid'].format(**fvars))
+    else:
+        parts.append(cp['rain_high'].format(**fvars))
+
+    # Best month comparison
+    if score >= 9:
+        parts.append(cp['score_top'].format(**fvars))
+    elif score >= 7.5:
+        parts.append(cp['score_good'].format(**fvars))
+    elif score >= 5.5:
+        parts.append(cp['score_fair'].format(**fvars))
 
     return ' '.join(parts)
 
@@ -891,20 +791,16 @@ def _build_sim_cards(cfg, sim_list, all_dests, climate_for_sim, mi):
         if sd.get('monthly', 'True').strip().lower() not in ('true', '1', 'yes', ''):
             continue
         sc = climate_for_sim.get(sim_slug, {})
-        if C['is_fr']:
-            url = f"{sim_slug}-meteo-{MONTH_URL_FR[mi]}.html"
-            name = sd.get('nom_bare', sim_slug)
-            pfx = 'flags/'
-            lbl = f"{MONTHS[mi]} : {sc.get('score','?')}/10 · {sc.get('tmax','?')}°C"
-        else:
-            url = f"{sd.get('slug_en', sim_slug)}-weather-{MONTH_URL[mi]}.html"
-            name = sd.get('nom_en', sd.get('nom_bare', sim_slug))
-            pfx = '../flags/'
-            lbl = f"{MONTHS[mi]}: {sc.get('score','?')}/10 · {sc.get('tmax','?')}°C"
+        s_slug = dest_slug(C, sd)
+        name = dest_name(C, sd)
+        url = f"{s_slug}{C['monthly_sep']}{C['month_url'][mi]}.html"
+        pfx_flag = f"{C['asset_prefix']}flags/"
+        sep = ' : ' if C['lang'] == 'fr' else ': '
+        lbl = f"{MONTHS[mi]}{sep}{sc.get('score','?')}/10 · {sc.get('tmax','?')}°C"
         parts.append(
             f'<a href="{url}" class="sim-card-sm">'
             f'<div class="fw700-navy-f14">'
-            f'<img src="{pfx}{sd.get("flag","")}.png" width="16" height="12" '
+            f'<img src="{pfx_flag}{sd.get("flag","")}.png" width="16" height="12" '
             f'alt="" class="flag-icon">'
             f'{name}</div>'
             f'<div class="f12-slate2">{lbl}</div>'
@@ -916,13 +812,10 @@ def _build_comp_cards_monthly(cfg, slug, nom, comparison_index, all_dests):
     if not comparison_index or slug not in comparison_index:
         return ''
     cards = []
+    or_word = cfg['lbl_or_word']
     for other_slug, comp_file in comparison_index[slug][:2]:
-        if cfg['is_fr']:
-            other_nom = all_dests.get(other_slug, {}).get('nom_bare', other_slug)
-            label = f'⚖️ {nom} ou {other_nom} ?'
-        else:
-            other_nom = all_dests.get(other_slug, {}).get('nom_en', other_slug)
-            label = f'⚖️ {nom} or {other_nom}?'
+        other_nom = _resolve_dest_name(cfg, other_slug, all_dests)
+        label = f'⚖️ {nom} {or_word} {other_nom} ?'
         cards.append(
             f'<a href="{comp_file}" class="link-card">'
             f'{label}</a>')
@@ -933,7 +826,7 @@ def _build_comp_cards_monthly(cfg, slug, nom, comparison_index, all_dests):
 
 def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate, events=None, comparison_index=None):
     C = cfg
-    is_fr   = C['is_fr']
+    lang    = C['lang']
     MONTHS  = C['months']
     MABBR   = C['month_abbr']
     slug_fr = dest['slug_fr']
@@ -950,7 +843,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     score    = m['score']
     season   = C['seasons_map'][mi]
     month    = MONTHS[mi]
-    month_url = MONTH_URL_FR[mi] if is_fr else MONTH_URL[mi]
+    m_url    = C['month_url'][mi]
+    is_fr    = C['is_fr']
     is_mountain = dest.get('mountain', 'False').strip() == 'True'
 
     all_scores = [mo['score'] for mo in months]
@@ -969,17 +863,11 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     prev_mi = (mi - 1) % 12
     next_mi = (mi + 1) % 12
 
-    # Activities
-    if is_fr:
-        act_city  = '✅ Bon' if score >= 6.5 else '⚠️ Possible'
-        act_ext   = '✅ Bon' if score >= 7.5 else ('⚠️ Possible' if score >= 6.0 else '❌ Déconseillé')
-        act_beach = ('✅ Bon' if score >= 7.5 and m['tmax'] >= 25
-                     else ('⚠️ Possible' if score >= 6.5 and m['tmax'] >= 20 else '❌ Déconseillé'))
-    else:
-        act_city  = '✅ Good' if score >= 6.5 else '⚠️ Possible'
-        act_ext   = '✅ Good' if score >= 7.5 else ('⚠️ Possible' if score >= 6.0 else '❌ Not recommended')
-        act_beach = ('✅ Good' if score >= 7.5 and m['tmax'] >= 25
-                     else ('⚠️ Possible' if score >= 6.5 and m['tmax'] >= 20 else '❌ Not recommended'))
+    # Activities — use locale labels
+    act_city  = C['lbl_m_act_city_good'] if score >= 6.5 else C['lbl_m_act_city_ok']
+    act_ext   = C['lbl_m_act_ext_good'] if score >= 7.5 else (C['lbl_m_act_ext_ok'] if score >= 6.0 else C['lbl_m_act_ext_bad'])
+    act_beach = (C['lbl_m_act_beach_good'] if score >= 7.5 and m['tmax'] >= 25
+                 else (C['lbl_m_act_beach_ok'] if score >= 6.5 and m['tmax'] >= 20 else C['lbl_m_act_beach_bad']))
 
     # Context flags
     is_tropical = dest.get('tropical', '0') == '1'
@@ -995,105 +883,24 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     is_shoulder = mi in (3, 4, 8, 9)
     hash_var    = (hash(slug_fr + str(mi)) % 3)
 
-    # FR-specific vars (needed in labels dict even for EN path)
     prep = dest.get('prep', 'à')
     nom_bare = dest.get('nom_bare', slug_fr)
-    month_lc = month.lower() if is_fr else month  # FR lowercases months
+    mlc = month_lc(C, month)
+
+    # Template vars for locale lookups
+    tpl = dict(month=month, month_lc=mlc, nom=nom, nom_bare=nom_bare, prep=prep,
+               best_month=best_month, best_month_lc=month_lc(C, best_month),
+               tmax=m['tmax'], rain=m['rain_pct'], sun=m['sun_h'],
+               score=f"{score:.1f}", best_score=best_score,
+               diff=round(best_score - score, 1))
 
     # ── Hero sub ──
-    if is_fr:
-        if score >= 8.5:
-            hero_opts = [
-                f"{month} est l'une des meilleures périodes {prep} {nom_bare}.",
-                f"{month} {prep} {nom_bare} : conditions quasi idéales.",
-                f"Partir {prep} {nom_bare} en {month_lc} ? Excellente idée.",
-            ]
-        elif score >= 7.0:
-            hero_opts = [
-                f"{month} est une bonne période. {best_month} est légèrement meilleur.",
-                f"{nom_bare} en {month_lc} : solide, même si {best_month.lower()} reste le pic.",
-                f"Bonne fenêtre en {month_lc} — {best_month.lower()} est un cran au-dessus.",
-            ]
-        else:
-            hero_opts = [
-                f"{month} est difficile — {best_month} offre de bien meilleures conditions.",
-                f"Période compliquée en {month_lc}. Préférez {best_month.lower()} si possible.",
-                f"{nom_bare} en {month_lc} ? Pas la meilleure fenêtre — visez {best_month.lower()}.",
-            ]
-    else:
-        if score >= 8.5:
-            hero_opts = [
-                f"{month} is one of the best times to visit {nom}.",
-                f"{nom} in {month}: near-perfect conditions.",
-                f"Visiting {nom} in {month}? Excellent choice.",
-            ]
-        elif score >= 7.0:
-            hero_opts = [
-                f"{month} is a good time to visit. {best_month} is slightly better.",
-                f"{nom} in {month}: solid, though {best_month} remains peak.",
-                f"Good window in {month} — {best_month} is a notch above.",
-            ]
-        else:
-            hero_opts = [
-                f"{month} is a difficult time — {best_month} offers much better conditions.",
-                f"Tough conditions in {month}. Consider {best_month} if possible.",
-                f"{nom} in {month}? Not the best window — aim for {best_month}.",
-            ]
-    hero_sub = hero_opts[hash_var]
+    tier = 'excellent' if score >= 8.5 else ('good' if score >= 7.0 else 'poor')
+    hero_sub = C['monthly_hero_subs'][tier][hash_var].format(**tpl)
 
     # ── Verdict text ──
-    diff = round(best_score - score, 1)
-    if is_fr:
-        if score >= 9.0:
-            verdict_opts = [
-                f"{month} est une excellente période {prep} {nom_bare}. {m['tmax']}°C, {m['sun_h']}h de soleil — conditions optimales.",
-                f"Partir en {month_lc} {prep} {nom_bare} est un choix sûr : météo au top, {m['rain_pct']}% de risque de pluie seulement.",
-                f"{nom_bare} en {month_lc} coche toutes les cases : chaleur, soleil, peu de pluie.",
-            ]
-        elif score >= 7.0:
-            verdict_opts = [
-                f"{month} est une bonne période {prep} {nom_bare}. {best_month} reste légèrement meilleur (+{diff} pts).",
-                f"Conditions favorables en {month_lc} ({score:.1f}/10). {best_month} fait mieux mais l'écart est faible.",
-                f"{nom_bare} en {month_lc} : {m['tmax']}°C et {m['sun_h']}h de soleil. Correct, sans être le pic.",
-            ]
-        elif score >= 5.0:
-            verdict_opts = [
-                f"{month} est une période moyenne {prep} {nom_bare}. {best_month} ({best_score}/10) est nettement préférable.",
-                f"Pas la meilleure fenêtre : {m['rain_pct']}% de risque de pluie et {m['sun_h']}h de soleil. {best_month} est bien plus sûr.",
-                f"{nom_bare} en {month_lc} reste possible mais {best_month} offre un score de {best_score}/10 contre {score:.1f}.",
-            ]
-        else:
-            verdict_opts = [
-                f"{month} est difficile {prep} {nom_bare}. {best_month} ({best_score}/10) est bien plus favorable.",
-                f"Conditions défavorables en {month_lc} ({score:.1f}/10). Privilégiez {best_month.lower()} si vos dates sont flexibles.",
-                f"{nom_bare} en {month_lc} : {m['rain_pct']}% de pluie, {m['sun_h']}h de soleil. Mieux vaut reporter à {best_month.lower()}.",
-            ]
-    else:
-        if score >= 9.0:
-            verdict_opts = [
-                f"{month} is an excellent time to visit {nom}. {m['tmax']}°C, {m['sun_h']}h of sunshine — optimal conditions.",
-                f"Visiting {nom} in {month} is a safe bet: great weather, only {m['rain_pct']}% chance of rain.",
-                f"{nom} in {month} ticks all the boxes: warmth, sunshine, minimal rain.",
-            ]
-        elif score >= 7.0:
-            verdict_opts = [
-                f"{month} is a good time to visit {nom}. {best_month} remains slightly better (+{diff} pts).",
-                f"Favourable conditions in {month} ({score:.1f}/10). {best_month} scores higher but the gap is small.",
-                f"{nom} in {month}: {m['tmax']}°C and {m['sun_h']}h of sunshine. Decent, but not the peak.",
-            ]
-        elif score >= 5.0:
-            verdict_opts = [
-                f"{month} is an average time for {nom}. {best_month} ({best_score}/10) is clearly preferable.",
-                f"Not the best window: {m['rain_pct']}% rain risk and {m['sun_h']}h of sunshine. {best_month} is much safer.",
-                f"{nom} in {month} is possible but {best_month} offers a score of {best_score}/10 vs {score:.1f}.",
-            ]
-        else:
-            verdict_opts = [
-                f"{month} is a difficult time for {nom}. {best_month} ({best_score}/10) is much more favourable.",
-                f"Unfavourable conditions in {month} ({score:.1f}/10). Consider {best_month} if your dates are flexible.",
-                f"{nom} in {month}: {m['rain_pct']}% rain, {m['sun_h']}h of sunshine. Better to wait for {best_month}.",
-            ]
-    verdict_txt = verdict_opts[hash_var]
+    vtier = 'excellent' if score >= 9.0 else ('good' if score >= 7.0 else ('fair' if score >= 5.0 else 'poor'))
+    verdict_txt = C['monthly_verdicts'][vtier][hash_var].format(**tpl)
 
     # Bars
     rain_bar = bar_chart(m['rain_pct'])
@@ -1101,104 +908,28 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     sun_bar  = bar_chart(min(m['sun_h'], 14), 14)
 
     # ── Oui si / Yes if ──
-    if is_fr:
-        if score >= 8.0:
-            if is_tropical and is_dry:
-                oui_si = "profiter de la saison sèche — conditions idéales pour la plage et les excursions."
-                non_si = "voyager à petit budget — c'est la haute saison, les prix sont au plus haut."
-            elif is_hot and is_sunny:
-                oui_si = f"chercher le plein soleil — {m['sun_h']}h par jour en moyenne."
-                non_si = "mal supporter la chaleur — les températures dépassent souvent 30°C."
-            elif is_warm and is_dry:
-                oui_si = f"combiner plage, visites et randonnées — météo polyvalente ({m['tmax']}°C, peu de pluie)."
-                non_si = "éviter l'affluence touristique — c'est la période la plus fréquentée."
-            elif is_summer:
-                oui_si = "profiter de longues journées ensoleillées et d'activités en plein air."
-                non_si = "fuir la foule estivale — c'est le pic de fréquentation."
-            elif is_shoulder:
-                oui_si = "combiner bonne météo et tarifs plus doux qu'en pleine saison."
-                non_si = "avoir une garantie absolue de beau temps — quelques jours mitigés possibles."
-            else:
-                oui_si = "profiter d'un temps agréable pour toutes les activités."
-                non_si = "voyager avec un budget serré — les prix sont plus élevés en haute saison."
-        elif score >= 6.0:
-            if is_rainy:
-                oui_si = "accepter des averses en échange de prix réduits et moins de touristes."
-                non_si = "planifier des activités 100% extérieures — la pluie est fréquente."
-            elif is_cold:
-                oui_si = f"privilégier les musées et la gastronomie — il fait frais ({m['tmax']}°C)."
-                non_si = "chercher du soleil pour bronzer ou nager — ce n'est pas la bonne saison."
-            elif is_mild:
-                oui_si = "explorer la ville à pied sans souffrir de la chaleur."
-                non_si = "chercher une destination balnéaire — l'eau et l'air sont encore frais."
-            elif is_shoulder:
-                oui_si = f"profiter de l'entre-saison — moins de monde, {m['tmax']}°C agréables."
-                non_si = "garantir un ensoleillement maximal — des journées grises sont possibles."
-            else:
-                oui_si = "visiter les sites culturels et profiter de la gastronomie locale."
-                non_si = "garantir du soleil pour vos photos ou activités extérieures."
-        else:
-            if is_tropical and is_rainy:
-                oui_si = "découvrir une facette différente hors des sentiers battus, à prix cassés."
-                non_si = "craindre la pluie — c'est la mousson, les averses sont quotidiennes."
-            elif is_cold and is_winter:
-                oui_si = "apprécier l'ambiance hivernale et les prix les plus bas de l'année."
-                non_si = "chercher le soleil ou les activités de plein air."
-            elif is_rainy:
-                oui_si = "voyager hors saison avec des prix réduits et très peu de touristes."
-                non_si = "éviter la pluie — plus d'un jour sur deux est pluvieux."
-            else:
-                oui_si = "profiter de tarifs bas et d'une fréquentation minimale."
-                non_si = "rechercher un temps estival — les conditions ne s'y prêtent pas."
+    osi = C['monthly_oui_si']
+    fvars = dict(sun=m['sun_h'], tmax=m['tmax'], rain=m['rain_pct'])
+    if score >= 8.0:
+        if is_tropical and is_dry:     key = 'high_tropical_dry'
+        elif is_hot and is_sunny:      key = 'high_hot_sunny'
+        elif is_warm and is_dry:       key = 'high_warm_dry'
+        elif is_summer:                key = 'high_summer'
+        elif is_shoulder:              key = 'high_shoulder'
+        else:                          key = 'high_default'
+    elif score >= 6.0:
+        if is_rainy:                   key = 'mid_rainy'
+        elif is_cold:                  key = 'mid_cold'
+        elif is_mild:                  key = 'mid_mild'
+        elif is_shoulder:              key = 'mid_shoulder'
+        else:                          key = 'mid_default'
     else:
-        if score >= 8.0:
-            if is_tropical and is_dry:
-                oui_si = "you want to enjoy the dry season — ideal for beaches and excursions."
-                non_si = "you're on a tight budget — it's peak season with highest prices."
-            elif is_hot and is_sunny:
-                oui_si = f"you're looking for maximum sunshine — {m['sun_h']}h per day on average."
-                non_si = "you struggle with heat — temperatures regularly exceed 30°C."
-            elif is_warm and is_dry:
-                oui_si = f"you want to combine beach, sightseeing and hiking — versatile weather ({m['tmax']}°C, little rain)."
-                non_si = "you want to avoid tourist crowds — this is the busiest period."
-            elif is_summer:
-                oui_si = "you want long sunny days and outdoor activities."
-                non_si = "you want to avoid summer crowds — this is peak tourist season."
-            elif is_shoulder:
-                oui_si = "you want good weather with lower prices than peak season."
-                non_si = "you need guaranteed perfect weather — some mixed days are possible."
-            else:
-                oui_si = "you want great weather for all activities."
-                non_si = "you're on a tight budget — prices are higher during peak season."
-        elif score >= 6.0:
-            if is_rainy:
-                oui_si = "you're willing to accept showers in exchange for lower prices and fewer tourists."
-                non_si = "you're planning 100% outdoor activities — rain is frequent."
-            elif is_cold:
-                oui_si = f"you prefer museums and gastronomy — it's cool at {m['tmax']}°C."
-                non_si = "you're looking for beach weather — it's not the right season."
-            elif is_mild:
-                oui_si = "you want to explore the city on foot without suffering from heat."
-                non_si = "you're looking for a beach destination — water and air are still cool."
-            elif is_shoulder:
-                oui_si = f"you want shoulder-season value — fewer crowds, {m['tmax']}°C."
-                non_si = "you need maximum sunshine — some overcast days are possible."
-            else:
-                oui_si = "you want to explore cultural sites and local food."
-                non_si = "you need guaranteed sunshine for photos or outdoor activities."
-        else:
-            if is_tropical and is_rainy:
-                oui_si = "you want an off-the-beaten-path experience at bargain prices."
-                non_si = "you're worried about rain — it's monsoon season with daily showers."
-            elif is_cold and is_winter:
-                oui_si = "you enjoy winter atmosphere and the lowest prices of the year."
-                non_si = "you're looking for sunshine or outdoor activities."
-            elif is_rainy:
-                oui_si = "you prefer off-season travel with reduced prices and very few tourists."
-                non_si = "you want to avoid rain — more than half the days are rainy."
-            else:
-                oui_si = "you want the lowest prices and minimal crowds."
-                non_si = "you're looking for summer weather — conditions don't support it."
+        if is_tropical and is_rainy:   key = 'low_tropical_rainy'
+        elif is_cold and is_winter:    key = 'low_cold_winter'
+        elif is_rainy:                 key = 'low_rainy'
+        else:                          key = 'low_default'
+    oui_si = osi[key + '_yes'].format(**fvars)
+    non_si = osi[key + '_no'].format(**fvars)
 
     # ── Month nav ──
     MNAV_CLS = {'rec': 'mnav-rec', 'mid': 'mnav-mid', 'avoid': 'mnav-avoid'}
@@ -1208,14 +939,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         c = MNAV_CLS.get(months[i]['classe'], '')
         return f' class="{c}"' if c else ''
 
-    if is_fr:
-        month_nav = ''.join(
-            f'<a href="{slug_fr}-meteo-{MONTH_URL_FR[i]}.html"{_mnav_attr(i)}>{MABBR[i]}</a>'
-            for i in range(12))
-    else:
-        month_nav = ''.join(
-            f'<a href="{slug_en}-weather-{MONTH_URL[i]}.html"{_mnav_attr(i)}>{MABBR[i]}</a>'
-            for i in range(12))
+    month_nav = ''.join(
+        f'<a href="{slug}{C["monthly_sep"]}{C["month_url"][i]}.html"{_mnav_attr(i)}>{MABBR[i]}</a>'
+        for i in range(12))
 
     # ── Annual table ──
     table_rows = ''
@@ -1244,28 +970,28 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     # ── FAQ ──
     if is_fr:
-        faq_q1 = f"{nom_bare} en {month_lc} : est-ce une bonne période ?"
+        faq_q1 = f"{nom_bare} en {mlc} : est-ce une bonne période ?"
         if is_mountain:
             from scoring import compute_ski_score
             ski_this = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
             if ski_this >= 6.5 and score < 5:
-                faq_a1 = (f"Pour le ski, oui : score ski {ski_this}/10 en {month_lc}. "
+                faq_a1 = (f"Pour le ski, oui : score ski {ski_this}/10 en {mlc}. "
                           f"Les températures ({m['tmax']}°C max) garantissent un bon enneigement. "
                           f"Pour la randonnée estivale, préférez {best_month.lower()} ({best_score:.1f}/10).")
             elif ski_this >= 5 and score < 5:
                 faq_a1 = (f"{month} est une période correcte pour le ski (score ski {ski_this}/10). "
                           f"Les conditions ne sont pas idéales pour la randonnée ({score:.1f}/10).")
             elif score >= 9:
-                faq_a1 = f"Oui, {month_lc} est l'une des meilleures périodes {prep} {nom_bare} (score {score:.1f}/10). {m['tmax']}°C, {m['sun_h']}h de soleil — idéal pour la randonnée."
+                faq_a1 = f"Oui, {mlc} est l'une des meilleures périodes {prep} {nom_bare} (score {score:.1f}/10). {m['tmax']}°C, {m['sun_h']}h de soleil — idéal pour la randonnée."
             elif score >= 7:
-                faq_a1 = f"Oui, {month_lc} est une bonne période ({score:.1f}/10). Idéal pour les activités outdoor et la randonnée."
+                faq_a1 = f"Oui, {mlc} est une bonne période ({score:.1f}/10). Idéal pour les activités outdoor et la randonnée."
             else:
                 faq_a1 = (f"Période de transition avec un score été de {score:.1f}/10 et ski de {ski_this}/10. "
                           f"Ni la meilleure saison de ski ni d'été.")
         elif score >= 9:
-            faq_a1 = f"Oui, {month_lc} est l'une des meilleures périodes {prep} {nom_bare} (score {score:.1f}/10). {m['tmax']}°C, {m['sun_h']}h de soleil et seulement {m['rain_pct']}% de jours pluvieux."
+            faq_a1 = f"Oui, {mlc} est l'une des meilleures périodes {prep} {nom_bare} (score {score:.1f}/10). {m['tmax']}°C, {m['sun_h']}h de soleil et seulement {m['rain_pct']}% de jours pluvieux."
         elif score >= 7.5:
-            faq_a1 = f"Oui, {month_lc} est une bonne période ({score:.1f}/10). Les conditions sont favorables même si {best_month.lower()} reste le mois optimal ({best_score:.1f}/10)."
+            faq_a1 = f"Oui, {mlc} est une bonne période ({score:.1f}/10). Les conditions sont favorables même si {best_month.lower()} reste le mois optimal ({best_score:.1f}/10)."
         elif score >= 5.5:
             faq_a1 = f"{month} est une période correcte ({score:.1f}/10) mais pas idéale. Attendez-vous à {m['rain_pct']}% de jours pluvieux. {best_month} ({best_score:.1f}/10) offre de meilleures garanties."
         else:
@@ -1273,28 +999,28 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
         # Q2
         if is_mountain and is_cold:
-            faq_q2 = f"Peut-on skier {prep} {nom_bare} en {month_lc} ?"
+            faq_q2 = f"Peut-on skier {prep} {nom_bare} en {mlc} ?"
             if ski_this >= 6.5:
-                faq_a2 = f"Oui, {month_lc} est une excellente période pour le ski (score {ski_this}/10). Avec {m['tmax']}°C max et {m['rain_pct']}% de précipitations, les conditions d'enneigement sont bonnes."
+                faq_a2 = f"Oui, {mlc} est une excellente période pour le ski (score {ski_this}/10). Avec {m['tmax']}°C max et {m['rain_pct']}% de précipitations, les conditions d'enneigement sont bonnes."
             elif ski_this >= 4:
                 faq_a2 = f"Les conditions sont correctes (score ski {ski_this}/10) mais pas optimales. Vérifiez l'état des pistes avant de partir."
             else:
-                faq_a2 = f"Le ski n'est pas recommandé en {month_lc} (score ski {ski_this}/10). Les températures ({m['tmax']}°C) limitent l'enneigement."
+                faq_a2 = f"Le ski n'est pas recommandé en {mlc} (score ski {ski_this}/10). Les températures ({m['tmax']}°C) limitent l'enneigement."
         elif is_hot and is_dry:
-            faq_q2 = f"Fait-il trop chaud {prep} {nom_bare} en {month_lc} ?"
+            faq_q2 = f"Fait-il trop chaud {prep} {nom_bare} en {mlc} ?"
             _heat_fr = "C'est intense mais gérable avec de la crème solaire et de l'eau." if m['tmax'] < 38 else "La chaleur est extrême — limitez les activités aux heures fraîches."
             faq_a2 = f"Les températures atteignent {m['tmax']}°C. {_heat_fr} Ensoleillement : {m['sun_h']}h/jour."
         elif is_rainy:
-            faq_q2 = f"Pleut-il beaucoup {prep} {nom_bare} en {month_lc} ?"
-            faq_a2 = f"Oui, {m['rain_pct']}% des jours connaissent de la pluie en {month_lc}. {'En zone tropicale, ce sont souvent des averses courtes mais intenses.' if is_tropical else 'Prévoyez des activités couvertes en alternative.'}"
+            faq_q2 = f"Pleut-il beaucoup {prep} {nom_bare} en {mlc} ?"
+            faq_a2 = f"Oui, {m['rain_pct']}% des jours connaissent de la pluie en {mlc}. {'En zone tropicale, ce sont souvent des averses courtes mais intenses.' if is_tropical else 'Prévoyez des activités couvertes en alternative.'}"
         elif is_cold:
-            faq_q2 = f"Quel temps fait-il {prep} {nom_bare} en {month_lc} ?"
+            faq_q2 = f"Quel temps fait-il {prep} {nom_bare} en {mlc} ?"
             faq_a2 = f"Il fait frais avec {m['tmax']}°C en journée et {m['tmin']}°C la nuit. {m['sun_h']}h de soleil par jour. Prévoyez des vêtements chauds et privilégiez les visites intérieures."
         elif score >= 8:
-            faq_q2 = f"Que faire {prep} {nom_bare} en {month_lc} ?"
+            faq_q2 = f"Que faire {prep} {nom_bare} en {mlc} ?"
             faq_a2 = f"Avec {m['tmax']}°C et {m['sun_h']}h de soleil, toutes les activités extérieures sont possibles : {'plage, snorkeling et excursions en bateau.' if is_tropical else 'randonnées, visites de sites et terrasses.'}"
         else:
-            faq_q2 = f"Que faire {prep} {nom_bare} en {month_lc} ?"
+            faq_q2 = f"Que faire {prep} {nom_bare} en {mlc} ?"
             faq_a2 = f"Avec {m['tmax']}°C max et {m['sun_h']}h de soleil, {'concentrez-vous sur les sites culturels, musées et gastronomie locale.' if score >= 6 else 'privilégiez les activités couvertes — musées, spas, gastronomie.'}"
     else:
         faq_q1 = f"Is {month} a good time to visit {nom}?"
@@ -1360,14 +1086,14 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     }, ensure_ascii=False)
 
     if is_fr:
-        canonical = f"https://bestdateweather.com/{slug_fr}-meteo-{month_url}.html"
+        canonical = f"https://bestdateweather.com/{slug_fr}-meteo-{m_url}.html"
         cross_url = f"https://bestdateweather.com/en/{slug_en}-weather-{MONTH_URL[mi]}.html"
         hreflang_fr = canonical
         hreflang_en = cross_url
-        article_headline = f"Météo {prep} {nom_bare} en {month_lc} — Températures, pluie et conseils"
-        article_desc = f"Météo {prep} {nom_bare} en {month_lc} : {m['tmax']}°C, {m['rain_pct']}% de jours pluvieux. Score {score:.1f}/10."
+        article_headline = f"Météo {prep} {nom_bare} en {mlc} — Températures, pluie et conseils"
+        article_desc = f"Météo {prep} {nom_bare} en {mlc} : {m['tmax']}°C, {m['rain_pct']}% de jours pluvieux. Score {score:.1f}/10."
     else:
-        canonical = f"https://bestdateweather.com/en/{slug_en}-weather-{month_url}.html"
+        canonical = f"https://bestdateweather.com/en/{slug_en}-weather-{m_url}.html"
         cross_url = f"https://bestdateweather.com/{slug_fr}-meteo-{MONTH_URL_FR[mi]}.html"
         hreflang_fr = cross_url
         hreflang_en = canonical
@@ -1411,31 +1137,31 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     if is_fr:
         if title_var == 0:
-            title = f"{nom_bare} en {month_lc} : météo, pluie ({m['rain_pct']}%) et faut-il partir ? [{YEAR}]"
+            title = f"{nom_bare} en {mlc} : météo, pluie ({m['rain_pct']}%) et faut-il partir ? [{YEAR}]"
         elif title_var == 1:
-            title = f"Météo {prep} {nom_bare} en {month_lc} [{YEAR}] — {m['tmax']}°C, {m['rain_pct']}% pluie"
+            title = f"Météo {prep} {nom_bare} en {mlc} [{YEAR}] — {m['tmax']}°C, {m['rain_pct']}% pluie"
         else:
-            title = f"Partir {prep} {nom_bare} en {month_lc} ? Score {score:.1f}/10 [{YEAR}]"
+            title = f"Partir {prep} {nom_bare} en {mlc} ? Score {score:.1f}/10 [{YEAR}]"
 
         if desc_var == 0:
-            desc = f"Météo {prep} {nom_bare} en {month_lc} : {m['tmax']}°C max, {m['rain_pct']}% de jours pluvieux, {m['sun_h']}h de soleil/jour. Score {score:.1f}/10. Données 10 ans Open-Meteo."
+            desc = f"Météo {prep} {nom_bare} en {mlc} : {m['tmax']}°C max, {m['rain_pct']}% de jours pluvieux, {m['sun_h']}h de soleil/jour. Score {score:.1f}/10. Données 10 ans Open-Meteo."
         elif desc_var == 1:
-            desc = f"{nom_bare} en {month_lc} : {m['tmax']}°C, {m['sun_h']}h de soleil, {m['rain_pct']}% de pluie. {_verdict_fr} Score {score:.1f}/10."
+            desc = f"{nom_bare} en {mlc} : {m['tmax']}°C, {m['sun_h']}h de soleil, {m['rain_pct']}% de pluie. {_verdict_fr} Score {score:.1f}/10."
         elif desc_var == 2:
-            desc = f"Faut-il partir {prep} {nom_bare} en {month_lc} ? {m['tmax']}°C et {m['rain_pct']}% de pluie — score météo {score:.1f}/10 sur 10 ans de données."
+            desc = f"Faut-il partir {prep} {nom_bare} en {mlc} ? {m['tmax']}°C et {m['rain_pct']}% de pluie — score météo {score:.1f}/10 sur 10 ans de données."
         elif desc_var == 3:
-            desc = f"{nom_bare} en {month_lc} : {m['sun_h']}h de soleil, {m['tmin']}–{m['tmax']}°C. {_verdict_fr} Climat analysé sur 10 ans de données ERA5."
+            desc = f"{nom_bare} en {mlc} : {m['sun_h']}h de soleil, {m['tmin']}–{m['tmax']}°C. {_verdict_fr} Climat analysé sur 10 ans de données ERA5."
         else:
-            desc = f"{m['tmax']}°C et {m['rain_pct']}% de pluie en {month_lc} {prep} {nom_bare}. {m['sun_h']}h d'ensoleillement — score {score:.1f}/10."
+            desc = f"{m['tmax']}°C et {m['rain_pct']}% de pluie en {mlc} {prep} {nom_bare}. {m['sun_h']}h d'ensoleillement — score {score:.1f}/10."
 
         if h1_var == 0:
-            h1_text = f"Météo {prep} {nom_bare}<br/><em>en {month_lc}</em>"
+            h1_text = f"Météo {prep} {nom_bare}<br/><em>en {mlc}</em>"
         elif h1_var == 1:
-            h1_text = f"{nom_bare} en {month_lc}<br/><em>quel temps fait-il ?</em>"
+            h1_text = f"{nom_bare} en {mlc}<br/><em>quel temps fait-il ?</em>"
         else:
-            h1_text = f"Partir {prep} {nom_bare}<br/><em>en {month_lc} ?</em>"
+            h1_text = f"Partir {prep} {nom_bare}<br/><em>en {mlc} ?</em>"
 
-        og_title = f"Météo {prep} {nom_bare} en {month_lc} — {m['tmax']}°C, {m['rain_pct']}% pluie"
+        og_title = f"Météo {prep} {nom_bare} en {mlc} — {m['tmax']}°C, {m['rain_pct']}% pluie"
     else:
         if title_var == 0:
             title = f"{nom} in {month}: weather, rain ({m['rain_pct']}%) and should you go? [{YEAR}]"
@@ -1474,7 +1200,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     sim_cards_html = _build_sim_cards(cfg, similarities.get(slug_fr, [])[:3], all_dests, climate_for_sim, mi)
 
     if is_fr:
-        sim_section_title = f"Destinations similaires en {month_lc}"
+        sim_section_title = f"Destinations similaires en {mlc}"
         sim_section_label = "Explorer aussi"
     else:
         sim_section_title = f"Similar destinations in {month}"
@@ -1483,7 +1209,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     # Pillar + comparison links
     if is_fr:
         pillar_link = (f'<a href="ou-partir-en-{MONTH_URL_FR[mi]}.html" class="link-card">'
-                       f'📅 Où partir en {month_lc} — top 25</a>')
+                       f'📅 Où partir en {mlc} — top 25</a>')
     else:
         pillar_link = (f'<a href="where-to-go-in-{MONTH_URL[mi]}.html" class="link-card">'
                        f'📅 Where to go in {month} — top 25</a>')
@@ -1501,17 +1227,17 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         'fr': {
             'html_lang': 'fr',
             'hstat_tmax': 'Température max', 'hstat_rain': 'Jours pluvieux', 'hstat_sun': 'Soleil / jour',
-            'sec_summary': 'Résumé du mois', 'sec_summary_title': f'Météo {prep} {nom_bare} en {month_lc}',
+            'sec_summary': 'Résumé du mois', 'sec_summary_title': f'Météo {prep} {nom_bare} en {mlc}',
             'qf_tminmax': 'Température min / max', 'qf_rain': 'Jours pluvieux', 'qf_rain_unit': 'des jours',
             'qf_sun': 'Soleil', 'qf_sun_unit': 'par jour en moyenne', 'qf_season': 'Saison',
             'qf_score': 'Score météo', 'qf_best': 'Meilleur mois',
-            'sec_verdict': 'Décision rapide', 'sec_verdict_title': f'Faut-il partir {prep} {nom_bare} en {month_lc} ?',
+            'sec_verdict': 'Décision rapide', 'sec_verdict_title': f'Faut-il partir {prep} {nom_bare} en {mlc} ?',
             'yes_lbl': '✅ Oui si :', 'no_lbl': '❌ Non si :',
             'bar_rain': 'Pluie', 'bar_temp': 'Température', 'bar_sun': 'Soleil',
             'verdict_intro': 'Notre avis :',
-            'sec_activity': 'Selon votre projet', 'sec_activity_title': f'{nom_bare} en {month_lc} selon votre type de voyage',
+            'sec_activity': 'Selon votre projet', 'sec_activity_title': f'{nom_bare} en {mlc} selon votre type de voyage',
             'act_city': 'City-trip / culture', 'act_ext': 'Activités extérieures', 'act_beach': 'Plage / baignade', 'act_budget': 'Budget',
-            'sec_context': 'Contexte local', 'sec_context_title': f"À quoi s'attendre en {month_lc}",
+            'sec_context': 'Contexte local', 'sec_context_title': f"À quoi s'attendre en {mlc}",
             'sec_nav': 'Naviguer par mois', 'sec_nav_title': f'Tous les mois {prep} {nom_bare}',
             'sec_table': 'Tableau annuel', 'sec_table_title': 'Comparaison mois par mois',
             'th_month': 'Mois', 'th_tmin': 'T° min', 'th_tmax': 'T° max', 'th_rain': 'Pluie %',
@@ -1519,12 +1245,12 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
             'legend_ideal': 'Idéal', 'legend_ok': 'Acceptable', 'legend_bad': 'Défavorable',
             'legend_note': '◀ Mois consulté · Source Open-Meteo · 10 ans',
             'src_label': '📊 Source des données',
-            'src_text': f'Données calculées sur <strong>10 ans de relevés ERA5</strong> via Open-Meteo, avec ajustement saisonnier ECMWF. En {month_lc}, {nom_bare} affiche en moyenne <strong>{m["tmax"]}°C</strong>, {m["rain_pct"]}% de jours pluvieux et {m["sun_h"]}h de soleil par jour. Score météo global du mois : <strong>{score:.1f}/10</strong>.',
+            'src_text': f'Données calculées sur <strong>10 ans de relevés ERA5</strong> via Open-Meteo, avec ajustement saisonnier ECMWF. En {mlc}, {nom_bare} affiche en moyenne <strong>{m["tmax"]}°C</strong>, {m["rain_pct"]}% de jours pluvieux et {m["sun_h"]}h de soleil par jour. Score météo global du mois : <strong>{score:.1f}/10</strong>.',
             'src_link_text': 'Voir la méthodologie →', 'src_link': 'methodologie.html',
             'sec_compare': 'Comparaison', 'sec_compare_title': f'{month} vs {best_month} (meilleur mois)',
             'compare_intro': f'Le meilleur mois est <strong><a href="meilleure-periode-{slug_fr}.html" class="txt-inherit">{best_month}</a></strong> (score {best_score:.1f}/10). Différence :',
             'cmp_tmax': 'Température max', 'cmp_rain': 'Jours de pluie', 'cmp_sun': 'Ensoleillement',
-            'sec_faq': 'Questions fréquentes', 'sec_faq_title': f'FAQ — {nom_bare} en {month_lc}',
+            'sec_faq': 'Questions fréquentes', 'sec_faq_title': f'FAQ — {nom_bare} en {mlc}',
             'prev_label': '← Mois précédent', 'next_label': 'Mois suivant →',
             'annual_label': '📅 Vue annuelle', 'annual_text': 'Tous les mois', 'annual_best': f'Meilleur : {best_month.lower()}',
             'sec_rankings': 'Classements météo', 'sec_rankings_title': 'Comparer les destinations par météo',
@@ -1613,7 +1339,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         bk_params += f"&dest_id={booking_id}&dest_type=city"
     bk_url = f"https://www.booking.com/{cfg['booking_domain']}?{bk_params}"
     if is_fr:
-        bk_cta = f"Voir les h\u00e9bergements {prep} {nom_bare} en {month_lc}"
+        bk_cta = f"Voir les h\u00e9bergements {prep} {nom_bare} en {mlc}"
     else:
         bk_cta = f"Find places to stay in {nom} in {month}"
     booking_section = f'''<section class="section">
@@ -1626,8 +1352,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 </section>'''
 
     # ── Activities (GetYourGuide) – monthly ──
-    gyg_domain_m = 'getyourguide.fr' if is_fr else 'getyourguide.com'
-    gyg_lang_m = 'fr' if is_fr else 'en'
+    gyg_domain_m = C['gyg_domain']
+    gyg_lang_m = C['gyg_lang']
     gyg_dest_m = quote_plus(f"{nom}, {country_name}")
     gyg_url_m = f"https://www.{gyg_domain_m}/s/?q={gyg_dest_m}&partner_id={GYG_PARTNER_ID}"
     activities_section = f'''<section class="section">
@@ -1807,7 +1533,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <a href="{prev_url}" class="nav-card">
  <div class="f11-slate3-mb">{L['prev_label']}</div>
  <div class="fw700-navy">{MONTHS[prev_mi]}</div>
- <div class="f12-slate2">{months[prev_mi]['tmax']}°C · {months[prev_mi]['rain_pct']}% {'pluie' if is_fr else 'rain'}</div>
+ <div class="f12-slate2">{months[prev_mi]['tmax']}°C · {months[prev_mi]['rain_pct']}% {C['lbl_rain_word']}</div>
  </a>
  <a href="{annual_link}" class="nav-card-active">
  <div class="f11-slate3-mb">{L['annual_label']}</div>
@@ -1817,7 +1543,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <a href="{next_url}" class="nav-card">
  <div class="f11-slate3-mb">{L['next_label']}</div>
  <div class="fw700-navy">{MONTHS[next_mi]}</div>
- <div class="f12-slate2">{months[next_mi]['tmax']}°C · {months[next_mi]['rain_pct']}% {'pluie' if is_fr else 'rain'}</div>
+ <div class="f12-slate2">{months[next_mi]['tmax']}°C · {months[next_mi]['rain_pct']}% {C['lbl_rain_word']}</div>
  </a>
  </div>
  </section>
