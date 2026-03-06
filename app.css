@@ -116,6 +116,8 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
 .hero-loc-wrap{}
 .hero-loc{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:3px;letter-spacing:.1px}
 .hero-date{font-size:12px;color:var(--slate3);font-weight:400}
+.fiche-link-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--teal,#0d9488);background:rgba(13,148,136,.08);border:1px solid rgba(13,148,136,.25);border-radius:20px;padding:3px 10px;text-decoration:none;transition:background .15s,border-color .15s;white-space:nowrap}
+.fiche-link-btn:hover{background:rgba(13,148,136,.16);border-color:rgba(13,148,136,.5)}
 .confidence-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.4px;flex-shrink:0}
 .conf-real{background:var(--green-bg);color:var(--green);border:1px solid rgba(26,122,74,.2)}
 .conf-hybrid{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(26,95,154,.2)}

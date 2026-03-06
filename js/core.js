@@ -1466,6 +1466,7 @@ function run() {
  window._lastDiff=diffDays;
  btnEl.disabled=true; errEl.style.display='none';
  hideSection('hero');hideSection('sec-hourly');hideSection('sec-scenarios');
+ var _flw=document.getElementById('fiche-link-wrap');if(_flw){_flw.style.display='none';_flw.innerHTML='';}
  document.getElementById('foot-note').style.display='none';
  progEl.style.display='block';setP(0,T.progLocating);
  // Avertir si pas de sélection depuis la liste (risque de mauvaise ville)
@@ -1480,6 +1481,23 @@ function run() {
  setP(5,loc.name+T.progFound);
  document.getElementById('r-loc').textContent=loc.name+' — '+(loc.country||'');
  document.getElementById('r-date').textContent=new Date(yr,mo,da,12,0,0).toLocaleDateString(CFG.dateLocale,{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+ // Fiche destination link
+ (function(){
+  var fw=document.getElementById('fiche-link-wrap');
+  if(!fw)return;
+  fw.style.display='none'; fw.innerHTML='';
+  var slugMap=window.BDW_FICHE_SLUGS;
+  if(!slugMap)return;
+  var normName=loc.name.toLowerCase().replace(/[àâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[îï]/g,'i').replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/ç/g,'c').replace(/[^a-z0-9 ]/g,'').trim();
+  var entry=slugMap[normName];
+  if(!entry)return;
+  var isFr=(CFG.dateLocale==='fr-FR'||CFG.dateLocale==='fr');
+  var ficheSlug=isFr?entry.fr:entry.en;
+  var ficheUrl=isFr?'meilleure-periode-'+ficheSlug+'.html':'best-time-to-visit-'+ficheSlug+'.html';
+  var label=isFr?'Analyse complète de '+loc.name:'Complete guide for '+loc.name;
+  fw.innerHTML='<a class="fiche-link-btn" href="'+ficheUrl+'">↗ '+label+'</a>';
+  fw.style.display='block';
+ })();
  renderAstro(loc.lat,loc.lon,yr,mo,da);
  // Lancer SST en parallèle (silencieux — n'affecte pas le score principal)
  window._lastSSTResult = null;
