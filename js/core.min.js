@@ -1490,13 +1490,18 @@ function run() {
   fw.style.display='none'; fw.innerHTML='';
   var slugMap=window.BDW_FICHE_SLUGS;
   if(!slugMap)return;
-  var normName=loc.name.toLowerCase().replace(/[àâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[îï]/g,'i').replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/ç/g,'c').replace(/[^a-z0-9 ]/g,'').trim();
-  var entry=slugMap[normName];
+  var _normStr=function(s){return s.toLowerCase().replace(/[àâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[îï]/g,'i').replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/ç/g,'c').replace(/[^a-z0-9 ]/g,'').trim();};
+  // Try 1: full name
+  var entry=slugMap[_normStr(loc.name)];
+  // Try 2: first word only (handles "Guyane française" → "guyane")
+  if(!entry) entry=slugMap[_normStr(loc.name.split(/[\s,\-]/)[0])];
+  // Try 3: without leading articles (la, le, les, l')
+  if(!entry){var bare=loc.name.replace(/^(la |le |les |l'|l')/i,'');entry=slugMap[_normStr(bare)];}
   if(!entry)return;
   var isFr=(CFG.dateLocale==='fr-FR'||CFG.dateLocale==='fr');
   var ficheSlug=isFr?entry.fr:entry.en;
   var ficheUrl=isFr?'meilleure-periode-'+ficheSlug+'.html':'best-time-to-visit-'+ficheSlug+'.html';
-  var label=isFr?'Analyse complète de '+loc.name:'Complete guide for '+loc.name;
+  var label=isFr?'Analyse complète de '+(loc.name):'Complete guide for '+loc.name;
   fw.innerHTML='<a class="fiche-link-btn" href="'+ficheUrl+'">↗ '+label+'</a>';
   fw.style.display='block';
  })();
