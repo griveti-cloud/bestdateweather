@@ -379,7 +379,8 @@
     "sim_label": "Explorer aussi",
     "verdict_period_rec": "Période recommandée.",
     "verdict_period_avg": "Période acceptable.",
-    "verdict_period_bad": "Période déconseillée."
+    "verdict_period_bad": "Période déconseillée.",
+    "act_beach_na": "— Sans accès mer"
   },
   "narratives": {
     "tropical_rainy": "En {month_lc}, {name} est en pleine saison des pluies ({rain}% de jours pluvieux). Les averses tropicales sont généralement courtes mais intenses — prévoyez un imperméable léger.",

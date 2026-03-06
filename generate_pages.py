@@ -866,10 +866,14 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     next_mi = (mi + 1) % 12
 
     # Activities — use locale labels
+    is_coastal  = dest.get('coastal', 'True').strip().lower() in ('true', '1', 'yes')
     act_city  = C['lbl_m_act_city_good'] if score >= 6.5 else C['lbl_m_act_city_ok']
     act_ext   = C['lbl_m_act_ext_good'] if score >= 7.5 else (C['lbl_m_act_ext_ok'] if score >= 6.0 else C['lbl_m_act_ext_bad'])
-    act_beach = (C['lbl_m_act_beach_good'] if score >= 7.5 and m['tmax'] >= 25
-                 else (C['lbl_m_act_beach_ok'] if score >= 6.5 and m['tmax'] >= 20 else C['lbl_m_act_beach_bad']))
+    if not is_coastal:
+        act_beach = C['lbl_m_act_beach_na']
+    else:
+        act_beach = (C['lbl_m_act_beach_good'] if score >= 7.5 and m['tmax'] >= 25
+                     else (C['lbl_m_act_beach_ok'] if score >= 6.5 and m['tmax'] >= 20 else C['lbl_m_act_beach_bad']))
 
     # Context flags
     is_tropical = dest.get('tropical', '0') == '1'
@@ -1374,7 +1378,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <ul class="act-list">
  <li class="act-item-odd">🏙️ {L['act_city']} : <strong>{act_city}</strong></li>
  <li class="act-item-even">🚶 {L['act_ext']} : <strong>{act_ext}</strong></li>
- <li class="act-item-odd">🏖️ {L['act_beach']} : <strong>{act_beach}</strong></li>
+ <li class="act-item-odd">{L['act_beach']} : <strong>{act_beach}</strong></li>
  <li class="act-item-last">💰 {L['act_budget']} : <strong>{bud}</strong></li>
  </ul>
  </section>

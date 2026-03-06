@@ -359,7 +359,8 @@
     "sim_label": "Explore also",
     "verdict_period_rec": "Recommended period.",
     "verdict_period_avg": "Average period.",
-    "verdict_period_bad": "Not recommended."
+    "verdict_period_bad": "Not recommended.",
+    "act_beach_na": "— No sea access"
   },
   "narratives": {
     "tropical_rainy": "In {month}, {name} is in the middle of the rainy season ({rain}% rainy days). Tropical showers are usually short but intense — pack a light raincoat.",
