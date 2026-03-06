@@ -1649,11 +1649,14 @@ function switchMode(mode) {
  if (md) md.className = 'mode-btn' + (isDate ? ' active' : '');
  if (ma) ma.className = 'mode-btn' + (!isDate ? ' active' : '');
  if (aw) aw.style.display = isDate ? 'none' : 'block';
- var dateEls = ['date-form','hero','sec-hourly','sec-scenarios','empty','foot-note','uc-filter-wrap'];
+ var dateEls = ['date-form','hero','sec-hourly','sec-scenarios','empty','foot-note'];
  dateEls.forEach(function(id){
   var el = document.getElementById(id);
   if (el) el.style.display = isDate ? '' : 'none';
  });
+ // uc-filter-wrap must stay hidden until showResults() — never reset to ''
+ var ucfw = document.getElementById('uc-filter-wrap');
+ if (ucfw) ucfw.style.display = 'none';
  if (isDate) { var empt = document.getElementById('empty'); if (empt) empt.style.display = 'block'; }
 }
 
