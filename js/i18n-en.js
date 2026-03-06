@@ -165,6 +165,7 @@ window.BDW_T = {
  errForecast: 'Forecast unavailable',
  errDataReason: 'Weather data unavailable for this destination ({r})',
  errData: 'Weather data unavailable for this destination',
+ errOffline: '📡 You\'re offline — an internet connection is required to fetch weather data.',
  errPrefix: 'Error: ',
  progLocating: 'Locating…', progFound: ' found…',
  progFetching: 'Fetching live forecast…', progDone: 'Done',

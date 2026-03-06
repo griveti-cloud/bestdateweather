@@ -1464,6 +1464,8 @@ function run() {
  var target=new Date(yr,mo,da,0,0,0);
  var diffDays=Math.round((target.getTime()-today.getTime())/86400000);
  window._lastDiff=diffDays;
+ // Offline check
+ if (!navigator.onLine) { errEl.textContent=T.errOffline; errEl.style.display='block'; return; }
  btnEl.disabled=true; errEl.style.display='none';
  hideSection('hero');hideSection('sec-hourly');hideSection('sec-scenarios');
  var _flw=document.getElementById('fiche-link-wrap');if(_flw){_flw.style.display='none';_flw.innerHTML='';}
@@ -1561,7 +1563,11 @@ function run() {
     }
     progEl.style.display='none';btnEl.disabled=false;
  });
- }).catch(function(err){errEl.textContent=T.errPrefix+err.message;errEl.style.display='block';progEl.style.display='none';showSection('empty');btnEl.disabled=false;});
+ }).catch(function(err){
+  var isNetErr = !navigator.onLine || err instanceof TypeError;
+  errEl.textContent = isNetErr ? T.errOffline : T.errPrefix+err.message;
+  errEl.style.display='block';progEl.style.display='none';showSection('empty');btnEl.disabled=false;
+});
 }
 
 

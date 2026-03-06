@@ -165,6 +165,7 @@ window.BDW_T = {
  errForecast: 'Prévisions indisponibles',
  errDataReason: 'Données météo indisponibles pour cette destination ({r})',
  errData: 'Données météo indisponibles pour cette destination',
+ errOffline: '📡 Hors-ligne — une connexion internet est nécessaire pour récupérer les données météo.',
  errPrefix: 'Erreur : ',
  progLocating: 'Localisation…', progFound: ' trouvé…',
  progFetching: 'Prévisions météo réelles…', progDone: 'Terminé',
