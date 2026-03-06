@@ -961,7 +961,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
             cls = best_class(mo['classe'], ski)
             ski_col = f'<td>{ski:.1f}/10</td>'
         table_rows += (f'<tr class="{cls}"{highlight}>'
-                       f'<td>{weather_emoji(mo["tmax"], mo["rain_pct"], mo["sun_h"])} {MONTHS[i]}</td>'
+                       f'<td>{weather_emoji(mo["tmax"], mo["rain_pct"], mo["sun_h"], mo.get("tmin"))} {MONTHS[i]}</td>'
                        f'<td>{mo["tmin"]}°C</td><td>{mo["tmax"]}°C</td>'
                        f'<td>{mo["rain_pct"]}%</td>'
                        f'<td>{mo["precip"]:.1f}</td>'
