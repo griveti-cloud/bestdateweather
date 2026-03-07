@@ -185,6 +185,156 @@ MAPPING = {
     'Papouasie-Nouvelle-Guinée': ('oceanie', 'Pacifique & Outre-mer'),
 }
 
+# ── Country name translations {fr_name: {fr, en, es}} ──
+COUNTRY_NAMES_TRANS = {
+    'Afrique du Sud':{'fr':'Afrique du Sud','en':'South Africa','es':'Sudáfrica'},
+    'Albanie':{'fr':'Albanie','en':'Albania','es':'Albania'},
+    'Allemagne':{'fr':'Allemagne','en':'Germany','es':'Alemania'},
+    'Antigua-et-Barbuda':{'fr':'Antigua-et-Barbuda','en':'Antigua & Barbuda','es':'Antigua y Barbuda'},
+    'Arabie Saoudite':{'fr':'Arabie Saoudite','en':'Saudi Arabia','es':'Arabia Saudita'},
+    'Argentine':{'fr':'Argentine','en':'Argentina','es':'Argentina'},
+    'Aruba':{'fr':'Aruba','en':'Aruba','es':'Aruba'},
+    'Australie':{'fr':'Australie','en':'Australia','es':'Australia'},
+    'Autriche':{'fr':'Autriche','en':'Austria','es':'Austria'},
+    'Bahamas':{'fr':'Bahamas','en':'Bahamas','es':'Bahamas'},
+    'Bahreïn':{'fr':'Bahreïn','en':'Bahrain','es':'Baréin'},
+    'Barbade':{'fr':'Barbade','en':'Barbados','es':'Barbados'},
+    'Belgique':{'fr':'Belgique','en':'Belgium','es':'Bélgica'},
+    'Belize':{'fr':'Belize','en':'Belize','es':'Belice'},
+    'Bhoutan':{'fr':'Bhoutan','en':'Bhutan','es':'Bután'},
+    'Bolivie':{'fr':'Bolivie','en':'Bolivia','es':'Bolivia'},
+    'Bosnie-Herzégovine':{'fr':'Bosnie-Herzégovine','en':'Bosnia & Herzegovina','es':'Bosnia y Herzegovina'},
+    'Botswana':{'fr':'Botswana','en':'Botswana','es':'Botsuana'},
+    'Brésil':{'fr':'Brésil','en':'Brazil','es':'Brasil'},
+    'Bulgarie':{'fr':'Bulgarie','en':'Bulgaria','es':'Bulgaria'},
+    'Burkina Faso':{'fr':'Burkina Faso','en':'Burkina Faso','es':'Burkina Faso'},
+    'Bénin':{'fr':'Bénin','en':'Benin','es':'Benín'},
+    'Cambodge':{'fr':'Cambodge','en':'Cambodia','es':'Camboya'},
+    'Cameroun':{'fr':'Cameroun','en':'Cameroon','es':'Camerún'},
+    'Canada':{'fr':'Canada','en':'Canada','es':'Canadá'},
+    'Cap-Vert':{'fr':'Cap-Vert','en':'Cape Verde','es':'Cabo Verde'},
+    'Chili':{'fr':'Chili','en':'Chile','es':'Chile'},
+    'Chine':{'fr':'Chine','en':'China','es':'China'},
+    'Chypre':{'fr':'Chypre','en':'Cyprus','es':'Chipre'},
+    'Colombie':{'fr':'Colombie','en':'Colombia','es':'Colombia'},
+    'Corée du Sud':{'fr':'Corée du Sud','en':'South Korea','es':'Corea del Sur'},
+    'Costa Rica':{'fr':'Costa Rica','en':'Costa Rica','es':'Costa Rica'},
+    'Croatie':{'fr':'Croatie','en':'Croatia','es':'Croacia'},
+    'Cuba':{'fr':'Cuba','en':'Cuba','es':'Cuba'},
+    'Curaçao':{'fr':'Curaçao','en':'Curaçao','es':'Curazao'},
+    "Côte d'Ivoire":{'fr':"Côte d'Ivoire",'en':'Ivory Coast','es':'Costa de Marfil'},
+    'Danemark':{'fr':'Danemark','en':'Denmark','es':'Dinamarca'},
+    'Dominique':{'fr':'Dominique','en':'Dominica','es':'Dominica'},
+    'Espagne':{'fr':'Espagne','en':'Spain','es':'España'},
+    'Estonie':{'fr':'Estonie','en':'Estonia','es':'Estonia'},
+    'Fidji':{'fr':'Fidji','en':'Fiji','es':'Fiyi'},
+    'Finlande':{'fr':'Finlande','en':'Finland','es':'Finlandia'},
+    'France':{'fr':'France','en':'France','es':'Francia'},
+    'Ghana':{'fr':'Ghana','en':'Ghana','es':'Ghana'},
+    'Grèce':{'fr':'Grèce','en':'Greece','es':'Grecia'},
+    'Guatemala':{'fr':'Guatemala','en':'Guatemala','es':'Guatemala'},
+    'Géorgie':{'fr':'Géorgie','en':'Georgia','es':'Georgia'},
+    'Honduras':{'fr':'Honduras','en':'Honduras','es':'Honduras'},
+    'Hongrie':{'fr':'Hongrie','en':'Hungary','es':'Hungría'},
+    'Inde':{'fr':'Inde','en':'India','es':'India'},
+    'Indonésie':{'fr':'Indonésie','en':'Indonesia','es':'Indonesia'},
+    'Iran':{'fr':'Iran','en':'Iran','es':'Irán'},
+    'Irlande':{'fr':'Irlande','en':'Ireland','es':'Irlanda'},
+    'Islande':{'fr':'Islande','en':'Iceland','es':'Islandia'},
+    'Israël':{'fr':'Israël','en':'Israel','es':'Israel'},
+    'Italie':{'fr':'Italie','en':'Italy','es':'Italia'},
+    'Jamaïque':{'fr':'Jamaïque','en':'Jamaica','es':'Jamaica'},
+    'Japon':{'fr':'Japon','en':'Japan','es':'Japón'},
+    'Jordanie':{'fr':'Jordanie','en':'Jordan','es':'Jordania'},
+    'Kazakhstan':{'fr':'Kazakhstan','en':'Kazakhstan','es':'Kazajistán'},
+    'Kenya':{'fr':'Kenya','en':'Kenya','es':'Kenia'},
+    'Kirghizistan':{'fr':'Kirghizistan','en':'Kyrgyzstan','es':'Kirguistán'},
+    'Koweït':{'fr':'Koweït','en':'Kuwait','es':'Kuwait'},
+    'Laos':{'fr':'Laos','en':'Laos','es':'Laos'},
+    'Lettonie':{'fr':'Lettonie','en':'Latvia','es':'Letonia'},
+    'Liban':{'fr':'Liban','en':'Lebanon','es':'Líbano'},
+    'Lituanie':{'fr':'Lituanie','en':'Lithuania','es':'Lituania'},
+    'Macédoine du Nord':{'fr':'Macédoine du Nord','en':'North Macedonia','es':'Macedonia del Norte'},
+    'Madagascar':{'fr':'Madagascar','en':'Madagascar','es':'Madagascar'},
+    'Malaisie':{'fr':'Malaisie','en':'Malaysia','es':'Malasia'},
+    'Maldives':{'fr':'Maldives','en':'Maldives','es':'Maldivas'},
+    'Malte':{'fr':'Malte','en':'Malta','es':'Malta'},
+    'Maroc':{'fr':'Maroc','en':'Morocco','es':'Marruecos'},
+    'Maurice':{'fr':'Maurice','en':'Mauritius','es':'Mauricio'},
+    'Mexique':{'fr':'Mexique','en':'Mexico','es':'México'},
+    'Monaco':{'fr':'Monaco','en':'Monaco','es':'Mónaco'},
+    'Mongolie':{'fr':'Mongolie','en':'Mongolia','es':'Mongolia'},
+    'Monténégro':{'fr':'Monténégro','en':'Montenegro','es':'Montenegro'},
+    'Mozambique':{'fr':'Mozambique','en':'Mozambique','es':'Mozambique'},
+    'Myanmar':{'fr':'Myanmar','en':'Myanmar','es':'Myanmar'},
+    'Namibie':{'fr':'Namibie','en':'Namibia','es':'Namibia'},
+    'Nicaragua':{'fr':'Nicaragua','en':'Nicaragua','es':'Nicaragua'},
+    'Nigeria':{'fr':'Nigeria','en':'Nigeria','es':'Nigeria'},
+    'Norvège':{'fr':'Norvège','en':'Norway','es':'Noruega'},
+    'Nouvelle-Calédonie':{'fr':'Nouvelle-Calédonie','en':'New Caledonia','es':'Nueva Caledonia'},
+    'Nouvelle-Zélande':{'fr':'Nouvelle-Zélande','en':'New Zealand','es':'Nueva Zelanda'},
+    'Népal':{'fr':'Népal','en':'Nepal','es':'Nepal'},
+    'Oman':{'fr':'Oman','en':'Oman','es':'Omán'},
+    'Ouganda':{'fr':'Ouganda','en':'Uganda','es':'Uganda'},
+    'Ouzbékistan':{'fr':'Ouzbékistan','en':'Uzbekistan','es':'Uzbekistán'},
+    'Panama':{'fr':'Panama','en':'Panama','es':'Panamá'},
+    'Papouasie-Nouvelle-Guinée':{'fr':'Papouasie-Nouvelle-Guinée','en':'Papua New Guinea','es':'Papúa Nueva Guinea'},
+    'Paraguay':{'fr':'Paraguay','en':'Paraguay','es':'Paraguay'},
+    'Pays-Bas':{'fr':'Pays-Bas','en':'Netherlands','es':'Países Bajos'},
+    'Pays-Bas caribéens':{'fr':'Pays-Bas caribéens','en':'Caribbean Netherlands','es':'Países Bajos del Caribe'},
+    'Philippines':{'fr':'Philippines','en':'Philippines','es':'Filipinas'},
+    'Pologne':{'fr':'Pologne','en':'Poland','es':'Polonia'},
+    'Polynésie française':{'fr':'Polynésie française','en':'French Polynesia','es':'Polinesia Francesa'},
+    'Porto Rico':{'fr':'Porto Rico','en':'Puerto Rico','es':'Puerto Rico'},
+    'Portugal':{'fr':'Portugal','en':'Portugal','es':'Portugal'},
+    'Pérou':{'fr':'Pérou','en':'Peru','es':'Perú'},
+    'Qatar':{'fr':'Qatar','en':'Qatar','es':'Catar'},
+    'Roumanie':{'fr':'Roumanie','en':'Romania','es':'Rumanía'},
+    'Royaume-Uni':{'fr':'Royaume-Uni','en':'United Kingdom','es':'Reino Unido'},
+    'Rwanda':{'fr':'Rwanda','en':'Rwanda','es':'Ruanda'},
+    'République Dominicaine':{'fr':'République Dominicaine','en':'Dominican Republic','es':'República Dominicana'},
+    'Saint-Vincent-et-les-Grenadines':{'fr':'Saint-Vincent-et-les-Grenadines','en':'St. Vincent & Grenadines','es':'San Vicente y las Granadinas'},
+    'Sainte-Lucie':{'fr':'Sainte-Lucie','en':'Saint Lucia','es':'Santa Lucía'},
+    'Samoa':{'fr':'Samoa','en':'Samoa','es':'Samoa'},
+    'Serbie':{'fr':'Serbie','en':'Serbia','es':'Serbia'},
+    'Seychelles':{'fr':'Seychelles','en':'Seychelles','es':'Seychelles'},
+    'Sierra Leone':{'fr':'Sierra Leone','en':'Sierra Leone','es':'Sierra Leona'},
+    'Singapour':{'fr':'Singapour','en':'Singapore','es':'Singapur'},
+    'Slovaquie':{'fr':'Slovaquie','en':'Slovakia','es':'Eslovaquia'},
+    'Slovénie':{'fr':'Slovénie','en':'Slovenia','es':'Eslovenia'},
+    'Sri Lanka':{'fr':'Sri Lanka','en':'Sri Lanka','es':'Sri Lanka'},
+    'Suisse':{'fr':'Suisse','en':'Switzerland','es':'Suiza'},
+    'Suède':{'fr':'Suède','en':'Sweden','es':'Suecia'},
+    'Sénégal':{'fr':'Sénégal','en':'Senegal','es':'Senegal'},
+    'Tanzanie':{'fr':'Tanzanie','en':'Tanzania','es':'Tanzania'},
+    'Taïwan':{'fr':'Taïwan','en':'Taiwan','es':'Taiwán'},
+    'Tchéquie':{'fr':'Tchéquie','en':'Czech Republic','es':'República Checa'},
+    'Thaïlande':{'fr':'Thaïlande','en':'Thailand','es':'Tailandia'},
+    'Togo':{'fr':'Togo','en':'Togo','es':'Togo'},
+    'Tonga':{'fr':'Tonga','en':'Tonga','es':'Tonga'},
+    'Trinité-et-Tobago':{'fr':'Trinité-et-Tobago','en':'Trinidad & Tobago','es':'Trinidad y Tobago'},
+    'Tunisie':{'fr':'Tunisie','en':'Tunisia','es':'Túnez'},
+    'Turks-et-Caïcos':{'fr':'Turks-et-Caïcos','en':'Turks & Caicos','es':'Islas Turcas y Caicos'},
+    'Turquie':{'fr':'Turquie','en':'Turkey','es':'Turquía'},
+    'Ukraine':{'fr':'Ukraine','en':'Ukraine','es':'Ucrania'},
+    'Uruguay':{'fr':'Uruguay','en':'Uruguay','es':'Uruguay'},
+    'Vanuatu':{'fr':'Vanuatu','en':'Vanuatu','es':'Vanuatu'},
+    'Viêt Nam':{'fr':'Viêt Nam','en':'Vietnam','es':'Vietnam'},
+    'Yémen':{'fr':'Yémen','en':'Yemen','es':'Yemen'},
+    'Zambie':{'fr':'Zambie','en':'Zambia','es':'Zambia'},
+    'Zimbabwe':{'fr':'Zimbabwe','en':'Zimbabwe','es':'Zimbabue'},
+    'Écosse':{'fr':'Écosse','en':'Scotland','es':'Escocia'},
+    'Égypte':{'fr':'Égypte','en':'Egypt','es':'Egipto'},
+    'Émirats Arabes Unis':{'fr':'Émirats Arabes Unis','en':'United Arab Emirates','es':'Emiratos Árabes Unidos'},
+    'Équateur':{'fr':'Équateur','en':'Ecuador','es':'Ecuador'},
+    'États-Unis':{'fr':'États-Unis','en':'United States','es':'Estados Unidos'},
+    'Éthiopie':{'fr':'Éthiopie','en':'Ethiopia','es':'Etiopía'},
+    'Îles Cook':{'fr':'Îles Cook','en':'Cook Islands','es':'Islas Cook'},
+}
+
+MIN_COUNTRY_SIZE = 3  # own accordion if >= 3 destinations
+OTHERS_LABEL = {'fr':'Autres pays','en':'Other countries','es':'Otros países'}
+
 # 5 mega-regions in order (France merged into Europe)
 MEGAS = [
     ('europe',     1, {'fr': '🌊 Europe',                         'en': '🌊 Europe',                    'es': '🌊 Europa'}),
@@ -395,11 +545,12 @@ def build_hub(destinations, loc):
             continue
         else:
             mega_id, sub_name = MAPPING[pays]
+        country_key = pays
         if mega_id not in megas:
             megas[mega_id] = {}
-        if sub_name not in megas[mega_id]:
-            megas[mega_id][sub_name] = []
-        megas[mega_id][sub_name].append(d)
+        if country_key not in megas[mega_id]:
+            megas[mega_id][country_key] = []
+        megas[mega_id][country_key].append(d)
 
     L = []
 
@@ -417,7 +568,7 @@ def build_hub(destinations, loc):
         label = labels[lang]
         subs_data = megas[mega_id]
         cnt = sum(len(v) for v in subs_data.values())
-        has_subs = len(subs_data) > 1
+        has_subs = True  # always group by country
 
         L.append(f'<div class="dh-acc">')
         L.append(f'<button class="dh-acc-head" aria-expanded="false">')
@@ -426,14 +577,23 @@ def build_hub(destinations, loc):
         L.append(f'<span class="dh-acc-chev">▾</span></span></button>')
         L.append(f'<div class="dh-acc-body">')
 
-        sorted_subs = sorted(subs_data.items(), key=lambda x: SUB_ORDER.get(x[0], 99))
+        big = {k: v for k, v in subs_data.items() if len(v) >= MIN_COUNTRY_SIZE}
+        small = {k: v for k, v in subs_data.items() if len(v) < MIN_COUNTRY_SIZE}
+        sorted_subs = sorted(big.items(), key=lambda x: (-len(x[1]), x[0]))
+        if small:
+            others_dests = [d for v in small.values() for d in v]
+            sorted_subs = sorted_subs + [('__others__', others_dests)]
 
         if has_subs:
             for sub_name, dests in sorted_subs:
                 sub_cnt = len(dests)
                 L.append(f'<div class="dh-sub">')
                 L.append(f'<button class="dh-sub-head">')
-                sub_label = SUB_NAMES.get(sub_name, {}).get(lang, sub_name)
+                if sub_name == '__others__':
+                    sub_label = OTHERS_LABEL.get(lang, 'Other countries')
+                else:
+                    trans = COUNTRY_NAMES_TRANS.get(sub_name, {})
+                    sub_label = trans.get(lang, sub_name)
                 L.append(f'<span class="dh-sub-label">{html_mod.escape(sub_label)}</span>')
                 L.append(f'<span class="dh-acc-meta"><span class="dh-sub-count">{sub_cnt}</span>')
                 L.append(f'<span class="dh-sub-chev">▾</span></span></button>')
