@@ -132,8 +132,8 @@
   },
   "cards": {
     "file": "cards.csv",
-    "title_key": "titre",
-    "text_key": "texte"
+    "title_key": "title",
+    "text_key": "text"
   },
   "footer": {
     "data_by": "Données météo par Open-Meteo.com",
