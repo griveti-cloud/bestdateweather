@@ -128,8 +128,7 @@
     "monthly_sep": "-meteo-",
     "pillar_prefix": "ou-partir-en-",
     "cross_annual_prefix": "best-time-to-visit-",
-    "cross_monthly_sep": "-weather-",
-    "comparison_tpl": "{a}-ou-{b}-climat.html"
+    "cross_monthly_sep": "-weather-"
   },
   "cards": {
     "file": "cards.csv",

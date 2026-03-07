@@ -128,9 +128,7 @@
     "monthly_sep": "-clima-",
     "pillar_prefix": "../es/donde-ir-en-",
     "cross_annual_prefix": "meilleure-periode-",
-    "cross_monthly_sep": "-meteo-",
-    "comparison_glob": "*-vs-*-clima.html",
-    "comparison_tpl": "{a}-o-{b}-clima.html"
+    "cross_monthly_sep": "-meteo-"
   },
   "cards": {
     "file": "cards_en.csv",

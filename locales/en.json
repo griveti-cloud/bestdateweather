@@ -128,9 +128,7 @@
     "monthly_sep": "-weather-",
     "pillar_prefix": "where-to-go-in-",
     "cross_annual_prefix": "meilleure-periode-",
-    "cross_monthly_sep": "-meteo-",
-    "comparison_glob": "*-vs-*-weather.html",
-    "comparison_tpl": "{a}-or-{b}-climate.html"
+    "cross_monthly_sep": "-meteo-"
   },
   "cards": {
     "file": "cards_en.csv",
