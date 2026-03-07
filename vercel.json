@@ -52,66 +52,6 @@
       "permanent": false
     },
     {
-      "source": "/es/donde-ir-en-diciembre.html",
-      "destination": "/en/where-to-go-in-december.html",
-      "permanent": false
-    },
-    {
-      "source": "/es/donde-ir-en-noviembre.html",
-      "destination": "/en/where-to-go-in-november.html",
-      "permanent": false
-    },
-    {
-      "source": "/es/donde-ir-en-octubre.html",
-      "destination": "/en/where-to-go-in-october.html",
-      "permanent": false
-    },
-    {
-      "source": "/es/donde-ir-en-septiembre.html",
-      "destination": "/en/where-to-go-in-september.html",
-      "permanent": false
-    },
-    {
-      "source": "/es/donde-ir-en-agosto.html",
-      "destination": "/en/where-to-go-in-august.html",
-      "permanent": false
-    },
-    {
-      "source": "/es/donde-ir-en-julio.html",
-      "destination": "/en/where-to-go-in-july.html",
-      "permanent": false
-    },
-    {
-      "source": "/es/donde-ir-en-junio.html",
-      "destination": "/en/where-to-go-in-june.html",
-      "permanent": false
-    },
-    {
-      "source": "/es/donde-ir-en-mayo.html",
-      "destination": "/en/where-to-go-in-may.html",
-      "permanent": false
-    },
-    {
-      "source": "/es/donde-ir-en-abril.html",
-      "destination": "/en/where-to-go-in-april.html",
-      "permanent": false
-    },
-    {
-      "source": "/es/donde-ir-en-marzo.html",
-      "destination": "/en/where-to-go-in-march.html",
-      "permanent": false
-    },
-    {
-      "source": "/es/donde-ir-en-febrero.html",
-      "destination": "/en/where-to-go-in-february.html",
-      "permanent": false
-    },
-    {
-      "source": "/es/donde-ir-en-enero.html",
-      "destination": "/en/where-to-go-in-january.html",
-      "permanent": false
-    },
-    {
       "source": "/methodology-en.html",
       "destination": "/en/methodology.html",
       "permanent": true
