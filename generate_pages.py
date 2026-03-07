@@ -626,6 +626,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     _hreflangs = {C['html_lang']: canonical, C['cross_lang']: cross_url}
     hreflang_fr = _hreflangs.get('fr', canonical)
     hreflang_en = _hreflangs.get('en', hreflang_fr)
+    slug_es = dest.get('slug_es', dest.get('slug_en', slug_fr))
+    hreflang_es = f"https://www.bestdateweather.com/es/mejor-epoca-{slug_es}.html"
 
     headline = C['lbl_headline_tpl'].format(prep=prep, nom_bare=nom_bare, nom=nom)
 
@@ -685,6 +687,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <link rel="canonical" href="{canonical}"/>
 <link rel="alternate" hreflang="fr" href="{hreflang_fr}"/>
 <link rel="alternate" hreflang="en" href="{hreflang_en}"/>
+<link rel="alternate" hreflang="es" href="{hreflang_es}"/>
 <link rel="alternate" hreflang="x-default" href="{hreflang_en}"/>
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="{og_title}"/>
@@ -1079,6 +1082,10 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     _hreflangs = {C['html_lang']: canonical, C['cross_lang']: cross_url}
     hreflang_fr = _hreflangs.get('fr', canonical)
     hreflang_en = _hreflangs.get('en', hreflang_fr)
+    _slug_es_m = dest.get('slug_es', dest.get('slug_en', slug))
+    _mes_es = ['enero','febrero','marzo','abril','mayo','junio',
+               'julio','agosto','septiembre','octubre','noviembre','diciembre'][mi]
+    hreflang_es = f"https://www.bestdateweather.com/es/{_slug_es_m}-clima-{_mes_es}.html"
     article_headline = C['monthly_article_headline_tpl'].format(**tpl)
     article_desc = C['monthly_article_desc_tpl'].format(**tpl)
 
@@ -1289,6 +1296,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <link rel="canonical" href="{canonical}"/>
 <link rel="alternate" hreflang="fr" href="{hreflang_fr}"/>
 <link rel="alternate" hreflang="en" href="{hreflang_en}"/>
+<link rel="alternate" hreflang="es" href="{hreflang_es}"/>
 <link rel="alternate" hreflang="x-default" href="{hreflang_en}"/>
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="{og_title}"/>

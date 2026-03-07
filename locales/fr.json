@@ -20,6 +20,12 @@
         "flag": "gb",
         "label": "English",
         "asset_prefix": "en/"
+      },
+      {
+        "lang": "es",
+        "flag": "es",
+        "label": "Español",
+        "asset_prefix": "es/"
       }
     ]
   },
