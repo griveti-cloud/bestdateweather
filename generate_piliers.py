@@ -154,13 +154,14 @@ FONTS = (
 def build_table(entries, loc, mi):
     """Build ranking table for a given month."""
     is_fr = loc['meta']['html_lang'] == 'fr'
+    is_es = loc['meta']['html_lang'] == 'es'
     gen = loc['gen']
     pil = loc['pilier']
     month_url = loc['month_url']
     rows = ''
     for i, entry in enumerate(entries, 1):
-        slug = entry['slug_fr'] if is_fr else entry['slug_en']
-        nom = entry['nom_bare'] if is_fr else entry['nom_en']
+        slug = entry['slug_fr'] if is_fr else (entry.get('slug_es') or entry['slug_en'] if is_es else entry['slug_en'])
+        nom = entry['nom_bare'] if is_fr else (entry.get('nom_es') or entry['nom_bare'] if is_es else entry['nom_en'])
         href = gen['monthly_href_tpl'].format(slug=slug, month_slug=month_url[mi])
         flag_img = f'<img src="{gen["asset_prefix"]}flags/{entry["flag"]}.png" width="16" height="12" alt="" style="vertical-align:middle;margin-right:6px;border-radius:1px">'
         sc = entry['score']
@@ -235,7 +236,13 @@ def generate_page(mi, lang, dests, climate):
     avg_temp = sum(x['tmax'] for x in entries[:10]) / 10
 
     # File paths
-    cross_loc = load_locale('en' if is_fr else 'fr')
+    is_es = (lang == 'es')
+    if is_fr:
+        cross_loc = load_locale('en')
+    elif is_es:
+        cross_loc = load_locale('en')
+    else:
+        cross_loc = load_locale('fr')
     cross_month_url = cross_loc['month_url']
     cross_prefix = cross_loc['pilier']['pillar_prefix']
 
@@ -245,6 +252,11 @@ def generate_page(mi, lang, dests, climate):
         filepath = ROOT / filename
         canonical = f'https://bestdateweather.com/{filename}'
         hreflang_fr = canonical
+        hreflang_en = f'https://bestdateweather.com/en/{alt_file}'
+    elif is_es:
+        filepath = ROOT / 'es' / filename
+        canonical = f'https://bestdateweather.com/es/{filename}'
+        hreflang_fr = f'https://bestdateweather.com/ou-partir-en-{load_locale("fr")["month_url"][mi]}.html'
         hreflang_en = f'https://bestdateweather.com/en/{alt_file}'
     else:
         filepath = ROOT / 'en' / filename
@@ -256,7 +268,21 @@ def generate_page(mi, lang, dests, climate):
     mn_lc = month_name.lower() if loc['meta'].get('lowercase_months') else month_name
 
     # Content — keep is_fr for complex text blocks
-    if is_fr:
+    nom_es = lambda e: e.get('nom_es') or e.get('nom_bare', '')
+    if is_es:
+        title = f"Adónde ir en {month_name} {YEAR} — Top {TOP_N} destinos por clima"
+        desc = (f"¿Adónde ir en {month_name} {YEAR}? Top {TOP_N} destinos por clima. "
+                f"N°1: {nom_es(top)} ({top['score']:.1f}/10, {top['tmax']:.0f}°C). "
+                f"Basado en 10 años de datos Open-Meteo.")
+        h1 = f"¿Adónde ir en <em>{month_name}</em>?"
+        hero_sub = (f"Los {TOP_N} mejores destinos por clima en {month_name} {YEAR}, "
+                    f"clasificados por puntuación climática basada en 10 años de datos.")
+        sec_eyebrow = f"Ranking {month_name} {YEAR}"
+        sec_title = f"Top {TOP_N} destinos en {month_name}"
+        sec_intro = (f"Puntuación media top 10: <strong>{avg_score:.1f}/10</strong> · "
+                     f"Temperatura media: <strong>{avg_temp:.0f}°C</strong>")
+        cta_text = f"🎯 Elige una fecha exacta para tu viaje en {month_name}"
+    elif is_fr:
         title = f"Où partir en {mn_lc} {YEAR} ? Top {TOP_N} destinations météo"
         desc = (f"Où partir en {mn_lc} {YEAR} ? Classement des {TOP_N} meilleures destinations "
                 f"par score météo. N°1 : {top['nom_bare']} ({top['score']:.1f}/10, {top['tmax']:.0f}°C). "
@@ -312,9 +338,9 @@ def generate_page(mi, lang, dests, climate):
             {
                 "@type": "ListItem",
                 "position": i + 1,
-                "name": entry['nom_bare'] if is_fr else entry['nom_en'],
+                "name": entry['nom_bare'] if is_fr else (entry.get('nom_es') or entry['nom_bare'] if is_es else entry['nom_en']),
                 "url": loc['meta']['canonical_prefix'] + gen['monthly_href_tpl'].format(
-                    slug=entry['slug_fr'] if is_fr else entry['slug_en'],
+                    slug=entry['slug_fr'] if is_fr else (entry.get('slug_es') or entry['slug_en'] if is_es else entry['slug_en']),
                     month_slug=month_url[mi])
             }
             for i, entry in enumerate(entries)
@@ -332,6 +358,15 @@ def generate_page(mi, lang, dests, climate):
             "name": f"Où partir au soleil en {mn_lc} ?",
             "acceptedAnswer": {"@type": "Answer",
                 "text": f"Les destinations les plus ensoleillées en {mn_lc} sont {entries[0]['nom_bare']}, {entries[1]['nom_bare']} et {entries[2]['nom_bare']}, avec des scores de {entries[0]['score']:.1f} à {entries[2]['score']:.1f}/10."}})
+    elif is_es:
+        faq_items.append({"@type": "Question",
+            "name": f"¿Cuál es el mejor destino en {month_name}?",
+            "acceptedAnswer": {"@type": "Answer",
+                "text": f"{nom_es(top)} es el destino n°1 en {month_name} con una puntuación de {top['score']:.1f}/10 y {top['tmax']:.0f}°C."}})
+        faq_items.append({"@type": "Question",
+            "name": f"¿Adónde ir con buen tiempo en {month_name}?",
+            "acceptedAnswer": {"@type": "Answer",
+                "text": f"Los destinos con mejor clima en {month_name} son {nom_es(entries[0])}, {nom_es(entries[1])} y {nom_es(entries[2])}, con puntuaciones de {entries[0]['score']:.1f} a {entries[2]['score']:.1f}/10."}})
     else:
         faq_items.append({"@type": "Question",
             "name": f"What is the best destination in {month_name}?",
@@ -368,6 +403,7 @@ def generate_page(mi, lang, dests, climate):
 <link rel="alternate" hreflang="fr" href="{hreflang_fr}"/>
 <link rel="alternate" hreflang="en" href="{hreflang_en}"/>
 <link rel="alternate" hreflang="x-default" href="{hreflang_en}"/>
+<link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/{pil['pillar_prefix']}{month_slug}.html"/>
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="{e(title)}"/>
 <meta property="og:description" content="{e(desc)}"/>
@@ -489,7 +525,16 @@ if __name__ == '__main__':
             en_pages.append({'canonical': canonical, 'hreflang_fr': hreflang_fr, 'hreflang_en': hreflang_en})
             print(f"  ✅ en/{filename}")
 
-    print(f"\n📄 {len(fr_pages)} FR + {len(en_pages)} EN pillar pages generated")
+    # ES
+    es_pages = []
+    for mi in range(12):
+        result = generate_page(mi, 'es', dests, climate)
+        if result:
+            filename, canonical, hreflang_fr, hreflang_en = result
+            es_pages.append({'canonical': canonical})
+            print(f"  ✅ es/{filename}")
+
+    print(f"\n📄 {len(fr_pages)} FR + {len(en_pages)} EN + {len(es_pages)} ES pillar pages generated")
 
     update_sitemaps(fr_pages, en_pages)
     print("\n✅ Done")
