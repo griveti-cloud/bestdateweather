@@ -471,7 +471,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     gyg_domain = C['gyg_domain']
     gyg_lang = C['lang']
     gyg_dest = quote_plus(f"{nom}, {country_name}")
-    gyg_url = f"https://www.{gyg_domain}/s/?q={gyg_dest}&partner_id={GYG_PARTNER_ID}"
+    gyg_url = f"https://www.{gyg_domain}/s/?q={gyg_dest}&partner_id={GYG_PARTNER_ID}&locale={gyg_lang}"
     activities_section = f'''<section class="section">
  <div class="section-label">{C['lbl_activities_section']}</div>
  <h2 class="section-title">{C['lbl_activities_title_tpl'].format(name=nom_f)}</h2>
@@ -1275,7 +1275,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     gyg_domain_m = C['gyg_domain']
     gyg_lang_m = C['gyg_lang']
     gyg_dest_m = quote_plus(f"{nom}, {country_name}")
-    gyg_url_m = f"https://www.{gyg_domain_m}/s/?q={gyg_dest_m}&partner_id={GYG_PARTNER_ID}"
+    gyg_url_m = f"https://www.{gyg_domain_m}/s/?q={gyg_dest_m}&partner_id={GYG_PARTNER_ID}&locale={C['gyg_lang']}"
     activities_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_activities_section']}</div>
  <h2 class="section-title">{cfg['lbl_activities_title_tpl'].format(name=nom_f)}</h2>

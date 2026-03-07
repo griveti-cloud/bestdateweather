@@ -151,11 +151,11 @@
     "data_by": "Datos meteorológicos por Open-Meteo.com",
     "sources": "Fuentes: ECMWF, DWD, NOAA · CC BY 4.0",
     "methodology": [
-      "../en/methodology.html",
+      "../es/metodologia.html",
       "Metodología"
     ],
     "app": [
-      "../en/app.html",
+      "../es/app.html",
       "App meteorológica"
     ],
     "about": [
@@ -167,15 +167,15 @@
       "FAQ"
     ],
     "legal": [
-      "../en/legal.html",
+      "../es/aviso-legal.html",
       "Legal"
     ],
     "privacy": [
-      "../en/privacy.html",
+      "../es/privacidad.html",
       "Privacidad"
     ],
     "contact": [
-      "../en/contact.html",
+      "../es/contacto.html",
       "Contacto"
     ],
     "alt_lang_flag": "fr",
