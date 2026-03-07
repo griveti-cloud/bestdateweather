@@ -14,6 +14,7 @@ from datetime import date
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.page_config import load_locale
+from lib.common import footer_ranking_html
 
 ROOT = Path(__file__).parent
 TODAY = date.today().isoformat()
@@ -407,14 +408,12 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
         # CTA
         cta = f'<div class="cta-box"><a href="{gen["home_url"]}">{gen["cta_choose"]}</a></div>'
 
-        # Footer
-        alt_link = f'{gen["alt_link_prefix"]}{alt_filename}'
-        footer = f"""<footer>
-<p style="font-weight:700;margin-bottom:8px">bestdateweather.com</p>
-<p><a href="https://open-meteo.com/" rel="noopener">{gen["data_credit"]}</a> · ECMWF, DWD, NOAA · CC BY 4.0</p>
-<p style="margin-top:8px"><a href="{gen["home_url"]}">{gen["home_label"]}</a> · <a href="{alt_link}"><img src="{gen["alt_flag_path"]}" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> {gen["alt_lang_label"]}</a></p>
-<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="{gen["legal_url"]}" style="color:rgba(255,255,255,.7)">{gen["legal_label"]}</a></p>
-</footer>"""
+        # Footer — FR↔EN cross-lang links (ES comparatifs not yet generated)
+        if is_fr:
+            _alt_links = [{'url': f'en/{alt_filename}', 'flag': 'flags/gb.png', 'label': 'English'}]
+        else:
+            _alt_links = [{'url': f'../{alt_filename}', 'flag': '../flags/fr.png', 'label': 'Français'}]
+        footer = footer_ranking_html(lang, _alt_links)
 
         page_html = f"""<!DOCTYPE html>
 <html lang="{lang}">

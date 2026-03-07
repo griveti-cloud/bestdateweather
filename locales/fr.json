@@ -676,17 +676,23 @@
     "try_app_label": "Tester l'application",
     "annual_href_tpl": "meilleure-periode-{slug}.html",
     "monthly_href_tpl": "{slug}-meteo-{month_slug}.html",
-    "alt_flag_path": "flags/gb.png",
-    "alt_lang_label": "English",
-    "alt_link_prefix": "en/",
     "guide_label": "Guide complet",
     "explore_label": "Explorer",
     "best_period_tpl": "Meilleure période {nom}",
     "guides_title": "Guides détaillés",
     "cta_choose": "🎯 Choisir une date précise pour votre voyage →",
-    "alt_link2_prefix": "es/",
-    "alt_flag_path2": "flags/es.png",
-    "alt_lang_label2": "Español"
+    "alt_langs": [
+      {
+        "prefix": "en/",
+        "flag": "flags/gb.png",
+        "label": "English"
+      },
+      {
+        "prefix": "es/",
+        "flag": "flags/es.png",
+        "label": "Español"
+      }
+    ]
   },
   "hub": {
     "search_placeholder": "Rechercher une destination…",

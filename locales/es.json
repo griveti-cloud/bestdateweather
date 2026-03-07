@@ -691,17 +691,23 @@
     "try_app_label": "Probar la app",
     "annual_href_tpl": "mejor-epoca-{slug}.html",
     "monthly_href_tpl": "{slug}-clima-{month_slug}.html",
-    "alt_flag_path": "../flags/fr.png",
-    "alt_lang_label": "Français",
-    "alt_link_prefix": "../",
     "guide_label": "Guía completa",
     "explore_label": "Explorar",
     "best_period_tpl": "Mejor época para visitar {nom}",
     "guides_title": "Guías detalladas",
     "cta_choose": "🎯 Elige una fecha concreta para tu viaje →",
-    "alt_link2_prefix": "../en/",
-    "alt_flag_path2": "../flags/gb.png",
-    "alt_lang_label2": "English"
+    "alt_langs": [
+      {
+        "prefix": "../",
+        "flag": "../flags/fr.png",
+        "label": "Français"
+      },
+      {
+        "prefix": "../en/",
+        "flag": "../flags/gb.png",
+        "label": "English"
+      }
+    ]
   },
   "hub": {
     "search_placeholder": "Busca un destino…",

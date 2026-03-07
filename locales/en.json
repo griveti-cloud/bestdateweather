@@ -677,17 +677,23 @@
     "try_app_label": "Try the app",
     "annual_href_tpl": "best-time-to-visit-{slug}.html",
     "monthly_href_tpl": "{slug}-weather-{month_slug}.html",
-    "alt_flag_path": "../flags/fr.png",
-    "alt_lang_label": "Français",
-    "alt_link_prefix": "../",
     "guide_label": "Full guide",
     "explore_label": "Explore",
     "best_period_tpl": "Best time to visit {nom}",
     "guides_title": "Detailed Guides",
     "cta_choose": "🎯 Choose a specific date for your trip →",
-    "alt_link2_prefix": "../es/",
-    "alt_flag_path2": "../flags/es.png",
-    "alt_lang_label2": "Español"
+    "alt_langs": [
+      {
+        "prefix": "../",
+        "flag": "../flags/fr.png",
+        "label": "Français"
+      },
+      {
+        "prefix": "../es/",
+        "flag": "../flags/es.png",
+        "label": "Español"
+      }
+    ]
   },
   "hub": {
     "search_placeholder": "Search a destination…",
