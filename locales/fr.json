@@ -13,7 +13,15 @@
     "lowercase_months": true,
     "in_language": null,
     "gyg_lang": "fr",
-    "cross_lang": "en"
+    "cross_lang": "en",
+    "cross_links": [
+      {
+        "lang": "en",
+        "flag": "gb",
+        "label": "English",
+        "asset_prefix": "en/"
+      }
+    ]
   },
   "months": [
     "Janvier",
@@ -259,7 +267,9 @@
     "dataset_name_tpl": "Données climatiques de {nom} — moyennes mensuelles sur 10 ans",
     "dataset_desc_tpl": "Températures, précipitations, ensoleillement et vent mensuels {nom_f}. Moyennes calculées sur 10 ans de données ERA5 (Open-Meteo).",
     "best_months_lbl_tpl": "Meilleur{s} mois",
-    "or_word": "ou"
+    "or_word": "ou",
+    "share_label": "Partager",
+    "colon_sep": " : "
   },
   "monthly": {
     "hero_tpl": "Météo {name} en {month_lc}",
@@ -421,7 +431,23 @@
     "ski_q": "Peut-on skier {name} en {month_lc} ?",
     "ski_a_good": "Oui, {month_lc} est une excellente période pour le ski (score {ski}/10). Avec {tmax}°C max et {rain}% de précipitations, les conditions d'enneigement sont bonnes.",
     "ski_a_fair": "Les conditions sont correctes (score ski {ski}/10) mais pas optimales. Vérifiez l'état des pistes avant de partir.",
-    "ski_a_bad": "Le ski n'est pas recommandé en {month_lc} (score ski {ski}/10). Les températures ({tmax}°C) limitent l'enneigement."
+    "ski_a_bad": "Le ski n'est pas recommandé en {month_lc} (score ski {ski}/10). Les températures ({tmax}°C) limitent l'enneigement.",
+    "ski_q_cold": "Peut-on skier {name} en {month_lc} ?",
+    "ski_a_good_mountain": "Oui, {month_lc} est une excellente période pour le ski (score {ski}/10). Avec {tmax}°C max et {rain}% de précipitations, les conditions d'enneigement sont bonnes.",
+    "ski_a_fair_mountain": "Les conditions sont correctes (score ski {ski}/10) mais pas optimales. Vérifiez l'état des pistes avant de partir.",
+    "ski_a_bad_mountain": "Le ski n'est pas recommandé en {month_lc} (score ski {ski}/10). Les températures ({tmax}°C) limitent l'enneigement.",
+    "mountain_summer_q": "Que faire {name} en {month_lc} ?",
+    "mountain_summer_a_good": "Oui, {month_lc} est l'une des meilleures périodes {name} (score {score}/10). {tmax}°C, {sun}h de soleil — idéal pour la randonnée.",
+    "mountain_summer_a_mid": "Oui, {month_lc} est une bonne période ({score}/10). Idéal pour les activités outdoor et la randonnée.",
+    "mountain_summer_a_transition": "Période de transition avec un score été de {score}/10 et ski de {ski}/10. Ni la meilleure saison de ski ni d'été.",
+    "activity_q": "Que faire {name} en {month_lc} ?",
+    "activity_a_outdoor": "Avec {tmax}°C et {sun}h de soleil, toutes les activités extérieures sont possibles : randonnées, visites de sites et terrasses.",
+    "activity_a_outdoor_tropical": "Avec {tmax}°C et {sun}h de soleil, toutes les activités extérieures sont possibles : plage, snorkeling et excursions en bateau.",
+    "activity_a_indoor": "Avec {tmax}°C max et {sun}h de soleil, privilégiez les activités couvertes — musées, spas, gastronomie.",
+    "activity_a_cultural": "Avec {tmax}°C max et {sun}h de soleil, concentrez-vous sur les sites culturels, musées et gastronomie locale.",
+    "weather_q_hot2": "Fait-il trop chaud {name} en {month_lc} ?",
+    "share_label": "Partager",
+    "colon_sep": " : "
   },
   "decision": {
     "yes_hot_beach": "profiter du soleil et de la plage.",

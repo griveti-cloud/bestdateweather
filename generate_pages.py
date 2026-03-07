@@ -244,7 +244,7 @@ def head_css(cfg):
 def nav_html(cfg):
     home_href = cfg['nav_cta_href']
     cta_label = cfg['nav_cta_label']
-    share_label = 'Partager' if cfg['lang'] == 'fr' else 'Share'
+    share_label = cfg.get('lbl_share_label', 'Share')
     return f'''<nav>
  <a class="nav-brand" href="{home_href}">Best<em>Date</em>Weather</a>
  <div class="nav-actions">
@@ -261,10 +261,29 @@ def footer_html(cfg, dest):
     slug_fr = dest['slug_fr']
     slug_en = dest['slug_en']
 
-    if cfg['lang'] == 'fr':
-        alt_link = f' · <a href="en/best-time-to-visit-{slug_en}.html" class="txt-muted"><img src="flags/gb.png" width="20" height="15" alt="" class="flag-icon-lg"> English</a>'
-    else:
-        alt_link = f' · <a href="../meilleure-periode-{slug_fr}.html" class="txt-muted"><img src="../flags/fr.png" width="20" height="15" alt="" class="flag-icon-lg"> Français</a>'
+    lang = cfg['lang']
+    cross_lang = cfg.get('cross_lang', 'en')
+    pfx = cfg['asset_prefix']
+
+    # Build cross-language links from locale cross_links config
+    cross_links_cfg = cfg.get('cross_links', [])
+    alt_links = []
+    for cl in cross_links_cfg:
+        cl_lang = cl['lang']
+        cl_flag = cl['flag']
+        cl_label = cl['label']
+        cl_pfx = cl['asset_prefix']
+        if cl_lang == 'fr':
+            cl_url = f"{cl_pfx}meilleure-periode-{slug_fr}.html"
+        elif cl_lang == 'en':
+            cl_url = f"{cl_pfx}best-time-to-visit-{slug_en}.html"
+        elif cl_lang == 'es':
+            slug_es = dest.get('slug_es', slug_en)
+            cl_url = f"{cl_pfx}mejor-epoca-{slug_es}.html"
+        else:
+            continue
+        alt_links.append(f' · <a href="{cl_url}" class="txt-muted"><img src="{cl_pfx}flags/{cl_flag}.png" width="20" height="15" alt="" class="flag-icon-lg"> {cl_label}</a>')
+    alt_link = ''.join(alt_links)
 
     meth_url, meth_label = fc['methodology']
     app_url, app_label = fc['app']
@@ -338,6 +357,9 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     if C['lang'] == 'fr':
         prep = dest.get('prep', 'à')
         nom_bare = dest.get('nom_bare', slug_fr)
+    elif C['lang'] == 'es':
+        prep = dest.get('prep_es', 'en')
+        nom_bare = dest.get('nom_es', dest.get('nom_bare', slug_fr))
     else:
         prep = ''
         nom_bare = nom
@@ -797,7 +819,7 @@ def _build_sim_cards(cfg, sim_list, all_dests, climate_for_sim, mi):
         name = dest_name(C, sd)
         url = f"{s_slug}{C['monthly_sep']}{C['month_url'][mi]}.html"
         pfx_flag = f"{C['asset_prefix']}flags/"
-        sep = ' : ' if C['lang'] == 'fr' else ': '
+        sep = C.get('lbl_colon_sep', ': ')
         lbl = f"{MONTHS[mi]}{sep}{sc.get('score','?')}/10 · {sc.get('tmax','?')}°C"
         parts.append(
             f'<a href="{url}" class="sim-card-sm">'
@@ -978,114 +1000,71 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     diff_r = round(bm['rain_pct'] - m['rain_pct'])
     diff_s = round(bm['sun_h'] - m['sun_h'], 1)
 
-    # ── FAQ ──
-    if is_fr:
-        faq_q1 = f"{nom_bare} en {mlc} : est-ce une bonne période ?"
-        if is_mountain:
-            from scoring import compute_ski_score
-            ski_this = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
-            if ski_this >= 6.5 and score < 5:
-                faq_a1 = (f"Pour le ski, oui : score ski {ski_this}/10 en {mlc}. "
-                          f"Les températures ({m['tmax']}°C max) garantissent un bon enneigement. "
-                          f"Pour la randonnée estivale, préférez {best_month.lower()} ({best_score:.1f}/10).")
-            elif ski_this >= 5 and score < 5:
-                faq_a1 = (f"{month} est une période correcte pour le ski (score ski {ski_this}/10). "
-                          f"Les conditions ne sont pas idéales pour la randonnée ({score:.1f}/10).")
-            elif score >= 9:
-                faq_a1 = f"Oui, {mlc} est l'une des meilleures périodes {prep} {nom_bare} (score {score:.1f}/10). {m['tmax']}°C, {m['sun_h']}h de soleil — idéal pour la randonnée."
-            elif score >= 7:
-                faq_a1 = f"Oui, {mlc} est une bonne période ({score:.1f}/10). Idéal pour les activités outdoor et la randonnée."
-            else:
-                faq_a1 = (f"Période de transition avec un score été de {score:.1f}/10 et ski de {ski_this}/10. "
-                          f"Ni la meilleure saison de ski ni d'été.")
-        elif score >= 9:
-            faq_a1 = f"Oui, {mlc} est l'une des meilleures périodes {prep} {nom_bare} (score {score:.1f}/10). {m['tmax']}°C, {m['sun_h']}h de soleil et seulement {m['rain_pct']}% de jours pluvieux."
-        elif score >= 7.5:
-            faq_a1 = f"Oui, {mlc} est une bonne période ({score:.1f}/10). Les conditions sont favorables même si {best_month.lower()} reste le mois optimal ({best_score:.1f}/10)."
-        elif score >= 5.5:
-            faq_a1 = f"{month} est une période correcte ({score:.1f}/10) mais pas idéale. Attendez-vous à {m['rain_pct']}% de jours pluvieux. {best_month} ({best_score:.1f}/10) offre de meilleures garanties."
-        else:
-            faq_a1 = f"{month} n'est pas recommandé {prep} {nom_bare} (score {score:.1f}/10). Avec {m['rain_pct']}% de jours pluvieux et {m['sun_h']}h de soleil, préférez {best_month.lower()} ({best_score:.1f}/10)."
+    # ── FAQ (locale-driven, language-agnostic) ──
+    ft = C['faq_templates']
+    _fv = dict(
+        name=nom_f, month=month, month_lc=mlc,
+        tmax=m['tmax'], tmin=m['tmin'], rain=m['rain_pct'],
+        sun=m['sun_h'], score=f"{score:.1f}",
+        best_month=best_month, best_month_lc=month_lc(C, best_month),
+        best_score=f"{best_score:.1f}", prep=prep, nom_bare=nom_bare,
+    )
 
-        # Q2
-        if is_mountain and is_cold:
-            faq_q2 = f"Peut-on skier {prep} {nom_bare} en {mlc} ?"
-            if ski_this >= 6.5:
-                faq_a2 = f"Oui, {mlc} est une excellente période pour le ski (score {ski_this}/10). Avec {m['tmax']}°C max et {m['rain_pct']}% de précipitations, les conditions d'enneigement sont bonnes."
-            elif ski_this >= 4:
-                faq_a2 = f"Les conditions sont correctes (score ski {ski_this}/10) mais pas optimales. Vérifiez l'état des pistes avant de partir."
-            else:
-                faq_a2 = f"Le ski n'est pas recommandé en {mlc} (score ski {ski_this}/10). Les températures ({m['tmax']}°C) limitent l'enneigement."
-        elif is_hot and is_dry:
-            faq_q2 = f"Fait-il trop chaud {prep} {nom_bare} en {mlc} ?"
-            _heat_fr = "C'est intense mais gérable avec de la crème solaire et de l'eau." if m['tmax'] < 38 else "La chaleur est extrême — limitez les activités aux heures fraîches."
-            faq_a2 = f"Les températures atteignent {m['tmax']}°C. {_heat_fr} Ensoleillement : {m['sun_h']}h/jour."
-        elif is_rainy:
-            faq_q2 = f"Pleut-il beaucoup {prep} {nom_bare} en {mlc} ?"
-            faq_a2 = f"Oui, {m['rain_pct']}% des jours connaissent de la pluie en {mlc}. {'En zone tropicale, ce sont souvent des averses courtes mais intenses.' if is_tropical else 'Prévoyez des activités couvertes en alternative.'}"
-        elif is_cold:
-            faq_q2 = f"Quel temps fait-il {prep} {nom_bare} en {mlc} ?"
-            faq_a2 = f"Il fait frais avec {m['tmax']}°C en journée et {m['tmin']}°C la nuit. {m['sun_h']}h de soleil par jour. Prévoyez des vêtements chauds et privilégiez les visites intérieures."
-        elif score >= 8:
-            faq_q2 = f"Que faire {prep} {nom_bare} en {mlc} ?"
-            faq_a2 = f"Avec {m['tmax']}°C et {m['sun_h']}h de soleil, toutes les activités extérieures sont possibles : {'plage, snorkeling et excursions en bateau.' if is_tropical else 'randonnées, visites de sites et terrasses.'}"
+    # Q1 — is this a good time?
+    faq_q1 = ft['good_period_q'].format(**_fv)
+    if is_mountain:
+        from scoring import compute_ski_score
+        ski_this = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
+        _fv['ski'] = f"{ski_this:.1f}"
+        if ski_this >= 6.5 and score < 5:
+            faq_a1 = ft['ski_a_good'].format(**_fv)
+        elif ski_this >= 5 and score < 5:
+            faq_a1 = ft['ski_a_fair'].format(**_fv)
+        elif score >= 9:
+            faq_a1 = ft.get('mountain_summer_a_good', ft['good_period_a_rec']).format(**_fv)
+        elif score >= 7:
+            faq_a1 = ft.get('mountain_summer_a_mid', ft['good_period_a_rec']).format(**_fv)
         else:
-            faq_q2 = f"Que faire {prep} {nom_bare} en {mlc} ?"
-            faq_a2 = f"Avec {m['tmax']}°C max et {m['sun_h']}h de soleil, {'concentrez-vous sur les sites culturels, musées et gastronomie locale.' if score >= 6 else 'privilégiez les activités couvertes — musées, spas, gastronomie.'}"
+            faq_a1 = ft.get('mountain_summer_a_transition', ft['good_period_a_avoid']).format(**_fv)
+    elif score >= 9:
+        faq_a1 = ft['good_period_a_rec'].format(**_fv)
+    elif score >= 7.5:
+        faq_a1 = ft['good_period_a_rec'].format(**_fv)
+    elif score >= 5.5:
+        faq_a1 = ft['good_period_a_mid'].format(**_fv)
     else:
-        faq_q1 = f"Is {month} a good time to visit {nom}?"
-        if is_mountain:
+        faq_a1 = ft['good_period_a_avoid'].format(**_fv)
+
+    # Q2 — contextual follow-up
+    if is_mountain and is_cold:
+        if not is_mountain or 'ski_this' not in dir():
             from scoring import compute_ski_score
             ski_this = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
-            if ski_this >= 6.5 and score < 5:
-                faq_a1 = (f"For skiing, yes: ski score {ski_this}/10 in {month}. "
-                          f"Temperatures ({m['tmax']}°C max) ensure good snow cover. "
-                          f"For summer hiking, prefer {best_month} ({best_score:.1f}/10).")
-            elif ski_this >= 5 and score < 5:
-                faq_a1 = (f"{month} is decent for skiing (ski score {ski_this}/10). "
-                          f"Conditions aren't ideal for hiking ({score:.1f}/10).")
-            elif score >= 9:
-                faq_a1 = f"Yes, {month} is one of the best times to visit {nom} (score {score:.1f}/10). {m['tmax']}°C, {m['sun_h']}h of sunshine — perfect for hiking."
-            elif score >= 7:
-                faq_a1 = f"Yes, {month} is a good time ({score:.1f}/10). Great for outdoor activities and hiking."
-            else:
-                faq_a1 = (f"Transition period with a summer score of {score:.1f}/10 and ski score of {ski_this}/10. "
-                          f"Neither the best ski nor summer season.")
-        elif score >= 9:
-            faq_a1 = f"Yes, {month} is one of the best times to visit {nom} (score {score:.1f}/10). {m['tmax']}°C, {m['sun_h']}h of sunshine and only {m['rain_pct']}% rainy days."
-        elif score >= 7.5:
-            faq_a1 = f"Yes, {month} is a good time ({score:.1f}/10). Conditions are favourable although {best_month} remains the optimal month ({best_score:.1f}/10)."
-        elif score >= 5.5:
-            faq_a1 = f"{month} is acceptable ({score:.1f}/10) but not ideal. Expect {m['rain_pct']}% rainy days. {best_month} ({best_score:.1f}/10) offers better guarantees."
+            _fv['ski'] = f"{ski_this:.1f}"
+        faq_q2 = ft.get('ski_q_cold', ft['ski_q']).format(**_fv)
+        if ski_this >= 6.5:
+            faq_a2 = ft.get('ski_a_good_mountain', ft['ski_a_good']).format(**_fv)
+        elif ski_this >= 4:
+            faq_a2 = ft.get('ski_a_fair_mountain', ft['ski_a_fair']).format(**_fv)
         else:
-            faq_a1 = f"{month} is not recommended for {nom} (score {score:.1f}/10). With {m['rain_pct']}% rainy days and {m['sun_h']}h of sunshine, prefer {best_month} ({best_score:.1f}/10)."
-
-        # Q2 EN
-        if is_mountain and is_cold:
-            faq_q2 = f"Can you ski in {nom} in {month}?"
-            if ski_this >= 6.5:
-                faq_a2 = f"Yes, {month} is excellent for skiing (score {ski_this}/10). With {m['tmax']}°C max and {m['rain_pct']}% precipitation, snow conditions are good."
-            elif ski_this >= 4:
-                faq_a2 = f"Conditions are decent (ski score {ski_this}/10) but not optimal. Check slope conditions before going."
-            else:
-                faq_a2 = f"Skiing is not recommended in {month} (ski score {ski_this}/10). Temperatures ({m['tmax']}°C) limit snow cover."
-        elif is_hot and is_dry:
-            faq_q2 = f"Is it too hot in {nom} in {month}?"
-            _heat_en = "It's intense but manageable with sunscreen and water." if m['tmax'] < 38 else "The heat is extreme — limit activities to cooler hours."
-            faq_a2 = f"Temperatures reach {m['tmax']}°C. {_heat_en} Sunshine: {m['sun_h']}h/day."
-        elif is_rainy:
-            faq_q2 = f"Does it rain a lot in {nom} in {month}?"
-            faq_a2 = f"Yes, {m['rain_pct']}% of days see rain in {month}. {'In tropical zones, these are often short but intense showers.' if is_tropical else 'Plan indoor alternatives.'}"
-        elif is_cold:
-            faq_q2 = f"What is the weather like in {nom} in {month}?"
-            faq_a2 = f"It's cool with {m['tmax']}°C during the day and {m['tmin']}°C at night. {m['sun_h']}h of sunshine per day. Pack warm clothes and favour indoor visits."
-        elif score >= 8:
-            faq_q2 = f"What to do in {nom} in {month}?"
-            faq_a2 = f"With {m['tmax']}°C and {m['sun_h']}h of sunshine, all outdoor activities are possible: {'beach, snorkelling and boat excursions.' if is_tropical else 'hiking, sightseeing and terraces.'}"
-        else:
-            faq_q2 = f"What to do in {nom} in {month}?"
-            faq_a2 = f"With {m['tmax']}°C max and {m['sun_h']}h of sunshine, {'focus on cultural sites, museums and local gastronomy.' if score >= 6 else 'favour indoor activities — museums, spas, gastronomy.'}"
-
+            faq_a2 = ft.get('ski_a_bad_mountain', ft['ski_a_bad']).format(**_fv)
+    elif is_hot and is_dry:
+        faq_q2 = ft.get('weather_q_hot2', ft['weather_q_hot']).format(**_fv)
+        faq_a2 = (ft['weather_a_hot_intense'] if m['tmax'] >= 38 else ft['weather_a_hot_ok']).format(**_fv)
+    elif is_rainy:
+        faq_q2 = ft['weather_q_rain'].format(**_fv)
+        faq_a2 = (ft['weather_a_rain_tropical'] if is_tropical else ft['weather_a_rain_normal']).format(**_fv)
+    elif is_cold:
+        faq_q2 = ft['weather_q_cold'].format(**_fv)
+        faq_a2 = ft['weather_a_cold'].format(**_fv)
+    elif score >= 8:
+        faq_q2 = ft.get('activity_q', ft['weather_q_default']).format(**_fv)
+        faq_a2 = (ft.get('activity_a_outdoor_tropical', ft.get('activity_a_outdoor', ft['weather_a_default'])) if is_tropical
+                  else ft.get('activity_a_outdoor', ft['weather_a_default'])).format(**_fv)
+    else:
+        faq_q2 = ft.get('activity_q', ft['weather_q_default']).format(**_fv)
+        faq_a2 = (ft.get('activity_a_cultural', ft.get('activity_a_indoor', ft['weather_a_default'])) if score >= 6
+                  else ft.get('activity_a_indoor', ft['weather_a_default'])).format(**_fv)
     # ── Schemas ──
     faq_schema = json.dumps({
         "@context": "https://schema.org", "@type": "FAQPage",
@@ -1509,7 +1488,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 def main():
     import argparse
     parser = argparse.ArgumentParser(description='BestDateWeather unified page generator')
-    parser.add_argument('--lang', required=True, choices=['fr', 'en'])
+    parser.add_argument('--lang', required=True, choices=['fr', 'en', 'es'])
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--validate-only', action='store_true')
     parser.add_argument('target', nargs='?', default=None, help='Single destination slug')
@@ -1542,7 +1521,7 @@ def main():
     similarities = compute_all_similarities(dests, climate)
     comp_index = build_comparison_index(cfg)
 
-    OUT = DIR if cfg['is_fr'] else os.path.join(DIR, 'en')
+    OUT = os.path.join(DIR, cfg['out_subdir']) if cfg['out_subdir'] else DIR
     os.makedirs(OUT, exist_ok=True)
 
     slugs = [args.target] if args.target else list(dests.keys())

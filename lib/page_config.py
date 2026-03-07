@@ -31,7 +31,7 @@ load_locale = _load_locale
 
 
 # Cross-language mapping for hreflang
-_CROSS_LANG = {'fr': 'en', 'en': 'fr'}
+_CROSS_LANG = {'fr': 'en', 'en': 'fr', 'es': 'fr'}
 
 # Season icons (shared across languages)
 SEASON_ICONS = {'Printemps':'🌸','Été':'☀️','Automne':'🍂','Hiver':'❄️',
@@ -168,6 +168,7 @@ def build_config(lang):
     cfg['out_subdir'] = loc['meta']['out_subdir']
     cfg['lowercase_months'] = loc['meta']['lowercase_months']
     cfg['in_language'] = loc['meta'].get('in_language')
+    cfg['cross_links'] = loc['meta'].get('cross_links', [])
 
     # Content templates (annual)
     cfg['annual_titles'] = loc.get('annual_titles', [])
