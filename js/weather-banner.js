@@ -338,14 +338,13 @@
 
   function flagImg(code) {
     if (!code) return "\ud83c\udf0d";
-    // 2-letter country code → emoji flag via regional indicator symbols
     if (/^[a-zA-Z]{2}$/.test(code)) {
-      var upper = code.toUpperCase();
+      var lower = code.toLowerCase();
       // DOM-TOM → use France flag
-      var domTom = {GF:1,GP:1,MQ:1,RE:1,PM:1,YT:1,NC:1,PF:1,WF:1,MF:1,BL:1};
-      if (domTom[upper]) upper = "FR";
-      return String.fromCodePoint(0x1F1E6 + upper.charCodeAt(0) - 65) +
-             String.fromCodePoint(0x1F1E6 + upper.charCodeAt(1) - 65);
+      var domTom = {gf:1,gp:1,mq:1,re:1,pm:1,yt:1,nc:1,pf:1,wf:1,mf:1,bl:1};
+      if (domTom[lower]) lower = "fr";
+      var base = (window.BDW_CFG && window.BDW_CFG.flagBase) ? window.BDW_CFG.flagBase : "flags/";
+      return '<img src="' + base + lower + '.png" width="20" height="15" alt="' + lower.toUpperCase() + '" style="vertical-align:middle;border-radius:2px" onerror="this.style.display=\'none\'">';
     }
     return code;
   }
