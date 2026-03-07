@@ -996,11 +996,12 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
             ski_col = f'<td>{ski:.1f}/10</td>'
         table_rows += (f'<tr class="{cls}"{highlight}>'
                        f'<td>{weather_emoji(mo["tmax"], mo["rain_pct"], mo["sun_h"], mo.get("tmin"))} {MONTHS[i]}</td>'
-                       f'<td>{mo["tmin"]}°C</td><td>{mo["tmax"]}°C</td>'
-                       f'<td>{mo["rain_pct"]}%</td>'
-                       f'<td>{mo["precip"]:.1f}</td>'
-                       f'<td>{mo["sun_h"]}h</td>'
-                       f'<td>{mo["score"]:.1f}/10</td>{ski_col}</tr>\n')
+                       f'<td data-label="{C["lbl_m_th_tmin"]}">{mo["tmin"]}°C</td>'
+                       f'<td data-label="{C["lbl_m_th_tmax"]}">{mo["tmax"]}°C</td>'
+                       f'<td data-label="{C["lbl_m_th_rain"]}">{mo["rain_pct"]}%</td>'
+                       f'<td data-label="{C["lbl_m_th_precip"]}">{mo["precip"]:.1f}</td>'
+                       f'<td data-label="{C["lbl_m_th_sun"]}">{mo["sun_h"]}h</td>'
+                       f'<td data-label="{C["lbl_m_th_score"]}">{mo["score"]:.1f}/10</td>{ski_col}</tr>\n')
 
     # Best month diff
     bm = months[best_idx]

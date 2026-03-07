@@ -40,6 +40,12 @@ def build_lang(lang):
         'table_aria': loc['table']['aria'],
         'table_headers': loc['table']['headers'],
         'table_ski_header': loc['table']['ski_header'],
+        'th_tmin': loc.get('monthly', {}).get('th_tmin', loc['table'].get('th_tmin', 'Tmin')),
+        'th_tmax': loc.get('monthly', {}).get('th_tmax', loc['table'].get('th_tmax', 'Tmax')),
+        'th_rain': loc.get('monthly', {}).get('th_rain', loc['table'].get('th_rain', 'Rain')),
+        'th_precip': loc.get('monthly', {}).get('th_precip', loc['table'].get('th_precip', 'Precip')),
+        'th_sun': loc.get('monthly', {}).get('th_sun', loc['table'].get('th_sun', 'Sun')),
+        'th_score': loc.get('monthly', {}).get('th_score', loc['table'].get('th_score', 'Score')),
         'legend_ideal': loc['table']['legend_ideal'],
         'legend_fair': loc['table']['legend_fair'],
         'legend_off': loc['table']['legend_off'],
@@ -214,11 +220,12 @@ def climate_table_html(months, nom, is_mountain=False, L=None):
         rows += (f'<tr class="{cls}" data-tmax="{m["tmax"]}" '
                  f'data-rain="{m["rain_pct"]}" data-sun="{m["sun_h"]}">'
                  f'<td>{weather_emoji(m["tmax"], m["rain_pct"], m["sun_h"], m.get("precip"))} {L["months"][i]}</td>'
-                 f'<td>{m["tmin"]}°C</td><td>{m["tmax"]}°C</td>'
-                 f'<td>{m["rain_pct"]}%</td>'
-                 f'<td>{m["precip"]:.1f}</td>'
-                 f'<td>{m["sun_h"]}h</td>'
-                 f'<td>{m["score"]:.1f}/10</td>{ski_col}</tr>\n')
+                 f'<td data-label="{L["th_tmin"]}">{m["tmin"]}°C</td>'
+                 f'<td data-label="{L["th_tmax"]}">{m["tmax"]}°C</td>'
+                 f'<td data-label="{L["th_rain"]}">{m["rain_pct"]}%</td>'
+                 f'<td data-label="{L["th_precip"]}">{m["precip"]:.1f}</td>'
+                 f'<td data-label="{L["th_sun"]}">{m["sun_h"]}h</td>'
+                 f'<td data-label="{L["th_score"]}">{m["score"]:.1f}/10</td>{ski_col}</tr>\n')
     ski_header = L['table_ski_header'] if is_mountain else ''
     wrap_class = 'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'
     return f'''<div class="{wrap_class}">
