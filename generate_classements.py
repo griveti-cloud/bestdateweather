@@ -49,7 +49,7 @@ REGION_TAG = {
     'Monténégro': 'Europe du Sud', 'Albanie': 'Europe du Sud', 'Chypre': 'Europe du Sud',
     'Slovénie': 'Europe du Sud', 'Turquie': 'Europe du Sud',
     # Europe du Nord & Centrale
-    'France': 'France', 'Allemagne': 'Europe Centrale', 'Pays-Bas': 'Europe Centrale',
+    'France': 'Europe du Sud', 'Allemagne': 'Europe Centrale', 'Pays-Bas': 'Europe Centrale',
     'Belgique': 'Europe Centrale', 'Autriche': 'Europe Centrale', 'Suisse': 'Europe Centrale',
     'République Tchèque': 'Europe Centrale', 'Hongrie': 'Europe Centrale', 'Pologne': 'Europe Centrale',
     'Roumanie': 'Europe Centrale', 'Royaume-Uni': 'Europe du Nord',
@@ -110,7 +110,7 @@ REGION_TAG = {
 
 REGION_TAG_EN = {
     'Europe du Sud': 'Southern Europe', 'Europe Centrale': 'Central Europe',
-    'Europe du Nord': 'Northern Europe', 'France': 'France',
+    'Europe du Nord': 'Northern Europe',
     'Scandinavie': 'Scandinavia', 'Baltique': 'Baltics',
     'Caucase': 'Caucasus', 'Asie Centrale': 'Central Asia',
     'Afrique du Nord': 'North Africa', 'Afrique': 'Africa',

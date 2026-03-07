@@ -33,7 +33,7 @@ SLUG_OVERRIDE = {
 
 # ── pays → (mega_region, sub_region) ──
 MAPPING = {
-    'France': ('france', 'France'),
+    'France': ('europe', 'Europe du Sud & Méditerranée'),
     # EUROPE
     'Albanie': ('europe', 'Europe du Sud & Méditerranée'),
     'Bosnie-Herzégovine': ('europe', 'Europe du Sud & Méditerranée'),
@@ -185,20 +185,41 @@ MAPPING = {
     'Papouasie-Nouvelle-Guinée': ('oceanie', 'Pacifique & Outre-mer'),
 }
 
-# 6 mega-regions in order
+# 5 mega-regions in order (France merged into Europe)
 MEGAS = [
-    ('france',     1, {'fr': '<img src="flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> France',
-                       'en': '<img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> France'}),
-    ('europe',     2, {'fr': '🌊 Europe',                         'en': '🌊 Europe'}),
-    ('afrique-mo', 3, {'fr': '🌍 Afrique & Moyen-Orient',        'en': '🌍 Africa & Middle East'}),
-    ('asie',       4, {'fr': '🌏 Asie',                           'en': '🌏 Asia'}),
-    ('ameriques',  5, {'fr': '🌎 Amériques',                      'en': '🌎 Americas'}),
-    ('oceanie',    6, {'fr': '🦘 Océanie & Outre-mer',            'en': '🦘 Oceania & Overseas'}),
+    ('europe',     1, {'fr': '🌊 Europe',                         'en': '🌊 Europe',                    'es': '🌊 Europa'}),
+    ('afrique-mo', 2, {'fr': '🌍 Afrique & Moyen-Orient',        'en': '🌍 Africa & Middle East',      'es': '🌍 África & Oriente Medio'}),
+    ('asie',       3, {'fr': '🌏 Asie',                           'en': '🌏 Asia',                      'es': '🌏 Asia'}),
+    ('ameriques',  4, {'fr': '🌎 Amériques',                      'en': '🌎 Americas',                  'es': '🌎 Américas'}),
+    ('oceanie',    5, {'fr': '🦘 Océanie & Outre-mer',            'en': '🦘 Oceania & Overseas',        'es': '🦘 Oceanía & Ultramar'}),
 ]
+
+# Sub-region name translations per language
+SUB_NAMES = {
+    'Europe du Sud & Méditerranée': {'fr': 'Europe du Sud & Méditerranée', 'en': 'Southern Europe & Mediterranean', 'es': 'Europa del Sur y Mediterráneo'},
+    'Europe du Nord & Centrale':    {'fr': 'Europe du Nord & Centrale',    'en': 'Northern & Central Europe',       'es': 'Europa del Norte y Central'},
+    'Scandinavie & Baltique':       {'fr': 'Scandinavie & Baltique',       'en': 'Scandinavia & Baltics',           'es': 'Escandinavia y Báltico'},
+    'Caucase & Asie Centrale':      {'fr': 'Caucase & Asie Centrale',      'en': 'Caucasus & Central Asia',         'es': 'Cáucaso y Asia Central'},
+    'Afrique du Nord':              {'fr': 'Afrique du Nord',              'en': 'North Africa',                    'es': 'África del Norte'},
+    "Afrique de l'Ouest":           {'fr': "Afrique de l'Ouest",           'en': 'West Africa',                     'es': 'África Occidental'},
+    "Afrique de l'Est":             {'fr': "Afrique de l'Est",             'en': 'East Africa',                     'es': 'África Oriental'},
+    'Afrique australe':             {'fr': 'Afrique australe',             'en': 'Southern Africa',                 'es': 'África Austral'},
+    'Océan Indien':                 {'fr': 'Océan Indien',                 'en': 'Indian Ocean',                    'es': 'Océano Índico'},
+    'Moyen-Orient':                 {'fr': 'Moyen-Orient',                 'en': 'Middle East',                     'es': 'Oriente Medio'},
+    'Macaronésie':                  {'fr': 'Macaronésie',                  'en': 'Macaronesia',                     'es': 'Macaronesia'},
+    'Asie du Sud-Est':              {'fr': 'Asie du Sud-Est',              'en': 'Southeast Asia',                  'es': 'Asia del Sudeste'},
+    "Asie de l'Est":                {'fr': "Asie de l'Est",                'en': 'East Asia',                       'es': 'Asia Oriental'},
+    'Asie du Sud':                  {'fr': 'Asie du Sud',                  'en': 'South Asia',                      'es': 'Asia del Sur'},
+    'Amérique du Nord':             {'fr': 'Amérique du Nord',             'en': 'North America',                   'es': 'América del Norte'},
+    'Caraïbes':                     {'fr': 'Caraïbes',                     'en': 'Caribbean',                       'es': 'Caribe'},
+    'Mexique & Amérique Centrale':  {'fr': 'Mexique & Amérique Centrale',  'en': 'Mexico & Central America',        'es': 'México y América Central'},
+    'Amérique du Sud':              {'fr': 'Amérique du Sud',              'en': 'South America',                   'es': 'América del Sur'},
+    'Australie & Nouvelle-Zélande': {'fr': 'Australie & Nouvelle-Zélande','en': 'Australia & New Zealand',         'es': 'Australia y Nueva Zelanda'},
+    'Pacifique & Outre-mer':        {'fr': 'Pacifique & Outre-mer',        'en': 'Pacific & Overseas',              'es': 'Pacífico y Ultramar'},
+}
 
 # Sub-region sort order within each mega
 SUB_ORDER = {
-    'France': 1,
     'Europe du Sud & Méditerranée': 1,
     'Europe du Nord & Centrale': 2,
     'Scandinavie & Baltique': 3,
@@ -358,8 +379,8 @@ def build_hub(destinations, loc):
     page_prefix = ''  # pages are always in same dir as hub
     lang = loc['meta']['html_lang']
     is_fr = (lang == 'fr')
-    slug_key = 'slug_fr' if is_fr else 'slug_en'
-    name_key = 'nom_fr' if is_fr else 'nom_en'
+    slug_key = 'slug_fr' if is_fr else ('slug_es' if lang == 'es' else 'slug_en')
+    name_key = 'nom_fr' if is_fr else ('nom_es' if lang == 'es' else 'nom_en')
 
     # Group: mega → sub → [dests]
     megas = {}
@@ -412,7 +433,8 @@ def build_hub(destinations, loc):
                 sub_cnt = len(dests)
                 L.append(f'<div class="dh-sub">')
                 L.append(f'<button class="dh-sub-head">')
-                L.append(f'<span class="dh-sub-label">{html_mod.escape(sub_name)}</span>')
+                sub_label = SUB_NAMES.get(sub_name, {}).get(lang, sub_name)
+                L.append(f'<span class="dh-sub-label">{html_mod.escape(sub_label)}</span>')
                 L.append(f'<span class="dh-acc-meta"><span class="dh-sub-count">{sub_cnt}</span>')
                 L.append(f'<span class="dh-sub-chev">▾</span></span></button>')
                 L.append(f'<div class="dh-sub-body"><div class="dh-grid">')
@@ -520,6 +542,14 @@ if os.path.exists('en/app.html'):
     if 'SILO 1' in open('en/app.html').read():
         if inject('en/app.html', dests, loc_en):
             c = len(re.findall(r'best-time-to-visit-', open('en/app.html').read()))
+            print(f"  ✅ {c} liens")
+
+if os.path.exists('es/app.html'):
+    loc_es = load_locale('es')
+    print("\n🇪🇸 es/app.html...")
+    if 'SILO 1' in open('es/app.html').read():
+        if inject('es/app.html', dests, loc_es):
+            c = len(re.findall(r'mejor-epoca-', open('es/app.html').read()))
             print(f"  ✅ {c} liens")
 
 print("\n✅ Done")
