@@ -355,7 +355,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     best_sun = best_m['sun_h']
 
     if C['lang'] == 'fr':
-        prep = dest.get('prep', 'à')
+        prep = dest.get('prep_fr', 'à')
         nom_bare = dest.get('nom_bare', slug_fr)
     elif C['lang'] == 'es':
         prep = dest.get('prep_es', 'en')
@@ -919,7 +919,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     is_shoulder = mi in (3, 4, 8, 9)
     hash_var    = (hash(slug_fr + str(mi)) % 3)
 
-    prep = dest.get('prep', 'à')
+    prep = dest.get('prep_fr', 'à')
     nom_bare = dest.get('nom_bare', slug_fr)
     mlc = month_lc(C, month)
 

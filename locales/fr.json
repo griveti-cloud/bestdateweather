@@ -496,7 +496,7 @@
     "name_key": "nom_bare",
     "slug_key": "slug_fr",
     "country_key": "pays",
-    "hero_sub_key": "hero_sub"
+    "hero_sub_key": "hero_sub_fr"
   },
   "annual_titles": [
     "Meilleure période pour partir {prep} {nom_bare} [{year}] — Météo & conseils",

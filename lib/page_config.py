@@ -211,7 +211,7 @@ def dest_name(cfg, dest):
 def dest_name_full(cfg, dest):
     """Return full name with preposition (FR) or plain name (EN)."""
     if cfg['lang'] == 'fr':
-        return f"{dest.get('prep', 'à')} {dest.get('nom_bare', dest['slug_fr'])}"
+        return f"{dest.get('prep_fr', 'à')} {dest.get('nom_bare', dest['slug_fr'])}"
     return dest.get(cfg['dest_fields']['name_key'], dest.get('nom_bare', dest['slug_fr']))
 
 

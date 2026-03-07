@@ -510,7 +510,7 @@
   "dest_fields": {
     "name_key": "nom_es",
     "slug_key": "slug_es",
-    "country_key": "country_en",
+    "country_key": "country_es",
     "hero_sub_key": "hero_sub_es"
   },
   "annual_titles": [
