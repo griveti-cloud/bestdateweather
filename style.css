@@ -210,30 +210,30 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
     opacity:.65;white-space:nowrap;flex-shrink:0
   }
   /* Table mensuelle + comparaison : responsive sans scroll horizontal */
-  .climate-table[aria-label*="mensuel"],.climate-table[aria-label*="Monthly climate table"],
-  .climate-table[aria-label*="Comparaison"],.climate-table[aria-label*="Month-by-month"]{
+  .climate-table[aria-label*="mensuel"],.climate-table[aria-label*="mensual"],.climate-table[aria-label*="Monthly climate table"],
+  .climate-table[aria-label*="Comparaison"],.climate-table[aria-label*="Comparación"],.climate-table[aria-label*="Month-by-month"]{
     min-width:0;display:table;font-size:11px
   }
-  .climate-table[aria-label*="mensuel"] thead,.climate-table[aria-label*="Monthly climate table"] thead,
-  .climate-table[aria-label*="Comparaison"] thead,.climate-table[aria-label*="Month-by-month"] thead{display:table-header-group}
-  .climate-table[aria-label*="mensuel"] tbody,.climate-table[aria-label*="Monthly climate table"] tbody,
-  .climate-table[aria-label*="Comparaison"] tbody,.climate-table[aria-label*="Month-by-month"] tbody{display:table-row-group}
-  .climate-table[aria-label*="mensuel"] tbody tr,.climate-table[aria-label*="Monthly climate table"] tbody tr,
-  .climate-table[aria-label*="Comparaison"] tbody tr,.climate-table[aria-label*="Month-by-month"] tbody tr{
+  .climate-table[aria-label*="mensuel"] thead,.climate-table[aria-label*="mensual"] thead,.climate-table[aria-label*="Monthly climate table"] thead,
+  .climate-table[aria-label*="Comparaison"] thead,.climate-table[aria-label*="Comparación"] thead,.climate-table[aria-label*="Month-by-month"] thead{display:table-header-group}
+  .climate-table[aria-label*="mensuel"] tbody,.climate-table[aria-label*="mensual"] tbody,.climate-table[aria-label*="Monthly climate table"] tbody,
+  .climate-table[aria-label*="Comparaison"] tbody,.climate-table[aria-label*="Comparación"] tbody,.climate-table[aria-label*="Month-by-month"] tbody{display:table-row-group}
+  .climate-table[aria-label*="mensuel"] tbody tr,.climate-table[aria-label*="mensual"] tbody tr,.climate-table[aria-label*="Monthly climate table"] tbody tr,
+  .climate-table[aria-label*="Comparaison"] tbody tr,.climate-table[aria-label*="Comparación"] tbody tr,.climate-table[aria-label*="Month-by-month"] tbody tr{
     display:table-row;border:none;border-radius:0;
     padding:0;margin:0;box-shadow:none;flex-direction:unset
   }
-  .climate-table[aria-label*="mensuel"] tbody td,.climate-table[aria-label*="Monthly climate table"] tbody td,
-  .climate-table[aria-label*="Comparaison"] tbody td,.climate-table[aria-label*="Month-by-month"] tbody td{
+  .climate-table[aria-label*="mensuel"] tbody td,.climate-table[aria-label*="mensual"] tbody td,.climate-table[aria-label*="Monthly climate table"] tbody td,
+  .climate-table[aria-label*="Comparaison"] tbody td,.climate-table[aria-label*="Comparación"] tbody td,.climate-table[aria-label*="Month-by-month"] tbody td{
     display:table-cell;padding:6px 4px!important;
     text-align:center!important;font-size:11px
   }
-  .climate-table[aria-label*="mensuel"] thead th,.climate-table[aria-label*="Monthly climate table"] thead th,
-  .climate-table[aria-label*="Comparaison"] thead th,.climate-table[aria-label*="Month-by-month"] thead th{
+  .climate-table[aria-label*="mensuel"] thead th,.climate-table[aria-label*="mensual"] thead th,.climate-table[aria-label*="Monthly climate table"] thead th,
+  .climate-table[aria-label*="Comparaison"] thead th,.climate-table[aria-label*="Comparación"] thead th,.climate-table[aria-label*="Month-by-month"] thead th{
     padding:8px 4px!important;font-size:10px
   }
-  .climate-table[aria-label*="mensuel"] tbody td:first-child,.climate-table[aria-label*="Monthly climate table"] tbody td:first-child,
-  .climate-table[aria-label*="Comparaison"] tbody td:first-child,.climate-table[aria-label*="Month-by-month"] tbody td:first-child{
+  .climate-table[aria-label*="mensuel"] tbody td:first-child,.climate-table[aria-label*="mensual"] tbody td:first-child,.climate-table[aria-label*="Monthly climate table"] tbody td:first-child,
+  .climate-table[aria-label*="Comparaison"] tbody td:first-child,.climate-table[aria-label*="Comparación"] tbody td:first-child,.climate-table[aria-label*="Month-by-month"] tbody td:first-child{
     padding-left:8px!important;font-size:11px;white-space:nowrap;
     border-bottom:1px solid var(--cream2)!important
   }
@@ -241,12 +241,12 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
   .climate-table[aria-label*="mensuel"] td:nth-child(2),.climate-table[aria-label*="Monthly climate table"] td:nth-child(2),
   .climate-table[aria-label*="mensuel"] th:nth-child(5),.climate-table[aria-label*="Monthly climate table"] th:nth-child(5),
   .climate-table[aria-label*="mensuel"] td:nth-child(5),.climate-table[aria-label*="Monthly climate table"] td:nth-child(5),
-  .climate-table[aria-label*="Comparaison"] th:nth-child(2),.climate-table[aria-label*="Month-by-month"] th:nth-child(2),
-  .climate-table[aria-label*="Comparaison"] td:nth-child(2),.climate-table[aria-label*="Month-by-month"] td:nth-child(2),
-  .climate-table[aria-label*="Comparaison"] th:nth-child(5),.climate-table[aria-label*="Month-by-month"] th:nth-child(5),
-  .climate-table[aria-label*="Comparaison"] td:nth-child(5),.climate-table[aria-label*="Month-by-month"] td:nth-child(5){display:none}
-  .climate-table-wrap:has([aria-label*="mensuel"]),.climate-table-wrap:has([aria-label*="Monthly climate table"]){overflow-x:auto}
-  .climate-table-wrap.mountain,.climate-table-wrap.mountain:has([aria-label*="mensuel"]),.climate-table-wrap.mountain:has([aria-label*="Monthly climate table"]){overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .climate-table[aria-label*="Comparaison"] th:nth-child(2),.climate-table[aria-label*="Comparación"] th:nth-child(2),.climate-table[aria-label*="Month-by-month"] th:nth-child(2),
+  .climate-table[aria-label*="Comparaison"] td:nth-child(2),.climate-table[aria-label*="Comparación"] td:nth-child(2),.climate-table[aria-label*="Month-by-month"] td:nth-child(2),
+  .climate-table[aria-label*="Comparaison"] th:nth-child(5),.climate-table[aria-label*="Comparación"] th:nth-child(5),.climate-table[aria-label*="Month-by-month"] th:nth-child(5),
+  .climate-table[aria-label*="Comparaison"] td:nth-child(5),.climate-table[aria-label*="Comparación"] td:nth-child(5),.climate-table[aria-label*="Month-by-month"] td:nth-child(5){display:none}
+  .climate-table-wrap:has([aria-label*="mensuel"]),.climate-table-wrap:has([aria-label*="mensual"]),.climate-table-wrap:has([aria-label*="Monthly climate table"]){overflow-x:auto}
+  .climate-table-wrap.mountain,.climate-table-wrap.mountain:has([aria-label*="mensuel"]),.climate-table-wrap.mountain:has([aria-label*="mensual"]),.climate-table-wrap.mountain:has([aria-label*="Monthly climate table"]){overflow-x:auto;-webkit-overflow-scrolling:touch}
   .widget-frame iframe{height:580px}
 }
 
