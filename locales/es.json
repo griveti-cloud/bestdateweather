@@ -131,7 +131,7 @@
     "cross_monthly_sep": "-meteo-"
   },
   "cards": {
-    "file": "cards_en.csv",
+    "file": "cards_es.csv",
     "title_key": "title",
     "text_key": "text"
   },
