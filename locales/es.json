@@ -382,7 +382,7 @@
     "th_score": "Puntuación",
     "th_ski": "Puntuación ski 🎿",
     "legend_note": "◀ Mes actual · Fuente Open-Meteo · 10 años",
-    "src_link": "../en/methodology.html",
+    "src_link": "../es/metodologia.html",
     "kicker_tpl": "Open-Meteo · 10 años · 12 meses comparados · {lat}°N {lon}°{dir}",
     "og_title_tpl": "{nom} en {month} — {tmax}°C, {rain}% lluvia",
     "bk_cta_tpl": "Alojarse en {nom} en {month}",
