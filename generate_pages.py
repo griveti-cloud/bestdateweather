@@ -1399,7 +1399,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <div class="section-label">{L['sec_table']}</div>
  <h2 class="section-title">{L['sec_table_title']}</h2>
  <div class="{'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'}">
- <table class="climate-table" aria-label="{L['sec_table_title']} {nom}">
+ <table class="climate-table climate-table--horizontal" aria-label="{L['sec_table_title']} {nom}">
  <thead><tr><th>{L['th_month']}</th><th>{L['th_tmin']}</th><th>{L['th_tmax']}</th><th>{L['th_rain']}</th><th>{L['th_precip']}</th><th>{L['th_sun']}</th><th>{L['th_score']}</th>{'<th>' + L['th_ski'] + '</th>' if is_mountain else ''}</tr></thead>
  <tbody>{table_rows}</tbody>
  </table>

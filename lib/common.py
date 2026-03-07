@@ -229,7 +229,7 @@ def climate_table_html(months, nom, is_mountain=False, L=None):
     ski_header = L['table_ski_header'] if is_mountain else ''
     wrap_class = 'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'
     return f'''<div class="{wrap_class}">
- <table class="climate-table" aria-label="{L['table_aria'].format(nom=nom)}">
+ <table class="climate-table climate-table--horizontal" aria-label="{L['table_aria'].format(nom=nom)}">
  <thead><tr>{L['table_headers']}{ski_header}</tr></thead>
  <tbody>{rows}</tbody>
  </table>
