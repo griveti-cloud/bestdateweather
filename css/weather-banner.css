@@ -88,8 +88,8 @@
 /* ── GEOLOCATION PROMPT ── */
 .wb-geo-prompt{margin:0 16px 12px;padding:14px 16px;background:linear-gradient(135deg,var(--navy),#2a3548);border-radius:var(--r);color:#fff;text-align:center;animation:fadeUp .35s ease both}
 .wb-geo-prompt p{font-size:13px;opacity:.8;margin-bottom:10px}
-.wb-geo-input-wrap{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border-radius:var(--r-sm);padding:10px 14px;border:1.5px solid rgba(255,255,255,.15);transition:border-color .2s}
-.wb-geo-input-wrap:focus-within{border-color:var(--gold)}
+.wb-geo-input-wrap{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border-radius:var(--r-sm);padding:10px 14px;border:1.5px solid rgba(255,255,255,.15);transition:box-shadow .2s}
+.wb-geo-input-wrap:focus-within{box-shadow:0 0 0 2px var(--gold)}
 .wb-geo-input{border:none;outline:none;background:none;flex:1;font-size:14px;font-family:'DM Sans',sans-serif;color:#fff}
 .wb-geo-input::placeholder{color:rgba(255,255,255,.4)}
 .wb-geo-results{margin-top:6px;text-align:left}
