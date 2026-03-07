@@ -437,11 +437,12 @@ def rank_icon(i):
     if i == 3: return '🥉'
     return str(i)
 
-def dest_link(slug, nom, lang):
+def dest_link(slug, nom, lang, dest=None):
     if lang == 'fr':
         return f'meilleure-periode-{slug}.html'
     elif lang == 'es':
-        return f'../es/mejor-epoca-{slug}.html'
+        slug_es = dest.get('slug_es', slug) if dest else slug
+        return f'../es/mejor-epoca-{slug_es}.html'
     else:
         return f'best-time-to-visit-{slug}.html'
 
@@ -489,7 +490,7 @@ def make_table_annual(entries, n, lang):
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
         nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
-        link = dest_link(entry['slug'], nom, lang)
+        link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
@@ -514,7 +515,7 @@ def make_table_seasonal(entries, n, lang):
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
         nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
-        link = dest_link(entry['slug'], nom, lang)
+        link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
@@ -539,7 +540,7 @@ def make_table_sun(entries, n, lang):
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
         nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
-        link = dest_link(entry['slug'], nom, lang)
+        link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
@@ -563,7 +564,7 @@ def make_table_rain(entries, n, lang):
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
         nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
-        link = dest_link(entry['slug'], nom, lang)
+        link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
@@ -588,7 +589,7 @@ def make_table_nomad(entries, n, lang):
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
         nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
-        link = dest_link(entry['slug'], nom, lang)
+        link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
@@ -613,7 +614,7 @@ def make_table_beach(entries, n, lang):
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
         nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
-        link = dest_link(entry['slug'], nom, lang)
+        link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
@@ -640,7 +641,7 @@ def make_table_beach_annual(entries, n, lang):
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
         nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
-        link = dest_link(entry['slug'], nom, lang)
+        link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
@@ -695,12 +696,12 @@ RELATED_EN = [
 ]
 
 RELATED_ES = [
-    ('mejores-destinos-clima-2026.html', '🏆 Ranking global 2026', '318 destinos'),
-    ('mejores-destinos-europa-clima-2026.html', '<img src="../flags/eu.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Mejores destinos Europa', 'Comparativa europea'),
-    ('mejores-destinos-verano-clima-2026.html', '☀️ Mejores destinos verano', 'Jun–Jul–Ago'),
-    ('mejores-destinos-invierno-clima-2026.html', '❄️ Mejores destinos invierno', 'Dic–Ene–Feb'),
-    ('mejores-destinos-nomadas-clima-2026.html', '💻 Mejores destinos nómadas', 'Regularidad y confort'),
-    ('mejores-playas-clima-2026.html', '🏖️ Mejores playas', 'Puntuación playa y mar'),
+    ('mejores-destinos-clima-2026.html', '🏆 Ranking global 2026', '478 destinos'),
+    ('mejor-clima-europa-2026.html', '<img src="../flags/eu.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Mejores destinos Europa', 'Comparativa europea'),
+    ('mejores-destinos-verano-2026.html', '☀️ Mejores destinos verano', 'Jun–Jul–Ago'),
+    ('mejores-destinos-invierno-2026.html', '❄️ Mejores destinos invierno', 'Dic–Ene–Feb'),
+    ('mejores-destinos-nomadas-digitales-2026.html', '💻 Mejores destinos nómadas', 'Regularidad y confort'),
+    ('mejores-destinos-playa-2026.html', '🏖️ Mejores playas', 'Puntuación playa y mar'),
 ]
 
 def make_related(lang, exclude_href=''):

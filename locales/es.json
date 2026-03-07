@@ -25,7 +25,7 @@
         "lang": "en",
         "flag": "gb",
         "label": "English",
-        "asset_prefix": "../"
+        "asset_prefix": "../en/"
       }
     ]
   },
@@ -98,41 +98,98 @@
     "Invierno": "Dic–Feb"
   },
   "season_months": {
-    "Primavera": [2, 3, 4],
-    "Verano": [5, 6, 7],
-    "Otoño": [8, 9, 10],
-    "Invierno": [11, 0, 1]
+    "Primavera": [
+      2,
+      3,
+      4
+    ],
+    "Verano": [
+      5,
+      6,
+      7
+    ],
+    "Otoño": [
+      8,
+      9,
+      10
+    ],
+    "Invierno": [
+      11,
+      0,
+      1
+    ]
   },
   "url": {
     "annual_prefix": "mejor-epoca-",
     "annual_suffix": ".html",
     "monthly_sep": "-clima-",
-    "pillar_prefix": "donde-ir-en-",
+    "pillar_prefix": "../en/where-to-go-in-",
     "cross_annual_prefix": "meilleure-periode-",
     "cross_monthly_sep": "-meteo-",
-    "comparison_glob": "*-vs-*-clima.html"
+    "comparison_glob": "*-vs-*-clima.html",
+    "pillar_month_url": [
+      "january",
+      "february",
+      "march",
+      "april",
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december"
+    ]
   },
   "cards": {
-    "file": "cards_es.csv",
+    "file": "cards_en.csv",
     "title_key": "title",
     "text_key": "text"
   },
   "footer": {
     "data_by": "Datos meteorológicos por Open-Meteo.com",
     "sources": "Fuentes: ECMWF, DWD, NOAA · CC BY 4.0",
-    "methodology": ["metodologia.html", "Metodología"],
-    "app": ["app.html", "App del tiempo"],
-    "about": ["about.html", "Acerca de"],
-    "faq": ["faq.html", "FAQ"],
-    "legal": ["legal.html", "Legal"],
-    "privacy": ["privacy.html", "Privacidad"],
-    "contact": ["contact.html", "Contacto"],
+    "methodology": [
+      "../en/methodology.html",
+      "Metodología"
+    ],
+    "app": [
+      "../en/app.html",
+      "App meteorológica"
+    ],
+    "about": [
+      "../en/about.html",
+      "Acerca de"
+    ],
+    "faq": [
+      "../en/faq.html",
+      "FAQ"
+    ],
+    "legal": [
+      "../en/legal.html",
+      "Legal"
+    ],
+    "privacy": [
+      "../en/privacy.html",
+      "Privacidad"
+    ],
+    "contact": [
+      "../en/contact.html",
+      "Contacto"
+    ],
     "alt_lang_flag": "fr",
     "alt_lang_label": "Français"
   },
   "rankings": [
-    ["mejor-clima-mundial-2026.html", "🌍 Ranking mundial 2026"],
-    ["mejor-clima-europa-2026.html", "🇪🇺 Mejor clima en Europa"]
+    [
+      "mejores-destinos-clima-2026.html",
+      "🌍 Ranking mundial 2026"
+    ],
+    [
+      "mejor-clima-europa-2026.html",
+      "🇪🇺 Mejor clima en Europa"
+    ]
   ],
   "badges": {
     "excellent": "✅ Excelente",
@@ -161,8 +218,8 @@
     "legend_source": "Fuente: Open-Meteo · 10 años"
   },
   "nav": {
-    "cta_label": "Probar la app del tiempo",
-    "cta_href": "app.html"
+    "cta_label": "Probar la aplicación",
+    "cta_href": "../en/app.html"
   },
   "labels": {
     "quick_section": "Decisión rápida",
@@ -238,7 +295,7 @@
     "cta_title": "📅 Previsión en tiempo real — próximos 12 meses",
     "cta_text": "Datos en tiempo real con correcciones estacionales ECMWF · actualizados cada día",
     "cta_btn": "Probar la app del tiempo",
-    "cta_link": "app.html",
+    "cta_link": "../en/app.html",
     "act_city_good": "✅ Bueno",
     "act_city_ok": "⚠️ Posible",
     "act_ext_good": "✅ Bueno",
@@ -325,7 +382,7 @@
     "th_score": "Puntuación",
     "th_ski": "Puntuación ski 🎿",
     "legend_note": "◀ Mes actual · Fuente Open-Meteo · 10 años",
-    "src_link": "metodologia.html",
+    "src_link": "../en/methodology.html",
     "kicker_tpl": "Open-Meteo · 10 años · 12 meses comparados · {lat}°N {lon}°{dir}",
     "og_title_tpl": "{nom} en {month} — {tmax}°C, {rain}% lluvia",
     "bk_cta_tpl": "Alojarse en {nom} en {month}",
@@ -427,8 +484,8 @@
     "card_missing": "[P2] {slug}: sin tarjeta de proyecto"
   },
   "dest_fields": {
-    "name_key": "nom_en",
-    "slug_key": "slug_en",
+    "name_key": "nom_es",
+    "slug_key": "slug_es",
     "country_key": "country_en",
     "hero_sub_key": "hero_sub_en"
   },
@@ -642,7 +699,14 @@
     "file_tpl": "{a}-vs-{b}-clima.html"
   },
   "pilier": {
-    "th": ["#", "Destino", "Puntuación", "Temp.", "Lluvia", "Sol/día"],
+    "th": [
+      "#",
+      "Destino",
+      "Puntuación",
+      "Temp.",
+      "Lluvia",
+      "Sol/día"
+    ],
     "ranking_label": "Ranking",
     "months_label": "Meses",
     "pillar_prefix": "donde-ir-en-",
@@ -650,7 +714,7 @@
     "top_n_label": "destinos",
     "world_ranking_label": "🌍 Ranking mundial 2026",
     "world_ranking_sub": "Todos los destinos",
-    "world_ranking_url": "mejor-clima-mundial-2026.html",
+    "world_ranking_url": "mejores-destinos-clima-2026.html",
     "also_explore": "Explorar también",
     "other_rankings": "Otros rankings",
     "hero_eyebrow_prefix": "Estudio climático · 10 años de datos · ",

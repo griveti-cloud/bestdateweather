@@ -94,6 +94,7 @@ def build_config(lang):
         'annual_suffix': loc['url']['annual_suffix'],
         'monthly_sep': loc['url']['monthly_sep'],
         'pillar_prefix': loc['url']['pillar_prefix'],
+        'pillar_month_url': loc['url'].get('pillar_month_url', None),
         'base_url': loc['meta']['base_url'],
         'base_url_cross': cross_loc['meta']['base_url'],
         'canonical_prefix': loc['meta']['canonical_prefix'],
@@ -259,4 +260,5 @@ def hero_sub(cfg, dest):
 
 def pillar_url(cfg, mi):
     """Return pillar page URL for a month."""
-    return f"{cfg['pillar_prefix']}{cfg['month_url'][mi]}.html"
+    month_key = cfg['pillar_month_url'][mi] if cfg.get('pillar_month_url') else cfg['month_url'][mi]
+    return f"{cfg['pillar_prefix']}{month_key}.html"
