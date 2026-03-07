@@ -222,7 +222,7 @@ def compute_all_similarities(dests, climate):
 
 def GTAG_HTML(pfx=''):
     return f'''<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
-<script src="{pfx}js/ga.js"></script>'''
+<script defer src="{pfx}js/ga.js"></script>'''
 
 
 
