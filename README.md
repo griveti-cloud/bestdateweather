@@ -1,79 +1,171 @@
 # BestDateWeather
 
-Plateforme météo et voyage — données climatiques et recommandations pour 318+ destinations mondiales.
+Plateforme météo et voyage — données climatiques et scores pour **617 destinations** mondiales en **3 langues** (FR, EN, ES).
 
 **Site** : [bestdateweather.com](https://bestdateweather.com)
 
-## Architecture
+---
+
+## Architecture des fichiers
 
 ```
-├── index.html              # Hub FR (app météo interactive)
-├── en/app.html             # Hub EN
+├── index.html                      # Hub FR (app météo interactive)
+├── en/
+│   ├── app.html                    # Hub EN
+│   ├── about.html                  # À propos EN
+│   ├── faq.html                    # FAQ EN
+│   ├── {slug}-weather-{month}.html # Pages mensuelles EN (617×12 = 7404)
+│   ├── best-time-to-visit-{slug}.html # Pages annuelles EN (617)
+│   └── ...                         # Comparatifs, classements, statiques EN
+├── es/
+│   ├── app.html                    # Hub ES
+│   ├── sobre-nosotros.html         # À propos ES
+│   ├── faq.html                    # FAQ ES
+│   ├── {slug}-clima-{month}.html   # Pages mensuelles ES (617×12 = 7404)
+│   ├── mejor-epoca-{slug}.html     # Pages annuelles ES (617)
+│   └── ...                         # Comparatifs, classements, statiques ES
+├── {slug}-meteo-{month}.html       # Pages mensuelles FR (617×12 = 7404)
+├── meilleure-periode-{slug}.html   # Pages annuelles FR (617)
 ├── js/
-│   ├── core.js             # Logique app partagée FR/EN (scoring, API, rendu)
-│   ├── i18n-fr.js          # Chaînes FR
-│   └── i18n-en.js          # Chaînes EN
-├── style.css               # CSS partagé (fiches destination)
+│   ├── core.js                     # Logique app (scoring, API, rendu) — SOURCE
+│   ├── core.min.js                 # = copie de core.js (pas de minification regex)
+│   ├── fiche-scores.js             # Scores pré-calculés : 'lat,lon' → [12 scores]
+│   ├── fiche-slugs.js              # Autocomplete : alias → {fr, en, es}
+│   ├── fiche-slugs.min.js          # = copie de fiche-slugs.js
+│   ├── i18n-fr.js / i18n-fr.min.js # Chaînes FR
+│   ├── i18n-en.js / i18n-en.min.js # Chaînes EN
+│   └── i18n-es.js / i18n-es.min.js # Chaînes ES
+├── locales/
+│   ├── fr.json                     # Clés i18n générateurs FR (767 clés)
+│   ├── en.json                     # Clés i18n générateurs EN
+│   └── es.json                     # Clés i18n générateurs ES
 ├── data/
-│   ├── destinations.csv    # 318 destinations (coords, slugs, flags, config)
-│   ├── climate.csv         # Données climatiques mensuelles (10 ans ERA5)
-│   ├── cards.csv           # Cartes projet FR
-│   ├── cards_en.csv        # Cartes projet EN
-│   ├── events.csv          # Événements par destination/mois
-│   └── overrides.csv       # Corrections manuelles
-├── scoring.py              # Algorithme de scoring (SOURCE DE VÉRITÉ)
-├── generate_pages.py       # Générateur unifié fiches destination FR+EN
-├── generate_piliers.py     # Pages pilier (par continent/thème)
-├── generate_comparatifs.py # Pages comparaison (ville A vs ville B)
-├── generate_classements.py # Pages classement (top destinations)
-├── fetch_climate.py        # Récupération données Open-Meteo → climate.csv
-├── regenerate_scores.py    # Recalcul scores dans pages existantes
-├── generate_events.py      # Génération events.csv
-├── generate_index_hub.py   # Injection liens dans hubs
-├── Makefile                # Pipeline de build
-├── vercel.json             # Config Vercel (headers, redirects)
-└── scripts/archive/        # Scripts utilitaires one-shot (non utilisés au quotidien)
+│   ├── destinations.csv            # 617 destinations (coords, slugs ×3, flags, config)
+│   ├── climate.csv                 # 617×12 = 7404 rows (moyennes mensuelles P50, 10 ans)
+│   ├── events.csv                  # Événements par destination/mois
+│   └── overrides.csv              # Corrections manuelles scores
+├── scoring.py                      # Algorithme scoring (SOURCE DE VÉRITÉ)
+├── generate_pages.py               # Générateur fiches FR+EN+ES (monthly + annual)
+├── generate_piliers.py             # Pages pilier par mois (FR+EN+ES)
+├── generate_comparatifs.py         # Pages comparaison A vs B
+├── generate_classements.py         # Pages classement top destinations (FR+EN+ES)
+├── generate_index_hub.py           # Injection cartes dans hubs FR+EN+ES
+├── generate_fiche_slugs.py         # Régénère fiche-slugs.js depuis destinations.csv
+├── fetch_climate.py                # Récupération Open-Meteo → climate.csv (P50)
+├── regenerate_scores.py            # Recalcul scores dans HTML existants
+├── check_locale.py                 # Audit cohérence locales FR/EN/ES
+├── scripts/
+│   ├── generate_sitemaps.py        # Régénère sitemap-fr.xml + sitemap-en.xml
+│   └── archive/                    # Scripts one-shot archivés
+├── sitemap-fr.xml                  # 8079 URLs
+├── sitemap-en.xml                  # 8078 URLs
+├── sitemap-es.xml                  # 8034 URLs
+├── sitemap-index.xml               # Index FR+EN+ES
+├── robots.txt                      # Disallow app.html? sur FR+EN+ES
+└── vercel.json                     # Config Vercel (headers, redirects 301)
 ```
 
-## Build
+---
 
-```bash
-make all          # Rebuild complet (~10s)
-make destinations # Fiches destination uniquement
-make test         # Tests de cohérence scoring
-make deploy       # Commit + push → Vercel
-```
+## Pipeline de build
+
+### Ajouter des destinations
+
+1. Ajouter lignes dans `data/destinations.csv` (24 colonnes — voir schéma ci-dessous)
+2. `python3 fetch_climate.py` → remplit `climate.csv` via Open-Meteo
+3. `python3 generate_pages.py` → génère 13 pages × 3 langues par destination
+4. `python3 generate_classements.py` → met à jour classements FR+EN+ES
+5. `python3 generate_piliers.py` → met à jour piliers FR+EN+ES
+6. `python3 generate_fiche_slugs.py` → met à jour autocomplete
+7. `python3 scripts/generate_sitemaps.py` → met à jour sitemap-fr + sitemap-en
+8. Régénérer `sitemap-es.xml` manuellement (pas encore automatisé)
+9. Mettre à jour `js/fiche-scores.js` via `scripts/build_fiche_scores.py` ou script inline
+
+### Modifier le scoring
+
+1. Modifier `scoring.py` (source de vérité Python)
+2. Propager les changements dans `js/core.js` (réplique JS)
+3. Copier `core.js` → `core.min.js` (**ne jamais utiliser de minification regex**)
+4. `python3 regenerate_scores.py` → recalcule les scores dans les HTML existants
+
+### Modifier les textes i18n
+
+1. Modifier `locales/fr.json`, `locales/en.json`, `locales/es.json`
+2. `python3 check_locale.py` → vérifie parité des clés entre langues
+3. Relancer le ou les générateurs concernés
+
+---
 
 ## Flux de données
 
 ```
-                     climate.csv
-                         │
-            ┌────────────┼────────────┐
-            ▼            ▼            ▼
-       scoring.py    core.js     generate_*.py
-       (Python)      (JS app)    (Python → HTML)
-            │            │            │
-            ▼            ▼            ▼
-     FICHE_SCORES   Live scoring   8 000+ pages
-     (core.js)      (date/annual)  statiques
+destinations.csv ──────────────────────────────────────────────┐
+       │                                                         │
+  fetch_climate.py                                         generate_*.py
+       │                                                         │
+  climate.csv ──┬──── scoring.py ──── generate_pages.py         │
+                │          │                   │                 │
+                │      core.js            HTML pages             │
+                │     (réplique)         FR+EN+ES           classements
+                │          │             (24 063)            piliers
+                │    Live scoring                            comparatifs
+                │
+           fiche-scores.js
+          (scores pré-calculés
+           par coordonnées)
 ```
 
 ### Scoring : 3 chemins parallèles
 
-| Chemin | Source | Moteur | Output |
-|---|---|---|---|
-| Fiches statiques | climate.csv | `scoring.py` → `generate_pages.py` | Score /10 dans HTML |
-| App mode date | Open-Meteo API live | `core.js` (`computeAndRenderScore`) | Score /10 live |
-| App mode annuel | Open-Meteo archive | `core.js` (`rawScoreFiche` + `FICHE_SCORES`) | Score /100 ancré |
+| Chemin | Source données | Moteur | Output |
+|--------|---------------|--------|--------|
+| Fiches statiques | `climate.csv` | `scoring.py` → `generate_pages.py` | Score /10 dans HTML |
+| App mode date | Open-Meteo API live | `core.js` `computeAndRenderScore()` | Score /10 live |
+| App mode annuel | Open-Meteo archive | `core.js` `rawScoreFiche()` + `fiche-scores.js` | Score /100 ancré |
 
-⚠️ `scoring.py` est la source de vérité. `core.js` réplique `t_ideal()` et `raw_score()` — toute modification de l'un doit être propagée à l'autre.
+⚠️ `scoring.py` est la source de vérité. `core.js` réplique `t_ideal()` et `raw_score()` — toute modification de l'un **doit** être propagée à l'autre.
 
-## Données
+---
 
-- **climate.csv** : moyennes mensuelles sur 10 ans (ERA5/Open-Meteo) pour 318 destinations
-- **Classes éditoriales** : `rec` (recommandé), `mid` (acceptable), `avoid` (déconseillé) — définies manuellement dans climate.csv
-- **Scoring ancré** : les scores /10 sont contraints dans la plage de leur classe (rec: 7-10, mid: 4-6.9, avoid: 0.5-3.9)
+## Schéma destinations.csv
+
+| Colonne | Exemple | Notes |
+|---------|---------|-------|
+| `slug_fr` | `barcelone` | ASCII uniquement, a-z0-9- |
+| `slug_en` | `barcelona` | |
+| `slug_es` | `barcelona` | |
+| `nom_fr` | `Barcelone` | Nom affiché FR |
+| `nom_bare` | `Barcelone` | Sans article |
+| `pays` | `Espagne` | Pays en français |
+| `flag` | `es` | Code ISO 2 lettres |
+| `prep_fr` | `à` | Préposition FR (à/en/au/aux) |
+| `prep_es` | `en` | Préposition ES |
+| `lat` / `lon` | `41.39` / `2.15` | Coordonnées décimales |
+| `tropical` | `False` | Booléen |
+| `mountain` | `False` | Booléen |
+| `coastal` | `True` | Booléen |
+| `monthly` | `True` | Pages mensuelles activées |
+| `hero_sub_fr` | `"Barcelone, ..."` | Tagline FR (fallback générique si vide) |
+| `hero_sub_en` | `"Barcelona, ..."` | Tagline EN |
+| `hero_sub_es` | `"Barcelona, ..."` | Tagline ES |
+| `nom_en` | `Barcelona` | |
+| `nom_es` | `Barcelona` | |
+| `country_en` | `Spain` | |
+| `country_es` | `España` | |
+| `booking_dest_id` | `-372490` | ID Booking.com (négatif) ou vide |
+| `aliases` | `barca bcn` | Espace-séparé, pour autocomplete |
+
+---
+
+## Points d'attention
+
+- **Slugs** : ASCII strict (a-z, 0-9, tiret). Jamais de caractères accentués (`koweit` pas `koweït`).
+- **core.min.js** : toujours copier `core.js` tel quel. La minification regex casse l'UI.
+- **fiche-slugs.js** : régénérer via `generate_fiche_slugs.py` après chaque batch de destinations.
+- **sitemap-es.xml** : pas encore intégré dans `scripts/generate_sitemaps.py` — régénérer manuellement.
+- **Localisation** : ~30 `is_fr` subsistent dans les générateurs pour des cas structurels complexes (FAQ, titres CSV-dépendants).
+
+---
 
 ## Déploiement
 
