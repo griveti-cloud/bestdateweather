@@ -163,6 +163,8 @@ MOIS_FR = {1:'Janvier',2:'Février',3:'Mars',4:'Avril',5:'Mai',6:'Juin',
            7:'Juillet',8:'Août',9:'Septembre',10:'Octobre',11:'Novembre',12:'Décembre'}
 MOIS_EN = {1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',
            7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'}
+MOIS_ES = {1:'Enero',2:'Febrero',3:'Marzo',4:'Abril',5:'Mayo',6:'Junio',
+           7:'Julio',8:'Agosto',9:'Septiembre',10:'Octubre',11:'Noviembre',12:'Diciembre'}
 
 # ── Country-level deduplication ───────────────────────────────────────────────
 # Slugs that represent an entire country (not a city/region/island).
@@ -438,6 +440,8 @@ def rank_icon(i):
 def dest_link(slug, nom, lang):
     if lang == 'fr':
         return f'meilleure-periode-{slug}.html'
+    elif lang == 'es':
+        return f'../es/mejor-epoca-{slug}.html'
     else:
         return f'best-time-to-visit-{slug}.html'
 
@@ -463,8 +467,8 @@ def country_tag(d, lang, slug=''):
         'guyane': 'French Guiana', 'saint-pierre-et-miquelon': 'Saint Pierre & Miquelon',
     }
     if slug in SLUG_TERRITORY:
-        tag = SLUG_TERRITORY_EN[slug] if lang == 'en' else SLUG_TERRITORY[slug]
-    elif lang == 'en':
+        tag = SLUG_TERRITORY_EN[slug] if lang in ('en', 'es') else SLUG_TERRITORY[slug]
+    elif lang == 'en' or lang == 'es':
         tag = d.get('country_en', '') or d.get('pays', '')
     else:
         tag = d.get('pays', '')
@@ -474,7 +478,7 @@ def country_tag(d, lang, slug=''):
 
 def make_table_annual(entries, n, lang):
     """Generate top-N annual ranking table."""
-    mois = MOIS_EN if lang == 'en' else MOIS_FR
+    mois = MOIS_ES if lang == 'es' else (MOIS_EN if lang == 'en' else MOIS_FR)
     headers = {
         'fr': ('Rang','Destination','Meilleur mois','Score annuel','Soleil/an','Pluie moy.'),
         'en': ('Rank','Destination','Best month','Annual score','Sun/year','Avg. rain'),
@@ -483,7 +487,7 @@ def make_table_annual(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang == 'en' else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -507,7 +511,7 @@ def make_table_seasonal(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang == 'en' else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -531,7 +535,7 @@ def make_table_sun(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang == 'en' else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -554,7 +558,7 @@ def make_table_rain(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang == 'en' else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -573,12 +577,12 @@ def make_table_nomad(entries, n, lang):
         'fr': ('Rang','Destination','Score moyen','Écart-type','Pire mois','Score pire'),
         'en': ('Rank','Destination','Avg. score','Std. dev.','Worst month','Worst score'),
     }
-    mois = MOIS_EN if lang == 'en' else MOIS_FR
+    mois = MOIS_ES if lang == 'es' else (MOIS_EN if lang == 'en' else MOIS_FR)
     h = headers[lang]
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang == 'en' else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -602,7 +606,7 @@ def make_table_beach(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang == 'en' else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -619,7 +623,7 @@ def make_table_beach(entries, n, lang):
     )
 
 def make_table_beach_annual(entries, n, lang):
-    mois = MOIS_EN if lang == 'en' else MOIS_FR
+    mois = MOIS_ES if lang == 'es' else (MOIS_EN if lang == 'en' else MOIS_FR)
     headers = {
         'fr': ('Rang','Destination','Score plage','Mer moy.','Meilleur mois','Mois ≥7/10'),
         'en': ('Rank','Destination','Beach score','Avg. sea','Best month','Months ≥7/10'),
@@ -628,7 +632,7 @@ def make_table_beach_annual(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang == 'en' else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang)
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -649,10 +653,12 @@ def make_jsonld(entries, n, title, lang):
     items = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang == 'en' else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
         slug = entry['slug']
         if lang == 'fr':
             url = f'https://bestdateweather.com/meilleure-periode-{slug}.html'
+        elif lang == 'es':
+            url = f'https://bestdateweather.com/es/mejor-epoca-{slug}.html'
         else:
             url = f'https://bestdateweather.com/best-time-to-visit-{slug}.html'
         items.append({"@type":"ListItem","position":i,"name":nom,"url":url})
@@ -681,8 +687,17 @@ RELATED_EN = [
     ('best-beach-destinations-weather-2026.html', '🏖️ Best beach destinations', 'Beach score & sea temp'),
 ]
 
+RELATED_ES = [
+    ('mejores-destinos-clima-2026.html', '🏆 Ranking global 2026', '318 destinos'),
+    ('mejores-destinos-europa-clima-2026.html', '<img src="../flags/eu.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Mejores destinos Europa', 'Comparativa europea'),
+    ('mejores-destinos-verano-clima-2026.html', '☀️ Mejores destinos verano', 'Jun–Jul–Ago'),
+    ('mejores-destinos-invierno-clima-2026.html', '❄️ Mejores destinos invierno', 'Dic–Ene–Feb'),
+    ('mejores-destinos-nomadas-clima-2026.html', '💻 Mejores destinos nómadas', 'Regularidad y confort'),
+    ('mejores-playas-clima-2026.html', '🏖️ Mejores playas', 'Puntuación playa y mar'),
+]
+
 def make_related(lang, exclude_href=''):
-    related = RELATED_EN if lang == 'en' else RELATED_FR
+    related = RELATED_ES if lang == 'es' else (RELATED_EN if lang == 'en' else RELATED_FR)
     cards = ''
     for href, title, sub in related:
         if href == exclude_href:
@@ -706,6 +721,13 @@ METH_EN = (
     'thermal comfort (30%). Annual score = average of 12 months. '
     '318 destinations analyzed.</p></div>'
 )
+METH_ES = (
+    '<div class="meth"><strong>Metodología</strong>'
+    '<p>Puntuaciones calculadas a partir de 10 años de archivos Open-Meteo (ERA5). '
+    'Cada mes puntuado según sol (40&nbsp;%), precipitaciones (30&nbsp;%), '
+    'confort térmico (30&nbsp;%). Puntuación anual = media de los 12 meses. '
+    '318 destinos analizados.</p></div>'
+)
 
 # ── Footer ────────────────────────────────────────────────────────────────────
 
@@ -720,6 +742,13 @@ FOOTER_EN = """<footer>
 <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
 <p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Weather data by Open-Meteo.com</a> · Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
 <p style="margin-top:8px"><a href="../note_modele.html" style="color:rgba(255,255,255,.7)">Methodology</a> · <a href="app.html" style="color:rgba(255,255,255,.7)">Weather app</a> · <a href="../{fr_file}" style="color:rgba(255,255,255,.7)"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a></p>
+<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="../mentions-legales.html" style="color:rgba(255,255,255,.7)">Legal</a></p>
+</footer>"""
+
+FOOTER_ES = """<footer>
+<p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
+<p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Datos meteorológicos de Open-Meteo.com</a> · Fuentes ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
+<p style="margin-top:8px"><a href="../note_modele.html" style="color:rgba(255,255,255,.7)">Metodología</a> · <a href="../index.html" style="color:rgba(255,255,255,.7)">App meteorológica</a> · <a href="../{fr_file}" style="color:rgba(255,255,255,.7)"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a></p>
 <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="../mentions-legales.html" style="color:rgba(255,255,255,.7)">Legal</a></p>
 </footer>"""
 
@@ -767,14 +796,14 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 </head>
 <body>
 <nav>
- <a class="nav-brand" href="{"index.html" if lang == "fr" else "app.html"}">Best<em>Date</em>Weather</a>
+ <a class="nav-brand" href="{"index.html" if lang == "fr" else ("../index.html" if lang == "es" else "app.html")}">Best<em>Date</em>Weather</a>
  <div class="nav-actions">
-  <button class="nav-share" onclick="shareThis()" aria-label="{"Partager" if lang == "fr" else "Share"}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
-  <a class="nav-cta" href="{"index.html" if lang == "fr" else "app.html"}">{"Tester l'application" if lang == "fr" else "Try the app"}</a>
+  <button class="nav-share" onclick="shareThis()" aria-label="{"Partager" if lang == "fr" else ("Compartir" if lang == "es" else "Share")}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+  <a class="nav-cta" href="{"index.html" if lang == "fr" else ("../index.html" if lang == "es" else "app.html")}">{"Tester l'application" if lang == "fr" else ("Probar la aplicación" if lang == "es" else "Try the app")}</a>
  </div>
 </nav>
 <header class="hero">
-<div class="hero-eyebrow">{"Independent climate study · 2026" if lang == "en" else "Étude climatique indépendante · 2026"}</div>
+<div class="hero-eyebrow">{"Estudio climático independiente · 2026" if lang == "es" else ("Independent climate study · 2026" if lang == "en" else "Étude climatique indépendante · 2026")}</div>
 <h1 class="hero-title">{h1}</h1>
 <p class="hero-sub">{hero_sub}</p>
 {stats_html}
