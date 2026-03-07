@@ -22,6 +22,11 @@ YEAR = date.today().year
 
 TOP_N = 25
 
+# Derived from locale files present in locales/ — add a new locale file to expand
+PILIER_LANGS = sorted(
+    p.stem for p in (Path(__file__).parent / 'locales').glob('*.json')
+)
+
 # ── Data Loading ──────────────────────────────────────────────────────────────
 
 def load_destinations():
@@ -250,7 +255,7 @@ def generate_page(mi, lang, dests, climate):
                  f'https://bestdateweather.com/{src_sub}/{filename}')
 
     # Build cross-lang link list for all other langs
-    ALL_PILIER_LANGS = ['fr', 'en', 'es']
+    # PILIER_LANGS is module-level, derived from locales/ at import time
 
     def _cross_url(dst_lang):
         """Relative URL from src_sub to dst pilier page."""
@@ -267,7 +272,7 @@ def generate_page(mi, lang, dests, climate):
             return f'../{dst_sub}/{dst_file}'
 
     cross_links = []
-    for dst_lang in ALL_PILIER_LANGS:
+    for dst_lang in PILIER_LANGS:
         if dst_lang == lang:
             continue
         dst_loc = load_locale(dst_lang)
@@ -281,10 +286,18 @@ def generate_page(mi, lang, dests, climate):
                       f'https://bestdateweather.com/{dst_loc["meta"]["subdir"]}/{dst_loc["pilier"]["pillar_prefix"]}{dst_loc["month_url"][mi]}.html'),
         })
 
-    hreflang_fr = next((c['abs'] for c in cross_links if c['lang'] == 'fr'), canonical if lang == 'fr' else '')
-    if lang == 'fr': hreflang_fr = canonical
-    hreflang_en = next((c['abs'] for c in cross_links if c['lang'] == 'en'), canonical if lang == 'en' else '')
-    if lang == 'en': hreflang_en = canonical
+    # Build hreflang data from cross_links + self
+    _all_hreflang = {c['lang']: c['abs'] for c in cross_links}
+    _all_hreflang[lang] = canonical  # self
+    hreflang_fr = _all_hreflang.get('fr', '')
+    hreflang_en = _all_hreflang.get('en', '')
+    # Generate <link> tags dynamically for all langs
+    _hreflang_lines = []
+    for _hl_lang, _hl_url in sorted(_all_hreflang.items()):
+        _hreflang_lines.append(f'<link rel="alternate" hreflang="{_hl_lang}" href="{_hl_url}"/>')
+    if hreflang_en:
+        _hreflang_lines.append(f'<link rel="alternate" hreflang="x-default" href="{hreflang_en}"/>')
+    hreflang_tags = '\n'.join(_hreflang_lines)
 
     # Month name for display (lowercase in FR)
     mn_lc = month_name.lower() if loc['meta'].get('lowercase_months') else month_name
@@ -416,10 +429,7 @@ def generate_page(mi, lang, dests, climate):
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}"/>
 <link rel="canonical" href="{canonical}"/>
-<link rel="alternate" hreflang="fr" href="{hreflang_fr}"/>
-<link rel="alternate" hreflang="en" href="{hreflang_en}"/>
-<link rel="alternate" hreflang="x-default" href="{hreflang_en}"/>
-<link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/{pil['pillar_prefix']}{month_slug}.html"/>
+{hreflang_tags}
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="{e(title)}"/>
 <meta property="og:description" content="{e(desc)}"/>
@@ -467,7 +477,7 @@ def generate_page(mi, lang, dests, climate):
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(page_html)
 
-    return filename, canonical, hreflang_fr, hreflang_en
+    return filename, canonical, hreflang_fr, hreflang_en, _all_hreflang
 
 
 # ── Sitemap Update ────────────────────────────────────────────────────────────
@@ -523,34 +533,27 @@ if __name__ == '__main__':
     climate = load_climate()
     print(f"📦 {len(dests)} destinations, {len(climate)} climate entries\n")
 
-    fr_pages = []
-    en_pages = []
+    pages_by_lang = {lang: [] for lang in PILIER_LANGS}
 
-    for mi in range(12):
-        # FR
-        result = generate_page(mi, 'fr', dests, climate)
-        if result:
-            filename, canonical, hreflang_fr, hreflang_en = result
-            fr_pages.append({'canonical': canonical, 'hreflang_fr': hreflang_fr, 'hreflang_en': hreflang_en})
-            print(f"  ✅ {filename}")
+    for lang in PILIER_LANGS:
+        lang_loc = load_locale(lang)
+        subdir = lang_loc['meta']['subdir']
+        prefix = f"{subdir}/" if subdir else ""
+        for mi in range(12):
+            result = generate_page(mi, lang, dests, climate)
+            if result:
+                filename, canonical, hreflang_fr, hreflang_en, all_hreflang = result
+                pages_by_lang[lang].append({
+                    'canonical': canonical,
+                    'hreflang_fr': hreflang_fr,
+                    'hreflang_en': hreflang_en,
+                })
+                print(f"  ✅ {prefix}{filename}")
 
-        # EN
-        result = generate_page(mi, 'en', dests, climate)
-        if result:
-            filename, canonical, hreflang_fr, hreflang_en = result
-            en_pages.append({'canonical': canonical, 'hreflang_fr': hreflang_fr, 'hreflang_en': hreflang_en})
-            print(f"  ✅ en/{filename}")
+    counts = " + ".join(f"{len(pages_by_lang[l])} {l.upper()}" for l in PILIER_LANGS)
+    print(f"\n📄 {counts} pillar pages generated")
 
-    # ES
-    es_pages = []
-    for mi in range(12):
-        result = generate_page(mi, 'es', dests, climate)
-        if result:
-            filename, canonical, hreflang_fr, hreflang_en = result
-            es_pages.append({'canonical': canonical})
-            print(f"  ✅ es/{filename}")
-
-    print(f"\n📄 {len(fr_pages)} FR + {len(en_pages)} EN + {len(es_pages)} ES pillar pages generated")
-
+    fr_pages = pages_by_lang.get('fr', [])
+    en_pages = pages_by_lang.get('en', [])
     update_sitemaps(fr_pages, en_pages)
     print("\n✅ Done")
