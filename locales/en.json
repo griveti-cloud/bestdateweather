@@ -709,5 +709,15 @@
     "hero_eyebrow_prefix": "Climate study · 10 years of data · ",
     "score_n1": "#1 Score",
     "top10_avg": "Top 10 avg"
+  },
+  "ranking_footer": {
+    "data_by": "Weather data by Open-Meteo.com",
+    "sources": "Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
+    "methodology_url": "../note_modele.html",
+    "methodology_label": "Methodology",
+    "app_url": "app.html",
+    "app_label": "Weather app",
+    "legal_url": "../mentions-legales.html",
+    "legal_label": "Legal"
   }
 }

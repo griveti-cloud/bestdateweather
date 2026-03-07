@@ -729,5 +729,15 @@
     "hero_eyebrow_prefix": "Étude climatique · 10 ans de données · ",
     "score_n1": "Score n°1",
     "top10_avg": "Moy. top 10"
+  },
+  "ranking_footer": {
+    "data_by": "Données météo par Open-Meteo.com",
+    "sources": "Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
+    "methodology_url": "note_modele.html",
+    "methodology_label": "Méthodologie",
+    "app_url": "index.html",
+    "app_label": "Application météo",
+    "legal_url": "mentions-legales.html",
+    "legal_label": "Mentions légales"
   }
 }

@@ -723,5 +723,15 @@
     "hero_eyebrow_prefix": "Estudio climático · 10 años de datos · ",
     "score_n1": "Puntuación #1",
     "top10_avg": "Media top 10"
+  },
+  "ranking_footer": {
+    "data_by": "Datos meteorológicos de Open-Meteo.com",
+    "sources": "Fuentes ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
+    "methodology_url": "../note_modele.html",
+    "methodology_label": "Metodología",
+    "app_url": "../es/app.html",
+    "app_label": "App meteorológica",
+    "legal_url": "../mentions-legales.html",
+    "legal_label": "Legal"
   }
 }

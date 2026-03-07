@@ -10,6 +10,7 @@ Usage: python3 generate_piliers.py
 
 import csv, html as html_mod, json, sys, os
 from pathlib import Path
+from lib.common import footer_ranking_html
 from datetime import date
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -394,16 +395,13 @@ def generate_page(mi, lang, dests, climate):
         "mainEntity": faq_items
     }, ensure_ascii=False)
 
-    # Footer
-    alt_link = f'{gen["alt_link_prefix"]}{alt_file}'
-    alt_link2 = f'{gen["alt_link2_prefix"]}{alt_file2}' if gen.get('alt_link2_prefix') and alt_file2 else ''
-    alt_link2_html = f' · <a href="{alt_link2}"><img src="{gen["alt_flag_path2"]}" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> {gen["alt_lang_label2"]}</a>' if alt_link2 else ''
-    footer = f"""<footer>
-<p style="font-weight:700;margin-bottom:8px">bestdateweather.com</p>
-<p><a href="https://open-meteo.com/" rel="noopener">{gen["data_credit"]}</a> · ECMWF, DWD, NOAA · CC BY 4.0</p>
-<p style="margin-top:8px"><a href="{gen["home_url"]}">{gen["home_label"]}</a> · <a href="{alt_link}"><img src="{gen["alt_flag_path"]}" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> {gen["alt_lang_label"]}</a>{alt_link2_html}</p>
-<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="{gen["legal_url"]}" style="color:rgba(255,255,255,.7)">{gen["legal_label"]}</a></p>
-</footer>"""
+    # Footer — built from ranking_footer locale section + cross-language links
+    _alt_links = [
+        {'url': f'{gen["alt_link_prefix"]}{alt_file}',  'flag': f'{gen["asset_prefix"]}{gen["alt_flag_path"]}',  'label': gen['alt_lang_label']},
+    ]
+    if gen.get('alt_link2_prefix') and alt_file2:
+        _alt_links.append({'url': f'{gen["alt_link2_prefix"]}{alt_file2}', 'flag': f'{gen["asset_prefix"]}{gen["alt_flag_path2"]}', 'label': gen['alt_lang_label2']})
+    footer = footer_ranking_html(lang, _alt_links)
 
     flag_prefix = gen['asset_prefix']
 

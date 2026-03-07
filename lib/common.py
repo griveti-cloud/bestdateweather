@@ -267,3 +267,32 @@ def validate_climate(climate, months_list, L=None):
             elif c == 'avoid' and s > 4.5:
                 errors.append(L['val_score_class'].format(slug=slug, month=month, score=s, cls=c))
     return errors
+
+
+def footer_ranking_html(lang, alt_links):
+    """
+    Generate a unified footer for ranking/pillar pages (classements + piliers).
+    
+    Args:
+        lang: language code ('fr', 'en', 'es', ...)
+        alt_links: list of dicts [{url, flag, label}] for cross-language links
+                   e.g. [{'url': 'en/best-dest.html', 'flag': 'flags/gb.png', 'label': 'English'}]
+    
+    Returns: HTML string
+    """
+    loc = _load_locale(lang)
+    fc = loc['ranking_footer']
+
+    alt_html = ''.join(
+        f' · <a href="{a["url"]}" style="color:rgba(255,255,255,.7)">'
+        f'<img src="{a["flag"]}" width="20" height="15" alt="" '
+        f'style="vertical-align:middle;border-radius:2px"> {a["label"]}</a>'
+        for a in alt_links
+    )
+
+    return f"""<footer>
+<p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
+<p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">{fc['data_by']}</a> · {fc['sources']}</p>
+<p style="margin-top:8px"><a href="{fc['methodology_url']}" style="color:rgba(255,255,255,.7)">{fc['methodology_label']}</a> · <a href="{fc['app_url']}" style="color:rgba(255,255,255,.7)">{fc['app_label']}</a>{alt_html}</p>
+<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="{fc['legal_url']}" style="color:rgba(255,255,255,.7)">{fc['legal_label']}</a></p>
+</footer>"""

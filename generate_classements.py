@@ -6,6 +6,7 @@ Usage: python3 generate_classements.py
 
 import csv, html, json, statistics
 from pathlib import Path
+from lib.common import footer_ranking_html
 
 ROOT = Path(__file__).parent
 
@@ -739,26 +740,11 @@ METH_ES = (
 
 # ── Footer ────────────────────────────────────────────────────────────────────
 
-FOOTER_FR = """<footer>
-<p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
-<p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Données météo par Open-Meteo.com</a> · Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
-<p style="margin-top:8px"><a href="note_modele.html" style="color:rgba(255,255,255,.7)">Méthodologie</a> · <a href="index.html" style="color:rgba(255,255,255,.7)">Application météo</a> · <a href="en/{en_file}" style="color:rgba(255,255,255,.7)"><img src="flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English</a> · <a href="es/{es_file}" style="color:rgba(255,255,255,.7)"><img src="flags/es.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Español</a></p>
-<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="mentions-legales.html" style="color:rgba(255,255,255,.7)">Mentions légales</a></p>
-</footer>"""
+# FOOTER_FR removed — use footer_ranking_html(lang, alt_links)
 
-FOOTER_EN = """<footer>
-<p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
-<p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Weather data by Open-Meteo.com</a> · Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
-<p style="margin-top:8px"><a href="../note_modele.html" style="color:rgba(255,255,255,.7)">Methodology</a> · <a href="app.html" style="color:rgba(255,255,255,.7)">Weather app</a> · <a href="../{fr_file}" style="color:rgba(255,255,255,.7)"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a> · <a href="../es/{es_file}" style="color:rgba(255,255,255,.7)"><img src="../flags/es.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Español</a></p>
-<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="../mentions-legales.html" style="color:rgba(255,255,255,.7)">Legal</a></p>
-</footer>"""
+# FOOTER_EN removed — use footer_ranking_html(lang, alt_links)
 
-FOOTER_ES = """<footer>
-<p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
-<p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Datos meteorológicos de Open-Meteo.com</a> · Fuentes ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
-<p style="margin-top:8px"><a href="../note_modele.html" style="color:rgba(255,255,255,.7)">Metodología</a> · <a href="../es/app.html" style="color:rgba(255,255,255,.7)">App meteorológica</a> · <a href="../{fr_file}" style="color:rgba(255,255,255,.7)"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a> · <a href="../en/{en_file}" style="color:rgba(255,255,255,.7)"><img src="../flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English</a></p>
-<p style="margin-top:8px;font-size:11px;opacity:.6"><a href="../mentions-legales.html" style="color:rgba(255,255,255,.7)">Legal</a></p>
-</footer>"""
+# FOOTER_ES removed — use footer_ranking_html(lang, alt_links)
 
 # ── Page Assembly ─────────────────────────────────────────────────────────────
 
@@ -861,7 +847,10 @@ def gen_mondial(dests, climate, lang):
         fr_file = 'classement-destinations-meteo-2026.html'
         en_file = 'best-destinations-weather-ranking-2026.html'
         canonical = f'https://bestdateweather.com/{fr_file}' if lang == 'fr' else f'https://bestdateweather.com/en/{en_file}'
-        footer = FOOTER_FR.format(en_file=en_file, es_file='mejores-destinos-clima-2026.html')
+        footer = footer_ranking_html('fr', [
+            {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
+            {'url': 'es/mejores-destinos-clima-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
+        ])
         meth = METH_FR
         outfile = ROOT / fr_file
     elif lang == 'en':
@@ -881,7 +870,10 @@ def gen_mondial(dests, climate, lang):
         fr_file = 'classement-destinations-meteo-2026.html'
         en_file = 'best-destinations-weather-ranking-2026.html'
         canonical = f'https://bestdateweather.com/en/{en_file}'
-        footer = FOOTER_EN.format(fr_file=fr_file, es_file='mejores-destinos-clima-2026.html')
+        footer = footer_ranking_html('en', [
+            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': '../es/mejores-destinos-clima-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
+        ])
         meth = METH_EN
         outfile = ROOT / 'en' / en_file
     elif lang == 'es':
@@ -901,7 +893,10 @@ def gen_mondial(dests, climate, lang):
         fr_file = 'classement-destinations-meteo-2026.html'
         en_file = 'best-destinations-weather-ranking-2026.html'
         canonical = 'https://bestdateweather.com/es/mejores-destinos-clima-2026.html'
-        footer = FOOTER_ES.format(fr_file=fr_file, en_file=en_file)
+        footer = footer_ranking_html('es', [
+            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
+        ])
         meth = METH_ES
         outfile = ROOT / 'es' / 'mejores-destinos-clima-2026.html'
 
@@ -942,7 +937,10 @@ def gen_europe(dests, climate, lang):
         fr_file = 'classement-destinations-europe-meteo-2026.html'
         en_file = 'best-europe-weather-ranking-2026.html'
         canonical = f'https://bestdateweather.com/{fr_file}'
-        footer = FOOTER_FR.format(en_file=en_file, es_file='mejor-clima-europa-2026.html')
+        footer = footer_ranking_html('fr', [
+            {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
+            {'url': 'es/mejor-clima-europa-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
+        ])
         meth = METH_FR
         outfile = ROOT / fr_file
     elif lang == 'en':
@@ -962,7 +960,10 @@ def gen_europe(dests, climate, lang):
         fr_file = 'classement-destinations-europe-meteo-2026.html'
         en_file = 'best-europe-weather-ranking-2026.html'
         canonical = f'https://bestdateweather.com/en/{en_file}'
-        footer = FOOTER_EN.format(fr_file=fr_file, es_file='mejor-clima-europa-2026.html')
+        footer = footer_ranking_html('en', [
+            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': '../es/mejor-clima-europa-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
+        ])
         meth = METH_EN
         outfile = ROOT / 'en' / en_file
     elif lang == 'es':
@@ -982,7 +983,10 @@ def gen_europe(dests, climate, lang):
         fr_file = 'classement-destinations-europe-meteo-2026.html'
         en_file = 'best-europe-weather-ranking-2026.html'
         canonical = 'https://bestdateweather.com/es/mejor-clima-europa-2026.html'
-        footer = FOOTER_ES.format(fr_file=fr_file, en_file=en_file)
+        footer = footer_ranking_html('es', [
+            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
+        ])
         meth = METH_ES
         outfile = ROOT / 'es' / 'mejor-clima-europa-2026.html'
 
@@ -1019,7 +1023,10 @@ def gen_ete(dests, climate, lang):
         fr_file = 'classement-destinations-meteo-ete-2026.html'
         en_file = 'best-destinations-summer-weather-2026.html'
         canonical = f'https://bestdateweather.com/{fr_file}'
-        footer = FOOTER_FR.format(en_file=en_file, es_file='mejores-destinos-verano-2026.html')
+        footer = footer_ranking_html('fr', [
+            {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
+            {'url': 'es/mejores-destinos-verano-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
+        ])
         meth = METH_FR
         outfile = ROOT / fr_file
     elif lang == 'en':
@@ -1037,7 +1044,10 @@ def gen_ete(dests, climate, lang):
         fr_file = 'classement-destinations-meteo-ete-2026.html'
         en_file = 'best-destinations-summer-weather-2026.html'
         canonical = f'https://bestdateweather.com/en/{en_file}'
-        footer = FOOTER_EN.format(fr_file=fr_file, es_file='mejores-destinos-verano-2026.html')
+        footer = footer_ranking_html('en', [
+            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': '../es/mejores-destinos-verano-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
+        ])
         meth = METH_EN
         outfile = ROOT / 'en' / en_file
     elif lang == 'es':
@@ -1055,7 +1065,10 @@ def gen_ete(dests, climate, lang):
         fr_file = 'classement-destinations-meteo-ete-2026.html'
         en_file = 'best-destinations-summer-weather-2026.html'
         canonical = 'https://bestdateweather.com/es/mejores-destinos-verano-2026.html'
-        footer = FOOTER_ES.format(fr_file=fr_file, en_file=en_file)
+        footer = footer_ranking_html('es', [
+            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
+        ])
         meth = METH_ES
         outfile = ROOT / 'es' / 'mejores-destinos-verano-2026.html'
 
@@ -1092,7 +1105,10 @@ def gen_hiver(dests, climate, lang):
         fr_file = 'classement-destinations-meteo-hiver-2026.html'
         en_file = 'best-destinations-winter-weather-2026.html'
         canonical = f'https://bestdateweather.com/{fr_file}'
-        footer = FOOTER_FR.format(en_file=en_file, es_file='mejores-destinos-invierno-2026.html')
+        footer = footer_ranking_html('fr', [
+            {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
+            {'url': 'es/mejores-destinos-invierno-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
+        ])
         meth = METH_FR
         outfile = ROOT / fr_file
     elif lang == 'en':
@@ -1110,7 +1126,10 @@ def gen_hiver(dests, climate, lang):
         fr_file = 'classement-destinations-meteo-hiver-2026.html'
         en_file = 'best-destinations-winter-weather-2026.html'
         canonical = f'https://bestdateweather.com/en/{en_file}'
-        footer = FOOTER_EN.format(fr_file=fr_file, es_file='mejores-destinos-invierno-2026.html')
+        footer = footer_ranking_html('en', [
+            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': '../es/mejores-destinos-invierno-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
+        ])
         meth = METH_EN
         outfile = ROOT / 'en' / en_file
     elif lang == 'es':
@@ -1128,7 +1147,10 @@ def gen_hiver(dests, climate, lang):
         fr_file = 'classement-destinations-meteo-hiver-2026.html'
         en_file = 'best-destinations-winter-weather-2026.html'
         canonical = 'https://bestdateweather.com/es/mejores-destinos-invierno-2026.html'
-        footer = FOOTER_ES.format(fr_file=fr_file, en_file=en_file)
+        footer = footer_ranking_html('es', [
+            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
+        ])
         meth = METH_ES
         outfile = ROOT / 'es' / 'mejores-destinos-invierno-2026.html'
 
@@ -1165,7 +1187,10 @@ def gen_nomades(dests, climate, lang):
         fr_file = 'classement-destinations-meteo-nomades-2026.html'
         en_file = 'best-destinations-digital-nomads-weather-2026.html'
         canonical = f'https://bestdateweather.com/{fr_file}'
-        footer = FOOTER_FR.format(en_file=en_file, es_file='mejores-destinos-nomadas-digitales-2026.html')
+        footer = footer_ranking_html('fr', [
+            {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
+            {'url': 'es/mejores-destinos-nomadas-digitales-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
+        ])
         meth = METH_FR
         outfile = ROOT / fr_file
     elif lang == 'en':
@@ -1183,7 +1208,10 @@ def gen_nomades(dests, climate, lang):
         fr_file = 'classement-destinations-meteo-nomades-2026.html'
         en_file = 'best-destinations-digital-nomads-weather-2026.html'
         canonical = f'https://bestdateweather.com/en/{en_file}'
-        footer = FOOTER_EN.format(fr_file=fr_file, es_file='mejores-destinos-nomadas-digitales-2026.html')
+        footer = footer_ranking_html('en', [
+            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': '../es/mejores-destinos-nomadas-digitales-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
+        ])
         meth = METH_EN
         outfile = ROOT / 'en' / en_file
     elif lang == 'es':
@@ -1201,7 +1229,10 @@ def gen_nomades(dests, climate, lang):
         fr_file = 'classement-destinations-meteo-nomades-2026.html'
         en_file = 'best-destinations-digital-nomads-weather-2026.html'
         canonical = 'https://bestdateweather.com/es/mejores-destinos-nomadas-digitales-2026.html'
-        footer = FOOTER_ES.format(fr_file=fr_file, en_file=en_file)
+        footer = footer_ranking_html('es', [
+            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
+        ])
         meth = METH_ES
         outfile = ROOT / 'es' / 'mejores-destinos-nomadas-digitales-2026.html'
 
@@ -1259,7 +1290,10 @@ def gen_beach(dests, climate, lang):
         fr_file = 'classement-destinations-plage-2026.html'
         en_file = 'best-beach-destinations-weather-2026.html'
         canonical = f'https://bestdateweather.com/{fr_file}'
-        footer = FOOTER_FR.format(en_file=en_file, es_file='mejores-destinos-playa-2026.html')
+        footer = footer_ranking_html('fr', [
+            {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
+            {'url': 'es/mejores-destinos-playa-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
+        ])
         meth = ('<div class="meth"><strong>Méthodologie score plage</strong>'
                 '<p>Le score plage combine température air (25%), température de la mer (25%), '
                 'précipitations (30%) et ensoleillement (20%). '
@@ -1300,7 +1334,10 @@ def gen_beach(dests, climate, lang):
         fr_file = 'classement-destinations-plage-2026.html'
         en_file = 'best-beach-destinations-weather-2026.html'
         canonical = f'https://bestdateweather.com/en/{en_file}'
-        footer = FOOTER_EN.format(fr_file=fr_file, es_file='mejores-destinos-playa-2026.html')
+        footer = footer_ranking_html('en', [
+            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': '../es/mejores-destinos-playa-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
+        ])
         meth = ('<div class="meth"><strong>Beach score methodology</strong>'
                 '<p>Beach score combines air temperature (25%), sea temperature (25%), '
                 'precipitation (30%) and sunshine (20%). '
@@ -1344,7 +1381,10 @@ def gen_beach(dests, climate, lang):
         fr_file = 'classement-destinations-plage-2026.html'
         en_file = 'best-beach-destinations-weather-2026.html'
         canonical = 'https://bestdateweather.com/es/mejores-destinos-playa-2026.html'
-        footer = FOOTER_ES.format(fr_file=fr_file, en_file=en_file)
+        footer = footer_ranking_html('es', [
+            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
+        ])
         meth = ('<div class="meth"><strong>Metodología puntuación playa</strong>'
                 '<p>La puntuación playa combina temperatura del aire (25%), temperatura del mar (25%), '
                 'precipitaciones (30%) y sol (20%). '
