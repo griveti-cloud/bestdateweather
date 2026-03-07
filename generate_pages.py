@@ -624,8 +624,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     canonical = f"{C['canonical_prefix']}{annual_url(C, slug)}"
     cross_url = C['base_url_cross'] + annual_url_cross(C, dest)
     _hreflangs = {C['html_lang']: canonical, C['cross_lang']: cross_url}
-    hreflang_fr = _hreflangs['fr']
-    hreflang_en = _hreflangs['en']
+    hreflang_fr = _hreflangs.get('fr', canonical)
+    hreflang_en = _hreflangs.get('en', hreflang_fr)
 
     headline = C['lbl_headline_tpl'].format(prep=prep, nom_bare=nom_bare, nom=nom)
 
@@ -1077,8 +1077,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     canonical = C['canonical_prefix'] + monthly_url(C, slug, mi)
     cross_url = C['base_url_cross'] + monthly_url_cross(C, dest, mi)
     _hreflangs = {C['html_lang']: canonical, C['cross_lang']: cross_url}
-    hreflang_fr = _hreflangs['fr']
-    hreflang_en = _hreflangs['en']
+    hreflang_fr = _hreflangs.get('fr', canonical)
+    hreflang_en = _hreflangs.get('en', hreflang_fr)
     article_headline = C['monthly_article_headline_tpl'].format(**tpl)
     article_desc = C['monthly_article_desc_tpl'].format(**tpl)
 

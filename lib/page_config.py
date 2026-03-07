@@ -35,7 +35,8 @@ _CROSS_LANG = {'fr': 'en', 'en': 'fr', 'es': 'fr'}
 
 # Season icons (shared across languages)
 SEASON_ICONS = {'Printemps':'🌸','Été':'☀️','Automne':'🍂','Hiver':'❄️',
-                'Spring':'🌸','Summer':'☀️','Autumn':'🍂','Winter':'❄️'}
+                'Spring':'🌸','Summer':'☀️','Autumn':'🍂','Winter':'❄️',
+                'Primavera':'🌸','Verano':'☀️','Otoño':'🍂','Invierno':'❄️'}
 
 # Backward-compatible constants still imported by generate_pages.py
 MONTH_URL    = ['january','february','march','april','may','june',
