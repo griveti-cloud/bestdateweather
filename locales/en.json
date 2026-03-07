@@ -660,7 +660,10 @@
     "explore_label": "Explore",
     "best_period_tpl": "Best time to visit {nom}",
     "guides_title": "Detailed Guides",
-    "cta_choose": "🎯 Choose a specific date for your trip →"
+    "cta_choose": "🎯 Choose a specific date for your trip →",
+    "alt_link2_prefix": "../es/",
+    "alt_flag_path2": "../flags/es.png",
+    "alt_lang_label2": "Español"
   },
   "hub": {
     "search_placeholder": "Search a destination…",

@@ -680,7 +680,10 @@
     "explore_label": "Explorer",
     "best_period_tpl": "Meilleure période {nom}",
     "guides_title": "Guides détaillés",
-    "cta_choose": "🎯 Choisir une date précise pour votre voyage →"
+    "cta_choose": "🎯 Choisir une date précise pour votre voyage →",
+    "alt_link2_prefix": "es/",
+    "alt_flag_path2": "flags/es.png",
+    "alt_lang_label2": "Español"
   },
   "hub": {
     "search_placeholder": "Rechercher une destination…",

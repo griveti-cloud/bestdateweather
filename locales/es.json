@@ -674,7 +674,10 @@
     "explore_label": "Explorar",
     "best_period_tpl": "Mejor época para visitar {nom}",
     "guides_title": "Guías detalladas",
-    "cta_choose": "🎯 Elige una fecha concreta para tu viaje →"
+    "cta_choose": "🎯 Elige una fecha concreta para tu viaje →",
+    "alt_link2_prefix": "../en/",
+    "alt_flag_path2": "../flags/gb.png",
+    "alt_lang_label2": "English"
   },
   "hub": {
     "search_placeholder": "Busca un destino…",

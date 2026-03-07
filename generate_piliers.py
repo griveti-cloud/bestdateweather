@@ -240,7 +240,7 @@ def generate_page(mi, lang, dests, climate):
     if is_fr:
         cross_loc = load_locale('en')
     elif is_es:
-        cross_loc = load_locale('en')
+        cross_loc = load_locale('fr')  # ES first alt = FR
     else:
         cross_loc = load_locale('fr')
     cross_month_url = cross_loc['month_url']
@@ -248,21 +248,33 @@ def generate_page(mi, lang, dests, climate):
 
     filename = f'{pil["pillar_prefix"]}{month_slug}.html'
     alt_file = f'{cross_prefix}{cross_month_url[mi]}.html'
+    # alt_file2 = file in the third language
+    loc_fr = load_locale('fr')
+    loc_en = load_locale('en')
+    loc_es = load_locale('es')
+    es_prefix = loc_es['pilier']['pillar_prefix']
+    es_month_url = loc_es['month_url']
+    alt_file2_es = f'{es_prefix}{es_month_url[mi]}.html'
+    alt_file2_en = f'{loc_en["pilier"]["pillar_prefix"]}{loc_en["month_url"][mi]}.html'
+    alt_file2_fr = f'{loc_fr["pilier"]["pillar_prefix"]}{loc_fr["month_url"][mi]}.html'
     if is_fr:
         filepath = ROOT / filename
         canonical = f'https://bestdateweather.com/{filename}'
         hreflang_fr = canonical
         hreflang_en = f'https://bestdateweather.com/en/{alt_file}'
+        alt_file2 = alt_file2_es  # FR→EN already in alt_file, FR→ES in alt_file2
     elif is_es:
         filepath = ROOT / 'es' / filename
         canonical = f'https://bestdateweather.com/es/{filename}'
-        hreflang_fr = f'https://bestdateweather.com/ou-partir-en-{load_locale("fr")["month_url"][mi]}.html'
+        hreflang_fr = f'https://bestdateweather.com/ou-partir-en-{loc_fr["month_url"][mi]}.html'
         hreflang_en = f'https://bestdateweather.com/en/{alt_file}'
+        alt_file2 = alt_file2_en  # ES→FR already in alt_file, ES→EN in alt_file2
     else:
         filepath = ROOT / 'en' / filename
         canonical = f'https://bestdateweather.com/en/{filename}'
         hreflang_fr = f'https://bestdateweather.com/{alt_file}'
         hreflang_en = canonical
+        alt_file2 = alt_file2_es  # EN→FR already in alt_file, EN→ES in alt_file2
 
     # Month name for display (lowercase in FR)
     mn_lc = month_name.lower() if loc['meta'].get('lowercase_months') else month_name
@@ -384,10 +396,12 @@ def generate_page(mi, lang, dests, climate):
 
     # Footer
     alt_link = f'{gen["alt_link_prefix"]}{alt_file}'
+    alt_link2 = f'{gen["alt_link2_prefix"]}{alt_file2}' if gen.get('alt_link2_prefix') and alt_file2 else ''
+    alt_link2_html = f' · <a href="{alt_link2}"><img src="{gen["alt_flag_path2"]}" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> {gen["alt_lang_label2"]}</a>' if alt_link2 else ''
     footer = f"""<footer>
 <p style="font-weight:700;margin-bottom:8px">bestdateweather.com</p>
 <p><a href="https://open-meteo.com/" rel="noopener">{gen["data_credit"]}</a> · ECMWF, DWD, NOAA · CC BY 4.0</p>
-<p style="margin-top:8px"><a href="{gen["home_url"]}">{gen["home_label"]}</a> · <a href="{alt_link}"><img src="{gen["alt_flag_path"]}" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> {gen["alt_lang_label"]}</a></p>
+<p style="margin-top:8px"><a href="{gen["home_url"]}">{gen["home_label"]}</a> · <a href="{alt_link}"><img src="{gen["alt_flag_path"]}" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> {gen["alt_lang_label"]}</a>{alt_link2_html}</p>
 <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="{gen["legal_url"]}" style="color:rgba(255,255,255,.7)">{gen["legal_label"]}</a></p>
 </footer>"""
 
