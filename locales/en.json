@@ -719,5 +719,44 @@
     "app_label": "Weather app",
     "legal_url": "../mentions-legales.html",
     "legal_label": "Legal"
+  },
+  "classements": {
+    "share_label": "Share",
+    "nav_cta_label": "Try the weather app",
+    "hero_eyebrow": "Independent climate study · 2026",
+    "share_js": "../js/share.js",
+    "methodology": "<div class=\"meth\"><strong>Methodology</strong><p>Scores computed from 10 years of Open-Meteo archives (ERA5). Each month rated on sunshine (40%), precipitation (30%), thermal comfort (30%). Annual score = average of 12 months. 318 destinations analyzed.</p></div>",
+    "related": [
+      [
+        "best-destinations-weather-ranking-2026.html",
+        "🏆 Global ranking 2026",
+        "318 destinations"
+      ],
+      [
+        "best-europe-weather-ranking-2026.html",
+        "<img src=\"../flags/eu.png\" width=\"20\" height=\"15\" alt=\"\" style=\"vertical-align:middle;border-radius:2px\"> Europe weather ranking",
+        "European comparison"
+      ],
+      [
+        "best-destinations-summer-weather-2026.html",
+        "☀️ Best summer destinations",
+        "June–July–August"
+      ],
+      [
+        "best-destinations-winter-weather-2026.html",
+        "❄️ Best winter destinations",
+        "Dec–Jan–Feb"
+      ],
+      [
+        "best-destinations-digital-nomads-weather-2026.html",
+        "💻 Best nomad destinations",
+        "Consistency & comfort"
+      ],
+      [
+        "best-beach-destinations-weather-2026.html",
+        "🏖️ Best beach destinations",
+        "Beach score & sea temp"
+      ]
+    ]
   }
 }

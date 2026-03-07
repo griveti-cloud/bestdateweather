@@ -733,5 +733,44 @@
     "app_label": "App meteorológica",
     "legal_url": "../mentions-legales.html",
     "legal_label": "Legal"
+  },
+  "classements": {
+    "share_label": "Compartir",
+    "nav_cta_label": "Probar la aplicación",
+    "hero_eyebrow": "Estudio climático independiente · 2026",
+    "share_js": "../js/share.js",
+    "methodology": "<div class=\"meth\"><strong>Metodología</strong><p>Puntuaciones calculadas a partir de 10 años de archivos Open-Meteo (ERA5). Cada mes puntuado según sol (40 %), precipitaciones (30 %), confort térmico (30 %). Puntuación anual = media de los 12 meses. 318 destinos analizados.</p></div>",
+    "related": [
+      [
+        "mejores-destinos-clima-2026.html",
+        "🏆 Ranking global 2026",
+        "478 destinos"
+      ],
+      [
+        "mejor-clima-europa-2026.html",
+        "<img src=\"../flags/eu.png\" width=\"20\" height=\"15\" alt=\"\" style=\"vertical-align:middle;border-radius:2px\"> Mejores destinos Europa",
+        "Comparativa europea"
+      ],
+      [
+        "mejores-destinos-verano-2026.html",
+        "☀️ Mejores destinos verano",
+        "Jun–Jul–Ago"
+      ],
+      [
+        "mejores-destinos-invierno-2026.html",
+        "❄️ Mejores destinos invierno",
+        "Dic–Ene–Feb"
+      ],
+      [
+        "mejores-destinos-nomadas-digitales-2026.html",
+        "💻 Mejores destinos nómadas",
+        "Regularidad y confort"
+      ],
+      [
+        "mejores-destinos-playa-2026.html",
+        "🏖️ Mejores playas",
+        "Puntuación playa y mar"
+      ]
+    ]
   }
 }

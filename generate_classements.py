@@ -8,6 +8,17 @@ import csv, html, json, statistics
 from pathlib import Path
 from lib.common import footer_ranking_html
 
+# ── Locale loading ───────────────────────────────────────────────────────────
+_locale_cache = {}
+def load_locale(lang):
+    if lang not in _locale_cache:
+        import os
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "locales", f"{lang}.json")
+        with open(path, encoding="utf-8") as f:
+            _locale_cache[lang] = json.load(f)
+    return _locale_cache[lang]
+
+
 ROOT = Path(__file__).parent
 
 # ── Data Loading ──────────────────────────────────────────────────────────────
@@ -160,12 +171,11 @@ SLUG_REGION_TAG = {
     'saint-pierre-et-miquelon': 'Amérique du Nord',
 }
 
-MOIS_FR = {1:'Janvier',2:'Février',3:'Mars',4:'Avril',5:'Mai',6:'Juin',
-           7:'Juillet',8:'Août',9:'Septembre',10:'Octobre',11:'Novembre',12:'Décembre'}
-MOIS_EN = {1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',
-           7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'}
-MOIS_ES = {1:'Enero',2:'Febrero',3:'Marzo',4:'Abril',5:'Mayo',6:'Junio',
-           7:'Julio',8:'Agosto',9:'Septiembre',10:'Octubre',11:'Noviembre',12:'Diciembre'}
+# MOIS_* removed — loaded from locales at runtime via get_mois(lang)
+def get_mois(lang):
+    months = load_locale(lang)['months']  # list index 0=Jan
+    return {i+1: m for i, m in enumerate(months)}
+
 
 # ── Country-level deduplication ───────────────────────────────────────────────
 # Slugs that represent an entire country (not a city/region/island).
@@ -480,7 +490,7 @@ def country_tag(d, lang, slug=''):
 
 def make_table_annual(entries, n, lang):
     """Generate top-N annual ranking table."""
-    mois = MOIS_ES if lang == 'es' else (MOIS_EN if lang == 'en' else MOIS_FR)
+    mois = get_mois(lang)
     headers = {
         'fr': ('Rang','Destination','Meilleur mois','Score annuel','Soleil/an','Pluie moy.'),
         'en': ('Rank','Destination','Best month','Annual score','Sun/year','Avg. rain'),
@@ -584,7 +594,7 @@ def make_table_nomad(entries, n, lang):
         'en': ('Rank','Destination','Avg. score','Std. dev.','Worst month','Worst score'),
         'es': ('Pos.','Destino','Punt. media','Desv. típica','Peor mes','Punt. peor mes'),
     }
-    mois = MOIS_ES if lang == 'es' else (MOIS_EN if lang == 'en' else MOIS_FR)
+    mois = get_mois(lang)
     h = headers[lang]
     rows = []
     for i, entry in enumerate(entries[:n], 1):
@@ -631,7 +641,7 @@ def make_table_beach(entries, n, lang):
     )
 
 def make_table_beach_annual(entries, n, lang):
-    mois = MOIS_ES if lang == 'es' else (MOIS_EN if lang == 'en' else MOIS_FR)
+    mois = get_mois(lang)
     headers = {
         'fr': ('Rang','Destination','Score plage','Mer moy.','Meilleur mois','Mois ≥7/10'),
         'en': ('Rank','Destination','Beach score','Avg. sea','Best month','Months ≥7/10'),
@@ -678,35 +688,9 @@ def make_jsonld(entries, n, title, lang):
 
 # ── Related Pages ─────────────────────────────────────────────────────────────
 
-RELATED_FR = [
-    ('classement-destinations-meteo-2026.html', '🏆 Classement global 2026', '318 destinations'),
-    ('classement-destinations-europe-meteo-2026.html', '<img src="flags/eu.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Top Europe météo 2026', 'Comparatif européen'),
-    ('classement-destinations-meteo-ete-2026.html', '☀️ Meilleures destinations été', 'Juin–Juil–Août'),
-    ('classement-destinations-meteo-hiver-2026.html', '❄️ Meilleures destinations hiver', 'Déc–Jan–Fév'),
-    ('classement-destinations-meteo-nomades-2026.html', '💻 Meilleures destinations nomades', 'Régularité & confort'),
-    ('classement-destinations-plage-2026.html', '🏖️ Meilleures plages', 'Score plage & mer'),
-]
-
-RELATED_EN = [
-    ('best-destinations-weather-ranking-2026.html', '🏆 Global ranking 2026', '318 destinations'),
-    ('best-europe-weather-ranking-2026.html', '<img src="../flags/eu.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Europe weather ranking', 'European comparison'),
-    ('best-destinations-summer-weather-2026.html', '☀️ Best summer destinations', 'June–July–August'),
-    ('best-destinations-winter-weather-2026.html', '❄️ Best winter destinations', 'Dec–Jan–Feb'),
-    ('best-destinations-digital-nomads-weather-2026.html', '💻 Best nomad destinations', 'Consistency & comfort'),
-    ('best-beach-destinations-weather-2026.html', '🏖️ Best beach destinations', 'Beach score & sea temp'),
-]
-
-RELATED_ES = [
-    ('mejores-destinos-clima-2026.html', '🏆 Ranking global 2026', '478 destinos'),
-    ('mejor-clima-europa-2026.html', '<img src="../flags/eu.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Mejores destinos Europa', 'Comparativa europea'),
-    ('mejores-destinos-verano-2026.html', '☀️ Mejores destinos verano', 'Jun–Jul–Ago'),
-    ('mejores-destinos-invierno-2026.html', '❄️ Mejores destinos invierno', 'Dic–Ene–Feb'),
-    ('mejores-destinos-nomadas-digitales-2026.html', '💻 Mejores destinos nómadas', 'Regularidad y confort'),
-    ('mejores-destinos-playa-2026.html', '🏖️ Mejores playas', 'Puntuación playa y mar'),
-]
-
+# RELATED_* removed — loaded from locales[classements][related]
 def make_related(lang, exclude_href=''):
-    related = RELATED_ES if lang == 'es' else (RELATED_EN if lang == 'en' else RELATED_FR)
+    related = load_locale(lang)['classements']['related']
     cards = ''
     for href, title, sub in related:
         if href == exclude_href:
@@ -716,27 +700,7 @@ def make_related(lang, exclude_href=''):
 
 # ── Methodology ───────────────────────────────────────────────────────────────
 
-METH_FR = (
-    '<div class="meth"><strong>Méthodologie</strong>'
-    '<p>Scores calculés sur 10 ans d\'archives Open-Meteo (ERA5). '
-    'Chaque mois noté sur ensoleillement (40&nbsp;%), précipitations (30&nbsp;%), '
-    'confort thermique (30&nbsp;%). Score annuel = moyenne des 12 mois. '
-    '318 destinations analysées.</p></div>'
-)
-METH_EN = (
-    '<div class="meth"><strong>Methodology</strong>'
-    '<p>Scores computed from 10 years of Open-Meteo archives (ERA5). '
-    'Each month rated on sunshine (40%), precipitation (30%), '
-    'thermal comfort (30%). Annual score = average of 12 months. '
-    '318 destinations analyzed.</p></div>'
-)
-METH_ES = (
-    '<div class="meth"><strong>Metodología</strong>'
-    '<p>Puntuaciones calculadas a partir de 10 años de archivos Open-Meteo (ERA5). '
-    'Cada mes puntuado según sol (40&nbsp;%), precipitaciones (30&nbsp;%), '
-    'confort térmico (30&nbsp;%). Puntuación anual = media de los 12 meses. '
-    '318 destinos analizados.</p></div>'
-)
+# METH_* removed — loaded from locales[classements][methodology]
 
 # ── Footer ────────────────────────────────────────────────────────────────────
 
@@ -791,14 +755,14 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 </head>
 <body>
 <nav>
- <a class="nav-brand" href="{"index.html" if lang == "fr" else "app.html"}">Best<em>Date</em>Weather</a>
+ <a class="nav-brand" href="{load_locale(lang)['nav']['cta_href']}">Best<em>Date</em>Weather</a>
  <div class="nav-actions">
-  <button class="nav-share" onclick="shareThis()" aria-label="{"Partager" if lang == "fr" else ("Compartir" if lang == "es" else "Share")}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
-  <a class="nav-cta" href="{"index.html" if lang == "fr" else "app.html"}">{"Tester l'application" if lang == "fr" else ("Probar la aplicación" if lang == "es" else "Try the app")}</a>
+  <button class="nav-share" onclick="shareThis()" aria-label="{load_locale(lang)['classements']['share_label']}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+  <a class="nav-cta" href="{load_locale(lang)['nav']['cta_href']}">{load_locale(lang)['classements']['nav_cta_label']}</a>
  </div>
 </nav>
 <header class="hero">
-<div class="hero-eyebrow">{"Estudio climático independiente · 2026" if lang == "es" else ("Independent climate study · 2026" if lang == "en" else "Étude climatique indépendante · 2026")}</div>
+<div class="hero-eyebrow">{load_locale(lang)['classements']['hero_eyebrow']}</div>
 <h1 class="hero-title">{h1}</h1>
 <p class="hero-sub">{hero_sub}</p>
 {stats_html}
@@ -810,7 +774,7 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 {related_html}
 </main>
 {footer_html}
-<script src="{"js/share.js" if lang == "fr" else "../js/share.js"}"></script>
+<script src="{load_locale(lang)['classements']['share_js']}"></script>
 </body></html>"""
 
 
@@ -851,7 +815,7 @@ def gen_mondial(dests, climate, lang):
             {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
             {'url': 'es/mejores-destinos-clima-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
         ])
-        meth = METH_FR
+        meth = load_locale('fr')['classements']['methodology']
         outfile = ROOT / fr_file
     elif lang == 'en':
         title = 'Best weather destinations 2026 — 10-year climate ranking'
@@ -874,7 +838,7 @@ def gen_mondial(dests, climate, lang):
             {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': '../es/mejores-destinos-clima-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
         ])
-        meth = METH_EN
+        meth = load_locale('en')['classements']['methodology']
         outfile = ROOT / 'en' / en_file
     elif lang == 'es':
         title = 'Mejores destinos clima 2026 — ranking meteorológico de 10 años'
@@ -897,7 +861,7 @@ def gen_mondial(dests, climate, lang):
             {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
         ])
-        meth = METH_ES
+        meth = load_locale('es')['classements']['methodology']
         outfile = ROOT / 'es' / 'mejores-destinos-clima-2026.html'
 
     page = make_page(
@@ -941,7 +905,7 @@ def gen_europe(dests, climate, lang):
             {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
             {'url': 'es/mejor-clima-europa-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
         ])
-        meth = METH_FR
+        meth = load_locale('fr')['classements']['methodology']
         outfile = ROOT / fr_file
     elif lang == 'en':
         title = 'Europe weather ranking 2026 — Top European destinations'
@@ -964,7 +928,7 @@ def gen_europe(dests, climate, lang):
             {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': '../es/mejor-clima-europa-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
         ])
-        meth = METH_EN
+        meth = load_locale('en')['classements']['methodology']
         outfile = ROOT / 'en' / en_file
     elif lang == 'es':
         title = 'Mejor clima en Europa 2026 — ranking de destinos europeos'
@@ -987,7 +951,7 @@ def gen_europe(dests, climate, lang):
             {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
         ])
-        meth = METH_ES
+        meth = load_locale('es')['classements']['methodology']
         outfile = ROOT / 'es' / 'mejor-clima-europa-2026.html'
 
     page = make_page(
@@ -1027,7 +991,7 @@ def gen_ete(dests, climate, lang):
             {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
             {'url': 'es/mejores-destinos-verano-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
         ])
-        meth = METH_FR
+        meth = load_locale('fr')['classements']['methodology']
         outfile = ROOT / fr_file
     elif lang == 'en':
         title = 'Best summer destinations 2026 — Weather ranking June–August'
@@ -1048,7 +1012,7 @@ def gen_ete(dests, climate, lang):
             {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': '../es/mejores-destinos-verano-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
         ])
-        meth = METH_EN
+        meth = load_locale('en')['classements']['methodology']
         outfile = ROOT / 'en' / en_file
     elif lang == 'es':
         title = 'Mejores destinos verano 2026 — clima ideal junio, julio, agosto'
@@ -1069,7 +1033,7 @@ def gen_ete(dests, climate, lang):
             {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
         ])
-        meth = METH_ES
+        meth = load_locale('es')['classements']['methodology']
         outfile = ROOT / 'es' / 'mejores-destinos-verano-2026.html'
 
     page = make_page(
@@ -1109,7 +1073,7 @@ def gen_hiver(dests, climate, lang):
             {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
             {'url': 'es/mejores-destinos-invierno-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
         ])
-        meth = METH_FR
+        meth = load_locale('fr')['classements']['methodology']
         outfile = ROOT / fr_file
     elif lang == 'en':
         title = 'Best winter destinations 2026 — Guaranteed sun & warmth'
@@ -1130,7 +1094,7 @@ def gen_hiver(dests, climate, lang):
             {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': '../es/mejores-destinos-invierno-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
         ])
-        meth = METH_EN
+        meth = load_locale('en')['classements']['methodology']
         outfile = ROOT / 'en' / en_file
     elif lang == 'es':
         title = 'Mejores destinos invierno 2026 — sol y calor garantizados'
@@ -1151,7 +1115,7 @@ def gen_hiver(dests, climate, lang):
             {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
         ])
-        meth = METH_ES
+        meth = load_locale('es')['classements']['methodology']
         outfile = ROOT / 'es' / 'mejores-destinos-invierno-2026.html'
 
     page = make_page(
@@ -1191,7 +1155,7 @@ def gen_nomades(dests, climate, lang):
             {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
             {'url': 'es/mejores-destinos-nomadas-digitales-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
         ])
-        meth = METH_FR
+        meth = load_locale('fr')['classements']['methodology']
         outfile = ROOT / fr_file
     elif lang == 'en':
         title = 'Best digital nomad destinations 2026 — Weather consistency ranking'
@@ -1212,7 +1176,7 @@ def gen_nomades(dests, climate, lang):
             {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': '../es/mejores-destinos-nomadas-digitales-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
         ])
-        meth = METH_EN
+        meth = load_locale('en')['classements']['methodology']
         outfile = ROOT / 'en' / en_file
     elif lang == 'es':
         title = 'Mejores destinos nómadas digitales 2026 — clima constante todo el año'
@@ -1233,7 +1197,7 @@ def gen_nomades(dests, climate, lang):
             {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
         ])
-        meth = METH_ES
+        meth = load_locale('es')['classements']['methodology']
         outfile = ROOT / 'es' / 'mejores-destinos-nomadas-digitales-2026.html'
 
     page = make_page(

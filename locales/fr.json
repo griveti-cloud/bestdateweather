@@ -739,5 +739,44 @@
     "app_label": "Application météo",
     "legal_url": "mentions-legales.html",
     "legal_label": "Mentions légales"
+  },
+  "classements": {
+    "share_label": "Partager",
+    "nav_cta_label": "Tester l'application",
+    "hero_eyebrow": "Étude climatique indépendante · 2026",
+    "share_js": "js/share.js",
+    "methodology": "<div class=\"meth\"><strong>Méthodologie</strong><p>Scores calculés sur 10 ans d'archives Open-Meteo (ERA5). Chaque mois noté sur ensoleillement (40 %), précipitations (30 %), confort thermique (30 %). Score annuel = moyenne des 12 mois. 318 destinations analysées.</p></div>",
+    "related": [
+      [
+        "classement-destinations-meteo-2026.html",
+        "🏆 Classement global 2026",
+        "318 destinations"
+      ],
+      [
+        "classement-destinations-europe-meteo-2026.html",
+        "<img src=\"flags/eu.png\" width=\"20\" height=\"15\" alt=\"\" style=\"vertical-align:middle;border-radius:2px\"> Top Europe météo 2026",
+        "Comparatif européen"
+      ],
+      [
+        "classement-destinations-meteo-ete-2026.html",
+        "☀️ Meilleures destinations été",
+        "Juin–Juil–Août"
+      ],
+      [
+        "classement-destinations-meteo-hiver-2026.html",
+        "❄️ Meilleures destinations hiver",
+        "Déc–Jan–Fév"
+      ],
+      [
+        "classement-destinations-meteo-nomades-2026.html",
+        "💻 Meilleures destinations nomades",
+        "Régularité & confort"
+      ],
+      [
+        "classement-destinations-plage-2026.html",
+        "🏖️ Meilleures plages",
+        "Score plage & mer"
+      ]
+    ]
   }
 }
