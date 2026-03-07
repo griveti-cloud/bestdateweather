@@ -167,6 +167,526 @@
       "permanent": true
     },
     {
+      "source": "/es/mejor-epoca-algiers.html",
+      "destination": "/es/mejor-epoca-argel.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/algiers-clima-enero.html",
+      "destination": "/es/argel-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/algiers-clima-febrero.html",
+      "destination": "/es/argel-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/algiers-clima-marzo.html",
+      "destination": "/es/argel-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/algiers-clima-abril.html",
+      "destination": "/es/argel-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/algiers-clima-mayo.html",
+      "destination": "/es/argel-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/algiers-clima-junio.html",
+      "destination": "/es/argel-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/algiers-clima-julio.html",
+      "destination": "/es/argel-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/algiers-clima-agosto.html",
+      "destination": "/es/argel-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/algiers-clima-septiembre.html",
+      "destination": "/es/argel-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/algiers-clima-octubre.html",
+      "destination": "/es/argel-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/algiers-clima-noviembre.html",
+      "destination": "/es/argel-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/algiers-clima-diciembre.html",
+      "destination": "/es/argel-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-amman.html",
+      "destination": "/es/mejor-epoca-aman.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/amman-clima-enero.html",
+      "destination": "/es/aman-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/amman-clima-febrero.html",
+      "destination": "/es/aman-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/amman-clima-marzo.html",
+      "destination": "/es/aman-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/amman-clima-abril.html",
+      "destination": "/es/aman-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/amman-clima-mayo.html",
+      "destination": "/es/aman-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/amman-clima-junio.html",
+      "destination": "/es/aman-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/amman-clima-julio.html",
+      "destination": "/es/aman-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/amman-clima-agosto.html",
+      "destination": "/es/aman-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/amman-clima-septiembre.html",
+      "destination": "/es/aman-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/amman-clima-octubre.html",
+      "destination": "/es/aman-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/amman-clima-noviembre.html",
+      "destination": "/es/aman-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/amman-clima-diciembre.html",
+      "destination": "/es/aman-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-athens.html",
+      "destination": "/es/mejor-epoca-atenas.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/athens-clima-enero.html",
+      "destination": "/es/atenas-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/athens-clima-febrero.html",
+      "destination": "/es/atenas-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/athens-clima-marzo.html",
+      "destination": "/es/atenas-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/athens-clima-abril.html",
+      "destination": "/es/atenas-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/athens-clima-mayo.html",
+      "destination": "/es/atenas-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/athens-clima-junio.html",
+      "destination": "/es/atenas-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/athens-clima-julio.html",
+      "destination": "/es/atenas-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/athens-clima-agosto.html",
+      "destination": "/es/atenas-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/athens-clima-septiembre.html",
+      "destination": "/es/atenas-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/athens-clima-octubre.html",
+      "destination": "/es/atenas-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/athens-clima-noviembre.html",
+      "destination": "/es/atenas-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/athens-clima-diciembre.html",
+      "destination": "/es/atenas-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-bay-of-islands.html",
+      "destination": "/es/mejor-epoca-bahia-de-las-islas.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bay-of-islands-clima-enero.html",
+      "destination": "/es/bahia-de-las-islas-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bay-of-islands-clima-febrero.html",
+      "destination": "/es/bahia-de-las-islas-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bay-of-islands-clima-marzo.html",
+      "destination": "/es/bahia-de-las-islas-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bay-of-islands-clima-abril.html",
+      "destination": "/es/bahia-de-las-islas-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bay-of-islands-clima-mayo.html",
+      "destination": "/es/bahia-de-las-islas-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bay-of-islands-clima-junio.html",
+      "destination": "/es/bahia-de-las-islas-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bay-of-islands-clima-julio.html",
+      "destination": "/es/bahia-de-las-islas-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bay-of-islands-clima-agosto.html",
+      "destination": "/es/bahia-de-las-islas-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bay-of-islands-clima-septiembre.html",
+      "destination": "/es/bahia-de-las-islas-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bay-of-islands-clima-octubre.html",
+      "destination": "/es/bahia-de-las-islas-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bay-of-islands-clima-noviembre.html",
+      "destination": "/es/bahia-de-las-islas-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bay-of-islands-clima-diciembre.html",
+      "destination": "/es/bahia-de-las-islas-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-beijing.html",
+      "destination": "/es/mejor-epoca-pekin.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/beijing-clima-enero.html",
+      "destination": "/es/pekin-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/beijing-clima-febrero.html",
+      "destination": "/es/pekin-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/beijing-clima-marzo.html",
+      "destination": "/es/pekin-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/beijing-clima-abril.html",
+      "destination": "/es/pekin-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/beijing-clima-mayo.html",
+      "destination": "/es/pekin-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/beijing-clima-junio.html",
+      "destination": "/es/pekin-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/beijing-clima-julio.html",
+      "destination": "/es/pekin-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/beijing-clima-agosto.html",
+      "destination": "/es/pekin-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/beijing-clima-septiembre.html",
+      "destination": "/es/pekin-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/beijing-clima-octubre.html",
+      "destination": "/es/pekin-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/beijing-clima-noviembre.html",
+      "destination": "/es/pekin-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/beijing-clima-diciembre.html",
+      "destination": "/es/pekin-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-brussels.html",
+      "destination": "/es/mejor-epoca-bruselas.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/brussels-clima-enero.html",
+      "destination": "/es/bruselas-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/brussels-clima-febrero.html",
+      "destination": "/es/bruselas-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/brussels-clima-marzo.html",
+      "destination": "/es/bruselas-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/brussels-clima-abril.html",
+      "destination": "/es/bruselas-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/brussels-clima-mayo.html",
+      "destination": "/es/bruselas-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/brussels-clima-junio.html",
+      "destination": "/es/bruselas-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/brussels-clima-julio.html",
+      "destination": "/es/bruselas-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/brussels-clima-agosto.html",
+      "destination": "/es/bruselas-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/brussels-clima-septiembre.html",
+      "destination": "/es/bruselas-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/brussels-clima-octubre.html",
+      "destination": "/es/bruselas-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/brussels-clima-noviembre.html",
+      "destination": "/es/bruselas-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/brussels-clima-diciembre.html",
+      "destination": "/es/bruselas-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-bucharest.html",
+      "destination": "/es/mejor-epoca-bucarest.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bucharest-clima-enero.html",
+      "destination": "/es/bucarest-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bucharest-clima-febrero.html",
+      "destination": "/es/bucarest-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bucharest-clima-marzo.html",
+      "destination": "/es/bucarest-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bucharest-clima-abril.html",
+      "destination": "/es/bucarest-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bucharest-clima-mayo.html",
+      "destination": "/es/bucarest-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bucharest-clima-junio.html",
+      "destination": "/es/bucarest-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bucharest-clima-julio.html",
+      "destination": "/es/bucarest-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bucharest-clima-agosto.html",
+      "destination": "/es/bucarest-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bucharest-clima-septiembre.html",
+      "destination": "/es/bucarest-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bucharest-clima-octubre.html",
+      "destination": "/es/bucarest-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bucharest-clima-noviembre.html",
+      "destination": "/es/bucarest-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/bucharest-clima-diciembre.html",
+      "destination": "/es/bucarest-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-cairo.html",
+      "destination": "/es/mejor-epoca-el-cairo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cairo-clima-enero.html",
+      "destination": "/es/el-cairo-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cairo-clima-febrero.html",
+      "destination": "/es/el-cairo-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cairo-clima-marzo.html",
+      "destination": "/es/el-cairo-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cairo-clima-abril.html",
+      "destination": "/es/el-cairo-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cairo-clima-mayo.html",
+      "destination": "/es/el-cairo-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cairo-clima-junio.html",
+      "destination": "/es/el-cairo-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cairo-clima-julio.html",
+      "destination": "/es/el-cairo-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cairo-clima-agosto.html",
+      "destination": "/es/el-cairo-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cairo-clima-septiembre.html",
+      "destination": "/es/el-cairo-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cairo-clima-octubre.html",
+      "destination": "/es/el-cairo-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cairo-clima-noviembre.html",
+      "destination": "/es/el-cairo-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cairo-clima-diciembre.html",
+      "destination": "/es/el-cairo-clima-diciembre.html",
+      "permanent": true
+    },
+    {
       "source": "/es/mejor-epoca-canary-islands.html",
       "destination": "/es/mejor-epoca-canarias.html",
       "permanent": true
@@ -229,6 +749,331 @@
     {
       "source": "/es/canary-islands-clima-diciembre.html",
       "destination": "/es/canarias-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-cape-town.html",
+      "destination": "/es/mejor-epoca-ciudad-del-cabo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cape-town-clima-enero.html",
+      "destination": "/es/ciudad-del-cabo-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cape-town-clima-febrero.html",
+      "destination": "/es/ciudad-del-cabo-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cape-town-clima-marzo.html",
+      "destination": "/es/ciudad-del-cabo-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cape-town-clima-abril.html",
+      "destination": "/es/ciudad-del-cabo-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cape-town-clima-mayo.html",
+      "destination": "/es/ciudad-del-cabo-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cape-town-clima-junio.html",
+      "destination": "/es/ciudad-del-cabo-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cape-town-clima-julio.html",
+      "destination": "/es/ciudad-del-cabo-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cape-town-clima-agosto.html",
+      "destination": "/es/ciudad-del-cabo-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cape-town-clima-septiembre.html",
+      "destination": "/es/ciudad-del-cabo-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cape-town-clima-octubre.html",
+      "destination": "/es/ciudad-del-cabo-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cape-town-clima-noviembre.html",
+      "destination": "/es/ciudad-del-cabo-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cape-town-clima-diciembre.html",
+      "destination": "/es/ciudad-del-cabo-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-cartagena-colombia.html",
+      "destination": "/es/mejor-epoca-cartagena-col.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-colombia-clima-enero.html",
+      "destination": "/es/cartagena-col-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-colombia-clima-febrero.html",
+      "destination": "/es/cartagena-col-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-colombia-clima-marzo.html",
+      "destination": "/es/cartagena-col-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-colombia-clima-abril.html",
+      "destination": "/es/cartagena-col-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-colombia-clima-mayo.html",
+      "destination": "/es/cartagena-col-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-colombia-clima-junio.html",
+      "destination": "/es/cartagena-col-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-colombia-clima-julio.html",
+      "destination": "/es/cartagena-col-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-colombia-clima-agosto.html",
+      "destination": "/es/cartagena-col-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-colombia-clima-septiembre.html",
+      "destination": "/es/cartagena-col-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-colombia-clima-octubre.html",
+      "destination": "/es/cartagena-col-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-colombia-clima-noviembre.html",
+      "destination": "/es/cartagena-col-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-colombia-clima-diciembre.html",
+      "destination": "/es/cartagena-col-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-cayman-islands.html",
+      "destination": "/es/mejor-epoca-islas-caiman.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cayman-islands-clima-enero.html",
+      "destination": "/es/islas-caiman-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cayman-islands-clima-febrero.html",
+      "destination": "/es/islas-caiman-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cayman-islands-clima-marzo.html",
+      "destination": "/es/islas-caiman-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cayman-islands-clima-abril.html",
+      "destination": "/es/islas-caiman-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cayman-islands-clima-mayo.html",
+      "destination": "/es/islas-caiman-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cayman-islands-clima-junio.html",
+      "destination": "/es/islas-caiman-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cayman-islands-clima-julio.html",
+      "destination": "/es/islas-caiman-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cayman-islands-clima-agosto.html",
+      "destination": "/es/islas-caiman-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cayman-islands-clima-septiembre.html",
+      "destination": "/es/islas-caiman-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cayman-islands-clima-octubre.html",
+      "destination": "/es/islas-caiman-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cayman-islands-clima-noviembre.html",
+      "destination": "/es/islas-caiman-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cayman-islands-clima-diciembre.html",
+      "destination": "/es/islas-caiman-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-cologne.html",
+      "destination": "/es/mejor-epoca-colonia.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cologne-clima-enero.html",
+      "destination": "/es/colonia-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cologne-clima-febrero.html",
+      "destination": "/es/colonia-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cologne-clima-marzo.html",
+      "destination": "/es/colonia-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cologne-clima-abril.html",
+      "destination": "/es/colonia-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cologne-clima-mayo.html",
+      "destination": "/es/colonia-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cologne-clima-junio.html",
+      "destination": "/es/colonia-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cologne-clima-julio.html",
+      "destination": "/es/colonia-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cologne-clima-agosto.html",
+      "destination": "/es/colonia-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cologne-clima-septiembre.html",
+      "destination": "/es/colonia-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cologne-clima-octubre.html",
+      "destination": "/es/colonia-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cologne-clima-noviembre.html",
+      "destination": "/es/colonia-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cologne-clima-diciembre.html",
+      "destination": "/es/colonia-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-copenhagen.html",
+      "destination": "/es/mejor-epoca-copenhague.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/copenhagen-clima-enero.html",
+      "destination": "/es/copenhague-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/copenhagen-clima-febrero.html",
+      "destination": "/es/copenhague-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/copenhagen-clima-marzo.html",
+      "destination": "/es/copenhague-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/copenhagen-clima-abril.html",
+      "destination": "/es/copenhague-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/copenhagen-clima-mayo.html",
+      "destination": "/es/copenhague-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/copenhagen-clima-junio.html",
+      "destination": "/es/copenhague-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/copenhagen-clima-julio.html",
+      "destination": "/es/copenhague-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/copenhagen-clima-agosto.html",
+      "destination": "/es/copenhague-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/copenhagen-clima-septiembre.html",
+      "destination": "/es/copenhague-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/copenhagen-clima-octubre.html",
+      "destination": "/es/copenhague-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/copenhagen-clima-noviembre.html",
+      "destination": "/es/copenhague-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/copenhagen-clima-diciembre.html",
+      "destination": "/es/copenhague-clima-diciembre.html",
       "permanent": true
     },
     {
@@ -362,6 +1207,201 @@
       "permanent": true
     },
     {
+      "source": "/es/mejor-epoca-cyprus.html",
+      "destination": "/es/mejor-epoca-chipre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cyprus-clima-enero.html",
+      "destination": "/es/chipre-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cyprus-clima-febrero.html",
+      "destination": "/es/chipre-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cyprus-clima-marzo.html",
+      "destination": "/es/chipre-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cyprus-clima-abril.html",
+      "destination": "/es/chipre-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cyprus-clima-mayo.html",
+      "destination": "/es/chipre-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cyprus-clima-junio.html",
+      "destination": "/es/chipre-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cyprus-clima-julio.html",
+      "destination": "/es/chipre-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cyprus-clima-agosto.html",
+      "destination": "/es/chipre-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cyprus-clima-septiembre.html",
+      "destination": "/es/chipre-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cyprus-clima-octubre.html",
+      "destination": "/es/chipre-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cyprus-clima-noviembre.html",
+      "destination": "/es/chipre-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cyprus-clima-diciembre.html",
+      "destination": "/es/chipre-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-dresden.html",
+      "destination": "/es/mejor-epoca-dresde.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dresden-clima-enero.html",
+      "destination": "/es/dresde-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dresden-clima-febrero.html",
+      "destination": "/es/dresde-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dresden-clima-marzo.html",
+      "destination": "/es/dresde-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dresden-clima-abril.html",
+      "destination": "/es/dresde-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dresden-clima-mayo.html",
+      "destination": "/es/dresde-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dresden-clima-junio.html",
+      "destination": "/es/dresde-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dresden-clima-julio.html",
+      "destination": "/es/dresde-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dresden-clima-agosto.html",
+      "destination": "/es/dresde-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dresden-clima-septiembre.html",
+      "destination": "/es/dresde-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dresden-clima-octubre.html",
+      "destination": "/es/dresde-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dresden-clima-noviembre.html",
+      "destination": "/es/dresde-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dresden-clima-diciembre.html",
+      "destination": "/es/dresde-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-dushanbe.html",
+      "destination": "/es/mejor-epoca-dushanbé.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dushanbe-clima-enero.html",
+      "destination": "/es/dushanbé-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dushanbe-clima-febrero.html",
+      "destination": "/es/dushanbé-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dushanbe-clima-marzo.html",
+      "destination": "/es/dushanbé-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dushanbe-clima-abril.html",
+      "destination": "/es/dushanbé-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dushanbe-clima-mayo.html",
+      "destination": "/es/dushanbé-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dushanbe-clima-junio.html",
+      "destination": "/es/dushanbé-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dushanbe-clima-julio.html",
+      "destination": "/es/dushanbé-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dushanbe-clima-agosto.html",
+      "destination": "/es/dushanbé-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dushanbe-clima-septiembre.html",
+      "destination": "/es/dushanbé-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dushanbe-clima-octubre.html",
+      "destination": "/es/dushanbé-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dushanbe-clima-noviembre.html",
+      "destination": "/es/dushanbé-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/dushanbe-clima-diciembre.html",
+      "destination": "/es/dushanbé-clima-diciembre.html",
+      "permanent": true
+    },
+    {
       "source": "/es/mejor-epoca-edinburgh.html",
       "destination": "/es/mejor-epoca-edimburgo.html",
       "permanent": true
@@ -489,6 +1529,201 @@
     {
       "source": "/es/florence-clima-diciembre.html",
       "destination": "/es/florencia-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-geneva.html",
+      "destination": "/es/mejor-epoca-ginebra.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/geneva-clima-enero.html",
+      "destination": "/es/ginebra-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/geneva-clima-febrero.html",
+      "destination": "/es/ginebra-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/geneva-clima-marzo.html",
+      "destination": "/es/ginebra-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/geneva-clima-abril.html",
+      "destination": "/es/ginebra-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/geneva-clima-mayo.html",
+      "destination": "/es/ginebra-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/geneva-clima-junio.html",
+      "destination": "/es/ginebra-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/geneva-clima-julio.html",
+      "destination": "/es/ginebra-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/geneva-clima-agosto.html",
+      "destination": "/es/ginebra-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/geneva-clima-septiembre.html",
+      "destination": "/es/ginebra-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/geneva-clima-octubre.html",
+      "destination": "/es/ginebra-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/geneva-clima-noviembre.html",
+      "destination": "/es/ginebra-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/geneva-clima-diciembre.html",
+      "destination": "/es/ginebra-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-genoa.html",
+      "destination": "/es/mejor-epoca-genova.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/genoa-clima-enero.html",
+      "destination": "/es/genova-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/genoa-clima-febrero.html",
+      "destination": "/es/genova-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/genoa-clima-marzo.html",
+      "destination": "/es/genova-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/genoa-clima-abril.html",
+      "destination": "/es/genova-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/genoa-clima-mayo.html",
+      "destination": "/es/genova-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/genoa-clima-junio.html",
+      "destination": "/es/genova-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/genoa-clima-julio.html",
+      "destination": "/es/genova-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/genoa-clima-agosto.html",
+      "destination": "/es/genova-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/genoa-clima-septiembre.html",
+      "destination": "/es/genova-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/genoa-clima-octubre.html",
+      "destination": "/es/genova-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/genoa-clima-noviembre.html",
+      "destination": "/es/genova-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/genoa-clima-diciembre.html",
+      "destination": "/es/genova-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-havana.html",
+      "destination": "/es/mejor-epoca-la-habana.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/havana-clima-enero.html",
+      "destination": "/es/la-habana-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/havana-clima-febrero.html",
+      "destination": "/es/la-habana-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/havana-clima-marzo.html",
+      "destination": "/es/la-habana-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/havana-clima-abril.html",
+      "destination": "/es/la-habana-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/havana-clima-mayo.html",
+      "destination": "/es/la-habana-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/havana-clima-junio.html",
+      "destination": "/es/la-habana-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/havana-clima-julio.html",
+      "destination": "/es/la-habana-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/havana-clima-agosto.html",
+      "destination": "/es/la-habana-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/havana-clima-septiembre.html",
+      "destination": "/es/la-habana-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/havana-clima-octubre.html",
+      "destination": "/es/la-habana-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/havana-clima-noviembre.html",
+      "destination": "/es/la-habana-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/havana-clima-diciembre.html",
+      "destination": "/es/la-habana-clima-diciembre.html",
       "permanent": true
     },
     {
@@ -622,133 +1857,68 @@
       "permanent": true
     },
     {
-      "source": "/es/mejor-epoca-havana.html",
-      "destination": "/es/mejor-epoca-la-habana.html",
+      "source": "/es/mejor-epoca-krakow.html",
+      "destination": "/es/mejor-epoca-cracovia.html",
       "permanent": true
     },
     {
-      "source": "/es/havana-clima-enero.html",
-      "destination": "/es/la-habana-clima-enero.html",
+      "source": "/es/krakow-clima-enero.html",
+      "destination": "/es/cracovia-clima-enero.html",
       "permanent": true
     },
     {
-      "source": "/es/havana-clima-febrero.html",
-      "destination": "/es/la-habana-clima-febrero.html",
+      "source": "/es/krakow-clima-febrero.html",
+      "destination": "/es/cracovia-clima-febrero.html",
       "permanent": true
     },
     {
-      "source": "/es/havana-clima-marzo.html",
-      "destination": "/es/la-habana-clima-marzo.html",
+      "source": "/es/krakow-clima-marzo.html",
+      "destination": "/es/cracovia-clima-marzo.html",
       "permanent": true
     },
     {
-      "source": "/es/havana-clima-abril.html",
-      "destination": "/es/la-habana-clima-abril.html",
+      "source": "/es/krakow-clima-abril.html",
+      "destination": "/es/cracovia-clima-abril.html",
       "permanent": true
     },
     {
-      "source": "/es/havana-clima-mayo.html",
-      "destination": "/es/la-habana-clima-mayo.html",
+      "source": "/es/krakow-clima-mayo.html",
+      "destination": "/es/cracovia-clima-mayo.html",
       "permanent": true
     },
     {
-      "source": "/es/havana-clima-junio.html",
-      "destination": "/es/la-habana-clima-junio.html",
+      "source": "/es/krakow-clima-junio.html",
+      "destination": "/es/cracovia-clima-junio.html",
       "permanent": true
     },
     {
-      "source": "/es/havana-clima-julio.html",
-      "destination": "/es/la-habana-clima-julio.html",
+      "source": "/es/krakow-clima-julio.html",
+      "destination": "/es/cracovia-clima-julio.html",
       "permanent": true
     },
     {
-      "source": "/es/havana-clima-agosto.html",
-      "destination": "/es/la-habana-clima-agosto.html",
+      "source": "/es/krakow-clima-agosto.html",
+      "destination": "/es/cracovia-clima-agosto.html",
       "permanent": true
     },
     {
-      "source": "/es/havana-clima-septiembre.html",
-      "destination": "/es/la-habana-clima-septiembre.html",
+      "source": "/es/krakow-clima-septiembre.html",
+      "destination": "/es/cracovia-clima-septiembre.html",
       "permanent": true
     },
     {
-      "source": "/es/havana-clima-octubre.html",
-      "destination": "/es/la-habana-clima-octubre.html",
+      "source": "/es/krakow-clima-octubre.html",
+      "destination": "/es/cracovia-clima-octubre.html",
       "permanent": true
     },
     {
-      "source": "/es/havana-clima-noviembre.html",
-      "destination": "/es/la-habana-clima-noviembre.html",
+      "source": "/es/krakow-clima-noviembre.html",
+      "destination": "/es/cracovia-clima-noviembre.html",
       "permanent": true
     },
     {
-      "source": "/es/havana-clima-diciembre.html",
-      "destination": "/es/la-habana-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-cape-town.html",
-      "destination": "/es/mejor-epoca-ciudad-del-cabo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cape-town-clima-enero.html",
-      "destination": "/es/ciudad-del-cabo-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cape-town-clima-febrero.html",
-      "destination": "/es/ciudad-del-cabo-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cape-town-clima-marzo.html",
-      "destination": "/es/ciudad-del-cabo-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cape-town-clima-abril.html",
-      "destination": "/es/ciudad-del-cabo-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cape-town-clima-mayo.html",
-      "destination": "/es/ciudad-del-cabo-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cape-town-clima-junio.html",
-      "destination": "/es/ciudad-del-cabo-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cape-town-clima-julio.html",
-      "destination": "/es/ciudad-del-cabo-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cape-town-clima-agosto.html",
-      "destination": "/es/ciudad-del-cabo-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cape-town-clima-septiembre.html",
-      "destination": "/es/ciudad-del-cabo-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cape-town-clima-octubre.html",
-      "destination": "/es/ciudad-del-cabo-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cape-town-clima-noviembre.html",
-      "destination": "/es/ciudad-del-cabo-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cape-town-clima-diciembre.html",
-      "destination": "/es/ciudad-del-cabo-clima-diciembre.html",
+      "source": "/es/krakow-clima-diciembre.html",
+      "destination": "/es/cracovia-clima-diciembre.html",
       "permanent": true
     },
     {
@@ -882,6 +2052,136 @@
       "permanent": true
     },
     {
+      "source": "/es/mejor-epoca-lucerne.html",
+      "destination": "/es/mejor-epoca-lucerna.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/lucerne-clima-enero.html",
+      "destination": "/es/lucerna-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/lucerne-clima-febrero.html",
+      "destination": "/es/lucerna-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/lucerne-clima-marzo.html",
+      "destination": "/es/lucerna-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/lucerne-clima-abril.html",
+      "destination": "/es/lucerna-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/lucerne-clima-mayo.html",
+      "destination": "/es/lucerna-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/lucerne-clima-junio.html",
+      "destination": "/es/lucerna-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/lucerne-clima-julio.html",
+      "destination": "/es/lucerna-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/lucerne-clima-agosto.html",
+      "destination": "/es/lucerna-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/lucerne-clima-septiembre.html",
+      "destination": "/es/lucerna-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/lucerne-clima-octubre.html",
+      "destination": "/es/lucerna-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/lucerne-clima-noviembre.html",
+      "destination": "/es/lucerna-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/lucerne-clima-diciembre.html",
+      "destination": "/es/lucerna-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-malacca.html",
+      "destination": "/es/mejor-epoca-malaca.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/malacca-clima-enero.html",
+      "destination": "/es/malaca-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/malacca-clima-febrero.html",
+      "destination": "/es/malaca-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/malacca-clima-marzo.html",
+      "destination": "/es/malaca-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/malacca-clima-abril.html",
+      "destination": "/es/malaca-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/malacca-clima-mayo.html",
+      "destination": "/es/malaca-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/malacca-clima-junio.html",
+      "destination": "/es/malaca-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/malacca-clima-julio.html",
+      "destination": "/es/malaca-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/malacca-clima-agosto.html",
+      "destination": "/es/malaca-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/malacca-clima-septiembre.html",
+      "destination": "/es/malaca-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/malacca-clima-octubre.html",
+      "destination": "/es/malaca-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/malacca-clima-noviembre.html",
+      "destination": "/es/malaca-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/malacca-clima-diciembre.html",
+      "destination": "/es/malaca-clima-diciembre.html",
+      "permanent": true
+    },
+    {
       "source": "/es/mejor-epoca-maldives.html",
       "destination": "/es/mejor-epoca-maldivas.html",
       "permanent": true
@@ -1012,6 +2312,201 @@
       "permanent": true
     },
     {
+      "source": "/es/mejor-epoca-mexico-city.html",
+      "destination": "/es/mejor-epoca-ciudad-de-mexico.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mexico-city-clima-enero.html",
+      "destination": "/es/ciudad-de-mexico-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mexico-city-clima-febrero.html",
+      "destination": "/es/ciudad-de-mexico-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mexico-city-clima-marzo.html",
+      "destination": "/es/ciudad-de-mexico-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mexico-city-clima-abril.html",
+      "destination": "/es/ciudad-de-mexico-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mexico-city-clima-mayo.html",
+      "destination": "/es/ciudad-de-mexico-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mexico-city-clima-junio.html",
+      "destination": "/es/ciudad-de-mexico-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mexico-city-clima-julio.html",
+      "destination": "/es/ciudad-de-mexico-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mexico-city-clima-agosto.html",
+      "destination": "/es/ciudad-de-mexico-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mexico-city-clima-septiembre.html",
+      "destination": "/es/ciudad-de-mexico-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mexico-city-clima-octubre.html",
+      "destination": "/es/ciudad-de-mexico-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mexico-city-clima-noviembre.html",
+      "destination": "/es/ciudad-de-mexico-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mexico-city-clima-diciembre.html",
+      "destination": "/es/ciudad-de-mexico-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-mumbai.html",
+      "destination": "/es/mejor-epoca-bombay.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mumbai-clima-enero.html",
+      "destination": "/es/bombay-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mumbai-clima-febrero.html",
+      "destination": "/es/bombay-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mumbai-clima-marzo.html",
+      "destination": "/es/bombay-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mumbai-clima-abril.html",
+      "destination": "/es/bombay-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mumbai-clima-mayo.html",
+      "destination": "/es/bombay-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mumbai-clima-junio.html",
+      "destination": "/es/bombay-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mumbai-clima-julio.html",
+      "destination": "/es/bombay-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mumbai-clima-agosto.html",
+      "destination": "/es/bombay-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mumbai-clima-septiembre.html",
+      "destination": "/es/bombay-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mumbai-clima-octubre.html",
+      "destination": "/es/bombay-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mumbai-clima-noviembre.html",
+      "destination": "/es/bombay-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mumbai-clima-diciembre.html",
+      "destination": "/es/bombay-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-natal-brazil.html",
+      "destination": "/es/mejor-epoca-natal-brasil.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/natal-brazil-clima-enero.html",
+      "destination": "/es/natal-brasil-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/natal-brazil-clima-febrero.html",
+      "destination": "/es/natal-brasil-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/natal-brazil-clima-marzo.html",
+      "destination": "/es/natal-brasil-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/natal-brazil-clima-abril.html",
+      "destination": "/es/natal-brasil-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/natal-brazil-clima-mayo.html",
+      "destination": "/es/natal-brasil-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/natal-brazil-clima-junio.html",
+      "destination": "/es/natal-brasil-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/natal-brazil-clima-julio.html",
+      "destination": "/es/natal-brasil-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/natal-brazil-clima-agosto.html",
+      "destination": "/es/natal-brasil-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/natal-brazil-clima-septiembre.html",
+      "destination": "/es/natal-brasil-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/natal-brazil-clima-octubre.html",
+      "destination": "/es/natal-brasil-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/natal-brazil-clima-noviembre.html",
+      "destination": "/es/natal-brasil-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/natal-brazil-clima-diciembre.html",
+      "destination": "/es/natal-brasil-clima-diciembre.html",
+      "permanent": true
+    },
+    {
       "source": "/es/mejor-epoca-nice.html",
       "destination": "/es/mejor-epoca-niza.html",
       "permanent": true
@@ -1074,6 +2569,71 @@
     {
       "source": "/es/nice-clima-diciembre.html",
       "destination": "/es/niza-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-palau.html",
+      "destination": "/es/mejor-epoca-palaos.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/palau-clima-enero.html",
+      "destination": "/es/palaos-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/palau-clima-febrero.html",
+      "destination": "/es/palaos-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/palau-clima-marzo.html",
+      "destination": "/es/palaos-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/palau-clima-abril.html",
+      "destination": "/es/palaos-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/palau-clima-mayo.html",
+      "destination": "/es/palaos-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/palau-clima-junio.html",
+      "destination": "/es/palaos-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/palau-clima-julio.html",
+      "destination": "/es/palaos-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/palau-clima-agosto.html",
+      "destination": "/es/palaos-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/palau-clima-septiembre.html",
+      "destination": "/es/palaos-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/palau-clima-octubre.html",
+      "destination": "/es/palaos-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/palau-clima-noviembre.html",
+      "destination": "/es/palaos-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/palau-clima-diciembre.html",
+      "destination": "/es/palaos-clima-diciembre.html",
       "permanent": true
     },
     {
@@ -1272,6 +2832,266 @@
       "permanent": true
     },
     {
+      "source": "/es/mejor-epoca-saint-augustine.html",
+      "destination": "/es/mejor-epoca-san-agustin-florida.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-augustine-clima-enero.html",
+      "destination": "/es/san-agustin-florida-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-augustine-clima-febrero.html",
+      "destination": "/es/san-agustin-florida-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-augustine-clima-marzo.html",
+      "destination": "/es/san-agustin-florida-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-augustine-clima-abril.html",
+      "destination": "/es/san-agustin-florida-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-augustine-clima-mayo.html",
+      "destination": "/es/san-agustin-florida-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-augustine-clima-junio.html",
+      "destination": "/es/san-agustin-florida-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-augustine-clima-julio.html",
+      "destination": "/es/san-agustin-florida-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-augustine-clima-agosto.html",
+      "destination": "/es/san-agustin-florida-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-augustine-clima-septiembre.html",
+      "destination": "/es/san-agustin-florida-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-augustine-clima-octubre.html",
+      "destination": "/es/san-agustin-florida-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-augustine-clima-noviembre.html",
+      "destination": "/es/san-agustin-florida-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-augustine-clima-diciembre.html",
+      "destination": "/es/san-agustin-florida-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-saint-vincent.html",
+      "destination": "/es/mejor-epoca-san-vicente.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-vincent-clima-enero.html",
+      "destination": "/es/san-vicente-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-vincent-clima-febrero.html",
+      "destination": "/es/san-vicente-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-vincent-clima-marzo.html",
+      "destination": "/es/san-vicente-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-vincent-clima-abril.html",
+      "destination": "/es/san-vicente-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-vincent-clima-mayo.html",
+      "destination": "/es/san-vicente-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-vincent-clima-junio.html",
+      "destination": "/es/san-vicente-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-vincent-clima-julio.html",
+      "destination": "/es/san-vicente-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-vincent-clima-agosto.html",
+      "destination": "/es/san-vicente-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-vincent-clima-septiembre.html",
+      "destination": "/es/san-vicente-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-vincent-clima-octubre.html",
+      "destination": "/es/san-vicente-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-vincent-clima-noviembre.html",
+      "destination": "/es/san-vicente-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/saint-vincent-clima-diciembre.html",
+      "destination": "/es/san-vicente-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-salzburg.html",
+      "destination": "/es/mejor-epoca-salzburgo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/salzburg-clima-enero.html",
+      "destination": "/es/salzburgo-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/salzburg-clima-febrero.html",
+      "destination": "/es/salzburgo-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/salzburg-clima-marzo.html",
+      "destination": "/es/salzburgo-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/salzburg-clima-abril.html",
+      "destination": "/es/salzburgo-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/salzburg-clima-mayo.html",
+      "destination": "/es/salzburgo-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/salzburg-clima-junio.html",
+      "destination": "/es/salzburgo-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/salzburg-clima-julio.html",
+      "destination": "/es/salzburgo-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/salzburg-clima-agosto.html",
+      "destination": "/es/salzburgo-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/salzburg-clima-septiembre.html",
+      "destination": "/es/salzburgo-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/salzburg-clima-octubre.html",
+      "destination": "/es/salzburgo-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/salzburg-clima-noviembre.html",
+      "destination": "/es/salzburgo-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/salzburg-clima-diciembre.html",
+      "destination": "/es/salzburgo-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-santa-fe.html",
+      "destination": "/es/mejor-epoca-santa-fe-nm.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/santa-fe-clima-enero.html",
+      "destination": "/es/santa-fe-nm-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/santa-fe-clima-febrero.html",
+      "destination": "/es/santa-fe-nm-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/santa-fe-clima-marzo.html",
+      "destination": "/es/santa-fe-nm-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/santa-fe-clima-abril.html",
+      "destination": "/es/santa-fe-nm-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/santa-fe-clima-mayo.html",
+      "destination": "/es/santa-fe-nm-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/santa-fe-clima-junio.html",
+      "destination": "/es/santa-fe-nm-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/santa-fe-clima-julio.html",
+      "destination": "/es/santa-fe-nm-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/santa-fe-clima-agosto.html",
+      "destination": "/es/santa-fe-nm-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/santa-fe-clima-septiembre.html",
+      "destination": "/es/santa-fe-nm-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/santa-fe-clima-octubre.html",
+      "destination": "/es/santa-fe-nm-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/santa-fe-clima-noviembre.html",
+      "destination": "/es/santa-fe-nm-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/santa-fe-clima-diciembre.html",
+      "destination": "/es/santa-fe-nm-clima-diciembre.html",
+      "permanent": true
+    },
+    {
       "source": "/es/mejor-epoca-sardinia.html",
       "destination": "/es/mejor-epoca-cerdena.html",
       "permanent": true
@@ -1334,6 +3154,71 @@
     {
       "source": "/es/sardinia-clima-diciembre.html",
       "destination": "/es/cerdena-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-seoul.html",
+      "destination": "/es/mejor-epoca-seul.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/seoul-clima-enero.html",
+      "destination": "/es/seul-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/seoul-clima-febrero.html",
+      "destination": "/es/seul-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/seoul-clima-marzo.html",
+      "destination": "/es/seul-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/seoul-clima-abril.html",
+      "destination": "/es/seul-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/seoul-clima-mayo.html",
+      "destination": "/es/seul-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/seoul-clima-junio.html",
+      "destination": "/es/seul-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/seoul-clima-julio.html",
+      "destination": "/es/seul-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/seoul-clima-agosto.html",
+      "destination": "/es/seul-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/seoul-clima-septiembre.html",
+      "destination": "/es/seul-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/seoul-clima-octubre.html",
+      "destination": "/es/seul-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/seoul-clima-noviembre.html",
+      "destination": "/es/seul-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/seoul-clima-diciembre.html",
+      "destination": "/es/seul-clima-diciembre.html",
       "permanent": true
     },
     {
@@ -1467,6 +3352,71 @@
       "permanent": true
     },
     {
+      "source": "/es/mejor-epoca-stockholm.html",
+      "destination": "/es/mejor-epoca-estocolmo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/stockholm-clima-enero.html",
+      "destination": "/es/estocolmo-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/stockholm-clima-febrero.html",
+      "destination": "/es/estocolmo-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/stockholm-clima-marzo.html",
+      "destination": "/es/estocolmo-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/stockholm-clima-abril.html",
+      "destination": "/es/estocolmo-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/stockholm-clima-mayo.html",
+      "destination": "/es/estocolmo-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/stockholm-clima-junio.html",
+      "destination": "/es/estocolmo-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/stockholm-clima-julio.html",
+      "destination": "/es/estocolmo-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/stockholm-clima-agosto.html",
+      "destination": "/es/estocolmo-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/stockholm-clima-septiembre.html",
+      "destination": "/es/estocolmo-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/stockholm-clima-octubre.html",
+      "destination": "/es/estocolmo-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/stockholm-clima-noviembre.html",
+      "destination": "/es/estocolmo-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/stockholm-clima-diciembre.html",
+      "destination": "/es/estocolmo-clima-diciembre.html",
+      "permanent": true
+    },
+    {
       "source": "/es/mejor-epoca-tokyo.html",
       "destination": "/es/mejor-epoca-tokio.html",
       "permanent": true
@@ -1529,6 +3479,71 @@
     {
       "source": "/es/tokyo-clima-diciembre.html",
       "destination": "/es/tokio-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-valletta.html",
+      "destination": "/es/mejor-epoca-la-valeta.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/valletta-clima-enero.html",
+      "destination": "/es/la-valeta-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/valletta-clima-febrero.html",
+      "destination": "/es/la-valeta-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/valletta-clima-marzo.html",
+      "destination": "/es/la-valeta-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/valletta-clima-abril.html",
+      "destination": "/es/la-valeta-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/valletta-clima-mayo.html",
+      "destination": "/es/la-valeta-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/valletta-clima-junio.html",
+      "destination": "/es/la-valeta-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/valletta-clima-julio.html",
+      "destination": "/es/la-valeta-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/valletta-clima-agosto.html",
+      "destination": "/es/la-valeta-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/valletta-clima-septiembre.html",
+      "destination": "/es/la-valeta-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/valletta-clima-octubre.html",
+      "destination": "/es/la-valeta-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/valletta-clima-noviembre.html",
+      "destination": "/es/la-valeta-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/valletta-clima-diciembre.html",
+      "destination": "/es/la-valeta-clima-diciembre.html",
       "permanent": true
     },
     {
@@ -1662,588 +3677,68 @@
       "permanent": true
     },
     {
-      "source": "/es/mejor-epoca-athens.html",
-      "destination": "/es/mejor-epoca-atenas.html",
+      "source": "/es/mejor-epoca-warsaw.html",
+      "destination": "/es/mejor-epoca-varsovia.html",
       "permanent": true
     },
     {
-      "source": "/es/athens-clima-enero.html",
-      "destination": "/es/atenas-clima-enero.html",
+      "source": "/es/warsaw-clima-enero.html",
+      "destination": "/es/varsovia-clima-enero.html",
       "permanent": true
     },
     {
-      "source": "/es/athens-clima-febrero.html",
-      "destination": "/es/atenas-clima-febrero.html",
+      "source": "/es/warsaw-clima-febrero.html",
+      "destination": "/es/varsovia-clima-febrero.html",
       "permanent": true
     },
     {
-      "source": "/es/athens-clima-marzo.html",
-      "destination": "/es/atenas-clima-marzo.html",
+      "source": "/es/warsaw-clima-marzo.html",
+      "destination": "/es/varsovia-clima-marzo.html",
       "permanent": true
     },
     {
-      "source": "/es/athens-clima-abril.html",
-      "destination": "/es/atenas-clima-abril.html",
+      "source": "/es/warsaw-clima-abril.html",
+      "destination": "/es/varsovia-clima-abril.html",
       "permanent": true
     },
     {
-      "source": "/es/athens-clima-mayo.html",
-      "destination": "/es/atenas-clima-mayo.html",
+      "source": "/es/warsaw-clima-mayo.html",
+      "destination": "/es/varsovia-clima-mayo.html",
       "permanent": true
     },
     {
-      "source": "/es/athens-clima-junio.html",
-      "destination": "/es/atenas-clima-junio.html",
+      "source": "/es/warsaw-clima-junio.html",
+      "destination": "/es/varsovia-clima-junio.html",
       "permanent": true
     },
     {
-      "source": "/es/athens-clima-julio.html",
-      "destination": "/es/atenas-clima-julio.html",
+      "source": "/es/warsaw-clima-julio.html",
+      "destination": "/es/varsovia-clima-julio.html",
       "permanent": true
     },
     {
-      "source": "/es/athens-clima-agosto.html",
-      "destination": "/es/atenas-clima-agosto.html",
+      "source": "/es/warsaw-clima-agosto.html",
+      "destination": "/es/varsovia-clima-agosto.html",
       "permanent": true
     },
     {
-      "source": "/es/athens-clima-septiembre.html",
-      "destination": "/es/atenas-clima-septiembre.html",
+      "source": "/es/warsaw-clima-septiembre.html",
+      "destination": "/es/varsovia-clima-septiembre.html",
       "permanent": true
     },
     {
-      "source": "/es/athens-clima-octubre.html",
-      "destination": "/es/atenas-clima-octubre.html",
+      "source": "/es/warsaw-clima-octubre.html",
+      "destination": "/es/varsovia-clima-octubre.html",
       "permanent": true
     },
     {
-      "source": "/es/athens-clima-noviembre.html",
-      "destination": "/es/atenas-clima-noviembre.html",
+      "source": "/es/warsaw-clima-noviembre.html",
+      "destination": "/es/varsovia-clima-noviembre.html",
       "permanent": true
     },
     {
-      "source": "/es/athens-clima-diciembre.html",
-      "destination": "/es/atenas-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-copenhagen.html",
-      "destination": "/es/mejor-epoca-copenhague.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/copenhagen-clima-enero.html",
-      "destination": "/es/copenhague-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/copenhagen-clima-febrero.html",
-      "destination": "/es/copenhague-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/copenhagen-clima-marzo.html",
-      "destination": "/es/copenhague-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/copenhagen-clima-abril.html",
-      "destination": "/es/copenhague-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/copenhagen-clima-mayo.html",
-      "destination": "/es/copenhague-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/copenhagen-clima-junio.html",
-      "destination": "/es/copenhague-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/copenhagen-clima-julio.html",
-      "destination": "/es/copenhague-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/copenhagen-clima-agosto.html",
-      "destination": "/es/copenhague-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/copenhagen-clima-septiembre.html",
-      "destination": "/es/copenhague-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/copenhagen-clima-octubre.html",
-      "destination": "/es/copenhague-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/copenhagen-clima-noviembre.html",
-      "destination": "/es/copenhague-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/copenhagen-clima-diciembre.html",
-      "destination": "/es/copenhague-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-krakow.html",
-      "destination": "/es/mejor-epoca-cracovia.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/krakow-clima-enero.html",
-      "destination": "/es/cracovia-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/krakow-clima-febrero.html",
-      "destination": "/es/cracovia-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/krakow-clima-marzo.html",
-      "destination": "/es/cracovia-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/krakow-clima-abril.html",
-      "destination": "/es/cracovia-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/krakow-clima-mayo.html",
-      "destination": "/es/cracovia-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/krakow-clima-junio.html",
-      "destination": "/es/cracovia-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/krakow-clima-julio.html",
-      "destination": "/es/cracovia-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/krakow-clima-agosto.html",
-      "destination": "/es/cracovia-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/krakow-clima-septiembre.html",
-      "destination": "/es/cracovia-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/krakow-clima-octubre.html",
-      "destination": "/es/cracovia-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/krakow-clima-noviembre.html",
-      "destination": "/es/cracovia-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/krakow-clima-diciembre.html",
-      "destination": "/es/cracovia-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-cyprus.html",
-      "destination": "/es/mejor-epoca-chipre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cyprus-clima-enero.html",
-      "destination": "/es/chipre-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cyprus-clima-febrero.html",
-      "destination": "/es/chipre-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cyprus-clima-marzo.html",
-      "destination": "/es/chipre-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cyprus-clima-abril.html",
-      "destination": "/es/chipre-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cyprus-clima-mayo.html",
-      "destination": "/es/chipre-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cyprus-clima-junio.html",
-      "destination": "/es/chipre-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cyprus-clima-julio.html",
-      "destination": "/es/chipre-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cyprus-clima-agosto.html",
-      "destination": "/es/chipre-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cyprus-clima-septiembre.html",
-      "destination": "/es/chipre-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cyprus-clima-octubre.html",
-      "destination": "/es/chipre-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cyprus-clima-noviembre.html",
-      "destination": "/es/chipre-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cyprus-clima-diciembre.html",
-      "destination": "/es/chipre-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-cairo.html",
-      "destination": "/es/mejor-epoca-el-cairo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cairo-clima-enero.html",
-      "destination": "/es/el-cairo-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cairo-clima-febrero.html",
-      "destination": "/es/el-cairo-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cairo-clima-marzo.html",
-      "destination": "/es/el-cairo-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cairo-clima-abril.html",
-      "destination": "/es/el-cairo-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cairo-clima-mayo.html",
-      "destination": "/es/el-cairo-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cairo-clima-junio.html",
-      "destination": "/es/el-cairo-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cairo-clima-julio.html",
-      "destination": "/es/el-cairo-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cairo-clima-agosto.html",
-      "destination": "/es/el-cairo-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cairo-clima-septiembre.html",
-      "destination": "/es/el-cairo-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cairo-clima-octubre.html",
-      "destination": "/es/el-cairo-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cairo-clima-noviembre.html",
-      "destination": "/es/el-cairo-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cairo-clima-diciembre.html",
-      "destination": "/es/el-cairo-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-seoul.html",
-      "destination": "/es/mejor-epoca-seul.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/seoul-clima-enero.html",
-      "destination": "/es/seul-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/seoul-clima-febrero.html",
-      "destination": "/es/seul-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/seoul-clima-marzo.html",
-      "destination": "/es/seul-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/seoul-clima-abril.html",
-      "destination": "/es/seul-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/seoul-clima-mayo.html",
-      "destination": "/es/seul-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/seoul-clima-junio.html",
-      "destination": "/es/seul-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/seoul-clima-julio.html",
-      "destination": "/es/seul-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/seoul-clima-agosto.html",
-      "destination": "/es/seul-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/seoul-clima-septiembre.html",
-      "destination": "/es/seul-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/seoul-clima-octubre.html",
-      "destination": "/es/seul-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/seoul-clima-noviembre.html",
-      "destination": "/es/seul-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/seoul-clima-diciembre.html",
-      "destination": "/es/seul-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-stockholm.html",
-      "destination": "/es/mejor-epoca-estocolmo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/stockholm-clima-enero.html",
-      "destination": "/es/estocolmo-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/stockholm-clima-febrero.html",
-      "destination": "/es/estocolmo-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/stockholm-clima-marzo.html",
-      "destination": "/es/estocolmo-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/stockholm-clima-abril.html",
-      "destination": "/es/estocolmo-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/stockholm-clima-mayo.html",
-      "destination": "/es/estocolmo-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/stockholm-clima-junio.html",
-      "destination": "/es/estocolmo-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/stockholm-clima-julio.html",
-      "destination": "/es/estocolmo-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/stockholm-clima-agosto.html",
-      "destination": "/es/estocolmo-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/stockholm-clima-septiembre.html",
-      "destination": "/es/estocolmo-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/stockholm-clima-octubre.html",
-      "destination": "/es/estocolmo-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/stockholm-clima-noviembre.html",
-      "destination": "/es/estocolmo-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/stockholm-clima-diciembre.html",
-      "destination": "/es/estocolmo-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-brussels.html",
-      "destination": "/es/mejor-epoca-bruselas.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/brussels-clima-enero.html",
-      "destination": "/es/bruselas-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/brussels-clima-febrero.html",
-      "destination": "/es/bruselas-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/brussels-clima-marzo.html",
-      "destination": "/es/bruselas-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/brussels-clima-abril.html",
-      "destination": "/es/bruselas-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/brussels-clima-mayo.html",
-      "destination": "/es/bruselas-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/brussels-clima-junio.html",
-      "destination": "/es/bruselas-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/brussels-clima-julio.html",
-      "destination": "/es/bruselas-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/brussels-clima-agosto.html",
-      "destination": "/es/bruselas-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/brussels-clima-septiembre.html",
-      "destination": "/es/bruselas-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/brussels-clima-octubre.html",
-      "destination": "/es/bruselas-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/brussels-clima-noviembre.html",
-      "destination": "/es/bruselas-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/brussels-clima-diciembre.html",
-      "destination": "/es/bruselas-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-beijing.html",
-      "destination": "/es/mejor-epoca-pekin.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/beijing-clima-enero.html",
-      "destination": "/es/pekin-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/beijing-clima-febrero.html",
-      "destination": "/es/pekin-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/beijing-clima-marzo.html",
-      "destination": "/es/pekin-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/beijing-clima-abril.html",
-      "destination": "/es/pekin-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/beijing-clima-mayo.html",
-      "destination": "/es/pekin-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/beijing-clima-junio.html",
-      "destination": "/es/pekin-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/beijing-clima-julio.html",
-      "destination": "/es/pekin-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/beijing-clima-agosto.html",
-      "destination": "/es/pekin-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/beijing-clima-septiembre.html",
-      "destination": "/es/pekin-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/beijing-clima-octubre.html",
-      "destination": "/es/pekin-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/beijing-clima-noviembre.html",
-      "destination": "/es/pekin-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/beijing-clima-diciembre.html",
-      "destination": "/es/pekin-clima-diciembre.html",
+      "source": "/es/warsaw-clima-diciembre.html",
+      "destination": "/es/varsovia-clima-diciembre.html",
       "permanent": true
     },
     {
@@ -2312,458 +3807,68 @@
       "permanent": true
     },
     {
-      "source": "/es/mejor-epoca-mexico-city.html",
-      "destination": "/es/mejor-epoca-ciudad-de-mexico.html",
+      "source": "/es/mejor-epoca-yerevan.html",
+      "destination": "/es/mejor-epoca-erevan.html",
       "permanent": true
     },
     {
-      "source": "/es/mexico-city-clima-enero.html",
-      "destination": "/es/ciudad-de-mexico-clima-enero.html",
+      "source": "/es/yerevan-clima-enero.html",
+      "destination": "/es/erevan-clima-enero.html",
       "permanent": true
     },
     {
-      "source": "/es/mexico-city-clima-febrero.html",
-      "destination": "/es/ciudad-de-mexico-clima-febrero.html",
+      "source": "/es/yerevan-clima-febrero.html",
+      "destination": "/es/erevan-clima-febrero.html",
       "permanent": true
     },
     {
-      "source": "/es/mexico-city-clima-marzo.html",
-      "destination": "/es/ciudad-de-mexico-clima-marzo.html",
+      "source": "/es/yerevan-clima-marzo.html",
+      "destination": "/es/erevan-clima-marzo.html",
       "permanent": true
     },
     {
-      "source": "/es/mexico-city-clima-abril.html",
-      "destination": "/es/ciudad-de-mexico-clima-abril.html",
+      "source": "/es/yerevan-clima-abril.html",
+      "destination": "/es/erevan-clima-abril.html",
       "permanent": true
     },
     {
-      "source": "/es/mexico-city-clima-mayo.html",
-      "destination": "/es/ciudad-de-mexico-clima-mayo.html",
+      "source": "/es/yerevan-clima-mayo.html",
+      "destination": "/es/erevan-clima-mayo.html",
       "permanent": true
     },
     {
-      "source": "/es/mexico-city-clima-junio.html",
-      "destination": "/es/ciudad-de-mexico-clima-junio.html",
+      "source": "/es/yerevan-clima-junio.html",
+      "destination": "/es/erevan-clima-junio.html",
       "permanent": true
     },
     {
-      "source": "/es/mexico-city-clima-julio.html",
-      "destination": "/es/ciudad-de-mexico-clima-julio.html",
+      "source": "/es/yerevan-clima-julio.html",
+      "destination": "/es/erevan-clima-julio.html",
       "permanent": true
     },
     {
-      "source": "/es/mexico-city-clima-agosto.html",
-      "destination": "/es/ciudad-de-mexico-clima-agosto.html",
+      "source": "/es/yerevan-clima-agosto.html",
+      "destination": "/es/erevan-clima-agosto.html",
       "permanent": true
     },
     {
-      "source": "/es/mexico-city-clima-septiembre.html",
-      "destination": "/es/ciudad-de-mexico-clima-septiembre.html",
+      "source": "/es/yerevan-clima-septiembre.html",
+      "destination": "/es/erevan-clima-septiembre.html",
       "permanent": true
     },
     {
-      "source": "/es/mexico-city-clima-octubre.html",
-      "destination": "/es/ciudad-de-mexico-clima-octubre.html",
+      "source": "/es/yerevan-clima-octubre.html",
+      "destination": "/es/erevan-clima-octubre.html",
       "permanent": true
     },
     {
-      "source": "/es/mexico-city-clima-noviembre.html",
-      "destination": "/es/ciudad-de-mexico-clima-noviembre.html",
+      "source": "/es/yerevan-clima-noviembre.html",
+      "destination": "/es/erevan-clima-noviembre.html",
       "permanent": true
     },
     {
-      "source": "/es/mexico-city-clima-diciembre.html",
-      "destination": "/es/ciudad-de-mexico-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-warsaw.html",
-      "destination": "/es/mejor-epoca-varsovia.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/warsaw-clima-enero.html",
-      "destination": "/es/varsovia-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/warsaw-clima-febrero.html",
-      "destination": "/es/varsovia-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/warsaw-clima-marzo.html",
-      "destination": "/es/varsovia-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/warsaw-clima-abril.html",
-      "destination": "/es/varsovia-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/warsaw-clima-mayo.html",
-      "destination": "/es/varsovia-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/warsaw-clima-junio.html",
-      "destination": "/es/varsovia-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/warsaw-clima-julio.html",
-      "destination": "/es/varsovia-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/warsaw-clima-agosto.html",
-      "destination": "/es/varsovia-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/warsaw-clima-septiembre.html",
-      "destination": "/es/varsovia-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/warsaw-clima-octubre.html",
-      "destination": "/es/varsovia-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/warsaw-clima-noviembre.html",
-      "destination": "/es/varsovia-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/warsaw-clima-diciembre.html",
-      "destination": "/es/varsovia-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-bucharest.html",
-      "destination": "/es/mejor-epoca-bucarest.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/bucharest-clima-enero.html",
-      "destination": "/es/bucarest-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/bucharest-clima-febrero.html",
-      "destination": "/es/bucarest-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/bucharest-clima-marzo.html",
-      "destination": "/es/bucarest-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/bucharest-clima-abril.html",
-      "destination": "/es/bucarest-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/bucharest-clima-mayo.html",
-      "destination": "/es/bucarest-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/bucharest-clima-junio.html",
-      "destination": "/es/bucarest-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/bucharest-clima-julio.html",
-      "destination": "/es/bucarest-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/bucharest-clima-agosto.html",
-      "destination": "/es/bucarest-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/bucharest-clima-septiembre.html",
-      "destination": "/es/bucarest-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/bucharest-clima-octubre.html",
-      "destination": "/es/bucarest-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/bucharest-clima-noviembre.html",
-      "destination": "/es/bucarest-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/bucharest-clima-diciembre.html",
-      "destination": "/es/bucarest-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-geneva.html",
-      "destination": "/es/mejor-epoca-ginebra.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/geneva-clima-enero.html",
-      "destination": "/es/ginebra-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/geneva-clima-febrero.html",
-      "destination": "/es/ginebra-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/geneva-clima-marzo.html",
-      "destination": "/es/ginebra-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/geneva-clima-abril.html",
-      "destination": "/es/ginebra-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/geneva-clima-mayo.html",
-      "destination": "/es/ginebra-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/geneva-clima-junio.html",
-      "destination": "/es/ginebra-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/geneva-clima-julio.html",
-      "destination": "/es/ginebra-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/geneva-clima-agosto.html",
-      "destination": "/es/ginebra-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/geneva-clima-septiembre.html",
-      "destination": "/es/ginebra-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/geneva-clima-octubre.html",
-      "destination": "/es/ginebra-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/geneva-clima-noviembre.html",
-      "destination": "/es/ginebra-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/geneva-clima-diciembre.html",
-      "destination": "/es/ginebra-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-genoa.html",
-      "destination": "/es/mejor-epoca-genova.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/genoa-clima-enero.html",
-      "destination": "/es/genova-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/genoa-clima-febrero.html",
-      "destination": "/es/genova-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/genoa-clima-marzo.html",
-      "destination": "/es/genova-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/genoa-clima-abril.html",
-      "destination": "/es/genova-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/genoa-clima-mayo.html",
-      "destination": "/es/genova-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/genoa-clima-junio.html",
-      "destination": "/es/genova-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/genoa-clima-julio.html",
-      "destination": "/es/genova-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/genoa-clima-agosto.html",
-      "destination": "/es/genova-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/genoa-clima-septiembre.html",
-      "destination": "/es/genova-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/genoa-clima-octubre.html",
-      "destination": "/es/genova-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/genoa-clima-noviembre.html",
-      "destination": "/es/genova-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/genoa-clima-diciembre.html",
-      "destination": "/es/genova-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-mumbai.html",
-      "destination": "/es/mejor-epoca-bombay.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mumbai-clima-enero.html",
-      "destination": "/es/bombay-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mumbai-clima-febrero.html",
-      "destination": "/es/bombay-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mumbai-clima-marzo.html",
-      "destination": "/es/bombay-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mumbai-clima-abril.html",
-      "destination": "/es/bombay-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mumbai-clima-mayo.html",
-      "destination": "/es/bombay-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mumbai-clima-junio.html",
-      "destination": "/es/bombay-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mumbai-clima-julio.html",
-      "destination": "/es/bombay-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mumbai-clima-agosto.html",
-      "destination": "/es/bombay-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mumbai-clima-septiembre.html",
-      "destination": "/es/bombay-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mumbai-clima-octubre.html",
-      "destination": "/es/bombay-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mumbai-clima-noviembre.html",
-      "destination": "/es/bombay-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mumbai-clima-diciembre.html",
-      "destination": "/es/bombay-clima-diciembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/mejor-epoca-cartagena-colombia.html",
-      "destination": "/es/mejor-epoca-cartagena-col.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cartagena-colombia-clima-enero.html",
-      "destination": "/es/cartagena-col-clima-enero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cartagena-colombia-clima-febrero.html",
-      "destination": "/es/cartagena-col-clima-febrero.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cartagena-colombia-clima-marzo.html",
-      "destination": "/es/cartagena-col-clima-marzo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cartagena-colombia-clima-abril.html",
-      "destination": "/es/cartagena-col-clima-abril.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cartagena-colombia-clima-mayo.html",
-      "destination": "/es/cartagena-col-clima-mayo.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cartagena-colombia-clima-junio.html",
-      "destination": "/es/cartagena-col-clima-junio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cartagena-colombia-clima-julio.html",
-      "destination": "/es/cartagena-col-clima-julio.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cartagena-colombia-clima-agosto.html",
-      "destination": "/es/cartagena-col-clima-agosto.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cartagena-colombia-clima-septiembre.html",
-      "destination": "/es/cartagena-col-clima-septiembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cartagena-colombia-clima-octubre.html",
-      "destination": "/es/cartagena-col-clima-octubre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cartagena-colombia-clima-noviembre.html",
-      "destination": "/es/cartagena-col-clima-noviembre.html",
-      "permanent": true
-    },
-    {
-      "source": "/es/cartagena-colombia-clima-diciembre.html",
-      "destination": "/es/cartagena-col-clima-diciembre.html",
+      "source": "/es/yerevan-clima-diciembre.html",
+      "destination": "/es/erevan-clima-diciembre.html",
       "permanent": true
     }
   ],
