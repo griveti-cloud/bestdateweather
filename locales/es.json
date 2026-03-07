@@ -786,5 +786,319 @@
         "Puntuación playa y mar"
       ]
     ]
+  },
+  "classement_pages": {
+    "mondial": {
+      "title_tpl": "Mejores destinos clima 2026 — ranking meteorológico de 10 años",
+      "desc_tpl": "{n} destinos clasificados con 10 años de datos. Top mundial, más soleados, más secos.",
+      "h1": "Mejores destinos<br/><em>clima 2026</em>",
+      "hero_sub_tpl": "{n} destinos analizados durante 10 años. {top1} lidera con {top1_avg}/10.",
+      "stats": [
+        [
+          "{n}",
+          "Destinos"
+        ],
+        [
+          "10 años",
+          "Datos"
+        ],
+        [
+          "{days},000+",
+          "Días medidos"
+        ]
+      ],
+      "insights_label": "Puntos clave",
+      "insights": [
+        [
+          "N°1 mundial",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "Más soleado",
+          "{sun1} — {sun1_h}h/año."
+        ],
+        [
+          "Más seco",
+          "{dry1} — {dry1_r}% lluvia."
+        ],
+        [
+          "Europa",
+          "{eu1} lidera con {eu1_avg}/10."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Ranking mundial",
+          "h2": "🏆 Top 20 mundial — Puntuación climática anual",
+          "intro_tpl": "Puntuación anual = media de 12 puntuaciones mensuales (0–10). {n} destinos analizados."
+        },
+        {
+          "eyebrow": "Insolación",
+          "h2": "☀️ Top 10 más soleados",
+          "intro": "Horas de sol acumuladas al año."
+        },
+        {
+          "eyebrow": "Precipitaciones",
+          "h2": "🌂 Top 10 más secos",
+          "intro": "Porcentaje medio de días lluviosos al año."
+        }
+      ],
+      "jsonld_title_tpl": "Top destinos clima 2026",
+      "fr_file": "classement-destinations-meteo-2026.html",
+      "en_file": "best-destinations-weather-ranking-2026.html",
+      "es_file": "mejores-destinos-clima-2026.html"
+    },
+    "europe": {
+      "title_tpl": "Mejor clima en Europa 2026 — ranking de destinos europeos",
+      "desc_tpl": "{n} destinos europeos analizados con 10 años de datos meteorológicos. Ranking anual, verano e invierno.",
+      "h1": "Mejor clima<br/><em>en Europa 2026</em>",
+      "hero_sub_tpl": "{n} destinos europeos. {top1} lidera con {top1_avg}/10.",
+      "stats": [
+        [
+          "{n}",
+          "Destinos"
+        ],
+        [
+          "10 años",
+          "Datos"
+        ],
+        [
+          "365,000+",
+          "Días medidos"
+        ]
+      ],
+      "insights_label": "Puntos clave",
+      "insights": [
+        [
+          "N°1 Europa",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "Verano",
+          "{summer1} lidera ({summer1_avg}/10)."
+        ],
+        [
+          "Invierno",
+          "{winter1} lidera ({winter1_avg}/10)."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Europa",
+          "h2": "🏆 Top 20 Europa — Puntuación anual",
+          "intro_tpl": "{n} destinos europeos clasificados por puntuación anual."
+        },
+        {
+          "eyebrow": "Verano",
+          "h2": "☀️ Top 10 Europa verano (jun–ago)",
+          "intro": "Puntuación media junio, julio, agosto."
+        },
+        {
+          "eyebrow": "Invierno",
+          "h2": "❄️ Top 10 Europa invierno (dic–feb)",
+          "intro": "Puntuación media diciembre, enero, febrero."
+        }
+      ],
+      "jsonld_title_tpl": "Top destinos clima Europa 2026",
+      "fr_file": "classement-destinations-europe-meteo-2026.html",
+      "en_file": "best-europe-weather-ranking-2026.html",
+      "es_file": "mejor-clima-europa-2026.html"
+    },
+    "ete": {
+      "title_tpl": "Mejores destinos verano 2026 — clima ideal junio, julio, agosto",
+      "desc_tpl": "Top {n} destinos para el verano 2026. Ranking basado en 10 años de datos meteorológicos junio–agosto.",
+      "h1": "Mejores destinos<br/><em>verano 2026</em>",
+      "hero_sub_tpl": "{top1} lidera con {top1_avg}/10 en junio–agosto.",
+      "stats": [
+        [
+          "{n}",
+          "Destinos"
+        ],
+        [
+          "Jun–Ago",
+          "Temporada"
+        ],
+        [
+          "10 años",
+          "Datos"
+        ]
+      ],
+      "insights_label": "Puntos clave",
+      "insights": [
+        [
+          "N°1 verano",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "N°2",
+          "{top2} — {top2_avg}/10."
+        ],
+        [
+          "N°3",
+          "{top3} — {top3_avg}/10."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Ranking verano",
+          "h2": "☀️ Top 20 verano — Puntuación climática jun–ago",
+          "intro_tpl": "Puntuación media de junio, julio y agosto (0–10). {n} destinos analizados."
+        }
+      ],
+      "jsonld_title_tpl": "Mejores destinos verano 2026",
+      "fr_file": "classement-destinations-meteo-ete-2026.html",
+      "en_file": "best-destinations-summer-weather-2026.html",
+      "es_file": "mejores-destinos-verano-2026.html"
+    },
+    "hiver": {
+      "title_tpl": "Mejores destinos invierno 2026 — sol y calor garantizados",
+      "desc_tpl": "Top {n} destinos para el invierno 2026. Ranking basado en 10 años de datos dic–feb.",
+      "h1": "Mejores destinos<br/><em>invierno 2026</em>",
+      "hero_sub_tpl": "{top1} lidera con {top1_avg}/10 en diciembre–febrero.",
+      "stats": [
+        [
+          "{n}",
+          "Destinos"
+        ],
+        [
+          "Dic–Feb",
+          "Temporada"
+        ],
+        [
+          "10 años",
+          "Datos"
+        ]
+      ],
+      "insights_label": "Puntos clave",
+      "insights": [
+        [
+          "N°1 invierno",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "N°2",
+          "{top2} — {top2_avg}/10."
+        ],
+        [
+          "N°3",
+          "{top3} — {top3_avg}/10."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Ranking invierno",
+          "h2": "❄️ Top 20 invierno — Puntuación climática dic–feb",
+          "intro_tpl": "Puntuación media de diciembre, enero y febrero (0–10). {n} destinos analizados."
+        }
+      ],
+      "jsonld_title_tpl": "Mejores destinos invierno 2026",
+      "fr_file": "classement-destinations-meteo-hiver-2026.html",
+      "en_file": "best-destinations-winter-weather-2026.html",
+      "es_file": "mejores-destinos-invierno-2026.html"
+    },
+    "nomades": {
+      "title_tpl": "Mejores destinos nómadas digitales 2026 — clima constante todo el año",
+      "desc_tpl": "{n} destinos clasificados por regularidad climática. Ideal para trabajadores remotos y nómadas.",
+      "h1": "Mejores destinos<br/><em>nómadas digitales 2026</em>",
+      "hero_sub_tpl": "{top1} lidera: {top1_avg}/10 de media, desviación {top1_stdev}.",
+      "stats": [
+        [
+          "{n}",
+          "Destinos"
+        ],
+        [
+          "12 meses",
+          "Cobertura"
+        ],
+        [
+          "10 años",
+          "Datos"
+        ]
+      ],
+      "insights_label": "Puntos clave",
+      "insights": [
+        [
+          "N°1 nómada",
+          "{top1} — máxima constancia."
+        ],
+        [
+          "N°2",
+          "{top2} — {top2_avg}/10."
+        ],
+        [
+          "Criterio",
+          "Puntuación media ponderada por varianza."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Ranking nómadas",
+          "h2": "💻 Top 20 nómadas digitales — Constancia climática anual",
+          "intro_tpl": "Puntuación nomad = media anual penalizada por la varianza mensual. {n} destinos analizados.",
+          "intro": "Puntuación nomad = media anual penalizada por la varianza mensual."
+        }
+      ],
+      "jsonld_title_tpl": "Mejores destinos nómadas digitales 2026",
+      "fr_file": "classement-destinations-meteo-nomades-2026.html",
+      "en_file": "best-destinations-digital-nomads-weather-2026.html",
+      "es_file": "mejores-destinos-nomadas-digitales-2026.html"
+    },
+    "beach": {
+      "title_tpl": "Mejores destinos playa 2026 — ranking clima y temperatura del mar",
+      "desc_tpl": "Top {n} destinos de playa 2026. Ranking basado en temperatura aire + mar, insolación y lluvia. N°1: {top1} ({top1_avg}/10).",
+      "h1": "Mejores<br/><em>destinos playa 2026</em>",
+      "hero_sub_tpl": "{top1}: {top1_avg}/10 anual, mar a {top1_sea}°C de media.",
+      "stats": [
+        [
+          "{n}",
+          "Destinos costeros"
+        ],
+        [
+          "🏖️",
+          "Puntuación playa"
+        ],
+        [
+          "10 años",
+          "Datos"
+        ]
+      ],
+      "insights_label": "Puntos clave",
+      "insights": [
+        [
+          "N°1 anual",
+          "{top1} — {top1_avg}/10, mar {top1_sea}°C."
+        ],
+        [
+          "N°1 verano",
+          "{summer1} — {summer1_avg}/10."
+        ],
+        [
+          "N°1 invierno",
+          "{winter1} — {winter1_avg}/10."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Anual",
+          "h2": "🏖️ Top 25 playas — Ranking anual",
+          "intro_tpl": "Puntuación playa media anual. Combina temperatura aire + mar, lluvia y sol. {n} destinos costeros."
+        },
+        {
+          "eyebrow": "Verano 2026",
+          "h2": "☀️ Top 20 playas — Verano (jun–ago)",
+          "intro": "Mejores playas en verano. Puntuación media junio–agosto."
+        },
+        {
+          "eyebrow": "Invierno 2026",
+          "h2": "❄️ Top 20 playas — Invierno (dic–feb)",
+          "intro": "¿Dónde bañarse en invierno? Puntuación media diciembre–febrero."
+        }
+      ],
+      "jsonld_title_tpl": "Mejores destinos playa 2026",
+      "meth": "<div class=\"meth\"><strong>Metodología puntuación playa</strong><p>La puntuación playa combina temperatura del aire (25%), temperatura del mar (25%), precipitaciones (30%) y horas de sol (20%). Temperatura marina procedente de la API Marine de Open-Meteo (datos 2024). Solo se incluyen destinos costeros con datos marinos.</p></div>",
+      "fr_file": "classement-destinations-plage-2026.html",
+      "en_file": "best-beach-destinations-weather-2026.html",
+      "es_file": "mejores-destinos-playa-2026.html"
+    }
   }
 }

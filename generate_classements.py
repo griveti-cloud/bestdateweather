@@ -781,596 +781,219 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 </body></html>"""
 
 
+
+# ── Classement page helpers ────────────────────────────────────────────────────
+
+def _dest_name(dest, lang):
+    """Return display name for a destination in the given language."""
+    if lang == 'fr':
+        return dest.get('nom_bare', dest.get('nom_fr', ''))
+    elif lang == 'es':
+        return dest.get('nom_es') or dest.get('nom_en', '')
+    return dest.get('nom_en', '')
+
+
+def _tpl(s, ctx):
+    try:
+        return s.format(**ctx)
+    except (KeyError, ValueError):
+        return s
+
+
+def _stats_html(stats, ctx):
+    divs = ''.join(
+        f'<div class="hstat"><span class="hstat-val">{_tpl(v, ctx)}</span>'
+        f'<span class="hstat-lbl">{lbl}</span></div>'
+        for v, lbl in stats
+    )
+    return f'<div class="hero-stats">{divs}</div>'
+
+
+def _insights_html(label, items, ctx):
+    grid = ''.join(
+        f'<div class="insight-item"><strong>{strong}</strong>{_tpl(tpl, ctx)}</div>'
+        for strong, tpl in items
+    )
+    return (f'<div class="insights-bar"><div class="insights-inner">'
+            f'<div class="insights-label">{label}</div>'
+            f'<div class="insights-grid">{grid}</div></div></div>')
+
+
+def _sections(sections_cfg, ctx, tables):
+    return [
+        {'eyebrow': s['eyebrow'], 'h2': s['h2'],
+         'intro': _tpl(s.get('intro_tpl', s.get('intro', '')), ctx),
+         'table': tables[i]}
+        for i, s in enumerate(sections_cfg)
+    ]
+
+
+def _cl_layout(pc, lang):
+    BASE = 'https://bestdateweather.com'
+    fr_file, en_file, es_file = pc['fr_file'], pc['en_file'], pc['es_file']
+    if lang == 'fr':
+        canonical = f'{BASE}/{fr_file}'
+        footer = footer_ranking_html('fr', [
+            {'url': f'en/{en_file}',  'flag': 'flags/gb.png',    'label': 'English'},
+            {'url': f'es/{es_file}',  'flag': 'flags/es.png',    'label': 'Español'},
+        ])
+        outfile = ROOT / fr_file
+    elif lang == 'en':
+        canonical = f'{BASE}/en/{en_file}'
+        footer = footer_ranking_html('en', [
+            {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': f'../es/{es_file}', 'flag': '../flags/es.png', 'label': 'Español'},
+        ])
+        outfile = ROOT / 'en' / en_file
+    else:
+        canonical = f'{BASE}/es/{es_file}'
+        footer = footer_ranking_html('es', [
+            {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
+        ])
+        outfile = ROOT / 'es' / es_file
+    return canonical, footer, outfile, fr_file, en_file, es_file
+
+
+def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix=''):
+    title    = _tpl(pc['title_tpl'],    ctx)
+    desc     = _tpl(pc['desc_tpl'],     ctx)
+    h1       = pc['h1']
+    hero_sub = _tpl(pc['hero_sub_tpl'], ctx)
+    stats    = _stats_html(pc['stats'], ctx)
+    insights = _insights_html(pc['insights_label'], pc['insights'], ctx)
+    sections = _sections(pc['sections'], ctx, tables)
+    jsonld   = make_jsonld(jsonld_data, jsonld_n, _tpl(pc['jsonld_title_tpl'], ctx), lang)
+    meth     = pc.get('meth') or load_locale(lang)['classements']['methodology']
+    canonical, footer, outfile, fr_file, en_file, es_file = _cl_layout(pc, lang)
+    rel_file = es_file if lang == 'es' else (en_file if lang == 'en' else fr_file)
+    related  = make_related(lang, rel_file)
+    page = make_page(
+        title=title, description=desc, h1=h1, hero_sub=hero_sub,
+        stats_html=stats, insights_html=insights, sections=sections,
+        jsonld_str=jsonld, related_html=related, meth_html=meth,
+        footer_html=footer, lang=lang, canonical=canonical,
+        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
+        hreflang_en=f'https://bestdateweather.com/en/{en_file}',
+        hreflang_es=f'https://bestdateweather.com/es/{es_file}',
+    )
+    outfile.write_text(page, encoding='utf-8')
+    print(f'  ✓ {outfile.name}{print_suffix}')
+
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE GENERATORS
 # ══════════════════════════════════════════════════════════════════════════════
 
 def gen_mondial(dests, climate, lang):
-    annual = dedup_country(compute_annual(climate, dests), dests)
+    annual   = dedup_country(compute_annual(climate, dests), dests)
     sunniest = dedup_country(compute_sunniest(climate, dests), dests)
-    driest = dedup_country(compute_driest(climate, dests), dests)
-    top1 = annual[0]
-    sun1 = sunniest[0]
-    dry1 = driest[0]
-    # Find top Europe
+    driest   = dedup_country(compute_driest(climate, dests), dests)
     europe_annual = dedup_country(compute_annual(climate, dests, europe_only=True), dests)
-    eu1 = europe_annual[0]
+    top1 = annual[0]; sun1 = sunniest[0]; dry1 = driest[0]; eu1 = europe_annual[0]
     n_dests = len(annual)
-
-    if lang == 'fr':
-        title = f'Classement 2026 des meilleures destinations selon 10 ans de données météo'
-        desc = f'{n_dests} destinations classées sur 10 ans de données météo. Top mondial, plus ensoleillées, moins pluvieuses.'
-        h1 = 'Classement 2026 des meilleures<br/><em>destinations météo</em>'
-        hero_sub = f'{n_dests} destinations analysées sur 10 ans. {top1["dest"]["nom_bare"]} en tête avec {top1["avg"]:.1f}/10.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinations</span></div><div class="hstat"><span class="hstat-val">10 ans</span><span class="hstat-lbl">Données</span></div><div class="hstat"><span class="hstat-val">{n_dests * 10 * 365 // 1000}&nbsp;000+</span><span class="hstat-lbl">Jours mesurés</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Points clés</div><div class="insights-grid"><div class="insight-item"><strong>N°1 mondial</strong>{top1["dest"]["nom_bare"]} — {top1["avg"]:.1f}/10 annuel.</div><div class="insight-item"><strong>Plus ensoleillé</strong>{sun1["dest"]["nom_bare"]} — {sun1["sun_annual"]:.0f}h/an.</div><div class="insight-item"><strong>Plus sec</strong>{dry1["dest"]["nom_bare"]} — {dry1["rain_avg"]:.0f}% de pluie.</div><div class="insight-item"><strong>Europe</strong>{eu1["dest"]["nom_bare"]} domine avec {eu1["avg"]:.1f}/10.</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Classement mondial', 'h2':f'🏆 Top 20 mondial — Score climatique annuel', 'intro':f'Score annuel = moyenne des 12 scores mensuels (0–10). {n_dests} destinations analysées.', 'table': make_table_annual(annual, 20, lang)},
-            {'eyebrow':'Ensoleillement', 'h2':'☀️ Top 10 les plus ensoleillées', 'intro':'Heures de soleil cumulées sur l\'année.', 'table': make_table_sun(sunniest, 10, lang)},
-            {'eyebrow':'Précipitations', 'h2':'🌂 Top 10 les moins pluvieuses', 'intro':'Pourcentage moyen de jours de pluie sur l\'année.', 'table': make_table_rain(driest, 10, lang)},
-        ]
-        jsonld = make_jsonld(annual, 40, f'Top {n_dests} meilleures destinations météo 2026', lang)
-        related = make_related(lang, 'classement-destinations-meteo-2026.html')
-        fr_file = 'classement-destinations-meteo-2026.html'
-        en_file = 'best-destinations-weather-ranking-2026.html'
-        canonical = f'https://bestdateweather.com/{fr_file}' if lang == 'fr' else f'https://bestdateweather.com/en/{en_file}'
-        footer = footer_ranking_html('fr', [
-            {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
-            {'url': 'es/mejores-destinos-clima-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
-        ])
-        meth = load_locale('fr')['classements']['methodology']
-        outfile = ROOT / fr_file
-    elif lang == 'en':
-        title = 'Best weather destinations 2026 — 10-year climate ranking'
-        desc = f'{n_dests} destinations ranked using 10 years of weather data. Global top, sunniest, driest.'
-        h1 = 'Best weather<br/><em>destinations 2026</em>'
-        hero_sub = f'{n_dests} destinations analyzed over 10 years. {top1["dest"]["nom_en"]} leads with {top1["avg"]:.1f}/10.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinations</span></div><div class="hstat"><span class="hstat-val">10 years</span><span class="hstat-lbl">Data</span></div><div class="hstat"><span class="hstat-val">{n_dests * 10 * 365 // 1000},000+</span><span class="hstat-lbl">Days measured</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Key insights</div><div class="insights-grid"><div class="insight-item"><strong>#1 worldwide</strong>{top1["dest"]["nom_en"]} — {top1["avg"]:.1f}/10 annual.</div><div class="insight-item"><strong>Sunniest</strong>{sun1["dest"]["nom_en"]} — {sun1["sun_annual"]:.0f}h/yr.</div><div class="insight-item"><strong>Driest</strong>{dry1["dest"]["nom_en"]} — {dry1["rain_avg"]:.0f}% rain.</div><div class="insight-item"><strong>Europe</strong>{eu1["dest"]["nom_en"]} leads with {eu1["avg"]:.1f}/10.</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Global ranking', 'h2':'🏆 Top 20 worldwide — Annual climate score', 'intro':f'Annual score = average of 12 monthly scores (0–10). {n_dests} destinations analyzed.', 'table': make_table_annual(annual, 20, lang)},
-            {'eyebrow':'Sunshine', 'h2':'☀️ Top 10 sunniest', 'intro':'Cumulative sunshine hours per year.', 'table': make_table_sun(sunniest, 10, lang)},
-            {'eyebrow':'Precipitation', 'h2':'🌂 Top 10 driest', 'intro':'Average percentage of rainy days per year.', 'table': make_table_rain(driest, 10, lang)},
-        ]
-        jsonld = make_jsonld(annual, 40, 'Top weather destinations 2026', lang)
-        related = make_related(lang, 'best-destinations-weather-ranking-2026.html')
-        fr_file = 'classement-destinations-meteo-2026.html'
-        en_file = 'best-destinations-weather-ranking-2026.html'
-        canonical = f'https://bestdateweather.com/en/{en_file}'
-        footer = footer_ranking_html('en', [
-            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': '../es/mejores-destinos-clima-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
-        ])
-        meth = load_locale('en')['classements']['methodology']
-        outfile = ROOT / 'en' / en_file
-    elif lang == 'es':
-        title = 'Mejores destinos clima 2026 — ranking meteorológico de 10 años'
-        desc = f'{n_dests} destinos clasificados con 10 años de datos. Top mundial, más soleados, más secos.'
-        h1 = 'Mejores destinos<br/><em>clima 2026</em>'
-        hero_sub = f'{n_dests} destinos analizados durante 10 años. {top1["dest"].get("nom_es", top1["dest"]["nom_en"])} lidera con {top1["avg"]:.1f}/10.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinos</span></div><div class="hstat"><span class="hstat-val">10 años</span><span class="hstat-lbl">Datos</span></div><div class="hstat"><span class="hstat-val">{n_dests * 10 * 365 // 1000},000+</span><span class="hstat-lbl">Días medidos</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Puntos clave</div><div class="insights-grid"><div class="insight-item"><strong>N°1 mundial</strong>{top1["dest"].get("nom_es", top1["dest"]["nom_en"])} — {top1["avg"]:.1f}/10.</div><div class="insight-item"><strong>Más soleado</strong>{sun1["dest"].get("nom_es", sun1["dest"]["nom_en"])} — {sun1["sun_annual"]:.0f}h/año.</div><div class="insight-item"><strong>Más seco</strong>{dry1["dest"].get("nom_es", dry1["dest"]["nom_en"])} — {dry1["rain_avg"]:.0f}% lluvia.</div><div class="insight-item"><strong>Europa</strong>{eu1["dest"].get("nom_es", eu1["dest"]["nom_en"])} lidera con {eu1["avg"]:.1f}/10.</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Ranking mundial', 'h2':'🏆 Top 20 mundial — Puntuación climática anual', 'intro':f'Puntuación anual = media de 12 puntuaciones mensuales (0–10). {n_dests} destinos analizados.', 'table': make_table_annual(annual, 20, lang)},
-            {'eyebrow':'Insolación', 'h2':'☀️ Top 10 más soleados', 'intro':'Horas de sol acumuladas al año.', 'table': make_table_sun(sunniest, 10, lang)},
-            {'eyebrow':'Precipitaciones', 'h2':'🌂 Top 10 más secos', 'intro':'Porcentaje medio de días lluviosos al año.', 'table': make_table_rain(driest, 10, lang)},
-        ]
-        jsonld = make_jsonld(annual, 40, 'Top destinos clima 2026', lang)
-        related = make_related(lang, 'mejores-destinos-clima-2026.html')
-        fr_file = 'classement-destinations-meteo-2026.html'
-        en_file = 'best-destinations-weather-ranking-2026.html'
-        canonical = 'https://bestdateweather.com/es/mejores-destinos-clima-2026.html'
-        footer = footer_ranking_html('es', [
-            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
-        ])
-        meth = load_locale('es')['classements']['methodology']
-        outfile = ROOT / 'es' / 'mejores-destinos-clima-2026.html'
-
-    page = make_page(
-        title=title, description=desc, h1=h1, hero_sub=hero_sub,
-        stats_html=stats, insights_html=insights, sections=sections,
-        jsonld_str=jsonld, related_html=related, meth_html=meth,
-        footer_html=footer, lang=lang, canonical=canonical,
-        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
-        hreflang_en=f'https://bestdateweather.com/en/{en_file}',
-        hreflang_es='https://bestdateweather.com/es/mejores-destinos-clima-2026.html'
+    pc  = load_locale(lang)['classement_pages']['mondial']
+    ctx = dict(
+        n=n_dests, days=n_dests * 10 * 365 // 1000,
+        top1=_dest_name(top1['dest'], lang),  top1_avg=f'{top1["avg"]:.1f}',
+        sun1=_dest_name(sun1['dest'], lang),  sun1_h=int(sun1['sun_annual']),
+        dry1=_dest_name(dry1['dest'], lang),  dry1_r=int(dry1['rain_avg']),
+        eu1=_dest_name(eu1['dest'], lang),    eu1_avg=f'{eu1["avg"]:.1f}',
     )
-    outfile.write_text(page, encoding='utf-8')
-    print(f'  ✓ {outfile.name} ({n_dests} dests, top={top1["dest"]["nom_bare"]})')
-
+    _cl_render(pc, lang, ctx,
+               tables=[make_table_annual(annual, 20, lang),
+                       make_table_sun(sunniest, 10, lang),
+                       make_table_rain(driest, 10, lang)],
+               jsonld_data=annual, jsonld_n=40,
+               print_suffix=f' ({n_dests} dests, top={top1["dest"]["nom_bare"]})')
 
 def gen_europe(dests, climate, lang):
-    annual = dedup_country(compute_annual(climate, dests, europe_only=True), dests)
-    summer = dedup_country(compute_seasonal(climate, dests, [6,7,8], europe_only=True), dests)
-    winter = dedup_country(compute_seasonal(climate, dests, [12,1,2], europe_only=True), dests)
-    top1 = annual[0]
+    annual  = dedup_country(compute_annual(climate, dests, europe_only=True), dests)
+    summer  = dedup_country(compute_seasonal(climate, dests, [6,7,8], europe_only=True), dests)
+    winter  = dedup_country(compute_seasonal(climate, dests, [12,1,2], europe_only=True), dests)
+    top1    = annual[0]
     n_dests = len(annual)
-
-    if lang == 'fr':
-        title = 'Classement météo Europe 2026 — Top destinations européennes'
-        desc = f'{n_dests} destinations européennes classées. Top annuel, été et hiver.'
-        h1 = 'Top destinations<br/><em>météo Europe 2026</em>'
-        hero_sub = f'{n_dests} destinations européennes. {top1["dest"]["nom_bare"]} en tête avec {top1["avg"]:.1f}/10.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinations</span></div><div class="hstat"><span class="hstat-val">10 ans</span><span class="hstat-lbl">Données</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Points clés</div><div class="insights-grid"><div class="insight-item"><strong>N°1 Europe</strong>{top1["dest"]["nom_bare"]} — {top1["avg"]:.1f}/10.</div><div class="insight-item"><strong>Été</strong>{summer[0]["dest"]["nom_bare"]} domine ({summer[0]["avg"]:.1f}/10).</div><div class="insight-item"><strong>Hiver</strong>{winter[0]["dest"]["nom_bare"]} en tête ({winter[0]["avg"]:.1f}/10).</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Europe', 'h2':'🏆 Top 20 Europe — Score annuel', 'intro':f'{n_dests} destinations européennes classées par score annuel.', 'table': make_table_annual(annual, 20, lang)},
-            {'eyebrow':'Été', 'h2':'☀️ Top 10 Europe été (juin–août)', 'intro':'Score moyen juin, juillet, août.', 'table': make_table_seasonal(summer, 10, lang)},
-            {'eyebrow':'Hiver', 'h2':'❄️ Top 10 Europe hiver (déc–fév)', 'intro':'Score moyen décembre, janvier, février.', 'table': make_table_seasonal(winter, 10, lang)},
-        ]
-        jsonld = make_jsonld(annual, 20, 'Top destinations météo Europe 2026', lang)
-        related = make_related(lang, 'classement-destinations-europe-meteo-2026.html')
-        fr_file = 'classement-destinations-europe-meteo-2026.html'
-        en_file = 'best-europe-weather-ranking-2026.html'
-        canonical = f'https://bestdateweather.com/{fr_file}'
-        footer = footer_ranking_html('fr', [
-            {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
-            {'url': 'es/mejor-clima-europa-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
-        ])
-        meth = load_locale('fr')['classements']['methodology']
-        outfile = ROOT / fr_file
-    elif lang == 'en':
-        title = 'Europe weather ranking 2026 — Top European destinations'
-        desc = f'{n_dests} European destinations ranked. Annual, summer and winter tops.'
-        h1 = 'Top European<br/><em>weather destinations 2026</em>'
-        hero_sub = f'{n_dests} European destinations. {top1["dest"]["nom_en"]} leads with {top1["avg"]:.1f}/10.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinations</span></div><div class="hstat"><span class="hstat-val">10 years</span><span class="hstat-lbl">Data</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Key insights</div><div class="insights-grid"><div class="insight-item"><strong>#1 Europe</strong>{top1["dest"]["nom_en"]} — {top1["avg"]:.1f}/10.</div><div class="insight-item"><strong>Summer</strong>{summer[0]["dest"]["nom_en"]} leads ({summer[0]["avg"]:.1f}/10).</div><div class="insight-item"><strong>Winter</strong>{winter[0]["dest"]["nom_en"]} leads ({winter[0]["avg"]:.1f}/10).</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Europe', 'h2':'🏆 Top 20 Europe — Annual score', 'intro':f'{n_dests} European destinations ranked by annual score.', 'table': make_table_annual(annual, 20, lang)},
-            {'eyebrow':'Summer', 'h2':'☀️ Top 10 Europe summer (June–Aug)', 'intro':'Average score June, July, August.', 'table': make_table_seasonal(summer, 10, lang)},
-            {'eyebrow':'Winter', 'h2':'❄️ Top 10 Europe winter (Dec–Feb)', 'intro':'Average score December, January, February.', 'table': make_table_seasonal(winter, 10, lang)},
-        ]
-        jsonld = make_jsonld(annual, 20, 'Top European weather destinations 2026', lang)
-        related = make_related(lang, 'best-europe-weather-ranking-2026.html')
-        fr_file = 'classement-destinations-europe-meteo-2026.html'
-        en_file = 'best-europe-weather-ranking-2026.html'
-        canonical = f'https://bestdateweather.com/en/{en_file}'
-        footer = footer_ranking_html('en', [
-            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': '../es/mejor-clima-europa-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
-        ])
-        meth = load_locale('en')['classements']['methodology']
-        outfile = ROOT / 'en' / en_file
-    elif lang == 'es':
-        title = 'Mejor clima en Europa 2026 — ranking de destinos europeos'
-        desc = f'{n_dests} destinos europeos analizados con 10 años de datos meteorológicos. Ranking anual, verano e invierno.'
-        h1 = 'Mejor clima<br/><em>en Europa 2026</em>'
-        hero_sub = f'{n_dests} destinos europeos. {top1["dest"].get("nom_es", top1["dest"]["nom_en"])} lidera con {top1["avg"]:.1f}/10.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinos</span></div><div class="hstat"><span class="hstat-val">10 años</span><span class="hstat-lbl">Datos</span></div><div class="hstat"><span class="hstat-val">365,000+</span><span class="hstat-lbl">Días medidos</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Puntos clave</div><div class="insights-grid"><div class="insight-item"><strong>N°1 Europa</strong>{top1["dest"].get("nom_es", top1["dest"]["nom_en"])} — {top1["avg"]:.1f}/10.</div><div class="insight-item"><strong>Verano</strong>{summer[0]["dest"].get("nom_es", summer[0]["dest"]["nom_en"])} lidera ({summer[0]["avg"]:.1f}/10).</div><div class="insight-item"><strong>Invierno</strong>{winter[0]["dest"].get("nom_es", winter[0]["dest"]["nom_en"])} lidera ({winter[0]["avg"]:.1f}/10).</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Ranking Europa', 'h2':'🏆 Top 20 Europa — Puntuación climática anual', 'intro':f'Puntuación anual = media de 12 meses (0–10). {n_dests} destinos europeos analizados.', 'table': make_table_annual(annual, 20, lang)},
-            {'eyebrow':'Mejor verano', 'h2':'☀️ Top 10 mejor verano (jun–ago)', 'intro':'Puntuación media de junio, julio y agosto.', 'table': make_table_seasonal(summer, 10, lang)},
-            {'eyebrow':'Mejor invierno', 'h2':'❄️ Top 10 mejor invierno (dic–feb)', 'intro':'Puntuación media de diciembre, enero y febrero.', 'table': make_table_seasonal(winter, 10, lang)},
-        ]
-        jsonld = make_jsonld(annual, 20, 'Mejor clima Europa 2026', lang)
-        related = make_related(lang, 'mejor-clima-europa-2026.html')
-        fr_file = 'classement-destinations-europe-meteo-2026.html'
-        en_file = 'best-europe-weather-ranking-2026.html'
-        canonical = 'https://bestdateweather.com/es/mejor-clima-europa-2026.html'
-        footer = footer_ranking_html('es', [
-            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
-        ])
-        meth = load_locale('es')['classements']['methodology']
-        outfile = ROOT / 'es' / 'mejor-clima-europa-2026.html'
-
-    page = make_page(
-        title=title, description=desc, h1=h1, hero_sub=hero_sub,
-        stats_html=stats, insights_html=insights, sections=sections,
-        jsonld_str=jsonld, related_html=related, meth_html=meth,
-        footer_html=footer, lang=lang, canonical=canonical,
-        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
-        hreflang_en=f'https://bestdateweather.com/en/{en_file}',
-        hreflang_es='https://bestdateweather.com/es/mejor-clima-europa-2026.html'
+    pc  = load_locale(lang)['classement_pages']['europe']
+    ctx = dict(
+        n=n_dests,
+        top1=_dest_name(top1['dest'], lang),         top1_avg=f'{top1["avg"]:.1f}',
+        summer1=_dest_name(summer[0]['dest'], lang),  summer1_avg=f'{summer[0]["avg"]:.1f}',
+        winter1=_dest_name(winter[0]['dest'], lang),  winter1_avg=f'{winter[0]["avg"]:.1f}',
     )
-    outfile.write_text(page, encoding='utf-8')
-    print(f'  ✓ {outfile.name} ({n_dests} dests Europe)')
-
+    _cl_render(pc, lang, ctx,
+               tables=[make_table_annual(annual, 20, lang),
+                       make_table_seasonal(summer, 10, lang),
+                       make_table_seasonal(winter, 10, lang)],
+               jsonld_data=annual, jsonld_n=20,
+               print_suffix=f' (Europe, top={top1["dest"]["nom_bare"]})')
 
 def gen_ete(dests, climate, lang):
-    summer = dedup_country(compute_seasonal(climate, dests, [6,7,8]), dests)
-    top1 = summer[0]
+    summer  = dedup_country(compute_seasonal(climate, dests, [6,7,8]), dests)
+    top1    = summer[0]
     n_dests = len(summer)
-
-    if lang == 'fr':
-        title = 'Meilleures destinations été 2026 — Classement météo Juin–Août'
-        desc = f'Top {n_dests} destinations pour l\'été 2026. Classement basé sur 10 ans de données météo juin–août.'
-        h1 = 'Meilleures destinations<br/><em>été 2026</em>'
-        hero_sub = f'{top1["dest"]["nom_bare"]} en tête avec {top1["avg"]:.1f}/10 sur juin–août.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinations</span></div><div class="hstat"><span class="hstat-val">Juin–Août</span><span class="hstat-lbl">Période</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Points clés</div><div class="insights-grid"><div class="insight-item"><strong>N°1 été</strong>{top1["dest"]["nom_bare"]} — {top1["avg"]:.1f}/10.</div><div class="insight-item"><strong>N°2</strong>{summer[1]["dest"]["nom_bare"]} — {summer[1]["avg"]:.1f}/10.</div><div class="insight-item"><strong>N°3</strong>{summer[2]["dest"]["nom_bare"]} — {summer[2]["avg"]:.1f}/10.</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Été 2026', 'h2':'☀️ Top 20 mondial — Été 2026 (juin–août)', 'intro':f'Score moyen sur les 3 mois d\'été. {n_dests} destinations.', 'table': make_table_seasonal(summer, 20, lang)},
-        ]
-        jsonld = make_jsonld(summer, 20, 'Meilleures destinations été 2026', lang)
-        related = make_related(lang, 'classement-destinations-meteo-ete-2026.html')
-        fr_file = 'classement-destinations-meteo-ete-2026.html'
-        en_file = 'best-destinations-summer-weather-2026.html'
-        canonical = f'https://bestdateweather.com/{fr_file}'
-        footer = footer_ranking_html('fr', [
-            {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
-            {'url': 'es/mejores-destinos-verano-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
-        ])
-        meth = load_locale('fr')['classements']['methodology']
-        outfile = ROOT / fr_file
-    elif lang == 'en':
-        title = 'Best summer destinations 2026 — Weather ranking June–August'
-        desc = f'Top {n_dests} destinations for summer 2026. Ranked using 10 years of June–August weather data.'
-        h1 = 'Best summer<br/><em>destinations 2026</em>'
-        hero_sub = f'{top1["dest"]["nom_en"]} leads with {top1["avg"]:.1f}/10 for June–August.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinations</span></div><div class="hstat"><span class="hstat-val">Jun–Aug</span><span class="hstat-lbl">Period</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Key insights</div><div class="insights-grid"><div class="insight-item"><strong>#1 summer</strong>{top1["dest"]["nom_en"]} — {top1["avg"]:.1f}/10.</div><div class="insight-item"><strong>#2</strong>{summer[1]["dest"]["nom_en"]} — {summer[1]["avg"]:.1f}/10.</div><div class="insight-item"><strong>#3</strong>{summer[2]["dest"]["nom_en"]} — {summer[2]["avg"]:.1f}/10.</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Summer 2026', 'h2':'☀️ Top 20 worldwide — Summer 2026 (June–Aug)', 'intro':f'Average score over 3 summer months. {n_dests} destinations.', 'table': make_table_seasonal(summer, 20, lang)},
-        ]
-        jsonld = make_jsonld(summer, 20, 'Best summer destinations 2026', lang)
-        related = make_related(lang, 'best-destinations-summer-weather-2026.html')
-        fr_file = 'classement-destinations-meteo-ete-2026.html'
-        en_file = 'best-destinations-summer-weather-2026.html'
-        canonical = f'https://bestdateweather.com/en/{en_file}'
-        footer = footer_ranking_html('en', [
-            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': '../es/mejores-destinos-verano-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
-        ])
-        meth = load_locale('en')['classements']['methodology']
-        outfile = ROOT / 'en' / en_file
-    elif lang == 'es':
-        title = 'Mejores destinos verano 2026 — clima ideal junio, julio, agosto'
-        desc = f'Top {n_dests} destinos para el verano 2026. Ranking basado en 10 años de datos meteorológicos junio–agosto.'
-        h1 = 'Mejores destinos<br/><em>verano 2026</em>'
-        hero_sub = f'{top1["dest"].get("nom_es", top1["dest"]["nom_en"])} lidera con {top1["avg"]:.1f}/10 en junio–agosto.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinos</span></div><div class="hstat"><span class="hstat-val">Jun–Ago</span><span class="hstat-lbl">Temporada</span></div><div class="hstat"><span class="hstat-val">10 años</span><span class="hstat-lbl">Datos</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Puntos clave</div><div class="insights-grid"><div class="insight-item"><strong>N°1 verano</strong>{top1["dest"].get("nom_es", top1["dest"]["nom_en"])} — {top1["avg"]:.1f}/10.</div><div class="insight-item"><strong>N°2</strong>{summer[1]["dest"].get("nom_es", summer[1]["dest"]["nom_en"])} — {summer[1]["avg"]:.1f}/10.</div><div class="insight-item"><strong>N°3</strong>{summer[2]["dest"].get("nom_es", summer[2]["dest"]["nom_en"])} — {summer[2]["avg"]:.1f}/10.</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Ranking verano', 'h2':'☀️ Top 20 verano — Puntuación climática jun–ago', 'intro':f'Puntuación media de junio, julio y agosto (0–10). {n_dests} destinos analizados.', 'table': make_table_seasonal(summer, 20, lang)},
-        ]
-        jsonld = make_jsonld(summer, 20, 'Mejores destinos verano 2026', lang)
-        related = make_related(lang, 'mejores-destinos-verano-2026.html')
-        fr_file = 'classement-destinations-meteo-ete-2026.html'
-        en_file = 'best-destinations-summer-weather-2026.html'
-        canonical = 'https://bestdateweather.com/es/mejores-destinos-verano-2026.html'
-        footer = footer_ranking_html('es', [
-            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
-        ])
-        meth = load_locale('es')['classements']['methodology']
-        outfile = ROOT / 'es' / 'mejores-destinos-verano-2026.html'
-
-    page = make_page(
-        title=title, description=desc, h1=h1, hero_sub=hero_sub,
-        stats_html=stats, insights_html=insights, sections=sections,
-        jsonld_str=jsonld, related_html=related, meth_html=meth,
-        footer_html=footer, lang=lang, canonical=canonical,
-        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
-        hreflang_en=f'https://bestdateweather.com/en/{en_file}',
-        hreflang_es='https://bestdateweather.com/es/mejores-destinos-verano-2026.html'
+    pc  = load_locale(lang)['classement_pages']['ete']
+    ctx = dict(
+        n=n_dests,
+        top1=_dest_name(top1['dest'], lang),     top1_avg=f'{top1["avg"]:.1f}',
+        top2=_dest_name(summer[1]['dest'], lang), top2_avg=f'{summer[1]["avg"]:.1f}',
+        top3=_dest_name(summer[2]['dest'], lang), top3_avg=f'{summer[2]["avg"]:.1f}',
     )
-    outfile.write_text(page, encoding='utf-8')
-    print(f'  ✓ {outfile.name} (été, top={top1["dest"]["nom_bare"]})')
-
+    _cl_render(pc, lang, ctx,
+               tables=[make_table_seasonal(summer, 20, lang)],
+               jsonld_data=summer, jsonld_n=20,
+               print_suffix=f' (été, top={top1["dest"]["nom_bare"]})')
 
 def gen_hiver(dests, climate, lang):
-    winter = dedup_country(compute_seasonal(climate, dests, [12,1,2]), dests)
-    top1 = winter[0]
+    winter  = dedup_country(compute_seasonal(climate, dests, [12,1,2]), dests)
+    top1    = winter[0]
     n_dests = len(winter)
-
-    if lang == 'fr':
-        title = 'Meilleures destinations hiver 2026 — Soleil et chaleur garanti'
-        desc = f'Top {n_dests} destinations pour l\'hiver 2026. Classement basé sur 10 ans de données météo déc–fév.'
-        h1 = 'Meilleures destinations<br/><em>hiver 2026</em>'
-        hero_sub = f'{top1["dest"]["nom_bare"]} en tête avec {top1["avg"]:.1f}/10 sur déc–fév.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinations</span></div><div class="hstat"><span class="hstat-val">Déc–Fév</span><span class="hstat-lbl">Période</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Points clés</div><div class="insights-grid"><div class="insight-item"><strong>N°1 hiver</strong>{top1["dest"]["nom_bare"]} — {top1["avg"]:.1f}/10.</div><div class="insight-item"><strong>N°2</strong>{winter[1]["dest"]["nom_bare"]} — {winter[1]["avg"]:.1f}/10.</div><div class="insight-item"><strong>N°3</strong>{winter[2]["dest"]["nom_bare"]} — {winter[2]["avg"]:.1f}/10.</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Hiver 2026', 'h2':'❄️ Top 20 mondial — Hiver 2026 (déc–fév)', 'intro':f'Score moyen sur les 3 mois d\'hiver. {n_dests} destinations.', 'table': make_table_seasonal(winter, 20, lang)},
-        ]
-        jsonld = make_jsonld(winter, 20, 'Meilleures destinations hiver 2026', lang)
-        related = make_related(lang, 'classement-destinations-meteo-hiver-2026.html')
-        fr_file = 'classement-destinations-meteo-hiver-2026.html'
-        en_file = 'best-destinations-winter-weather-2026.html'
-        canonical = f'https://bestdateweather.com/{fr_file}'
-        footer = footer_ranking_html('fr', [
-            {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
-            {'url': 'es/mejores-destinos-invierno-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
-        ])
-        meth = load_locale('fr')['classements']['methodology']
-        outfile = ROOT / fr_file
-    elif lang == 'en':
-        title = 'Best winter destinations 2026 — Guaranteed sun & warmth'
-        desc = f'Top {n_dests} destinations for winter 2026. Ranked using 10 years of Dec–Feb weather data.'
-        h1 = 'Best winter<br/><em>destinations 2026</em>'
-        hero_sub = f'{top1["dest"]["nom_en"]} leads with {top1["avg"]:.1f}/10 for Dec–Feb.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinations</span></div><div class="hstat"><span class="hstat-val">Dec–Feb</span><span class="hstat-lbl">Period</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Key insights</div><div class="insights-grid"><div class="insight-item"><strong>#1 winter</strong>{top1["dest"]["nom_en"]} — {top1["avg"]:.1f}/10.</div><div class="insight-item"><strong>#2</strong>{winter[1]["dest"]["nom_en"]} — {winter[1]["avg"]:.1f}/10.</div><div class="insight-item"><strong>#3</strong>{winter[2]["dest"]["nom_en"]} — {winter[2]["avg"]:.1f}/10.</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Winter 2026', 'h2':'❄️ Top 20 worldwide — Winter 2026 (Dec–Feb)', 'intro':f'Average score over 3 winter months. {n_dests} destinations.', 'table': make_table_seasonal(winter, 20, lang)},
-        ]
-        jsonld = make_jsonld(winter, 20, 'Best winter destinations 2026', lang)
-        related = make_related(lang, 'best-destinations-winter-weather-2026.html')
-        fr_file = 'classement-destinations-meteo-hiver-2026.html'
-        en_file = 'best-destinations-winter-weather-2026.html'
-        canonical = f'https://bestdateweather.com/en/{en_file}'
-        footer = footer_ranking_html('en', [
-            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': '../es/mejores-destinos-invierno-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
-        ])
-        meth = load_locale('en')['classements']['methodology']
-        outfile = ROOT / 'en' / en_file
-    elif lang == 'es':
-        title = 'Mejores destinos invierno 2026 — sol y calor garantizados'
-        desc = f'Top {n_dests} destinos para el invierno 2026. Ranking basado en 10 años de datos dic–feb.'
-        h1 = 'Mejores destinos<br/><em>invierno 2026</em>'
-        hero_sub = f'{top1["dest"].get("nom_es", top1["dest"]["nom_en"])} lidera con {top1["avg"]:.1f}/10 en diciembre–febrero.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinos</span></div><div class="hstat"><span class="hstat-val">Dic–Feb</span><span class="hstat-lbl">Temporada</span></div><div class="hstat"><span class="hstat-val">10 años</span><span class="hstat-lbl">Datos</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Puntos clave</div><div class="insights-grid"><div class="insight-item"><strong>N°1 invierno</strong>{top1["dest"].get("nom_es", top1["dest"]["nom_en"])} — {top1["avg"]:.1f}/10.</div><div class="insight-item"><strong>N°2</strong>{winter[1]["dest"].get("nom_es", winter[1]["dest"]["nom_en"])} — {winter[1]["avg"]:.1f}/10.</div><div class="insight-item"><strong>N°3</strong>{winter[2]["dest"].get("nom_es", winter[2]["dest"]["nom_en"])} — {winter[2]["avg"]:.1f}/10.</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Ranking invierno', 'h2':'❄️ Top 20 invierno — Puntuación climática dic–feb', 'intro':f'Puntuación media de diciembre, enero y febrero (0–10). {n_dests} destinos analizados.', 'table': make_table_seasonal(winter, 20, lang)},
-        ]
-        jsonld = make_jsonld(winter, 20, 'Mejores destinos invierno 2026', lang)
-        related = make_related(lang, 'mejores-destinos-invierno-2026.html')
-        fr_file = 'classement-destinations-meteo-hiver-2026.html'
-        en_file = 'best-destinations-winter-weather-2026.html'
-        canonical = 'https://bestdateweather.com/es/mejores-destinos-invierno-2026.html'
-        footer = footer_ranking_html('es', [
-            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
-        ])
-        meth = load_locale('es')['classements']['methodology']
-        outfile = ROOT / 'es' / 'mejores-destinos-invierno-2026.html'
-
-    page = make_page(
-        title=title, description=desc, h1=h1, hero_sub=hero_sub,
-        stats_html=stats, insights_html=insights, sections=sections,
-        jsonld_str=jsonld, related_html=related, meth_html=meth,
-        footer_html=footer, lang=lang, canonical=canonical,
-        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
-        hreflang_en=f'https://bestdateweather.com/en/{en_file}',
-        hreflang_es='https://bestdateweather.com/es/mejores-destinos-invierno-2026.html'
+    pc  = load_locale(lang)['classement_pages']['hiver']
+    ctx = dict(
+        n=n_dests,
+        top1=_dest_name(top1['dest'], lang),     top1_avg=f'{top1["avg"]:.1f}',
+        top2=_dest_name(winter[1]['dest'], lang), top2_avg=f'{winter[1]["avg"]:.1f}',
+        top3=_dest_name(winter[2]['dest'], lang), top3_avg=f'{winter[2]["avg"]:.1f}',
     )
-    outfile.write_text(page, encoding='utf-8')
-    print(f'  ✓ {outfile.name} (hiver, top={top1["dest"]["nom_bare"]})')
-
+    _cl_render(pc, lang, ctx,
+               tables=[make_table_seasonal(winter, 20, lang)],
+               jsonld_data=winter, jsonld_n=20,
+               print_suffix=f' (hiver, top={top1["dest"]["nom_bare"]})')
 
 def gen_nomades(dests, climate, lang):
-    nomad = dedup_country(compute_nomad(climate, dests), dests)
-    top1 = nomad[0]
+    nomad   = dedup_country(compute_nomad(climate, dests), dests)
+    top1    = nomad[0]
     n_dests = len(nomad)
-
-    if lang == 'fr':
-        title = 'Meilleures destinations digital nomads 2026 — Météo et régularité climatique'
-        desc = f'{n_dests} destinations classées par constance météo. Idéal pour les nomades digitaux.'
-        h1 = 'Meilleures destinations<br/><em>nomades digitaux 2026</em>'
-        hero_sub = f'{top1["dest"]["nom_bare"]} en tête : {top1["avg"]:.1f}/10 moyen, écart-type {top1["stdev"]:.2f}.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinations</span></div><div class="hstat"><span class="hstat-val">12 mois</span><span class="hstat-lbl">Constance</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Points clés</div><div class="insights-grid"><div class="insight-item"><strong>N°1 nomade</strong>{top1["dest"]["nom_bare"]} — régularité maximale.</div><div class="insight-item"><strong>N°2</strong>{nomad[1]["dest"]["nom_bare"]} — {nomad[1]["avg"]:.1f}/10.</div><div class="insight-item"><strong>Critère</strong>Score moyen pondéré par la variance.</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Nomades digitaux', 'h2':'💻 Top 20 — Constance météo toute l\'année', 'intro':f'Score = moyenne annuelle − pénalité variance. Plus le score est haut, plus la météo est régulière et agréable.', 'table': make_table_nomad(nomad, 20, lang)},
-        ]
-        jsonld = make_jsonld(nomad, 20, 'Meilleures destinations nomades digitaux 2026', lang)
-        related = make_related(lang, 'classement-destinations-meteo-nomades-2026.html')
-        fr_file = 'classement-destinations-meteo-nomades-2026.html'
-        en_file = 'best-destinations-digital-nomads-weather-2026.html'
-        canonical = f'https://bestdateweather.com/{fr_file}'
-        footer = footer_ranking_html('fr', [
-            {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
-            {'url': 'es/mejores-destinos-nomadas-digitales-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
-        ])
-        meth = load_locale('fr')['classements']['methodology']
-        outfile = ROOT / fr_file
-    elif lang == 'en':
-        title = 'Best digital nomad destinations 2026 — Weather consistency ranking'
-        desc = f'{n_dests} destinations ranked by weather consistency. Ideal for digital nomads.'
-        h1 = 'Best digital nomad<br/><em>destinations 2026</em>'
-        hero_sub = f'{top1["dest"]["nom_en"]} leads: {top1["avg"]:.1f}/10 average, std dev {top1["stdev"]:.2f}.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinations</span></div><div class="hstat"><span class="hstat-val">12 months</span><span class="hstat-lbl">Consistency</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Key insights</div><div class="insights-grid"><div class="insight-item"><strong>#1 nomad</strong>{top1["dest"]["nom_en"]} — maximum consistency.</div><div class="insight-item"><strong>#2</strong>{nomad[1]["dest"]["nom_en"]} — {nomad[1]["avg"]:.1f}/10.</div><div class="insight-item"><strong>Criteria</strong>Average score weighted by variance.</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Digital nomads', 'h2':'💻 Top 20 — Year-round weather consistency', 'intro':'Score = annual average − variance penalty. Higher = more consistent and pleasant weather.', 'table': make_table_nomad(nomad, 20, lang)},
-        ]
-        jsonld = make_jsonld(nomad, 20, 'Best digital nomad destinations 2026', lang)
-        related = make_related(lang, 'best-destinations-digital-nomads-weather-2026.html')
-        fr_file = 'classement-destinations-meteo-nomades-2026.html'
-        en_file = 'best-destinations-digital-nomads-weather-2026.html'
-        canonical = f'https://bestdateweather.com/en/{en_file}'
-        footer = footer_ranking_html('en', [
-            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': '../es/mejores-destinos-nomadas-digitales-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
-        ])
-        meth = load_locale('en')['classements']['methodology']
-        outfile = ROOT / 'en' / en_file
-    elif lang == 'es':
-        title = 'Mejores destinos nómadas digitales 2026 — clima constante todo el año'
-        desc = f'{n_dests} destinos clasificados por regularidad climática. Ideal para trabajadores remotos y nómadas.'
-        h1 = 'Mejores destinos<br/><em>nómadas digitales 2026</em>'
-        hero_sub = f'{top1["dest"].get("nom_es", top1["dest"]["nom_en"])} lidera: {top1["avg"]:.1f}/10 de media, desviación {top1["stdev"]:.2f}.'
-        stats = f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span><span class="hstat-lbl">Destinos</span></div><div class="hstat"><span class="hstat-val">12 meses</span><span class="hstat-lbl">Cobertura</span></div><div class="hstat"><span class="hstat-val">10 años</span><span class="hstat-lbl">Datos</span></div></div>'
-        insights = f'<div class="insights-bar"><div class="insights-inner"><div class="insights-label">Puntos clave</div><div class="insights-grid"><div class="insight-item"><strong>N°1 nómada</strong>{top1["dest"].get("nom_es", top1["dest"]["nom_en"])} — máxima constancia.</div><div class="insight-item"><strong>N°2</strong>{nomad[1]["dest"].get("nom_es", nomad[1]["dest"]["nom_en"])} — {nomad[1]["avg"]:.1f}/10.</div><div class="insight-item"><strong>Criterio</strong>Puntuación media ponderada por varianza.</div></div></div></div>'
-        sections = [
-            {'eyebrow':'Ranking nómadas', 'h2':'💻 Top 20 nómadas digitales — Constancia climática anual', 'intro':f'Puntuación nomad = media anual penalizada por la varianza mensual. {n_dests} destinos analizados.', 'table': make_table_nomad(nomad, 20, lang)},
-        ]
-        jsonld = make_jsonld(nomad, 20, 'Mejores destinos nómadas digitales 2026', lang)
-        related = make_related(lang, 'mejores-destinos-nomadas-digitales-2026.html')
-        fr_file = 'classement-destinations-meteo-nomades-2026.html'
-        en_file = 'best-destinations-digital-nomads-weather-2026.html'
-        canonical = 'https://bestdateweather.com/es/mejores-destinos-nomadas-digitales-2026.html'
-        footer = footer_ranking_html('es', [
-            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
-        ])
-        meth = load_locale('es')['classements']['methodology']
-        outfile = ROOT / 'es' / 'mejores-destinos-nomadas-digitales-2026.html'
-
-    page = make_page(
-        title=title, description=desc, h1=h1, hero_sub=hero_sub,
-        stats_html=stats, insights_html=insights, sections=sections,
-        jsonld_str=jsonld, related_html=related, meth_html=meth,
-        footer_html=footer, lang=lang, canonical=canonical,
-        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
-        hreflang_en=f'https://bestdateweather.com/en/{en_file}',
-        hreflang_es='https://bestdateweather.com/es/mejores-destinos-nomadas-digitales-2026.html'
+    pc  = load_locale(lang)['classement_pages']['nomades']
+    ctx = dict(
+        n=n_dests,
+        top1=_dest_name(top1['dest'], lang),    top1_avg=f'{top1["avg"]:.1f}',
+        top2=_dest_name(nomad[1]['dest'], lang), top2_avg=f'{nomad[1]["avg"]:.1f}',
+        top1_stdev=f'{top1["stdev"]:.2f}',
     )
-    outfile.write_text(page, encoding='utf-8')
-    print(f'  ✓ {outfile.name} (nomades, top={top1["dest"]["nom_bare"]})')
-
+    _cl_render(pc, lang, ctx,
+               tables=[make_table_nomad(nomad, 20, lang)],
+               jsonld_data=nomad, jsonld_n=20,
+               print_suffix=f' (nomades, top={top1["dest"]["nom_bare"]})')
 
 def gen_beach(dests, climate, lang):
-    annual = dedup_country(compute_beach(climate, dests), dests)
-    summer = dedup_country(compute_beach_seasonal(climate, dests, [6,7,8]), dests)
-    winter = dedup_country(compute_beach_seasonal(climate, dests, [12,1,2]), dests)
-    top1 = annual[0]
+    annual  = dedup_country(compute_beach(climate, dests), dests)
+    summer  = dedup_country(compute_beach_seasonal(climate, dests, [6,7,8]), dests)
+    winter  = dedup_country(compute_beach_seasonal(climate, dests, [12,1,2]), dests)
+    top1    = annual[0]
     n_dests = len(annual)
-
-    if lang == 'fr':
-        nom1 = top1['dest']['nom_bare']
-        title = f'Meilleures destinations plage 2026 — Classement météo & mer'
-        desc = (f'Top {n_dests} destinations plage 2026. Classement basé sur température air + mer, '
-                f'ensoleillement et pluie. N°1 : {nom1} ({top1["avg"]:.1f}/10).')
-        h1 = 'Meilleures<br/><em>destinations plage 2026</em>'
-        hero_sub = f'{nom1} en tête avec {top1["avg"]:.1f}/10 · {top1["good_months"]} mois de plage.'
-        stats = (f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span>'
-                 f'<span class="hstat-lbl">Destinations côtières</span></div>'
-                 f'<div class="hstat"><span class="hstat-val">🏖️</span>'
-                 f'<span class="hstat-lbl">Score plage dédié</span></div></div>')
-        insights = (f'<div class="insights-bar"><div class="insights-inner">'
-                    f'<div class="insights-label">Points clés</div>'
-                    f'<div class="insights-grid">'
-                    f'<div class="insight-item"><strong>N°1 annuel</strong>{nom1} — {top1["avg"]:.1f}/10, mer {top1["avg_sea"]:.0f}°C.</div>'
-                    f'<div class="insight-item"><strong>N°1 été</strong>{summer[0]["dest"]["nom_bare"]} — {summer[0]["avg"]:.1f}/10.</div>'
-                    f'<div class="insight-item"><strong>N°1 hiver</strong>{winter[0]["dest"]["nom_bare"]} — {winter[0]["avg"]:.1f}/10.</div>'
-                    f'</div></div></div>')
-        sections = [
-            {'eyebrow':'Annuel', 'h2':'🏖️ Top 25 plages — Classement annuel',
-             'intro':f'Score plage moyen sur 12 mois. Intègre température air + mer, pluie et soleil. {n_dests} destinations côtières.',
-             'table': make_table_beach_annual(annual, 25, lang)},
-            {'eyebrow':'Été 2026', 'h2':'☀️ Top 20 plages — Été (juin–août)',
-             'intro':'Meilleures plages pour l\'été. Score plage moyen juin–août.',
-             'table': make_table_beach(summer, 20, lang)},
-            {'eyebrow':'Hiver 2026', 'h2':'❄️ Top 20 plages — Hiver (déc–fév)',
-             'intro':'Où se baigner en hiver ? Score plage moyen décembre–février.',
-             'table': make_table_beach(winter, 20, lang)},
-        ]
-        jsonld = make_jsonld(annual, 25, 'Meilleures destinations plage 2026', lang)
-        related = make_related(lang, 'classement-destinations-plage-2026.html')
-        fr_file = 'classement-destinations-plage-2026.html'
-        en_file = 'best-beach-destinations-weather-2026.html'
-        canonical = f'https://bestdateweather.com/{fr_file}'
-        footer = footer_ranking_html('fr', [
-            {'url': f'en/{en_file}', 'flag': 'flags/gb.png', 'label': 'English'},
-            {'url': 'es/mejores-destinos-playa-2026.html', 'flag': 'flags/es.png', 'label': 'Español'},
-        ])
-        meth = ('<div class="meth"><strong>Méthodologie score plage</strong>'
-                '<p>Le score plage combine température air (25%), température de la mer (25%), '
-                'précipitations (30%) et ensoleillement (20%). '
-                'Température mer issue de l\'API Marine Open-Meteo (données 2024). '
-                'Seules les destinations côtières avec données marines sont incluses.</p></div>')
-        outfile = ROOT / fr_file
-    elif lang == 'en':
-        nom1 = top1['dest']['nom_en']
-        title = f'Best beach destinations 2026 — Weather & sea ranking'
-        desc = (f'Top {n_dests} beach destinations 2026. Ranked by air + sea temperature, '
-                f'sunshine and rainfall. #1: {nom1} ({top1["avg"]:.1f}/10).')
-        h1 = 'Best beach<br/><em>destinations 2026</em>'
-        hero_sub = f'{nom1} leads with {top1["avg"]:.1f}/10 · {top1["good_months"]} beach months.'
-        stats = (f'<div class="hero-stats"><div class="hstat"><span class="hstat-val">{n_dests}</span>'
-                 f'<span class="hstat-lbl">Coastal destinations</span></div>'
-                 f'<div class="hstat"><span class="hstat-val">🏖️</span>'
-                 f'<span class="hstat-lbl">Dedicated beach score</span></div></div>')
-        insights = (f'<div class="insights-bar"><div class="insights-inner">'
-                    f'<div class="insights-label">Key insights</div>'
-                    f'<div class="insights-grid">'
-                    f'<div class="insight-item"><strong>#1 annual</strong>{nom1} — {top1["avg"]:.1f}/10, sea {top1["avg_sea"]:.0f}°C.</div>'
-                    f'<div class="insight-item"><strong>#1 summer</strong>{summer[0]["dest"]["nom_en"]} — {summer[0]["avg"]:.1f}/10.</div>'
-                    f'<div class="insight-item"><strong>#1 winter</strong>{winter[0]["dest"]["nom_en"]} — {winter[0]["avg"]:.1f}/10.</div>'
-                    f'</div></div></div>')
-        sections = [
-            {'eyebrow':'Annual', 'h2':'🏖️ Top 25 beaches — Annual ranking',
-             'intro':f'Average beach score over 12 months. Combines air + sea temperature, rainfall and sunshine. {n_dests} coastal destinations.',
-             'table': make_table_beach_annual(annual, 25, lang)},
-            {'eyebrow':'Summer 2026', 'h2':'☀️ Top 20 beaches — Summer (June–Aug)',
-             'intro':'Best beaches for summer. Average beach score June–August.',
-             'table': make_table_beach(summer, 20, lang)},
-            {'eyebrow':'Winter 2026', 'h2':'❄️ Top 20 beaches — Winter (Dec–Feb)',
-             'intro':'Where to swim in winter? Average beach score December–February.',
-             'table': make_table_beach(winter, 20, lang)},
-        ]
-        jsonld = make_jsonld(annual, 25, 'Best beach destinations 2026', lang)
-        related = make_related(lang, 'best-beach-destinations-weather-2026.html')
-        fr_file = 'classement-destinations-plage-2026.html'
-        en_file = 'best-beach-destinations-weather-2026.html'
-        canonical = f'https://bestdateweather.com/en/{en_file}'
-        footer = footer_ranking_html('en', [
-            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': '../es/mejores-destinos-playa-2026.html', 'flag': '../flags/es.png', 'label': 'Español'},
-        ])
-        meth = ('<div class="meth"><strong>Beach score methodology</strong>'
-                '<p>Beach score combines air temperature (25%), sea temperature (25%), '
-                'precipitation (30%) and sunshine (20%). '
-                'Sea temperature from Open-Meteo Marine API (2024 data). '
-                'Only coastal destinations with marine data are included.</p></div>')
-        outfile = ROOT / 'en' / en_file
-    elif lang == 'es':
-        nom1 = top1['dest'].get('nom_es', top1['dest']['nom_en'])
-        title = f'Mejores destinos playa 2026 — ranking clima y temperatura del mar'
-        desc = (f'Top {n_dests} destinos de playa 2026. Ranking basado en temperatura aire + mar, '
-                f'insolación y lluvia. N°1: {nom1} ({top1["avg"]:.1f}/10).')
-        h1 = 'Mejores<br/><em>destinos playa 2026</em>'
-        hero_sub = f'{nom1}: {top1["avg"]:.1f}/10 anual, mar a {top1["avg_sea"]:.0f}°C de media.'
-        stats = (f'<div class="hero-stats">'
-                 f'<div class="hstat"><span class="hstat-val">{n_dests}</span>'
-                 f'<span class="hstat-lbl">Destinos costeros</span></div>'
-                 f'<div class="hstat"><span class="hstat-val">4 factores</span>'
-                 f'<span class="hstat-lbl">Puntuación playa</span></div>'
-                 f'<div class="hstat"><span class="hstat-val">🏖️</span>'
-                 f'<span class="hstat-lbl">Score playa dedicado</span></div></div>')
-        insights = (f'<div class="insights-bar"><div class="insights-inner">'
-                    f'<div class="insights-label">Puntos clave</div>'
-                    f'<div class="insights-grid">'
-                    f'<div class="insight-item"><strong>N°1 anual</strong>{nom1} — {top1["avg"]:.1f}/10, mar {top1["avg_sea"]:.0f}°C.</div>'
-                    f'<div class="insight-item"><strong>N°1 verano</strong>{summer[0]["dest"].get("nom_es", summer[0]["dest"]["nom_en"])} — {summer[0]["avg"]:.1f}/10.</div>'
-                    f'<div class="insight-item"><strong>N°1 invierno</strong>{winter[0]["dest"].get("nom_es", winter[0]["dest"]["nom_en"])} — {winter[0]["avg"]:.1f}/10.</div>'
-                    f'</div></div></div>')
-        sections = [
-            {'eyebrow':'Anual', 'h2':'🏖️ Top 25 playas — Ranking anual',
-             'intro':f'Puntuación playa media sobre 12 meses. Combina temperatura aire + mar, lluvia y sol. {n_dests} destinos costeros.',
-             'table': make_table_beach_annual(annual, 25, lang)},
-            {'eyebrow':'Verano 2026', 'h2':'☀️ Top 20 playas — Verano (jun–ago)',
-             'intro':'Las mejores playas para el verano. Puntuación playa media junio–agosto.',
-             'table': make_table_beach(summer, 20, lang)},
-            {'eyebrow':'Invierno 2026', 'h2':'❄️ Top 20 playas — Invierno (dic–feb)',
-             'intro':'¿Dónde bañarse en invierno? Puntuación playa media diciembre–febrero.',
-             'table': make_table_beach(winter, 20, lang)},
-        ]
-        jsonld = make_jsonld(annual, 25, 'Mejores destinos playa 2026', lang)
-        related = make_related(lang, 'mejores-destinos-playa-2026.html')
-        fr_file = 'classement-destinations-plage-2026.html'
-        en_file = 'best-beach-destinations-weather-2026.html'
-        canonical = 'https://bestdateweather.com/es/mejores-destinos-playa-2026.html'
-        footer = footer_ranking_html('es', [
-            {'url': f'../{fr_file}', 'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
-        ])
-        meth = ('<div class="meth"><strong>Metodología puntuación playa</strong>'
-                '<p>La puntuación playa combina temperatura del aire (25%), temperatura del mar (25%), '
-                'precipitaciones (30%) y sol (20%). '
-                'Temperatura del mar de la API Marina de Open-Meteo (datos 2024). '
-                'Solo se incluyen destinos costeros con datos marinos disponibles.</p></div>')
-        outfile = ROOT / 'es' / 'mejores-destinos-playa-2026.html'
-
-    page = make_page(
-        title=title, description=desc, h1=h1, hero_sub=hero_sub,
-        stats_html=stats, insights_html=insights, sections=sections,
-        jsonld_str=jsonld, related_html=related, meth_html=meth,
-        footer_html=footer, lang=lang, canonical=canonical,
-        hreflang_fr=f'https://bestdateweather.com/{fr_file}',
-        hreflang_en=f'https://bestdateweather.com/en/{en_file}',
-        hreflang_es='https://bestdateweather.com/es/mejores-destinos-playa-2026.html'
+    pc  = load_locale(lang)['classement_pages']['beach']
+    ctx = dict(
+        n=n_dests,
+        top1=_dest_name(top1['dest'], lang),          top1_avg=f'{top1["avg"]:.1f}',
+        top1_sea=f'{top1["avg_sea"]:.0f}',            top1_months=top1['good_months'],
+        summer1=_dest_name(summer[0]['dest'], lang),   summer1_avg=f'{summer[0]["avg"]:.1f}',
+        winter1=_dest_name(winter[0]['dest'], lang),   winter1_avg=f'{winter[0]["avg"]:.1f}',
     )
-    outfile.write_text(page, encoding='utf-8')
-    print(f'  ✓ {outfile.name} (plage, {n_dests} coastal, top={top1["dest"]["nom_bare"]})')
-
+    _cl_render(pc, lang, ctx,
+               tables=[make_table_beach_annual(annual, 25, lang),
+                       make_table_beach(summer, 20, lang),
+                       make_table_beach(winter, 20, lang)],
+               jsonld_data=annual, jsonld_n=25,
+               print_suffix=f' (plage, {n_dests} coastal, top={top1["dest"]["nom_bare"]})')
 
 # ══════════════════════════════════════════════════════════════════════════════
 # MAIN
