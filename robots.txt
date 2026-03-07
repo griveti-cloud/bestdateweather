@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /en/app.html?
+Disallow: /es/app.html?
 Disallow: /app.html?
 Disallow: /data/
 
