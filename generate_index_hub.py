@@ -533,6 +533,8 @@ def build_hub(destinations, loc):
     name_key = 'nom_fr' if is_fr else ('nom_es' if lang == 'es' else 'nom_en')
 
     # Group: mega → sub → [dests]
+    # Build pays→flag mapping from destinations
+    pays_flag = {d['pays']: d.get('flag', '') for d in destinations}
     megas = {}
     for d in destinations:
         slug = d['slug_fr']
@@ -591,10 +593,13 @@ def build_hub(destinations, loc):
                 L.append(f'<button class="dh-sub-head">')
                 if sub_name == '__others__':
                     sub_label = OTHERS_LABEL.get(lang, 'Other countries')
+                    flag_img = ''
                 else:
                     trans = COUNTRY_NAMES_TRANS.get(sub_name, {})
                     sub_label = trans.get(lang, sub_name)
-                L.append(f'<span class="dh-sub-label">{html_mod.escape(sub_label)}</span>')
+                    flag_code = pays_flag.get(sub_name, '')
+                    flag_img = f'<img src="{asset_prefix}flags/{flag_code}.png" width="20" height="15" alt="{flag_code}" class="flag-icon" style="margin-right:6px;vertical-align:middle;border-radius:2px"> ' if flag_code else ''
+                L.append(f'<span class="dh-sub-label">{flag_img}{html_mod.escape(sub_label)}</span>')
                 L.append(f'<span class="dh-acc-meta"><span class="dh-sub-count">{sub_cnt}</span>')
                 L.append(f'<span class="dh-sub-chev">▾</span></span></button>')
                 L.append(f'<div class="dh-sub-body"><div class="dh-grid">')
