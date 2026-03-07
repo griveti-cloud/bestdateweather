@@ -301,6 +301,30 @@ def footer_html(cfg, dest):
 <script src="{cfg['asset_prefix']}js/share.js" defer></script>'''
 
 
+def _resolve_prep_and_bare(cfg, dest):
+    """Return (prep, nom_bare) for the current language.
+
+    Centralise la logique pour gen_annual et gen_monthly.
+    Pour ajouter une langue : ajouter un elif avec les colonnes CSV correspondantes.
+    """
+    lang    = cfg['lang']
+    slug_fr = dest['slug_fr']
+    lang_key = cfg['dest_fields'].get('prep_key')   # colonne prep dans le CSV
+    bare_key = cfg['dest_fields'].get('bare_key')    # colonne nom_bare/nom_xx
+
+    if lang == 'fr':
+        prep     = dest.get('prep_fr', 'à')
+        nom_bare = dest.get('nom_bare', slug_fr)
+    elif lang == 'es':
+        prep     = dest.get('prep_es', 'en')
+        nom_bare = dest.get('nom_es', dest.get('nom_bare', slug_fr))
+    else:
+        # EN (et futures langues sans préposition grammaticale)
+        prep     = dest.get(f'prep_{lang}', '')
+        nom_bare = dest.get(f'nom_{lang}', dest.get('nom_bare', slug_fr))
+    return prep, nom_bare
+
+
 def _resolve_dest_name(cfg, slug, all_dests):
     """Resolve a destination name from its slug (FR or EN) using dest_fields."""
     name_key = cfg['dest_fields']['name_key']
@@ -354,15 +378,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     _best_season_name = max(seas, key=lambda s: seas[s]['score'])
     best_sun = best_m['sun_h']
 
-    if C['lang'] == 'fr':
-        prep = dest.get('prep_fr', 'à')
-        nom_bare = dest.get('nom_bare', slug_fr)
-    elif C['lang'] == 'es':
-        prep = dest.get('prep_es', 'en')
-        nom_bare = dest.get('nom_es', dest.get('nom_bare', slug_fr))
-    else:
-        prep = ''
-        nom_bare = nom
+    prep, nom_bare = _resolve_prep_and_bare(C, dest)
 
     tpl_vars = dict(prep=prep, nom_bare=nom_bare, nom=nom, year=YEAR,
                     best_month=MONTHS[best_idx], best_month_lc=month_lc(C, MONTHS[best_idx]),
@@ -919,8 +935,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     is_shoulder = mi in (3, 4, 8, 9)
     hash_var    = (hash(slug_fr + str(mi)) % 3)
 
-    prep = dest.get('prep_fr', 'à')
-    nom_bare = dest.get('nom_bare', slug_fr)
+    prep, nom_bare = _resolve_prep_and_bare(C, dest)
     mlc = month_lc(C, month)
 
     # Template vars for locale lookups
