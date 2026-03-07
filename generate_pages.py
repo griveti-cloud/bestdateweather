@@ -632,7 +632,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     else:
         hreflang_en = _hreflangs.get('en', hreflang_fr)
     slug_es = dest.get('slug_es', dest.get('slug_en', slug_fr))
-    hreflang_es = f"https://www.bestdateweather.com/es/mejor-epoca-{slug_es}.html"
+    hreflang_es = f"https://bestdateweather.com/es/mejor-epoca-{slug_es}.html"
 
     headline = C['lbl_headline_tpl'].format(prep=prep, nom_bare=nom_bare, nom=nom)
 
@@ -1098,7 +1098,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     _slug_es_m = dest.get('slug_es', dest.get('slug_en', slug))
     _mes_es = ['enero','febrero','marzo','abril','mayo','junio',
                'julio','agosto','septiembre','octubre','noviembre','diciembre'][mi]
-    hreflang_es = f"https://www.bestdateweather.com/es/{_slug_es_m}-clima-{_mes_es}.html"
+    hreflang_es = f"https://bestdateweather.com/es/{_slug_es_m}-clima-{_mes_es}.html"
     article_headline = C['monthly_article_headline_tpl'].format(**tpl)
     article_desc = C['monthly_article_desc_tpl'].format(**tpl)
 
