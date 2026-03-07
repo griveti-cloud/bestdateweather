@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-NTCJTDPSJL");</script>
+<title>Cómo funciona BestDateWeather — Metodología</title>
+<meta name="description" content="¿Cómo anticipa BestDateWeather el tiempo hasta 12 meses? Descubre nuestra metodología: fuentes de datos, modelo de puntuación, horizontes temporales y limitaciones."/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://bestdateweather.com/es/metodologia.html"/>
+<link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/metodologia.html"/>
+<link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/methodology.html"/>
+<link rel="alternate" hreflang="fr" href="https://bestdateweather.com/methodologie.html"/>
+<link rel="icon" type="image/x-icon" href="../favicon.ico"/>
+<meta name="theme-color" content="#1a1f2e"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --cream:#faf8f3;--cream2:#f2ede2;--navy:#1a1f2e;--navy2:#252d42;
+ --gold:#e8940a;--gold2:#f5b020;--gold-light:#fef3d0;
+ --slate:#4a5568;--slate2:#718096;--slate3:#a0aec0;
+ --green:#1a7a4a;--green-bg:#e8f8f0;
+ --blue:#1a5f9a;--blue-bg:#e8f2fc;
+ --r:18px;--r-sm:12px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);line-height:1.7;-webkit-font-smoothing:antialiased}
+.page{max-width:800px;margin:0 auto;padding:40px 20px 80px}
+.back{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--gold);text-decoration:none;margin-bottom:32px;padding:8px 14px;background:white;border-radius:10px;box-shadow:0 2px 8px rgba(26,31,46,.07)}
+.back:hover{background:var(--gold-light)}
+.back svg{width:14px;height:14px}
+.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:24px;padding:40px 36px;color:white;margin-bottom:40px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;background:radial-gradient(circle,rgba(232,148,10,.25),transparent 70%);pointer-events:none}
+.hero-tag{display:inline-block;background:rgba(232,148,10,.2);border:1px solid rgba(232,148,10,.4);color:var(--gold2);font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:16px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,34px);font-weight:900;line-height:1.2;margin-bottom:12px}
+.hero p{font-size:15px;opacity:.75;max-width:560px;line-height:1.7}
+.toc{background:white;border-radius:var(--r);padding:24px 28px;margin-bottom:36px;box-shadow:0 2px 12px rgba(26,31,46,.06);border-left:4px solid var(--gold)}
+.toc-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--slate2);margin-bottom:14px}
+.toc ol{padding-left:18px}
+.toc li{margin:6px 0}
+.toc a{font-size:14px;font-weight:500;color:var(--navy);text-decoration:none;transition:color .15s}
+.toc a:hover{color:var(--gold)}
+.section{margin-bottom:48px}
+.section-num{display:inline-block;background:var(--gold);color:white;font-size:11px;font-weight:800;letter-spacing:.5px;padding:3px 10px;border-radius:20px;margin-bottom:12px}
+h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:16px;line-height:1.3}
+h3{font-size:14px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin:24px 0 10px}
+p{font-size:15px;color:#4a5568;margin:10px 0;line-height:1.8}
+ul,ol{margin:10px 0 10px 20px}
+li{font-size:15px;color:#4a5568;line-height:1.8;margin:4px 0}
+strong{color:var(--navy);font-weight:700}
+.card{background:white;border-radius:var(--r);padding:24px 28px;box-shadow:0 2px 12px rgba(26,31,46,.06);margin:20px 0}
+.card-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:20px 0}
+@media(max-width:600px){.card-grid{grid-template-columns:1fr}}
+.card-mini{background:white;border-radius:var(--r-sm);padding:18px 20px;box-shadow:0 2px 8px rgba(26,31,46,.06);border-top:3px solid var(--gold)}
+.card-mini .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--slate2);margin-bottom:6px}
+.card-mini .val{font-size:22px;font-weight:800;color:var(--navy);line-height:1.2}
+.card-mini .sub{font-size:12px;color:var(--slate2);margin-top:4px}
+.horizon-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
+.horizon-row{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start;background:white;border-radius:var(--r-sm);padding:16px 20px;box-shadow:0 2px 8px rgba(26,31,46,.06)}
+.horizon-badge{display:inline-block;font-size:11px;font-weight:700;padding:4px 10px;border-radius:10px;text-align:center}
+.badge-real{background:var(--green-bg);color:var(--green)}
+.badge-hybrid{background:var(--blue-bg);color:var(--blue)}
+.badge-profile{background:#eef3f8;color:#5a7a9a}
+.horizon-title{font-weight:700;font-size:14px;color:var(--navy);margin-bottom:4px}
+.horizon-desc{font-size:13px;color:#5a6478;line-height:1.6}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(26,31,46,.06)}
+thead tr{background:var(--navy);color:white}
+thead th{padding:11px 14px;text-align:left;font-weight:700;font-size:12px}
+tbody tr:nth-child(odd){background:white}
+tbody tr:nth-child(even){background:var(--cream)}
+tbody td{padding:10px 14px;color:#4a5568;border-bottom:1px solid var(--cream2)}
+tbody td:first-child{font-weight:600;color:var(--navy)}
+.callout{display:flex;gap:0;border-radius:12px;overflow:hidden;margin:20px 0;box-shadow:0 2px 8px rgba(26,31,46,.06)}
+.callout-ico{display:flex;align-items:center;justify-content:center;padding:0 16px;min-width:50px;font-size:18px}
+.callout-body{padding:14px 18px;font-size:14px;line-height:1.7;font-weight:500}
+.callout.gold .callout-ico{background:var(--gold);color:white}
+.callout.gold .callout-body{background:var(--gold-light);color:var(--navy)}
+.callout.green .callout-ico{background:var(--green);color:white}
+.callout.green .callout-body{background:var(--green-bg);color:#1a3a2a}
+.callout.warn .callout-ico{background:#dc2626;color:white}
+.callout.warn .callout-body{background:#fef2f2;color:#7f1d1d}
+.callout.blue .callout-ico{background:var(--blue);color:white}
+.callout.blue .callout-body{background:var(--blue-bg);color:#0f2a4a}
+.source-list{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+.source-chip{background:white;border:1.5px solid var(--cream2);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:8px}
+.source-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
+footer{text-align:center;padding:32px 0 0;border-top:1px solid var(--cream2);margin-top:48px}
+footer p{font-size:12px;color:var(--slate2)}
+footer a{color:var(--gold);text-decoration:none;font-weight:600}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+ {
+  "@type": "Question",
+  "name": "¿Cómo calcula BestDateWeather sus estimaciones meteorológicas?",
+  "acceptedAnswer": {
+   "@type": "Answer",
+   "text": "BestDateWeather combina tres fuentes según el horizonte temporal: datos en tiempo real de Open-Meteo para los próximos 7 días, climatología histórica de 10 años corregida por el modelo estacional ECMWF hasta 7 meses, y perfiles climáticos históricos puros más allá."
+  }
+ },
+ {
+  "@type": "Question",
+  "name": "¿Qué fiabilidad tienen las estimaciones varios meses por adelantado?",
+  "acceptedAnswer": {
+   "@type": "Answer",
+   "text": "Más allá de 7 días, BestDateWeather no produce previsiones meteorológicas en el sentido tradicional. Calcula tendencias probabilísticas basadas en 10 años de datos históricos, ajustadas por anomalías estacionales del ECMWF. Cuanto más lejana es la fecha, más estadística y menos predictiva resulta la estimación."
+  }
+ },
+ {
+  "@type": "Question",
+  "name": "¿Cómo se calcula la puntuación meteorológica?",
+  "acceptedAnswer": {
+   "@type": "Answer",
+   "text": "La puntuación sobre 10 pondera cuatro criterios según la actividad: precipitaciones (25–45%), temperatura (15–30%), viento (10–25%) y sol (10–40%). Cada criterio se normaliza entre 0 y 100 antes de la ponderación."
+  }
+ }
+ ]
+}
+</script>
+<meta property="og:image" content="https://bestdateweather.com/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://bestdateweather.com/og-image.png"/>
+</head>
+<body>
+<div class="page">
+
+ <a href="app.html" class="back">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+ BestDateWeather
+ </a>
+
+ <header class="hero">
+ <div class="hero-tag">Transparencia y método</div>
+ <h1>¿Cómo anticipamos el tiempo hasta 12 meses?</h1>
+ <p>Fuentes de datos, modelo de puntuación, horizontes temporales — todo lo que necesitas para interpretar nuestros resultados con el nivel de confianza adecuado.</p>
+ </header>
+
+ <nav class="toc" aria-label="Contenidos">
+ <div class="toc-title">Contenidos</div>
+ <ol>
+  <li><a href="#principio">El principio en una frase</a></li>
+  <li><a href="#fuentes">Nuestras fuentes de datos</a></li>
+  <li><a href="#horizontes">Tres niveles según el horizonte temporal</a></li>
+  <li><a href="#puntuacion">¿Cómo funciona la puntuación?</a></li>
+  <li><a href="#puntuacion-anual">Puntuación de referencia anual por destino</a></li>
+  <li><a href="#correccion-ecmwf">Corrección estacional ECMWF</a></li>
+  <li><a href="#limitaciones">Lo que nuestra herramienta no hace</a></li>
+  <li><a href="#faq">Preguntas frecuentes</a></li>
+ </ol>
+ </nav>
+
+ <main>
+
+ <section class="section" id="principio">
+ <div class="section-num">1</div>
+ <h2>El principio en una frase</h2>
+ <div class="callout gold">
+  <div class="callout-ico">☀️</div>
+  <div class="callout-body">BestDateWeather es un <strong>agregador probabilístico</strong>: no predice el tiempo — calcula la probabilidad de buenas condiciones para tu proyecto en una fecha y lugar dados, cruzando 10 años de historial climático con modelos de tendencias estacionales.</div>
+ </div>
+ <p>Esta distinción es importante. Cuando consultas el tiempo a 5 días, obtienes una previsión real de modelos atmosféricos numéricos. Cuando consultas una fecha 4 meses después, obtienes una <strong>estimación estadística</strong> basada en lo que ocurrió en las mismas fechas en años anteriores, ajustada por las tendencias actuales del modelo estacional.</p>
+ </section>
+
+ <section class="section" id="fuentes">
+ <div class="section-num">2</div>
+ <h2>Nuestras fuentes de datos</h2>
+
+ <div class="source-list">
+  <div class="source-chip"><div class="source-dot"></div>API Archivo Open-Meteo — datos históricos ERA5</div>
+  <div class="source-chip"><div class="source-dot"></div>API Previsión Open-Meteo — previsiones en tiempo real</div>
+  <div class="source-chip"><div class="source-dot"></div>API Estacional Open-Meteo — modelo estacional ECMWF</div>
+  <div class="source-chip"><div class="source-dot"></div>API Marina Open-Meteo — temperatura superficial del mar</div>
+  <div class="source-chip"><div class="source-dot"></div>API Geocodificación Open-Meteo — geolocalización de ciudades</div>
+ </div>
+
+ <p>Todos nuestros datos meteorológicos provienen de <strong>Open-Meteo</strong>, una API de código abierto que agrega reanálisis ERA5 del Centro Europeo de Previsiones Meteorológicas a Plazo Medio (ECMWF), así como modelos operativos de Météo-France (ARPEGE/AROME), el DWD alemán y NOAA en Estados Unidos.</p>
+
+ <h3>¿Por qué ERA5?</h3>
+ <p>ERA5 es el reanálisis de referencia mundial: reconstruye el estado de la atmósfera hora a hora desde 1940, con una resolución de 31 km, asimilando todas las observaciones disponibles (satélites, radiosondas, estaciones terrestres). Es el conjunto de datos utilizado por los investigadores climáticos para establecer normas.</p>
+ <p>Nuestra ventana de análisis cubre los <strong>últimos 10 años</strong>. Es una decisión deliberada: incluir datos más antiguos introduciría un sesgo de enfriamiento creciente debido al cambio climático, haciendo las estimaciones menos representativas de las condiciones actuales.</p>
+
+ <div class="callout blue">
+  <div class="callout-ico">ℹ️</div>
+  <div class="callout-body">El estándar de la Organización Meteorológica Mundial (OMM) para una «normal climatológica» es de 30 años. Nuestra ventana de 10 años es una elección pragmática para ajustarse al clima reciente — por eso usamos el término <strong>«tendencia reciente»</strong> en lugar de «climatología» en sentido estricto.</div>
+ </div>
+ </section>
+
+ <section class="section" id="horizontes">
+ <div class="section-num">3</div>
+ <h2>Tres niveles según el horizonte temporal</h2>
+ <p>La fiabilidad de una estimación meteorológica decrece con la distancia temporal. Lo indicamos explícitamente en la interfaz mediante una insignia de horizonte. Esto es lo que significa cada nivel.</p>
+
+ <div class="horizon-grid">
+  <div class="horizon-row">
+  <div>
+   <div class="horizon-badge badge-real">Previsión en vivo</div>
+   <div style="font-size:12px;color:var(--slate2);margin-top:6px">Hoy → D+7</div>
+  </div>
+  <div>
+   <div class="horizon-title">Datos en tiempo real</div>
+   <div class="horizon-desc">Previsiones directamente de modelos numéricos (resolución 1–15 km según la zona). Actualizadas cada hora. Fiabilidad comparable a las apps de tiempo estándar: excelente a D+2, buena a D+5, indicativa a D+7.</div>
+  </div>
+  </div>
+
+  <div class="horizon-row">
+  <div>
+   <div class="horizon-badge badge-hybrid">Tendencia estacional</div>
+   <div style="font-size:12px;color:var(--slate2);margin-top:6px">D+8 → D+210</div>
+  </div>
+  <div>
+   <div class="horizon-title">Climatología + corrección ECMWF</div>
+   <div class="horizon-desc">La base climática histórica (10 años) se ajusta por señales de anomalía del modelo estacional ECMWF: desviación de temperatura, factor de corrección de precipitaciones, ajuste del viento. No es una previsión — es una tendencia probabilística. Útil para comparar meses o elegir entre dos fechas.</div>
+  </div>
+  </div>
+
+  <div class="horizon-row">
+  <div>
+   <div class="horizon-badge badge-profile">Perfil climático</div>
+   <div style="font-size:12px;color:var(--slate2);margin-top:6px">Más allá de D+210</div>
+  </div>
+  <div>
+   <div class="horizon-title">Estadísticas históricas puras</div>
+   <div class="horizon-desc">Media de los últimos 10 años para esta fecha y ubicación, sin corrección estacional. Muestra lo que ocurrió en años anteriores en la misma época. Sin valor predictivo directo — útil para planificación a largo plazo y comparación de destinos.</div>
+  </div>
+  </div>
+ </div>
+ </section>
+
+ <section class="section" id="puntuacion">
+ <div class="section-num">4</div>
+ <h2>¿Cómo funciona la puntuación?</h2>
+ <p>La puntuación sobre 10 resume las condiciones meteorológicas según tu actividad. No es universal: el buen tiempo para un día de playa no es lo mismo que para esquiar. Cuatro criterios se ponderan de forma distinta según el perfil seleccionado.</p>
+
+ <h3>Importancia relativa por perfil</h3>
+ <p>Los cuatro factores se ponderan según una calibración específica para cada perfil, que refleja la importancia relativa de cada criterio para esa actividad. Aquí hay una visión indicativa de las prioridades:</p>
+ <table>
+  <thead>
+  <tr>
+   <th>Criterio</th>
+   <th>🌤 General</th>
+   <th>🏖️ Playa</th>
+   <th>⛷️ Esquí</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+   <td>Precipitaciones</td>
+   <td>●●●</td><td>●●●</td><td>●●</td>
+  </tr>
+  <tr>
+   <td>Temperatura</td>
+   <td>●●●●</td><td>●●●●●</td><td>●●●●</td>
+  </tr>
+  <tr>
+   <td>Viento</td>
+   <td>●●</td><td>●</td><td>●</td>
+  </tr>
+  <tr>
+   <td>Sol</td>
+   <td>●●</td><td>●●</td><td>●●●</td>
+  </tr>
+  </tbody>
+ </table>
+ <p style="font-size:13px;color:var(--slate2);margin-top:10px">● = prioridad baja · ●●●●● = prioridad dominante. Los pesos exactos provienen de calibración interna y no se divulgan.</p>
+
+ <h3>Rangos de temperatura ideales</h3>
+ <p>Cada perfil define un rango de temperatura óptimo. Fuera de este rango, la sub-puntuación de temperatura disminuye progresivamente.</p>
+ <div class="card-grid">
+  <div class="card-mini"><div class="label">General</div><div class="val">16° – 28°C</div></div>
+  <div class="card-mini"><div class="label">Playa</div><div class="val">22° – 38°C</div></div>
+  <div class="card-mini"><div class="label">Esquí</div><div class="val">-8° – 2°C</div></div>
+ </div>
+
+ <h3>Veredictos</h3>
+ <p>La puntuación final se convierte en un veredicto cualitativo: <strong>Ideal</strong> (≥ 8,0/10), <strong>Favorable</strong> (6,5–7,9/10), <strong>Aceptable</strong> (4,5–6,4/10), <strong>Temporada baja</strong> (&lt; 4,5/10). Estos umbrales son idénticos en todos los perfiles.</p>
+
+ <div class="callout green">
+  <div class="callout-ico">✓</div>
+  <div class="callout-body">Cada sub-puntuación se normaliza entre 0 y 100 antes de la ponderación. La puntuación final se calcula en tiempo real en cada consulta, basándose en los datos climáticos disponibles para la fecha y ubicación seleccionadas.</div>
+ </div>
+ </section>
+
+ <section class="section" id="puntuacion-anual">
+ <div class="section-num">5</div>
+ <h2>Puntuación de referencia anual por destino</h2>
+ <p>Para los destinos del catálogo (guías climáticas), cada mes del año tiene una <strong>puntuación de referencia</strong> distinta de la puntuación de la app. Esta puntuación refleja el atractivo climático intrínseco del mes, independientemente de cualquier perfil de actividad.</p>
+
+ <h3>Tres niveles estacionales</h3>
+ <p>Cada mes se clasifica primero por su carácter estacional general: <strong>recomendado</strong>, <strong>intermedio</strong> o <strong>a evitar</strong>. Esta clasificación tiene en cuenta la realidad local más allá de los números — por ejemplo, un destino tropical durante la temporada de monzones es diferente a un destino nórdico en invierno.</p>
+ <div class="card-grid">
+  <div class="card-mini"><div class="label" style="color:var(--green)">● Recomendado</div><div class="val">7,0 – 10,0</div><div class="sub">Condiciones generalmente ideales</div></div>
+  <div class="card-mini"><div class="label" style="color:var(--gold)">● Intermedio</div><div class="val">4,0 – 6,9</div><div class="sub">Condiciones aceptables, algunas concesiones</div></div>
+  <div class="card-mini"><div class="label" style="color:#dc2626">● A evitar</div><div class="val">0,5 – 3,9</div><div class="sub">Condiciones difíciles o desaconsejadas</div></div>
+ </div>
+
+ <h3>Calibración multicriterio</h3>
+ <p>Dentro de cada nivel, los meses se diferencian por un análisis combinado de confort térmico, precipitaciones y sol, calibrado sobre 10 años de datos ERA5. La ponderación de estos criterios y las funciones de confort utilizadas provienen de calibración interna.</p>
+
+ <h3>Particularidades climáticas locales</h3>
+ <p>Algunos regímenes climáticos requieren un tratamiento adaptado. Los destinos con fuerte estacionalidad monzónica (sudeste asiático, África oriental) están sujetos a ajuste: la temporada húmeda, aunque estadísticamente desfavorable, a menudo sigue siendo adecuada para viajar gracias a lluvias cortas e intensas. Este contexto está incorporado en la clasificación estacional para estos destinos.</p>
+
+ <div class="callout blue">
+  <div class="callout-ico">ℹ️</div>
+  <div class="callout-body">La puntuación de referencia anual se muestra en la <strong>vista de 12 meses</strong> de la app para destinos reconocidos. Para cualquier otra ubicación, se calcula una puntuación al vuelo utilizando el mismo enfoque multicriterio.</div>
+ </div>
+ </section>
+
+ <section class="section" id="correccion-ecmwf">
+ <div class="section-num">6</div>
+ <h2>Corrección estacional ECMWF</h2>
+ <p>Cuando el horizonte temporal se sitúa entre D+8 y D+210, la climatología histórica se ajusta por señales de anomalía del modelo estacional ECMWF. Este mecanismo fusiona progresivamente los datos históricos con las tendencias proyectadas, tratando la temperatura, las precipitaciones y el viento de forma diferente según su predictibilidad respectiva a medio plazo.</p>
+ <p>El objetivo es detectar desviaciones significativas de la norma — una temporada anormalmente lluviosa, un invierno más suave de lo habitual — sin pretender la precisión de una previsión a corto plazo.</p>
+
+ <h3>Precisión indicativa del modelo</h3>
+ <div class="card-grid">
+  <div class="card-mini">
+  <div class="label">Error típico D+2</div>
+  <div class="val">±0,5–1°C</div>
+  <div class="sub">Modelos NWP de alta resolución</div>
+  </div>
+  <div class="card-mini">
+  <div class="label">Error típico D+5</div>
+  <div class="val">±1,5–2°C</div>
+  <div class="sub">Fuente: benchmarks Open-Meteo / ECMWF</div>
+  </div>
+  <div class="card-mini">
+  <div class="label">Tendencia estacional</div>
+  <div class="val">±3–5°C</div>
+  <div class="sub">Variabilidad interanual ERA5</div>
+  </div>
+ </div>
+ <div class="callout blue">
+  <div class="callout-ico">ℹ️</div>
+  <div class="callout-body">Estas cifras reflejan el rendimiento documentado de las fuentes que utilizamos (Open-Meteo, ERA5, ECMWF), no un backtest independiente realizado por BestDateWeather.</div>
+ </div>
+ </section>
+
+ <section class="section" id="limitaciones">
+ <div class="section-num">7</div>
+ <h2>Lo que nuestra herramienta no hace</h2>
+ <p>Preferimos ser claros sobre las limitaciones antes que minimizarlas.</p>
+
+ <div class="callout warn">
+  <div class="callout-ico">⚠</div>
+  <div class="callout-body"><strong>BestDateWeather no reemplaza una previsión meteorológica profesional</strong> para decisiones críticas (seguridad, logística pesada). Para una boda importante o un festival, consulta siempre tu servicio meteorológico nacional a D-7.</div>
+ </div>
+
+ <ul>
+  <li><strong>Sin microclimas.</strong> La resolución espacial de ERA5 es de 31 km — las variaciones locales (valles, costas, altitud) no se capturan. Un destino costero puede diferir en 5°C de la ciudad vecina.</li>
+  <li><strong>Sin modelado del cambio climático.</strong> Nuestra ventana de 10 años captura parcialmente el calentamiento reciente, pero no extrapola tendencias futuras. Las proyecciones más allá de 2030 están fuera de nuestro alcance.</li>
+  <li><strong>Sin corrección estacional ECMWF más allá de 7 meses.</strong> Más allá de D+210, el modelo estacional ECMWF ya no aporta valor predictivo significativo. Mostramos entonces un perfil climático histórico puro basado en 10 años de datos — útil para planificación a largo plazo, pero sin ajuste de tendencia estacional.</li>
+  <li><strong>Los eventos extremos no son predecibles.</strong> Ciclones, tormentas excepcionales, olas de calor históricas — estos eventos raros no están representados en las estadísticas medias.</li>
+  <li><strong>Sin datos horarios más allá de D+7.</strong> Para fechas futuras, mostramos un perfil horario diario indicativo, no previsiones hora a hora.</li>
+ </ul>
+ </section>
+
+ <section class="section" id="faq">
+ <div class="section-num">8</div>
+ <h2>Preguntas frecuentes</h2>
+
+ <div class="card">
+  <h3 style="margin-top:0">¿De dónde provienen los datos de temperatura del mar?</h3>
+  <p>La temperatura superficial del mar proviene de la API Marina de Open-Meteo para fechas próximas (D+0 a D+7) y de una base de datos climatológica histórica por ciudad costera para fechas más lejanas.</p>
+ </div>
+
+ <div class="card">
+  <h3 style="margin-top:0">¿Por qué las horas de amanecer y atardecer se calculan y no se prevén?</h3>
+  <p>El amanecer y el atardecer son deterministas: dependen únicamente de la latitud, la longitud y la fecha. Se calculan mediante algoritmo astronómico y no varían de un año a otro (con diferencia de unos pocos segundos).</p>
+ </div>
+
+ <div class="card">
+  <h3 style="margin-top:0">¿Cuál es la diferencia entre los escenarios «pesimista» y «optimista»?</h3>
+  <p>Los escenarios se construyen a partir de los percentiles P10 y P90 de la distribución histórica. El escenario pesimista corresponde al 10% de los días más desfavorables observados en el período (máxima lluvia, temperaturas extremas, viento fuerte). El optimista al 10% de los días más favorables.</p>
+ </div>
+
+ <div class="card">
+  <h3 style="margin-top:0">¿Cómo puedo comparar dos fechas o dos destinos?</h3>
+  <p>Usa la «vista anual» para comparar puntuaciones mes a mes para un destino. Para comparar dos ciudades, realiza dos búsquedas separadas y compara las puntuaciones para el mismo período.</p>
+ </div>
+
+ <div class="card">
+  <h3 style="margin-top:0">¿Se actualizan los datos?</h3>
+  <p>Los datos históricos (base climática) son fijos — corresponden a los últimos 10 años. Las previsiones en tiempo real (D+0 a D+7) se obtienen en directo de las APIs de Open-Meteo en cada consulta, con una latencia de actualización de 1 hora.</p>
+ </div>
+ </section>
+
+ </main>
+
+ <footer>
+ <p style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">bestdateweather.com</p>
+ <p><a href="https://open-meteo.com/" rel="noopener">Datos meteorológicos por Open-Meteo.com</a> · Fuentes ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
+ <p style="margin-top:8px"><a href="app.html">Aplicación</a> · <a href="../methodologie.html"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Version française</a> · <a href="../en/methodology.html"><img src="../flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English version</a></p>
+ <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="aviso-legal.html">Aviso legal</a> · <a href="privacidad.html">Privacidad</a> · <a href="contacto.html">Contacto</a></p>
+ </footer>
+
+</div>
+</body>
+</html>
