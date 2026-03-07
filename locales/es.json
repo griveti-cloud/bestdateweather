@@ -219,7 +219,7 @@
   },
   "nav": {
     "cta_label": "Probar la aplicación",
-    "cta_href": "../es/app.html"
+    "cta_href": "app.html"
   },
   "labels": {
     "quick_section": "Decisión rápida",
@@ -729,7 +729,7 @@
     "sources": "Fuentes ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
     "methodology_url": "../note_modele.html",
     "methodology_label": "Metodología",
-    "app_url": "../es/app.html",
+    "app_url": "app.html",
     "app_label": "App meteorológica",
     "legal_url": "../mentions-legales.html",
     "legal_label": "Legal"

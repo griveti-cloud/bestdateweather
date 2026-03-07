@@ -791,10 +791,10 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 </head>
 <body>
 <nav>
- <a class="nav-brand" href="{"index.html" if lang == "fr" else ("../es/app.html" if lang == "es" else "app.html")}">Best<em>Date</em>Weather</a>
+ <a class="nav-brand" href="{"index.html" if lang == "fr" else "app.html"}">Best<em>Date</em>Weather</a>
  <div class="nav-actions">
   <button class="nav-share" onclick="shareThis()" aria-label="{"Partager" if lang == "fr" else ("Compartir" if lang == "es" else "Share")}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
-  <a class="nav-cta" href="{"index.html" if lang == "fr" else ("../es/app.html" if lang == "es" else "app.html")}">{"Tester l'application" if lang == "fr" else ("Probar la aplicación" if lang == "es" else "Try the app")}</a>
+  <a class="nav-cta" href="{"index.html" if lang == "fr" else "app.html"}">{"Tester l'application" if lang == "fr" else ("Probar la aplicación" if lang == "es" else "Try the app")}</a>
  </div>
 </nav>
 <header class="hero">
