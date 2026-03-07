@@ -282,7 +282,7 @@ def footer_html(cfg, dest):
             cl_url = f"{cl_pfx}mejor-epoca-{slug_es}.html"
         else:
             continue
-        alt_links.append(f' · <a href="{cl_url}" class="txt-muted"><img src="{cl_pfx}flags/{cl_flag}.png" width="20" height="15" alt="" class="flag-icon-lg"> {cl_label}</a>')
+        alt_links.append(f' · <a href="{cl_url}" class="txt-muted"><img src="{pfx}flags/{cl_flag}.png" width="20" height="15" alt="" class="flag-icon-lg"> {cl_label}</a>')
     alt_link = ''.join(alt_links)
 
     meth_url, meth_label = fc['methodology']
