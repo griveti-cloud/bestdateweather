@@ -337,7 +337,7 @@ OTHERS_LABEL = {'fr':'Autres pays','en':'Other countries','es':'Otros países'}
 
 # 5 mega-regions in order (France merged into Europe)
 MEGAS = [
-    ('europe',     1, {'fr': '🌊 Europe',                         'en': '🌊 Europe',                    'es': '🌊 Europa'}),
+    ('europe',     1, {'fr': '🌍 Europe',                         'en': '🌍 Europe',                    'es': '🌍 Europa'}),
     ('afrique-mo', 2, {'fr': '🌍 Afrique & Moyen-Orient',        'en': '🌍 Africa & Middle East',      'es': '🌍 África & Oriente Medio'}),
     ('asie',       3, {'fr': '🌏 Asie',                           'en': '🌏 Asia',                      'es': '🌏 Asia'}),
     ('ameriques',  4, {'fr': '🌎 Amériques',                      'en': '🌎 Americas',                  'es': '🌎 Américas'}),
