@@ -658,7 +658,9 @@
       switchMode("annual");
       var annInput = document.getElementById("ann-city");
       if (annInput) {
-        annInput.value = r.lat != null ? inputLabel : cleanName;
+        annInput.value = cleanName;
+        var annClearBtn = document.getElementById("ann-city-clear");
+        if (annClearBtn) annClearBtn.classList.add("visible");
         if (r.lat != null && r.lon != null) {
           window.annSelectedLoc = window.selectedLoc;
         }
