@@ -27,7 +27,10 @@
         "label": "English",
         "asset_prefix": "../en/"
       }
-    ]
+    ],
+    "subdir": "es",
+    "flag": "flags/es.png",
+    "lang_label": "Español"
   },
   "months": [
     "Enero",

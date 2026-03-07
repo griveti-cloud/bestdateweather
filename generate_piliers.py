@@ -236,46 +236,55 @@ def generate_page(mi, lang, dests, climate):
     avg_score = sum(x['score'] for x in entries[:10]) / 10
     avg_temp = sum(x['tmax'] for x in entries[:10]) / 10
 
-    # File paths
+    # File paths — cross-lang links built dynamically from all locales
     is_es = (lang == 'es')
-    if is_fr:
-        cross_loc = load_locale('en')
-    elif is_es:
-        cross_loc = load_locale('fr')  # ES first alt = FR
-    else:
-        cross_loc = load_locale('fr')
-    cross_month_url = cross_loc['month_url']
-    cross_prefix = cross_loc['pilier']['pillar_prefix']
-
+    src_sub = loc['meta']['subdir']  # '' for FR, 'en', 'es', ...
     filename = f'{pil["pillar_prefix"]}{month_slug}.html'
-    alt_file = f'{cross_prefix}{cross_month_url[mi]}.html'
-    # alt_file2 = file in the third language
-    loc_fr = load_locale('fr')
-    loc_en = load_locale('en')
-    loc_es = load_locale('es')
-    es_prefix = loc_es['pilier']['pillar_prefix']
-    es_month_url = loc_es['month_url']
-    alt_file2_es = f'{es_prefix}{es_month_url[mi]}.html'
-    alt_file2_en = f'{loc_en["pilier"]["pillar_prefix"]}{loc_en["month_url"][mi]}.html'
-    alt_file2_fr = f'{loc_fr["pilier"]["pillar_prefix"]}{loc_fr["month_url"][mi]}.html'
-    if is_fr:
+
+    if src_sub == '':
         filepath = ROOT / filename
-        canonical = f'https://bestdateweather.com/{filename}'
-        hreflang_fr = canonical
-        hreflang_en = f'https://bestdateweather.com/en/{alt_file}'
-        alt_file2 = alt_file2_es  # FR→EN already in alt_file, FR→ES in alt_file2
-    elif is_es:
-        filepath = ROOT / 'es' / filename
-        canonical = f'https://bestdateweather.com/es/{filename}'
-        hreflang_fr = f'https://bestdateweather.com/ou-partir-en-{loc_fr["month_url"][mi]}.html'
-        hreflang_en = f'https://bestdateweather.com/en/{alt_file}'
-        alt_file2 = alt_file2_en  # ES→FR already in alt_file, ES→EN in alt_file2
     else:
-        filepath = ROOT / 'en' / filename
-        canonical = f'https://bestdateweather.com/en/{filename}'
-        hreflang_fr = f'https://bestdateweather.com/{alt_file}'
-        hreflang_en = canonical
-        alt_file2 = alt_file2_es  # EN→FR already in alt_file, EN→ES in alt_file2
+        filepath = ROOT / src_sub / filename
+    canonical = (f'https://bestdateweather.com/{filename}'
+                 if src_sub == '' else
+                 f'https://bestdateweather.com/{src_sub}/{filename}')
+
+    # Build cross-lang link list for all other langs
+    ALL_PILIER_LANGS = ['fr', 'en', 'es']
+
+    def _cross_url(dst_lang):
+        """Relative URL from src_sub to dst pilier page."""
+        dst_loc = load_locale(dst_lang)
+        dst_sub = dst_loc['meta']['subdir']
+        dst_file = f'{dst_loc["pilier"]["pillar_prefix"]}{dst_loc["month_url"][mi]}.html'
+        if src_sub == dst_sub:
+            return dst_file
+        elif src_sub == '':
+            return f'{dst_sub}/{dst_file}'
+        elif dst_sub == '':
+            return f'../{dst_file}'
+        else:
+            return f'../{dst_sub}/{dst_file}'
+
+    cross_links = []
+    for dst_lang in ALL_PILIER_LANGS:
+        if dst_lang == lang:
+            continue
+        dst_loc = load_locale(dst_lang)
+        cross_links.append({
+            'lang':  dst_lang,
+            'url':   _cross_url(dst_lang),
+            'flag':  f'{loc["meta"]["asset_prefix"]}{dst_loc["meta"]["flag"]}',
+            'label': dst_loc['meta']['lang_label'],
+            'abs':   (f'https://bestdateweather.com/{dst_loc["pilier"]["pillar_prefix"]}{dst_loc["month_url"][mi]}.html'
+                      if dst_loc['meta']['subdir'] == '' else
+                      f'https://bestdateweather.com/{dst_loc["meta"]["subdir"]}/{dst_loc["pilier"]["pillar_prefix"]}{dst_loc["month_url"][mi]}.html'),
+        })
+
+    hreflang_fr = next((c['abs'] for c in cross_links if c['lang'] == 'fr'), canonical if lang == 'fr' else '')
+    if lang == 'fr': hreflang_fr = canonical
+    hreflang_en = next((c['abs'] for c in cross_links if c['lang'] == 'en'), canonical if lang == 'en' else '')
+    if lang == 'en': hreflang_en = canonical
 
     # Month name for display (lowercase in FR)
     mn_lc = month_name.lower() if loc['meta'].get('lowercase_months') else month_name
@@ -396,12 +405,7 @@ def generate_page(mi, lang, dests, climate):
     }, ensure_ascii=False)
 
     # Footer — built from ranking_footer locale section + cross-language links
-    _alt_links = [
-        {'url': f'{gen["alt_link_prefix"]}{alt_file}',  'flag': f'{gen["asset_prefix"]}{gen["alt_flag_path"]}',  'label': gen['alt_lang_label']},
-    ]
-    if gen.get('alt_link2_prefix') and alt_file2:
-        _alt_links.append({'url': f'{gen["alt_link2_prefix"]}{alt_file2}', 'flag': f'{gen["asset_prefix"]}{gen["alt_flag_path2"]}', 'label': gen['alt_lang_label2']})
-    footer = footer_ranking_html(lang, _alt_links)
+    footer = footer_ranking_html(lang, [{'url': c['url'], 'flag': c['flag'], 'label': c['label']} for c in cross_links])
 
     flag_prefix = gen['asset_prefix']
 
