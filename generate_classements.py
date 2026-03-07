@@ -455,7 +455,8 @@ def dest_link(slug, nom, lang, dest=None):
         slug_es = dest.get('slug_es', slug) if dest else slug
         return f'../es/mejor-epoca-{slug_es}.html'
     else:
-        return f'best-time-to-visit-{slug}.html'
+        slug_en = dest.get('slug_en', slug) if dest else slug
+        return f'best-time-to-visit-{slug_en}.html'
 
 def country_tag(d, lang, slug=''):
     """Show country name (or DOM-TOM territory) next to destination."""
@@ -677,9 +678,11 @@ def make_jsonld(entries, n, title, lang):
         if lang == 'fr':
             url = f'https://bestdateweather.com/meilleure-periode-{slug}.html'
         elif lang == 'es':
-            url = f'https://bestdateweather.com/es/mejor-epoca-{slug}.html'
+            slug_es = d.get('slug_es', slug)
+            url = f'https://bestdateweather.com/es/mejor-epoca-{slug_es}.html'
         else:
-            url = f'https://bestdateweather.com/best-time-to-visit-{slug}.html'
+            slug_en = d.get('slug_en', slug)
+            url = f'https://bestdateweather.com/best-time-to-visit-{slug_en}.html'
         items.append({"@type":"ListItem","position":i,"name":nom,"url":url})
     return json.dumps({
         "@context":"https://schema.org","@type":"ItemList",
