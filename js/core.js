@@ -1366,6 +1366,7 @@ function getFrTerritory(lat, lon) {
 }
 
 function getAcSub(item) {
+ if (item._local) return ""; // local index match — no geocoder sub
  var FR_TERRITORIES = {'GF':'Guyane française','GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'Nouvelle-Calédonie','PF':'Polynésie française'};
  var isFrDom = !!FR_TERRITORIES[item.country_code];
  if (item.country_code === 'FR' || isFrDom) {
@@ -1378,6 +1379,15 @@ function getAcSub(item) {
 
 function selectAC(i){
  var item=acData[i];if(!item)return;
+ // Local index match: use name directly, trigger geocode via selectedLoc=null
+ if (item._local) {
+   selectedLoc = null;
+   document.getElementById('inp-city').value = item.name;
+   var clearBtn = document.getElementById('inp-city-clear');
+   if (clearBtn) clearBtn.classList.add('visible');
+   hideAC();
+   return;
+ }
  // Pour FR : ne jamais afficher admin1, juste le pays
  var FR_DOM = {'GF':1,'GP':1,'MQ':1,'RE':1,'PM':1,'YT':1,'NC':1,'PF':1};
  var FR_TERRITORY_NAMES = {'GF':'Guyane française','GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'Nouvelle-Calédonie','PF':'Polynésie française'};
