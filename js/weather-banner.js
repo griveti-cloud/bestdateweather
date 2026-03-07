@@ -14,7 +14,7 @@
   var GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search";
 
   /* ── i18n ── */
-  var LANG = document.documentElement.lang === "en" ? "en" : "fr";
+  var LANG = document.documentElement.lang === "en" ? "en" : (document.documentElement.lang === "es" ? "es" : "fr");
   var T = {
     fr: {
       now: "Maint.", feels: "Ressenti", wind: "Vent", uv: "UV",
@@ -56,6 +56,27 @@
         71: "Light snow", 73: "Snow", 75: "Heavy snow",
         80: "Light showers", 81: "Showers", 82: "Heavy showers",
         95: "Thunderstorm", 96: "Storm + hail", 99: "Storm + heavy hail"
+      }
+    },
+    es: {
+      now: "Ahora", feels: "Sensación", wind: "Viento", uv: "UV",
+      chosenCity: "ciudad elegida", changeCity: "Cambiar de ciudad",
+      cityTitle: "Ciudad del banner meteorológico", typeCity: "Escribe una ciudad\u2026",
+      usePosition: "Usar mi ubicación", currently: "Actualmente",
+      recentTitle: "Búsquedas recientes", clearAll: "Borrar todo",
+      suggestTitle: "Para ti", suggestSub: "región climática similar",
+      geoPrompt: "¿Dónde estás? Introduce tu ciudad para el tiempo local",
+      geoPlaceholder: "Tu ciudad\u2026",
+      geoAllow: "Permitir", geoSkip: "Más tarde",
+      annual: "12 meses", date: "fecha",
+      weatherDesc: {
+        0: "Cielo despejado", 1: "Mayormente despejado", 2: "Parcialmente nublado", 3: "Cubierto",
+        45: "Niebla", 48: "Niebla engelante",
+        51: "Llovizna ligera", 53: "Llovizna", 55: "Llovizna intensa",
+        61: "Lluvia ligera", 63: "Lluvia", 65: "Lluvia intensa",
+        71: "Nieve ligera", 73: "Nieve", 75: "Nieve intensa",
+        80: "Chubascos ligeros", 81: "Chubascos", 82: "Chubascos fuertes",
+        95: "Tormenta", 96: "Tormenta + granizo", 99: "Tormenta + granizo fuerte"
       }
     }
   };

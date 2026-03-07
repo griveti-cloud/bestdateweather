@@ -1499,9 +1499,10 @@ function run() {
   if(!entry){var bare=loc.name.replace(/^(la |le |les |l'|l')/i,'');entry=slugMap[_normStr(bare)];}
   if(!entry)return;
   var isFr=(CFG.dateLocale==='fr-FR'||CFG.dateLocale==='fr');
-  var ficheSlug=isFr?entry.fr:entry.en;
-  var ficheUrl=isFr?'meilleure-periode-'+ficheSlug+'.html':'best-time-to-visit-'+ficheSlug+'.html';
-  var label=isFr?'Analyse complète de '+(loc.name):'Complete guide for '+loc.name;
+  var isEs=(CFG.dateLocale==='es-ES'||CFG.dateLocale==='es');
+  var ficheSlug=isFr?entry.fr:(isEs?(entry.es||entry.en):entry.en);
+  var ficheUrl=isFr?'meilleure-periode-'+ficheSlug+'.html':(isEs?'../es/mejor-epoca-'+ficheSlug+'.html':'best-time-to-visit-'+ficheSlug+'.html');
+  var label=isFr?'Analyse complète de '+(loc.name):(isEs?'Guía completa de '+loc.name:'Complete guide for '+loc.name);
   fw.innerHTML='<a class="fiche-link-btn" href="'+ficheUrl+'">↗ '+label+'</a>';
   fw.style.display='block';
  })();
