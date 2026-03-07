@@ -26,7 +26,7 @@ from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
                               annual_url_cross, monthly_url_cross, hero_sub as _hero_sub,
                               pillar_url, month_lc, MONTH_URL, MONTH_URL_FR,
                               SEASON_ICONS, TODAY, YEAR, DATA_UPDATED,
-                              date_modified_for)
+                              date_modified_for, build_hreflang_tags)
 
 # ── PATHS ───────────────────────────────────────────────────────────────────
 DIR  = os.path.dirname(os.path.abspath(__file__))
@@ -638,17 +638,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 
     # ── Schema.org ──
     canonical = f"{C['canonical_prefix']}{annual_url(C, slug)}"
-    cross_url = C['base_url_cross'] + annual_url_cross(C, dest)
-    _hreflangs = {C['html_lang']: canonical, C['cross_lang']: cross_url}
-    hreflang_fr = _hreflangs.get('fr', canonical)
-    # For ES pages, cross_lang='fr' so 'en' is not in _hreflangs — compute explicitly
-    if C['lang'] == 'es':
-        _slug_en = dest.get('slug_en', slug_fr)
-        hreflang_en = f"https://bestdateweather.com/en/best-time-to-visit-{_slug_en}.html"
-    else:
-        hreflang_en = _hreflangs.get('en', hreflang_fr)
-    slug_es = dest.get('slug_es', dest.get('slug_en', slug_fr))
-    hreflang_es = f"https://bestdateweather.com/es/mejor-epoca-{slug_es}.html"
+    hreflang_tags = build_hreflang_tags(dest, mi=None)
 
     headline = C['lbl_headline_tpl'].format(prep=prep, nom_bare=nom_bare, nom=nom)
 
@@ -706,10 +696,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <title>{title}</title>
 <meta name="description" content="{desc}"/>
 <link rel="canonical" href="{canonical}"/>
-<link rel="alternate" hreflang="fr" href="{hreflang_fr}"/>
-<link rel="alternate" hreflang="en" href="{hreflang_en}"/>
-<link rel="alternate" hreflang="es" href="{hreflang_es}"/>
-<link rel="alternate" hreflang="x-default" href="{hreflang_en}"/>
+{hreflang_tags}
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="{og_title}"/>
 <meta property="og:description" content="{desc}"/>
@@ -1099,21 +1086,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     }, ensure_ascii=False)
 
     canonical = C['canonical_prefix'] + monthly_url(C, slug, mi)
-    cross_url = C['base_url_cross'] + monthly_url_cross(C, dest, mi)
-    _hreflangs = {C['html_lang']: canonical, C['cross_lang']: cross_url}
-    hreflang_fr = _hreflangs.get('fr', canonical)
-    # For ES pages, cross_lang='fr' so 'en' is not in _hreflangs — compute explicitly
-    _en_months = ['january','february','march','april','may','june',
-                  'july','august','september','october','november','december']
-    if C['lang'] == 'es':
-        _slug_en = dest.get('slug_en', slug)
-        hreflang_en = f"https://bestdateweather.com/en/{_slug_en}-weather-{_en_months[mi]}.html"
-    else:
-        hreflang_en = _hreflangs.get('en', hreflang_fr)
-    _slug_es_m = dest.get('slug_es', dest.get('slug_en', slug))
-    _mes_es = ['enero','febrero','marzo','abril','mayo','junio',
-               'julio','agosto','septiembre','octubre','noviembre','diciembre'][mi]
-    hreflang_es = f"https://bestdateweather.com/es/{_slug_es_m}-clima-{_mes_es}.html"
+    hreflang_tags = build_hreflang_tags(dest, mi=mi)
     article_headline = C['monthly_article_headline_tpl'].format(**tpl)
     article_desc = C['monthly_article_desc_tpl'].format(**tpl)
 
@@ -1322,10 +1295,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <title>{title}</title>
 <meta name="description" content="{desc}"/>
 <link rel="canonical" href="{canonical}"/>
-<link rel="alternate" hreflang="fr" href="{hreflang_fr}"/>
-<link rel="alternate" hreflang="en" href="{hreflang_en}"/>
-<link rel="alternate" hreflang="es" href="{hreflang_es}"/>
-<link rel="alternate" hreflang="x-default" href="{hreflang_en}"/>
+{hreflang_tags}
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="{og_title}"/>
 <meta property="og:description" content="{desc}"/>

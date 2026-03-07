@@ -227,6 +227,93 @@ def dest_country(cfg, dest):
     return dest.get(key, dest.get('pays', ''))
 
 
+# Langues actives. Pour ajouter DE : 1) créer locales/de.json 2) ajouter 'de' ici.
+SUPPORTED_LANGS = ['fr', 'en', 'es']
+
+# Cache des configs par langue pour éviter de recharger les locales à chaque page
+_lang_cfg_cache: dict = {}
+
+def _get_lang_cfg(lang: str) -> dict | None:
+    """Retourne le config minimal d'une langue (base_url + url patterns + month_url).
+    Retourne None si le fichier locale n'existe pas."""
+    if lang in _lang_cfg_cache:
+        return _lang_cfg_cache[lang]
+    locale_path = os.path.join(os.path.dirname(__file__), '..', 'locales', f'{lang}.json')
+    if not os.path.exists(locale_path):
+        _lang_cfg_cache[lang] = None
+        return None
+    loc = json.load(open(locale_path, encoding='utf-8'))
+    _lang_cfg_cache[lang] = {
+        'html_lang':        loc['meta']['html_lang'],
+        'base_url':         loc['meta']['base_url'].rstrip('/') + '/',
+        'annual_prefix':    loc['url']['annual_prefix'],
+        'annual_suffix':    loc['url']['annual_suffix'],
+        'monthly_sep':      loc['url']['monthly_sep'],
+        'month_url':        loc['month_url'],
+        'x_default':        loc['meta'].get('x_default', False),
+    }
+    return _lang_cfg_cache[lang]
+
+
+def build_hreflang_tags(dest: dict, mi: int | None = None) -> str:
+    """Génère les balises <link rel="alternate" hreflang="..."> pour toutes les langues.
+
+    Itère sur SUPPORTED_LANGS — ajouter une langue = ajouter à la liste + créer le locale.
+    mi=None → page annuelle ; mi=int → page mensuelle (0-based).
+
+    Retourne une chaîne HTML multiligne prête à insérer dans <head>.
+    """
+    BASE = 'https://bestdateweather.com'
+    tags = []
+    x_default_url = None
+
+    for lang in SUPPORTED_LANGS:
+        lc = _get_lang_cfg(lang)
+        if lc is None:
+            continue
+
+        slug = dest.get(f'slug_{lang}', dest.get('slug_en', dest.get('slug_fr', '')))
+        if not slug:
+            continue
+
+        if mi is None:
+            path = f"{lc['annual_prefix']}{slug}{lc['annual_suffix']}"
+        else:
+            month_key = lc['month_url'][mi]
+            path = f"{slug}{lc['monthly_sep']}{month_key}.html"
+
+        # base_url déjà absolu (ex: "https://bestdateweather.com/en/")
+        # On reconstruit proprement pour ne pas doubler le domaine
+        url_base = lc['base_url']
+        if url_base.startswith('http'):
+            url = url_base + path
+        else:
+            url = f"{BASE}/{url_base.lstrip('/')}{path}"
+
+        html_lang = lc['html_lang']
+        tags.append(f'<link rel="alternate" hreflang="{html_lang}" href="{url}"/>')
+
+        if lc.get('x_default'):
+            x_default_url = url
+
+    # x-default : EN si non défini dans locale
+    if x_default_url is None:
+        en_lc = _get_lang_cfg('en')
+        if en_lc:
+            slug = dest.get('slug_en', dest.get('slug_fr', ''))
+            if mi is None:
+                path = f"{en_lc['annual_prefix']}{slug}{en_lc['annual_suffix']}"
+            else:
+                month_key = en_lc['month_url'][mi]
+                path = f"{slug}{en_lc['monthly_sep']}{month_key}.html"
+            x_default_url = en_lc['base_url'] + path
+
+    if x_default_url:
+        tags.append(f'<link rel="alternate" hreflang="x-default" href="{x_default_url}"/>')
+
+    return '\n'.join(tags)
+
+
 def annual_url(cfg, slug):
     """Return annual page filename."""
     return f"{cfg['annual_prefix']}{slug}{cfg['annual_suffix']}"
