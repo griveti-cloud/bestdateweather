@@ -234,8 +234,8 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
   .climate-table--horizontal th:nth-child(2),
   .climate-table--horizontal td:nth-child(2),
   .climate-table--horizontal th:nth-child(5),
-  .climate-table--horizontal td:nth-child(5){display:none}
-  .climate-table-wrap:has(.climate-table--horizontal){overflow-x:auto}
+  .climate-table--horizontal td:nth-child(5){display:none!important}
+  .climate-table-wrap:has(.climate-table--horizontal){overflow-x:auto!important}
   .climate-table-wrap.mountain{overflow-x:auto;-webkit-overflow-scrolling:touch}
   /* Supprimer le data-label ::before dans les tables en mode horizontal */
   .climate-table--horizontal tbody td[data-label]::before{content:none}
