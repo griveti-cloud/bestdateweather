@@ -756,7 +756,7 @@ FOOTER_EN = """<footer>
 FOOTER_ES = """<footer>
 <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
 <p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">Datos meteorológicos de Open-Meteo.com</a> · Fuentes ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</p>
-<p style="margin-top:8px"><a href="../note_modele.html" style="color:rgba(255,255,255,.7)">Metodología</a> · <a href="../index.html" style="color:rgba(255,255,255,.7)">App meteorológica</a> · <a href="../{fr_file}" style="color:rgba(255,255,255,.7)"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a> · <a href="../en/{en_file}" style="color:rgba(255,255,255,.7)"><img src="../flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English</a></p>
+<p style="margin-top:8px"><a href="../note_modele.html" style="color:rgba(255,255,255,.7)">Metodología</a> · <a href="../es/app.html" style="color:rgba(255,255,255,.7)">App meteorológica</a> · <a href="../{fr_file}" style="color:rgba(255,255,255,.7)"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a> · <a href="../en/{en_file}" style="color:rgba(255,255,255,.7)"><img src="../flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English</a></p>
 <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="../mentions-legales.html" style="color:rgba(255,255,255,.7)">Legal</a></p>
 </footer>"""
 
@@ -805,10 +805,10 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 </head>
 <body>
 <nav>
- <a class="nav-brand" href="{"index.html" if lang == "fr" else ("../index.html" if lang == "es" else "app.html")}">Best<em>Date</em>Weather</a>
+ <a class="nav-brand" href="{"index.html" if lang == "fr" else ("../es/app.html" if lang == "es" else "app.html")}">Best<em>Date</em>Weather</a>
  <div class="nav-actions">
   <button class="nav-share" onclick="shareThis()" aria-label="{"Partager" if lang == "fr" else ("Compartir" if lang == "es" else "Share")}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
-  <a class="nav-cta" href="{"index.html" if lang == "fr" else ("../index.html" if lang == "es" else "app.html")}">{"Tester l'application" if lang == "fr" else ("Probar la aplicación" if lang == "es" else "Try the app")}</a>
+  <a class="nav-cta" href="{"index.html" if lang == "fr" else ("../es/app.html" if lang == "es" else "app.html")}">{"Tester l'application" if lang == "fr" else ("Probar la aplicación" if lang == "es" else "Try the app")}</a>
  </div>
 </nav>
 <header class="hero">
