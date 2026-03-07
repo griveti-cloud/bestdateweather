@@ -669,7 +669,9 @@
       var cityInput = document.getElementById("inp-city");
       var dateInput = document.getElementById("inp-date");
       if (cityInput) {
-        cityInput.value = r.lat != null ? inputLabel : cleanName;
+        cityInput.value = cleanName;
+        var clearBtn = document.getElementById("inp-city-clear");
+        if (clearBtn) clearBtn.classList.add("visible");
       }
       if (dateInput && r.date) {
         var parts = r.date.match(/(\d{2})\/(\d{2})\/(\d{4})/);
