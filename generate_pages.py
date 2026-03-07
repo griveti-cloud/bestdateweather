@@ -625,7 +625,12 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     cross_url = C['base_url_cross'] + annual_url_cross(C, dest)
     _hreflangs = {C['html_lang']: canonical, C['cross_lang']: cross_url}
     hreflang_fr = _hreflangs.get('fr', canonical)
-    hreflang_en = _hreflangs.get('en', hreflang_fr)
+    # For ES pages, cross_lang='fr' so 'en' is not in _hreflangs — compute explicitly
+    if C['lang'] == 'es':
+        _slug_en = dest.get('slug_en', slug_fr)
+        hreflang_en = f"https://bestdateweather.com/en/best-time-to-visit-{_slug_en}.html"
+    else:
+        hreflang_en = _hreflangs.get('en', hreflang_fr)
     slug_es = dest.get('slug_es', dest.get('slug_en', slug_fr))
     hreflang_es = f"https://www.bestdateweather.com/es/mejor-epoca-{slug_es}.html"
 
@@ -1081,7 +1086,14 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     cross_url = C['base_url_cross'] + monthly_url_cross(C, dest, mi)
     _hreflangs = {C['html_lang']: canonical, C['cross_lang']: cross_url}
     hreflang_fr = _hreflangs.get('fr', canonical)
-    hreflang_en = _hreflangs.get('en', hreflang_fr)
+    # For ES pages, cross_lang='fr' so 'en' is not in _hreflangs — compute explicitly
+    _en_months = ['january','february','march','april','may','june',
+                  'july','august','september','october','november','december']
+    if C['lang'] == 'es':
+        _slug_en = dest.get('slug_en', slug)
+        hreflang_en = f"https://bestdateweather.com/en/{_slug_en}-weather-{_en_months[mi]}.html"
+    else:
+        hreflang_en = _hreflangs.get('en', hreflang_fr)
     _slug_es_m = dest.get('slug_es', dest.get('slug_en', slug))
     _mes_es = ['enero','febrero','marzo','abril','mayo','junio',
                'julio','agosto','septiembre','octubre','noviembre','diciembre'][mi]
