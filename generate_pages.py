@@ -298,7 +298,7 @@ def footer_html(cfg, dest):
  <p class="mt-8"><a href="{meth_url}" class="txt-muted">{meth_label}</a> · <a href="{about_url}" class="txt-muted">{about_label}</a> · <a href="{faq_url}" class="txt-muted">{faq_label}</a> · <a href="{app_url}" class="txt-muted">{app_label}</a>{alt_link}</p>
  <p class="f11-muted"><a href="{legal_url}" class="txt-muted">{legal_label}</a> · <a href="{priv_url}" class="txt-muted">{priv_label}</a> · <a href="{fc['contact'][0]}" class="txt-muted">{fc['contact'][1]}</a></p>
 </footer>
-<script src="{cfg['asset_prefix']}js/share.js"></script>'''
+<script src="{cfg['asset_prefix']}js/share.js" defer></script>'''
 
 
 def _resolve_dest_name(cfg, slug, all_dests):
