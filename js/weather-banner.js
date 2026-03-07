@@ -1002,6 +1002,10 @@
 
   window.wbAddRecent = function(item) {
     // item: { slug, name, flag, mode, date, score }
+    // Sanitize name: strip country suffix appended by autocomplete
+    if (item.name) {
+      item.name = item.name.split(' — ')[0].split(',')[0].replace(/\s*\([^)]*\)\s*$/, '').trim();
+    }
     var arr = getRecent();
 
     // Remove duplicate by slug + mode
