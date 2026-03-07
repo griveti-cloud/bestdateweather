@@ -60,47 +60,76 @@ LANG_EN = build_lang('en')
 
 # ── Weather emoji ─────────────────────────────────────────────────────────────
 
-def weather_emoji(tmax, rain_pct, sun_h=None, tmin=None):
-    """Return a weather emoji consistent with the JS monthIconFromData card logic."""
-    sun = sun_h or 0
-
-    # Cold / snow / heat extremes first
+def weather_emoji(tmax, rain_pct, sun_h=None, precip_mm=None, score=None):
+    """Return a weather emoji based on temperature, rain, sunshine, intensity and score.
+    
+    In tropical climates (tmax >= 25), high rain_pct (frequency of rainy days) does NOT
+    mean all-day rain. Brief afternoon showers are normal. We use precip_mm (daily intensity)
+    and sun_h to distinguish tropical showers from actual bad weather.
+    """
+    # ── Extreme cold ──
     if tmax < 0:
         return '❄️'
     if tmax <= 4:
         return '🌨️'
+    # ── Extreme heat ──
     if tmax >= 36:
         return '🥵'
-
-    # Tropical correction: short convective showers, sun between them
-    avg_temp = ((tmax + tmin) / 2) if tmin is not None else (tmax - 4)
-    eff_pct = rain_pct
-    if avg_temp >= 22 and sun >= 4:
-        trop_factor = 0.55 if avg_temp >= 24 else (0.55 + (24 - avg_temp) / 2 * 0.10)
-        eff_pct = eff_pct * trop_factor
-
-    # Sun dominant
-    if eff_pct <= 25 and sun >= 6:
-        return '☀️'
-    if eff_pct <= 35 and sun >= 8:
-        return '☀️'
-
-    # Showers with sun
-    if eff_pct <= 55 and sun >= 7:
-        return '🌦️'
-    if eff_pct <= 45 and sun >= 5:
-        return '🌦️'
-
-    # Partly cloudy
-    if eff_pct <= 45 and sun >= 3:
-        return '⛅'
-    if eff_pct <= 35:
-        return '⛅'
-
-    # Rain
-    if eff_pct <= 80:
+    
+    # ── Tropical / warm climates (tmax >= 25) — softer rain thresholds ──
+    if tmax >= 25:
+        # Sun hours take priority: 10h+ sun = significant clear skies regardless of rain frequency
+        if sun_h is not None and sun_h >= 10:
+            if rain_pct < 25:
+                return '☀️'
+            if rain_pct < 60:
+                return '🌤️'
+            if rain_pct < 85:
+                return '⛅'  # lots of sun + frequent brief showers
+            return '🌦️'  # extreme rain frequency but still sunny
+        if sun_h is not None and sun_h >= 8:
+            if rain_pct < 30:
+                return '☀️'
+            if rain_pct < 55:
+                return '🌤️'
+            if rain_pct < 80:
+                return '⛅'
+            # 8h+ sun but 80%+ rain → heavy tropical rain season
+            if precip_mm is not None and precip_mm >= 12:
+                return '🌧️'
+            return '🌦️'
+        # Less than 8h sun — genuinely overcast/rainy
+        if rain_pct >= 75 and precip_mm is not None and precip_mm >= 8:
+            return '🌧️'
+        # Warm but less sun
+        if rain_pct < 25:
+            return '☀️'
+        if rain_pct < 45:
+            return '🌤️'
+        if rain_pct < 65:
+            return '🌦️'
         return '🌧️'
-    return '⛈️'
+    
+    # ── Mild / temperate climates (tmax 5-24) ──
+    if rain_pct >= 65:
+        return '🌧️'
+    if rain_pct >= 50:
+        return '🌦️'
+    if tmax >= 22 and rain_pct < 50 and sun_h is not None and sun_h >= 10:
+        return '🌤️'
+    if tmax >= 18 and rain_pct < 35:
+        return '🌤️'
+    if tmax >= 18 and rain_pct < 45 and sun_h is not None and sun_h >= 9:
+        return '🌤️'
+    if rain_pct >= 40 and tmax >= 12:
+        return '🌦️'
+    if tmax >= 15 and rain_pct < 40:
+        return '⛅'
+    if tmax >= 12 and rain_pct < 40:
+        return '⛅'
+    if rain_pct >= 35 and tmax >= 5:
+        return '🌦️'
+    return '🌫️'
 
 
 # ── Shared functions ──────────────────────────────────────────────────────────
@@ -184,7 +213,7 @@ def climate_table_html(months, nom, is_mountain=False, L=None):
             ski_col = f'<td>{ski:.1f}/10</td>'
         rows += (f'<tr class="{cls}" data-tmax="{m["tmax"]}" '
                  f'data-rain="{m["rain_pct"]}" data-sun="{m["sun_h"]}">'
-                 f'<td>{weather_emoji(m["tmax"], m["rain_pct"], m["sun_h"], m.get("tmin"))} {L["months"][i]}</td>'
+                 f'<td>{weather_emoji(m["tmax"], m["rain_pct"], m["sun_h"], m.get("precip"))} {L["months"][i]}</td>'
                  f'<td>{m["tmin"]}°C</td><td>{m["tmax"]}°C</td>'
                  f'<td>{m["rain_pct"]}%</td>'
                  f'<td>{m["precip"]:.1f}</td>'
