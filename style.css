@@ -222,6 +222,10 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
     display:table-cell;padding:6px 4px!important;
     text-align:center!important;font-size:11px
   }
+  .climate-table--horizontal tbody td[data-label]{
+    display:table-cell;padding:6px 4px!important;
+    text-align:center!important
+  }
   .climate-table--horizontal thead th{padding:8px 4px!important;font-size:10px}
   .climate-table--horizontal tbody td:first-child{
     padding-left:8px!important;font-size:11px;white-space:nowrap;
