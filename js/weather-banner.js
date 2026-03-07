@@ -355,6 +355,7 @@
       .then(function(r) { return r.json(); })
       .then(function(d) {
         suggestionsData = d;
+        window._wbSuggestions = d; // expose for autocomplete local search
         renderSuggestions();
       })
       .catch(function() {});
@@ -412,7 +413,8 @@
       var d = suggestionsData[slug];
       var fr = (d.fr || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       var en = (d.en || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      if (fr === lower || en === lower) return slug;
+      var es = (d.es || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      if (fr === lower || en === lower || es === lower) return slug;
     }
     return "";
   }

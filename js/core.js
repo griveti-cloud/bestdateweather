@@ -1398,7 +1398,22 @@ function normalizeQuery(s){
 function fetchAC(q){
  var hint=document.getElementById('city-hint');
  if(hint) hint.style.display='none';
- var _gl2=document.documentElement.lang||'fr'; if(_gl2!=='en'&&_gl2!=='es')_gl2='fr'; var base='https://geocoding-api.open-meteo.com/v1/search?count=10&language='+_gl2+'&name=';
+ var _gl2=document.documentElement.lang||'fr'; if(_gl2!=='en'&&_gl2!=='es')_gl2='fr';
+ // Local index search: inject matching destinations from suggestions.json (supports ES names)
+ var localMatches = [];
+ if(window._wbSuggestions){
+   var qLow=q.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+   Object.keys(window._wbSuggestions).forEach(function(slug){
+     var d=window._wbSuggestions[slug];
+     var name=d[_gl2]||d.fr||'';
+     var nameLow=name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+     if(nameLow.indexOf(qLow)===0){
+       localMatches.push({name:name,country_code:d.flag?d.flag.toUpperCase():'',population:9999999,_local:true,_slug:slug,_flag:d.flag});
+     }
+   });
+   localMatches.sort(function(a,b){return a.name.localeCompare(b.name);});
+ }
+ var base='https://geocoding-api.open-meteo.com/v1/search?count=10&language='+_gl2+'&name=';
  var p1=fetch(base+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(d){return d.results||[];});
  // Si espaces : aussi envoyer version normalisée (tirets + sans accents)
  var qNorm = normalizeQuery(q);
@@ -1431,7 +1446,11 @@ function fetchAC(q){
   var tKey=rName+'|'+territory;
   if(!terrSeen[tKey]){terrSeen[tKey]=1;deduped.push(merged[i]);}
  }
- showAC(deduped);
+ // Prepend local matches not already in deduped
+ var localUniq=localMatches.filter(function(lm){
+   return !deduped.some(function(d){return d.name.toLowerCase()===lm.name.toLowerCase();});
+ }).slice(0,3);
+ showAC(localUniq.concat(deduped).slice(0,6));
  }).catch(function(){hideAC();});
 }
 
