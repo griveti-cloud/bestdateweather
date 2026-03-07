@@ -140,7 +140,8 @@
       "octubre",
       "noviembre",
       "diciembre"
-    ]
+    ],
+    "comparison_tpl": "{a}-o-{b}-clima.html"
   },
   "cards": {
     "file": "cards_en.csv",
@@ -189,6 +190,10 @@
     [
       "mejor-clima-europa-2026.html",
       "🇪🇺 Mejor clima en Europa"
+    ],
+    [
+      "mejores-destinos-invierno-2026.html",
+      "🌴 Destinos sol invierno"
     ]
   ],
   "badges": {
@@ -390,7 +395,23 @@
     "verdict_period_rec": "Período recomendado.",
     "verdict_period_avg": "Período aceptable.",
     "verdict_period_bad": "No recomendado.",
-    "act_beach_na": "— Sin acceso al mar"
+    "act_beach_na": "— Sin acceso al mar",
+    "back_annual_tpl": "← Mejor época para {name}",
+    "compare_section": "Comparar",
+    "compare_title": "Guías y comparaciones",
+    "detail_section": "Detalles climáticos",
+    "detail_title": "Datos detallados",
+    "max": "Máx",
+    "min": "Mín",
+    "month_nav_tpl": "Tiempo en {month_lc}",
+    "other_months": "Otros meses",
+    "other_title_tpl": "Tiempo en {name} los demás meses",
+    "precip_day": "Precipitación/día",
+    "rain_section": "Precipitaciones",
+    "rainy_days": "Días de lluvia",
+    "sun_day": "Sol/día",
+    "sun_section": "Horas de sol",
+    "temp_section": "Temperaturas"
   },
   "narratives": {
     "tropical_rainy": "En {month}, {name} está en plena temporada de lluvias ({rain}% de días con lluvia). Los aguaceros tropicales son normalmente breves pero intensos — lleva un impermeable ligero.",

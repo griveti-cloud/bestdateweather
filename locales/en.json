@@ -126,7 +126,8 @@
     "pillar_prefix": "where-to-go-in-",
     "cross_annual_prefix": "meilleure-periode-",
     "cross_monthly_sep": "-meteo-",
-    "comparison_glob": "*-vs-*-weather.html"
+    "comparison_glob": "*-vs-*-weather.html",
+    "comparison_tpl": "{a}-or-{b}-climate.html"
   },
   "cards": {
     "file": "cards_en.csv",
@@ -175,6 +176,10 @@
     [
       "best-europe-weather-ranking-2026.html",
       "🇪🇺 Best in Europe"
+    ],
+    [
+      "best-destinations-winter-weather-2026.html",
+      "🌴 Sun destinations winter"
     ]
   ],
   "badges": {
@@ -376,7 +381,23 @@
     "verdict_period_rec": "Recommended period.",
     "verdict_period_avg": "Average period.",
     "verdict_period_bad": "Not recommended.",
-    "act_beach_na": "— No sea access"
+    "act_beach_na": "— No sea access",
+    "back_annual_tpl": "← Best time for {name}",
+    "compare_section": "Compare",
+    "compare_title": "Guides & comparisons",
+    "detail_section": "Climate details",
+    "detail_title": "Detailed data",
+    "max": "Max",
+    "min": "Min",
+    "month_nav_tpl": "Weather in {month_lc}",
+    "other_months": "Other months",
+    "other_title_tpl": "{name} weather in other months",
+    "precip_day": "Precipitation/day",
+    "rain_section": "Precipitation",
+    "rainy_days": "Rainy days",
+    "sun_day": "Sunshine/day",
+    "sun_section": "Sunshine",
+    "temp_section": "Temperatures"
   },
   "narratives": {
     "tropical_rainy": "In {month}, {name} is in the middle of the rainy season ({rain}% rainy days). Tropical showers are usually short but intense — pack a light raincoat.",
