@@ -32,6 +32,16 @@
   ],
   "redirects": [
     {
+      "source": "/fr",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/fr/",
+      "destination": "/",
+      "permanent": false
+    },
+    {
       "source": "/en",
       "destination": "/en/app.html",
       "permanent": false
