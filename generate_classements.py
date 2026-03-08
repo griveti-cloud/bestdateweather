@@ -848,7 +848,7 @@ def _cl_layout(pc, lang):
         canonical = f'{BASE}/us/{en_file}'
         footer = footer_ranking_html('en', [
             {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
-            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English (UK/AU)'},
+            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
             {'url': f'../es/{es_file}', 'flag': '../flags/es.png', 'label': 'Español'},
         ])
         outfile = ROOT / 'us' / en_file
