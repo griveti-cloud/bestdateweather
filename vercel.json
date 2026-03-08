@@ -32,6 +32,391 @@
   ],
   "redirects": [
     {
+      "source": "/meilleure-periode-moorea-en-aout.html",
+      "destination": "/moorea-meteo-aout.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-machu-picchu-en-fevrier.html",
+      "destination": "/machu-picchu-meteo-fevrier.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-orlando-en-avril.html",
+      "destination": "/orlando-meteo-avril.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-portland-en-fevrier.html",
+      "destination": "/portland-meteo-fevrier.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-dubai-en-novembre.html",
+      "destination": "/dubai-meteo-novembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-denver-en-fevrier.html",
+      "destination": "/denver-meteo-fevrier.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-vienne-en-avril.html",
+      "destination": "/vienne-meteo-avril.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-grenade-en-juillet.html",
+      "destination": "/grenade-meteo-juillet.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-nara-en-octobre.html",
+      "destination": "/nara-meteo-octobre.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-zakynthos-en-novembre.html",
+      "destination": "/zakynthos-meteo-novembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-nouvelle-zelande-en-fevrier.html",
+      "destination": "/nouvelle-zelande-meteo-fevrier.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-annecy-en-juin.html",
+      "destination": "/annecy-meteo-juin.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-nha-trang-en-mars.html",
+      "destination": "/nha-trang-meteo-mars.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-ella-en-fevrier.html",
+      "destination": "/ella-meteo-fevrier.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-lijiang-en-septembre.html",
+      "destination": "/lijiang-meteo-septembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-bretagne-en-novembre.html",
+      "destination": "/bretagne-meteo-novembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-da-nang-en-octobre.html",
+      "destination": "/da-nang-meteo-octobre.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-queenstown-en-avril.html",
+      "destination": "/queenstown-meteo-avril.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-la-paz-bolivie-en-decembre.html",
+      "destination": "/la-paz-bolivie-meteo-decembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-antalya-en-octobre.html",
+      "destination": "/antalya-meteo-octobre.html",
+      "permanent": true
+    },
+    {
+      "source": "/bali-meteo-mariage.html",
+      "destination": "/meilleure-periode-bali.html",
+      "permanent": true
+    },
+    {
+      "source": "/algarve-meteo-mariage.html",
+      "destination": "/meilleure-periode-algarve.html",
+      "permanent": true
+    },
+    {
+      "source": "/madere-meteo-mariage.html",
+      "destination": "/meilleure-periode-madere.html",
+      "permanent": true
+    },
+    {
+      "source": "/istanbul-meteo-mariage.html",
+      "destination": "/meilleure-periode-istanbul.html",
+      "permanent": true
+    },
+    {
+      "source": "/canaries-meteo-mariage.html",
+      "destination": "/meilleure-periode-canaries.html",
+      "permanent": true
+    },
+    {
+      "source": "/toscane-meteo-mariage.html",
+      "destination": "/meilleure-periode-toscane.html",
+      "permanent": true
+    },
+    {
+      "source": "/marrakech-meteo-mariage.html",
+      "destination": "/meilleure-periode-marrakech.html",
+      "permanent": true
+    },
+    {
+      "source": "/sicile-meteo-mariage.html",
+      "destination": "/meilleure-periode-sicile.html",
+      "permanent": true
+    },
+    {
+      "source": "/ile-maurice-meteo-mariage.html",
+      "destination": "/meilleure-periode-ile-maurice.html",
+      "permanent": true
+    },
+    {
+      "source": "/crete-meteo-mariage.html",
+      "destination": "/meilleure-periode-crete.html",
+      "permanent": true
+    },
+    {
+      "source": "/dubai-meteo-mariage.html",
+      "destination": "/meilleure-periode-dubai.html",
+      "permanent": true
+    },
+    {
+      "source": "/malte-meteo-mariage.html",
+      "destination": "/meilleure-periode-malte.html",
+      "permanent": true
+    },
+    {
+      "source": "/majorque-meteo-mariage.html",
+      "destination": "/meilleure-periode-majorque.html",
+      "permanent": true
+    },
+    {
+      "source": "/cote-azur-meteo-mariage.html",
+      "destination": "/meilleure-periode-cote-azur.html",
+      "permanent": true
+    },
+    {
+      "source": "/capri-meteo-mariage.html",
+      "destination": "/meilleure-periode-capri.html",
+      "permanent": true
+    },
+    {
+      "source": "/lisbonne-meteo-mariage.html",
+      "destination": "/meilleure-periode-lisbonne.html",
+      "permanent": true
+    },
+    {
+      "source": "/santorin-meteo-mariage.html",
+      "destination": "/meilleure-periode-santorin.html",
+      "permanent": true
+    },
+    {
+      "source": "/amalfi-meteo-mariage.html",
+      "destination": "/meilleure-periode-amalfi.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cote-azur-meteo-janvier.html",
+      "destination": "/en/french-riviera-weather-january.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cote-azur-meteo-fevrier.html",
+      "destination": "/en/french-riviera-weather-february.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cote-azur-meteo-mars.html",
+      "destination": "/en/french-riviera-weather-march.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cote-azur-meteo-avril.html",
+      "destination": "/en/french-riviera-weather-april.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cote-azur-meteo-mai.html",
+      "destination": "/en/french-riviera-weather-may.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cote-azur-meteo-juin.html",
+      "destination": "/en/french-riviera-weather-june.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cote-azur-meteo-juillet.html",
+      "destination": "/en/french-riviera-weather-july.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cote-azur-meteo-aout.html",
+      "destination": "/en/french-riviera-weather-august.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cote-azur-meteo-septembre.html",
+      "destination": "/en/french-riviera-weather-september.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cote-azur-meteo-octobre.html",
+      "destination": "/en/french-riviera-weather-october.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cote-azur-meteo-novembre.html",
+      "destination": "/en/french-riviera-weather-november.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cote-azur-meteo-decembre.html",
+      "destination": "/en/french-riviera-weather-december.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/classement-destinations-meteo-2026.html",
+      "destination": "/en/best-destinations-weather-ranking-2026.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/classement-destinations-europe-meteo-2026.html",
+      "destination": "/en/best-europe-weather-ranking-2026.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/classement-destinations-meteo-ete-2026.html",
+      "destination": "/en/best-destinations-summer-weather-2026.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/classement-destinations-meteo-hiver-2026.html",
+      "destination": "/en/best-destinations-winter-weather-2026.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/classement-destinations-meteo-nomades-2026.html",
+      "destination": "/en/best-destinations-digital-nomads-weather-2026.html",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-en.html",
+      "destination": "/en/legal.html",
+      "permanent": true
+    },
+    {
+      "source": "/legal-en.html",
+      "destination": "/en/legal.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/methodologie.html",
+      "destination": "/en/methodology.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/note_modele.html",
+      "destination": "/en/app.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-corse.html",
+      "destination": "/en/best-time-to-visit-corsica.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-valence.html",
+      "destination": "/en/best-time-to-visit-valencia.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/en/best-europe-weather-ranking-2026.html",
+      "destination": "/en/best-europe-weather-ranking-2026.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-hawaii-maui.html",
+      "destination": "/meilleure-periode-maui.html",
+      "permanent": true
+    },
+    {
+      "source": "/meilleure-periode-santorini.html",
+      "destination": "/meilleure-periode-santorin.html",
+      "permanent": true
+    },
+    {
+      "source": "/ile-maurice-meteo-january.html",
+      "destination": "/ile-maurice-meteo-janvier.html",
+      "permanent": true
+    },
+    {
+      "source": "/venice-meteo-mars.html",
+      "destination": "/venise-meteo-mars.html",
+      "permanent": true
+    },
+    {
+      "source": "/venice-meteo-janvier.html",
+      "destination": "/venise-meteo-janvier.html",
+      "permanent": true
+    },
+    {
+      "source": "/majorque-meteo-may.html",
+      "destination": "/majorque-meteo-mai.html",
+      "permanent": true
+    },
+    {
+      "source": "/cote-azur-meteo-december.html",
+      "destination": "/cote-azur-meteo-decembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/majorca-weather-september.html",
+      "destination": "/en/mallorca-weather-september.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-malta-in-february.html",
+      "destination": "/en/malta-weather-february.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-koh-phi-phi-in-november.html",
+      "destination": "/en/koh-phi-phi-weather-november.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-mayotte-in-february.html",
+      "destination": "/en/mayotte-weather-february.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-french-basque-country-in-may.html",
+      "destination": "/en/french-basque-country-weather-may.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-luxor-in-december.html",
+      "destination": "/en/luxor-weather-december.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-pondicherry-in-february.html",
+      "destination": "/en/pondicherry-weather-february.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-varanasi-in-february.html",
+      "destination": "/en/varanasi-weather-february.html",
+      "permanent": true
+    },
+    {
       "source": "/us",
       "destination": "/us/app.html",
       "permanent": false
