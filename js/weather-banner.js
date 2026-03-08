@@ -604,7 +604,8 @@
     var cards = "";
     for (var i = 0; i < shown.length; i++) {
       var item = shown[i];
-      var flag = flagImg(item.flag || findFlagForSlug(item.slug));
+      var resolvedSlug = item.slug || findSlugForName(item.name);
+      var flag = flagImg(item.flag || findFlagForSlug(resolvedSlug));
       var modeLabel = item.mode === "annual"
         ? " \u00b7 " + t.annual
         : " \u00b7 " + t.date;
