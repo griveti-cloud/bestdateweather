@@ -16,6 +16,12 @@
     "cross_lang": "fr",
     "cross_links": [
       {
+        "lang": "en",
+        "flag": "gb",
+        "label": "English (UK/AU)",
+        "asset_prefix": "../en/"
+      },
+      {
         "lang": "fr",
         "flag": "fr",
         "label": "Français",

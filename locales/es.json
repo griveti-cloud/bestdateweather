@@ -26,6 +26,12 @@
         "flag": "gb",
         "label": "English",
         "asset_prefix": "../en/"
+      },
+      {
+        "lang": "en-us",
+        "flag": "us",
+        "label": "English (US)",
+        "asset_prefix": "../us/"
       }
     ],
     "subdir": "es",

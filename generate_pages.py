@@ -281,6 +281,8 @@ def footer_html(cfg, dest):
         elif cl_lang == 'es':
             slug_es = dest.get('slug_es', slug_en)
             cl_url = f"{cl_pfx}mejor-epoca-{slug_es}.html"
+        elif cl_lang == 'en-us':
+            cl_url = f"{cl_pfx}best-time-to-visit-{slug_en}.html"
         else:
             continue
         alt_links.append(f' · <a href="{cl_url}" class="txt-muted"><img src="{pfx}flags/{cl_flag}.png" width="20" height="15" alt="" class="flag-icon-lg"> {cl_label}</a>')
