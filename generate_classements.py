@@ -173,8 +173,14 @@ SLUG_REGION_TAG = {
 
 # MOIS_* removed — loaded from locales at runtime via get_mois(lang)
 def get_mois(lang):
-    months = load_locale(lang)['months']  # list index 0=Jan
+    months = load_locale('en' if lang == 'en-us' else lang)['months']  # list index 0=Jan
     return {i+1: m for i, m in enumerate(months)}
+
+def _ft(c, lang):
+    """Format temperature: °C for all langs except en-us → °F."""
+    if lang == 'en-us':
+        return f'{round(c * 9/5 + 32)}°F'
+    return f'{round(c)}°C'
 
 
 # ── Country-level deduplication ───────────────────────────────────────────────
@@ -454,7 +460,7 @@ def dest_link(slug, nom, lang, dest=None):
     elif lang == 'es':
         slug_es = dest.get('slug_es', slug) if dest else slug
         return f'../es/mejor-epoca-{slug_es}.html'
-    else:
+    else:  # en, en-us
         slug_en = dest.get('slug_en', slug) if dest else slug
         return f'best-time-to-visit-{slug_en}.html'
 
@@ -497,11 +503,11 @@ def make_table_annual(entries, n, lang):
         'en': ('Rank','Destination','Best month','Annual score','Sun/year','Avg. rain'),
         'es': ('Pos.','Destino','Mejor mes','Puntuación anual','Sol/año','Lluvia media'),
     }
-    h = headers[lang]
+    h = headers['en' if lang == 'en-us' else lang]
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -522,17 +528,17 @@ def make_table_seasonal(entries, n, lang):
         'en': ('Rank','Destination','Score','Max temp.','Sun','Rain'),
         'es': ('Pos.','Destino','Puntuación','Temp. máx','Sol','Lluvia'),
     }
-    h = headers[lang]
+    h = headers['en' if lang == 'en-us' else lang]
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
-            f'<td>{entry["tmax_avg"]:.0f}°C</td>'
+            f'<td>{_ft(entry["tmax_avg"], lang)}</td>'
             f'<td>{entry["sun"]:.0f}h</td>'
             f'<td>{entry["rain_avg"]:.0f}%</td></tr>'
         )
@@ -547,11 +553,11 @@ def make_table_sun(entries, n, lang):
         'en': ('Rank','Destination','Sun/year','Annual score','Avg. rain'),
         'es': ('Pos.','Destino','Sol/año','Puntuación anual','Lluvia media'),
     }
-    h = headers[lang]
+    h = headers['en' if lang == 'en-us' else lang]
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -571,11 +577,11 @@ def make_table_rain(entries, n, lang):
         'en': ('Rank','Destination','Avg. rain','Annual score','Sun/year'),
         'es': ('Pos.','Destino','Lluvia media','Puntuación anual','Sol/año'),
     }
-    h = headers[lang]
+    h = headers['en' if lang == 'en-us' else lang]
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -596,11 +602,11 @@ def make_table_nomad(entries, n, lang):
         'es': ('Pos.','Destino','Punt. media','Desv. típica','Peor mes','Punt. peor mes'),
     }
     mois = get_mois(lang)
-    h = headers[lang]
+    h = headers['en' if lang == 'en-us' else lang]
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -621,18 +627,18 @@ def make_table_beach(entries, n, lang):
         'en': ('Rank','Destination','Beach score','Sea','Temp.','Sun/day','Rain'),
         'es': ('Pos.','Destino','Score playa','Mar','Temp.','Sol/día','Lluvia'),
     }
-    h = headers[lang]
+    h = headers['en' if lang == 'en-us' else lang]
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
-            f'<td>{entry["avg_sea"]:.0f}°C</td>'
-            f'<td>{entry["tmax_avg"]:.0f}°C</td>'
+            f'<td>{_ft(entry["avg_sea"], lang)}</td>'
+            f'<td>{_ft(entry["tmax_avg"], lang)}</td>'
             f'<td>{entry["sun_avg"]:.1f}h</td>'
             f'<td>{entry["rain_avg"]:.0f}%</td></tr>'
         )
@@ -648,17 +654,17 @@ def make_table_beach_annual(entries, n, lang):
         'en': ('Rank','Destination','Beach score','Avg. sea','Best month','Months ≥7/10'),
         'es': ('Pos.','Destino','Score playa','Mar medio','Mejor mes','Meses ≥7/10'),
     }
-    h = headers[lang]
+    h = headers['en' if lang == 'en-us' else lang]
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
-            f'<td>{entry["avg_sea"]:.0f}°C</td>'
+            f'<td>{_ft(entry["avg_sea"], lang)}</td>'
             f'<td>{mois[entry["best_month"]]} ({entry["best_score"]:.1f})</td>'
             f'<td>{entry["good_months"]}</td></tr>'
         )
@@ -673,7 +679,7 @@ def make_jsonld(entries, n, title, lang):
     items = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'es') else d['nom_fr']
+        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
         slug = entry['slug']
         if lang == 'fr':
             url = f'https://bestdateweather.com/meilleure-periode-{slug}.html'
@@ -693,7 +699,7 @@ def make_jsonld(entries, n, title, lang):
 
 # RELATED_* removed — loaded from locales[classements][related]
 def make_related(lang, exclude_href=''):
-    related = load_locale(lang)['classements']['related']
+    related = load_locale('en' if lang == 'en-us' else lang)['classements']['related']
     cards = ''
     for href, title, sub in related:
         if href == exclude_href:
@@ -838,6 +844,14 @@ def _cl_layout(pc, lang):
             {'url': f'es/{es_file}',  'flag': 'flags/es.png',    'label': 'Español'},
         ])
         outfile = ROOT / fr_file
+    elif lang == 'en-us':
+        canonical = f'{BASE}/us/{en_file}'
+        footer = footer_ranking_html('en', [
+            {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English (UK/AU)'},
+            {'url': f'../es/{es_file}', 'flag': '../flags/es.png', 'label': 'Español'},
+        ])
+        outfile = ROOT / 'us' / en_file
     elif lang == 'en':
         canonical = f'{BASE}/en/{en_file}'
         footer = footer_ranking_html('en', [
@@ -864,9 +878,9 @@ def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix=''):
     insights = _insights_html(pc['insights_label'], pc['insights'], ctx)
     sections = _sections(pc['sections'], ctx, tables)
     jsonld   = make_jsonld(jsonld_data, jsonld_n, _tpl(pc['jsonld_title_tpl'], ctx), lang)
-    meth     = pc.get('meth') or load_locale(lang)['classements']['methodology']
+    meth     = pc.get('meth') or load_locale('en' if lang == 'en-us' else lang)['classements']['methodology']
     canonical, footer, outfile, fr_file, en_file, es_file = _cl_layout(pc, lang)
-    rel_file = es_file if lang == 'es' else (en_file if lang == 'en' else fr_file)
+    rel_file = es_file if lang == 'es' else (fr_file if lang == 'fr' else en_file)
     related  = make_related(lang, rel_file)
     page = make_page(
         title=title, description=desc, h1=h1, hero_sub=hero_sub,
@@ -1029,7 +1043,15 @@ def main():
     gen_nomades(dests, climate, 'es')
     gen_beach(dests, climate, 'es')
 
-    print('\n✅ All 18 ranking pages generated (FR + EN + ES).')
+    print('\nGenerating EN-US pages (°F)...')
+    gen_mondial(dests, climate, 'en-us')
+    gen_europe(dests, climate, 'en-us')
+    gen_ete(dests, climate, 'en-us')
+    gen_hiver(dests, climate, 'en-us')
+    gen_nomades(dests, climate, 'en-us')
+    gen_beach(dests, climate, 'en-us')
+
+    print('\n✅ All 24 ranking pages generated (FR + EN + ES + EN-US).')
 
 if __name__ == '__main__':
     main()
