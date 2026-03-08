@@ -356,6 +356,7 @@
       .then(function(d) {
         suggestionsData = d;
         window._wbSuggestions = d; // expose for autocomplete local search
+        renderRecent();   // re-render to resolve missing flags from old localStorage entries
         renderSuggestions();
       })
       .catch(function() {});
