@@ -603,7 +603,7 @@
     var cards = "";
     for (var i = 0; i < shown.length; i++) {
       var item = shown[i];
-      var flag = flagImg(item.flag);
+      var flag = flagImg(item.flag || findFlagForSlug(item.slug));
       var modeLabel = item.mode === "annual"
         ? " \u00b7 " + t.annual
         : " \u00b7 " + t.date;
