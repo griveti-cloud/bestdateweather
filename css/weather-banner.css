@@ -66,11 +66,11 @@
 .wb-section-action:hover{color:var(--gold)}
 .wb-section-sub{font-size:11px;color:var(--mist);font-style:italic}
 
-.wb-recent{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:var(--r-sm);padding:3px 10px;margin-bottom:1px;border:1px solid var(--cream2);cursor:pointer;transition:border-color .15s,transform .1s;animation:fadeUp .3s ease both}
+.wb-recent{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:var(--r-sm);padding:2px 10px;margin-bottom:1px;border:1px solid var(--cream2);cursor:pointer;transition:border-color .15s,transform .1s;animation:fadeUp .3s ease both}
 .wb-recent:hover{border-color:var(--gold)}
 .wb-recent:active{transform:scale(.985)}
-.wb-recent-left{display:flex;align-items:center;gap:10px;min-width:0}
-.wb-recent-flag{font-size:18px;line-height:1;flex-shrink:0}
+.wb-recent-left{display:flex;align-items:center;gap:6px;min-width:0}
+.wb-recent-flag{font-size:14px;line-height:1;flex-shrink:0}
 .wb-recent-info{min-width:0}
 .wb-recent-name{font-size:12px;font-weight:600;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .wb-recent-date{font-size:11px;color:var(--mist)}
@@ -78,7 +78,7 @@
 .wb-score{font-size:14px;font-weight:700;padding:3px 10px;border-radius:var(--r-xs);font-family:'DM Sans',sans-serif;flex-shrink:0}
 
 /* ── SUGGESTIONS ── */
-.wb-suggest{background:#fff;border-radius:var(--r-sm);padding:3px 10px;margin-bottom:1px;border:1px solid var(--cream2);border-left:3px solid var(--gold);cursor:pointer;transition:border-color .15s,transform .1s;animation:fadeUp .3s ease both;text-decoration:none;display:block}
+.wb-suggest{background:#fff;border-radius:var(--r-sm);padding:2px 10px;margin-bottom:1px;border:1px solid var(--cream2);border-left:3px solid var(--gold);cursor:pointer;transition:border-color .15s,transform .1s;animation:fadeUp .3s ease both;text-decoration:none;display:block}
 .wb-suggest:hover{border-color:var(--gold)}
 .wb-suggest:active{transform:scale(.985)}
 .wb-suggest-top{display:flex;align-items:center;gap:8px}
@@ -120,7 +120,7 @@
  .wb-recent-date{font-size:10px}
  .wb-recent-flag{font-size:16px}
  #wb-suggest-section{display:none!important}
- .wb-recent:nth-child(n+4){display:none}
+ .wb-recent:nth-child(n+3){display:none}
 }
 
 /* ── RESPONSIVE ── */
