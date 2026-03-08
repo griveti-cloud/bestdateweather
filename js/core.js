@@ -4,7 +4,7 @@ var T = window.BDW_T;
 var CFG = window.BDW_CFG;
 
 /* ── UNITS TOGGLE (°C/°F) ── */
-var _units = 'metric';
+var _units = (CFG && CFG.defaultUnits) ? CFG.defaultUnits : 'metric';
 
 function setUnits(sys) {
  _units = sys;
@@ -2269,9 +2269,11 @@ document.getElementById('annual-wrap').addEventListener('click', function() {
  }
 }, true);
 document.addEventListener('DOMContentLoaded', function() {
+ // Sync unit toggle buttons with default units from i18n config
+ setUnits(_units);
  flatpickr(document.getElementById('inp-date'), {
- dateFormat: 'd/m/Y',
- locale: 'fr',
+ dateFormat: CFG.dateFormat || 'd/m/Y',
+ locale: CFG.fpLocale || 'fr',
  minDate: 'today',
  maxDate: new Date(new Date().setFullYear(new Date().getFullYear()+1)),
  disableMobile: true,
