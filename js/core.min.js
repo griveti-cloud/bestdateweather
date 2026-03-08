@@ -2271,6 +2271,9 @@ document.getElementById('annual-wrap').addEventListener('click', function() {
 document.addEventListener('DOMContentLoaded', function() {
  // Sync unit toggle buttons with default units from i18n config
  setUnits(_units);
+ // Sync date placeholder from i18n config
+ var inpDate = document.getElementById('inp-date');
+ if (inpDate && CFG.datePlaceholder) inpDate.placeholder = CFG.datePlaceholder;
  flatpickr(document.getElementById('inp-date'), {
  dateFormat: CFG.dateFormat || 'd/m/Y',
  locale: CFG.fpLocale || 'fr',
