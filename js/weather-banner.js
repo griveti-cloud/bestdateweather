@@ -712,9 +712,9 @@
           '<div class="wb-suggest-top">' +
             '<span class="wb-recent-flag">' + flagImg(s.flag) + '</span>' +
             '<span class="wb-suggest-name">' + escHtml(s.name) + '</span>' +
-            (s.score ? '<span class="wb-score" style="font-size:12px;padding:2px 8px;color:' + scoreColor(s.score) + ';background:' + scoreBg(s.score) + '">' + s.score.toFixed(1) + '</span>' : '') +
+            '<span class="wb-suggest-reason">' + escHtml(s.reason) + '</span>' +
           '</div>' +
-          '<div class="wb-suggest-reason">' + escHtml(s.reason) + '</div>' +
+          (s.score ? '<span class="wb-score" style="font-size:12px;padding:2px 8px;color:' + scoreColor(s.score) + ';background:' + scoreBg(s.score) + '">' + s.score.toFixed(1) + '</span>' : '') +
         '</a>';
     }
 
