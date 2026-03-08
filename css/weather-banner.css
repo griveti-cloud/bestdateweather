@@ -59,7 +59,7 @@
 .wb-modal-current{margin-top:12px;font-size:12px;color:var(--mist);text-align:center;font-style:italic}
 
 /* ── RECENT SEARCHES ── */
-.wb-section{padding:0 12px;margin-bottom:0}
+.wb-section{padding:0 12px;margin-bottom:8px}
 .wb-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
 .wb-section-title{font-size:12px;font-weight:600;color:var(--navy);letter-spacing:-.2px}
 .wb-section-action{font-size:11px;color:var(--mist);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif}
