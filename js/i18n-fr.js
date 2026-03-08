@@ -177,6 +177,10 @@ window.BDW_T = {
 
 window.BDW_CFG = {
  dateLocale: 'fr-FR',
+ dateFormat: 'd/m/Y',
+ datePlaceholder: 'jj/mm/aaaa',
+ fpLocale: 'fr',
+ defaultUnits: 'metric',
  flagBase: 'flags/',
  dataBase: '',
  avoidColor: '#f97316',
