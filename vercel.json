@@ -32,6 +32,11 @@
   ],
   "redirects": [
     {
+      "source": "/meilleure-periode-zante.html",
+      "destination": "/meilleure-periode-zakynthos.html",
+      "permanent": true
+    },
+    {
       "source": "/en/sitemap-en.xml",
       "destination": "/sitemap-en.xml",
       "permanent": true
