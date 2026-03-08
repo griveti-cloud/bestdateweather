@@ -622,11 +622,11 @@ def build_hub(destinations, loc):
                 L.append(f'<div class="dh-sub">')
                 L.append(f'<button class="dh-sub-head">')
                 if sub_name == '__others__':
-                    sub_label = OTHERS_LABEL.get(lang, 'Other countries')
+                    sub_label = OTHERS_LABEL.get(lang_key, 'Other countries')
                     flag_img = ''
                 else:
                     trans = COUNTRY_NAMES_TRANS.get(sub_name, {})
-                    sub_label = trans.get(lang, sub_name)
+                    sub_label = trans.get(lang_key, sub_name)
                     flag_code = pays_flag.get(sub_name, '')
                     flag_img = f'<img src="{asset_prefix}flags/{flag_code}.png" width="20" height="15" alt="{flag_code}" class="flag-icon" style="margin-right:6px;vertical-align:middle;border-radius:2px"> ' if flag_code else ''
                 L.append(f'<span class="dh-sub-label">{flag_img}{html_mod.escape(sub_label)}</span>')
