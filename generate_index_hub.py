@@ -757,14 +757,32 @@ def build_hub_footer(current_lang, current_loc):
 
 
 def inject_hub_footer(filepath, current_lang, current_loc):
-    """Replace <!-- HUB-FOOTER --> marker with generated lang links."""
+    """Replace content between <!-- HUB-FOOTER-START --> / <!-- HUB-FOOTER-END --> markers.
+    Also handles legacy one-shot <!-- HUB-FOOTER --> marker (upgrades it to START/END).
+    """
     content = open(filepath, encoding='utf-8').read()
-    marker = '<!-- HUB-FOOTER -->'
-    if marker not in content:
-        return False
+    START = '<!-- HUB-FOOTER-START -->'
+    END   = '<!-- HUB-FOOTER-END -->'
     footer_html = build_hub_footer(current_lang, current_loc)
-    content = content.replace(marker, footer_html)
-    open(filepath, 'w', encoding='utf-8').write(content)
+
+    # Legacy one-shot marker → upgrade to persistent markers
+    legacy = '<!-- HUB-FOOTER -->'
+    if legacy in content:
+        content = content.replace(legacy, START + footer_html + END)
+        open(filepath, 'w', encoding='utf-8').write(content)
+        return True
+
+    if START not in content or END not in content:
+        return False
+
+    import re
+    new_content = re.sub(
+        re.escape(START) + '.*?' + re.escape(END),
+        START + footer_html + END,
+        content,
+        flags=re.DOTALL
+    )
+    open(filepath, 'w', encoding='utf-8').write(new_content)
     return True
 
 

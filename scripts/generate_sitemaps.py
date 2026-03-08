@@ -273,11 +273,123 @@ def generate_sitemap(lang, dry_run=False):
     return len(entries)
 
 
+def find_es_pages():
+    """Retourne les pages ES destination (annual + monthly)."""
+    annual, monthly = [], []
+    for f in sorted(glob.glob(os.path.join(DIR, 'es', 'mejor-epoca-*.html'))):
+        if not _is_redirect(f):
+            annual.append('es/' + os.path.basename(f))
+    for f in sorted(glob.glob(os.path.join(DIR, 'es', '*-clima-*.html'))):
+        if not _is_redirect(f):
+            monthly.append('es/' + os.path.basename(f))
+    return annual + monthly
+
+def find_us_pages():
+    """Retourne les pages US destination (annual + monthly)."""
+    annual, monthly = [], []
+    for f in sorted(glob.glob(os.path.join(DIR, 'us', 'best-time-to-visit-*.html'))):
+        if not _is_redirect(f):
+            annual.append('us/' + os.path.basename(f))
+    for f in sorted(glob.glob(os.path.join(DIR, 'us', '*-weather-*.html'))):
+        if not _is_redirect(f):
+            monthly.append('us/' + os.path.basename(f))
+    return annual + monthly
+
+def find_es_pillar_pages():
+    return ['es/' + os.path.basename(f)
+            for f in sorted(glob.glob(os.path.join(DIR, 'es', 'donde-ir-en-*.html')))
+            if not _is_redirect(f)]
+
+def find_us_pillar_pages():
+    return ['us/' + os.path.basename(f)
+            for f in sorted(glob.glob(os.path.join(DIR, 'us', 'where-to-go-in-*.html')))
+            if not _is_redirect(f)]
+
+def find_es_ranking_pages():
+    patterns = ['mejores-destinos-*.html']
+    pages = []
+    for pat in patterns:
+        for f in glob.glob(os.path.join(DIR, 'es', pat)):
+            if not _is_redirect(f):
+                pages.append('es/' + os.path.basename(f))
+    return sorted(pages)
+
+def find_us_ranking_pages():
+    patterns = ['best-*-ranking-*.html', 'best-destinations-*-weather-*.html']
+    pages = []
+    for pat in patterns:
+        for f in glob.glob(os.path.join(DIR, 'us', pat)):
+            if not _is_redirect(f):
+                pages.append('us/' + os.path.basename(f))
+    return sorted(pages)
+
+STATIC_PAGES_ES = {
+    'es/app.html':         0.9,
+    'es/metodologia.html': 0.5,
+    'es/sobre-nosotros.html': 0.5,
+    'es/faq.html':         0.5,
+    'es/aviso-legal.html': 0.3,
+    'es/privacidad.html':  0.3,
+    'es/contacto.html':    0.3,
+}
+
+STATIC_PAGES_US = {
+    'us/app.html': 0.9,
+}
+
+def generate_sitemap_es(dry_run=False):
+    entries = []
+    for loc, prio in STATIC_PAGES_ES.items():
+        if os.path.exists(os.path.join(DIR, loc)):
+            entries.append(make_url_entry(loc, priority=prio))
+    for page in find_es_pages():
+        prio = 0.8 if 'mejor-epoca-' in page else 0.6
+        entries.append(make_url_entry(page, priority=prio))
+    for page in find_es_ranking_pages():
+        entries.append(make_url_entry(page, priority=0.7))
+    for page in find_es_pillar_pages():
+        entries.append(make_url_entry(page, priority=0.7))
+    _write_sitemap('sitemap-es.xml', entries, dry_run)
+    return len(entries)
+
+def generate_sitemap_us(dry_run=False):
+    entries = []
+    for loc, prio in STATIC_PAGES_US.items():
+        if os.path.exists(os.path.join(DIR, loc)):
+            entries.append(make_url_entry(loc, priority=prio))
+    for page in find_us_pages():
+        prio = 0.8 if 'best-time-to-visit-' in page else 0.6
+        entries.append(make_url_entry(page, priority=prio))
+    for page in find_us_ranking_pages():
+        entries.append(make_url_entry(page, priority=0.7))
+    for page in find_us_pillar_pages():
+        entries.append(make_url_entry(page, priority=0.7))
+    _write_sitemap('sitemap-us.xml', entries, dry_run)
+    return len(entries)
+
+def _write_sitemap(filename, entries, dry_run):
+    xml = ['<?xml version="1.0" encoding="UTF-8"?>']
+    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"'
+               ' xmlns:xhtml="http://www.w3.org/1999/xhtml">')
+    xml.extend(entries)
+    xml.append('</urlset>')
+    content = '\n'.join(xml) + '\n'
+    filepath = os.path.join(DIR, filename)
+    if dry_run:
+        print(f'[DRY-RUN] {filename}: {len(entries)} URLs')
+    else:
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print(f'{filename}: {len(entries)} URLs')
+
+
 if __name__ == '__main__':
     dry_run = '--dry-run' in sys.argv
     n_fr = generate_sitemap('fr', dry_run)
     n_en = generate_sitemap('en', dry_run)
-    print(f'\nTotal: {n_fr} FR + {n_en} EN = {n_fr + n_en} URLs')
+    n_es = generate_sitemap_es(dry_run)
+    n_us = generate_sitemap_us(dry_run)
+    print(f'\nTotal: {n_fr} FR + {n_en} EN + {n_es} ES + {n_us} US = {n_fr + n_en + n_es + n_us} URLs')
 
     # Update sitemap-index.xml
     if not dry_run:
@@ -289,6 +401,14 @@ if __name__ == '__main__':
   </sitemap>
   <sitemap>
     <loc>https://bestdateweather.com/sitemap-en.xml</loc>
+    <lastmod>{TODAY}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://bestdateweather.com/sitemap-es.xml</loc>
+    <lastmod>{TODAY}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://bestdateweather.com/sitemap-us.xml</loc>
     <lastmod>{TODAY}</lastmod>
   </sitemap>
 </sitemapindex>'''
