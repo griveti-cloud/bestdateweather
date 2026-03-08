@@ -499,12 +499,12 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
 
 /* ── Mobile compact: above-fold fit ── */
 @media(max-width:640px){
- header.app-header{padding-top:20px}
- .app-title{margin-bottom:8px;font-size:clamp(26px,5vw,36px)}
- .app-divider{margin-bottom:10px}
- .app-sub{margin-bottom:8px;font-size:13px;line-height:1.5}
- .app-proof{margin-bottom:6px;padding:3px 10px;font-size:10px}
- .unit-toggle{margin-bottom:10px}
+ header.app-header{padding-top:10px}
+ .app-title{margin-bottom:4px;font-size:clamp(24px,6vw,34px)}
+ .app-divider{display:none}
+ .app-sub{margin-bottom:4px;font-size:12px;line-height:1.4}
+ .app-proof{margin-bottom:5px;padding:3px 10px;font-size:10px}
+ .unit-toggle{margin-bottom:8px}
  .mode-toggle{margin-bottom:14px;gap:8px}
  .mode-btn{padding:10px 12px;gap:8px}
  .mode-btn svg{width:18px;height:18px}
