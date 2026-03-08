@@ -792,13 +792,14 @@ var SCORE_POWER = 2.0;
 
 // scoring.py : t_ideal()
 function tIdeal(tmax) {
- if (tmax <= 5) return 0.0;
+ // Aligned with scoring.py t_ideal() — source of truth
+ if (tmax <= 5)  return 0.0;
  if (tmax <= 14) return (tmax - 5) / 9 * 0.3;
  if (tmax <= 22) return 0.3 + (tmax - 14) / 8 * 0.5;
  if (tmax <= 28) return 0.8 + (tmax - 22) / 6 * 0.2;
  if (tmax <= 32) return 1.0 - (tmax - 28) / 4 * 0.25;
  if (tmax <= 36) return 0.75 - (tmax - 32) / 4 * 0.45;
- return Math.max(0, 0.30 - (tmax - 36) / 6 * 0.30);
+ return Math.max(0.0, 0.30 - (tmax - 36) / 6 * 0.30);
 }
 
 // scoring.py : raw_score() poids 40/35/25
