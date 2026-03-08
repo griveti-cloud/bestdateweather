@@ -14,7 +14,7 @@
   var GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search";
 
   /* ── i18n ── */
-  var LANG = document.documentElement.lang === "en" ? "en" : (document.documentElement.lang === "es" ? "es" : "fr");
+  var LANG = (document.documentElement.lang === "en" || document.documentElement.lang === "en-US") ? "en" : (document.documentElement.lang === "es" ? "es" : "fr");
   var T = {
     fr: {
       now: "Maint.", feels: "Ressenti", wind: "Vent", uv: "UV",
