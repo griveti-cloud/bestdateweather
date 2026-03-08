@@ -26,7 +26,7 @@
       geoPrompt: "Où êtes-vous ? Entrez votre ville pour la météo locale",
       geoPlaceholder: "Votre ville…",
       geoAllow: "Autoriser", geoSkip: "Plus tard",
-      annual: "12 mois", date: "date",
+      annual: "12 mois", date: "date", share: "Partager",
       weatherDesc: {
         0: "Ciel dégagé", 1: "Peu nuageux", 2: "Partiellement nuageux", 3: "Couvert",
         45: "Brouillard", 48: "Brouillard givrant",
@@ -47,7 +47,7 @@
       geoPrompt: "Where are you? Enter your city for local weather",
       geoPlaceholder: "Your city…",
       geoAllow: "Allow", geoSkip: "Later",
-      annual: "12 months", date: "date",
+      annual: "12 months", date: "date", share: "Share",
       weatherDesc: {
         0: "Clear sky", 1: "Mainly clear", 2: "Partly cloudy", 3: "Overcast",
         45: "Foggy", 48: "Rime fog",
@@ -68,7 +68,7 @@
       geoPrompt: "¿Dónde estás? Introduce tu ciudad para el tiempo local",
       geoPlaceholder: "Tu ciudad\u2026",
       geoAllow: "Permitir", geoSkip: "Más tarde",
-      annual: "12 meses", date: "fecha",
+      annual: "12 meses", date: "fecha", share: "Compartir",
       weatherDesc: {
         0: "Cielo despejado", 1: "Mayormente despejado", 2: "Parcialmente nublado", 3: "Cubierto",
         45: "Niebla", 48: "Niebla engelante",
