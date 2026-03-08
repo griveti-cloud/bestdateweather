@@ -10,7 +10,7 @@ Usage: python3 generate_piliers.py
 
 import csv, html as html_mod, json, sys, os
 from pathlib import Path
-from lib.common import footer_ranking_html
+from lib.common import footer_ranking_html, c_to_f
 from datetime import date
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -161,9 +161,13 @@ def build_table(entries, loc, mi):
     """Build ranking table for a given month."""
     is_fr = loc['meta']['html_lang'] == 'fr'
     is_es = loc['meta']['html_lang'] == 'es'
+    imperial = loc['meta'].get('imperial', False)
     gen = loc['gen']
     pil = loc['pilier']
     month_url = loc['month_url']
+
+    def _ft(celsius): return f"{c_to_f(celsius):.0f}°F" if imperial else f"{celsius:.0f}°C"
+
     rows = ''
     for i, entry in enumerate(entries, 1):
         slug = entry['slug_fr'] if is_fr else (entry.get('slug_es') or entry['slug_en'] if is_es else entry['slug_en'])
@@ -177,7 +181,7 @@ def build_table(entries, loc, mi):
             f'<td class="rank">{rank_icon(i)}</td>'
             f'<td>{flag_img}<a href="{href}" class="dest-link">{e(nom)}</a></td>'
             f'<td class="sc" style="color:{sc_color}">{sc:.1f}<span>/10</span></td>'
-            f'<td>{entry["tmin"]:.0f}–{entry["tmax"]:.0f}°C</td>'
+            f'<td>{_ft(entry["tmin"])}–{_ft(entry["tmax"])}</td>'
             f'<td>{entry["rain_pct"]:.0f}%</td>'
             f'<td>{entry["sun_h"]:.1f}h</td>'
             f'</tr>'
@@ -225,12 +229,17 @@ def generate_page(mi, lang, dests, climate):
     gen = loc['gen']
     pil = loc['pilier']
     is_fr = (lang == 'fr')
+    imperial = loc['meta'].get('imperial', False)
     months = loc['months']
     month_url = loc['month_url']
     month_name = months[mi]
     month_slug = month_url[mi]
     season_map = {int(k): v for k, v in loc['seasons_map'].items()}
     season = season_map.get(mi, '')
+
+    # Temperature formatting helper
+    def ft(celsius): return f"{c_to_f(celsius):.0f}°F" if imperial else f"{celsius:.0f}°C"
+    def ft_unit(): return '°F' if imperial else '°C'
 
     entries = get_rankings(climate, dests, mi + 1)  # climate.csv is 1-indexed
     if not entries:
@@ -239,7 +248,8 @@ def generate_page(mi, lang, dests, climate):
 
     top = entries[0]
     avg_score = sum(x['score'] for x in entries[:10]) / 10
-    avg_temp = sum(x['tmax'] for x in entries[:10]) / 10
+    avg_temp_raw = sum(x['tmax'] for x in entries[:10]) / 10
+    avg_temp = c_to_f(avg_temp_raw) if imperial else avg_temp_raw
 
     # File paths — cross-lang links built dynamically from all locales
     is_es = (lang == 'es')
@@ -333,7 +343,7 @@ def generate_page(mi, lang, dests, climate):
     else:
         title = f"Where to Go in {month_name} {YEAR} — Top {TOP_N} Weather Destinations"
         desc = (f"Where to go in {month_name} {YEAR}? Top {TOP_N} destinations ranked by weather score. "
-                f"#1: {top['nom_en']} ({top['score']:.1f}/10, {top['tmax']:.0f}°C). "
+                f"#1: {top['nom_en']} ({top['score']:.1f}/10, {ft(top['tmax'])}). "
                 f"Based on 10 years of Open-Meteo data.")
         h1 = f"Where to Go in <em>{month_name}</em>"
         hero_sub = (f"The {TOP_N} best weather destinations for {month_name} {YEAR}, "
@@ -341,7 +351,7 @@ def generate_page(mi, lang, dests, climate):
         sec_eyebrow = f"{month_name} {YEAR} ranking"
         sec_title = f"Top {TOP_N} destinations in {month_name}"
         sec_intro = (f"Top 10 average score: <strong>{avg_score:.1f}/10</strong> · "
-                     f"Average temperature: <strong>{avg_temp:.0f}°C</strong>")
+                     f"Average temperature: <strong>{avg_temp:.0f}{ft_unit()}</strong>")
         cta_text = f"🎯 Choose a specific date for your {month_name} trip"
 
     cta_href = gen['home_url']
@@ -406,7 +416,7 @@ def generate_page(mi, lang, dests, climate):
         faq_items.append({"@type": "Question",
             "name": f"What is the best destination in {month_name}?",
             "acceptedAnswer": {"@type": "Answer",
-                "text": f"{top['nom_en']} is the #1 destination in {month_name} with a score of {top['score']:.1f}/10 and {top['tmax']:.0f}°C."}})
+                "text": f"{top['nom_en']} is the #1 destination in {month_name} with a score of {top['score']:.1f}/10 and {ft(top['tmax'])}."}})
         faq_items.append({"@type": "Question",
             "name": f"Where is it sunny in {month_name}?",
             "acceptedAnswer": {"@type": "Answer",
@@ -455,7 +465,7 @@ def generate_page(mi, lang, dests, climate):
 <div class="hero-stats">
 <div class="hstat"><span class="hstat-val">{top['score']:.1f}</span><span class="hstat-lbl">{pil["score_n1"]}</span></div>
 <div class="hstat"><span class="hstat-val">{TOP_N}</span><span class="hstat-lbl">Destinations</span></div>
-<div class="hstat"><span class="hstat-val">{avg_temp:.0f}°C</span><span class="hstat-lbl">{pil["top10_avg"]}</span></div>
+<div class="hstat"><span class="hstat-val">{avg_temp:.0f}{ft_unit()}</span><span class="hstat-lbl">{pil["top10_avg"]}</span></div>
 </div>
 </header>
 <main class="page">
