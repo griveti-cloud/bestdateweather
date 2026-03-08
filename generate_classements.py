@@ -156,6 +156,16 @@ NON_EUROPE_SLUGS = DOM_TOM_SLUGS | {
     'lanzarote', 'la-palma', 'la-gomera', 'el-hierro',                  # Espagne, Macaronésie
 }
 
+# Destinations caribéennes (pays + territoires, toutes nationalités)
+CARIBBEAN_SLUGS = {
+    'antigua', 'aruba', 'bahamas', 'barbade', 'bermudes', 'bonaire',
+    'cayman-islands', 'curacao', 'dominique', 'grenadines', 'guadeloupe',
+    'jamaique', 'la-havane', 'martinique', 'nassau', 'porto-rico',
+    'punta-cana', 'republique-dominicaine', 'saint-barthelemy', 'saint-lucie',
+    'saint-martin', 'saint-thomas', 'saint-vincent', 'san-juan',
+    'trinidad-cuba', 'trinite-et-tobago', 'turks-et-caicos', 'cuba',
+}
+
 # Override region tag par slug (priorité sur REGION_TAG par pays)
 SLUG_REGION_TAG = {
     'reunion': 'Océan Indien',
@@ -192,7 +202,7 @@ COUNTRY_SLUGS = {
     'colombie', 'costa-rica', 'equateur', 'georgie', 'guatemala', 'iles-cook',
     'jordanie', 'kenya', 'laos', 'madagascar', 'malte', 'montenegro', 'myanmar',
     'namibie', 'nepal', 'nicaragua', 'nouvelle-zelande', 'oman', 'ouzbekistan',
-    'perou', 'philippines', 'republique-dominicaine', 'senegal', 'sri-lanka',
+    'perou', 'philippines', 'porto-rico', 'republique-dominicaine', 'senegal', 'sri-lanka',
     'tanzanie', 'uruguay',
 }
 
@@ -201,6 +211,7 @@ COUNTRY_SLUGS = {
 REGION_CHILDREN = {
     'canaries': {'lanzarote', 'fuerteventura', 'gran-canaria', 'tenerife',
                  'la-palma', 'la-gomera', 'el-hierro'},
+    'porto-rico': {'san-juan'},
 }
 
 def dedup_country(results, dests):
@@ -223,7 +234,7 @@ def dedup_country(results, dests):
 
 # ── Ranking Computations ─────────────────────────────────────────────────────
 
-def compute_annual(climate, dests, europe_only=False):
+def compute_annual(climate, dests, europe_only=False, caribbean_only=False):
     """Annual average score ranking."""
     results = []
     for slug, monthly in climate.items():
@@ -231,6 +242,8 @@ def compute_annual(climate, dests, europe_only=False):
             continue
         d = dests[slug]
         if europe_only and (d['pays'] not in EUROPE_COUNTRIES or slug in NON_EUROPE_SLUGS):
+            continue
+        if caribbean_only and slug not in CARIBBEAN_SLUGS:
             continue
         if len(monthly) < 12:
             continue
@@ -245,7 +258,7 @@ def compute_annual(climate, dests, europe_only=False):
     results.sort(key=lambda x: -x['avg'])
     return results
 
-def compute_seasonal(climate, dests, months, europe_only=False):
+def compute_seasonal(climate, dests, months, europe_only=False, caribbean_only=False):
     """Seasonal average score ranking for given months."""
     results = []
     for slug, monthly in climate.items():
@@ -253,6 +266,8 @@ def compute_seasonal(climate, dests, months, europe_only=False):
             continue
         d = dests[slug]
         if europe_only and (d['pays'] not in EUROPE_COUNTRIES or slug in NON_EUROPE_SLUGS):
+            continue
+        if caribbean_only and slug not in CARIBBEAN_SLUGS:
             continue
         if not all(m in monthly for m in months):
             continue
@@ -1009,6 +1024,26 @@ def gen_beach(dests, climate, lang):
                jsonld_data=annual, jsonld_n=25,
                print_suffix=f' (plage, {n_dests} coastal, top={top1["dest"]["nom_bare"]})')
 
+def gen_caribbean(dests, climate, lang):
+    annual  = dedup_country(compute_annual(climate, dests, caribbean_only=True), dests)
+    summer  = dedup_country(compute_seasonal(climate, dests, [12,1,2], caribbean_only=True), dests)  # "été" caribéen = hiver boréal
+    winter  = dedup_country(compute_seasonal(climate, dests, [6,7,8], caribbean_only=True), dests)   # saison humide
+    top1    = annual[0]
+    n_dests = len(annual)
+    pc  = load_locale('en' if lang == 'en-us' else lang)['classement_pages']['caraibes']
+    ctx = dict(
+        n=n_dests,
+        top1=_dest_name(top1['dest'], lang),         top1_avg=f'{top1["avg"]:.1f}',
+        dry1=_dest_name(summer[0]['dest'], lang),     dry1_avg=f'{summer[0]["avg"]:.1f}',
+        wet1=_dest_name(winter[0]['dest'], lang),     wet1_avg=f'{winter[0]["avg"]:.1f}',
+    )
+    _cl_render(pc, lang, ctx,
+               tables=[make_table_annual(annual, n_dests, lang),
+                       make_table_seasonal(summer, n_dests, lang),
+                       make_table_seasonal(winter, n_dests, lang)],
+               jsonld_data=annual, jsonld_n=n_dests,
+               print_suffix=f' (Caraïbes, {n_dests} dests, top={top1["dest"]["nom_bare"]})')
+
 # ══════════════════════════════════════════════════════════════════════════════
 # MAIN
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1026,6 +1061,7 @@ def main():
     gen_hiver(dests, climate, 'fr')
     gen_nomades(dests, climate, 'fr')
     gen_beach(dests, climate, 'fr')
+    gen_caribbean(dests, climate, 'fr')
 
     print('\nGenerating EN pages...')
     gen_mondial(dests, climate, 'en')
@@ -1034,6 +1070,7 @@ def main():
     gen_hiver(dests, climate, 'en')
     gen_nomades(dests, climate, 'en')
     gen_beach(dests, climate, 'en')
+    gen_caribbean(dests, climate, 'en')
 
     print('\nGenerating ES pages...')
     gen_mondial(dests, climate, 'es')
@@ -1042,6 +1079,7 @@ def main():
     gen_hiver(dests, climate, 'es')
     gen_nomades(dests, climate, 'es')
     gen_beach(dests, climate, 'es')
+    gen_caribbean(dests, climate, 'es')
 
     print('\nGenerating EN-US pages (°F)...')
     gen_mondial(dests, climate, 'en-us')
@@ -1050,8 +1088,9 @@ def main():
     gen_hiver(dests, climate, 'en-us')
     gen_nomades(dests, climate, 'en-us')
     gen_beach(dests, climate, 'en-us')
+    gen_caribbean(dests, climate, 'en-us')
 
-    print('\n✅ All 24 ranking pages generated (FR + EN + ES + EN-US).')
+    print('\n✅ All 28 ranking pages generated (FR + EN + ES + EN-US).')
 
 if __name__ == '__main__':
     main()

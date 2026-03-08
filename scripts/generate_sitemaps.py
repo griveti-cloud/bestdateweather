@@ -103,7 +103,7 @@ def find_ranking_pages():
     fr = sorted(glob.glob(os.path.join(DIR, 'classement-*.html')))
     # EN rankings: best-*-ranking-*.html + best-destinations-*-weather-*.html
     en_set = set()
-    for pattern in ['best-*-ranking-*.html', 'best-destinations-*-weather-*.html']:
+    for pattern in ['best-*-ranking-*.html', 'best-destinations-*-weather-*.html', 'best-caribbean-weather-*.html']:
         for f in glob.glob(os.path.join(DIR, 'en', pattern)):
             en_set.add('en/' + os.path.basename(f))
     # Exclude destination pages (best-time-to-visit-*)
@@ -280,8 +280,10 @@ def find_es_pages():
         if not _is_redirect(f):
             annual.append('es/' + os.path.basename(f))
     for f in sorted(glob.glob(os.path.join(DIR, 'es', '*-clima-*.html'))):
-        if not _is_redirect(f):
-            monthly.append('es/' + os.path.basename(f))
+        bn = os.path.basename(f)
+        # Exclude ranking pages (mejor-clima-*) — handled by find_es_ranking_pages
+        if not _is_redirect(f) and not bn.startswith('mejor-clima-'):
+            monthly.append('es/' + bn)
     return annual + monthly
 
 def find_us_pages():
@@ -291,8 +293,10 @@ def find_us_pages():
         if not _is_redirect(f):
             annual.append('us/' + os.path.basename(f))
     for f in sorted(glob.glob(os.path.join(DIR, 'us', '*-weather-*.html'))):
-        if not _is_redirect(f):
-            monthly.append('us/' + os.path.basename(f))
+        bn = os.path.basename(f)
+        # Exclude ranking pages — handled by find_us_ranking_pages
+        if not _is_redirect(f) and 'best-time-to-visit' not in bn and not bn.startswith('best-caribbean-'):
+            monthly.append('us/' + bn)
     return annual + monthly
 
 def find_es_pillar_pages():
@@ -306,7 +310,7 @@ def find_us_pillar_pages():
             if not _is_redirect(f)]
 
 def find_es_ranking_pages():
-    patterns = ['mejores-destinos-*.html']
+    patterns = ['mejores-destinos-*.html', 'mejor-clima-*.html']
     pages = []
     for pat in patterns:
         for f in glob.glob(os.path.join(DIR, 'es', pat)):
@@ -315,7 +319,7 @@ def find_es_ranking_pages():
     return sorted(pages)
 
 def find_us_ranking_pages():
-    patterns = ['best-*-ranking-*.html', 'best-destinations-*-weather-*.html']
+    patterns = ['best-*-ranking-*.html', 'best-destinations-*-weather-*.html', 'best-caribbean-weather-*.html']
     pages = []
     for pat in patterns:
         for f in glob.glob(os.path.join(DIR, 'us', pat)):

@@ -29521,12 +29521,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://bestdateweather.com/es/mejor-clima-europa-2026.html</loc>
-    <lastmod>2026-03-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://bestdateweather.com/es/mejores-destinos-clima-2026.html</loc>
     <lastmod>2026-03-08</lastmod>
     <changefreq>monthly</changefreq>
@@ -48179,6 +48173,18 @@
     <lastmod>2026-03-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/mejor-clima-caribe-2026.html</loc>
+    <lastmod>2026-03-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/mejor-clima-europa-2026.html</loc>
+    <lastmod>2026-03-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://bestdateweather.com/es/mejores-destinos-clima-2026.html</loc>

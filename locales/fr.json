@@ -790,6 +790,11 @@
         "classement-destinations-plage-2026.html",
         "🏖️ Meilleures plages",
         "Score plage & mer"
+      ],
+      [
+        "classement-destinations-caraibes-meteo-2026.html",
+        "🌴 Meilleures destinations Caraïbes",
+        "Saison sèche & pluies"
       ]
     ]
   },
@@ -1084,6 +1089,58 @@
       "fr_file": "classement-destinations-plage-2026.html",
       "en_file": "best-beach-destinations-weather-2026.html",
       "es_file": "mejores-destinos-playa-2026.html"
+    },
+    "caraibes": {
+      "title_tpl": "Classement météo Caraïbes 2026 — Meilleures destinations caribéennes",
+      "desc_tpl": "{n} destinations caribéennes classées sur 10 ans de données. Saison sèche et saison des pluies.",
+      "h1": "Top destinations<br/><em>météo Caraïbes 2026</em>",
+      "hero_sub_tpl": "{n} destinations caribéennes. {top1} en tête avec {top1_avg}/10.",
+      "stats": [
+        [
+          "{n}",
+          "Destinations"
+        ],
+        [
+          "10 ans",
+          "Données"
+        ]
+      ],
+      "insights_label": "Points clés",
+      "insights": [
+        [
+          "N°1 Caraïbes",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "Saison sèche",
+          "{dry1} domine (déc–fév, {dry1_avg}/10)."
+        ],
+        [
+          "Saison des pluies",
+          "{wet1} résiste (juin–août, {wet1_avg}/10)."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Caraïbes",
+          "h2": "🌴 Top Caraïbes — Score annuel",
+          "intro_tpl": "{n} destinations caribéennes classées par score annuel."
+        },
+        {
+          "eyebrow": "Saison sèche",
+          "h2": "☀️ Top Caraïbes saison sèche (déc–fév)",
+          "intro": "Score moyen décembre, janvier, février."
+        },
+        {
+          "eyebrow": "Saison des pluies",
+          "h2": "🌧️ Top Caraïbes saison des pluies (juin–août)",
+          "intro": "Score moyen juin, juillet, août."
+        }
+      ],
+      "jsonld_title_tpl": "Top destinations météo Caraïbes 2026",
+      "fr_file": "classement-destinations-caraibes-meteo-2026.html",
+      "en_file": "best-caribbean-weather-2026.html",
+      "es_file": "mejor-clima-caribe-2026.html"
     }
   }
 }

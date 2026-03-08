@@ -790,6 +790,11 @@
         "best-beach-destinations-weather-2026.html",
         "🏖️ Best beach destinations",
         "Beach score & sea temp"
+      ],
+      [
+        "best-caribbean-weather-2026.html",
+        "🌴 Best Caribbean destinations",
+        "Dry & rainy season"
       ]
     ]
   },
@@ -1084,6 +1089,58 @@
       "fr_file": "classement-destinations-plage-2026.html",
       "en_file": "best-beach-destinations-weather-2026.html",
       "es_file": "mejores-destinos-playa-2026.html"
+    },
+    "caraibes": {
+      "title_tpl": "Best Caribbean weather 2026 — Top Caribbean destinations ranked",
+      "desc_tpl": "{n} Caribbean destinations ranked with 10 years of weather data. Dry season and rainy season.",
+      "h1": "Best Caribbean<br/><em>weather destinations 2026</em>",
+      "hero_sub_tpl": "{n} Caribbean destinations. {top1} leads with {top1_avg}/10.",
+      "stats": [
+        [
+          "{n}",
+          "Destinations"
+        ],
+        [
+          "10 years",
+          "Data"
+        ]
+      ],
+      "insights_label": "Key insights",
+      "insights": [
+        [
+          "#1 Caribbean",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "Dry season",
+          "{dry1} leads (Dec–Feb, {dry1_avg}/10)."
+        ],
+        [
+          "Rainy season",
+          "{wet1} holds up (Jun–Aug, {wet1_avg}/10)."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Caribbean",
+          "h2": "🌴 Top Caribbean — Annual score",
+          "intro_tpl": "{n} Caribbean destinations ranked by annual score."
+        },
+        {
+          "eyebrow": "Dry season",
+          "h2": "☀️ Top Caribbean dry season (Dec–Feb)",
+          "intro": "Average score December, January, February."
+        },
+        {
+          "eyebrow": "Rainy season",
+          "h2": "🌧️ Top Caribbean rainy season (Jun–Aug)",
+          "intro": "Average score June, July, August."
+        }
+      ],
+      "jsonld_title_tpl": "Best Caribbean weather destinations 2026",
+      "fr_file": "classement-destinations-caraibes-meteo-2026.html",
+      "en_file": "best-caribbean-weather-2026.html",
+      "es_file": "mejor-clima-caribe-2026.html"
     }
   }
 }
