@@ -9,7 +9,7 @@
   var LS_CITY = "bdw_banner_city";
   var LS_RECENT = "bdw_recent";
   var MAX_RECENT_STORE = 10;
-  var MAX_RECENT_SHOW = 3;
+  var MAX_RECENT_SHOW = 2;
   var FORECAST_URL = "https://api.open-meteo.com/v1/forecast";
   var GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search";
 
