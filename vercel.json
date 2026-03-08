@@ -32,6 +32,11 @@
   ],
   "redirects": [
     {
+      "source": "/en/sitemap-en.xml",
+      "destination": "/sitemap-en.xml",
+      "permanent": true
+    },
+    {
       "source": "/meilleure-periode-moorea-en-aout.html",
       "destination": "/moorea-meteo-aout.html",
       "permanent": true
