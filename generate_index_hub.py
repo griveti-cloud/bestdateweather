@@ -556,6 +556,8 @@ def build_hub(destinations, loc):
     asset_prefix = loc['gen']['asset_prefix']
     page_prefix = ''  # pages are always in same dir as hub
     lang = loc['meta']['html_lang']
+    # en-US uses same MEGAS/SUB_NAMES labels as en
+    lang_key = 'en' if lang == 'en-US' else lang
     is_fr = (lang == 'fr')
     slug_key = 'slug_fr' if is_fr else ('slug_es' if lang == 'es' else 'slug_en')
     name_key = 'nom_fr' if is_fr else ('nom_es' if lang == 'es' else 'nom_en')
@@ -595,7 +597,7 @@ def build_hub(destinations, loc):
     for mega_id, sort, labels in MEGAS:
         if mega_id not in megas:
             continue
-        label = labels[lang]
+        label = labels[lang_key]
         subs_data = megas[mega_id]
         cnt = sum(len(v) for v in subs_data.values())
         has_subs = True  # always group by country
@@ -715,7 +717,56 @@ def inject(filepath, destinations, loc):
 # ── Main ──
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from lib.page_config import load_locale
+from lib.page_config import load_locale, SUPPORTED_LANGS
+
+
+def build_hub_footer(current_lang, current_loc):
+    """Generate the lang-switcher div for a hub page footer.
+
+    Reads SUPPORTED_LANGS — adding a language requires no change here,
+    only a new locale file + a new app.html.
+    """
+    current_sub = current_loc['meta']['subdir']  # '' for FR, 'en', 'es', 'us'
+    links = []
+    for lang in SUPPORTED_LANGS:
+        if lang == current_lang:
+            continue
+        loc = load_locale(lang)
+        sub = loc['meta']['subdir']
+        flag_file = loc['meta']['flag']          # e.g. 'flags/gb.png'
+        label = loc['meta']['lang_label']
+
+        # Compute relative path from current hub to target app.html
+        if current_sub == '':
+            # root → sub/app.html
+            href = f"{sub}/app.html" if sub else "index.html"
+            flag_src = flag_file          # already relative to root
+        else:
+            # sub/ → ../app.html or ../other_sub/app.html
+            href = "../index.html" if sub == '' else f"../{sub}/app.html"
+            flag_src = f"../{flag_file}"
+
+        links.append(
+            f'<a href="{href}" style="color:inherit;text-decoration:none">'
+            f'<img src="{flag_src}" width="20" height="15" alt="" '
+            f'style="vertical-align:middle;border-radius:2px"> {label}</a>'
+        )
+
+    sep = ' &nbsp;·&nbsp; '
+    return sep.join(links)
+
+
+def inject_hub_footer(filepath, current_lang, current_loc):
+    """Replace <!-- HUB-FOOTER --> marker with generated lang links."""
+    content = open(filepath, encoding='utf-8').read()
+    marker = '<!-- HUB-FOOTER -->'
+    if marker not in content:
+        return False
+    footer_html = build_hub_footer(current_lang, current_loc)
+    content = content.replace(marker, footer_html)
+    open(filepath, 'w', encoding='utf-8').write(content)
+    return True
+
 
 dests = []
 with open('data/destinations.csv', encoding='utf-8-sig') as f:
@@ -744,5 +795,23 @@ if os.path.exists('es/app.html'):
         if inject('es/app.html', dests, loc_es):
             c = len(re.findall(r'mejor-epoca-', open('es/app.html').read()))
             print(f"  ✅ {c} liens")
+
+if os.path.exists('us/app.html'):
+    loc_us = load_locale('en-us')
+    print("\n🇺🇸 us/app.html...")
+    if 'SILO 1' in open('us/app.html').read():
+        if inject('us/app.html', dests, loc_us):
+            c = len(re.findall(r'best-time-to-visit-', open('us/app.html').read()))
+            print(f"  ✅ {c} liens")
+
+# Inject lang-switcher footers in all hub pages
+print("\n🔗 Injection footers langue...")
+for lang, filepath in [('fr','index.html'),('en','en/app.html'),('es','es/app.html'),('en-us','us/app.html')]:
+    if os.path.exists(filepath):
+        loc = load_locale(lang)
+        if inject_hub_footer(filepath, lang, loc):
+            print(f"  ✅ {filepath} footer mis à jour")
+        else:
+            print(f"  ⚠️  {filepath} : marqueur <!-- HUB-FOOTER --> absent")
 
 print("\n✅ Done")
