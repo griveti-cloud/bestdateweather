@@ -633,13 +633,6 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     pillar_comp_cards.append(
         f'<a href="{pillar_url(C, best_idx)}" class="link-card">'
         f'{C["lbl_pillar_tpl"].format(month=month_lc(C, best_month_name))}</a>')
-    comp_slug = dest_slug(C, dest)
-    if comparison_index and comp_slug in comparison_index:
-        for other_slug, comp_file in comparison_index[comp_slug][:3]:
-            other_nom = _resolve_dest_name(C, other_slug, all_dests)
-            pillar_comp_cards.append(
-                f'<a href="{comp_file}" class="link-card">'
-                f'{C["lbl_vs_tpl"].format(a=nom, b=other_nom)}</a>')
     pillar_comparison_section = f'''<section class="section">
  <div class="section-label">{C['lbl_guides_section']}</div>
  <h2 class="section-title">{C['lbl_guides_title']}</h2>
@@ -1158,7 +1151,6 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     # Pillar + comparison links
     pillar_link = (f'<a href="{pillar_url(C, mi)}" class="link-card">'
                    f'{C["lbl_pillar_tpl"].format(**tpl)}</a>')
-    comp_links = _build_comp_cards_monthly(cfg, slug_fr, nom, comparison_index, all_dests) if comparison_index else ''
 
     # ── Context paragraph ──
     event_text = (events or {}).get((slug_fr, mi+1), {}).get(C['lang'])
@@ -1489,7 +1481,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <section class="section">
  <div class="section-label">{L['sec_guides']}</div>
  <h2 class="section-title">{L['sec_guides_title']}</h2>
- <div class="flex-wrap-14">{pillar_link}{comp_links}</div>
+ <div class="flex-wrap-14">{pillar_link}</div>
  </section>
 
  <section class="widget-section">
