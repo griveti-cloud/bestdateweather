@@ -198,6 +198,55 @@ def seasonal_stats(months, L=None):
     return result
 
 
+# ── Unit conversion helpers ───────────────────────────────────────────────
+
+def c_to_f(celsius):
+    """Celsius → Fahrenheit, rounded to nearest integer."""
+    return round(celsius * 9 / 5 + 32)
+
+
+def mm_to_in(mm):
+    """Millimetres → inches, 1 decimal place."""
+    return round(mm / 25.4, 1)
+
+
+def fmt_temp(value, cfg):
+    """Format a temperature with correct unit symbol for the locale.
+
+    Args:
+        value : int|float — always stored in °C in the data
+        cfg   : lang config dict (must have cfg['imperial'] bool)
+    Returns e.g. "72°F" or "22°C"
+    """
+    if cfg.get('imperial'):
+        return f"{c_to_f(value)}°F"
+    return f"{value}°C"
+
+
+def fmt_precip(value_mm, cfg):
+    """Format precipitation with correct unit for the locale.
+
+    Args:
+        value_mm : float — always stored in mm in the data
+        cfg      : lang config dict
+    Returns e.g. "0.4in" or "9.7"  (no unit on metric — matches existing display)
+    """
+    if cfg.get('imperial'):
+        return f"{mm_to_in(value_mm)}in"
+    return f"{value_mm:.1f}"
+
+
+def fill_tpl(template, cfg, **kwargs):
+    """Fill a locale template string.
+
+    If cfg['imperial'], substitutes °C→°F and mm→in in the template string.
+    Numeric values must already be converted before calling (use c_to_f/mm_to_in).
+    """
+    if cfg.get('imperial'):
+        template = template.replace('°C', '°F').replace('mm', 'in')
+    return template.format(**kwargs)
+
+
 def bar_chart(pct, max_val=100):
     """ASCII bar chart (language-independent)."""
     filled = round((pct / max_val) * 10)
@@ -220,10 +269,10 @@ def climate_table_html(months, nom, is_mountain=False, L=None):
         rows += (f'<tr class="{cls}" data-tmax="{m["tmax"]}" '
                  f'data-rain="{m["rain_pct"]}" data-sun="{m["sun_h"]}">'
                  f'<td>{weather_emoji(m["tmax"], m["rain_pct"], m["sun_h"], m.get("precip"))} {L["months"][i]}</td>'
-                 f'<td data-label="{L["th_tmin"]}">{m["tmin"]}°C</td>'
-                 f'<td data-label="{L["th_tmax"]}">{m["tmax"]}°C</td>'
+                 f'<td data-label="{L["th_tmin"]}">{fmt_temp(m["tmin"], L)}</td>'
+                 f'<td data-label="{L["th_tmax"]}">{fmt_temp(m["tmax"], L)}</td>'
                  f'<td data-label="{L["th_rain"]}">{m["rain_pct"]}%</td>'
-                 f'<td data-label="{L["th_precip"]}">{m["precip"]:.1f}</td>'
+                 f'<td data-label="{L["th_precip"]}">{fmt_precip(m["precip"], L)}</td>'
                  f'<td data-label="{L["th_sun"]}">{m["sun_h"]}h</td>'
                  f'<td data-label="{L["th_score"]}">{m["score"]:.1f}/10</td>{ski_col}</tr>\n')
     ski_header = L['table_ski_header'] if is_mountain else ''

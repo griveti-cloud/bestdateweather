@@ -20,7 +20,7 @@ from urllib.parse import quote_plus
 from lib.common import (score_badge as _score_badge, best_months as _best_months,
                         budget_tier as _budget_tier, seasonal_stats as _seasonal_stats,
                         bar_chart, climate_table_html as _climate_table_html,
-                        weather_emoji, build_lang)
+                        weather_emoji, build_lang, fmt_temp, fmt_precip, fill_tpl, c_to_f)
 from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
                               dest_country, annual_url, monthly_url,
                               annual_url_cross, monthly_url_cross, hero_sub as _hero_sub,
@@ -55,6 +55,7 @@ MONTHLY_GRAD = [
 def _bind_lang(cfg):
     """Bind shared functions to the selected language."""
     L = build_lang(cfg['lang'])
+    L['imperial'] = cfg.get('imperial', False)  # propagate to table helpers
     return {
         'score_badge': lambda s, c=None: _score_badge(s, c, L=L),
         'best_months': lambda m: _best_months(m, L=L),
@@ -388,10 +389,17 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
                     worst_rain=worst_rain,
                     best_season_lc=_best_season_name.lower())
 
-    title = C['annual_titles'][title_var].format(**tpl_vars)
-    h1_text = C['annual_h1s'][title_var].format(**tpl_vars)
-    desc = C['annual_descs'][desc_var].format(**tpl_vars)
-    og_title = C['lbl_og_title_tpl'].format(**tpl_vars)
+    # Convert temperatures for imperial locales
+    if C.get('imperial'):
+
+        for _k in ('best_tmax', 'best_tmin'):
+            if _k in tpl_vars:
+                tpl_vars[_k] = c_to_f(tpl_vars[_k])
+
+    title    = fill_tpl(C['annual_titles'][title_var], C, **tpl_vars)
+    h1_text  = fill_tpl(C['annual_h1s'][title_var],   C, **tpl_vars)
+    desc     = fill_tpl(C['annual_descs'][desc_var],   C, **tpl_vars)
+    og_title = fill_tpl(C['lbl_og_title_tpl'],         C, **tpl_vars)
 
     # ── Climate table ──
     table_html = fn['climate_table_html'](months, nom, is_mountain)
@@ -403,7 +411,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <h2 class="section-title">{C['lbl_quick_title_tpl'].format(name=nom_f)}</h2>
  <div class="quick-facts">
  <div class="quick-facts-row"><div class="qf-label">{C['lbl_best_overall']}</div><div class="qf-value"><strong>{MONTHS[best_idx]}</strong></div></div>
- <div class="quick-facts-row"><div class="qf-label">{C['lbl_optimal_temp']}</div><div class="qf-value"><strong>{best_m["tmin"]}–{best_m["tmax"]}°C</strong> {C['lbl_in']} {month_lc(C, MONTHS[best_idx])}</div></div>
+ <div class="quick-facts-row"><div class="qf-label">{C['lbl_optimal_temp']}</div><div class="qf-value"><strong>{fmt_temp(best_m["tmin"], C)}–{fmt_temp(best_m["tmax"], C)}</strong> {C['lbl_in']} {month_lc(C, MONTHS[best_idx])}</div></div>
  <div class="quick-facts-row"><div class="qf-label">{C['lbl_least_rain']}</div><div class="qf-value"><strong>{best_rain}%</strong> {C['lbl_rainy_days_in']} {month_lc(C, MONTHS[best_idx])}</div></div>
  <div class="quick-facts-row"><div class="qf-label">{C['lbl_wettest']}</div><div class="qf-value"><strong>{MONTHS[worst_idx]}</strong> ({worst_rain}%)</div></div>
  <div class="quick-facts-row"><div class="qf-label">{C['lbl_best_score']}</div><div class="qf-value"><strong>{best_score}/10</strong></div></div>
@@ -541,7 +549,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
                         best_score=best_score, best_tmax=best_tmax,
                         worst_month=MONTHS[worst_idx], worst_rain=worst_rain,
                         winter_ski_avg=winter_ski_avg, jan_tmax=months[0]['tmax'])
-        faq_items = [(item['q'].format(**faq_vars), item['a'].format(**faq_vars))
+        faq_items = [(fill_tpl(item['q'], C, **faq_vars), fill_tpl(item['a'], C, **faq_vars))
                      for item in C['annual_faq_mountain']]
     else:
         # Bests suffix
@@ -556,7 +564,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
                         worst_month=MONTHS[worst_idx], worst_rain=worst_rain,
                         bests_suffix=bests_suffix,
                         winter_score=winter_score, winter_verdict=winter_verdict)
-        faq_items = [(item['q'].format(**faq_vars), item['a'].format(**faq_vars))
+        faq_items = [(fill_tpl(item['q'], C, **faq_vars), fill_tpl(item['a'], C, **faq_vars))
                      for item in C['annual_faq_standard']]
 
     faq_html = '<div class="faq-list">' + ''.join(
@@ -720,7 +728,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <div class="kicker">{kicker}</div>
  <div class="hero-stats mt-22">
  <div><span class="hstat-val">{best_str}</span><span class="hstat-lbl">{best_months_lbl}</span></div>
- <div><span class="hstat-val">{best_tmax}°C</span><span class="hstat-lbl">{C['lbl_optimal_temp_stat']}</span></div>
+ <div><span class="hstat-val">{fmt_temp(best_tmax, C)}</span><span class="hstat-lbl">{C['lbl_optimal_temp_stat']}</span></div>
  <div><span class="hstat-val">{best_rain}%</span><span class="hstat-lbl">{C['lbl_rainy_days_stat']}</span></div>
  </div>
 </header>
@@ -831,7 +839,7 @@ def _build_sim_cards(cfg, sim_list, all_dests, climate_for_sim, mi):
         url = f"{s_slug}{C['monthly_sep']}{C['month_url'][mi]}.html"
         pfx_flag = f"{C['asset_prefix']}flags/"
         sep = C.get('lbl_colon_sep', ': ')
-        lbl = f"{MONTHS[mi]}{sep}{sc.get('score','?')}/10 · {sc.get('tmax','?')}°C"
+        lbl = f"{MONTHS[mi]}{sep}{sc.get('score','?')}/10 · {fmt_temp(sc.get('tmax', 0), C)}"
         parts.append(
             f'<a href="{url}" class="sim-card-sm">'
             f'<div class="fw700-navy-f14">'
@@ -936,6 +944,13 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
                dir="E" if lon >= 0 else "W",
                annual_link=annual_url(C, slug))
 
+    # Convert temperatures in tpl for imperial locales (en-us)
+    if C.get('imperial'):
+
+        for _k in ('tmax', 'tmin'):
+            if _k in tpl:
+                tpl[_k] = c_to_f(tpl[_k])
+
     # ── Hero sub ──
     tier = 'excellent' if score >= 8.5 else ('good' if score >= 7.0 else 'poor')
     hero_sub = C['monthly_hero_subs'][tier][hash_var].format(**tpl)
@@ -998,10 +1013,10 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
             ski_col = f'<td>{ski:.1f}/10</td>'
         table_rows += (f'<tr class="{cls}"{highlight}>'
                        f'<td>{weather_emoji(mo["tmax"], mo["rain_pct"], mo["sun_h"], mo.get("tmin"))} {MONTHS[i]}</td>'
-                       f'<td data-label="{C["lbl_m_th_tmin"]}">{mo["tmin"]}°C</td>'
-                       f'<td data-label="{C["lbl_m_th_tmax"]}">{mo["tmax"]}°C</td>'
+                       f'<td data-label="{C["lbl_m_th_tmin"]}">{fmt_temp(mo["tmin"], C)}</td>'
+                       f'<td data-label="{C["lbl_m_th_tmax"]}">{fmt_temp(mo["tmax"], C)}</td>'
                        f'<td data-label="{C["lbl_m_th_rain"]}">{mo["rain_pct"]}%</td>'
-                       f'<td data-label="{C["lbl_m_th_precip"]}">{mo["precip"]:.1f}</td>'
+                       f'<td data-label="{C["lbl_m_th_precip"]}">{fmt_precip(mo["precip"], C)}</td>'
                        f'<td data-label="{C["lbl_m_th_sun"]}">{mo["sun_h"]}h</td>'
                        f'<td data-label="{C["lbl_m_th_score"]}">{mo["score"]:.1f}/10</td>{ski_col}</tr>\n')
 
@@ -1020,6 +1035,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         best_month=best_month, best_month_lc=month_lc(C, best_month),
         best_score=f"{best_score:.1f}", prep=prep, nom_bare=nom_bare,
     )
+    if C.get('imperial'):
+        _fv['tmax'] = c_to_f(_fv['tmax'])
+        _fv['tmin'] = c_to_f(_fv['tmin'])
 
     # Q1 — is this a good time?
     faq_q1 = ft['good_period_q'].format(**_fv)
@@ -1118,10 +1136,10 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     _verdict = C['lbl_m_verdict_period_rec'] if score >= 7.5 else C['lbl_m_verdict_period_avg'] if score >= 5.5 else C['lbl_m_verdict_period_bad']
     tpl['verdict'] = _verdict
 
-    title   = C['monthly_titles'][title_var].format(**tpl)
-    desc    = C['monthly_descs'][desc_var].format(**tpl)
-    h1_text = C['monthly_h1s'][h1_var].format(**tpl)
-    og_title = C['lbl_m_og_title_tpl'].format(**tpl)
+    title    = fill_tpl(C['monthly_titles'][title_var], C, **tpl)
+    desc     = fill_tpl(C['monthly_descs'][desc_var],   C, **tpl)
+    h1_text  = fill_tpl(C['monthly_h1s'][h1_var],       C, **tpl)
+    og_title = fill_tpl(C['lbl_m_og_title_tpl'],         C, **tpl)
 
     # ── Cross-linking similar destinations ──
     climate_for_sim = {}
@@ -1321,7 +1339,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <p class="hero-sub">{hero_sub}</p>
  <div class="kicker">{L['kicker']}</div>
  <div class="hero-stats mt-22">
- <div><span class="hstat-val">{m['tmax']}°C</span><span class="hstat-lbl">{L['hstat_tmax']}</span></div>
+ <div><span class="hstat-val">{fmt_temp(m['tmax'], C)}</span><span class="hstat-lbl">{L['hstat_tmax']}</span></div>
  <div><span class="hstat-val">{m['rain_pct']}%</span><span class="hstat-lbl">{L['hstat_rain']}</span></div>
  <div><span class="hstat-val">{m['sun_h']}h</span><span class="hstat-lbl">{L['hstat_sun']}</span></div>
  </div>
@@ -1332,7 +1350,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <h2 class="section-title">{L['sec_summary_title']}</h2>
  <div class="verdict-badge" style="background:{bg};color:{txt};border:1.5px solid {txt}">{verdict_lbl}</div>
  <div class="quick-facts">
- <div class="quick-facts-row"><div class="qf-label">🌡️ {L['qf_tminmax']}</div><div class="qf-value"><strong>{m['tmin']}°C – {m['tmax']}°C</strong></div></div>
+ <div class="quick-facts-row"><div class="qf-label">🌡️ {L['qf_tminmax']}</div><div class="qf-value"><strong>{fmt_temp(m['tmin'], C)} – {fmt_temp(m['tmax'], C)}</strong></div></div>
  <div class="quick-facts-row"><div class="qf-label">🌧 {L['qf_rain']}</div><div class="qf-value"><strong>{m['rain_pct']}%</strong> {L['qf_rain_unit']}</div></div>
  <div class="quick-facts-row"><div class="qf-label">☀️ {L['qf_sun']}</div><div class="qf-value"><strong>{m['sun_h']}h</strong> {L['qf_sun_unit']}</div></div>
  <div class="quick-facts-row"><div class="qf-label">🌊 {L['qf_season']}</div><div class="qf-value"><strong>{season}</strong></div></div>
@@ -1351,7 +1369,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  <div class="bar-wrap">
  <div>🌧 {L['bar_rain']} : {rain_bar} <span class="txt-gray">{m['rain_pct']}%</span></div>
- <div>🌡 {L['bar_temp']} : {temp_bar} <span class="txt-gray">{m['tmax']}°C</span></div>
+ <div>🌡 {L['bar_temp']} : {temp_bar} <span class="txt-gray">{fmt_temp(m['tmax'], C)}</span></div>
  <div>☀️ {L['bar_sun']} : {sun_bar} <span class="txt-gray">{m['sun_h']}h/j</span></div>
  </div>
  <p class="f14-body-sep"><strong>{L['verdict_intro']}</strong> {verdict_txt}</p>
@@ -1408,7 +1426,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <h2 class="section-title">{L['sec_compare_title']}</h2>
  <p class="f14-mb12">{L['compare_intro']}</p>
  <ul class="cmp-list">
- <li class="act-item-odd">🌡️ {L['cmp_tmax']} : <strong>{'+' if diff_t >= 0 else ''}{diff_t}°C</strong></li>
+ <li class="act-item-odd">🌡️ {L['cmp_tmax']} : <strong>{'+' if diff_t >= 0 else ''}{diff_t}{'°F' if C.get('imperial') else '°C'}</strong></li>
  <li class="act-item-even">🌧 {L['cmp_rain']} : <strong>{'+' if diff_r >= 0 else ''}{diff_r}%</strong></li>
  <li class="act-item-last">☀️ {L['cmp_sun']} : <strong>{'+' if diff_s >= 0 else ''}{diff_s}h/jour</strong></li>
  </ul>
@@ -1439,7 +1457,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <a href="{prev_url}" class="nav-card">
  <div class="f11-slate3-mb">{L['prev_label']}</div>
  <div class="fw700-navy">{MONTHS[prev_mi]}</div>
- <div class="f12-slate2">{months[prev_mi]['tmax']}°C · {months[prev_mi]['rain_pct']}% {C['lbl_rain_word']}</div>
+ <div class="f12-slate2">{fmt_temp(months[prev_mi]['tmax'], C)} · {months[prev_mi]['rain_pct']}% {C['lbl_rain_word']}</div>
  </a>
  <a href="{annual_link}" class="nav-card-active">
  <div class="f11-slate3-mb">{L['annual_label']}</div>
@@ -1449,7 +1467,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <a href="{next_url}" class="nav-card">
  <div class="f11-slate3-mb">{L['next_label']}</div>
  <div class="fw700-navy">{MONTHS[next_mi]}</div>
- <div class="f12-slate2">{months[next_mi]['tmax']}°C · {months[next_mi]['rain_pct']}% {C['lbl_rain_word']}</div>
+ <div class="f12-slate2">{fmt_temp(months[next_mi]['tmax'], C)} · {months[next_mi]['rain_pct']}% {C['lbl_rain_word']}</div>
  </a>
  </div>
  </section>
@@ -1494,7 +1512,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 def main():
     import argparse
     parser = argparse.ArgumentParser(description='BestDateWeather unified page generator')
-    parser.add_argument('--lang', required=True, choices=['fr', 'en', 'es'])
+    parser.add_argument('--lang', required=True, choices=['fr', 'en', 'en-us', 'es'])
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--validate-only', action='store_true')
     parser.add_argument('target', nargs='?', default=None, help='Single destination slug')

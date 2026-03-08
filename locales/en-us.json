@@ -1,0 +1,1085 @@
+{
+  "_comment": "BestDateWeather — English locale (en)",
+  "meta": {
+    "html_lang": "en-US",
+    "booking_lang": "en-us",
+    "booking_domain": "searchresults.en-us.html",
+    "asset_prefix": "../",
+    "base_url": "https://bestdateweather.com/us/",
+    "canonical_prefix": "https://bestdateweather.com/us/",
+    "schema_home_url": "https://bestdateweather.com/us/app.html",
+    "gyg_domain": "getyourguide.com",
+    "out_subdir": "us",
+    "lowercase_months": false,
+    "in_language": "en-US",
+    "gyg_lang": "en",
+    "cross_lang": "fr",
+    "cross_links": [
+      {
+        "lang": "fr",
+        "flag": "fr",
+        "label": "Français",
+        "asset_prefix": "../"
+      },
+      {
+        "lang": "es",
+        "flag": "es",
+        "label": "Español",
+        "asset_prefix": "../es/"
+      }
+    ],
+    "subdir": "us",
+    "flag": "flags/us.png",
+    "lang_label": "English (US)",
+    "imperial": true,
+    "x_default": true
+  },
+  "months": [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  "month_url": [
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december"
+  ],
+  "month_abbr": [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ],
+  "seasons_map": {
+    "0": "Winter",
+    "1": "Winter",
+    "2": "Spring",
+    "3": "Spring",
+    "4": "Spring",
+    "5": "Summer",
+    "6": "Summer",
+    "7": "Summer",
+    "8": "Autumn",
+    "9": "Autumn",
+    "10": "Autumn",
+    "11": "Winter"
+  },
+  "season_order": [
+    "Spring",
+    "Summer",
+    "Autumn",
+    "Winter"
+  ],
+  "season_range": {
+    "Spring": "Mar–May",
+    "Summer": "Jun–Aug",
+    "Autumn": "Sep–Nov",
+    "Winter": "Dec–Feb"
+  },
+  "season_months": {
+    "Spring": [
+      2,
+      3,
+      4
+    ],
+    "Summer": [
+      5,
+      6,
+      7
+    ],
+    "Autumn": [
+      8,
+      9,
+      10
+    ],
+    "Winter": [
+      11,
+      0,
+      1
+    ]
+  },
+  "url": {
+    "annual_prefix": "best-time-to-visit-",
+    "annual_suffix": ".html",
+    "monthly_sep": "-weather-",
+    "pillar_prefix": "where-to-go-in-",
+    "cross_annual_prefix": "meilleure-periode-",
+    "cross_monthly_sep": "-meteo-"
+  },
+  "cards": {
+    "file": "cards_en.csv",
+    "title_key": "title",
+    "text_key": "text"
+  },
+  "footer": {
+    "data_by": "Weather data by Open-Meteo.com",
+    "sources": "Sources: ECMWF, DWD, NOAA · CC BY 4.0",
+    "methodology": [
+      "methodology.html",
+      "Methodology"
+    ],
+    "app": [
+      "app.html",
+      "Weather app"
+    ],
+    "about": [
+      "about.html",
+      "About"
+    ],
+    "faq": [
+      "faq.html",
+      "FAQ"
+    ],
+    "legal": [
+      "legal.html",
+      "Legal"
+    ],
+    "privacy": [
+      "privacy.html",
+      "Privacy"
+    ],
+    "contact": [
+      "contact.html",
+      "Contact"
+    ],
+    "alt_lang_flag": "fr",
+    "alt_lang_label": "Français"
+  },
+  "rankings": [
+    [
+      "best-destinations-weather-ranking-2026.html",
+      "🌍 World ranking 2026"
+    ],
+    [
+      "best-europe-weather-ranking-2026.html",
+      "🇪🇺 Best in Europe"
+    ],
+    [
+      "best-destinations-winter-weather-2026.html",
+      "🌴 Sun destinations winter"
+    ]
+  ],
+  "badges": {
+    "excellent": "✅ Excellent",
+    "good": "✅ Good",
+    "fair": "⚠️ Fair",
+    "poor": "❌ Poor"
+  },
+  "tiers": {
+    "peak": "💸 Peak season",
+    "low": "✅ Low season",
+    "shoulder": "🌿 Shoulder"
+  },
+  "verdicts": {
+    "excellent": "Excellent time",
+    "good": "Good time",
+    "fair": "Acceptable",
+    "poor": "Not recommended"
+  },
+  "table": {
+    "aria": "Monthly climate table {nom}",
+    "headers": "<th>Month</th><th>Min °F</th><th>Max °F</th><th>Rainy days (%)</th><th>Precip. in/d</th><th>Sun h/d</th><th>Score</th>",
+    "ski_header": "<th>Ski score 🎿</th>",
+    "legend_ideal": "Ideal",
+    "legend_fair": "Fair",
+    "legend_off": "Unfavourable",
+    "legend_source": "Source: Open-Meteo · 10 years"
+  },
+  "nav": {
+    "cta_label": "Try the weather app",
+    "cta_href": "app.html"
+  },
+  "labels": {
+    "quick_section": "Quick decision",
+    "quick_title_tpl": "When to visit {name}?",
+    "best_overall": "🌞 Best time overall",
+    "optimal_temp": "🌡️ Optimal temperature",
+    "least_rain": "🌧 Least rain",
+    "wettest": "🌧 Wettest month",
+    "best_score": "📅 Best score",
+    "rainy_days_in": "rainy days in",
+    "in": "in",
+    "cards_section": "By trip type",
+    "cards_title": "Best time by type of trip",
+    "table_section": "Monthly climate data",
+    "table_title_tpl": "{name} weather month by month",
+    "season_section": "Seasonal breakdown",
+    "season_title": "What to expect each season",
+    "season_temp_tpl": "Average {tmax}°F, {rain}% rainy days, {sun}h sunshine/day. Score: {score}/10.",
+    "booking_section": "Accommodation",
+    "booking_title_tpl": "Find a place to stay in {name}",
+    "booking_cta": "Check availability during the recommended period",
+    "booking_btn": "Search on Booking.com",
+    "monthly_section": "Monthly weather",
+    "monthly_title": "Detailed weather by month",
+    "faq_section": "FAQ",
+    "faq_title": "Frequently asked questions",
+    "similar_section": "Also explore",
+    "similar_title": "Destinations with similar climate",
+    "similar_very": "Very similar climate",
+    "similar_mid": "Similar climate",
+    "similar_low": "Fairly similar climate",
+    "ranking_section": "Weather rankings",
+    "ranking_title": "Compare destinations by weather",
+    "guides_section": "Guides & comparisons",
+    "guides_title": "Explore by month or compare",
+    "pillar_tpl": "📅 Where to go in {month} — top 25",
+    "vs_tpl": "⚖️ {a} vs {b}",
+    "breadcrumb_home": "Home",
+    "updated_tpl": "Updated: {date} · Open-Meteo · 10 years · 12 months compared · {coords}",
+    "best_months": "Best month{s}",
+    "optimal_temp_stat": "Optimal temperature",
+    "rainy_days_stat": "Rainy days",
+    "hero_sub_default_tpl": "{name}, a destination to discover based on weather data.",
+    "tip_prefix": "Tip",
+    "tip_good_tpl": "{months} {verb} a good weather/price balance — decent score with fewer crowds.",
+    "tip_offpeak_tpl": "off-peak months ({m1}, {m2}) are cheapest but weather is significantly worse.",
+    "offer_sg": "offers",
+    "offer_pl": "offer",
+    "activities_section": "Activities & tours",
+    "activities_title_tpl": "Activities and tours in {name}",
+    "activities_cta": "Guided tours, skip-the-line tickets and local experiences.",
+    "activities_btn": "Browse activities on GetYourGuide",
+    "flights_section": "Flights",
+    "flights_title_tpl": "Find a flight to {name}",
+    "flights_cta": "Compare flights from all airlines.",
+    "flights_btn": "Search flights",
+    "rain_word": "rain",
+    "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropical destination — heavy rain months benefit from an algorithmic adjustment: tropical showers are intense but brief and usually don't ruin a trip.</p>",
+    "headline_tpl": "Best Time to Visit {nom}",
+    "og_title_tpl": "Best time to visit {nom} — weather &amp; tips",
+    "dataset_name_tpl": "Climate data for {nom} — monthly averages over 10 years",
+    "dataset_desc_tpl": "Monthly temperatures, precipitation, sunshine and wind for {nom}. Averages computed from 10 years of ERA5 data (Open-Meteo).",
+    "best_months_lbl_tpl": "Best month{s}",
+    "or_word": "or",
+    "share_label": "Share",
+    "colon_sep": ": "
+  },
+  "monthly": {
+    "hero_tpl": "{name} weather in {month}",
+    "score_label": "Weather score",
+    "overview_section": "Month overview",
+    "overview_title_tpl": "{name} in {month}: what to expect?",
+    "cta_title": "📅 Live forecast — next 12 months",
+    "cta_text": "Real-time data with ECMWF seasonal corrections · updated daily",
+    "cta_btn": "Try the weather app",
+    "cta_link": "app.html",
+    "act_city_good": "✅ Good",
+    "act_city_ok": "⚠️ Possible",
+    "act_ext_good": "✅ Good",
+    "act_ext_ok": "⚠️ Possible",
+    "act_ext_bad": "❌ Not recommended",
+    "act_beach_good": "✅ Good",
+    "act_beach_ok": "⚠️ Possible",
+    "act_beach_bad": "❌ Not recommended",
+    "act_budget_low": "✅ Low season",
+    "lbl_city": "🏙️ City break / culture",
+    "lbl_ext": "🚶 Outdoor activities",
+    "lbl_beach": "🏖️ Beach / swimming",
+    "lbl_budget": "💰 Budget",
+    "rain_unit": "of days",
+    "sun_unit": "per day on average",
+    "qf_tminmax": "Temperature min / max",
+    "qf_rain": "Rainy days",
+    "qf_sun": "Sunshine",
+    "qf_season": "🌊 Season",
+    "qf_score": "⭐ Weather score",
+    "qf_best_month": "📅 Best month",
+    "hstat_tmax": "Max temperature",
+    "hstat_rain": "Rainy days",
+    "hstat_sun": "Sunshine / day",
+    "sec_decision": "Quick decision",
+    "sec_decision_title_tpl": "Should you visit {name} in {month}?",
+    "yes_if": "✅ Yes if:",
+    "no_if": "❌ No if:",
+    "our_opinion": "Our take:",
+    "opinion_tpl": "{verdict_word} conditions in {month} ({score}/10). Consider {best_month} if your dates are flexible.",
+    "sec_activities": "By trip type",
+    "sec_activities_title_tpl": "{name} in {month} by trip type",
+    "sec_context": "Local context",
+    "sec_context_title": "What to expect in {month}",
+    "sec_table": "Annual table",
+    "sec_table_title": "Month-by-month comparison",
+    "src_label": "📊 Data source",
+    "src_link_text": "See methodology →",
+    "sec_compare": "Comparison",
+    "sec_compare_title_tpl": "{month} vs {best_month} (best month)",
+    "compare_intro_tpl": "The best month is <strong><a href=\"{annual_link}\" class=\"txt-inherit\">{best_month}</a></strong> (score {best_score}/10). Difference:",
+    "cmp_tmax": "Max temperature",
+    "cmp_rain": "Rainy days",
+    "cmp_sun": "Sunshine",
+    "sec_faq": "FAQ",
+    "sec_faq_title_tpl": "FAQ — {name} in {month}",
+    "prev_label": "← Previous month",
+    "next_label": "Next month →",
+    "annual_label": "📅 Annual view",
+    "annual_text": "All months",
+    "annual_best_tpl": "Best: {best_month}",
+    "sec_similar": "Also explore",
+    "sec_similar_title_tpl": "Similar destinations in {month}",
+    "sec_rankings": "Weather rankings",
+    "sec_rankings_title": "Compare destinations by weather",
+    "sec_guides": "Guides & comparisons",
+    "sec_guides_title": "Explore or compare",
+    "context_excellent": "This is the best month of the year for {name}.",
+    "context_good": "This is a good time to visit {name}.",
+    "context_fair": "Conditions are acceptable in {name}.",
+    "context_poor": "This is not the best time for {name}.",
+    "better_month_tpl": "Consider {month} ({score}/10) for better conditions.",
+    "tropical_note": "In tropical areas, rain often comes as short, intense showers rather than grey days.",
+    "src_text_tpl": "Data based on <strong>10 years of ERA5 records</strong> via Open-Meteo, with ECMWF seasonal adjustment. In {month}, {name} averages <strong>{tmax}°F</strong>, {rain}% rainy days and {sun}h of sunshine per day. Overall weather score: <strong>{score}/10</strong>.",
+    "temp_range": "Temperatures",
+    "rain_label": "Rain",
+    "sun_label": "Sun",
+    "temp_section_label": "Temperatures",
+    "rain_section_label": "Precipitation",
+    "sun_section_label": "Sunshine",
+    "sec_summary": "Month summary",
+    "sec_summary_title_tpl": "{nom} weather in {month}",
+    "bar_rain": "Rain",
+    "bar_temp": "Temperature",
+    "bar_sun": "Sunshine",
+    "sec_nav": "Browse by month",
+    "sec_nav_title_tpl": "All months for {nom}",
+    "th_month": "Month",
+    "th_tmin": "Min °F",
+    "th_tmax": "Max °F",
+    "th_rain": "Rain %",
+    "th_precip": "Precip in",
+    "th_sun": "Sun h/d",
+    "th_score": "Score",
+    "th_ski": "Ski score 🎿",
+    "legend_note": "◀ Current month · Source Open-Meteo · 10 years",
+    "src_link": "methodology.html",
+    "kicker_tpl": "Open-Meteo · 10 years · 12 months compared · {lat}°N {lon}°{dir}",
+    "og_title_tpl": "{nom} in {month} — {tmax}°F, {rain}% rain",
+    "bk_cta_tpl": "Find places to stay in {nom} in {month}",
+    "sim_label": "Explore also",
+    "verdict_period_rec": "Recommended period.",
+    "verdict_period_avg": "Average period.",
+    "verdict_period_bad": "Not recommended.",
+    "act_beach_na": "— No sea access",
+    "back_annual_tpl": "← Best time for {name}",
+    "compare_section": "Compare",
+    "compare_title": "Guides & comparisons",
+    "detail_section": "Climate details",
+    "detail_title": "Detailed data",
+    "max": "Max",
+    "min": "Min",
+    "month_nav_tpl": "Weather in {month_lc}",
+    "other_months": "Other months",
+    "other_title_tpl": "{name} weather in other months",
+    "precip_day": "Precipitation/day",
+    "rain_section": "Precipitation",
+    "rainy_days": "Rainy days",
+    "sun_day": "Sunshine/day",
+    "sun_section": "Sunshine",
+    "temp_section": "Temperatures"
+  },
+  "narratives": {
+    "tropical_rainy": "In {month}, {name} is in the middle of the rainy season ({rain}% rainy days). Tropical showers are usually short but intense — pack a light raincoat.",
+    "tropical_dry": "{month} falls in the dry season in {name}. With only {rain}% rainy days and {sun}h of sunshine, it's an optimal time to visit.",
+    "tropical_transition": "{month} marks a transitional period in {name}. Weather remains pleasant at {tmax}°F with intermittent showers ({rain}% of days).",
+    "hot_dry": "Temperatures reach {tmax}°F in {name} in {month}. With {sun}h of sunshine and very little rain ({rain}%), it's ideal for beach activities.",
+    "hot_humid": "The thermometer hits {tmax}°F in {name} in {month}, with notable humidity ({rain}% rainy days). Favour activities early morning or late afternoon.",
+    "warm_dry": "{month} offers pleasant conditions in {name}: {tmax}°F, {sun}h of sunshine and little rain ({rain}%). Perfect for outdoor activities.",
+    "warm_mixed": "In {month}, {name} sees {tmax}°F with decent sunshine ({sun}h). Rain stays moderate ({rain}% of days) — have a backup plan for grey days.",
+    "mild_dry": "{month} is a shoulder season in {name}. At {tmax}°F with little rain ({rain}%), it's pleasant for city breaks and sightseeing.",
+    "mild_mixed": "In {month}, {name} sees changeable conditions: {tmax}°F, {rain}% rain and {sun}h of sunshine. A waterproof jacket will be useful.",
+    "cold_dry": "{month} is cold in {name} ({tmax}°F max) but relatively dry ({rain}% rain). Limited sunshine ({sun}h) makes this period less attractive for outdoor activities.",
+    "cold_wet": "In {month}, {name} combines cold ({tmax}°F) and rain ({rain}% of days). With {sun}h of sunshine, it's the least favourable time of year.",
+    "shoulder_good": "The shoulder season is a good compromise in {name} in {month}. Fewer tourists, lower prices, and decent weather ({tmax}°F, {rain}% rain).",
+    "winter_good": "Winter in {name} in {month} can offer pleasant surprises with {tmax}°F and {sun}h of sunshine. Prices are at their lowest — perfect for a cultural break.",
+    "extreme_heat": "Warning: temperatures exceed {tmax}°F in {name} in {month}. The heat can be hard to bear, especially midday. Stay hydrated and limit physical effort.",
+    "monsoon": "{month} is full monsoon season in {name}. Expect torrential rain ({rain}% rainy days). Some tourist infrastructure may be closed.",
+    "perfect": "{month} is the ideal month to visit {name}. With {tmax}°F, {sun}h of sunshine and only {rain}% rain, all conditions are perfect.",
+    "ski_good": "Good skiing conditions in {name} in {month}: {tmax}°F daytime temperatures favour a solid snowpack. {sun}h of sunshine on the slopes.",
+    "ski_fair": "Skiing is possible in {name} in {month}, but conditions aren't optimal. Check piste conditions before heading out.",
+    "ski_bad": "Skiing is not recommended in {month} in {name}. Temperatures ({tmax}°F) limit snow coverage."
+  },
+  "faq_templates": {
+    "good_period_q": "Is {month} a good time to visit {name}?",
+    "good_period_a_rec": "{month} is an excellent time to visit {name} (score {score}/10). With {tmax}°F, {sun}h of sunshine and {rain}% rain, conditions are very favourable.",
+    "good_period_a_mid": "{month} is an acceptable time for {name} (score {score}/10). Conditions are decent but not optimal — consider {best_month} ({best_score}/10) if possible.",
+    "good_period_a_avoid": "{month} is not recommended for {name} (score {score}/10). With {rain}% rainy days and {sun}h of sunshine, consider {best_month} ({best_score}/10) instead.",
+    "weather_q_hot": "Is it too hot in {name} in {month}?",
+    "weather_a_hot_intense": "Temperatures reach {tmax}°F. The heat is extreme — limit activities to cooler hours. Sunshine: {sun}h/day.",
+    "weather_a_hot_ok": "Temperatures reach {tmax}°F. It's intense but manageable with sunscreen and water. Sunshine: {sun}h/day.",
+    "weather_q_rain": "Does it rain a lot in {name} in {month}?",
+    "weather_a_rain_tropical": "Yes, {rain}% of days see rain in {month}. In tropical areas, these are usually short but intense showers.",
+    "weather_a_rain_normal": "Yes, {rain}% of days see rain in {month}. Plan some indoor activities as backup.",
+    "weather_q_cold": "What's the weather like in {name} in {month}?",
+    "weather_a_cold": "It's cool with {tmax}°F daytime and {tmin}°F at night. {sun}h of sunshine per day. Pack warm clothes and favour indoor visits.",
+    "weather_q_default": "What's the weather like in {name} in {month}?",
+    "weather_a_default": "In {month}, {name} sees {tmax}°F daytime, {sun}h of sunshine and {rain}% rainy days.",
+    "ski_q": "Can you ski in {name} in {month}?",
+    "ski_a_good": "Yes, {month} is an excellent time for skiing (score {ski}/10). With {tmax}°F max and {rain}% precipitation, snow conditions are good.",
+    "ski_a_fair": "Conditions are decent (ski score {ski}/10) but not optimal. Check piste conditions before heading out.",
+    "ski_a_bad": "Skiing is not recommended in {month} (ski score {ski}/10). Temperatures ({tmax}°F) limit snow coverage.",
+    "ski_q_cold": "Can you ski in {name} in {month}?",
+    "ski_a_good_mountain": "Yes, {month} is excellent for skiing (score {ski}/10). With {tmax}°F max and {rain}% precipitation, snow conditions are good.",
+    "ski_a_fair_mountain": "Conditions are decent (ski score {ski}/10) but not optimal. Check slope conditions before going.",
+    "ski_a_bad_mountain": "Skiing is not recommended in {month} (ski score {ski}/10). Temperatures ({tmax}°F) limit snow cover.",
+    "mountain_summer_q": "What to do in {name} in {month}?",
+    "mountain_summer_a_good": "Yes, {month} is one of the best times to visit {name} (score {score}/10). {tmax}°F, {sun}h of sunshine — perfect for hiking.",
+    "mountain_summer_a_mid": "Yes, {month} is a good time ({score}/10). Great for outdoor activities and hiking.",
+    "mountain_summer_a_transition": "Transition period with a summer score of {score}/10 and ski score of {ski}/10. Neither the best ski nor summer season.",
+    "activity_q": "What to do in {name} in {month}?",
+    "activity_a_outdoor": "With {tmax}°F and {sun}h of sunshine, all outdoor activities are possible: hiking, sightseeing and terraces.",
+    "activity_a_outdoor_tropical": "With {tmax}°F and {sun}h of sunshine, all outdoor activities are possible: beach, snorkelling and boat excursions.",
+    "activity_a_indoor": "With {tmax}°F max and {sun}h of sunshine, favour indoor activities — museums, spas, gastronomy.",
+    "activity_a_cultural": "With {tmax}°F max and {sun}h of sunshine, focus on cultural sites, museums and local gastronomy.",
+    "weather_q_hot2": "Is it too hot in {name} in {month}?",
+    "share_label": "Share",
+    "colon_sep": ": "
+  },
+  "decision": {
+    "yes_hot_beach": "enjoy the sun and the beach.",
+    "yes_warm_outdoor": "explore outdoors with pleasant temperatures.",
+    "yes_mild_culture": "enjoy city breaks and cultural visits at reduced prices.",
+    "yes_cold_ambiance": "enjoy the winter atmosphere and the lowest prices of the year.",
+    "yes_shoulder_budget": "travel off-season with good value for money.",
+    "no_rain": "looking for guaranteed sunshine — {rain}% rain risk.",
+    "no_cold": "looking for warmth — only {tmax}°F.",
+    "no_heat": "avoiding intense heat — {tmax}°F on average.",
+    "no_outdoor": "looking for sunshine or outdoor activities."
+  },
+  "verdict_words": {
+    "rec": "Favourable",
+    "mid": "Acceptable",
+    "avoid": "Unfavourable"
+  },
+  "console": {
+    "title": "BestDateWeather — generate_pages.py",
+    "target_all": "all destinations",
+    "validation_ok": "✅ Validation OK\n",
+    "skip_unknown": "[SKIP] {slug}: unknown destination",
+    "skip_incomplete": "[SKIP] {slug}: incomplete climate data",
+    "monthly_done": "12 monthly pages",
+    "monthly_skip": "monthly skipped (monthly=False)",
+    "no_errors": "✅ No generation errors"
+  },
+  "validation": {
+    "missing_months": "[P0] {slug}: missing months: {missing}",
+    "score_range": "[P0] {slug}/{month}: score out of range ({score})",
+    "class_invalid": "[P0] {slug}/{month}: invalid class ({cls})",
+    "score_class": "[P1] {slug}/{month}: score {score} inconsistent with class {cls}",
+    "no_climate": "[P1] {slug}: in destinations.csv but no climate data",
+    "card_missing": "[P2] {slug}: no project card"
+  },
+  "dest_fields": {
+    "name_key": "nom_en",
+    "slug_key": "slug_en",
+    "country_key": "country_en",
+    "hero_sub_key": "hero_sub_en"
+  },
+  "annual_titles": [
+    "Best Time to Visit {nom} [{year}] — Weather & Tips",
+    "When to Visit {nom}? Month-by-Month Climate [{year}]",
+    "{nom}: Best Season to Travel [{year}] — Climate & Weather"
+  ],
+  "annual_h1s": [
+    "Best Time to Visit<br/><em>{nom}</em>",
+    "When to Visit<br/><em>{nom}</em>?",
+    "<em>{nom}</em><br/>Which Season to Choose?"
+  ],
+  "annual_descs": [
+    "When is the best time to visit {nom}? {best_month} offers {best_tmax}°F and {best_rain}% rainy days. Weather score: {best_score}/10. 10-year Open-Meteo data.",
+    "When to visit {nom}? {best_month} is the best month ({best_score}/10) with {best_tmax}°F. Full 12-month analysis based on 10 years of data.",
+    "{nom} in {best_month}: {best_tmax}°F, {best_rain}% rain, score {best_score}/10. Find the best time to go — 10-year weather data.",
+    "{best_month} is ideal for {nom}: {best_tmax}°F, {best_sun}h sunshine and {best_rain}% rain. Avoid {worst_month} ({worst_rain}% rainy). Score {best_score}/10.",
+    "{nom} climate: enjoy {best_season_lc} ({best_tmin}–{best_tmax}°F in {best_month}). Sunshine {best_sun}h/day, rain {best_rain}%. 10-year analysis."
+  ],
+  "annual_faq_mountain": [
+    {
+      "q": "When is the best time to visit {nom}?",
+      "a": "It depends on the activity. For skiing: {best_ski_month} (ski score {best_ski_score}/10). For hiking/summer: {best_month} ({best_score}/10, {best_tmax}°F)."
+    },
+    {
+      "q": "Can you ski in {nom} in winter?",
+      "a": "Yes, it's peak ski season. Average ski score December–February: {winter_ski_avg}/10. Cold temperatures ({jan_tmax}°F max in January) and frequent snowfall."
+    },
+    {
+      "q": "Is it warm in {nom} in summer?",
+      "a": "In {best_month}, temperatures average {best_tmax}°F. Ideal for hiking and outdoor activities."
+    },
+    {
+      "q": "What is the wettest month in {nom}?",
+      "a": "{worst_month} is the wettest month with {worst_rain}% rainy days."
+    }
+  ],
+  "annual_faq_standard": [
+    {
+      "q": "When is the best time to visit {nom}?",
+      "a": "{best_month} is ideal with {best_rain}% rainy days and {best_tmax}°F. {bests_suffix}"
+    },
+    {
+      "q": "What is the wettest month in {nom}?",
+      "a": "{worst_month} is the wettest month with {worst_rain}% rainy days."
+    },
+    {
+      "q": "Is it hot in {nom} in {best_month}?",
+      "a": "Yes, {best_month} is the best month with an average of {best_tmax}°F."
+    },
+    {
+      "q": "Can you visit {nom} in winter?",
+      "a": "In winter, the average score is {winter_score}/10. {winter_verdict}"
+    }
+  ],
+  "annual_faq_winter_verdicts": {
+    "ok": "Acceptable conditions for cultural visits.",
+    "bad": "Difficult period — prefer the peak season."
+  },
+  "annual_faq_bests_suffix": "The months of {bests_str} offer comparable conditions.",
+  "monthly_hero_subs": {
+    "excellent": [
+      "{month} is one of the best times to visit {nom}.",
+      "{nom} in {month}: near-perfect conditions.",
+      "Visiting {nom} in {month}? Excellent choice."
+    ],
+    "good": [
+      "{month} is a good time to visit. {best_month} is slightly better.",
+      "{nom} in {month}: solid, though {best_month} remains peak.",
+      "Good window in {month} — {best_month} is a notch above."
+    ],
+    "poor": [
+      "{month} is a difficult time — {best_month} offers much better conditions.",
+      "Tough conditions in {month}. Consider {best_month} if possible.",
+      "{nom} in {month}? Not the best window — aim for {best_month}."
+    ]
+  },
+  "monthly_verdicts": {
+    "excellent": [
+      "{month} is an excellent time to visit {nom}. {tmax}°F, {sun}h of sunshine — optimal conditions.",
+      "Visiting {nom} in {month} is a safe bet: great weather, only {rain}% chance of rain.",
+      "{nom} in {month} ticks all the boxes: warmth, sunshine, minimal rain."
+    ],
+    "good": [
+      "{month} is a good time to visit {nom}. {best_month} remains slightly better (+{diff} pts).",
+      "Favourable conditions in {month} ({score}/10). {best_month} scores higher but the gap is small.",
+      "{nom} in {month}: {tmax}°F and {sun}h of sunshine. Decent, but not the peak."
+    ],
+    "fair": [
+      "{month} is an average time for {nom}. {best_month} ({best_score}/10) is clearly preferable.",
+      "Not the best window: {rain}% rain risk and {sun}h of sunshine. {best_month} is much safer.",
+      "{nom} in {month} is possible but {best_month} offers a score of {best_score}/10 vs {score}."
+    ],
+    "poor": [
+      "{month} is a difficult time for {nom}. {best_month} ({best_score}/10) is much more favourable.",
+      "Unfavourable conditions in {month} ({score}/10). Consider {best_month} if your dates are flexible.",
+      "{nom} in {month}: {rain}% rain, {sun}h of sunshine. Better to wait for {best_month}."
+    ]
+  },
+  "monthly_oui_si": {
+    "high_tropical_dry_yes": "you want to enjoy the dry season — ideal for beaches and excursions.",
+    "high_tropical_dry_no": "you're on a tight budget — it's peak season with highest prices.",
+    "high_hot_sunny_yes": "you're looking for maximum sunshine — {sun}h per day on average.",
+    "high_hot_sunny_no": "you struggle with heat — temperatures regularly exceed 30°F.",
+    "high_warm_dry_yes": "you want to combine beach, sightseeing and hiking — versatile weather ({tmax}°F, little rain).",
+    "high_warm_dry_no": "you want to avoid tourist crowds — this is the busiest period.",
+    "high_summer_yes": "you want long sunny days and outdoor activities.",
+    "high_summer_no": "you want to avoid summer crowds — this is peak tourist season.",
+    "high_shoulder_yes": "you want good weather with lower prices than peak season.",
+    "high_shoulder_no": "you need guaranteed perfect weather — some mixed days are possible.",
+    "high_default_yes": "you want great weather for all activities.",
+    "high_default_no": "you're on a tight budget — prices are higher during peak season.",
+    "mid_rainy_yes": "you're willing to accept showers in exchange for lower prices and fewer tourists.",
+    "mid_rainy_no": "you're planning 100% outdoor activities — rain is frequent.",
+    "mid_cold_yes": "you prefer museums and gastronomy — it's cool at {tmax}°F.",
+    "mid_cold_no": "you're looking for beach weather — it's not the right season.",
+    "mid_mild_yes": "you want to explore the city on foot without suffering from heat.",
+    "mid_mild_no": "you're looking for a beach destination — water and air are still cool.",
+    "mid_shoulder_yes": "you want shoulder-season value — fewer crowds, {tmax}°F.",
+    "mid_shoulder_no": "you need maximum sunshine — some overcast days are possible.",
+    "mid_default_yes": "you want to explore cultural sites and local food.",
+    "mid_default_no": "you need guaranteed sunshine for photos or outdoor activities.",
+    "low_tropical_rainy_yes": "you want an off-the-beaten-path experience at bargain prices.",
+    "low_tropical_rainy_no": "you're worried about rain — it's monsoon season with daily showers.",
+    "low_cold_winter_yes": "you enjoy winter atmosphere and the lowest prices of the year.",
+    "low_cold_winter_no": "you're looking for sunshine or outdoor activities.",
+    "low_rainy_yes": "you prefer off-season travel with reduced prices and very few tourists.",
+    "low_rainy_no": "you want to avoid rain — more than half the days are rainy.",
+    "low_default_yes": "you want the lowest prices and minimal crowds.",
+    "low_default_no": "you're looking for summer weather — conditions don't support it."
+  },
+  "context_paragraphs": {
+    "tropical_wet": "{month} falls in the wet season in {nom}. Showers are often brief but intense.",
+    "tropical_dry": "{month} is peak dry season in {nom}. The air is warm and humidity more bearable than in the rainy season.",
+    "summer_hot": "In the height of summer, {nom} sees high temperatures ({tmax}°F). Heat is a factor for outdoor activities.",
+    "summer_warm": "Summer in {nom} brings pleasant temperatures ({tmax}°F) and long sunny days ({sun}h of sunshine).",
+    "winter_cold": "Winter in {nom} is cool ({tmax}°F during the day). Days are short ({sun}h of sunshine) but the city reveals a different side.",
+    "winter_warm": "Even in winter, {nom} enjoys {tmax}°F. A real asset for escaping the European cold.",
+    "spring": "Spring marks the start of the good season in {nom}. Temperatures rise ({tmax}°F) and tourists have not yet arrived en masse.",
+    "autumn_good": "Autumn in {nom} is often underrated: {tmax}°F, golden light and declining crowds. An interesting window.",
+    "autumn_bad": "Autumn marks the end of peak season in {nom}. Temperatures drop ({tmax}°F) and rain returns ({rain}% of days).",
+    "default": "In {month}, {nom} sees {tmax}°F during the day with {sun}h of sunshine per day.",
+    "rain_none": "Rain is virtually absent ({rain}% of days) — ideal for planning without a backup.",
+    "rain_low": "Rain risk remains low ({rain}% of days), leaving good room for outdoor activities.",
+    "rain_mid": "Expect rain on {rain}% of days — a light raincoat in the bag is recommended.",
+    "rain_high": "With {rain}% of rainy days, always have indoor alternatives planned.",
+    "score_top": "This is one of the best times of year to visit {nom}.",
+    "score_good": "A good balance between weather and crowds, even if {best_month} ({best_score}/10) remains theoretically better.",
+    "score_fair": "Not the best window, but acceptable if dates are constrained. {best_month} ({best_score}/10) is significantly better if possible."
+  },
+  "monthly_titles": [
+    "{nom} in {month}: weather, rain ({rain}%) and should you go? [{year}]",
+    "{nom} weather in {month} [{year}] — {tmax}°F, {rain}% rain",
+    "Visit {nom} in {month}? Score {score}/10 [{year}]"
+  ],
+  "monthly_descs": [
+    "{nom} weather in {month}: {tmax}°F max, {rain}% rainy days, {sun}h sunshine/day. Score {score}/10. Based on 10 years of Open-Meteo data.",
+    "{nom} in {month}: {tmax}°F, {sun}h sunshine, {rain}% rain. {verdict} Score {score}/10.",
+    "Should you visit {nom} in {month}? {tmax}°F and {rain}% rain — weather score {score}/10 based on 10 years of data.",
+    "{nom} in {month}: {sun}h sunshine, {tmin}–{tmax}°F. {verdict} Climate analysed from 10 years of ERA5 data.",
+    "{tmax}°F and {rain}% rain in {month} in {nom}. {sun}h sunshine — score {score}/10."
+  ],
+  "monthly_h1s": [
+    "{nom} weather<br/><em>in {month}</em>",
+    "{nom} in {month}<br/><em>what's the weather like?</em>",
+    "Visit {nom}<br/><em>in {month}?</em>"
+  ],
+  "monthly_article_headline_tpl": "{nom} weather in {month} — Temperature, rain and tips",
+  "monthly_article_desc_tpl": "{nom} weather in {month}: {tmax}°F, {rain}% rainy days. Score {score}/10.",
+  "gen": {
+    "asset_prefix": "../",
+    "home_url": "app.html",
+    "home_label": "Weather app",
+    "data_credit": "Data by Open-Meteo",
+    "legal_url": "../mentions-legales.html",
+    "legal_label": "Legal",
+    "share_label": "Share",
+    "try_app_label": "Try the app",
+    "annual_href_tpl": "best-time-to-visit-{slug}.html",
+    "monthly_href_tpl": "{slug}-weather-{month_slug}.html",
+    "guide_label": "Full guide",
+    "explore_label": "Explore",
+    "best_period_tpl": "Best time to visit {nom}",
+    "guides_title": "Detailed Guides",
+    "cta_choose": "🎯 Choose a specific date for your trip →",
+    "alt_langs": [
+      {
+        "prefix": "../",
+        "flag": "../flags/fr.png",
+        "label": "Français"
+      },
+      {
+        "prefix": "../es/",
+        "flag": "../flags/es.png",
+        "label": "Español"
+      }
+    ]
+  },
+  "hub": {
+    "search_placeholder": "Search a destination…",
+    "no_results": "No destinations found.",
+    "card_sub": "When to visit",
+    "title": "Best time to visit by destination",
+    "count_plural": "destinations found",
+    "count_singular": "destination found"
+  },
+  "comp": {
+    "th_month": "Month",
+    "th_better": "Better",
+    "sep": "vs",
+    "best_month_label": "Best month",
+    "max_temp_label": "Max temp",
+    "verdict_title": "🏆 Overall Verdict",
+    "season_title": "📅 By Season",
+    "month_by_month": "Month by month",
+    "detailed_title": "Detailed Climate Comparison",
+    "detailed_intro": "Weather score out of 10, based on temperature, rain and sunshine. 10-year Open-Meteo data.",
+    "hero_eyebrow_prefix": "Climate comparison · 10 years of data · ",
+    "file_tpl": "{a}-vs-{b}-weather.html"
+  },
+  "pilier": {
+    "th": [
+      "#",
+      "Destination",
+      "Score",
+      "Temp.",
+      "Rain",
+      "Sun/day"
+    ],
+    "ranking_label": "Ranking",
+    "months_label": "Months",
+    "pillar_prefix": "where-to-go-in-",
+    "where_to_go_tpl": "Where to go in {month}",
+    "top_n_label": "destinations",
+    "world_ranking_label": "🌍 World ranking 2026",
+    "world_ranking_sub": "All destinations",
+    "world_ranking_url": "best-destinations-weather-ranking-2026.html",
+    "also_explore": "Also explore",
+    "other_rankings": "Other rankings",
+    "hero_eyebrow_prefix": "Climate study · 10 years of data · ",
+    "score_n1": "#1 Score",
+    "top10_avg": "Top 10 avg"
+  },
+  "ranking_footer": {
+    "data_by": "Weather data by Open-Meteo.com",
+    "sources": "Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
+    "methodology_url": "../note_modele.html",
+    "methodology_label": "Methodology",
+    "app_url": "app.html",
+    "app_label": "Weather app",
+    "legal_url": "../mentions-legales.html",
+    "legal_label": "Legal"
+  },
+  "classements": {
+    "share_label": "Share",
+    "nav_cta_label": "Try the weather app",
+    "hero_eyebrow": "Independent climate study · 2026",
+    "share_js": "../js/share.js",
+    "methodology": "<div class=\"meth\"><strong>Methodology</strong><p>Scores computed from 10 years of Open-Meteo archives (ERA5). Each month rated on sunshine (40%), precipitation (30%), thermal comfort (30%). Annual score = average of 12 months. 318 destinations analyzed.</p></div>",
+    "related": [
+      [
+        "best-destinations-weather-ranking-2026.html",
+        "🏆 Global ranking 2026",
+        "318 destinations"
+      ],
+      [
+        "best-europe-weather-ranking-2026.html",
+        "<img src=\"../flags/eu.png\" width=\"20\" height=\"15\" alt=\"\" style=\"vertical-align:middle;border-radius:2px\"> Europe weather ranking",
+        "European comparison"
+      ],
+      [
+        "best-destinations-summer-weather-2026.html",
+        "☀️ Best summer destinations",
+        "June–July–August"
+      ],
+      [
+        "best-destinations-winter-weather-2026.html",
+        "❄️ Best winter destinations",
+        "Dec–Jan–Feb"
+      ],
+      [
+        "best-destinations-digital-nomads-weather-2026.html",
+        "💻 Best nomad destinations",
+        "Consistency & comfort"
+      ],
+      [
+        "best-beach-destinations-weather-2026.html",
+        "🏖️ Best beach destinations",
+        "Beach score & sea temp"
+      ]
+    ]
+  },
+  "classement_pages": {
+    "mondial": {
+      "title_tpl": "Best weather destinations 2026 — 10-year climate ranking",
+      "desc_tpl": "{n} destinations ranked using 10 years of weather data. Global top, sunniest, driest.",
+      "h1": "Best weather<br/><em>destinations 2026</em>",
+      "hero_sub_tpl": "{n} destinations analyzed over 10 years. {top1} leads with {top1_avg}/10.",
+      "stats": [
+        [
+          "{n}",
+          "Destinations"
+        ],
+        [
+          "10 years",
+          "Data"
+        ],
+        [
+          "{days},000+",
+          "Days measured"
+        ]
+      ],
+      "insights_label": "Key insights",
+      "insights": [
+        [
+          "#1 worldwide",
+          "{top1} — {top1_avg}/10 annual."
+        ],
+        [
+          "Sunniest",
+          "{sun1} — {sun1_h}h/yr."
+        ],
+        [
+          "Driest",
+          "{dry1} — {dry1_r}% rain."
+        ],
+        [
+          "Europe",
+          "{eu1} leads with {eu1_avg}/10."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Global ranking",
+          "h2": "🏆 Top 20 worldwide — Annual climate score",
+          "intro_tpl": "Annual score = average of 12 monthly scores (0–10). {n} destinations analyzed."
+        },
+        {
+          "eyebrow": "Sunshine",
+          "h2": "☀️ Top 10 sunniest",
+          "intro": "Cumulative sunshine hours per year."
+        },
+        {
+          "eyebrow": "Precipitation",
+          "h2": "🌂 Top 10 driest",
+          "intro": "Average percentage of rainy days per year."
+        }
+      ],
+      "jsonld_title_tpl": "Top weather destinations 2026",
+      "fr_file": "classement-destinations-meteo-2026.html",
+      "en_file": "best-destinations-weather-ranking-2026.html",
+      "es_file": "mejores-destinos-clima-2026.html"
+    },
+    "europe": {
+      "title_tpl": "Europe weather ranking 2026 — Top European destinations",
+      "desc_tpl": "{n} European destinations ranked. Annual, summer and winter tops.",
+      "h1": "Top European<br/><em>weather destinations 2026</em>",
+      "hero_sub_tpl": "{n} European destinations. {top1} leads with {top1_avg}/10.",
+      "stats": [
+        [
+          "{n}",
+          "Destinations"
+        ],
+        [
+          "10 years",
+          "Data"
+        ]
+      ],
+      "insights_label": "Key insights",
+      "insights": [
+        [
+          "#1 Europe",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "Summer",
+          "{summer1} leads ({summer1_avg}/10)."
+        ],
+        [
+          "Winter",
+          "{winter1} leads ({winter1_avg}/10)."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Europe",
+          "h2": "🏆 Top 20 Europe — Annual score",
+          "intro_tpl": "{n} European destinations ranked by annual score."
+        },
+        {
+          "eyebrow": "Summer",
+          "h2": "☀️ Top 10 Europe summer (June–Aug)",
+          "intro": "Average score June, July, August."
+        },
+        {
+          "eyebrow": "Winter",
+          "h2": "❄️ Top 10 Europe winter (Dec–Feb)",
+          "intro": "Average score December, January, February."
+        }
+      ],
+      "jsonld_title_tpl": "Top European weather destinations 2026",
+      "fr_file": "classement-destinations-europe-meteo-2026.html",
+      "en_file": "best-europe-weather-ranking-2026.html",
+      "es_file": "mejor-clima-europa-2026.html"
+    },
+    "ete": {
+      "title_tpl": "Best summer destinations 2026 — Weather ranking June–August",
+      "desc_tpl": "Top {n} destinations for summer 2026. Ranked using 10 years of June–August weather data.",
+      "h1": "Best summer<br/><em>destinations 2026</em>",
+      "hero_sub_tpl": "{top1} leads with {top1_avg}/10 for June–August.",
+      "stats": [
+        [
+          "{n}",
+          "Destinations"
+        ],
+        [
+          "Jun–Aug",
+          "Period"
+        ]
+      ],
+      "insights_label": "Key insights",
+      "insights": [
+        [
+          "#1 summer",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "#2",
+          "{top2} — {top2_avg}/10."
+        ],
+        [
+          "#3",
+          "{top3} — {top3_avg}/10."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Summer 2026",
+          "h2": "☀️ Top 20 worldwide — Summer 2026 (June–Aug)",
+          "intro_tpl": "Average score over 3 summer months. {n} destinations."
+        }
+      ],
+      "jsonld_title_tpl": "Best summer destinations 2026",
+      "fr_file": "classement-destinations-meteo-ete-2026.html",
+      "en_file": "best-destinations-summer-weather-2026.html",
+      "es_file": "mejores-destinos-verano-2026.html"
+    },
+    "hiver": {
+      "title_tpl": "Best winter destinations 2026 — Guaranteed sun & warmth",
+      "desc_tpl": "Top {n} destinations for winter 2026. Ranked using 10 years of Dec–Feb weather data.",
+      "h1": "Best winter<br/><em>destinations 2026</em>",
+      "hero_sub_tpl": "{top1} leads with {top1_avg}/10 for Dec–Feb.",
+      "stats": [
+        [
+          "{n}",
+          "Destinations"
+        ],
+        [
+          "Dec–Feb",
+          "Period"
+        ]
+      ],
+      "insights_label": "Key insights",
+      "insights": [
+        [
+          "#1 winter",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "#2",
+          "{top2} — {top2_avg}/10."
+        ],
+        [
+          "#3",
+          "{top3} — {top3_avg}/10."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Winter 2026",
+          "h2": "❄️ Top 20 worldwide — Winter 2026 (Dec–Feb)",
+          "intro_tpl": "Average score over 3 winter months. {n} destinations."
+        }
+      ],
+      "jsonld_title_tpl": "Best winter destinations 2026",
+      "fr_file": "classement-destinations-meteo-hiver-2026.html",
+      "en_file": "best-destinations-winter-weather-2026.html",
+      "es_file": "mejores-destinos-invierno-2026.html"
+    },
+    "nomades": {
+      "title_tpl": "Best digital nomad destinations 2026 — Weather consistency ranking",
+      "desc_tpl": "{n} destinations ranked by weather consistency. Ideal for digital nomads.",
+      "h1": "Best digital nomad<br/><em>destinations 2026</em>",
+      "hero_sub_tpl": "{top1} leads: {top1_avg}/10 average, std dev {top1_stdev}.",
+      "stats": [
+        [
+          "{n}",
+          "Destinations"
+        ],
+        [
+          "12 months",
+          "Consistency"
+        ]
+      ],
+      "insights_label": "Key insights",
+      "insights": [
+        [
+          "#1 nomad",
+          "{top1} — maximum consistency."
+        ],
+        [
+          "#2",
+          "{top2} — {top2_avg}/10."
+        ],
+        [
+          "Criteria",
+          "Average score weighted by variance."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Digital nomads",
+          "h2": "💻 Top 20 — Year-round weather consistency",
+          "intro": "Score = annual average − variance penalty. Higher = more consistent and pleasant weather."
+        }
+      ],
+      "jsonld_title_tpl": "Best digital nomad destinations 2026",
+      "fr_file": "classement-destinations-meteo-nomades-2026.html",
+      "en_file": "best-destinations-digital-nomads-weather-2026.html",
+      "es_file": "mejores-destinos-nomadas-digitales-2026.html"
+    },
+    "beach": {
+      "title_tpl": "Best beach destinations 2026 — Weather & sea ranking",
+      "desc_tpl": "Top {n} beach destinations 2026. Ranked by air + sea temperature, sunshine and rainfall. #1: {top1} ({top1_avg}/10).",
+      "h1": "Best beach<br/><em>destinations 2026</em>",
+      "hero_sub_tpl": "{top1} leads with {top1_avg}/10 · {top1_months} beach months.",
+      "stats": [
+        [
+          "{n}",
+          "Coastal destinations"
+        ],
+        [
+          "🏖️",
+          "Dedicated beach score"
+        ]
+      ],
+      "insights_label": "Key insights",
+      "insights": [
+        [
+          "#1 annual",
+          "{top1} — {top1_avg}/10, sea {top1_sea}°F."
+        ],
+        [
+          "#1 summer",
+          "{summer1} — {summer1_avg}/10."
+        ],
+        [
+          "#1 winter",
+          "{winter1} — {winter1_avg}/10."
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "Annual",
+          "h2": "🏖️ Top 25 beaches — Annual ranking",
+          "intro_tpl": "Average beach score over 12 months. Combines air + sea temperature, rainfall and sunshine. {n} coastal destinations."
+        },
+        {
+          "eyebrow": "Summer 2026",
+          "h2": "☀️ Top 20 beaches — Summer (June–Aug)",
+          "intro": "Best beaches for summer. Average beach score June–August."
+        },
+        {
+          "eyebrow": "Winter 2026",
+          "h2": "❄️ Top 20 beaches — Winter (Dec–Feb)",
+          "intro": "Where to swim in winter? Average beach score December–February."
+        }
+      ],
+      "jsonld_title_tpl": "Best beach destinations 2026",
+      "meth": "<div class=\"meth\"><strong>Beach score methodology</strong><p>Beach score combines air temperature (25%), sea temperature (25%), precipitation (30%) and sunshine (20%). Sea temperature from Open-Meteo Marine API (2024 data). Only coastal destinations with marine data are included.</p></div>",
+      "fr_file": "classement-destinations-plage-2026.html",
+      "en_file": "best-beach-destinations-weather-2026.html",
+      "es_file": "mejores-destinos-playa-2026.html"
+    }
+  }
+}

@@ -31,7 +31,7 @@ load_locale = _load_locale
 
 
 # Cross-language mapping for hreflang
-_CROSS_LANG = {'fr': 'en', 'en': 'fr', 'es': 'fr'}
+_CROSS_LANG = {'fr': 'en', 'en': 'fr', 'es': 'fr', 'en-us': 'fr'}
 
 # Season icons (shared across languages)
 SEASON_ICONS = {'Printemps':'🌸','Été':'☀️','Automne':'🍂','Hiver':'❄️',
@@ -68,6 +68,7 @@ def build_config(lang):
         'lang': lang,
         'html_lang': loc['meta']['html_lang'],
         'is_fr': is_fr,  # kept for grammar-dependent logic
+        'imperial': loc['meta'].get('imperial', False),  # True pour en-us
         'cross_lang': cross_lang,
 
         # Months
@@ -228,7 +229,7 @@ def dest_country(cfg, dest):
 
 
 # Langues actives. Pour ajouter DE : 1) créer locales/de.json 2) ajouter 'de' ici.
-SUPPORTED_LANGS = ['fr', 'en', 'es']
+SUPPORTED_LANGS = ['fr', 'en', 'en-us', 'es']
 
 # Cache des configs par langue pour éviter de recharger les locales à chaque page
 _lang_cfg_cache: dict = {}
