@@ -617,11 +617,8 @@
           '<div class="wb-recent-left">' +
             '<span class="wb-recent-flag">' + flag + '</span>' +
             '<div class="wb-recent-info">' +
-              '<div class="wb-recent-name">' + escHtml(item.name) + '</div>' +
-              '<div class="wb-recent-date">' +
-                escHtml(item.date || "") +
-                '<span class="wb-recent-mode">' + modeLabel + '</span>' +
-              '</div>' +
+              '<span class="wb-recent-name">' + escHtml(item.name) + '</span>' +
+              '<span class="wb-recent-date">' + (item.date ? escHtml(item.date) + ' · ' : '') + modeLabel.replace(' · ', '') + '</span>' +
             '</div>' +
           '</div>' +
           (item.score ? '<div class="wb-score" style="color:' + sColor + ';background:' + sBg + '">' + item.score.toFixed(1) + '</div>' : '') +
