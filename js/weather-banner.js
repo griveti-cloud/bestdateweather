@@ -512,6 +512,9 @@
                 escHtml(w.city) +
                 '<span class="wb-edit-ico">\u270e</span>' +
               '</button>' +
+              '<button class="wb-share-btn" onclick="event.stopPropagation();wbShare()" title="' + (t.share || 'Partager') + '">' +
+                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>' +
+              '</button>' +
               badgeHtml +
             '</div>' +
             '<div class="wb-desc">' + escHtml(w.desc) + '</div>' +
@@ -827,6 +830,25 @@
   window.wbOpenCityModal = function() {
     state.cityModalOpen = true;
     renderCityModal();
+  };
+
+  window.wbShare = function() {
+    var url = window.location.href;
+    var title = document.title || 'BestDateWeather';
+    if (navigator.share) {
+      navigator.share({ title: title, url: url }).catch(function(){});
+    } else {
+      navigator.clipboard.writeText(url).then(function() {
+        var btn = document.querySelector('.wb-share-btn');
+        if (btn) {
+          var orig = btn.innerHTML;
+          btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>';
+          setTimeout(function(){ btn.innerHTML = orig; }, 1800);
+        }
+      }).catch(function(){
+        window.prompt('Copier le lien :', url);
+      });
+    }
   };
 
   window.wbCloseCityModal = function() {

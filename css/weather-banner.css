@@ -16,6 +16,8 @@
 .wb-city-btn{background:none;border:none;color:#fff;cursor:pointer;font-size:15px;font-weight:600;letter-spacing:-.2px;padding:0;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:4px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .wb-city-btn:hover .wb-edit-ico{opacity:.9}
 .wb-edit-ico{font-size:11px;opacity:.4;transition:opacity .2s}
+.wb-share-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.35);padding:2px 4px;border-radius:5px;display:flex;align-items:center;transition:color .15s,background .15s;flex-shrink:0}
+.wb-share-btn:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.1)}
 .wb-badge{font-size:9px;background:rgba(232,148,10,.3);border:1px solid rgba(232,148,10,.5);padding:1px 6px;border-radius:8px;font-weight:500;margin-left:4px;letter-spacing:.3px;text-transform:uppercase;color:#fad88a}
 .wb-desc{font-size:12px;opacity:.7;margin-top:2px;font-weight:300}
 .wb-right{display:flex;align-items:center;gap:4px;flex-shrink:0}

@@ -549,3 +549,119 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
   align-items:center;color:#5a6c7d;
   box-shadow:0 2px 8px rgba(0,0,0,.08)
 }
+
+/* ══════════════════════════════════════════════
+   OPTION B — Unified main card
+   ══════════════════════════════════════════════ */
+
+/* Card wrapper */
+.main-card{
+  background:white;
+  border-radius:var(--r);
+  box-shadow:var(--shadow-lg);
+  border:1px solid rgba(26,31,46,.05);
+  overflow:visible;
+  margin-bottom:20px;
+}
+
+/* Banner flush inside card — override weather-banner.css margins */
+.main-card .wb,
+.main-card .wb-shimmer{
+  margin:0;
+  border-radius:var(--r) var(--r) 0 0;
+  animation:none;
+}
+.main-card .wb-hourly{
+  margin:0;
+  border-radius:0;
+}
+/* Override responsive centering that applied when banner was standalone */
+@media(max-width:640px){
+  .main-card .wb,
+  .main-card .wb-shimmer,
+  .main-card .wb-hourly,
+  .main-card .wb-section{
+    max-width:100%;
+    margin-left:0;
+    margin-right:0;
+  }
+}
+
+/* Sections (recent + suggest) inside card */
+.main-card .wb-section{
+  max-width:100%;
+  margin-left:0;
+  margin-right:0;
+  padding-top:4px;
+}
+#wb-recent-section + #wb-suggest-section .wb-section{
+  padding-top:0;
+}
+
+/* Mode toggle padding */
+.main-card .mode-toggle{
+  padding:12px 16px 0;
+  margin-bottom:12px;
+}
+
+/* Annual form — remove its own card appearance, use main-card instead */
+.main-card .search-card{
+  background:transparent;
+  box-shadow:none;
+  border:none;
+  border-radius:0;
+  padding:0 16px 12px;
+  margin-bottom:0;
+}
+
+/* Date form padding */
+.main-card #date-form{
+  padding:0 16px 4px;
+}
+.main-card .uc-hint{
+  padding:0 16px;
+}
+/* btn-go in main-card: reduce bottom margin (footer takes over) */
+.main-card .btn-go{
+  margin-bottom:12px;
+}
+
+/* Card footer: logo + guides link */
+.card-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 16px 10px;
+  border-top:1px solid var(--cream2);
+}
+.footer-wordmark{
+  font-family:'Fraunces',serif;
+  font-size:13px;
+  font-weight:900;
+  font-style:italic;
+  color:var(--navy);
+  opacity:.38;
+  letter-spacing:-.2px;
+  text-decoration:none;
+  transition:opacity .15s;
+}
+.footer-wordmark:hover{opacity:.65}
+.footer-wordmark em{color:#b06800;font-style:italic}
+.footer-guides{
+  font-size:11px;
+  color:var(--slate2);
+  text-decoration:none;
+  font-weight:500;
+  transition:color .15s;
+}
+.footer-guides:hover{color:var(--navy)}
+
+/* ── Extra compact for true short viewports (≤750px height) ── */
+@media(max-height:750px) and (min-width:641px){
+  header.app-header{padding:4px 20px 0}
+  .app-title{font-size:22px;margin-bottom:0}
+  .app-sub{display:none}
+  .app-proof{display:none}
+  .app-divider{display:none}
+  .unit-toggle{margin-bottom:4px}
+}
