@@ -109,8 +109,8 @@ jobs:
               rows = list(csv.DictReader(f))
           print(f'destinations.csv: {len(rows)} rows')
           for r in rows:
-              if not r.get('hero_sub','').strip():
-                  errors.append(f\"  Missing hero_sub: {r['slug_fr']}\")
+              if not r.get('hero_sub_fr','').strip():
+                  errors.append(f\"  Missing hero_sub_fr: {r['slug_fr']}\")
               if not r.get('hero_sub_en','').strip():
                   errors.append(f\"  Missing hero_sub_en: {r['slug_fr']}\")
 
