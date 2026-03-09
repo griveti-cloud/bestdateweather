@@ -90,7 +90,7 @@ window.BDW_T = {
  actPoorBeachFull: 'Insufficient temperature or poor conditions',
 
  // Score actions — general
- actBookOk: 'Reliable weather',
+ actBookOk: 'Stable weather',
  actResidual: ' (minor risk)',
  actPlanB: 'Have a backup plan',
  actPlanBFull: 'Variable \u2014 have a backup plan',
