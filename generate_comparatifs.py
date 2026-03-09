@@ -209,6 +209,7 @@ def build_comparison_table(ca, cb, nom_a, nom_b, loc, use_f=False):
 def compute_verdicts(ca, cb, nom_a, nom_b, loc, use_f=False):
     """Generate verdicts per season and overall."""
     is_fr = loc['meta']['html_lang'] == 'fr'
+    is_es = loc['meta']['html_lang'] == 'es'
     wins_a = sum(1 for mi in range(1, 13) if ca.get(mi, {}).get('score', 0) > cb.get(mi, {}).get('score', 0))
     wins_b = sum(1 for mi in range(1, 13) if cb.get(mi, {}).get('score', 0) > ca.get(mi, {}).get('score', 0))
     ties = 12 - wins_a - wins_b
@@ -249,6 +250,8 @@ def compute_verdicts(ca, cb, nom_a, nom_b, loc, use_f=False):
         winner = nom_a if sa_avg > sb_avg else nom_b
         if is_fr:
             detail = f"En {season_name}, <strong>{winner}</strong> l'emporte ({sa_avg:.1f} vs {sb_avg:.1f}). Températures : {nom_a} {ta_avg:.0f}{unit}, {nom_b} {tb_avg:.0f}{unit}."
+        elif is_es:
+            detail = f"En {season_name}, <strong>{winner}</strong> gana ({sa_avg:.1f} vs {sb_avg:.1f}). Temperaturas: {nom_a} {ta_avg:.0f}{unit}, {nom_b} {tb_avg:.0f}{unit}."
         else:
             detail = f"In {season_name}, <strong>{winner}</strong> wins ({sa_avg:.1f} vs {sb_avg:.1f}). Temperatures: {nom_a} {ta_avg:.0f}{unit}, {nom_b} {tb_avg:.0f}{unit}."
         season_verdicts.append(detail)
@@ -260,6 +263,12 @@ def compute_verdicts(ca, cb, nom_a, nom_b, loc, use_f=False):
                    (f" ({ties} ex-æquo)." if ties else ".") +
                    f" Score annuel moyen : {nom_a} {avg_a:.1f}/10, {nom_b} {avg_b:.1f}/10. "
                    f"Meilleur mois : {nom_a} en {months[best_a-1].lower()}, {nom_b} en {months[best_b-1].lower()}.")
+    elif is_es:
+        overall = (f"<strong>{nom_a}</strong> gana {wins_a} meses de 12, "
+                   f"<strong>{nom_b}</strong> gana {wins_b}" +
+                   (f" ({ties} empates)." if ties else ".") +
+                   f" Puntuación anual media: {nom_a} {avg_a:.1f}/10, {nom_b} {avg_b:.1f}/10. "
+                   f"Mejor mes: {nom_a} en {months[best_a-1]}, {nom_b} en {months[best_b-1]}.")
     else:
         overall = (f"<strong>{nom_a}</strong> wins {wins_a} months out of 12, "
                    f"<strong>{nom_b}</strong> wins {wins_b}" +
@@ -283,45 +292,66 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
         print(f"  ⚠️  Missing climate: {slug_a if not ca else slug_b}")
         return
 
-    for lang in ('fr', 'en', 'en-us'):
+    for lang in ('fr', 'en', 'en-us', 'es'):
         loc = load_locale(lang)
         gen = loc['gen']
         comp = loc['comp']
         is_fr = (lang == 'fr')
         is_us = (lang == 'en-us')
+        is_es = (lang == 'es')
         use_f = is_us
-        nom_a = da['nom_bare'] if is_fr else da.get('nom_en', da['nom_bare'])
-        nom_b = db['nom_bare'] if is_fr else db.get('nom_en', db['nom_bare'])
+        nom_a = da['nom_bare'] if is_fr else (da.get('nom_es', da['nom_bare']) if is_es else da.get('nom_en', da['nom_bare']))
+        nom_b = db['nom_bare'] if is_fr else (db.get('nom_es', db['nom_bare']) if is_es else db.get('nom_en', db['nom_bare']))
         slug_en_a = da.get('slug_en', slug_a)
         slug_en_b = db.get('slug_en', slug_b)
+        slug_es_a = da.get('slug_es', slug_en_a)
+        slug_es_b = db.get('slug_es', slug_en_b)
         flag_a, flag_b = da.get('flag', ''), db.get('flag', '')
 
-        filename = comp['file_tpl'].format(a=slug_a if is_fr else slug_en_a,
-                                            b=slug_b if is_fr else slug_en_b)
+        filename = comp['file_tpl'].format(
+            a=slug_a if is_fr else (slug_es_a if is_es else slug_en_a),
+            b=slug_b if is_fr else (slug_es_b if is_es else slug_en_b)
+        )
         if is_fr:
             filepath = ROOT / filename
             canonical = f"https://bestdateweather.com/{filename}"
             alt_en_filename = load_locale('en')['comp']['file_tpl'].format(a=slug_en_a, b=slug_en_b)
             alt_us_filename = load_locale('en-us')['comp']['file_tpl'].format(a=slug_en_a, b=slug_en_b)
+            alt_es_filename = load_locale('es')['comp']['file_tpl'].format(a=slug_es_a, b=slug_es_b)
             hreflang_fr = canonical
             hreflang_en = f"https://bestdateweather.com/en/{alt_en_filename}"
             hreflang_us = f"https://bestdateweather.com/us/{alt_us_filename}"
+            hreflang_es = f"https://bestdateweather.com/es/{alt_es_filename}"
+        elif is_es:
+            filepath = ROOT / 'es' / filename
+            canonical = f"https://bestdateweather.com/es/{filename}"
+            alt_fr_filename = load_locale('fr')['comp']['file_tpl'].format(a=slug_a, b=slug_b)
+            alt_en_filename = load_locale('en')['comp']['file_tpl'].format(a=slug_en_a, b=slug_en_b)
+            alt_us_filename = load_locale('en-us')['comp']['file_tpl'].format(a=slug_en_a, b=slug_en_b)
+            hreflang_fr = f"https://bestdateweather.com/{alt_fr_filename}"
+            hreflang_en = f"https://bestdateweather.com/en/{alt_en_filename}"
+            hreflang_us = f"https://bestdateweather.com/us/{alt_us_filename}"
+            hreflang_es = canonical
         elif is_us:
             filepath = ROOT / 'us' / filename
             canonical = f"https://bestdateweather.com/us/{filename}"
             alt_fr_filename = load_locale('fr')['comp']['file_tpl'].format(a=slug_a, b=slug_b)
             alt_en_filename = load_locale('en')['comp']['file_tpl'].format(a=slug_en_a, b=slug_en_b)
+            alt_es_filename = load_locale('es')['comp']['file_tpl'].format(a=slug_es_a, b=slug_es_b)
             hreflang_fr = f"https://bestdateweather.com/{alt_fr_filename}"
             hreflang_en = f"https://bestdateweather.com/en/{alt_en_filename}"
             hreflang_us = canonical
+            hreflang_es = f"https://bestdateweather.com/es/{alt_es_filename}"
         else:  # en
             filepath = ROOT / 'en' / filename
             canonical = f"https://bestdateweather.com/en/{filename}"
             alt_fr_filename = load_locale('fr')['comp']['file_tpl'].format(a=slug_a, b=slug_b)
             alt_us_filename = load_locale('en-us')['comp']['file_tpl'].format(a=slug_en_a, b=slug_en_b)
+            alt_es_filename = load_locale('es')['comp']['file_tpl'].format(a=slug_es_a, b=slug_es_b)
             hreflang_fr = f"https://bestdateweather.com/{alt_fr_filename}"
             hreflang_en = canonical
             hreflang_us = f"https://bestdateweather.com/us/{alt_us_filename}"
+            hreflang_es = f"https://bestdateweather.com/es/{alt_es_filename}"
 
         # Scores
         avg_a_score = sum(ca.get(mi, {}).get('score', 0) for mi in range(1, 13)) / 12
@@ -347,6 +377,14 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
             hero_sub = f"Comparaison climatique complète — 12 mois, 10 ans de données, score objectif"
             href_a = gen['annual_href_tpl'].format(slug=slug_a)
             href_b = gen['annual_href_tpl'].format(slug=slug_b)
+        elif is_es:
+            title = f"{nom_a} vs {nom_b} — Comparación del clima [{YEAR}]"
+            desc = (f"{nom_a} vs {nom_b}: ¿cuál tiene mejor clima? Comparación mes a mes "
+                    f"en 10 años. {nom_a}: {avg_a_score:.1f}/10, {nom_b}: {avg_b_score:.1f}/10.")
+            h1 = f"{nom_a} <em>vs</em> {nom_b}"
+            hero_sub = f"Comparación climática completa — 12 meses, 10 años de datos, puntuación objetiva"
+            href_a = gen['annual_href_tpl'].format(slug=slug_es_a)
+            href_b = gen['annual_href_tpl'].format(slug=slug_es_b)
         else:
             title = f"{nom_a} vs {nom_b} — Weather Comparison [{YEAR}]"
             desc = (f"{nom_a} vs {nom_b}: which has better weather? Month-by-month comparison "
@@ -408,6 +446,14 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
                 "name": f"Quand partir à {nom_a} plutôt qu'à {nom_b} ?",
                 "acceptedAnswer": {"@type": "Answer",
                     "text": f"{nom_a} est meilleur en {months[best_mi_a-1].lower()} ({ca[best_mi_a]['score']:.1f}/10). {nom_b} est meilleur en {months[best_mi_b-1].lower()} ({cb[best_mi_b]['score']:.1f}/10)."}})
+        elif is_es:
+            faq_items.append({"@type": "Question",
+                "name": f"{nom_a} o {nom_b}: ¿cuál tiene mejor clima?",
+                "acceptedAnswer": {"@type": "Answer", "text": overall.replace('<strong>', '').replace('</strong>', '')}})
+            faq_items.append({"@type": "Question",
+                "name": f"¿Cuándo visitar {nom_a} en lugar de {nom_b}?",
+                "acceptedAnswer": {"@type": "Answer",
+                    "text": f"{nom_a} es mejor en {months[best_mi_a-1]} ({ca[best_mi_a]['score']:.1f}/10). {nom_b} es mejor en {months[best_mi_b-1]} ({cb[best_mi_b]['score']:.1f}/10)."}})
         else:
             faq_items.append({"@type": "Question",
                 "name": f"{nom_a} or {nom_b}: which has better weather?",
@@ -420,11 +466,12 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
         faq_schema = json.dumps({"@context": "https://schema.org", "@type": "FAQPage",
                                   "mainEntity": faq_items}, ensure_ascii=False)
 
-        # hreflang block (3 languages)
+        # hreflang block (4 languages)
         hreflang_block = (
             f'<link rel="alternate" hreflang="fr" href="{hreflang_fr}"/>\n'
             f'<link rel="alternate" hreflang="en" href="{hreflang_en}"/>\n'
             f'<link rel="alternate" hreflang="en-US" href="{hreflang_us}"/>\n'
+            f'<link rel="alternate" hreflang="es" href="{hreflang_es}"/>\n'
             f'<link rel="alternate" hreflang="x-default" href="{hreflang_en}"/>'
         )
 
@@ -433,11 +480,13 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
         for slug, nom in [(slug_a, nom_a), (slug_b, nom_b)]:
             if is_fr:
                 href = gen['annual_href_tpl'].format(slug=slug)
-                label = gen['best_period_tpl'].format(nom=nom)
+            elif is_es:
+                sle = dests[slug].get('slug_es', slug)
+                href = gen['annual_href_tpl'].format(slug=sle)
             else:
                 sle = dests[slug].get('slug_en', slug)
                 href = gen['annual_href_tpl'].format(slug=sle)
-                label = gen['best_period_tpl'].format(nom=nom)
+            label = gen['best_period_tpl'].format(nom=nom)
             related_cards.append(f'<a href="{href}" class="related-card"><strong>{e(label)}</strong><span>{gen["guide_label"]}</span></a>')
 
         related_html = (f'<div class="section"><div class="eyebrow">{gen["explore_label"]}</div>'
@@ -448,26 +497,36 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
         cta = f'<div class="cta-box"><a href="{gen["home_url"]}">{gen["cta_choose"]}</a></div>'
 
         # Footer — cross-lang links
+        _es_fn = load_locale('es')['comp']['file_tpl'].format(a=slug_es_a, b=slug_es_b)
+        _en_fn = load_locale('en')['comp']['file_tpl'].format(a=slug_en_a, b=slug_en_b)
+        _us_fn = load_locale('en-us')['comp']['file_tpl'].format(a=slug_en_a, b=slug_en_b)
+        _fr_fn = load_locale('fr')['comp']['file_tpl'].format(a=slug_a, b=slug_b)
         if is_fr:
             _alt_links = [
-                {'url': f'en/{alt_en_filename}', 'flag': 'flags/gb.png', 'label': 'English'},
-                {'url': f'us/{alt_us_filename}', 'flag': 'flags/us.png', 'label': 'English (US)'},
+                {'url': f'en/{_en_fn}', 'flag': 'flags/gb.png', 'label': 'English'},
+                {'url': f'us/{_us_fn}', 'flag': 'flags/us.png', 'label': 'English (US)'},
+                {'url': f'es/{_es_fn}', 'flag': 'flags/es.png', 'label': 'Español'},
+            ]
+        elif is_es:
+            _alt_links = [
+                {'url': f'../en/{_en_fn}', 'flag': '../flags/gb.png', 'label': 'English'},
+                {'url': f'../us/{_us_fn}', 'flag': '../flags/us.png', 'label': 'English (US)'},
+                {'url': f'../{_fr_fn}', 'flag': '../flags/fr.png', 'label': 'Français'},
             ]
         elif is_us:
-            alt_en_fn = load_locale('en')['comp']['file_tpl'].format(a=slug_en_a, b=slug_en_b)
-            alt_fr_fn = load_locale('fr')['comp']['file_tpl'].format(a=slug_a, b=slug_b)
             _alt_links = [
-                {'url': f'../en/{alt_en_fn}', 'flag': '../flags/gb.png', 'label': 'English'},
-                {'url': f'../{alt_fr_fn}', 'flag': '../flags/fr.png', 'label': 'Français'},
+                {'url': f'../en/{_en_fn}', 'flag': '../flags/gb.png', 'label': 'English'},
+                {'url': f'../{_fr_fn}', 'flag': '../flags/fr.png', 'label': 'Français'},
+                {'url': f'../es/{_es_fn}', 'flag': '../flags/es.png', 'label': 'Español'},
             ]
-        else:
-            alt_fr_fn = load_locale('fr')['comp']['file_tpl'].format(a=slug_a, b=slug_b)
-            alt_us_fn = load_locale('en-us')['comp']['file_tpl'].format(a=slug_en_a, b=slug_en_b)
+        else:  # en
             _alt_links = [
-                {'url': f'../{alt_fr_fn}', 'flag': '../flags/fr.png', 'label': 'Français'},
-                {'url': f'../us/{alt_us_fn}', 'flag': '../flags/us.png', 'label': 'English (US)'},
+                {'url': f'../{_fr_fn}', 'flag': '../flags/fr.png', 'label': 'Français'},
+                {'url': f'../us/{_us_fn}', 'flag': '../flags/us.png', 'label': 'English (US)'},
+                {'url': f'../es/{_es_fn}', 'flag': '../flags/es.png', 'label': 'Español'},
             ]
-        footer = footer_ranking_html(lang if not is_us else 'en', _alt_links)
+        footer_lang = 'en' if is_us else lang
+        footer = footer_ranking_html(footer_lang, _alt_links)
 
         html_lang = loc['meta']['html_lang']
 
@@ -515,7 +574,7 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
 
         generated_files.append({
             'canonical': canonical, 'hreflang_fr': hreflang_fr, 'hreflang_en': hreflang_en,
-            'hreflang_us': hreflang_us, 'lang': lang, 'filename': filename
+            'hreflang_us': hreflang_us, 'hreflang_es': hreflang_es, 'lang': lang, 'filename': filename
         })
 
 
@@ -524,10 +583,12 @@ def update_sitemaps(files):
     fr_files  = [f for f in files if f['lang'] == 'fr']
     en_files  = [f for f in files if f['lang'] == 'en']
     us_files  = [f for f in files if f['lang'] == 'en-us']
+    es_files  = [f for f in files if f['lang'] == 'es']
 
     for sitemap_file, pages in [('sitemap-fr.xml', fr_files),
                                   ('sitemap-en.xml', en_files),
-                                  ('sitemap-us.xml', us_files)]:
+                                  ('sitemap-us.xml', us_files),
+                                  ('sitemap-es.xml', es_files)]:
         path = ROOT / sitemap_file
         if not path.exists():
             continue
@@ -537,6 +598,7 @@ def update_sitemaps(files):
             if page['canonical'] in content:
                 continue
             hreflang_us = page.get('hreflang_us', page['hreflang_en'])
+            hreflang_es = page.get('hreflang_es', page['hreflang_en'])
             entry = f"""  <url>
     <loc>{page['canonical']}</loc>
     <lastmod>{TODAY}</lastmod>
@@ -545,6 +607,7 @@ def update_sitemaps(files):
     <xhtml:link rel="alternate" hreflang="fr" href="{page['hreflang_fr']}"/>
     <xhtml:link rel="alternate" hreflang="en" href="{page['hreflang_en']}"/>
     <xhtml:link rel="alternate" hreflang="en-US" href="{hreflang_us}"/>
+    <xhtml:link rel="alternate" hreflang="es" href="{hreflang_es}"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="{page['hreflang_en']}"/>
   </url>"""
             content = content.replace('</urlset>', entry + '\n</urlset>')
@@ -567,14 +630,20 @@ if __name__ == '__main__':
         en_a = dests.get(slug_a, {}).get('slug_en', slug_a)
         en_b = dests.get(slug_b, {}).get('slug_en', slug_b)
         en_name = f"{en_a}-vs-{en_b}-weather.html"
+        da_tmp = dests.get(slug_a, {})
+        db_tmp = dests.get(slug_b, {})
+        es_a = da_tmp.get('slug_es', da_tmp.get('slug_en', slug_a))
+        es_b = db_tmp.get('slug_es', db_tmp.get('slug_en', slug_b))
         print(f"  ✅ {fr_name}")
         print(f"  ✅ en/{en_name}")
         print(f"  ✅ us/{en_name}")
+        print(f"  ✅ es/{es_a}-vs-{es_b}-clima.html")
 
     fr_count = sum(1 for f in generated if f['lang'] == 'fr')
     en_count = sum(1 for f in generated if f['lang'] == 'en')
     us_count = sum(1 for f in generated if f['lang'] == 'en-us')
-    print(f"\n📄 {fr_count} FR + {en_count} EN + {us_count} US comparison pages")
+    es_count = sum(1 for f in generated if f['lang'] == 'es')
+    print(f"\n📄 {fr_count} FR + {en_count} EN + {us_count} US + {es_count} ES comparison pages")
 
     update_sitemaps(generated)
     print("\n✅ Done")

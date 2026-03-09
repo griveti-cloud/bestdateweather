@@ -48288,4 +48288,367 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://bestdateweather.com/es/niza-vs-barcelona-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/nice-ou-barcelone-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/nice-vs-barcelona-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/nice-vs-barcelona-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/niza-vs-barcelona-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/nice-vs-barcelona-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/algarve-vs-canarias-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/algarve-ou-canaries-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/algarve-vs-canary-islands-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/algarve-vs-canary-islands-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/algarve-vs-canarias-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/algarve-vs-canary-islands-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/creta-vs-cerdena-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/crete-ou-sardaigne-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/crete-vs-sardinia-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/crete-vs-sardinia-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/creta-vs-cerdena-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/crete-vs-sardinia-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/sicilia-vs-creta-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/sicile-ou-crete-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/sicily-vs-crete-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/sicily-vs-crete-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/sicilia-vs-creta-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/sicily-vs-crete-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/mallorca-vs-cerdena-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/majorque-ou-sardaigne-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/mallorca-vs-sardinia-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/mallorca-vs-sardinia-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/mallorca-vs-cerdena-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/mallorca-vs-sardinia-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/corcega-vs-cerdena-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/corse-ou-sardaigne-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/corsica-vs-sardinia-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/corsica-vs-sardinia-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/corcega-vs-cerdena-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/corsica-vs-sardinia-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/malta-vs-sicilia-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/malte-ou-sicile-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/malta-vs-sicily-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/malta-vs-sicily-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/malta-vs-sicilia-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/malta-vs-sicily-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/dubrovnik-vs-split-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/dubrovnik-ou-split-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/dubrovnik-vs-split-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/dubrovnik-vs-split-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/dubrovnik-vs-split-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/dubrovnik-vs-split-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/french-riviera-vs-costa-brava-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/cote-azur-ou-costa-brava-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/french-riviera-vs-costa-brava-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/french-riviera-vs-costa-brava-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/french-riviera-vs-costa-brava-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/french-riviera-vs-costa-brava-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/mykonos-vs-santorini-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/mykonos-ou-santorin-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/mykonos-vs-santorini-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/mykonos-vs-santorini-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/mykonos-vs-santorini-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/mykonos-vs-santorini-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/ibiza-vs-mallorca-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/ibiza-ou-majorque-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/ibiza-vs-mallorca-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/ibiza-vs-mallorca-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/ibiza-vs-mallorca-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/ibiza-vs-mallorca-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/lisboa-vs-porto-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/lisbonne-ou-porto-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/lisbon-vs-porto-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/lisbon-vs-porto-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/lisboa-vs-porto-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/lisbon-vs-porto-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/barcelona-vs-lisboa-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/barcelone-ou-lisbonne-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/barcelona-vs-lisbon-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/barcelona-vs-lisbon-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/barcelona-vs-lisboa-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/barcelona-vs-lisbon-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/algarve-vs-french-riviera-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/algarve-ou-cote-azur-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/algarve-vs-french-riviera-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/algarve-vs-french-riviera-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/algarve-vs-french-riviera-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/algarve-vs-french-riviera-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/marrakech-vs-fes-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/marrakech-ou-fes-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/marrakech-vs-fes-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/marrakech-vs-fes-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/marrakech-vs-fes-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/marrakech-vs-fes-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/marrakech-vs-agadir-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/marrakech-ou-agadir-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/marrakech-vs-agadir-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/marrakech-vs-agadir-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/marrakech-vs-agadir-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/marrakech-vs-agadir-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/dubai-vs-abu-dhabi-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/dubai-ou-abu-dhabi-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/dubai-vs-abu-dhabi-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/dubai-vs-abu-dhabi-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/dubai-vs-abu-dhabi-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/dubai-vs-abu-dhabi-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/bali-vs-phuket-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/bali-ou-phuket-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/bali-vs-phuket-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/bali-vs-phuket-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/bali-vs-phuket-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/bali-vs-phuket-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/koh-samui-vs-koh-lanta-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/koh-samui-ou-koh-lanta-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/koh-samui-vs-koh-lanta-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/koh-samui-vs-koh-lanta-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/koh-samui-vs-koh-lanta-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/koh-samui-vs-koh-lanta-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/chiang-mai-vs-bangkok-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/chiang-mai-ou-bangkok-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/chiang-mai-vs-bangkok-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/chiang-mai-vs-bangkok-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/chiang-mai-vs-bangkok-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/chiang-mai-vs-bangkok-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/bali-vs-sri-lanka-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/bali-ou-sri-lanka-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/bali-vs-sri-lanka-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/bali-vs-sri-lanka-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/bali-vs-sri-lanka-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/bali-vs-sri-lanka-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/langkawi-vs-phuket-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/langkawi-ou-phuket-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/langkawi-vs-phuket-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/langkawi-vs-phuket-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/langkawi-vs-phuket-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/langkawi-vs-phuket-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/maldivas-vs-seychelles-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/maldives-ou-seychelles-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/maldives-vs-seychelles-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/maldives-vs-seychelles-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/maldivas-vs-seychelles-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/maldives-vs-seychelles-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/mauritius-vs-reunion-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/ile-maurice-ou-reunion-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/mauritius-vs-reunion-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/mauritius-vs-reunion-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/mauritius-vs-reunion-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/mauritius-vs-reunion-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/maldivas-vs-zanzibar-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/maldives-ou-zanzibar-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/maldives-vs-zanzibar-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/maldives-vs-zanzibar-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/maldivas-vs-zanzibar-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/maldives-vs-zanzibar-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/guadeloupe-vs-martinique-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/guadeloupe-ou-martinique-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/guadeloupe-vs-martinique-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/guadeloupe-vs-martinique-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/guadeloupe-vs-martinique-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/guadeloupe-vs-martinique-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/dominican-republic-vs-jamaica-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/republique-dominicaine-ou-jamaique-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/dominican-republic-vs-jamaica-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/dominican-republic-vs-jamaica-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/dominican-republic-vs-jamaica-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/dominican-republic-vs-jamaica-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/cancun-vs-riviera-maya-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/cancun-ou-riviera-maya-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/cancun-vs-riviera-maya-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/cancun-vs-riviera-maya-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/cancun-vs-riviera-maya-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/cancun-vs-riviera-maya-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/costa-rica-vs-colombia-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/costa-rica-ou-colombie-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/costa-rica-vs-colombia-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/costa-rica-vs-colombia-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/costa-rica-vs-colombia-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/costa-rica-vs-colombia-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/bali-vs-dominican-republic-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/bali-ou-republique-dominicaine-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/bali-vs-dominican-republic-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/bali-vs-dominican-republic-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/bali-vs-dominican-republic-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/bali-vs-dominican-republic-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/tenerife-vs-madeira-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/tenerife-ou-madere-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/tenerife-vs-madeira-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/tenerife-vs-madeira-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/tenerife-vs-madeira-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/tenerife-vs-madeira-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/canarias-vs-madeira-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/canaries-ou-madere-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/canary-islands-vs-madeira-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/canary-islands-vs-madeira-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/canarias-vs-madeira-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/canary-islands-vs-madeira-weather.html"/>
+  </url>
+  <url>
+    <loc>https://bestdateweather.com/es/fuerteventura-vs-gran-canaria-clima.html</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bestdateweather.com/fuerteventura-ou-gran-canaria-climat.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/fuerteventura-vs-gran-canaria-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/fuerteventura-vs-gran-canaria-weather.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/fuerteventura-vs-gran-canaria-clima.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/fuerteventura-vs-gran-canaria-weather.html"/>
+  </url>
 </urlset>
