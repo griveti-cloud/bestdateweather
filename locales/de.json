@@ -107,10 +107,26 @@
     "Winter": "Dez–Feb"
   },
   "season_months": {
-    "Frühling": [2, 3, 4],
-    "Sommer": [5, 6, 7],
-    "Herbst": [8, 9, 10],
-    "Winter": [11, 0, 1]
+    "Frühling": [
+      2,
+      3,
+      4
+    ],
+    "Sommer": [
+      5,
+      6,
+      7
+    ],
+    "Herbst": [
+      8,
+      9,
+      10
+    ],
+    "Winter": [
+      11,
+      0,
+      1
+    ]
   },
   "url": {
     "annual_prefix": "beste-reisezeit-",
@@ -128,20 +144,50 @@
   "footer": {
     "data_by": "Wetterdaten von Open-Meteo.com",
     "sources": "Quellen: ECMWF, DWD, NOAA · CC BY 4.0",
-    "methodology": ["methodik.html", "Methodik"],
-    "app": ["app.html", "Wetter-App"],
-    "about": ["ueber-uns.html", "Über uns"],
-    "faq": ["faq.html", "FAQ"],
-    "legal": ["impressum.html", "Impressum"],
-    "privacy": ["datenschutz.html", "Datenschutz"],
-    "contact": ["kontakt.html", "Kontakt"],
+    "methodology": [
+      "methodik.html",
+      "Methodik"
+    ],
+    "app": [
+      "app.html",
+      "Wetter-App"
+    ],
+    "about": [
+      "ueber-uns.html",
+      "Über uns"
+    ],
+    "faq": [
+      "faq.html",
+      "FAQ"
+    ],
+    "legal": [
+      "impressum.html",
+      "Impressum"
+    ],
+    "privacy": [
+      "datenschutz.html",
+      "Datenschutz"
+    ],
+    "contact": [
+      "kontakt.html",
+      "Kontakt"
+    ],
     "alt_lang_flag": "gb",
     "alt_lang_label": "English"
   },
   "rankings": [
-    ["beste-reiseziele-wetter-2026.html", "🌍 Weltranking 2026"],
-    ["beste-europa-wetter-2026.html", "<img src=\"../flags/eu.png\" width=\"16\" height=\"12\" alt=\"EU\" style=\"vertical-align:middle;border-radius:1px;margin-right:2px\"> Beste in Europa"],
-    ["beste-reiseziele-winter-wetter-2026.html", "🌴 Sonnenziele im Winter"]
+    [
+      "beste-reiseziele-wetter-2026.html",
+      "🌍 Weltranking 2026"
+    ],
+    [
+      "beste-europa-wetter-2026.html",
+      "<img src=\"../flags/eu.png\" width=\"16\" height=\"12\" alt=\"EU\" style=\"vertical-align:middle;border-radius:1px;margin-right:2px\"> Beste in Europa"
+    ],
+    [
+      "beste-reiseziele-winter-wetter-2026.html",
+      "🌴 Sonnenziele im Winter"
+    ]
   ],
   "badges": {
     "excellent": "✅ Ausgezeichnet",
@@ -678,10 +724,18 @@
     "detailed_title": "Detaillierter Klimavergleich",
     "detailed_intro": "Wetter-Score von 10, basierend auf Temperatur, Regen und Sonnenschein. 10 Jahre Open-Meteo-Daten.",
     "hero_eyebrow_prefix": "Klimavergleich · 10 Jahre Daten · ",
-    "file_tpl": "{a}-vs-{b}-wetter.html"
+    "file_tpl": "{a}-vs-{b}-wetter.html",
+    "sun_per_day": "h/Tag"
   },
   "pilier": {
-    "th": ["#", "Reiseziel", "Score", "Temp.", "Regen", "Sonne/Tag"],
+    "th": [
+      "#",
+      "Reiseziel",
+      "Score",
+      "Temp.",
+      "Regen",
+      "Sonne/Tag"
+    ],
     "ranking_label": "Ranking",
     "months_label": "Monate",
     "pillar_prefix": "wohin-im-",
@@ -713,13 +767,41 @@
     "share_js": "../js/share.js",
     "methodology": "<div class=\"meth\"><strong>Methodik</strong><p>Scores berechnet aus 10 Jahren Open-Meteo-Archiven (ERA5). Jeder Monat bewertet nach Sonnenschein (40%), Niederschlag (30%), thermischem Komfort (30%). Jahresscore = Durchschnitt der 12 Monate. 318 analysierte Reiseziele.</p></div>",
     "related": [
-      ["beste-reiseziele-wetter-2026.html", "🏆 Weltranking 2026", "318 Reiseziele"],
-      ["beste-europa-wetter-2026.html", "<img src=\"../flags/eu.png\" width=\"20\" height=\"15\" alt=\"\" style=\"vertical-align:middle;border-radius:2px\"> Europa Wetter-Ranking", "Europäischer Vergleich"],
-      ["beste-reiseziele-sommer-wetter-2026.html", "☀️ Beste Sommerziele", "Juni–Juli–August"],
-      ["beste-reiseziele-winter-wetter-2026.html", "❄️ Beste Winterziele", "Dez–Jan–Feb"],
-      ["beste-reiseziele-digital-nomaden-wetter-2026.html", "💻 Beste Nomaden-Ziele", "Konstanz & Komfort"],
-      ["beste-strand-reiseziele-wetter-2026.html", "🏖️ Beste Strandreiseziele", "Strand-Score & Meerestemperatur"],
-      ["beste-karibik-wetter-2026.html", "🌴 Beste Karibik-Ziele", "Trocken- & Regenzeit"]
+      [
+        "beste-reiseziele-wetter-2026.html",
+        "🏆 Weltranking 2026",
+        "318 Reiseziele"
+      ],
+      [
+        "beste-europa-wetter-2026.html",
+        "<img src=\"../flags/eu.png\" width=\"20\" height=\"15\" alt=\"\" style=\"vertical-align:middle;border-radius:2px\"> Europa Wetter-Ranking",
+        "Europäischer Vergleich"
+      ],
+      [
+        "beste-reiseziele-sommer-wetter-2026.html",
+        "☀️ Beste Sommerziele",
+        "Juni–Juli–August"
+      ],
+      [
+        "beste-reiseziele-winter-wetter-2026.html",
+        "❄️ Beste Winterziele",
+        "Dez–Jan–Feb"
+      ],
+      [
+        "beste-reiseziele-digital-nomaden-wetter-2026.html",
+        "💻 Beste Nomaden-Ziele",
+        "Konstanz & Komfort"
+      ],
+      [
+        "beste-strand-reiseziele-wetter-2026.html",
+        "🏖️ Beste Strandreiseziele",
+        "Strand-Score & Meerestemperatur"
+      ],
+      [
+        "beste-karibik-wetter-2026.html",
+        "🌴 Beste Karibik-Ziele",
+        "Trocken- & Regenzeit"
+      ]
     ]
   },
   "classement_pages": {
@@ -728,18 +810,55 @@
       "desc_tpl": "{n} Reiseziele nach 10 Jahren Wetterdaten gerankt. Weltweites Top, sonnigste, trockenste.",
       "h1": "Beste Reiseziele<br/><em>nach Wetter 2026</em>",
       "hero_sub_tpl": "{n} analysierte Reiseziele über 10 Jahre. {top1} führt mit {top1_avg}/10.",
-      "stats": [["{n}", "Reiseziele"], ["10 Jahre", "Daten"], ["{days}.000+", "Gemessene Tage"]],
+      "stats": [
+        [
+          "{n}",
+          "Reiseziele"
+        ],
+        [
+          "10 Jahre",
+          "Daten"
+        ],
+        [
+          "{days}.000+",
+          "Gemessene Tage"
+        ]
+      ],
       "insights_label": "Wichtigste Erkenntnisse",
       "insights": [
-        ["#1 weltweit", "{top1} — {top1_avg}/10 jährlich."],
-        ["Sonnigste", "{sun1} — {sun1_h}h/Jahr."],
-        ["Trockenste", "{dry1} — {dry1_r}% Regen."],
-        ["Europa", "{eu1} führt mit {eu1_avg}/10."]
+        [
+          "#1 weltweit",
+          "{top1} — {top1_avg}/10 jährlich."
+        ],
+        [
+          "Sonnigste",
+          "{sun1} — {sun1_h}h/Jahr."
+        ],
+        [
+          "Trockenste",
+          "{dry1} — {dry1_r}% Regen."
+        ],
+        [
+          "Europa",
+          "{eu1} führt mit {eu1_avg}/10."
+        ]
       ],
       "sections": [
-        {"eyebrow": "Weltranking", "h2": "🏆 Top 20 weltweit — Jahres-Klimascore", "intro_tpl": "Jahresscore = Durchschnitt der 12 Monats-Scores (0–10). {n} analysierte Reiseziele."},
-        {"eyebrow": "Sonnenschein", "h2": "☀️ Top 10 sonnigste", "intro": "Kumulierte Sonnenstunden pro Jahr."},
-        {"eyebrow": "Niederschlag", "h2": "🌂 Top 10 trockenste", "intro": "Durchschnittlicher Anteil der Regentage pro Jahr."}
+        {
+          "eyebrow": "Weltranking",
+          "h2": "🏆 Top 20 weltweit — Jahres-Klimascore",
+          "intro_tpl": "Jahresscore = Durchschnitt der 12 Monats-Scores (0–10). {n} analysierte Reiseziele."
+        },
+        {
+          "eyebrow": "Sonnenschein",
+          "h2": "☀️ Top 10 sonnigste",
+          "intro": "Kumulierte Sonnenstunden pro Jahr."
+        },
+        {
+          "eyebrow": "Niederschlag",
+          "h2": "🌂 Top 10 trockenste",
+          "intro": "Durchschnittlicher Anteil der Regentage pro Jahr."
+        }
       ],
       "jsonld_title_tpl": "Top {n} Reiseziele nach Wetter 2026",
       "fr_file": "classement-destinations-meteo-2026.html",
@@ -752,17 +871,47 @@
       "desc_tpl": "{n} europäische Reiseziele gerankt. Jahres-, Sommer- und Winter-Top.",
       "h1": "Top europäische<br/><em>Reiseziele nach Wetter 2026</em>",
       "hero_sub_tpl": "{n} europäische Reiseziele. {top1} führt mit {top1_avg}/10.",
-      "stats": [["{n}", "Reiseziele"], ["10 Jahre", "Daten"]],
+      "stats": [
+        [
+          "{n}",
+          "Reiseziele"
+        ],
+        [
+          "10 Jahre",
+          "Daten"
+        ]
+      ],
       "insights_label": "Wichtigste Erkenntnisse",
       "insights": [
-        ["#1 Europa", "{top1} — {top1_avg}/10."],
-        ["Sommer", "{summer1} führt ({summer1_avg}/10)."],
-        ["Winter", "{winter1} führt ({winter1_avg}/10)."]
+        [
+          "#1 Europa",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "Sommer",
+          "{summer1} führt ({summer1_avg}/10)."
+        ],
+        [
+          "Winter",
+          "{winter1} führt ({winter1_avg}/10)."
+        ]
       ],
       "sections": [
-        {"eyebrow": "Europa", "h2": "🏆 Top 20 Europa — Jahresscore", "intro_tpl": "{n} europäische Reiseziele nach Jahresscore gerankt."},
-        {"eyebrow": "Sommer", "h2": "☀️ Top 10 Europa Sommer (Jun–Aug)", "intro": "Durchschnittsscore Juni, Juli, August."},
-        {"eyebrow": "Winter", "h2": "❄️ Top 10 Europa Winter (Dez–Feb)", "intro": "Durchschnittsscore Dezember, Januar, Februar."}
+        {
+          "eyebrow": "Europa",
+          "h2": "🏆 Top 20 Europa — Jahresscore",
+          "intro_tpl": "{n} europäische Reiseziele nach Jahresscore gerankt."
+        },
+        {
+          "eyebrow": "Sommer",
+          "h2": "☀️ Top 10 Europa Sommer (Jun–Aug)",
+          "intro": "Durchschnittsscore Juni, Juli, August."
+        },
+        {
+          "eyebrow": "Winter",
+          "h2": "❄️ Top 10 Europa Winter (Dez–Feb)",
+          "intro": "Durchschnittsscore Dezember, Januar, Februar."
+        }
       ],
       "jsonld_title_tpl": "Top europäische Reiseziele nach Wetter 2026",
       "fr_file": "classement-destinations-europe-meteo-2026.html",
@@ -775,15 +924,37 @@
       "desc_tpl": "Top {n} Reiseziele für den Sommer 2026. Gerankt nach 10 Jahren Juni–August-Wetterdaten.",
       "h1": "Beste Sommerziele<br/><em>2026</em>",
       "hero_sub_tpl": "{top1} führt mit {top1_avg}/10 für Juni–August.",
-      "stats": [["{n}", "Reiseziele"], ["Jun–Aug", "Zeitraum"]],
+      "stats": [
+        [
+          "{n}",
+          "Reiseziele"
+        ],
+        [
+          "Jun–Aug",
+          "Zeitraum"
+        ]
+      ],
       "insights_label": "Wichtigste Erkenntnisse",
       "insights": [
-        ["#1 Sommer", "{top1} — {top1_avg}/10."],
-        ["#2", "{top2} — {top2_avg}/10."],
-        ["#3", "{top3} — {top3_avg}/10."]
+        [
+          "#1 Sommer",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "#2",
+          "{top2} — {top2_avg}/10."
+        ],
+        [
+          "#3",
+          "{top3} — {top3_avg}/10."
+        ]
       ],
       "sections": [
-        {"eyebrow": "Sommer 2026", "h2": "☀️ Top 20 weltweit — Sommer 2026 (Jun–Aug)", "intro_tpl": "Durchschnittsscore über 3 Sommermonate. {n} Reiseziele."}
+        {
+          "eyebrow": "Sommer 2026",
+          "h2": "☀️ Top 20 weltweit — Sommer 2026 (Jun–Aug)",
+          "intro_tpl": "Durchschnittsscore über 3 Sommermonate. {n} Reiseziele."
+        }
       ],
       "jsonld_title_tpl": "Beste Sommerziele 2026",
       "fr_file": "classement-destinations-meteo-ete-2026.html",
@@ -796,15 +967,37 @@
       "desc_tpl": "Top {n} Reiseziele für den Winter 2026. Gerankt nach 10 Jahren Dez–Feb-Wetterdaten.",
       "h1": "Beste Winterziele<br/><em>2026</em>",
       "hero_sub_tpl": "{top1} führt mit {top1_avg}/10 für Dez–Feb.",
-      "stats": [["{n}", "Reiseziele"], ["Dez–Feb", "Zeitraum"]],
+      "stats": [
+        [
+          "{n}",
+          "Reiseziele"
+        ],
+        [
+          "Dez–Feb",
+          "Zeitraum"
+        ]
+      ],
       "insights_label": "Wichtigste Erkenntnisse",
       "insights": [
-        ["#1 Winter", "{top1} — {top1_avg}/10."],
-        ["#2", "{top2} — {top2_avg}/10."],
-        ["#3", "{top3} — {top3_avg}/10."]
+        [
+          "#1 Winter",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "#2",
+          "{top2} — {top2_avg}/10."
+        ],
+        [
+          "#3",
+          "{top3} — {top3_avg}/10."
+        ]
       ],
       "sections": [
-        {"eyebrow": "Winter 2026", "h2": "❄️ Top 20 weltweit — Winter 2026 (Dez–Feb)", "intro_tpl": "Durchschnittsscore über 3 Wintermonate. {n} Reiseziele."}
+        {
+          "eyebrow": "Winter 2026",
+          "h2": "❄️ Top 20 weltweit — Winter 2026 (Dez–Feb)",
+          "intro_tpl": "Durchschnittsscore über 3 Wintermonate. {n} Reiseziele."
+        }
       ],
       "jsonld_title_tpl": "Beste Winterziele 2026",
       "fr_file": "classement-destinations-meteo-hiver-2026.html",
@@ -817,15 +1010,37 @@
       "desc_tpl": "{n} Reiseziele nach Wetter-Konsistenz gerankt. Ideal für digitale Nomaden.",
       "h1": "Beste Digital-Nomaden-<br/><em>Ziele 2026</em>",
       "hero_sub_tpl": "{top1} führt: {top1_avg}/10 Ø, Stdabw. {top1_stdev}.",
-      "stats": [["{n}", "Reiseziele"], ["12 Monate", "Konsistenz"]],
+      "stats": [
+        [
+          "{n}",
+          "Reiseziele"
+        ],
+        [
+          "12 Monate",
+          "Konsistenz"
+        ]
+      ],
       "insights_label": "Wichtigste Erkenntnisse",
       "insights": [
-        ["#1 Nomaden", "{top1} — maximale Konsistenz."],
-        ["#2", "{top2} — {top2_avg}/10."],
-        ["Kriterium", "Durchschnittsscore gewichtet nach Varianz."]
+        [
+          "#1 Nomaden",
+          "{top1} — maximale Konsistenz."
+        ],
+        [
+          "#2",
+          "{top2} — {top2_avg}/10."
+        ],
+        [
+          "Kriterium",
+          "Durchschnittsscore gewichtet nach Varianz."
+        ]
       ],
       "sections": [
-        {"eyebrow": "Digitale Nomaden", "h2": "💻 Top 20 — Ganzjährige Wetter-Konsistenz", "intro": "Score = Jahresdurchschnitt − Varianzstrafe. Höher = konsistenteres und angenehmeres Wetter."}
+        {
+          "eyebrow": "Digitale Nomaden",
+          "h2": "💻 Top 20 — Ganzjährige Wetter-Konsistenz",
+          "intro": "Score = Jahresdurchschnitt − Varianzstrafe. Höher = konsistenteres und angenehmeres Wetter."
+        }
       ],
       "jsonld_title_tpl": "Beste Digital-Nomaden-Ziele 2026",
       "fr_file": "classement-destinations-meteo-nomades-2026.html",
@@ -838,17 +1053,47 @@
       "desc_tpl": "Top {n} Strandreiseziele 2026. Gerankt nach Luft- und Meerestemperatur, Sonnenschein und Regen. #1: {top1} ({top1_avg}/10).",
       "h1": "Beste Strandreiseziele<br/><em>2026</em>",
       "hero_sub_tpl": "{top1} führt mit {top1_avg}/10 · {top1_months} Strandmonate.",
-      "stats": [["{n}", "Küstenreiseziele"], ["🏖️", "Dedizierter Strand-Score"]],
+      "stats": [
+        [
+          "{n}",
+          "Küstenreiseziele"
+        ],
+        [
+          "🏖️",
+          "Dedizierter Strand-Score"
+        ]
+      ],
       "insights_label": "Wichtigste Erkenntnisse",
       "insights": [
-        ["#1 jährlich", "{top1} — {top1_avg}/10, Meer {top1_sea}°C."],
-        ["#1 Sommer", "{summer1} — {summer1_avg}/10."],
-        ["#1 Winter", "{winter1} — {winter1_avg}/10."]
+        [
+          "#1 jährlich",
+          "{top1} — {top1_avg}/10, Meer {top1_sea}°C."
+        ],
+        [
+          "#1 Sommer",
+          "{summer1} — {summer1_avg}/10."
+        ],
+        [
+          "#1 Winter",
+          "{winter1} — {winter1_avg}/10."
+        ]
       ],
       "sections": [
-        {"eyebrow": "Jährlich", "h2": "🏖️ Top 25 Strände — Jahresranking", "intro_tpl": "Durchschnittlicher Strand-Score über 12 Monate. Kombiniert Luft- + Meerestemperatur, Regen und Sonnenschein. {n} Küstenreiseziele."},
-        {"eyebrow": "Sommer 2026", "h2": "☀️ Top 20 Strände — Sommer (Jun–Aug)", "intro": "Beste Strände für den Sommer. Durchschnittlicher Strand-Score Juni–August."},
-        {"eyebrow": "Winter 2026", "h2": "❄️ Top 20 Strände — Winter (Dez–Feb)", "intro": "Wo im Winter schwimmen? Durchschnittlicher Strand-Score Dezember–Februar."}
+        {
+          "eyebrow": "Jährlich",
+          "h2": "🏖️ Top 25 Strände — Jahresranking",
+          "intro_tpl": "Durchschnittlicher Strand-Score über 12 Monate. Kombiniert Luft- + Meerestemperatur, Regen und Sonnenschein. {n} Küstenreiseziele."
+        },
+        {
+          "eyebrow": "Sommer 2026",
+          "h2": "☀️ Top 20 Strände — Sommer (Jun–Aug)",
+          "intro": "Beste Strände für den Sommer. Durchschnittlicher Strand-Score Juni–August."
+        },
+        {
+          "eyebrow": "Winter 2026",
+          "h2": "❄️ Top 20 Strände — Winter (Dez–Feb)",
+          "intro": "Wo im Winter schwimmen? Durchschnittlicher Strand-Score Dezember–Februar."
+        }
       ],
       "jsonld_title_tpl": "Beste Strandreiseziele 2026",
       "meth": "<div class=\"meth\"><strong>Strand-Score-Methodik</strong><p>Strand-Score kombiniert Lufttemperatur (25%), Meerestemperatur (25%), Niederschlag (30%) und Sonnenschein (20%). Meerestemperatur von Open-Meteo Marine API (2024-Daten). Nur Küstenreiseziele mit Meeresdaten sind enthalten.</p></div>",
@@ -862,17 +1107,47 @@
       "desc_tpl": "{n} Karibik-Ziele mit 10 Jahren Wetterdaten gerankt. Trocken- und Regenzeit.",
       "h1": "Bestes Karibik-<br/><em>Wetter 2026</em>",
       "hero_sub_tpl": "{n} Karibik-Ziele. {top1} führt mit {top1_avg}/10.",
-      "stats": [["{n}", "Reiseziele"], ["10 Jahre", "Daten"]],
+      "stats": [
+        [
+          "{n}",
+          "Reiseziele"
+        ],
+        [
+          "10 Jahre",
+          "Daten"
+        ]
+      ],
       "insights_label": "Wichtigste Erkenntnisse",
       "insights": [
-        ["#1 Karibik", "{top1} — {top1_avg}/10."],
-        ["Trockenzeit", "{dry1} führt (Dez–Feb, {dry1_avg}/10)."],
-        ["Regenzeit", "{wet1} hält stand (Jun–Aug, {wet1_avg}/10)."]
+        [
+          "#1 Karibik",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "Trockenzeit",
+          "{dry1} führt (Dez–Feb, {dry1_avg}/10)."
+        ],
+        [
+          "Regenzeit",
+          "{wet1} hält stand (Jun–Aug, {wet1_avg}/10)."
+        ]
       ],
       "sections": [
-        {"eyebrow": "Karibik", "h2": "🌴 Top Karibik — Jahresscore", "intro_tpl": "{n} Karibik-Ziele nach Jahresscore gerankt."},
-        {"eyebrow": "Trockenzeit", "h2": "☀️ Top Karibik Trockenzeit (Dez–Feb)", "intro": "Durchschnittsscore Dezember, Januar, Februar."},
-        {"eyebrow": "Regenzeit", "h2": "🌧️ Top Karibik Regenzeit (Jun–Aug)", "intro": "Durchschnittsscore Juni, Juli, August."}
+        {
+          "eyebrow": "Karibik",
+          "h2": "🌴 Top Karibik — Jahresscore",
+          "intro_tpl": "{n} Karibik-Ziele nach Jahresscore gerankt."
+        },
+        {
+          "eyebrow": "Trockenzeit",
+          "h2": "☀️ Top Karibik Trockenzeit (Dez–Feb)",
+          "intro": "Durchschnittsscore Dezember, Januar, Februar."
+        },
+        {
+          "eyebrow": "Regenzeit",
+          "h2": "🌧️ Top Karibik Regenzeit (Jun–Aug)",
+          "intro": "Durchschnittsscore Juni, Juli, August."
+        }
       ],
       "jsonld_title_tpl": "Beste Karibik-Wetter-Ziele 2026",
       "fr_file": "classement-destinations-caraibes-meteo-2026.html",

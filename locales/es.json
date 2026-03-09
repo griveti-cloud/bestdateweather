@@ -725,7 +725,8 @@
     "detailed_title": "Comparación climática detallada",
     "detailed_intro": "Puntuación meteorológica sobre 10, basada en temperatura, lluvia y sol. Datos Open-Meteo a 10 años.",
     "hero_eyebrow_prefix": "Comparación climática · 10 años de datos · ",
-    "file_tpl": "{a}-vs-{b}-clima.html"
+    "file_tpl": "{a}-vs-{b}-clima.html",
+    "sun_per_day": "h/día"
   },
   "pilier": {
     "th": [

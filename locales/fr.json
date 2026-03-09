@@ -725,7 +725,8 @@
     "detailed_title": "Comparaison climatique détaillée",
     "detailed_intro": "Score météo sur 10, basé sur températures, pluie et ensoleillement. Données 10 ans Open-Meteo.",
     "hero_eyebrow_prefix": "Comparatif climatique · 10 ans de données · ",
-    "file_tpl": "{a}-ou-{b}-climat.html"
+    "file_tpl": "{a}-ou-{b}-climat.html",
+    "sun_per_day": "h/jour"
   },
   "pilier": {
     "th": [

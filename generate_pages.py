@@ -1427,7 +1427,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <ul class="cmp-list">
  <li class="act-item-odd">🌡️ {L['cmp_tmax']} : <strong>{'+' if diff_t >= 0 else ''}{diff_t}{'°F' if C.get('imperial') else '°C'}</strong></li>
  <li class="act-item-even">🌧 {L['cmp_rain']} : <strong>{'+' if diff_r >= 0 else ''}{diff_r}%</strong></li>
- <li class="act-item-last">☀️ {L['cmp_sun']} : <strong>{'+' if diff_s >= 0 else ''}{diff_s}h/jour</strong></li>
+ <li class="act-item-last">☀️ {L['cmp_sun']} : <strong>{'+' if diff_s >= 0 else ''}{diff_s}{C['locale']['comp']['sun_per_day']}</strong></li>
  </ul>
  </section>
 
