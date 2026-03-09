@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>How BestDateWeather Works — Methodology</title>
 <meta name="description" content="How does BestDateWeather anticipate the weather up to 12 months ahead? Discover our methodology: data sources, scoring model, time horizons and tool limitations."/>
 <meta name="robots" content="index,follow"/>
-<link rel="canonical" href="https://bestdateweather.com/en/methodology.html"/>
+<link rel="canonical" href="https://bestdateweather.com/us/methodology.html"/>
+<link rel="alternate" hreflang="fr" href="https://bestdateweather.com/note_modele.html"/>
 <link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/methodology.html"/>
 <link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/methodology.html"/>
-<link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/metodologia.html"/>
-<link rel="alternate" hreflang="fr" href="https://bestdateweather.com/methodologie.html"/>
+<link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/note_modele.html"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -277,9 +277,9 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
  <h3>Ideal temperature ranges</h3>
  <p>Each profile defines an optimal temperature range. Outside this range, the temperature sub-score decreases progressively.</p>
  <div class="card-grid">
-  <div class="card-mini"><div class="label">General</div><div class="val">16° – 28°C</div></div>
-  <div class="card-mini"><div class="label">Beach</div><div class="val">22° – 38°C</div></div>
-  <div class="card-mini"><div class="label">Ski</div><div class="val">-8° – 2°C</div></div>
+  <div class="card-mini"><div class="label">General</div><div class="val">61° – 82°F</div></div>
+  <div class="card-mini"><div class="label">Beach</div><div class="val">72° – 100°F</div></div>
+  <div class="card-mini"><div class="label">Ski</div><div class="val">18° – 36°F</div></div>
  </div>
 
  <h3>Verdicts</h3>
@@ -328,17 +328,17 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
  <div class="card-grid">
   <div class="card-mini">
   <div class="label">Typical error D+2</div>
-  <div class="val">±0.5–1°C</div>
+  <div class="val">±0.9–1.8°F</div>
   <div class="sub">High-resolution NWP models</div>
   </div>
   <div class="card-mini">
   <div class="label">Typical error D+5</div>
-  <div class="val">±1.5–2°C</div>
+  <div class="val">±2.7–3.6°F</div>
   <div class="sub">Source: Open-Meteo / ECMWF benchmarks</div>
   </div>
   <div class="card-mini">
   <div class="label">Seasonal trend</div>
-  <div class="val">±3–5°C</div>
+  <div class="val">±5.4–9°F</div>
   <div class="sub">ERA5 year-to-year variability</div>
   </div>
  </div>
@@ -360,7 +360,7 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
  </div>
 
  <ul>
-  <li><strong>No microclimates.</strong> ERA5's spatial resolution is 31 km — local variations (valleys, coasts, altitude) are not captured. A seaside resort can differ by 5°C from the neighbouring town.</li>
+  <li><strong>No microclimates.</strong> ERA5's spatial resolution is 31 km — local variations (valleys, coasts, altitude) are not captured. A seaside resort can differ by 9°F from the neighbouring town.</li>
   <li><strong>No climate change modelling.</strong> Our 10-year window partially captures recent warming, but doesn't extrapolate future trends. Projections beyond 2030 are outside our scope.</li>
   <li><strong>No ECMWF seasonal correction beyond 7 months.</strong> Beyond D+210, the ECMWF seasonal model no longer provides significant predictive value. We then display a pure historical climate profile based on 10 years of data — still useful for long-term planning, but without seasonal trend adjustment.</li>
   <li><strong>Extreme events are not predictable.</strong> Cyclones, exceptional storms, historic heatwaves — these rare events are not represented in average statistics.</li>
