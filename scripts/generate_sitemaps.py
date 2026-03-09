@@ -395,6 +395,11 @@ def find_de_comparison_pages():
             for f in sorted(glob.glob(os.path.join(DIR, 'de', '*-vs-*-wetter.html')))
             if not _is_redirect(f)]
 
+def find_de_pillar_pages():
+    return ['de/' + os.path.basename(f)
+            for f in sorted(glob.glob(os.path.join(DIR, 'de', 'wohin-im-*.html')))
+            if not _is_redirect(f)]
+
 def find_de_ranking_pages():
     pages = []
     for f in glob.glob(os.path.join(DIR, 'de', 'beste-*-wetter-*.html')):
@@ -421,6 +426,8 @@ def generate_sitemap_de(dry_run=False):
         prio = 0.8 if 'beste-reisezeit-' in page else 0.6
         entries.append(make_url_entry(page, priority=prio))
     for page in find_de_ranking_pages():
+        entries.append(make_url_entry(page, priority=0.7))
+    for page in find_de_pillar_pages():
         entries.append(make_url_entry(page, priority=0.7))
     for page in find_de_comparison_pages():
         entries.append(make_url_entry(page, priority=0.7))
