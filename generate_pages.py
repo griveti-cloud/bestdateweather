@@ -283,6 +283,9 @@ def footer_html(cfg, dest):
             cl_url = f"{cl_pfx}mejor-epoca-{slug_es}.html"
         elif cl_lang == 'en-us':
             cl_url = f"{cl_pfx}best-time-to-visit-{slug_en}.html"
+        elif cl_lang == 'de':
+            slug_de = dest.get('slug_de', slug_en)
+            cl_url = f"{cl_pfx}beste-reisezeit-{slug_de}.html"
         else:
             continue
         alt_links.append(f' · <a href="{cl_url}" class="txt-muted"><img src="{pfx}flags/{cl_flag}.png" width="20" height="15" alt="" class="flag-icon-lg"> {cl_label}</a>')
@@ -1508,7 +1511,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 def main():
     import argparse
     parser = argparse.ArgumentParser(description='BestDateWeather unified page generator')
-    parser.add_argument('--lang', required=True, choices=['fr', 'en', 'en-us', 'es'])
+    parser.add_argument('--lang', required=True, choices=['fr', 'en', 'en-us', 'es', 'de'])
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--validate-only', action='store_true')
     parser.add_argument('target', nargs='?', default=None, help='Single destination slug')

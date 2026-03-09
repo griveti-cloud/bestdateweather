@@ -475,6 +475,9 @@ def dest_link(slug, nom, lang, dest=None):
     elif lang == 'es':
         slug_es = dest.get('slug_es', slug) if dest else slug
         return f'../es/mejor-epoca-{slug_es}.html'
+    elif lang == 'de':
+        slug_de = dest.get('slug_de', dest.get('slug_en', slug)) if dest else slug
+        return f'beste-reisezeit-{slug_de}.html'
     else:  # en, en-us
         slug_en = dest.get('slug_en', slug) if dest else slug
         return f'best-time-to-visit-{slug_en}.html'
@@ -522,7 +525,7 @@ def make_table_annual(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
+        nom = d.get('nom_de', d['nom_en']) if lang == 'de' else (d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr'])
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -547,7 +550,7 @@ def make_table_seasonal(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
+        nom = d.get('nom_de', d['nom_en']) if lang == 'de' else (d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr'])
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -572,7 +575,7 @@ def make_table_sun(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
+        nom = d.get('nom_de', d['nom_en']) if lang == 'de' else (d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr'])
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -596,7 +599,7 @@ def make_table_rain(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
+        nom = d.get('nom_de', d['nom_en']) if lang == 'de' else (d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr'])
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -621,7 +624,7 @@ def make_table_nomad(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
+        nom = d.get('nom_de', d['nom_en']) if lang == 'de' else (d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr'])
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -646,7 +649,7 @@ def make_table_beach(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
+        nom = d.get('nom_de', d['nom_en']) if lang == 'de' else (d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr'])
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -673,7 +676,7 @@ def make_table_beach_annual(entries, n, lang):
     rows = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
+        nom = d.get('nom_de', d['nom_en']) if lang == 'de' else (d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr'])
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
@@ -694,13 +697,21 @@ def make_jsonld(entries, n, title, lang):
     items = []
     for i, entry in enumerate(entries[:n], 1):
         d = entry['dest']
-        nom = d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr']
+        if lang == 'de':
+            nom = d.get('nom_de', d['nom_en'])
+        elif lang in ('en', 'en-us', 'es'):
+            nom = d['nom_en']
+        else:
+            nom = d['nom_fr']
         slug = entry['slug']
         if lang == 'fr':
             url = f'https://bestdateweather.com/meilleure-periode-{slug}.html'
         elif lang == 'es':
             slug_es = d.get('slug_es', slug)
             url = f'https://bestdateweather.com/es/mejor-epoca-{slug_es}.html'
+        elif lang == 'de':
+            slug_de = d.get('slug_de', d.get('slug_en', slug))
+            url = f'https://bestdateweather.com/de/beste-reisezeit-{slug_de}.html'
         else:
             slug_en = d.get('slug_en', slug)
             url = f'https://bestdateweather.com/best-time-to-visit-{slug_en}.html'
@@ -811,6 +822,8 @@ def _dest_name(dest, lang):
         return dest.get('nom_bare', dest.get('nom_fr', ''))
     elif lang == 'es':
         return dest.get('nom_es') or dest.get('nom_en', '')
+    elif lang == 'de':
+        return dest.get('nom_de') or dest.get('nom_en', '')
     return dest.get('nom_en', '')
 
 
@@ -852,11 +865,13 @@ def _sections(sections_cfg, ctx, tables):
 def _cl_layout(pc, lang):
     BASE = 'https://bestdateweather.com'
     fr_file, en_file, es_file = pc['fr_file'], pc['en_file'], pc['es_file']
+    de_file = pc.get('de_file', en_file)
     if lang == 'fr':
         canonical = f'{BASE}/{fr_file}'
         footer = footer_ranking_html('fr', [
             {'url': f'en/{en_file}',  'flag': 'flags/gb.png',    'label': 'English'},
             {'url': f'es/{es_file}',  'flag': 'flags/es.png',    'label': 'Español'},
+            {'url': f'de/{de_file}',  'flag': 'flags/de.png',    'label': 'Deutsch'},
         ])
         outfile = ROOT / fr_file
     elif lang == 'en-us':
@@ -865,6 +880,7 @@ def _cl_layout(pc, lang):
             {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
             {'url': f'../es/{es_file}', 'flag': '../flags/es.png', 'label': 'Español'},
+            {'url': f'../de/{de_file}', 'flag': '../flags/de.png', 'label': 'Deutsch'},
         ])
         outfile = ROOT / 'us' / en_file
     elif lang == 'en':
@@ -872,16 +888,26 @@ def _cl_layout(pc, lang):
         footer = footer_ranking_html('en', [
             {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../es/{es_file}', 'flag': '../flags/es.png', 'label': 'Español'},
+            {'url': f'../de/{de_file}', 'flag': '../flags/de.png', 'label': 'Deutsch'},
         ])
         outfile = ROOT / 'en' / en_file
-    else:
+    elif lang == 'de':
+        canonical = f'{BASE}/de/{de_file}'
+        footer = footer_ranking_html('de', [
+            {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
+            {'url': f'../es/{es_file}', 'flag': '../flags/es.png', 'label': 'Español'},
+        ])
+        outfile = ROOT / 'de' / de_file
+    else:  # es
         canonical = f'{BASE}/es/{es_file}'
         footer = footer_ranking_html('es', [
             {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
+            {'url': f'../de/{de_file}', 'flag': '../flags/de.png', 'label': 'Deutsch'},
         ])
         outfile = ROOT / 'es' / es_file
-    return canonical, footer, outfile, fr_file, en_file, es_file
+    return canonical, footer, outfile, fr_file, en_file, es_file, de_file
 
 
 def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix=''):
@@ -894,8 +920,8 @@ def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix=''):
     sections = _sections(pc['sections'], ctx, tables)
     jsonld   = make_jsonld(jsonld_data, jsonld_n, _tpl(pc['jsonld_title_tpl'], ctx), lang)
     meth     = pc.get('meth') or load_locale('en' if lang == 'en-us' else lang)['classements']['methodology']
-    canonical, footer, outfile, fr_file, en_file, es_file = _cl_layout(pc, lang)
-    rel_file = es_file if lang == 'es' else (fr_file if lang == 'fr' else en_file)
+    canonical, footer, outfile, fr_file, en_file, es_file, de_file = _cl_layout(pc, lang)
+    rel_file = es_file if lang == 'es' else (de_file if lang == 'de' else (fr_file if lang == 'fr' else en_file))
     related  = make_related(lang, rel_file)
     page = make_page(
         title=title, description=desc, h1=h1, hero_sub=hero_sub,
@@ -1090,7 +1116,16 @@ def main():
     gen_beach(dests, climate, 'en-us')
     gen_caribbean(dests, climate, 'en-us')
 
-    print('\n✅ All 28 ranking pages generated (FR + EN + ES + EN-US).')
+    print('\nGenerating DE pages...')
+    gen_mondial(dests, climate, 'de')
+    gen_europe(dests, climate, 'de')
+    gen_ete(dests, climate, 'de')
+    gen_hiver(dests, climate, 'de')
+    gen_nomades(dests, climate, 'de')
+    gen_beach(dests, climate, 'de')
+    gen_caribbean(dests, climate, 'de')
+
+    print('\n✅ All 35 ranking pages generated (FR + EN + ES + EN-US + DE).')
 
 if __name__ == '__main__':
     main()

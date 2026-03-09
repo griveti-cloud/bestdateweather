@@ -229,7 +229,7 @@ def dest_country(cfg, dest):
 
 
 # Langues actives. Pour ajouter DE : 1) créer locales/de.json 2) ajouter 'de' ici.
-SUPPORTED_LANGS = ['fr', 'en', 'en-us', 'es']
+SUPPORTED_LANGS = ['fr', 'en', 'en-us', 'es', 'de']
 
 # Cache des configs par langue pour éviter de recharger les locales à chaque page
 _lang_cfg_cache: dict = {}

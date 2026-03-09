@@ -822,9 +822,16 @@ if os.path.exists('us/app.html'):
             c = len(re.findall(r'best-time-to-visit-', open('us/app.html').read()))
             print(f"  ✅ {c} liens")
 
+    loc_de = load_locale('de')
+    print("\n🇩🇪 de/app.html...")
+    if os.path.exists('de/app.html') and 'SILO 1' in open('de/app.html').read():
+        if inject('de/app.html', dests, loc_de):
+            c = len(re.findall(r'beste-reisezeit-', open('de/app.html').read()))
+            print(f"  ✅ {c} liens")
+
 # Inject lang-switcher footers in all hub pages
 print("\n🔗 Injection footers langue...")
-for lang, filepath in [('fr','index.html'),('en','en/app.html'),('es','es/app.html'),('en-us','us/app.html')]:
+for lang, filepath in [('fr','index.html'),('en','en/app.html'),('es','es/app.html'),('en-us','us/app.html'),('de','de/app.html')]:
     if os.path.exists(filepath):
         loc = load_locale(lang)
         if inject_hub_footer(filepath, lang, loc):
