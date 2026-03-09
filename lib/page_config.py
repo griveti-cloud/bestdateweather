@@ -35,6 +35,7 @@ _CROSS_LANG = {'fr': 'en', 'en': 'fr', 'es': 'fr', 'en-us': 'fr'}
 
 # Season icons (shared across languages)
 SEASON_ICONS = {'Printemps':'🌸','Été':'☀️','Automne':'🍂','Hiver':'❄️',
+                'Frühling':'🌸','Sommer':'☀️','Herbst':'🍂','Winter':'❄️',
                 'Spring':'🌸','Summer':'☀️','Autumn':'🍂','Winter':'❄️',
                 'Primavera':'🌸','Verano':'☀️','Otoño':'🍂','Invierno':'❄️'}
 

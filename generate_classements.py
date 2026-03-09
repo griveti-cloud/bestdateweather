@@ -520,6 +520,7 @@ def make_table_annual(entries, n, lang):
         'fr': ('Rang','Destination','Meilleur mois','Score annuel','Soleil/an','Pluie moy.'),
         'en': ('Rank','Destination','Best month','Annual score','Sun/year','Avg. rain'),
         'es': ('Pos.','Destino','Mejor mes','Puntuación anual','Sol/año','Lluvia media'),
+        'de': ('Rang','Ziel','Bester Monat','Jahreswertung','Sonne/Jahr','Ø Regen'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -545,6 +546,7 @@ def make_table_seasonal(entries, n, lang):
         'fr': ('Rang','Destination','Score','Temp. max','Soleil','Pluie'),
         'en': ('Rank','Destination','Score','Max temp.','Sun','Rain'),
         'es': ('Pos.','Destino','Puntuación','Temp. máx','Sol','Lluvia'),
+        'de': ('Rang','Ziel','Wertung','Max-Temp.','Sonne','Regen'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -570,6 +572,7 @@ def make_table_sun(entries, n, lang):
         'fr': ('Rang','Destination','Soleil/an','Score annuel','Pluie moy.'),
         'en': ('Rank','Destination','Sun/year','Annual score','Avg. rain'),
         'es': ('Pos.','Destino','Sol/año','Puntuación anual','Lluvia media'),
+        'de': ('Rang','Ziel','Sonne/Jahr','Jahreswertung','Ø Regen'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -594,6 +597,7 @@ def make_table_rain(entries, n, lang):
         'fr': ('Rang','Destination','Pluie moy.','Score annuel','Soleil/an'),
         'en': ('Rank','Destination','Avg. rain','Annual score','Sun/year'),
         'es': ('Pos.','Destino','Lluvia media','Puntuación anual','Sol/año'),
+        'de': ('Rang','Ziel','Ø Regen','Jahreswertung','Sonne/Jahr'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -618,6 +622,7 @@ def make_table_nomad(entries, n, lang):
         'fr': ('Rang','Destination','Score moyen','Écart-type','Pire mois','Score pire'),
         'en': ('Rank','Destination','Avg. score','Std. dev.','Worst month','Worst score'),
         'es': ('Pos.','Destino','Punt. media','Desv. típica','Peor mes','Punt. peor mes'),
+        'de': ('Rang','Ziel','Ø Wertung','Std.-Abw.','Schlechtester Monat','Schlechteste Note'),
     }
     mois = get_mois(lang)
     h = headers['en' if lang == 'en-us' else lang]
@@ -644,6 +649,7 @@ def make_table_beach(entries, n, lang):
         'fr': ('Rang','Destination','Score plage','Mer','Temp.','Soleil/j','Pluie'),
         'en': ('Rank','Destination','Beach score','Sea','Temp.','Sun/day','Rain'),
         'es': ('Pos.','Destino','Score playa','Mar','Temp.','Sol/día','Lluvia'),
+        'de': ('Rang','Ziel','Strand-Score','Meer','Temp.','Sonne/Tag','Regen'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -671,6 +677,7 @@ def make_table_beach_annual(entries, n, lang):
         'fr': ('Rang','Destination','Score plage','Mer moy.','Meilleur mois','Mois ≥7/10'),
         'en': ('Rank','Destination','Beach score','Avg. sea','Best month','Months ≥7/10'),
         'es': ('Pos.','Destino','Score playa','Mar medio','Mejor mes','Meses ≥7/10'),
+        'de': ('Rang','Ziel','Strand-Score','Ø Meer','Bester Monat','Monate ≥7/10'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
