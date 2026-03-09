@@ -376,6 +376,57 @@ def generate_sitemap_es(dry_run=False):
     _write_sitemap('sitemap-es.xml', entries, dry_run)
     return len(entries)
 
+def find_de_pages():
+    """Retourne les pages DE destination (annual + monthly)."""
+    annual, monthly = [], []
+    for f in sorted(glob.glob(os.path.join(DIR, 'de', 'beste-reisezeit-*.html'))):
+        if not _is_redirect(f):
+            annual.append('de/' + os.path.basename(f))
+    for f in sorted(glob.glob(os.path.join(DIR, 'de', '*-wetter-*.html'))):
+        bn = os.path.basename(f)
+        # Exclure classements (beste-reiseziele-*) et comparatifs (*-vs-*)
+        if not _is_redirect(f) and not bn.startswith('beste-reiseziele') and 'vs' not in bn:
+            monthly.append('de/' + bn)
+    return annual + monthly
+
+def find_de_comparison_pages():
+    """Retourne les pages comparatif DE (*-vs-*-wetter.html)."""
+    return ['de/' + os.path.basename(f)
+            for f in sorted(glob.glob(os.path.join(DIR, 'de', '*-vs-*-wetter.html')))
+            if not _is_redirect(f)]
+
+def find_de_ranking_pages():
+    pages = []
+    for f in glob.glob(os.path.join(DIR, 'de', 'beste-*-wetter-*.html')):
+        if not _is_redirect(f):
+            pages.append('de/' + os.path.basename(f))
+    return sorted(pages)
+
+STATIC_PAGES_DE = {
+    'de/app.html':        0.9,
+    'de/methodik.html':   0.5,
+    'de/ueber-uns.html':  0.5,
+    'de/faq.html':        0.5,
+    'de/impressum.html':  0.3,
+    'de/datenschutz.html':0.3,
+    'de/kontakt.html':    0.3,
+}
+
+def generate_sitemap_de(dry_run=False):
+    entries = []
+    for loc, prio in STATIC_PAGES_DE.items():
+        if os.path.exists(os.path.join(DIR, loc)):
+            entries.append(make_url_entry(loc, priority=prio))
+    for page in find_de_pages():
+        prio = 0.8 if 'beste-reisezeit-' in page else 0.6
+        entries.append(make_url_entry(page, priority=prio))
+    for page in find_de_ranking_pages():
+        entries.append(make_url_entry(page, priority=0.7))
+    for page in find_de_comparison_pages():
+        entries.append(make_url_entry(page, priority=0.7))
+    _write_sitemap('sitemap-de.xml', entries, dry_run)
+    return len(entries)
+
 def generate_sitemap_us(dry_run=False):
     entries = []
     for loc, prio in STATIC_PAGES_US.items():
@@ -415,7 +466,8 @@ if __name__ == '__main__':
     n_en = generate_sitemap('en', dry_run)
     n_es = generate_sitemap_es(dry_run)
     n_us = generate_sitemap_us(dry_run)
-    print(f'\nTotal: {n_fr} FR + {n_en} EN + {n_es} ES + {n_us} US = {n_fr + n_en + n_es + n_us} URLs')
+    n_de = generate_sitemap_de(dry_run)
+    print(f'\nTotal: {n_fr} FR + {n_en} EN + {n_es} ES + {n_us} US + {n_de} DE = {n_fr + n_en + n_es + n_us + n_de} URLs')
 
     # Update sitemap-index.xml
     if not dry_run:
@@ -435,6 +487,10 @@ if __name__ == '__main__':
   </sitemap>
   <sitemap>
     <loc>https://bestdateweather.com/sitemap-us.xml</loc>
+    <lastmod>{TODAY}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://bestdateweather.com/sitemap-de.xml</loc>
     <lastmod>{TODAY}</lastmod>
   </sitemap>
 </sitemapindex>'''
