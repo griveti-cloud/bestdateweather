@@ -680,9 +680,9 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 
     # ── Hero stats ──
     if len(bests) > 1:
-        best_months_lbl = C['lbl_best_months_lbl_tpl'].replace('{s}', 's')
+        best_months_lbl = C['lbl_best_months_lbl_tpl'].replace('{s}', 's').replace('{es}', 'es')
     else:
-        best_months_lbl = C['lbl_best_months_lbl_tpl'].replace('{s}', '')
+        best_months_lbl = C['lbl_best_months_lbl_tpl'].replace('{s}', '').replace('{es}', '')
     updated_date = f"{MONTHS[date.today().month - 1]} {date.today().year}"
 
     coords = f"{lat}°N {abs(lon)}°{'E' if lon >= 0 else 'W'}"

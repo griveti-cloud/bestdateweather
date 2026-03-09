@@ -854,7 +854,7 @@
           "intro": "Porcentaje medio de días lluviosos al año."
         }
       ],
-      "jsonld_title_tpl": "Top destinos clima 2026",
+      "jsonld_title_tpl": "Top {n} destinos clima 2026",
       "fr_file": "classement-destinations-meteo-2026.html",
       "en_file": "best-destinations-weather-ranking-2026.html",
       "es_file": "mejores-destinos-clima-2026.html"
