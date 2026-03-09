@@ -75,7 +75,7 @@ window.BDW_T = {
 
  // Score verdicts
  scIdeal: 'Ideal', scVeryGood: 'Very favourable', scGood: 'Favourable',
- scPoor: 'Unfavourable', scBad: 'Poor conditions',
+ scPoor: 'Unfavourable', scBad: 'Challenging climate',
 
  // Score actions — ski
  actGoodSnow: 'Good snow cover likely',
