@@ -253,6 +253,7 @@ def generate_page(mi, lang, dests, climate):
 
     # File paths — cross-lang links built dynamically from all locales
     is_es = (lang == 'es')
+    is_de = (lang == 'de')
     src_sub = loc['meta']['subdir']  # '' for FR, 'en', 'es', ...
     filename = f'{pil["pillar_prefix"]}{month_slug}.html'
 
@@ -340,6 +341,20 @@ def generate_page(mi, lang, dests, climate):
         sec_intro = (f"Score moyen du top 10 : <strong>{avg_score:.1f}/10</strong> · "
                      f"Température moyenne : <strong>{avg_temp:.0f}°C</strong>")
         cta_text = f"🎯 Choisir une date précise pour votre voyage en {mn_lc}"
+    elif is_de:
+        nom_de = lambda e: e.get('nom_de') or e.get('nom_en', '')
+        title = f"Wohin im {month_name} {YEAR} — Top {TOP_N} Reiseziele nach Wetter"
+        desc = (f"Wohin im {month_name} {YEAR}? Top {TOP_N} Reiseziele nach Wetter-Score. "
+                f"Nr. 1: {nom_de(top)} ({top['score']:.1f}/10, {top['tmax']:.0f}°C). "
+                f"Basierend auf 10 Jahren Open-Meteo-Daten.")
+        h1 = f"Wohin im <em>{month_name}</em>?"
+        hero_sub = (f"Die {TOP_N} besten Reiseziele nach Wetter im {month_name} {YEAR}, "
+                    f"gerankt nach Klima-Score auf Basis von 10 Jahren Daten.")
+        sec_eyebrow = f"{month_name} {YEAR} Ranking"
+        sec_title = f"Top {TOP_N} Reiseziele im {month_name}"
+        sec_intro = (f"Ø Score Top 10: <strong>{avg_score:.1f}/10</strong> · "
+                     f"Ø Temperatur: <strong>{avg_temp:.0f}°C</strong>")
+        cta_text = f"🎯 Genaues Datum für Ihre Reise im {month_name} wählen"
     else:
         title = f"Where to Go in {month_name} {YEAR} — Top {TOP_N} Weather Destinations"
         desc = (f"Where to go in {month_name} {YEAR}? Top {TOP_N} destinations ranked by weather score. "
@@ -383,9 +398,9 @@ def generate_page(mi, lang, dests, climate):
             {
                 "@type": "ListItem",
                 "position": i + 1,
-                "name": entry['nom_bare'] if is_fr else (entry.get('nom_es') or entry['nom_bare'] if is_es else entry['nom_en']),
+                "name": entry['nom_bare'] if is_fr else (entry.get('nom_es') or entry['nom_bare'] if is_es else (entry.get('nom_de') or entry['nom_en'] if is_de else entry['nom_en'])),
                 "url": loc['meta']['canonical_prefix'] + gen['monthly_href_tpl'].format(
-                    slug=entry['slug_fr'] if is_fr else (entry.get('slug_es') or entry['slug_en'] if is_es else entry['slug_en']),
+                    slug=entry['slug_fr'] if is_fr else (entry.get('slug_es') or entry['slug_en'] if is_es else (entry.get('slug_de') or entry['slug_en'] if is_de else entry['slug_en'])),
                     month_slug=month_url[mi])
             }
             for i, entry in enumerate(entries)
@@ -412,6 +427,16 @@ def generate_page(mi, lang, dests, climate):
             "name": f"¿Adónde ir con buen tiempo en {month_name}?",
             "acceptedAnswer": {"@type": "Answer",
                 "text": f"Los destinos con mejor clima en {month_name} son {nom_es(entries[0])}, {nom_es(entries[1])} y {nom_es(entries[2])}, con puntuaciones de {entries[0]['score']:.1f} a {entries[2]['score']:.1f}/10."}})
+    elif is_de:
+        nom_de_fn = lambda e: e.get('nom_de') or e.get('nom_en', '')
+        faq_items.append({"@type": "Question",
+            "name": f"Was ist das beste Reiseziel im {month_name}?",
+            "acceptedAnswer": {"@type": "Answer",
+                "text": f"{nom_de_fn(top)} ist das Top-Reiseziel im {month_name} mit einem Score von {top['score']:.1f}/10 und {top['tmax']:.0f}°C."}})
+        faq_items.append({"@type": "Question",
+            "name": f"Wohin reisen mit gutem Wetter im {month_name}?",
+            "acceptedAnswer": {"@type": "Answer",
+                "text": f"Die besten Reiseziele im {month_name} sind {nom_de_fn(entries[0])}, {nom_de_fn(entries[1])} und {nom_de_fn(entries[2])}, mit Scores von {entries[2]['score']:.1f} bis {entries[0]['score']:.1f}/10."}})
     else:
         faq_items.append({"@type": "Question",
             "name": f"What is the best destination in {month_name}?",
@@ -464,7 +489,7 @@ def generate_page(mi, lang, dests, climate):
 <p class="hero-sub">{hero_sub}</p>
 <div class="hero-stats">
 <div class="hstat"><span class="hstat-val">{top['score']:.1f}</span><span class="hstat-lbl">{pil["score_n1"]}</span></div>
-<div class="hstat"><span class="hstat-val">{TOP_N}</span><span class="hstat-lbl">Destinations</span></div>
+<div class="hstat"><span class="hstat-val">{TOP_N}</span><span class="hstat-lbl">{pil["top_n_label"]}</span></div>
 <div class="hstat"><span class="hstat-val">{avg_temp:.0f}{ft_unit()}</span><span class="hstat-lbl">{pil["top10_avg"]}</span></div>
 </div>
 </header>
