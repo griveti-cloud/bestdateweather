@@ -142,7 +142,7 @@ window.BDW_T = {
  bestBeach: 'Best months for beach',
  bestSki: 'Best months for skiing',
  ecmwfTrend: 'ECMWF Trend',
- badgeRec: 'Recommended', badgeAvoid: 'Less favourable',
+ badgeRec: 'Recommended', badgeAvoid: 'Challenging climate',
  badgeBest: '🔥 Best month',
  avgLabel: 'avg.', dayAbbr: 'd',
  legendBarColor: 'Bar colour = average monthly temperature',

@@ -142,7 +142,7 @@ window.BDW_T = {
  bestBeach: 'Meilleurs mois pour la plage',
  bestSki: 'Meilleurs mois pour le ski',
  ecmwfTrend: 'Tendance ECMWF',
- badgeRec: 'Recommandé', badgeAvoid: 'Peu favorable',
+ badgeRec: 'Recommandé', badgeAvoid: 'Climat prononcé',
  badgeBest: '🔥 Meilleur mois',
  avgLabel: 'moy.', dayAbbr: 'j',
  legendBarColor: 'Couleur barre = température moyenne du mois',
