@@ -299,6 +299,18 @@ def find_us_pages():
             monthly.append('us/' + bn)
     return annual + monthly
 
+def find_es_comparison_pages():
+    """Retourne les pages comparatif ES (*-vs-*-clima.html)."""
+    return ['es/' + os.path.basename(f)
+            for f in sorted(glob.glob(os.path.join(DIR, 'es', '*-vs-*-clima.html')))
+            if not _is_redirect(f)]
+
+def find_us_comparison_pages():
+    """Retourne les pages comparatif US (*-vs-*-weather.html)."""
+    return ['us/' + os.path.basename(f)
+            for f in sorted(glob.glob(os.path.join(DIR, 'us', '*-vs-*-weather.html')))
+            if not _is_redirect(f)]
+
 def find_es_pillar_pages():
     return ['es/' + os.path.basename(f)
             for f in sorted(glob.glob(os.path.join(DIR, 'es', 'donde-ir-en-*.html')))
@@ -338,7 +350,13 @@ STATIC_PAGES_ES = {
 }
 
 STATIC_PAGES_US = {
-    'us/app.html': 0.9,
+    'us/app.html':        0.9,
+    'us/about.html':      0.5,
+    'us/faq.html':        0.5,
+    'us/methodology.html':0.5,
+    'us/legal.html':      0.3,
+    'us/privacy.html':    0.3,
+    'us/contact.html':    0.3,
 }
 
 def generate_sitemap_es(dry_run=False):
@@ -352,6 +370,8 @@ def generate_sitemap_es(dry_run=False):
     for page in find_es_ranking_pages():
         entries.append(make_url_entry(page, priority=0.7))
     for page in find_es_pillar_pages():
+        entries.append(make_url_entry(page, priority=0.7))
+    for page in find_es_comparison_pages():
         entries.append(make_url_entry(page, priority=0.7))
     _write_sitemap('sitemap-es.xml', entries, dry_run)
     return len(entries)
@@ -367,6 +387,8 @@ def generate_sitemap_us(dry_run=False):
     for page in find_us_ranking_pages():
         entries.append(make_url_entry(page, priority=0.7))
     for page in find_us_pillar_pages():
+        entries.append(make_url_entry(page, priority=0.7))
+    for page in find_us_comparison_pages():
         entries.append(make_url_entry(page, priority=0.7))
     _write_sitemap('sitemap-us.xml', entries, dry_run)
     return len(entries)
