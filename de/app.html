@@ -69,10 +69,10 @@
   <span class="app-divider-ico">🌤</span>
   <span class="app-divider-line r"></span>
  </div>
- <p class="app-sub"><strong>Anticipate the weather up to 12 months ahead.</strong><br/>Any city. Any date. 10 years of data.</p>
+ <p class="app-sub"><strong>Wettervorhersage bis zu 12 Monate im Voraus.</strong><br/>Jede Stadt. Jedes Datum. 10 Jahre Daten.</p>
  <p class="app-proof">
   <span class="app-proof-dot"></span>
-  10 years of data · ERA5 / ECMWF
+  10 Jahre Daten · ERA5 / ECMWF
  </p>
  <div class="unit-toggle" id="unit-toggle">
   <button class="unit-btn active" id="btn-metric" onclick="setUnits('metric')">°C · km/h</button>
@@ -90,11 +90,11 @@
 <div class="mode-toggle">
  <button class="mode-btn active" id="mode-date" onclick="switchMode('date')">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
- <span><span class="mode-btn-title">Date</span><span class="mode-btn-sub">Travel, wedding, event — up to 12 months</span></span>
+ <span><span class="mode-btn-title">Datum</span><span class="mode-btn-sub">Reise, Hochzeit, Veranstaltung — bis 12 Monate</span></span>
  </button>
  <button class="mode-btn" id="mode-annual" onclick="switchMode('annual')">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
- <span><span class="mode-btn-title">12-month view</span><span class="mode-btn-sub">Compare seasons</span></span>
+ <span><span class="mode-btn-title">12-Monats-Ansicht</span><span class="mode-btn-sub">Saisons vergleichen</span></span>
  </button>
  </div>
 
@@ -105,13 +105,13 @@
  <div class="field-wrap" style="flex:1">
  <label class="field-label" for="ann-city">
  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
- Destination
+ Reiseziel
  </label>
- <div class="inp-wrap"><input class="inp" type="text" id="ann-city" placeholder="Paris, Lisbonne, Tokyo, Bali…" autocomplete="off"/>
+ <div class="inp-wrap"><input class="inp" type="text" id="ann-city" placeholder="Paris, Lissabon, Tokio, Bali…" autocomplete="off"/>
  <button class="inp-clear" id="ann-city-clear" tabindex="-1" onclick="clearAnnCity()">×</button></div>
  <div class="ac-list" id="ann-ac-list"></div>
  </div>
- <button class="annual-btn" id="ann-btn" onclick="runAnnual()">View year</button>
+ <button class="annual-btn" id="ann-btn" onclick="runAnnual()">Jahr anzeigen</button>
  </div>
  <div class="prog-wrap" id="ann-prog-wrap">
  <div class="prog-labels"><span id="ann-prog-lbl">Loading…</span><span id="ann-prog-pct">0%</span></div>
@@ -147,29 +147,29 @@
  <div class="field-wrap">
  <label class="field-label" for="inp-city">
  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
- City or destination
+ Stadt oder Reiseziel
  </label>
- <div class="inp-wrap"><input class="inp" type="text" id="inp-city" placeholder="Paris, Barcelona, Tokyo…" autocomplete="off"/>
+ <div class="inp-wrap"><input class="inp" type="text" id="inp-city" placeholder="Paris, Barcelona, Tokio…" autocomplete="off"/>
  <button class="inp-clear" id="inp-city-clear" tabindex="-1" onclick="clearCity()">×</button></div>
  <div class="ac-list" id="ac-list"></div>
- <div id="city-hint" style="font-size:11px;color:var(--slate2);margin-top:5px;display:none">💡 Compound names: use hyphens — <em>Pointe-à-Pitre</em>, <em>Saint-Denis</em></div>
+ <div id="city-hint" style="font-size:11px;color:var(--slate2);margin-top:5px;display:none">💡 Zusammengesetzte Namen: Bindestriche verwenden — <em>Pointe-à-Pitre</em>, <em>Saint-Denis</em></div>
  </div>
  <div class="field-wrap">
  <label class="field-label" for="inp-date">
  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
- Project date
+ Reisedatum
  </label>
  <div style="position:relative">
- <input class="inp" type="text" id="inp-date" placeholder="dd/mm/yyyy" readonly style="position:relative;z-index:2;background:white;cursor:pointer" />
+ <input class="inp" type="text" id="inp-date" placeholder="TT.MM.JJJJ" readonly style="position:relative;z-index:2;background:white;cursor:pointer" />
  
  </div>
- <div class="date-hint" id="date-hint">Seasonal projection up to 12 months</div>
+ <div class="date-hint" id="date-hint">Saisonale Prognose bis 12 Monate</div>
  </div>
  </div>
 
  <button class="btn-go" id="btn-go" type="button">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
- <span id="btn-go-text">Check the weather</span>
+ <span id="btn-go-text">Wetter prüfen</span>
  </button>
  <div class="prog-wrap" id="prog-wrap">
  <div class="prog-labels"><span id="prog-lbl">Loading…</span><span id="prog-pct">0%</span></div>
@@ -180,7 +180,7 @@
 
 <div class="card-footer">
 <a href="/" class="footer-wordmark">Best<em>Date</em>Weather</a>
-<a href="#seo-hub" class="footer-guides" onclick="var h=document.getElementById('seo-hub');var b=document.querySelector('.seo-hub-toggle');if(!h.classList.contains('open')){h.classList.add('open');b.classList.add('open');}setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);return false;">📍 Destination guides · 617 cities</a>
+<a href="#seo-hub" class="footer-guides" onclick="var h=document.getElementById('seo-hub');var b=document.querySelector('.seo-hub-toggle');if(!h.classList.contains('open')){h.classList.add('open');b.classList.add('open');}setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);return false;">📍 Reisezielführer · 617 Städte</a>
 </div><!-- /.card-footer -->
 </div><!-- /.main-card -->
 
@@ -245,7 +245,7 @@
  <div id="snow-depth-info" style="display:none;margin-top:8px;font-size:11px;color:#6366f1;font-weight:500"></div>
  </div>
  <button class="details-toggle" id="details-toggle" onclick="toggleDetails()" aria-expanded="false">
-  <span>View details — hour by hour, scenarios, astro</span>
+  <span>Details anzeigen — stündlich, Szenarien, Astro</span>
   <span class="details-toggle-icon">&#8964;</span>
  </button>
  <div class="details-panel" id="details-panel">
@@ -342,16 +342,16 @@
  Crawlable par Google · Maillage interne complet
  ═══════════════════════════════════════════ -->
 <button class="seo-hub-toggle" onclick="var h=document.getElementById('seo-hub');var o=h.classList.toggle('open');this.classList.toggle('open');if(o)setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);" aria-expanded="false" aria-controls="seo-hub">
- 🌍 View destination guides (617 destinations)
+ 🌍 Reisezielführer anzeigen (617 Reiseziele)
  <span class="seo-hub-toggle-icon">⌄</span>
 </button>
 <div id="seo-hub" class="desktop-only" style="background:#faf8f3;border-top:1px solid #e8e0d0;padding:52px 20px 60px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
  <div style="max-width:900px;margin:0 auto">
 
- <p style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#7a5205;margin-bottom:12px" class="dh-intro-tag">Destination guides</p>
- <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:8px;letter-spacing:-.3px" class="dh-intro-title">When to go ? Monthly weather guide</h2>
- <p style="color:#4a5568;font-size:14px;margin-bottom:16px;line-height:1.7" class="dh-intro-sub">Open-Meteo data · 10 years · Monthly climate tables · 617 destinations</p>
- <p style="max-width:720px;margin-bottom:40px;font-size:15px;line-height:1.8;color:#4a5568" class="dh-intro-desc">Our guides analyse temperatures, rainfall, sunshine and seasonality to objectively determine the best months for your project — trip, wedding, festival or event.</p>
+ <p style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#7a5205;margin-bottom:12px" class="dh-intro-tag">Reisezielführer</p>
+ <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:8px;letter-spacing:-.3px" class="dh-intro-title">Wann reisen? Monatlicher Wetterführer</h2>
+ <p style="color:#4a5568;font-size:14px;margin-bottom:16px;line-height:1.7" class="dh-intro-sub">Open-Meteo-Daten · 10 Jahre · Monatliche Klimatabellen · 617 Reiseziele</p>
+ <p style="max-width:720px;margin-bottom:40px;font-size:15px;line-height:1.8;color:#4a5568" class="dh-intro-desc">Unsere Reiseführer analysieren Temperaturen, Niederschlag, Sonnenschein und Saisonalität, um die besten Monate für Ihr Vorhaben objektiv zu bestimmen — Reise, Hochzeit, Festival oder Veranstaltung.</p>
 
  <!-- SILO 1 : MEILLEURE PERIODE - dominant -->
  <div style="margin-bottom:52px">
@@ -1571,54 +1571,54 @@
  <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">🏆 Weather destination rankings</p>
  <div style="flex:1;height:2px;background:linear-gradient(90deg,#e8940a,#e8e0d0)"></div>
  </div>
- <p style="color:#4a5568;font-size:14px;margin-bottom:24px;line-height:1.7">Objective rankings based on 10 years of climate data — find the best destination for your project.</p>
+ <p style="color:#4a5568;font-size:14px;margin-bottom:24px;line-height:1.7">Objektive Rankings auf Basis von 10 Jahren Klimadaten — finden Sie das beste Reiseziel für Ihr Vorhaben.</p>
  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
- <a href="best-destinations-weather-ranking-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="beste-reiseziele-wetter-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">🌍</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Global ranking 2026</span><span style="font-size:11px;color:#5a6478">Best weather destinations</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Globales Ranking 2026</span><span style="font-size:11px;color:#5a6478">Beste Reiseziele weltweit</span></span>
  </a>
- <a href="best-europe-weather-ranking-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="beste-europa-wetter-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px"><img src="../flags/eu.png" width="20" height="15" alt="EU" style="vertical-align:middle;border-radius:2px"></span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Europe ranking 2026</span><span style="font-size:11px;color:#5a6478">Best weather in Europe</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Europa-Ranking 2026</span><span style="font-size:11px;color:#5a6478">Bestes Wetter in Europa</span></span>
  </a>
- <a href="best-destinations-summer-weather-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="beste-reiseziele-sommer-wetter-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">☀️</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Summer 2026</span><span style="font-size:11px;color:#5a6478">Top destinations June–August</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Sommer 2026</span><span style="font-size:11px;color:#5a6478">Top-Reiseziele Juni–August</span></span>
  </a>
- <a href="best-destinations-winter-weather-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="beste-reiseziele-winter-wetter-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">🌴</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Winter sun 2026</span><span style="font-size:11px;color:#5a6478">Warm destinations in winter</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Wintersonne 2026</span><span style="font-size:11px;color:#5a6478">Warme Reiseziele im Winter</span></span>
  </a>
- <a href="best-destinations-digital-nomads-weather-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="beste-reiseziele-digital-nomaden-wetter-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">💻</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Digital nomads 2026</span><span style="font-size:11px;color:#5a6478">Weather consistency ranking</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Digitale Nomaden 2026</span><span style="font-size:11px;color:#5a6478">Beständigkeit des Wetters</span></span>
  </a>
- <a href="best-beach-destinations-weather-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="beste-strand-reiseziele-wetter-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">🏖️</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Beach ranking 2026</span><span style="font-size:11px;color:#5a6478">Best coastal destinations</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Strand-Ranking 2026</span><span style="font-size:11px;color:#5a6478">Beste Küstenreiseziele</span></span>
  </a>
- <a href="best-caribbean-weather-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="beste-karibik-wetter-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">🌴</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Caribbean 2026</span><span style="font-size:11px;color:#5a6478">Best Caribbean destinations</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Karibik 2026</span><span style="font-size:11px;color:#5a6478">Beste Karibik-Reiseziele</span></span>
  </a>
  <div style="display:flex;align-items:center;gap:14px;margin:32px 0 18px;grid-column:1/-1">
- <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">📅 Where to go month by month</p>
+ <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">📅 Wohin reisen, Monat für Monat</p>
  <div style="flex:1;height:2px;background:linear-gradient(90deg,#e8940a,#e8e0d0)"></div>
  </div>
  </div>
  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:8px">
- <a href="where-to-go-in-january.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">January</a>
- <a href="where-to-go-in-february.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">February</a>
- <a href="where-to-go-in-march.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">March</a>
- <a href="where-to-go-in-april.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">April</a>
- <a href="where-to-go-in-may.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">May</a>
- <a href="where-to-go-in-june.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">June</a>
- <a href="where-to-go-in-july.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">July</a>
- <a href="where-to-go-in-august.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">August</a>
- <a href="where-to-go-in-september.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">September</a>
- <a href="where-to-go-in-october.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">October</a>
- <a href="where-to-go-in-november.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">November</a>
- <a href="where-to-go-in-december.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">December</a>
+ <a href="beste-reiseziele-januar-2026.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Januar</a>
+ <a href="beste-reiseziele-februar-2026.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Februar</a>
+ <a href="beste-reiseziele-maerz-2026.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">März</a>
+ <a href="beste-reiseziele-april-2026.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">April</a>
+ <a href="beste-reiseziele-mai-2026.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Mai</a>
+ <a href="beste-reiseziele-juni-2026.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Juni</a>
+ <a href="beste-reiseziele-juli-2026.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Juli</a>
+ <a href="beste-reiseziele-august-2026.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">August</a>
+ <a href="beste-reiseziele-september-2026.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">September</a>
+ <a href="beste-reiseziele-oktober-2026.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Oktober</a>
+ <a href="beste-reiseziele-november-2026.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">November</a>
+ <a href="beste-reiseziele-dezember-2026.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Dezember</a>
  </div>
 
  </div>
@@ -1630,9 +1630,9 @@
 
 <section inert style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
  <div style="max-width:860px;margin:0 auto">
- <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:16px">Choosing the best time to travel</h2>
- <p style="font-size:15px;line-height:1.8;color:#5a6478;max-width:680px">Our model analyses 10 years of ERA5 data to determine the ideal months based on three criteria: rainfall, temperatures and sunshine. Scores include ECMWF seasonal corrections to maximise accuracy at 1–6 months.</p>
- <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#1a1f2e;margin:32px 0 16px">Popular destinations</h3>
+ <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:16px">Die beste Reisezeit wählen</h2>
+ <p style="font-size:15px;line-height:1.8;color:#5a6478;max-width:680px">Unser Modell analysiert 10 Jahre ERA5-Daten, um die idealen Monate anhand von drei Kriterien zu bestimmen: Niederschlag, Temperaturen und Sonnenschein. Scores beinhalten saisonale ECMWF-Korrekturen für maximale Genauigkeit bei 1–6 Monaten.</p>
+ <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#1a1f2e;margin:32px 0 16px">Beliebte Reiseziele</h3>
  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:32px">
  <a href="../" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:white;border:1px solid #e8e4dc;border-radius:10px;text-decoration:none;color:#1a1f2e;font-size:13px;font-weight:600"><img src="../flags/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;border-radius:2px"> Majorque</a>
  <a href="../" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:white;border:1px solid #e8e4dc;border-radius:10px;text-decoration:none;color:#1a1f2e;font-size:13px;font-weight:600"><img src="../flags/es.png" width="20" height="15" alt="ES" style="vertical-align:middle;border-radius:2px"> Barcelone</a>
@@ -1647,32 +1647,32 @@
  <a href="../" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:white;border:1px solid #e8e4dc;border-radius:10px;text-decoration:none;color:#1a1f2e;font-size:13px;font-weight:600"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="vertical-align:middle;border-radius:2px"> Marrakech</a>
  <a href="../" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:white;border:1px solid #e8e4dc;border-radius:10px;text-decoration:none;color:#1a1f2e;font-size:13px;font-weight:600"><img src="../flags/mx.png" width="20" height="15" alt="MX" style="vertical-align:middle;border-radius:2px"> Cancún</a>
  </div>
- <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#1a1f2e;margin:0 0 12px">How it works</h3>
- <p style="font-size:14px;line-height:1.8;color:#5a6478;max-width:680px;margin-bottom:24px">Enter a city and a date — the tool calculates a weather score from 0 to 10 based on historical records, then refines it with ECMWF seasonal trends. Annual mode lets you compare all months at once to find the optimal window. <a href="../methodology-en.html" style="color:#7a6012;font-weight:600">View full methodology →</a></p>
- <p style="font-size:12px;color:#5c6478">Data: ERA5 · 10 years via Open-Meteo · ECMWF seasonal corrections · Updated daily</p>
+ <h3 style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#1a1f2e;margin:0 0 12px">So funktioniert es</h3>
+ <p style="font-size:14px;line-height:1.8;color:#5a6478;max-width:680px;margin-bottom:24px">Geben Sie eine Stadt und ein Datum ein — das Tool berechnet einen Wetter-Score von 0 bis 10 auf Basis historischer Daten und verfeinert ihn mit saisonalen ECMWF-Trends. Der Jahres-Modus ermöglicht den Vergleich aller Monate auf einen Blick. <a href="../de/methodik.html" style="color:#7a6012;font-weight:600">Methodik ansehen →</a></p>
+ <p style="font-size:12px;color:#5c6478">Daten: ERA5 · 10 Jahre via Open-Meteo · Saisonale ECMWF-Korrekturen · Täglich aktualisiert</p>
  </div>
 </section>
 
 <!-- ── Trust block ── -->
 <section class="trust-block">
  <div class="trust-block-inner">
-  <h2>Why are these estimates reliable?</h2>
-  <p class="trust-tagline">BestDateWeather is not a 1-year weather forecast. We analyse seasonal climate trends to estimate the most probable conditions for a given date.</p>
+  <h2>Warum sind diese Schätzungen zuverlässig?</h2>
+  <p class="trust-tagline">BestDateWeather ist keine 1-Jahres-Wettervorhersage. Wir analysieren saisonale Klimatrends, um die wahrscheinlichsten Bedingungen für ein bestimmtes Datum zu schätzen.</p>
   <div class="trust-grid">
    <div class="trust-item">
     <div class="trust-item-icon">📊</div>
-    <h3>10 years of observed data</h3>
-    <p>Every estimate is based on real weather records from 2016 to 2025: temperature, precipitation, sunshine and wind, hour by hour.</p>
+    <h3>10 Jahre beobachteter Daten</h3>
+    <p>Jede Schätzung basiert auf echten Wetterdaten von 2016 bis 2025: Temperatur, Niederschlag, Sonnenschein und Wind, Stunde für Stunde.</p>
    </div>
    <div class="trust-item">
     <div class="trust-item-icon">🌍</div>
-    <h3>ECMWF model integrated</h3>
-    <p>For dates within the next 7 months, seasonal trends from the European Centre for Medium-Range Weather Forecasts correct the historical averages.</p>
+    <h3>ECMWF-Modell integriert</h3>
+    <p>Für Daten innerhalb der nächsten 7 Monate korrigieren saisonale Trends des Europäischen Zentrums für mittelfristige Wettervorhersagen die historischen Durchschnittswerte.</p>
    </div>
    <div class="trust-item">
     <div class="trust-item-icon">📐</div>
-    <h3>Probabilistic score P10–P90</h3>
-    <p>The score out of 10 is not an exact forecast. It quantifies the probability of good conditions by aggregating 4 key factors: rain, temperature, wind, sunshine.</p>
+    <h3>Probabilistischer Score P10–P90</h3>
+    <p>Der Score von 10 ist keine exakte Vorhersage. Er quantifiziert die Wahrscheinlichkeit guter Bedingungen durch Aggregation von 4 Schlüsselfaktoren: Regen, Temperatur, Wind, Sonnenschein.</p>
    </div>
   </div>
  </div>
@@ -1681,47 +1681,47 @@
 <!-- ── SEO block ── -->
 <section class="seo-block" inert style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
  <div class="seo-block-inner">
-  <h2>What is the best time to travel?</h2>
-  <p>Choosing the ideal date involves far more than a 5-day forecast. Average temperatures, rain risk, sunshine, wind — every destination has its own climate rhythm. BestDateWeather analyses this data to give you a probabilistic estimate of expected conditions, month by month or day by day up to a year ahead.</p>
+  <h2>Wann ist die beste Reisezeit?</h2>
+  <p>Die Wahl des idealen Datums geht weit über eine 5-Tage-Vorhersage hinaus. Durchschnittstemperaturen, Regenrisiko, Sonnenschein, Wind — jedes Reiseziel hat seinen eigenen Klimarhythmus. BestDateWeather analysiert diese Daten, um eine probabilistische Schätzung der zu erwartenden Bedingungen zu liefern, Monat für Monat oder Tag für Tag bis zu einem Jahr im Voraus.</p>
 
-  <h3>Popular destinations — when to go?</h3>
+  <h3>Beliebte Reiseziele — wann reisen?</h3>
   <div class="seo-links">
-   <a class="seo-link" href="../bali-meteo-juillet.html">Bali in July</a>
-   <a class="seo-link" href="../tenerife-meteo-janvier.html">Tenerife in January</a>
-   <a class="seo-link" href="../lisbonne-meteo-mai.html">Lisbon in May</a>
-   <a class="seo-link" href="../barcelone-meteo-juin.html">Barcelona in June</a>
-   <a class="seo-link" href="../new-york-meteo-octobre.html">New York in October</a>
-   <a class="seo-link" href="../phuket-meteo-mars.html">Phuket in March</a>
-   <a class="seo-link" href="../crete-meteo-septembre.html">Crete in September</a>
-   <a class="seo-link" href="../marrakech-meteo-avril.html">Marrakech in April</a>
-   <a class="seo-link" href="../paris-meteo-juin.html">Paris in June</a>
-   <a class="seo-link" href="../tokyo-meteo-avril.html">Tokyo in April</a>
+   <a class="seo-link" href="../de/bali-wetter-juli.html">Bali im Juli</a>
+   <a class="seo-link" href="../de/teneriffa-wetter-januar.html">Teneriffa im Januar</a>
+   <a class="seo-link" href="../de/lissabon-wetter-mai.html">Lissabon im Mai</a>
+   <a class="seo-link" href="../de/barcelona-wetter-juni.html">Barcelona im Juni</a>
+   <a class="seo-link" href="../de/new-york-wetter-oktober.html">New York im Oktober</a>
+   <a class="seo-link" href="../de/phuket-wetter-maerz.html">Phuket im März</a>
+   <a class="seo-link" href="../de/kreta-wetter-september.html">Kreta im September</a>
+   <a class="seo-link" href="../de/marrakesch-wetter-april.html">Marrakesch im April</a>
+   <a class="seo-link" href="../de/paris-wetter-juni.html">Paris im Juni</a>
+   <a class="seo-link" href="../de/tokio-wetter-april.html">Tokio im April</a>
   </div>
 
-  <h3>Monthly weather — detailed pages</h3>
+  <h3>Monatliches Wetter — detaillierte Seiten</h3>
   <div class="seo-links">
-   <a class="seo-link" href="../nice-meteo-juillet.html">Nice in July</a>
-   <a class="seo-link" href="../rome-meteo-mai.html">Rome in May</a>
-   <a class="seo-link" href="../dubai-meteo-novembre.html">Dubai in November</a>
-   <a class="seo-link" href="../cancun-meteo-decembre.html">Cancún in December</a>
-   <a class="seo-link" href="../maldives-meteo-fevrier.html">Maldives in February</a>
-   <a class="seo-link" href="../porto-meteo-mars.html">Porto in March</a>
-   <a class="seo-link" href="../corse-meteo-aout.html">Corsica in August</a>
-   <a class="seo-link" href="../ibiza-meteo-juin.html">Ibiza in June</a>
-   <a class="seo-link" href="../santorin-meteo-septembre.html">Santorini in September</a>
-   <a class="seo-link" href="../ile-maurice-meteo-juillet.html">Mauritius in July</a>
+   <a class="seo-link" href="../de/nizza-wetter-juli.html">Nizza im Juli</a>
+   <a class="seo-link" href="../de/rom-wetter-mai.html">Rom im Mai</a>
+   <a class="seo-link" href="../de/dubai-wetter-november.html">Dubai im November</a>
+   <a class="seo-link" href="../de/cancun-wetter-dezember.html">Cancún im Dezember</a>
+   <a class="seo-link" href="../de/malediven-wetter-februar.html">Malediven im Februar</a>
+   <a class="seo-link" href="../de/porto-wetter-maerz.html">Porto im März</a>
+   <a class="seo-link" href="../de/korsika-wetter-august.html">Korsika im August</a>
+   <a class="seo-link" href="../de/ibiza-wetter-juni.html">Ibiza im Juni</a>
+   <a class="seo-link" href="../de/santorin-wetter-september.html">Santorin im September</a>
+   <a class="seo-link" href="../de/mauritius-wetter-juli.html">Mauritius im Juli</a>
   </div>
 
-  <h3>How to read the weather score?</h3>
-  <p>The score out of 10 combines four weighted components: rain probability (highest weight for beach and travel), temperature against the ideal range for the activity, sunshine measured in hours of direct radiation, and wind speed. The P50 statistical median is used instead of the mean to prevent exceptional events — heatwaves, isolated storms — from skewing the estimate.</p>
+  <h3>Wie liest man den Wetter-Score?</h3>
+  <p>Der Score von 10 kombiniert vier gewichtete Komponenten: Regenwahrscheinlichkeit (höchste Gewichtung für Strand und Reise), Temperatur im Verhältnis zum idealen Bereich für die Aktivität, Sonnenschein in Stunden direkter Strahlung und Windgeschwindigkeit. Der statistische Median P50 wird anstelle des Mittelwerts verwendet, um außergewöhnliche Ereignisse — Hitzewellen, isolierte Stürme — nicht zu verzerren.</p>
 
-  <h3>Destination comparisons</h3>
+  <h3>Reisezielvergleiche</h3>
   <div class="seo-links">
-   <a class="seo-link" href="../bali-meteo-juillet.html">Bali vs Phuket in summer</a>
-   <a class="seo-link" href="../tenerife-meteo-fevrier.html">Canary Islands in winter</a>
-   <a class="seo-link" href="../cote-azur-meteo-aout.html">French Riviera in August</a>
-   <a class="seo-link" href="../maldives-meteo-mars.html">Maldives off-season</a>
-   <a class="seo-link" href="../barcelone-meteo-octobre.html">Mediterranean in autumn</a>
+   <a class="seo-link" href="../de/bali-vs-phuket-wetter.html">Bali vs. Phuket im Sommer</a>
+   <a class="seo-link" href="../de/teneriffa-vs-lanzarote-wetter.html">Kanarische Inseln im Winter</a>
+   <a class="seo-link" href="../de/nizza-vs-barcelona-wetter.html">Côte d'Azur im August</a>
+   <a class="seo-link" href="../de/malediven-vs-seychellen-wetter.html">Malediven Nebensaison</a>
+   <a class="seo-link" href="../de/barcelona-vs-lissabon-wetter.html">Mittelmeer im Herbst</a>
   </div>
  </div>
 </section>
@@ -1729,9 +1729,9 @@
 <!-- ── Brand block ── -->
 <section class="brand-block">
  <div class="brand-block-inner">
-  <h2>Weather for big decisions</h2>
-  <p>An outdoor wedding, an important trip, a shoot, a sporting event — when weather truly matters, a simple 7-day forecast app is not enough.</p>
-  <p>BestDateWeather analyses seasonal climate trends to help you choose the most favourable moment, with a transparent method and verifiable data.</p>
+  <h2>Wetter für wichtige Entscheidungen</h2>
+  <p>Eine Hochzeit im Freien, eine wichtige Reise, ein Shooting, ein Sportereignis — wenn das Wetter wirklich zählt, reicht eine einfache 7-Tage-Vorhersage-App nicht aus.</p>
+  <p>BestDateWeather analysiert saisonale Klimatrends, um Ihnen zu helfen, den günstigsten Moment zu wählen — mit einer transparenten Methode und nachprüfbaren Daten.</p>
  </div>
 </section>
 
@@ -1741,9 +1741,9 @@
  <div style="font-weight:700;font-size:13px;color:var(--slate2);margin-bottom:6px">bestdateweather.com</div>
  <a href="https://open-meteo.com/" target="_blank" style="color:inherit;text-decoration:none">Weather data by Open-Meteo.com</a>
  &nbsp;·&nbsp; Sources ECMWF, DWD, NOAA, Météo-France &nbsp;·&nbsp; CC BY 4.0
- &nbsp;·&nbsp; <a href="../methodology-en.html" style="color:inherit;text-decoration:none">Methodology</a>
+ &nbsp;·&nbsp; <a href="../de/methodik.html" style="color:inherit;text-decoration:none">Methodik</a>
 <!-- HUB-FOOTER-START --><a href="../index.html" style="color:inherit;text-decoration:none"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a> &nbsp;·&nbsp; <a href="../en/app.html" style="color:inherit;text-decoration:none"><img src="../flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English</a> &nbsp;·&nbsp; <a href="../us/app.html" style="color:inherit;text-decoration:none"><img src="../flags/us.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English (US)</a> &nbsp;·&nbsp; <a href="../es/app.html" style="color:inherit;text-decoration:none"><img src="../flags/es.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Español</a><!-- HUB-FOOTER-END -->
- <p class="method-note">Methodology based on observed climate data (2016–2025) and ECMWF seasonal trends. P50 aggregation (median). Raw data: Open-Meteo archive API (CC BY 4.0). Last updated: January 2026.</p>
+ <p class="method-note">Methodik basierend auf beobachteten Klimadaten (2016–2025) und saisonalen ECMWF-Trends. P50-Aggregation (Median). Rohdaten: Open-Meteo-Archiv-API (CC BY 4.0). Letzte Aktualisierung: Januar 2026.</p>
 </div>
 
 <script defer src="../js/share.js" defer></script>
