@@ -14,7 +14,8 @@
   var GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search";
 
   /* ── i18n ── */
-  var LANG = (document.documentElement.lang === "en" || document.documentElement.lang === "en-US") ? "en" : (document.documentElement.lang === "es" ? "es" : "fr");
+  var _docLang = document.documentElement.lang;
+  var LANG = (_docLang === "en" || _docLang === "en-US") ? "en" : (_docLang === "es" ? "es" : (_docLang === "de" ? "de" : "fr"));
   var T = {
     fr: {
       now: "Maint.", feels: "Ressenti", wind: "Vent", uv: "UV",
@@ -77,6 +78,27 @@
         71: "Nieve ligera", 73: "Nieve", 75: "Nieve intensa",
         80: "Chubascos ligeros", 81: "Chubascos", 82: "Chubascos fuertes",
         95: "Tormenta", 96: "Tormenta + granizo", 99: "Tormenta + granizo fuerte"
+      }
+    },
+    de: {
+      now: "Jetzt", feels: "Gefühlt", wind: "Wind", uv: "UV",
+      chosenCity: "gewählte Stadt", changeCity: "Stadt ändern",
+      cityTitle: "Stadt für Wetterbanner", typeCity: "Stadt eingeben\u2026",
+      usePosition: "Meinen Standort verwenden", currently: "Aktuell",
+      recentTitle: "Letzte Suchen", clearAll: "Alle löschen",
+      suggestTitle: "Für Sie", suggestSub: "ähnliche Klimazone",
+      geoPrompt: "Wo sind Sie? Geben Sie Ihre Stadt für das lokale Wetter ein",
+      geoPlaceholder: "Ihre Stadt\u2026",
+      geoAllow: "Erlauben", geoSkip: "Später",
+      annual: "12 Monate", date: "Datum", share: "Teilen",
+      weatherDesc: {
+        0: "Klarer Himmel", 1: "Überwiegend klar", 2: "Teilweise bewölkt", 3: "Bedeckt",
+        45: "Nebel", 48: "Gefrierender Nebel",
+        51: "Leichter Nieselregen", 53: "Nieselregen", 55: "Starker Nieselregen",
+        61: "Leichter Regen", 63: "Regen", 65: "Starker Regen",
+        71: "Leichter Schnee", 73: "Schnee", 75: "Starker Schnee",
+        80: "Leichte Schauer", 81: "Schauer", 82: "Starke Schauer",
+        95: "Gewitter", 96: "Gewitter + Hagel", 99: "Gewitter + starker Hagel"
       }
     }
   };
