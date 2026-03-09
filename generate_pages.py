@@ -1369,7 +1369,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <div class="bar-wrap">
  <div>🌧 {L['bar_rain']} : {rain_bar} <span class="txt-gray">{m['rain_pct']}%</span></div>
  <div>🌡 {L['bar_temp']} : {temp_bar} <span class="txt-gray">{fmt_temp(m['tmax'], C)}</span></div>
- <div>☀️ {L['bar_sun']} : {sun_bar} <span class="txt-gray">{m['sun_h']}h/j</span></div>
+ <div>☀️ {L['bar_sun']} : {sun_bar} <span class="txt-gray">{m['sun_h']}{C['locale']['comp']['sun_per_day_short']}</span></div>
  </div>
  <p class="f14-body-sep"><strong>{L['verdict_intro']}</strong> {verdict_txt}</p>
  </section>

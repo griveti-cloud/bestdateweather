@@ -725,7 +725,8 @@
     "detailed_intro": "Wetter-Score von 10, basierend auf Temperatur, Regen und Sonnenschein. 10 Jahre Open-Meteo-Daten.",
     "hero_eyebrow_prefix": "Klimavergleich · 10 Jahre Daten · ",
     "file_tpl": "{a}-vs-{b}-wetter.html",
-    "sun_per_day": "h/Tag"
+    "sun_per_day": "h/Tag",
+    "sun_per_day_short": "h/T"
   },
   "pilier": {
     "th": [
