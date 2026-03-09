@@ -206,7 +206,7 @@
     "excellent": "Excellent time",
     "good": "Good time",
     "fair": "Acceptable",
-    "poor": "Not recommended"
+    "poor": "Challenging climate"
   },
   "table": {
     "aria": "Monthly climate table {nom}",
@@ -214,7 +214,7 @@
     "ski_header": "<th>Ski score 🎿</th>",
     "legend_ideal": "Ideal",
     "legend_fair": "Fair",
-    "legend_off": "Unfavourable",
+    "legend_off": "Challenging climate",
     "legend_source": "Source: Open-Meteo · 10 years"
   },
   "nav": {
@@ -389,7 +389,7 @@
     "sim_label": "Explore also",
     "verdict_period_rec": "Recommended period.",
     "verdict_period_avg": "Average period.",
-    "verdict_period_bad": "Not recommended.",
+    "verdict_period_bad": "Climate is demanding this month.",
     "act_beach_na": "— No sea access",
     "back_annual_tpl": "← Best time for {name}",
     "compare_section": "Compare",
@@ -479,7 +479,7 @@
   "verdict_words": {
     "rec": "Favourable",
     "mid": "Acceptable",
-    "avoid": "Unfavourable"
+    "avoid": "Challenging"
   },
   "console": {
     "title": "BestDateWeather — generate_pages.py",
@@ -598,7 +598,7 @@
     ],
     "poor": [
       "{month} is a difficult time for {nom}. {best_month} ({best_score}/10) is much more favourable.",
-      "Unfavourable conditions in {month} ({score}/10). Consider {best_month} if your dates are flexible.",
+      "{month} brings a challenging climate ({score}/10). {best_month} offers milder conditions if your dates are flexible.",
       "{nom} in {month}: {rain}% rain, {sun}h of sunshine. Better to wait for {best_month}."
     ]
   },

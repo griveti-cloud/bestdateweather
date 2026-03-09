@@ -204,7 +204,7 @@
     "excellent": "Excellente période",
     "good": "Bonne période",
     "fair": "Période acceptable",
-    "poor": "Période difficile"
+    "poor": "Climat prononcé"
   },
   "table": {
     "aria": "Tableau climat mensuel {nom}",
@@ -212,7 +212,7 @@
     "ski_header": "<th>Score ski 🎿</th>",
     "legend_ideal": "Idéal",
     "legend_fair": "Acceptable",
-    "legend_off": "Défavorable",
+    "legend_off": "Climat prononcé",
     "legend_source": "Source Open-Meteo · 10 ans"
   },
   "nav": {
@@ -477,7 +477,7 @@
   "verdict_words": {
     "rec": "favorables",
     "mid": "acceptables",
-    "avoid": "défavorables"
+    "avoid": "prononcés"
   },
   "console": {
     "title": "BestDateWeather — generate_pages.py",
@@ -558,7 +558,7 @@
   ],
   "annual_faq_winter_verdicts": {
     "ok": "Conditions acceptables pour les visites culturelles.",
-    "bad": "Période difficile — préférez la haute saison."
+    "bad": "Climat prononcé — la haute saison offre des conditions plus douces."
   },
   "annual_faq_bests_suffix": "La période {bests_str} offre des conditions comparables.",
   "monthly_hero_subs": {
@@ -573,7 +573,7 @@
       "Bonne fenêtre en {month_lc} — {best_month_lc} est un cran au-dessus."
     ],
     "poor": [
-      "{month} est difficile — {best_month} offre de bien meilleures conditions.",
+      "{month} affiche un climat prononcé — {best_month} offre des conditions plus douces.",
       "Période compliquée en {month_lc}. Préférez {best_month_lc} si possible.",
       "{nom_bare} en {month_lc} ? Pas la meilleure fenêtre — visez {best_month_lc}."
     ]
@@ -595,8 +595,8 @@
       "{nom_bare} en {month_lc} reste possible mais {best_month} offre un score de {best_score}/10 contre {score}."
     ],
     "poor": [
-      "{month} est difficile {prep} {nom_bare}. {best_month} ({best_score}/10) est bien plus favorable.",
-      "Conditions défavorables en {month_lc} ({score}/10). Privilégiez {best_month_lc} si vos dates sont flexibles.",
+      "{month} présente un climat prononcé {prep} {nom_bare}. {best_month} ({best_score}/10) offre des conditions plus clémentes.",
+      "Climat prononcé en {month_lc} ({score}/10). {best_month_lc} offre des conditions plus clémentes si vos dates sont flexibles.",
       "{nom_bare} en {month_lc} : {rain}% de pluie, {sun}h de soleil. Mieux vaut reporter à {best_month_lc}."
     ]
   },

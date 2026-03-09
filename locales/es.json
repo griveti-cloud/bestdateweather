@@ -193,7 +193,7 @@
     "excellent": "✅ Excelente",
     "good": "✅ Bueno",
     "fair": "⚠️ Aceptable",
-    "poor": "❌ Desaconsejado"
+    "poor": "❌ Clima marcado"
   },
   "tiers": {
     "peak": "💸 Temporada alta",
@@ -204,7 +204,7 @@
     "excellent": "Época ideal",
     "good": "Buena época",
     "fair": "Aceptable",
-    "poor": "No recomendado"
+    "poor": "Clima marcado"
   },
   "table": {
     "aria": "Tabla climática mensual de {nom}",
@@ -212,7 +212,7 @@
     "ski_header": "<th>Puntuación ski 🎿</th>",
     "legend_ideal": "Ideal",
     "legend_fair": "Aceptable",
-    "legend_off": "Desfavorable",
+    "legend_off": "Clima marcado",
     "legend_source": "Fuente: Open-Meteo · 10 años"
   },
   "nav": {
@@ -477,7 +477,7 @@
   "verdict_words": {
     "rec": "Favorables",
     "mid": "Aceptables",
-    "avoid": "Desfavorables"
+    "avoid": "Marcadas"
   },
   "console": {
     "title": "BestDateWeather — generate_pages.py",
@@ -596,7 +596,7 @@
     ],
     "poor": [
       "{month} es una época difícil para {nom}. {best_month} ({best_score}/10) es mucho más favorable.",
-      "Condiciones desfavorables en {month} ({score}/10). Considera {best_month} si tus fechas son flexibles.",
+      "Clima marcado en {month} ({score}/10). {best_month} ofrece condiciones más suaves si tus fechas son flexibles.",
       "{nom} en {month}: {rain}% de lluvia, {sun}h de sol. Mejor esperar a {best_month}."
     ]
   },
