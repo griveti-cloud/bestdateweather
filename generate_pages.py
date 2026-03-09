@@ -713,6 +713,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 .hero-band{{background:linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%);}}
 .hero-title em{{color:#93c5fd;}}
 </style>
+<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 </head>
 <body>
 {nav_html(C)}
@@ -1324,6 +1325,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .month-nav a.active{{background:var(--gold);color:white;border-color:var(--gold);}}
 .month-nav a:hover{{border-color:var(--gold);}}
 </style>
+<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 </head>
 <body>
 {NAV}
