@@ -596,7 +596,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     top3_idx_sorted = sorted(top3_idx)  # ordre chronologique
     editorial_cards = []
     for idx in top3_idx_sorted:
-        ed_key = f"{slug_fr}:{idx + 1}:{C['lang']}"
+        _ed_lang = 'en' if C['lang'] == 'en-us' else C['lang']
+        ed_key = f"{slug_fr}:{idx + 1}:{_ed_lang}"
         snippet = _EDITORIAL.get(ed_key, '')
         if not snippet:
             continue
@@ -1054,7 +1055,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     # ── Verdict text ──
     vtier = 'excellent' if score >= 9.0 else ('good' if score >= 7.0 else ('fair' if score >= 5.0 else 'poor'))
     # Contenu éditorial enrichi (generate_editorial.py) prioritaire sur template
-    _editorial_key = f"{slug}:{mi + 1}:{lang}"
+    _editorial_lang = 'en' if lang == 'en-us' else lang
+    _editorial_key = f"{slug}:{mi + 1}:{_editorial_lang}"
     if _editorial_key in _EDITORIAL:
         verdict_txt = _EDITORIAL[_editorial_key]
     else:
