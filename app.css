@@ -286,7 +286,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
 .month-range{font-size:10px;color:var(--slate3);font-weight:500;margin-bottom:10px;height:16px}
 .month-stats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;min-height:36px;align-content:flex-start}
 .month-stat{font-size:10px;color:var(--slate2);font-weight:500;display:flex;align-items:center;gap:3px}
-.month-bar{position:absolute;bottom:26px;left:12px;right:12px;height:3px;background:var(--cream2);border-radius:2px;overflow:hidden}
+.month-bar{position:absolute;bottom:40px;left:12px;right:12px;height:3px;background:var(--cream2);border-radius:2px;overflow:hidden}
 .month-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#90c8f8,#4a9fd4)}
 
 /* score badge */
