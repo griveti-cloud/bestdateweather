@@ -662,11 +662,17 @@ function hideSection(id){document.getElementById(id).style.display='none';}
 function renderHourly(sc) {
  var strip=document.getElementById('h-strip'); strip.innerHTML='';
  var hours=[0,3,6,9,12,15,18,21,23];
+ var nowH = new Date().getHours();
+ var activeSlot = hours[0];
+ for(var k=0;k<hours.length;k++){ if(hours[k]<=nowH) activeSlot=hours[k]; }
  for(var i=0;i<hours.length;i++){
  var r=sc[hours[i]]; if(!r) continue;
  var lbl=(hours[i]===23)?'00h':r.label;
- var cell=document.createElement('div'); cell.className='h-cell';
- cell.innerHTML='<span class="h-hr">'+lbl+'</span><span class="h-ic">'+getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25)+'</span><span class="h-tp">'+(r.temp!=null?fmtTempRaw(r.temp)+'°':'-')+'</span><span class="h-lb">'+getLabel(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0)+'</span><div class="h-rb"><div class="h-rf" style="width:'+r.rain+'%"></div></div>';
+ var icon = (r.isForecast && r.wmo != null) ? (wmoToIcon(r.wmo)||getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25)) : getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25);
+ var label = (r.isForecast && r.wmo != null) ? (wmoToLabel(r.wmo)||getLabel(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0)) : getLabel(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0);
+ var isNow = (hours[i]===activeSlot);
+ var cell=document.createElement('div'); cell.className='h-cell'+(isNow?' h-cell-now':'');
+ cell.innerHTML='<span class="h-hr">'+lbl+'</span><span class="h-ic">'+icon+'</span><span class="h-tp">'+(r.temp!=null?fmtTempRaw(r.temp)+'°':'-')+'</span><span class="h-lb">'+label+'</span><div class="h-rb"><div class="h-rf" style="width:'+r.rain+'%"></div></div>';
  strip.appendChild(cell);
  }
 }
