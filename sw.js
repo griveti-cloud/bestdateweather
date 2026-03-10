@@ -1,4 +1,4 @@
-const CACHE = 'bdw-v24';
+const CACHE = 'bdw-v25';
 
 // Installation légère — pas de précache pour ne pas ralentir le premier chargement
 self.addEventListener('install', e => {
