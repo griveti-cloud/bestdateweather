@@ -173,6 +173,7 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .affil-box{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:16px;padding:24px 28px;margin-top:16px;display:flex;flex-direction:column;gap:12px}
 .affil-box strong{font-size:16px;color:var(--navy)}
 .affil-btn{display:inline-block;background:#0070f3;color:white;font-weight:600;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;width:fit-content}
+.affil-btn-secondary{display:inline-block;margin-top:10px;color:#0070f3;font-weight:600;font-size:13px;text-decoration:underline}
 .affil-btn:hover{background:#0060d0}
 .affil-note{font-size:12px;color:var(--slate2)}
 

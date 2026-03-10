@@ -552,14 +552,23 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     # ── Activities (GetYourGuide) ──
     gyg_domain = C['gyg_domain']
     gyg_lang = C['lang']
-    gyg_dest = quote_plus(f"{nom}, {country_name}")
-    gyg_url = f"https://www.{gyg_domain}/s/?q={gyg_dest}&partner_id={GYG_PARTNER_ID}&locale={gyg_lang}"
+    _GYG_LOCALE = {'fr':'fr-FR','en':'en-US','en-us':'en-US','es':'es-ES','de':'de-DE'}
+    gyg_locale_code = _GYG_LOCALE.get(gyg_lang, 'en-US')
+    gyg_dest = f"{nom}, {country_name}"
+    gyg_dest_enc = quote_plus(gyg_dest)
+    gyg_url = f"https://www.{gyg_domain}/s/?q={gyg_dest_enc}&partner_id={GYG_PARTNER_ID}&locale={gyg_lang}"
     activities_section = f'''<section class="section">
  <div class="section-label">{C['lbl_activities_section']}</div>
  <h2 class="section-title">{C['lbl_activities_title_tpl'].format(name=nom_f)}</h2>
  <div class="affil-box">
  <strong>{C['lbl_activities_cta']}</strong>
- <a href="{gyg_url}" target="_blank" rel="sponsored noopener" class="affil-btn">{C['lbl_activities_btn']}</a>
+ <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+      data-gyg-locale-code="{gyg_locale_code}"
+      data-gyg-widget="activities"
+      data-gyg-number-of-items="3"
+      data-gyg-partner-id="{GYG_PARTNER_ID}"
+      data-gyg-q="{gyg_dest}"></div>
+ <a href="{gyg_url}" target="_blank" rel="sponsored noopener" class="affil-btn-secondary">{C['lbl_activities_btn']}</a>
  </div>
 </section>'''
 
@@ -1401,14 +1410,23 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     # ── Activities (GetYourGuide) – monthly ──
     gyg_domain_m = C['gyg_domain']
     gyg_lang_m = C['gyg_lang']
-    gyg_dest_m = quote_plus(f"{nom}, {country_name}")
-    gyg_url_m = f"https://www.{gyg_domain_m}/s/?q={gyg_dest_m}&partner_id={GYG_PARTNER_ID}&locale={C['gyg_lang']}"
+    _GYG_LOCALE_M = {'fr':'fr-FR','en':'en-US','en-us':'en-US','es':'es-ES','de':'de-DE'}
+    gyg_locale_code_m = _GYG_LOCALE_M.get(C['lang'], 'en-US')
+    gyg_dest_m = f"{nom}, {country_name}"
+    gyg_dest_m_enc = quote_plus(gyg_dest_m)
+    gyg_url_m = f"https://www.{gyg_domain_m}/s/?q={gyg_dest_m_enc}&partner_id={GYG_PARTNER_ID}&locale={gyg_lang_m}"
     activities_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_activities_section']}</div>
  <h2 class="section-title">{cfg['lbl_activities_title_tpl'].format(name=nom_f)}</h2>
  <div class="affil-box">
  <strong>{cfg['lbl_activities_cta']}</strong>
- <a href="{gyg_url_m}" target="_blank" rel="sponsored noopener" class="affil-btn">{cfg['lbl_activities_btn']}</a>
+ <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+      data-gyg-locale-code="{gyg_locale_code_m}"
+      data-gyg-widget="activities"
+      data-gyg-number-of-items="3"
+      data-gyg-partner-id="{GYG_PARTNER_ID}"
+      data-gyg-q="{gyg_dest_m}"></div>
+ <a href="{gyg_url_m}" target="_blank" rel="sponsored noopener" class="affil-btn-secondary">{cfg['lbl_activities_btn']}</a>
  </div>
 </section>'''
 
