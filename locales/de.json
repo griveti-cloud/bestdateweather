@@ -768,7 +768,7 @@
     "methodology_label": "Methodik",
     "app_url": "app.html",
     "app_label": "Wetter-App",
-    "legal_url": "../impressum.html",
+    "legal_url": "impressum.html",
     "legal_label": "Impressum"
   },
   "classements": {
