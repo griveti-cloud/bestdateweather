@@ -266,15 +266,23 @@
 
   var searchTimeout = null;
 
-  var FR_TERRITORIES = {GF:"Guyane française",GP:"Guadeloupe",MQ:"Martinique",RE:"La Réunion",PM:"Saint-Pierre-et-Miquelon",YT:"Mayotte",NC:"Nouvelle-Calédonie",PF:"Polynésie française"};
+  var FR_TERRITORIES = {
+    fr: {GF:"Guyane française",GP:"Guadeloupe",MQ:"Martinique",RE:"La Réunion",PM:"Saint-Pierre-et-Miquelon",YT:"Mayotte",NC:"Nouvelle-Calédonie",PF:"Polynésie française"},
+    en: {GF:"French Guiana",GP:"Guadeloupe",MQ:"Martinique",RE:"Réunion",PM:"Saint Pierre and Miquelon",YT:"Mayotte",NC:"New Caledonia",PF:"French Polynesia"},
+    es: {GF:"Guayana Francesa",GP:"Guadalupe",MQ:"Martinica",RE:"Reunión",PM:"San Pedro y Miquelón",YT:"Mayotte",NC:"Nueva Caledonia",PF:"Polinesia Francesa"},
+    de: {GF:"Französisch-Guayana",GP:"Guadeloupe",MQ:"Martinique",RE:"Réunion",PM:"Saint-Pierre und Miquelon",YT:"Mayotte",NC:"Neukaledonien",PF:"Französisch-Polynesien"}
+  };
+  var FRANCE_LABEL = {fr:"France",en:"France",es:"Francia",de:"Frankreich"};
 
   function acSub(r) {
     var cc = r.country_code || "";
-    var isFrDom = !!FR_TERRITORIES[cc];
+    var langKey = LANG === "en" ? "en" : (LANG === "es" ? "es" : (LANG === "de" ? "de" : "fr"));
+    var terrMap = FR_TERRITORIES[langKey];
+    var isFrDom = !!terrMap[cc];
     if (cc === "FR" || isFrDom) {
-      var terr = isFrDom ? FR_TERRITORIES[cc] : "";
+      var terr = isFrDom ? terrMap[cc] : "";
       var region = terr || r.admin1 || "";
-      return region + (region ? ", " : "") + "France";
+      return region + (region ? ", " : "") + FRANCE_LABEL[langKey];
     }
     return (r.admin1 || "") + (r.admin1 && r.country ? ", " : "") + (r.country || "");
   }
