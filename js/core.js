@@ -1,5 +1,6 @@
 // BestDateWeather — core.js
 // Requires: i18n-xx.js loaded BEFORE this file (sets window.BDW_T + window.BDW_CFG)
+/* global _showDateNav */
 var T = window.BDW_T;
 var CFG = window.BDW_CFG;
 
