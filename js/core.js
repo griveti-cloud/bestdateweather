@@ -1337,6 +1337,7 @@ function showResults(sc, rows, isForecast, noteText, diffDays) {
  applyHorizonWording(diffDays);
  document.getElementById('score-block').style.display = 'block';
  showSection('hero');
+ if (typeof _showDateNav === 'function') _showDateNav();
  document.getElementById('uc-filter-wrap').style.display='block';
  showSection('sec-hourly');
  renderHourly(sc);
@@ -2445,6 +2446,9 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
     _updateButtons();
   }
 
+  // Expose globally so showResults() can call it
+  window._showDateNav = _showNav;
+
   document.addEventListener('DOMContentLoaded', function() {
     navEl   = document.getElementById('date-nav');
     prevBtn = document.getElementById('date-nav-prev');
@@ -2456,17 +2460,12 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
     prevBtn.addEventListener('click', function() { _navTo(-1); });
     nextBtn.addEventListener('click', function() { _navTo(+1); });
 
-    // Watch hero visibility to show/hide nav
+    // Hide nav when a new search starts (hero is hidden)
     var _hero = document.getElementById('hero');
     if (_hero) {
-      var obs = new MutationObserver(function() {
-        if (_hero.style.display === 'none') {
-          navEl.style.display = 'none';
-        } else if (window._lastYr != null) {
-          _showNav();
-        }
-      });
-      obs.observe(_hero, { attributes: true, attributeFilter: ['style'] });
+      new MutationObserver(function() {
+        if (_hero.style.display === 'none') navEl.style.display = 'none';
+      }).observe(_hero, { attributes: true, attributeFilter: ['style'] });
     }
 
     // Swipe support on hero
