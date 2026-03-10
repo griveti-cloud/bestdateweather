@@ -518,8 +518,20 @@ function render7DayStrip(diffDays) {
   var tMax = d.temperature_2m_max[idx] != null ? Math.round(d.temperature_2m_max[idx]) : '–';
   var tMin = d.temperature_2m_min[idx] != null ? Math.round(d.temperature_2m_min[idx]) : '–';
   var wCode = d.weather_code ? (d.weather_code[idx] || 0) : 0;
+  // For today: use current hour's WMO from hourly rows (not daily worst-case)
+  if (i === 0 && window._lastSc) {
+   var _nowH = new Date().getHours();
+   var _curRow = window._lastSc[_nowH] || window._lastSc[Math.min(_nowH, window._lastSc.length-1)];
+   if (_curRow && _curRow.wmo != null) wCode = _curRow.wmo;
+  }
   var rainP = d.precipitation_probability_max ? (d.precipitation_probability_max[idx] || 0) : 0;
   var precip = d.precipitation_sum ? (d.precipitation_sum[idx] || 0) : 0;
+  // For today: use current hour's rain probability instead of daily max
+  if (i === 0 && window._lastSc) {
+   var _nowH2 = new Date().getHours();
+   var _curRow2 = window._lastSc[_nowH2] || window._lastSc[Math.min(_nowH2, window._lastSc.length-1)];
+   if (_curRow2) { rainP = _curRow2.rain || 0; precip = _curRow2.mm || 0; }
+  }
   var icon = wmoIcon(wCode, precip, rainP);
   var isActive = (i === diffDays);
   var rainClass = precip > 5 ? 'fs-rain-heavy' : (precip > 0.5 ? 'fs-rain-light' : (rainP > 40 ? 'fs-rain-maybe' : ''));
