@@ -758,7 +758,7 @@ def make_related(lang, exclude_href=''):
 
 def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
               sections, jsonld_str, related_html, meth_html, footer_html, lang, canonical,
-              hreflang_fr='', hreflang_en='', hreflang_es=''):
+              hreflang_fr='', hreflang_en='', hreflang_es='', hreflang_de='', hreflang_us=''):
     fonts = (
         '<link rel="preconnect" href="https://fonts.googleapis.com"/>'
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>'
@@ -786,6 +786,8 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 {f'<link rel="alternate" hreflang="fr" href="{hreflang_fr}"/>' if hreflang_fr else ''}
 {f'<link rel="alternate" hreflang="en" href="{hreflang_en}"/>' if hreflang_en else ''}
 {f'<link rel="alternate" hreflang="es" href="{hreflang_es}"/>' if hreflang_es else ''}
+{f'<link rel="alternate" hreflang="de" href="{hreflang_de}"/>' if hreflang_de else ''}
+{f'<link rel="alternate" hreflang="en-us" href="{hreflang_us}"/>' if hreflang_us else ''}
 {f'<link rel="alternate" hreflang="x-default" href="{hreflang_en}"/>' if hreflang_en else ''}
 <style>{CSS}</style>
 {fonts}
@@ -906,6 +908,7 @@ def _cl_layout(pc, lang):
             {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
             {'url': f'../es/{es_file}', 'flag': '../flags/es.png', 'label': 'Español'},
+            {'url': f'../us/{en_file}', 'flag': '../flags/us.png', 'label': 'US English'},
         ])
         outfile = ROOT / 'de' / de_file
     else:  # es
@@ -914,6 +917,7 @@ def _cl_layout(pc, lang):
             {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
             {'url': f'../de/{de_file}', 'flag': '../flags/de.png', 'label': 'Deutsch'},
+            {'url': f'../us/{en_file}', 'flag': '../flags/us.png', 'label': 'US English'},
         ])
         outfile = ROOT / 'es' / es_file
     return canonical, footer, outfile, fr_file, en_file, es_file, de_file
@@ -940,6 +944,8 @@ def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix=''):
         hreflang_fr=f'https://bestdateweather.com/{fr_file}',
         hreflang_en=f'https://bestdateweather.com/en/{en_file}',
         hreflang_es=f'https://bestdateweather.com/es/{es_file}',
+        hreflang_de=f'https://bestdateweather.com/de/{de_file}',
+        hreflang_us=f'https://bestdateweather.com/us/{en_file}',
     )
     outfile.write_text(page, encoding='utf-8')
     print(f'  ✓ {outfile.name}{print_suffix}')
