@@ -348,7 +348,7 @@ function setConfBadge(diffDays) { /* badge supprimé */ }
 function geocode(city) {
  // Strip formatting artifacts like 'Porto, Porto (Portugal)' → 'Porto'
  var clean = city.replace(/\s*\([^)]*\)/g, '').split(/,|\s+[—–-]\s+/)[0].trim();
- var _gl=document.documentElement.lang||'fr'; if(_gl!=='en'&&_gl!=='es')_gl='fr'; return fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(clean) + '&count=5&language='+_gl)
+ var _gl=document.documentElement.lang||'fr'; if(_gl!=='en'&&_gl!=='es'&&_gl!=='de')_gl='fr'; return fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(clean) + '&count=5&language='+_gl)
  .then(function(r) { return r.json(); })
  .then(function(d) {
  if (!d.results || !d.results.length) throw new Error('Ville introuvable');
@@ -1409,7 +1409,7 @@ function normalizeQuery(s){
 function fetchAC(q){
  var hint=document.getElementById('city-hint');
  if(hint) hint.style.display='none';
- var _gl2=document.documentElement.lang||'fr'; if(_gl2!=='en'&&_gl2!=='es')_gl2='fr';
+ var _gl2=document.documentElement.lang||'fr'; if(_gl2!=='en'&&_gl2!=='es'&&_gl2!=='de')_gl2='fr';
  // Local index search: inject matching destinations from suggestions.json (supports ES names)
  var localMatches = [];
  if(window._wbSuggestions){
@@ -2232,7 +2232,7 @@ document.getElementById('ann-city').oninput=function(){
  annSelectedLoc=null;var q=this.value.trim();clearTimeout(annAcTimer);
  document.getElementById('ann-city-clear').classList.toggle('visible',q.length>0);
  if(q.length<2){hideAnnAC();return;}
- var _gl3=document.documentElement.lang||'fr'; if(_gl3!=='en'&&_gl3!=='es')_gl3='fr'; annAcTimer=setTimeout(function(){fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=10&language='+_gl3).then(function(r){return r.json();}).then(function(d){var items=(d.results||[]).filter(function(r){return r.feature_code!=='AIRP'&&r.feature_code!=='RSTN'});items.sort(function(a,b){return(b.population||0)-(a.population||0)});var np={};for(var j=0;j<items.length;j++){var nm=items[j].name.toLowerCase(),pop=items[j].population||0;if(!np[nm]||pop>np[nm])np[nm]=pop;}var dt={GF:1,GP:1,MQ:1,RE:1,PM:1,YT:1,NC:1,PF:1,WF:1,MF:1,BL:1},seen={},out=[];for(var i=0;i<items.length&&out.length<6;i++){var rn=items[i].name.toLowerCase();if(np[rn]>=5000&&!(items[i].population>0))continue;var cc=(items[i].country_code||'').toUpperCase(),terr=dt[cc]?cc:(cc==='FR'?'FR':cc),k=rn+'|'+terr;if(!seen[k]){seen[k]=1;out.push(items[i]);}}showAnnAC(out);}).catch(function(){hideAnnAC();});},280);
+ var _gl3=document.documentElement.lang||'fr'; if(_gl3!=='en'&&_gl3!=='es'&&_gl3!=='de')_gl3='fr'; annAcTimer=setTimeout(function(){fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=10&language='+_gl3).then(function(r){return r.json();}).then(function(d){var items=(d.results||[]).filter(function(r){return r.feature_code!=='AIRP'&&r.feature_code!=='RSTN'});items.sort(function(a,b){return(b.population||0)-(a.population||0)});var np={};for(var j=0;j<items.length;j++){var nm=items[j].name.toLowerCase(),pop=items[j].population||0;if(!np[nm]||pop>np[nm])np[nm]=pop;}var dt={GF:1,GP:1,MQ:1,RE:1,PM:1,YT:1,NC:1,PF:1,WF:1,MF:1,BL:1},seen={},out=[];for(var i=0;i<items.length&&out.length<6;i++){var rn=items[i].name.toLowerCase();if(np[rn]>=5000&&!(items[i].population>0))continue;var cc=(items[i].country_code||'').toUpperCase(),terr=dt[cc]?cc:(cc==='FR'?'FR':cc),k=rn+'|'+terr;if(!seen[k]){seen[k]=1;out.push(items[i]);}}showAnnAC(out);}).catch(function(){hideAnnAC();});},280);
 };
 document.getElementById('ann-city').onblur=function(){setTimeout(hideAnnAC,180);};
 document.getElementById('ann-city').onkeydown=function(e){
