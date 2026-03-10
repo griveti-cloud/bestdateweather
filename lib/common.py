@@ -333,7 +333,13 @@ def footer_ranking_html(lang, alt_links):
     fc = loc['ranking_footer']
 
     alt_html = ''.join(
-        f' · <a href="{a["url"]}" style="color:rgba(255,255,255,.7)">'
+        f'<a href="{a["url"]}" style="color:rgba(255,255,255,.7)">'
+        f'<img src="{a["flag"]}" width="20" height="15" alt="" '
+        f'style="vertical-align:middle;border-radius:2px"> {a["label"]}</a>'
+        for a in alt_links
+    )
+    alt_sep = ' · '.join(
+        f'<a href="{a["url"]}" style="color:rgba(255,255,255,.7)">'
         f'<img src="{a["flag"]}" width="20" height="15" alt="" '
         f'style="vertical-align:middle;border-radius:2px"> {a["label"]}</a>'
         for a in alt_links
@@ -342,6 +348,7 @@ def footer_ranking_html(lang, alt_links):
     return f"""<footer>
 <p style="color:rgba(255,255,255,.7);font-size:13px;font-weight:700;margin-bottom:8px">bestdateweather.com</p>
 <p><a href="https://open-meteo.com/" rel="noopener" style="color:rgba(255,255,255,.7)">{fc['data_by']}</a> · {fc['sources']}</p>
-<p style="margin-top:8px"><a href="{fc['methodology_url']}" style="color:rgba(255,255,255,.7)">{fc['methodology_label']}</a> · <a href="{fc['app_url']}" style="color:rgba(255,255,255,.7)">{fc['app_label']}</a>{alt_html}</p>
+<p style="margin-top:8px"><a href="{fc['methodology_url']}" style="color:rgba(255,255,255,.7)">{fc['methodology_label']}</a> · <a href="{fc['app_url']}" style="color:rgba(255,255,255,.7)">{fc['app_label']}</a></p>
+<p style="margin-top:4px;white-space:nowrap;overflow-x:auto">{alt_sep}</p>
 <p style="margin-top:8px;font-size:11px;opacity:.6"><a href="{fc['legal_url']}" style="color:rgba(255,255,255,.7)">{fc['legal_label']}</a></p>
 </footer>"""
