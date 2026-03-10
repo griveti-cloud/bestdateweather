@@ -2387,3 +2387,101 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
  setTimeout(function() { runAnnual(); }, 100);
  }
 })();
+
+// ── Date navigation (prev/next day arrows + swipe) ──────────────────────────
+(function() {
+  var navEl, prevBtn, nextBtn, labelEl;
+  var _fp = null; // flatpickr instance reference
+
+  function _pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function _dateFromState() {
+    if (window._lastYr == null) return null;
+    return new Date(window._lastYr, window._lastMo, window._lastDa, 0, 0, 0);
+  }
+
+  function _today() {
+    var d = new Date(); d.setHours(0,0,0,0); return d;
+  }
+
+  function _maxDate() {
+    var d = new Date(); d.setHours(0,0,0,0);
+    d.setDate(d.getDate() + 365);
+    return d;
+  }
+
+  function _updateButtons() {
+    if (!prevBtn || !nextBtn) return;
+    var cur = _dateFromState();
+    if (!cur) return;
+    prevBtn.disabled = cur <= _today();
+    nextBtn.disabled = cur >= _maxDate();
+  }
+
+  function _navTo(delta) {
+    var cur = _dateFromState();
+    if (!cur) return;
+    var newDate = new Date(cur.getTime());
+    newDate.setDate(newDate.getDate() + delta);
+    var minD = _today(), maxD = _maxDate();
+    if (newDate < minD || newDate > maxD) return;
+
+    var iso = newDate.getFullYear() + '-' + _pad(newDate.getMonth()+1) + '-' + _pad(newDate.getDate());
+
+    // Update flatpickr if available
+    var inpDate = document.getElementById('inp-date');
+    if (inpDate && inpDate._flatpickr) {
+      inpDate._flatpickr.setDate(iso, false);
+    }
+    inpDate._isoValue = iso;
+
+    // Also update the city field to keep state consistent
+    if (typeof run === 'function') { run(); }
+  }
+
+  function _showNav() {
+    if (!navEl) return;
+    navEl.style.display = 'flex';
+    _updateButtons();
+  }
+
+  // Hook into showResults to show nav after results
+  var _origShowResults = window.showResults || null;
+  // Instead of patching, we watch for hero visibility via MutationObserver
+  var _hero = document.getElementById('hero');
+  if (_hero) {
+    var obs = new MutationObserver(function() {
+      if (_hero.style.display === 'none') {
+        if (navEl) navEl.style.display = 'none';
+      } else if (window._lastYr != null) {
+        _showNav();
+      }
+    });
+    obs.observe(_hero, { attributes: true, attributeFilter: ['style'] });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    navEl   = document.getElementById('date-nav');
+    prevBtn = document.getElementById('date-nav-prev');
+    nextBtn = document.getElementById('date-nav-next');
+    labelEl = document.getElementById('date-nav-label');
+
+    if (!navEl) return;
+
+    prevBtn.addEventListener('click', function() { _navTo(-1); });
+    nextBtn.addEventListener('click', function() { _navTo(+1); });
+
+    // Swipe support on hero
+    var hero = document.getElementById('hero');
+    if (hero) {
+      var _tx = 0;
+      hero.addEventListener('touchstart', function(e) {
+        _tx = e.changedTouches[0].clientX;
+      }, { passive: true });
+      hero.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].clientX - _tx;
+        if (Math.abs(dx) > 50) { _navTo(dx < 0 ? +1 : -1); }
+      }, { passive: true });
+    }
+  });
+})();
