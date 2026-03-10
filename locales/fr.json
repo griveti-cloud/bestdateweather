@@ -412,7 +412,9 @@
     "verdict_period_bad": "Période déconseillée.",
     "act_beach_na": "— Sans accès mer",
     "crosslink_label": "🌍 Top destinations",
-    "crosslink_title_tpl": "Autres top destinations en {month_lc}"
+    "crosslink_title_tpl": "Autres top destinations en {month_lc}",
+    "editorial_highlights_label": "✍️ Notre avis",
+    "editorial_highlights_title": "Les meilleurs mois à {nom}"
   },
   "narratives": {
     "tropical_rainy": "En {month_lc}, {name} est en pleine saison des pluies ({rain}% de jours pluvieux). Les averses tropicales sont généralement courtes mais intenses — prévoyez un imperméable léger.",

@@ -591,6 +591,42 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  </div>
 </section>'''
 
+    # ── Editorial highlights (top 3 months with snippet) ──
+    top3_idx = sorted(range(12), key=lambda i: months[i]['score'], reverse=True)[:3]
+    top3_idx_sorted = sorted(top3_idx)  # ordre chronologique
+    editorial_cards = []
+    for idx in top3_idx_sorted:
+        ed_key = f"{slug_fr}:{idx + 1}:{C['lang']}"
+        snippet = _EDITORIAL.get(ed_key, '')
+        if not snippet:
+            continue
+        m_url = monthly_url(C, slug, idx)
+        m_score = months[idx]['score']
+        m_tmax = fmt_temp(months[idx]['tmax'], C)
+        _, _, badge_lbl = fn['score_badge'](m_score)
+        badge_html = f'<span style="background:#dcfce7;color:#16a34a;padding:1px 6px;border-radius:4px;font-size:.75rem;font-weight:600">{badge_lbl}</span>'
+        # Truncate to ~120 chars for annual view
+        short = snippet[:120].rsplit(' ', 1)[0] + '…' if len(snippet) > 120 else snippet
+        editorial_cards.append(
+            f'<a href="{m_url}" class="editorial-month-card">'
+            f'<div class="em-header">'
+            f'<span class="em-month">{MONTHS[idx]}</span>'
+            f'<span class="em-meta">{badge_html} · {m_tmax}</span>'
+            f'</div>'
+            f'<p class="em-snippet">{short}</p>'
+            f'</a>'
+        )
+    if editorial_cards:
+        ed_label = C.get('lbl_m_editorial_highlights_label', C['lbl_monthly_section'])
+        ed_title = C.get('lbl_m_editorial_highlights_title', C['lbl_monthly_title'])
+        editorial_highlights_section = f'''<section class="section">
+ <div class="section-label">{ed_label}</div>
+ <h2 class="section-title">{ed_title.format(nom=nom) if '{nom}' in ed_title else ed_title}</h2>
+ <div class="editorial-months-grid">{''.join(editorial_cards)}</div>
+</section>'''
+    else:
+        editorial_highlights_section = ''
+
     # ── FAQ ──
     winter_key = C['season_order'][-1]  # 'Hiver' (FR) or 'Winter' (EN)
     if is_mountain:
@@ -768,6 +804,13 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <style>
 .hero-band{{background:linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%);}}
 .hero-title em{{color:#93c5fd;}}
+.editorial-months-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}}
+.editorial-month-card{{display:block;padding:14px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;text-decoration:none;color:inherit;transition:box-shadow .15s;}}
+.editorial-month-card:hover{{box-shadow:0 4px 14px rgba(0,0,0,.1);border-color:#93c5fd;}}
+.em-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}}
+.em-month{{font-weight:700;font-size:.95rem;color:#1e3a5f;}}
+.em-meta{{font-size:.8rem;color:#64748b;}}
+.em-snippet{{font-size:.82rem;color:#475569;margin:0;line-height:1.5;}}
 </style>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 </head>
@@ -793,6 +836,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 {activities_section}
 {flights_section}
 {monthly_section}
+{editorial_highlights_section}
 {faq_section}
 {similar_section}
 {ranking_section}

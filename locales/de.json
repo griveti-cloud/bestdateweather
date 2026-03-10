@@ -406,7 +406,9 @@
     "sun_section": "Sonnenschein",
     "temp_section": "Temperaturen",
     "crosslink_label": "🌍 Top-Reiseziele",
-    "crosslink_title_tpl": "Andere Top-Reiseziele im {month}"
+    "crosslink_title_tpl": "Andere Top-Reiseziele im {month}",
+    "editorial_highlights_label": "✍️ Unser Fazit",
+    "editorial_highlights_title": "Beste Monate in {nom}"
   },
   "narratives": {
     "tropical_rainy": "Im {month} befindet sich {name} mitten in der Regenzeit ({rain}% Regentage). Tropenschauer sind meist kurz, aber intensiv — einen leichten Regenmantel einpacken.",
