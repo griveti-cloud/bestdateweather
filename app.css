@@ -575,7 +575,15 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
   margin:0;
   border-radius:0;
 }
-/* Override responsive centering that applied when banner was standalone */
+/* Override responsive centering — all screen sizes */
+.main-card .wb,
+.main-card .wb-shimmer,
+.main-card .wb-hourly,
+.main-card .wb-section{
+  max-width:100%;
+  margin-left:0;
+  margin-right:0;
+}
 @media(max-width:640px){
   .main-card .wb,
   .main-card .wb-shimmer,
