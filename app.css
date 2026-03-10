@@ -648,14 +648,13 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
   font-size:13px;
   font-weight:900;
   font-style:italic;
-  color:var(--navy);
-  opacity:.38;
+  color:#5e6470;
   letter-spacing:-.2px;
   text-decoration:none;
-  transition:opacity .15s;
+  transition:color .15s;
 }
-.footer-wordmark:hover{opacity:.65}
-.footer-wordmark em{color:#b06800;font-style:italic}
+.footer-wordmark:hover{color:#3a3f4a}
+.footer-wordmark em{color:#7a4500;font-style:italic}
 .footer-guides{
   font-size:11px;
   color:var(--slate2);

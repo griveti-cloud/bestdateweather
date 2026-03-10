@@ -372,8 +372,7 @@
   }
 
   function loadSuggestions() {
-    var pfx = LANG === "en" ? "../" : "";
-    fetch(pfx + "data/suggestions.json")
+    fetch("/data/suggestions.json")
       .then(function(r) { return r.json(); })
       .then(function(d) {
         suggestionsData = d;
