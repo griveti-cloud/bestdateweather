@@ -2412,6 +2412,8 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
   }
 
   function _updateButtons() {
+    if (!prevBtn) prevBtn = document.getElementById('date-nav-prev');
+    if (!nextBtn) nextBtn = document.getElementById('date-nav-next');
     if (!prevBtn || !nextBtn) return;
     var cur = _dateFromState();
     if (!cur) return;
@@ -2441,6 +2443,7 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
   }
 
   function _showNav() {
+    if (!navEl) navEl = document.getElementById('date-nav');
     if (!navEl) return;
     navEl.style.display = 'flex';
     _updateButtons();
