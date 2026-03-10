@@ -32,6 +32,12 @@
         "flag": "es",
         "label": "Español",
         "asset_prefix": "../es/"
+      },
+      {
+        "lang": "en-us",
+        "flag": "us",
+        "label": "🇺🇸 US",
+        "asset_prefix": "../us/"
       }
     ],
     "subdir": "de",
