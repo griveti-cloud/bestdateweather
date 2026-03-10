@@ -273,6 +273,14 @@
     de: {GF:"Französisch-Guayana",GP:"Guadeloupe",MQ:"Martinique",RE:"Réunion",PM:"Saint-Pierre und Miquelon",YT:"Mayotte",NC:"Neukaledonien",PF:"Französisch-Polynesien"}
   };
   var FRANCE_LABEL = {fr:"France",en:"France",es:"Francia",de:"Frankreich"};
+  var COUNTRY_OVERRIDE = {
+    de: {GB:"Vereinigtes Königreich",US:"Vereinigte Staaten",AU:"Australien",NZ:"Neuseeland",
+         AE:"Vereinigte Arabische Emirate",ZA:"Südafrika",MX:"Mexiko",AR:"Argentinien",
+         CL:"Chile",BR:"Brasilien",TH:"Thailand",VN:"Vietnam",PH:"Philippinen",
+         JP:"Japan",CN:"China",IN:"Indien",TR:"Türkei",EG:"Ägypten",MA:"Marokko",
+         TZ:"Tansania",KE:"Kenia",MZ:"Mosambik",MU:"Mauritius",MV:"Malediven",
+         LK:"Sri Lanka",CD:"Demokratische Republik Kongo",CG:"Republik Kongo"}
+  };
 
   function acSub(r) {
     var cc = r.country_code || "";
@@ -284,7 +292,11 @@
       var region = terr || r.admin1 || "";
       return region + (region ? ", " : "") + FRANCE_LABEL[langKey];
     }
-    return (r.admin1 || "") + (r.admin1 && r.country ? ", " : "") + (r.country || "");
+    var countryName = r.country || "";
+    if (COUNTRY_OVERRIDE[langKey] && COUNTRY_OVERRIDE[langKey][cc]) {
+      countryName = COUNTRY_OVERRIDE[langKey][cc];
+    }
+    return (r.admin1 || "") + (r.admin1 && countryName ? ", " : "") + countryName;
   }
 
   function searchCities(query, callback) {
