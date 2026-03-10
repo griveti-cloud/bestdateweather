@@ -876,7 +876,10 @@ def _sections(sections_cfg, ctx, tables):
 def _cl_layout(pc, lang):
     BASE = 'https://bestdateweather.com'
     fr_file, en_file, es_file = pc['fr_file'], pc['en_file'], pc['es_file']
-    de_file = pc.get('de_file', en_file)
+    # de_file is always stored in the DE locale — load it from there
+    _page_key = next((k for k, v in load_locale('de').get('classement_pages', {}).items()
+                      if v.get('en_file') == en_file), None)
+    de_file = load_locale('de')['classement_pages'][_page_key]['de_file'] if _page_key else pc.get('de_file', en_file)
     if lang == 'fr':
         canonical = f'{BASE}/{fr_file}'
         footer = footer_ranking_html('fr', [
