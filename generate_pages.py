@@ -562,10 +562,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <h2 class="section-title">{C['lbl_activities_title_tpl'].format(name=nom_f)}</h2>
  <div class="affil-box">
  <strong>{C['lbl_activities_cta']}</strong>
- <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+ <div data-gyg-href="https://widget.getyourguide.com/default/search.frame"
       data-gyg-locale-code="{gyg_locale_code}"
-      data-gyg-widget="activities"
-      data-gyg-number-of-items="3"
       data-gyg-partner-id="{GYG_PARTNER_ID}"
       data-gyg-q="{gyg_dest}"></div>
  <a href="{gyg_url}" target="_blank" rel="sponsored noopener" class="affil-btn-secondary">{C['lbl_activities_btn']}</a>
@@ -1420,10 +1418,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <h2 class="section-title">{cfg['lbl_activities_title_tpl'].format(name=nom_f)}</h2>
  <div class="affil-box">
  <strong>{cfg['lbl_activities_cta']}</strong>
- <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+ <div data-gyg-href="https://widget.getyourguide.com/default/search.frame"
       data-gyg-locale-code="{gyg_locale_code_m}"
-      data-gyg-widget="activities"
-      data-gyg-number-of-items="3"
       data-gyg-partner-id="{GYG_PARTNER_ID}"
       data-gyg-q="{gyg_dest_m}"></div>
  <a href="{gyg_url_m}" target="_blank" rel="sponsored noopener" class="affil-btn-secondary">{cfg['lbl_activities_btn']}</a>
