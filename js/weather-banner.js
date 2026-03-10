@@ -414,7 +414,7 @@
     for (var i = 0; i < recent.length; i++) {
       if (recent[i].slug && suggestionsData[recent[i].slug]) {
         baseDest = suggestionsData[recent[i].slug];
-        baseName = LANG === "en" ? baseDest.en : baseDest.fr;
+        baseName = LANG === "fr" ? baseDest.fr : (baseDest.en || baseDest.fr);
         break;
       }
     }
@@ -430,13 +430,13 @@
     var suggestions = [];
     for (var k = 0; k < sims.length; k++) {
       if (!recentSlugs[sims[k].slug]) {
-        var sName = LANG === "en" ? sims[k].en : sims[k].fr;
+        var sName = LANG === "fr" ? sims[k].fr : (sims[k].en || sims[k].fr);
         suggestions.push({
           name: sName,
           flag: sims[k].flag || "",
           slug: sims[k].slug,
           score: sims[k].score_avg || 0,
-          reason: (LANG === "en" ? "Climate similar to " : "Climat proche de ") + baseName
+          reason: (LANG === "fr" ? "Climat proche de " : "Climate similar to ") + baseName
         });
       }
       if (suggestions.length >= 2) break;
