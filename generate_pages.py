@@ -516,19 +516,12 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  {season_rows}
 </section>'''
 
-    # ── Booking ──
+    # ── Hotels.com (Expedia Group) ──
     booking_section = ''
     country_name = country
-    ss_val = quote_plus(f"{nom}, {country_name}")
-    booking_params = (f"ss={ss_val}"
-                      f"&aid={BOOKING_AID}"
-                      f"&lang={C['booking_lang']}"
-                      f"&sb=1&src=index&src_elem=sb"
-                      f"&checkin={YEAR}-{best_idx+1:02d}-01&checkout={YEAR}-{best_idx+1:02d}-07"
-                      f"&group_adults=2&no_rooms=1&group_children=0")
-    if booking_id:
-        booking_params += f"&dest_id={booking_id}&dest_type=city"
-    booking_url = f"https://www.booking.com/{C['booking_domain']}?{booking_params}"
+    hotels_dest = quote_plus(f"{nom}, {country_name}")
+    hotels_subdomain = C['booking_domain']
+    booking_url = f"https://{hotels_subdomain}.hotels.com/Hotel-Search?destination={hotels_dest}&camref=1110IB57J"
 
     off_months = [month_lc(C, MONTHS[i])
                   for i in range(12) if months[i]['score'] >= 6.5 and months[i]['score'] < best_score - 1.5]
@@ -1378,19 +1371,11 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     # ── HEAD CSS / NAV / FOOTER from gen_annual helpers ──
     NAV      = nav_html(cfg)
 
-    # ── Booking (monthly) ──
-    booking_id = dest.get('booking_dest_id', '')
+    # ── Hotels.com (monthly) ──
     country_name = dest_country(cfg, dest)
-    ss_val_m = quote_plus(f"{nom}, {country_name}")
-    bk_params = (f"ss={ss_val_m}"
-                 f"&aid={BOOKING_AID}"
-                 f"&lang={cfg['booking_lang']}"
-                 f"&sb=1&src=index&src_elem=sb"
-                 f"&checkin={YEAR}-{mi+1:02d}-01&checkout={YEAR}-{mi+1:02d}-07"
-                 f"&group_adults=2&no_rooms=1&group_children=0")
-    if booking_id:
-        bk_params += f"&dest_id={booking_id}&dest_type=city"
-    bk_url = f"https://www.booking.com/{cfg['booking_domain']}?{bk_params}"
+    hotels_dest_m = quote_plus(f"{nom}, {country_name}")
+    hotels_subdomain_m = cfg['booking_domain']
+    bk_url = f"https://{hotels_subdomain_m}.hotels.com/Hotel-Search?destination={hotels_dest_m}&camref=1110IB57J"
     bk_cta = C['lbl_m_bk_cta_tpl'].format(**tpl)
     booking_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_booking_section']}</div>

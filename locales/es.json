@@ -3,7 +3,7 @@
   "meta": {
     "html_lang": "es",
     "booking_lang": "es",
-    "booking_domain": "searchresults.es.html",
+    "booking_domain": "es",
     "asset_prefix": "../",
     "base_url": "https://bestdateweather.com/es/",
     "canonical_prefix": "https://bestdateweather.com/es/",
@@ -245,7 +245,7 @@
     "booking_section": "Alojamiento",
     "booking_title_tpl": "Alojarse en {name}",
     "booking_cta": "Ver disponibilidad en el período recomendado",
-    "booking_btn": "Buscar en Booking.com",
+    "booking_btn": "Buscar en Hotels.com",
     "monthly_section": "Clima mensual",
     "monthly_title": "Tiempo detallado mes a mes",
     "faq_section": "FAQ",
