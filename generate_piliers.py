@@ -101,7 +101,16 @@ def get_rankings(climate, dests, month_idx):
     remove = {p for p, ch in REGION_CHILDREN.items() if p in ranked and ranked & ch}
     if remove:
         entries = [e for e in entries if e['slug_fr'] not in remove]
-    return entries[:TOP_N]
+    # Keep only best-scoring destination per country (no city+country duplicate)
+    seen_countries = {}
+    deduped = []
+    for e in entries:
+        pays = e['pays']
+        if pays not in seen_countries:
+            seen_countries[pays] = e['score']
+            deduped.append(e)
+        # else: skip — a higher-scoring entry for this country already included
+    return deduped[:TOP_N]
 
 # ── CSS ───────────────────────────────────────────────────────────────────────
 
