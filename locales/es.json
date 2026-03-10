@@ -410,7 +410,9 @@
     "rainy_days": "Días de lluvia",
     "sun_day": "Sol/día",
     "sun_section": "Horas de sol",
-    "temp_section": "Temperaturas"
+    "temp_section": "Temperaturas",
+    "crosslink_label": "🌍 Top destinos",
+    "crosslink_title_tpl": "Otros top destinos en {month}"
   },
   "narratives": {
     "tropical_rainy": "En {month}, {name} está en plena temporada de lluvias ({rain}% de días con lluvia). Los aguaceros tropicales son normalmente breves pero intensos — lleva un impermeable ligero.",

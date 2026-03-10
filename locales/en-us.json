@@ -412,7 +412,9 @@
     "rainy_days": "Rainy days",
     "sun_day": "Sunshine/day",
     "sun_section": "Sunshine",
-    "temp_section": "Temperatures"
+    "temp_section": "Temperatures",
+    "crosslink_label": "🌍 Top destinations",
+    "crosslink_title_tpl": "Other top destinations in {month}"
   },
   "narratives": {
     "tropical_rainy": "In {month}, {name} is in the middle of the rainy season ({rain}% rainy days). Tropical showers are usually short but intense — pack a light raincoat.",

@@ -226,6 +226,52 @@ def compute_all_similarities(dests, climate):
     return similarities
 
 
+def compute_monthly_crosslinks(dests, climate, top_n=50):
+    """For each (destination, month), find the 5 closest top-N destinations
+    by monthly score, excluding same country. Returns:
+      {slug_fr: {mi (0-based): [other_slug, ...]}}
+    """
+    import pandas as pd
+
+    # Build top-N by average score
+    all_scores = {}
+    for slug, months in climate.items():
+        if None in months:
+            continue
+        all_scores[slug] = sum(m['score'] for m in months) / len(months)
+    top_slugs = set(sorted(all_scores, key=all_scores.get, reverse=True)[:top_n])
+
+    # Country lookup
+    country_of = {slug: dests[slug].get('pays', '') for slug in dests}
+
+    # Monthly score lookup: {slug: [score_m0, score_m1, ..., score_m11]}
+    monthly_scores = {}
+    for slug in top_slugs:
+        if slug not in climate or None in climate[slug]:
+            continue
+        monthly_scores[slug] = [m['score'] for m in climate[slug]]
+
+    result = {}
+    for slug in dests:
+        if slug not in climate or None in climate[slug]:
+            continue
+        my_country = country_of.get(slug, '')
+        result[slug] = {}
+        for mi in range(12):
+            my_score = climate[slug][mi]['score']
+            neighbors = []
+            for other_slug, other_scores in monthly_scores.items():
+                if other_slug == slug:
+                    continue
+                if country_of.get(other_slug, '') == my_country:
+                    continue
+                diff = abs(other_scores[mi] - my_score)
+                neighbors.append((diff, other_scores[mi], other_slug))
+            neighbors.sort()
+            result[slug][mi] = [s for _, _, s in neighbors[:5]]
+    return result
+
+
 # ── HTML CONSTANTS ──────────────────────────────────────────────────────────
 
 def GTAG_HTML(pfx=''):
@@ -873,7 +919,7 @@ def _build_comp_cards_monthly(cfg, slug, nom, comparison_index, all_dests):
 
 # ── MONTHLY PAGE GENERATOR ────────────────────────────────────────────────
 
-def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate, events=None, comparison_index=None):
+def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate, events=None, comparison_index=None, monthly_crosslinks=None):
     C = cfg
     lang    = C['lang']
     MONTHS  = C['months']
@@ -1163,6 +1209,25 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     sim_section_title = C['lbl_m_sec_similar_title_tpl'].format(**tpl)
     sim_section_label = C['lbl_m_sim_label']
+
+    # ── Monthly score crosslinks (top-50, pays différent, même mois) ──
+    crosslink_section_html = ''
+    if monthly_crosslinks:
+        cl_slugs = (monthly_crosslinks.get(slug_fr) or {}).get(mi, [])
+        cl_climate = {}
+        for cs in cl_slugs:
+            if cs in all_climate and all_climate[cs][mi]:
+                sm = all_climate[cs][mi]
+                cl_climate[cs] = {'score': f"{sm['score']:.1f}", 'tmax': sm['tmax']}
+        if cl_slugs:
+            cl_cards = _build_sim_cards(cfg, [(0, s) for s in cl_slugs], all_dests, cl_climate, mi)
+            cl_title = C.get('lbl_m_crosslink_title_tpl', C['lbl_m_sec_similar_title_tpl']).format(**tpl)
+            cl_label = C.get('lbl_m_crosslink_label', C['lbl_m_sim_label'])
+            crosslink_section_html = f'''<section class="section">
+ <div class="section-label">{cl_label}</div>
+ <h2 class="section-title">{cl_title}</h2>
+ <div class="flex-wrap-14">{cl_cards}</div>
+ </section>'''
 
     # Pillar + comparison links
     pillar_link = (f'<a href="{pillar_url(C, mi)}" class="link-card">'
@@ -1489,6 +1554,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <div class="flex-wrap-14">{sim_cards_html}</div>
  </section>
 
+ {crosslink_section_html}
+
  <section class="section">
  <div class="section-label">{L['sec_rankings']}</div>
  <h2 class="section-title">{L['sec_rankings_title']}</h2>
@@ -1554,6 +1621,7 @@ def main():
         return
 
     similarities = compute_all_similarities(dests, climate)
+    monthly_crosslinks = compute_monthly_crosslinks(dests, climate)
     comp_index = build_comparison_index(cfg)
 
     OUT = os.path.join(DIR, cfg['out_subdir']) if cfg['out_subdir'] else DIR
@@ -1591,7 +1659,7 @@ def main():
         if gen_monthly_pages:
             for mi in range(12):
                 try:
-                    html = gen_monthly(cfg, fn, dest, months, mi, dests, similarities, climate, events, comp_index)
+                    html = gen_monthly(cfg, fn, dest, months, mi, dests, similarities, climate, events, comp_index, monthly_crosslinks)
                     out  = os.path.join(OUT, monthly_url(cfg, slug, mi))
                     if not args.dry_run:
                         open(out, 'w', encoding='utf-8').write(html)

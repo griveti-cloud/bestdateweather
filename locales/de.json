@@ -404,7 +404,9 @@
     "rainy_days": "Regentage",
     "sun_day": "Sonnenschein/Tag",
     "sun_section": "Sonnenschein",
-    "temp_section": "Temperaturen"
+    "temp_section": "Temperaturen",
+    "crosslink_label": "🌍 Top-Reiseziele",
+    "crosslink_title_tpl": "Andere Top-Reiseziele im {month}"
   },
   "narratives": {
     "tropical_rainy": "Im {month} befindet sich {name} mitten in der Regenzeit ({rain}% Regentage). Tropenschauer sind meist kurz, aber intensiv — einen leichten Regenmantel einpacken.",
