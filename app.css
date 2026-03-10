@@ -677,6 +677,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
 
 /* ── Date navigation arrows ── */
 #date-nav{display:flex;align-items:center;justify-content:center;gap:16px;padding:12px 0 4px;margin-top:4px}
+#date-nav[style*="display:none"]{margin:0;padding:0;height:0;overflow:hidden}
 .date-nav-btn{background:none;border:1.5px solid var(--gold);border-radius:50%;width:36px;height:36px;font-size:18px;color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s;line-height:1;padding:0}
 .date-nav-btn:hover:not(:disabled){background:var(--gold);color:#fff}
 .date-nav-btn:disabled{opacity:.3;cursor:default}
