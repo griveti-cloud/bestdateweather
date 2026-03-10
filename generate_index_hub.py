@@ -505,7 +505,8 @@ JS_TEMPLATE = """
   cards.forEach(function(c){
    var t=norm(c.getAttribute('data-name')||'');
    var p=norm(c.getAttribute('data-country')||'');
-   if(t.indexOf(q)>-1||p.indexOf(q)>-1){c.classList.remove('dh-hidden');n++}
+   var al=norm(c.getAttribute('data-aliases')||'');
+   if(t.indexOf(q)>-1||p.indexOf(q)>-1||al.indexOf(q)>-1){c.classList.remove('dh-hidden');n++}
    else{c.classList.add('dh-hidden')}
   });
   subs.forEach(function(s){
@@ -544,9 +545,11 @@ JS_TEMPLATE = """
 def make_card(slug, name, bare, flag, country, asset_prefix, page_prefix, loc):
     href = f'{page_prefix}{loc["gen"]["annual_href_tpl"].format(slug=slug)}'
     sub = loc['hub']['card_sub']
+    aliases = bare if bare.lower() != name.lower() else ''
+    alias_attr = f' data-aliases="{html_mod.escape(aliases)}"' if aliases else ''
     return (
         f'<a href="{href}" target="_top" class="dh-card" '
-        f'data-name="{html_mod.escape(bare)}" data-country="{html_mod.escape(country)}">'
+        f'data-name="{html_mod.escape(name)}" data-country="{html_mod.escape(country)}"{alias_attr}>'
         f'<img src="{asset_prefix}flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" style="border-radius:2px">'
         f'<span><span class="dh-card-name">{html_mod.escape(name)}</span>'
         f'<span class="dh-card-sub">{sub}</span></span></a>')
