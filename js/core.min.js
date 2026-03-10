@@ -462,6 +462,12 @@ function fetchForecast(lat, lon, yr, mo, da) {
  window._forecastDaily = data.daily || null;
  _modelElevation = data.elevation != null ? Math.round(data.elevation) : null;
  var mo2=mo+1, prefix=yr+'-'+(mo2<10?'0':'')+mo2+'-'+(da<10?'0':'')+da, rows=[];
+ // Get daily WMO code for the requested date
+ var dailyWmo = null;
+ if (data.daily && data.daily.time && data.daily.weather_code) {
+  var dIdx = data.daily.time.indexOf(prefix);
+  if (dIdx >= 0) dailyWmo = data.daily.weather_code[dIdx];
+ }
  for(var h=0;h<24;h++){
  var ts=prefix+'T'+(h<10?'0':'')+h+':00', idx=-1;
  for(var i=0;i<data.hourly.time.length;i++){if(data.hourly.time[i]===ts){idx=i;break;}}
@@ -471,7 +477,7 @@ function fetchForecast(lat, lon, yr, mo, da) {
  var snow_val=idx>=0&&data.hourly.snowfall&&data.hourly.snowfall[idx]!=null?parseFloat(data.hourly.snowfall[idx].toFixed(2)):0;
  var w=idx>=0&&data.hourly.windspeed_10m[idx]!=null?parseFloat(data.hourly.windspeed_10m[idx].toFixed(1)):0;
  var s=idx>=0&&data.hourly.shortwave_radiation&&data.hourly.shortwave_radiation[idx]!=null?Math.max(0,data.hourly.shortwave_radiation[idx]):0;
- rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:t,p50:t,p75:t,temp:t,rain:rn,mm:mm_val,windP50:w,solP25:s,solP50:s,solP75:s,sol:s,snow:snow_val,isForecast:true});
+ rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:t,p50:t,p75:t,temp:t,rain:rn,mm:mm_val,windP50:w,solP25:s,solP50:s,solP75:s,sol:s,snow:snow_val,isForecast:true,wmo:dailyWmo});
  }
  return rows;
  });
@@ -1191,6 +1197,36 @@ function computeAndRenderScore(sc, rows) {
  if (window._lastSSTResult) renderSeaChip(window._lastSSTResult);
 }
 
+function wmoToLabel(code) {
+ if (code == null) return null;
+ if (code === 0) return T.sunny;
+ if (code <= 2) return T.partlyCloudy;
+ if (code === 3) return T.overcast;
+ if (code === 45 || code === 48) return T.fog;
+ if (code >= 51 && code <= 57) return T.lightRain;
+ if (code >= 61 && code <= 65) return T.rain;
+ if (code >= 66 && code <= 67) return T.rain;
+ if (code >= 71 && code <= 77) return T.snow;
+ if (code >= 80 && code <= 82) return T.showers;
+ if (code >= 85 && code <= 86) return T.snow;
+ if (code >= 95) return T.storm;
+ return null;
+}
+function wmoToIcon(code) {
+ if (code == null) return null;
+ if (code === 0) return IC.sun;
+ if (code <= 2) return IC.partcloud;
+ if (code === 3) return IC.cloud;
+ if (code === 45 || code === 48) return IC.fog;
+ if (code >= 51 && code <= 57) return IC.lightrain;
+ if (code >= 61 && code <= 65) return IC.rain;
+ if (code >= 66 && code <= 67) return IC.rain;
+ if (code >= 71 && code <= 77) return IC.snow;
+ if (code >= 80 && code <= 82) return IC.shower;
+ if (code >= 85 && code <= 86) return IC.snow;
+ if (code >= 95) return IC.storm;
+ return null;
+}
 function updateHero(sc, rows, mainHour) {
  var main=sc[mainHour!=null?mainHour:(13)]||sc[12];
  var temps=[]; for(var i=0;i<sc.length;i++) if(sc[i].temp!=null) temps.push(sc[i].temp);
@@ -1218,8 +1254,8 @@ function updateHero(sc, rows, mainHour) {
    _siEl.style.display='block';
   } else { _siEl.style.display='none'; }
  }
- document.getElementById('r-cond').textContent=getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
- document.getElementById('r-icon').innerHTML=getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
+ document.getElementById('r-cond').textContent=(main.isForecast && main.wmo != null && wmoToLabel(main.wmo)) ? wmoToLabel(main.wmo) : getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
+ document.getElementById('r-icon').innerHTML=(main.isForecast && main.wmo != null && wmoToIcon(main.wmo)) ? wmoToIcon(main.wmo) : getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
  document.getElementById('r-rain').textContent=avgRain+'%';
  document.getElementById('r-wind').textContent=fmtWind(Math.round(wSum/rows.length));
  document.getElementById('r-sky').textContent=skyLbl;
