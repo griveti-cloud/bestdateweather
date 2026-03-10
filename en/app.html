@@ -13,55 +13,15 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,900;1,900&display=optional"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,900;1,900&display=optional" rel="stylesheet" media="print" onload="this.media='all'"/>
 <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,900;1,900&display=optional" rel="stylesheet"/></noscript>
-<style id="critical-css">
-/* ── CRITICAL CSS — inlined to eliminate render-blocking ── */
-:root{--cream:#faf8f3;--cream2:#f2ede2;--navy:#1a1f2e;--navy2:#252d42;--gold:#e8940a;--gold2:#f5b020;--gold-light:#fef3d0;--slate:#4a5568;--slate2:#5c687a;--slate3:#546070;--green:#1a7a4a;--green-bg:#e8f8f0;--blue:#1a5f9a;--blue-bg:#e8f2fc;--mist:#7a8fa8;--mist-bg:#eef3f8;--shadow:0 4px 24px rgba(26,31,46,.08);--shadow-lg:0 12px 48px rgba(26,31,46,.14);--r:18px;--r-sm:12px;--r-xs:8px}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;-webkit-font-smoothing:antialiased}
-img[src*="flags/"]{object-fit:contain}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:center}
-.app-title{font-family:'Fraunces',serif;font-size:clamp(30px,5.5vw,48px);font-weight:900;color:var(--navy);line-height:1.05;letter-spacing:-.5px;margin-bottom:8px;animation:fadeUp .4s ease both}
-.app-title em{font-style:italic;color:#b06800;font-weight:900}
-.app-divider{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto 10px;max-width:260px}
-.app-divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--cream2))}
-.app-divider-line.r{background:linear-gradient(270deg,transparent,var(--cream2))}
-.app-divider-ico{font-size:15px;opacity:.7}
-.app-sub{font-size:14px;color:var(--slate);font-weight:400;line-height:1.65;max-width:440px;margin:0 auto 8px;animation:fadeUp .4s .08s ease both}
-.app-proof{display:inline-flex;align-items:center;gap:6px;background:var(--gold-light);border:1px solid rgba(232,148,10,.25);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;color:#7a5500;letter-spacing:.3px;margin:0 auto 12px;white-space:nowrap;animation:fadeUp .4s .14s ease both}
-.app-proof-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0}
-.unit-toggle{display:flex;gap:6px;justify-content:center;margin:0 auto 12px}
-.unit-btn{background:none;border:1.5px solid var(--cream2);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--slate2);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s,border-color .15s,color .15s}
-.unit-btn.active{background:var(--navy);border-color:var(--navy);color:white}
-.app-disclaimer{display:inline-flex;align-items:center;gap:7px;background:white;border:1px solid var(--cream2);border-radius:20px;padding:5px 14px;font-size:11px;color:var(--slate2);max-width:440px;margin:0 auto 28px;line-height:1.4;animation:fadeUp .4s .2s ease both;white-space:nowrap}
-.app-disclaimer-ico{flex-shrink:0;opacity:.5;font-size:12px}
-.wrap{max-width:620px;margin:0 auto;padding:0 20px 80px}
-.search-card{background:white;border-radius:var(--r);box-shadow:var(--shadow-lg);padding:28px;border:1px solid rgba(26,31,46,.05);margin-bottom:20px}
-.field-group{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
-@media(max-width:500px){.field-group{grid-template-columns:1fr}}
-.field-wrap{position:relative}
-.field-label{font-size:11px;font-weight:700;color:var(--slate2);letter-spacing:.6px;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:6px}
-.field-label svg{opacity:.6}
-.inp{width:100%;background:white;border:2px solid var(--cream2);border-radius:var(--r-sm);color:var(--navy);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 40px 13px 16px;outline:none;transition:box-shadow .2s}
-.inp::placeholder{color:var(--slate3);font-weight:400}
-#inp-date::placeholder{color:var(--slate2)}#inp-date{color:var(--navy)}
-.inp:focus{outline:3px solid rgba(232,148,10,.35);outline-offset:0;background:white;border-color:var(--gold)}
-.inp[type=date]{color:var(--navy)}
-.btn-go{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:var(--r-sm);color:white;font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;padding:16px;cursor:pointer;transition:filter .2s,transform .2s,box-shadow .2s,opacity .2s;letter-spacing:.2px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 16px rgba(232,148,10,.3);margin-bottom:20px}
-.btn-go:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-.trust-tagline{font-size:14px;line-height:1.7;color:#5a6478;max-width:680px;margin:0 auto 36px}
-.main-card{background:white;border-radius:var(--r);box-shadow:var(--shadow-lg);border:1px solid rgba(26,31,46,.05);overflow:visible;margin-bottom:20px}
+<link rel="stylesheet" href="../app.css"/>
+<link rel="stylesheet" href="../css/weather-banner.css?v=2"/>
+<style>
 /* EN overrides */
 .app-sub{max-width:400px}
 .app-disclaimer{margin:0 auto 14px}
 .month-badge.avoid{background:#f59e0b}
 .month-card.is-avoid{border-color:#ef4444;border-top:3px solid #ef4444!important}
 </style>
-<link rel="preload" href="../app.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
-<link rel="preload" href="../css/weather-banner.css?v=2" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
-<noscript><link rel="stylesheet" href="../app.css"/><link rel="stylesheet" href="../css/weather-banner.css?v=2"/></noscript>
 <link rel="icon" type="image/x-icon" href="../favicon.ico"/><link rel="icon" type="image/svg+xml" href="../favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
 <link rel="manifest" href="../manifest.json"/>
 <meta name="apple-mobile-web-app-title" content="BestDate"/>
