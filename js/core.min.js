@@ -454,7 +454,7 @@ function renderSeaChip(sstResult) {
 }
 
 function fetchForecast(lat, lon, yr, mo, da) {
- var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,precipitation,snowfall,windspeed_10m,shortwave_radiation&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum&timezone=auto&forecast_days=8';
+ var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,precipitation,snowfall,windspeed_10m,shortwave_radiation,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum&timezone=auto&forecast_days=8';
  // _locTzOffset is global
  return fetch(url).then(function(r){if(!r.ok)throw new Error(T.errForecast);return r.json();}).then(function(data){
  if (data.utc_offset_seconds != null) _locTzOffset = data.utc_offset_seconds;
@@ -462,12 +462,6 @@ function fetchForecast(lat, lon, yr, mo, da) {
  window._forecastDaily = data.daily || null;
  _modelElevation = data.elevation != null ? Math.round(data.elevation) : null;
  var mo2=mo+1, prefix=yr+'-'+(mo2<10?'0':'')+mo2+'-'+(da<10?'0':'')+da, rows=[];
- // Get daily WMO code for the requested date
- var dailyWmo = null;
- if (data.daily && data.daily.time && data.daily.weather_code) {
-  var dIdx = data.daily.time.indexOf(prefix);
-  if (dIdx >= 0) dailyWmo = data.daily.weather_code[dIdx];
- }
  for(var h=0;h<24;h++){
  var ts=prefix+'T'+(h<10?'0':'')+h+':00', idx=-1;
  for(var i=0;i<data.hourly.time.length;i++){if(data.hourly.time[i]===ts){idx=i;break;}}
@@ -477,7 +471,8 @@ function fetchForecast(lat, lon, yr, mo, da) {
  var snow_val=idx>=0&&data.hourly.snowfall&&data.hourly.snowfall[idx]!=null?parseFloat(data.hourly.snowfall[idx].toFixed(2)):0;
  var w=idx>=0&&data.hourly.windspeed_10m[idx]!=null?parseFloat(data.hourly.windspeed_10m[idx].toFixed(1)):0;
  var s=idx>=0&&data.hourly.shortwave_radiation&&data.hourly.shortwave_radiation[idx]!=null?Math.max(0,data.hourly.shortwave_radiation[idx]):0;
- rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:t,p50:t,p75:t,temp:t,rain:rn,mm:mm_val,windP50:w,solP25:s,solP50:s,solP75:s,sol:s,snow:snow_val,isForecast:true,wmo:dailyWmo});
+ var wmo_h=idx>=0&&data.hourly.weather_code&&data.hourly.weather_code[idx]!=null?data.hourly.weather_code[idx]:null;
+ rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:t,p50:t,p75:t,temp:t,rain:rn,mm:mm_val,windP50:w,solP25:s,solP50:s,solP75:s,sol:s,snow:snow_val,isForecast:true,wmo:wmo_h});
  }
  return rows;
  });
