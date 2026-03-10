@@ -243,7 +243,14 @@
  <div id="forecast-strip" style="display:none"></div>
  <div id="snow-depth-info" style="display:none;margin-top:8px;font-size:11px;color:#6366f1;font-weight:500"></div>
  </div>
- <button class="details-toggle" id="details-toggle" onclick="toggleDetails()" aria-expanded="false">
+     <!-- DATE NAV -->
+    <div id="date-nav" style="display:none">
+     <button id="date-nav-prev" class="date-nav-btn" aria-label="Jour précédent">&#8592;</button>
+     <span id="date-nav-label"></span>
+     <button id="date-nav-next" class="date-nav-btn" aria-label="Jour suivant">&#8594;</button>
+    </div>
+
+<button class="details-toggle" id="details-toggle" onclick="toggleDetails()" aria-expanded="false">
   <span>Ver detalles — hora a hora, escenarios, astro</span>
   <span class="details-toggle-icon">&#8964;</span>
  </button>
@@ -285,15 +292,6 @@
  </div>
  </div>
  </div>
-
- 
-    <!-- DATE NAV -->
-    <div id="date-nav" style="display:none">
-     <button id="date-nav-prev" class="date-nav-btn" aria-label="Previous day">&#8592;</button>
-     <span id="date-nav-label"></span>
-     <button id="date-nav-next" class="date-nav-btn" aria-label="Next day">&#8594;</button>
-    </div>
-
 <!-- HOURLY -->
  <div class="sec-block" id="sec-hourly">
  <div class="sec-header">
