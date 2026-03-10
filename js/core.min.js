@@ -2445,21 +2445,6 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
     _updateButtons();
   }
 
-  // Hook into showResults to show nav after results
-  var _origShowResults = window.showResults || null;
-  // Instead of patching, we watch for hero visibility via MutationObserver
-  var _hero = document.getElementById('hero');
-  if (_hero) {
-    var obs = new MutationObserver(function() {
-      if (_hero.style.display === 'none') {
-        if (navEl) navEl.style.display = 'none';
-      } else if (window._lastYr != null) {
-        _showNav();
-      }
-    });
-    obs.observe(_hero, { attributes: true, attributeFilter: ['style'] });
-  }
-
   document.addEventListener('DOMContentLoaded', function() {
     navEl   = document.getElementById('date-nav');
     prevBtn = document.getElementById('date-nav-prev');
@@ -2470,6 +2455,19 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
 
     prevBtn.addEventListener('click', function() { _navTo(-1); });
     nextBtn.addEventListener('click', function() { _navTo(+1); });
+
+    // Watch hero visibility to show/hide nav
+    var _hero = document.getElementById('hero');
+    if (_hero) {
+      var obs = new MutationObserver(function() {
+        if (_hero.style.display === 'none') {
+          navEl.style.display = 'none';
+        } else if (window._lastYr != null) {
+          _showNav();
+        }
+      });
+      obs.observe(_hero, { attributes: true, attributeFilter: ['style'] });
+    }
 
     // Swipe support on hero
     var hero = document.getElementById('hero');
