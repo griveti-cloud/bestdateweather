@@ -505,8 +505,10 @@ def country_tag(d, lang, slug=''):
     }
     if slug in SLUG_TERRITORY:
         tag = SLUG_TERRITORY_EN[slug] if lang in ('en', 'es') else SLUG_TERRITORY[slug]
-    elif lang in ('en', 'en-us', 'es'):
+    elif lang in ('en', 'en-us'):
         tag = d.get('country_en', '') or d.get('pays', '')
+    elif lang == 'es':
+        tag = d.get('country_es', '') or d.get('country_en', '') or d.get('pays', '')
     elif lang == 'de':
         tag = d.get('country_de', '') or d.get('country_en', '') or d.get('pays', '')
     else:
