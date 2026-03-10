@@ -208,6 +208,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
 /* ── FOOTER ── */
 @media(max-width:768px){.desktop-only{display:none}}
 .app-footer{text-align:center;padding:20px 20px 40px;font-size:11px;color:var(--slate2)}
+.footer-langs{white-space:nowrap;overflow-x:auto;font-size:12px}
 
 /* ── MODE TOGGLE ── */
 .mode-toggle{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
