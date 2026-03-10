@@ -88,6 +88,11 @@ def get_rankings(climate, dests, month_idx):
             'nom_bare': dest.get('nom_bare', slug),
             'nom_en': dest.get('nom_en', dest.get('nom_bare', slug)),
             'pays': dest.get('pays', ''),
+            'pays_en': dest.get('country_en', dest.get('pays', '')),
+            'pays_es': dest.get('country_es', dest.get('pays', '')),
+            'pays_de': dest.get('country_de', dest.get('pays', '')),
+            'nom_es': dest.get('nom_es', dest.get('nom_bare', '')),
+            'slug_es': dest.get('slug_es', dest.get('slug_en', '')),
             'flag': dest.get('flag', ''),
             'score': m['score'],
             'tmin': m['tmin'],
@@ -181,14 +186,24 @@ def build_table(entries, loc, mi):
     for i, entry in enumerate(entries, 1):
         slug = entry['slug_fr'] if is_fr else (entry.get('slug_es') or entry['slug_en'] if is_es else entry['slug_en'])
         nom = entry['nom_bare'] if is_fr else (entry.get('nom_es') or entry['nom_bare'] if is_es else entry['nom_en'])
+        lang = loc['meta']['html_lang']
+        if is_fr:
+            pays = entry['pays']
+        elif is_es:
+            pays = entry.get('pays_es') or entry['pays']
+        elif lang == 'de':
+            pays = entry.get('pays_de') or entry['pays']
+        else:
+            pays = entry.get('pays_en') or entry['pays']
         href = gen['monthly_href_tpl'].format(slug=slug, month_slug=month_url[mi])
         flag_img = f'<img src="{gen["asset_prefix"]}flags/{entry["flag"]}.png" width="16" height="12" alt="" style="vertical-align:middle;margin-right:6px;border-radius:1px">'
         sc = entry['score']
         sc_color = score_class(sc)
+        pays_html = f'<span class="region-tag">{e(pays)}</span>' if pays else ''
         rows += (
             f'<tr>'
             f'<td class="rank">{rank_icon(i)}</td>'
-            f'<td>{flag_img}<a href="{href}" class="dest-link">{e(nom)}</a></td>'
+            f'<td>{flag_img}<a href="{href}" class="dest-link">{e(nom)}</a>{pays_html}</td>'
             f'<td class="sc" style="color:{sc_color}">{sc:.1f}<span>/10</span></td>'
             f'<td>{_ft(entry["tmin"])}–{_ft(entry["tmax"])}</td>'
             f'<td>{entry["rain_pct"]:.0f}%</td>'
