@@ -1641,9 +1641,10 @@ function run() {
   if(!entry)return;
   var isFr=(CFG.dateLocale==='fr-FR'||CFG.dateLocale==='fr');
   var isEs=(CFG.dateLocale==='es-ES'||CFG.dateLocale==='es');
+  var isDe=(CFG.dateLocale==='de-DE'||CFG.dateLocale==='de');
   var ficheSlug=isFr?entry.fr:(isEs?(entry.es||entry.en):entry.en);
-  var ficheUrl=isFr?'meilleure-periode-'+ficheSlug+'.html':(isEs?'../es/mejor-epoca-'+ficheSlug+'.html':'best-time-to-visit-'+ficheSlug+'.html');
-  var label=isFr?'Analyse complète de '+(loc.name):(isEs?'Guía completa de '+loc.name:'Complete guide for '+loc.name);
+  var ficheUrl=isFr?'meilleure-periode-'+ficheSlug+'.html':(isEs?'../es/mejor-epoca-'+ficheSlug+'.html':(isDe?'../de/beste-reisezeit-'+ficheSlug+'.html':'best-time-to-visit-'+ficheSlug+'.html'));
+  var label=isFr?'Analyse complète de '+(loc.name):(isEs?'Guía completa de '+loc.name:(isDe?(T.guide_label||'Reiseführer')+' '+loc.name:'Complete guide for '+loc.name));
   fw.innerHTML='<a class="fiche-link-btn" href="'+ficheUrl+'">↗ '+label+'</a>';
   fw.style.display='block';
  })();
