@@ -60,8 +60,8 @@ jobs:
           # Must have hreflang
           grep -q 'hreflang' index.html || { echo "❌ Missing hreflang"; exit 1; }
           # Must load external JS
-          grep -q 'src="js/core.min.js"' index.html || grep -q 'src="js/core.js"' index.html || { echo "❌ core.js not loaded"; exit 1; }
-          grep -q 'src="js/i18n-fr.min.js"' index.html || grep -q 'src="js/i18n-fr.js"' index.html || { echo "❌ i18n-fr.js not loaded"; exit 1; }
+          grep -q 'src="js/core.min.js' index.html || grep -q 'src="js/core.js' index.html || { echo "❌ core.js not loaded"; exit 1; }
+          grep -q 'src="js/i18n-fr.min.js' index.html || grep -q 'src="js/i18n-fr.js' index.html || { echo "❌ i18n-fr.js not loaded"; exit 1; }
           echo "✅ index.html OK"
 
           echo "=== en/app.html ==="
@@ -69,8 +69,8 @@ jobs:
           grep -q 'meta name="description"' en/app.html || { echo "❌ Missing meta description"; exit 1; }
           grep -q 'canonical' en/app.html || { echo "❌ Missing canonical"; exit 1; }
           grep -q 'hreflang' en/app.html || { echo "❌ Missing hreflang"; exit 1; }
-          grep -q 'src="../js/core.min.js"' en/app.html || grep -q 'src="../js/core.js"' en/app.html || { echo "❌ core.js not loaded"; exit 1; }
-          grep -q 'src="../js/i18n-en.min.js"' en/app.html || grep -q 'src="../js/i18n-en.js"' en/app.html || { echo "❌ i18n-en.js not loaded"; exit 1; }
+          grep -q 'src="../js/core.min.js' en/app.html || grep -q 'src="../js/core.js' en/app.html || { echo "❌ core.js not loaded"; exit 1; }
+          grep -q 'src="../js/i18n-en.min.js' en/app.html || grep -q 'src="../js/i18n-en.js' en/app.html || { echo "❌ i18n-en.js not loaded"; exit 1; }
           echo "✅ en/app.html OK"
 
       - name: Check no inline JS > 1KB in app pages
