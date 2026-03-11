@@ -683,7 +683,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
 .date-nav-btn:disabled{opacity:.3;cursor:default}
 #date-nav-label{font-size:12px;color:var(--slate2);letter-spacing:.03em;min-width:80px;text-align:center}
 /* ── Affiliate chips ── */
-#affil-chips{display:none;gap:8px;margin:10px 0 2px;padding:0 2px}
+#affil-chips{display:none;gap:8px;margin:10px 0 0;padding:0 2px}
 .affil-chip{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:9px 6px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;text-decoration:none;border:1.5px solid var(--cream2);background:var(--cream);color:var(--slate);transition:background .15s,border-color .15s,color .15s;white-space:nowrap}
 .affil-chip:hover{background:var(--cream2);border-color:var(--gold2);color:var(--navy)}
 .affil-chip--green{border-color:#c6ebd8;background:var(--green-bg);color:var(--green)}
