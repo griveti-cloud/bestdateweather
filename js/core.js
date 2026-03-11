@@ -23,7 +23,7 @@ function updateAffilChips(loc) {
 
   // Activités — GYG
   var gygLocale = (CFG && CFG.gyg_lang) ? CFG.gyg_lang : 'fr';
-  var gygUrl = 'https://www.' + gygDomain + '/s/?q=' + destEnc + '&partner_id=2MQKL00&locale=' + gygLocale;
+  var gygUrl = 'https://www.' + gygDomain + '/s/?q=' + destEnc + '&partner_id=2MQKLO0&locale=' + gygLocale;
   var elA = document.getElementById('affil-activ');
   if (elA) { elA.href = gygUrl; if(T.chip_activ) elA.innerHTML = '🎟️ ' + T.chip_activ; }
 
