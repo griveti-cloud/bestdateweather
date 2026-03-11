@@ -762,12 +762,14 @@
   "ranking_footer": {
     "data_by": "Weather data by Open-Meteo.com",
     "sources": "Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
-    "methodology_url": "../note_modele.html",
+    "methodology_url": "methodology.html",
     "methodology_label": "Methodology",
     "app_url": "app.html",
     "app_label": "Weather app",
     "legal_url": "../mentions-legales.html",
-    "legal_label": "Legal"
+    "legal_label": "Legal",
+    "about_url": "about.html",
+    "about_label": "About"
   },
   "classements": {
     "share_label": "Share",

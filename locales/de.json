@@ -772,7 +772,9 @@
     "app_url": "app.html",
     "app_label": "Wetter-App",
     "legal_url": "impressum.html",
-    "legal_label": "Impressum"
+    "legal_label": "Impressum",
+    "about_url": "ueber-uns.html",
+    "about_label": "Über uns"
   },
   "classements": {
     "share_label": "Teilen",
