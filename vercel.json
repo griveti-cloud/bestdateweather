@@ -32,6 +32,106 @@
     ],
     "redirects": [
         {
+            "source": "/cusco-ville-meteo-:month.html",
+            "destination": "/cusco-meteo-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/meilleure-periode-cusco-ville.html",
+            "destination": "/meilleure-periode-cusco.html",
+            "permanent": true
+        },
+        {
+            "source": "/savannah-ga-meteo-:month.html",
+            "destination": "/savannah-meteo-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/meilleure-periode-savannah-ga.html",
+            "destination": "/meilleure-periode-savannah.html",
+            "permanent": true
+        },
+        {
+            "source": "/en/cusco-city-weather-:month.html",
+            "destination": "/en/cusco-weather-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/en/best-time-to-visit-cusco-city.html",
+            "destination": "/en/best-time-to-visit-cusco.html",
+            "permanent": true
+        },
+        {
+            "source": "/en/savannah-ga-weather-:month.html",
+            "destination": "/en/savannah-weather-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/en/best-time-to-visit-savannah-ga.html",
+            "destination": "/en/best-time-to-visit-savannah.html",
+            "permanent": true
+        },
+        {
+            "source": "/es/cusco-city-clima-:month.html",
+            "destination": "/es/cusco-clima-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/es/mejor-epoca-cusco-city.html",
+            "destination": "/es/mejor-epoca-cusco.html",
+            "permanent": true
+        },
+        {
+            "source": "/es/savannah-ga-clima-:month.html",
+            "destination": "/es/savannah-clima-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/es/mejor-epoca-savannah-ga.html",
+            "destination": "/es/mejor-epoca-savannah.html",
+            "permanent": true
+        },
+        {
+            "source": "/de/cusco-city-wetter-:month.html",
+            "destination": "/de/cusco-wetter-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/de/beste-reisezeit-cusco-city.html",
+            "destination": "/de/beste-reisezeit-cusco.html",
+            "permanent": true
+        },
+        {
+            "source": "/de/savannah-ga-wetter-:month.html",
+            "destination": "/de/savannah-wetter-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/de/beste-reisezeit-savannah-ga.html",
+            "destination": "/de/beste-reisezeit-savannah.html",
+            "permanent": true
+        },
+        {
+            "source": "/us/cusco-city-weather-:month.html",
+            "destination": "/us/cusco-weather-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/us/best-time-to-visit-cusco-city.html",
+            "destination": "/us/best-time-to-visit-cusco.html",
+            "permanent": true
+        },
+        {
+            "source": "/us/savannah-ga-weather-:month.html",
+            "destination": "/us/savannah-weather-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/us/best-time-to-visit-savannah-ga.html",
+            "destination": "/us/best-time-to-visit-savannah.html",
+            "permanent": true
+        },
+        {
             "source": "/meilleure-periode-zante.html",
             "destination": "/meilleure-periode-zakynthos.html",
             "permanent": true
