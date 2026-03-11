@@ -3,6 +3,7 @@ Allow: /
 Disallow: /en/app.html?
 Disallow: /es/app.html?
 Disallow: /us/app.html?
+Disallow: /de/app.html?
 Disallow: /app.html?
 Disallow: /data/
 
