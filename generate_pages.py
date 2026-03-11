@@ -741,7 +741,9 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         "image": {"@type": "ImageObject", "url": "https://bestdateweather.com/og-image.png", "width": 1200, "height": 630},
         "author": {"@type": "Organization", "name": "BestDateWeather"},
         "publisher": {"@type": "Organization", "name": "BestDateWeather"},
+        "datePublished": date_modified_for(slug_fr),
         "dateModified": date_modified_for(slug_fr),
+        "url": canonical,
         **_inlang,
         "mainEntityOfPage": {"@type": "WebPage", "@id": canonical}
     }, ensure_ascii=False)
@@ -794,6 +796,9 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <meta property="og:title" content="{og_title}"/>
 <meta property="og:description" content="{desc}"/>
 <meta property="og:url" content="{canonical}"/>
+<meta property="og:image" content="https://bestdateweather.com/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
 <script type="application/ld+json">{article_schema}</script>
 <script type="application/ld+json">{faq_schema}</script>
 <script type="application/ld+json">{breadcrumb_schema}</script>
@@ -1215,7 +1220,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         "image": {"@type": "ImageObject", "url": "https://bestdateweather.com/og-image.png", "width": 1200, "height": 630},
         "author": {"@type": "Organization", "name": "BestDateWeather"},
         "publisher": {"@type": "Organization", "name": "BestDateWeather"},
+        "datePublished": date_modified_for(slug_fr, str(mi)),
         "dateModified": date_modified_for(slug_fr, str(mi)),
+        "url": canonical,
         "mainEntityOfPage": {"@type": "WebPage", "@id": canonical}
     }, ensure_ascii=False)
 
@@ -1432,6 +1439,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <meta property="og:title" content="{og_title}"/>
 <meta property="og:description" content="{desc}"/>
 <meta property="og:url" content="{canonical}"/>
+<meta property="og:image" content="https://bestdateweather.com/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
 <script type="application/ld+json">{article_schema}</script>
 <script type="application/ld+json">{faq_schema}</script>
 <script type="application/ld+json">{breadcrumb_schema}</script>
