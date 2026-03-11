@@ -201,31 +201,59 @@ function fetchHistoricalTemps(lat, lon, mo, da) {
  var e=toISO(addDays(new Date(endYr,mo,da),3));
  return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon
   +'&start_date='+s+'&end_date='+e
-  +'&daily=temperature_2m_max,temperature_2m_min,temperature_2m_mean&timezone=auto')
+  +'&daily=temperature_2m_max,temperature_2m_min,temperature_2m_mean,weather_code&timezone=auto')
   .then(function(r){if(!r.ok)throw new Error('hist');return r.json();})
   .then(function(d){
    if(!d||!d.daily||!d.daily.time)return[];
    var times=d.daily.time,tmaxA=d.daily.temperature_2m_max||[],
-    tminA=d.daily.temperature_2m_min||[],tmeanA=d.daily.temperature_2m_mean||[];
+    tminA=d.daily.temperature_2m_min||[],tmeanA=d.daily.temperature_2m_mean||[],
+    wcA=d.daily.weather_code||[];
    var byYear={};
    for(var i=0;i<times.length;i++){
     var pts=times[i].split('-');
     var yr=parseInt(pts[0]),dMo=parseInt(pts[1])-1,dDa=parseInt(pts[2]);
-    if(Math.abs((dMo*31+dDa)-(mo*31+da))>3)continue;
-    if(!byYear[yr])byYear[yr]={mx:[],mn:[],me:[]};
+    var dist=Math.abs((dMo*31+dDa)-(mo*31+da));
+    if(dist>3)continue;
+    if(!byYear[yr])byYear[yr]={mx:[],mn:[],me:[],wc:[],wd:[]};
     if(tmaxA[i]!=null)byYear[yr].mx.push(tmaxA[i]);
     if(tminA[i]!=null)byYear[yr].mn.push(tminA[i]);
     if(tmeanA[i]!=null)byYear[yr].me.push(tmeanA[i]);
+    // Stocker code météo avec poids (jour exact = poids 3, sinon 1)
+    if(wcA[i]!=null)byYear[yr].wc.push(wcA[i]),byYear[yr].wd.push(dist===0?3:1);
    }
    var avg=function(a){return a.length?a.reduce(function(s,v){return s+v;},0)/a.length:null;};
+   // Mode pondéré du weather_code (code le plus fréquent autour de la date exacte)
+   var modeWC=function(codes,weights){
+    if(!codes||!codes.length)return null;
+    var cnt={};
+    for(var i=0;i<codes.length;i++){
+     var c=codes[i];cnt[c]=(cnt[c]||0)+weights[i];
+    }
+    var best=null,bv=0;
+    for(var k in cnt){if(cnt[k]>bv){bv=cnt[k];best=parseInt(k);}}
+    return best;
+   };
    var res=[];
    for(var y=endYr-9;y<=endYr;y++){
     var b=byYear[y];
     if(!b||!b.mx.length)continue;
-    res.push({year:y,tmax:avg(b.mx),tmin:avg(b.mn),tmean:avg(b.me)});
+    res.push({year:y,tmax:avg(b.mx),tmin:avg(b.mn),tmean:avg(b.me),wc:modeWC(b.wc,b.wd)});
    }
    return res;
   });
+}
+
+function histWeatherEmoji(code){
+ if(code==null)return'❓';
+ if(code===0)return'☀️';
+ if(code<=2)return'⛅';
+ if(code===3)return'☁️';
+ if(code<=48)return'🌫️';
+ if(code<=55)return'🌦️';
+ if(code<=65)return'🌧️';
+ if(code<=75)return'❄️';
+ if(code<=82)return'🌧️';
+ return'⛈️';
 }
 
 function renderHistoricalChart(data){
@@ -271,13 +299,19 @@ function renderHistoricalChart(data){
   '<path d="'+mkPath('tmean')+'" fill="none" stroke="#b0a080" stroke-width="1.5" stroke-dasharray="4 2" stroke-linejoin="round"/>'+
   '<path d="'+mkPath('tmax')+'" fill="none" stroke="#e07040" stroke-width="2" stroke-linejoin="round"/>'+
   dots+'</svg>';
- var isUS2=window._units==='us',unit=isUS2?'°F':'°C';
- var leg='<div style="display:flex;gap:14px;margin-top:4px;font-size:11px;color:#888;flex-wrap:wrap">'+
+ // Ligne emojis alignée sous chaque point du graphique
+ var emojiRow='<div style="display:flex;padding:0 '+PR+'px 0 '+PL+'px;margin-top:-2px">';
+ for(var e2=0;e2<data.length;e2++){
+  var flex=e2===0?'0 0 0px':'1';
+  emojiRow+='<div style="flex:'+flex+';text-align:center;font-size:14px;line-height:1" title="'+data[e2].year+'">'+histWeatherEmoji(data[e2].wc)+'</div>';
+ }
+ emojiRow+='</div>';
+ var leg='<div style="display:flex;gap:14px;margin-top:6px;font-size:11px;color:#888;flex-wrap:wrap">'+
   '<span><span style="display:inline-block;width:12px;height:2px;background:#e07040;vertical-align:middle;margin-right:3px;border-radius:1px"></span>Tmax</span>'+
   '<span><span style="display:inline-block;width:12px;height:2px;background:#b0a080;vertical-align:middle;margin-right:3px;border-radius:1px;border-top:2px dashed #b0a080"></span>Moy.</span>'+
   '<span><span style="display:inline-block;width:12px;height:2px;background:#6ea8d9;vertical-align:middle;margin-right:3px;border-radius:1px"></span>Tmin</span>'+
   '</div>';
- ct.innerHTML=svg+leg;
+ ct.innerHTML=svg+emojiRow+leg;
  el.style.display='block';
 }
 
