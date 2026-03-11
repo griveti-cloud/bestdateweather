@@ -28,7 +28,7 @@ function updateAffilChips(loc) {
   if (elA) { elA.href = gygUrl; if(T.chip_activ) elA.innerHTML = '🎟️ ' + T.chip_activ; }
 
   // Vols — Kiwi via Travelpayouts
-  var kiwiSlug = (name + (loc.country_code ? '-' + loc.country_code : ''))
+  var kiwiSlug = (name + (country ? '-' + country : ''))
     .toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
