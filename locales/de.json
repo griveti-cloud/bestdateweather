@@ -662,7 +662,7 @@
     "score_fair": "Kein optimales Fenster, aber akzeptabel bei festen Terminen. Der {best_month} ({best_score}/10) ist deutlich besser, wenn möglich."
   },
   "monthly_titles": [
-    "{nom} im {month}: Wetter, Regen ({rain}%) und lohnt es sich? [{year}]",
+    "{nom} im {month}: {tmax}°C, {rain}% Regen [{year}]",
     "{nom} Wetter im {month} [{year}] — {tmax}°C, {rain}% Regen",
     "{nom} im {month} besuchen? Score {score}/10 [{year}]"
   ],

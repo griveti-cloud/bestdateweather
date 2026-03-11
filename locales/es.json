@@ -662,7 +662,7 @@
     "score_fair": "No es la mejor ventana, pero es aceptable si las fechas son fijas. {best_month} ({best_score}/10) es significativamente mejor si es posible."
   },
   "monthly_titles": [
-    "{nom} en {month}: tiempo, lluvia ({rain}%) y ¿vale la pena ir? [{year}]",
+    "{nom} en {month}: {tmax}°C, {rain}% lluvia [{year}]",
     "Tiempo en {nom} en {month} [{year}] — {tmax}°C, {rain}% de lluvia",
     "¿Visitar {nom} en {month}? Puntuación {score}/10 [{year}]"
   ],

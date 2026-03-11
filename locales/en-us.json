@@ -664,7 +664,7 @@
     "score_fair": "Not the best window, but acceptable if dates are constrained. {best_month} ({best_score}/10) is significantly better if possible."
   },
   "monthly_titles": [
-    "{nom} in {month}: weather, rain ({rain}%) and should you go? [{year}]",
+    "{nom} in {month}: {tmax}°F, {rain}% rain [{year}]",
     "{nom} weather in {month} [{year}] — {tmax}°F, {rain}% rain",
     "Visit {nom} in {month}? Score {score}/10 [{year}]"
   ],
