@@ -177,7 +177,108 @@ function toggleDetails() {
  var open = panel.classList.toggle('open');
  btn.classList.toggle('open', open);
  btn.setAttribute('aria-expanded', open);
- if(open)setTimeout(function(){btn.scrollIntoView({behavior:'smooth',block:'start'});},80);
+ if(open){
+  setTimeout(function(){btn.scrollIntoView({behavior:'smooth',block:'start'});},80);
+  // Lazy-load historique températures au premier ouverture
+  if(!_histLoaded && !_histLoading && selectedLoc && window._lastMo!=null && window._lastDa!=null){
+   _histLoading=true;
+   fetchHistoricalTemps(selectedLoc.lat,selectedLoc.lon,window._lastMo,window._lastDa)
+    .then(function(data){_histLoaded=true;_histLoading=false;renderHistoricalChart(data);})
+    .catch(function(){_histLoading=false;var s=document.getElementById('sec-history');if(s)s.style.display='none';});
+  }
+ }
+}
+
+/* ══════════════════════════════════════════════
+   HISTORICAL TEMPERATURE CHART
+   1 seul appel API sur 10 ans, fenêtre ±3 jours
+   ══════════════════════════════════════════════ */
+var _histLoaded=false, _histLoading=false;
+
+function fetchHistoricalTemps(lat, lon, mo, da) {
+ var now=new Date(), endYr=now.getFullYear()-1;
+ var s=toISO(addDays(new Date(endYr-9,mo,da),-3));
+ var e=toISO(addDays(new Date(endYr,mo,da),3));
+ return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon
+  +'&start_date='+s+'&end_date='+e
+  +'&daily=temperature_2m_max,temperature_2m_min,temperature_2m_mean&timezone=auto')
+  .then(function(r){if(!r.ok)throw new Error('hist');return r.json();})
+  .then(function(d){
+   if(!d||!d.daily||!d.daily.time)return[];
+   var times=d.daily.time,tmaxA=d.daily.temperature_2m_max||[],
+    tminA=d.daily.temperature_2m_min||[],tmeanA=d.daily.temperature_2m_mean||[];
+   var byYear={};
+   for(var i=0;i<times.length;i++){
+    var pts=times[i].split('-');
+    var yr=parseInt(pts[0]),dMo=parseInt(pts[1])-1,dDa=parseInt(pts[2]);
+    if(Math.abs((dMo*31+dDa)-(mo*31+da))>3)continue;
+    if(!byYear[yr])byYear[yr]={mx:[],mn:[],me:[]};
+    if(tmaxA[i]!=null)byYear[yr].mx.push(tmaxA[i]);
+    if(tminA[i]!=null)byYear[yr].mn.push(tminA[i]);
+    if(tmeanA[i]!=null)byYear[yr].me.push(tmeanA[i]);
+   }
+   var avg=function(a){return a.length?a.reduce(function(s,v){return s+v;},0)/a.length:null;};
+   var res=[];
+   for(var y=endYr-9;y<=endYr;y++){
+    var b=byYear[y];
+    if(!b||!b.mx.length)continue;
+    res.push({year:y,tmax:avg(b.mx),tmin:avg(b.mn),tmean:avg(b.me)});
+   }
+   return res;
+  });
+}
+
+function renderHistoricalChart(data){
+ var el=document.getElementById('sec-history');
+ if(!el)return;
+ var ct=document.getElementById('hist-chart-container');
+ if(!ct)return;
+ if(!data||!data.length){el.style.display='none';return;}
+ var isUS=window._units==='us';
+ function toD(c){return c==null?null:(isUS?Math.round(c*9/5+32):Math.round(c*10)/10);}
+ var allV=[];
+ for(var i=0;i<data.length;i++){if(data[i].tmax!=null)allV.push(toD(data[i].tmax));if(data[i].tmin!=null)allV.push(toD(data[i].tmin));}
+ var minV=Math.floor(Math.min.apply(null,allV))-2,maxV=Math.ceil(Math.max.apply(null,allV))+2;
+ var range=maxV-minV||1;
+ var W=320,H=140,PL=30,PR=8,PT=10,PB=22,w=W-PL-PR,h=H-PT-PB,n=data.length;
+ function xP(i){return PL+(i/(n-1))*w;}
+ function yP(v){return v==null?null:PT+h-((toD(v)-minV)/range)*h;}
+ function mkPath(key){
+  var segs='';
+  for(var i=0;i<data.length;i++){var y=yP(data[i][key]);if(y!=null)segs+=(segs?'L ':' M ')+xP(i)+','+y;}
+  return segs;
+ }
+ var grid='';
+ for(var g=0;g<=4;g++){
+  var gv=minV+(range*g/4),gy=PT+h-(range*g/4)/range*h;
+  grid+='<line x1="'+PL+'" y1="'+gy+'" x2="'+(W-PR)+'" y2="'+gy+'" stroke="#ede8e0" stroke-width="1"/>';
+  grid+='<text x="'+(PL-3)+'" y="'+(gy+4)+'" text-anchor="end" font-size="9" fill="#aaa">'+Math.round(gv)+'</text>';
+ }
+ var xlbl='';
+ for(var j=0;j<data.length;j++){
+  if(j%2===0||j===data.length-1){
+   xlbl+='<text x="'+xP(j)+'" y="'+(H-5)+'" text-anchor="middle" font-size="9" fill="#aaa">'+data[j].year+'</text>';
+  }
+ }
+ var dots='';
+ for(var k=0;k<data.length;k++){
+  var dy=yP(data[k].tmax);
+  if(dy!=null)dots+='<circle cx="'+xP(k)+'" cy="'+dy+'" r="2.5" fill="#e07040"/>';
+ }
+ var svg='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;display:block">'+
+  grid+xlbl+
+  '<path d="'+mkPath('tmin')+'" fill="none" stroke="#6ea8d9" stroke-width="1.5" stroke-linejoin="round"/>'+
+  '<path d="'+mkPath('tmean')+'" fill="none" stroke="#b0a080" stroke-width="1.5" stroke-dasharray="4 2" stroke-linejoin="round"/>'+
+  '<path d="'+mkPath('tmax')+'" fill="none" stroke="#e07040" stroke-width="2" stroke-linejoin="round"/>'+
+  dots+'</svg>';
+ var isUS2=window._units==='us',unit=isUS2?'°F':'°C';
+ var leg='<div style="display:flex;gap:14px;margin-top:4px;font-size:11px;color:#888;flex-wrap:wrap">'+
+  '<span><span style="display:inline-block;width:12px;height:2px;background:#e07040;vertical-align:middle;margin-right:3px;border-radius:1px"></span>Tmax</span>'+
+  '<span><span style="display:inline-block;width:12px;height:2px;background:#b0a080;vertical-align:middle;margin-right:3px;border-radius:1px;border-top:2px dashed #b0a080"></span>Moy.</span>'+
+  '<span><span style="display:inline-block;width:12px;height:2px;background:#6ea8d9;vertical-align:middle;margin-right:3px;border-radius:1px"></span>Tmin</span>'+
+  '</div>';
+ ct.innerHTML=svg+leg;
+ el.style.display='block';
 }
 
 function fillUseCase(type) { currentUseCase = type; document.getElementById("score-block").style.display = "block"; quickFill(type); }
@@ -1600,6 +1701,9 @@ function run() {
  if(parts.length!==3){errEl.textContent='⚠ Format de date invalide.';errEl.style.display='block';return;}
  var yr=parseInt(parts[0],10), mo=parseInt(parts[1],10)-1, da=parseInt(parts[2],10);
  window._lastYr=yr; window._lastMo=mo; window._lastDa=da; window._lastDiff=null;
+ _histLoaded=false; _histLoading=false;
+ var _hSec=document.getElementById('sec-history');
+ if(_hSec){_hSec.style.display='';var _hCt=document.getElementById('hist-chart-container');if(_hCt)_hCt.innerHTML='<div class="hist-loader" style="text-align:center;padding:20px;color:#aaa;font-size:13px">⏳</div>';}
  var today=new Date();today.setHours(0,0,0,0);
  var target=new Date(yr,mo,da,0,0,0);
  var diffDays=Math.round((target.getTime()-today.getTime())/86400000);
