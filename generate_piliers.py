@@ -558,9 +558,6 @@ def update_sitemaps(fr_pages, en_pages):
     <lastmod>{TODAY}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="fr" href="{page['hreflang_fr']}"/>
-    <xhtml:link rel="alternate" hreflang="en" href="{page['hreflang_en']}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="{page['hreflang_en']}"/>
   </url>"""
             if page['canonical'] in content:
                 # Replace existing entry if it lacks hreflang

@@ -184,19 +184,14 @@ def get_fr_counterpart(en_file, slug_map):
     return None
 
 
-def make_url_entry(loc, hreflang_fr=None, hreflang_en=None, priority=0.8,
-                   changefreq='monthly', lastmod=None):
-    """Génère un bloc <url> XML."""
+def make_url_entry(loc, priority=0.8, changefreq='monthly', lastmod=None, **_kwargs):
+    """Génère un bloc <url> XML (sans xhtml:link — hreflang géré par les balises HTML)."""
     lm = lastmod or TODAY
     lines = ['  <url>']
     lines.append(f'    <loc>{BASE_URL}/{loc}</loc>')
     lines.append(f'    <lastmod>{lm}</lastmod>')
     lines.append(f'    <changefreq>{changefreq}</changefreq>')
     lines.append(f'    <priority>{priority}</priority>')
-    if hreflang_fr:
-        lines.append(f'    <xhtml:link rel="alternate" hreflang="fr" href="{BASE_URL}/{hreflang_fr}" />')
-    if hreflang_en:
-        lines.append(f'    <xhtml:link rel="alternate" hreflang="en" href="{BASE_URL}/{hreflang_en}" />')
     lines.append('  </url>')
     return '\n'.join(lines)
 
@@ -254,8 +249,7 @@ def generate_sitemap(lang, dry_run=False):
 
     # Assemble XML
     xml = ['<?xml version="1.0" encoding="UTF-8"?>']
-    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"'
-               ' xmlns:xhtml="http://www.w3.org/1999/xhtml">')
+    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
     xml.extend(entries)
     xml.append('</urlset>')
     content = '\n'.join(xml) + '\n'
@@ -453,8 +447,7 @@ def generate_sitemap_us(dry_run=False):
 
 def _write_sitemap(filename, entries, dry_run):
     xml = ['<?xml version="1.0" encoding="UTF-8"?>']
-    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"'
-               ' xmlns:xhtml="http://www.w3.org/1999/xhtml">')
+    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
     xml.extend(entries)
     xml.append('</urlset>')
     content = '\n'.join(xml) + '\n'

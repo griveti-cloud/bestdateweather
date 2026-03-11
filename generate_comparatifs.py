@@ -632,18 +632,11 @@ def update_sitemaps(files):
         for page in pages:
             if page['canonical'] in content:
                 continue
-            hreflang_us = page.get('hreflang_us', page['hreflang_en'])
-            hreflang_es = page.get('hreflang_es', page['hreflang_en'])
             entry = f"""  <url>
     <loc>{page['canonical']}</loc>
     <lastmod>{TODAY}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="fr" href="{page['hreflang_fr']}"/>
-    <xhtml:link rel="alternate" hreflang="en" href="{page['hreflang_en']}"/>
-    <xhtml:link rel="alternate" hreflang="en-US" href="{hreflang_us}"/>
-    <xhtml:link rel="alternate" hreflang="es" href="{hreflang_es}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="{page['hreflang_en']}"/>
   </url>"""
             content = content.replace('</urlset>', entry + '\n</urlset>')
             added += 1
