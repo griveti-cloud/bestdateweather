@@ -232,17 +232,17 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
 .score-usecase{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--slate3);margin-bottom:4px}
 .score-verdict{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px;line-height:1.35}
 .score-risk{font-size:11px;font-weight:500;color:var(--slate2);line-height:1.5}
-.score-chips{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:12px}
-.score-chip{display:flex;align-items:center;gap:5px;padding:7px 9px;background:var(--cream);border-radius:20px;border:1.5px solid var(--cream2);min-width:0;justify-content:space-between}
+.score-chips{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px}
+.score-chip{display:flex;align-items:center;gap:5px;padding:7px 10px;background:var(--cream);border-radius:20px;border:1.5px solid var(--cream2);min-width:0;justify-content:space-between}
 .score-chip-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.score-chip-lbl{font-size:10px;font-weight:600;color:var(--slate);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.score-chip-lbl{font-size:11px;font-weight:600;color:var(--slate);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .details-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--cream);border:1.5px solid var(--cream2);border-radius:var(--r-sm);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--slate2);margin-top:12px;transition:background .2s}
 .details-toggle:hover{background:var(--cream2)}
 .details-toggle-icon{font-size:18px;transition:transform .25s;display:inline-block}
 .details-toggle.open .details-toggle-icon{transform:rotate(180deg)}
 .details-panel{display:none;margin-top:0}
 .details-panel.open{display:block}
-.score-chip-val{font-size:11px;font-weight:700;color:var(--navy)}
+.score-chip-val{font-size:11px;font-weight:700;color:var(--navy);white-space:nowrap;padding-left:3px}
 
 /* ── TOOLTIP SCORE ── */
 .score-info-btn{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--cream2);color:var(--slate3);font-size:10px;font-weight:700;cursor:pointer;border:none;margin-left:6px;vertical-align:middle;transition:all .15s;flex-shrink:0}

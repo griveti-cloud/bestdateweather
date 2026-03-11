@@ -1236,7 +1236,6 @@ function computeAndRenderScore(sc, rows) {
   var rhScore = Math.max(0, 100 - Math.max(0, avgRh - 50) * 1.5);
   chips.push({ lbl: T.chipHumidity, val: Math.round(avgRh)+'%', score: rhScore });
  }
- if (spreadLabel) chips.push({ lbl: spreadLabel, val: '', score: -1, color: spreadColor, noDot: true });
  var chipsEl = document.getElementById('score-chips');
  chipsEl.innerHTML = '';
  for (var b=0; b<chips.length; b++) {
