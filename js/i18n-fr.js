@@ -172,6 +172,7 @@ window.BDW_T = {
  progEcmwf: 'Correction ECMWF saisonnière…',
  progFetchData: 'Récupération des données…',
  progCache: 'Données en cache…', progDownload: 'Téléchargement archive…',
+ chip_hotel: 'Hébergements', chip_activ: 'Activités', chip_flight: 'Vols',
  progAggregation: 'Agrégation mensuelle…'
 };
 
