@@ -1203,7 +1203,13 @@ function computeAndRenderScore(sc, rows) {
  document.getElementById('score-verdict').textContent = getVerdict(total, avgRain, avgTemp, avgWind, uc, _isSeas);
  document.getElementById('score-verdict').style.color = color;
  updateScoreTooltip(uc);
- document.getElementById('score-risk').textContent = getMainRisk(avgRain, avgTemp, avgWind, uc);
+ var _riskTxt = getMainRisk(avgRain, avgTemp, avgWind, uc);
+ var _riskEl = document.getElementById('score-risk');
+ if (_riskTxt && _riskTxt !== T.riskNone) {
+  _riskEl.innerHTML = '<span style="color:#c8bfb0;font-weight:600">⚠ </span>' + _riskTxt;
+ } else {
+  _riskEl.textContent = _riskTxt;
+ }
 
  // Detail chips — show actual values with colored dot
  var totalMm = Math.round(mmSum * 10) / 10;
