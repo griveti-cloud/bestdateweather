@@ -886,6 +886,7 @@ def _cl_layout(pc, lang):
         canonical = f'{BASE}/{fr_file}'
         footer = footer_ranking_html('fr', [
             {'url': f'en/{en_file}',  'flag': 'flags/gb.png',    'label': 'English'},
+            {'url': f'us/{en_file}',  'flag': 'flags/us.png',    'label': 'English (US)'},
             {'url': f'es/{es_file}',  'flag': 'flags/es.png',    'label': 'Español'},
             {'url': f'de/{de_file}',  'flag': 'flags/de.png',    'label': 'Deutsch'},
         ])
@@ -903,6 +904,7 @@ def _cl_layout(pc, lang):
         canonical = f'{BASE}/en/{en_file}'
         footer = footer_ranking_html('en', [
             {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
+            {'url': f'../us/{en_file}', 'flag': '../flags/us.png', 'label': 'English (US)'},
             {'url': f'../es/{es_file}', 'flag': '../flags/es.png', 'label': 'Español'},
             {'url': f'../de/{de_file}', 'flag': '../flags/de.png', 'label': 'Deutsch'},
         ])
