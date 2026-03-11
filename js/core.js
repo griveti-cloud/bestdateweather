@@ -4,6 +4,39 @@
 var T = window.BDW_T;
 var CFG = window.BDW_CFG;
 
+/* ── AFFILIATE CHIPS ── */
+function updateAffilChips(loc) {
+  var wrap = document.getElementById('affil-chips');
+  if (!wrap) return;
+  var name = loc.name || '';
+  var country = loc.country || '';
+  var dest = name + (country ? ', ' + country : '');
+  var destEnc = encodeURIComponent(dest);
+  var lang = (CFG && CFG.lang) ? CFG.lang : 'fr';
+  var gygDomain = (CFG && CFG.gyg_domain) ? CFG.gyg_domain : 'getyourguide.fr';
+
+  // Hébergements — Hotels.com via CJ
+  var hotelsDomain = (CFG && CFG.booking_domain) ? CFG.booking_domain : 'fr';
+  var hotelsUrl = 'https://' + hotelsDomain + '.hotels.com/Hotel-Search?destination=' + destEnc + '&camref=1110IB57J';
+  var elH = document.getElementById('affil-hotel');
+  if (elH) { elH.href = hotelsUrl; if(T.chip_hotel) elH.innerHTML = '🏨 ' + T.chip_hotel; }
+
+  // Activités — GYG
+  var gygLocale = (CFG && CFG.gyg_lang) ? CFG.gyg_lang : 'fr';
+  var gygUrl = 'https://www.' + gygDomain + '/s/?q=' + destEnc + '&partner_id=2MQKL00&locale=' + gygLocale;
+  var elA = document.getElementById('affil-activ');
+  if (elA) { elA.href = gygUrl; if(T.chip_activ) elA.innerHTML = '🎟️ ' + T.chip_activ; }
+
+  // Vols — Kiwi via Travelpayouts
+  var kiwiTo = encodeURIComponent(name + (country ? '-' + country : ''));
+  var kiwiDeep = 'https://www.kiwi.com/deep?to=' + kiwiTo + '&lang=' + lang;
+  var flightsUrl = 'https://c111.travelpayouts.com/click?shmarker=708106&promo_id=3791&source_type=customlink&type=click&custom_url=' + encodeURIComponent(kiwiDeep);
+  var elF = document.getElementById('affil-flight');
+  if (elF) { elF.href = flightsUrl; if(T.chip_flight) elF.innerHTML = '✈️ ' + T.chip_flight; }
+
+  wrap.style.display = 'flex';
+}
+
 /* ── UNITS TOGGLE (°C/°F) ── */
 var _units = (CFG && CFG.defaultUnits) ? CFG.defaultUnits : 'metric';
 
@@ -1337,6 +1370,7 @@ function showResults(sc, rows, isForecast, noteText, diffDays) {
  setConfBadge(diffDays);
  applyHorizonWording(diffDays);
  document.getElementById('score-block').style.display = 'block';
+ if (selectedLoc) updateAffilChips(selectedLoc);
  showSection('hero');
  if (typeof _showDateNav === 'function') _showDateNav();
  document.getElementById('uc-filter-wrap').style.display='block';
@@ -1565,6 +1599,7 @@ function run() {
  if (!navigator.onLine) { errEl.textContent=T.errOffline; errEl.style.display='block'; return; }
  btnEl.disabled=true; errEl.style.display='none';
  hideSection('hero');hideSection('sec-hourly');hideSection('sec-scenarios');
+ var _achips=document.getElementById('affil-chips');if(_achips)_achips.style.display='none';
  var _flw=document.getElementById('fiche-link-wrap');if(_flw){_flw.style.display='none';_flw.innerHTML='';}
  document.getElementById('foot-note').style.display='none';
  progEl.style.display='block';setP(0,T.progLocating);
