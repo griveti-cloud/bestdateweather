@@ -363,7 +363,7 @@
     "context_poor": "No es la mejor época para {name}.",
     "better_month_tpl": "Considera {month} ({score}/10) para mejores condiciones.",
     "tropical_note": "En zonas tropicales, la lluvia suele llegar en forma de aguaceros breves e intensos, no como días grises.",
-    "src_text_tpl": "Datos basados en <strong>10 años de registros ERA5</strong> via Open-Meteo, con ajuste estacional ECMWF. En {month}, {name} registra <strong>{tmax}°C</strong>, {rain}% de días de lluvia y {sun}h de sol al día. Puntuación meteorológica global: <strong>{score}/10</strong>.",
+    "src_text_tpl": "Datos basados en <strong>10 años de registros ERA5</strong> via Open-Meteo, con ajuste estacional ECMWF. En {month}, {name} registra <strong>{tmax}°C</strong>, {rain}% de días de lluvia y {sun}h de sol al día. Puntuación meteorológica global: <strong>{score}/10</strong>. Esta página se genera automáticamente a partir de datos climáticos. <a href=\"/es/sobre-nosotros.html\" class=\"txt-muted\">Más información →</a>",
     "temp_range": "Temperaturas",
     "rain_label": "Lluvia",
     "sun_label": "Sol",

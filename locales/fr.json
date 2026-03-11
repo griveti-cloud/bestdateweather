@@ -379,7 +379,7 @@
     "sec_rankings_title": "Comparer les destinations par météo",
     "sec_guides": "Guides & comparatifs",
     "sec_guides_title": "Explorer ou comparer",
-    "src_text_tpl": "Données calculées sur <strong>10 ans de relevés ERA5</strong> via Open-Meteo, avec ajustement saisonnier ECMWF. En {month_lc}, {name} affiche en moyenne <strong>{tmax}°C</strong>, {rain}% de jours pluvieux et {sun}h de soleil par jour. Score météo global du mois : <strong>{score}/10</strong>.",
+    "src_text_tpl": "Données calculées sur <strong>10 ans de relevés ERA5</strong> via Open-Meteo, avec ajustement saisonnier ECMWF. En {month_lc}, {name} affiche en moyenne <strong>{tmax}°C</strong>, {rain}% de jours pluvieux et {sun}h de soleil par jour. Score météo global du mois : <strong>{score}/10</strong>. Cette page est générée automatiquement à partir de données climatiques. <a href=\"/a-propos.html\" class=\"txt-muted\">En savoir plus →</a>",
     "temp_range": "Températures",
     "rain_label": "Pluie",
     "sun_label": "Soleil",

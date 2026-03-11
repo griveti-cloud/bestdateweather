@@ -365,7 +365,7 @@
     "context_poor": "This is not the best time for {name}.",
     "better_month_tpl": "Consider {month} ({score}/10) for better conditions.",
     "tropical_note": "In tropical areas, rain often comes as short, intense showers rather than grey days.",
-    "src_text_tpl": "Data based on <strong>10 years of ERA5 records</strong> via Open-Meteo, with ECMWF seasonal adjustment. In {month}, {name} averages <strong>{tmax}°F</strong>, {rain}% rainy days and {sun}h of sunshine per day. Overall weather score: <strong>{score}/10</strong>.",
+    "src_text_tpl": "Data based on <strong>10 years of ERA5 records</strong> via Open-Meteo, with ECMWF seasonal adjustment. In {month}, {name} averages <strong>{tmax}°F</strong>, {rain}% rainy days and {sun}h of sunshine per day. Overall weather score: <strong>{score}/10</strong>. This page is automatically generated from climate data. <a href=\"/us/about.html\" class=\"txt-muted\">Learn more →</a>",
     "temp_range": "Temperatures",
     "rain_label": "Rain",
     "sun_label": "Sun",

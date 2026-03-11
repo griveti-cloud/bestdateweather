@@ -363,7 +363,7 @@
     "context_poor": "Dies ist nicht die beste Zeit für {name}.",
     "better_month_tpl": "{month} ({score}/10) für bessere Bedingungen in Betracht ziehen.",
     "tropical_note": "In tropischen Regionen fällt Regen oft als kurze, intensive Schauer statt als graue Dauertage.",
-    "src_text_tpl": "Daten basieren auf <strong>10 Jahren ERA5-Aufzeichnungen</strong> via Open-Meteo, mit ECMWF-Saisonanpassung. Im {month} hat {name} durchschnittlich <strong>{tmax}°C</strong>, {rain}% Regentage und {sun}h Sonnenschein pro Tag. Wetter-Gesamtscore: <strong>{score}/10</strong>.",
+    "src_text_tpl": "Daten basieren auf <strong>10 Jahren ERA5-Aufzeichnungen</strong> via Open-Meteo, mit ECMWF-Saisonanpassung. Im {month} hat {name} durchschnittlich <strong>{tmax}°C</strong>, {rain}% Regentage und {sun}h Sonnenschein pro Tag. Wetter-Gesamtscore: <strong>{score}/10</strong>. Diese Seite wird automatisch aus Klimadaten generiert. <a href=\"/ueber-uns.html\" class=\"txt-muted\">Mehr erfahren →</a>",
     "temp_range": "Temperaturen",
     "rain_label": "Regen",
     "sun_label": "Sonne",
