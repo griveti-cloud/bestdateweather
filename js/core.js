@@ -28,8 +28,12 @@ function updateAffilChips(loc) {
   if (elA) { elA.href = gygUrl; if(T.chip_activ) elA.innerHTML = '🎟️ ' + T.chip_activ; }
 
   // Vols — Kiwi via Travelpayouts
-  var kiwiTo = encodeURIComponent(name + (country ? '-' + country : ''));
-  var kiwiDeep = 'https://www.kiwi.com/deep?to=' + kiwiTo + '&lang=' + lang;
+  var kiwiSlug = (name + (loc.country_code ? '-' + loc.country_code : ''))
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+  var kiwiDeep = 'https://www.kiwi.com/' + lang + '/search/results/anywhere/' + kiwiSlug + '/anytime/anytime';
   var flightsUrl = 'https://c111.travelpayouts.com/click?shmarker=708106&promo_id=3791&source_type=customlink&type=click&custom_url=' + encodeURIComponent(kiwiDeep);
   var elF = document.getElementById('affil-flight');
   if (elF) { elF.href = flightsUrl; if(T.chip_flight) elF.innerHTML = '✈️ ' + T.chip_flight; }
