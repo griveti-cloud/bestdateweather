@@ -1419,14 +1419,30 @@ function getFrTerritory(lat, lon) {
 
 function getAcSub(item) {
  if (item._local) return ""; // local index match — no geocoder sub
- var FR_TERRITORIES = {'GF':'Guyane française','GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'Nouvelle-Calédonie','PF':'Polynésie française'};
- var isFrDom = !!FR_TERRITORIES[item.country_code];
+ var lang = (document.documentElement.lang || 'fr').toLowerCase();
+ var langKey = lang === 'en' || lang === 'en-us' ? 'en' : lang === 'es' ? 'es' : lang === 'de' ? 'de' : 'fr';
+ var FR_TERRITORIES = {
+   fr: {'GF':'Guyane française','GP':'Guadeloupe','MQ':'Martinique','RE':'La Réunion','PM':'Saint-Pierre-et-Miquelon','YT':'Mayotte','NC':'Nouvelle-Calédonie','PF':'Polynésie française'},
+   en: {'GF':'French Guiana','GP':'Guadeloupe','MQ':'Martinique','RE':'Réunion','PM':'Saint Pierre and Miquelon','YT':'Mayotte','NC':'New Caledonia','PF':'French Polynesia'},
+   es: {'GF':'Guayana Francesa','GP':'Guadalupe','MQ':'Martinica','RE':'Reunión','PM':'San Pedro y Miquelón','YT':'Mayotte','NC':'Nueva Caledonia','PF':'Polinesia Francesa'},
+   de: {'GF':'Französisch-Guayana','GP':'Guadeloupe','MQ':'Martinique','RE':'Réunion','PM':'Saint-Pierre und Miquelon','YT':'Mayotte','NC':'Neukaledonien','PF':'Französisch-Polynesien'}
+ };
+ var FRANCE_LABEL = {fr:'France',en:'France',es:'Francia',de:'Frankreich'};
+ var COUNTRY_OVERRIDE = {
+   de: {'GB':'Vereinigtes Königreich','US':'Vereinigte Staaten','AU':'Australien','NZ':'Neuseeland','AE':'Vereinigte Arabische Emirate','ZA':'Südafrika','MX':'Mexiko','AR':'Argentinien','CL':'Chile','BR':'Brasilien','TH':'Thailand','VN':'Vietnam','PH':'Philippinen','JP':'Japan','CN':'China','IN':'Indien','TR':'Türkei','EG':'Ägypten','MA':'Marokko','TZ':'Tansania','KE':'Kenia','MZ':'Mosambik','MU':'Mauritius','MV':'Malediven','LK':'Sri Lanka','CD':'Demokratische Republik Kongo','CG':'Republik Kongo'}
+ };
+ var terrMap = FR_TERRITORIES[langKey] || FR_TERRITORIES.fr;
+ var isFrDom = !!terrMap[item.country_code];
  if (item.country_code === 'FR' || isFrDom) {
- var terr = isFrDom ? FR_TERRITORIES[item.country_code] : getFrTerritory(item.latitude, item.longitude);
- var region = terr || item.admin1 || '';
- return region + (region ? ', ' : '') + 'France';
+   var terr = isFrDom ? terrMap[item.country_code] : getFrTerritory(item.latitude, item.longitude);
+   var region = terr || item.admin1 || '';
+   return region + (region ? ', ' : '') + FRANCE_LABEL[langKey];
  }
- return (item.admin1 || '') + (item.admin1 && item.country ? ', ' : '') + (item.country || '');
+ var countryName = item.country || '';
+ if (COUNTRY_OVERRIDE[langKey] && COUNTRY_OVERRIDE[langKey][item.country_code]) {
+   countryName = COUNTRY_OVERRIDE[langKey][item.country_code];
+ }
+ return (item.admin1 || '') + (item.admin1 && countryName ? ', ' : '') + countryName;
 }
 
 function selectAC(i){
