@@ -320,10 +320,10 @@ footer a{color:#f5d060;text-decoration:none}
 .mode-tab{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s}
 .mode-tab.active{background:var(--gold);color:white;border-color:var(--gold)}
 .mode-tab:hover:not(.active){border-color:var(--gold)}
-.reg-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.reg-tab{padding:5px 12px;border-radius:14px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s}
-.reg-tab.active{background:var(--navy);color:white;border-color:var(--navy)}
-.reg-tab:hover:not(.active){border-color:var(--navy)}
+.reg-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.reg-tab{padding:5px 12px;border-radius:14px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s;white-space:nowrap}
+.reg-tab.active{background:var(--gold);color:white;border-color:var(--gold)}
+.reg-tab:hover:not(.active){border-color:var(--gold)}
 """
 
 FONTS = (
