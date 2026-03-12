@@ -517,6 +517,7 @@ def generate_page(mi, lang, dests, climate):
         f'<div class="mode-tabs" id="mode-tabs">'
         f'<button class="mode-tab active" data-mode="meteo">{tab_meteo}</button>'
         f'<button class="mode-tab" data-mode="beach">{tab_beach}</button>'
+        f'<button class="mode-tab" data-mode="ski">{tab_ski}</button>'
         f'</div>'
     )
 
