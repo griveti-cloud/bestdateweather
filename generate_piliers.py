@@ -16,6 +16,7 @@ from scoring import compute_ski_score
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.page_config import load_locale
+from generate_classements import COUNTRY_SLUGS, dedup_country
 
 ROOT = Path(__file__).parent
 TODAY = date.today().isoformat()
@@ -759,21 +760,17 @@ def generate_page(mi, lang, dests, climate):
 
 
 def get_annual_rankings(climate, dests, pool_size=80):
-    """Return top destinations ranked by mean annual score (1 per country)."""
-    REGION_CHILDREN_SLUGS = set()
-    for ch_set in REGION_CHILDREN.values():
-        REGION_CHILDREN_SLUGS.update(ch_set)
-
-    entries = []
+    """Return top destinations ranked by mean annual score — same logic as classement mondial."""
+    raw = []
     for slug, dest in dests.items():
         if slug not in climate: continue
         months = climate[slug]
         if len(months) < 12: continue
-        avg  = sum(float(months[m]['score']) for m in range(1, 13)) / 12
+        avg   = sum(float(months[m]['score']) for m in range(1, 13)) / 12
         best_m = max(range(1, 13), key=lambda m: float(months[m]['score']))
-        best_s = float(months[best_m]['score'])
         m_data = months[best_m]
-        entries.append({
+        raw.append({
+            'slug':      slug,
             'slug_fr':   slug,
             'slug_en':   dest.get('slug_en', slug),
             'slug_es':   dest.get('slug_es', dest.get('slug_en', slug)),
@@ -787,27 +784,17 @@ def get_annual_rankings(climate, dests, pool_size=80):
             'pays_es':   dest.get('country_es', dest.get('pays', '')),
             'pays_de':   dest.get('country_de', dest.get('pays', '')),
             'flag':      dest.get('flag', ''),
-            'score':     round(avg, 1),
-            'best_score': best_s,
+            'score':     avg,
             'best_month': best_m,
             'tmax':      float(m_data['tmax']),
             'tmin':      float(m_data['tmin']),
             'rain_pct':  float(m_data['rain_pct']),
             'sun_h':     float(m_data['sun_h']),
+            'dest':      dest,
         })
-
-    entries.sort(key=lambda x: (-x['score'], x['nom_bare']))
-    # Remove region parents
-    ranked_slugs = {e['slug_fr'] for e in entries}
-    remove = {p for p, ch in REGION_CHILDREN.items() if p in ranked_slugs and ranked_slugs & ch}
-    entries = [e for e in entries if e['slug_fr'] not in remove]
-    # 1 per country
-    seen = {}
-    deduped = []
-    for e in entries:
-        if e['pays'] not in seen:
-            seen[e['pays']] = True
-            deduped.append(e)
+    raw.sort(key=lambda x: (-x['score'], x['nom_bare']))
+    # Same dedup as classement mondial (dedup_country from generate_classements)
+    deduped = dedup_country(raw, dests)
     return deduped[:pool_size]
 
 
