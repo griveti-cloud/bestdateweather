@@ -162,6 +162,7 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=20):
             'beach_score': m['beach_score'],
             'ski_score': ski,
             'is_mountain': dest.get('mountain', 'False') == 'True',
+            'is_coastal':  dest.get('coastal',  'False') == 'True',
         })
 
     # --- General pool (country-deduped, by general score) ---
@@ -184,7 +185,23 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=20):
     ski_candidates.sort(key=lambda x: (-x['ski_score'], x['nom_bare']))
     ski_injected = ski_candidates[:ski_boost]
 
-    return general_pool + ski_injected
+    # --- Beach boost: top coastal destinations by beach_score, 1 per country ---
+    # Ensures beach tab ranking reflects true beach quality, not just general score
+    all_slugs = {e['slug_fr'] for e in general_pool + ski_injected}
+    beach_candidates = [e for e in all_entries
+                        if e.get('beach_score') is not None
+                        and e.get('is_coastal', False)
+                        and e['slug_fr'] not in all_slugs]
+    beach_candidates.sort(key=lambda x: (-(x['beach_score'] or 0), x['nom_bare']))
+    seen_beach_countries: dict = {}
+    beach_injected = []
+    for e in beach_candidates:
+        if e['pays'] not in seen_beach_countries:
+            seen_beach_countries[e['pays']] = True
+            beach_injected.append(e)
+    beach_injected = beach_injected[:40]
+
+    return general_pool + ski_injected + beach_injected
 
 CSS = r"""
 *{margin:0;padding:0;box-sizing:border-box}
