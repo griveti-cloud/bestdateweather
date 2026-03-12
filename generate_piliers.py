@@ -12,6 +12,7 @@ import csv, html as html_mod, json, sys, os
 from pathlib import Path
 from lib.common import footer_ranking_html, c_to_f
 from datetime import date
+from scoring import compute_ski_score
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.page_config import load_locale
@@ -51,6 +52,7 @@ def load_climate():
                 'rain_pct': float(r['rain_pct']),
                 'precip_mm': float(r['precip_mm']),
                 'sun_h': float(r['sun_h']),
+                'beach_score': float(r['beach_score']) if r.get('beach_score') else None,
             }
     return data
 
@@ -82,6 +84,7 @@ def get_rankings(climate, dests, month_idx):
         if slug not in climate or month_idx not in climate[slug]:
             continue
         m = climate[slug][month_idx]
+        ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
         entries.append({
             'slug_fr': slug,
             'slug_en': dest.get('slug_en', slug),
@@ -99,6 +102,8 @@ def get_rankings(climate, dests, month_idx):
             'tmax': m['tmax'],
             'rain_pct': m['rain_pct'],
             'sun_h': m['sun_h'],
+            'beach_score': m['beach_score'],
+            'ski_score': ski,
         })
     entries.sort(key=lambda x: (-x['score'], x['nom_bare']))
     # Remove region parents when a child island is also ranked
@@ -117,7 +122,48 @@ def get_rankings(climate, dests, month_idx):
         # else: skip — a higher-scoring entry for this country already included
     return deduped[:TOP_N]
 
-# ── CSS ───────────────────────────────────────────────────────────────────────
+def get_pool_entries(climate, dests, month_idx, pool_size=80):
+    """Return broader pool for beach/ski JS filtering (country-deduped, top pool_size by general score)."""
+    entries = []
+    for slug, dest in dests.items():
+        if slug not in climate or month_idx not in climate[slug]:
+            continue
+        m = climate[slug][month_idx]
+        ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
+        entries.append({
+            'slug_fr': slug,
+            'slug_en': dest.get('slug_en', slug),
+            'nom_bare': dest.get('nom_bare', slug),
+            'nom_en': dest.get('nom_en', dest.get('nom_bare', slug)),
+            'nom_es': dest.get('nom_es', dest.get('nom_bare', '')),
+            'nom_de': dest.get('nom_de', dest.get('nom_en', '')),
+            'slug_es': dest.get('slug_es', dest.get('slug_en', '')),
+            'slug_de': dest.get('slug_de', dest.get('slug_en', '')),
+            'pays': dest.get('pays', ''),
+            'pays_en': dest.get('country_en', dest.get('pays', '')),
+            'pays_es': dest.get('country_es', dest.get('pays', '')),
+            'pays_de': dest.get('country_de', dest.get('pays', '')),
+            'flag': dest.get('flag', ''),
+            'score': m['score'],
+            'tmin': m['tmin'],
+            'tmax': m['tmax'],
+            'rain_pct': m['rain_pct'],
+            'sun_h': m['sun_h'],
+            'beach_score': m['beach_score'],
+            'ski_score': ski,
+        })
+    entries.sort(key=lambda x: (-x['score'], x['nom_bare']))
+    ranked = {e['slug_fr'] for e in entries}
+    remove = {p for p, ch in REGION_CHILDREN.items() if p in ranked and ranked & ch}
+    if remove:
+        entries = [e for e in entries if e['slug_fr'] not in remove]
+    seen_countries = {}
+    deduped = []
+    for e in entries:
+        if e['pays'] not in seen_countries:
+            seen_countries[e['pays']] = True
+            deduped.append(e)
+    return deduped[:pool_size]
 
 CSS = r"""
 *{margin:0;padding:0;box-sizing:border-box}
@@ -160,6 +206,10 @@ footer a{color:#f5d060;text-decoration:none}
 .nav-share{display:none}
 @media(pointer:coarse),(max-width:768px){.nav-share{display:flex}}
 @media(max-width:640px){.rt th:nth-child(5),.rt td:nth-child(5){display:none}.hero-stats{gap:20px}}
+.mode-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.mode-tab{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s}
+.mode-tab.active{background:var(--gold);color:white;border-color:var(--gold)}
+.mode-tab:hover:not(.active){border-color:var(--gold)}
 """
 
 FONTS = (
@@ -172,12 +222,11 @@ FONTS = (
 # ── Page Builders ─────────────────────────────────────────────────────────────
 
 def build_table(entries, loc, mi):
-    """Build ranking table for a given month."""
+    """Build tbody rows only (thead injected by JS for mode switching)."""
     is_fr = loc['meta']['html_lang'] == 'fr'
     is_es = loc['meta']['html_lang'] == 'es'
     imperial = loc['meta'].get('imperial', False)
     gen = loc['gen']
-    pil = loc['pilier']
     month_url = loc['month_url']
 
     def _ft(celsius): return f"{c_to_f(celsius):.0f}°F" if imperial else f"{celsius:.0f}°C"
@@ -210,12 +259,7 @@ def build_table(entries, loc, mi):
             f'<td>{entry["sun_h"]:.1f}h</td>'
             f'</tr>'
         )
-    h = pil['th']
-    return (
-        f'<table class="rt" aria-label="{pil["ranking_label"]}">'
-        f'<thead><tr>{"".join(f"<th>{c}</th>" for c in h)}</tr></thead>'
-        f'<tbody>{rows}</tbody></table>'
-    )
+    return rows
 
 def build_month_nav(mi, loc):
     """Build month navigation bar."""
@@ -266,6 +310,7 @@ def generate_page(mi, lang, dests, climate):
     def ft_unit(): return '°F' if imperial else '°C'
 
     entries = get_rankings(climate, dests, mi + 1)  # climate.csv is 1-indexed
+    pool = get_pool_entries(climate, dests, mi + 1)  # broader pool for beach/ski JS
     if not entries:
         print(f"  ⚠️  No data for month {mi}")
         return
@@ -394,10 +439,134 @@ def generate_page(mi, lang, dests, climate):
         cta_text = f"🎯 Choose a specific date for your {month_name} trip"
 
     cta_href = gen['home_url']
+    flag_prefix = gen['asset_prefix']
+    if is_fr:
+        tab_meteo = '☀️ Météo générale'
+        tab_beach = '🏖️ Plage'
+        tab_ski   = '⛷️ Ski'
+        th_score_beach = 'Score plage'
+        th_score_ski   = 'Score ski'
+        th_score_gen   = 'Score'
+        no_beach_msg   = "Aucune destination côtière dans ce classement pour ce mois."
+        no_ski_msg     = "Aucune destination ski dans ce classement pour ce mois."
+    elif is_es:
+        tab_meteo = '☀️ Clima general'
+        tab_beach = '🏖️ Playa'
+        tab_ski   = '⛷️ Esquí'
+        th_score_beach = 'Score playa'
+        th_score_ski   = 'Score esquí'
+        th_score_gen   = 'Score'
+        no_beach_msg   = "No hay destinos costeros en este ranking para este mes."
+        no_ski_msg     = "No hay destinos de esquí en este ranking para este mes."
+    elif is_de:
+        tab_meteo = '☀️ Allgemeines Wetter'
+        tab_beach = '🏖️ Strand'
+        tab_ski   = '⛷️ Ski'
+        th_score_beach = 'Strand-Score'
+        th_score_ski   = 'Ski-Score'
+        th_score_gen   = 'Score'
+        no_beach_msg   = "Keine Küstenziele in diesem Ranking für diesen Monat."
+        no_ski_msg     = "Keine Ski-Ziele in diesem Ranking für diesen Monat."
+    else:
+        tab_meteo = '☀️ General weather'
+        tab_beach = '🏖️ Beach'
+        tab_ski   = '⛷️ Ski'
+        th_score_beach = 'Beach score'
+        th_score_ski   = 'Ski score'
+        th_score_gen   = 'Score'
+        no_beach_msg   = "No coastal destinations in this ranking for this month."
+        no_ski_msg     = "No ski destinations in this ranking for this month."
 
-    table = build_table(entries, loc, mi)
+    # ── Pool JSON for JS rendering ────────────────────────────────────────────
+    def entry_nom(entry):
+        if is_fr: return entry['nom_bare']
+        if is_es: return entry.get('nom_es') or entry['nom_bare']
+        if is_de: return entry.get('nom_de') or entry['nom_en']
+        return entry['nom_en']
+    def entry_slug(entry):
+        if is_fr: return entry['slug_fr']
+        if is_es: return entry.get('slug_es') or entry['slug_en']
+        if is_de: return entry.get('slug_de') or entry['slug_en']
+        return entry['slug_en']
+    def entry_pays(entry):
+        if is_fr: return entry['pays']
+        if is_es: return entry.get('pays_es') or entry['pays']
+        if is_de: return entry.get('pays_de') or entry['pays']
+        return entry.get('pays_en') or entry['pays']
+
+    pool_json = json.dumps([{
+        'n': entry_nom(p),
+        'p': entry_pays(p),
+        'f': p['flag'],
+        'h': gen['monthly_href_tpl'].format(slug=entry_slug(p), month_slug=month_url[mi]),
+        's': round(p['score'], 1),
+        'b': round(p['beach_score'], 1) if p['beach_score'] is not None else None,
+        'k': round(p['ski_score'], 1),
+        'ap': f'{flag_prefix}flags/{p["flag"]}.png',
+        'r': round(p['rain_pct'], 0),
+        'sun': round(p['sun_h'], 1),
+        'tmin': round(p['tmin'], 0),
+        'tmax': round(p['tmax'], 0),
+    } for p in pool], ensure_ascii=False)
+
+    table_body = build_table(entries, loc, mi)
     month_nav = build_month_nav(mi, loc)
     related = build_related(mi, loc)
+
+    mode_tabs = (
+        f'<div class="mode-tabs" id="mode-tabs">'
+        f'<button class="mode-tab active" data-mode="meteo">{tab_meteo}</button>'
+        f'<button class="mode-tab" data-mode="beach">{tab_beach}</button>'
+        f'<button class="mode-tab" data-mode="ski">{tab_ski}</button>'
+        f'</div>'
+    )
+
+    rank_js = (
+        '<script>(function(){'
+        f'var POOL={pool_json};'
+        'var TOP=25;'
+        f'var TH_GEN="{e(th_score_gen)}",TH_BEACH="{e(th_score_beach)}",TH_SKI="{e(th_score_ski)}";'
+        f'var NO_BEACH="{e(no_beach_msg)}",NO_SKI="{e(no_ski_msg)}";'
+        'function sc(s){return s>=8?"#16a34a":s>=6?"#d4a853":"#dc2626";}'
+        'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'
+        'function render(mode){'
+        'var tb=document.getElementById("rt-body");'
+        'var th=document.getElementById("rt-head");'
+        'var msg=document.getElementById("rt-msg");'
+        'if(!tb)return;'
+        'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'
+        'var list=POOL.filter(function(d){return mode==="beach"?d.b!=null:mode==="ski"?d.k>=4:true;});'
+        'list.sort(function(a,b){return (b[key]||0)-(a[key]||0);});'
+        'list=list.slice(0,TOP);'
+        'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'
+        'msg.style.display="none";'
+        'var label=mode==="beach"?TH_BEACH:mode==="ski"?TH_SKI:TH_GEN;'
+        'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th></tr>";'
+        'var html="";'
+        'list.forEach(function(d,i){'
+        'var v=d[key]!=null?d[key]:d.s;'
+        'var tmp=d.tmin!=null?(d.tmin.toFixed(0)+"°–"+d.tmax.toFixed(0)+"°"):"—";'
+        'html+="<tr>"'
+        '+"<td class=\'rank\'>"+ri(i+1)+"</td>"'
+        '+"<td><img src=\'"+d.ap+"\' width=\'16\' height=\'12\' alt=\'\' style=\'vertical-align:middle;margin-right:6px;border-radius:1px\'><a href=\'"+d.h+"\' class=\'dest-link\'>"+d.n+"</a>"+(d.p?"<span class=\'region-tag\'>"+d.p+"</span>":"")+"</td>"'
+        '+"<td class=\'sc\' style=\'color:"+sc(v)+"\'>"+v.toFixed(1)+"<span>/10</span></td>"'
+        '+"<td>"+tmp+"</td>"'
+        '+"<td>"+(d.r!=null?d.r.toFixed(0)+"%":"—")+"</td>"'
+        '+"<td>"+(d.sun!=null?d.sun.toFixed(1)+"h":"—")+"</td>"'
+        '+"</tr>";'
+        '});'
+        'tb.innerHTML=html;'
+        '}'
+        'document.getElementById("mode-tabs").addEventListener("click",function(ev){'
+        'var btn=ev.target.closest(".mode-tab");'
+        'if(!btn)return;'
+        'document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.remove("active");});'
+        'btn.classList.add("active");'
+        'render(btn.dataset.mode);'
+        '});'
+        'render("meteo");'  # init on load
+        '})();</script>'
+    )
 
     # Schema.org
     breadcrumb_name = pil['where_to_go_tpl'].format(month=mn_lc)
@@ -523,12 +692,15 @@ def generate_page(mi, lang, dests, climate):
 <div class="eyebrow">{sec_eyebrow}</div>
 <h2 class="sec-title">{sec_title}</h2>
 <p class="sec-intro">{sec_intro}</p>
-<div style="overflow-x:auto">{table}</div>
+{mode_tabs}
+<p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
+<div style="overflow-x:auto"><table class="rt" aria-label="Classement"><thead id="rt-head"></thead><tbody id="rt-body">{table_body}</tbody></table></div>
 </div>
 <div class="cta-box"><a href="{cta_href}">{cta_text} →</a></div>
 {related}
 </main>
 {footer}
+{rank_js}
 <script src="{gen['asset_prefix']}js/share.js" defer></script>
 </body></html>"""
 
