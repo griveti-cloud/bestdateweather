@@ -52,32 +52,37 @@ def collect(patterns, exclude_redirects=True):
 
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_FR if glob.glob(f)] +
-    collect([('ou-partir-en-*.html','monthly','0.8'),('classement-*.html','monthly','0.7'),
+    collect([('meilleures-destinations-meteo.html','monthly','0.9'),
+             ('ou-partir-en-*.html','monthly','0.8'),('classement-*.html','monthly','0.7'),
              ('meilleure-periode-*.html','monthly','0.8'),('*-meteo-*.html','monthly','0.6'),
              ('comparer-*.html','monthly','0.5')]),
     'sitemap-fr.xml')
 
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_EN if glob.glob(f)] +
-    collect([('en/where-to-go-in-*.html','monthly','0.8'),('en/ranking-*.html','monthly','0.7'),
+    collect([('en/best-weather-destinations.html','monthly','0.9'),
+             ('en/where-to-go-in-*.html','monthly','0.8'),('en/ranking-*.html','monthly','0.7'),
              ('en/best-time-to-visit-*.html','monthly','0.8'),('en/*-weather-*.html','monthly','0.6'),
              ('en/compare-*.html','monthly','0.5')]),
     'sitemap-en.xml')
 
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_ES if glob.glob(f)] +
-    collect([('es/donde-ir-en-*.html','monthly','0.8'),('es/mejor-epoca-*.html','monthly','0.8'),
+    collect([('es/mejores-destinos-climaticos.html','monthly','0.9'),
+             ('es/donde-ir-en-*.html','monthly','0.8'),('es/mejor-epoca-*.html','monthly','0.8'),
              ('es/*-clima-*.html','monthly','0.6')]),
     'sitemap-es.xml')
 
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_DE if glob.glob(f)] +
-    collect([('de/wohin-im-*.html','monthly','0.8'),('de/beste-reisezeit-*.html','monthly','0.8'),
+    collect([('de/beste-reiseziele-klima.html','monthly','0.9'),
+             ('de/wohin-im-*.html','monthly','0.8'),('de/beste-reisezeit-*.html','monthly','0.8'),
              ('de/*-wetter-*.html','monthly','0.6')]),
     'sitemap-de.xml')
 
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_US if glob.glob(f)] +
-    collect([('us/where-to-go-in-*.html','monthly','0.8'),('us/best-time-to-visit-*.html','monthly','0.8'),
+    collect([('us/best-weather-destinations.html','monthly','0.9'),
+             ('us/where-to-go-in-*.html','monthly','0.8'),('us/best-time-to-visit-*.html','monthly','0.8'),
              ('us/*-weather-*.html','monthly','0.6')]),
     'sitemap-us.xml')

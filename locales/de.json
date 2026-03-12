@@ -766,7 +766,14 @@
     "other_rankings": "Weitere Rankings",
     "hero_eyebrow_prefix": "Klimastudie · 10 Jahre Daten · ",
     "score_n1": "#1 Score",
-    "top10_avg": "Top 10 Ø"
+    "top10_avg": "Top 10 Ø",
+    "all_year_nav": "Ganzes Jahr",
+    "all_year_url": "beste-reiseziele-klima.html",
+    "all_year_h1": "Beste Reiseziele für das Wetter",
+    "all_year_sub": "Die 25 Reiseziele mit dem besten Klima das ganze Jahr über, nach Jahresdurchschnittswert gerankt.",
+    "all_year_eyebrow": "Jahres-Ranking · Ganzjährig",
+    "all_year_sec": "Top 25 Reiseziele — Jahresbewertung",
+    "all_year_intro": "Durchschnittliche Bewertung über alle 12 Monate des Jahres berechnet."
   },
   "ranking_footer": {
     "data_by": "Wetterdaten von Open-Meteo.com",

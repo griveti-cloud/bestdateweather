@@ -299,15 +299,19 @@ def build_table(entries, loc, mi):
         )
     return rows
 
-def build_month_nav(mi, loc):
-    """Build month navigation bar."""
+def build_month_nav(mi, loc, is_annual=False):
+    """Build month navigation bar. mi=-1 means annual page."""
     months = loc['months']
     month_url = loc['month_url']
     pil = loc['pilier']
     prefix = pil['pillar_prefix']
-    links = ''
+    all_year_url = pil.get('all_year_url', '')
+    all_year_nav = pil.get('all_year_nav', 'All year')
+    # "Toute l'année" button
+    active_annual = ' class="active"' if is_annual else ''
+    links = f'<a href="{all_year_url}"{active_annual}>{all_year_nav}</a>'
     for i in range(12):
-        active = ' class="active"' if i == mi else ''
+        active = ' class="active"' if (not is_annual and i == mi) else ''
         links += f'<a href="{prefix}{month_url[i]}.html"{active}>{months[i][:3]}</a>'
     return f'<nav class="month-nav" aria-label="{pil["months_label"]}">{links}</nav>'
 
@@ -752,6 +756,187 @@ def generate_page(mi, lang, dests, climate):
 
 # ── Sitemap Update ────────────────────────────────────────────────────────────
 
+
+def get_annual_rankings(climate, dests, pool_size=80):
+    """Return top destinations ranked by mean annual score (1 per country)."""
+    REGION_CHILDREN_SLUGS = set()
+    for ch_set in REGION_CHILDREN.values():
+        REGION_CHILDREN_SLUGS.update(ch_set)
+
+    entries = []
+    for slug, dest in dests.items():
+        if slug not in climate: continue
+        months = climate[slug]
+        if len(months) < 12: continue
+        avg  = sum(float(months[m]['score']) for m in range(1, 13)) / 12
+        best_m = max(range(1, 13), key=lambda m: float(months[m]['score']))
+        best_s = float(months[best_m]['score'])
+        m_data = months[best_m]
+        entries.append({
+            'slug_fr':   slug,
+            'slug_en':   dest.get('slug_en', slug),
+            'slug_es':   dest.get('slug_es', dest.get('slug_en', slug)),
+            'slug_de':   dest.get('slug_de', dest.get('slug_en', slug)),
+            'nom_bare':  dest.get('nom_bare', slug),
+            'nom_en':    dest.get('nom_en', dest.get('nom_bare', slug)),
+            'nom_es':    dest.get('nom_es', dest.get('nom_bare', slug)),
+            'nom_de':    dest.get('nom_de', dest.get('nom_en', dest.get('nom_bare', slug))),
+            'pays':      dest.get('pays', ''),
+            'pays_en':   dest.get('country_en', dest.get('pays', '')),
+            'pays_es':   dest.get('country_es', dest.get('pays', '')),
+            'pays_de':   dest.get('country_de', dest.get('pays', '')),
+            'flag':      dest.get('flag', ''),
+            'score':     round(avg, 1),
+            'best_score': best_s,
+            'best_month': best_m,
+            'tmax':      float(m_data['tmax']),
+            'tmin':      float(m_data['tmin']),
+            'rain_pct':  float(m_data['rain_pct']),
+            'sun_h':     float(m_data['sun_h']),
+        })
+
+    entries.sort(key=lambda x: (-x['score'], x['nom_bare']))
+    # Remove region parents
+    ranked_slugs = {e['slug_fr'] for e in entries}
+    remove = {p for p, ch in REGION_CHILDREN.items() if p in ranked_slugs and ranked_slugs & ch}
+    entries = [e for e in entries if e['slug_fr'] not in remove]
+    # 1 per country
+    seen = {}
+    deduped = []
+    for e in entries:
+        if e['pays'] not in seen:
+            seen[e['pays']] = True
+            deduped.append(e)
+    return deduped[:pool_size]
+
+
+def generate_annual_page(lang, dests, climate):
+    """Generate the all-year ranking page for a given language."""
+    loc   = load_locale(lang)
+    gen   = loc['gen']
+    pil   = loc['pilier']
+    months_labels = loc['months']
+    imperial = loc['meta'].get('imperial', False)
+    def ft(c): return f"{c_to_f(c):.0f}°F" if imperial else f"{c:.0f}°C"
+    def ft_unit(): return '°F' if imperial else '°C'
+
+    entries = get_annual_rankings(climate, dests)
+    if not entries:
+        return None
+
+    top     = entries[0]
+    avg_score  = sum(x['score'] for x in entries[:10]) / 10
+    avg_temp_raw = sum(x['tmax'] for x in entries[:10]) / 10
+    avg_temp = c_to_f(avg_temp_raw) if imperial else avg_temp_raw
+
+    src_sub  = loc['meta']['subdir']
+    filename = pil.get('all_year_url', 'meilleures-destinations-meteo.html')
+    filepath = ROOT / filename if src_sub == '' else ROOT / src_sub / filename
+    canonical = (f'https://bestdateweather.com/{filename}'
+                 if src_sub == '' else
+                 f'https://bestdateweather.com/{src_sub}/{filename}')
+
+    # Slug key
+    is_fr = (lang == 'fr')
+    is_es = (lang == 'es')
+    is_de = (lang == 'de')
+    slug_key = 'slug_fr' if is_fr else ('slug_es' if is_es else ('slug_de' if is_de else 'slug_en'))
+    name_key = 'nom_bare' if is_fr else ('nom_es' if is_es else ('nom_de' if is_de else 'nom_en'))
+    pays_key = 'pays' if is_fr else ('pays_es' if is_es else ('pays_de' if is_de else 'pays_en'))
+    annual_href_tpl = gen['annual_href_tpl']
+
+    # Table
+    rows = ''
+    for i, e in enumerate(entries[:TOP_N], 1):
+        medal = ['🥇','🥈','🥉'][i-1] if i <= 3 else str(i)
+        slug  = e[slug_key]
+        name  = e[name_key]
+        pays  = e[pays_key] or e['pays']
+        flag  = e['flag']
+        href  = annual_href_tpl.format(slug=slug)
+        temp_str = f"{ft(e['tmin'])}–{ft(e['tmax'])}"
+        flag_img = (f'<img src="{gen["asset_prefix"]}flags/{flag}.png" '
+                    f'width="16" height="12" alt="{flag}" '
+                    f'style="margin-right:4px;vertical-align:middle;border-radius:1px">'
+                    if flag else '')
+        best_m_label = months_labels[e['best_month'] - 1]
+        rows += (f'<tr>'
+                 f'<td class="rank">{medal}</td>'
+                 f'<td><a href="{href}" class="dest-link">'
+                 f'{flag_img}{name}</a>'
+                 f'<span style="display:block;font-size:11px;color:var(--slate)">{pays}</span></td>'
+                 f'<td class="sc">{e["score"]:.1f}/10</td>'
+                 f'<td>{temp_str}</td>'
+                 f'<td>{e["rain_pct"]:.0f}%</td>'
+                 f'<td>{e["sun_h"]:.1f}h</td>'
+                 f'</tr>\n')
+
+    h1  = pil.get('all_year_h1', 'Best weather destinations')
+    sub = pil.get('all_year_sub', '')
+    eyebrow = pil.get('all_year_eyebrow', '')
+    sec_title = pil.get('all_year_sec', '')
+    sec_intro = pil.get('all_year_intro', '')
+    th_list   = pil['th']
+    month_nav = build_month_nav(-1, loc, is_annual=True)
+    footer    = build_hub_footer(lang, loc) if False else ''
+
+    # hreflang
+    hreflang_tags = ''
+    for hl_lang in PILIER_LANGS:
+        hl_loc  = load_locale(hl_lang)
+        hl_sub  = hl_loc['meta']['subdir']
+        hl_file = hl_loc['pilier'].get('all_year_url', filename)
+        hl_url  = (f'https://bestdateweather.com/{hl_file}'
+                   if hl_sub == '' else
+                   f'https://bestdateweather.com/{hl_sub}/{hl_file}')
+        hl_code = hl_loc['meta'].get('hreflang', hl_lang)
+        hreflang_tags += f'<link rel="alternate" hreflang="{hl_code}" href="{hl_url}">\n'
+
+    page_html = f"""<!DOCTYPE html>
+<html lang="{loc['meta']['html_lang']}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{h1} — BestDateWeather</title>
+<meta name="description" content="{sub}">
+<link rel="canonical" href="{canonical}">
+{hreflang_tags}<link rel="stylesheet" href="{gen['asset_prefix']}style.css">
+<link rel="stylesheet" href="{gen['asset_prefix']}app.css">
+</head>
+<body>
+{gen.get('header_html','<header></header>')}
+<header class="hero">
+<p class="hero-eyebrow">{eyebrow}</p>
+<h1 class="hero-title">{h1}</h1>
+<p class="hero-sub">{sub}</p>
+<div class="hero-stats">
+<div class="hstat"><span class="hstat-val">{top['score']:.1f}</span><span class="hstat-lbl">{pil["score_n1"]}</span></div>
+<div class="hstat"><span class="hstat-val">{TOP_N}</span><span class="hstat-lbl">{pil["top_n_label"]}</span></div>
+<div class="hstat"><span class="hstat-val">{avg_temp:.0f}{ft_unit()}</span><span class="hstat-lbl">{pil["top10_avg"]}</span></div>
+</div>
+</header>
+<main class="page">
+{month_nav}
+<div class="section">
+<div class="eyebrow">{eyebrow}</div>
+<h2 class="sec-title">{sec_title}</h2>
+<p class="sec-intro">{sec_intro}</p>
+<div style="overflow-x:auto"><table class="rt" aria-label="{sec_title}">
+<thead><tr>{"".join(f"<th>{c}</th>" for c in th_list)}</tr></thead>
+<tbody>{rows}</tbody>
+</table></div>
+</div>
+</main>
+<script src="{gen['asset_prefix']}js/share.js" defer></script>
+</body></html>"""
+
+    filepath.parent.mkdir(parents=True, exist_ok=True)
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(page_html)
+
+    return filename, canonical
+
+
 def update_sitemaps(fr_pages, en_pages):
     """Append new pillar pages to existing sitemaps if not already present."""
     for sitemap_file, pages in [('sitemap-fr.xml', fr_pages), ('sitemap-en.xml', en_pages)]:
@@ -819,6 +1004,17 @@ if __name__ == '__main__':
 
     counts = " + ".join(f"{len(pages_by_lang[l])} {l.upper()}" for l in PILIER_LANGS)
     print(f"\n📄 {counts} pillar pages generated")
+
+    # Generate annual pages
+    print("\n📅 Generating all-year pages...")
+    for lang in PILIER_LANGS:
+        result = generate_annual_page(lang, dests, climate)
+        if result:
+            filename, canonical = result
+            lang_loc = load_locale(lang)
+            subdir = lang_loc['meta']['subdir']
+            prefix = f"{subdir}/" if subdir else ""
+            print(f"  ✅ {prefix}{filename}")
 
     fr_pages = pages_by_lang.get('fr', [])
     en_pages = pages_by_lang.get('en', [])
