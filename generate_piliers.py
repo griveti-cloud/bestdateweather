@@ -517,7 +517,6 @@ def generate_page(mi, lang, dests, climate):
         f'<div class="mode-tabs" id="mode-tabs">'
         f'<button class="mode-tab active" data-mode="meteo">{tab_meteo}</button>'
         f'<button class="mode-tab" data-mode="beach">{tab_beach}</button>'
-        f'<button class="mode-tab" data-mode="ski">{tab_ski}</button>'
         f'</div>'
     )
 
@@ -694,7 +693,7 @@ def generate_page(mi, lang, dests, climate):
 <p class="sec-intro">{sec_intro}</p>
 {mode_tabs}
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
-<div style="overflow-x:auto"><table class="rt" aria-label="Classement"><thead id="rt-head"></thead><tbody id="rt-body">{table_body}</tbody></table></div>
+<div style="overflow-x:auto"><table class="rt" aria-label="Classement"><thead id="rt-head"><tr>{"".join(f"<th>{c}</th>" for c in loc['pilier']['th'])}</tr></thead><tbody id="rt-body">{table_body}</tbody></table></div>
 </div>
 <div class="cta-box"><a href="{cta_href}">{cta_text} →</a></div>
 {related}
