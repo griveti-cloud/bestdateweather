@@ -122,15 +122,25 @@ def get_rankings(climate, dests, month_idx):
         # else: skip — a higher-scoring entry for this country already included
     return deduped[:TOP_N]
 
-def get_pool_entries(climate, dests, month_idx, pool_size=80):
-    """Return broader pool for beach/ski JS filtering (country-deduped, top pool_size by general score)."""
-    entries = []
+def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=20):
+    """Return broader pool for beach/ski JS filtering.
+
+    - General pool: top pool_size destinations by general score (country-deduped)
+    - Ski boost: top ski_boost mountain=True destinations by ski_score injected on top
+      (skipping duplicates already in the general pool)
+    """
+    # Slugs à ignorer (doublons legacy)
+    SKI_DUPES = {'val-disere', 'sierra-nevada', 'queenstown-ski'}
+
+    all_entries = []
     for slug, dest in dests.items():
+        if slug in SKI_DUPES:
+            continue
         if slug not in climate or month_idx not in climate[slug]:
             continue
         m = climate[slug][month_idx]
         ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
-        entries.append({
+        all_entries.append({
             'slug_fr': slug,
             'slug_en': dest.get('slug_en', slug),
             'nom_bare': dest.get('nom_bare', slug),
@@ -151,19 +161,30 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80):
             'sun_h': m['sun_h'],
             'beach_score': m['beach_score'],
             'ski_score': ski,
+            'is_mountain': dest.get('mountain', 'False') == 'True',
         })
-    entries.sort(key=lambda x: (-x['score'], x['nom_bare']))
-    ranked = {e['slug_fr'] for e in entries}
+
+    # --- General pool (country-deduped, by general score) ---
+    general = sorted(all_entries, key=lambda x: (-x['score'], x['nom_bare']))
+    ranked = {e['slug_fr'] for e in general}
     remove = {p for p, ch in REGION_CHILDREN.items() if p in ranked and ranked & ch}
     if remove:
-        entries = [e for e in entries if e['slug_fr'] not in remove]
-    seen_countries = {}
-    deduped = []
-    for e in entries:
+        general = [e for e in general if e['slug_fr'] not in remove]
+    seen_countries: dict = {}
+    deduped: list = []
+    for e in general:
         if e['pays'] not in seen_countries:
             seen_countries[e['pays']] = True
             deduped.append(e)
-    return deduped[:pool_size]
+    general_pool = deduped[:pool_size]
+    general_slugs = {e['slug_fr'] for e in general_pool}
+
+    # --- Ski boost: top mountain destinations not already in general pool ---
+    ski_candidates = [e for e in all_entries if e['is_mountain'] and e['slug_fr'] not in general_slugs]
+    ski_candidates.sort(key=lambda x: (-x['ski_score'], x['nom_bare']))
+    ski_injected = ski_candidates[:ski_boost]
+
+    return general_pool + ski_injected
 
 CSS = r"""
 *{margin:0;padding:0;box-sizing:border-box}
@@ -502,6 +523,7 @@ def generate_page(mi, lang, dests, climate):
         's': round(p['score'], 1),
         'b': round(p['beach_score'], 1) if p['beach_score'] is not None else None,
         'k': round(p['ski_score'], 1),
+        'm': 1 if p['is_mountain'] else 0,
         'ap': f'{flag_prefix}flags/{p["flag"]}.png',
         'r': round(p['rain_pct'], 0),
         'sun': round(p['sun_h'], 1),
@@ -535,7 +557,7 @@ def generate_page(mi, lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'
         'if(!tb)return;'
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'
-        'var list=POOL.filter(function(d){return mode==="beach"?d.b!=null:mode==="ski"?d.k>=4:true;});'
+        'var list=POOL.filter(function(d){return mode==="beach"?d.b!=null:mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;});'
         'list.sort(function(a,b){return (b[key]||0)-(a[key]||0);});'
         'list=list.slice(0,TOP);'
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'
