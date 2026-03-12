@@ -759,6 +759,92 @@ def generate_page(mi, lang, dests, climate):
 # ── Sitemap Update ────────────────────────────────────────────────────────────
 
 
+
+def get_annual_pool(climate, dests, pool_size=80, ski_boost=20):
+    """Annual pool: avg score/beach/ski over 12 months, for JS tab switching."""
+    SKI_DUPES = {'val-disere', 'sierra-nevada', 'queenstown-ski'}
+    all_entries = []
+    for slug, dest in dests.items():
+        if slug in SKI_DUPES:
+            continue
+        if slug not in climate or len(climate[slug]) < 12:
+            continue
+        months = climate[slug]
+        avg_score = sum(float(months[m]['score']) for m in range(1,13)) / 12
+        avg_beach = None
+        beach_vals = [float(months[m]['beach_score']) for m in range(1,13)
+                      if months[m].get('beach_score') not in (None, '', '0', 0)]
+        if beach_vals and dest.get('coastal','False') == 'True':
+            avg_beach = sum(beach_vals) / len(beach_vals)
+        # ski: average of ski_score computed from monthly data
+        ski_vals = [compute_ski_score(float(months[m]['tmax']),
+                                      float(months[m]['rain_pct']),
+                                      float(months[m]['sun_h']))
+                    for m in range(1,13)]
+        # Use best winter month ski score (Dec/Jan/Feb average) — more meaningful
+        ski_winter = sum(compute_ski_score(float(months[m]['tmax']),
+                                           float(months[m]['rain_pct']),
+                                           float(months[m]['sun_h']))
+                         for m in [12,1,2]) / 3
+        best_m = max(range(1,13), key=lambda m: float(months[m]['score']))
+        m_data = months[best_m]
+        all_entries.append({
+            'slug_fr':    slug,
+            'slug_en':    dest.get('slug_en', slug),
+            'slug_es':    dest.get('slug_es', dest.get('slug_en', slug)),
+            'slug_de':    dest.get('slug_de', dest.get('slug_en', slug)),
+            'nom_bare':   dest.get('nom_bare', slug),
+            'nom_en':     dest.get('nom_en', dest.get('nom_bare', slug)),
+            'nom_es':     dest.get('nom_es', dest.get('nom_bare', '')),
+            'nom_de':     dest.get('nom_de', dest.get('nom_en', '')),
+            'pays':       dest.get('pays', ''),
+            'pays_en':    dest.get('country_en', dest.get('pays', '')),
+            'pays_es':    dest.get('country_es', dest.get('pays', '')),
+            'pays_de':    dest.get('country_de', dest.get('pays', '')),
+            'flag':       dest.get('flag', ''),
+            'score':      avg_score,
+            'beach_score': avg_beach,
+            'ski_score':  ski_winter,
+            'is_mountain': dest.get('mountain', 'False') == 'True',
+            'is_coastal':  dest.get('coastal',  'False') == 'True',
+            'tmin':       float(m_data['tmin']),
+            'tmax':       float(m_data['tmax']),
+            'rain_pct':   float(m_data['rain_pct']),
+            'sun_h':      float(m_data['sun_h']),
+            'dest':       dest,
+            'slug':       slug,
+        })
+
+    # General pool: country-dedup by general score (same as classement mondial)
+    general = sorted(all_entries, key=lambda x: (-x['score'], x['nom_bare']))
+    ranked = {e['slug_fr'] for e in general}
+    remove = {p for p, ch in REGION_CHILDREN.items() if p in ranked and ranked & ch}
+    general = [e for e in general if e['slug_fr'] not in remove]
+    general = dedup_country(general, dests)[:pool_size]
+    general_slugs = {e['slug_fr'] for e in general}
+
+    # Ski boost
+    ski_candidates = [e for e in all_entries if e['is_mountain'] and e['slug_fr'] not in general_slugs]
+    ski_candidates.sort(key=lambda x: (-x['ski_score'], x['nom_bare']))
+    ski_injected = ski_candidates[:ski_boost]
+
+    # Beach boost
+    all_slugs = {e['slug_fr'] for e in general + ski_injected}
+    beach_candidates = [e for e in all_entries
+                        if e.get('beach_score') is not None
+                        and e.get('is_coastal', False)
+                        and e['slug_fr'] not in all_slugs]
+    beach_candidates.sort(key=lambda x: (-(x['beach_score'] or 0), x['nom_bare']))
+    seen_bc: dict = {}
+    beach_injected = []
+    for e in beach_candidates:
+        if e['pays'] not in seen_bc:
+            seen_bc[e['pays']] = True
+            beach_injected.append(e)
+    beach_injected = beach_injected[:40]
+
+    return general + ski_injected + beach_injected
+
 def get_annual_rankings(climate, dests, pool_size=80):
     """Return top destinations ranked by mean annual score — same logic as classement mondial."""
     raw = []
@@ -868,6 +954,111 @@ def generate_annual_page(lang, dests, climate):
     month_nav = build_month_nav(-1, loc, is_annual=True)
     footer    = footer_ranking_html(lang, [])
 
+    # ── Mode tabs (Météo / Plage / Ski) ───────────────────────────────────────
+    if lang == 'fr':
+        tab_meteo = '☀️ Météo générale'; tab_beach = '🏖️ Plage'; tab_ski = '⛷️ Ski'
+        th_score_gen = 'Score annuel'; th_score_beach = 'Score plage'; th_score_ski = 'Score ski'
+        no_beach_msg = 'Aucune destination balnéaire dans ce classement.'
+        no_ski_msg   = 'Aucune station de ski dans ce classement.'
+    elif lang == 'es':
+        tab_meteo = '☀️ Clima general'; tab_beach = '🏖️ Playa'; tab_ski = '⛷️ Esquí'
+        th_score_gen = 'Puntuación'; th_score_beach = 'Puntuación playa'; th_score_ski = 'Puntuación esquí'
+        no_beach_msg = 'Sin destinos de playa en este ranking.'
+        no_ski_msg   = 'Sin estaciones de esquí en este ranking.'
+    elif lang == 'de':
+        tab_meteo = '☀️ Allgemeines Wetter'; tab_beach = '🏖️ Strand'; tab_ski = '⛷️ Ski'
+        th_score_gen = 'Jahreswertung'; th_score_beach = 'Strandwertung'; th_score_ski = 'Skiwertung'
+        no_beach_msg = 'Keine Strandziele in diesem Ranking.'
+        no_ski_msg   = 'Keine Skigebiete in diesem Ranking.'
+    else:  # en / en-us
+        tab_meteo = '☀️ General weather'; tab_beach = '🏖️ Beach'; tab_ski = '⛷️ Ski'
+        th_score_gen = 'Annual score'; th_score_beach = 'Beach score'; th_score_ski = 'Ski score'
+        no_beach_msg = 'No beach destinations in this ranking.'
+        no_ski_msg   = 'No ski resorts in this ranking.'
+
+    # Build annual pool
+    annual_pool = get_annual_pool(climate, dests)
+    flag_prefix = gen['asset_prefix']
+    annual_href_tpl2 = gen['annual_href_tpl']
+
+    def _pool_slug(e):
+        if is_fr: return e['slug_fr']
+        if is_es: return e.get('slug_es') or e['slug_en']
+        if is_de: return e.get('slug_de') or e['slug_en']
+        return e['slug_en']
+
+    pool_json = json.dumps([{
+        'n':   e[name_key] if e.get(name_key) else e['nom_bare'],
+        'p':   e[pays_key] if e.get(pays_key) else e['pays'],
+        'f':   e['flag'],
+        'h':   annual_href_tpl2.format(slug=_pool_slug(e)),
+        's':   round(e['score'], 1),
+        'b':   round(e['beach_score'], 1) if e.get('beach_score') is not None else None,
+        'k':   round(e['ski_score'], 1),
+        'm':   1 if e['is_mountain'] else 0,
+        'ap':  f'{flag_prefix}flags/{e["flag"]}.png',
+        'r':   round(e['rain_pct'], 0),
+        'sun': round(e['sun_h'], 1),
+        'tmin': round(e['tmin'], 0),
+        'tmax': round(e['tmax'], 0),
+    } for e in annual_pool], ensure_ascii=False)
+
+    mode_tabs = (
+        f'<div class="mode-tabs" id="mode-tabs">'
+        f'<button class="mode-tab active" data-mode="meteo">{tab_meteo}</button>'
+        f'<button class="mode-tab" data-mode="beach">{tab_beach}</button>'
+        f'<button class="mode-tab" data-mode="ski">{tab_ski}</button>'
+        f'</div>'
+    )
+
+    def _e(s): return s.replace('"', '&quot;')
+    rank_js = (
+        '<script>(function(){'+
+        f'var POOL={pool_json};'+
+        'var TOP=25;'+
+        f'var TH_GEN="{_e(th_score_gen)}",TH_BEACH="{_e(th_score_beach)}",TH_SKI="{_e(th_score_ski)}";'+
+        f'var NO_BEACH="{_e(no_beach_msg)}",NO_SKI="{_e(no_ski_msg)}";'+
+        'function sc(s){return s>=8?"#16a34a":s>=6?"#d4a853":"#dc2626";}'+
+        'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'+
+        'function render(mode){'+
+        'var tb=document.getElementById("rt-body");'+
+        'var th=document.getElementById("rt-head");'+
+        'var msg=document.getElementById("rt-msg");'+
+        'if(!tb)return;'+
+        'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'+
+        'var list=POOL.filter(function(d){return mode==="beach"?d.b!=null:mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;});'+
+        'list.sort(function(a,b){return (b[key]||0)-(a[key]||0);});'+
+        'list=list.slice(0,TOP);'+
+        'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'+
+        'msg.style.display="none";'+
+        'var label=mode==="beach"?TH_BEACH:mode==="ski"?TH_SKI:TH_GEN;'+
+        'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th></tr>";'+
+        'var html="";'+
+        'list.forEach(function(d,i){'+
+        'var v=d[key]!=null?d[key]:d.s;'+
+        'var tmp=d.tmin!=null?(d.tmin.toFixed(0)+"°–"+d.tmax.toFixed(0)+"°"):"—";'+
+        'html+="<tr>"'+
+        '+"<td class=\'rank\'>"+ri(i+1)+"</td>"'+
+        '+"<td><img src=\'"+d.ap+"\' width=\'16\' height=\'12\' alt=\'\'  style=\'vertical-align:middle;margin-right:6px;border-radius:1px\'><a href=\'"+d.h+"\' class=\'dest-link\'>"+d.n+"</a>"+(d.p?"<span class=\'region-tag\'>"+d.p+"</span>":"")+"</td>"'+
+        '+"<td class=\'sc\' style=\'color:"+sc(v)+"\'>"+v.toFixed(1)+"<span>/10</span></td>"'+
+        '+"<td>"+tmp+"</td>"'+
+        '+"<td>"+(d.r!=null?d.r.toFixed(0)+"%":"—")+"</td>"'+
+        '+"<td>"+(d.sun!=null?d.sun.toFixed(1)+"h":"—")+"</td>"'+
+        '+"</tr>";'+
+        '});'+
+        'tb.innerHTML=html;'+
+        '}'+
+        'document.getElementById("mode-tabs").addEventListener("click",function(ev){'+
+        'var btn=ev.target.closest(".mode-tab");'+
+        'if(!btn)return;'+
+        'document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.remove("active");});'+
+        'btn.classList.add("active");'+
+        'render(btn.dataset.mode);'+
+        '});'+
+        'render("meteo");'+
+        '})();</script>'
+    )
+
     # hreflang
     hreflang_tags = ''
     for hl_lang in PILIER_LANGS:
@@ -915,13 +1106,16 @@ def generate_annual_page(lang, dests, climate):
 <div class="eyebrow">{eyebrow}</div>
 <h2 class="sec-title">{sec_title}</h2>
 <p class="sec-intro">{sec_intro}</p>
+{mode_tabs}
+<p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
 <div style="overflow-x:auto"><table class="rt" aria-label="{sec_title}">
-<thead><tr>{"".join(f"<th>{c}</th>" for c in th_list)}</tr></thead>
-<tbody>{rows}</tbody>
+<thead id="rt-head"><tr>{"".join(f"<th>{c}</th>" for c in th_list)}</tr></thead>
+<tbody id="rt-body">{rows}</tbody>
 </table></div>
 </div>
 </main>
 {footer}
+{rank_js}
 <script src="{gen['asset_prefix']}js/share.js" defer></script>
 </body></html>"""
 
