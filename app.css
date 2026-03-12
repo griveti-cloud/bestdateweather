@@ -115,7 +115,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
 .hero-meta{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
 .hero-loc-wrap{}
 .hero-loc{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:3px;letter-spacing:.1px}
-.hero-date{font-size:12px;color:var(--slate3);font-weight:400}
+.hero-date{font-size:14px;color:var(--slate3);font-weight:500}
 .fiche-link-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--gold);background:var(--gold-light);border:1.5px solid rgba(232,148,10,.4);border-radius:20px;padding:5px 14px;text-decoration:none;transition:background .15s,border-color .15s;white-space:nowrap}
 .fiche-link-btn:hover{background:#fde9a0;border-color:var(--gold)}
 .confidence-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.4px;flex-shrink:0}
