@@ -219,7 +219,9 @@
     "legend_ideal": "Idéal",
     "legend_fair": "Acceptable",
     "legend_off": "Climat prononcé",
-    "legend_source": "Source Open-Meteo · 10 ans"
+    "legend_source": "Source Open-Meteo · 10 ans",
+    "legend_ideal_mtn": "Idéal (ski ou été)",
+    "legend_off_mtn": "Hors saison"
   },
   "nav": {
     "cta_label": "Tester l'application",
@@ -1178,5 +1180,7 @@
       "{month} n'est pas la saison ski {prep} {nom_bare}. Visez {best_ski_month_lc}.",
       "Peu de neige en {month_lc} {prep} {nom_bare} — {best_ski_month_lc} est le pic ski."
     ]
-  }
+  },
+  "legend_ideal_mtn": "Idéal (ski ou été)",
+  "legend_off_mtn": "Hors saison"
 }

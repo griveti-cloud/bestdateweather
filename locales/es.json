@@ -219,7 +219,9 @@
     "legend_ideal": "Ideal",
     "legend_fair": "Aceptable",
     "legend_off": "Clima marcado",
-    "legend_source": "Fuente: Open-Meteo · 10 años"
+    "legend_source": "Fuente: Open-Meteo · 10 años",
+    "legend_ideal_mtn": "Ideal (esquí o verano)",
+    "legend_off_mtn": "Temporada baja"
   },
   "nav": {
     "cta_label": "Probar la aplicación",
@@ -1199,5 +1201,7 @@
       "{month} no es temporada de esquí en {nom_bare}. Apunta a {best_ski_month_lc}.",
       "Poca nieve en {nom_bare} en {month_lc} — {best_ski_month_lc} es el pico de esquí."
     ]
-  }
+  },
+  "legend_ideal_mtn": "Ideal (esquí o verano)",
+  "legend_off_mtn": "Temporada baja"
 }

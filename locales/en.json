@@ -219,7 +219,9 @@
     "legend_ideal": "Ideal",
     "legend_fair": "Fair",
     "legend_off": "Challenging climate",
-    "legend_source": "Source: Open-Meteo · 10 years"
+    "legend_source": "Source: Open-Meteo · 10 years",
+    "legend_ideal_mtn": "Ideal (ski or summer)",
+    "legend_off_mtn": "Off season"
   },
   "nav": {
     "cta_label": "Try the weather app",
@@ -1178,5 +1180,7 @@
       "{month} is not ski season in {nom_bare}. Target {best_ski_month_lc}.",
       "Little snow in {nom_bare} in {month_lc} — {best_ski_month_lc} is peak ski."
     ]
-  }
+  },
+  "legend_ideal_mtn": "Ideal (ski or summer)",
+  "legend_off_mtn": "Off season"
 }

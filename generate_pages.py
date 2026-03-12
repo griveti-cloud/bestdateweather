@@ -1547,9 +1547,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </table>
  </div>
  <div class="table-legend">
- <span><span class="legend-dot legend-rec"></span>{L['legend_ideal']}</span>
+ <span><span class="legend-dot legend-rec"></span>{L.get('legend_ideal_mtn', L['legend_ideal']) if is_mountain else L['legend_ideal']}</span>
  <span><span class="legend-dot legend-mid"></span>{L['legend_ok']}</span>
- <span><span class="legend-dot legend-avoid"></span>{L['legend_bad']}</span>
+ <span><span class="legend-dot legend-avoid"></span>{L.get('legend_off_mtn', L['legend_bad']) if is_mountain else L['legend_bad']}</span>
  <span class="ml-auto">{L['legend_note']}</span>
  </div>
  </section>

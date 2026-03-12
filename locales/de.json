@@ -219,7 +219,9 @@
     "legend_ideal": "Ideal",
     "legend_fair": "Akzeptabel",
     "legend_off": "Anspruchsvolles Klima",
-    "legend_source": "Quelle: Open-Meteo · 10 Jahre"
+    "legend_source": "Quelle: Open-Meteo · 10 Jahre",
+    "legend_ideal_mtn": "Ideal (Ski oder Sommer)",
+    "legend_off_mtn": "Nebensaison"
   },
   "nav": {
     "cta_label": "Wetter-App testen",
@@ -1190,5 +1192,7 @@
       "{month} ist keine Skisaison in {nom_bare}. Ziel: {best_ski_month_lc}.",
       "Wenig Schnee in {nom_bare} im {month_lc} — {best_ski_month_lc} ist die Skispitze."
     ]
-  }
+  },
+  "legend_ideal_mtn": "Ideal (Ski oder Sommer)",
+  "legend_off_mtn": "Nebensaison"
 }

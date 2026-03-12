@@ -50,6 +50,8 @@ def build_lang(lang):
         'legend_fair': loc['table']['legend_fair'],
         'legend_off': loc['table']['legend_off'],
         'legend_source': loc['table']['legend_source'],
+        'legend_ideal_mtn': loc['table'].get('legend_ideal_mtn', loc['table']['legend_ideal']),
+        'legend_off_mtn': loc['table'].get('legend_off_mtn', loc['table']['legend_off']),
         'val_missing_months': loc['validation']['missing_months'],
         'val_score_range': loc['validation']['score_range'],
         'val_class_invalid': loc['validation']['class_invalid'],
@@ -277,6 +279,8 @@ def climate_table_html(months, nom, is_mountain=False, L=None):
                  f'<td data-label="{L["th_score"]}">{m["score"]:.1f}/10</td>{ski_col}</tr>\n')
     ski_header = L['table_ski_header'] if is_mountain else ''
     wrap_class = 'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'
+    legend_ideal_label = L.get('legend_ideal_mtn', L['legend_ideal']) if is_mountain else L['legend_ideal']
+    legend_off_label   = L.get('legend_off_mtn',   L['legend_off'])   if is_mountain else L['legend_off']
     return f'''<div class="{wrap_class}">
  <table class="climate-table climate-table--horizontal" aria-label="{L['table_aria'].format(nom=nom)}">
  <thead><tr>{L['table_headers']}{ski_header}</tr></thead>
@@ -284,9 +288,9 @@ def climate_table_html(months, nom, is_mountain=False, L=None):
  </table>
 </div>
 <div class="table-legend">
- <span><span class="legend-dot legend-rec"></span>{L['legend_ideal']}</span>
+ <span><span class="legend-dot legend-rec"></span>{legend_ideal_label}</span>
  <span><span class="legend-dot legend-mid"></span>{L['legend_fair']}</span>
- <span><span class="legend-dot legend-avoid"></span>{L['legend_off']}</span>
+ <span><span class="legend-dot legend-avoid"></span>{legend_off_label}</span>
  <span class="ml-auto">{L['legend_source']}</span>
 </div>'''
 
