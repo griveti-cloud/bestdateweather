@@ -78,6 +78,76 @@ REGION_CHILDREN = {
                  'la-palma', 'la-gomera', 'el-hierro'},
 }
 
+# ── Geographic region mapping (pays → region code) ────────────────────────────
+REGION_MAP = {
+    # Europe
+    'Albanie':'eu','Allemagne':'eu','Andorre':'eu','Arménie':'eu','Autriche':'eu',
+    'Azerbaïdjan':'eu','Belgique':'eu','Bosnie-Herzégovine':'eu','Bulgarie':'eu',
+    'Chypre':'eu','Croatie':'eu','Danemark':'eu','Espagne':'eu','Estonie':'eu',
+    'Finlande':'eu','France':'eu','Gibraltar':'eu','Grèce':'eu','Géorgie':'eu',
+    'Hongrie':'eu','Irlande':'eu','Islande':'eu','Italie':'eu','Lettonie':'eu',
+    'Lituanie':'eu','Macédoine du Nord':'eu','Malte':'eu','Monaco':'eu',
+    'Monténégro':'eu','Norvège':'eu','Pays-Bas':'eu','Pologne':'eu','Portugal':'eu',
+    'Roumanie':'eu','Royaume-Uni':'eu','Russie':'eu','Serbie':'eu','Slovaquie':'eu',
+    'Slovénie':'eu','Suisse':'eu','Suède':'eu','Tchéquie':'eu','Ukraine':'eu',
+    'Écosse':'eu',
+    # Afrique
+    'Afrique du Sud':'af','Algérie':'af','Bénin':'af','Botswana':'af',
+    'Burkina Faso':'af','Cameroun':'af','Cap-Vert':'af',"Côte d'Ivoire":'af',
+    'Égypte':'af','Éthiopie':'af','Gabon':'af','Gambie':'af','Ghana':'af',
+    'Kenya':'af','Madagascar':'af','Malawi':'af','Maroc':'af','Maurice':'af',
+    'Mozambique':'af','Namibie':'af','Nigeria':'af','Ouganda':'af','Rwanda':'af',
+    'Sénégal':'af','Seychelles':'af','Sierra Leone':'af','Tanzanie':'af',
+    'Togo':'af','Tunisie':'af','Zambie':'af','Zimbabwe':'af',
+    # Amériques (Nord + Central + Caraïbes + Sud)
+    'Antigua-et-Barbuda':'am','Argentine':'am','Aruba':'am','Bahamas':'am',
+    'Barbade':'am','Belize':'am','Bolivie':'am','Brésil':'am','Canada':'am',
+    'Chili':'am','Colombie':'am','Costa Rica':'am','Cuba':'am','Curaçao':'am',
+    'Dominique':'am','Équateur':'am','États-Unis':'am','Guatemala':'am',
+    'Honduras':'am','Îles Caïmans':'am','Îles Vierges américaines':'am',
+    'Jamaïque':'am','Mexique':'am','Nicaragua':'am','Panama':'am',
+    'Pays-Bas caribéens':'am','Paraguay':'am','Pérou':'am','Porto Rico':'am',
+    'République Dominicaine':'am','Saint-Vincent-et-les-Grenadines':'am',
+    'Sainte-Lucie':'am','Trinité-et-Tobago':'am','Turks-et-Caïcos':'am',
+    'Uruguay':'am',
+    # Asie & Moyen-Orient
+    'Arabie Saoudite':'as','Bahreïn':'as','Bhoutan':'as','Cambodge':'as',
+    'Chine':'as','Corée du Sud':'as','Émirats Arabes Unis':'as',
+    'Émirats arabes unis':'as','Inde':'as','Indonésie':'as','Iran':'as',
+    'Israël':'as','Japon':'as','Jordanie':'as','Kazakhstan':'as',
+    'Kirghizistan':'as','Koweït':'as','Laos':'as','Liban':'as','Malaisie':'as',
+    'Maldives':'as','Mongolie':'as','Myanmar':'as','Népal':'as','Oman':'as',
+    'Ouzbékistan':'as','Philippines':'as','Qatar':'as','Singapour':'as',
+    'Sri Lanka':'as','Tadjikistan':'as','Taïwan':'as','Thaïlande':'as',
+    'Turquie':'as','Vietnam':'as','Viêt Nam':'as','Yémen':'as',
+    # Océanie
+    'Australie':'oc','Fidji':'oc','Nouvelle-Calédonie':'oc','Nouvelle-Zélande':'oc',
+    'Palaos':'oc','Papouasie-Nouvelle-Guinée':'oc','Polynésie française':'oc',
+    'Samoa':'oc','Tonga':'oc','Vanuatu':'oc',
+}
+
+def _reg(pays): return REGION_MAP.get(pays, 'other')
+
+_REGION_LABELS = {
+    'fr': {'all':'🌍 Monde','eu':'🇪🇺 Europe','af':'🌍 Afrique',
+           'am':'🌎 Amériques','as':'🌏 Asie','oc':'🌊 Océanie'},
+    'en': {'all':'🌍 World','eu':'🇪🇺 Europe','af':'🌍 Africa',
+           'am':'🌎 Americas','as':'🌏 Asia','oc':'🌊 Oceania'},
+    'es': {'all':'🌍 Mundo','eu':'🇪🇺 Europa','af':'🌍 África',
+           'am':'🌎 Américas','as':'🌏 Asia','oc':'🌊 Oceanía'},
+    'de': {'all':'🌍 Welt','eu':'🇪🇺 Europa','af':'🌍 Afrika',
+           'am':'🌎 Amerika','as':'🌏 Asien','oc':'🌊 Ozeanien'},
+}
+
+def build_region_tabs(lang):
+    labels = _REGION_LABELS.get(lang, _REGION_LABELS['en'])
+    btns = ''.join(
+        f'<button class="reg-tab{" active" if k=="all" else ""}" data-reg="{k}">{v}</button>'
+        for k, v in labels.items()
+    )
+    return f'<div class="reg-tabs" id="reg-tabs">{btns}</div>'
+
+
 def get_rankings(climate, dests, month_idx):
     """Return top destinations for given month (1-indexed), sorted by score desc."""
     entries = []
@@ -250,6 +320,10 @@ footer a{color:#f5d060;text-decoration:none}
 .mode-tab{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s}
 .mode-tab.active{background:var(--gold);color:white;border-color:var(--gold)}
 .mode-tab:hover:not(.active){border-color:var(--gold)}
+.reg-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.reg-tab{padding:5px 12px;border-radius:14px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s}
+.reg-tab.active{background:var(--navy);color:white;border-color:var(--navy)}
+.reg-tab:hover:not(.active){border-color:var(--navy)}
 """
 
 FONTS = (
@@ -552,8 +626,10 @@ def generate_page(mi, lang, dests, climate):
         'sun': round(p['sun_h'], 1),
         'tmin': round(p['tmin'], 0),
         'tmax': round(p['tmax'], 0),
+        'reg': _reg(p['pays']),
     } for p in pool], ensure_ascii=False)
 
+    region_tabs = build_region_tabs(lang)
     table_body = build_table(entries, loc, mi)
     month_nav = build_month_nav(mi, loc)
     related = build_related(mi, loc)
@@ -569,7 +645,7 @@ def generate_page(mi, lang, dests, climate):
     rank_js = (
         '<script>(function(){'
         f'var POOL={pool_json};'
-        'var TOP=25;'
+        'var TOP=25;var CUR_REG="all";'
         f'var TH_GEN="{e(th_score_gen)}",TH_BEACH="{e(th_score_beach)}",TH_SKI="{e(th_score_ski)}";'
         f'var NO_BEACH="{e(no_beach_msg)}",NO_SKI="{e(no_ski_msg)}";'
         'function sc(s){return s>=8?"#16a34a":s>=6?"#d4a853":"#dc2626";}'
@@ -580,7 +656,7 @@ def generate_page(mi, lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'
         'if(!tb)return;'
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'
-        'var list=POOL.filter(function(d){return mode==="beach"?d.b!=null:mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;});'
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||d.reg===CUR_REG;var mOk=mode==="beach"?d.b!=null:mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;return rOk&&mOk;});'
         'list.sort(function(a,b){return (b[key]||0)-(a[key]||0);});'
         'list=list.slice(0,TOP);'
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'
@@ -608,6 +684,15 @@ def generate_page(mi, lang, dests, climate):
         'document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.remove("active");});'
         'btn.classList.add("active");'
         'render(btn.dataset.mode);'
+        '});'
+        'document.getElementById("reg-tabs").addEventListener("click",function(ev){'
+        'var btn=ev.target.closest(".reg-tab");'
+        'if(!btn)return;'
+        'document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.remove("active");});'
+        'btn.classList.add("active");'
+        'CUR_REG=btn.dataset.reg;'
+        'var activeMode=document.querySelector(".mode-tab.active");'
+        'render(activeMode?activeMode.dataset.mode:"meteo");'
         '});'
         'render("meteo");'  # init on load
         '})();</script>'
@@ -733,6 +818,7 @@ def generate_page(mi, lang, dests, climate):
 </header>
 <main class="page">
 {month_nav}
+{region_tabs}
 <div class="section">
 <div class="eyebrow">{sec_eyebrow}</div>
 <h2 class="sec-title">{sec_title}</h2>
@@ -952,6 +1038,7 @@ def generate_annual_page(lang, dests, climate):
     sec_intro = pil.get('all_year_intro', '')
     th_list   = pil['th']
     month_nav = build_month_nav(-1, loc, is_annual=True)
+    region_tabs = build_region_tabs(lang)
     footer    = footer_ranking_html(lang, [])
 
     # ── Mode tabs (Météo / Plage / Ski) ───────────────────────────────────────
@@ -1001,6 +1088,7 @@ def generate_annual_page(lang, dests, climate):
         'sun': round(e['sun_h'], 1),
         'tmin': round(e['tmin'], 0),
         'tmax': round(e['tmax'], 0),
+        'reg': _reg(e['pays']),
     } for e in annual_pool], ensure_ascii=False)
 
     mode_tabs = (
@@ -1015,7 +1103,7 @@ def generate_annual_page(lang, dests, climate):
     rank_js = (
         '<script>(function(){'+
         f'var POOL={pool_json};'+
-        'var TOP=25;'+
+        'var TOP=25;var CUR_REG="all";'+
         f'var TH_GEN="{_e(th_score_gen)}",TH_BEACH="{_e(th_score_beach)}",TH_SKI="{_e(th_score_ski)}";'+
         f'var NO_BEACH="{_e(no_beach_msg)}",NO_SKI="{_e(no_ski_msg)}";'+
         'function sc(s){return s>=8?"#16a34a":s>=6?"#d4a853":"#dc2626";}'+
@@ -1026,7 +1114,7 @@ def generate_annual_page(lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'+
         'if(!tb)return;'+
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'+
-        'var list=POOL.filter(function(d){return mode==="beach"?d.b!=null:mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;});'+
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||d.reg===CUR_REG;var mOk=mode==="beach"?d.b!=null:mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;return rOk&&mOk;});'+
         'list.sort(function(a,b){return (b[key]||0)-(a[key]||0);});'+
         'list=list.slice(0,TOP);'+
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'+
@@ -1054,6 +1142,15 @@ def generate_annual_page(lang, dests, climate):
         'document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.remove("active");});'+
         'btn.classList.add("active");'+
         'render(btn.dataset.mode);'+
+        '});'+
+        'document.getElementById("reg-tabs").addEventListener("click",function(ev){'+
+        'var btn=ev.target.closest(".reg-tab");'+
+        'if(!btn)return;'+
+        'document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.remove("active");});'+
+        'btn.classList.add("active");'+
+        'CUR_REG=btn.dataset.reg;'+
+        'var activeMode=document.querySelector(".mode-tab.active");'+
+        'render(activeMode?activeMode.dataset.mode:"meteo");'+
         '});'+
         'render("meteo");'+
         '})();</script>'
@@ -1102,6 +1199,7 @@ def generate_annual_page(lang, dests, climate):
 </header>
 <main class="page">
 {month_nav}
+{region_tabs}
 <div class="section">
 <div class="eyebrow">{eyebrow}</div>
 <h2 class="sec-title">{sec_title}</h2>
