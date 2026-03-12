@@ -363,6 +363,8 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
 .dh-sub-body{display:none;padding:6px 14px 12px}
 .dh-sub.open>.dh-sub-body{display:block}
 
+.dh-group-label{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8a7a5a;padding:10px 0 6px;border-bottom:1px solid #e8e0d0;margin-bottom:8px}
+.dh-group-label:not(:first-child){margin-top:16px}
 .dh-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:8px}
 .dh-card{background:#fff;border-radius:10px;padding:10px 12px;text-decoration:none;border:1px solid #e8e0d0;display:flex;align-items:center;gap:9px;transition:border-color .15s,box-shadow .15s}
 .dh-card:hover{border-color:#e8940a;box-shadow:0 2px 8px rgba(232,148,10,.12)}

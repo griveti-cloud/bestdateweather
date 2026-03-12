@@ -723,7 +723,9 @@
     "card_sub": "Wann reisen",
     "title": "Beste Reisezeit nach Reiseziel",
     "count_plural": "Reiseziele gefunden",
-    "count_singular": "Reiseziel gefunden"
+    "count_singular": "Reiseziel gefunden",
+    "mountain_group": "⛷️ Bergstationen",
+    "city_group": "🌆 Städte & Reiseziele"
   },
   "comp": {
     "th_month": "Monat",

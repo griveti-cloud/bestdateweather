@@ -635,41 +635,20 @@ def build_hub(destinations, loc):
                 L.append(f'<span class="dh-sub-label">{flag_img}{html_mod.escape(sub_label)}</span>')
                 L.append(f'<span class="dh-acc-meta"><span class="dh-sub-count">{sub_cnt}</span>')
                 L.append(f'<span class="dh-sub-chev">▾</span></span></button>')
-                L.append(f'<div class="dh-sub-body">')
-                # Split mountain vs other destinations
-                mountain_dests = [d for d in dests if d.get('mountain','').strip() == 'True']
-                city_dests     = [d for d in dests if d.get('mountain','').strip() != 'True']
-                lbl_mountain   = loc.get('hub', {}).get('mountain_group', '\u26f7\ufe0f Mountain resorts')
-                lbl_city       = loc.get('hub', {}).get('city_group', '\U0001f306 Cities & destinations')
-
-                def render_group(group, label, show_label):
-                    html = []
-                    if show_label:
-                        html.append(f'<div class="dh-group-label">{label}</div>')
-                    html.append('<div class="dh-grid">')
-                    for d in sorted(group, key=lambda x: x['nom_bare']):
-                        s = d[slug_key]
-                        n = d[name_key]
-                        if is_fr:
-                            cc = d['pays']
-                        elif lang == 'es':
-                            cc = d.get('country_es') or d['pays']
-                        elif lang == 'de':
-                            cc = d.get('country_de') or d['pays']
-                        else:
-                            cc = d.get('country_en') or d['pays']
-                        html.append(make_card(s, n, d['nom_bare'], d['flag'], cc, asset_prefix, page_prefix, loc))
-                    html.append('</div>')
-                    return html
-
-                use_groups = len(mountain_dests) >= 2 and len(city_dests) >= 1
-                if use_groups:
-                    if city_dests:
-                        L.extend(render_group(city_dests, lbl_city, True))
-                    L.extend(render_group(mountain_dests, lbl_mountain, True))
-                else:
-                    L.extend(render_group(dests, '', False))
-                L.append(f'</div></div>')
+                L.append(f'<div class="dh-sub-body"><div class="dh-grid">')
+                for d in sorted(dests, key=lambda x: x['nom_bare']):
+                    slug = d[slug_key]
+                    name = d[name_key]
+                    if is_fr:
+                        card_country = d['pays']
+                    elif lang == 'es':
+                        card_country = d.get('country_es') or d['pays']
+                    elif lang == 'de':
+                        card_country = d.get('country_de') or d['pays']
+                    else:
+                        card_country = d.get('country_en') or d['pays']
+                    L.append(make_card(slug, name, d['nom_bare'], d['flag'], card_country, asset_prefix, page_prefix, loc))
+                L.append(f'</div></div></div>')
         else:
             # Single sub-region: no sub-accordion, just grid
             dests = list(subs_data.values())[0]

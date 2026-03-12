@@ -718,7 +718,9 @@
     "card_sub": "Quand partir",
     "title": "Meilleure période par destination",
     "count_plural": "destinations trouvées",
-    "count_singular": "destination trouvée"
+    "count_singular": "destination trouvée",
+    "mountain_group": "⛷️ Stations de montagne",
+    "city_group": "🌆 Villes & destinations"
   },
   "comp": {
     "th_month": "Mois",

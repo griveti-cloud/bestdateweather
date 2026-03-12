@@ -718,7 +718,9 @@
     "card_sub": "Cuándo visitar",
     "title": "Mejor época para visitar por destino",
     "count_plural": "destinos encontrados",
-    "count_singular": "destino encontrado"
+    "count_singular": "destino encontrado",
+    "mountain_group": "⛷️ Estaciones de montaña",
+    "city_group": "🌆 Ciudades & destinos"
   },
   "comp": {
     "th_month": "Mes",

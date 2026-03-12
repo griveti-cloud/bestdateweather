@@ -720,7 +720,9 @@
     "card_sub": "When to visit",
     "title": "Best time to visit by destination",
     "count_plural": "destinations found",
-    "count_singular": "destination found"
+    "count_singular": "destination found",
+    "mountain_group": "⛷️ Mountain resorts",
+    "city_group": "🌆 Cities & destinations"
   },
   "comp": {
     "th_month": "Month",
