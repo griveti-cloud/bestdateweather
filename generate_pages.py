@@ -1051,8 +1051,22 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
                 tpl[_k] = c_to_f(tpl[_k])
 
     # ── Hero sub ──
-    tier = 'excellent' if score >= 8.5 else ('good' if score >= 7.0 else 'poor')
-    hero_sub = C['monthly_hero_subs'][tier][hash_var].format(**tpl)
+    if is_mountain and C.get('monthly_hero_subs_ski'):
+        from scoring import compute_ski_score
+        ski_sc_hero = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
+        best_ski_idx_hero = max(range(12), key=lambda i: compute_ski_score(months[i]['tmax'], months[i]['rain_pct'], months[i]['sun_h']))
+        tpl['best_ski_month_lc'] = month_lc(C, MONTHS[best_ski_idx_hero])
+        if ski_sc_hero >= 7.5:
+            ski_tier = 'ski_excellent'
+        elif ski_sc_hero >= 6.0:
+            ski_tier = 'ski_good'
+        else:
+            ski_tier = 'ski_poor'
+        ski_subs = C['monthly_hero_subs_ski'][ski_tier]
+        hero_sub = ski_subs[hash_var % len(ski_subs)].format(**tpl)
+    else:
+        tier = 'excellent' if score >= 8.5 else ('good' if score >= 7.0 else 'poor')
+        hero_sub = C['monthly_hero_subs'][tier][hash_var].format(**tpl)
 
     # ── Verdict text ──
     vtier = 'excellent' if score >= 9.0 else ('good' if score >= 7.0 else ('fair' if score >= 5.0 else 'poor'))
@@ -1642,7 +1656,7 @@ def main():
     parser.add_argument('--lang', required=True, choices=['fr', 'en', 'en-us', 'es', 'de'])
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--validate-only', action='store_true')
-    parser.add_argument('target', nargs='?', default=None, help='Single destination slug')
+    parser.add_argument('target', nargs='*', default=None, help='One or more destination slugs (omit for all)')
     args = parser.parse_args()
 
     cfg = build_config(args.lang)
@@ -1650,7 +1664,8 @@ def main():
 
     print(f"BestDateWeather — generate_pages.py --lang {args.lang}")
     print(f"Mode: {'validate-only' if args.validate_only else 'dry-run' if args.dry_run else 'production'}")
-    print(f"Target: {args.target or 'all destinations'}\n")
+    target_list = args.target if args.target else None
+    print(f"Target: {', '.join(target_list) if target_list else 'all destinations'}\n")
 
     dests, climate, cards, overrides, events = load_data(cfg)
 
@@ -1676,7 +1691,7 @@ def main():
     OUT = os.path.join(DIR, cfg['out_subdir']) if cfg['out_subdir'] else DIR
     os.makedirs(OUT, exist_ok=True)
 
-    slugs = [args.target] if args.target else list(dests.keys())
+    slugs = target_list if target_list else list(dests.keys())
     total_annual = total_monthly = 0
     errors_gen = []
 

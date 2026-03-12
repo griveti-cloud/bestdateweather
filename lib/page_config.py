@@ -185,6 +185,7 @@ def build_config(lang):
 
     # Content templates (monthly)
     cfg['monthly_hero_subs'] = loc.get('monthly_hero_subs', {})
+    cfg['monthly_hero_subs_ski'] = loc.get('monthly_hero_subs_ski', {})
     cfg['monthly_verdicts'] = loc.get('monthly_verdicts', {})
     cfg['monthly_oui_si'] = loc.get('monthly_oui_si', {})
     cfg['context_paragraphs'] = loc.get('context_paragraphs', {})

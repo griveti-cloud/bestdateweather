@@ -1159,5 +1159,22 @@
       "en_file": "best-caribbean-weather-2026.html",
       "es_file": "mejor-clima-caribe-2026.html"
     }
+  },
+  "monthly_hero_subs_ski": {
+    "ski_excellent": [
+      "Conditions ski idéales en {month_lc} {prep} {nom_bare} — neige et froid garantis.",
+      "{month} : pleine saison ski {prep} {nom_bare}. Conditions optimales.",
+      "Le meilleur de la saison ski {prep} {nom_bare} — {month_lc} ne déçoit pas."
+    ],
+    "ski_good": [
+      "Bonne période ski en {month_lc} {prep} {nom_bare} — enneigement généralement fiable.",
+      "{month} offre de bonnes conditions ski {prep} {nom_bare}.",
+      "Ski solide en {month_lc} {prep} {nom_bare} — conditions hivernales bien établies."
+    ],
+    "ski_poor": [
+      "Hors-saison ski {prep} {nom_bare} en {month_lc} — préférez {best_ski_month_lc}.",
+      "{month} n'est pas la saison ski {prep} {nom_bare}. Visez {best_ski_month_lc}.",
+      "Peu de neige en {month_lc} {prep} {nom_bare} — {best_ski_month_lc} est le pic ski."
+    ]
   }
 }
