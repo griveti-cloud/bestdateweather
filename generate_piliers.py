@@ -696,7 +696,7 @@ def generate_page(mi, lang, dests, climate):
         'var activeMode=document.querySelector(".mode-tab.active");'
         'render(activeMode?activeMode.dataset.mode:"meteo");'
         '});'
-        'render("meteo");'  # init on load
+        'var _p=new URLSearchParams(location.search);var _initMode=_p.get("mode")||"meteo";var _initReg=_p.get("reg")||"all";CUR_REG=_initReg;if(_initReg!=="all"){document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.toggle("active",b.dataset.reg===_initReg);});}if(_initMode!=="meteo"){document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.toggle("active",b.dataset.mode===_initMode);});}render(_initMode);document.querySelectorAll(".month-nav a").forEach(function(a){a.addEventListener("click",function(ev){var am=document.querySelector(".mode-tab.active");var ar=document.querySelector(".reg-tab.active");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";if(m==="meteo"&&r==="all")return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);location.href=url+(q.length?"?"+q.join("&"):"");});});'
         '})();</script>'
     )
 
@@ -1153,7 +1153,7 @@ def generate_annual_page(lang, dests, climate):
         'var activeMode=document.querySelector(".mode-tab.active");'+
         'render(activeMode?activeMode.dataset.mode:"meteo");'+
         '});'+
-        'render("meteo");'+
+        'var _p=new URLSearchParams(location.search);var _initMode=_p.get("mode")||"meteo";var _initReg=_p.get("reg")||"all";CUR_REG=_initReg;if(_initReg!=="all"){document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.toggle("active",b.dataset.reg===_initReg);});}if(_initMode!=="meteo"){document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.toggle("active",b.dataset.mode===_initMode);});}render(_initMode);document.querySelectorAll(".month-nav a").forEach(function(a){a.addEventListener("click",function(ev){var am=document.querySelector(".mode-tab.active");var ar=document.querySelector(".reg-tab.active");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";if(m==="meteo"&&r==="all")return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);location.href=url+(q.length?"?"+q.join("&"):"");});});'+
         '})();</script>'
     )
 
