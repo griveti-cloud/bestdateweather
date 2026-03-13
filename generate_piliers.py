@@ -110,16 +110,18 @@ REGION_MAP = {
     'République Dominicaine':'am','Saint-Vincent-et-les-Grenadines':'am',
     'Sainte-Lucie':'am','Trinité-et-Tobago':'am','Turks-et-Caïcos':'am',
     'Uruguay':'am',
-    # Asie & Moyen-Orient
-    'Arabie Saoudite':'as','Bahreïn':'as','Bhoutan':'as','Cambodge':'as',
-    'Chine':'as','Corée du Sud':'as','Émirats Arabes Unis':'as',
-    'Émirats arabes unis':'as','Inde':'as','Indonésie':'as','Iran':'as',
-    'Israël':'as','Japon':'as','Jordanie':'as','Kazakhstan':'as',
-    'Kirghizistan':'as','Koweït':'as','Laos':'as','Liban':'as','Malaisie':'as',
-    'Maldives':'as','Mongolie':'as','Myanmar':'as','Népal':'as','Oman':'as',
-    'Ouzbékistan':'as','Philippines':'as','Qatar':'as','Singapour':'as',
-    'Sri Lanka':'as','Tadjikistan':'as','Taïwan':'as','Thaïlande':'as',
-    'Turquie':'as','Vietnam':'as','Viêt Nam':'as','Yémen':'as',
+    # Moyen-Orient (+ Asie centrale + Turquie)
+    'Arabie Saoudite':'me','Bahreïn':'me','Émirats Arabes Unis':'me',
+    'Émirats arabes unis':'me','Iran':'me','Israël':'me','Jordanie':'me',
+    'Kazakhstan':'me','Kirghizistan':'me','Koweït':'me','Liban':'me',
+    'Oman':'me','Ouzbékistan':'me','Qatar':'me','Tadjikistan':'me',
+    'Turquie':'me','Yémen':'me',
+    # Asie
+    'Bhoutan':'as','Cambodge':'as','Chine':'as','Corée du Sud':'as',
+    'Inde':'as','Indonésie':'as','Japon':'as','Laos':'as','Malaisie':'as',
+    'Maldives':'as','Mongolie':'as','Myanmar':'as','Népal':'as',
+    'Philippines':'as','Singapour':'as','Sri Lanka':'as','Taïwan':'as',
+    'Thaïlande':'as','Vietnam':'as','Viêt Nam':'as',
     # Océanie
     'Australie':'oc','Fidji':'oc','Nouvelle-Calédonie':'oc','Nouvelle-Zélande':'oc',
     'Palaos':'oc','Papouasie-Nouvelle-Guinée':'oc','Polynésie française':'oc',
@@ -130,13 +132,13 @@ def _reg(pays): return REGION_MAP.get(pays, 'other')
 
 _REGION_LABELS = {
     'fr': {'all':'Monde','eu':'Europe','af':'Afrique',
-           'am':'Amériques','as':'Asie','oc':'Océanie'},
+           'am':'Amériques','as':'Asie','me':'Moyen-Orient','oc':'Océanie'},
     'en': {'all':'World','eu':'Europe','af':'Africa',
-           'am':'Americas','as':'Asia','oc':'Oceania'},
+           'am':'Americas','as':'Asia','me':'Middle East','oc':'Oceania'},
     'es': {'all':'Mundo','eu':'Europa','af':'África',
-           'am':'Américas','as':'Asia','oc':'Oceanía'},
+           'am':'Américas','as':'Asia','me':'Oriente Medio','oc':'Oceanía'},
     'de': {'all':'Welt','eu':'Europa','af':'Afrika',
-           'am':'Amerika','as':'Asien','oc':'Ozeanien'},
+           'am':'Amerika','as':'Asien','me':'Naher Osten','oc':'Ozeanien'},
 }
 
 def build_region_tabs(lang):
