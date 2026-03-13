@@ -301,7 +301,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .dest-link{color:var(--text);text-decoration:none;font-weight:600}
 .dest-link:hover{color:var(--gold)}
 .region-tag{display:inline-block;font-size:10px;color:var(--slate);background:var(--cream);padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle}
-.filter-panel{background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px 14px 0 0;padding:8px 14px 6px;margin-bottom:0;display:flex;flex-direction:column;gap:0}.filter-row{display:flex;flex-direction:column;gap:6px;padding:5px 0;border-bottom:1px solid var(--cream2)}.filter-row:last-child{border-bottom:none;padding-bottom:2px}.filter-label{font-size:9px;font-weight:700;color:var(--slate);letter-spacing:.08em;text-transform:uppercase}.filter-btns{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.month-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.month-nav a{padding:3px 7px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;background:white;border:1.5px solid var(--cream2);color:var(--navy);white-space:nowrap;flex-shrink:0}.month-nav a.active{background:var(--gold);color:white;border-color:var(--gold)}.month-nav a:hover{border-color:var(--gold)}
+.filter-panel{background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px 14px 0 0;padding:8px 14px 6px;margin-bottom:0;display:flex;flex-direction:column;gap:0}.filter-row{display:flex;flex-direction:column;gap:6px;padding:5px 0;border-bottom:1px solid var(--cream2)}.filter-row:last-child{border-bottom:none;padding-bottom:2px}.filter-label{font-size:9px;font-weight:700;color:var(--slate);letter-spacing:.08em;text-transform:uppercase}.filter-btns{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.month-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.month-nav a{padding:5px 10px;border-radius:10px;font-size:12px;font-weight:600;text-decoration:none;background:white;border:1.5px solid var(--cream2);color:var(--navy);white-space:nowrap;flex-shrink:0}.month-nav a.active{background:var(--gold);color:white;border-color:var(--gold)}.month-nav a:hover{border-color:var(--gold)}
 .filter-panel+.section{border:1.5px solid var(--cream2);border-top:none;border-radius:0 0 14px 14px;padding:12px 14px 0;margin-bottom:16px}.cta-box{background:linear-gradient(135deg,#d4a853,#c69a3a);border-radius:14px;padding:24px;text-align:center;margin:28px 0}
 .cta-box a{color:white;font-weight:700;font-size:15px;text-decoration:none}
 .related-pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px}
@@ -315,11 +315,11 @@ footer a{color:#f5d060;text-decoration:none}
 @media(pointer:coarse),(max-width:768px){.nav-share{display:flex}}
 @media(max-width:640px){.rt th:nth-child(5),.rt td:nth-child(5){display:none}.hero-stats{gap:20px}}
 .mode-tabs{display:flex;gap:6px;flex-wrap:wrap}
-.mode-tab{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:14px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s}
-.mode-tab.active{background:var(--gold);color:white;border-color:var(--gold)}
+.mode-tab{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s}
+.mode-tab.active{background:var(--gold);color:white;border-color:var(--gold);border-radius:10px}
 .mode-tab:hover:not(.active){border-color:var(--gold)}
 .reg-tabs{display:flex;gap:6px;flex-wrap:wrap}
-.reg-tab{padding:3px 9px;border-radius:10px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s;white-space:nowrap}
+.reg-tab{padding:5px 11px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s;white-space:nowrap}
 .reg-tab.active{background:var(--gold);color:white;border-color:var(--gold)}
 .reg-tab:hover:not(.active){border-color:var(--gold)}
 """
