@@ -129,14 +129,14 @@ REGION_MAP = {
 def _reg(pays): return REGION_MAP.get(pays, 'other')
 
 _REGION_LABELS = {
-    'fr': {'all':'🌍 Monde','eu':'🇪🇺 Europe','af':'🌍 Afrique',
-           'am':'🌎 Amériques','as':'🌏 Asie','oc':'🌊 Océanie'},
-    'en': {'all':'🌍 World','eu':'🇪🇺 Europe','af':'🌍 Africa',
-           'am':'🌎 Americas','as':'🌏 Asia','oc':'🌊 Oceania'},
-    'es': {'all':'🌍 Mundo','eu':'🇪🇺 Europa','af':'🌍 África',
-           'am':'🌎 Américas','as':'🌏 Asia','oc':'🌊 Oceanía'},
-    'de': {'all':'🌍 Welt','eu':'🇪🇺 Europa','af':'🌍 Afrika',
-           'am':'🌎 Amerika','as':'🌏 Asien','oc':'🌊 Ozeanien'},
+    'fr': {'all':'Monde','eu':'Europe','af':'Afrique',
+           'am':'Amériques','as':'Asie','oc':'Océanie'},
+    'en': {'all':'World','eu':'Europe','af':'Africa',
+           'am':'Americas','as':'Asia','oc':'Oceania'},
+    'es': {'all':'Mundo','eu':'Europa','af':'África',
+           'am':'Américas','as':'Asia','oc':'Oceanía'},
+    'de': {'all':'Welt','eu':'Europa','af':'Afrika',
+           'am':'Amerika','as':'Asien','oc':'Ozeanien'},
 }
 
 def build_region_tabs(lang):
