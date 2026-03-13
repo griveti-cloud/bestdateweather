@@ -4436,6 +4436,36 @@
             "source": "/es/yerevan-clima-diciembre.html",
             "destination": "/es/erevan-clima-diciembre.html",
             "permanent": true
+        },
+        {
+            "source": "/de",
+            "destination": "/de/app.html",
+            "permanent": false
+        },
+        {
+            "source": "/de/",
+            "destination": "/de/app.html",
+            "permanent": false
+        },
+        {
+            "source": "/es",
+            "destination": "/es/app.html",
+            "permanent": false
+        },
+        {
+            "source": "/es/",
+            "destination": "/es/app.html",
+            "permanent": false
+        },
+        {
+            "source": "/meilleure-periode-moorea-en-octobre.html",
+            "destination": "/moorea-meteo-octobre.html",
+            "permanent": true
+        },
+        {
+            "source": "/meilleure-periode-hammamet-en-novembre.html",
+            "destination": "/hammamet-meteo-novembre.html",
+            "permanent": true
         }
     ],
     "cleanUrls": false
