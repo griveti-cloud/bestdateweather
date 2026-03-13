@@ -16,7 +16,7 @@ from scoring import compute_ski_score
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.page_config import load_locale
-from generate_classements import COUNTRY_SLUGS, dedup_country
+from generate_classements import COUNTRY_SLUGS, NON_EUROPE_SLUGS, dedup_country
 
 ROOT = Path(__file__).parent
 TODAY = date.today().isoformat()
@@ -285,7 +285,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .hero-sub{font-size:15px;opacity:.75;max-width:600px;margin:0 auto 20px}
 .hero-stats{display:flex;justify-content:center;gap:36px;margin-top:16px}
 .hstat{text-align:center}.hstat-val{display:block;font-size:22px;font-weight:700;color:var(--gold)}.hstat-lbl{font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:1px}
-.page{max-width:960px;margin:0 auto;padding:28px 20px 40px}
+.page{max-width:960px;margin:0 auto;padding:28px 16px 40px}
 .section{margin-bottom:36px}
 .eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#9c5f00;font-weight:700;margin-bottom:6px}
 .sec-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(18px,4vw,24px);margin-bottom:8px}
@@ -294,7 +294,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .rt th{background:var(--navy);color:white;padding:10px 10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;position:sticky;top:0;white-space:nowrap}
 .rt td{padding:9px 10px;border-bottom:1px solid var(--cream2);vertical-align:middle;white-space:nowrap}
 .rt tr:hover{background:#fef9f0}
-.rt .rank{font-weight:700;font-size:15px;text-align:center;width:40px}
+.rt .rank{font-weight:700;font-size:15px;text-align:center;width:36px;padding-left:4px}
 .rt .sc{font-weight:700;color:var(--navy);font-size:14px;white-space:nowrap}
 .rt td:nth-child(2){white-space:normal;min-width:130px}
 .dest-link{color:var(--text);text-decoration:none;font-weight:600}
@@ -627,6 +627,7 @@ def generate_page(mi, lang, dests, climate):
         'tmin': round(p['tmin'], 0),
         'tmax': round(p['tmax'], 0),
         'reg': _reg(p['pays']),
+        'xeu': 1 if p['slug_fr'] in NON_EUROPE_SLUGS else 0,
     } for p in pool], ensure_ascii=False)
 
     region_tabs = build_region_tabs(lang)
@@ -656,7 +657,7 @@ def generate_page(mi, lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'
         'if(!tb)return;'
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||d.reg===CUR_REG;var mOk=mode==="beach"?d.b!=null:mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;return rOk&&mOk;});'
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?d.b!=null:mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;return rOk&&mOk;});'
         'list.sort(function(a,b){return (b[key]||0)-(a[key]||0);});'
         'list=list.slice(0,TOP);'
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'
@@ -669,7 +670,7 @@ def generate_page(mi, lang, dests, climate):
         'var tmp=d.tmin!=null?(d.tmin.toFixed(0)+"°–"+d.tmax.toFixed(0)+"°"):"—";'
         'html+="<tr>"'
         '+"<td class=\'rank\'>"+ri(i+1)+"</td>"'
-        '+"<td><img src=\'"+d.ap+"\' width=\'16\' height=\'12\' alt=\'\' style=\'vertical-align:middle;margin-right:6px;border-radius:1px\'><a href=\'"+d.h+"\' class=\'dest-link\'>"+d.n+"</a>"+(d.p?"<span class=\'region-tag\'>"+d.p+"</span>":"")+"</td>"'
+        '+"<td><img src=\'"+d.ap+"\' width=\'16\' height=\'12\' alt=\'\' style=\'vertical-align:middle;margin-right:6px;border-radius:1px\'><a href=\'"+d.h+"\' class=\'dest-link\'>"+d.n+"</a>"+(d.p?"<span style=\'display:block;font-size:11px;color:#5a6c7d\'>"+d.p+"</span>":"")+"</td>"'
         '+"<td class=\'sc\' style=\'color:"+sc(v)+"\'>"+v.toFixed(1)+"<span>/10</span></td>"'
         '+"<td>"+tmp+"</td>"'
         '+"<td>"+(d.r!=null?d.r.toFixed(0)+"%":"—")+"</td>"'
@@ -1089,6 +1090,7 @@ def generate_annual_page(lang, dests, climate):
         'tmin': round(e['tmin'], 0),
         'tmax': round(e['tmax'], 0),
         'reg': _reg(e['pays']),
+        'xeu': 1 if e.get('slug', e.get('slug_fr','')) in NON_EUROPE_SLUGS else 0,
     } for e in annual_pool], ensure_ascii=False)
 
     mode_tabs = (
@@ -1114,7 +1116,7 @@ def generate_annual_page(lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'+
         'if(!tb)return;'+
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'+
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||d.reg===CUR_REG;var mOk=mode==="beach"?d.b!=null:mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;return rOk&&mOk;});'+
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?d.b!=null:mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;return rOk&&mOk;});'+
         'list.sort(function(a,b){return (b[key]||0)-(a[key]||0);});'+
         'list=list.slice(0,TOP);'+
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'+
@@ -1127,7 +1129,7 @@ def generate_annual_page(lang, dests, climate):
         'var tmp=d.tmin!=null?(d.tmin.toFixed(0)+"°–"+d.tmax.toFixed(0)+"°"):"—";'+
         'html+="<tr>"'+
         '+"<td class=\'rank\'>"+ri(i+1)+"</td>"'+
-        '+"<td><img src=\'"+d.ap+"\' width=\'16\' height=\'12\' alt=\'\'  style=\'vertical-align:middle;margin-right:6px;border-radius:1px\'><a href=\'"+d.h+"\' class=\'dest-link\'>"+d.n+"</a>"+(d.p?"<span class=\'region-tag\'>"+d.p+"</span>":"")+"</td>"'+
+        '+"<td><img src=\'"+d.ap+"\' width=\'16\' height=\'12\' alt=\'\'  style=\'vertical-align:middle;margin-right:6px;border-radius:1px\'><a href=\'"+d.h+"\' class=\'dest-link\'>"+d.n+"</a>"+(d.p?"<span style=\'display:block;font-size:11px;color:#5a6c7d\'>"+d.p+"</span>":"")+"</td>"'+
         '+"<td class=\'sc\' style=\'color:"+sc(v)+"\'>"+v.toFixed(1)+"<span>/10</span></td>"'+
         '+"<td>"+tmp+"</td>"'+
         '+"<td>"+(d.r!=null?d.r.toFixed(0)+"%":"—")+"</td>"'+
