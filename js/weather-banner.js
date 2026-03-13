@@ -674,7 +674,7 @@
         '<div class="wb-section-head">' +
           '<span class="wb-section-title">' + t.recentTitle + '</span>' +
           '<div style="display:flex;gap:8px;align-items:center">' +
-            (t.rankingUrl ? '<a href="' + t.rankingUrl + '" class="wb-section-action" style="text-decoration:none;font-weight:700;color:var(--gold)">' + t.rankingTitle + '</a>' : '') +
+            (t.rankingUrl ? '<a href="' + t.rankingUrl + '" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px;background:var(--gold);color:#fff;font-size:11px;font-weight:700;font-family:DM Sans,sans-serif;padding:3px 9px;border-radius:20px;white-space:nowrap;line-height:1.4">' + t.rankingTitle + ' ›</a>' : '') +
             '<button class="wb-section-action" onclick="wbClearRecent()">' + t.clearAll + '</button>' +
           '</div>' +
         '</div>' +
