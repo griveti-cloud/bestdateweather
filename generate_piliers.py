@@ -1201,9 +1201,6 @@ def generate_annual_page(lang, dests, climate):
 <main class="page">
 <div class="filter-panel"><div class="filter-row"><span class="filter-label">{fp_period}</span><div class="filter-btns">{month_nav}</div></div><div class="filter-row"><span class="filter-label">{fp_region}</span><div class="filter-btns" id="reg-tabs">{region_tabs_inner}</div></div><div class="filter-row"><span class="filter-label">{fp_type}</span><div class="filter-btns" id="mode-tabs">{mode_tabs_inner}</div></div></div>
 <div class="section">
-<div class="eyebrow">{eyebrow}</div>
-<h2 class="sec-title">{sec_title}</h2>
-<p class="sec-intro">{sec_intro}</p>
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
 <div style="overflow-x:auto"><table class="rt" aria-label="{sec_title}">
 <thead id="rt-head"><tr>{"".join(f"<th>{c}</th>" for c in th_list)}</tr></thead>
