@@ -1191,5 +1191,8 @@
     ]
   },
   "legend_ideal_mtn": "Ideal (ski or summer)",
-  "legend_off_mtn": "Off season"
+  "legend_off_mtn": "Off season",
+  "fp_period": "PERIOD",
+  "fp_region": "REGION",
+  "fp_type": "TYPE"
 }

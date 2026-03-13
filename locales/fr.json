@@ -1189,5 +1189,8 @@
     ]
   },
   "legend_ideal_mtn": "Idéal (ski ou été)",
-  "legend_off_mtn": "Hors saison"
+  "legend_off_mtn": "Hors saison",
+  "fp_period": "PÉRIODE",
+  "fp_region": "RÉGION",
+  "fp_type": "TYPE"
 }

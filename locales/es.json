@@ -1210,5 +1210,8 @@
     ]
   },
   "legend_ideal_mtn": "Ideal (esquí o verano)",
-  "legend_off_mtn": "Temporada baja"
+  "legend_off_mtn": "Temporada baja",
+  "fp_period": "PERÍODO",
+  "fp_region": "REGIÓN",
+  "fp_type": "TIPO"
 }

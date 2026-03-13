@@ -145,7 +145,7 @@ def build_region_tabs(lang):
         f'<button class="reg-tab{" active" if k=="all" else ""}" data-reg="{k}">{v}</button>'
         for k, v in labels.items()
     )
-    return f'<div class="reg-tabs" id="reg-tabs">{btns}</div>'
+    return btns  # juste les boutons — le wrapper est dans filter-panel
 
 
 def get_rankings(climate, dests, month_idx):
@@ -301,10 +301,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .dest-link{color:var(--text);text-decoration:none;font-weight:600}
 .dest-link:hover{color:var(--gold)}
 .region-tag{display:inline-block;font-size:10px;color:var(--slate);background:var(--cream);padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle}
-.month-nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:28px;overflow-x:auto;padding-bottom:4px}
-.month-nav a{padding:7px 11px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;background:white;border:1.5px solid var(--cream2);color:var(--navy);white-space:nowrap;flex-shrink:0}
-.month-nav a.active{background:var(--gold);color:white;border-color:var(--gold)}
-.month-nav a:hover{border-color:var(--gold)}
+.filter-panel{background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px;padding:12px 16px;margin-bottom:24px;display:flex;flex-direction:column;gap:0}.filter-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--cream2)}.filter-row:last-child{border-bottom:none;padding-bottom:2px}.filter-label{font-size:10px;font-weight:700;color:var(--slate);letter-spacing:.08em;min-width:58px;padding-top:8px;flex-shrink:0;text-transform:uppercase}.filter-btns{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.month-nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.month-nav a{padding:6px 10px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;background:white;border:1.5px solid var(--cream2);color:var(--navy);white-space:nowrap;flex-shrink:0}.month-nav a.active{background:var(--gold);color:white;border-color:var(--gold)}.month-nav a:hover{border-color:var(--gold)}
 .cta-box{background:linear-gradient(135deg,#d4a853,#c69a3a);border-radius:14px;padding:24px;text-align:center;margin:28px 0}
 .cta-box a{color:white;font-weight:700;font-size:15px;text-decoration:none}
 .related-pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px}
@@ -317,11 +314,11 @@ footer a{color:#f5d060;text-decoration:none}
 .nav-share{display:none}
 @media(pointer:coarse),(max-width:768px){.nav-share{display:flex}}
 @media(max-width:640px){.rt th:nth-child(5),.rt td:nth-child(5){display:none}.hero-stats{gap:20px}}
-.mode-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.mode-tabs{display:flex;gap:6px;flex-wrap:wrap}
 .mode-tab{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s}
 .mode-tab.active{background:var(--gold);color:white;border-color:var(--gold)}
 .mode-tab:hover:not(.active){border-color:var(--gold)}
-.reg-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.reg-tabs{display:flex;gap:6px;flex-wrap:wrap}
 .reg-tab{padding:5px 12px;border-radius:14px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s;white-space:nowrap}
 .reg-tab.active{background:var(--gold);color:white;border-color:var(--gold)}
 .reg-tab:hover:not(.active){border-color:var(--gold)}
@@ -390,7 +387,7 @@ def build_month_nav(mi, loc, is_annual=False):
     for i in range(12):
         active = ' class="active"' if (not is_annual and i == mi) else ''
         links += f'<a href="{prefix}{month_url[i]}.html"{active}>{months[i][:3]}</a>'
-    return f'<nav class="month-nav" aria-label="{pil["months_label"]}">{links}</nav>'
+    return f'<div class="month-nav" aria-label="{pil["months_label"]}">{links}</div>'
 
 def build_related(mi, loc):
     """Build related ranking cards."""
@@ -636,13 +633,15 @@ def generate_page(mi, lang, dests, climate):
     month_nav = build_month_nav(mi, loc)
     related = build_related(mi, loc)
 
-    mode_tabs = (
-        f'<div class="mode-tabs" id="mode-tabs">'
+    mode_tabs_inner = (
         f'<button class="mode-tab active" data-mode="meteo">{tab_meteo}</button>'
         f'<button class="mode-tab" data-mode="beach">{tab_beach}</button>'
         f'<button class="mode-tab" data-mode="ski">{tab_ski}</button>'
-        f'</div>'
     )
+    region_tabs_inner = region_tabs
+    fp_period = loc.get('fp_period', 'PÉRIODE')
+    fp_region = loc.get('fp_region', 'RÉGION')
+    fp_type   = loc.get('fp_type',   'TYPE')
 
     rank_js = (
         '<script>(function(){'
@@ -819,13 +818,7 @@ def generate_page(mi, lang, dests, climate):
 </div>
 </header>
 <main class="page">
-{month_nav}
-{region_tabs}
-<div class="section">
-<div class="eyebrow">{sec_eyebrow}</div>
-<h2 class="sec-title">{sec_title}</h2>
-<p class="sec-intro">{sec_intro}</p>
-{mode_tabs}
+<div class="filter-panel"><div class="filter-row"><span class="filter-label">{fp_period}</span><div class="filter-btns">{month_nav}</div></div><div class="filter-row"><span class="filter-label">{fp_region}</span><div class="filter-btns" id="reg-tabs">{region_tabs_inner}</div></div><div class="filter-row"><span class="filter-label">{fp_type}</span><div class="filter-btns" id="mode-tabs">{mode_tabs_inner}</div></div></div><div class="section"><div class="eyebrow">{sec_eyebrow}</div><h2 class="sec-title">{sec_title}</h2><p class="sec-intro">{sec_intro}</p>
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
 <div style="overflow-x:auto"><table class="rt" aria-label="Classement"><thead id="rt-head"><tr>{"".join(f"<th>{c}</th>" for c in loc['pilier']['th'])}</tr></thead><tbody id="rt-body">{table_body}</tbody></table></div>
 </div>
@@ -1095,13 +1088,15 @@ def generate_annual_page(lang, dests, climate):
         'xeu': 1 if e.get('slug', e.get('slug_fr','')) in NON_EUROPE_SLUGS else 0,
     } for e in annual_pool], ensure_ascii=False)
 
-    mode_tabs = (
-        f'<div class="mode-tabs" id="mode-tabs">'
+    mode_tabs_inner = (
         f'<button class="mode-tab active" data-mode="meteo">{tab_meteo}</button>'
         f'<button class="mode-tab" data-mode="beach">{tab_beach}</button>'
         f'<button class="mode-tab" data-mode="ski">{tab_ski}</button>'
-        f'</div>'
     )
+    region_tabs_inner = build_region_tabs(lang)
+    fp_period = loc.get('fp_period', 'PÉRIODE')
+    fp_region = loc.get('fp_region', 'RÉGION')
+    fp_type   = loc.get('fp_type',   'TYPE')
 
     def _e(s): return s.replace('"', '&quot;')
     rank_js = (
@@ -1202,13 +1197,11 @@ def generate_annual_page(lang, dests, climate):
 </div>
 </header>
 <main class="page">
-{month_nav}
-{region_tabs}
+<div class="filter-panel"><div class="filter-row"><span class="filter-label">{fp_period}</span><div class="filter-btns">{month_nav}</div></div><div class="filter-row"><span class="filter-label">{fp_region}</span><div class="filter-btns" id="reg-tabs">{region_tabs_inner}</div></div><div class="filter-row"><span class="filter-label">{fp_type}</span><div class="filter-btns" id="mode-tabs">{mode_tabs_inner}</div></div></div>
 <div class="section">
 <div class="eyebrow">{eyebrow}</div>
 <h2 class="sec-title">{sec_title}</h2>
 <p class="sec-intro">{sec_intro}</p>
-{mode_tabs}
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
 <div style="overflow-x:auto"><table class="rt" aria-label="{sec_title}">
 <thead id="rt-head"><tr>{"".join(f"<th>{c}</th>" for c in th_list)}</tr></thead>

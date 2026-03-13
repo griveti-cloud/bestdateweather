@@ -1201,5 +1201,8 @@
     ]
   },
   "legend_ideal_mtn": "Ideal (Ski oder Sommer)",
-  "legend_off_mtn": "Nebensaison"
+  "legend_off_mtn": "Nebensaison",
+  "fp_period": "ZEITRAUM",
+  "fp_region": "REGION",
+  "fp_type": "TYP"
 }
