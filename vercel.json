@@ -32,6 +32,77 @@
     ],
     "redirects": [
         {
+            "source": "/en/best-time-to-visit-bali-in-:month.html",
+            "destination": "/en/bali-weather-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/en/best-time-to-visit-luxor-in-:month.html",
+            "destination": "/en/luxor-weather-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/en/best-time-to-visit-french-basque-country-in-:month.html",
+            "destination": "/en/french-basque-country-weather-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/en/best-time-to-visit-koh-phi-phi-in-:month.html",
+            "destination": "/en/koh-phi-phi-weather-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/en/best-time-to-visit-mayotte-in-:month.html",
+            "destination": "/en/mayotte-weather-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/en/best-time-to-visit-pondicherry-in-:month.html",
+            "destination": "/en/pondicherry-weather-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/en/best-time-to-visit-varanasi-in-:month.html",
+            "destination": "/en/varanasi-weather-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/meilleure-periode-pays-basque-en-:month.html",
+            "destination": "/meilleure-periode-pays-basque.html",
+            "permanent": true
+        },
+        {
+            "source": "/:path*",
+            "has": [
+                {
+                    "type": "host",
+                    "value": "www.bestdateweather.com"
+                }
+            ],
+            "destination": "https://bestdateweather.com/:path*",
+            "permanent": true
+        },
+        {
+            "source": "/venice-meteo-:month.html",
+            "destination": "/venise-meteo-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/zante-meteo-novembre.html",
+            "destination": "/zakynthos-meteo-novembre.html",
+            "permanent": true
+        },
+        {
+            "source": "/zante-meteo-:month.html",
+            "destination": "/zakynthos-meteo-:month.html",
+            "permanent": true
+        },
+        {
+            "source": "/en/majorca-weather-:month.html",
+            "destination": "/en/mallorca-weather-:month.html",
+            "permanent": true
+        },
+        {
             "source": "/cusco-ville-meteo-:month.html",
             "destination": "/cusco-meteo-:month.html",
             "permanent": true
