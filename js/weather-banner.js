@@ -22,7 +22,7 @@
       chosenCity: "ville choisie", changeCity: "Changer de ville",
       cityTitle: "Ville du bandeau météo", typeCity: "Tapez une ville\u2026",
       usePosition: "Utiliser ma position", currently: "Actuellement",
-      recentTitle: "Recherches récentes", clearAll: "Tout effacer",
+      recentTitle: "Recherches récentes", clearAll: "Tout effacer", rankingTitle: "Où partir ?", rankingUrl: "/meilleures-destinations-meteo.html",
       suggestTitle: "Pour vous", suggestSub: "même région climatique",
       geoPrompt: "Où êtes-vous ? Entrez votre ville pour la météo locale",
       geoPlaceholder: "Votre ville…",
@@ -43,7 +43,7 @@
       chosenCity: "chosen city", changeCity: "Change city",
       cityTitle: "Banner weather city", typeCity: "Type a city\u2026",
       usePosition: "Use my location", currently: "Currently",
-      recentTitle: "Recent searches", clearAll: "Clear all",
+      recentTitle: "Recent searches", clearAll: "Clear all", rankingTitle: "Where to go?", rankingUrl: "/en/best-weather-destinations.html",
       suggestTitle: "For you", suggestSub: "similar climate region",
       geoPrompt: "Where are you? Enter your city for local weather",
       geoPlaceholder: "Your city…",
@@ -64,7 +64,7 @@
       chosenCity: "ciudad elegida", changeCity: "Cambiar de ciudad",
       cityTitle: "Ciudad del banner meteorológico", typeCity: "Escribe una ciudad\u2026",
       usePosition: "Usar mi ubicación", currently: "Actualmente",
-      recentTitle: "Búsquedas recientes", clearAll: "Borrar todo",
+      recentTitle: "Búsquedas recientes", clearAll: "Borrar todo", rankingTitle: "¿Dónde ir?", rankingUrl: "/es/mejores-destinos-climaticos.html",
       suggestTitle: "Para ti", suggestSub: "región climática similar",
       geoPrompt: "¿Dónde estás? Introduce tu ciudad para el tiempo local",
       geoPlaceholder: "Tu ciudad\u2026",
@@ -85,7 +85,7 @@
       chosenCity: "gewählte Stadt", changeCity: "Stadt ändern",
       cityTitle: "Stadt für Wetterbanner", typeCity: "Stadt eingeben\u2026",
       usePosition: "Meinen Standort verwenden", currently: "Aktuell",
-      recentTitle: "Letzte Suchen", clearAll: "Alle löschen",
+      recentTitle: "Letzte Suchen", clearAll: "Alle löschen", rankingTitle: "Wohin reisen?", rankingUrl: "/de/beste-reiseziele-klima.html",
       suggestTitle: "Für Sie", suggestSub: "ähnliche Klimazone",
       geoPrompt: "Wo sind Sie? Geben Sie Ihre Stadt für das lokale Wetter ein",
       geoPlaceholder: "Ihre Stadt\u2026",
@@ -673,7 +673,10 @@
       '<div class="wb-section">' +
         '<div class="wb-section-head">' +
           '<span class="wb-section-title">' + t.recentTitle + '</span>' +
-          '<button class="wb-section-action" onclick="wbClearRecent()">' + t.clearAll + '</button>' +
+          '<div style="display:flex;gap:8px;align-items:center">' +
+            (t.rankingUrl ? '<a href="' + t.rankingUrl + '" class="wb-section-action" style="text-decoration:none;font-weight:700;color:var(--gold)">' + t.rankingTitle + '</a>' : '') +
+            '<button class="wb-section-action" onclick="wbClearRecent()">' + t.clearAll + '</button>' +
+          '</div>' +
         '</div>' +
         cards +
       '</div>';
