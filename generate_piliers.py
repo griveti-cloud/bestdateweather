@@ -262,6 +262,7 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=20):
     beach_candidates = [e for e in all_entries
                         if e.get('beach_score') is not None
                         and e.get('is_coastal', False)
+                        and (e['beach_score'] or 0) > 4.0
                         and e['slug_fr'] not in all_slugs]
     beach_candidates.sort(key=lambda x: (-(x['beach_score'] or 0), x['nom_bare']))
     seen_beach_countries: dict = {}
@@ -657,7 +658,7 @@ def generate_page(mi, lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'
         'if(!tb)return;'
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?d.b!=null:mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;return rOk&&mOk;});'
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>4.0):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;return rOk&&mOk;});'
         'list.sort(function(a,b){return (b[key]||0)-(a[key]||0);});'
         'list=list.slice(0,TOP);'
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'
@@ -920,6 +921,7 @@ def get_annual_pool(climate, dests, pool_size=80, ski_boost=20):
     beach_candidates = [e for e in all_entries
                         if e.get('beach_score') is not None
                         and e.get('is_coastal', False)
+                        and (e['beach_score'] or 0) > 4.0
                         and e['slug_fr'] not in all_slugs]
     beach_candidates.sort(key=lambda x: (-(x['beach_score'] or 0), x['nom_bare']))
     seen_bc: dict = {}
@@ -1116,7 +1118,7 @@ def generate_annual_page(lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'+
         'if(!tb)return;'+
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'+
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?d.b!=null:mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;return rOk&&mOk;});'+
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>4.0):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=15):true;return rOk&&mOk;});'+
         'list.sort(function(a,b){return (b[key]||0)-(a[key]||0);});'+
         'list=list.slice(0,TOP);'+
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'+

@@ -316,14 +316,19 @@ def raw_beach_score(tmax: float, rain_pct: float, sun_h: float, sea_temp: float)
     Score brut plage [0, 1].
 
     Poids :
-      25%  température air  → t_beach(tmax)
-      25%  température mer  → t_sea(sea_temp)
-      30%  pluie            → 1 - rain_pct / 100 (pénalité forte, plage = extérieur)
+      30%  température air  → t_beach(tmax)      [↑ vs ancien 25%]
+      30%  température mer  → t_sea(sea_temp)     [↑ vs ancien 25%]
+      20%  pluie            → 1 - rain_pct / 100  [↓ vs ancien 30%]
       20%  soleil           → sun_h / 15
+
+    Ratio pluie réduit car rain_pct mesure % jours avec pluie (pas durée) :
+    les averses tropicales courtes (Caraïbes, Asie) ne gâchent pas la plage
+    autant qu'une journée couverte méditerranéenne ou nordique.
+    Température air+mer = critère dominant pour le confort balnéaire.
     """
-    return (0.25 * t_beach(tmax)
-          + 0.25 * t_sea(sea_temp)
-          + 0.30 * max(0.0, 1.0 - rain_pct / 100.0)
+    return (0.30 * t_beach(tmax)
+          + 0.30 * t_sea(sea_temp)
+          + 0.20 * max(0.0, 1.0 - rain_pct / 100.0)
           + 0.20 * min(1.0, sun_h / 15.0))
 
 
