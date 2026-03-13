@@ -660,7 +660,7 @@ def generate_page(mi, lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'
         'if(!tb)return;'
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>4.0):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):true;return rOk&&mOk;});'
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>4.0):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);return rOk&&mOk;});'
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'
         'list=list.slice(0,TOP);'
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'
@@ -1117,7 +1117,7 @@ def generate_annual_page(lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'+
         'if(!tb)return;'+
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'+
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>4.0):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):true;return rOk&&mOk;});'+
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>4.0):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);return rOk&&mOk;});'+
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
         'list=list.slice(0,TOP);'+
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'+
