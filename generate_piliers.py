@@ -278,7 +278,7 @@ CSS = r"""
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--navy:#1a2332;--gold:#d4a853;--cream:#faf6ef;--cream2:#ede4d3;--text:#2c3e50;--slate:#5a6c7d;--slate2:#8899a6}
 body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--text);line-height:1.6}
-.hero{background:var(--navy);color:white;padding:48px 20px 36px;text-align:center}
+.pillar-hero{background:var(--navy);color:white;padding:48px 20px 36px;text-align:center}
 .hero-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:2.5px;color:#9c5f00;margin-bottom:12px;font-weight:700}
 .hero-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(24px,5vw,38px);margin-bottom:10px;line-height:1.2}
 .hero-title em{color:var(--gold);font-style:italic}
@@ -806,7 +806,7 @@ def generate_page(mi, lang, dests, climate):
   <a href="{gen["home_url"]}" style="display:inline-block;background:#d4a853;color:white;font-size:12px;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none">{gen["try_app_label"]}</a>
  </div>
 </nav>
-<header class="hero">
+<header class="pillar-hero">
 <div class="hero-eyebrow">{pil["hero_eyebrow_prefix"]}{YEAR}</div>
 <h1 class="hero-title">{h1}</h1>
 <p class="hero-sub">{hero_sub}</p>
@@ -1187,7 +1187,7 @@ def generate_annual_page(lang, dests, climate):
   <a href="{gen['home_url']}" style="display:inline-block;background:#d4a853;color:white;font-size:12px;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none">{gen['try_app_label']}</a>
  </div>
 </nav>
-<header class="hero">
+<header class="pillar-hero">
 <p class="hero-eyebrow">{eyebrow}</p>
 <h1 class="hero-title">{h1}</h1>
 <p class="hero-sub">{sub}</p>
