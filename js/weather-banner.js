@@ -673,10 +673,7 @@
       '<div class="wb-section">' +
         '<div class="wb-section-head">' +
           '<span class="wb-section-title">' + t.recentTitle + '</span>' +
-          '<div style="display:flex;gap:8px;align-items:center">' +
-            (t.rankingUrl ? '<a href="' + t.rankingUrl + '" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px;background:var(--gold);color:#fff;font-size:11px;font-weight:700;font-family:DM Sans,sans-serif;padding:3px 9px;border-radius:20px;white-space:nowrap;line-height:1.4">' + t.rankingTitle + ' ›</a>' : '') +
-            '<button class="wb-section-action" onclick="wbClearRecent()">' + t.clearAll + '</button>' +
-          '</div>' +
+          '<button class="wb-section-action" onclick="wbClearRecent()">' + t.clearAll + '</button>' +
         '</div>' +
         cards +
       '</div>';
@@ -733,6 +730,21 @@
         run();
       }, 300);
     }
+  }
+
+  function renderRankingLink() {
+    var section = document.getElementById('wb-ranking-section');
+    if (!section || !t.rankingUrl) return;
+    section.innerHTML =
+      '<a href="' + t.rankingUrl + '" style="' +
+        'display:flex;align-items:center;justify-content:space-between;' +
+        'background:var(--gold);color:#fff;text-decoration:none;' +
+        'padding:10px 14px;border-radius:10px;margin-bottom:6px;' +
+        'font-family:\'DM Sans\',sans-serif;' +
+      '">' +
+        '<span style="font-size:13px;font-weight:700">' + t.rankingTitle + '</span>' +
+        '<span style="font-size:17px;line-height:1">›</span>' +
+      '</a>';
   }
 
   function renderSuggestions() {
@@ -1123,6 +1135,7 @@
 
   function initAll() {
     initBanner();
+    renderRankingLink();
     loadSuggestions();
     hookSearchTracking();
   }
