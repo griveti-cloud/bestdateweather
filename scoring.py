@@ -358,27 +358,52 @@ def t_ideal_winter(tmax: float) -> float:
     return max(0.0, 0.2 - (tmax - 15) / 10 * 0.2)
 
 
+def _snow_reliability(tmax: float, rain_pct: float) -> float:
+    """
+    Proxy enneigement [0, 1].
+    Logique vacancier : l'enneigement est le pré-requis absolu.
+
+    Seuil froid garanti : +4°C en vallée ≈ -2°C à 2000m (lapse rate ~6.5°C/1000m).
+    Précipitations froides (tmax ≤ 0°C) = bonus poudreuse.
+    Pluie vraiment problématique uniquement au-delà de +6°C.
+    """
+    if tmax <= 0:
+        # Poudreuse garantie — plus de précip = mieux
+        base = 0.70
+        powder_bonus = min(0.20, rain_pct / 100 * 0.45)
+        return base + powder_bonus
+    elif tmax <= 4:
+        # Froid en altitude, neige quasi certaine
+        cold_factor = (4 - tmax) / 4
+        base = 0.65 + cold_factor * 0.05
+        heavy_penalty = max(0, rain_pct - 60) / 100 * 0.15
+        return max(0.50, base - heavy_penalty)
+    elif tmax <= 6:
+        # Zone limite : neige possible mais incertaine
+        return max(0.30, 0.50 - (tmax - 4) / 2 * 0.20 - rain_pct / 100 * 0.15)
+    elif tmax <= 12:
+        return max(0.05, 0.30 - (tmax - 6) / 6 * 0.20 - rain_pct / 100 * 0.15)
+    else:
+        return 0.0
+
+
 def raw_score_winter(tmax: float, rain_pct: float, sun_h: float) -> float:
     """
     Score brut [0, 1] pour activités ski/montagne hiver.
 
+    Philosophie vacancier ski :
+      1. Enneigement fiable (pré-requis absolu)
+      2. Qualité météo sur les pistes (soleil, froid confortable)
+
     Poids :
-      50%  température  → t_ideal_winter(tmax)
-      25%  précipitations → neutre si froid (neige), pénalisé si chaud (pluie)
-      25%  soleil       → sun_h / 12  (12h = max hivernal réaliste)
+      40%  enneigement proxy → _snow_reliability(tmax, rain_pct)
+      40%  température       → t_ideal_winter(tmax)
+      20%  soleil            → sun_h / 12
     """
-    t = t_ideal_winter(tmax)
-
-    # Quand il fait ≤ 2°C, les précipitations tombent en neige → neutre/positif
-    if tmax <= 2:
-        precip_score = 0.7
-    elif tmax <= 8:
-        precip_score = max(0.2, 1.0 - rain_pct / 100.0)
-    else:
-        precip_score = max(0.0, 1.0 - rain_pct / 100.0)
-
-    sun = min(1.0, sun_h / 12.0)
-    return 0.50 * t + 0.25 * precip_score + 0.25 * sun
+    t    = t_ideal_winter(tmax)
+    snow = _snow_reliability(tmax, rain_pct)
+    sun  = min(1.0, sun_h / 12.0)
+    return 0.40 * t + 0.40 * snow + 0.20 * sun
 
 
 def compute_ski_score(tmax: float, rain_pct: float, sun_h: float) -> float:
