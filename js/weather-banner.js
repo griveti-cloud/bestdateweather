@@ -105,9 +105,9 @@
   var t = T[LANG];
 
   /* ── WEATHER CODE → EMOJI ── */
-  function weatherEmoji(code) {
-    if (code === 0) return "\u2600\ufe0f";
-    if (code <= 2) return "\u26c5";
+  function weatherEmoji(code, isNight) {
+    if (code === 0) return isNight ? "\ud83c\udf19" : "\u2600\ufe0f";
+    if (code <= 2) return isNight ? "\ud83c\udf19" : "\u26c5";
     if (code === 3) return "\u2601\ufe0f";
     if (code <= 48) return "\ud83c\udf2b\ufe0f";
     if (code <= 55) return "\ud83c\udf26\ufe0f";
@@ -222,7 +222,7 @@
         hourly.push({
           h: label,
           temp: hTemps[i],
-          icon: weatherEmoji(hCodes[i] || 0),
+          icon: weatherEmoji(hCodes[i] || 0, i < 7 || i >= 21),
           wind: hWinds[i] || 0,
           rain: Math.round(hRains[i] || 0)
         });
