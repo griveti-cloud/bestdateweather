@@ -739,11 +739,11 @@
       '<a href="' + t.rankingUrl + '" style="' +
         'display:block;text-align:center;' +
         'background:transparent;color:var(--gold);text-decoration:none;' +
-        'padding:9px 14px;border-radius:10px;margin-bottom:6px;' +
+        'padding:6px 14px;border-radius:10px;margin:10px 0 4px;' +
         'border:1.5px solid var(--gold);' +
         'font-family:\'DM Sans\',sans-serif;font-size:14px;font-weight:700;' +
       '">' +
-        '🗺️ ' + t.rankingTitle +
+        t.rankingTitle +
       '</a>';
   }
 
