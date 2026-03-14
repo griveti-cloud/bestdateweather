@@ -299,7 +299,7 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=20):
     beach_candidates = [e for e in all_entries
                         if e.get('beach_score') is not None
                         and e.get('is_coastal', False)
-                        and (e['beach_score'] or 0) > 4.0
+                        and (e['beach_score'] or 0) >= 3.5
                         and e['slug_fr'] not in all_slugs
                         and not (e['slug_fr'] in COUNTRY_SLUGS and e['pays'] in countries_in_pool2)]
     beach_candidates.sort(key=lambda x: (-(x['beach_score'] or 0), x['nom_bare']))
@@ -700,7 +700,7 @@ def generate_page(mi, lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'
         'if(!tb)return;'
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>4.0):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);return rOk&&mOk;});'
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);return rOk&&mOk;});'
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'
         'list=list.slice(0,TOP);'
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:NO_METEO);msg.style.display="block";return;}'
@@ -962,7 +962,7 @@ def get_annual_pool(climate, dests, pool_size=80, ski_boost=20):
     beach_candidates = [e for e in all_entries
                         if e.get('beach_score') is not None
                         and e.get('is_coastal', False)
-                        and (e['beach_score'] or 0) > 4.0
+                        and (e['beach_score'] or 0) >= 3.5
                         and e['slug_fr'] not in all_slugs
                         and not (e['slug_fr'] in COUNTRY_SLUGS and e['pays'] in countries_in_pool)]
     beach_candidates.sort(key=lambda x: (-(x['beach_score'] or 0), x['nom_bare']))
@@ -1167,7 +1167,7 @@ def generate_annual_page(lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'+
         'if(!tb)return;'+
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'+
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>4.0):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);return rOk&&mOk;});'+
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);return rOk&&mOk;});'+
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
         'list=list.slice(0,TOP);'+
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:NO_METEO);msg.style.display="block";return;}'+
