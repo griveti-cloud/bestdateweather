@@ -277,11 +277,13 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=20):
     # --- Beach boost: top coastal destinations by beach_score, 1 per country ---
     # Ensures beach tab ranking reflects true beach quality, not just general score
     all_slugs = {e['slug_fr'] for e in general_pool + ski_injected + eu_boost}
+    countries_in_pool2 = {e['pays'] for e in general_pool + ski_injected + eu_boost}
     beach_candidates = [e for e in all_entries
                         if e.get('beach_score') is not None
                         and e.get('is_coastal', False)
                         and (e['beach_score'] or 0) > 4.0
-                        and e['slug_fr'] not in all_slugs]
+                        and e['slug_fr'] not in all_slugs
+                        and not (e['slug_fr'] in COUNTRY_SLUGS and e['pays'] in countries_in_pool2)]
     beach_candidates.sort(key=lambda x: (-(x['beach_score'] or 0), x['nom_bare']))
     seen_beach_countries: dict = {}
     beach_injected = []
@@ -924,7 +926,11 @@ def get_annual_pool(climate, dests, pool_size=80, ski_boost=20):
     ranked = {e['slug_fr'] for e in general}
     remove = {p for p, ch in REGION_CHILDREN.items() if p in ranked and ranked & ch}
     general = [e for e in general if e['slug_fr'] not in remove]
-    general = dedup_country(general, dests)[:pool_size]
+    # Inline dedup: remove country-slug when a city from the same country is also ranked
+    countries_with_cities = {e['pays'] for e in general if e['slug_fr'] not in COUNTRY_SLUGS}
+    general = [e for e in general
+               if e['slug_fr'] not in COUNTRY_SLUGS or e['pays'] not in countries_with_cities]
+    general = general[:pool_size]
     general_slugs = {e['slug_fr'] for e in general}
 
     # Ski boost
@@ -934,11 +940,13 @@ def get_annual_pool(climate, dests, pool_size=80, ski_boost=20):
 
     # Beach boost
     all_slugs = {e['slug_fr'] for e in general + ski_injected}
+    countries_in_pool = {e['pays'] for e in general + ski_injected}
     beach_candidates = [e for e in all_entries
                         if e.get('beach_score') is not None
                         and e.get('is_coastal', False)
                         and (e['beach_score'] or 0) > 4.0
-                        and e['slug_fr'] not in all_slugs]
+                        and e['slug_fr'] not in all_slugs
+                        and not (e['slug_fr'] in COUNTRY_SLUGS and e['pays'] in countries_in_pool)]
     beach_candidates.sort(key=lambda x: (-(x['beach_score'] or 0), x['nom_bare']))
     seen_bc: dict = {}
     beach_injected = []
