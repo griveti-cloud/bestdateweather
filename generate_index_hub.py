@@ -542,10 +542,15 @@ JS_TEMPLATE = """
 """
 
 
-def make_card(slug, name, bare, flag, country, asset_prefix, page_prefix, loc):
+def make_card(slug, name, bare, flag, country, asset_prefix, page_prefix, loc, csv_aliases=''):
     href = f'{page_prefix}{loc["gen"]["annual_href_tpl"].format(slug=slug)}'
     sub = loc['hub']['card_sub']
-    aliases = bare if bare.lower() != name.lower() else ''
+    parts = []
+    if bare.lower() != name.lower():
+        parts.append(bare)
+    if csv_aliases:
+        parts += [a.strip() for a in csv_aliases.split() if a.strip()]
+    aliases = ' '.join(dict.fromkeys(parts))  # déduplique en préservant l'ordre
     alias_attr = f' data-aliases="{html_mod.escape(aliases)}"' if aliases else ''
     return (
         f'<a href="{href}" target="_top" class="dh-card" '
@@ -658,7 +663,7 @@ def build_hub(destinations, loc):
                             cc = d.get('country_de') or d['pays']
                         else:
                             cc = d.get('country_en') or d['pays']
-                        html.append(make_card(s, n, d['nom_bare'], d['flag'], cc, asset_prefix, page_prefix, loc))
+                        html.append(make_card(s, n, d['nom_bare'], d['flag'], cc, asset_prefix, page_prefix, loc, d.get('aliases','')))
                     html.append('</div>')
                     return html
 
@@ -677,7 +682,7 @@ def build_hub(destinations, loc):
             for d in sorted(dests, key=lambda x: x['nom_bare']):
                 slug = d[slug_key]
                 name = d[name_key]
-                L.append(make_card(slug, name, d['nom_bare'], d['flag'], d['pays'], asset_prefix, page_prefix, loc))
+                L.append(make_card(slug, name, d['nom_bare'], d['flag'], d['pays'], asset_prefix, page_prefix, loc, d.get('aliases','')))
             L.append(f'</div>')
 
         L.append(f'</div></div>')
