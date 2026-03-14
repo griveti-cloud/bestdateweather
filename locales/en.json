@@ -419,7 +419,9 @@
     "crosslink_label": "🌍 Top destinations",
     "crosslink_title_tpl": "Other top destinations in {month}",
     "editorial_highlights_label": "✍️ Our take",
-    "editorial_highlights_title": "Best months in {nom}"
+    "editorial_highlights_title": "Best months in {nom}",
+    "sec_similar_ski_tpl": "Similar ski resorts in {month_lc}",
+    "sim_label_ski": "⛷️ Comparable resorts"
   },
   "narratives": {
     "tropical_rainy": "In {month}, {name} is in the middle of the rainy season ({rain}% rainy days). Tropical showers are usually short but intense — pack a light raincoat.",

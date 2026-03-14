@@ -419,7 +419,9 @@
     "crosslink_label": "🌍 Top destinations",
     "crosslink_title_tpl": "Autres top destinations en {month_lc}",
     "editorial_highlights_label": "✍️ Notre avis",
-    "editorial_highlights_title": "Les meilleurs mois à {nom}"
+    "editorial_highlights_title": "Les meilleurs mois à {nom}",
+    "sec_similar_ski_tpl": "Stations ski similaires en {month_lc}",
+    "sim_label_ski": "⛷️ Stations comparables"
   },
   "narratives": {
     "tropical_rainy": "En {month_lc}, {name} est en pleine saison des pluies ({rain}% de jours pluvieux). Les averses tropicales sont généralement courtes mais intenses — prévoyez un imperméable léger.",

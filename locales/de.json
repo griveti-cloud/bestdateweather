@@ -419,7 +419,9 @@
     "crosslink_label": "🌍 Top-Reiseziele",
     "crosslink_title_tpl": "Andere Top-Reiseziele im {month}",
     "editorial_highlights_label": "✍️ Unser Fazit",
-    "editorial_highlights_title": "Beste Monate in {nom}"
+    "editorial_highlights_title": "Beste Monate in {nom}",
+    "sec_similar_ski_tpl": "Ähnliche Skigebiete im {month_lc}",
+    "sim_label_ski": "⛷️ Vergleichbare Skigebiete"
   },
   "narratives": {
     "tropical_rainy": "Im {month} befindet sich {name} mitten in der Regenzeit ({rain}% Regentage). Tropenschauer sind meist kurz, aber intensiv — einen leichten Regenmantel einpacken.",

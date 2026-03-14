@@ -419,7 +419,9 @@
     "crosslink_label": "🌍 Top destinos",
     "crosslink_title_tpl": "Otros top destinos en {month}",
     "editorial_highlights_label": "✍️ Nuestra opinión",
-    "editorial_highlights_title": "Mejores meses en {nom}"
+    "editorial_highlights_title": "Mejores meses en {nom}",
+    "sec_similar_ski_tpl": "Estaciones de esquí similares en {month_lc}",
+    "sim_label_ski": "⛷️ Estaciones comparables"
   },
   "narratives": {
     "tropical_rainy": "En {month}, {name} está en plena temporada de lluvias ({rain}% de días con lluvia). Los aguaceros tropicales son normalmente breves pero intensos — lleva un impermeable ligero.",

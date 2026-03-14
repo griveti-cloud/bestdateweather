@@ -188,6 +188,8 @@ def build_config(lang):
     cfg['monthly_hero_subs_ski'] = loc.get('monthly_hero_subs_ski', {})
     cfg['annual_hero_subs_ski'] = loc.get('annual_hero_subs_ski', [])
     cfg['context_paragraphs_ski'] = loc.get('context_paragraphs_ski', {})
+    cfg['lbl_m_sec_similar_ski_tpl'] = loc.get('monthly', {}).get('sec_similar_ski_tpl', '')
+    cfg['lbl_m_sim_label_ski'] = loc.get('monthly', {}).get('sim_label_ski', '')
     cfg['monthly_verdicts'] = loc.get('monthly_verdicts', {})
     cfg['monthly_oui_si'] = loc.get('monthly_oui_si', {})
     cfg['context_paragraphs'] = loc.get('context_paragraphs', {})

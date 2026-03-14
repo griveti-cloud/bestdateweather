@@ -1327,8 +1327,12 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
                 climate_for_sim[sim_slug] = {'score': f"{sm['score']:.1f}", 'tmax': sm['tmax']}
         sim_cards_html = _build_sim_cards(cfg, similarities.get(slug_fr, [])[:3], all_dests, climate_for_sim, mi)
 
-    sim_section_title = C['lbl_m_sec_similar_title_tpl'].format(**tpl)
-    sim_section_label = C['lbl_m_sim_label']
+    if is_mountain and C.get('lbl_m_sec_similar_ski_tpl'):
+        sim_section_title = C['lbl_m_sec_similar_ski_tpl'].format(**tpl)
+        sim_section_label = C.get('lbl_m_sim_label_ski', C['lbl_m_sim_label'])
+    else:
+        sim_section_title = C['lbl_m_sec_similar_title_tpl'].format(**tpl)
+        sim_section_label = C['lbl_m_sim_label']
 
     # ── Monthly score crosslinks (top-50, pays différent, même mois) ──
     crosslink_section_html = ''
