@@ -1513,6 +1513,8 @@ function updateHero(sc, rows, mainHour) {
 function showResults(sc, rows, isForecast, noteText, diffDays) {
  var _heroEl=document.getElementById('hero');
  if(_heroEl){_heroEl.style.opacity='';_heroEl.style.pointerEvents='';}
+ var _lb=document.getElementById('hero-loading-bar');
+ if(_lb){_lb.classList.remove('active');}
  setConfBadge(diffDays);
  applyHorizonWording(diffDays);
  document.getElementById('score-block').style.display = 'block';
@@ -1750,6 +1752,9 @@ function run() {
  var _heroEl=document.getElementById('hero');
  if(_heroEl&&_heroEl.style.display!=='none'){
    _heroEl.style.opacity='0.35';_heroEl.style.pointerEvents='none';
+   var _lb=document.getElementById('hero-loading-bar');
+   if(!_lb){_lb=document.createElement('div');_lb.id='hero-loading-bar';_lb.className='hero-loading-bar';var _ht=_heroEl.querySelector('.hero-top');if(_ht)_ht.appendChild(_lb);}
+   _lb.classList.add('active');
  } else {
    hideSection('hero');
  }

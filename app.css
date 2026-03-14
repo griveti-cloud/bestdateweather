@@ -107,6 +107,11 @@ header.app-header{max-width:580px;margin:0 auto;padding:16px 20px 0;text-align:c
 .hero{background:white;border-radius:var(--r);box-shadow:var(--shadow-lg);overflow:hidden;margin-bottom:16px;display:none;border:1px solid var(--cream2);border-top:3px solid var(--gold);max-width:580px;margin-left:auto;margin-right:auto;transition:opacity .25s ease}
 .hero-top{background:white;padding:28px 28px 24px;color:var(--navy);position:relative;overflow:hidden;border-bottom:1px solid var(--cream2)}
 .hero-top::after{display:none}
+/* ── Hero loading bar ── */
+.hero-loading-bar{position:absolute;top:0;left:0;height:3px;width:0;background:var(--gold);border-radius:0;transition:width .3s ease;z-index:10}
+.hero-loading-bar.active{animation:heroLoad 1.2s ease-in-out infinite}
+@keyframes heroLoad{0%{left:0;width:0}40%{left:0;width:60%}70%{left:20%;width:70%}100%{left:100%;width:0}}
+
 
 .hero-meta{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
 .hero-loc-wrap{}
