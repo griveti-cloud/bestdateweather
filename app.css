@@ -311,7 +311,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:24px 20px 0;text-align:c
 .month-card{animation:monthIn .3s ease both}
 
 /* SEO HUB toggle mobile */
-.seo-hub-toggle{display:none;width:100%;background:#f0ebe0;border:1.5px solid #e8e0d0;border-radius:12px;padding:14px 18px;font-size:14px;font-weight:700;color:#1a1f2e;text-align:left;cursor:pointer;align-items:center;justify-content:space-between}
+.seo-hub-toggle{display:none;width:100%;background:#faf8f3;border:1px solid #e8e0d0;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#5a6c7d;text-align:left;cursor:pointer;align-items:center;justify-content:space-between}
 #seo-hub{content-visibility:auto;contain-intrinsic-size:0 2000px}
 .seo-hub-toggle.open .seo-hub-toggle-icon{transform:rotate(180deg)}
 @media(max-width:640px){
