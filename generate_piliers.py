@@ -1199,7 +1199,7 @@ def generate_annual_page(lang, dests, climate):
  </div>
 </nav>
 <header class="pillar-hero">
-<p class="hero-eyebrow">{eyebrow}</p>
+<div class="hero-eyebrow">{pil["hero_eyebrow_prefix"]}{YEAR}</div>
 <h1 class="hero-title">{h1}</h1>
 <p class="hero-sub">{sub}</p>
 <div class="hero-stats">
