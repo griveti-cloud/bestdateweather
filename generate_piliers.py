@@ -17,6 +17,9 @@ from scoring import compute_ski_score
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.page_config import load_locale
 from generate_classements import COUNTRY_SLUGS, NON_EUROPE_SLUGS, dedup_country
+# Pour le filtre interactif, les Canaries et Madère restent dans "Europe" (attente utilisateur)
+from generate_classements import DOM_TOM_SLUGS
+PILIER_XEU_SLUGS = DOM_TOM_SLUGS  # uniquement DOM-TOM exclus d'Europe dans les piliers
 
 ROOT = Path(__file__).parent
 TODAY = date.today().isoformat()
@@ -567,6 +570,7 @@ def generate_page(mi, lang, dests, climate):
         th_score_gen   = 'Score'
         no_beach_msg   = "Aucune destination côtière dans ce classement pour ce mois."
         no_ski_msg     = "Aucune destination ski dans ce classement pour ce mois."
+        no_meteo_msg   = "Aucune destination dans cette région pour ce mois."
     elif is_es:
         tab_meteo = '☀️ Clima general'
         tab_beach = '🏖️ Playa'
@@ -576,6 +580,7 @@ def generate_page(mi, lang, dests, climate):
         th_score_gen   = 'Score'
         no_beach_msg   = "No hay destinos costeros en este ranking para este mes."
         no_ski_msg     = "No hay destinos de esquí en este ranking para este mes."
+        no_meteo_msg   = "No hay destinos en esta región para este mes."
     elif is_de:
         tab_meteo = '☀️ Allgemeines Wetter'
         tab_beach = '🏖️ Strand'
@@ -585,6 +590,7 @@ def generate_page(mi, lang, dests, climate):
         th_score_gen   = 'Score'
         no_beach_msg   = "Keine Küstenziele in diesem Ranking für diesen Monat."
         no_ski_msg     = "Keine Ski-Ziele in diesem Ranking für diesen Monat."
+        no_meteo_msg   = "Keine Ziele in dieser Region für diesen Monat."
     else:
         tab_meteo = '☀️ General weather'
         tab_beach = '🏖️ Beach'
@@ -594,6 +600,7 @@ def generate_page(mi, lang, dests, climate):
         th_score_gen   = 'Score'
         no_beach_msg   = "No coastal destinations in this ranking for this month."
         no_ski_msg     = "No ski destinations in this ranking for this month."
+        no_meteo_msg   = "No destinations in this region for this month."
 
     # ── Pool JSON for JS rendering ────────────────────────────────────────────
     def entry_nom(entry):
@@ -628,7 +635,7 @@ def generate_page(mi, lang, dests, climate):
         'tmin': round(p['tmin'], 0),
         'tmax': round(p['tmax'], 0),
         'reg': _reg(p['pays']),
-        'xeu': 1 if p['slug_fr'] in NON_EUROPE_SLUGS else 0,
+        'xeu': 1 if p['slug_fr'] in PILIER_XEU_SLUGS else 0,
     } for p in pool], ensure_ascii=False)
 
     region_tabs = build_region_tabs(lang)
@@ -651,7 +658,7 @@ def generate_page(mi, lang, dests, climate):
         f'var POOL={pool_json};'
         'var TOP=25;var CUR_REG="all";'
         f'var TH_GEN="{e(th_score_gen)}",TH_BEACH="{e(th_score_beach)}",TH_SKI="{e(th_score_ski)}";'
-        f'var NO_BEACH="{e(no_beach_msg)}",NO_SKI="{e(no_ski_msg)}";'
+        f'var NO_BEACH="{e(no_beach_msg)}",NO_SKI="{e(no_ski_msg)}",NO_METEO="{e(no_meteo_msg)}";'
         'function sc(s){return s>=8?"#16a34a":s>=6?"#d4a853":"#dc2626";}'
         'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'
         'function render(mode){'
@@ -663,7 +670,7 @@ def generate_page(mi, lang, dests, climate):
         'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>4.0):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);return rOk&&mOk;});'
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'
         'list=list.slice(0,TOP);'
-        'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'
+        'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:NO_METEO);msg.style.display="block";return;}'
         'msg.style.display="none";'
         'var label=mode==="beach"?TH_BEACH:mode==="ski"?TH_SKI:TH_GEN;'
         'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th></tr>";'
@@ -1046,21 +1053,25 @@ def generate_annual_page(lang, dests, climate):
         th_score_gen = 'Score annuel'; th_score_beach = 'Score plage'; th_score_ski = 'Score ski'
         no_beach_msg = 'Aucune destination balnéaire dans ce classement.'
         no_ski_msg   = 'Aucune station de ski dans ce classement.'
+        no_meteo_msg = 'Aucune destination dans cette région.'
     elif lang == 'es':
         tab_meteo = '☀️ Clima general'; tab_beach = '🏖️ Playa'; tab_ski = '⛷️ Esquí'
         th_score_gen = 'Puntuación'; th_score_beach = 'Puntuación playa'; th_score_ski = 'Puntuación esquí'
         no_beach_msg = 'Sin destinos de playa en este ranking.'
         no_ski_msg   = 'Sin estaciones de esquí en este ranking.'
+        no_meteo_msg = 'No hay destinos en esta región.'
     elif lang == 'de':
         tab_meteo = '☀️ Allgemeines Wetter'; tab_beach = '🏖️ Strand'; tab_ski = '⛷️ Ski'
         th_score_gen = 'Jahreswertung'; th_score_beach = 'Strandwertung'; th_score_ski = 'Skiwertung'
         no_beach_msg = 'Keine Strandziele in diesem Ranking.'
         no_ski_msg   = 'Keine Skigebiete in diesem Ranking.'
+        no_meteo_msg = 'Keine Ziele in dieser Region.'
     else:  # en / en-us
         tab_meteo = '☀️ General weather'; tab_beach = '🏖️ Beach'; tab_ski = '⛷️ Ski'
         th_score_gen = 'Annual score'; th_score_beach = 'Beach score'; th_score_ski = 'Ski score'
         no_beach_msg = 'No beach destinations in this ranking.'
         no_ski_msg   = 'No ski resorts in this ranking.'
+        no_meteo_msg = 'No destinations in this region.'
 
     # Build annual pool
     annual_pool = get_annual_pool(climate, dests)
@@ -1089,7 +1100,7 @@ def generate_annual_page(lang, dests, climate):
         'tmin': round(e['tmin'], 0),
         'tmax': round(e['tmax'], 0),
         'reg': _reg(e['pays']),
-        'xeu': 1 if e.get('slug', e.get('slug_fr','')) in NON_EUROPE_SLUGS else 0,
+        'xeu': 1 if e.get('slug', e.get('slug_fr','')) in PILIER_XEU_SLUGS else 0,
     } for e in annual_pool], ensure_ascii=False)
 
     mode_tabs_inner = (
@@ -1108,7 +1119,7 @@ def generate_annual_page(lang, dests, climate):
         f'var POOL={pool_json};'+
         'var TOP=25;var CUR_REG="all";'+
         f'var TH_GEN="{_e(th_score_gen)}",TH_BEACH="{_e(th_score_beach)}",TH_SKI="{_e(th_score_ski)}";'+
-        f'var NO_BEACH="{_e(no_beach_msg)}",NO_SKI="{_e(no_ski_msg)}";'+
+        f'var NO_BEACH="{_e(no_beach_msg)}",NO_SKI="{_e(no_ski_msg)}",NO_METEO="{_e(no_meteo_msg)}";'+
         'function sc(s){return s>=8?"#16a34a":s>=6?"#d4a853":"#dc2626";}'+
         'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'+
         'function render(mode){'+
@@ -1120,7 +1131,7 @@ def generate_annual_page(lang, dests, climate):
         'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>4.0):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);return rOk&&mOk;});'+
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
         'list=list.slice(0,TOP);'+
-        'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:NO_SKI;msg.style.display="block";return;}'+
+        'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:NO_METEO);msg.style.display="block";return;}'+
         'msg.style.display="none";'+
         'var label=mode==="beach"?TH_BEACH:mode==="ski"?TH_SKI:TH_GEN;'+
         'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th></tr>";'+
