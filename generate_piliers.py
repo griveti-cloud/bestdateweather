@@ -208,7 +208,7 @@ def get_rankings(climate, dests, month_idx):
         # else: skip — a higher-scoring entry for this country already included
     return deduped[:TOP_N]
 
-def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=20):
+def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=35):
     """Return broader pool for beach/ski JS filtering.
 
     - General pool: top pool_size destinations by general score (country-deduped)
@@ -272,9 +272,15 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=20):
     general_slugs = {e['slug_fr'] for e in general_pool}
 
     # --- Ski boost: top mountain destinations not already in general pool ---
-    ski_candidates = [e for e in all_entries if e['is_mountain'] and e['slug_fr'] not in general_slugs]
+    ski_candidates = [e for e in all_entries if e['is_mountain'] and e['slug_fr'] not in general_slugs and e['tmax'] <= 30]
     ski_candidates.sort(key=lambda x: (-x['ski_score'], x['nom_bare']))
     ski_injected = ski_candidates[:ski_boost]
+    # Whitelist: summer glacier resorts always injected regardless of score
+    SUMMER_GLACIER_SLUGS = {'zermatt', 'saas-fee', 'hintertux', 'les-deux-alpes', 'tignes'}
+    all_injected_slugs = {e['slug_fr'] for e in general_pool + ski_injected}
+    for e in all_entries:
+        if e['slug_fr'] in SUMMER_GLACIER_SLUGS and e['slug_fr'] not in all_injected_slugs:
+            ski_injected.append(e)
 
     # --- Region boost: ensure EU has enough entries for JS filter ---
     from generate_classements import EUROPE_COUNTRIES, NON_EUROPE_SLUGS as _NEU
@@ -892,7 +898,7 @@ def generate_page(mi, lang, dests, climate):
 
 
 
-def get_annual_pool(climate, dests, pool_size=80, ski_boost=20):
+def get_annual_pool(climate, dests, pool_size=80, ski_boost=35):
     """Annual pool: avg score/beach/ski over 12 months, for JS tab switching."""
     SKI_DUPES = {'val-disere', 'sierra-nevada', 'queenstown-ski'}
     all_entries = []
@@ -960,7 +966,7 @@ def get_annual_pool(climate, dests, pool_size=80, ski_boost=20):
     general_slugs = {e['slug_fr'] for e in general}
 
     # Ski boost
-    ski_candidates = [e for e in all_entries if e['is_mountain'] and e['slug_fr'] not in general_slugs]
+    ski_candidates = [e for e in all_entries if e['is_mountain'] and e['slug_fr'] not in general_slugs and e['tmax'] <= 30]
     ski_candidates.sort(key=lambda x: (-x['ski_score'], x['nom_bare']))
     ski_injected = ski_candidates[:ski_boost]
 
