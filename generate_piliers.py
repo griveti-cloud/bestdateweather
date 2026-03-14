@@ -17,9 +17,6 @@ from scoring import compute_ski_score
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.page_config import load_locale
 from generate_classements import COUNTRY_SLUGS, NON_EUROPE_SLUGS, dedup_country
-# Pour le filtre interactif, les Canaries et Madère restent dans "Europe" (attente utilisateur)
-from generate_classements import DOM_TOM_SLUGS
-PILIER_XEU_SLUGS = DOM_TOM_SLUGS  # uniquement DOM-TOM exclus d'Europe dans les piliers
 
 ROOT = Path(__file__).parent
 TODAY = date.today().isoformat()
@@ -651,7 +648,7 @@ def generate_page(mi, lang, dests, climate):
         'tmin': round(p['tmin'], 0),
         'tmax': round(p['tmax'], 0),
         'reg': _reg(p['pays']),
-        'xeu': 1 if p['slug_fr'] in PILIER_XEU_SLUGS else 0,
+        'xeu': 1 if p['slug_fr'] in NON_EUROPE_SLUGS else 0,
     } for p in pool], ensure_ascii=False)
 
     region_tabs = build_region_tabs(lang)
@@ -1116,7 +1113,7 @@ def generate_annual_page(lang, dests, climate):
         'tmin': round(e['tmin'], 0),
         'tmax': round(e['tmax'], 0),
         'reg': _reg(e['pays']),
-        'xeu': 1 if e.get('slug', e.get('slug_fr','')) in PILIER_XEU_SLUGS else 0,
+        'xeu': 1 if e.get('slug', e.get('slug_fr','')) in NON_EUROPE_SLUGS else 0,
     } for e in annual_pool], ensure_ascii=False)
 
     mode_tabs_inner = (

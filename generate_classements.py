@@ -154,6 +154,8 @@ NON_EUROPE_SLUGS = DOM_TOM_SLUGS | {
     'bermudes',                                                          # Royaume-Uni, Atlantique
     'canaries', 'tenerife', 'gran-canaria', 'fuerteventura',            # Espagne, Macaronésie
     'lanzarote', 'la-palma', 'la-gomera', 'el-hierro',                  # Espagne, Macaronésie
+    'madere', 'funchal',                                                 # Portugal, Macaronésie
+    'azores',                                                            # Portugal, Atlantique
 }
 
 # Destinations caribéennes (pays + territoires, toutes nationalités)
