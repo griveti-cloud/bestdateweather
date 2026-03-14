@@ -83,37 +83,129 @@ footer a{color:var(--gold);text-decoration:none;font-weight:600}
   <p>Transparenz ist ein Kernprinzip von BestDateWeather. Hier erfahren Sie, wie wir vorgehen.</p>
  </header>
  <main>
-  <section class="section">
-   <span class="section-num">01</span>
-   <h2>Datenquellen</h2>
-   <p>Alle Klimadaten stammen von <strong>Open-Meteo.com</strong> und basieren auf dem ERA5-Reanalysedatensatz des ECMWF (Europäisches Zentrum für mittelfristige Wettervorhersage), ergänzt durch DWD-, NOAA- und Météo-France-Modelle.</p>
-   <p>Wir berechnen <strong>monatliche Durchschnittswerte über 10 Jahre</strong> für jedes Reiseziel und jeden Monat des Jahres.</p>
+  <section class="section" id="intro">
+  <div class="section-num">1</div>
+  <h2>Das Prinzip in einem Satz</h2>
+  <p>Wir berechnen einen Klimakomfort-Score (0–10) für jeden Tag des Jahres, für jedes Ziel, basierend auf 10 Jahren historischer Daten (ERA5) — angepasst durch ECMWF-Saisonalprognosen für Daten innerhalb der nächsten 7 Monate.</p>
   </section>
-  <section class="section">
-   <span class="section-num">02</span>
-   <h2>Score-Berechnung</h2>
-   <p>Der monatliche Score (0–10) kombiniert mehrere gewichtete Parameter. Die genauen Gewichtungen sind proprietär, aber der allgemeine Ansatz lässt sich so beschreiben:</p>
-   <div class="card" style="margin:16px 0">
-    <p>●●●●● <strong>Thermischer Komfort</strong> — Optimale Temperaturen für Outdoor-Aktivitäten, Strafpunkte für extreme Hitze oder Kälte.</p>
-    <p>●●●●○ <strong>Niederschlag</strong> — Anteil der Regentage, gewichtet nach Klimatyp (tropisch vs. gemäßigt).</p>
-    <p>●●●○○ <strong>Sonnenschein</strong> — Tägliche Sonnenstunden als positiver Faktor.</p>
-    <p>●●○○○ <strong>Wind</strong> — Häufige starke Winde beeinträchtigen den Score.</p>
+  <section class="section" id="data">
+  <div class="section-num">2</div>
+  <h2>Unsere Datenquellen</h2>
+  <p>Alle Klimadaten stammen von <strong>Open-Meteo.com</strong> und basieren auf dem ERA5-Reanalysedatensatz des ECMWF. Jedes Ziel wird durch einen Gitterpunkt mit einer Auflösung von ca. 9 km repräsentiert. Der Analysezeitraum umfasst <strong>10 Jahre</strong> täglicher Beobachtungen.</p>
+  <ul>
+  <li><strong>ERA5 / ECMWF</strong> — historische Klimadaten (Temperatur, Niederschlag, Windgeschwindigkeit, Sonnenstrahlung)</li>
+  <li><strong>Open-Meteo Forecast</strong> — stündliche NWP-Prognosen bis D+7 (ICON, GFS, ARPEGE je nach Region)</li>
+  <li><strong>ECMWF Seasonal</strong> — probabilistische Anomalien bis D+210 (Temperaturabweichung, Niederschlagsfaktor)</li>
+  <li><strong>Open-Meteo Marine</strong> — Meeresoberflächentemperatur für Küstenziele</li>
+  </ul>
+  </section>
+  <section class="section" id="horizons">
+  <div class="section-num">3</div>
+  <h2>Drei Ebenen nach Zeithorizont</h2>
+  <p>Die Zuverlässigkeit einer Wettervorhersage nimmt mit dem zeitlichen Abstand ab. Wir zeigen dies explizit in der Benutzeroberfläche über ein Horizont-Badge. Was jede Ebene wirklich bedeutet:</p>
+  <div class="horizon-grid">
+   <div class="horizon-row">
+   <div>
+    <div class="horizon-badge badge-real">Live-Prognose</div>
+    <div style="font-size:12px;color:var(--slate2);margin-top:6px">Heute → D+7</div>
    </div>
-   <div class="callout gold">
-    <div class="callout-ico">🌴</div>
-    <div class="callout-body"><strong>Tropische Anpassung:</strong> In tropischen Reisezielen werden Regenmonate algorithmisch angepasst — tropische Schauer sind kurz und intensiv, verderben einen Urlaub aber meist nicht.</div>
+   <div>
+    <div class="horizon-title">Echtzeit-Daten</div>
+    <div class="horizon-desc">Prognosen direkt aus numerischen Modellen (1–15 km Auflösung je nach Region). Stündlich aktualisiert. Zuverlässigkeit vergleichbar mit Standard-Wetter-Apps: ausgezeichnet bei D+2, gut bei D+5, orientierend bei D+7.</div>
    </div>
+   </div>
+   <div class="horizon-row">
+   <div>
+    <div class="horizon-badge badge-hybrid">Saisonaler Trend</div>
+    <div style="font-size:12px;color:var(--slate2);margin-top:6px">D+8 → D+210</div>
+   </div>
+   <div>
+    <div class="horizon-title">Klimatologie + ECMWF-Korrektur</div>
+    <div class="horizon-desc">Die historische Klimabasis (10 Jahre) wird durch Anomaliesignale des ECMWF-Saisonalmodells angepasst: Temperaturverschiebung, Niederschlagskorrektur, Windanpassung. Dies ist keine Prognose — es ist ein probabilistischer Trend. Nützlich zum Vergleich von Monaten oder zur Auswahl zwischen zwei Daten.</div>
+   </div>
+   </div>
+   <div class="horizon-row">
+   <div>
+    <div class="horizon-badge badge-profile">Klimaprofil</div>
+    <div style="font-size:12px;color:var(--slate2);margin-top:6px">Über D+210 hinaus</div>
+   </div>
+   <div>
+    <div class="horizon-title">Reine historische Statistiken</div>
+    <div class="horizon-desc">Durchschnitt der letzten 10 Jahre für dieses Datum und diesen Ort, ohne Saisonalkorrektur. Zeigt, was in Vorjahren zur gleichen Zeit passiert ist. Kein direkter Vorhersagewert — nützlich für langfristige Planung und Zielvergleiche.</div>
+   </div>
+   </div>
+  </div>
   </section>
-  <section class="section">
-   <span class="section-num">03</span>
-   <h2>Spezifische Scores</h2>
-   <p><strong>Strand-Score</strong> kombiniert Lufttemperatur, Meerestemperatur (Open-Meteo Marine API), Regen und Sonne — nur für Küstenreiseziele.</p>
-   <p><strong>Ski-Score</strong> berücksichtigt Schneedecke, Frosttemperaturen und Sonnenschein. Eine Höhenkorrektur wird auf Bergreiseziele angewendet.</p>
+  <section class="section" id="score">
+  <div class="section-num">4</div>
+  <h2>Wie funktioniert der Score?</h2>
+  <p>Der Score von 10 fasst die Wetterbedingungen basierend auf Ihrer Aktivität zusammen. Er ist nicht universell: Gutes Wetter für einen Strandtag ist nicht dasselbe wie für Skifahren. Vier Kriterien werden je nach gewähltem Profil unterschiedlich gewichtet.</p>
+  <h3>Relative Gewichtung nach Profil</h3>
+  <p>Die vier Faktoren werden nach einer profilspezifischen Kalibrierung gewichtet. Hier ein orientierender Überblick der Prioritäten:</p>
+  <table>
+   <thead>
+   <tr><th>Kriterium</th><th>Allgemein</th><th>Strand</th><th>Ski</th></tr>
+   </thead>
+   <tbody>
+   <tr><td>Temperatur</td><td>●●●○○</td><td>●●●○○</td><td>●●●○○</td></tr>
+   <tr><td>Niederschlag</td><td>●●●○○</td><td>●●○○○</td><td>●●○○○</td></tr>
+   <tr><td>Sonnenstunden</td><td>●●○○○</td><td>●●○○○</td><td>●●○○○</td></tr>
+   <tr><td>Wind</td><td>●○○○○</td><td>●○○○○</td><td>○○○○○</td></tr>
+   <tr><td>Enneigement</td><td>○○○○○</td><td>○○○○○</td><td>●●●○○</td></tr>
+   </tbody>
+  </table>
+  <p style="font-size:12px;color:var(--slate2);margin-top:8px">Die genauen Gewichtungen sind proprietär. Die Tabelle zeigt die relative Wichtigkeit jedes Kriteriums für das jeweilige Profil.</p>
+  <h3>Temperatur-Komfortkurven</h3>
+  <p>Jedes Profil hat seine eigene Temperaturkurve. Der Allgemein-Score erreicht sein Maximum bei 22–26°C; der Strand-Score bei 28–32°C; der Ski-Score bevorzugt negative Temperaturen mit einem Maximum um −2°C bis 0°C auf Pistenebene.</p>
+  <h3>Niederschlagsbehandlung</h3>
+  <p>Wir messen den Prozentsatz der Tage mit messbarem Niederschlag (≥0,1 mm) — nicht die Gesamtniederschlagsmenge. Ein Tag mit kurzem tropischen Schauer wird genauso gezählt wie ein verregneter Tag in Nordeuropa. Beim Ski-Score wirken sich Niederschläge bei Temperaturen unter 0°C positiv aus (Neuschnee-Bonus).</p>
   </section>
-  <section class="section">
-   <span class="section-num">04</span>
-   <h2>Echtzeitdaten</h2>
-   <p>Die interaktive App ruft zwei zusätzliche Datenquellen ab: <strong>Wetterdaten D+0 bis D+7</strong> (stündliche Updates) und <strong>ECMWF-Saisontrends D+30 bis D+270</strong> (täglich). Diese werden mit dem historischen Klimaprofil kombiniert, um einen adjustierten Score zu erzeugen.</p>
+  <section class="section" id="ref">
+  <div class="section-num">5</div>
+  <h2>Jährlicher Referenz-Score pro Ziel</h2>
+  <p>Für jedes der 617 Ziele berechnen wir ein vollständiges Klimaprofil aus 10 Jahren ERA5-Daten: Monatsdurchschnitte für Temperatur, Niederschlag, Sonnenstunden, Wind und Meeresoberflächentemperatur. Dieser Referenz-Score dient als Klimaprofil für Tage, die über D+210 hinausliegen, oder wenn Echtzeit-API-Daten nicht verfügbar sind.</p>
+  <p>Der <strong>P50-Wert</strong> (Median) wird dem Durchschnitt vorgezogen, um die Robustheit gegenüber Extremjahren zu gewährleisten. Für jeden Monat werden mindestens 8 Jahre Daten benötigt, damit ein Score als gültig gilt.</p>
+  </section>
+  <section class="section" id="ecmwf">
+  <div class="section-num">6</div>
+  <h2>ECMWF-Saisonalkorrektur</h2>
+  <p>Für Daten zwischen D+8 und D+210 wenden wir eine Korrektur basierend auf dem ECMWF-Saisonalmodell an. Konkret wird das historische Klimaprofil durch drei Anomalie-Signale angepasst:</p>
+  <ul>
+  <li><strong>Temperaturverschiebung</strong> — Differenz zwischen ECMWF-Prognose und ERA5-Klimatologie für denselben Kalendermonat</li>
+  <li><strong>Niederschlagsfaktor</strong> — relatives Verhältnis zwischen prognostiziertem und historischem Niederschlag</li>
+  <li><strong>Windanpassung</strong> — ähnliches Verhältnis für Windgeschwindigkeit</li>
+  </ul>
+  <p>Diese Korrektur ermöglicht es, zwischen einem tendenziell überdurchschnittlich warmen und einem normal warmen Monat zu unterscheiden — mit expliziter Angabe des Konfidenzgrades in der Benutzeroberfläche.</p>
+  </section>
+  <section class="section" id="limits">
+  <div class="section-num">7</div>
+  <h2>Was unser Tool nicht leistet</h2>
+  <ul>
+  <li><strong>Kein Tages-Wetter-Detail</strong> — wir sagen nicht voraus, ob es an einem bestimmten Dienstag regnen wird</li>
+  <li><strong>Keine Mikroklima-Analyse</strong> — das ERA5-Gitter mit ~9 km Auflösung erfasst keine lokalen Besonderheiten (Küstenwinde, Täler, Stadtinseln)</li>
+  <li><strong>Kein tatsächlicher Schneebericht</strong> — der Ski-Score basiert auf Temperatur und Niederschlag auf Pistenebene, nicht auf gemessener Schneehöhe</li>
+  <li><strong>Keine Extremereignisvorhersage</strong> — zyklonische Ereignisse, Hitzewellen oder Überschwemmungen spiegeln sich nur statistisch durch historische Häufigkeiten wider</li>
+  </ul>
+  </section>
+  <section class="section" id="faq">
+  <div class="section-num">8</div>
+  <h2>Häufig gestellte Fragen</h2>
+  <details>
+  <summary>Warum unterscheidet sich Ihr Score von anderen Quellen?</summary>
+  <p>Die meisten Reise-Websites nutzen einfache Temperatur- oder Niederschlagsschwellen. Unser Score kombiniert mehrere Kriterien mit aktivitätsspezifischen Gewichtungen und nutzt ERA5-Reanalysedaten mit 9 km Auflösung anstelle von Stationsdaten.</p>
+  </details>
+  <details>
+  <summary>Welche Sprachen und Einheiten werden unterstützt?</summary>
+  <p>Die Website ist auf Französisch, Englisch, Spanisch und Deutsch verfügbar. Temperaturen werden in °C oder °F je nach Sprachversion angezeigt (°F für en-us).</p>
+  </details>
+  <details>
+  <summary>Wie oft werden die Daten aktualisiert?</summary>
+  <p>Historische Klimaprofile werden jährlich aktualisiert. ECMWF-Saisonalprognosen werden täglich abgerufen. Echtzeit-Prognosedaten werden stündlich aktualisiert.</p>
+  </details>
+  <details>
+  <summary>Was bedeuten die Farben der Scores?</summary>
+  <p>Grün (≥7,6/10): empfohlen. Gelb-grün (6,3–7,5): akzeptabel. Orange (5–6,2): eingeschränkt. Rot (&lt;5): ungünstig für die gewählte Aktivität.</p>
+  </details>
   </section>
  </main>
  <footer>
