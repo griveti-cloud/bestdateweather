@@ -1274,20 +1274,36 @@ function computeAndRenderScore(sc, rows) {
    tmin_ski = altCorrection(tmin_ski, selectedLoc.elevation, _modelElevation);
   }
   var avgMm = mmSum / rows.length;
-  var sTempSki;
-  if (tmax_ski > 10) sTempSki = 0;
-  else if (tmax_ski > 5) sTempSki = Math.max(0, 50 - (tmax_ski - 5) * 10);
-  else if (tmax_ski >= -2) sTempSki = 90 + (2 - Math.abs(tmax_ski)) * 2;
-  else if (tmax_ski >= -12) sTempSki = 90 - (Math.abs(tmax_ski) - 2) * 3;
-  else sTempSki = Math.max(30, 90 - (Math.abs(tmax_ski) - 2) * 3);
-  var snowBonus = (tmin_ski < 0 && avgMm > 2) ? Math.min(100, 60 + avgMm * 3) : (tmin_ski < 0 && avgMm > 0 ? 55 : (tmin_ski < 0 ? 15 : 0));
+  // ── Température idéale ski (même logique que Python t_ideal_winter) ──
+  var tIdeaSki;
+  if (tmax_ski <= -15) tIdeaSki = 30;
+  else if (tmax_ski <= -5) tIdeaSki = 30 + (tmax_ski + 15) / 10 * 60;
+  else if (tmax_ski <= 5)  tIdeaSki = 90 + (5 - Math.abs(tmax_ski)) / 5 * 10;
+  else if (tmax_ski <= 15) tIdeaSki = 90 - (tmax_ski - 5) / 10 * 70;
+  else tIdeaSki = Math.max(0, 20 - (tmax_ski - 15) / 10 * 20);
+  // ── Enneigement proxy (même logique que Python _snow_reliability) ──
+  // Seuil +4°C en vallée ≈ -2°C à 2000m ; précip froides = bonus poudreuse
+  var sSnow;
+  if (tmax_ski <= 0) {
+   var powderBonus = Math.min(20, avgRain * 0.45);
+   sSnow = Math.min(90, 70 + powderBonus);
+  } else if (tmax_ski <= 4) {
+   var coldF = (4 - tmax_ski) / 4;
+   var heavyPen = Math.max(0, avgRain - 60) / 100 * 15;
+   sSnow = Math.max(50, 65 + coldF * 5 - heavyPen);
+  } else if (tmax_ski <= 6) {
+   sSnow = Math.max(30, 50 - (tmax_ski - 4) / 2 * 20 - avgRain * 0.15);
+  } else if (tmax_ski <= 12) {
+   sSnow = Math.max(5, 30 - (tmax_ski - 6) / 6 * 20 - avgRain * 0.15);
+  } else {
+   sSnow = 0;
+  }
+  // ── Soleil ski ──
   var sSunSki = Math.min(100, (peakSol / 50) * 8);
-  if (tmax_ski > 10) sSunSki = 0;
-  else if (tmax_ski > 5) sSunSki = Math.round(sSunSki * 0.4);
-  var sRainSki = tmax_ski > 2 ? Math.max(0, 100 - avgRain * 1.5) : Math.max(40, 100 - avgRain * 0.3);
-  total = Math.round(sRainSki * 0.15 + sTempSki * 0.40 + snowBonus * 0.20 + sSunSki * 0.25);
+  // ── Score final : 40% enneigement + 40% température + 20% soleil ──
+  total = Math.round(sSnow * 0.40 + tIdeaSki * 0.40 + sSunSki * 0.20);
   if (tmax_ski > 15) total = Math.min(total, 5);
-  else if (tmax_ski > 10) total = Math.min(total, 10);
+  else if (tmax_ski > 12) total = Math.min(total, 15);
 
  // ── Plage : logique spécifique ───────────────────────────────────────────
  } else if (uc === 'plage') {
