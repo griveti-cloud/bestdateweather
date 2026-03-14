@@ -737,13 +737,12 @@
     if (!section || !t.rankingUrl) return;
     section.innerHTML =
       '<a href="' + t.rankingUrl + '" style="' +
-        'display:flex;align-items:center;justify-content:space-between;' +
+        'display:block;text-align:center;' +
         'background:var(--gold);color:#fff;text-decoration:none;' +
-        'padding:10px 14px;border-radius:10px;margin-bottom:6px;' +
-        'font-family:\'DM Sans\',sans-serif;' +
+        'padding:12px 14px;border-radius:10px;margin-bottom:6px;' +
+        'font-family:\'DM Sans\',sans-serif;font-size:16px;font-weight:700;' +
       '">' +
-        '<span style="font-size:13px;font-weight:700">' + t.rankingTitle + '</span>' +
-        '<span style="font-size:17px;line-height:1">›</span>' +
+        t.rankingTitle +
       '</a>';
   }
 
