@@ -768,7 +768,10 @@
     "all_year_sub": "Los 25 destinos con el mejor clima durante los 12 meses, clasificados por puntuación media anual.",
     "all_year_eyebrow": "¿Dónde ir según el clima?",
     "all_year_sec": "Top 25 destinos — Puntuación anual",
-    "all_year_intro": "Puntuación media calculada durante los 12 meses del año."
+    "all_year_intro": "Puntuación media calculada durante los 12 meses del año.",
+    "sec_title_meteo": "Top {n} destinos en {month}",
+    "sec_title_beach": "Top {n} destinos de playa en {month}",
+    "sec_title_ski": "Top {n} estaciones de esquí en {month}"
   },
   "ranking_footer": {
     "data_by": "Datos meteorológicos de Open-Meteo.com",

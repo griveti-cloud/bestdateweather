@@ -773,7 +773,10 @@
     "all_year_sub": "Die 25 Reiseziele mit dem besten Klima das ganze Jahr über, nach Jahresdurchschnittswert gerankt.",
     "all_year_eyebrow": "Wohin reisen nach Wetter?",
     "all_year_sec": "Top 25 Reiseziele — Jahresbewertung",
-    "all_year_intro": "Durchschnittliche Bewertung über alle 12 Monate des Jahres berechnet."
+    "all_year_intro": "Durchschnittliche Bewertung über alle 12 Monate des Jahres berechnet.",
+    "sec_title_meteo": "Top {n} Reiseziele im {month}",
+    "sec_title_beach": "Top {n} Strandziele im {month}",
+    "sec_title_ski": "Top {n} Skigebiete im {month}"
   },
   "ranking_footer": {
     "data_by": "Wetterdaten von Open-Meteo.com",

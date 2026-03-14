@@ -768,7 +768,10 @@
     "all_year_sub": "The 25 destinations with the best climate year-round, ranked by annual average score.",
     "all_year_eyebrow": "Where to go by weather?",
     "all_year_sec": "Top 25 destinations — Annual score",
-    "all_year_intro": "Average score calculated across all 12 months. Perfect for finding destinations with great weather all year long."
+    "all_year_intro": "Average score calculated across all 12 months. Perfect for finding destinations with great weather all year long.",
+    "sec_title_meteo": "Top {n} destinations in {month}",
+    "sec_title_beach": "Top {n} beach destinations in {month}",
+    "sec_title_ski": "Top {n} ski resorts in {month}"
   },
   "ranking_footer": {
     "data_by": "Weather data by Open-Meteo.com",

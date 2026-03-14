@@ -768,7 +768,10 @@
     "all_year_sub": "Les 25 destinations avec le meilleur climat sur 12 mois, classées par score annuel moyen.",
     "all_year_eyebrow": "Où partir selon la météo ?",
     "all_year_sec": "Top 25 destinations — Score annuel",
-    "all_year_intro": "Score moyen calculé sur les 12 mois de l'année. Idéal pour choisir une destination qui offre un bon climat toute l'année."
+    "all_year_intro": "Score moyen calculé sur les 12 mois de l'année. Idéal pour choisir une destination qui offre un bon climat toute l'année.",
+    "sec_title_meteo": "Top {n} destinations en {month}",
+    "sec_title_beach": "Top {n} destinations plage en {month}",
+    "sec_title_ski": "Top {n} stations ski en {month}"
   },
   "ranking_footer": {
     "data_by": "Données météo par Open-Meteo.com",
