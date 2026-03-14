@@ -1201,5 +1201,12 @@
     "{best_ski_month} marque le cœur de la saison ski {prep} {nom_bare}.",
     "Ski {prep} {nom_bare} : {best_ski_month_lc} offre les meilleures conditions d'enneigement.",
     "{nom_bare} — station de ski. Saison idéale : {best_ski_month_lc}."
-  ]
+  ],
+  "context_paragraphs_ski": {
+    "ski_peak": "Pleine saison ski {nom_f} : enneigement optimal et domaine entièrement ouvert. C'est le meilleur moment pour profiter des pistes.",
+    "ski_good": "Bonne période ski {nom_f} avec un enneigement généralement fiable ({tmax}°C en vallée). Les remontées mécaniques tournent à plein régime.",
+    "ski_shoulder": "Période de mi-saison {nom_f} : enneigement variable selon l'altitude. Les pistes de bas de domaine peuvent manquer de neige avec {tmax}°C en vallée.",
+    "ski_poor": "Conditions ski difficiles {nom_f} ce mois-ci ({tmax}°C en vallée). L'enneigement est aléatoire, les domaines partiellement fermés ou en fin de saison.",
+    "ski_offseason": "Hors-saison ski {nom_f} — les remontées mécaniques sont fermées. À privilegier pour la randonnée, le VTT ou les activités estivales en altitude."
+  }
 }

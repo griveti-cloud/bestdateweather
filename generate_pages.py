@@ -866,7 +866,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 
 # ── CONTEXT PARAGRAPH ──────────────────────────────────────────────────────
 
-def context_paragraph(cfg, nom, nom_f, m, mi, score, best_month, best_score, is_tropical, event_text=None):
+def context_paragraph(cfg, nom, nom_f, m, mi, score, best_month, best_score, is_tropical, event_text=None, is_mountain=False, ski_sc=0):
     """Generate a context paragraph per destination × month."""
     C = cfg
     MONTHS = C['months']
@@ -889,7 +889,28 @@ def context_paragraph(cfg, nom, nom_f, m, mi, score, best_month, best_score, is_
     if event_text:
         parts.append(f"<strong>🎯 {event_text}</strong>")
 
-    # Main condition
+    # ── Ski context override for mountain destinations ──
+    if is_mountain and C.get('context_paragraphs_ski'):
+        cps = C['context_paragraphs_ski']
+        if ski_sc >= 8.0:
+            parts.append(cps['ski_peak'].format(**fvars))
+        elif ski_sc >= 6.5:
+            parts.append(cps['ski_good'].format(**fvars))
+        elif ski_sc >= 5.0:
+            parts.append(cps['ski_shoulder'].format(**fvars))
+        elif ski_sc >= 3.0:
+            parts.append(cps['ski_poor'].format(**fvars))
+        else:
+            parts.append(cps['ski_offseason'].format(**fvars))
+        # Ajouter pluie si conditions limit (tmax > 2°C)
+        if m['tmax'] > 2:
+            if rain <= 25:
+                parts.append(cp['rain_low'].format(**fvars))
+            elif rain >= 50:
+                parts.append(cp['rain_high'].format(**fvars))
+        return ' '.join(parts)
+
+    # Main condition (non-ski)
     if is_tropical and rain >= 50:
         parts.append(cp['tropical_wet'].format(**fvars))
     elif is_tropical and rain <= 20:
@@ -1007,6 +1028,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     best_score = months[best_idx]['score']
 
     eff_classe = m['classe']
+    ski_sc = 0  # default; overridden for mountain below
     if is_mountain:
         from scoring import compute_ski_score, best_class
         ski_sc = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
@@ -1276,13 +1298,34 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     og_title = fill_tpl(C['lbl_m_og_title_tpl'],         C, **tpl)
 
     # ── Cross-linking similar destinations ──
-    climate_for_sim = {}
-    for _, sim_slug in similarities.get(slug_fr, [])[:3]:
-        if sim_slug in all_climate and all_climate[sim_slug][mi]:
-            sm = all_climate[sim_slug][mi]
-            climate_for_sim[sim_slug] = {'score': f"{sm['score']:.1f}", 'tmax': sm['tmax']}
-
-    sim_cards_html = _build_sim_cards(cfg, similarities.get(slug_fr, [])[:3], all_dests, climate_for_sim, mi)
+    if is_mountain:
+        # Pour les stations ski : trier les autres stations par proximité de ski_score ce mois
+        from scoring import compute_ski_score as _csk
+        _my_ski = _csk(m['tmax'], m['rain_pct'], m['sun_h'])
+        _ski_sims = []
+        for _ss, _sd in all_dests.items():
+            if _ss == slug_fr: continue
+            if _sd.get('mountain','False').strip() != 'True': continue
+            if _ss not in all_climate or not all_climate[_ss][mi]: continue
+            _sm = all_climate[_ss][mi]
+            _other_ski = _csk(_sm['tmax'], _sm['rain_pct'], _sm['sun_h'])
+            _ski_sims.append((abs(_other_ski - _my_ski), _ss))
+        _ski_sims.sort(key=lambda x: x[0])
+        sim_list_for_page = [(1 - d/10, s) for d, s in _ski_sims[:3]]
+        climate_for_sim = {}
+        for _, sim_slug in sim_list_for_page:
+            if sim_slug in all_climate and all_climate[sim_slug][mi]:
+                sm = all_climate[sim_slug][mi]
+                _ssc = _csk(sm['tmax'], sm['rain_pct'], sm['sun_h'])
+                climate_for_sim[sim_slug] = {'score': f"{_ssc:.1f}", 'tmax': sm['tmax']}
+        sim_cards_html = _build_sim_cards(cfg, sim_list_for_page, all_dests, climate_for_sim, mi)
+    else:
+        climate_for_sim = {}
+        for _, sim_slug in similarities.get(slug_fr, [])[:3]:
+            if sim_slug in all_climate and all_climate[sim_slug][mi]:
+                sm = all_climate[sim_slug][mi]
+                climate_for_sim[sim_slug] = {'score': f"{sm['score']:.1f}", 'tmax': sm['tmax']}
+        sim_cards_html = _build_sim_cards(cfg, similarities.get(slug_fr, [])[:3], all_dests, climate_for_sim, mi)
 
     sim_section_title = C['lbl_m_sec_similar_title_tpl'].format(**tpl)
     sim_section_label = C['lbl_m_sim_label']
@@ -1312,9 +1355,11 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     # ── Context paragraph ──
     event_text = (events or {}).get((slug_fr, mi+1), {}).get(C['lang'])
+    _ski_sc_ctx = ski_sc if is_mountain else 0
     ctx_para = context_paragraph(cfg, nom,
                                  nom_f, m, mi, score, best_month, best_score,
-                                 dest.get('tropical', '0') == '1', event_text)
+                                 dest.get('tropical', '0') == '1', event_text,
+                                 is_mountain=is_mountain, ski_sc=_ski_sc_ctx)
 
     # ── Labels ──
     # ── Labels (built from locale config) ──

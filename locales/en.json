@@ -1201,5 +1201,12 @@
     "{best_ski_month} is peak ski season at {nom_bare}.",
     "Ski at {nom_bare}: {best_ski_month_lc} offers the best snow coverage.",
     "{nom_bare} — ski resort. Prime season: {best_ski_month_lc}."
-  ]
+  ],
+  "context_paragraphs_ski": {
+    "ski_peak": "Peak ski season {nom_f}: optimal snow cover and fully open slopes. The best time to hit the mountain.",
+    "ski_good": "Good ski conditions {nom_f} with generally reliable snow ({tmax}°C in the valley). Lifts running at full capacity.",
+    "ski_shoulder": "Shoulder ski season {nom_f}: variable snow depending on altitude. Lower runs may be thin with {tmax}°C in the valley.",
+    "ski_poor": "Challenging ski conditions {nom_f} this month ({tmax}°C in the valley). Snow cover is unreliable, with partial closures or late-season conditions.",
+    "ski_offseason": "Off-season for skiing {nom_f} — lifts are closed. Consider hiking, mountain biking or summer activities at altitude."
+  }
 }

@@ -1222,5 +1222,12 @@
     "{best_ski_month} es la temporada alta de esquí en {nom_bare}.",
     "Esquí en {nom_bare}: {best_ski_month_lc} ofrece las mejores condiciones.",
     "{nom_bare} — estación de esquí. Temporada ideal: {best_ski_month_lc}."
-  ]
+  ],
+  "context_paragraphs_ski": {
+    "ski_peak": "Temporada alta de esquí {nom_f}: nieve óptima y dominio completamente abierto. El mejor momento para esquiar.",
+    "ski_good": "Buenas condiciones de esquí {nom_f} con nieve generalmente fiable ({tmax}°C en el valle). Telesillas en pleno funcionamiento.",
+    "ski_shoulder": "Temporada intermedia {nom_f}: nieve variable según la altitud. Las pistas bajas pueden tener poca nieve con {tmax}°C en el valle.",
+    "ski_poor": "Condiciones de esquí difíciles {nom_f} este mes ({tmax}°C en el valle). La nieve es poco fiable, con cierres parciales o fin de temporada.",
+    "ski_offseason": "Fuera de temporada de esquí {nom_f} — los telesillas están cerrados. Ideal para senderismo, BTT o actividades estivales de montaña."
+  }
 }

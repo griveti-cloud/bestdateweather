@@ -1213,5 +1213,12 @@
     "{best_ski_month} ist die Hauptskisaison in {nom_bare}.",
     "Ski in {nom_bare}: {best_ski_month_lc} bietet die besten Bedingungen.",
     "{nom_bare} — Skigebiet. Ideale Saison: {best_ski_month_lc}."
-  ]
+  ],
+  "context_paragraphs_ski": {
+    "ski_peak": "Hochsaison Ski {nom_f}: optimale Schneelage und vollständig geöffnetes Skigebiet. Die beste Zeit für die Pisten.",
+    "ski_good": "Gute Skibedingungen {nom_f} mit generell zuverlässiger Schneelage ({tmax}°C im Tal). Lifte in vollem Betrieb.",
+    "ski_shoulder": "Nebensaison Ski {nom_f}: je nach Höhenlage unterschiedliche Schneebedingungen. Untere Pisten können bei {tmax}°C im Tal Schneemangel aufweisen.",
+    "ski_poor": "Schwierige Skibedingungen {nom_f} diesen Monat ({tmax}°C im Tal). Schneelage unzuverlässig, teilweise Schließungen oder Saisonende.",
+    "ski_offseason": "Ski-Nebensaison {nom_f} — Lifte geschlossen. Empfehlenswert für Wandern, Mountainbike oder sommerliche Aktivitäten in der Höhe."
+  }
 }
