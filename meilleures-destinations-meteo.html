@@ -11,7 +11,54 @@
 <link rel="alternate" hreflang="en-us" href="https://bestdateweather.com/us/best-weather-destinations.html">
 <link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/mejores-destinos-climaticos.html">
 <link rel="alternate" hreflang="fr" href="https://bestdateweather.com/meilleures-destinations-meteo.html">
-<link rel="stylesheet" href="style.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1a2332;--gold:#d4a853;--cream:#faf6ef;--cream2:#ede4d3;--text:#2c3e50;--slate:#5a6c7d;--slate2:#8899a6}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--text);line-height:1.6}
+.pillar-hero{background:var(--navy);color:white;padding:48px 20px 36px;text-align:center}
+.hero-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:2.5px;color:#9c5f00;margin-bottom:12px;font-weight:700}
+.hero-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(24px,5vw,38px);margin-bottom:10px;line-height:1.2}
+.hero-title em{color:var(--gold);font-style:italic}
+.hero-sub{font-size:15px;opacity:.75;max-width:600px;margin:0 auto 20px}
+.hero-stats{display:flex;justify-content:center;gap:36px;margin-top:16px}
+.hstat{text-align:center}.hstat-val{display:block;font-size:22px;font-weight:700;color:var(--gold)}.hstat-lbl{font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:1px}
+.page{max-width:960px;margin:0 auto;padding:28px 16px 40px}
+.section{margin-bottom:36px}
+.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#9c5f00;font-weight:700;margin-bottom:6px}
+.sec-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(18px,4vw,24px);margin-bottom:8px}
+.sec-intro{font-size:14px;color:var(--slate);margin-bottom:18px}
+.rt{width:100%;border-collapse:collapse;font-size:13px}
+.rt th{background:var(--navy);color:white;padding:10px 10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;position:sticky;top:0;white-space:nowrap}
+.rt td{padding:9px 10px;border-bottom:1px solid var(--cream2);vertical-align:middle;white-space:nowrap}
+.rt tr:hover{background:#fef9f0}
+.rt .rank{font-weight:700;font-size:15px;text-align:center;width:36px;padding-left:4px}
+.rt .sc{font-weight:700;color:var(--navy);font-size:14px;white-space:nowrap}
+.rt td:nth-child(2){white-space:normal;min-width:130px}
+.dest-link{color:var(--text);text-decoration:none;font-weight:600}
+.dest-link:hover{color:var(--gold)}
+.region-tag{display:inline-block;font-size:10px;color:var(--slate);background:var(--cream);padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle}
+.filter-panel{background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px 14px 0 0;padding:8px 14px 6px;margin-bottom:0;display:flex;flex-direction:column;gap:0}.filter-row{display:flex;flex-direction:column;gap:6px;padding:5px 0;border-bottom:1px solid var(--cream2)}.filter-row:last-child{border-bottom:none;padding-bottom:2px}.filter-label{font-size:9px;font-weight:700;color:var(--slate);letter-spacing:.08em;text-transform:uppercase}.filter-btns{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.month-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.month-nav a{padding:4px 8px;border-radius:10px;font-size:11px;font-weight:600;text-decoration:none;background:white;border:1.5px solid var(--cream2);color:var(--navy);white-space:nowrap;flex-shrink:0}.month-nav a.active{background:var(--gold);color:white;border-color:var(--gold)}.month-nav a:hover{border-color:var(--gold)}
+.filter-panel+.section{border:1.5px solid var(--cream2);border-top:none;border-radius:0 0 14px 14px;padding:12px 14px 0;margin-bottom:16px}.cta-box{background:linear-gradient(135deg,#d4a853,#c69a3a);border-radius:14px;padding:24px;text-align:center;margin:28px 0}
+.cta-box a{color:white;font-weight:700;font-size:15px;text-decoration:none}
+.related-pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px}
+.related-card{background:white;border:1.5px solid var(--cream2);border-radius:12px;padding:16px;text-decoration:none;color:var(--text);display:block}
+.related-card:hover{border-color:var(--gold);background:#fffbf0}
+.related-card strong{display:block;font-size:13px;font-weight:700;margin-bottom:4px}
+.related-card span{font-size:11px;color:var(--slate2)}
+footer{background:var(--navy);color:#b8bcc8;text-align:center;padding:36px 20px;font-size:12px;line-height:2}
+footer a{color:#f5d060;text-decoration:none}
+.nav-share{display:none}
+@media(pointer:coarse),(max-width:768px){.nav-share{display:flex}}
+@media(max-width:640px){.rt th:nth-child(5),.rt td:nth-child(5){display:none}.hero-stats{gap:20px}}
+.mode-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.mode-tab{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s}
+.mode-tab.active{background:var(--gold);color:white;border-color:var(--gold);border-radius:10px}
+.mode-tab:hover:not(.active){border-color:var(--gold)}
+.reg-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.reg-tab{padding:5px 11px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s;white-space:nowrap}
+.reg-tab.active{background:var(--gold);color:white;border-color:var(--gold)}
+.reg-tab:hover:not(.active){border-color:var(--gold)}
+</style>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap"/></noscript>
 </head>
 <body>
