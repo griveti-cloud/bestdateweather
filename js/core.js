@@ -78,6 +78,16 @@ function fmtWind(kmh) {
  return Math.round(kmh) + ' km/h';
 }
 
+function fmtWindDir(deg) {
+ if (deg == null) return '';
+ var dirs;
+ var _lg=(document.documentElement.lang||'fr').toLowerCase();
+ if (_lg==='de') dirs=['N','NO','O','SO','S','SW','W','NW'];
+ else if (_lg==='en'||_lg==='en-us') dirs=['N','NE','E','SE','S','SW','W','NW'];
+ else if (_lg==='es') dirs=['N','NE','E','SE','S','SO','O','NO'];
+ else dirs=['N','NE','E','SE','S','SO','O','NO'];
+ return dirs[Math.round(((deg%360)+360)%360/45)%8];
+}
 function fmtPrecip(mm) {
  if (mm == null) return '–';
  if (_units === 'us') { var inches = mm * 0.0393701; return (inches < 0.1 ? inches.toFixed(2) : inches.toFixed(1)) + ' in'; }
@@ -627,7 +637,7 @@ function renderSeaChip(sstResult) {
 }
 
 function fetchForecast(lat, lon, yr, mo, da) {
- var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,precipitation,snowfall,windspeed_10m,shortwave_radiation,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum&timezone=auto&forecast_days=8';
+ var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,precipitation,snowfall,windspeed_10m,winddirection_10m,shortwave_radiation,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum&timezone=auto&forecast_days=8';
  // _locTzOffset is global
  return fetch(url).then(function(r){if(!r.ok)throw new Error(T.errForecast);return r.json();}).then(function(data){
  if (data.utc_offset_seconds != null) _locTzOffset = data.utc_offset_seconds;
@@ -645,7 +655,8 @@ function fetchForecast(lat, lon, yr, mo, da) {
  var w=idx>=0&&data.hourly.windspeed_10m[idx]!=null?parseFloat(data.hourly.windspeed_10m[idx].toFixed(1)):0;
  var s=idx>=0&&data.hourly.shortwave_radiation&&data.hourly.shortwave_radiation[idx]!=null?Math.max(0,data.hourly.shortwave_radiation[idx]):0;
  var wmo_h=idx>=0&&data.hourly.weather_code&&data.hourly.weather_code[idx]!=null?data.hourly.weather_code[idx]:null;
- rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:t,p50:t,p75:t,temp:t,rain:rn,mm:mm_val,windP50:w,solP25:s,solP50:s,solP75:s,sol:s,snow:snow_val,isForecast:true,wmo:wmo_h});
+ var wd_fc=idx>=0&&data.hourly.winddirection_10m&&data.hourly.winddirection_10m[idx]!=null?data.hourly.winddirection_10m[idx]:null;
+    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:t,p50:t,p75:t,temp:t,rain:rn,mm:mm_val,windP50:w,windDir:wd_fc,solP25:s,solP50:s,solP75:s,sol:s,snow:snow_val,isForecast:true,wmo:wmo_h});
  }
  return rows;
  });
@@ -723,7 +734,7 @@ function render7DayStrip(diffDays) {
 
 function fetchArchive(lat, lon, refDate) {
  var s=toISO(addDays(refDate,-10)), e=toISO(addDays(refDate,10));
- return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&hourly=temperature_2m,precipitation,snowfall,windspeed_10m,shortwave_radiation,relative_humidity_2m&timezone=auto').then(function(r){if(!r.ok)throw new Error('Archive error');return r.json();}).then(function(d){if(d.utc_offset_seconds!=null)_locTzOffset=d.utc_offset_seconds;if(d.elevation!=null)_modelElevation=Math.round(d.elevation);return d;});
+ return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&hourly=temperature_2m,precipitation,snowfall,windspeed_10m,winddirection_10m,shortwave_radiation,relative_humidity_2m&timezone=auto').then(function(r){if(!r.ok)throw new Error('Archive error');return r.json();}).then(function(d){if(d.utc_offset_seconds!=null)_locTzOffset=d.utc_offset_seconds;if(d.elevation!=null)_modelElevation=Math.round(d.elevation);return d;});
 }
 
 function fetchSnowDepth(lat, lon, yr, mo, da) {
@@ -760,14 +771,14 @@ function buildClimatology(lat, lon, yr, mo, da) {
  var trend=Math.max(0,(target.getTime()-now.getTime())/(1000*60*60*24*365.25))*0.03;
  var endYr=now.getFullYear()-1, years=[];
  for(var y=endYr-9;y<=endYr;y++) years.push(y);
- var buckets=[]; for(var h=0;h<24;h++) buckets.push({t:[],p:[],w:[],s:[],sn:[],rh:[]});
+ var buckets=[]; for(var h=0;h<24;h++) buckets.push({t:[],p:[],w:[],s:[],sn:[],rh:[],wd:[]});
  var idx=0;
  function step(){
  if(idx>=years.length) return Promise.resolve(buildRows(buckets,trend));
  var yr2=years[idx++];
  return fetchArchive(lat,lon,new Date(yr2,mo,da,12,0,0)).then(function(data){
- var T=data.hourly.temperature_2m, P=data.hourly.precipitation, W=data.hourly.windspeed_10m, S=data.hourly.shortwave_radiation||[], SN=data.hourly.snowfall||[], RH=data.hourly.relative_humidity_2m||[];
- for(var i=0;i<data.hourly.time.length;i++){var hh=new Date(data.hourly.time[i]).getHours();if(T[i]!=null)buckets[hh].t.push(T[i]);if(P[i]!=null)buckets[hh].p.push(P[i]);if(W[i]!=null)buckets[hh].w.push(W[i]);if(S[i]!=null)buckets[hh].s.push(S[i]);if(SN[i]!=null)buckets[hh].sn.push(SN[i]);if(RH[i]!=null)buckets[hh].rh.push(RH[i]);}
+ var T=data.hourly.temperature_2m, P=data.hourly.precipitation, W=data.hourly.windspeed_10m, WD=data.hourly.winddirection_10m||[], S=data.hourly.shortwave_radiation||[], SN=data.hourly.snowfall||[], RH=data.hourly.relative_humidity_2m||[];
+ for(var i=0;i<data.hourly.time.length;i++){var hh=new Date(data.hourly.time[i]).getHours();if(T[i]!=null)buckets[hh].t.push(T[i]);if(P[i]!=null)buckets[hh].p.push(P[i]);if(W[i]!=null)buckets[hh].w.push(W[i]);if(WD[i]!=null)buckets[hh].wd.push(WD[i]);if(S[i]!=null)buckets[hh].s.push(S[i]);if(SN[i]!=null)buckets[hh].sn.push(SN[i]);if(RH[i]!=null)buckets[hh].rh.push(RH[i]);}
  }).catch(function(){}).then(function(){setP(Math.round((idx/years.length)*90),'Analyse '+yr2+'…');return new Promise(function(res){setTimeout(res,20);});}).then(step);
  }
  return step();
@@ -784,7 +795,8 @@ function buildRows(buckets, trend) {
     var tempFreq=null;
     if(p50v!=null&&b.t.length>0){var _inRange=0;for(var _ti=0;_ti<b.t.length;_ti++)if(Math.abs(b.t[_ti]-p50v)<=2)_inRange++;tempFreq=Math.round(_inRange/b.t.length*100);}
     var avgRh = b.rh && b.rh.length > 0 ? b.rh.reduce(function(s,v){return s+v;},0)/b.rh.length : null;
-    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50v,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50v,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,mm:b.p.length>0?(b.p.reduce(function(s,v){return s+v;},0)/b.p.length):0,snow:avgSnow,windP50:pct(b.w,50),solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0),tempFreq:tempFreq,rh:avgRh});
+    var windDirMean=null;if(b.wd&&b.wd.length>0){var _sinS=0,_cosS=0;for(var _di=0;_di<b.wd.length;_di++){var _rad=b.wd[_di]*Math.PI/180;_sinS+=Math.sin(_rad);_cosS+=Math.cos(_rad);}windDirMean=((Math.atan2(_sinS/b.wd.length,_cosS/b.wd.length)*180/Math.PI)+360)%360;}
+    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50v,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50v,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,mm:b.p.length>0?(b.p.reduce(function(s,v){return s+v;},0)/b.p.length):0,snow:avgSnow,windP50:pct(b.w,50),windDir:windDirMean,solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0),tempFreq:tempFreq,rh:avgRh});
  }
  return rows;
 }
@@ -1477,7 +1489,10 @@ function updateHero(sc, rows, mainHour) {
  document.getElementById('r-cond').textContent=(main.isForecast && main.wmo != null && wmoToLabel(main.wmo)) ? wmoToLabel(main.wmo) : getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
  document.getElementById('r-icon').innerHTML=(main.isForecast && main.wmo != null && wmoToIcon(main.wmo)) ? wmoToIcon(main.wmo) : getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
  document.getElementById('r-rain').textContent=avgRain+'%';
- document.getElementById('r-wind').textContent=fmtWind(Math.round(wSum/rows.length));
+ var _windAvg=Math.round(wSum/rows.length);
+ var _mainDir=(rows[Math.round(rows.length/2)]&&rows[Math.round(rows.length/2)].windDir!=null)?rows[Math.round(rows.length/2)].windDir:null;
+ var _wdirStr=_mainDir!=null?' '+fmtWindDir(_mainDir):'';
+ document.getElementById('r-wind').textContent=fmtWind(_windAvg)+_wdirStr;
  document.getElementById('r-sky').textContent=skyLbl;
  computeAndRenderScore(sc, rows);
 
