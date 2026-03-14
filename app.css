@@ -18,7 +18,7 @@ html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;-webkit-font-smoothing:antialiased}
 
 /* ── FLAGS ── */
-img[src*="flags/"]{object-fit:contain}
+img[src*="flags/"]{object-fit:contain;vertical-align:middle}
 
 /* ── HEADER ── */
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
