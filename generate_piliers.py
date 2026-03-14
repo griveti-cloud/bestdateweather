@@ -721,6 +721,14 @@ def generate_page(mi, lang, dests, climate):
         '+"</tr>";'
         '});'
         'tb.innerHTML=html;'
+        'var _s1=document.getElementById("stat-score");'
+        'if(_s1&&list.length){'
+        'var _top=list[0];var _topV=_top[key]!=null?_top[key]:_top.s;'
+        '_s1.textContent=_topV.toFixed(1);'
+        'document.getElementById("stat-count").textContent=list.length;'
+        'var _avgT=list.slice(0,10).reduce(function(a,d){return a+(d.tmin+d.tmax)/2;},0)/Math.min(10,list.length);'
+        'var _s3=document.getElementById("stat-temp");if(_s3)_s3.textContent=Math.round(_avgT)+"°";'
+        '}'
         '}'
         'document.getElementById("mode-tabs").addEventListener("click",function(ev){'
         'var btn=ev.target.closest(".mode-tab");'
@@ -855,9 +863,9 @@ def generate_page(mi, lang, dests, climate):
 <h1 class="hero-title">{h1}</h1>
 <p class="hero-sub">{hero_sub}</p>
 <div class="hero-stats">
-<div class="hstat"><span class="hstat-val">{top['score']:.1f}</span><span class="hstat-lbl">{pil["score_n1"]}</span></div>
-<div class="hstat"><span class="hstat-val">{TOP_N}</span><span class="hstat-lbl">{pil["top_n_label"]}</span></div>
-<div class="hstat"><span class="hstat-val">{avg_temp:.0f}{ft_unit()}</span><span class="hstat-lbl">{pil["top10_avg"]}</span></div>
+<div class="hstat"><span class="hstat-val" id="stat-score">{top['score']:.1f}</span><span class="hstat-lbl">{pil["score_n1"]}</span></div>
+<div class="hstat"><span class="hstat-val" id="stat-count">{TOP_N}</span><span class="hstat-lbl">{pil["top_n_label"]}</span></div>
+<div class="hstat"><span class="hstat-val" id="stat-temp">{avg_temp:.0f}{ft_unit()}</span><span class="hstat-lbl">{pil["top10_avg"]}</span></div>
 </div>
 </header>
 <main class="page">
