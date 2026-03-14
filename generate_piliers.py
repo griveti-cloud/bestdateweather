@@ -69,9 +69,12 @@ def rank_icon(i):
     return str(i)
 
 def score_class(s):
-    if s >= 8: return '#16a34a'
-    if s >= 6: return '#d4a853'
-    return '#dc2626'
+    if s >= 8.6: return '#1a7a4a'
+    if s >= 7.6: return '#2d9e60'
+    if s >= 6.3: return '#84cc16'
+    if s >= 5.0: return '#f59e0b'
+    if s >= 3.5: return '#f97316'
+    return '#ef4444'
 
 REGION_CHILDREN = {
     'canaries': {'lanzarote', 'fuerteventura', 'gran-canaria', 'tenerife',
@@ -689,7 +692,7 @@ def generate_page(mi, lang, dests, climate):
         'var TOP=25;var CUR_REG="all";'
         f'var TH_GEN="{e(th_score_gen)}",TH_BEACH="{e(th_score_beach)}",TH_SKI="{e(th_score_ski)}";'
         f'var NO_BEACH="{e(no_beach_msg)}",NO_SKI="{e(no_ski_msg)}",NO_METEO="{e(no_meteo_msg)}";'
-        'function sc(s){return s>=8?"#16a34a":s>=6?"#d4a853":"#dc2626";}'
+        'function sc(s){return s>=8.6?"#1a7a4a":s>=7.6?"#2d9e60":s>=6.3?"#84cc16":s>=5?"#f59e0b":s>=3.5?"#f97316":"#ef4444";}'
         'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'
         'function render(mode){'
         'var tb=document.getElementById("rt-body");'
@@ -1156,7 +1159,7 @@ def generate_annual_page(lang, dests, climate):
         'var TOP=25;var CUR_REG="all";'+
         f'var TH_GEN="{_e(th_score_gen)}",TH_BEACH="{_e(th_score_beach)}",TH_SKI="{_e(th_score_ski)}";'+
         f'var NO_BEACH="{_e(no_beach_msg)}",NO_SKI="{_e(no_ski_msg)}",NO_METEO="{_e(no_meteo_msg)}";'+
-        'function sc(s){return s>=8?"#16a34a":s>=6?"#d4a853":"#dc2626";}'+
+        'function sc(s){return s>=8.6?"#1a7a4a":s>=7.6?"#2d9e60":s>=6.3?"#84cc16":s>=5?"#f59e0b":s>=3.5?"#f97316":"#ef4444";}'+
         'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'+
         'function render(mode){'+
         'var tb=document.getElementById("rt-body");'+
