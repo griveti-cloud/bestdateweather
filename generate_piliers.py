@@ -254,6 +254,11 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=20):
     remove = {p for p, ch in REGION_CHILDREN.items() if p in ranked and ranked & ch}
     if remove:
         general = [e for e in general if e['slug_fr'] not in remove]
+    # Remove country-slugs when ANY city from the same country exists in all_entries
+    countries_with_cities = {e['pays'] for e in general if e['slug_fr'] not in COUNTRY_SLUGS}
+    general = [e for e in general
+               if e['slug_fr'] not in COUNTRY_SLUGS or e['pays'] not in countries_with_cities]
+    # 1 destination per country
     seen_countries: dict = {}
     deduped: list = []
     for e in general:
