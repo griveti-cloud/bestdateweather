@@ -1188,7 +1188,7 @@ def generate_annual_page(lang, dests, climate):
 <meta name="description" content="{sub}">
 <link rel="canonical" href="{canonical}">
 {hreflang_tags}<link rel="stylesheet" href="{gen['asset_prefix']}style.css">
-<link rel="stylesheet" href="{gen['asset_prefix']}app.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap"/></noscript>
 </head>
 <body>
 <nav style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;max-width:900px;margin:0 auto">
