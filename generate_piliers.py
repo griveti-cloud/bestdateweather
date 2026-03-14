@@ -123,7 +123,7 @@ REGION_MAP = {
     'Philippines':'as','Singapour':'as','Sri Lanka':'as','Taïwan':'as',
     'Thaïlande':'as','Vietnam':'as','Viêt Nam':'as',
     # Océanie
-    'Australie':'oc','Fidji':'oc','Nouvelle-Calédonie':'oc','Nouvelle-Zélande':'oc',
+    'Australie':'oc','Fidji':'oc','Nouvelle-Calédonie':'oc','Nouvelle-Zélande':'oc','Îles Cook':'oc',
     'Palaos':'oc','Papouasie-Nouvelle-Guinée':'oc','Polynésie française':'oc',
     'Samoa':'oc','Tonga':'oc','Vanuatu':'oc',
 }
