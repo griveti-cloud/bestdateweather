@@ -35,6 +35,16 @@ def normalize(s: str) -> str:
     return s
 
 
+# Tokens trop génériques pour être des clés de lookup fiables
+# (évite que "saint-nazaire" → les-arcs à cause de l'alias "bourg saint maurice")
+GENERIC_TOKENS = {
+    'saint', 'sainte', 'mer', 'val', 'lac', 'ile', 'les', 'mont', 'arc',
+    'bourg', 'ville', 'city', 'ski', 'new', 'big', 'sur', 'way', 'du',
+    'd', 'la', 'le', 'de', 'en', 'et', 'des', 'les', 'au', 'aux',
+    'blanc', 'mont', 'plage', 'station', 'resort', 'hotel', 'village',
+}
+
+
 def load_existing(path: str) -> dict:
     if not os.path.exists(path):
         return {}
@@ -78,10 +88,12 @@ def main():
         # Aliases field (space-separated)
         for alias in r.get('aliases', '').split():
             alias = alias.strip()
+            alias_norm = normalize(alias)
+            # Skip tokens that are too generic to be reliable lookup keys
+            if alias_norm in GENERIC_TOKENS or len(alias_norm) <= 2:
+                continue
             if alias and alias not in data:
                 data[alias] = entry
-            # Also add normalized version
-            alias_norm = normalize(alias)
             if alias_norm and alias_norm not in data:
                 data[alias_norm] = entry
 
@@ -91,6 +103,9 @@ def main():
     for key, entry in existing.items():
         if key in data:
             continue  # already covered
+        # Skip generic tokens even if manually added
+        if key in GENERIC_TOKENS or len(key) <= 2:
+            continue
         # Only keep if it still points to a valid slug_fr
         if entry.get('fr') in valid_slugs_fr:
             data[key] = entry
