@@ -294,22 +294,22 @@ def compute_scores(months: list, slug: str = '') -> list:
 # Échelle : 0 – 10, normalisation globale comme le score principal.
 
 def t_beach(tmax: float) -> float:
-    """Confort thermique plage [0, 1]. Pic à 28-30°C, plus tolérant au chaud."""
-    if tmax <= 18:  return 0.0
-    if tmax <= 24:  return (tmax - 18) / 6 * 0.5
-    if tmax <= 30:  return 0.5 + (tmax - 24) / 6 * 0.5
-    if tmax <= 36:  return 1.0 - (tmax - 30) / 6 * 0.4
-    if tmax <= 42:  return 0.6 - (tmax - 36) / 6 * 0.4
+    """Confort thermique plage [0, 1]. Seuil abaissé à 16°C, pic à 28-32°C."""
+    if tmax <= 16:  return 0.0
+    if tmax <= 22:  return (tmax - 16) / 6 * 0.45
+    if tmax <= 30:  return 0.45 + (tmax - 22) / 8 * 0.55
+    if tmax <= 36:  return 1.0 - (tmax - 30) / 6 * 0.35
+    if tmax <= 42:  return 0.65 - (tmax - 36) / 6 * 0.35
     return 0.0
 
 def t_sea(sea_temp: float) -> float:
-    """Score température mer [0, 1]. Idéal 24-28°C, baignable dès 20°C."""
-    if sea_temp < 16:   return 0.0
-    if sea_temp <= 20:  return (sea_temp - 16) / 4 * 0.3
-    if sea_temp <= 24:  return 0.3 + (sea_temp - 20) / 4 * 0.4
-    if sea_temp <= 28:  return 0.7 + (sea_temp - 24) / 4 * 0.3
-    if sea_temp <= 32:  return 1.0 - (sea_temp - 28) / 4 * 0.1
-    return max(0.5, 0.9 - (sea_temp - 32) / 4 * 0.4)
+    """Score température mer [0, 1]. Plus généreux à 18-24°C (baignade possible)."""
+    if sea_temp < 14:   return 0.0
+    if sea_temp <= 18:  return (sea_temp - 14) / 4 * 0.25
+    if sea_temp <= 22:  return 0.25 + (sea_temp - 18) / 4 * 0.30
+    if sea_temp <= 26:  return 0.55 + (sea_temp - 22) / 4 * 0.35
+    if sea_temp <= 30:  return 0.90 + (sea_temp - 26) / 4 * 0.10
+    return max(0.5, 1.0 - (sea_temp - 30) / 5 * 0.5)
 
 def raw_beach_score(tmax: float, rain_pct: float, sun_h: float, sea_temp: float) -> float:
     """

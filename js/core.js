@@ -1308,17 +1308,30 @@ function computeAndRenderScore(sc, rows) {
  // ── Plage : logique spécifique ───────────────────────────────────────────
  } else if (uc === 'plage') {
   var tmax_plage = rows.length ? Math.max.apply(null, rows.map(function(r){return r.temp||0;})) : (avgTemp||20);
+  // t_beach : seuil abaissé à 16°C, pic à 28-32°C
   var sTempPlage;
-  if (tmax_plage < 18) sTempPlage = 0;
-  else if (tmax_plage < 22) sTempPlage = (tmax_plage - 18) / 4 * 20;
-  else if (tmax_plage < 26) sTempPlage = 20 + (tmax_plage - 22) / 4 * 60;
-  else if (tmax_plage <= 35) sTempPlage = 80 + (tmax_plage - 26) / 9 * 20;
-  else if (tmax_plage <= 40) sTempPlage = 100 - (tmax_plage - 35) / 5 * 30;
-  else sTempPlage = Math.max(40, 70 - (tmax_plage - 40) * 5);
+  if (tmax_plage <= 16) sTempPlage = 0;
+  else if (tmax_plage <= 22) sTempPlage = (tmax_plage - 16) / 6 * 45;
+  else if (tmax_plage <= 30) sTempPlage = 45 + (tmax_plage - 22) / 8 * 55;
+  else if (tmax_plage <= 36) sTempPlage = 100 - (tmax_plage - 30) / 6 * 35;
+  else if (tmax_plage <= 42) sTempPlage = 65 - (tmax_plage - 36) / 6 * 35;
+  else sTempPlage = 0;
+  // t_sea : plus généreux à 18-24°C
+  var sst_plage = (window._lastSSTResult && window._lastSSTResult.sst != null) ? window._lastSSTResult.sst : null;
+  var sSeaPlage = 50; // valeur neutre si pas de données
+  if (sst_plage != null) {
+   if (sst_plage < 14) sSeaPlage = 0;
+   else if (sst_plage <= 18) sSeaPlage = (sst_plage - 14) / 4 * 25;
+   else if (sst_plage <= 22) sSeaPlage = 25 + (sst_plage - 18) / 4 * 30;
+   else if (sst_plage <= 26) sSeaPlage = 55 + (sst_plage - 22) / 4 * 35;
+   else if (sst_plage <= 30) sSeaPlage = 90 + (sst_plage - 26) / 4 * 10;
+   else sSeaPlage = Math.max(50, 100 - (sst_plage - 30) / 5 * 50);
+  }
   var sRainPlage = Math.max(0, 100 - avgRain * 1.8);
   var sSunPlage = Math.min(100, (peakSol / 50) * 8);
   var humMalusPlage = scoreHumidityPlage(avgRh, avgTemp);
-  total = Math.round(sRainPlage * 0.35 + sTempPlage * 0.45 + sSunPlage * 0.20) - humMalusPlage;
+  // 30% air + 30% mer + 20% pluie + 20% soleil (aligné scoring.py)
+  total = Math.round(sTempPlage * 0.30 + sSeaPlage * 0.30 + sRainPlage * 0.20 + sSunPlage * 0.20) - humMalusPlage;
 
  // ── Général : pondération standard ──────────────────────────────────────
  } else {
