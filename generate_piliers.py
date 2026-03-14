@@ -261,9 +261,25 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=20):
     ski_candidates.sort(key=lambda x: (-x['ski_score'], x['nom_bare']))
     ski_injected = ski_candidates[:ski_boost]
 
+    # --- Region boost: ensure EU has enough entries for JS filter ---
+    from generate_classements import EUROPE_COUNTRIES, NON_EUROPE_SLUGS as _NEU
+    all_in_pool = {e['slug_fr'] for e in general_pool + ski_injected}
+    eu_candidates = [e for e in all_entries
+                     if e['pays'] in EUROPE_COUNTRIES
+                     and e['slug_fr'] not in _NEU
+                     and not e['is_mountain']
+                     and e['slug_fr'] not in all_in_pool]
+    eu_candidates.sort(key=lambda x: (-x['score'], x['nom_bare']))
+    eu_seen: dict = {}
+    eu_boost = []
+    for e in eu_candidates:
+        if e['pays'] not in eu_seen and len(eu_boost) < 30:
+            eu_seen[e['pays']] = True
+            eu_boost.append(e)
+
     # --- Beach boost: top coastal destinations by beach_score, 1 per country ---
     # Ensures beach tab ranking reflects true beach quality, not just general score
-    all_slugs = {e['slug_fr'] for e in general_pool + ski_injected}
+    all_slugs = {e['slug_fr'] for e in general_pool + ski_injected + eu_boost}
     beach_candidates = [e for e in all_entries
                         if e.get('beach_score') is not None
                         and e.get('is_coastal', False)
@@ -278,7 +294,7 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=20):
             beach_injected.append(e)
     beach_injected = beach_injected[:40]
 
-    return general_pool + ski_injected + beach_injected
+    return general_pool + ski_injected + eu_boost + beach_injected
 
 CSS = r"""
 *{margin:0;padding:0;box-sizing:border-box}
