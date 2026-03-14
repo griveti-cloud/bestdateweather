@@ -128,7 +128,17 @@ REGION_MAP = {
     'Samoa':'oc','Tonga':'oc','Vanuatu':'oc',
 }
 
-def _reg(pays): return REGION_MAP.get(pays, 'other')
+MACARONESIA_SLUGS = {
+    'canaries','tenerife','gran-canaria','fuerteventura','lanzarote',
+    'la-palma','la-gomera','el-hierro',  # Canaries
+    'madere','funchal',                   # Madère
+    'azores',                             # Açores
+    'cap-vert','sal','praia',             # Cap-Vert (déjà af mais par sécurité)
+}
+def _reg(pays, slug=None):
+    if slug and slug in MACARONESIA_SLUGS:
+        return 'af'
+    return REGION_MAP.get(pays, 'other')
 
 _REGION_LABELS = {
     'fr': {'all':'Monde','eu':'Europe','af':'Afrique',
@@ -649,7 +659,7 @@ def generate_page(mi, lang, dests, climate):
         'sun': round(p['sun_h'], 1),
         'tmin': round(p['tmin'], 0),
         'tmax': round(p['tmax'], 0),
-        'reg': _reg(p['pays']),
+        'reg': _reg(p['pays'], p['slug_fr']),
         'xeu': 1 if p['slug_fr'] in NON_EUROPE_SLUGS else 0,
     } for p in pool], ensure_ascii=False)
 
@@ -1120,7 +1130,7 @@ def generate_annual_page(lang, dests, climate):
         'sun': round(e['sun_h'], 1),
         'tmin': round(e['tmin'], 0),
         'tmax': round(e['tmax'], 0),
-        'reg': _reg(e['pays']),
+        'reg': _reg(e['pays'], e.get('slug_fr', e.get('slug',''))),
         'xeu': 1 if e.get('slug', e.get('slug_fr','')) in NON_EUROPE_SLUGS else 0,
     } for e in annual_pool], ensure_ascii=False)
 
