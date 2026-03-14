@@ -1207,5 +1207,11 @@
   "legend_off_mtn": "Nebensaison",
   "fp_period": "ZEITRAUM",
   "fp_region": "REGION",
-  "fp_type": "TYP"
+  "fp_type": "TYP",
+  "annual_hero_subs_ski": [
+    "Beste Skizeit in {nom_bare}: {best_ski_month_lc} bietet optimale Schneebedingungen.",
+    "{best_ski_month} ist die Hauptskisaison in {nom_bare}.",
+    "Ski in {nom_bare}: {best_ski_month_lc} bietet die besten Bedingungen.",
+    "{nom_bare} — Skigebiet. Ideale Saison: {best_ski_month_lc}."
+  ]
 }

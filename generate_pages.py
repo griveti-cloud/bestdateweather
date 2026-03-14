@@ -426,6 +426,12 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     best_rain  = best_m['rain_pct']
     best_tmax  = best_m['tmax']
     is_mountain = dest.get('mountain', 'False').strip() == 'True'
+    # Best ski month for mountain destinations
+    if is_mountain:
+        from scoring import compute_ski_score
+        ski_scores = [compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h']) for m in months]
+        best_ski_idx   = max(range(12), key=lambda i: ski_scores[i])
+        best_ski_score = ski_scores[best_ski_idx]
     worst_idx  = min(range(12), key=lambda i: months[i]['score'])
     worst_rain = months[worst_idx]['rain_pct']
 
@@ -445,7 +451,9 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
                     best_sun=best_sun, best_tmin=best_m['tmin'],
                     worst_month=MONTHS[worst_idx], worst_month_lc=month_lc(C, MONTHS[worst_idx]),
                     worst_rain=worst_rain,
-                    best_season_lc=_best_season_name.lower())
+                    best_season_lc=_best_season_name.lower(),
+                    best_ski_month=MONTHS[best_ski_idx] if is_mountain else '',
+                    best_ski_month_lc=month_lc(C, MONTHS[best_ski_idx]) if is_mountain else '')
 
     # Convert temperatures for imperial locales
     if C.get('imperial'):
@@ -461,7 +469,11 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 
     # ── Climate table ──
     table_html = fn['climate_table_html'](months, nom, is_mountain)
-    hsub = _hero_sub(C, dest)
+    if is_mountain and C.get('annual_hero_subs_ski'):
+        _hash = abs(hash(dest.get('slug_fr', ''))) % len(C['annual_hero_subs_ski'])
+        hsub = C['annual_hero_subs_ski'][_hash].format(**tpl_vars)
+    else:
+        hsub = _hero_sub(C, dest)
 
     # ── Quick facts ──
     qf = f'''<section class="section">

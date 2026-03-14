@@ -1195,5 +1195,11 @@
   "legend_off_mtn": "Off season",
   "fp_period": "PERIOD",
   "fp_region": "REGION",
-  "fp_type": "TYPE"
+  "fp_type": "TYPE",
+  "annual_hero_subs_ski": [
+    "Best time to ski {nom_bare}: {best_ski_month_lc} offers optimal snow conditions.",
+    "{best_ski_month} is peak ski season at {nom_bare}.",
+    "Ski at {nom_bare}: {best_ski_month_lc} offers the best snow coverage.",
+    "{nom_bare} — ski resort. Prime season: {best_ski_month_lc}."
+  ]
 }

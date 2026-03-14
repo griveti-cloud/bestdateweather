@@ -1195,5 +1195,11 @@
   "legend_off_mtn": "Hors saison",
   "fp_period": "PÉRIODE",
   "fp_region": "RÉGION",
-  "fp_type": "TYPE"
+  "fp_type": "TYPE",
+  "annual_hero_subs_ski": [
+    "Meilleure période : {best_ski_month_lc} {prep} {nom_bare} — neige et conditions optimales.",
+    "{best_ski_month} marque le cœur de la saison ski {prep} {nom_bare}.",
+    "Ski {prep} {nom_bare} : {best_ski_month_lc} offre les meilleures conditions d'enneigement.",
+    "{nom_bare} — station de ski. Saison idéale : {best_ski_month_lc}."
+  ]
 }
