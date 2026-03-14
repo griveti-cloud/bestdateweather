@@ -1511,6 +1511,8 @@ function updateHero(sc, rows, mainHour) {
 
 
 function showResults(sc, rows, isForecast, noteText, diffDays) {
+ var _heroEl=document.getElementById('hero');
+ if(_heroEl){_heroEl.style.opacity='';_heroEl.style.pointerEvents='';}
  setConfBadge(diffDays);
  applyHorizonWording(diffDays);
  document.getElementById('score-block').style.display = 'block';
@@ -1745,7 +1747,13 @@ function run() {
  // Offline check
  if (!navigator.onLine) { errEl.textContent=T.errOffline; errEl.style.display='block'; return; }
  btnEl.disabled=true; errEl.style.display='none';
- hideSection('hero');hideSection('sec-hourly');hideSection('sec-scenarios');
+ var _heroEl=document.getElementById('hero');
+ if(_heroEl&&_heroEl.style.display!=='none'){
+   _heroEl.style.opacity='0.35';_heroEl.style.pointerEvents='none';
+ } else {
+   hideSection('hero');
+ }
+ hideSection('sec-hourly');hideSection('sec-scenarios');
  var _achips=document.getElementById('affil-chips');if(_achips)_achips.style.display='none';
  var _flw=document.getElementById('fiche-link-wrap');if(_flw){_flw.style.display='none';_flw.innerHTML='';}
  document.getElementById('foot-note').style.display='none';
