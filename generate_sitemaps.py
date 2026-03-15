@@ -86,3 +86,62 @@ make_sitemap(
              ('us/where-to-go-in-*.html','monthly','0.8'),('us/best-time-to-visit-*.html','monthly','0.8'),
              ('us/*-weather-*.html','monthly','0.6')]),
     'sitemap-us.xml')
+# ── Sitemaps segmentés (priorité crawl) ───────────────────────────────────────
+import csv as csv_mod, re as re_mod
+
+def load_top_slugs():
+    top = {'fr': set(), 'en': set(), 'es': set(), 'de': set()}
+    with open('data/destinations.csv', encoding='utf-8-sig') as f:
+        for row in csv_mod.DictReader(f):
+            if row.get('booking_dest_id', '').strip():
+                top['fr'].add(row['slug_fr'].lower())
+                top['en'].add(row.get('slug_en', row['slug_fr']).lower())
+                top['es'].add(row.get('slug_es', row['slug_fr']).lower())
+                top['de'].add(row.get('slug_de', row['slug_fr']).lower())
+    return top
+
+def split_sitemap(src_path, dst_prio, dst_sec, top_slugs, monthly_pat):
+    import xml.etree.ElementTree as ET2
+    ns = 'http://www.sitemaps.org/schemas/sitemap/0.9'
+    tree = ET2.parse(src_path)
+    root = tree.getroot()
+    prio, sec = [], []
+    for url_el in root.findall(f'{{{ns}}}url'):
+        loc = url_el.find(f'{{{ns}}}loc').text
+        path = re_mod.sub(r'https://bestdateweather\.com/(en/|es/|de/|us/)?', '', loc)
+        if monthly_pat not in path:
+            prio.append(loc)
+        else:
+            slug = path.split(monthly_pat)[0].rstrip('-').lower()
+            (prio if slug in top_slugs else sec).append(loc)
+    for urls, dst in [(prio, dst_prio), (sec, dst_sec)]:
+        lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+                 '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+        for u in urls:
+            lines += [f'  <url>', f'    <loc>{u}</loc>',
+                      f'    <lastmod>{TODAY}</lastmod>', f'  </url>']
+        lines.append('</urlset>')
+        open(dst, 'w').write('\n'.join(lines) + '\n')
+        print(f"  {dst}: {len(urls)} URLs")
+
+top = load_top_slugs()
+split_sitemap('sitemap-fr.xml','sitemap-fr-priority.xml','sitemap-fr-secondary.xml',top['fr'],'-meteo-')
+split_sitemap('sitemap-en.xml','sitemap-en-priority.xml','sitemap-en-secondary.xml',top['en'],'-weather-')
+split_sitemap('sitemap-es.xml','sitemap-es-priority.xml','sitemap-es-secondary.xml',top['es'],'-clima-')
+split_sitemap('sitemap-de.xml','sitemap-de-priority.xml','sitemap-de-secondary.xml',top['de'],'-wetter-')
+
+idx = f'''<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>https://bestdateweather.com/sitemap-fr-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
+  <sitemap><loc>https://bestdateweather.com/sitemap-en-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
+  <sitemap><loc>https://bestdateweather.com/sitemap-es-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
+  <sitemap><loc>https://bestdateweather.com/sitemap-de-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
+  <sitemap><loc>https://bestdateweather.com/sitemap-us.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
+  <sitemap><loc>https://bestdateweather.com/sitemap-fr-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
+  <sitemap><loc>https://bestdateweather.com/sitemap-en-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
+  <sitemap><loc>https://bestdateweather.com/sitemap-es-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
+  <sitemap><loc>https://bestdateweather.com/sitemap-de-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
+</sitemapindex>'''
+open('sitemap-index.xml','w').write(idx)
+print(f"  sitemap-index.xml: 9 sitemaps")
+
