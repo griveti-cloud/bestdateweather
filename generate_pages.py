@@ -469,7 +469,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 
     # ── Climate table ──
     table_html = fn['climate_table_html'](months, nom, is_mountain)
-    if is_mountain and C.get('annual_hero_subs_ski'):
+    _custom_hsub = dest.get(C['dest_fields']['hero_sub_key'], '').strip()
+    if is_mountain and not _custom_hsub and C.get('annual_hero_subs_ski'):
         _hash = abs(hash(dest.get('slug_fr', ''))) % len(C['annual_hero_subs_ski'])
         hsub = C['annual_hero_subs_ski'][_hash].format(**tpl_vars)
     else:
