@@ -791,7 +791,13 @@
     "legal_url": "impressum.html",
     "legal_label": "Impressum",
     "about_url": "ueber-uns.html",
-    "about_label": "Über uns"
+    "about_label": "Über uns",
+    "faq_url": "de/faq.html",
+    "faq_label": "FAQ",
+    "privacy_url": "de/datenschutz.html",
+    "privacy_label": "Datenschutz",
+    "contact_url": "de/kontakt.html",
+    "contact_label": "Kontakt"
   },
   "classements": {
     "share_label": "Teilen",

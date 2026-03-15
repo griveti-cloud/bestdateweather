@@ -786,7 +786,13 @@
     "legal_url": "../mentions-legales.html",
     "legal_label": "Legal",
     "about_url": "sobre-nosotros.html",
-    "about_label": "Sobre nosotros"
+    "about_label": "Sobre nosotros",
+    "faq_url": "es/faq.html",
+    "faq_label": "FAQ",
+    "privacy_url": "es/privacidad.html",
+    "privacy_label": "Privacidad",
+    "contact_url": "es/contacto.html",
+    "contact_label": "Contacto"
   },
   "classements": {
     "share_label": "Compartir",
