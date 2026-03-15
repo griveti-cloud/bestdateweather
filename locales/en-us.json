@@ -43,8 +43,7 @@
     "subdir": "us",
     "flag": "flags/us.png",
     "lang_label": "English (US)",
-    "imperial": true,
-    "x_default": true
+    "imperial": true
   },
   "months": [
     "January",

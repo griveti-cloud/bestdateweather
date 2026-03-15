@@ -42,7 +42,8 @@
     ],
     "subdir": "en",
     "flag": "flags/gb.png",
-    "lang_label": "English"
+    "lang_label": "English",
+    "x_default": true
   },
   "months": [
     "January",
