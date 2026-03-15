@@ -294,7 +294,8 @@
     "best_months_lbl_tpl": "Mejor{s} mes{es}",
     "or_word": "o",
     "share_label": "Compartir",
-    "colon_sep": ": "
+    "colon_sep": ": ",
+    "best_ski_months_lbl_tpl": "Mejor{es} mes{es} ski"
   },
   "monthly": {
     "hero_tpl": "Tiempo en {name} en {month}",

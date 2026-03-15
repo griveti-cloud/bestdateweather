@@ -432,6 +432,15 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         ski_scores = [compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h']) for m in months]
         best_ski_idx   = max(range(12), key=lambda i: ski_scores[i])
         best_ski_score = ski_scores[best_ski_idx]
+        # Override hero KPIs : top-2 mois ski (ordre chronologique)
+        ski_top2_idx = sorted(
+            sorted(range(12), key=lambda i: ski_scores[i], reverse=True)[:2]
+        )
+        bests     = [MONTHS[i] for i in ski_top2_idx]
+        best_str  = ' & '.join(bests)
+        best_m    = months[best_ski_idx]
+        best_tmax = best_m['tmax']
+        best_rain = best_m['rain_pct']
     worst_idx  = min(range(12), key=lambda i: months[i]['score'])
     worst_rain = months[worst_idx]['rain_pct']
 
@@ -784,7 +793,10 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     }, ensure_ascii=False)
 
     # ── Hero stats ──
-    if len(bests) > 1:
+    if is_mountain and C.get('lbl_best_ski_months_lbl_tpl'):
+        _ski_lbl = C['lbl_best_ski_months_lbl_tpl']
+        best_months_lbl = _ski_lbl.replace('{s}', 's' if len(bests) > 1 else '').replace('{es}', 'es' if len(bests) > 1 else '')
+    elif len(bests) > 1:
         best_months_lbl = C['lbl_best_months_lbl_tpl'].replace('{s}', 's').replace('{es}', 'es')
     else:
         best_months_lbl = C['lbl_best_months_lbl_tpl'].replace('{s}', '').replace('{es}', '')

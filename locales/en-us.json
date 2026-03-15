@@ -296,7 +296,8 @@
     "best_months_lbl_tpl": "Best month{s}",
     "or_word": "or",
     "share_label": "Share",
-    "colon_sep": ": "
+    "colon_sep": ": ",
+    "best_ski_months_lbl_tpl": "Best ski month{s}"
   },
   "monthly": {
     "hero_tpl": "{name} weather in {month}",
