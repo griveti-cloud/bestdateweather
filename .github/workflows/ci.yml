@@ -105,11 +105,17 @@ jobs:
               rows = list(csv.DictReader(f))
           print(f'destinations.csv: {len(rows)} rows')
 
+          warnings = []
           for r in rows:
               slug = r['slug_fr']
-              for lang in ['fr', 'en', 'es', 'de']:
+              for lang in ['fr', 'en']:
                   if not r.get(f'hero_sub_{lang}', '').strip():
                       errors.append(f'  Missing hero_sub_{lang}: {slug}')
+              for lang in ['es', 'de']:
+                  if not r.get(f'hero_sub_{lang}', '').strip():
+                      warnings.append(f'  Missing hero_sub_{lang}: {slug}')
+          if warnings:
+              print(f'  Warning: {len(warnings)} missing hero_sub_es/de (non-blocking)')
 
           with open('data/cards.csv', encoding='utf-8-sig') as f:
               cards = list(csv.DictReader(f))

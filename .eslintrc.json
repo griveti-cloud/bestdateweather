@@ -7,7 +7,12 @@
     "FICHE_SCORES": "readonly",
     "flatpickr": "readonly",
     "gtag": "readonly",
-    "dataLayer": "readonly"
+    "dataLayer": "readonly",
+    "wbCloseCityModal": "readonly",
+    "switchMode": "readonly",
+    "runAnnual": "readonly",
+    "run": "readonly",
+    "BDW_FICHE_SLUGS": "readonly"
   },
   "rules": {
     "no-undef": "error",

@@ -190,7 +190,7 @@ window.BDW_CFG = {
  'niza':'nice','marsella':'marseille','roma':'rome',
  'athens':'athens','atenas':'athens','mykonos':'mykonos','santorini':'santorini','rhodes':'rhodes',
  'ibiza':'ibiza','malta':'malta','valletta':'malta',
- 'lisbon':'lisbon','lisbon':'lisbon','porto':'porto','biarritz':'biarritz','tenerife':'tenerife',
+ 'lisbon':'lisbon','porto':'porto','biarritz':'biarritz','tenerife':'tenerife',
  'fuerteventura':'fuerteventura','lanzarote':'lanzarote',
  'gran canaria':'gran-canaria','gran canary':'gran-canaria',
  'london':'london','amsterdam':'amsterdam','rotterdam':'rotterdam',
