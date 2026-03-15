@@ -5,6 +5,7 @@ Disallow: /es/app.html?
 Disallow: /us/app.html?
 Disallow: /de/app.html?
 Disallow: /app.html?
+Disallow: /index.html?
 Disallow: /data/
 
 Sitemap: https://bestdateweather.com/sitemap-index.xml
