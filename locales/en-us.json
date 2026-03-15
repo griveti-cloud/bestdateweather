@@ -422,7 +422,9 @@
     "crosslink_label": "🌍 Top destinations",
     "crosslink_title_tpl": "Other top destinations in {month}",
     "editorial_highlights_label": "✍️ Our take",
-    "editorial_highlights_title": "Best months in {nom}"
+    "editorial_highlights_title": "Best months in {nom}",
+    "sec_similar_ski_tpl": "Similar ski resorts in {month_lc}",
+    "sim_label_ski": "⛷️ Comparable resorts"
   },
   "narratives": {
     "tropical_rainy": "In {month}, {name} is in the middle of the rainy season ({rain}% rainy days). Tropical showers are usually short but intense — pack a light raincoat.",
@@ -771,7 +773,10 @@
     "all_year_sub": "The 25 destinations with the best climate year-round, ranked by annual average score.",
     "all_year_eyebrow": "Annual ranking · Year-round",
     "all_year_sec": "Top 25 destinations — Annual score",
-    "all_year_intro": "Average score calculated across all 12 months. Perfect for finding destinations with great weather all year long."
+    "all_year_intro": "Average score calculated across all 12 months. Perfect for finding destinations with great weather all year long.",
+    "sec_title_meteo": "Top {n} destinations in {month}",
+    "sec_title_beach": "Top {n} beach destinations in {month}",
+    "sec_title_ski": "Top {n} ski resorts in {month}"
   },
   "ranking_footer": {
     "data_by": "Weather data by Open-Meteo.com",
@@ -1195,5 +1200,18 @@
   "legend_off_mtn": "Off season",
   "fp_period": "PERIOD",
   "fp_region": "REGION",
-  "fp_type": "TYPE"
+  "fp_type": "TYPE",
+  "annual_hero_subs_ski": [
+    "Best time to ski {nom_bare}: {best_ski_month_lc} offers optimal snow conditions.",
+    "{best_ski_month} is peak ski season at {nom_bare}.",
+    "Ski at {nom_bare}: {best_ski_month_lc} offers the best snow coverage.",
+    "{nom_bare} — ski resort. Prime season: {best_ski_month_lc}."
+  ],
+  "context_paragraphs_ski": {
+    "ski_peak": "Peak ski season {nom_f}: optimal snow cover and fully open slopes. The best time to hit the mountain.",
+    "ski_good": "Good ski conditions {nom_f} with generally reliable snow ({tmax}°C in the valley). Lifts running at full capacity.",
+    "ski_shoulder": "Shoulder ski season {nom_f}: variable snow depending on altitude. Lower runs may be thin with {tmax}°C in the valley.",
+    "ski_poor": "Challenging ski conditions {nom_f} this month ({tmax}°C in the valley). Snow cover is unreliable, with partial closures or late-season conditions.",
+    "ski_offseason": "Off-season for skiing {nom_f} — lifts are closed. Consider hiking, mountain biking or summer activities at altitude."
+  }
 }
