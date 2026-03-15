@@ -129,6 +129,7 @@ split_sitemap('sitemap-fr.xml','sitemap-fr-priority.xml','sitemap-fr-secondary.x
 split_sitemap('sitemap-en.xml','sitemap-en-priority.xml','sitemap-en-secondary.xml',top['en'],'-weather-')
 split_sitemap('sitemap-es.xml','sitemap-es-priority.xml','sitemap-es-secondary.xml',top['es'],'-clima-')
 split_sitemap('sitemap-de.xml','sitemap-de-priority.xml','sitemap-de-secondary.xml',top['de'],'-wetter-')
+split_sitemap('sitemap-us.xml','sitemap-us-priority.xml','sitemap-us-secondary.xml',top['en'],'-weather-')
 
 idx = f'''<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -136,12 +137,13 @@ idx = f'''<?xml version="1.0" encoding="UTF-8"?>
   <sitemap><loc>https://bestdateweather.com/sitemap-en-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
   <sitemap><loc>https://bestdateweather.com/sitemap-es-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
   <sitemap><loc>https://bestdateweather.com/sitemap-de-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
-  <sitemap><loc>https://bestdateweather.com/sitemap-us.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
+  <sitemap><loc>https://bestdateweather.com/sitemap-us-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
+  <sitemap><loc>https://bestdateweather.com/sitemap-us-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
   <sitemap><loc>https://bestdateweather.com/sitemap-fr-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
   <sitemap><loc>https://bestdateweather.com/sitemap-en-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
   <sitemap><loc>https://bestdateweather.com/sitemap-es-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
   <sitemap><loc>https://bestdateweather.com/sitemap-de-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
 </sitemapindex>'''
 open('sitemap-index.xml','w').write(idx)
-print(f"  sitemap-index.xml: 9 sitemaps")
+print(f"  sitemap-index.xml: 10 sitemaps")
 
