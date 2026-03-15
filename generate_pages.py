@@ -341,8 +341,8 @@ def footer_html(cfg, dest):
             cl_url = f"{cl_pfx}beste-reisezeit-{slug_de}.html"
         else:
             continue
-        alt_links.append(f' · <a href="{cl_url}" class="txt-muted"><img src="{pfx}flags/{cl_flag}.png" width="20" height="15" alt="" class="flag-icon-lg"> {cl_label}</a>')
-    alt_link = ''.join(alt_links)
+        alt_links.append(f'<span style="white-space:nowrap"><a href="{cl_url}" class="txt-muted"><img src="{pfx}flags/{cl_flag}.png" width="20" height="15" alt="" class="flag-icon-lg"> {cl_label}</a></span>')
+    alt_link_p = ('<p class="mt-8">'  + ' · '.join(alt_links) + '</p>') if alt_links else ''
 
     meth_url, meth_label = fc['methodology']
     app_url, app_label = fc['app']
@@ -354,7 +354,8 @@ def footer_html(cfg, dest):
     return f'''<footer>
  <p class="txt-muted-label">bestdateweather.com</p>
  <p><a href="https://open-meteo.com/" rel="noopener" class="txt-muted">{fc['data_by']}</a> · {fc['sources']}</p>
- <p class="mt-8"><a href="{meth_url}" class="txt-muted">{meth_label}</a> · <a href="{about_url}" class="txt-muted">{about_label}</a> · <a href="{faq_url}" class="txt-muted">{faq_label}</a> · <a href="{app_url}" class="txt-muted">{app_label}</a>{alt_link}</p>
+ <p class="mt-8"><a href="{meth_url}" class="txt-muted">{meth_label}</a> · <a href="{about_url}" class="txt-muted">{about_label}</a> · <a href="{faq_url}" class="txt-muted">{faq_label}</a> · <a href="{app_url}" class="txt-muted">{app_label}</a></p>
+{alt_link_p}
  <p class="f11-muted"><a href="{legal_url}" class="txt-muted">{legal_label}</a> · <a href="{priv_url}" class="txt-muted">{priv_label}</a> · <a href="{fc['contact'][0]}" class="txt-muted">{fc['contact'][1]}</a></p>
 </footer>
 <script src="{cfg['asset_prefix']}js/share.js" defer></script>'''
