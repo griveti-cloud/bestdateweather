@@ -3,3 +3,14 @@ node_modules/
 lighthouse-*.json
 lighthouse-*.html
 bestdateweather/
+
+# Fichiers de progression/log générés par les scripts
+data/*_progress.json
+data/*_log.txt
+data/*.log
+data/*.bak
+data/*_backup*.csv
+
+# Fichiers temporaires
+/tmp/
+*.pyc
