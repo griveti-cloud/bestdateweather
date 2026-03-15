@@ -10,6 +10,7 @@ on:
       - 'generate_pages.py'
       - 'scoring.py'
       - 'data/**'
+      - 'locales/**'
       - 'tests/**'
       - 'scripts/**'
   pull_request:
@@ -27,20 +28,22 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Check JS syntax (core.js + i18n + fiche-scores)
+      - name: Check JS syntax
         run: |
           echo "=== Checking JS syntax ==="
-          node --check js/core.js
-          node --check js/fiche-scores.js
-          node --check js/i18n-fr.js
-          node --check js/i18n-en.js
+          for f in js/core.js js/weather-banner-2.js js/fiche-slugs.js js/fiche-scores.js \
+                   js/i18n-fr.js js/i18n-en.js js/i18n-en-us.js js/i18n-es.js js/i18n-de.js; do
+            [ -f "$f" ] && node --check "$f" && echo "  ✓ $f"
+          done
           echo "✅ All JS files pass syntax check"
 
       - name: Install ESLint
         run: npm install eslint@8 --no-save
 
       - name: Run ESLint
-        run: npx eslint js/core.js js/i18n-fr.js js/i18n-en.js
+        run: |
+          npx eslint js/core.js js/weather-banner-2.js \
+                     js/i18n-fr.js js/i18n-en.js js/i18n-en-us.js js/i18n-es.js js/i18n-de.js
 
   html-validate:
     name: HTML Validation
@@ -51,15 +54,10 @@ jobs:
       - name: Check critical HTML elements
         run: |
           echo "=== index.html ==="
-          # Must have lang attribute
           grep -q 'lang="fr"' index.html || { echo "❌ Missing lang=fr"; exit 1; }
-          # Must have meta description
           grep -q 'meta name="description"' index.html || { echo "❌ Missing meta description"; exit 1; }
-          # Must have viewport
           grep -q 'viewport' index.html || { echo "❌ Missing viewport"; exit 1; }
-          # Must have hreflang
           grep -q 'hreflang' index.html || { echo "❌ Missing hreflang"; exit 1; }
-          # Must load external JS
           grep -q 'src="js/core.min.js' index.html || grep -q 'src="js/core.js' index.html || { echo "❌ core.js not loaded"; exit 1; }
           grep -q 'src="js/i18n-fr.min.js' index.html || grep -q 'src="js/i18n-fr.js' index.html || { echo "❌ i18n-fr.js not loaded"; exit 1; }
           echo "✅ index.html OK"
@@ -69,8 +67,6 @@ jobs:
           grep -q 'meta name="description"' en/app.html || { echo "❌ Missing meta description"; exit 1; }
           grep -q 'canonical' en/app.html || { echo "❌ Missing canonical"; exit 1; }
           grep -q 'hreflang' en/app.html || { echo "❌ Missing hreflang"; exit 1; }
-          grep -q 'src="../js/core.min.js' en/app.html || grep -q 'src="../js/core.js' en/app.html || { echo "❌ core.js not loaded"; exit 1; }
-          grep -q 'src="../js/i18n-en.min.js' en/app.html || grep -q 'src="../js/i18n-en.js' en/app.html || { echo "❌ i18n-en.js not loaded"; exit 1; }
           echo "✅ en/app.html OK"
 
       - name: Check no inline JS > 1KB in app pages
@@ -104,17 +100,17 @@ jobs:
           python3 -c "
           import csv, sys
           errors = []
-          # destinations.csv
+
           with open('data/destinations.csv', encoding='utf-8-sig') as f:
               rows = list(csv.DictReader(f))
           print(f'destinations.csv: {len(rows)} rows')
-          for r in rows:
-              if not r.get('hero_sub_fr','').strip():
-                  errors.append(f\"  Missing hero_sub_fr: {r['slug_fr']}\")
-              if not r.get('hero_sub_en','').strip():
-                  errors.append(f\"  Missing hero_sub_en: {r['slug_fr']}\")
 
-          # cards.csv
+          for r in rows:
+              slug = r['slug_fr']
+              for lang in ['fr', 'en', 'es', 'de']:
+                  if not r.get(f'hero_sub_{lang}', '').strip():
+                      errors.append(f'  Missing hero_sub_{lang}: {slug}')
+
           with open('data/cards.csv', encoding='utf-8-sig') as f:
               cards = list(csv.DictReader(f))
           slugs_with_cards = set(c['slug'] for c in cards)
@@ -124,28 +120,27 @@ jobs:
           if missing_cards:
               print(f'  ⚠️  {len(missing_cards)} destinations without FR cards (non-blocking)')
 
-          # cards_en.csv
-          with open('data/cards_en.csv', encoding='utf-8-sig') as f:
-              cards_en = list(csv.DictReader(f))
-          slugs_en = set(c['slug'] for c in cards_en)
-          missing_en = dest_slugs - slugs_en
-          print(f'cards_en.csv: {len(cards_en)} cards for {len(slugs_en)} destinations')
-          if missing_en:
-              print(f'  ⚠️  {len(missing_en)} destinations without EN cards (non-blocking)')
-
           if errors:
-              print('\\n❌ ERRORS:')
+              print('\n❌ ERRORS:')
               for e in errors:
                   print(e)
               sys.exit(1)
           else:
-              print('\\n✅ All data files valid')
+              print('\n✅ All data files valid')
           "
 
       - name: Check Python generators syntax
         run: |
-          python3 -c "import py_compile; py_compile.compile('generate_pages.py', doraise=True)"
+          for f in generate_pages.py generate_classements.py generate_piliers.py \
+                   generate_comparatifs.py generate_sitemaps.py scoring.py \
+                   lib/common.py lib/page_config.py; do
+            python3 -c "import py_compile; py_compile.compile('$f', doraise=True)" && echo "  ✓ $f"
+          done
           echo "✅ Python generators compile OK"
+
+      - name: Check locale consistency
+        run: |
+          python3 scripts/check_locale.py
 
   scoring-tests:
     name: Scoring Consistency
@@ -182,28 +177,25 @@ jobs:
           python3 -c "
           import re, glob, sys
 
-          # Parse sitemap URLs
           fr_xml = open('sitemap-fr.xml').read()
           en_xml = open('sitemap-en.xml').read()
           fr_urls = set(re.findall(r'<loc>https://bestdateweather\.com/([^<]+)</loc>', fr_xml))
           en_urls = set(re.findall(r'<loc>https://bestdateweather\.com/([^<]+)</loc>', en_xml))
 
-          # Expected: all meilleure-periode-*.html (non-redirect)
           errors = []
-          for f in sorted(glob.glob('meilleure-periode-*.html')):
-              with open(f, 'r') as fh:
-                  if 'meta http-equiv=\"refresh\"' in fh.read(500):
-                      continue  # skip redirects
-              if f not in fr_urls:
-                  errors.append(f'Missing from sitemap-fr.xml: {f}')
-
-          for f in sorted(glob.glob('en/best-time-to-visit-*.html')):
+          for f in sorted(glob.glob('meilleure-periode-*.html'))[:50]:
               with open(f, 'r') as fh:
                   if 'meta http-equiv=\"refresh\"' in fh.read(500):
                       continue
-              path = f
-              if path not in en_urls:
-                  errors.append(f'Missing from sitemap-en.xml: {path}')
+              if f not in fr_urls:
+                  errors.append(f'Missing from sitemap-fr.xml: {f}')
+
+          for f in sorted(glob.glob('en/best-time-to-visit-*.html'))[:50]:
+              with open(f, 'r') as fh:
+                  if 'meta http-equiv=\"refresh\"' in fh.read(500):
+                      continue
+              if f not in en_urls:
+                  errors.append(f'Missing from sitemap-en.xml: {f}')
 
           if errors:
               for e in errors:

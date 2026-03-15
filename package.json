@@ -3,6 +3,7 @@
     "terser": "^5.46.0"
   },
   "devDependencies": {
-    "js-beautify": "^1.15.4"
+    "js-beautify": "^1.15.4",
+    "eslint": "8"
   }
 }

@@ -3,36 +3,35 @@
 # ═══════════════════════════════════════════════════
 #
 # Usage:
-#   make all         — Full rebuild (destinations + pillar + comparison + ranking pages)
-#   make destinations — Destination pages only (FR + EN, annual + monthly)
-#   make pillar      — Pillar pages only
-#   make comparisons — Comparison pages only
-#   make rankings    — Ranking pages only
-#   make test        — Run scoring consistency tests
-#   make deploy      — Commit and push to Vercel
-#   make check       — Dry-run validation (no file writes)
+#   make all         — Full rebuild toutes langues
+#   make pages       — Pages destinations (FR+EN+ES+DE+US, annual+monthly)
+#   make pillar      — Pages piliers
+#   make comparisons — Pages comparatifs
+#   make rankings    — Pages classements
+#   make sitemap     — Sitemaps 5 langues
+#   make test        — Tests scoring
+#   make check-loc   — Validation cohérence locales
+#   make deploy      — Commit + push Vercel
 #
-# Prerequisites: Python 3.8+, node (for JS syntax check)
+# Prerequisites: Python 3.8+, node (terser, eslint)
 
-.PHONY: all destinations fr en pillar comparisons rankings sitemap test deploy check clean
+.PHONY: all pages pillar comparisons rankings sitemap slugs test check-loc deploy climate scores
 
 # ── Full rebuild ──────────────────────────────────────
-all: destinations pillar comparisons rankings sitemap
+all: pages pillar comparisons rankings sitemap
 	@echo ""
 	@echo "✅ Full build complete"
 	@echo "   Run 'make test' to validate scoring consistency"
 	@echo "   Run 'make deploy' to push to production"
 
-# ── Destination pages ─────────────────────────────────
-destinations: fr en
-
-fr:
-	@echo "🇫🇷 Generating FR destination pages..."
-	python3 generate_all.py
-
-en:
-	@echo "🇬🇧 Generating EN destination pages..."
-	python3 generate_all_en.py
+# ── Destination pages (toutes langues) ───────────────
+pages:
+	@echo "🌍 Generating destination pages (×5 langues)..."
+	python3 generate_pages.py --lang fr
+	python3 generate_pages.py --lang en
+	python3 generate_pages.py --lang en-us
+	python3 generate_pages.py --lang es
+	python3 generate_pages.py --lang de
 
 # ── Content pages ─────────────────────────────────────
 pillar:
@@ -49,21 +48,30 @@ rankings:
 
 # ── Sitemaps ──────────────────────────────────────────
 sitemap:
-	@echo "🗺️  Generating sitemaps from actual HTML files..."
-	python3 scripts/generate_sitemaps.py
+	@echo "🗺️  Generating sitemaps..."
+	python3 generate_sitemaps.py
+
+# ── Autocomplete slugs ────────────────────────────────
+slugs:
+	@echo "🔤 Regenerating fiche-slugs.js..."
+	python3 generate_fiche_slugs.py
+
+# ── Données ───────────────────────────────────────────
+climate:
+	@echo "🌡️  Fetching fresh climate data..."
+	python3 scripts/fetch_climate.py
 
 # ── Testing ───────────────────────────────────────────
 test:
 	@echo "🧪 Running scoring consistency tests..."
 	python3 tests/test_scoring.py
 
-check:
-	@echo "🔍 Dry-run validation (no writes)..."
-	python3 generate_all.py --dry-run
-	python3 generate_all_en.py --dry-run
+check-loc:
+	@echo "🌐 Checking locale consistency..."
+	python3 scripts/check_locale.py
 
 # ── Deploy ────────────────────────────────────────────
-deploy:
+deploy: check-loc
 	git add -A
 	git status --short
 	@echo ""
@@ -71,14 +79,10 @@ deploy:
 	git push
 
 # ── Utilities ─────────────────────────────────────────
-fiche-scores:
-	@echo "📊 Regenerating FICHE_SCORES in core.js..."
-	python3 scripts/build_fiche_scores.py
-
-climate:
-	@echo "🌡️  Fetching fresh climate data..."
-	python3 fetch_climate.py
+minify:
+	@echo "📦 Minifying all JS sources..."
+	sh scripts/minify.sh
 
 scores:
-	@echo "🔢 Regenerating scores in existing pages..."
-	python3 regenerate_scores.py
+	@echo "⚠️  regenerate_scores.py est dans scripts/archive/ — usage rare"
+	python3 scripts/archive/regenerate_scores.py
