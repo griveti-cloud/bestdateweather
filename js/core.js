@@ -857,7 +857,7 @@ function applySeasonalCorrection(rows, seas) {
   var solFactor=Math.max(0.4,Math.min(1.6,1-(rainAnomaly/100)*0.5));
   newSol=Math.max(0,Math.round(newSol*solFactor));
  }
- out.push(cloneRow(ro,{p50:newP50!=null?parseFloat(newP50.toFixed(1)):null,p25:newP50!=null?parseFloat((newP50-sp25*ratio).toFixed(1)):null,p75:newP50!=null?parseFloat((newP50+sp75*ratio).toFixed(1)):null,temp:newP50!=null?parseFloat(newP50.toFixed(1)):null,sol:newSol,rain:newRain,windP50:newWind}));
+ out.push(cloneRow(ro,{p50:newP50!=null?parseFloat(newP50.toFixed(1)):null,p25:newP50!=null?parseFloat((newP50-sp25*ratio).toFixed(1)):null,p75:newP50!=null?parseFloat((newP50+sp75*ratio).toFixed(1)):null,temp:newP50!=null?parseFloat(newP50.toFixed(1)):null,sol:newSol,solP50:Math.max(0,Math.round((ro.solP50||0)*solFactor)),solP25:Math.max(0,Math.round((ro.solP25||0)*solFactor)),solP75:Math.max(0,Math.round((ro.solP75||0)*solFactor)),rain:newRain,windP50:newWind}));
  }
  return out;
 }
