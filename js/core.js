@@ -345,7 +345,7 @@ function getIcon(h, temp, sol, rain, mm, snow, p25) {
  if (isSnowing && rain > 15) return IC.nightsnow;
  if (temp <= 0 && rain > 20) return IC.nightsnow;
  if (rain > 35 && mm >= 1.5) return IC.nightrain;
- if (rain > 20 && mm >= 0.3) return IC.nightshower;
+ if (rain > 20 && mm >= 0.1) return IC.nightshower;
  if (sol < 5) return IC.moon;
  return IC.nightcloud;
  }
@@ -354,9 +354,9 @@ function getIcon(h, temp, sol, rain, mm, snow, p25) {
  if (temp <= 0 && rain > 20) return IC.snow;
  if (rain > 55 && mm >= 3) return IC.heavyrain;
  if (rain > 35 && mm >= 1.5) return IC.rain;
- if (rain > 20 && mm >= 0.3 && sol >= 200) return IC.shower;
- if (rain > 20 && mm >= 0.3) return IC.lightrain;
- // rain > 35% mais mm < 0.3 → pas de pluie mesurable, cascade vers sol
+ if (rain > 20 && mm >= 0.1 && sol >= 200) return IC.shower;
+ if (rain > 20 && mm >= 0.1) return IC.lightrain;
+ // rain > 35% mais mm < 0.1 → pas de pluie mesurable, cascade vers sol
  if (sol < 60 && temp < 8) return IC.fog;
  if (sol < 130) return IC.cloud;
  if (sol < 420) return IC.partcloud;
@@ -373,7 +373,7 @@ function getLabel(h, temp, sol, rain, mm, snow, p25) {
  if (isSnowing && rain > 15) return T.snow;
  if (temp <= 0 && rain > 20) return T.snow;
  if (rain > 35 && mm >= 1.5) return T.rain;
- if (rain > 20 && mm >= 0.3) return T.showers;
+ if (rain > 20 && mm >= 0.1) return T.showers;
  if (sol < 5) return T.clearNight;
  return T.cloudyNight;
  }
@@ -382,9 +382,9 @@ function getLabel(h, temp, sol, rain, mm, snow, p25) {
  if (temp <= 0 && rain > 20) return T.snow;
  if (rain > 55 && mm >= 3) return T.heavyRain;
  if (rain > 35 && mm >= 1.5) return T.rain;
- if (rain > 20 && mm >= 0.3 && sol >= 200) return T.showers;
- if (rain > 20 && mm >= 0.3) return T.lightRain;
- // rain > 35% mais mm < 0.3 → pas de pluie mesurable, cascade vers sol
+ if (rain > 20 && mm >= 0.1 && sol >= 200) return T.showers;
+ if (rain > 20 && mm >= 0.1) return T.lightRain;
+ // rain > 35% mais mm < 0.1 → pas de pluie mesurable, cascade vers sol
  if (sol < 60 && temp < 8) return T.fog;
  if (sol < 130) return T.overcast;
  if (sol < 420) return T.partlyCloudy;
