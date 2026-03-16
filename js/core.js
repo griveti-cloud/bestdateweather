@@ -1500,7 +1500,8 @@ function updateHero(sc, rows, mainHour) {
  var _windAvg=Math.round(wSum/rows.length);
  var _mainDir=(rows[Math.round(rows.length/2)]&&rows[Math.round(rows.length/2)].windDir!=null)?rows[Math.round(rows.length/2)].windDir:null;
  var _wdirStr=_mainDir!=null?' '+fmtWindDir(_mainDir):'';
- document.getElementById('r-wind').textContent=fmtWind(_windAvg)+_wdirStr;
+ var _windArrow=_mainDir!=null?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin:0 2px;transform:rotate('+(_mainDir+180)+'deg);transition:transform .3s"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>':'';
+ document.getElementById('r-wind').innerHTML=fmtWind(_windAvg)+(_windArrow?_windArrow+_wdirStr:_wdirStr);
  document.getElementById('r-sky').textContent=skyLbl;
  computeAndRenderScore(sc, rows);
 
