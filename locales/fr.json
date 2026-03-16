@@ -522,9 +522,9 @@
     "hero_sub_key": "hero_sub_fr"
   },
   "annual_titles": [
-    "Meilleure période pour partir {prep} {nom_bare} [{year}] — Météo & conseils",
-    "Quand partir {prep} {nom_bare} ? Climat mois par mois [{year}]",
-    "{nom_bare} : meilleure saison pour voyager [{year}] — Climat & météo"
+    "Meilleure période {prep} {nom_bare} : {best_month_lc} ({best_tmax}°C) [{year}]",
+    "Quand partir {prep} {nom_bare} ? {best_month_lc} recommandé [{year}]",
+    "{nom_bare} : {best_month_lc} idéal — {best_tmax}°C, {best_rain}% pluie [{year}]"
   ],
   "annual_h1s": [
     "Meilleure période pour partir<br/><em>{prep} {nom_bare}</em>",

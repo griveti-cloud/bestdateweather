@@ -523,9 +523,9 @@
     "hero_sub_key": "hero_sub_en"
   },
   "annual_titles": [
-    "Best Time to Visit {nom} [{year}] — Weather & Tips",
-    "When to Visit {nom}? Month-by-Month Climate [{year}]",
-    "{nom}: Best Season to Travel [{year}] — Climate & Weather"
+    "Best Time to Visit {nom}: {best_month} ({best_tmax}°C) [{year}]",
+    "When to Visit {nom}? {best_month} recommended [{year}]",
+    "{nom}: {best_month} ideal — {best_tmax}°C, {best_rain}% rain [{year}]"
   ],
   "annual_h1s": [
     "Best Time to Visit<br/><em>{nom}</em>",

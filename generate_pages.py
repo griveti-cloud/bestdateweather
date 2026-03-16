@@ -455,8 +455,10 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 
     prep, nom_bare = _resolve_prep_and_bare(C, dest)
 
+    # For mountain destinations, best_month in titles should be the ski best month
+    _title_best_idx = best_ski_idx if is_mountain else best_idx
     tpl_vars = dict(prep=prep, nom_bare=nom_bare, nom=nom, year=YEAR,
-                    best_month=MONTHS[best_idx], best_month_lc=month_lc(C, MONTHS[best_idx]),
+                    best_month=MONTHS[_title_best_idx], best_month_lc=month_lc(C, MONTHS[_title_best_idx]),
                     best_tmax=best_tmax, best_rain=best_rain, best_score=best_score,
                     best_sun=best_sun, best_tmin=best_m['tmin'],
                     worst_month=MONTHS[worst_idx], worst_month_lc=month_lc(C, MONTHS[worst_idx]),

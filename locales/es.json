@@ -522,9 +522,9 @@
     "hero_sub_key": "hero_sub_es"
   },
   "annual_titles": [
-    "Mejor Época para Visitar {nom} [{year}] — Clima y Consejos",
-    "¿Cuándo Ir a {nom}? Clima Mes a Mes [{year}]",
-    "{nom}: Mejor Temporada para Viajar [{year}] — Clima y Tiempo"
+    "Mejor Época para {nom}: {best_month} ({best_tmax}°C) [{year}]",
+    "¿Cuándo ir a {nom}? {best_month} recomendado [{year}]",
+    "{nom}: {best_month} ideal — {best_tmax}°C, {best_rain}% lluvia [{year}]"
   ],
   "annual_h1s": [
     "Mejor Época para Visitar<br/><em>{nom}</em>",

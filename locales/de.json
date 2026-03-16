@@ -522,9 +522,9 @@
     "hero_sub_key": "hero_sub_de"
   },
   "annual_titles": [
-    "Beste Reisezeit für {nom} [{year}] — Wetter & Tipps",
-    "Wann nach {nom} reisen? Monatliches Klima [{year}]",
-    "{nom}: Beste Reisesaison [{year}] — Klima & Wetter"
+    "Beste Reisezeit für {nom}: {best_month} ({best_tmax}°C) [{year}]",
+    "Wann nach {nom} reisen? {best_month} empfohlen [{year}]",
+    "{nom}: {best_month} ideal — {best_tmax}°C, {best_rain}% Regen [{year}]"
   ],
   "annual_h1s": [
     "Beste Reisezeit für<br/><em>{nom}</em>",
