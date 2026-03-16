@@ -1179,20 +1179,16 @@ function scoreRainSmart(pct, mmDay, avgTemp) {
 }
 
 function scoreTemp(t, tMin, tMax) {
+ // Courbe universelle alignee sur Python t_ideal — Δ max ±0.5pt vs Python
+ // tMin/tMax conserves en signature (plage/ski utilisent des formules inline)
  if (t == null) return 50;
- var ideal = (tMin + tMax) / 2;
- var range = (tMax - tMin) / 2;
- if (t >= tMin && t <= tMax) {
- return 100 - 20 * Math.abs(t - ideal) / range;
- }
- if (t < tMin) {
- return Math.max(0, 80 - (tMin - t) * 8);
- }
- // Progressive heat penalty: accelerates above 32°C
- var over = t - tMax;
- if (over <= 4) return Math.max(0, 80 - over * 4);
- if (over <= 8) return Math.max(0, 64 - (over - 4) * 7);
- return Math.max(0, 36 - (over - 8) * 6);
+ if (t <= 5)  return 0;
+ if (t <= 14) return Math.round((t - 5) / 9 * 30);
+ if (t <= 22) return Math.round(30 + (t - 14) / 8 * 50);
+ if (t <= 28) return Math.round(80 + (t - 22) / 6 * 20);
+ if (t <= 32) return Math.round(100 - (t - 28) / 4 * 25);
+ if (t <= 36) return Math.round(75 - (t - 32) / 4 * 45);
+ return Math.max(0, Math.round(30 - (t - 36) / 6 * 30));
 }
 
 function scoreWind(kmh) {
@@ -2332,7 +2328,7 @@ function monthScoreForUC(d, uc) {
  var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
  var w = cfg.weights;
  var sRain = scoreRainSmart(d.rainPct, d.avgPrecipMm, d.avgTemp);
- var sSun = scoreSun((d.sunHrs || 0) * 50);
+ var sSun = Math.min(100, Math.round((d.sunHrs || 0) / 15 * 100)); // aligne Python sun_h/15
  if (!uc || uc === 'general') {
  // ficheScore garanti par computeAnchoredScores (appelé dans runAnnual)
  // scoring.py est la source de vérité — ne pas recalculer ici
