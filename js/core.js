@@ -966,6 +966,28 @@ function updateScenarioLabels(pessRows, optRows) {
  if (ps) ps.textContent = pess.sub;
  if (ot) ot.textContent = opt.title;
  if (os) os.textContent = opt.sub;
+ // Afficher la correction ECMWF sous les cards si active
+ var _to = window._seasTempOffset, _ro = window._seasRainOffset;
+ var hasCorr = (_to != null && Math.abs(_to) >= 0.3) || (_ro != null && Math.abs(_ro) >= 3);
+ ['sc-pess-ecmwf','sc-opt-ecmwf'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (!el) {
+   el = document.createElement('div');
+   el.id = id;
+   el.style.cssText = 'font-size:10px;color:#888;margin-top:4px;text-align:center;font-style:italic';
+   var card = document.getElementById(id === 'sc-pess-ecmwf' ? 'sc-pess-stats' : 'sc-opt-stats');
+   if (card) card.parentNode.insertBefore(el, card.nextSibling);
+  }
+  if (hasCorr) {
+   var parts = [];
+   if (_to != null && Math.abs(_to) >= 0.3) parts.push((_to > 0 ? '+' : '') + Math.round(_to*10)/10 + '°');
+   if (_ro != null && Math.abs(_ro) >= 3) parts.push((_ro > 0 ? '+' : '') + _ro + '% ' + T.wordRain);
+   el.textContent = T.seasonalCorrection + ' ' + parts.join(' · ');
+   el.style.display = 'block';
+  } else {
+   el.style.display = 'none';
+  }
+ });
 }
 
 function renderScCard(sc, stripId, statsId) {
