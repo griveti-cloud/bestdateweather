@@ -447,7 +447,12 @@ function genPess(rows) {
  var out = [];
  for (var i = 0; i < rows.length; i++) {
  var r = rows[i];
- out.push(cloneRow(r, { temp: r.p25 != null ? parseFloat((r.p25 - seededRand()).toFixed(1)) : r.p50, sol: Math.max(0, (r.solP25 || 0) * 0.4), rain: Math.min(100, Math.round(r.rain * 1.5 + 10)) }));
+ var pRain = Math.min(100, Math.round(r.rain * 1.5 + 10));
+ var pMm = r.rain > 0 ? parseFloat(((r.mm||0) * (pRain / r.rain)).toFixed(2)) : (r.mm||0);
+ var pSol = Math.max(0, (r.solP25 || 0) * 0.4);
+ out.push(cloneRow(r, { temp: r.p25 != null ? parseFloat((r.p25 - seededRand()).toFixed(1)) : r.p50,
+  sol: pSol, solP25: pSol, solP50: pSol, solP75: Math.max(0,(r.solP25||0)*0.6),
+  rain: pRain, mm: pMm }));
  }
  return out;
 }
@@ -455,7 +460,12 @@ function genOpt(rows) {
  var out = [];
  for (var i = 0; i < rows.length; i++) {
  var r = rows[i];
- out.push(cloneRow(r, { temp: r.p75 != null ? parseFloat((r.p75 + seededRand()).toFixed(1)) : r.p50, sol: Math.min(900, (r.solP75 || 0) * 1.4), rain: Math.max(0, Math.round(r.rain * 0.35)) }));
+ var oRain = Math.max(0, Math.round(r.rain * 0.35));
+ var oMm = r.rain > 0 ? parseFloat(((r.mm||0) * (oRain / r.rain)).toFixed(2)) : 0;
+ var oSol = Math.min(900, (r.solP75 || 0) * 1.4);
+ out.push(cloneRow(r, { temp: r.p75 != null ? parseFloat((r.p75 + seededRand()).toFixed(1)) : r.p50,
+  sol: oSol, solP25: Math.min(900,(r.solP75||0)*1.1), solP50: Math.min(900,(r.solP75||0)*1.25), solP75: oSol,
+  rain: oRain, mm: oMm }));
  }
  return out;
 }
@@ -1253,6 +1263,9 @@ function getVerdict(score, avgRain, avgTemp, avgWind, uc, isSeasonal) {
  else if (score >= 50) label = 'Variable';
  else if (score >= 35) label = T.scPoor;
  else label = T.scBad;
+ // Dégrader d'un cran si pluie notable (cohérence emoji/score)
+ if (avgRain > 28 && score >= 76) label = T.scGood;
+ else if (avgRain > 35 && score >= 63) label = 'Variable';
  var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
  var driver = getMainDriver(avgRain, avgTemp, avgWind, scoreRain(avgRain), scoreTemp(avgTemp, cfg.tempMin, cfg.tempMax), scoreWind(avgWind), uc);
  var action;
@@ -1452,7 +1465,9 @@ function computeAndRenderScore(sc, rows) {
  }
  var chips = [
  { lbl: T.statRain, val: Math.round(avgRain)+'%', score: sRain },
- { lbl: T.chipPrecip, val: fmtPrecip(totalMm > 0 ? totalMm : 0), score: sRain },
+ { lbl: T.chipPrecip, val: fmtPrecip(totalMm > 0 ? totalMm : 0),
+  score: totalMm > 5 ? 20 : totalMm > 2 ? 45 : totalMm > 0.5 ? 65 : sRain },
+ // score précip indépendant : rouge >5mm, orange >2mm, jaune >0.5mm, sinon sRain
  { lbl: T.chipTemp, val: avgTemp!=null?fmtTemp(avgTemp):'–', score: sTemp },
  { lbl: T.chipWind, val: fmtWind(avgWind)+(avgWindDir!=null?(
   ' <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:2px;transform:rotate('+(Math.round(avgWindDir)+180)+'deg)"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>'
