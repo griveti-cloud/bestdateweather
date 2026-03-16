@@ -567,8 +567,8 @@ header.app-header{max-width:580px;margin:0 auto;padding:16px 20px 0;text-align:c
 @media(max-height:780px) and (min-width:641px){
   header.app-header{padding:6px 20px 0}
   .app-title{font-size:26px;margin-bottom:2px}
-  .app-sub{display:none}
-  .app-proof{display:none}
+  .app-sub{font-size:11px;margin-bottom:2px}
+  .app-proof{font-size:9px;padding:2px 8px;margin-bottom:4px}
   .unit-toggle{margin-bottom:5px}
   .mode-toggle{margin-bottom:8px}
   .search-card{padding:16px}
@@ -700,8 +700,8 @@ header.app-header{max-width:580px;margin:0 auto;padding:16px 20px 0;text-align:c
 @media(max-height:750px) and (min-width:641px){
   header.app-header{padding:4px 20px 0}
   .app-title{font-size:22px;margin-bottom:0}
-  .app-sub{display:none}
-  .app-proof{display:none}
+  .app-sub{font-size:10px;margin-bottom:1px}
+  .app-proof{font-size:9px;padding:2px 8px;margin-bottom:3px}
   .app-divider{display:none}
   .unit-toggle{margin-bottom:4px}
 }
