@@ -721,3 +721,13 @@ header.app-header{max-width:580px;margin:0 auto;padding:16px 20px 0;text-align:c
 .affil-chip--green:hover{background:#fde9a0;border-color:var(--gold);color:#5a3800}
 .affil-chip--blue{border-color:rgba(232,148,10,.4);background:var(--gold-light);color:#7a4f00}
 .affil-chip--blue:hover{background:#fde9a0;border-color:var(--gold);color:#5a3800}
+
+/* ── Desktop layout: wider widget ── */
+@media(min-width:900px){
+  header.app-header{max-width:760px}
+  .wrap{max-width:760px}
+  .hero{max-width:720px}
+  .sec-block{max-width:720px}
+  .note{max-width:720px}
+  .empty{max-width:720px}
+}
