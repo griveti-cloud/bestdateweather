@@ -853,7 +853,7 @@ function renderHourly(sc) {
  for(var i=0;i<hours.length;i++){
  var r=sc[hours[i]]; if(!r) continue;
  var lbl=(hours[i]===23)?'00h':r.label;
- var icon = (r.isForecast && r.wmo != null) ? (wmoToIcon(r.wmo)||getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25)) : getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25);
+ var icon = (r.isForecast && r.wmo != null) ? (wmoToIcon(r.wmo,r.sol)||getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25)) : getIcon(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0,r.p25);
  var label = (r.isForecast && r.wmo != null) ? (wmoToLabel(r.wmo)||getLabel(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0)) : getLabel(r.h,r.temp,r.sol,r.rain,r.mm||0,r.snow||0);
  var isNow = (hours[i]===activeSlot);
  var cell=document.createElement('div'); cell.className='h-cell'+(isNow?' h-cell-now':'');
@@ -1444,18 +1444,19 @@ function wmoToLabel(code) {
  if (code >= 95) return T.storm;
  return null;
 }
-function wmoToIcon(code) {
+function wmoToIcon(code, sol) {
  if (code == null) return null;
- if (code === 0) return IC.sun;
- if (code <= 2) return IC.partcloud;
- if (code === 3) return IC.cloud;
+ var night = (sol != null && sol < 15);
+ if (code === 0) return night ? IC.moon : IC.sun;
+ if (code <= 2) return night ? IC.nightcloud : IC.partcloud;
+ if (code === 3) return night ? IC.nightcloud : IC.cloud;
  if (code === 45 || code === 48) return IC.fog;
- if (code >= 51 && code <= 57) return IC.lightrain;
- if (code >= 61 && code <= 65) return IC.rain;
- if (code >= 66 && code <= 67) return IC.rain;
- if (code >= 71 && code <= 77) return IC.snow;
- if (code >= 80 && code <= 82) return IC.shower;
- if (code >= 85 && code <= 86) return IC.snow;
+ if (code >= 51 && code <= 57) return night ? IC.nightshower : IC.lightrain;
+ if (code >= 61 && code <= 65) return night ? IC.nightrain : IC.rain;
+ if (code >= 66 && code <= 67) return night ? IC.nightrain : IC.rain;
+ if (code >= 71 && code <= 77) return night ? IC.nightsnow : IC.snow;
+ if (code >= 80 && code <= 82) return night ? IC.nightshower : IC.shower;
+ if (code >= 85 && code <= 86) return night ? IC.nightsnow : IC.snow;
  if (code >= 95) return IC.storm;
  return null;
 }
@@ -1487,7 +1488,7 @@ function updateHero(sc, rows, mainHour) {
   } else { _siEl.style.display='none'; }
  }
  document.getElementById('r-cond').textContent=(main.isForecast && main.wmo != null && wmoToLabel(main.wmo)) ? wmoToLabel(main.wmo) : getLabel(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
- document.getElementById('r-icon').innerHTML=(main.isForecast && main.wmo != null && wmoToIcon(main.wmo)) ? wmoToIcon(main.wmo) : getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
+ document.getElementById('r-icon').innerHTML=(main.isForecast && main.wmo != null && wmoToIcon(main.wmo,main.sol)) ? wmoToIcon(main.wmo,main.sol) : getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
  document.getElementById('r-rain').textContent=avgRain+'%';
  var _windAvg=Math.round(wSum/rows.length);
  var _mainDir=(rows[Math.round(rows.length/2)]&&rows[Math.round(rows.length/2)].windDir!=null)?rows[Math.round(rows.length/2)].windDir:null;
