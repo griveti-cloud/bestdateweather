@@ -546,7 +546,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     country_name = country
     hotels_dest = quote_plus(f"{nom}, {country_name}")
     hotels_subdomain = C['booking_domain']
-    booking_url = f"https://{hotels_subdomain}.hotels.com/Hotel-Search?destination={hotels_dest}&camref=1110IB57J"
+    booking_url = f"https://expedia.com/affiliate?siteid=1&landingPage={quote_plus('https://www.expedia.com/Hotel-Search?destination=' + nom + ', ' + country_name)}&camref=1110IB57J&creativeref=1100168075&adref=PZqrOrxQe3"
 
     off_months = [month_lc(C, MONTHS[i])
                   for i in range(12) if months[i]['score'] >= 6.5 and months[i]['score'] < best_score - 1.5]
@@ -596,6 +596,18 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <a href="{flights_url}" target="_blank" rel="sponsored noopener" class="affil-btn">{C['lbl_flights_btn']}</a>
  </div>
 </section>'''
+    # ── Plan bar (compact affiliate strip) ──
+    _pb_hotel_lbl = C.get('lbl_plan_hotel', '🏨 ' + C.get('lbl_booking_btn', 'Hébergement'))
+    _pb_activ_lbl = C.get('lbl_plan_activ', '🎟️ ' + C.get('lbl_activities_btn', 'Activités'))
+    _pb_flight_lbl = C.get('lbl_plan_flight', '✈️ ' + C.get('lbl_flights_btn', 'Vols'))
+    _pb_label = C.get('lbl_plan_bar', 'Planifier votre voyage')
+    plan_bar_html = f'''<div class="plan-bar">
+<span class="plan-bar-label">{_pb_label}</span>
+<a href="{booking_url}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">{_pb_hotel_lbl}</a>
+<a href="{gyg_url}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-activ">{_pb_activ_lbl}</a>
+<a href="{flights_url}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">{_pb_flight_lbl}</a>
+</div>'''
+
     MONTH_BTN_CLS = {'rec': 'month-btn-rec', 'mid': 'month-btn-mid', 'avoid': 'month-btn-avoid'}
     monthly_links = ''.join(
         f'<a href="{monthly_url(C, slug, i)}" class="month-btn '
@@ -870,6 +882,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 {qf}
 {cards_section}
 {table_section}
+{plan_bar_html}
 {seasonal_section}
 {booking_section}
 {activities_section}
@@ -1483,7 +1496,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     country_name = dest_country(cfg, dest)
     hotels_dest_m = quote_plus(f"{nom}, {country_name}")
     hotels_subdomain_m = cfg['booking_domain']
-    bk_url = f"https://{hotels_subdomain_m}.hotels.com/Hotel-Search?destination={hotels_dest_m}&camref=1110IB57J"
+    bk_url = f"https://expedia.com/affiliate?siteid=1&landingPage={quote_plus('https://www.expedia.com/Hotel-Search?destination=' + nom + ', ' + country_name)}&camref=1110IB57J&creativeref=1100168075&adref=PZqrOrxQe3"
     bk_cta = C['lbl_m_bk_cta_tpl'].format(**tpl)
     booking_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_booking_section']}</div>
@@ -1523,6 +1536,18 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <a href="{flights_url_m}" target="_blank" rel="sponsored noopener" class="affil-btn">{cfg['lbl_flights_btn']}</a>
  </div>
 </section>'''
+
+    # ── Plan bar mensuel ──
+    _pb_label_m = cfg.get('lbl_plan_bar', 'Planifier votre voyage')
+    _pb_hotel_m = cfg.get('lbl_plan_hotel', '🏨 ' + cfg.get('lbl_booking_btn', 'Hébergement'))
+    _pb_activ_m = cfg.get('lbl_plan_activ', '🎟️ ' + cfg.get('lbl_activities_btn', 'Activités'))
+    _pb_flight_m = cfg.get('lbl_plan_flight', '✈️ ' + cfg.get('lbl_flights_btn', 'Vols'))
+    plan_bar_m = f'''<div class="plan-bar">
+<span class="plan-bar-label">{_pb_label_m}</span>
+<a href="{bk_url}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">{_pb_hotel_m}</a>
+<a href="{gyg_url_m}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-activ">{_pb_activ_m}</a>
+<a href="{flights_url_m}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">{_pb_flight_m}</a>
+</div>'''
 
     html = f'''<!DOCTYPE html>
 <html lang="{L['html_lang']}">
@@ -1671,6 +1696,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  </section>
 
+{plan_bar_m}
 {booking_section}
 {activities_section}
 {flights_section}

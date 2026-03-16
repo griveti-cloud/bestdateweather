@@ -247,7 +247,7 @@
     "booking_section": "Alojamiento",
     "booking_title_tpl": "Alojarse en {name}",
     "booking_cta": "Ver disponibilidad en el período recomendado",
-    "booking_btn": "Buscar en Hotels.com",
+    "booking_btn": "Buscar en Expedia",
     "monthly_section": "Clima mensual",
     "monthly_title": "Tiempo detallado mes a mes",
     "faq_section": "FAQ",
@@ -295,7 +295,11 @@
     "or_word": "o",
     "share_label": "Compartir",
     "colon_sep": ": ",
-    "best_ski_months_lbl_tpl": "Mejor{es} mes{es} ski"
+    "best_ski_months_lbl_tpl": "Mejor{es} mes{es} ski",
+    "plan_bar": "Planifica tu viaje",
+    "plan_hotel": "🏨 Alojamiento",
+    "plan_activ": "🎟️ Actividades",
+    "plan_flight": "✈️ Vuelos"
   },
   "monthly": {
     "hero_tpl": "Tiempo en {name} en {month}",
@@ -1244,5 +1248,10 @@
   "hist_tmean": "Media",
   "hist_tmin": "Tmin",
   "hist_title": "Temperaturas históricas",
-  "hist_hint": "Tendencia 10 años"
+  "hist_hint": "Tendencia 10 años",
+  "lbl_plan_bar": "Planifica tu viaje",
+  "lbl_plan_hotel": "🏨 Alojamiento",
+  "lbl_plan_activ": "🎟️ Actividades",
+  "lbl_plan_flight": "✈️ Vuelos",
+  "lbl_booking_btn": "Buscar en Expedia"
 }

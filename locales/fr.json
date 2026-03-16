@@ -247,7 +247,7 @@
     "booking_section": "Hébergement",
     "booking_title_tpl": "Trouver un hébergement {name}",
     "booking_cta": "Voir les disponibilités sur la période recommandée",
-    "booking_btn": "Rechercher sur Hotels.com",
+    "booking_btn": "Rechercher sur Expedia",
     "monthly_section": "Météo par mois",
     "monthly_title": "Météo détaillée mois par mois",
     "faq_section": "FAQ",
@@ -295,7 +295,11 @@
     "or_word": "ou",
     "share_label": "Partager",
     "colon_sep": " : ",
-    "best_ski_months_lbl_tpl": "Meilleure{s} période{s} ski"
+    "best_ski_months_lbl_tpl": "Meilleure{s} période{s} ski",
+    "plan_bar": "Planifier votre voyage",
+    "plan_hotel": "🏨 Hébergement",
+    "plan_activ": "🎟️ Activités",
+    "plan_flight": "✈️ Vols"
   },
   "monthly": {
     "hero_tpl": "Météo {name} en {month_lc}",
@@ -1223,5 +1227,10 @@
   "hist_tmean": "Moy.",
   "hist_tmin": "Tmin",
   "hist_title": "Températures historiques",
-  "hist_hint": "Tendance sur 10 ans"
+  "hist_hint": "Tendance sur 10 ans",
+  "lbl_plan_bar": "Planifier votre voyage",
+  "lbl_plan_hotel": "🏨 Hébergement",
+  "lbl_plan_activ": "🎟️ Activités",
+  "lbl_plan_flight": "✈️ Vols",
+  "lbl_booking_btn": "Rechercher sur Expedia"
 }
