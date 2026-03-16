@@ -1270,6 +1270,10 @@ function computeAndRenderScore(sc, rows) {
 
  var avgRain = rSum / rows.length;
  var avgWind = wSum / rows.length;
+ // Direction moyenne du vent (moyenne circulaire)
+ var _sinW=0,_cosW=0,_wdCnt=0;
+ for(var _wi=0;_wi<rows.length;_wi++){if(rows[_wi].windDir!=null){var _wr=rows[_wi].windDir*Math.PI/180;_sinW+=Math.sin(_wr);_cosW+=Math.cos(_wr);_wdCnt++;}}
+ var avgWindDir=_wdCnt>0?(((Math.atan2(_sinW/_wdCnt,_cosW/_wdCnt)*180/Math.PI)+360)%360):null;
  var avgTemp = tCnt ? tSum / tCnt : null;
  var rhSum = 0, rhCnt = 0;
  for (var j=0; j<rows.length; j++) { if (rows[j].rh != null) { rhSum += rows[j].rh; rhCnt++; } }
@@ -1411,7 +1415,9 @@ function computeAndRenderScore(sc, rows) {
  { lbl: T.statRain, val: Math.round(avgRain)+'%', score: sRain },
  { lbl: T.chipPrecip, val: fmtPrecip(totalMm > 0 ? totalMm : 0), score: sRain },
  { lbl: T.chipTemp, val: avgTemp!=null?fmtTemp(avgTemp):'–', score: sTemp },
- { lbl: T.chipWind, val: fmtWind(avgWind), score: sWind }
+ { lbl: T.chipWind, val: fmtWind(avgWind)+(avgWindDir!=null?(
+  ' <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:2px;transform:rotate('+(Math.round(avgWindDir)+180)+'deg)"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>'
+):''), score: sWind }
  
  ];
  if (totalSnow > 0.5) chips.push({ lbl: T.chipSnow, val: totalSnow + ' cm', score: 0, color: '#6366f1' });
