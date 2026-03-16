@@ -847,8 +847,8 @@ function applySeasonalCorrection(rows, seas) {
  var sp25=ro.p50!=null&&ro.p25!=null?ro.p50-ro.p25:0, sp75=ro.p50!=null&&ro.p75!=null?ro.p75-ro.p50:0;
  var newRain=ro.rain;
  if(seas.rainProb!==null){var anomalyRain=seas.rainProb-histRainAvg;newRain=Math.min(100,Math.max(0,Math.round(ro.rain+anomalyRain*0.25)));}
- // Scaler mm proportionnellement au ratio rain corrigé/original (évite mm trop bas bloquant getIcon)
- var newMm=(ro.rain>0&&newRain>0)?parseFloat(Math.max(ro.mm||0,(ro.mm||0)*(newRain/ro.rain)).toFixed(2)):(ro.mm||0);
+ // Scaler mm : proportionnel si mm>0, sinon synthèse minimale si rain>20 (slot sec en moyenne)
+ var newMm;if((ro.mm||0)>0&&ro.rain>0&&newRain>0){newMm=parseFloat(((ro.mm)*(newRain/ro.rain)).toFixed(2));}else if(newRain>=20){newMm=parseFloat((newRain*0.005).toFixed(2));}else{newMm=(ro.mm||0);}
  var newWind=ro.windP50;
  if(seas.windMean!==null&&ro.windP50!=null){var wDelta=Math.min(5,Math.max(-5,(seas.windMean-histWindAvg)*0.35));newWind=Math.max(0,parseFloat((ro.windP50+wDelta).toFixed(1)));}
  // Corriger sol inversement à l'anomalie pluie (plus de pluie = moins de soleil)
