@@ -338,61 +338,65 @@ function renderHistoricalChart(data){
 function fillUseCase(type) { currentUseCase = type; document.getElementById("score-block").style.display = "block"; quickFill(type); }
 
 function getIcon(h, temp, sol, rain, mm, snow, p25) {
+ // rain (probabilite %) = driver principal | sol = driver secondaire (beau temps) | mm = seuils forts seulement
  mm = mm || 0;
  snow = snow || 0;
  p25 = p25 != null ? p25 : temp;
  var night = sol < 15;
  var isSnowing = snow > 0.1 || (p25 != null && p25 <= 2 && mm > 0.1);
  if (night) {
- if (mm > 7 || (rain > 70 && mm > 2)) return IC.storm;
+ if (rain > 75 || mm > 7) return IC.storm;
  if (isSnowing && rain > 15) return IC.nightsnow;
  if (temp <= 0 && rain > 20) return IC.nightsnow;
- if (rain > 35 && mm >= 1.5) return IC.nightrain;
- if (rain > 20 && mm >= 0.2) return IC.nightshower;
+ if (rain > 45 && mm >= 1) return IC.nightrain;
+ if (rain > 25) return IC.nightshower;
  if (sol < 5) return IC.moon;
  return IC.nightcloud;
  }
- if (mm > 7 || (rain > 70 && mm > 2)) return IC.storm;
+ if (rain > 75 || mm > 7) return IC.storm;
  if (isSnowing && rain > 15) return IC.snow;
  if (temp <= 0 && rain > 20) return IC.snow;
- if (rain > 55 && mm >= 3) return IC.heavyrain;
- if (rain > 35 && mm >= 1.5) return IC.rain;
- if (rain > 20 && mm >= 0.2 && sol >= 200) return IC.shower;
- if (rain > 20 && mm >= 0.2) return IC.lightrain;
- // rain > 35% mais mm < 0.2 → précip trop faibles, cascade vers sol
+ if (rain > 60 && mm >= 1.5) return IC.heavyrain;
+ if (rain > 45) return IC.rain;
+ if (rain > 28 && sol >= 250) return IC.shower;
+ if (rain > 28) return IC.lightrain;
+ if (rain > 18 && sol >= 350) return IC.partcloud;
+ if (rain > 18) return IC.cloud;
+ // rain <= 18% : logique purement solaire
  if (sol < 60 && temp < 8) return IC.fog;
  if (sol < 130) return IC.cloud;
- if (sol < 420) return IC.partcloud;
- if (rain > 30) return IC.partcloud; // pluie notable -> pas de soleil pur
+ if (sol < 450) return IC.partcloud;
  return IC.sun;
 }
 
 function getLabel(h, temp, sol, rain, mm, snow, p25) {
+ // Miroir exact de getIcon — meme logique, meme seuils
  mm = mm || 0; snow = snow || 0;
  p25 = p25 != null ? p25 : temp;
  var night = sol < 15;
  var isSnowing = snow > 0.1 || (p25 <= 2 && mm > 0.1);
  if (night) {
- if (mm > 7 || (rain > 70 && mm > 2)) return T.storm;
+ if (rain > 75 || mm > 7) return T.storm;
  if (isSnowing && rain > 15) return T.snow;
  if (temp <= 0 && rain > 20) return T.snow;
- if (rain > 35 && mm >= 1.5) return T.rain;
- if (rain > 20 && mm >= 0.2) return T.showers;
+ if (rain > 45 && mm >= 1) return T.rain;
+ if (rain > 25) return T.showers;
  if (sol < 5) return T.clearNight;
  return T.cloudyNight;
  }
- if (mm > 7 || (rain > 70 && mm > 2)) return T.storm;
+ if (rain > 75 || mm > 7) return T.storm;
  if (isSnowing && rain > 15) return T.snow;
  if (temp <= 0 && rain > 20) return T.snow;
- if (rain > 55 && mm >= 3) return T.heavyRain;
- if (rain > 35 && mm >= 1.5) return T.rain;
- if (rain > 20 && mm >= 0.2 && sol >= 200) return T.showers;
- if (rain > 20 && mm >= 0.2) return T.lightRain;
- // rain > 35% mais mm < 0.1 → pas de pluie mesurable, cascade vers sol
+ if (rain > 60 && mm >= 1.5) return T.heavyRain;
+ if (rain > 45) return T.rain;
+ if (rain > 28 && sol >= 250) return T.showers;
+ if (rain > 28) return T.lightRain;
+ if (rain > 18 && sol >= 350) return T.partlyCloudy;
+ if (rain > 18) return T.overcast;
+ // rain <= 18% : logique purement solaire
  if (sol < 60 && temp < 8) return T.fog;
  if (sol < 130) return T.overcast;
- if (sol < 420) return T.partlyCloudy;
- if (rain > 30) return T.partlyCloudy; // pluie notable -> pas ensoleille pur
+ if (sol < 450) return T.partlyCloudy;
  return T.sunny;
 }
 
