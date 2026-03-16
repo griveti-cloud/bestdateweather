@@ -1282,6 +1282,7 @@ function computeAndRenderScore(sc, rows) {
  var _sinW=0,_cosW=0,_wdCnt=0;
  for(var _wi=0;_wi<rows.length;_wi++){if(rows[_wi].windDir!=null){var _wr=rows[_wi].windDir*Math.PI/180;_sinW+=Math.sin(_wr);_cosW+=Math.cos(_wr);_wdCnt++;}}
  var avgWindDir=_wdCnt>0?(((Math.atan2(_sinW/_wdCnt,_cosW/_wdCnt)*180/Math.PI)+360)%360):null;
+ window._avgWindDir=avgWindDir;
  var avgTemp = tCnt ? tSum / tCnt : null;
  var rhSum = 0, rhCnt = 0;
  for (var j=0; j<rows.length; j++) { if (rows[j].rh != null) { rhSum += rows[j].rh; rhCnt++; } }
@@ -1512,9 +1513,10 @@ function updateHero(sc, rows, mainHour) {
  document.getElementById('r-icon').innerHTML=(main.isForecast && main.wmo != null && wmoToIcon(main.wmo,main.sol)) ? wmoToIcon(main.wmo,main.sol) : getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
  document.getElementById('r-rain').textContent=avgRain+'%';
  var _windAvg=Math.round(wSum/rows.length);
- var _mainDir=(rows[Math.round(rows.length/2)]&&rows[Math.round(rows.length/2)].windDir!=null)?rows[Math.round(rows.length/2)].windDir:null;
- var _wdirStr=_mainDir!=null?' '+fmtWindDir(_mainDir):'';
- var _windArrow=_mainDir!=null?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin:0 2px;transform:rotate('+(_mainDir+180)+'deg);transition:transform .3s"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>':'';
+ // Use avgWindDir from score chips if available (same computation, consistent)
+ var _heroDir=window._avgWindDir!=null?window._avgWindDir:((rows[Math.round(rows.length/2)]&&rows[Math.round(rows.length/2)].windDir!=null)?rows[Math.round(rows.length/2)].windDir:null);
+ var _wdirStr=_heroDir!=null?' '+fmtWindDir(_heroDir):'';
+ var _windArrow=_heroDir!=null?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin:0 2px;transform:rotate('+(_heroDir+180)+'deg);transition:transform .3s"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>':'';
  document.getElementById('r-wind').innerHTML=fmtWind(_windAvg)+(_windArrow?_windArrow+_wdirStr:_wdirStr);
  document.getElementById('r-sky').textContent=skyLbl;
  computeAndRenderScore(sc, rows);
