@@ -134,13 +134,17 @@ def main():
     parser.add_argument('--top',       type=int, default=TOP_N_DEFAULT)
     parser.add_argument('--lang',      nargs='+', default=LANGS_DEFAULT)
     parser.add_argument('--dest',      nargs='+', default=None)
+    parser.add_argument('--dest-file',  default=None, help='File with one slug per line')
     parser.add_argument('--overwrite', action='store_true')
     args = parser.parse_args()
 
     climate = pd.read_csv(CLIMATE_FILE)
     dests   = pd.read_csv(DESTS_FILE)
 
-    if args.dest:
+    if args.dest_file:
+        with open(args.dest_file) as f:
+            target_slugs = [l.strip() for l in f if l.strip()]
+    elif args.dest:
         target_slugs = args.dest
     else:
         avg = climate.groupby('slug')['score'].mean().reset_index()
