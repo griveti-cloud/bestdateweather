@@ -1513,8 +1513,10 @@ function updateHero(sc, rows, mainHour) {
  document.getElementById('r-icon').innerHTML=(main.isForecast && main.wmo != null && wmoToIcon(main.wmo,main.sol)) ? wmoToIcon(main.wmo,main.sol) : getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
  document.getElementById('r-rain').textContent=avgRain+'%';
  var _windAvg=Math.round(wSum/rows.length);
- // Use avgWindDir from score chips if available (same computation, consistent)
- var _heroDir=window._avgWindDir!=null?window._avgWindDir:((rows[Math.round(rows.length/2)]&&rows[Math.round(rows.length/2)].windDir!=null)?rows[Math.round(rows.length/2)].windDir:null);
+ // Compute circular mean of wind direction from all rows
+ var _sinHW=0,_cosHW=0,_cntHW=0;
+ for(var _hwi=0;_hwi<rows.length;_hwi++){if(rows[_hwi].windDir!=null){var _hwr=rows[_hwi].windDir*Math.PI/180;_sinHW+=Math.sin(_hwr);_cosHW+=Math.cos(_hwr);_cntHW++;}}
+ var _heroDir=_cntHW>0?(((Math.atan2(_sinHW/_cntHW,_cosHW/_cntHW)*180/Math.PI)+360)%360):null;
  var _wdirStr=_heroDir!=null?' '+fmtWindDir(_heroDir):'';
  var _windArrow=_heroDir!=null?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin:0 2px;transform:rotate('+(_heroDir+180)+'deg);transition:transform .3s"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>':'';
  document.getElementById('r-wind').innerHTML=fmtWind(_windAvg)+(_windArrow?_windArrow+_wdirStr:_wdirStr);
