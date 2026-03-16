@@ -363,6 +363,7 @@ function getIcon(h, temp, sol, rain, mm, snow, p25) {
  if (sol < 60 && temp < 8) return IC.fog;
  if (sol < 130) return IC.cloud;
  if (sol < 420) return IC.partcloud;
+ if (rain > 30) return IC.partcloud; // pluie notable -> pas de soleil pur
  return IC.sun;
 }
 
@@ -391,6 +392,7 @@ function getLabel(h, temp, sol, rain, mm, snow, p25) {
  if (sol < 60 && temp < 8) return T.fog;
  if (sol < 130) return T.overcast;
  if (sol < 420) return T.partlyCloudy;
+ if (rain > 30) return T.partlyCloudy; // pluie notable -> pas ensoleille pur
  return T.sunny;
 }
 
