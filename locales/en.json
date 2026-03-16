@@ -1219,5 +1219,10 @@
     "ski_poor": "Challenging ski conditions {nom_f} this month ({tmax}°C in the valley). Snow cover is unreliable, with partial closures or late-season conditions.",
     "ski_offseason": "Off-season for skiing {nom_f} — lifts are closed. Consider hiking, mountain biking or summer activities at altitude."
   },
-  "temp_unit": "°C"
+  "temp_unit": "°C",
+  "hist_tmax": "Tmax",
+  "hist_tmean": "Avg",
+  "hist_tmin": "Tmin",
+  "hist_title": "Historical temperatures",
+  "hist_hint": "10-year trend"
 }

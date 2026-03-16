@@ -1218,5 +1218,10 @@
     "ski_poor": "Conditions ski difficiles {nom_f} ce mois-ci ({tmax}°C en vallée). L'enneigement est aléatoire, les domaines partiellement fermés ou en fin de saison.",
     "ski_offseason": "Hors-saison ski {nom_f} — les remontées mécaniques sont fermées. À privilegier pour la randonnée, le VTT ou les activités estivales en altitude."
   },
-  "temp_unit": "°C"
+  "temp_unit": "°C",
+  "hist_tmax": "Tmax",
+  "hist_tmean": "Moy.",
+  "hist_tmin": "Tmin",
+  "hist_title": "Températures historiques",
+  "hist_hint": "Tendance sur 10 ans"
 }

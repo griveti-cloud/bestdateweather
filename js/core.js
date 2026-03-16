@@ -317,9 +317,9 @@ function renderHistoricalChart(data){
  }
  emojiRow+='</div>';
  var leg='<div style="display:flex;gap:14px;margin-top:6px;font-size:11px;color:#888;flex-wrap:wrap">'+
-  '<span><span style="display:inline-block;width:12px;height:2px;background:#e07040;vertical-align:middle;margin-right:3px;border-radius:1px"></span>Tmax</span>'+
-  '<span><span style="display:inline-block;width:12px;height:2px;background:#b0a080;vertical-align:middle;margin-right:3px;border-radius:1px;border-top:2px dashed #b0a080"></span>Moy.</span>'+
-  '<span><span style="display:inline-block;width:12px;height:2px;background:#6ea8d9;vertical-align:middle;margin-right:3px;border-radius:1px"></span>Tmin</span>'+
+  '<span><span style="display:inline-block;width:12px;height:2px;background:#e07040;vertical-align:middle;margin-right:3px;border-radius:1px"></span>'+(T.hist_tmax||'Tmax')+'</span>'+
+  '<span><span style="display:inline-block;width:12px;height:2px;background:#b0a080;vertical-align:middle;margin-right:3px;border-radius:1px;border-top:2px dashed #b0a080"></span>'+(T.hist_tmean||'Avg')+'</span>'+
+  '<span><span style="display:inline-block;width:12px;height:2px;background:#6ea8d9;vertical-align:middle;margin-right:3px;border-radius:1px"></span>'+(T.hist_tmin||'Tmin')+'</span>'+
   '</div>';
  ct.innerHTML=svg+emojiRow+leg;
  el.style.display='block';

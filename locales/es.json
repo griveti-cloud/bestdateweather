@@ -1239,5 +1239,10 @@
     "ski_poor": "Condiciones de esquí difíciles {nom_f} este mes ({tmax}°C en el valle). La nieve es poco fiable, con cierres parciales o fin de temporada.",
     "ski_offseason": "Fuera de temporada de esquí {nom_f} — los telesillas están cerrados. Ideal para senderismo, BTT o actividades estivales de montaña."
   },
-  "temp_unit": "°C"
+  "temp_unit": "°C",
+  "hist_tmax": "Tmax",
+  "hist_tmean": "Media",
+  "hist_tmin": "Tmin",
+  "hist_title": "Temperaturas históricas",
+  "hist_hint": "Tendencia 10 años"
 }
