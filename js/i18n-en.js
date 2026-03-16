@@ -10,7 +10,7 @@ window.BDW_T = {
  clearNight: 'Clear night', cloudyNight: 'Cloudy night',
  heavyRain: 'Heavy rain', lightRain: 'Light rain',
  fog: 'Fog', overcast: 'Overcast',
- partlyCloudy: 'Partly cloudy', sunny: 'Sunny',
+ partlyCloudy: 'Partly cloudy', sunny: 'Sunny', hotWave: 'Heat wave', lightSnow: 'Light snow',
 
  // Moon phases
  moonNew: 'New moon', moonWaxCrescent: 'Waxing crescent',

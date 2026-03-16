@@ -10,7 +10,7 @@ window.BDW_T = {
  clearNight: 'Noche despejada', cloudyNight: 'Noche nublada',
  heavyRain: 'Lluvia intensa', lightRain: 'Lluvia ligera',
  fog: 'Niebla', overcast: 'Cubierto',
- partlyCloudy: 'Parcialmente nublado', sunny: 'Soleado',
+ partlyCloudy: 'Parcialmente nublado', sunny: 'Soleado', hotWave: 'Calor extremo', lightSnow: 'Nieve ligera',
 
  // Moon phases
  moonNew: 'Luna nueva', moonWaxCrescent: 'Cuarto creciente',

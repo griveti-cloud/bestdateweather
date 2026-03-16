@@ -110,7 +110,9 @@ var IC = {
  nightrain: '<svg viewBox="0 0 40 40" fill="none"><circle cx="9" cy="9" r="6" fill="#d4c060"/><circle cx="12" cy="7" r="5" fill="#e8f0fc"/><rect x="6" y="17" width="28" height="11" rx="5.5" fill="#5a7090"/><ellipse cx="17" cy="17" rx="8" ry="6.5" fill="#6a8090"/><ellipse cx="26" cy="18" rx="7" ry="5.5" fill="#7a90a0"/><g stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round"><line x1="13" y1="30" x2="11" y2="37"/><line x1="20" y1="30" x2="18" y2="37"/><line x1="27" y1="30" x2="25" y2="37"/></g></svg>',
  shower: '<svg viewBox="0 0 40 40" fill="none"><circle cx="14" cy="12" r="5.5" fill="#f59e0b" opacity=".9"/><g stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round"><line x1="14" y1="3" x2="14" y2="6"/><line x1="5" y1="12" x2="8" y2="12"/><line x1="8" y1="7" x2="10" y2="9"/><line x1="20" y1="7" x2="18" y2="9"/></g><rect x="9" y="18" width="22" height="11" rx="5.5" fill="#93c5e8"/><ellipse cx="17" cy="18" rx="6" ry="5.5" fill="#a8d4f0"/><ellipse cx="23" cy="19" rx="5" ry="4.5" fill="#bde0f8"/><g stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round"><line x1="19" y1="31" x2="17" y2="37"/></g></svg>',
  nightshower:'<svg viewBox="0 0 40 40" fill="none"><circle cx="9" cy="9" r="6" fill="#d4c060"/><circle cx="12" cy="7" r="5" fill="#e8f0fc"/><rect x="6" y="17" width="28" height="11" rx="5.5" fill="#5a7090"/><ellipse cx="17" cy="17" rx="8" ry="6.5" fill="#6a8090"/><ellipse cx="26" cy="18" rx="7" ry="5.5" fill="#7a90a0"/><g stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round"><line x1="20" y1="30" x2="18" y2="36"/></g></svg>',
- nightsnow: '<svg viewBox="0 0 40 40" fill="none"><circle cx="9" cy="9" r="6" fill="#d4c060"/><circle cx="12" cy="7" r="5" fill="#e8f0fc"/><rect x="6" y="17" width="28" height="11" rx="5.5" fill="#7090b0"/><ellipse cx="17" cy="17" rx="8" ry="6.5" fill="#80a0c0"/><ellipse cx="26" cy="18" rx="7" ry="5.5" fill="#90b0d0"/><g stroke="#60a0d0" stroke-width="2" stroke-linecap="round"><line x1="13" y1="31" x2="13" y2="38"/><line x1="10" y1="33.5" x2="16" y2="35.5"/><line x1="10" y1="35.5" x2="16" y2="33.5"/><line x1="22" y1="31" x2="22" y2="38"/><line x1="19" y1="33.5" x2="25" y2="35.5"/><line x1="19" y1="35.5" x2="25" y2="33.5"/></g></svg>'
+ nightsnow: '<svg viewBox="0 0 40 40" fill="none"><circle cx="9" cy="9" r="6" fill="#d4c060"/><circle cx="12" cy="7" r="5" fill="#e8f0fc"/><rect x="6" y="17" width="28" height="11" rx="5.5" fill="#7090b0"/><ellipse cx="17" cy="17" rx="8" ry="6.5" fill="#80a0c0"/><ellipse cx="26" cy="18" rx="7" ry="5.5" fill="#90b0d0"/><g stroke="#60a0d0" stroke-width="2" stroke-linecap="round"><line x1="13" y1="31" x2="13" y2="38"/><line x1="10" y1="33.5" x2="16" y2="35.5"/><line x1="10" y1="35.5" x2="16" y2="33.5"/><line x1="22" y1="31" x2="22" y2="38"/><line x1="19" y1="33.5" x2="25" y2="35.5"/><line x1="19" y1="35.5" x2="25" y2="33.5"/></g></svg>',
+ hot: '<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="17" r="8" fill="#ef4444"/><g stroke="#ef4444" stroke-width="2.2" stroke-linecap="round"><line x1="20" y1="3" x2="20" y2="7"/><line x1="20" y1="27" x2="20" y2="31"/><line x1="6" y1="17" x2="10" y2="17"/><line x1="30" y1="17" x2="34" y2="17"/><line x1="9.5" y1="8.5" x2="12.5" y2="11.5"/><line x1="27.5" y1="22.5" x2="30.5" y2="25.5"/><line x1="30.5" y1="8.5" x2="27.5" y2="11.5"/><line x1="12.5" y1="22.5" x2="9.5" y2="25.5"/></g><path d="M8 33 Q11 30 14 33 Q17 36 20 33 Q23 30 26 33 Q29 36 32 33" stroke="#f97316" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M8 37 Q11 34 14 37 Q17 40 20 37 Q23 34 26 37 Q29 40 32 37" stroke="#f97316" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".6"/></svg>',
+ snowlight: '<svg viewBox="0 0 40 40" fill="none"><rect x="6" y="10" width="28" height="11" rx="5.5" fill="#b8d4e8"/><ellipse cx="16" cy="10" rx="8" ry="6.5" fill="#c8e4f8"/><ellipse cx="25" cy="11" rx="7" ry="5.5" fill="#d8eeff"/><g stroke="#7ab0d4" stroke-width="1.8" stroke-linecap="round"><line x1="13" y1="25" x2="13" y2="30"/><line x1="11" y1="26.5" x2="15" y2="28.5"/><line x1="11" y1="28.5" x2="15" y2="26.5"/><line x1="22" y1="27" x2="22" y2="32"/><line x1="20" y1="28.5" x2="24" y2="30.5"/><line x1="20" y1="30.5" x2="24" y2="28.5"/></g></svg>'
 };
 
 /* QUICK FILL */
@@ -346,6 +348,9 @@ function getIcon(h, temp, sol, rain, mm, snow, p25) {
  var night = sol < 15;
  var tropical = temp >= 25;
  var isSnowing = snow > 0.1 || (p25 != null && p25 <= 2 && mm > 0.1);
+ // Cas extremes temperature — priorite absolue
+ if (temp >= 36 && rain < 20) return IC.hot;
+ if (temp <= 4 && temp > 0 && rain > 20) return IC.snowlight;
  if (night) {
  if (rain > 75 || mm > 10) return IC.storm;
  if (isSnowing && rain > 15) return IC.nightsnow;
@@ -383,6 +388,9 @@ function getLabel(h, temp, sol, rain, mm, snow, p25) {
  var night = sol < 15;
  var tropical = temp >= 25;
  var isSnowing = snow > 0.1 || (p25 <= 2 && mm > 0.1);
+ // Cas extremes temperature — priorite absolue
+ if (temp >= 36 && rain < 20) return T.hotWave;
+ if (temp <= 4 && temp > 0 && rain > 20) return T.lightSnow;
  if (night) {
  if (rain > 75 || mm > 10) return T.storm;
  if (isSnowing && rain > 15) return T.snow;
