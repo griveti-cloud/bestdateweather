@@ -843,7 +843,15 @@ function applySeasonalCorrection(rows, seas) {
  if(seas.rainProb!==null){var anomalyRain=seas.rainProb-histRainAvg;newRain=Math.min(100,Math.max(0,Math.round(ro.rain+anomalyRain*0.25)));}
  var newWind=ro.windP50;
  if(seas.windMean!==null&&ro.windP50!=null){var wDelta=Math.min(5,Math.max(-5,(seas.windMean-histWindAvg)*0.35));newWind=Math.max(0,parseFloat((ro.windP50+wDelta).toFixed(1)));}
- out.push(cloneRow(ro,{p50:newP50!=null?parseFloat(newP50.toFixed(1)):null,p25:newP50!=null?parseFloat((newP50-sp25*ratio).toFixed(1)):null,p75:newP50!=null?parseFloat((newP50+sp75*ratio).toFixed(1)):null,temp:newP50!=null?parseFloat(newP50.toFixed(1)):null,sol:ro.solP50||0,rain:newRain,windP50:newWind}));
+ // Corriger sol inversement à l'anomalie pluie (plus de pluie = moins de soleil)
+ var newSol=ro.solP50||0;
+ if(seas.rainProb!==null&&histRainAvg>0){
+  var rainAnomaly=seas.rainProb-histRainAvg; // ex: +41%
+  // Facteur de réduction du soleil : -1% sol pour chaque +2% pluie (plafonné à ±40%)
+  var solFactor=Math.max(0.4,Math.min(1.6,1-(rainAnomaly/100)*0.5));
+  newSol=Math.max(0,Math.round(newSol*solFactor));
+ }
+ out.push(cloneRow(ro,{p50:newP50!=null?parseFloat(newP50.toFixed(1)):null,p25:newP50!=null?parseFloat((newP50-sp25*ratio).toFixed(1)):null,p75:newP50!=null?parseFloat((newP50+sp75*ratio).toFixed(1)):null,temp:newP50!=null?parseFloat(newP50.toFixed(1)):null,sol:newSol,rain:newRain,windP50:newWind}));
  }
  return out;
 }
