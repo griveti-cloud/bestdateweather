@@ -338,14 +338,16 @@ function renderHistoricalChart(data){
 function fillUseCase(type) { currentUseCase = type; document.getElementById("score-block").style.display = "block"; quickFill(type); }
 
 function getIcon(h, temp, sol, rain, mm, snow, p25) {
- // rain (probabilite %) = driver principal | sol = driver secondaire (beau temps) | mm = seuils forts seulement
+ // rain% = driver principal | sol = driver secondaire | mm = seuils forts uniquement
+ // Tropicaux (temp>=25) : averses convectives breves != pluie continue -> seuils assouplis
  mm = mm || 0;
  snow = snow || 0;
  p25 = p25 != null ? p25 : temp;
  var night = sol < 15;
+ var tropical = temp >= 25;
  var isSnowing = snow > 0.1 || (p25 != null && p25 <= 2 && mm > 0.1);
  if (night) {
- if (rain > 75 || mm > 7) return IC.storm;
+ if (rain > 75 || mm > 10) return IC.storm;
  if (isSnowing && rain > 15) return IC.nightsnow;
  if (temp <= 0 && rain > 20) return IC.nightsnow;
  if (rain > 45 && mm >= 1) return IC.nightrain;
@@ -353,10 +355,15 @@ function getIcon(h, temp, sol, rain, mm, snow, p25) {
  if (sol < 5) return IC.moon;
  return IC.nightcloud;
  }
- if (rain > 75 || mm > 7) return IC.storm;
+ if (rain > 75 || mm > 10) return IC.storm;
  if (isSnowing && rain > 15) return IC.snow;
  if (temp <= 0 && rain > 20) return IC.snow;
  if (rain > 60 && mm >= 1.5) return IC.heavyrain;
+ if (rain > 60) return IC.rain;
+ // Tropicaux : averses convectives breves != pluie continue
+ if (tropical && rain > 45 && sol >= 350) return IC.shower;
+ if (tropical && rain > 28 && sol >= 500) return IC.partcloud;
+ if (tropical && rain <= 25 && sol >= 500) return IC.sun;
  if (rain > 45) return IC.rain;
  if (rain > 28 && sol >= 250) return IC.shower;
  if (rain > 28) return IC.lightrain;
@@ -374,9 +381,10 @@ function getLabel(h, temp, sol, rain, mm, snow, p25) {
  mm = mm || 0; snow = snow || 0;
  p25 = p25 != null ? p25 : temp;
  var night = sol < 15;
+ var tropical = temp >= 25;
  var isSnowing = snow > 0.1 || (p25 <= 2 && mm > 0.1);
  if (night) {
- if (rain > 75 || mm > 7) return T.storm;
+ if (rain > 75 || mm > 10) return T.storm;
  if (isSnowing && rain > 15) return T.snow;
  if (temp <= 0 && rain > 20) return T.snow;
  if (rain > 45 && mm >= 1) return T.rain;
@@ -384,10 +392,15 @@ function getLabel(h, temp, sol, rain, mm, snow, p25) {
  if (sol < 5) return T.clearNight;
  return T.cloudyNight;
  }
- if (rain > 75 || mm > 7) return T.storm;
+ if (rain > 75 || mm > 10) return T.storm;
  if (isSnowing && rain > 15) return T.snow;
  if (temp <= 0 && rain > 20) return T.snow;
  if (rain > 60 && mm >= 1.5) return T.heavyRain;
+ if (rain > 60) return T.rain;
+ // Tropicaux : averses convectives breves != pluie continue -> seuils assouplis
+ if (tropical && rain > 45 && sol >= 350) return T.showers;
+ if (tropical && rain > 28 && sol >= 500) return T.partlyCloudy;
+ if (tropical && rain <= 25 && sol >= 500) return T.sunny; // Bali sec : ensoleille
  if (rain > 45) return T.rain;
  if (rain > 28 && sol >= 250) return T.showers;
  if (rain > 28) return T.lightRain;
