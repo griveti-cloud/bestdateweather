@@ -274,7 +274,7 @@
         tMax: v,
         feels: t.apparent_temperature,
         wind: t.wind_speed_10m,
-        icon: r(t.weather_code),
+        icon: r(t.weather_code, l < 7 || l >= 21),
         desc: i.weatherDesc[t.weather_code] || i.weatherDesc[0],
         humidity: Math.round(t.relative_humidity_2m || 0),
         uv: Math.round(t.uv_index || 0),
