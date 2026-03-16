@@ -558,20 +558,20 @@
   ],
   "annual_faq_standard": [
     {
-      "q": "¿Cuándo es la mejor época para visitar {nom}?",
-      "a": "{best_month} es ideal con {best_rain}% de días de lluvia y {best_tmax}°C. {bests_suffix}"
+      "q": "¿Cuál es la mejor época para visitar {nom}?",
+      "a": "{best_month} es el mejor mes con {best_tmax}{temp_unit} de máxima, {best_tmin}{temp_unit} de mínima, {best_sun}h de sol y {best_rain}% de días lluviosos. {bests_suffix}"
+    },
+    {
+      "q": "¿Cuántas horas de sol tiene {nom} en {best_month_lc}?",
+      "a": "{nom} tiene una media de {best_sun}h de sol al día en {best_month_lc}. Es el mes más soleado con una puntuación climática de {best_score}/10."
     },
     {
       "q": "¿Cuál es el mes más lluvioso en {nom}?",
-      "a": "{worst_month} es el mes más lluvioso con {worst_rain}% de días de lluvia."
+      "a": "{worst_month} es el mes más desfavorable con {worst_rain}% de días de lluvia y la puntuación climática más baja del año."
     },
     {
-      "q": "¿Hace calor en {nom} en {best_month}?",
-      "a": "Sí, {best_month} es el mejor mes con una media de {best_tmax}°C."
-    },
-    {
-      "q": "¿Se puede visitar {nom} en invierno?",
-      "a": "En invierno, la puntuación media es {winter_score}/10. {winter_verdict}"
+      "q": "¿Qué temperatura hace por la noche en {nom} en {best_month_lc}?",
+      "a": "En {best_month_lc}, la temperatura mínima nocturna es de {best_tmin}{temp_unit}, con máximas de {best_tmax}{temp_unit} por la tarde."
     }
   ],
   "annual_faq_winter_verdicts": {
@@ -1238,5 +1238,6 @@
     "ski_shoulder": "Temporada intermedia {nom_f}: nieve variable según la altitud. Las pistas bajas pueden tener poca nieve con {tmax}°C en el valle.",
     "ski_poor": "Condiciones de esquí difíciles {nom_f} este mes ({tmax}°C en el valle). La nieve es poco fiable, con cierres parciales o fin de temporada.",
     "ski_offseason": "Fuera de temporada de esquí {nom_f} — los telesillas están cerrados. Ideal para senderismo, BTT o actividades estivales de montaña."
-  }
+  },
+  "temp_unit": "°C"
 }

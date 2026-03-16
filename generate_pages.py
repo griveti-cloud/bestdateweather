@@ -674,9 +674,17 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
             bests_suffix = C['annual_faq_bests_suffix'].format(bests_str=' & '.join(bests[:2]))
         winter_score = seas[winter_key]['score']
         winter_verdict = C['annual_faq_winter_verdicts']['ok'] if winter_score >= 5.5 else C['annual_faq_winter_verdicts']['bad']
+        _best_sun  = round(months[best_idx]['sun_h'], 1)
+        _best_tmin = months[best_idx]['tmin']
+        _best_tmax_v = best_tmax
+        if C.get('imperial'):
+            _best_tmax_v = c_to_f(_best_tmax_v)
+            _best_tmin   = c_to_f(_best_tmin)
+        _temp_unit = C.get('temp_unit', '°C')
         faq_vars = dict(prep=prep, nom_bare=nom_bare, nom=nom,
                         best_month=MONTHS[best_idx], best_month_lc=month_lc(C, MONTHS[best_idx]),
-                        best_score=best_score, best_rain=best_rain, best_tmax=best_tmax,
+                        best_score=best_score, best_rain=best_rain, best_tmax=_best_tmax_v,
+                        best_tmin=_best_tmin, best_sun=_best_sun, temp_unit=_temp_unit,
                         worst_month=MONTHS[worst_idx], worst_rain=worst_rain,
                         bests_suffix=bests_suffix,
                         winter_score=winter_score, winter_verdict=winter_verdict)

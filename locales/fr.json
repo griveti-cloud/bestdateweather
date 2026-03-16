@@ -559,19 +559,19 @@
   "annual_faq_standard": [
     {
       "q": "Quelle est la meilleure période pour partir {prep} {nom_bare} ?",
-      "a": "{best_month} est idéal avec {best_rain}% de jours pluvieux et {best_tmax}°C. {bests_suffix}"
+      "a": "{best_month} est le meilleur mois avec {best_tmax}{temp_unit} le jour, {best_tmin}{temp_unit} la nuit, {best_sun}h de soleil et {best_rain}% de jours pluvieux. {bests_suffix}"
+    },
+    {
+      "q": "Combien d'heures de soleil {prep} {nom_bare} en {best_month_lc} ?",
+      "a": "En {best_month_lc}, on compte en moyenne {best_sun}h de soleil par jour. C'est le mois le plus ensoleillé avec un score climatique de {best_score}/10."
     },
     {
       "q": "Quel est le mois le plus pluvieux {prep} {nom_bare} ?",
-      "a": "{worst_month} est le mois le plus pluvieux avec {worst_rain}% de jours de pluie."
+      "a": "{worst_month} est le mois le plus défavorable avec {worst_rain}% de jours de pluie. Le score climatique est alors le plus bas de l'année."
     },
     {
-      "q": "Fait-il chaud {prep} {nom_bare} en {best_month_lc} ?",
-      "a": "Oui, {best_month_lc} est le meilleur mois avec {best_tmax}°C en moyenne."
-    },
-    {
-      "q": "Peut-on partir {prep} {nom_bare} en hiver ?",
-      "a": "En hiver, le score moyen est {winter_score}/10. {winter_verdict}"
+      "q": "Quelle est la température la nuit {prep} {nom_bare} en {best_month_lc} ?",
+      "a": "En {best_month_lc}, la température minimale est de {best_tmin}{temp_unit} la nuit, pour {best_tmax}{temp_unit} l'après-midi."
     }
   ],
   "annual_faq_winter_verdicts": {
@@ -1217,5 +1217,6 @@
     "ski_shoulder": "Période de mi-saison {nom_f} : enneigement variable selon l'altitude. Les pistes de bas de domaine peuvent manquer de neige avec {tmax}°C en vallée.",
     "ski_poor": "Conditions ski difficiles {nom_f} ce mois-ci ({tmax}°C en vallée). L'enneigement est aléatoire, les domaines partiellement fermés ou en fin de saison.",
     "ski_offseason": "Hors-saison ski {nom_f} — les remontées mécaniques sont fermées. À privilegier pour la randonnée, le VTT ou les activités estivales en altitude."
-  }
+  },
+  "temp_unit": "°C"
 }

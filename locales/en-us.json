@@ -559,20 +559,20 @@
   ],
   "annual_faq_standard": [
     {
-      "q": "When is the best time to visit {nom}?",
-      "a": "{best_month} is ideal with {best_rain}% rainy days and {best_tmax}°F. {bests_suffix}"
+      "q": "What is the best time to visit {nom}?",
+      "a": "{best_month} is the best month with {best_tmax}{temp_unit} highs, {best_tmin}{temp_unit} lows, {best_sun}h of sunshine and {best_rain}% rainy days. {bests_suffix}"
     },
     {
-      "q": "What is the wettest month in {nom}?",
-      "a": "{worst_month} is the wettest month with {worst_rain}% rainy days."
+      "q": "How many hours of sunshine does {nom} get in {best_month_lc}?",
+      "a": "{nom} averages {best_sun} sunshine hours per day in {best_month_lc}. It is the sunniest month with a climate score of {best_score}/10."
     },
     {
-      "q": "Is it hot in {nom} in {best_month}?",
-      "a": "Yes, {best_month} is the best month with an average of {best_tmax}°F."
+      "q": "What is the rainiest month in {nom}?",
+      "a": "{worst_month} is the most unfavourable month with {worst_rain}% rainy days and the lowest climate score of the year."
     },
     {
-      "q": "Can you visit {nom} in winter?",
-      "a": "In winter, the average score is {winter_score}/10. {winter_verdict}"
+      "q": "What are the temperatures at night in {nom} in {best_month_lc}?",
+      "a": "In {best_month_lc}, overnight lows reach {best_tmin}{temp_unit}, while afternoon highs average {best_tmax}{temp_unit}."
     }
   ],
   "annual_faq_winter_verdicts": {
@@ -1218,5 +1218,6 @@
     "ski_shoulder": "Shoulder ski season {nom_f}: variable snow depending on altitude. Lower runs may be thin with {tmax}°C in the valley.",
     "ski_poor": "Challenging ski conditions {nom_f} this month ({tmax}°C in the valley). Snow cover is unreliable, with partial closures or late-season conditions.",
     "ski_offseason": "Off-season for skiing {nom_f} — lifts are closed. Consider hiking, mountain biking or summer activities at altitude."
-  }
+  },
+  "temp_unit": "°F"
 }

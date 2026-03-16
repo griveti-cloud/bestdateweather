@@ -70,6 +70,7 @@ def build_config(lang):
         'html_lang': loc['meta']['html_lang'],
         'is_fr': is_fr,  # kept for grammar-dependent logic
         'imperial': loc['meta'].get('imperial', False),  # True pour en-us
+        'temp_unit': loc.get('temp_unit', '°C'),
         'cross_lang': cross_lang,
 
         # Months

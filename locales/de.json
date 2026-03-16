@@ -558,20 +558,20 @@
   ],
   "annual_faq_standard": [
     {
-      "q": "Wann ist die beste Reisezeit für {nom}?",
-      "a": "Der {best_month} ist ideal mit {best_rain}% Regentagen und {best_tmax}°C. {bests_suffix}"
+      "q": "Was ist die beste Reisezeit für {nom}?",
+      "a": "{best_month} ist der beste Monat mit {best_tmax}{temp_unit} tagsüber, {best_tmin}{temp_unit} nachts, {best_sun}h Sonnenschein und {best_rain}% Regentagen. {bests_suffix}"
+    },
+    {
+      "q": "Wie viele Sonnenstunden hat {nom} im {best_month_lc}?",
+      "a": "Im {best_month_lc} scheint die Sonne in {nom} durchschnittlich {best_sun}h pro Tag. Der Klimascore liegt bei {best_score}/10."
     },
     {
       "q": "Was ist der regenreichste Monat in {nom}?",
-      "a": "Der {worst_month} ist der regenreichste Monat mit {worst_rain}% Regentagen."
+      "a": "{worst_month} ist der ungünstigste Monat mit {worst_rain}% Regentagen und dem niedrigsten Klimascore des Jahres."
     },
     {
-      "q": "Ist es in {nom} im {best_month} warm?",
-      "a": "Ja, der {best_month} ist der beste Monat mit durchschnittlich {best_tmax}°C."
-    },
-    {
-      "q": "Kann man {nom} im Winter besuchen?",
-      "a": "Im Winter liegt der Durchschnittsscore bei {winter_score}/10. {winter_verdict}"
+      "q": "Wie kalt ist es nachts in {nom} im {best_month_lc}?",
+      "a": "Im {best_month_lc} liegt die Tiefsttemperatur bei {best_tmin}{temp_unit} nachts, bei {best_tmax}{temp_unit} am Nachmittag."
     }
   ],
   "annual_faq_winter_verdicts": {
@@ -1229,5 +1229,6 @@
     "ski_shoulder": "Nebensaison Ski {nom_f}: je nach Höhenlage unterschiedliche Schneebedingungen. Untere Pisten können bei {tmax}°C im Tal Schneemangel aufweisen.",
     "ski_poor": "Schwierige Skibedingungen {nom_f} diesen Monat ({tmax}°C im Tal). Schneelage unzuverlässig, teilweise Schließungen oder Saisonende.",
     "ski_offseason": "Ski-Nebensaison {nom_f} — Lifte geschlossen. Empfehlenswert für Wandern, Mountainbike oder sommerliche Aktivitäten in der Höhe."
-  }
+  },
+  "temp_unit": "°C"
 }
