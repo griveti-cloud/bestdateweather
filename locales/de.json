@@ -299,7 +299,12 @@
     "plan_bar": "Reise planen",
     "plan_hotel": "🏨 Unterkunft",
     "plan_activ": "🎟️ Aktivitäten",
-    "plan_flight": "✈️ Flüge"
+    "plan_flight": "✈️ Flüge",
+    "hist_tmax": "Tmax",
+    "hist_tmean": "Mittel",
+    "hist_tmin": "Tmin",
+    "hist_title": "Historische Temperaturen",
+    "hist_hint": "10-Jahres-Trend"
   },
   "monthly": {
     "hero_tpl": "{name} Wetter im {month}",
@@ -1234,15 +1239,5 @@
     "ski_poor": "Schwierige Skibedingungen {nom_f} diesen Monat ({tmax}°C im Tal). Schneelage unzuverlässig, teilweise Schließungen oder Saisonende.",
     "ski_offseason": "Ski-Nebensaison {nom_f} — Lifte geschlossen. Empfehlenswert für Wandern, Mountainbike oder sommerliche Aktivitäten in der Höhe."
   },
-  "temp_unit": "°C",
-  "hist_tmax": "Tmax",
-  "hist_tmean": "Mittel",
-  "hist_tmin": "Tmin",
-  "hist_title": "Historische Temperaturen",
-  "hist_hint": "10-Jahres-Trend",
-  "lbl_plan_bar": "Reise planen",
-  "lbl_plan_hotel": "🏨 Unterkunft",
-  "lbl_plan_activ": "🎟️ Aktivitäten",
-  "lbl_plan_flight": "✈️ Flüge",
-  "lbl_booking_btn": "Auf Expedia suchen"
+  "temp_unit": "°C"
 }

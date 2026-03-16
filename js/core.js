@@ -51,8 +51,8 @@ function setUnits(sys) {
  if (m) m.classList.toggle('active', sys === 'metric');
  if (u) u.classList.toggle('active', sys === 'us');
  if (window._lastRows && window._lastSc) {
-  computeAndRenderScore(window._lastSc, window._lastRows);
-  updateHero(window._lastSc, window._lastRows);
+  var _metrics = computeAndRenderScore(window._lastSc, window._lastRows);
+  updateHero(window._lastSc, window._lastRows, null, _metrics);
  }
  // Refresh weather banner units
  if (typeof window.wbRefreshUnits === 'function') window.wbRefreshUnits();
@@ -824,6 +824,12 @@ function fetchSeasonal(lat, lon, yr, mo, da) {
  }).catch(function(){return null;});
 }
 
+// applySeasonalCorrection — Variables corrigées :
+//   temp (p25/p50/p75) : offset = seas.tMean - histMean
+//   rain              : anomalie seas.rainProb vs histRainAvg (factor 0.25)
+//   wind              : delta seas.windMean vs histWindAvg (capped ±5, factor 0.35)
+//   sol               : inverse de l'anomalie pluie (factor 0.5, capped 0.4–1.6×)
+// Toute nouvelle variable corrélée doit être ajoutée ici.
 function applySeasonalCorrection(rows, seas) {
  if(!seas) return rows;
  var histSum=0,histCnt=0,histRainSum=0,histWindSum=0,histSpreadSum=0,spreadCnt=0;
@@ -1449,6 +1455,8 @@ function computeAndRenderScore(sc, rows) {
  }
  // Ré-injecter le chip SST s'il a déjà été récupéré
  if (window._lastSSTResult) renderSeaChip(window._lastSSTResult);
+ // Retourner les métriques clés pour les appelants (évite les dépendances window._*)
+ return {avgWindDir: avgWindDir, avgWind: avgWind, avgTemp: avgTemp, avgRain: avgRain};
 }
 
 function wmoToLabel(code) {
@@ -1482,7 +1490,7 @@ function wmoToIcon(code, sol) {
  if (code >= 95) return IC.storm;
  return null;
 }
-function updateHero(sc, rows, mainHour) {
+function updateHero(sc, rows, mainHour, _scoreMetrics) {
  var main=sc[mainHour!=null?mainHour:(13)]||sc[12];
  var temps=[]; for(var i=0;i<sc.length;i++) if(sc[i].temp!=null) temps.push(sc[i].temp);
  var tmin=temps.length?Math.min.apply(null,temps):'-', tmax=temps.length?Math.max.apply(null,temps):'-';
@@ -1513,10 +1521,15 @@ function updateHero(sc, rows, mainHour) {
  document.getElementById('r-icon').innerHTML=(main.isForecast && main.wmo != null && wmoToIcon(main.wmo,main.sol)) ? wmoToIcon(main.wmo,main.sol) : getIcon(main.h,main.temp,main.sol,main.rain,main.mm||0,main.snow||0,main.p25);
  document.getElementById('r-rain').textContent=avgRain+'%';
  var _windAvg=Math.round(wSum/rows.length);
- // Compute circular mean of wind direction from all rows
- var _sinHW=0,_cosHW=0,_cntHW=0;
- for(var _hwi=0;_hwi<rows.length;_hwi++){if(rows[_hwi].windDir!=null){var _hwr=rows[_hwi].windDir*Math.PI/180;_sinHW+=Math.sin(_hwr);_cosHW+=Math.cos(_hwr);_cntHW++;}}
- var _heroDir=_cntHW>0?(((Math.atan2(_sinHW/_cntHW,_cosHW/_cntHW)*180/Math.PI)+360)%360):null;
+ // Wind direction: use passed metrics if available, otherwise compute locally
+ var _heroDir;
+ if (_scoreMetrics && _scoreMetrics.avgWindDir != null) {
+  _heroDir = _scoreMetrics.avgWindDir;
+ } else {
+  var _sinHW=0,_cosHW=0,_cntHW=0;
+  for(var _hwi=0;_hwi<rows.length;_hwi++){if(rows[_hwi].windDir!=null){var _hwr=rows[_hwi].windDir*Math.PI/180;_sinHW+=Math.sin(_hwr);_cosHW+=Math.cos(_hwr);_cntHW++;}}
+  _heroDir=_cntHW>0?(((Math.atan2(_sinHW/_cntHW,_cosHW/_cntHW)*180/Math.PI)+360)%360):null;
+ }
  var _wdirStr=_heroDir!=null?' '+fmtWindDir(_heroDir):'';
  var _windArrow=_heroDir!=null?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin:0 2px;transform:rotate('+(_heroDir+180)+'deg);transition:transform .3s"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>':'';
  document.getElementById('r-wind').innerHTML=fmtWind(_windAvg)+(_windArrow?_windArrow+_wdirStr:_wdirStr);

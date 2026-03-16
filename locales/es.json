@@ -299,7 +299,12 @@
     "plan_bar": "Planifica tu viaje",
     "plan_hotel": "🏨 Alojamiento",
     "plan_activ": "🎟️ Actividades",
-    "plan_flight": "✈️ Vuelos"
+    "plan_flight": "✈️ Vuelos",
+    "hist_tmax": "Tmax",
+    "hist_tmean": "Media",
+    "hist_tmin": "Tmin",
+    "hist_title": "Temperaturas históricas",
+    "hist_hint": "Tendencia 10 años"
   },
   "monthly": {
     "hero_tpl": "Tiempo en {name} en {month}",
@@ -1243,15 +1248,5 @@
     "ski_poor": "Condiciones de esquí difíciles {nom_f} este mes ({tmax}°C en el valle). La nieve es poco fiable, con cierres parciales o fin de temporada.",
     "ski_offseason": "Fuera de temporada de esquí {nom_f} — los telesillas están cerrados. Ideal para senderismo, BTT o actividades estivales de montaña."
   },
-  "temp_unit": "°C",
-  "hist_tmax": "Tmax",
-  "hist_tmean": "Media",
-  "hist_tmin": "Tmin",
-  "hist_title": "Temperaturas históricas",
-  "hist_hint": "Tendencia 10 años",
-  "lbl_plan_bar": "Planifica tu viaje",
-  "lbl_plan_hotel": "🏨 Alojamiento",
-  "lbl_plan_activ": "🎟️ Actividades",
-  "lbl_plan_flight": "✈️ Vuelos",
-  "lbl_booking_btn": "Buscar en Expedia"
+  "temp_unit": "°C"
 }

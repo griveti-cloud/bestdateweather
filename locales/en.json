@@ -300,7 +300,12 @@
     "plan_bar": "Plan your trip",
     "plan_hotel": "🏨 Hotels",
     "plan_activ": "🎟️ Activities",
-    "plan_flight": "✈️ Flights"
+    "plan_flight": "✈️ Flights",
+    "hist_tmax": "Tmax",
+    "hist_tmean": "Avg",
+    "hist_tmin": "Tmin",
+    "hist_title": "Historical temperatures",
+    "hist_hint": "10-year trend"
   },
   "monthly": {
     "hero_tpl": "{name} weather in {month}",
@@ -1223,15 +1228,5 @@
     "ski_poor": "Challenging ski conditions {nom_f} this month ({tmax}°C in the valley). Snow cover is unreliable, with partial closures or late-season conditions.",
     "ski_offseason": "Off-season for skiing {nom_f} — lifts are closed. Consider hiking, mountain biking or summer activities at altitude."
   },
-  "temp_unit": "°C",
-  "hist_tmax": "Tmax",
-  "hist_tmean": "Avg",
-  "hist_tmin": "Tmin",
-  "hist_title": "Historical temperatures",
-  "hist_hint": "10-year trend",
-  "lbl_plan_bar": "Plan your trip",
-  "lbl_plan_hotel": "🏨 Hotels",
-  "lbl_plan_activ": "🎟️ Activities",
-  "lbl_plan_flight": "✈️ Flights",
-  "lbl_booking_btn": "Search on Expedia"
+  "temp_unit": "°C"
 }
