@@ -278,7 +278,9 @@ function renderHistoricalChart(data){
  for(var i=0;i<data.length;i++){if(data[i].tmax!=null)allV.push(toD(data[i].tmax));if(data[i].tmin!=null)allV.push(toD(data[i].tmin));}
  var minV=Math.floor(Math.min.apply(null,allV))-2,maxV=Math.ceil(Math.max.apply(null,allV))+2;
  var range=maxV-minV||1;
- var W=320,H=140,PL=30,PR=8,PT=10,PB=22,w=W-PL-PR,h=H-PT-PB,n=data.length;
+ // Extra bottom padding: emoji row (16px) + staggered year rows (14px each)
+ var W=320,H=178,PL=30,PR=8,PT=10,PB=52,w=W-PL-PR,h=H-PT-PB,n=data.length;
+ var yChart=PT+h; // y baseline of chart area
  function xP(i){return PL+(i/(n-1))*w;}
  function yP(v){return v==null?null:PT+h-((toD(v)-minV)/range)*h;}
  function mkPath(key){
@@ -292,11 +294,22 @@ function renderHistoricalChart(data){
   grid+='<line x1="'+PL+'" y1="'+gy+'" x2="'+(W-PR)+'" y2="'+gy+'" stroke="#ede8e0" stroke-width="1"/>';
   grid+='<text x="'+(PL-3)+'" y="'+(gy+4)+'" text-anchor="end" font-size="9" fill="#aaa">'+Math.round(gv)+'</text>';
  }
- var xlbl='';
+ // Tick lines from chart bottom to emoji row
+ var ticks='';
+ for(var t=0;t<data.length;t++){
+  ticks+='<line x1="'+xP(t)+'" y1="'+yChart+'" x2="'+xP(t)+'" y2="'+(yChart+4)+'" stroke="#ddd" stroke-width="1"/>';
+ }
+ // Emojis row — all points, inside SVG at y = yChart+16
+ var emojis='';
+ for(var e2=0;e2<data.length;e2++){
+  var em=histWeatherEmoji(data[e2].wc);
+  emojis+='<text x="'+xP(e2)+'" y="'+(yChart+16)+'" text-anchor="middle" font-size="13">'+em+'</text>';
+ }
+ // Year labels — staggered: even index higher (row A), odd index lower (row B)
+ var ylbls='';
  for(var j=0;j<data.length;j++){
-  if(j%2===0||j===data.length-1){
-   xlbl+='<text x="'+xP(j)+'" y="'+(H-5)+'" text-anchor="middle" font-size="9" fill="#aaa">'+data[j].year+'</text>';
-  }
+  var yy=j%2===0?(yChart+32):(yChart+44);
+  ylbls+='<text x="'+xP(j)+'" y="'+yy+'" text-anchor="middle" font-size="9" fill="#888">'+data[j].year+'</text>';
  }
  var dots='';
  for(var k=0;k<data.length;k++){
@@ -304,24 +317,18 @@ function renderHistoricalChart(data){
   if(dy!=null)dots+='<circle cx="'+xP(k)+'" cy="'+dy+'" r="2.5" fill="#e07040"/>';
  }
  var svg='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;display:block">'+
-  grid+xlbl+
+  grid+ticks+
   '<path d="'+mkPath('tmin')+'" fill="none" stroke="#6ea8d9" stroke-width="1.5" stroke-linejoin="round"/>'+
   '<path d="'+mkPath('tmean')+'" fill="none" stroke="#b0a080" stroke-width="1.5" stroke-dasharray="4 2" stroke-linejoin="round"/>'+
   '<path d="'+mkPath('tmax')+'" fill="none" stroke="#e07040" stroke-width="2" stroke-linejoin="round"/>'+
-  dots+'</svg>';
- // Ligne emojis alignée sous chaque point du graphique
- var emojiRow='<div style="display:flex;padding:0 '+PR+'px 0 '+PL+'px;margin-top:-2px">';
- for(var e2=0;e2<data.length;e2++){
-  var flex=e2===0?'0 0 0px':'1';
-  emojiRow+='<div style="flex:'+flex+';text-align:center;font-size:14px;line-height:1" title="'+data[e2].year+'">'+histWeatherEmoji(data[e2].wc)+'</div>';
- }
- emojiRow+='</div>';
- var leg='<div style="display:flex;gap:14px;margin-top:6px;font-size:11px;color:#888;flex-wrap:wrap">'+
+  dots+emojis+ylbls+
+  '</svg>';
+ var leg='<div style="display:flex;gap:14px;margin-top:4px;font-size:11px;color:#888;flex-wrap:wrap">'+
   '<span><span style="display:inline-block;width:12px;height:2px;background:#e07040;vertical-align:middle;margin-right:3px;border-radius:1px"></span>'+(T.hist_tmax||'Tmax')+'</span>'+
   '<span><span style="display:inline-block;width:12px;height:2px;background:#b0a080;vertical-align:middle;margin-right:3px;border-radius:1px;border-top:2px dashed #b0a080"></span>'+(T.hist_tmean||'Avg')+'</span>'+
   '<span><span style="display:inline-block;width:12px;height:2px;background:#6ea8d9;vertical-align:middle;margin-right:3px;border-radius:1px"></span>'+(T.hist_tmin||'Tmin')+'</span>'+
   '</div>';
- ct.innerHTML=svg+emojiRow+leg;
+ ct.innerHTML=svg+leg;
  el.style.display='block';
 }
 
