@@ -50,6 +50,331 @@
   ],
   "redirects": [
     {
+      "source": "/meilleure-periode-cartagena.html",
+      "destination": "/cartagena-col-meteo-janvier.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagena-meteo-janvier.html",
+      "destination": "/cartagena-col-meteo-janvier.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagena-meteo-fevrier.html",
+      "destination": "/cartagena-col-meteo-fevrier.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagena-meteo-mars.html",
+      "destination": "/cartagena-col-meteo-mars.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagena-meteo-avril.html",
+      "destination": "/cartagena-col-meteo-avril.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagena-meteo-mai.html",
+      "destination": "/cartagena-col-meteo-mai.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagena-meteo-juin.html",
+      "destination": "/cartagena-col-meteo-juin.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagena-meteo-juillet.html",
+      "destination": "/cartagena-col-meteo-juillet.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagena-meteo-aout.html",
+      "destination": "/cartagena-col-meteo-aout.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagena-meteo-septembre.html",
+      "destination": "/cartagena-col-meteo-septembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagena-meteo-octobre.html",
+      "destination": "/cartagena-col-meteo-octobre.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagena-meteo-novembre.html",
+      "destination": "/cartagena-col-meteo-novembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/cartagena-meteo-decembre.html",
+      "destination": "/cartagena-col-meteo-decembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-cartagena.html",
+      "destination": "/en/best-time-to-visit-cartagena-col.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagena-weather-january.html",
+      "destination": "/en/cartagena-col-weather-january.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagena-weather-february.html",
+      "destination": "/en/cartagena-col-weather-february.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagena-weather-march.html",
+      "destination": "/en/cartagena-col-weather-march.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagena-weather-april.html",
+      "destination": "/en/cartagena-col-weather-april.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagena-weather-may.html",
+      "destination": "/en/cartagena-col-weather-may.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagena-weather-june.html",
+      "destination": "/en/cartagena-col-weather-june.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagena-weather-july.html",
+      "destination": "/en/cartagena-col-weather-july.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagena-weather-august.html",
+      "destination": "/en/cartagena-col-weather-august.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagena-weather-september.html",
+      "destination": "/en/cartagena-col-weather-september.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagena-weather-october.html",
+      "destination": "/en/cartagena-col-weather-october.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagena-weather-november.html",
+      "destination": "/en/cartagena-col-weather-november.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cartagena-weather-december.html",
+      "destination": "/en/cartagena-col-weather-december.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/best-time-to-visit-cartagena.html",
+      "destination": "/us/best-time-to-visit-cartagena-col.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/cartagena-weather-january.html",
+      "destination": "/us/cartagena-col-weather-january.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/cartagena-weather-february.html",
+      "destination": "/us/cartagena-col-weather-february.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/cartagena-weather-march.html",
+      "destination": "/us/cartagena-col-weather-march.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/cartagena-weather-april.html",
+      "destination": "/us/cartagena-col-weather-april.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/cartagena-weather-may.html",
+      "destination": "/us/cartagena-col-weather-may.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/cartagena-weather-june.html",
+      "destination": "/us/cartagena-col-weather-june.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/cartagena-weather-july.html",
+      "destination": "/us/cartagena-col-weather-july.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/cartagena-weather-august.html",
+      "destination": "/us/cartagena-col-weather-august.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/cartagena-weather-september.html",
+      "destination": "/us/cartagena-col-weather-september.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/cartagena-weather-october.html",
+      "destination": "/us/cartagena-col-weather-october.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/cartagena-weather-november.html",
+      "destination": "/us/cartagena-col-weather-november.html",
+      "permanent": true
+    },
+    {
+      "source": "/us/cartagena-weather-december.html",
+      "destination": "/us/cartagena-col-weather-december.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/mejor-epoca-cartagena.html",
+      "destination": "/es/mejor-epoca-cartagena-col.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-clima-enero.html",
+      "destination": "/es/cartagena-col-clima-enero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-clima-febrero.html",
+      "destination": "/es/cartagena-col-clima-febrero.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-clima-marzo.html",
+      "destination": "/es/cartagena-col-clima-marzo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-clima-abril.html",
+      "destination": "/es/cartagena-col-clima-abril.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-clima-mayo.html",
+      "destination": "/es/cartagena-col-clima-mayo.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-clima-junio.html",
+      "destination": "/es/cartagena-col-clima-junio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-clima-julio.html",
+      "destination": "/es/cartagena-col-clima-julio.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-clima-agosto.html",
+      "destination": "/es/cartagena-col-clima-agosto.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-clima-septiembre.html",
+      "destination": "/es/cartagena-col-clima-septiembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-clima-octubre.html",
+      "destination": "/es/cartagena-col-clima-octubre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-clima-noviembre.html",
+      "destination": "/es/cartagena-col-clima-noviembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/es/cartagena-clima-diciembre.html",
+      "destination": "/es/cartagena-col-clima-diciembre.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/beste-reisezeit-cartagena.html",
+      "destination": "/de/beste-reisezeit-cartagena-col.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/cartagena-wetter-januar.html",
+      "destination": "/de/cartagena-col-wetter-januar.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/cartagena-wetter-februar.html",
+      "destination": "/de/cartagena-col-wetter-februar.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/cartagena-wetter-maerz.html",
+      "destination": "/de/cartagena-col-wetter-maerz.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/cartagena-wetter-april.html",
+      "destination": "/de/cartagena-col-wetter-april.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/cartagena-wetter-mai.html",
+      "destination": "/de/cartagena-col-wetter-mai.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/cartagena-wetter-juni.html",
+      "destination": "/de/cartagena-col-wetter-juni.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/cartagena-wetter-juli.html",
+      "destination": "/de/cartagena-col-wetter-juli.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/cartagena-wetter-august.html",
+      "destination": "/de/cartagena-col-wetter-august.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/cartagena-wetter-september.html",
+      "destination": "/de/cartagena-col-wetter-september.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/cartagena-wetter-oktober.html",
+      "destination": "/de/cartagena-col-wetter-oktober.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/cartagena-wetter-november.html",
+      "destination": "/de/cartagena-col-wetter-november.html",
+      "permanent": true
+    },
+    {
+      "source": "/de/cartagena-wetter-dezember.html",
+      "destination": "/de/cartagena-col-wetter-dezember.html",
+      "permanent": true
+    },
+    {
       "source": "/en/best-time-to-visit-bali-in-january.html",
       "destination": "/en/best-time-to-visit-bali.html",
       "permanent": true
