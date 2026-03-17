@@ -50,6 +50,11 @@
   ],
   "redirects": [
     {
+      "source": "https://www.bestdateweather.com/:path*",
+      "destination": "https://bestdateweather.com/:path*",
+      "permanent": true
+    },
+    {
       "source": "/meilleure-periode-(.+)-en-(janvier|fevrier|mars|avril|mai|juin|juillet|aout|septembre|octobre|novembre|decembre)\\.html",
       "destination": "/$1-meteo-$2.html",
       "permanent": true
