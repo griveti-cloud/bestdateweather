@@ -13,7 +13,7 @@ from datetime import date
 YEAR = date.today().year
 TODAY = date.today().strftime('%Y-%m-%d')
 # Set manually when climate data is updated — do NOT use TODAY for schema.org
-DATA_UPDATED = '2026-03-02'
+DATA_UPDATED = '2026-03-17'
 
 _LOCALE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'locales')
 _locale_cache = {}
