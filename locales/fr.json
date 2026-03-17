@@ -532,13 +532,13 @@
   },
   "annual_titles": [
     "Meilleure période {prep} {nom_bare} : {best_month_lc} ({best_tmax}°C) [{year}]",
-    "Quand partir {prep} {nom_bare} ? {best_month_lc} recommandé [{year}]",
-    "{nom_bare} : {best_month_lc} idéal — {best_tmax}°C, {best_rain}% pluie [{year}]"
+    "Meilleure période {prep} {nom_bare} [{year}] — {best_month_lc}, {best_tmax}°C",
+    "Meilleure période {prep} {nom_bare} {year} : {best_month_lc} idéal — {best_tmax}°C"
   ],
   "annual_h1s": [
     "Meilleure période pour partir<br/><em>{prep} {nom_bare}</em>",
-    "Quand partir<br/><em>{prep} {nom_bare}</em> ?",
-    "<em>{nom_bare}</em><br/>quelle saison choisir ?"
+    "Meilleure période<br/><em>{prep} {nom_bare}</em>",
+    "Meilleure période de visite<br/><em>{prep} {nom_bare}</em>"
   ],
   "annual_descs": [
     "Quelle est la meilleure période pour visiter {nom_bare} ? {best_month} offre {best_tmax}°C et {best_rain}% de jours pluvieux. Score météo : {best_score}/10. Données 10 ans Open-Meteo.",

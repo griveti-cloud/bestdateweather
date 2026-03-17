@@ -532,13 +532,13 @@
   },
   "annual_titles": [
     "Mejor Época para {nom}: {best_month} ({best_tmax}°C) [{year}]",
-    "¿Cuándo ir a {nom}? {best_month} recomendado [{year}]",
-    "{nom}: {best_month} ideal — {best_tmax}°C, {best_rain}% lluvia [{year}]"
+    "Mejor Época para Visitar {nom} [{year}] — {best_month}, {best_tmax}°C",
+    "Mejor Época para Visitar {nom} {year}: {best_month} ideal — {best_tmax}°C"
   ],
   "annual_h1s": [
     "Mejor Época para Visitar<br/><em>{nom}</em>",
-    "¿Cuándo Ir a<br/><em>{nom}</em>?",
-    "<em>{nom}</em><br/>¿Qué Temporada Elegir?"
+    "Mejor Época para Visitar<br/><em>{nom}</em>",
+    "Mejor Época para Visitar<br/><em>{nom}</em>"
   ],
   "annual_descs": [
     "¿Cuándo es la mejor época para visitar {nom}? {best_month} ofrece {best_tmax}°C y {best_rain}% de días de lluvia. Puntuación: {best_score}/10. Datos Open-Meteo a 10 años.",

@@ -532,13 +532,13 @@
   },
   "annual_titles": [
     "Beste Reisezeit für {nom}: {best_month} ({best_tmax}°C) [{year}]",
-    "Wann nach {nom} reisen? {best_month} empfohlen [{year}]",
-    "{nom}: {best_month} ideal — {best_tmax}°C, {best_rain}% Regen [{year}]"
+    "Beste Reisezeit für {nom} [{year}] — {best_month}, {best_tmax}°C",
+    "Beste Reisezeit für {nom} {year}: {best_month} ideal — {best_tmax}°C"
   ],
   "annual_h1s": [
     "Beste Reisezeit für<br/><em>{nom}</em>",
-    "Wann nach<br/><em>{nom}</em> reisen?",
-    "<em>{nom}</em><br/>Welche Jahreszeit wählen?"
+    "Beste Reisezeit für<br/><em>{nom}</em>",
+    "Beste Reisezeit für<br/><em>{nom}</em>"
   ],
   "annual_descs": [
     "Wann ist die beste Reisezeit für {nom}? Der {best_month} bietet {best_tmax}°C und {best_rain}% Regentage. Wetter-Score: {best_score}/10. 10 Jahre Open-Meteo-Daten.",

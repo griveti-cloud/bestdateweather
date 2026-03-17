@@ -533,13 +533,13 @@
   },
   "annual_titles": [
     "Best Time to Visit {nom}: {best_month} ({best_tmax}°F) [{year}]",
-    "When to Visit {nom}? {best_month} recommended [{year}]",
-    "{nom}: {best_month} ideal — {best_tmax}°F, {best_rain}% rain [{year}]"
+    "Best Time to Visit {nom} [{year}] — {best_month}, {best_tmax}°F",
+    "Best Time to Visit {nom} {year}: {best_month} ideal — {best_tmax}°F"
   ],
   "annual_h1s": [
     "Best Time to Visit<br/><em>{nom}</em>",
-    "When to Visit<br/><em>{nom}</em>?",
-    "<em>{nom}</em><br/>Which Season to Choose?"
+    "Best Time to Visit<br/><em>{nom}</em> — When to Go",
+    "Best Time to Visit<br/><em>{nom}</em>"
   ],
   "annual_descs": [
     "When is the best time to visit {nom}? {best_month} offers {best_tmax}°F and {best_rain}% rainy days. Weather score: {best_score}/10. 10-year Open-Meteo data.",
