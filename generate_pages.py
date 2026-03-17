@@ -286,9 +286,11 @@ def GTAG_HTML(pfx=''):
 
 def head_css(cfg):
     pfx = cfg['asset_prefix']
+    font_url = "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap"
     return f'''<link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap"/>
+<link rel="preload" as="style" href="{font_url}"/>
+<link rel="stylesheet" href="{font_url}"/>
 <link rel="stylesheet" href="{pfx}style.css"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
