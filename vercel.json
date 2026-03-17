@@ -50,6 +50,61 @@
   ],
   "redirects": [
     {
+      "source": "/meilleure-periode-(.+)-en-(janvier|fevrier|mars|avril|mai|juin|juillet|aout|septembre|octobre|novembre|decembre)\\.html",
+      "destination": "/$1-meteo-$2.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-(.+)-in-(january|february|march|april|may|june|july|august|september|october|november|december)\\.html",
+      "destination": "/en/$1-weather-$2.html",
+      "permanent": true
+    },
+    {
+      "source": "/g%C3%B6teborg-meteo-:month.html",
+      "destination": "/goteborg-meteo-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/kowe%C3%AFt-meteo-:month.html",
+      "destination": "/koweit-meteo-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/lisbon-meteo-:month.html",
+      "destination": "/lisbonne-meteo-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/venice-meteo-:month.html",
+      "destination": "/venise-meteo-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/valencia-meteo-:month.html",
+      "destination": "/valence-meteo-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/legal.html",
+      "destination": "/mentions-legales.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/best-time-to-visit-katmandou.html",
+      "destination": "/en/best-time-to-visit-kathmandu.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/zante-weather-:month.html",
+      "destination": "/en/zakynthos-weather-:month.html",
+      "permanent": true
+    },
+    {
+      "source": "/en/cotswolds-weather-:month.html",
+      "destination": "/en/",
+      "permanent": true
+    },
+    {
       "source": "/meilleure-periode-cartagena.html",
       "destination": "/cartagena-col-meteo-janvier.html",
       "permanent": true
