@@ -680,15 +680,13 @@
   },
   "monthly_titles": [
     "{nom} en {month}: {tmax}°C, {rain}% lluvia [{year}]",
-    "Tiempo en {nom} en {month} [{year}] — {tmax}°C, {rain}% de lluvia",
-    "¿Visitar {nom} en {month}? Puntuación {score}/10 [{year}]"
+    "Tiempo en {nom} en {month} [{year}] — {tmax}°C, {sun}h sol",
+    "{nom} en {month} {year}: {tmax}°C, {sun}h de sol — ¿Vale la pena?"
   ],
   "monthly_descs": [
-    "Tiempo en {nom} en {month}: {tmax}°C máx, {rain}% días de lluvia, {sun}h de sol/día. Puntuación {score}/10. Basado en 10 años de datos Open-Meteo.",
-    "{nom} en {month}: {tmax}°C, {sun}h de sol, {rain}% de lluvia. {verdict} Puntuación {score}/10.",
-    "¿Vale la pena ir a {nom} en {month}? {tmax}°C y {rain}% de lluvia — puntuación meteorológica {score}/10 basada en 10 años de datos.",
-    "{nom} en {month}: {sun}h de sol, {tmin}–{tmax}°C. {verdict} Clima analizado con 10 años de datos ERA5.",
-    "{tmax}°C y {rain}% de lluvia en {month} en {nom}. {sun}h de sol — puntuación {score}/10."
+    "Tiempo en {nom} en {month}: {tmax}°C máx, {rain}% días de lluvia, {sun}h de sol/día. Puntuación {score}/10. Basado en 10 años de datos.",
+    "¿Es {month} un buen momento para visitar {nom}? {tmax}°C, {sun}h sol, {rain}% lluvia. Puntuación {score}/10 — {verdict}",
+    "{nom} en {month}: {tmax}°C, {sun}h de sol y {rain}% días lluviosos. Puntuación climática {score}/10."
   ],
   "monthly_h1s": [
     "Tiempo en {nom}<br/><em>en {month}</em>",

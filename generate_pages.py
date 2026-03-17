@@ -1323,7 +1323,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     # ── Title / Desc / H1 (from locale template arrays) ──
     title_var = hash(slug_fr + str(mi)) % 3
-    desc_var  = hash(slug_fr + str(mi) + 'd') % 5
+    desc_var  = hash(slug_fr + str(mi) + 'd') % 3
     h1_var    = hash(slug_fr + str(mi) + 'h1') % 3
 
     _verdict = C['lbl_m_verdict_period_rec'] if score >= 7.5 else C['lbl_m_verdict_period_avg'] if score >= 5.5 else C['lbl_m_verdict_period_bad']

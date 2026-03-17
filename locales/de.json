@@ -680,15 +680,13 @@
   },
   "monthly_titles": [
     "{nom} im {month}: {tmax}°C, {rain}% Regen [{year}]",
-    "{nom} Wetter im {month} [{year}] — {tmax}°C, {rain}% Regen",
-    "{nom} im {month} besuchen? Score {score}/10 [{year}]"
+    "Wetter in {nom} im {month} [{year}] — {tmax}°C, {sun}h Sonne",
+    "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne — Lohnt es sich?"
   ],
   "monthly_descs": [
-    "{nom} Wetter im {month}: {tmax}°C max, {rain}% Regentage, {sun}h Sonnenschein/Tag. Score {score}/10. Basiert auf 10 Jahren Open-Meteo-Daten.",
-    "{nom} im {month}: {tmax}°C, {sun}h Sonne, {rain}% Regen. {verdict} Score {score}/10.",
-    "{nom} im {month} besuchen? {tmax}°C und {rain}% Regen — Wetter-Score {score}/10 basierend auf 10 Jahren Daten.",
-    "{nom} im {month}: {sun}h Sonne, {tmin}–{tmax}°C. {verdict} Klima analysiert aus 10 Jahren ERA5-Daten.",
-    "{tmax}°C und {rain}% Regen im {month} in {nom}. {sun}h Sonne — Score {score}/10."
+    "Wetter in {nom} im {month}: {tmax}°C max, {rain}% Regentage, {sun}h Sonne/Tag. Score {score}/10. Basierend auf 10 Jahren Daten.",
+    "Ist {month} eine gute Zeit für {nom}? {tmax}°C, {sun}h Sonne, {rain}% Regen. Score {score}/10 — {verdict}",
+    "{nom} im {month}: {tmax}°C, {sun}h Sonne und {rain}% Regentage. Klimascore {score}/10."
   ],
   "monthly_h1s": [
     "{nom} Wetter<br/><em>im {month}</em>",

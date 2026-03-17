@@ -681,15 +681,13 @@
   },
   "monthly_titles": [
     "{nom} in {month}: {tmax}°F, {rain}% rain [{year}]",
-    "{nom} weather in {month} [{year}] — {tmax}°F, {rain}% rain",
-    "Visit {nom} in {month}? Score {score}/10 [{year}]"
+    "{nom} weather in {month} [{year}] — {tmax}°F, {sun}h sun",
+    "{nom} in {month} {year}: {tmax}°F, {sun}h sunshine — Worth it?"
   ],
   "monthly_descs": [
     "{nom} weather in {month}: {tmax}°F max, {rain}% rainy days, {sun}h sunshine/day. Score {score}/10. Based on 10 years of Open-Meteo data.",
-    "{nom} in {month}: {tmax}°F, {sun}h sunshine, {rain}% rain. {verdict} Score {score}/10.",
-    "Should you visit {nom} in {month}? {tmax}°F and {rain}% rain — weather score {score}/10 based on 10 years of data.",
-    "{nom} in {month}: {sun}h sunshine, {tmin}–{tmax}°F. {verdict} Climate analysed from 10 years of ERA5 data.",
-    "{tmax}°F and {rain}% rain in {month} in {nom}. {sun}h sunshine — score {score}/10."
+    "Is {month} a good time to visit {nom}? {tmax}°F, {sun}h sun, {rain}% rain. Score {score}/10 — {verdict}",
+    "{nom} in {month}: {tmax}°F, {sun}h of sunshine and {rain}% rainy days. Climate score {score}/10 based on 10 years of data."
   ],
   "monthly_h1s": [
     "{nom} weather<br/><em>in {month}</em>",
