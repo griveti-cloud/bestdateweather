@@ -591,6 +591,14 @@
     {
       "q": "Wie kalt ist es nachts in {nom} im {best_month_lc}?",
       "a": "Im {best_month_lc} liegt die Tiefsttemperatur bei {best_tmin}{temp_unit} nachts, bei {best_tmax}{temp_unit} am Nachmittag."
+    },
+    {
+      "q": "Ist {nom} im Winter angenehm?",
+      "a": "Im Winter (Dezember-Februar) erreicht {nom} einen Durchschnittswert von {winter_score}/10 — {winter_verdict}. Der beste Monat bleibt {best_month_lc} mit einer Wertung von {best_score}/10."
+    },
+    {
+      "q": "Wann sollte man {nom} meiden?",
+      "a": "{worst_month} ist der schwierigste Monat für einen Besuch in {nom}, mit {worst_rain}% Regentagen. Die Klimabedingungen sind in diesem Zeitraum am schlechtesten des Jahres."
     }
   ],
   "annual_faq_winter_verdicts": {

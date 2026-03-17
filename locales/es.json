@@ -591,6 +591,14 @@
     {
       "q": "¿Qué temperatura hace por la noche en {nom} en {best_month_lc}?",
       "a": "En {best_month_lc}, la temperatura mínima nocturna es de {best_tmin}{temp_unit}, con máximas de {best_tmax}{temp_unit} por la tarde."
+    },
+    {
+      "q": "¿Es {nom} agradable en invierno?",
+      "a": "En invierno (diciembre-febrero), {nom} obtiene una puntuación media de {winter_score}/10 — {winter_verdict}. El mejor mes sigue siendo {best_month_lc} con una puntuación de {best_score}/10."
+    },
+    {
+      "q": "¿Cuándo evitar {nom}?",
+      "a": "{worst_month} es el mes más difícil para visitar {nom}, con {worst_rain}% de días lluviosos. Las condiciones climáticas están en su punto más bajo del año durante este período."
     }
   ],
   "annual_faq_winter_verdicts": {

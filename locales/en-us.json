@@ -592,6 +592,14 @@
     {
       "q": "What are the temperatures at night in {nom} in {best_month_lc}?",
       "a": "In {best_month_lc}, overnight lows reach {best_tmin}{temp_unit}, while afternoon highs average {best_tmax}{temp_unit}."
+    },
+    {
+      "q": "Is {nom} good in winter?",
+      "a": "In winter (December-February), {nom} scores {winter_score}/10 on average — {winter_verdict}. The best month overall remains {best_month_lc} with a score of {best_score}/10."
+    },
+    {
+      "q": "When should you avoid {nom}?",
+      "a": "{worst_month} is the most difficult month to visit {nom}, with {worst_rain}% rainy days. Climate conditions are at their lowest of the year during this period."
     }
   ],
   "annual_faq_winter_verdicts": {
