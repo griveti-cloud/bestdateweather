@@ -679,16 +679,14 @@
     "score_fair": "Pas le meilleur créneau, mais acceptable pour qui a des contraintes de dates. {best_month} ({best_score}/10) est nettement préférable si possible."
   },
   "monthly_titles": [
-    "{nom_bare} en {month_lc} : {tmax}°C, {rain}% pluie [{year}]",
-    "Météo {prep} {nom_bare} en {month_lc} [{year}] — {tmax}°C, {rain}% pluie",
-    "Partir {prep} {nom_bare} en {month_lc} ? Score {score}/10 [{year}]"
+    "{nom_bare} en {month_lc} {year} : {tmax}°C, {rain}% pluie",
+    "Météo {prep} {nom_bare} en {month_lc} {year} — {tmax}°C, {sun}h soleil",
+    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil — Vaut-il le déplacement ?"
   ],
   "monthly_descs": [
-    "Météo {prep} {nom_bare} en {month_lc} : {tmax}°C max, {rain}% de jours pluvieux, {sun}h de soleil/jour. Score {score}/10. Données 10 ans Open-Meteo.",
-    "{nom_bare} en {month_lc} : {tmax}°C, {sun}h de soleil, {rain}% de pluie. {verdict} Score {score}/10.",
-    "Faut-il partir {prep} {nom_bare} en {month_lc} ? {tmax}°C et {rain}% de pluie — score météo {score}/10 sur 10 ans de données.",
-    "{nom_bare} en {month_lc} : {sun}h de soleil, {tmin}–{tmax}°C. {verdict} Climat analysé sur 10 ans de données ERA5.",
-    "{tmax}°C et {rain}% de pluie en {month_lc} {prep} {nom_bare}. {sun}h d'ensoleillement — score {score}/10."
+    "Météo {prep} {nom_bare} en {month_lc} {year} : {tmax}°C max, {rain}% jours pluvieux, {sun}h soleil/j. Score {score}/10. Basé sur 10 ans de données Open-Meteo.",
+    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil, {rain}% de pluie. {verdict} Score {score}/10.",
+    "Faut-il partir {prep} {nom_bare} en {month_lc} {year} ? {tmax}°C et {rain}% de pluie — score météo {score}/10 sur 10 ans de données."
   ],
   "monthly_h1s": [
     "Météo {prep} {nom_bare}<br/><em>en {month_lc}</em>",

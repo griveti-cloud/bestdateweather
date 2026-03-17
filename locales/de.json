@@ -684,9 +684,9 @@
     "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne — Lohnt es sich?"
   ],
   "monthly_descs": [
-    "Wetter in {nom} im {month}: {tmax}°C max, {rain}% Regentage, {sun}h Sonne/Tag. Score {score}/10. Basierend auf 10 Jahren Daten.",
-    "Ist {month} eine gute Zeit für {nom}? {tmax}°C, {sun}h Sonne, {rain}% Regen. Score {score}/10 — {verdict}",
-    "{nom} im {month}: {tmax}°C, {sun}h Sonne und {rain}% Regentage. Klimascore {score}/10."
+    "Wetter in {nom} im {month} {year}: {tmax}°C max, {rain}% Regentage, {sun}h Sonne/Tag. Score {score}/10. Basierend auf 10 Jahren Daten.",
+    "Ist {month} {year} eine gute Zeit für {nom}? {tmax}°C, {sun}h Sonne, {rain}% Regen. Score {score}/10 — {verdict}",
+    "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne und {rain}% Regentage. Klimascore {score}/10."
   ],
   "monthly_h1s": [
     "{nom} Wetter<br/><em>im {month}</em>",

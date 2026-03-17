@@ -685,9 +685,9 @@
     "{nom} in {month} {year}: {tmax}°F, {sun}h sunshine — Worth it?"
   ],
   "monthly_descs": [
-    "{nom} weather in {month}: {tmax}°F max, {rain}% rainy days, {sun}h sunshine/day. Score {score}/10. Based on 10 years of Open-Meteo data.",
-    "Is {month} a good time to visit {nom}? {tmax}°F, {sun}h sun, {rain}% rain. Score {score}/10 — {verdict}",
-    "{nom} in {month}: {tmax}°F, {sun}h of sunshine and {rain}% rainy days. Climate score {score}/10 based on 10 years of data."
+    "{nom} weather in {month} {year}: {tmax}°F max, {rain}% rainy days, {sun}h sunshine/day. Score {score}/10. Based on 10 years of Open-Meteo data.",
+    "Is {month} {year} a good time to visit {nom}? {tmax}°F, {sun}h sun, {rain}% rain. Score {score}/10 — {verdict}",
+    "{nom} in {month} {year}: {tmax}°F, {sun}h of sunshine and {rain}% rainy days. Climate score {score}/10 based on 10 years of data."
   ],
   "monthly_h1s": [
     "{nom} weather<br/><em>in {month}</em>",
