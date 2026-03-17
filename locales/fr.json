@@ -488,7 +488,16 @@
     "activity_a_cultural": "Avec {tmax}°C max et {sun}h de soleil, concentrez-vous sur les sites culturels, musées et gastronomie locale.",
     "weather_q_hot2": "Fait-il trop chaud {name} en {month_lc} ?",
     "share_label": "Partager",
-    "colon_sep": " : "
+    "colon_sep": " : ",
+    "pack_q": "Que mettre dans sa valise {prep} {nom_bare} en {month_lc} ?",
+    "pack_a_hot_dry": "Vêtements légers, crème solaire (SPF 50+), lunettes et chapeau. {tmax}°C et faible humidité — pensez à bien vous hydrater.",
+    "pack_a_hot_rain": "Vêtements légers et parapluie compact ou imperméable léger. {tmax}°C mais {rain}% de risque de pluie — averses possibles.",
+    "pack_a_mild": "Prévoyez des couches — une veste légère pour les soirées ({tmin}°C), tenue confortable pour les journées à {tmax}°C. Parapluie utile ({rain}% pluie).",
+    "pack_a_cold": "Vêtements chauds en couches, imperméable, bonnet et gants. Les températures descendent à {tmin}°C. Chaussures imperméables recommandées.",
+    "compare_q": "Le mois de {month_lc} est-il un bon moment pour aller {prep} {nom_bare} ?",
+    "compare_a_best": "{month} est l'un des meilleurs mois {prep} {nom_bare} (score {score}/10). Conditions excellentes par rapport à la moyenne annuelle.",
+    "compare_a_good": "{month} affiche un score de {score}/10 — au-dessus de la moyenne annuelle. Le meilleur mois est {best_month} ({best_score}/10), mais {month} reste un excellent choix.",
+    "compare_a_below": "{month} affiche un score de {score}/10 — en dessous de la meilleure période. Envisagez {best_month} ({best_score}/10) pour des conditions optimales."
   },
   "decision": {
     "yes_hot_beach": "profiter du soleil et de la plage.",

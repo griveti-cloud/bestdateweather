@@ -489,7 +489,16 @@
     "activity_a_cultural": "With {tmax}°C max and {sun}h of sunshine, focus on cultural sites, museums and local gastronomy.",
     "weather_q_hot2": "Is it too hot in {name} in {month}?",
     "share_label": "Share",
-    "colon_sep": ": "
+    "colon_sep": ": ",
+    "pack_q": "What should I pack for {name} in {month}?",
+    "pack_a_hot_dry": "Pack light summer clothing, sunscreen (SPF 50+), sunglasses and a hat. {tmax}°C with low humidity — comfortable but stay hydrated.",
+    "pack_a_hot_rain": "Pack light clothing and a compact umbrella or rain jacket. {tmax}°C but {rain}% rain chance — sudden showers are possible.",
+    "pack_a_mild": "Pack layers — a light jacket for evenings ({tmin}°C), comfortable daywear for {tmax}°C days. An umbrella is useful ({rain}% rain).",
+    "pack_a_cold": "Pack warm layers, a waterproof jacket, hat and gloves. Temperatures drop to {tmin}°C. Waterproof footwear recommended.",
+    "compare_q": "Is {month} a good month compared to the rest of the year in {name}?",
+    "compare_a_best": "{month} is one of {name}'s best months (score {score}/10). Conditions are excellent compared to the yearly average.",
+    "compare_a_good": "{month} scores {score}/10 — above the yearly average. The best month is {best_month} ({best_score}/10), but {month} is a solid choice.",
+    "compare_a_below": "{month} scores {score}/10 — below {name}'s best period. Consider {best_month} ({best_score}/10) for optimal conditions."
   },
   "decision": {
     "yes_hot_beach": "enjoy the sun and the beach.",

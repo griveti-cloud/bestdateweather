@@ -1284,13 +1284,44 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         faq_q2 = ft.get('activity_q', ft['weather_q_default']).format(**_fv)
         faq_a2 = (ft.get('activity_a_cultural', ft.get('activity_a_indoor', ft['weather_a_default'])) if score >= 6
                   else ft.get('activity_a_indoor', ft['weather_a_default'])).format(**_fv)
+    # Q3 — what to pack
+    faq_q3 = ft.get('pack_q', '').format(**_fv) if ft.get('pack_q') else ''
+    faq_a3 = ''
+    if faq_q3:
+        tmax_val = m['tmax'] if not C.get('imperial') else c_to_f(m['tmax'])
+        if tmax_val >= 28 and m['rain_pct'] <= 20:
+            faq_a3 = ft.get('pack_a_hot_dry', '').format(**_fv)
+        elif tmax_val >= 25:
+            faq_a3 = ft.get('pack_a_hot_rain', '').format(**_fv)
+        elif tmax_val >= 12:
+            faq_a3 = ft.get('pack_a_mild', '').format(**_fv)
+        else:
+            faq_a3 = ft.get('pack_a_cold', '').format(**_fv)
+
+    # Q4 — comparison with best month
+    faq_q4 = ft.get('compare_q', '').format(**_fv) if ft.get('compare_q') else ''
+    faq_a4 = ''
+    if faq_q4:
+        if score >= best_score - 0.3:
+            faq_a4 = ft.get('compare_a_best', '').format(**_fv)
+        elif score >= best_score - 1.5:
+            faq_a4 = ft.get('compare_a_good', '').format(**_fv)
+        else:
+            faq_a4 = ft.get('compare_a_below', '').format(**_fv)
+
     # ── Schemas ──
+    faq_entities = [
+        {"@type": "Question", "name": faq_q1, "acceptedAnswer": {"@type": "Answer", "text": faq_a1}},
+        {"@type": "Question", "name": faq_q2, "acceptedAnswer": {"@type": "Answer", "text": faq_a2}},
+    ]
+    if faq_q3 and faq_a3:
+        faq_entities.append({"@type": "Question", "name": faq_q3, "acceptedAnswer": {"@type": "Answer", "text": faq_a3}})
+    if faq_q4 and faq_a4:
+        faq_entities.append({"@type": "Question", "name": faq_q4, "acceptedAnswer": {"@type": "Answer", "text": faq_a4}})
+
     faq_schema = json.dumps({
         "@context": "https://schema.org", "@type": "FAQPage",
-        "mainEntity": [
-            {"@type": "Question", "name": faq_q1, "acceptedAnswer": {"@type": "Answer", "text": faq_a1}},
-            {"@type": "Question", "name": faq_q2, "acceptedAnswer": {"@type": "Answer", "text": faq_a2}},
-        ]
+        "mainEntity": faq_entities
     }, ensure_ascii=False)
 
     canonical = C['canonical_prefix'] + monthly_url(C, slug, mi)

@@ -488,7 +488,16 @@
     "activity_a_cultural": "Mit {tmax}°C max und {sun}h Sonnenschein auf Kulturstätten, Museen und lokale Gastronomie konzentrieren.",
     "weather_q_hot2": "Ist es in {name} im {month} zu heiß?",
     "share_label": "Teilen",
-    "colon_sep": ": "
+    "colon_sep": ": ",
+    "pack_q": "Was sollte ich für {name} im {month} einpacken?",
+    "pack_a_hot_dry": "Leichte Sommerkleidung, Sonnencreme (LSF 50+), Sonnenbrille und Hut. {tmax}°C bei niedriger Luftfeuchtigkeit — gut hydratisiert bleiben.",
+    "pack_a_hot_rain": "Leichte Kleidung und ein kompakter Regenschirm oder leichte Regenjacke. {tmax}°C aber {rain}% Regenwahrscheinlichkeit — plötzliche Schauer möglich.",
+    "pack_a_mild": "Zwiebelschichten einpacken — eine leichte Jacke für die Abende ({tmin}°C), bequeme Tageskleidung für {tmax}°C. Regenschirm sinnvoll ({rain}% Regen).",
+    "pack_a_cold": "Warme Schichtkleidung, wasserdichte Jacke, Mütze und Handschuhe. Temperaturen fallen auf {tmin}°C. Wasserfestes Schuhwerk empfohlen.",
+    "compare_q": "Ist {month} ein guter Monat für {name}?",
+    "compare_a_best": "{month} ist einer der besten Monate in {name} (Score {score}/10). Die Bedingungen sind im Jahresvergleich ausgezeichnet.",
+    "compare_a_good": "{month} erzielt {score}/10 — über dem Jahresdurchschnitt. Der beste Monat ist {best_month} ({best_score}/10), aber {month} ist eine gute Wahl.",
+    "compare_a_below": "{month} erzielt {score}/10 — unter dem besten Reisezeitraum von {name}. Erwägen Sie {best_month} ({best_score}/10) für optimale Bedingungen."
   },
   "decision": {
     "yes_hot_beach": "Sonne und Strand genießen.",
