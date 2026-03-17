@@ -304,7 +304,8 @@
     "hist_tmean": "Media",
     "hist_tmin": "Tmin",
     "hist_title": "Temperaturas históricas",
-    "hist_hint": "Tendencia 10 años"
+    "hist_hint": "Tendencia 10 años",
+    "annual_view_link": "Ver todos los meses →"
   },
   "monthly": {
     "hero_tpl": "Tiempo en {name} en {month}",
@@ -690,7 +691,8 @@
   "monthly_titles": [
     "{nom} en {month}: {tmax}°C, {rain}% lluvia [{year}]",
     "Tiempo en {nom} en {month} [{year}] — {tmax}°C, {sun}h sol",
-    "{nom} en {month} {year}: {tmax}°C, {sun}h de sol — ¿Vale la pena?"
+    "{nom} en {month} {year}: {tmax}°C, {sun}h de sol — ¿Vale la pena?",
+    "{nom} en {month} {year}: guía del tiempo en {season_lc} — {tmax}°C"
   ],
   "monthly_descs": [
     "Tiempo en {nom} en {month} {year}: {tmax}°C máx, {rain}% días de lluvia, {sun}h de sol/día. Puntuación {score}/10. Basado en 10 años de datos.",

@@ -304,7 +304,8 @@
     "hist_tmean": "Mittel",
     "hist_tmin": "Tmin",
     "hist_title": "Historische Temperaturen",
-    "hist_hint": "10-Jahres-Trend"
+    "hist_hint": "10-Jahres-Trend",
+    "annual_view_link": "Alle Monate anzeigen →"
   },
   "monthly": {
     "hero_tpl": "{name} Wetter im {month}",
@@ -690,7 +691,8 @@
   "monthly_titles": [
     "{nom} im {month}: {tmax}°C, {rain}% Regen [{year}]",
     "Wetter in {nom} im {month} [{year}] — {tmax}°C, {sun}h Sonne",
-    "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne — Lohnt es sich?"
+    "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne — Lohnt es sich?",
+    "{nom} im {month} {year}: {season}-Reiseführer — {tmax}°C, {sun}h Sonne"
   ],
   "monthly_descs": [
     "Wetter in {nom} im {month} {year}: {tmax}°C max, {rain}% Regentage, {sun}h Sonne/Tag. Score {score}/10. Basierend auf 10 Jahren Daten.",

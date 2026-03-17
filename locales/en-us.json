@@ -305,7 +305,8 @@
     "hist_tmean": "Avg",
     "hist_tmin": "Tmin",
     "hist_title": "Historical temperatures",
-    "hist_hint": "10-year trend"
+    "hist_hint": "10-year trend",
+    "annual_view_link": "See all months →"
   },
   "monthly": {
     "hero_tpl": "{name} weather in {month}",
@@ -691,7 +692,8 @@
   "monthly_titles": [
     "{nom} in {month}: {tmax}°F, {rain}% rain [{year}]",
     "{nom} weather in {month} [{year}] — {tmax}°F, {sun}h sun",
-    "{nom} in {month} {year}: {tmax}°F, {sun}h sunshine — Worth it?"
+    "{nom} in {month} {year}: {tmax}°F, {sun}h sunshine — Worth it?",
+    "{nom} in {month} {year}: {season} weather guide — {tmax}°F, {sun}h sun"
   ],
   "monthly_descs": [
     "{nom} weather in {month} {year}: {tmax}°F max, {rain}% rainy days, {sun}h sunshine/day. Score {score}/10. Based on 10 years of Open-Meteo data.",

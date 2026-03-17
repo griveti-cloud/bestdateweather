@@ -1355,13 +1355,15 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     }, ensure_ascii=False)
 
     # ── Title / Desc / H1 (from locale template arrays) ──
-    title_var = hash(slug_fr + str(mi)) % 3
+    title_var = hash(slug_fr + str(mi)) % 4
     desc_var  = hash(slug_fr + str(mi) + 'd') % 3
     h1_var    = hash(slug_fr + str(mi) + 'h1') % 3
 
     _verdict = C['lbl_m_verdict_period_rec'] if score >= 7.5 else C['lbl_m_verdict_period_avg'] if score >= 5.5 else C['lbl_m_verdict_period_bad']
     tpl['verdict'] = _verdict
 
+    tpl['season'] = C['seasons_map'][mi]
+    tpl['season_lc'] = C['seasons_map'][mi].lower()
     title    = fill_tpl(C['monthly_titles'][title_var], C, **tpl)
     desc     = fill_tpl(C['monthly_descs'][desc_var],   C, **tpl)
     h1_text  = fill_tpl(C['monthly_h1s'][h1_var],       C, **tpl)
@@ -1701,6 +1703,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <strong class="txt-navy-block">{L['src_label']}</strong>
  {L['src_text']}
  <a href="{L['src_link']}" class="txt-gold">{L['src_link_text']}</a>
+ · <a href="{annual_link}" class="txt-gold">{C['lbl_annual_view_link']}</a>
  </div>
 
  <section class="section" class="mb-28">
