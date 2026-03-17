@@ -343,7 +343,7 @@ def footer_html(cfg, dest):
             cl_url = f"{cl_pfx}beste-reisezeit-{slug_de}.html"
         else:
             continue
-        alt_links.append(f'<span style="white-space:nowrap"><a href="{cl_url}" class="txt-muted"><img src="{pfx}flags/{cl_flag}.png" width="20" height="15" alt="" class="flag-icon-lg"> {cl_label}</a></span>')
+        alt_links.append(f'<span style="white-space:nowrap"><a href="{cl_url}" class="txt-muted"><img src="{pfx}flags/{cl_flag}.png" srcset="{pfx}flags/2x/{cl_flag}.png 2x" width="20" height="15" alt="" class="flag-icon-lg"> {cl_label}</a></span>')
     alt_link_p = ('<p class="mt-8">'  + ' · '.join(alt_links) + '</p>') if alt_links else ''
 
     meth_url, meth_label = fc['methodology']
@@ -744,7 +744,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
             s_slug = dest_slug(C, sd) if sd else sim_slug
             sim_cards += (
                 f'<a href="{annual_url(C, s_slug)}" class="sim-card">'
-                f'<div class="f13-slate3"><img src="{pfx}flags/{sf}.png" width="16" height="12" '
+                f'<div class="f13-slate3"><img src="{pfx}flags/{sf}.png" srcset="{pfx}flags/2x/{sf}.png 2x" width="16" height="12" '
                 f'alt="{sf}" class="flag-icon">{sc}</div>'
                 f'<div class="fw700-navy">{sn}</div>'
                 f'<div class="f12-slate2">{sim_label}</div>'
@@ -870,7 +870,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <body>
 {nav_html(C)}
 <header class="hero-band">
- <div class="dest-tag"><img src="{pfx}flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" class="flag-icon"> {nom}, {country}</div>
+ <div class="dest-tag"><img src="{pfx}flags/{flag}.png" srcset="{pfx}flags/2x/{flag}.png 2x" width="20" height="15" alt="{flag.upper()}" class="flag-icon"> {nom}, {country}</div>
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hsub}</p>
  <div class="kicker">{kicker}</div>
@@ -1616,7 +1616,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <body>
 {NAV}
 <header class="hero-band">
- <div class="dest-tag"><img src="{pfx}flags/{flag}.png" width="20" height="15" alt="{flag.upper()}" class="flag-icon"> {nom} · {season}</div>
+ <div class="dest-tag"><img src="{pfx}flags/{flag}.png" srcset="{pfx}flags/2x/{flag}.png 2x" width="20" height="15" alt="{flag.upper()}" class="flag-icon"> {nom} · {season}</div>
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hero_sub}</p>
  <div class="kicker">{L['kicker']}</div>
