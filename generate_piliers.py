@@ -493,6 +493,7 @@ def generate_page(mi, lang, dests, climate):
     avg_score = sum(x['score'] for x in entries[:10]) / 10
     avg_temp_raw = sum(x['tmax'] for x in entries[:10]) / 10
     avg_temp = c_to_f(avg_temp_raw) if imperial else avg_temp_raw
+    avg_sun  = round(sum(x['sun_h'] for x in entries[:10]) / 10, 1)
 
     # File paths — cross-lang links built dynamically from all locales
     is_es = (lang == 'es')
@@ -559,10 +560,10 @@ def generate_page(mi, lang, dests, climate):
     # Content — keep is_fr for complex text blocks
     nom_es = lambda e: e.get('nom_es') or e.get('nom_bare', '')
     if is_es:
-        title = f"Adónde ir en {month_name} {YEAR} — Top {TOP_N} destinos por clima"
-        desc = (f"¿Adónde ir en {month_name} {YEAR}? Top {TOP_N} destinos por clima. "
-                f"N°1: {nom_es(top)} ({top['score']:.1f}/10, {top['tmax']:.0f}°C). "
-                f"Basado en 10 años de datos Open-Meteo.")
+        title = f"Mejores Destinos en {month_name} {YEAR} — {int(avg_sun)}h sol, {int(avg_temp)}°C"
+        desc = (f"¿Adónde ir en {month_name} {YEAR}? Top {TOP_N} destinos con mejor clima. "
+                f"N°1: {nom_es(top)} ({top['score']:.1f}/10, {int(top['tmax'])}°C, {top['sun_h']:.1f}h sol). "
+                f"Datos de 10 años Open-Meteo.")
         h1 = f"¿Adónde ir en <em>{month_name}</em>?"
         hero_sub = (f"Los {TOP_N} mejores destinos por clima en {month_name} {YEAR}, "
                     f"clasificados por puntuación climática basada en 10 años de datos.")
@@ -572,10 +573,10 @@ def generate_page(mi, lang, dests, climate):
                      f"Temperatura media: <strong>{avg_temp:.0f}°C</strong>")
         cta_text = f"🎯 Elige una fecha exacta para tu viaje en {month_name}"
     elif is_fr:
-        title = f"Où partir en {mn_lc} {YEAR} ? Top {TOP_N} destinations météo"
-        desc = (f"Où partir en {mn_lc} {YEAR} ? Classement des {TOP_N} meilleures destinations "
-                f"par score météo. N°1 : {top['nom_bare']} ({top['score']:.1f}/10, {top['tmax']:.0f}°C). "
-                f"Données 10 ans Open-Meteo.")
+        title = f"Où partir en {mn_lc} {YEAR} ? Top {TOP_N} destinations — {int(avg_sun)}h soleil, {int(avg_temp)}°C"
+        desc = (f"Les {TOP_N} meilleures destinations météo en {mn_lc} {YEAR}. "
+                f"N°1 : {top['nom_bare']} ({top['score']:.1f}/10, {int(top['tmax'])}°C, {top['sun_h']:.1f}h soleil). "
+                f"Sur 10 ans de données Open-Meteo.")
         h1 = f"Où partir en <em>{mn_lc}</em> ?"
         hero_sub = (f"Les {TOP_N} meilleures destinations météo pour {mn_lc} {YEAR}, "
                     f"classées par score climatique sur 10 ans de données.")
@@ -586,9 +587,9 @@ def generate_page(mi, lang, dests, climate):
         cta_text = f"🎯 Choisir une date précise pour votre voyage en {mn_lc}"
     elif is_de:
         nom_de = lambda e: e.get('nom_de') or e.get('nom_en', '')
-        title = f"Wohin im {month_name} {YEAR} — Top {TOP_N} Reiseziele nach Wetter"
-        desc = (f"Wohin im {month_name} {YEAR}? Top {TOP_N} Reiseziele nach Wetter-Score. "
-                f"Nr. 1: {nom_de(top)} ({top['score']:.1f}/10, {top['tmax']:.0f}°C). "
+        title = f"Wohin im {month_name} {YEAR}? Top {TOP_N} Reiseziele — {int(avg_sun)}h Sonne, {int(avg_temp)}°C"
+        desc = (f"Top {TOP_N} Reiseziele im {month_name} {YEAR} nach Klima-Score. "
+                f"Nr. 1: {nom_de(top)} ({top['score']:.1f}/10, {int(top['tmax'])}°C, {top['sun_h']:.1f}h Sonne). "
                 f"Basierend auf 10 Jahren Open-Meteo-Daten.")
         h1 = f"Wohin im <em>{month_name}</em>?"
         hero_sub = (f"Die {TOP_N} besten Reiseziele nach Wetter im {month_name} {YEAR}, "
@@ -599,10 +600,10 @@ def generate_page(mi, lang, dests, climate):
                      f"Ø Temperatur: <strong>{avg_temp:.0f}°C</strong>")
         cta_text = f"🎯 Genaues Datum für Ihre Reise im {month_name} wählen"
     else:
-        title = f"Where to Go in {month_name} {YEAR} — Top {TOP_N} Weather Destinations"
-        desc = (f"Where to go in {month_name} {YEAR}? Top {TOP_N} destinations ranked by weather score. "
-                f"#1: {top['nom_en']} ({top['score']:.1f}/10, {ft(top['tmax'])}). "
-                f"Based on 10 years of Open-Meteo data.")
+        title = f"Best Places to Go in {month_name} {YEAR} — {int(avg_sun)}h Sunshine, up to {int(top['tmax'])}°C"
+        desc = (f"Where to go in {month_name} {YEAR}? Top {TOP_N} destinations by weather. "
+                f"#1: {top['nom_en']} ({top['score']:.1f}/10, {ft(top['tmax'])}, {top['sun_h']:.1f}h sunshine). "
+                f"10-year climate data.")
         h1 = f"Where to Go in <em>{month_name}</em>"
         hero_sub = (f"The {TOP_N} best weather destinations for {month_name} {YEAR}, "
                     f"ranked by climate score based on 10 years of data.")
