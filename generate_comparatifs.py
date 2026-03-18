@@ -82,14 +82,11 @@ PAIRS = [
     # Europe
     ('amsterdam', 'bruxelles'),
     ('prague', 'vienne'),
-    # ES-specific high volume
-    ('cancun', 'riviera-maya'),
+    # Paires supplémentaires
     ('maldives', 'bali'),
     ('lisbonne', 'madrid'),
-    ('barcelone', 'valence'),
     ('rome', 'florence'),
     ('paris', 'amsterdam'),
-    ('dubai', 'abu-dhabi'),
 ]
 
 # ── Data Loading ──────────────────────────────────────────────────────────────

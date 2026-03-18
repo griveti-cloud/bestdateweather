@@ -15,11 +15,11 @@ Plateforme météo et voyage — données climatiques ERA5 et scores pour **699 
 |------|----|----|----|----|-----|
 | Pages mensuelles | 8 370 | 8 372 | 8 367 | 8 371 | 8 372 |
 | Pages annuelles | 699 | 700 | 699 | 699 | 699 |
-| Comparatifs | 53 | 53 | 53 | 53 | 53 |
+| Comparatifs | 50 | 50 | 50 | 50 | 50 |
 | Piliers mensuels | 12 | 12 | 12 | 12 | — |
 
 **Éditorial** : `data/editorial.json` — 33 600+ textes différenciants par destination/mois/langue  
-**Destinations** : 699 · **Paires comparatifs** : 53
+**Destinations** : 699 · **Paires comparatifs** : 50
 
 ---
 
@@ -32,13 +32,13 @@ en/
   {slug}-weather-{month}.html       # Pages mensuelles EN (699 × 12)
   best-time-to-visit-{slug}.html    # Pages annuelles EN (699)
   best-*.html                       # Classements EN
-  {slug}-vs-{slug}-weather.html     # Comparatifs EN (53)
+  {slug}-vs-{slug}-weather.html     # Comparatifs EN (50)
   where-to-go-in-{month}.html       # Piliers mensuels EN (12)
 es/ de/ us/                         # Idem pour ES, DE, US
 {slug}-meteo-{month}.html           # Pages mensuelles FR (699 × 12)
 meilleure-periode-{slug}.html       # Pages annuelles FR (699)
 ou-partir-en-{month}.html           # Piliers mensuels FR (12)
-{slug}-ou-{slug}-climat.html        # Comparatifs FR (53)
+{slug}-ou-{slug}-climat.html        # Comparatifs FR (50)
 meilleures-destinations-meteo.html  # Hub annuel FR
 
 js/
@@ -78,7 +78,7 @@ netlify/
 | `generate_pages.py` | Pages mensuelles + annuelles (699 dest × 12 mois × 5 langues) |
 | `generate_piliers.py` | Piliers mensuels + hubs annuels (5 langues) |
 | `generate_classements.py` | Pages classements thématiques (5 langues) |
-| `generate_comparatifs.py` | Pages comparatifs X vs Y (53 paires × 5 langues) |
+| `generate_comparatifs.py` | Pages comparatifs X vs Y (50 paires × 5 langues) |
 | `generate_index_hub.py` | Injection SILO 1 dans app.html / index.html |
 | `generate_sitemaps.py` | Sitemaps segmentés (10 fichiers) |
 
