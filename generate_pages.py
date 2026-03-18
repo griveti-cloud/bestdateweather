@@ -645,8 +645,9 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         m_url = monthly_url(C, slug, idx)
         m_score = months[idx]['score']
         m_tmax = fmt_temp(months[idx]['tmax'], C)
-        _, _, badge_lbl = fn['score_badge'](m_score, t=is_tropical)
-        badge_html = f'<span style="background:#dcfce7;color:#16a34a;padding:1px 6px;border-radius:4px;font-size:.75rem;font-weight:600">{badge_lbl}</span>'
+        m_classe = months[idx]['classe']
+        bg_lbl, txt_lbl, badge_lbl = fn['score_badge'](m_score, m_classe, t=is_tropical)
+        badge_html = f'<span style="background:{bg_lbl};color:{txt_lbl};padding:1px 6px;border-radius:4px;font-size:.75rem;font-weight:600">{badge_lbl}</span>'
         # Truncate to ~120 chars for annual view
         short = snippet[:120].rsplit(' ', 1)[0] + '…' if len(snippet) > 120 else snippet
         editorial_cards.append(
