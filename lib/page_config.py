@@ -31,7 +31,7 @@ load_locale = _load_locale
 
 
 # Cross-language mapping for hreflang
-_CROSS_LANG = {'fr': 'en', 'en': 'fr', 'es': 'fr', 'en-us': 'fr'}
+_CROSS_LANG = {'fr': 'en', 'en': 'fr', 'es': 'fr', 'en-us': 'fr', 'de': 'en'}
 
 # Season icons (shared across languages)
 SEASON_ICONS = {'Printemps':'🌸','Été':'☀️','Automne':'🍂','Hiver':'❄️',
@@ -47,10 +47,18 @@ MONTH_URL_FR = ['janvier','fevrier','mars','avril','mai','juin',
 
 
 def date_modified_for(slug, suffix=''):
-    """Per-page dateModified staggered over 30 days before DATA_UPDATED."""
+    """Per-page dateModified staggered over 30 days before DATA_UPDATED.
+
+    Uses hashlib.md5 (not hash()) for cross-process determinism —
+    Python hash() is randomised by default (PYTHONHASHSEED) and would
+    produce a different dateModified on every build, causing artificial
+    page diffs and unnecessary recrawling.
+    """
+    import hashlib
     from datetime import timedelta
     base = date.fromisoformat(DATA_UPDATED)
-    offset = hash(slug + suffix) % 30
+    digest = hashlib.md5((slug + suffix).encode(), usedforsecurity=False).hexdigest()
+    offset = int(digest[:8], 16) % 30
     return (base - timedelta(days=offset)).isoformat()
 
 

@@ -941,7 +941,8 @@ def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix=''):
     insights = _insights_html(pc['insights_label'], pc['insights'], ctx)
     sections = _sections(pc['sections'], ctx, tables)
     jsonld   = make_jsonld(jsonld_data, jsonld_n, _tpl(pc['jsonld_title_tpl'], ctx), lang)
-    meth     = pc.get('meth') or load_locale('en' if lang == 'en-us' else lang)['classements']['methodology']
+    _meth_tpl = pc.get('meth') or load_locale('en' if lang == 'en-us' else lang)['classements']['methodology']
+    meth      = _meth_tpl.format(**ctx) if '{n}' in _meth_tpl else _meth_tpl
     canonical, footer, outfile, fr_file, en_file, es_file, de_file = _cl_layout(pc, lang)
     rel_file = es_file if lang == 'es' else (de_file if lang == 'de' else (fr_file if lang == 'fr' else en_file))
     related  = make_related(lang, rel_file)

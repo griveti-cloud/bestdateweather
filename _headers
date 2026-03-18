@@ -1,5 +1,4 @@
-# Cloudflare Pages _headers
-# Equivalent de vercel.json headers
+# Netlify _headers
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate

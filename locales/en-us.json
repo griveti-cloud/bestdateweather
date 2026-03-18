@@ -844,7 +844,7 @@
     "nav_cta_label": "Try the weather app",
     "hero_eyebrow": "Independent climate study · 2026",
     "share_js": "../js/share.js",
-    "methodology": "<div class=\"meth\"><strong>Methodology</strong><p>Scores computed from 10 years of Open-Meteo archives (ERA5). Each month rated on sunshine (40%), precipitation (30%), thermal comfort (30%). Annual score = average of 12 months. 318 destinations analyzed.</p></div>",
+    "methodology": "<div class=\"meth\"><strong>Methodology</strong><p>Scores computed from 10 years of Open-Meteo archives (ERA5). Each month rated on sunshine (40%), precipitation (30%), thermal comfort (30%). Annual score = average of 12 months. {n} destinations analyzed.</p></div>",
     "related": [
       [
         "best-destinations-weather-ranking-2026.html",
