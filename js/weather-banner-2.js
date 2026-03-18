@@ -251,16 +251,16 @@
   }
 
   function g(e, t, n, a) {
-    fetch("https://api.open-meteo.com/v1/forecast?latitude=" + e + "&longitude=" + t + "&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability&daily=temperature_2m_max,temperature_2m_min&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,uv_index,relative_humidity_2m&timezone=auto&forecast_days=1").then(function(e) {
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=" + e + "&longitude=" + t + "&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability,is_day&daily=temperature_2m_max,temperature_2m_min&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,uv_index,relative_humidity_2m,is_day&timezone=auto&forecast_days=1").then(function(e) {
       return e.json()
     }).then(function(e) {
       if (!e || !e.current) throw new Error("No data");
-      for (var t = e.current, o = [], l = (new Date).getHours(), s = e.hourly.temperature_2m || [], c = e.hourly.weather_code || [], u = e.hourly.wind_speed_10m || [], g = e.hourly.precipitation_probability || [], m = l; m < Math.min(l + 12, s.length); m++) {
+      for (var t = e.current, o = [], l = (new Date).getHours(), s = e.hourly.temperature_2m || [], c = e.hourly.weather_code || [], u = e.hourly.wind_speed_10m || [], g = e.hourly.precipitation_probability || [], h = e.hourly.is_day || [], m = l; m < Math.min(l + 12, s.length); m++) {
         var p = m === l ? i.now : m + "h";
         o.push({
           h: p,
           temp: s[m],
-          icon: r(c[m] || 0, m < 7 || m >= 21),
+          icon: r(c[m] || 0, h[m] === 0),
           wind: u[m] || 0,
           rain: Math.round(g[m] || 0)
         })
@@ -274,7 +274,7 @@
         tMax: v,
         feels: t.apparent_temperature,
         wind: t.wind_speed_10m,
-        icon: r(t.weather_code, l < 7 || l >= 21),
+        icon: r(t.weather_code, t.is_day === 0),
         desc: i.weatherDesc[t.weather_code] || i.weatherDesc[0],
         humidity: Math.round(t.relative_humidity_2m || 0),
         uv: Math.round(t.uv_index || 0),
