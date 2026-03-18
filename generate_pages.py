@@ -39,9 +39,8 @@ from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
 DIR  = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(DIR, 'data')
 
-BOOKING_AID = '304142'  # TODO: replace with your CJ affiliate ID
-GYG_PARTNER_ID = '2MQKLO0'
-TP_MARKER = '708106'
+# IDs partenaires — source de vérité dans config.py
+from config import BOOKING_AID, GYG_PARTNER_ID, TP_MARKER
 
 MONTHLY_GRAD = [
     'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
@@ -865,7 +864,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 .em-meta{{font-size:.8rem;color:#64748b;}}
 .em-snippet{{font-size:.82rem;color:#475569;margin:0;line-height:1.5;}}
 </style>
-<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKLO0"></script>
+<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="{GYG_PARTNER_ID}"></script>
 </head>
 <body>
 {nav_html(C)}
@@ -1613,7 +1612,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .month-nav a.active{{background:var(--gold);color:white;border-color:var(--gold);}}
 .month-nav a:hover{{border-color:var(--gold);}}
 </style>
-<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKLO0"></script>
+<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="{GYG_PARTNER_ID}"></script>
 </head>
 <body>
 {NAV}
