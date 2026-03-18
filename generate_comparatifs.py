@@ -169,7 +169,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .cta-box a{color:white;font-weight:700;font-size:15px;text-decoration:none}
 footer{background:var(--navy);color:rgba(255,255,255,.7);text-align:center;padding:36px 20px;font-size:12px;line-height:2}
 footer a{color:rgba(255,255,255,.8);text-decoration:none}
-@media(max-width:640px){.vs-grid{grid-template-columns:1fr;gap:12px}.vs-sep{padding:8px 0}.ct th:nth-child(n+6),.ct td:nth-child(n+6){display:none}}
+@media(max-width:640px){.vs-grid{grid-template-columns:1fr;gap:12px}.vs-sep{padding:8px 0}.ct th:nth-child(3),.ct td:nth-child(3),.ct th:nth-child(5),.ct td:nth-child(5){display:none}}
 """
 
 FONTS = (
