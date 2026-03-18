@@ -1,10 +1,8 @@
 [{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "com.bestdateweather.app",
-    "sha256_cert_fingerprints": [
-      "PLACEHOLDER_REMPLACE_PAR_BUBBLEWRAP"
-    ]
-  }
-}]
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.bestdateweather.app",
+        "sha256_cert_fingerprints": ["70:09:B3:6B:88:B4:A8:40:A9:64:4B:38:AE:18:D7:D3:FD:7E:A3:65:29:2E:32:B5:AE:A0:D8:99:7A:2C:E8:A2"]
+      }
+    }]
