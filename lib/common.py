@@ -242,10 +242,17 @@ def fill_tpl(template, cfg, **kwargs):
     """Fill a locale template string.
 
     If cfg['imperial'], substitutes °C→°F and mm→in in the template string.
+    Only replaces in literal text, not inside {format_keys}, to avoid corrupting
+    key names when °C appears adjacent to a format placeholder.
     Numeric values must already be converted before calling (use c_to_f/mm_to_in).
     """
     if cfg.get('imperial'):
-        template = template.replace('°C', '°F').replace('mm', 'in')
+        # Split on {key} tokens, replace only in literal parts
+        import re as _re
+        parts = _re.split(r'(\{[^}]*\})', template)
+        parts = [p if p.startswith('{') else p.replace('°C', '°F').replace('mm', 'in')
+                 for p in parts]
+        template = ''.join(parts)
     return template.format(**kwargs)
 
 

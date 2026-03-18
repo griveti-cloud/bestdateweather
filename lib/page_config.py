@@ -210,6 +210,11 @@ def build_config(lang):
     cfg['monthly_article_headline_tpl'] = loc.get('monthly_article_headline_tpl', '')
     cfg['monthly_article_desc_tpl'] = loc.get('monthly_article_desc_tpl', '')
 
+    # Tropical rain labels — contextual formulation for destinations with frequent showers
+    cfg['tropical_showers']      = loc.get('tropical_showers', '')
+    cfg['tropical_rainy_season'] = loc.get('tropical_rainy_season', '')
+    cfg['sea_temp_label']        = loc.get('sea_temp_label', '{sea_temp}°C sea')
+
     return cfg
 
 

@@ -703,9 +703,9 @@
     "{nom_bare} en {month_lc} : météo de {season_lc} {year} — {tmax}°C & {sun}h/jour"
   ],
   "monthly_descs": [
-    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil/jour et {rain}% de jours pluvieux. Score {score}/10 — {verdict}.",
+    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil/jour, {rain_label}. Score {score}/10 — {verdict}.",
     "Partir {prep} {nom_bare} en {month_lc} {year} : bonne idée ? {sun}h de soleil, {tmax}°C — score {score}/10.",
-    "Préparez votre séjour {prep} {nom_bare} en {month_lc} : {tmax}°C, {sun}h de soleil par jour. Score {score}/10 — {verdict}."
+    "Préparez votre séjour {prep} {nom_bare} en {month_lc} : {tmax}°C, {sun}h de soleil/jour{sea_label_comma} {rain_label}. Score {score}/10."
   ],
   "monthly_h1s": [
     "Météo {prep} {nom_bare}<br/><em>en {month_lc}</em>",
@@ -1262,5 +1262,8 @@
     "ski_poor": "Conditions ski difficiles {nom_f} ce mois-ci ({tmax}°C en vallée). L'enneigement est aléatoire, les domaines partiellement fermés ou en fin de saison.",
     "ski_offseason": "Hors-saison ski {nom_f} — les remontées mécaniques sont fermées. À privilegier pour la randonnée, le VTT ou les activités estivales en altitude."
   },
-  "temp_unit": "°C"
+  "temp_unit": "°C",
+  "tropical_showers": "averses tropicales brèves",
+  "tropical_rainy_season": "saison des pluies",
+  "sea_temp_label": "mer {sea_temp}°C"
 }

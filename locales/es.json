@@ -703,9 +703,9 @@
     "{nom} en {month}: clima de {season_lc} {year} — {tmax}°C y {sun}h de sol"
   ],
   "monthly_descs": [
-    "{nom} en {month} {year}: {tmax}°C, {sun}h de sol/día y {rain}% de días de lluvia. Puntuación {score}/10 — {verdict}.",
+    "{nom} en {month} {year}: {tmax}°C, {sun}h de sol/día, {rain_label}. Puntuación {score}/10 — {verdict}.",
     "¿Es {month} {year} buen momento para ir a {nom}? {sun}h de sol, {tmax}°C — puntuación {score}/10.",
-    "Planifica tu viaje a {nom} en {month}: {tmax}°C y {sun}h de sol al día. Puntuación {score}/10 — {verdict}."
+    "Planifica tu viaje a {nom} en {month}: {tmax}°C, {sun}h de sol/día{sea_label_comma} {rain_label}. Puntuación {score}/10."
   ],
   "monthly_h1s": [
     "Tiempo en {nom}<br/><em>en {month}</em>",
@@ -1283,5 +1283,8 @@
     "ski_poor": "Condiciones de esquí difíciles {nom_f} este mes ({tmax}°C en el valle). La nieve es poco fiable, con cierres parciales o fin de temporada.",
     "ski_offseason": "Fuera de temporada de esquí {nom_f} — los telesillas están cerrados. Ideal para senderismo, BTT o actividades estivales de montaña."
   },
-  "temp_unit": "°C"
+  "temp_unit": "°C",
+  "tropical_showers": "lluvias tropicales breves",
+  "tropical_rainy_season": "temporada de lluvias",
+  "sea_temp_label": "mar {sea_temp}°C"
 }

@@ -703,9 +703,9 @@
     "{nom} im {month}: {season}-Wetter {year} — {tmax}°C & {sun}h Sonne/Tag"
   ],
   "monthly_descs": [
-    "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne/Tag und {rain}% Regentage. Score {score}/10 — {verdict}.",
+    "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne/Tag, {rain_label}. Score {score}/10 — {verdict}.",
     "Ist {month} {year} eine gute Reisezeit für {nom}? {sun}h Sonne, {tmax}°C — Score {score}/10.",
-    "Plane deine Reise nach {nom} im {month}: {tmax}°C und {sun}h Sonne pro Tag. Score {score}/10 — {verdict}."
+    "Plane deine Reise nach {nom} im {month}: {tmax}°C, {sun}h Sonne/Tag{sea_label_comma} {rain_label}. Score {score}/10."
   ],
   "monthly_h1s": [
     "{nom} Wetter<br/><em>im {month}</em>",
@@ -1274,5 +1274,8 @@
     "ski_poor": "Schwierige Skibedingungen {nom_f} diesen Monat ({tmax}°C im Tal). Schneelage unzuverlässig, teilweise Schließungen oder Saisonende.",
     "ski_offseason": "Ski-Nebensaison {nom_f} — Lifte geschlossen. Empfehlenswert für Wandern, Mountainbike oder sommerliche Aktivitäten in der Höhe."
   },
-  "temp_unit": "°C"
+  "temp_unit": "°C",
+  "tropical_showers": "kurze tropische Schauer",
+  "tropical_rainy_season": "Regenzeit",
+  "sea_temp_label": "Meer {sea_temp}°C"
 }

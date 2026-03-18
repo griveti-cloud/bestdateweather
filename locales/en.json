@@ -704,9 +704,9 @@
     "{nom} in {month}: {season} weather {year} — {tmax}°C & {sun}h sun/day"
   ],
   "monthly_descs": [
-    "{nom} in {month} {year}: {tmax}°C, {sun}h sunshine/day and {rain}% rainy days. Score {score}/10 — {verdict}.",
-    "Is {month} {year} a good time to visit {nom}? {sun}h sun, {tmax}°C, score {score}/10. Based on 10 years of data.",
-    "Plan your {nom} trip in {month}: {tmax}°C, {sun}h of sun per day. Climate score {score}/10 — {verdict}."
+    "{nom} in {month} {year}: {tmax}°C, {sun}h sunshine/day, {rain_label}. Score {score}/10 — {verdict}.",
+    "Is {month} {year} a good time to visit {nom}? {sun}h sun, {tmax}°C{sea_label_comma} score {score}/10. Based on 10 years of data.",
+    "Plan your {nom} trip in {month}: {tmax}°C, {sun}h sun/day{sea_label_comma} {rain_label}. Score {score}/10 — {verdict}."
   ],
   "monthly_h1s": [
     "{nom} weather<br/><em>in {month}</em>",
@@ -1263,5 +1263,8 @@
     "ski_poor": "Challenging ski conditions {nom_f} this month ({tmax}°C in the valley). Snow cover is unreliable, with partial closures or late-season conditions.",
     "ski_offseason": "Off-season for skiing {nom_f} — lifts are closed. Consider hiking, mountain biking or summer activities at altitude."
   },
-  "temp_unit": "°C"
+  "temp_unit": "°C",
+  "tropical_showers": "brief tropical showers",
+  "tropical_rainy_season": "rainy season",
+  "sea_temp_label": "{sea_temp}°C sea"
 }
