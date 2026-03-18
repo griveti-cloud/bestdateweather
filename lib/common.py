@@ -29,6 +29,8 @@ def build_lang(lang):
         'badge_good': loc['badges']['good'],
         'badge_fair': loc['badges']['fair'],
         'badge_poor': loc['badges']['poor'],
+        'badge_tropical_good': loc['badges'].get('tropical_good', loc['badges']['good']),
+        'badge_tropical_fair': loc['badges'].get('tropical_fair', loc['badges']['fair']),
         'tier_peak': loc['tiers']['peak'],
         'tier_low': loc['tiers']['low'],
         'tier_shoulder': loc['tiers']['shoulder'],
@@ -142,7 +144,7 @@ def weather_emoji(tmax, rain_pct, sun_h=None, precip_mm=None, score=None):
 
 # ── Shared functions ──────────────────────────────────────────────────────────
 
-def score_badge(score, classe=None, L=None):
+def score_badge(score, classe=None, L=None, is_tropical=False):
     """Badge verdict aligned with editorial class from CSV."""
     if L is None:
         L = LANG_FR
@@ -154,6 +156,10 @@ def score_badge(score, classe=None, L=None):
     if classe == 'avoid':
         return '#fee2e2', '#dc2626', L['badge_poor']
     if score >= 9.0: return '#dcfce7', '#16a34a', L['badge_excellent']
+    if is_tropical:
+        if score >= 7.5: return '#dcfce7', '#16a34a', L['badge_tropical_good']
+        if score >= 5.5: return '#e0f2fe', '#0369a1', L['badge_tropical_fair']
+        return '#fee2e2', '#dc2626', L['badge_poor']
     if score >= 7.5: return '#dcfce7', '#16a34a', L['badge_good']
     if score >= 6.0: return '#fef9c3', '#ca8a04', L['badge_fair']
     return '#fee2e2', '#dc2626', L['badge_poor']

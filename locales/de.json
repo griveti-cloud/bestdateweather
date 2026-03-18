@@ -199,7 +199,9 @@
     "excellent": "✅ Ausgezeichnet",
     "good": "✅ Gut",
     "fair": "⚠️ Akzeptabel",
-    "poor": "❌ Schlecht"
+    "poor": "❌ Schlecht",
+    "tropical_good": "✅ Angenehm",
+    "tropical_fair": "🌴 Tropisch"
   },
   "tiers": {
     "peak": "💸 Hauptsaison",

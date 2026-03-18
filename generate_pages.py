@@ -68,7 +68,7 @@ def _bind_lang(cfg):
     L = build_lang(cfg['lang'])
     L['imperial'] = cfg.get('imperial', False)  # propagate to table helpers
     return {
-        'score_badge': lambda s, c=None: _score_badge(s, c, L=L),
+        'score_badge': lambda s, c=None, t=False: _score_badge(s, c, L=L, is_tropical=t),
         'best_months': lambda m: _best_months(m, L=L),
         'budget_tier': lambda s, a: _budget_tier(s, a, L=L),
         'seasonal_stats': lambda m: _seasonal_stats(m, L=L),
@@ -645,7 +645,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         m_url = monthly_url(C, slug, idx)
         m_score = months[idx]['score']
         m_tmax = fmt_temp(months[idx]['tmax'], C)
-        _, _, badge_lbl = fn['score_badge'](m_score)
+        _, _, badge_lbl = fn['score_badge'](m_score, t=is_tropical)
         badge_html = f'<span style="background:#dcfce7;color:#16a34a;padding:1px 6px;border-radius:4px;font-size:.75rem;font-weight:600">{badge_lbl}</span>'
         # Truncate to ~120 chars for annual view
         short = snippet[:120].rsplit(' ', 1)[0] + '…' if len(snippet) > 120 else snippet
@@ -1066,6 +1066,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     m_url    = C['month_url'][mi]
     is_fr    = C['is_fr']
     is_mountain = dest.get('mountain', 'False').strip() == 'True'
+    is_tropical = dest.get('tropical', '').strip().lower() in ('true', '1')
 
     all_scores = [mo['score'] for mo in months]
     best_idx   = max(range(12), key=lambda i: months[i]['score'])
@@ -1078,7 +1079,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         from scoring import compute_ski_score, best_class
         ski_sc = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
         eff_classe = best_class(m['classe'], ski_sc)
-    bg, txt, verdict_lbl = fn['score_badge'](score, eff_classe)
+    bg, txt, verdict_lbl = fn['score_badge'](score, eff_classe, is_tropical)
     bud = fn['budget_tier'](score, all_scores)
 
     prev_mi = (mi - 1) % 12
@@ -1095,7 +1096,6 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
                      else (C['lbl_m_act_beach_ok'] if score >= 6.5 and m['tmax'] >= 20 else C['lbl_m_act_beach_bad']))
 
     # Context flags
-    is_tropical = dest.get('tropical', '').strip().lower() in ('true', '1')
     is_hot      = m['tmax'] >= 30
     is_warm     = 22 <= m['tmax'] < 30
     is_mild     = 15 <= m['tmax'] < 22

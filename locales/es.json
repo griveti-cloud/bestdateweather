@@ -199,7 +199,9 @@
     "excellent": "✅ Excelente",
     "good": "✅ Bueno",
     "fair": "⚠️ Aceptable",
-    "poor": "❌ Clima marcado"
+    "poor": "❌ Clima marcado",
+    "tropical_good": "✅ Agradable",
+    "tropical_fair": "🌴 Tropical"
   },
   "tiers": {
     "peak": "💸 Temporada alta",

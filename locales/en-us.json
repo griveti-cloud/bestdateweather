@@ -200,7 +200,9 @@
     "excellent": "✅ Excellent",
     "good": "✅ Good",
     "fair": "⚠️ Fair",
-    "poor": "❌ Poor"
+    "poor": "❌ Poor",
+    "tropical_good": "✅ Pleasant",
+    "tropical_fair": "🌴 Tropical"
   },
   "tiers": {
     "peak": "💸 Peak season",
