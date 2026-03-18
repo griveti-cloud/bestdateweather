@@ -2847,3 +2847,170 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
     }
   });
 })();
+
+// ─── FAVORIS localStorage ────────────────────────────────────────────────────
+(function() {
+  var STORAGE_KEY = 'bdw_favorites';
+  var BTN_ID = 'btn-fav';
+
+  // Lire le slug depuis le commentaire HTML généré par generate_pages.py
+  // Format : <!-- SCORING: generate_pages.py | lang=fr | slug=barcelone | ... -->
+  function getPageSlug() {
+    var nodes = document.childNodes;
+    for (var i = 0; i < nodes.length; i++) {
+      if (nodes[i].nodeType === 8) { // commentaire
+        var m = nodes[i].textContent.match(/slug=([^\s|]+)/);
+        if (m) return m[1];
+      }
+    }
+    // Fallback : extraire depuis l'URL
+    var p = window.location.pathname;
+    var m = p.match(/meilleure-periode-(.+)\.html/);
+    return m ? m[1] : null;
+  }
+
+  function getPageName() {
+    var h1 = document.querySelector('h1.hero-title em');
+    if (h1) return h1.textContent.trim();
+    var title = document.title;
+    return title ? title.split('—')[0].trim() : null;
+  }
+
+  function getFlag() {
+    var img = document.querySelector('.dest-tag img');
+    return img ? img.src : null;
+  }
+
+  function loadFavs() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch(e) { return {}; }
+  }
+
+  function saveFavs(favs) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(favs)); } catch(e) {}
+  }
+
+  function isFav(slug) {
+    return !!loadFavs()[slug];
+  }
+
+  function toggleFav(slug, name, flag) {
+    var favs = loadFavs();
+    if (favs[slug]) {
+      delete favs[slug];
+    } else {
+      favs[slug] = { name: name, flag: flag, ts: Date.now() };
+    }
+    saveFavs(favs);
+    return !!favs[slug];
+  }
+
+  function updateBtn(btn, active) {
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    btn.setAttribute('aria-label', active ? 'Retirer des favoris' : 'Ajouter aux favoris');
+    btn.style.color = active ? '#d97706' : '';
+    btn.style.borderColor = active ? '#d97706' : '';
+    // Icône cœur plein ou vide
+    var svg = btn.querySelector('svg');
+    if (svg) svg.setAttribute('fill', active ? 'currentColor' : 'none');
+  }
+
+  function initFavButton() {
+    // Uniquement sur les pages fiche (présence de hero-band)
+    if (!document.querySelector('.hero-band')) return;
+
+    var slug = getPageSlug();
+    if (!slug) return;
+
+    var name = getPageName();
+    var flag = getFlag();
+
+    // Créer le bouton
+    var btn = document.createElement('button');
+    btn.id = BTN_ID;
+    btn.className = 'nav-share'; // réutilise le style existant
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+    btn.style.display = 'flex'; // toujours visible (pas seulement mobile)
+
+    var active = isFav(slug);
+    updateBtn(btn, active);
+
+    btn.addEventListener('click', function() {
+      var nowActive = toggleFav(slug, name, flag);
+      updateBtn(btn, nowActive);
+      // Feedback visuel court
+      btn.style.transform = 'scale(1.3)';
+      setTimeout(function() { btn.style.transform = ''; }, 200);
+    });
+
+    // Insérer avant le bouton share existant
+    var navActions = document.querySelector('.nav-actions');
+    var shareBtn = navActions ? navActions.querySelector('.nav-share') : null;
+    if (navActions && shareBtn) {
+      navActions.insertBefore(btn, shareBtn);
+    } else if (navActions) {
+      navActions.insertBefore(btn, navActions.firstChild);
+    }
+  }
+
+  // ── Page des favoris (accessible via /#favoris) ───────────────────────────
+  function renderFavsPage() {
+    var favs = loadFavs();
+    var keys = Object.keys(favs).sort(function(a,b) {
+      return (favs[b].ts || 0) - (favs[a].ts || 0);
+    });
+
+    var existing = document.getElementById('bdw-favs-panel');
+    if (existing) existing.remove();
+
+    var panel = document.createElement('div');
+    panel.id = 'bdw-favs-panel';
+    panel.style.cssText = 'position:fixed;inset:0;background:rgba(26,31,46,.95);z-index:9999;overflow-y:auto;padding:20px 16px;color:#fff;font-family:DM Sans,sans-serif';
+
+    var html = '<div style="max-width:480px;margin:0 auto">';
+    html += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">';
+    html += '<button onclick="document.getElementById(\'bdw-favs-panel\').remove();window.location.hash=\'\'" style="background:none;border:none;color:#fff;font-size:24px;cursor:pointer">←</button>';
+    html += '<h2 style="margin:0;font-size:20px;font-weight:700">Mes destinations favorites</h2></div>';
+
+    if (keys.length === 0) {
+      html += '<p style="color:#94a3b8;text-align:center;margin-top:40px">Aucun favori pour l\'instant.<br>Appuyez sur ♡ sur une fiche destination.</p>';
+    } else {
+      keys.forEach(function(slug) {
+        var f = favs[slug];
+        // Construire l'URL de la fiche (on est à la racine)
+        var url = 'meilleure-periode-' + slug + '.html';
+        html += '<a href="' + url + '" style="display:flex;align-items:center;gap:14px;background:#1e2a3a;border-radius:12px;padding:14px 16px;margin-bottom:10px;text-decoration:none;color:#fff">';
+        if (f.flag) html += '<img src="' + f.flag + '" width="24" height="18" style="border-radius:3px;flex-shrink:0">';
+        html += '<span style="flex:1;font-weight:600">' + (f.name || slug) + '</span>';
+        html += '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>';
+        html += '</a>';
+      });
+
+      html += '<button onclick="if(confirm(\'Effacer tous les favoris ?\')){'
+        + 'localStorage.removeItem(\'' + STORAGE_KEY + '\');'
+        + 'document.getElementById(\'bdw-favs-panel\').remove();'
+        + 'window.location.hash=\'\'}" '
+        + 'style="width:100%;margin-top:16px;padding:12px;background:none;border:1.5px solid #475569;border-radius:10px;color:#94a3b8;cursor:pointer;font-size:14px">'
+        + 'Effacer tous les favoris</button>';
+    }
+
+    html += '</div>';
+    panel.innerHTML = html;
+    document.body.appendChild(panel);
+  }
+
+  // Ouvrir les favoris via /#favoris (depuis l'app)
+  function checkHash() {
+    if (window.location.hash === '#favoris') renderFavsPage();
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    initFavButton();
+    checkHash();
+  });
+
+  window.addEventListener('hashchange', checkHash);
+
+  // Exposer pour usage externe (ex: lien dans le menu)
+  window.bdwShowFavorites = renderFavsPage;
+})();
