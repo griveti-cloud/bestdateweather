@@ -2853,20 +2853,20 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
   var STORAGE_KEY = 'bdw_favorites';
   var BTN_ID = 'btn-fav';
 
-  // Lire le slug depuis le commentaire HTML généré par generate_pages.py
-  // Format : <!-- SCORING: generate_pages.py | lang=fr | slug=barcelone | ... -->
+  // Lire le slug depuis le commentaire dans <head> ou depuis l'URL
   function getPageSlug() {
-    var nodes = document.childNodes;
-    for (var i = 0; i < nodes.length; i++) {
-      if (nodes[i].nodeType === 8) { // commentaire
-        var m = nodes[i].textContent.match(/slug=([^\s|]+)/);
+    // Chercher dans document.head.childNodes
+    var heads = document.head ? document.head.childNodes : [];
+    for (var i = 0; i < heads.length; i++) {
+      if (heads[i].nodeType === 8) {
+        var m = heads[i].textContent.match(/slug=([^\s|]+)/);
         if (m) return m[1];
       }
     }
-    // Fallback : extraire depuis l'URL
-    var p = window.location.pathname;
-    var m = p.match(/meilleure-periode-(.+)\.html/);
-    return m ? m[1] : null;
+    // Fallback robuste : extraire depuis l'URL (nom de fichier)
+    var p = window.location.pathname.split('/').pop();
+    var m2 = p.match(/^meilleure-periode-(.+)\.html$/);
+    return m2 ? m2[1] : null;
   }
 
   function getPageName() {
