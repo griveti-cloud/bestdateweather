@@ -1152,7 +1152,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     vtier = 'excellent' if score >= 9.0 else ('good' if score >= 7.0 else ('fair' if score >= 5.0 else 'poor'))
     # Contenu éditorial enrichi (generate_editorial.py) prioritaire sur template
     _editorial_lang = 'en' if lang == 'en-us' else lang
-    _editorial_key = f"{slug}:{mi + 1}:{_editorial_lang}"
+    _editorial_key = f"{slug_fr}:{mi + 1}:{_editorial_lang}"
     if _editorial_key in _EDITORIAL:
         verdict_txt = _EDITORIAL[_editorial_key]
     else:
