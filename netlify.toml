@@ -1,0 +1,6 @@
+[build]
+  # Site is pre-built locally — no build command needed.
+  # Netlify just serves the static HTML files as-is.
+  # This reduces deploy time from ~25 min to ~2 min and saves build credits.
+  command = ""
+  publish = "."
