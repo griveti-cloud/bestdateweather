@@ -1,8 +1,9 @@
+import os
 #!/usr/bin/env python3
 """Lance generate_editorial.py par batch de N destinations, relançable à l'infini."""
 import subprocess, json, csv, sys, time
 
-KEY = "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"
+KEY = os.environ.get('ANTHROPIC_API_KEY', '')
 BATCH = 25  # destinations par batch
 
 def get_incomplete():

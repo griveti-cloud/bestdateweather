@@ -1,7 +1,8 @@
+import os
 #!/usr/bin/env python3
 import json, csv, time, urllib.request, urllib.error, sys
 
-KEY = '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'
+KEY = os.environ.get('ANTHROPIC_API_KEY', '')
 OUTPUT = 'data/editorial.json'
 API = 'https://api.anthropic.com/v1/messages'
 MODEL = 'claude-haiku-4-5-20251001'
