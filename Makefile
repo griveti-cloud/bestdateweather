@@ -11,7 +11,7 @@
 #   make sitemap     — Sitemaps 5 langues
 #   make test        — Tests scoring
 #   make check-loc   — Validation cohérence locales
-#   make deploy      — Commit + push Vercel
+#   make deploy      — Commit + push (Netlify auto-deploy on push)
 #
 # Prerequisites: Python 3.8+, node (terser, eslint)
 
