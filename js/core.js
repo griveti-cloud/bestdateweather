@@ -3004,13 +3004,19 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
     if (window.location.hash === '#favoris') renderFavsPage();
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
+  // Script defer : DOM déjà prêt, exécution immédiate ou fallback DOMContentLoaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initFavButton();
+      checkHash();
+    });
+  } else {
     initFavButton();
     checkHash();
-  });
+  }
 
   window.addEventListener('hashchange', checkHash);
 
-  // Exposer pour usage externe (ex: lien dans le menu)
+  // Exposer pour usage externe
   window.bdwShowFavorites = renderFavsPage;
 })();
