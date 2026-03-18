@@ -303,14 +303,22 @@ def head_css(cfg):
 <meta name="theme-color" content="#1a1f2e"/>'''
 
 
-def nav_html(cfg):
+def nav_html(cfg, slug_fr=None):
     home_href = cfg['nav_cta_href']
     cta_label = cfg['nav_cta_label']
     share_label = cfg.get('lbl_share_label', 'Share')
+    fav_btn = (
+        f'<button id="btn-fav" class="nav-share" style="display:flex" '
+        f'data-slug="{slug_fr}" onclick="bdwToggleFav(this)" '
+        f'aria-label="Ajouter aux favoris" aria-pressed="false">'
+        f'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">'
+        f'<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'
+        f'</svg></button>'
+    ) if slug_fr else ''
     return f'''<nav>
  <a class="nav-brand" href="{home_href}">Best<em>Date</em>Weather</a>
  <div class="nav-actions">
-  <button class="nav-share" onclick="shareThis()" aria-label="{share_label}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+  {fav_btn}<button class="nav-share" onclick="shareThis()" aria-label="{share_label}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
   <a class="nav-cta" href="{home_href}">{cta_label}</a>
  </div>
 </nav>'''
@@ -877,7 +885,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="{GYG_PARTNER_ID}"></script>
 </head>
 <body>
-{nav_html(C)}
+{nav_html(C, slug_fr=slug_fr)}
 <header class="hero-band">
  <div class="dest-tag"><img src="{pfx}flags/{flag}.png" srcset="{pfx}flags/2x/{flag}.png 2x" width="20" height="15" alt="{flag.upper()}" loading="lazy" class="flag-icon"> {nom}, {country}</div>
  <h1 class="hero-title">{h1_text}</h1>
@@ -1562,7 +1570,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         for url, label in L['rank_links'])
 
     # ── HEAD CSS / NAV / FOOTER from gen_annual helpers ──
-    NAV      = nav_html(cfg)
+    NAV      = nav_html(cfg, slug_fr=slug_fr)
 
     # ── Hotels.com (monthly) ──
     country_name = dest_country(cfg, dest)
