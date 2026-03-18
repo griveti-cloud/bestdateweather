@@ -541,9 +541,9 @@
     "hero_sub_key": "hero_sub_es"
   },
   "annual_titles": [
-    "Mejor Época para {nom}: {best_month} ({best_tmax}°C) [{year}]",
-    "Mejor Época para Visitar {nom} [{year}] — {best_month}, {best_tmax}°C",
-    "Mejor Época para Visitar {nom} {year}: {best_month} ideal — {best_tmax}°C"
+    "Mejor Época para Visitar {nom}: {best_month} ideal ({best_tmax}°C) [{year}]",
+    "¿Cuándo ir a {nom} [{year}]? Mejor mes: {best_month} ({best_tmax}°C)",
+    "{nom}: ¿cuándo hace mejor tiempo? {best_month}, {best_tmax}°C [{year}]"
   ],
   "annual_h1s": [
     "Mejor Época para Visitar<br/><em>{nom}</em>",
@@ -697,10 +697,10 @@
     "score_fair": "No es la mejor ventana, pero es aceptable si las fechas son fijas. {best_month} ({best_score}/10) es significativamente mejor si es posible."
   },
   "monthly_titles": [
-    "{nom} en {month}: {tmax}°C, {rain}% lluvia [{year}]",
-    "Tiempo en {nom} en {month} [{year}] — {tmax}°C, {sun}h sol",
-    "{nom} en {month} {year}: {tmax}°C, {sun}h de sol — ¿Vale la pena?",
-    "{nom} en {month} {year}: guía del tiempo en {season_lc} — {tmax}°C"
+    "Tiempo en {nom} en {month} {year} — {tmax}°C, {sun}h de sol al día",
+    "{nom} en {month} {year}: {tmax}°C, {sun}h de sol — Guía del clima",
+    "¿Es {month} buen momento para visitar {nom}? [{year}] — {tmax}°C, {sun}h sol",
+    "{nom} en {month}: clima de {season_lc} {year} — {tmax}°C y {sun}h de sol"
   ],
   "monthly_descs": [
     "Tiempo en {nom} en {month} {year}: {tmax}°C máx, {rain}% días de lluvia, {sun}h de sol/día. Puntuación {score}/10. Basado en 10 años de datos.",

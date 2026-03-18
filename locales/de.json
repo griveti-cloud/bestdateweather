@@ -541,9 +541,9 @@
     "hero_sub_key": "hero_sub_de"
   },
   "annual_titles": [
-    "Beste Reisezeit für {nom}: {best_month} ({best_tmax}°C) [{year}]",
-    "Beste Reisezeit für {nom} [{year}] — {best_month}, {best_tmax}°C",
-    "Beste Reisezeit für {nom} {year}: {best_month} ideal — {best_tmax}°C"
+    "Beste Reisezeit für {nom}: {best_month} ist ideal ({best_tmax}°C) [{year}]",
+    "Wann nach {nom} reisen [{year}]? Bester Monat: {best_month} ({best_tmax}°C)",
+    "{nom}: Wann ist das Wetter am besten? {best_month}, {best_tmax}°C [{year}]"
   ],
   "annual_h1s": [
     "Beste Reisezeit für<br/><em>{nom}</em>",
@@ -697,10 +697,10 @@
     "score_fair": "Kein optimales Fenster, aber akzeptabel bei festen Terminen. Der {best_month} ({best_score}/10) ist deutlich besser, wenn möglich."
   },
   "monthly_titles": [
-    "{nom} im {month}: {tmax}°C, {rain}% Regen [{year}]",
-    "Wetter in {nom} im {month} [{year}] — {tmax}°C, {sun}h Sonne",
-    "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne — Lohnt es sich?",
-    "{nom} im {month} {year}: {season}-Reiseführer — {tmax}°C, {sun}h Sonne"
+    "Wetter in {nom} im {month} {year} — {tmax}°C, {sun}h Sonne/Tag",
+    "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne — Reiseführer Wetter",
+    "Ist {month} eine gute Reisezeit für {nom}? [{year}] — {tmax}°C, {sun}h Sonne",
+    "{nom} im {month}: {season}-Wetter {year} — {tmax}°C & {sun}h Sonne/Tag"
   ],
   "monthly_descs": [
     "Wetter in {nom} im {month} {year}: {tmax}°C max, {rain}% Regentage, {sun}h Sonne/Tag. Score {score}/10. Basierend auf 10 Jahren Daten.",

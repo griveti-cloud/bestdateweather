@@ -377,33 +377,41 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
 
         # Content
         if is_fr:
-            title = f"{nom_a} ou {nom_b} ? Comparatif météo mois par mois [{YEAR}]"
-            desc = (f"{nom_a} ou {nom_b} : quel climat est meilleur ? Comparaison mois par mois "
-                    f"sur 10 ans. {nom_a} : {avg_a_score:.1f}/10, {nom_b} : {avg_b_score:.1f}/10.")
+            _winner_fr = nom_a if avg_a_score >= avg_b_score else nom_b
+            _winner_score_fr = max(avg_a_score, avg_b_score)
+            title = f"{nom_a} ou {nom_b} ? Lequel a le meilleur climat ? [{YEAR}]"
+            desc = (f"{nom_a} ou {nom_b} : comparaison météo mois par mois sur 10 ans. "
+                    f"Verdict : {_winner_fr} ({_winner_score_fr:.1f}/10). Données ERA5.")
             h1 = f"{nom_a} <em>ou</em> {nom_b} ?"
             hero_sub = f"Comparaison climatique complète — 12 mois, 10 ans de données, score objectif"
             href_a = gen['annual_href_tpl'].format(slug=slug_a)
             href_b = gen['annual_href_tpl'].format(slug=slug_b)
         elif is_es:
-            title = f"{nom_a} vs {nom_b} — Comparación del clima [{YEAR}]"
-            desc = (f"{nom_a} vs {nom_b}: ¿cuál tiene mejor clima? Comparación mes a mes "
-                    f"en 10 años. {nom_a}: {avg_a_score:.1f}/10, {nom_b}: {avg_b_score:.1f}/10.")
+            _winner_es = nom_a if avg_a_score >= avg_b_score else nom_b
+            _winner_score_es = max(avg_a_score, avg_b_score)
+            title = f"{nom_a} vs {nom_b}: ¿Cuál Tiene Mejor Clima? [{YEAR}]"
+            desc = (f"{nom_a} vs {nom_b}: comparación del tiempo mes a mes en 10 años. "
+                    f"Veredicto: {_winner_es} ({_winner_score_es:.1f}/10). Datos ERA5.")
             h1 = f"{nom_a} <em>vs</em> {nom_b}"
             hero_sub = f"Comparación climática completa — 12 meses, 10 años de datos, puntuación objetiva"
             href_a = gen['annual_href_tpl'].format(slug=slug_es_a)
             href_b = gen['annual_href_tpl'].format(slug=slug_es_b)
         elif is_de:
-            title = f"{nom_a} vs {nom_b} — Wettervergleich [{YEAR}]"
-            desc = (f"{nom_a} vs {nom_b}: Wo ist das Wetter besser? Monatsvergleich "
-                    f"über 10 Jahre. {nom_a}: {avg_a_score:.1f}/10, {nom_b}: {avg_b_score:.1f}/10.")
+            _winner_de = nom_a if avg_a_score >= avg_b_score else nom_b
+            _winner_score_de = max(avg_a_score, avg_b_score)
+            title = f"{nom_a} vs {nom_b}: Wer Hat das Bessere Wetter? [{YEAR}]"
+            desc = (f"{nom_a} vs {nom_b}: Klimavergleich Monat für Monat über 10 Jahre. "
+                    f"Ergebnis: {_winner_de} ({_winner_score_de:.1f}/10). ERA5-Daten.")
             h1 = f"{nom_a} <em>vs</em> {nom_b}"
             hero_sub = f"Vollständiger Klimavergleich — 12 Monate, 10 Jahre Daten, objektiver Score"
             href_a = gen['annual_href_tpl'].format(slug=slug_de_a)
             href_b = gen['annual_href_tpl'].format(slug=slug_de_b)
         else:
-            title = f"{nom_a} vs {nom_b} — Weather Comparison [{YEAR}]"
-            desc = (f"{nom_a} vs {nom_b}: which has better weather? Month-by-month comparison "
-                    f"over 10 years. {nom_a}: {avg_a_score:.1f}/10, {nom_b}: {avg_b_score:.1f}/10.")
+            _winner_en = nom_a if avg_a_score >= avg_b_score else nom_b
+            _winner_score_en = max(avg_a_score, avg_b_score)
+            title = f"{nom_a} vs {nom_b}: Which Has Better Weather? [{YEAR}]"
+            desc = (f"{nom_a} vs {nom_b}: month-by-month weather comparison over 10 years. "
+                    f"Winner: {_winner_en} ({_winner_score_en:.1f}/10). Based on ERA5 data.")
             h1 = f"{nom_a} <em>vs</em> {nom_b}"
             hero_sub = f"Complete climate comparison — 12 months, 10 years of data, objective scores"
             href_a = gen['annual_href_tpl'].format(slug=slug_en_a)

@@ -541,9 +541,9 @@
     "hero_sub_key": "hero_sub_fr"
   },
   "annual_titles": [
-    "Meilleure période {prep} {nom_bare} : {best_month_lc} ({best_tmax}°C) [{year}]",
-    "Meilleure période {prep} {nom_bare} [{year}] — {best_month_lc}, {best_tmax}°C",
-    "Meilleure période {prep} {nom_bare} {year} : {best_month_lc} idéal — {best_tmax}°C"
+    "Meilleure période {prep} {nom_bare} : {best_month_lc} idéal ({best_tmax}°C) [{year}]",
+    "Quand partir {prep} {nom_bare} [{year}] ? Meilleur mois : {best_month_lc} ({best_tmax}°C)",
+    "{nom_bare} : quelle période choisir ? {best_month_lc}, {best_tmax}°C [{year}]"
   ],
   "annual_h1s": [
     "Meilleure période pour partir<br/><em>{prep} {nom_bare}</em>",
@@ -697,10 +697,10 @@
     "score_fair": "Pas le meilleur créneau, mais acceptable pour qui a des contraintes de dates. {best_month} ({best_score}/10) est nettement préférable si possible."
   },
   "monthly_titles": [
-    "{nom_bare} en {month_lc} {year} : {tmax}°C, {rain}% pluie",
-    "Météo {prep} {nom_bare} en {month_lc} {year} — {tmax}°C, {sun}h soleil",
-    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil — Vaut-il le déplacement ?",
-    "Météo {nom_bare} {month_lc} {year} : {tmax}°C en {season_lc} — Conseils & données"
+    "Météo {prep} {nom_bare} en {month_lc} {year} — {tmax}°C, {sun}h soleil/jour",
+    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil — Guide météo",
+    "Partir {prep} {nom_bare} en {month_lc} {year} : bonne idée ? {tmax}°C, {sun}h soleil",
+    "{nom_bare} en {month_lc} : météo de {season_lc} {year} — {tmax}°C & {sun}h/jour"
   ],
   "monthly_descs": [
     "Météo {prep} {nom_bare} en {month_lc} {year} : {tmax}°C max, {rain}% jours pluvieux, {sun}h soleil/j. Score {score}/10. Basé sur 10 ans de données Open-Meteo.",

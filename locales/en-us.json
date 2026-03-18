@@ -542,9 +542,9 @@
     "hero_sub_key": "hero_sub_en"
   },
   "annual_titles": [
-    "Best Time to Visit {nom}: {best_month} ({best_tmax}°F) [{year}]",
-    "Best Time to Visit {nom} [{year}] — {best_month}, {best_tmax}°F",
-    "Best Time to Visit {nom} {year}: {best_month} ideal — {best_tmax}°F"
+    "Best Time to Visit {nom}: {best_month} is Ideal ({best_tmax}°F) [{year}]",
+    "When to Visit {nom} [{year}] — Best Month: {best_month} ({best_tmax}°F)",
+    "Is {nom} Worth Visiting? Best Weather: {best_month} {best_tmax}°F [{year}]"
   ],
   "annual_h1s": [
     "Best Time to Visit<br/><em>{nom}</em>",
@@ -698,10 +698,10 @@
     "score_fair": "Not the best window, but acceptable if dates are constrained. {best_month} ({best_score}/10) is significantly better if possible."
   },
   "monthly_titles": [
-    "{nom} in {month}: {tmax}°F, {rain}% rain [{year}]",
-    "{nom} weather in {month} [{year}] — {tmax}°F, {sun}h sun",
-    "{nom} in {month} {year}: {tmax}°F, {sun}h sunshine — Worth it?",
-    "{nom} in {month} {year}: {season} weather guide — {tmax}°F, {sun}h sun"
+    "{nom} Weather in {month} {year} — {tmax}°F, {sun}h sunshine/day",
+    "{nom} in {month} {year}: {tmax}°F, {sun}h sunshine — Weather Guide",
+    "Is {month} a Good Time to Visit {nom}? [{year}] — {tmax}°F, {sun}h sun",
+    "{nom} in {month}: {season} weather {year} — {tmax}°F & {sun}h sun/day"
   ],
   "monthly_descs": [
     "{nom} weather in {month} {year}: {tmax}°F max, {rain}% rainy days, {sun}h sunshine/day. Score {score}/10. Based on 10 years of Open-Meteo data.",
