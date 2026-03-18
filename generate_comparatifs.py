@@ -65,6 +65,23 @@ PAIRS = [
     ('tenerife', 'madere'),
     ('canaries', 'madere'),
     ('fuerteventura', 'gran-canaria'),
+    # Americas / US-specific
+    ('miami', 'cancun'),
+    ('new-york', 'miami'),
+    ('new-york', 'los-angeles'),
+    ('los-angeles', 'san-francisco'),
+    ('hawaii', 'cancun'),
+    # ES-specific
+    ('barcelone', 'madrid'),
+    ('tenerife', 'lanzarote'),
+    ('valence', 'barcelone'),
+    ('costa-rica', 'panama'),
+    # Asia/Pacific
+    ('tokyo', 'seoul'),
+    ('sydney', 'melbourne'),
+    # Europe
+    ('amsterdam', 'bruxelles'),
+    ('prague', 'vienne'),
 ]
 
 # ── Data Loading ──────────────────────────────────────────────────────────────
@@ -627,11 +644,13 @@ def update_sitemaps(files):
     en_files  = [f for f in files if f['lang'] == 'en']
     us_files  = [f for f in files if f['lang'] == 'en-us']
     es_files  = [f for f in files if f['lang'] == 'es']
+    de_files  = [f for f in files if f['lang'] == 'de']
 
     for sitemap_file, pages in [('sitemap-fr.xml', fr_files),
                                   ('sitemap-en.xml', en_files),
                                   ('sitemap-us.xml', us_files),
-                                  ('sitemap-es.xml', es_files)]:
+                                  ('sitemap-es.xml', es_files),
+                                  ('sitemap-de.xml', de_files)]:
         path = ROOT / sitemap_file
         if not path.exists():
             continue
