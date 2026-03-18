@@ -733,7 +733,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     sim_list = (similarities or {}).get(slug_fr, [])
     if sim_list and all_dests:
         sim_cards = ''
-        for sim_score, sim_slug in sim_list[:3]:
+        for sim_score, sim_slug in sim_list[:5]:
             # Rescale cosine similarity: 0.975→0%, 1.0→100%
             display_pct = max(0, min(1, (sim_score - 0.975) / 0.025))
             # Qualifier based on rescaled score
