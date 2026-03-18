@@ -76,6 +76,29 @@ def score_class(s):
     if s >= 3.5: return '#f97316'
     return '#ef4444'
 
+def get_slug(entry, lang):
+    """Return the localised slug for a destination entry."""
+    if lang == 'fr':    return entry['slug_fr']
+    if lang == 'es':    return entry.get('slug_es') or entry['slug_en']
+    if lang == 'de':    return entry.get('slug_de') or entry['slug_en']
+    return entry['slug_en']  # en, en-us
+
+def get_nom(entry, lang):
+    """Return the localised display name for a destination entry."""
+    if lang == 'fr':    return entry['nom_bare']
+    if lang == 'es':    return entry.get('nom_es') or entry['nom_bare']
+    if lang == 'de':    return entry.get('nom_de') or entry['nom_en']
+    return entry['nom_en']
+
+def get_pays(entry, lang):
+    """Return the localised country name for a destination entry.
+    CSV columns: pays (FR), country_en, country_es, country_de.
+    """
+    if lang == 'fr':    return entry.get('pays', '')
+    if lang == 'es':    return entry.get('country_es') or entry.get('pays', '')
+    if lang == 'de':    return entry.get('country_de') or entry.get('pays', '')
+    return entry.get('country_en') or entry.get('pays', '')
+
 REGION_CHILDREN = {
     'canaries': {'lanzarote', 'fuerteventura', 'gran-canaria', 'tenerife',
                  'la-palma', 'la-gomera', 'el-hierro'},
@@ -379,8 +402,7 @@ FONTS = (
 
 def build_table(entries, loc, mi):
     """Build tbody rows only (thead injected by JS for mode switching)."""
-    is_fr = loc['meta']['html_lang'] == 'fr'
-    is_es = loc['meta']['html_lang'] == 'es'
+    lang = loc['meta']['html_lang']
     imperial = loc['meta'].get('imperial', False)
     gen = loc['gen']
     month_url = loc['month_url']
@@ -389,17 +411,9 @@ def build_table(entries, loc, mi):
 
     rows = ''
     for i, entry in enumerate(entries, 1):
-        slug = entry['slug_fr'] if is_fr else (entry.get('slug_es') or entry['slug_en'] if is_es else entry['slug_en'])
-        nom = entry['nom_bare'] if is_fr else (entry.get('nom_es') or entry['nom_bare'] if is_es else entry['nom_en'])
-        lang = loc['meta']['html_lang']
-        if is_fr:
-            pays = entry['pays']
-        elif is_es:
-            pays = entry.get('pays_es') or entry['pays']
-        elif lang == 'de':
-            pays = entry.get('pays_de') or entry['pays']
-        else:
-            pays = entry.get('pays_en') or entry['pays']
+        slug = get_slug(entry, lang)
+        nom  = get_nom(entry, lang)
+        pays = get_pays(entry, lang)
         href = gen['monthly_href_tpl'].format(slug=slug, month_slug=month_url[mi])
         flag_img = f'<img src="{gen["asset_prefix"]}flags/{entry["flag"]}.png" width="16" height="12" alt="" style="vertical-align:middle;margin-right:6px;border-radius:1px">'
         sc = entry['score']
@@ -600,69 +614,23 @@ def generate_page(mi, lang, dests, climate):
 
     cta_href = gen['home_url']
     flag_prefix = gen['asset_prefix']
-    if is_fr:
-        tab_meteo = '☀️ Météo générale'
-        tab_beach = '🏖️ Plage'
-        tab_ski   = '⛷️ Ski'
-        th_score_beach = 'Score plage'
-        th_score_ski   = 'Score ski'
-        th_score_gen   = 'Score'
-        no_beach_msg   = "Aucune destination côtière dans ce classement pour ce mois."
-        no_ski_msg     = "Aucune destination ski dans ce classement pour ce mois."
-        no_meteo_msg   = "Aucune destination dans cette région pour ce mois."
-    elif is_es:
-        tab_meteo = '☀️ Clima general'
-        tab_beach = '🏖️ Playa'
-        tab_ski   = '⛷️ Esquí'
-        th_score_beach = 'Score playa'
-        th_score_ski   = 'Score esquí'
-        th_score_gen   = 'Score'
-        no_beach_msg   = "No hay destinos costeros en este ranking para este mes."
-        no_ski_msg     = "No hay destinos de esquí en este ranking para este mes."
-        no_meteo_msg   = "No hay destinos en esta región para este mes."
-    elif is_de:
-        tab_meteo = '☀️ Allgemeines Wetter'
-        tab_beach = '🏖️ Strand'
-        tab_ski   = '⛷️ Ski'
-        th_score_beach = 'Strand-Score'
-        th_score_ski   = 'Ski-Score'
-        th_score_gen   = 'Score'
-        no_beach_msg   = "Keine Küstenziele in diesem Ranking für diesen Monat."
-        no_ski_msg     = "Keine Ski-Ziele in diesem Ranking für diesen Monat."
-        no_meteo_msg   = "Keine Ziele in dieser Region für diesen Monat."
-    else:
-        tab_meteo = '☀️ General weather'
-        tab_beach = '🏖️ Beach'
-        tab_ski   = '⛷️ Ski'
-        th_score_beach = 'Beach score'
-        th_score_ski   = 'Ski score'
-        th_score_gen   = 'Score'
-        no_beach_msg   = "No coastal destinations in this ranking for this month."
-        no_ski_msg     = "No ski destinations in this ranking for this month."
-        no_meteo_msg   = "No destinations in this region for this month."
+    # UI strings from locale — no more is_fr/is_es/is_de branching
+    tab_meteo      = pil['tab_meteo']
+    tab_beach      = pil['tab_beach']
+    tab_ski        = pil['tab_ski']
+    th_score_gen   = pil['th_score_gen']
+    th_score_beach = pil['th_score_beach']
+    th_score_ski   = pil['th_score_ski']
+    no_beach_msg   = pil['no_beach_msg']
+    no_ski_msg     = pil['no_ski_msg']
+    no_meteo_msg   = pil['no_meteo_msg']
 
     # ── Pool JSON for JS rendering ────────────────────────────────────────────
-    def entry_nom(entry):
-        if is_fr: return entry['nom_bare']
-        if is_es: return entry.get('nom_es') or entry['nom_bare']
-        if is_de: return entry.get('nom_de') or entry['nom_en']
-        return entry['nom_en']
-    def entry_slug(entry):
-        if is_fr: return entry['slug_fr']
-        if is_es: return entry.get('slug_es') or entry['slug_en']
-        if is_de: return entry.get('slug_de') or entry['slug_en']
-        return entry['slug_en']
-    def entry_pays(entry):
-        if is_fr: return entry['pays']
-        if is_es: return entry.get('pays_es') or entry['pays']
-        if is_de: return entry.get('pays_de') or entry['pays']
-        return entry.get('pays_en') or entry['pays']
-
     pool_json = json.dumps([{
-        'n': entry_nom(p),
-        'p': entry_pays(p),
+        'n': get_nom(p, lang),
+        'p': get_pays(p, lang),
         'f': p['flag'],
-        'h': gen['monthly_href_tpl'].format(slug=entry_slug(p), month_slug=month_url[mi]),
+        'h': gen['monthly_href_tpl'].format(slug=get_slug(p, lang), month_slug=month_url[mi]),
         's': round(p['score'], 1),
         'b': round(p['beach_score'], 1) if p['beach_score'] is not None else None,
         'br': round(p['beach_score'], 4) if p['beach_score'] is not None else None,
@@ -698,7 +666,7 @@ def generate_page(mi, lang, dests, climate):
         'var TOP=25;var CUR_REG="all";'
         f'var TH_GEN="{e(th_score_gen)}",TH_BEACH="{e(th_score_beach)}",TH_SKI="{e(th_score_ski)}";'
         f'var NO_BEACH="{e(no_beach_msg)}",NO_SKI="{e(no_ski_msg)}",NO_METEO="{e(no_meteo_msg)}";'
-        f'var TITLE_METEO="{e(sec_title)}",TITLE_BEACH="{e(pil.get("sec_title_beach",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc if is_fr else month_name))}",TITLE_SKI="{e(pil.get("sec_title_ski",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc if is_fr else month_name))}";'
+        f'var TITLE_METEO="{e(sec_title)}",TITLE_BEACH="{e(pil.get("sec_title_beach",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc))}",TITLE_SKI="{e(pil.get("sec_title_ski",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc))}";'
         'function sc(s){return s>=8.6?"#1a7a4a":s>=7.6?"#2d9e60":s>=6.3?"#84cc16":s>=5?"#f59e0b":s>=3.5?"#f97316":"#ef4444";}'
         'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'
         'function render(mode){'
@@ -788,9 +756,9 @@ def generate_page(mi, lang, dests, climate):
             {
                 "@type": "ListItem",
                 "position": i + 1,
-                "name": entry['nom_bare'] if is_fr else (entry.get('nom_es') or entry['nom_bare'] if is_es else (entry.get('nom_de') or entry['nom_en'] if is_de else entry['nom_en'])),
+                "name": get_nom(entry, lang),
                 "url": loc['meta']['canonical_prefix'] + gen['monthly_href_tpl'].format(
-                    slug=entry['slug_fr'] if is_fr else (entry.get('slug_es') or entry['slug_en'] if is_es else (entry.get('slug_de') or entry['slug_en'] if is_de else entry['slug_en'])),
+                    slug=get_slug(entry, lang),
                     month_slug=month_url[mi])
             }
             for i, entry in enumerate(entries)
@@ -1064,22 +1032,16 @@ def generate_annual_page(lang, dests, climate):
                  if src_sub == '' else
                  f'https://bestdateweather.com/{src_sub}/{filename}')
 
-    # Slug key
-    is_fr = (lang == 'fr')
-    is_es = (lang == 'es')
-    is_de = (lang == 'de')
-    slug_key = 'slug_fr' if is_fr else ('slug_es' if is_es else ('slug_de' if is_de else 'slug_en'))
-    name_key = 'nom_bare' if is_fr else ('nom_es' if is_es else ('nom_de' if is_de else 'nom_en'))
-    pays_key = 'pays' if is_fr else ('pays_es' if is_es else ('pays_de' if is_de else 'pays_en'))
+    # Slug/name/pays via module-level helpers
     annual_href_tpl = gen['annual_href_tpl']
 
     # Table
     rows = ''
     for i, e in enumerate(entries[:TOP_N], 1):
         medal = ['🥇','🥈','🥉'][i-1] if i <= 3 else str(i)
-        slug  = e[slug_key]
-        name  = e[name_key]
-        pays  = e[pays_key] or e['pays']
+        slug  = get_slug(e, lang)
+        name  = get_nom(e, lang)
+        pays  = get_pays(e, lang) or e['pays']
         flag  = e['flag']
         href  = annual_href_tpl.format(slug=slug)
         temp_str = f"{ft(e['tmin'])}–{ft(e['tmax'])}"
@@ -1124,48 +1086,27 @@ def generate_annual_page(lang, dests, climate):
             _annual_alt_links.append({'url': _href, 'flag': _prefix + _flag, 'label': _lbl})
     footer    = footer_ranking_html(lang, _annual_alt_links)
 
-    # ── Mode tabs (Météo / Plage / Ski) ───────────────────────────────────────
-    if lang == 'fr':
-        tab_meteo = '☀️ Météo générale'; tab_beach = '🏖️ Plage'; tab_ski = '⛷️ Ski'
-        th_score_gen = 'Score annuel'; th_score_beach = 'Score plage'; th_score_ski = 'Score ski'
-        no_beach_msg = 'Aucune destination balnéaire dans ce classement.'
-        no_ski_msg   = 'Aucune station de ski dans ce classement.'
-        no_meteo_msg = 'Aucune destination dans cette région.'
-    elif lang == 'es':
-        tab_meteo = '☀️ Clima general'; tab_beach = '🏖️ Playa'; tab_ski = '⛷️ Esquí'
-        th_score_gen = 'Puntuación'; th_score_beach = 'Puntuación playa'; th_score_ski = 'Puntuación esquí'
-        no_beach_msg = 'Sin destinos de playa en este ranking.'
-        no_ski_msg   = 'Sin estaciones de esquí en este ranking.'
-        no_meteo_msg = 'No hay destinos en esta región.'
-    elif lang == 'de':
-        tab_meteo = '☀️ Allgemeines Wetter'; tab_beach = '🏖️ Strand'; tab_ski = '⛷️ Ski'
-        th_score_gen = 'Jahreswertung'; th_score_beach = 'Strandwertung'; th_score_ski = 'Skiwertung'
-        no_beach_msg = 'Keine Strandziele in diesem Ranking.'
-        no_ski_msg   = 'Keine Skigebiete in diesem Ranking.'
-        no_meteo_msg = 'Keine Ziele in dieser Region.'
-    else:  # en / en-us
-        tab_meteo = '☀️ General weather'; tab_beach = '🏖️ Beach'; tab_ski = '⛷️ Ski'
-        th_score_gen = 'Annual score'; th_score_beach = 'Beach score'; th_score_ski = 'Ski score'
-        no_beach_msg = 'No beach destinations in this ranking.'
-        no_ski_msg   = 'No ski resorts in this ranking.'
-        no_meteo_msg = 'No destinations in this region.'
+    # ── Mode tabs (Météo / Plage / Ski) — from locale ────────────────────────────
+    tab_meteo      = pil['tab_meteo_annual']
+    tab_beach      = pil['tab_beach_annual']
+    tab_ski        = pil['tab_ski_annual']
+    th_score_gen   = pil['th_score_gen_annual']
+    th_score_beach = pil['th_score_beach_annual']
+    th_score_ski   = pil['th_score_ski_annual']
+    no_beach_msg   = pil['no_beach_annual']
+    no_ski_msg     = pil['no_ski_annual']
+    no_meteo_msg   = pil['no_meteo_annual']
 
     # Build annual pool
     annual_pool = get_annual_pool(climate, dests)
     flag_prefix = gen['asset_prefix']
     annual_href_tpl2 = gen['annual_href_tpl']
 
-    def _pool_slug(e):
-        if is_fr: return e['slug_fr']
-        if is_es: return e.get('slug_es') or e['slug_en']
-        if is_de: return e.get('slug_de') or e['slug_en']
-        return e['slug_en']
-
     pool_json = json.dumps([{
-        'n':   e[name_key] if e.get(name_key) else e['nom_bare'],
-        'p':   e[pays_key] if e.get(pays_key) else e['pays'],
+        'n':   get_nom(e, lang),
+        'p':   get_pays(e, lang) or e['pays'],
         'f':   e['flag'],
-        'h':   annual_href_tpl2.format(slug=_pool_slug(e)),
+        'h':   annual_href_tpl2.format(slug=get_slug(e, lang)),
         's':   round(e['score'], 1),
         'b':   round(e['beach_score'], 1) if e.get('beach_score') is not None else None,
         'br':  round(e['beach_score'], 4) if e.get('beach_score') is not None else None,
