@@ -1076,15 +1076,27 @@ def generate_annual_page(lang, dests, climate):
         'en': {'flag': 'flags/gb.png'},
     }
     _annual_alt_links = []
-    _all_langs = [('fr','fr','flags/fr.png','Français','meilleures-destinations-meteo.html'),
-                  ('en','en','flags/gb.png','English','en/best-weather-destinations.html'),
-                  ('en-us','us','flags/us.png','English (US)','us/best-weather-destinations.html'),
-                  ('es','es','flags/es.png','Español','es/mejores-destinos-climaticos.html'),
-                  ('de','de','flags/de.png','Deutsch','de/beste-reiseziele-klima.html')]
-    for _l, _sub, _flag, _lbl, _href in _all_langs:
+    # Les URLs absolues depuis la racine du site
+    _all_langs_abs = [('fr','fr','flags/fr.png','Français','meilleures-destinations-meteo.html'),
+                      ('en','en','flags/gb.png','English','en/best-weather-destinations.html'),
+                      ('en-us','us','flags/us.png','English (US)','us/best-weather-destinations.html'),
+                      ('es','es','flags/es.png','Español','es/mejores-destinos-climaticos.html'),
+                      ('de','de','flags/de.png','Deutsch','de/beste-reiseziele-klima.html')]
+    # Sous-répertoire du fichier courant (fr=racine, en/es/de/us=sous-dossier)
+    _cur_sub = '' if lang == 'fr' else ('us' if lang == 'en-us' else lang)
+    for _l, _sub, _flag, _lbl, _href_abs in _all_langs_abs:
         if _l != lang:
             _prefix = gen.get('asset_prefix', '')
-            _annual_alt_links.append({'url': _href, 'flag': _prefix + _flag, 'label': _lbl})
+            # Calcul du chemin relatif entre le fichier courant et la cible
+            if _cur_sub == '' and _sub == '':  # racine -> racine
+                _rel = _href_abs
+            elif _cur_sub == '':  # racine -> sous-dossier
+                _rel = _href_abs
+            elif _sub == '':  # sous-dossier -> racine
+                _rel = '../' + _href_abs
+            else:  # sous-dossier -> autre sous-dossier
+                _rel = '../' + _href_abs
+            _annual_alt_links.append({'url': _rel, 'flag': _prefix + _flag, 'label': _lbl})
     footer    = footer_ranking_html(lang, _annual_alt_links)
 
     # ── Mode tabs (Météo / Plage / Ski) — from locale ────────────────────────────
