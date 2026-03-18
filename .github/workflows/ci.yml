@@ -167,6 +167,50 @@ jobs:
       - name: Run scoring consistency tests
         run: python3 tests/test_scoring.py
 
+
+  minified-sync:
+    name: JS Minified Sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install terser
+        run: npm install terser --no-save
+
+      - name: Check source/min.js sync
+        run: |
+          echo "=== Checking source ↔ min.js sync ==="
+          FAIL=0
+          for src in js/core.js js/weather-banner-2.js js/fiche-slugs.js; do
+            min="${src%.js}.min.js"
+            [ -f "$src" ] || continue
+            [ -f "$min" ] || { echo "❌ Missing: $min"; FAIL=1; continue; }
+            # Regenerate min from source and compare size/hash
+            npx terser "$src" --compress --mangle -o /tmp/check_min.js 2>/dev/null
+            orig_size=$(wc -c < "$min")
+            regen_size=$(wc -c < /tmp/check_min.js)
+            orig_hash=$(sha256sum "$min" | cut -d' ' -f1)
+            regen_hash=$(sha256sum /tmp/check_min.js | cut -d' ' -f1)
+            if [ "$orig_hash" != "$regen_hash" ]; then
+              pct_diff=$(python3 -c "print(abs($regen_size-$orig_size)*100//$regen_size)")
+              if [ "$pct_diff" -gt 5 ]; then
+                echo "❌ $min is out of sync with $src (size diff: ${pct_diff}%)"
+                FAIL=1
+              else
+                echo "⚠️  $min differs from regen but within 5% tolerance (minifier version drift)"
+              fi
+            else
+              echo "  ✓ $min in sync"
+            fi
+          done
+          [ "$FAIL" -eq 0 ] || exit 1
+          echo "✅ All .min.js files in sync"
+
   sitemap-check:
     name: Sitemap Coverage
     runs-on: ubuntu-latest
