@@ -157,6 +157,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .ct td:first-child{text-align:left;font-weight:600}
 .ct tr:hover{background:#fef9f0}
 .ct .win{font-weight:700}
+.ct-mhead{display:none}
 .verdict{background:white;border:1.5px solid var(--cream2);border-radius:14px;padding:24px;margin-bottom:24px}
 .verdict h3{font-family:'Playfair Display',Georgia,serif;font-size:17px;margin-bottom:12px}
 .verdict p{font-size:14px;color:var(--slate);line-height:1.7;margin-bottom:8px}
@@ -169,7 +170,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .cta-box a{color:white;font-weight:700;font-size:15px;text-decoration:none}
 footer{background:var(--navy);color:rgba(255,255,255,.7);text-align:center;padding:36px 20px;font-size:12px;line-height:2}
 footer a{color:rgba(255,255,255,.8);text-decoration:none}
-@media(max-width:640px){.vs-grid{grid-template-columns:1fr;gap:12px}.vs-sep{padding:8px 0}.ct th:nth-child(3),.ct td:nth-child(3),.ct th:nth-child(5),.ct td:nth-child(5){display:none}}
+@media(max-width:640px){.vs-grid{grid-template-columns:1fr;gap:12px}.vs-sep{padding:8px 0}.ct-dhead{display:none}.ct-mhead{display:table-row}.ct td:nth-child(3),.ct td:nth-child(5){display:none}}
 """
 
 FONTS = (
@@ -187,18 +188,25 @@ def build_comparison_table(ca, cb, nom_a, nom_b, loc, use_f=False):
     comp = loc['comp']
     unit = '°F' if use_f else '°C'
     headers = (
-        f'<tr><th>{comp["th_month"]}</th>'
+        f'<tr class="ct-dhead"><th>{comp["th_month"]}</th>'
         f'<th colspan="2">{e(nom_a)}</th>'
         f'<th colspan="2">{e(nom_b)}</th>'
         f'<th>{comp["th_better"]}</th></tr>'
     )
     subheaders = (
-        f'<tr style="background:#f8f6f0"><td></td>'
+        f'<tr class="ct-dhead" style="background:#f8f6f0"><td></td>'
         f'<td style="font-size:10px;text-align:center;color:var(--slate2)">Score</td>'
         f'<td style="font-size:10px;text-align:center;color:var(--slate2)">Temp</td>'
         f'<td style="font-size:10px;text-align:center;color:var(--slate2)">Score</td>'
         f'<td style="font-size:10px;text-align:center;color:var(--slate2)">Temp</td>'
         f'<td></td></tr>'
+    )
+    # Header simplifié pour mobile (sans colspan)
+    mobile_header = (
+        f'<tr class="ct-mhead"><th>{comp["th_month"]}</th>'
+        f'<th>{e(nom_a)}</th>'
+        f'<th>{e(nom_b)}</th>'
+        f'<th>{comp["th_better"]}</th></tr>'
     )
     rows = ''
     for mi in range(1, 13):
@@ -225,7 +233,7 @@ def build_comparison_table(ca, cb, nom_a, nom_b, loc, use_f=False):
             f'<td style="font-size:12px">{winner_flag} {e(winner_name)}</td>'
             f'</tr>'
         )
-    return f'<table class="ct"><thead>{headers}{subheaders}</thead><tbody>{rows}</tbody></table>'
+    return f'<table class="ct"><thead>{headers}{subheaders}{mobile_header}</thead><tbody>{rows}</tbody></table>'
 
 
 def compute_verdicts(ca, cb, nom_a, nom_b, loc, use_f=False):
