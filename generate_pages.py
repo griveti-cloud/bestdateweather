@@ -292,11 +292,11 @@ def GTAG_HTML(pfx=''):
 
 def head_css(cfg):
     pfx = cfg['asset_prefix']
-    font_url = "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+    font_url = "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap&font-display=swap"
     return f'''<link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preload" as="style" href="{font_url}"/>
-<link rel="stylesheet" href="{font_url}"/>
+<link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
+<noscript><link rel="stylesheet" href="{font_url}"/></noscript>
 <link rel="stylesheet" href="{pfx}style.css"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
@@ -349,7 +349,7 @@ def footer_html(cfg, dest):
             cl_url = f"{cl_pfx}beste-reisezeit-{slug_de}.html"
         else:
             continue
-        alt_links.append(f'<span style="white-space:nowrap"><a href="{cl_url}" class="txt-muted"><img src="{pfx}flags/{cl_flag}.png" srcset="{pfx}flags/2x/{cl_flag}.png 2x" width="20" height="15" alt="" class="flag-icon-lg"> {cl_label}</a></span>')
+        alt_links.append(f'<span style="white-space:nowrap"><a href="{cl_url}" class="txt-muted"><img src="{pfx}flags/{cl_flag}.png" srcset="{pfx}flags/2x/{cl_flag}.png 2x" width="20" height="15" alt="" loading="lazy" class="flag-icon-lg"> {cl_label}</a></span>')
     alt_link_p = ('<p class="mt-8">'  + ' · '.join(alt_links) + '</p>') if alt_links else ''
 
     meth_url, meth_label = fc['methodology']
@@ -751,7 +751,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
             s_slug = dest_slug(C, sd) if sd else sim_slug
             sim_cards += (
                 f'<a href="{annual_url(C, s_slug)}" class="sim-card">'
-                f'<div class="f13-slate3"><img src="{pfx}flags/{sf}.png" srcset="{pfx}flags/2x/{sf}.png 2x" width="16" height="12" '
+                f'<div class="f13-slate3"><img src="{pfx}flags/{sf}.png" srcset="{pfx}flags/2x/{sf}.png 2x" loading="lazy" width="16" height="12" '
                 f'alt="{sf}" class="flag-icon">{sc}</div>'
                 f'<div class="fw700-navy">{sn}</div>'
                 f'<div class="f12-slate2">{sim_label}</div>'
@@ -845,7 +845,6 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <!-- SCORING: generate_pages.py | lang={C['lang']} | slug={slug_fr} | tropical={dest["tropical"]} | generated={TODAY} -->
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-{GTAG_HTML(pfx)}
 <title>{title}</title>
 <meta name="description" content="{desc}"/>
 <link rel="canonical" href="{canonical}"/>
@@ -861,6 +860,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <script type="application/ld+json">{faq_schema}</script>
 <script type="application/ld+json">{breadcrumb_schema}</script>
 <script type="application/ld+json">{dataset_schema}</script>
+{GTAG_HTML(pfx)}
 {head_css(C)}
 <style>
 .hero-band{{background:linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%);}}
@@ -878,7 +878,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <body>
 {nav_html(C)}
 <header class="hero-band">
- <div class="dest-tag"><img src="{pfx}flags/{flag}.png" srcset="{pfx}flags/2x/{flag}.png 2x" width="20" height="15" alt="{flag.upper()}" class="flag-icon"> {nom}, {country}</div>
+ <div class="dest-tag"><img src="{pfx}flags/{flag}.png" srcset="{pfx}flags/2x/{flag}.png 2x" width="20" height="15" alt="{flag.upper()}" loading="lazy" class="flag-icon"> {nom}, {country}</div>
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hsub}</p>
  <div class="kicker">{kicker}</div>
@@ -905,7 +905,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 {pillar_comparison_section}
 </main>
 {footer_html(C, dest)}
-<script src="{pfx}js/faq.js"></script>
+<script src="{pfx}js/faq.js" defer></script>
 </body>
 </html>'''
     return html
@@ -1022,7 +1022,7 @@ def _build_sim_cards(cfg, sim_list, all_dests, climate_for_sim, mi):
         parts.append(
             f'<a href="{url}" class="sim-card-sm">'
             f'<div class="fw700-navy-f14">'
-            f'<img src="{pfx_flag}{sd.get("flag","")}.png" width="16" height="12" '
+            f'<img src="{pfx_flag}{sd.get("flag","")}.png" loading="lazy" width="16" height="12" '
             f'alt="" class="flag-icon">'
             f'{name}</div>'
             f'<div class="f12-slate2">{lbl}</div>'
@@ -1625,7 +1625,6 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-{GTAG_HTML(pfx)}
 <title>{title}</title>
 <meta name="description" content="{desc}"/>
 <link rel="canonical" href="{canonical}"/>
@@ -1640,6 +1639,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <script type="application/ld+json">{article_schema}</script>
 <script type="application/ld+json">{faq_schema}</script>
 <script type="application/ld+json">{breadcrumb_schema}</script>
+{GTAG_HTML(pfx)}
 {head_css(cfg)}
 <style>
 .hero-band{{background:{MONTHLY_GRAD[mi]};}}
@@ -1654,7 +1654,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <body>
 {NAV}
 <header class="hero-band">
- <div class="dest-tag"><img src="{pfx}flags/{flag}.png" srcset="{pfx}flags/2x/{flag}.png 2x" width="20" height="15" alt="{flag.upper()}" class="flag-icon"> {nom} · {season}</div>
+ <div class="dest-tag"><img src="{pfx}flags/{flag}.png" srcset="{pfx}flags/2x/{flag}.png 2x" width="20" height="15" alt="{flag.upper()}" loading="lazy" class="flag-icon"> {nom} · {season}</div>
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hero_sub}</p>
  <div class="kicker">{L['kicker']}</div>

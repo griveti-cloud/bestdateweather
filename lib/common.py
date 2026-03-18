@@ -351,20 +351,20 @@ def footer_ranking_html(lang, alt_links):
 
     alt_html = ''.join(
         f'<a href="{a["url"]}" style="color:rgba(255,255,255,.7)">'
-        f'<img src="{a["flag"]}" width="20" height="15" alt="" '
+        f'<img loading="lazy" src="{a["flag"]}" width="20" height="15" alt="" '
         f'style="vertical-align:middle;border-radius:2px"> {a["label"]}</a>'
         for a in alt_links
     )
     alt_sep = ' · '.join(
         f'<a href="{a["url"]}" style="color:rgba(255,255,255,.7)">'
-        f'<img src="{a["flag"]}" width="20" height="15" alt="" '
+        f'<img loading="lazy" src="{a["flag"]}" width="20" height="15" alt="" '
         f'style="vertical-align:middle;border-radius:2px"> {a["label"]}</a>'
         for a in alt_links
     )
 
     alt_nowrap = ' · '.join(
         f'<span style="white-space:nowrap"><a href="{a["url"]}" style="color:rgba(255,255,255,.7)">'
-        f'<img src="{a["flag"]}" width="20" height="15" alt="" '
+        f'<img loading="lazy" src="{a["flag"]}" width="20" height="15" alt="" '
         f'style="vertical-align:middle;border-radius:2px"> {a["label"]}</a></span>'
         for a in alt_links
     )
