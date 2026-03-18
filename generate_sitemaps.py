@@ -31,10 +31,11 @@ def make_sitemap(urls, path):
 STATIC_FR = [
     ('index.html','weekly','1.0'),('a-propos.html','monthly','0.4'),
     ('methodologie.html','monthly','0.4'),('faq.html','monthly','0.4'),
-    ('legal.html','monthly','0.3'),('privacy.html','monthly','0.3'),('contact.html','monthly','0.3'),
+    ('mentions-legales.html','monthly','0.3'),('confidentialite.html','monthly','0.3'),('contact.html','monthly','0.3'),
 ]
 STATIC_EN = [
-    ('en/app.html','weekly','1.0'),('en/about.html','monthly','0.4'),
+    ('en/app.html','weekly','1.0'),('en/best-weather-destinations.html','monthly','0.9'),
+    ('en/about.html','monthly','0.4'),
     ('en/methodology.html','monthly','0.4'),('en/faq.html','monthly','0.4'),
     ('en/legal.html','monthly','0.3'),('en/privacy.html','monthly','0.3'),('en/contact.html','monthly','0.3'),
 ]
@@ -42,10 +43,12 @@ STATIC_ES = [('es/app.html','weekly','1.0'),('es/sobre-nosotros.html','monthly',
 STATIC_DE = [('de/app.html','weekly','1.0'),('de/ueber-uns.html','monthly','0.4'),('de/methodik.html','monthly','0.4')]
 STATIC_US = [('us/app.html','weekly','1.0'),('us/about.html','monthly','0.4')]
 
-def collect(patterns, exclude_redirects=True):
+def collect(patterns, exclude_redirects=True, exclude_files=None):
+    excl = set(exclude_files or [])
     result = []
     for pat, freq, pri in patterns:
         for f in sorted(glob.glob(pat)):
+            if f in excl: continue
             if exclude_redirects and is_redirect(f): continue
             result.append((f, freq, pri))
     return result
@@ -60,10 +63,10 @@ make_sitemap(
 
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_EN if glob.glob(f)] +
-    collect([('en/best-weather-destinations.html','monthly','0.9'),
-             ('en/where-to-go-in-*.html','monthly','0.8'),('en/ranking-*.html','monthly','0.7'),
+    collect([('en/where-to-go-in-*.html','monthly','0.8'),('en/ranking-*.html','monthly','0.7'),
              ('en/best-time-to-visit-*.html','monthly','0.8'),('en/*-weather-*.html','monthly','0.6'),
-             ('en/compare-*.html','monthly','0.5')]),
+             ('en/compare-*.html','monthly','0.5')],
+            exclude_files=[f for f,_,_ in STATIC_EN]),
     'sitemap-en.xml')
 
 make_sitemap(
@@ -112,8 +115,24 @@ def split_sitemap(src_path, dst_prio, dst_sec, top_slugs, monthly_pat):
         if monthly_pat not in path:
             prio.append(loc)
         else:
-            slug = path.split(monthly_pat)[0].rstrip('-').lower()
-            (prio if slug in top_slugs else sec).append(loc)
+            # Vérifier que c'est vraiment une page mensuelle (finit par un mois)
+            MONTH_SLUGS = {
+                'january','february','march','april','may','june','july','august',
+                'september','october','november','december',
+                'janvier','fevrier','mars','avril','mai','juin','juillet','aout',
+                'septembre','octobre','novembre','decembre',
+                'enero','febrero','marzo','abril','mayo','junio','julio','agosto',
+                'septiembre','octubre','noviembre','diciembre',
+                'januar','februar','maerz','april','mai','juni','juli','august',
+                'september','oktober','november','dezember',
+            }
+            stem = path.lower().replace('.html','').rstrip('/')
+            last_part = stem.split('-')[-1]
+            if last_part not in MONTH_SLUGS:
+                prio.append(loc)
+            else:
+                slug = path.split(monthly_pat)[0].rstrip('-').lower()
+                (prio if slug in top_slugs else sec).append(loc)
     for urls, dst in [(prio, dst_prio), (sec, dst_sec)]:
         lines = ['<?xml version="1.0" encoding="UTF-8"?>',
                  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
