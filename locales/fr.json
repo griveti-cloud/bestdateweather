@@ -551,11 +551,11 @@
     "Meilleure période de visite<br/><em>{prep} {nom_bare}</em>"
   ],
   "annual_descs": [
-    "Quelle est la meilleure période pour visiter {nom_bare} ? {best_month} offre {best_tmax}°C et {best_rain}% de jours pluvieux. Score météo : {best_score}/10. Données 10 ans Open-Meteo.",
-    "Quand partir {prep} {nom_bare} ? {best_month} est le meilleur mois ({best_score}/10) avec {best_tmax}°C. Analyse complète des 12 mois sur 10 ans de données.",
-    "{nom_bare} en {best_month_lc} : {best_tmax}°C, {best_rain}% de pluie, score {best_score}/10. Découvrez le meilleur moment pour partir — données météo 10 ans.",
-    "{best_month} est idéal {prep} {nom_bare} : {best_tmax}°C, {best_sun}h de soleil et {best_rain}% de pluie. Évitez {worst_month_lc} ({worst_rain}% pluvieux). Score {best_score}/10.",
-    "Climat {prep} {nom_bare} : profitez de {best_season_lc} ({best_tmin}–{best_tmax}°C en {best_month_lc}). Soleil {best_sun}h/j, pluie {best_rain}%. Analyse sur 10 ans."
+    "Quelle est la meilleure période {prep} {nom_bare} ? {best_month_lc} offre {best_tmax}°C et {best_sun}h de soleil/jour. Score {best_score}/10.",
+    "{best_month} est le meilleur mois {prep} {nom_bare} : {best_tmax}°C, {best_sun}h soleil, score {best_score}/10. Analyse 12 mois sur 10 ans.",
+    "Guide météo {prep} {nom_bare} : meilleur mois {best_month_lc} ({best_tmax}°C, {best_sun}h/jour). Évitez {worst_month_lc} ({worst_rain}% pluie).",
+    "Meilleure période {prep} {nom_bare} : {best_month_lc} ({best_score}/10) avec {best_tmax}°C et {best_sun}h de soleil. Planifiez mieux.",
+    "{nom_bare} en {best_month_lc} : {best_tmax}°C, {best_sun}h soleil, {best_rain}% pluie — conditions idéales. Données ERA5 sur 10 ans."
   ],
   "annual_faq_mountain": [
     {
@@ -703,9 +703,9 @@
     "{nom_bare} en {month_lc} : météo de {season_lc} {year} — {tmax}°C & {sun}h/jour"
   ],
   "monthly_descs": [
-    "Météo {prep} {nom_bare} en {month_lc} {year} : {tmax}°C max, {rain}% jours pluvieux, {sun}h soleil/j. Score {score}/10. Basé sur 10 ans de données Open-Meteo.",
-    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil, {rain}% de pluie. {verdict} Score {score}/10.",
-    "Faut-il partir {prep} {nom_bare} en {month_lc} {year} ? {tmax}°C et {rain}% de pluie — score météo {score}/10 sur 10 ans de données."
+    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil/jour et {rain}% de jours pluvieux. Score {score}/10 — {verdict}.",
+    "Partir {prep} {nom_bare} en {month_lc} {year} : bonne idée ? {sun}h de soleil, {tmax}°C — score {score}/10.",
+    "Préparez votre séjour {prep} {nom_bare} en {month_lc} : {tmax}°C, {sun}h de soleil par jour. Score {score}/10 — {verdict}."
   ],
   "monthly_h1s": [
     "Météo {prep} {nom_bare}<br/><em>en {month_lc}</em>",

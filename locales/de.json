@@ -551,11 +551,11 @@
     "Beste Reisezeit für<br/><em>{nom}</em>"
   ],
   "annual_descs": [
-    "Wann ist die beste Reisezeit für {nom}? Der {best_month} bietet {best_tmax}°C und {best_rain}% Regentage. Wetter-Score: {best_score}/10. 10 Jahre Open-Meteo-Daten.",
-    "Wann nach {nom} reisen? Der {best_month} ist der beste Monat ({best_score}/10) mit {best_tmax}°C. Vollständige 12-Monats-Analyse basierend auf 10 Jahren Daten.",
-    "{nom} im {best_month}: {best_tmax}°C, {best_rain}% Regen, Score {best_score}/10. Beste Reisezeit finden — 10 Jahre Wetterdaten.",
-    "Der {best_month} ist ideal für {nom}: {best_tmax}°C, {best_sun}h Sonnenschein und {best_rain}% Regen. {worst_month} meiden ({worst_rain}% Regen). Score {best_score}/10.",
-    "{nom} Klima: {best_season_lc} genießen ({best_tmin}–{best_tmax}°C im {best_month}). Sonnenschein {best_sun}h/Tag, Regen {best_rain}%. 10-Jahres-Analyse."
+    "Wann ist die beste Reisezeit für {nom}? {best_month} bietet {best_tmax}°C und {best_sun}h Sonne/Tag. Score {best_score}/10.",
+    "{best_month} ist der beste Monat für {nom}: {best_tmax}°C, {best_sun}h Sonne, Score {best_score}/10. 12-Monats-Wetteranalyse.",
+    "Klimaführer für {nom}: bester Monat {best_month} ({best_tmax}°C, {best_sun}h/Tag). Meide {worst_month} ({worst_rain}% Regen). 10 Jahre Daten.",
+    "Beste Reisezeit für {nom}: {best_month} ({best_score}/10) mit {best_tmax}°C und {best_sun}h Sonne. Schlechteste: {worst_month}.",
+    "{nom} im {best_month}: {best_tmax}°C, {best_sun}h Sonne, {best_rain}% Regen — ideale Bedingungen. ERA5-Analyse über 10 Jahre."
   ],
   "annual_faq_mountain": [
     {
@@ -703,9 +703,9 @@
     "{nom} im {month}: {season}-Wetter {year} — {tmax}°C & {sun}h Sonne/Tag"
   ],
   "monthly_descs": [
-    "Wetter in {nom} im {month} {year}: {tmax}°C max, {rain}% Regentage, {sun}h Sonne/Tag. Score {score}/10. Basierend auf 10 Jahren Daten.",
-    "Ist {month} {year} eine gute Zeit für {nom}? {tmax}°C, {sun}h Sonne, {rain}% Regen. Score {score}/10 — {verdict}",
-    "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne und {rain}% Regentage. Klimascore {score}/10."
+    "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne/Tag und {rain}% Regentage. Score {score}/10 — {verdict}.",
+    "Ist {month} {year} eine gute Reisezeit für {nom}? {sun}h Sonne, {tmax}°C — Score {score}/10.",
+    "Plane deine Reise nach {nom} im {month}: {tmax}°C und {sun}h Sonne pro Tag. Score {score}/10 — {verdict}."
   ],
   "monthly_h1s": [
     "{nom} Wetter<br/><em>im {month}</em>",

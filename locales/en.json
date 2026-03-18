@@ -552,11 +552,11 @@
     "Best Time to Visit<br/><em>{nom}</em>"
   ],
   "annual_descs": [
-    "When is the best time to visit {nom}? {best_month} offers {best_tmax}°C and {best_rain}% rainy days. Weather score: {best_score}/10. 10-year Open-Meteo data.",
-    "When to visit {nom}? {best_month} is the best month ({best_score}/10) with {best_tmax}°C. Full 12-month analysis based on 10 years of data.",
-    "{nom} in {best_month}: {best_tmax}°C, {best_rain}% rain, score {best_score}/10. Find the best time to go — 10-year weather data.",
-    "{best_month} is ideal for {nom}: {best_tmax}°C, {best_sun}h sunshine and {best_rain}% rain. Avoid {worst_month} ({worst_rain}% rainy). Score {best_score}/10.",
-    "{nom} climate: enjoy {best_season_lc} ({best_tmin}–{best_tmax}°C in {best_month}). Sunshine {best_sun}h/day, rain {best_rain}%. 10-year analysis."
+    "When is the best time to visit {nom}? {best_month} offers {best_tmax}°C and {best_sun}h sunshine/day. Score {best_score}/10 — 10-year data.",
+    "{best_month} is the best month to visit {nom}: {best_tmax}°C, {best_sun}h sun, score {best_score}/10. Full 12-month weather analysis.",
+    "{nom} climate guide: best month is {best_month} ({best_tmax}°C, {best_sun}h/day). Avoid {worst_month} ({worst_rain}% rain). 10 years of data.",
+    "Best time for {nom}: {best_month} ({best_score}/10) with {best_tmax}°C and {best_sun}h sunshine. Worst: {worst_month}. Plan smarter.",
+    "{nom} in {best_month}: {best_tmax}°C, {best_sun}h sun, {best_rain}% rain — ideal conditions. 10-year ERA5 climate analysis."
   ],
   "annual_faq_mountain": [
     {
@@ -704,9 +704,9 @@
     "{nom} in {month}: {season} weather {year} — {tmax}°C & {sun}h sun/day"
   ],
   "monthly_descs": [
-    "{nom} weather in {month} {year}: {tmax}°C max, {rain}% rainy days, {sun}h sunshine/day. Score {score}/10. Based on 10 years of Open-Meteo data.",
-    "Is {month} {year} a good time to visit {nom}? {tmax}°C, {sun}h sun, {rain}% rain. Score {score}/10 — {verdict}",
-    "{nom} in {month} {year}: {tmax}°C, {sun}h of sunshine and {rain}% rainy days. Climate score {score}/10 based on 10 years of data."
+    "{nom} in {month} {year}: {tmax}°C, {sun}h sunshine/day and {rain}% rainy days. Score {score}/10 — {verdict}.",
+    "Is {month} {year} a good time to visit {nom}? {sun}h sun, {tmax}°C, score {score}/10. Based on 10 years of data.",
+    "Plan your {nom} trip in {month}: {tmax}°C, {sun}h of sun per day. Climate score {score}/10 — {verdict}."
   ],
   "monthly_h1s": [
     "{nom} weather<br/><em>in {month}</em>",

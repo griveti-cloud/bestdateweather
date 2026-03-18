@@ -551,11 +551,11 @@
     "Mejor Época para Visitar<br/><em>{nom}</em>"
   ],
   "annual_descs": [
-    "¿Cuándo es la mejor época para visitar {nom}? {best_month} ofrece {best_tmax}°C y {best_rain}% de días de lluvia. Puntuación: {best_score}/10. Datos Open-Meteo a 10 años.",
-    "¿Cuándo ir a {nom}? {best_month} es el mejor mes ({best_score}/10) con {best_tmax}°C. Análisis completo de 12 meses basado en 10 años de datos.",
-    "{nom} en {best_month}: {best_tmax}°C, {best_rain}% de lluvia, puntuación {best_score}/10. Encuentra la mejor época — datos climáticos a 10 años.",
-    "{best_month} es ideal para {nom}: {best_tmax}°C, {best_sun}h de sol y {best_rain}% de lluvia. Evita {worst_month} ({worst_rain}% de lluvia). Puntuación {best_score}/10.",
-    "Clima de {nom}: disfruta de {best_season_lc} ({best_tmin}–{best_tmax}°C en {best_month}). Sol {best_sun}h/día, lluvia {best_rain}%. Análisis a 10 años."
+    "¿Cuándo es la mejor época para visitar {nom}? {best_month} ofrece {best_tmax}°C y {best_sun}h de sol/día. Puntuación {best_score}/10.",
+    "{best_month} es el mejor mes para visitar {nom}: {best_tmax}°C, {best_sun}h sol, puntuación {best_score}/10. Análisis de 12 meses.",
+    "Guía del clima en {nom}: mejor mes {best_month} ({best_tmax}°C, {best_sun}h/día). Evita {worst_month} ({worst_rain}% lluvia). 10 años de datos.",
+    "Mejor época para {nom}: {best_month} ({best_score}/10) con {best_tmax}°C y {best_sun}h de sol. Peor: {worst_month}. Planifica mejor.",
+    "{nom} en {best_month}: {best_tmax}°C, {best_sun}h sol, {best_rain}% lluvia — condiciones ideales. Análisis ERA5 de 10 años."
   ],
   "annual_faq_mountain": [
     {
@@ -703,9 +703,9 @@
     "{nom} en {month}: clima de {season_lc} {year} — {tmax}°C y {sun}h de sol"
   ],
   "monthly_descs": [
-    "Tiempo en {nom} en {month} {year}: {tmax}°C máx, {rain}% días de lluvia, {sun}h de sol/día. Puntuación {score}/10. Basado en 10 años de datos.",
-    "¿Es {month} {year} un buen momento para visitar {nom}? {tmax}°C, {sun}h sol, {rain}% lluvia. Puntuación {score}/10 — {verdict}",
-    "{nom} en {month} {year}: {tmax}°C, {sun}h de sol y {rain}% días lluviosos. Puntuación climática {score}/10."
+    "{nom} en {month} {year}: {tmax}°C, {sun}h de sol/día y {rain}% de días de lluvia. Puntuación {score}/10 — {verdict}.",
+    "¿Es {month} {year} buen momento para ir a {nom}? {sun}h de sol, {tmax}°C — puntuación {score}/10.",
+    "Planifica tu viaje a {nom} en {month}: {tmax}°C y {sun}h de sol al día. Puntuación {score}/10 — {verdict}."
   ],
   "monthly_h1s": [
     "Tiempo en {nom}<br/><em>en {month}</em>",
