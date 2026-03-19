@@ -155,6 +155,25 @@ def build_html(month, destinations):
         </table>
       </td></tr>
 
+      <!-- CTA classement -->
+      <tr><td style="padding:8px 0 24px">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0"
+               style="background:#1a1f2e;border-radius:12px">
+          <tr><td style="padding:24px;text-align:center">
+            <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,.6)">
+              Toutes les destinations analysées
+            </p>
+            <p style="margin:0 0 16px;font-family:Georgia,serif;font-size:18px;color:#ffffff;font-weight:700">
+              Voir le classement complet des meilleures destinations météo
+            </p>
+            <a href="{SITE_URL}/meilleures-destinations-meteo.html"
+               style="display:inline-block;background:#d97706;color:#ffffff;font-weight:700;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none">
+              Voir le classement →
+            </a>
+          </td></tr>
+        </table>
+      </td></tr>
+
       <!-- Footer -->
       <tr><td style="padding:24px 0;text-align:center;border-top:1px solid #e2e8f0">
         <p style="margin:0 0 8px;font-size:12px;color:#94a3b8">
