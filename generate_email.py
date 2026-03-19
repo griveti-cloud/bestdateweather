@@ -127,7 +127,7 @@ def build_html(month, destinations):
 <title>Top 5 destinations — {mois_cap} {year}</title>
 </head>
 <body style="margin:0;padding:0;background:#f1f5f9;font-family:DM Sans,Arial,sans-serif">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f1f5f9;padding:32px 16px">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f1f5f9" style="background:#f1f5f9;padding:32px 16px">
   <tr><td align="center">
     <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%">
 
@@ -139,7 +139,7 @@ def build_html(month, destinations):
       </td></tr>
 
       <!-- Hero -->
-      <tr><td style="background:linear-gradient(135deg,#0d1a3a,#1a2a6a);border-radius:16px;padding:32px 28px;text-align:center;margin-bottom:24px">
+      <!--[if mso]><tr><td style="background:#1a2a6a;padding:32px 28px;text-align:center"><![endif]--><!--[if !mso]><!--><tr><td style="background:#1a2a6a;border-radius:16px;padding:32px 28px;text-align:center"><!--<![endif]-->
         <p style="margin:0 0 8px;font-size:13px;font-weight:700;color:#93c5fd;text-transform:uppercase;letter-spacing:.8px">Météo voyage</p>
         <h1 style="margin:0 0 12px;font-family:Georgia,serif;font-size:28px;font-weight:700;color:#ffffff;line-height:1.2">
           Top 5 destinations<br>pour <em style="color:#d97706">{mois_cap} {year}</em>
@@ -158,7 +158,7 @@ def build_html(month, destinations):
       <!-- CTA classement -->
       <tr><td style="padding:8px 0 24px">
         <table width="100%" cellpadding="0" cellspacing="0" border="0"
-               style="background:#1a1f2e;border-radius:12px">
+               bgcolor="#1a1f2e" style="background:#1a1f2e;border-radius:12px">
           <tr><td style="padding:24px;text-align:center">
             <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,.6)">
               Toutes les destinations analysées
