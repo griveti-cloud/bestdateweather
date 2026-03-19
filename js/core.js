@@ -2877,6 +2877,12 @@ function bdwToggleFav(btn) {
   bdwUpdateFavBtn(btn, active);
   btn.style.transform = 'scale(1.3)';
   setTimeout(function() { btn.style.transform = ''; }, 200);
+  // Debug visuel temporaire
+  var dbg = document.createElement('div');
+  dbg.style.cssText = 'position:fixed;bottom:80px;left:16px;right:16px;background:#1a1f2e;color:white;padding:12px;border-radius:8px;font-size:12px;z-index:99999;font-family:monospace';
+  dbg.textContent = 'active=' + active + ' | emailFn=' + (typeof window.bdwShowEmailPopup) + ' | asked=' + localStorage.getItem('bdw_email_asked');
+  document.body.appendChild(dbg);
+  setTimeout(function() { dbg.remove(); }, 5000);
   // Proposer l'email uniquement au moment de l'ajout
   if (active && typeof window.bdwShowEmailPopup === 'function') {
     var nameEl = document.querySelector('h1.hero-title em');
