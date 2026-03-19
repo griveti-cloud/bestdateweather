@@ -16,3 +16,4 @@ data/*_backup*.csv
 *.pyc
 .env
 *.env
+email_preview_*.html
