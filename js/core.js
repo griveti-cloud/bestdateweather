@@ -2859,7 +2859,7 @@ function bdwSaveFavs(favs) {
   try { localStorage.setItem(BDW_FAV_KEY, JSON.stringify(favs)); } catch(e) {}
 }
 
-function bdwToggleFav(btn) {
+window.bdwToggleFav = function(btn) {
   var slug = btn.getAttribute('data-slug');
   if (!slug) return;
   var favs = bdwLoadFavs();
@@ -2910,19 +2910,19 @@ function bdwInitFavBtn() {
   bdwUpdateFavBtn(btn, !!bdwLoadFavs()[slug]);
 }
 
-function bdwCloseFavsPanel() {
+window.bdwCloseFavsPanel = function() {
   var p = document.getElementById('bdw-favs-panel');
   if (p) p.remove();
   window.location.hash = '';
 }
 
-function bdwClearFavs() {
+window.bdwClearFavs = function() {
   if (!confirm('Effacer tous les favoris ?')) return;
   localStorage.removeItem(BDW_FAV_KEY);
   bdwCloseFavsPanel();
 }
 
-function bdwShowFavorites() {
+window.bdwShowFavorites = function() {
   var favs = bdwLoadFavs();
   var keys = Object.keys(favs).sort(function(a,b) { return (favs[b].ts||0)-(favs[a].ts||0); });
   var existing = document.getElementById('bdw-favs-panel');
