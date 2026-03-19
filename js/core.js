@@ -2891,8 +2891,9 @@ function bdwUpdateFavBtn(btn, active) {
   btn.setAttribute('aria-label', active ? 'Retirer des favoris' : 'Ajouter aux favoris');
   btn.style.color = active ? '#d97706' : '';
   btn.style.borderColor = active ? '#d97706' : '';
-  var path = btn.querySelector('path');
-  if (path) path.setAttribute('fill', active ? 'currentColor' : 'none');
+  var svg = btn.querySelector('svg');
+  if (svg) svg.setAttribute('fill', active ? '#d97706' : 'none');
+  if (svg) svg.setAttribute('stroke', active ? '#d97706' : 'currentColor');
 }
 
 function bdwInitFavBtn() {
@@ -2987,11 +2988,16 @@ window.addEventListener('hashchange', bdwCheckHash);
   var ASKED_KEY = 'bdw_email_asked';
 
   function alreadyAsked() {
-    try { return !!localStorage.getItem(ASKED_KEY); } catch(e) { return true; }
+    try {
+      var v = localStorage.getItem(ASKED_KEY);
+      if (!v) return false;
+      // Réafficher après 30 jours
+      return (Date.now() - parseInt(v)) < 30 * 24 * 3600 * 1000;
+    } catch(e) { return false; }
   }
 
   function markAsked() {
-    try { localStorage.setItem(ASKED_KEY, '1'); } catch(e) {}
+    try { localStorage.setItem(ASKED_KEY, String(Date.now())); } catch(e) {}
   }
 
   function showEmailPopup(destName) {
