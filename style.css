@@ -23,9 +23,12 @@ nav{background:white;border-bottom:1px solid var(--cream2);padding:14px 24px;dis
 .nav-cta{background:var(--gold);color:var(--navy);border:none;border-radius:8px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;text-decoration:none;transition:all .2s;display:inline-block}
 .nav-cta:hover{background:var(--gold2);transform:translateY(-1px)}
 .nav-actions{display:flex;align-items:center;gap:10px}
-.nav-share{background:none;border:1.5px solid var(--cream2);border-radius:8px;padding:7px 9px;cursor:pointer;display:none;align-items:center;color:var(--slate)}
+.nav-share{background:none;border:1.5px solid var(--cream2);border-radius:8px;padding:7px 9px;cursor:pointer;display:none;align-items:center;color:var(--slate);transition:all .15s}
 .nav-share:hover{border-color:var(--gold);color:var(--gold)}
-@media(pointer:coarse),(max-width:768px){.nav-share{display:flex}}
+#btn-fav{display:flex}
+#btn-fav[aria-pressed="true"]{color:#d97706;border-color:#d97706}
+#btn-fav[aria-pressed="true"] path{fill:currentColor}
+@media(pointer:coarse),(max-width:768px){.nav-share{display:flex}.nav-brand{margin-right:4px}}
 
 /* HERO */
 .hero-band{color:white;padding:72px 24px 60px;text-align:center}
