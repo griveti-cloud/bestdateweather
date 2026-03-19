@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Widgets météo voyage gratuits — BestDateWeather</title>
+<meta name="description" content="Ajoutez des widgets météo à votre blog voyage. 696 destinations, données ERA5 10 ans, 100% gratuit. Aucune inscription requise."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0a0f1e;
+  --card: #111827;
+  --card2: #1a2236;
+  --border: #1e293b;
+  --orange: #f97316;
+  --orange2: #ea6900;
+  --gold: #d97706;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --green: #22c55e;
+  --radius: 12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh}
+
+/* Hero */
+.hero{padding:64px 24px 48px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249,115,22,.12) 0%, transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.3);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;color:var(--orange);margin-bottom:20px;text-transform:uppercase;letter-spacing:.5px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(32px,5vw,56px);font-weight:900;line-height:1.05;margin-bottom:16px}
+.hero h1 em{font-style:italic;color:var(--orange)}
+.hero-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto 32px;line-height:1.6}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.pill{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:5px}
+.pill::before{content:'✓';color:var(--green);font-weight:800}
+
+/* Builder */
+.builder{max-width:1100px;margin:0 auto;padding:0 24px 80px;display:grid;grid-template-columns:360px 1fr;gap:24px;align-items:start}
+@media(max-width:800px){.builder{grid-template-columns:1fr}}
+
+/* Panel */
+.panel{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.panel-title{padding:16px 20px;border-bottom:1px solid var(--border);font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+
+/* Search */
+.search-wrap{padding:16px 20px;border-bottom:1px solid var(--border)}
+#search{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:.15s}
+#search:focus{border-color:var(--orange)}
+#search::placeholder{color:var(--muted)}
+.dest-list{max-height:240px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.dest-item{padding:10px 20px;cursor:pointer;font-size:13px;color:var(--muted);transition:.1s;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(30,41,59,.5)}
+.dest-item:hover,.dest-item.active{background:rgba(249,115,22,.1);color:var(--text)}
+.dest-item.active{border-left:2px solid var(--orange)}
+.dest-flag{width:20px;height:14px;border-radius:2px;flex-shrink:0}
+.dest-name{font-weight:600;color:var(--text)}
+.dest-country{font-size:11px;color:var(--muted);margin-top:1px}
+
+/* Options */
+.options{padding:20px}
+.opt-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.opt-btn{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:.15s;font-family:'DM Sans',sans-serif}
+.opt-btn.active,.opt-btn:hover{background:var(--orange);border-color:var(--orange);color:white}
+
+/* Preview */
+.preview-panel{position:sticky;top:24px}
+.preview-label{padding:16px 20px;border-bottom:1px solid var(--border);font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.preview-box{padding:24px;display:flex;justify-content:center;min-height:300px;align-items:center}
+#widget-frame{border-radius:14px;border:none;display:block;transition:.2s}
+
+/* Code */
+.code-section{padding:20px;border-top:1px solid var(--border)}
+.code-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.code-header span{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.copy-btn{background:var(--orange);color:white;border:none;border-radius:8px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.15s}
+.copy-btn:hover{background:var(--orange2)}
+.copy-btn.copied{background:var(--green)}
+pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:11px;line-height:1.7;overflow-x:auto;color:#7dd3fc;white-space:pre-wrap;word-break:break-all}
+
+/* Widget inline preview (rendu dans la page) */
+.widget-preview{width:100%;font-family:'DM Sans',Arial,sans-serif;background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden}
+.wp-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f1f5f9}
+.wp-dest{display:flex;align-items:center;gap:10px}
+.wp-dest img{border-radius:3px}
+.wp-name{font-size:16px;font-weight:800;color:#0f172a}
+.wp-country{font-size:11px;color:#94a3b8;margin-top:1px}
+.wp-badge{background:#f1f5f9;color:#64748b;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px}
+.wp-section{padding:12px 16px;border-bottom:1px solid #f1f5f9}
+.wp-slabel{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.wp-months{display:flex;gap:6px;flex-wrap:wrap}
+.wp-month-badge{background:#f97316;color:white;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700}
+.wp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wp-stat{background:#f8fafc;border-radius:10px;padding:10px;text-align:center}
+.wp-stat-icon{font-size:18px;margin-bottom:4px}
+.wp-stat-lbl{font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.wp-stat-val{font-size:15px;font-weight:800;color:#0f172a}
+.wp-stat-mo{font-size:10px;color:#94a3b8;margin-top:1px}
+.wp-chart{padding:12px 16px 8px}
+.wp-bars{display:flex;gap:2px;align-items:flex-end;height:72px}
+.wp-bar-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1}
+.wp-bar{width:100%;border-radius:3px 3px 0 0;min-height:4px}
+.wp-bar-lbl{font-size:9px;color:#94a3b8}
+.wp-footer{padding:10px 16px;display:flex;align-items:center;justify-content:space-between;background:#f8fafc}
+.wp-brand{font-size:10px;color:#cbd5e1;font-weight:600}
+.wp-cta{background:#f97316;color:white;font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🛠️ Widgets gratuits</div>
+  <h1>Données météo voyage<br>pour votre <em>blog</em></h1>
+  <p class="hero-sub">Ajoutez des insights météo à vos articles en une ligne de code. 696 destinations, 10 ans de données ERA5. 100% gratuit, aucune inscription.</p>
+  <div class="badges">
+    <span class="pill">100% Gratuit</span>
+    <span class="pill">Sans inscription</span>
+    <span class="pill">696 destinations</span>
+    <span class="pill">Mobile responsive</span>
+  </div>
+</div>
+
+<div class="builder">
+  <!-- Panel gauche -->
+  <div>
+    <div class="panel">
+      <div class="panel-title">🌍 Choisir une destination</div>
+      <div class="search-wrap">
+        <input type="text" id="search" placeholder="Barcelone, Bali, Tokyo...">
+      </div>
+      <div class="dest-list" id="dest-list"></div>
+    </div>
+
+    <div class="panel" style="margin-top:16px">
+      <div class="panel-title">⚙️ Options</div>
+      <div class="options">
+        <div class="opt-label">Format</div>
+        <div class="btn-group">
+          <button class="opt-btn active" data-size="compact">Compact<br><span style="font-size:10px;opacity:.7">400×280</span></button>
+          <button class="opt-btn" data-size="full">Complet<br><span style="font-size:10px;opacity:.7">400×460</span></button>
+        </div>
+        <div class="opt-label">Thème</div>
+        <div class="btn-group">
+          <button class="opt-btn active" data-theme="light">☀️ Clair</button>
+          <button class="opt-btn" data-theme="dark">🌙 Sombre</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel droit : preview + code -->
+  <div class="preview-panel">
+    <div class="panel">
+      <div class="preview-label">👁️ Aperçu en direct</div>
+      <div class="preview-box" id="preview-box">
+        <div id="widget-container"></div>
+      </div>
+      <div class="code-section">
+        <div class="code-header">
+          <span>Code à copier</span>
+          <button class="copy-btn" id="copy-btn" onclick="copyCode()">Copier le code</button>
+        </div>
+        <pre id="code-output">&lt;!-- Sélectionnez une destination --&gt;</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/widget-data.js"></script>
+<script>
+var currentSlug = 'barcelone';
+var currentSize = 'compact';
+var currentTheme = 'light';
+var SITE = 'https://bestdateweather.com';
+
+var MOIS = ['Jan','Fév','Mar','Avr','Mai','Jui','Jul','Aoû','Sep','Oct','Nov','Déc'];
+
+function scoreColor(s) {
+  if (s >= 8.5) return '#22c55e';
+  if (s >= 7.0) return '#f97316';
+  return '#ef4444';
+}
+
+function renderWidget(slug, size, theme) {
+  var d = BDW_WIDGET_DATA[slug];
+  if (!d) return '<p style="color:#94a3b8;padding:20px">Destination non trouvée</p>';
+
+  var flagUrl = d.flag ? SITE + '/flags/' + d.flag + '.png' : '';
+  var ficheUrl = SITE + '/meilleure-periode-' + slug + '.html';
+  var isDark = theme === 'dark';
+
+  var bg      = isDark ? '#111827' : '#ffffff';
+  var bgStat  = isDark ? '#1a2236' : '#f8fafc';
+  var bgFooter= isDark ? '#0f172a' : '#f8fafc';
+  var textMain= isDark ? '#f1f5f9' : '#0f172a';
+  var textSub = isDark ? '#94a3b8' : '#94a3b8';
+  var border  = isDark ? '#1e293b' : '#f1f5f9';
+  var borderOut=isDark ? '#1e293b' : '#e2e8f0';
+  var badgeBg = isDark ? '#1e293b' : '#f1f5f9';
+  var badgeCol= isDark ? '#64748b' : '#64748b';
+
+  // Badges top 3
+  var monthBadges = d.top3.map(function(m) {
+    return '<span style="background:#f97316;color:white;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700">' + m + '</span>';
+  }).join('');
+
+  // Barres
+  var maxS = Math.max.apply(null, d.scores);
+  var bars = d.scores.map(function(s, i) {
+    var h = Math.max(4, Math.round(s / 10 * 60));
+    var c = scoreColor(s);
+    return '<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">'
+      + '<div style="width:100%;background:' + c + ';border-radius:3px 3px 0 0;height:' + h + 'px"></div>'
+      + '<span style="font-size:9px;color:' + textSub + '">' + MOIS[i] + '</span>'
+      + '</div>';
+  }).join('');
+
+  var compact = size === 'compact';
+
+  var html = '<div style="font-family:DM Sans,Arial,sans-serif;background:' + bg + ';border:1px solid ' + borderOut + ';border-radius:14px;overflow:hidden;width:400px">';
+
+  // Header
+  html += '<div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid ' + border + '">';
+  html += '<div style="display:flex;align-items:center;gap:10px">';
+  if (flagUrl) html += '<img src="' + flagUrl + '" width="22" height="16" style="border-radius:3px" alt="">';
+  html += '<div><div style="font-size:16px;font-weight:800;color:' + textMain + '">' + d.nom + '</div>';
+  html += '<div style="font-size:11px;color:' + textSub + ';margin-top:1px">' + d.pays + '</div></div></div>';
+  html += '<span style="background:' + badgeBg + ';color:' + badgeCol + ';font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">📊 10 ans ERA5</span>';
+  html += '</div>';
+
+  // Meilleure période
+  html += '<div style="padding:12px 16px;border-bottom:1px solid ' + border + '">';
+  html += '<div style="font-size:10px;font-weight:700;color:' + textSub + ';text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">☀️ Meilleure période</div>';
+  html += '<div style="display:flex;gap:6px;flex-wrap:wrap">' + monthBadges + '</div>';
+  html += '</div>';
+
+  if (!compact) {
+    // Stats
+    html += '<div style="padding:12px 16px;border-bottom:1px solid ' + border + '">';
+    html += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">';
+    html += '<div style="background:' + bgStat + ';border-radius:10px;padding:10px;text-align:center">';
+    html += '<div style="font-size:18px;margin-bottom:4px">🌡️</div>';
+    html += '<div style="font-size:9px;color:' + textSub + ';text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Le plus chaud</div>';
+    html += '<div style="font-size:15px;font-weight:800;color:' + textMain + '">' + d.hottest.t + '°C</div>';
+    html += '<div style="font-size:10px;color:' + textSub + ';margin-top:1px">' + d.hottest.m + '</div></div>';
+    html += '<div style="background:' + bgStat + ';border-radius:10px;padding:10px;text-align:center">';
+    html += '<div style="font-size:18px;margin-bottom:4px">❄️</div>';
+    html += '<div style="font-size:9px;color:' + textSub + ';text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Le plus froid</div>';
+    html += '<div style="font-size:15px;font-weight:800;color:' + textMain + '">' + d.coldest.t + '°C</div>';
+    html += '<div style="font-size:10px;color:' + textSub + ';margin-top:1px">' + d.coldest.m + '</div></div>';
+    html += '<div style="background:' + bgStat + ';border-radius:10px;padding:10px;text-align:center">';
+    html += '<div style="font-size:18px;margin-bottom:4px">🌤️</div>';
+    html += '<div style="font-size:9px;color:' + textSub + ';text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Le plus sec</div>';
+    html += '<div style="font-size:15px;font-weight:800;color:' + textMain + '">' + d.driest.p + '%</div>';
+    html += '<div style="font-size:10px;color:' + textSub + ';margin-top:1px">' + d.driest.m + '</div></div>';
+    html += '</div></div>';
+  }
+
+  // Graphique
+  html += '<div style="padding:12px 16px 8px">';
+  if (!compact) html += '<div style="font-size:10px;font-weight:700;color:' + textSub + ';text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">📈 Score mensuel</div>';
+  html += '<div style="display:flex;gap:2px;align-items:flex-end;height:72px">' + bars + '</div>';
+  html += '</div>';
+
+  // Footer
+  html += '<div style="padding:10px 16px;display:flex;align-items:center;justify-content:space-between;background:' + bgFooter + '">';
+  html += '<span style="font-size:10px;color:' + textSub + ';font-weight:600">bestdateweather.com · ERA5</span>';
+  html += '<a href="' + ficheUrl + '" target="_blank" style="background:#f97316;color:white;font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;text-decoration:none">Guide complet →</a>';
+  html += '</div>';
+  html += '</div>';
+
+  return html;
+}
+
+function updatePreview() {
+  document.getElementById('widget-container').innerHTML = renderWidget(currentSlug, currentSize, currentTheme);
+  updateCode();
+}
+
+function updateCode() {
+  var h = currentSize === 'compact' ? 280 : 460;
+  // Pour les pages widget statiques générées
+  var url = 'https://bestdateweather.com/widget/' + currentSlug + (currentSize === 'full' ? '-full' : '') + '.html';
+  var code = '<iframe\n  src="' + url + '"\n  width="400"\n  height="' + h + '"\n  frameborder="0"\n  style="border-radius:14px;border:1px solid #e2e8f0;"\n  loading="lazy"\n  title="Météo ' + (BDW_WIDGET_DATA[currentSlug] ? BDW_WIDGET_DATA[currentSlug].nom : currentSlug) + '"\n></iframe>';
+  document.getElementById('code-output').textContent = code;
+}
+
+function copyCode() {
+  var code = document.getElementById('code-output').textContent;
+  navigator.clipboard.writeText(code).then(function() {
+    var btn = document.getElementById('copy-btn');
+    btn.textContent = '✓ Copié !';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'Copier le code';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// Recherche destinations
+var allDests = Object.entries(BDW_WIDGET_DATA).map(function(e) {
+  return {slug: e[0], nom: e[1].nom, pays: e[1].pays, flag: e[1].flag};
+}).sort(function(a,b) { return a.nom.localeCompare(b.nom, 'fr'); });
+
+function renderList(filter) {
+  var list = document.getElementById('dest-list');
+  var items = filter
+    ? allDests.filter(function(d) {
+        return d.nom.toLowerCase().includes(filter.toLowerCase())
+            || d.pays.toLowerCase().includes(filter.toLowerCase());
+      })
+    : allDests;
+
+  list.innerHTML = items.slice(0, 50).map(function(d) {
+    var flagHtml = d.flag
+      ? '<img src="https://bestdateweather.com/flags/' + d.flag + '.png" width="20" height="14" style="border-radius:2px;flex-shrink:0" alt="">'
+      : '';
+    var active = d.slug === currentSlug ? ' active' : '';
+    return '<div class="dest-item' + active + '" onclick="selectDest(\'' + d.slug + '\')">'
+      + flagHtml
+      + '<div><div class="dest-name">' + d.nom + '</div><div class="dest-country">' + d.pays + '</div></div>'
+      + '</div>';
+  }).join('');
+}
+
+function selectDest(slug) {
+  currentSlug = slug;
+  renderList(document.getElementById('search').value);
+  updatePreview();
+}
+
+document.getElementById('search').addEventListener('input', function() {
+  renderList(this.value);
+});
+
+document.querySelectorAll('[data-size]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-size]').forEach(function(b) { b.classList.remove('active'); });
+    this.classList.add('active');
+    currentSize = this.dataset.size;
+    updatePreview();
+  });
+});
+
+document.querySelectorAll('[data-theme]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('[data-theme]').forEach(function(b) { b.classList.remove('active'); });
+    this.classList.add('active');
+    currentTheme = this.dataset.theme;
+    updatePreview();
+  });
+});
+
+// Init
+renderList('');
+updatePreview();
+</script>
+</body>
+</html>
