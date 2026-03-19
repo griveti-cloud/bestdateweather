@@ -2859,7 +2859,7 @@ function bdwSaveFavs(favs) {
   try { localStorage.setItem(BDW_FAV_KEY, JSON.stringify(favs)); } catch(e) {}
 }
 
-window.bdwToggleFav = function(btn) {
+function bdwToggleFav(btn) {
   var slug = btn.getAttribute('data-slug');
   if (!slug) return;
   var favs = bdwLoadFavs();
@@ -2910,19 +2910,19 @@ function bdwInitFavBtn() {
   bdwUpdateFavBtn(btn, !!bdwLoadFavs()[slug]);
 }
 
-window.bdwCloseFavsPanel = function() {
+function bdwCloseFavsPanel() {
   var p = document.getElementById('bdw-favs-panel');
   if (p) p.remove();
   window.location.hash = '';
 }
 
-window.bdwClearFavs = function() {
+function bdwClearFavs() {
   if (!confirm('Effacer tous les favoris ?')) return;
   localStorage.removeItem(BDW_FAV_KEY);
   bdwCloseFavsPanel();
 }
 
-window.bdwShowFavorites = function() {
+function bdwShowFavorites() {
   var favs = bdwLoadFavs();
   var keys = Object.keys(favs).sort(function(a,b) { return (favs[b].ts||0)-(favs[a].ts||0); });
   var existing = document.getElementById('bdw-favs-panel');
@@ -2988,6 +2988,13 @@ if (document.readyState === 'loading') {
   bdwCheckHash();
 }
 window.addEventListener('hashchange', bdwCheckHash);
+
+
+// Exposer sur window pour les onclick HTML
+window.bdwToggleFav = bdwToggleFav;
+window.bdwShowFavorites = bdwShowFavorites;
+window.bdwCloseFavsPanel = bdwCloseFavsPanel;
+window.bdwClearFavs = bdwClearFavs;
 
 // ─── CAPTURE EMAIL ────────────────────────────────────────────────────────────
 (function() {
