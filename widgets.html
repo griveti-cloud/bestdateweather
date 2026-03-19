@@ -156,7 +156,7 @@ pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;paddin
     <div class="panel">
       <div class="preview-label">👁️ Aperçu en direct</div>
       <div class="preview-box" id="preview-box">
-        <iframe id="widget-frame" src="" frameborder="0" style="border-radius:12px;border:1px solid #e2e8f0;display:block"></iframe>
+        <div id="widget-preview-container" style="display:flex;justify-content:center;align-items:center;width:100%"></div>
       </div>
       <div class="code-section">
         <div class="code-header">
@@ -191,98 +191,94 @@ function renderWidget(slug, size, theme) {
   var flagUrl = d.flag ? SITE + '/flags/' + d.flag + '.png' : '';
   var ficheUrl = SITE + '/meilleure-periode-' + slug + '.html';
   var isDark = theme === 'dark';
-
-  var bg      = isDark ? '#111827' : '#ffffff';
+  var bg      = isDark ? '#0f172a' : '#ffffff';
+  var card    = isDark ? '#1a1f2e' : '#ffffff';
   var bgStat  = isDark ? '#1a2236' : '#f8fafc';
-  var bgFooter= isDark ? '#0f172a' : '#f8fafc';
+  var bgFoot  = isDark ? '#0f172a' : '#f8fafc';
   var textMain= isDark ? '#f1f5f9' : '#0f172a';
-  var textSub = isDark ? '#94a3b8' : '#94a3b8';
+  var textSub = '#94a3b8';
   var border  = isDark ? '#1e293b' : '#f1f5f9';
   var borderOut=isDark ? '#1e293b' : '#e2e8f0';
-  var badgeBg = isDark ? '#1e293b' : '#f1f5f9';
-  var badgeCol= isDark ? '#64748b' : '#64748b';
 
-  // Badges top 3
-  var monthBadges = d.top3.map(function(m) {
-    return '<span style="background:#f97316;color:white;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700">' + m + '</span>';
-  }).join('');
+  function sc(s) { return s>=8.5?'#22c55e':(s>=7?'#f97316':'#ef4444'); }
+  function flagImg(w,h) { return flagUrl ? '<img src="'+flagUrl+'" width="'+w+'" height="'+h+'" style="border-radius:2px;flex-shrink:0" alt="">' : ''; }
 
-  // Barres
-  var maxS = Math.max.apply(null, d.scores);
-  var bars = d.scores.map(function(s, i) {
-    var h = Math.max(4, Math.round(s / 10 * 60));
-    var c = scoreColor(s);
-    return '<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1">'
-      + '<div style="width:100%;background:' + c + ';border-radius:3px 3px 0 0;height:' + h + 'px"></div>'
-      + '<span style="font-size:9px;color:' + textSub + '">' + MOIS[i] + '</span>'
-      + '</div>';
-  }).join('');
+  var badges = d.top3.map(function(m){ return '<span style="background:#f97316;color:white;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700">'+m+'</span>'; }).join('');
+  var badgesSm = d.top3.map(function(m){ return '<span style="background:#f97316;color:white;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">'+m+'</span>'; }).join('');
 
-  var compact = size === 'compact';
+  var bars60 = d.scores.map(function(s,i){ var h=Math.max(4,Math.round(s/10*60)); var c=sc(s); return '<div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:1"><div style="width:100%;background:'+c+';border-radius:2px 2px 0 0;height:'+h+'px"></div><span style="font-size:8px;color:'+textSub+'">'+MOIS[i]+'</span></div>'; }).join('');
+  var bars50 = d.scores.map(function(s,i){ var h=Math.max(4,Math.round(s/10*50)); var c=sc(s); return '<div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:1"><div style="width:100%;background:'+c+';border-radius:2px 2px 0 0;height:'+h+'px"></div><span style="font-size:8px;color:'+textSub+'">'+MOIS[i]+'</span></div>'; }).join('');
 
-  var html = '<div style="font-family:DM Sans,Arial,sans-serif;background:' + bg + ';border:1px solid ' + borderOut + ';border-radius:14px;overflow:hidden;width:400px">';
-
-  // Header
-  html += '<div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid ' + border + '">';
-  html += '<div style="display:flex;align-items:center;gap:10px">';
-  if (flagUrl) html += '<img src="' + flagUrl + '" width="22" height="16" style="border-radius:3px" alt="">';
-  html += '<div><div style="font-size:16px;font-weight:800;color:' + textMain + '">' + d.nom + '</div>';
-  html += '<div style="font-size:11px;color:' + textSub + ';margin-top:1px">' + d.pays + '</div></div></div>';
-  html += '<span style="background:' + badgeBg + ';color:' + badgeCol + ';font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">📊 10 ans ERA5</span>';
-  html += '</div>';
-
-  // Meilleure période
-  html += '<div style="padding:12px 16px;border-bottom:1px solid ' + border + '">';
-  html += '<div style="font-size:10px;font-weight:700;color:' + textSub + ';text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">☀️ Meilleure période</div>';
-  html += '<div style="display:flex;gap:6px;flex-wrap:wrap">' + monthBadges + '</div>';
-  html += '</div>';
-
-  if (!compact) {
-    // Stats
-    html += '<div style="padding:12px 16px;border-bottom:1px solid ' + border + '">';
-    html += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">';
-    html += '<div style="background:' + bgStat + ';border-radius:10px;padding:10px;text-align:center">';
-    html += '<div style="font-size:18px;margin-bottom:4px">🌡️</div>';
-    html += '<div style="font-size:9px;color:' + textSub + ';text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Le plus chaud</div>';
-    html += '<div style="font-size:15px;font-weight:800;color:' + textMain + '">' + d.hottest.t + '°C</div>';
-    html += '<div style="font-size:10px;color:' + textSub + ';margin-top:1px">' + d.hottest.m + '</div></div>';
-    html += '<div style="background:' + bgStat + ';border-radius:10px;padding:10px;text-align:center">';
-    html += '<div style="font-size:18px;margin-bottom:4px">❄️</div>';
-    html += '<div style="font-size:9px;color:' + textSub + ';text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Le plus froid</div>';
-    html += '<div style="font-size:15px;font-weight:800;color:' + textMain + '">' + d.coldest.t + '°C</div>';
-    html += '<div style="font-size:10px;color:' + textSub + ';margin-top:1px">' + d.coldest.m + '</div></div>';
-    html += '<div style="background:' + bgStat + ';border-radius:10px;padding:10px;text-align:center">';
-    html += '<div style="font-size:18px;margin-bottom:4px">🌤️</div>';
-    html += '<div style="font-size:9px;color:' + textSub + ';text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Le plus sec</div>';
-    html += '<div style="font-size:15px;font-weight:800;color:' + textMain + '">' + d.driest.p + '%</div>';
-    html += '<div style="font-size:10px;color:' + textSub + ';margin-top:1px">' + d.driest.m + '</div></div>';
-    html += '</div></div>';
+  function hdr(w) { return '<div style="padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid '+border+'">'+
+    '<div style="display:flex;align-items:center;gap:8px">'+flagImg(20,14)+'<div><div style="font-size:14px;font-weight:800;color:'+textMain+'">'+d.nom+'</div><div style="font-size:10px;color:'+textSub+'">'+d.pays+'</div></div></div>'+
+    '<span style="background:'+(isDark?'#1e293b':'#f1f5f9')+';color:#64748b;font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px">10 ans ERA5</span></div>'; }
+  function bestSection() { return '<div style="padding:10px 14px;border-bottom:1px solid '+border+'"><div style="font-size:9px;font-weight:700;color:'+textSub+';text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px">☀️ Meilleure période</div><div style="display:flex;gap:5px;flex-wrap:wrap">'+badges+'</div></div>'; }
+  function statsGrid() {
+    function stat(ico,lbl,val,mo){ return '<div style="background:'+bgStat+';border-radius:8px;padding:8px;text-align:center"><div style="font-size:15px;margin-bottom:2px">'+ico+'</div><div style="font-size:8px;color:'+textSub+';text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">'+lbl+'</div><div style="font-size:13px;font-weight:800;color:'+textMain+'">'+val+'</div><div style="font-size:9px;color:'+textSub+';margin-top:1px">'+mo+'</div></div>'; }
+    return '<div style="padding:10px 14px;border-bottom:1px solid '+border+'"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">'+stat('🌡️','Chaud',d.hottest.t+'°C',d.hottest.m)+stat('❄️','Froid',d.coldest.t+'°C',d.coldest.m)+stat('🌤️','Sec',d.driest.p+'%',d.driest.m)+'</div></div>';
   }
+  function chartSection(brs,h) { return '<div style="padding:10px 14px 6px;border-bottom:1px solid '+border+'"><div style="font-size:9px;font-weight:700;color:'+textSub+';text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">📈 Score mensuel</div><div style="display:flex;gap:2px;align-items:flex-end;height:'+h+'px">'+brs+'</div></div>'; }
+  function foot() { return '<div style="padding:8px 14px;display:flex;align-items:center;justify-content:space-between;background:'+bgFoot+'"><span style="font-size:9px;color:'+textSub+';font-weight:600">bestdateweather.com</span><a href="'+ficheUrl+'" target="_blank" style="background:#f97316;color:white;font-size:10px;font-weight:700;padding:5px 11px;border-radius:7px;text-decoration:none">Guide →</a></div>'; }
+  function wrap(body, w) { return '<div style="font-family:DM Sans,Arial,sans-serif;background:'+bg+';border:1px solid '+borderOut+';border-radius:12px;overflow:hidden;width:'+w+'px">'+body+'</div>'; }
 
-  // Graphique
-  html += '<div style="padding:12px 16px 8px">';
-  if (!compact) html += '<div style="font-size:10px;font-weight:700;color:' + textSub + ';text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">📈 Score mensuel</div>';
-  html += '<div style="display:flex;gap:2px;align-items:flex-end;height:72px">' + bars + '</div>';
-  html += '</div>';
-
-  // Footer
-  html += '<div style="padding:10px 16px;display:flex;align-items:center;justify-content:space-between;background:' + bgFooter + '">';
-  html += '<span style="font-size:10px;color:' + textSub + ';font-weight:600">bestdateweather.com · ERA5</span>';
-  html += '<a href="' + ficheUrl + '" target="_blank" style="background:#f97316;color:white;font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;text-decoration:none">Guide complet →</a>';
-  html += '</div>';
-  html += '</div>';
-
-  return html;
+  if (size === 'compact') {
+    var barsC = d.scores.map(function(s,i){ var h=Math.max(3,Math.round(s/10*44)); var c=sc(s); return '<div style="display:flex;flex-direction:column;align-items:center;flex:1;justify-content:flex-end;gap:1px"><span style="font-size:7px;color:'+c+';font-weight:700;line-height:1">'+s.toFixed(0)+'</span><div style="width:100%;background:'+c+';border-radius:2px 2px 0 0;height:'+h+'px"></div><span style="font-size:7px;color:#64748b">'+MOIS[i]+'</span></div>'; }).join('');
+    var top1 = d.scores.reduce(function(a,b,i){ return b>a.s?{s:b,i:i}:a; },{s:0,i:0});
+    var top1c = sc(top1.s);
+    var body = '<div style="background:'+(isDark?'#1a1f2e':'#1a1f2e')+';padding:10px 12px 8px">'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">'
+      +'<div style="display:flex;align-items:center;gap:7px">'+flagImg(18,13)+'<div style="font-size:13px;font-weight:800;color:#f1f5f9">'+d.nom+'</div></div>'
+      +'<div style="display:flex;align-items:center;gap:6px"><span style="font-size:10px;color:#94a3b8">'+d.hottest.t+'°C</span><span style="font-size:9px;color:#475569">·</span><span style="font-size:10px;color:#94a3b8">'+d.driest.p+'% pluie</span></div></div>'
+      +'<div style="display:flex;align-items:center;gap:8px">'
+      +'<span style="font-size:8px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.4px">Meilleur&nbsp;:</span>'
+      +'<span style="background:#f97316;color:white;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">'+d.top3[0]+'</span>'
+      +'<span style="font-size:14px;font-weight:800;color:'+top1c+';margin-left:2px">'+top1.s.toFixed(1)+'<span style="font-size:10px;font-weight:500;color:#64748b">/10</span></span>'
+      +'</div></div>'
+      +'<div style="padding:6px 10px 0;display:flex;gap:1px;align-items:flex-end">'+barsC+'</div>'
+      +'<div style="padding:3px 12px 6px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:8px;color:#475569">bestdateweather.com</span><a href="'+ficheUrl+'" target="_blank" style="background:#f97316;color:white;font-size:9px;font-weight:700;padding:3px 9px;border-radius:6px;text-decoration:none">Guide →</a></div>';
+    return '<div style="font-family:DM Sans,Arial,sans-serif;background:#0f172a;border:1px solid #1e293b;border-radius:12px;overflow:hidden;width:320px">'+body+'</div>';
+  }
+  if (size === 'small')  return wrap(hdr(350)+bestSection()+statsGrid()+foot(), 350);
+  if (size === 'medium') return wrap(hdr(400)+bestSection()+statsGrid()+chartSection(bars60,72)+foot(), 400);
+  if (size === 'large')  {
+    var tbl = '<table style="width:100%;border-collapse:collapse">';
+    tbl += '<thead><tr style="background:'+(isDark?'#1e293b':'#f8fafc')+'"><th style="padding:4px 10px;font-size:8px;font-weight:700;color:'+textSub+';text-align:left">Mois</th><th style="padding:4px 6px;font-size:8px;font-weight:700;color:'+textSub+'">Score</th><th style="padding:4px 6px;font-size:8px;font-weight:700;color:'+textSub+'">T°max</th><th style="padding:4px 10px;font-size:8px;font-weight:700;color:'+textSub+'">Météo</th></tr></thead><tbody>';
+    var bestI = d.scores.indexOf(Math.max.apply(null,d.scores));
+    d.scores.forEach(function(s,i){
+      var c=sc(s); var ib=i===bestI;
+      var rbg=ib?(isDark?'#1a2236':'#fff8ec'):(i%2===0?(isDark?'#111827':'#f8fafc'):(isDark?'#0f172a':'#fff'));
+      tbl+='<tr style="background:'+rbg+'"><td style="padding:3px 10px;font-size:10px;'+(ib?'font-weight:700;':'')+'color:'+textMain+'">'+(ib?'⭐':'')+MOIS[i]+'</td><td style="padding:3px 6px;text-align:center;font-size:10px;'+(ib?'font-weight:700;':'')+'color:'+c+'">'+s.toFixed(1)+'</td><td style="padding:3px 6px;text-align:center;font-size:10px;color:'+textSub+'">?°C</td><td style="padding:3px 10px"><div style="height:6px;background:'+c+';border-radius:3px;width:'+Math.max(6,Math.round(s/10*80))+'%"></div></td></tr>';
+    });
+    tbl += '</tbody></table>';
+    return wrap(hdr(400)+bestSection()+statsGrid()+chartSection(bars50,62)+'<div style="border-top:1px solid '+border+'">'+tbl+'</div>'+foot(), 400);
+  }
+  if (size === 'wide') {
+    var barsW = d.scores.map(function(s,i){ var h=Math.max(4,Math.round(s/10*64)); var c=sc(s); return '<div style="display:flex;flex-direction:column;align-items:center;gap:2px;flex:1"><div style="width:100%;background:'+c+';border-radius:2px 2px 0 0;height:'+h+'px"></div><span style="font-size:8px;color:'+textSub+'">'+MOIS[i]+'</span></div>'; }).join('');
+    var body2 = '<div style="display:flex;height:200px">'
+      +'<div style="width:220px;flex-shrink:0;padding:14px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid '+borderOut+'">'
+      +'<div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'+flagImg(22,16)+'<div><div style="font-size:14px;font-weight:800;color:'+textMain+'">'+d.nom+'</div><div style="font-size:10px;color:'+textSub+'">'+d.pays+'</div></div></div>'
+      +'<div style="font-size:8px;font-weight:700;color:'+textSub+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">☀️ Meilleure période</div>'
+      +'<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">'+badgesSm+'</div>'
+      +'<div style="display:flex;align-items:center;gap:5px;margin-bottom:4px"><span style="font-size:14px">🌡️</span><div><div style="font-size:12px;font-weight:700;color:'+textMain+'">'+d.hottest.t+'°C</div><div style="font-size:9px;color:'+textSub+'">'+d.hottest.m+'</div></div></div>'
+      +'<div style="display:flex;align-items:center;gap:5px"><span style="font-size:14px">❄️</span><div><div style="font-size:12px;font-weight:700;color:'+textMain+'">'+d.coldest.t+'°C</div><div style="font-size:9px;color:'+textSub+'">'+d.coldest.m+'</div></div></div>'
+      +'</div>'
+      +'<a href="'+ficheUrl+'" target="_blank" style="background:#f97316;color:white;font-size:11px;font-weight:700;padding:6px 0;border-radius:7px;text-decoration:none;text-align:center;display:block">Guide complet →</a>'
+      +'</div>'
+      +'<div style="flex:1;padding:12px 12px 8px;display:flex;flex-direction:column;justify-content:space-between">'
+      +'<div style="font-size:9px;font-weight:700;color:'+textSub+';text-transform:uppercase;letter-spacing:.5px">📈 Score mensuel</div>'
+      +'<div style="display:flex;gap:2px;align-items:flex-end;height:80px">'+barsW+'</div>'
+      +'<div style="font-size:8px;color:#cbd5e1;text-align:right">bestdateweather.com · ERA5</div>'
+      +'</div></div>';
+    return wrap(body2, 600);
+  }
+  return '<p>Format inconnu</p>';
 }
+
 
 var FORMAT_SIZES = {compact:[320,165], small:[350,240], medium:[400,340], large:[400,460], wide:[600,200]};
 function updatePreview() {
-  var sz = FORMAT_SIZES[currentSize] || [400,340];
-  var url = 'https://bestdateweather.com/widget/' + currentSlug + '-' + currentSize + '.html';
-  var frame = document.getElementById('widget-frame');
-  frame.src = url;
-  frame.width = sz[0];
-  frame.height = sz[1];
+  var container = document.getElementById('widget-preview-container');
+  container.innerHTML = renderWidget(currentSlug, currentSize, currentTheme);
   updateCode();
 }
 
