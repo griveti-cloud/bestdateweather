@@ -14,3 +14,5 @@ data/*_backup*.csv
 # Fichiers temporaires
 /tmp/
 *.pyc
+.env
+*.env

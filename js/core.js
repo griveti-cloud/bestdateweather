@@ -2877,6 +2877,12 @@ function bdwToggleFav(btn) {
   bdwUpdateFavBtn(btn, active);
   btn.style.transform = 'scale(1.3)';
   setTimeout(function() { btn.style.transform = ''; }, 200);
+  // Proposer l'email uniquement au moment de l'ajout
+  if (active && typeof window.bdwShowEmailPopup === 'function') {
+    var nameEl = document.querySelector('h1.hero-title em');
+    var destName = nameEl ? nameEl.textContent.trim() : null;
+    setTimeout(function() { window.bdwShowEmailPopup(destName); }, 600);
+  }
 }
 
 function bdwUpdateFavBtn(btn, active) {
@@ -2975,3 +2981,110 @@ if (document.readyState === 'loading') {
   bdwCheckHash();
 }
 window.addEventListener('hashchange', bdwCheckHash);
+
+// ─── CAPTURE EMAIL ────────────────────────────────────────────────────────────
+(function() {
+  var ASKED_KEY = 'bdw_email_asked';
+
+  function alreadyAsked() {
+    try { return !!localStorage.getItem(ASKED_KEY); } catch(e) { return true; }
+  }
+
+  function markAsked() {
+    try { localStorage.setItem(ASKED_KEY, '1'); } catch(e) {}
+  }
+
+  function showEmailPopup(destName) {
+    if (alreadyAsked()) return;
+    markAsked();
+
+    var overlay = document.createElement('div');
+    overlay.id = 'bdw-email-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(26,31,46,.6);z-index:10000;display:flex;align-items:flex-end;justify-content:center;padding:0 0 20px';
+
+    var panel = document.createElement('div');
+    panel.style.cssText = 'background:white;border-radius:16px;padding:24px 20px;max-width:420px;width:calc(100% - 32px);box-shadow:0 -4px 32px rgba(0,0,0,.15);font-family:DM Sans,sans-serif';
+
+    var msg = destName
+      ? 'Recevoir les meilleures périodes pour <strong>' + destName + '</strong> et vos autres destinations chaque mois.'
+      : 'Recevoir les 5 meilleures destinations chaque mois.';
+
+    panel.innerHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">' +
+        '<p style="margin:0;font-size:15px;font-weight:600;color:#1a1f2e;line-height:1.4">' +
+          '📩 ' + msg +
+        '</p>' +
+        '<button id="bdw-email-close" style="background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8;padding:0 0 0 8px;flex-shrink:0">✕</button>' +
+      '</div>' +
+      '<div style="display:flex;gap:8px;margin-top:8px">' +
+        '<input id="bdw-email-input" type="email" placeholder="votre@email.com" ' +
+          'style="flex:1;padding:10px 12px;border:1.5px solid #e8e0d0;border-radius:8px;font-size:14px;outline:none;font-family:DM Sans,sans-serif">' +
+        '<button id="bdw-email-submit" ' +
+          'style="background:#d97706;color:white;border:none;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:DM Sans,sans-serif">' +
+          'Recevoir' +
+        '</button>' +
+      '</div>' +
+      '<p id="bdw-email-msg" style="margin:8px 0 0;font-size:12px;color:#64748b;min-height:16px"></p>' +
+      '<p style="margin:8px 0 0;font-size:11px;color:#94a3b8">Pas de spam. Désabonnement en 1 clic.</p>';
+
+    overlay.appendChild(panel);
+    document.body.appendChild(overlay);
+
+    // Fermer
+    document.getElementById('bdw-email-close').onclick = function() {
+      overlay.remove();
+    };
+    overlay.onclick = function(e) {
+      if (e.target === overlay) overlay.remove();
+    };
+
+    // Soumettre
+    document.getElementById('bdw-email-submit').onclick = function() {
+      submitEmail();
+    };
+    document.getElementById('bdw-email-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') submitEmail();
+    });
+
+    function submitEmail() {
+      var emailVal = document.getElementById('bdw-email-input').value.trim();
+      var msgEl = document.getElementById('bdw-email-msg');
+      var btn = document.getElementById('bdw-email-submit');
+      if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+        msgEl.style.color = '#ef4444';
+        msgEl.textContent = 'Email invalide.';
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = '...';
+      fetch('/.netlify/functions/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: emailVal, source: 'favori' })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.success) {
+          msgEl.style.color = '#16a34a';
+          msgEl.textContent = '✓ Vous êtes inscrit !';
+          btn.style.display = 'none';
+          setTimeout(function() { overlay.remove(); }, 2000);
+        } else {
+          msgEl.style.color = '#ef4444';
+          msgEl.textContent = 'Une erreur est survenue, réessayez.';
+          btn.disabled = false;
+          btn.textContent = 'Recevoir';
+        }
+      })
+      .catch(function() {
+        msgEl.style.color = '#ef4444';
+        msgEl.textContent = 'Erreur réseau, réessayez.';
+        btn.disabled = false;
+        btn.textContent = 'Recevoir';
+      });
+    }
+  }
+
+  // Exposer pour bdwToggleFav
+  window.bdwShowEmailPopup = showEmailPopup;
+})();

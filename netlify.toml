@@ -4,3 +4,6 @@
   # This reduces deploy time from ~25 min to ~2 min and saves build credits.
   command = ""
   publish = "."
+
+[functions]
+  directory = "netlify/functions"
