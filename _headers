@@ -1,5 +1,9 @@
 # Netlify _headers
 
+/widget/*
+  X-Frame-Options: ALLOWALL
+  Content-Security-Policy: frame-ancestors *
+
 /manifest.json
   Content-Type: application/manifest+json
   Cache-Control: public, max-age=3600
