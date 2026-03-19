@@ -581,6 +581,7 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
         elif is_de:
             _alt_links = [
                 {'url': f'../en/{_en_fn}', 'flag': '../flags/gb.png', 'label': 'English'},
+                {'url': f'../us/{_us_fn}', 'flag': '../flags/us.png', 'label': 'English (US)'},
                 {'url': f'../{_fr_fn}', 'flag': '../flags/fr.png', 'label': 'Français'},
                 {'url': f'../es/{_es_fn}', 'flag': '../flags/es.png', 'label': 'Español'},
             ]
