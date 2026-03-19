@@ -194,7 +194,7 @@ window.bdwClearFavs = bdwClearFavs;
         '</button>' +
       '</div>' +
       '<p id="bdw-email-msg" style="margin:8px 0 0;font-size:12px;color:#64748b;min-height:16px"></p>' +
-      '<p style="margin:8px 0 0;font-size:11px;color:#94a3b8">Pas de spam. Désabonnement en 1 clic.</p>';
+      '<p style="margin:8px 0 0;font-size:11px;color:#94a3b8">Pas de spam. Désabonnement en 1 clic. <a href="/confidentialite.html" style="color:#94a3b8;text-decoration:underline" target="_blank">Confidentialité</a></p>';
 
     overlay.appendChild(panel);
     document.body.appendChild(overlay);
