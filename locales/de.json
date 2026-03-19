@@ -179,7 +179,11 @@
       "Kontakt"
     ],
     "alt_lang_flag": "gb",
-    "alt_lang_label": "English"
+    "alt_lang_label": "English",
+    "widget": [
+      "../widgets.html",
+      "Reise-Widgets"
+    ]
   },
   "rankings": [
     [
@@ -843,7 +847,9 @@
     "privacy_url": "de/datenschutz.html",
     "privacy_label": "Datenschutz",
     "contact_url": "de/kontakt.html",
-    "contact_label": "Kontakt"
+    "contact_label": "Kontakt",
+    "widget_label": "Reise-Widgets",
+    "widget_url": "../widgets.html"
   },
   "classements": {
     "share_label": "Teilen",

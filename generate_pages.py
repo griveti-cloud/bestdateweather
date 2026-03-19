@@ -366,11 +366,12 @@ def footer_html(cfg, dest):
     faq_url, faq_label = fc['faq']
     legal_url, legal_label = fc['legal']
     priv_url, priv_label = fc['privacy']
+    widget_url, widget_label = fc.get('widget', ['../widgets.html', 'Widgets'])
 
     return f'''<footer>
  <p class="txt-muted-label">bestdateweather.com</p>
  <p><a href="https://open-meteo.com/" rel="noopener" class="txt-muted">{fc['data_by']}</a> · {fc['sources']}</p>
- <p class="mt-8"><a href="{meth_url}" class="txt-muted">{meth_label}</a> · <a href="{about_url}" class="txt-muted">{about_label}</a> · <a href="{faq_url}" class="txt-muted">{faq_label}</a> · <a href="{app_url}" class="txt-muted">{app_label}</a></p>
+ <p class="mt-8"><a href="{meth_url}" class="txt-muted">{meth_label}</a> · <a href="{about_url}" class="txt-muted">{about_label}</a> · <a href="{faq_url}" class="txt-muted">{faq_label}</a> · <a href="{app_url}" class="txt-muted">{app_label}</a> · <a href="{widget_url}" class="txt-muted">{widget_label}</a></p>
 {alt_link_p}
  <p class="f11-muted"><a href="{legal_url}" class="txt-muted">{legal_label}</a> · <a href="{priv_url}" class="txt-muted">{priv_label}</a> · <a href="{fc['contact'][0]}" class="txt-muted">{fc['contact'][1]}</a></p>
 </footer>
