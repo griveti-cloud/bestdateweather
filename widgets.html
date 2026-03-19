@@ -136,8 +136,11 @@ pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;paddin
       <div class="options">
         <div class="opt-label">Format</div>
         <div class="btn-group">
-          <button class="opt-btn active" data-size="compact">Compact<br><span style="font-size:10px;opacity:.7">400×280</span></button>
-          <button class="opt-btn" data-size="full">Complet<br><span style="font-size:10px;opacity:.7">400×460</span></button>
+          <button class="opt-btn active" data-size="compact">Compact<br><span style="font-size:10px;opacity:.7">320×165</span></button>
+          <button class="opt-btn" data-size="small">Small<br><span style="font-size:10px;opacity:.7">350×240</span></button>
+          <button class="opt-btn" data-size="medium">Medium<br><span style="font-size:10px;opacity:.7">400×340</span></button>
+          <button class="opt-btn" data-size="large">Large<br><span style="font-size:10px;opacity:.7">400×460</span></button>
+          <button class="opt-btn" data-size="wide">Wide<br><span style="font-size:10px;opacity:.7">600×200</span></button>
         </div>
         <div class="opt-label">Thème</div>
         <div class="btn-group">
@@ -153,7 +156,7 @@ pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;paddin
     <div class="panel">
       <div class="preview-label">👁️ Aperçu en direct</div>
       <div class="preview-box" id="preview-box">
-        <div id="widget-container"></div>
+        <iframe id="widget-frame" src="" frameborder="0" style="border-radius:12px;border:1px solid #e2e8f0;display:block"></iframe>
       </div>
       <div class="code-section">
         <div class="code-header">
@@ -272,16 +275,23 @@ function renderWidget(slug, size, theme) {
   return html;
 }
 
+var FORMAT_SIZES = {compact:[320,165], small:[350,240], medium:[400,340], large:[400,460], wide:[600,200]};
 function updatePreview() {
-  document.getElementById('widget-container').innerHTML = renderWidget(currentSlug, currentSize, currentTheme);
+  var sz = FORMAT_SIZES[currentSize] || [400,340];
+  var url = 'https://bestdateweather.com/widget/' + currentSlug + '-' + currentSize + '.html';
+  var frame = document.getElementById('widget-frame');
+  frame.src = url;
+  frame.width = sz[0];
+  frame.height = sz[1];
   updateCode();
 }
 
+var FORMAT_SIZES = {compact:[320,165], small:[350,240], medium:[400,340], large:[400,460], wide:[600,200]};
 function updateCode() {
-  var h = currentSize === 'compact' ? 280 : 460;
-  // Pour les pages widget statiques générées
-  var url = 'https://bestdateweather.com/widget/' + currentSlug + (currentSize === 'full' ? '-full' : '') + '.html';
-  var code = '<iframe\n  src="' + url + '"\n  width="400"\n  height="' + h + '"\n  frameborder="0"\n  style="border-radius:14px;border:1px solid #e2e8f0;"\n  loading="lazy"\n  title="Météo ' + (BDW_WIDGET_DATA[currentSlug] ? BDW_WIDGET_DATA[currentSlug].nom : currentSlug) + '"\n></iframe>';
+  var sz = FORMAT_SIZES[currentSize] || [400,340];
+  var url = 'https://bestdateweather.com/widget/' + currentSlug + '-' + currentSize + '.html';
+  var nom = BDW_WIDGET_DATA[currentSlug] ? BDW_WIDGET_DATA[currentSlug].nom : currentSlug;
+  var code = '<iframe\n  src="' + url + '"\n  width="' + sz[0] + '"\n  height="' + sz[1] + '"\n  frameborder="0"\n  style="border-radius:12px;border:1px solid #e2e8f0;"\n  loading="lazy"\n  title="Météo ' + nom + '"\n></iframe>';
   document.getElementById('code-output').textContent = code;
 }
 
