@@ -257,3 +257,76 @@ window.bdwClearFavs = bdwClearFavs;
   // Exposer pour bdwToggleFav
   window.bdwShowEmailPopup = showEmailPopup;
 })();
+
+// ─── CTA INSTALL PWA ──────────────────────────────────────────────────────────
+(function() {
+  var INSTALL_KEY = 'bdw_install_dismissed';
+  var deferredPrompt = null;
+
+  // Capturer l'événement natif Chrome (Android)
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    setTimeout(showInstallBanner, 30000); // après 30s
+  });
+
+  function alreadyDismissed() {
+    try { return !!localStorage.getItem(INSTALL_KEY); } catch(e) { return true; }
+  }
+
+  function showInstallBanner() {
+    if (alreadyDismissed()) return;
+    if (document.getElementById('bdw-install-banner')) return;
+
+    var banner = document.createElement('div');
+    banner.id = 'bdw-install-banner';
+    banner.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9998;'
+      + 'background:white;border-top:2px solid #e8e0d0;padding:14px 16px;'
+      + 'display:flex;align-items:center;gap:12px;box-shadow:0 -4px 16px rgba(0,0,0,.1);'
+      + 'font-family:DM Sans,sans-serif';
+
+    banner.innerHTML =
+      '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#d97706" stroke-width="2" flex-shrink:0" style="flex-shrink:0">'
+      + '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#d97706"/>'
+      + '</svg>'
+      + '<div style="flex:1">'
+      + '<p style="margin:0;font-size:14px;font-weight:700;color:#1a1f2e">Installer BestDate</p>'
+      + '<p style="margin:2px 0 0;font-size:12px;color:#64748b">Accès rapide depuis votre écran d\'accueil</p>'
+      + '</div>'
+      + '<button id="bdw-install-btn" style="background:#d97706;color:white;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:DM Sans,sans-serif">Installer</button>'
+      + '<button id="bdw-install-close" style="background:none;border:none;font-size:20px;cursor:pointer;color:#94a3b8;padding:0 4px">✕</button>';
+
+    document.body.appendChild(banner);
+
+    document.getElementById('bdw-install-btn').onclick = function() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(function(result) {
+          if (result.outcome === 'accepted') {
+            dismiss();
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        // Fallback : instructions manuelles
+        alert('Sur Chrome : menu ⋮ → "Ajouter à l\'écran d\'accueil"');
+        dismiss();
+      }
+    };
+
+    document.getElementById('bdw-install-close').onclick = dismiss;
+
+    function dismiss() {
+      try { localStorage.setItem(INSTALL_KEY, '1'); } catch(e) {}
+      var b = document.getElementById('bdw-install-banner');
+      if (b) b.remove();
+    }
+  }
+
+  // Sur iOS (pas de beforeinstallprompt), afficher quand même après 30s
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isStandalone = window.navigator.standalone;
+  if (isIOS && !isStandalone) {
+    setTimeout(showInstallBanner, 30000);
+  }
+})();
