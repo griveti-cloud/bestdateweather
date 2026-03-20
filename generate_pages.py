@@ -911,7 +911,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <style>
 .hero-band{{position:relative;overflow:hidden;background:#0d1a3a;}}
 .hero-bg-img{{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;}}
-.hero-overlay{{position:absolute;inset:0;background:linear-gradient(160deg,rgba(5,12,35,0.88) 0%,rgba(13,26,80,0.82) 55%,rgba(20,45,120,0.72) 100%);z-index:1;}}
+.hero-overlay{{position:absolute;inset:0;background:linear-gradient(160deg,rgba(13,26,58,0.78) 0%,rgba(26,42,106,0.68) 55%,rgba(42,74,154,0.55) 100%);z-index:1;}}
 .hero-band>:not(.hero-bg-img):not(.hero-overlay){{position:relative;z-index:2;}}
 .hero-photo-credit{{position:absolute;bottom:4px;right:8px;font-size:.6rem;color:rgba(255,255,255,.18);z-index:3;text-decoration:none;letter-spacing:.01em;}}
 .hero-photo-credit:hover{{color:rgba(255,255,255,.45);}}
