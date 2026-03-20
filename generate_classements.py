@@ -762,7 +762,8 @@ def make_related(lang, exclude_href=''):
 
 def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
               sections, jsonld_str, related_html, meth_html, footer_html, lang, canonical,
-              hreflang_fr='', hreflang_en='', hreflang_es='', hreflang_de='', hreflang_us=''):
+              hreflang_fr='', hreflang_en='', hreflang_es='', hreflang_de='', hreflang_us='',
+              asset_prefix=''):
     fonts = (
         '<link rel="preconnect" href="https://fonts.googleapis.com"/>'
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>'
@@ -795,6 +796,7 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 {f'<link rel="alternate" hreflang="x-default" href="{hreflang_en}"/>' if hreflang_en else ''}
 <style>{CSS}</style>
 {fonts}
+<link rel="stylesheet" href="{asset_prefix}style.css"/>
 <script type="application/ld+json">{jsonld_str}</script>
 <meta property="og:title" content="{e(title)}"/>
 <meta property="og:description" content="{e(description)}"/>
@@ -940,6 +942,7 @@ def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix=''):
     canonical, footer, outfile, fr_file, en_file, es_file, de_file = _cl_layout(pc, lang)
     rel_file = es_file if lang == 'es' else (de_file if lang == 'de' else (fr_file if lang == 'fr' else en_file))
     related  = make_related(lang, rel_file)
+    pfx = '' if lang == 'fr' else '../'
     page = make_page(
         title=title, description=desc, h1=h1, hero_sub=hero_sub,
         stats_html=stats, insights_html=insights, sections=sections,
@@ -950,6 +953,7 @@ def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix=''):
         hreflang_es=f'https://bestdateweather.com/es/{es_file}',
         hreflang_de=f'https://bestdateweather.com/de/{de_file}',
         hreflang_us=f'https://bestdateweather.com/us/{en_file}',
+        asset_prefix=pfx,
     )
     outfile.write_text(page, encoding='utf-8')
     print(f'  ✓ {outfile.name}{print_suffix}')

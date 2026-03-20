@@ -379,7 +379,7 @@ def footer_ranking_html(lang, alt_links):
 
 
 def shared_nav_html(home_href, cta_label, share_label="Share", slug_fr=None):
-    """Shared nav identical across all page types (self-contained inline styles)."""
+    """Nav using same CSS classes as fiche pages (requires style.css to be loaded)."""
     svg_share = ('<svg viewBox="0 0 24 24" width="18" height="18" fill="none" '
                  'stroke="currentColor" stroke-width="2">'
                  '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/>'
@@ -391,31 +391,20 @@ def shared_nav_html(home_href, cta_label, share_label="Share", slug_fr=None):
                  'a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06'
                  'a5.5 5.5 0 0 0 0-7.78z"/></svg>')
 
-    btn_style = ('background:none;border:1.5px solid #e8e0d0;border-radius:8px;'
-                 'padding:7px 9px;cursor:pointer;display:flex;align-items:center;'
-                 'color:#5a6c7d')
-
     fav_btn = (
-        f'<button id="btn-fav" style="{btn_style}" '
+        f'<button id="btn-fav" class="nav-share" style="display:flex" '
         f'data-slug="{slug_fr}" onclick="bdwToggleFav(this)" '
         f'aria-label="Ajouter aux favoris" aria-pressed="false">'
         f'{svg_heart}</button>'
     ) if slug_fr else ''
 
     return (
-        f'<nav style="background:white;border-bottom:1px solid #ede4d3;padding:14px 24px;'
-        f'display:flex;align-items:center;justify-content:space-between;'
-        f'position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,31,46,.06)">'
-        f'<a href="{home_href}" style="font-family:\'Playfair Display\',serif;'
-        f'font-size:17px;font-weight:700;color:#1a1f2e;text-decoration:none">'
-        f'Best<em style="font-style:italic;color:#9c5f00">Date</em>Weather</a>'
-        f'<div style="display:flex;align-items:center;gap:10px">'
+        f'<nav>'
+        f'<a class="nav-brand" href="{home_href}">Best<em>Date</em>Weather</a>'
+        f'<div class="nav-actions">'
         f'{fav_btn}'
-        f'<button onclick="shareThis()" aria-label="{share_label}" style="{btn_style}">'
+        f'<button class="nav-share" onclick="shareThis()" aria-label="{share_label}">'
         f'{svg_share}</button>'
-        f'<a href="{home_href}" style="background:#e8940a;color:#1a1f2e;border:none;'
-        f'border-radius:8px;padding:8px 16px;font-family:\'DM Sans\',sans-serif;'
-        f'font-size:12px;font-weight:700;text-decoration:none;display:inline-block">'
-        f'{cta_label}</a>'
+        f'<a class="nav-cta" href="{home_href}">{cta_label}</a>'
         f'</div></nav>'
     )

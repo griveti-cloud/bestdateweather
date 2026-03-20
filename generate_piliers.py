@@ -830,6 +830,7 @@ def generate_page(mi, lang, dests, climate):
 <meta property="og:url" content="{canonical}"/>
 <style>{CSS}</style>
 {FONTS}
+<link rel="stylesheet" href="{gen['asset_prefix']}style.css"/>
 <script type="application/ld+json">{breadcrumb}</script>
 <script type="application/ld+json">{itemlist}</script>
 <script type="application/ld+json">{faq_schema}</script>
@@ -1225,6 +1226,7 @@ def generate_annual_page(lang, dests, climate):
 <link rel="canonical" href="{canonical}">
 {hreflang_tags}<style>{CSS}.pillar-hero{{padding-bottom:64px}}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap"/></noscript>
+<link rel="stylesheet" href="{gen['asset_prefix']}style.css"/>
 </head>
 <body>
 {shared_nav_html(gen['home_url'], gen['try_app_label'], gen['share_label'])}
