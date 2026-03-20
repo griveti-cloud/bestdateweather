@@ -6,7 +6,7 @@ Usage: python3 generate_classements.py
 
 import csv, html, json, statistics
 from pathlib import Path
-from lib.common import footer_ranking_html
+from lib.common import footer_ranking_html, shared_nav_html
 
 # ── Locale loading ───────────────────────────────────────────────────────────
 _locale_cache = {}
@@ -804,13 +804,7 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 <meta name="twitter:card" content="summary_large_image"/>
 </head>
 <body>
-<nav>
- <a class="nav-brand" href="{load_locale(lang)['nav']['cta_href']}">Best<em>Date</em>Weather</a>
- <div class="nav-actions">
-  <button class="nav-share" onclick="shareThis()" aria-label="{load_locale(lang)['classements']['share_label']}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
-  <a class="nav-cta" href="{load_locale(lang)['nav']['cta_href']}">{load_locale(lang)['classements']['nav_cta_label']}</a>
- </div>
-</nav>
+{shared_nav_html(load_locale(lang)['nav']['cta_href'], load_locale(lang)['classements']['nav_cta_label'], load_locale(lang)['classements']['share_label'])}
 <header class="hero">
 <div class="hero-eyebrow">{load_locale(lang)['classements']['hero_eyebrow']}</div>
 <h1 class="hero-title">{h1}</h1>

@@ -10,7 +10,7 @@ Usage: python3 generate_piliers.py
 
 import csv, html as html_mod, json, sys, os
 from pathlib import Path
-from lib.common import footer_ranking_html, c_to_f
+from lib.common import footer_ranking_html, c_to_f, shared_nav_html
 from datetime import date
 from scoring import compute_ski_score
 
@@ -835,13 +835,7 @@ def generate_page(mi, lang, dests, climate):
 <script type="application/ld+json">{faq_schema}</script>
 </head>
 <body>
-<nav style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;max-width:900px;margin:0 auto">
- <a href="{gen["home_url"]}" style="text-decoration:none;font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#1a2332">Best<em style="color:#d4a853;font-style:italic">Date</em>Weather</a>
- <div style="display:flex;align-items:center;gap:12px">
-  <button class="nav-share" onclick="shareThis()" aria-label="{gen["share_label"]}" style="background:none;border:1.5px solid #e8e0d0;border-radius:8px;padding:8px 10px;cursor:pointer;align-items:center;color:#5a6c7d"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
-  <a href="{gen["home_url"]}" style="display:inline-block;background:#d4a853;color:white;font-size:12px;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none">{gen["try_app_label"]}</a>
- </div>
-</nav>
+{shared_nav_html(gen["home_url"], gen["try_app_label"], gen["share_label"])}
 <header class="pillar-hero">
 <div class="hero-eyebrow">{pil["hero_eyebrow_prefix"]}{YEAR}</div>
 <h1 class="hero-title">{h1}</h1>
@@ -1233,13 +1227,7 @@ def generate_annual_page(lang, dests, climate):
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap"/></noscript>
 </head>
 <body>
-<nav style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;max-width:900px;margin:0 auto">
- <a href="{gen['home_url']}" style="text-decoration:none;font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#1a2332">Best<em style="color:#d4a853;font-style:italic">Date</em>Weather</a>
- <div style="display:flex;align-items:center;gap:12px">
-  <button class="nav-share" onclick="shareThis()" aria-label="{gen['share_label']}" style="background:none;border:1.5px solid #e8e0d0;border-radius:8px;padding:8px 10px;cursor:pointer;align-items:center;color:#5a6c7d"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
-  <a href="{gen['home_url']}" style="display:inline-block;background:#d4a853;color:white;font-size:12px;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none">{gen['try_app_label']}</a>
- </div>
-</nav>
+{shared_nav_html(gen['home_url'], gen['try_app_label'], gen['share_label'])}
 <header class="pillar-hero">
 <div class="hero-eyebrow">{pil["hero_eyebrow_prefix"]}{YEAR}</div>
 <h1 class="hero-title">{h1}</h1>
