@@ -175,7 +175,17 @@ def load_data(cfg):
                 'fr': row['event_fr'], 'en': row['event_en'],
             }
 
-    return dests, climate, cards, overrides, events
+    photos = {}
+    photos_path = f'{DATA}/destination_photos.csv'
+    if os.path.exists(photos_path):
+        for row in csv.DictReader(open(photos_path, encoding='utf-8-sig')):
+            photos[row['slug_fr']] = {
+                'url': row['photo_url'],
+                'credit_name': row['photo_credit_name'],
+                'credit_url': row['photo_credit_url'],
+            }
+
+    return dests, climate, cards, overrides, events, photos
 
 
 # ── VALIDATION ──────────────────────────────────────────────────────────────
@@ -435,6 +445,12 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     lon     = float(dest['lon'])
     pfx     = C['asset_prefix']
     booking_id = dest['booking_dest_id']
+
+    # Hero photo (optional)
+    _photo = dest.get('_photo', {})
+    _photo_url = _photo.get('url', '')
+    _photo_credit_name = _photo.get('credit_name', '')
+    _photo_credit_url = _photo.get('credit_url', '')
 
     bests      = fn['best_months'](months)
     best_str   = ' & '.join(bests[:2]) if len(bests) >= 2 else bests[0]
@@ -849,6 +865,24 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     coords = f"{lat}°N {abs(lon)}°{'E' if lon >= 0 else 'W'}"
     kicker = C['lbl_updated_tpl'].format(date=updated_date, coords=coords)
 
+    # ── Hero photo HTML blocks (pre-computed to avoid backslash in f-string) ──
+    if _photo_url:
+        _preload_tag = f'<link rel="preload" as="image" href="{_photo_url}" fetchpriority="high"/>'
+        _hero_img_block = (
+            f'<img src="{_photo_url}" class="hero-bg-img" alt="{nom}"'
+            f' loading="eager" decoding="async" fetchpriority="high"/>'
+            f'<div class="hero-overlay"></div>'
+        )
+        _hero_credit = (
+            f'<a href="{_photo_credit_url}" class="hero-photo-credit"'
+            f' target="_blank" rel="noopener">© {_photo_credit_name}</a>'
+            if _photo_credit_name else ''
+        )
+    else:
+        _preload_tag = ''
+        _hero_img_block = ''
+        _hero_credit = ''
+
     # ── HTML ASSEMBLY ──
     html = f'''<!DOCTYPE html>
 <html lang="{C['html_lang']}">
@@ -873,8 +907,13 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <script type="application/ld+json">{dataset_schema}</script>
 {GTAG_HTML(pfx)}
 {head_css(C)}
+{_preload_tag}
 <style>
-.hero-band{{background:linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%);}}
+.hero-band{{position:relative;overflow:hidden;background:#0d1a3a;}}
+.hero-bg-img{{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;}}
+.hero-overlay{{position:absolute;inset:0;background:linear-gradient(160deg,rgba(13,26,58,0.85) 0%,rgba(26,42,106,0.75) 55%,rgba(42,74,154,0.65) 100%);z-index:1;}}
+.hero-band>:not(.hero-bg-img):not(.hero-overlay){{position:relative;z-index:2;}}
+.hero-photo-credit{{position:absolute;bottom:6px;right:10px;font-size:.68rem;color:rgba(255,255,255,.45);z-index:3;text-decoration:none;}}
 .hero-title em{{color:#93c5fd;}}
 .editorial-months-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}}
 .editorial-month-card{{display:block;padding:14px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;text-decoration:none;color:inherit;transition:box-shadow .15s;}}
@@ -889,6 +928,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <body>
 {nav_html(C, slug_fr=slug_fr)}
 <header class="hero-band">
+{_hero_img_block}
  <div class="dest-tag"><img src="{pfx}flags/{flag}.png" srcset="{pfx}flags/2x/{flag}.png 2x" width="20" height="15" alt="{flag.upper()}" loading="lazy" class="flag-icon"> {nom}, {country}</div>
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hsub}</p>
@@ -898,6 +938,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <div><span class="hstat-val">{fmt_temp(best_tmax, C)}</span><span class="hstat-lbl">{C['lbl_optimal_temp_stat']}</span></div>
  <div><span class="hstat-val">{best_rain}%</span><span class="hstat-lbl">{C['lbl_rainy_days_stat']}</span></div>
  </div>
+{_hero_credit}
 </header>
 <main class="page">
 {qf}
@@ -1861,7 +1902,7 @@ def main():
     target_list = args.target if args.target else None
     print(f"Target: {', '.join(target_list) if target_list else 'all destinations'}\n")
 
-    dests, climate, cards, overrides, events = load_data(cfg)
+    dests, climate, cards, overrides, events, photos = load_data(cfg)
 
     errors = validate(cfg, dests, climate, cards)
     if errors:
@@ -1901,6 +1942,9 @@ def main():
         months = climate[slug_key]
         dest_cards_list = cards.get(slug_key, [])
         slug = dest_slug(cfg, dest)
+
+        # Inject photo info into dest dict
+        dest['_photo'] = photos.get(slug_key, {})
 
         # Annual page
         try:
