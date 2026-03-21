@@ -1,6 +1,6 @@
 # BestDateWeather
 
-Plateforme météo et voyage — données climatiques ERA5 et scores pour **699 destinations** mondiales en **5 langues** (FR, EN, EN-US, ES, DE).
+Plateforme météo et voyage — données climatiques ERA5 et scores pour **697 destinations** mondiales en **5 langues** (FR, EN, EN-US, ES, DE).
 
 **Site** : [bestdateweather.com](https://bestdateweather.com)  
 **Pages générées** : ~45 700 HTML statiques  
@@ -55,7 +55,7 @@ locales/
   es.json / de.json
 
 data/
-  destinations.csv                  # 699 destinations (slugs, coords, pays, flags…)
+  destinations.csv                  # 697 destinations (slugs, coords, pays, flags…)
   climate.csv                       # Données climatiques mensuelles ERA5 (score, tmin, tmax, rain, sun, sea_temp…)
   editorial.json                    # 33 600+ textes éditoriaux par destination/mois/langue
   overrides.csv                     # Overrides manuels scoring
