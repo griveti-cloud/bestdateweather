@@ -102,6 +102,7 @@ def footer(d, bg='#f8fafc', sub='#cbd5e1'):
 
 def wrap(body, w, bg='#fff', border='#e2e8f0'):
     return (f'<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"/>'
+            f'<meta name="robots" content="noindex,nofollow"/>'
             f'<style>*{{margin:0;padding:0;box-sizing:border-box}}body{{font-family:DM Sans,Arial,sans-serif;'
             f'background:{bg};border:1px solid {border};border-radius:12px;overflow:hidden;width:{w}px}}</style>'
             f'</head><body>{body}</body></html>')
