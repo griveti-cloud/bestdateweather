@@ -331,7 +331,8 @@ def nav_html(cfg, slug_fr=None):
   {fav_btn}<button class="nav-share" onclick="shareThis()" aria-label="{share_label}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
   <a class="nav-cta" href="{home_href}">{cta_label}</a>
  </div>
-</nav>'''
+</nav>
+<script>!function(){{var n=document.querySelector('nav'),b=document.querySelector('.plan-bar');if(n&&b){{var h=n.getBoundingClientRect().height;b.style.top=h+'px';window.addEventListener('resize',function(){{b.style.top=n.getBoundingClientRect().height+'px';}});}}}}();</script>'''
 
 
 def footer_html(cfg, dest):
@@ -385,7 +386,7 @@ def footer_html(cfg, dest):
 {alt_link_p}
  <p class="f11-muted"><a href="{legal_url}" class="txt-muted">{legal_label}</a> · <a href="{priv_url}" class="txt-muted">{priv_label}</a> · <a href="{fc['contact'][0]}" class="txt-muted">{fc['contact'][1]}</a></p>
 </footer>
-<script src="{cfg['asset_prefix']}js/core.min.js?v=15" defer></script>
+<script src="{cfg['asset_prefix']}js/core.min.js?v=16" defer></script>
 <script src="{cfg['asset_prefix']}js/favs.min.js?v=1" defer></script>
 <script src="{cfg['asset_prefix']}js/share.js" defer></script>'''
 
