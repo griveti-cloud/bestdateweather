@@ -2847,3 +2847,60 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
     }
   });
 })();
+
+// ── Plan-bar sticky top offset ──────────────────────────────────────────────
+(function() {
+  function setNavH() {
+    var nav = document.querySelector('nav');
+    var bar = document.querySelector('.plan-bar');
+    if (nav && bar) {
+      bar.style.top = nav.offsetHeight + 'px';
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setNavH);
+  } else {
+    setNavH();
+  }
+  window.addEventListener('resize', setNavH);
+})();
+
+// ── CTA mobile flottant ─────────────────────────────────────────────────────
+(function() {
+  if (window.innerWidth > 768) return;
+  var bar = document.querySelector('.plan-bar');
+  if (!bar) return;
+  var links = bar.querySelectorAll('.plan-link');
+  if (!links.length) return;
+
+  var fab = document.createElement('div');
+  fab.id = 'mobile-cta-fab';
+  fab.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:200;display:flex;flex-direction:column;gap:8px;align-items:flex-end';
+
+  // Bouton principal : Activités (GYG)
+  var activ = bar.querySelector('.plan-link-activ');
+  var flight = bar.querySelector('.plan-link-flight');
+
+  if (activ) {
+    var a1 = activ.cloneNode(true);
+    a1.style.cssText = 'display:inline-flex;align-items:center;gap:6px;padding:12px 18px;border-radius:24px;font-size:14px;font-weight:700;text-decoration:none;background:#16a34a;color:white;box-shadow:0 4px 16px rgba(22,163,74,.4);border:none';
+    fab.appendChild(a1);
+  }
+  if (flight) {
+    var a2 = flight.cloneNode(true);
+    a2.style.cssText = 'display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:24px;font-size:13px;font-weight:700;text-decoration:none;background:#2563eb;color:white;box-shadow:0 4px 12px rgba(37,99,235,.35);border:none';
+    fab.appendChild(a2);
+  }
+
+  document.body.appendChild(fab);
+
+  // Cacher le FAB quand on est près des sections affiliées
+  var affil = document.querySelector('.affil-box');
+  if (affil) {
+    var io = new IntersectionObserver(function(entries) {
+      fab.style.opacity = entries[0].isIntersecting ? '0' : '1';
+      fab.style.pointerEvents = entries[0].isIntersecting ? 'none' : 'auto';
+    });
+    io.observe(affil);
+  }
+})();
