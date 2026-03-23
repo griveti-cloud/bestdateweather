@@ -947,8 +947,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  </div>
 {_hero_credit}
 </header>
-<main class="page">
 {plan_bar_html}
+<main class="page">
 {qf}
 {cards_section}
 {table_section}
@@ -1738,8 +1738,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <div><span class="hstat-val">{m['sun_h']}h</span><span class="hstat-lbl">{L['hstat_sun']}</span></div>
  </div>
 </header>
-<main class="page">
 {plan_bar_m}
+<main class="page">
  <section class="section">
  <div class="section-label">{L['sec_summary']}</div>
  <h2 class="section-title">{L['sec_summary_title']}</h2>
