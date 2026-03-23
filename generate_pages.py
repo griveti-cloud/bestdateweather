@@ -880,9 +880,16 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
             f' loading="eager" decoding="async" fetchpriority="high"/>'
             f'<div class="hero-overlay"></div>'
         )
+        # Unsplash attribution: photo link with UTM + "on Unsplash" link
+        _utm = 'utm_source=bestdateweather&utm_medium=referral'
+        _credit_url_utm = f'{_photo_credit_url}?{_utm}' if _photo_credit_url else ''
+        _unsplash_utm = f'https://unsplash.com/?{_utm}'
+        _photographer = _photo_credit_name.replace(' via Unsplash', '').replace(' via unsplash', '')
         _hero_credit = (
-            f'<a href="{_photo_credit_url}" class="hero-photo-credit"'
-            f' target="_blank" rel="noopener">© {_photo_credit_name}</a>'
+            f'<span class="hero-photo-credit">'
+            f'<a href="{_credit_url_utm}" target="_blank" rel="noopener">{_photographer}</a>'
+            f' / <a href="{_unsplash_utm}" target="_blank" rel="noopener">Unsplash</a>'
+            f'</span>'
             if _photo_credit_name else ''
         )
     else:
@@ -920,8 +927,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 .hero-bg-img{{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;}}
 .hero-overlay{{position:absolute;inset:0;background:linear-gradient(160deg,rgba(13,26,58,0.68) 0%,rgba(26,42,106,0.55) 55%,rgba(42,74,154,0.42) 100%);z-index:1;}}
 .hero-band>:not(.hero-bg-img):not(.hero-overlay){{position:relative;z-index:2;}}
-.hero-photo-credit{{position:absolute;bottom:4px;right:8px;font-size:.6rem;color:rgba(255,255,255,.08);z-index:3;text-decoration:none;letter-spacing:.01em;}}
-.hero-photo-credit:hover{{color:rgba(255,255,255,.35);}}
+.hero-photo-credit{{position:absolute;bottom:6px;right:10px;font-size:.65rem;color:rgba(255,255,255,.65);z-index:3;letter-spacing:.01em;}}
+.hero-photo-credit a{{color:rgba(255,255,255,.65);text-decoration:none;}}.hero-photo-credit a:hover{{color:white;text-decoration:underline;}}
 .hero-title em{{color:#93c5fd;}}
 .editorial-months-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}}
 .editorial-month-card{{display:block;padding:14px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;text-decoration:none;color:inherit;transition:box-shadow .15s;}}
