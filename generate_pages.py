@@ -331,8 +331,7 @@ def nav_html(cfg, slug_fr=None):
   {fav_btn}<button class="nav-share" onclick="shareThis()" aria-label="{share_label}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
   <a class="nav-cta" href="{home_href}">{cta_label}</a>
  </div>
-</nav>
-<script>!function(){{var n=document.querySelector('nav'),b=document.querySelector('.plan-bar');if(n&&b){{var h=n.getBoundingClientRect().height;b.style.top=h+'px';window.addEventListener('resize',function(){{b.style.top=n.getBoundingClientRect().height+'px';}});}}}}();</script>'''
+</nav>'''
 
 
 def footer_html(cfg, dest):
@@ -941,7 +940,10 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="{GYG_PARTNER_ID}"></script>
 </head>
 <body>
+<div class="sticky-wrap">
 {nav_html(C, slug_fr=slug_fr)}
+{plan_bar_html}
+</div>
 <header class="hero-band">
 {_hero_img_block}
  <div class="dest-tag"><img src="{pfx}flags/{flag}.png" srcset="{pfx}flags/2x/{flag}.png 2x" width="20" height="15" alt="{flag.upper()}" loading="lazy" class="flag-icon"> {nom}, {country}</div>
@@ -955,7 +957,6 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  </div>
 {_hero_credit}
 </header>
-{plan_bar_html}
 <main class="page">
 {qf}
 {cards_section}
@@ -1734,7 +1735,10 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="{GYG_PARTNER_ID}"></script>
 </head>
 <body>
+<div class="sticky-wrap">
 {NAV}
+{plan_bar_m}
+</div>
 <header class="hero-band">
  <div class="dest-tag"><img src="{pfx}flags/{flag}.png" srcset="{pfx}flags/2x/{flag}.png 2x" width="20" height="15" alt="{flag.upper()}" loading="lazy" class="flag-icon"> {nom} · {season}</div>
  <h1 class="hero-title">{h1_text}</h1>
@@ -1746,7 +1750,6 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <div><span class="hstat-val">{m['sun_h']}h</span><span class="hstat-lbl">{L['hstat_sun']}</span></div>
  </div>
 </header>
-{plan_bar_m}
 <main class="page">
  <section class="section">
  <div class="section-label">{L['sec_summary']}</div>

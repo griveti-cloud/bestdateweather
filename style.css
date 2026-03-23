@@ -17,7 +17,7 @@ html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.75}
 
 /* NAV */
-nav{background:white;border-bottom:1px solid var(--cream2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,31,46,.06)}
+nav{background:white;border-bottom:1px solid var(--cream2);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100}
 .nav-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy);text-decoration:none}
 .nav-brand em{font-style:italic;color:#9c5f00}
 .nav-cta{background:var(--gold);color:var(--navy);border:none;border-radius:8px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;text-decoration:none;transition:all .2s;display:inline-block}
@@ -400,10 +400,11 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .filter-panel+.section{border:1.5px solid var(--cream2);border-top:none;border-radius:0 0 14px 14px;padding:12px 14px 0;margin-bottom:16px}
 
 /* ── Plan bar — compact affiliate strip ── */
-.plan-bar{display:flex;flex-wrap:nowrap;gap:8px;margin:0;padding:10px 24px;background:#fff;border-bottom:2px solid #e2e8f0;align-items:center;position:sticky;top:57px;z-index:90;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.plan-bar{display:flex;flex-wrap:nowrap;gap:8px;margin:0;padding:10px 24px;background:#fff;border-bottom:2px solid #e2e8f0;align-items:center;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .plan-bar-label{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;flex-shrink:0}
 .plan-link{display:inline-flex;align-items:center;gap:4px;padding:7px 13px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;border:1.5px solid transparent;transition:all .15s;white-space:nowrap;flex-shrink:0}
 .plan-link-hotel{background:#fff7ed;color:#92400e;border-color:#fcd34d}.plan-link-hotel:hover{background:#f59e0b;color:white;border-color:#f59e0b}
 .plan-link-activ{background:#f0fdf4;color:#166534;border-color:#86efac}.plan-link-activ:hover{background:#16a34a;color:white;border-color:#16a34a}
 .plan-link-flight{background:#eff6ff;color:#1e40af;border-color:#93c5fd}.plan-link-flight:hover{background:#2563eb;color:white;border-color:#2563eb}
 @media(max-width:768px){.plan-bar{padding:8px 16px;gap:6px;box-shadow:none}.plan-link{font-size:12px;padding:6px 11px}.plan-bar-label{display:none}}
+.sticky-wrap{position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,31,46,.06)}
