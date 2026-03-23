@@ -311,7 +311,8 @@
     "hist_tmin": "Tmin",
     "hist_title": "Historische Temperaturen",
     "hist_hint": "10-Jahres-Trend",
-    "annual_view_link": "Alle Monate anzeigen →"
+    "annual_view_link": "Alle Monate anzeigen →",
+    "cards_gyg_btn": "🎟️ Aktivitäten ansehen"
   },
   "monthly": {
     "hero_tpl": "{name} Wetter im {month}",

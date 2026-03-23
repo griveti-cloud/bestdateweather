@@ -537,11 +537,17 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 </section>'''
 
     # ── Cards section ──
+    _gyg_domain_c  = C['gyg_domain']
+    _gyg_lang_c    = C['lang']
+    _gyg_dest_c    = quote_plus(f"{nom}, {country}")
+    _gyg_url_c     = f"https://www.{_gyg_domain_c}/s/?q={_gyg_dest_c}&partner_id={GYG_PARTNER_ID}&locale={_gyg_lang_c}"
+    _gyg_btn_lbl   = C.get('lbl_cards_gyg_btn', '🎟️ Activities')
     tk, xk = C['card_title_key'], C['card_text_key']
     cards_html = '\n'.join(
         f'<div class="project-card"><span class="proj-icon">{c["icon"]}</span>'
         f'<span class="proj-title">{c[tk]}</span>'
-        f'<span class="proj-text">{c[xk]}</span></div>'
+        f'<span class="proj-text">{c[xk]}</span>'
+        f'<a href="{_gyg_url_c}" target="_blank" rel="sponsored noopener" class="proj-gyg-btn">{_gyg_btn_lbl}</a></div>'
         for c in dest_cards
     )
     cards_section = f'''<section class="section">
@@ -942,10 +948,10 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 {_hero_credit}
 </header>
 <main class="page">
+{plan_bar_html}
 {qf}
 {cards_section}
 {table_section}
-{plan_bar_html}
 {seasonal_section}
 {booking_section}
 {activities_section}
@@ -1639,11 +1645,25 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     gyg_dest_m = f"{nom}, {country_name}"
     gyg_dest_m_enc = quote_plus(gyg_dest_m)
     gyg_url_m = f"https://www.{gyg_domain_m}/s/?q={gyg_dest_m_enc}&partner_id={GYG_PARTNER_ID}&locale={gyg_lang_m}"
+    # Titre contextuel : "Que faire à Paris en juillet ?"
+    _act_title_m = ft.get('activity_q', cfg['lbl_activities_title_tpl'].format(name=nom_f)).format(
+        name=nom_f, month=month, month_lc=mlc, prep=prep, nom_bare=nom_bare)
+    # Texte météo contextualisé selon score
+    _tmax_disp = c_to_f(m['tmax']) if C.get('imperial') else m['tmax']
+    if score >= 7.5:
+        _act_text_m = ft.get('activity_a_outdoor', cfg['lbl_activities_cta']).format(
+            tmax=_tmax_disp, sun=m['sun_h'], rain=m['rain_pct'], name=nom_f, month_lc=mlc)
+    elif score >= 5.5:
+        _act_text_m = ft.get('activity_a_cultural', cfg['lbl_activities_cta']).format(
+            tmax=_tmax_disp, sun=m['sun_h'], rain=m['rain_pct'], name=nom_f, month_lc=mlc)
+    else:
+        _act_text_m = ft.get('activity_a_indoor', cfg['lbl_activities_cta']).format(
+            tmax=_tmax_disp, sun=m['sun_h'], rain=m['rain_pct'], name=nom_f, month_lc=mlc)
     activities_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_activities_section']}</div>
- <h2 class="section-title">{cfg['lbl_activities_title_tpl'].format(name=nom_f)}</h2>
+ <h2 class="section-title">{_act_title_m}</h2>
  <div class="affil-box">
- <strong>{cfg['lbl_activities_cta']}</strong>
+ <p>{_act_text_m}</p>
  <a href="{gyg_url_m}" target="_blank" rel="sponsored noopener" class="affil-btn">{cfg['lbl_activities_btn']}</a>
  </div>
 </section>'''
@@ -1662,10 +1682,11 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 </section>'''
 
     # ── Plan bar mensuel ──
-    _pb_label_m = cfg.get('lbl_plan_bar', 'Planifier votre voyage')
-    _pb_hotel_m = cfg.get('lbl_plan_hotel', '🏨 ' + cfg.get('lbl_booking_btn', 'Hébergement'))
-    _pb_activ_m = cfg.get('lbl_plan_activ', '🎟️ ' + cfg.get('lbl_activities_btn', 'Activités'))
-    _pb_flight_m = cfg.get('lbl_plan_flight', '✈️ ' + cfg.get('lbl_flights_btn', 'Vols'))
+    _month_lc_m  = month_lc(cfg, month)
+    _pb_label_m  = cfg.get('lbl_plan_bar', 'Planifier votre voyage')
+    _pb_hotel_m  = cfg.get('lbl_plan_hotel', '🏨 ' + cfg.get('lbl_booking_btn', 'Hébergement'))
+    _pb_activ_m  = f"🎟️ {cfg.get('lbl_chip_activ', 'Activités')} – {_month_lc_m}"
+    _pb_flight_m = f"✈️ {cfg.get('lbl_chip_flight', 'Vols')} – {_month_lc_m}"
     plan_bar_m = f'''<div class="plan-bar">
 <span class="plan-bar-label">{_pb_label_m}</span>
 <a href="{bk_url}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">{_pb_hotel_m}</a>
@@ -1718,6 +1739,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
 </header>
 <main class="page">
+{plan_bar_m}
  <section class="section">
  <div class="section-label">{L['sec_summary']}</div>
  <h2 class="section-title">{L['sec_summary_title']}</h2>
@@ -1821,7 +1843,6 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  </section>
 
-{plan_bar_m}
 {booking_section}
 {activities_section}
 {flights_section}

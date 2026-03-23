@@ -311,7 +311,8 @@
     "hist_tmin": "Tmin",
     "hist_title": "Temperaturas históricas",
     "hist_hint": "Tendencia 10 años",
-    "annual_view_link": "Ver todos los meses →"
+    "annual_view_link": "Ver todos los meses →",
+    "cards_gyg_btn": "🎟️ Ver actividades"
   },
   "monthly": {
     "hero_tpl": "Tiempo en {name} en {month}",
