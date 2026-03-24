@@ -936,3 +936,6 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .mode-btn.active .mode-btn-title{color:white!important}
 .mode-btn.active .mode-btn-sub{color:rgba(255,255,255,.75)!important}
 .mode-btn.active svg{stroke:white!important;opacity:.9!important}
+
+/* Fix sub-text inactif : contraste renforcé */
+.mode-btn:not(.active) .mode-btn-sub{color:var(--slate2)!important;opacity:1!important}
