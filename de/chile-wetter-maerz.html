@@ -320,8 +320,8 @@ Der März in Chile ist wirklich wunderbar: Es ist trocken, die Sonne scheint fas
     if(!suggestions){ ac.style.display='none'; return; }
     var qNorm = normStr(q);
     var results = [];
-    Object.keys(_suggestions).forEach(function(slug){
-      var d = _suggestions[slug];
+    Object.keys(suggestions).forEach(function(slug){
+      var d = suggestions[slug];
       var name = d[lang] || d.fr || d.en || '';
       if(normStr(name).indexOf(qNorm) === 0) {
         results.push({slug:slug, name:name, flag:d.flag});

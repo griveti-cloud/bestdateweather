@@ -1980,8 +1980,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     if(!suggestions){{ ac.style.display='none'; return; }}
     var qNorm = normStr(q);
     var results = [];
-    Object.keys(_suggestions).forEach(function(slug){{
-      var d = _suggestions[slug];
+    Object.keys(suggestions).forEach(function(slug){{
+      var d = suggestions[slug];
       var name = d[lang] || d.fr || d.en || '';
       if(normStr(name).indexOf(qNorm) === 0) {{
         results.push({{slug:slug, name:name, flag:d.flag}});
