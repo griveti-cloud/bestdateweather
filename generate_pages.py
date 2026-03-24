@@ -1955,7 +1955,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  </section>
 </main>
-<script src="{C['asset_prefix']}js/dest-data.js"></script>
+<script src="{C['asset_prefix']}js/dest-data.js?v=2"></script>
 <script>
 (function(){{
   var inp = document.getElementById('dest-search-inp');
