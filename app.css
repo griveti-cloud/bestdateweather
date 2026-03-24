@@ -649,9 +649,11 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 }
 
 /* Mode toggle padding */
+.main-card .mode-toggle-wrap{
+  padding:8px 16px 0;
+}
 .main-card .mode-toggle{
-  padding:12px 16px 0;
-  margin-bottom:12px;
+  margin-bottom:0;
 }
 
 /* Annual form — remove its own card appearance, use main-card instead */
