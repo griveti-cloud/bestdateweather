@@ -954,3 +954,15 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
   background:transparent!important;
 }
 /* Le pill reste intact (fond blanc, border, border-radius:50px) */
+
+/* CTA pleine largeur sur desktop */
+@media(min-width:641px){
+  .btn-go{
+    grid-column:1 / -1!important;
+    width:100%!important;
+  }
+  #date-form{
+    display:flex;
+    flex-direction:column;
+  }
+}
