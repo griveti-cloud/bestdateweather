@@ -340,7 +340,9 @@
             .filter(function(r){return r.feature_code!=='AIRP'&&r.feature_code!=='RSTN';})
             .slice(0,6)
             .map(function(r){
-              return {name:r.name, country:r.country||'', flag:'', lat:r.latitude, lon:r.longitude};
+              var cc = (r.country_code||'').toLowerCase();
+              var flagHtml = cc ? '<img src="flags/'+cc+'.png" width="20" height="15" alt="'+cc+'" style="vertical-align:middle;border-radius:2px;flex-shrink:0" onerror="this.style.display='none'">' : '';
+              return {name:r.name, country:r.country||'', flag:flagHtml, lat:r.latitude, lon:r.longitude};
             });
           showAC(items);
         }).catch(function(){});
