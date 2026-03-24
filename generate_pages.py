@@ -1762,6 +1762,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .dest-search-ac-item{{padding:10px 16px;cursor:pointer;font-size:13px;color:var(--navy);border-bottom:1px solid var(--cream2);display:flex;align-items:center;gap:8px;}}
 .dest-search-ac-item:last-child{{border-bottom:none;}}
 .dest-search-ac-item:hover{{background:var(--cream);}}
+.dest-flag{{vertical-align:middle;border-radius:2px;flex-shrink:0;}}
 </style>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="{GYG_PARTNER_ID}"></script>
 </head>
@@ -2003,7 +2004,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
             .slice(0,6)
             .map(function(r){{
               var cc = (r.country_code||'').toLowerCase();
-              var flagHtml = cc ? '<img src="{C["asset_prefix"]}flags/'+cc+'.png" width="20" height="15" alt="'+cc+'" style="vertical-align:middle;border-radius:2px;flex-shrink:0" onerror="this.style.display=\'none\'">' : '';
+              var flagHtml = cc ? '<img class="dest-flag" src="{C["asset_prefix"]}flags/'+cc+'.png" width="20" height="15" alt="'+cc+'">' : '';
               return {{name:r.name, country:r.country||'', flag:flagHtml, lat:r.latitude, lon:r.longitude}};
             }});
           showAC(items);
