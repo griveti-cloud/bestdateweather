@@ -1995,13 +1995,13 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         txt.appendChild(ctry);
       }}
       d.appendChild(txt);
-      d.onclick = function(){{ goTo(r); }};
+      d.onmousedown = function(e){{ e.preventDefault(); goTo(r); }};
       ac.appendChild(d);
     }});
     ac.classList.add('open');
   }}
 
-  function goToTo(r){{
+  function goTo(r){{
     var s = slugify(r.name);
     var url = basePrefix + s + monthSuffix;
     window.location.href = url;

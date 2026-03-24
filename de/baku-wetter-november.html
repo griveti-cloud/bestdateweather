@@ -335,13 +335,13 @@ Der November in Baku ist perfekt für Wanderer und Kulturreisende, die Kühle un
         txt.appendChild(ctry);
       }
       d.appendChild(txt);
-      d.onclick = function(){ goTo(r); };
+      d.onmousedown = function(e){ e.preventDefault(); goTo(r); };
       ac.appendChild(d);
     });
     ac.classList.add('open');
   }
 
-  function goToTo(r){
+  function goTo(r){
     var s = slugify(r.name);
     var url = basePrefix + s + monthSuffix;
     window.location.href = url;

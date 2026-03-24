@@ -335,13 +335,13 @@ Im Januar erlebst du Boracay mit angenehmen 25–27°C und viel Regen – perfek
         txt.appendChild(ctry);
       }
       d.appendChild(txt);
-      d.onclick = function(){ goTo(r); };
+      d.onmousedown = function(e){ e.preventDefault(); goTo(r); };
       ac.appendChild(d);
     });
     ac.classList.add('open');
   }
 
-  function goToTo(r){
+  function goTo(r){
     var s = slugify(r.name);
     var url = basePrefix + s + monthSuffix;
     window.location.href = url;
