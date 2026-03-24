@@ -316,14 +316,30 @@
     items.slice(0,6).forEach(function(r,i){
       var d = document.createElement('div');
       d.className = 'dest-search-ac-item';
-      d.innerHTML = '<span>' + (r.flag||'') + '</span><span>' + r.name + (r.country ? ' <span style="color:#9aabbb;font-size:11px">'+r.country+'</span>' : '') + '</span>';
+      if(r.cc){
+        var img = document.createElement('img');
+        img.src = basePrefix + 'flags/' + r.cc + '.png';
+        img.width = 20; img.height = 15; img.alt = r.cc;
+        img.style.cssText = 'vertical-align:middle;border-radius:2px;margin-right:6px;flex-shrink:0';
+        img.onerror = function(){this.style.display='none';};
+        d.appendChild(img);
+      }
+      var txt = document.createElement('span');
+      txt.textContent = r.name;
+      if(r.country){
+        var ctry = document.createElement('span');
+        ctry.textContent = ' ' + r.country;
+        ctry.style.cssText = 'color:#9aabbb;font-size:11px';
+        txt.appendChild(ctry);
+      }
+      d.appendChild(txt);
       d.onclick = function(){ goTo(r); };
       ac.appendChild(d);
     });
     ac.classList.add('open');
   }
 
-  function goTo(r){
+  function goToTo(r){
     var s = slugify(r.name);
     var url = basePrefix + s + monthSuffix;
     window.location.href = url;
@@ -341,9 +357,7 @@
             .filter(function(r){return r.feature_code!=='AIRP'&&r.feature_code!=='RSTN';})
             .slice(0,6)
             .map(function(r){
-              var cc = (r.country_code||'').toLowerCase();
-              var flagHtml = cc ? '<img class="dest-flag" src="../flags/'+cc+'.png" width="20" height="15" alt="'+cc+'">' : '';
-              return {name:r.name, country:r.country||'', flag:flagHtml, lat:r.latitude, lon:r.longitude};
+              return {name:r.name, country:r.country||'', cc:(r.country_code||'').toLowerCase(), lat:r.latitude, lon:r.longitude};
             });
           showAC(items);
         }).catch(function(){});
