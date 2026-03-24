@@ -1995,12 +1995,18 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         txt.appendChild(ctry);
       }}
       d.appendChild(txt);
-      d.onmousedown = function(e){{ e.preventDefault(); goTo(r); }};
+      d.onmousedown = function(e){{ e.preventDefault(); selectDest(r); }};
       ac.appendChild(d);
     }});
     ac.classList.add('open');
   }}
 
+  var _selected = null;
+  function selectDest(r){{
+    _selected = r;
+    inp.value = r.name + (r.country ? ', ' + r.country : '');
+    ac.classList.remove('open');
+  }}
   function goTo(r){{
     var s = slugify(r.name);
     var url = basePrefix + s + monthSuffix;
@@ -2027,7 +2033,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
   }});
 
   btn.addEventListener('click', function(){{
-    if(results.length) goTo(results[0]);
+    if(_selected) goTo(_selected);
+    else if(results.length) goTo(results[0]);
     else if(inp.value.trim()) goTo({{name: inp.value.trim()}});
   }});
 
@@ -2035,7 +2042,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     var items = ac.querySelectorAll('.dest-search-ac-item');
     if(e.key==='ArrowDown'){{selIdx=Math.min(selIdx+1,items.length-1);items.forEach(function(el,i){{el.style.background=i===selIdx?'var(--cream)':'';}});}}
     else if(e.key==='ArrowUp'){{selIdx=Math.max(selIdx-1,0);items.forEach(function(el,i){{el.style.background=i===selIdx?'var(--cream)':'';}});}}
-    else if(e.key==='Enter'){{if(selIdx>=0&&results[selIdx]) goTo(results[selIdx]); else if(results.length) goTo(results[0]);}}
+    else if(e.key==='Enter'){{if(selIdx>=0&&results[selIdx]) selectDest(results[selIdx]); else if(_selected) goTo(_selected); else if(results.length) goTo(results[0]);}}
     else if(e.key==='Escape'){{ac.classList.remove('open');}}
   }});
 
