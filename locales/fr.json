@@ -430,9 +430,9 @@
     "og_title_tpl": "Météo {prep} {nom_bare} en {month_lc} {year} — {tmax}°C & {sun}h de soleil",
     "bk_cta_tpl": "Voir les hébergements {prep} {nom_bare} en {month_lc}",
     "sim_label": "Explorer aussi",
-    "verdict_period_rec": "Excellent moment pour visiter",
-    "verdict_period_avg": "Période correcte pour visiter",
-    "verdict_period_bad": "Météo difficile ce mois",
+    "verdict_period_rec": "Idéal",
+    "verdict_period_avg": "Correct",
+    "verdict_period_bad": "Difficile",
     "act_beach_na": "— Sans accès mer",
     "crosslink_label": "🌍 Top destinations",
     "crosslink_title_tpl": "Autres top destinations en {month_lc}",
@@ -707,17 +707,17 @@
     "score_fair": "Pas le meilleur créneau, mais acceptable pour qui a des contraintes de dates. {best_month} ({best_score}/10) est nettement préférable si possible."
   },
   "monthly_titles": [
-    "Météo {prep} {nom_bare} en {month_lc} {year} — {tmax}°C, {sun}h soleil/jour",
-    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil — Guide météo",
-    "Partir {prep} {nom_bare} en {month_lc} {year} : bonne idée ? {tmax}°C, {sun}h soleil",
-    "{nom_bare} en {month_lc} : météo de {season_lc} {year} — {tmax}°C & {sun}h/jour",
-    "{verdict_emoji} {nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h — Vaut-il le voyage ?"
+    "{verdict_emoji} {nom_bare} en {month_lc} {year} — {tmax}°C, {sun}h soleil ({verdict})",
+    "Partir {prep} {nom_bare} en {month_lc} ? {verdict_emoji} {tmax}°C, {sun}h de soleil [{year}]",
+    "{nom_bare} en {month_lc} {year} : {tmax}°C & {sun}h soleil — {verdict} [{score}/10]",
+    "{nom_bare} en {month_lc} : {season_lc} {year} — {verdict_emoji} {tmax}°C, {sun}h/jour",
+    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h — Le voyage en vaut-il la peine ?"
   ],
   "monthly_descs": [
-    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil/jour, {rain_label}. Score météo {score}/10 — {verdict}.",
-    "Partir {prep} {nom_bare} en {month_lc} {year} ? {tmax}°C, {sun}h de soleil{sea_label_comma} — score {score}/10. Guide complet.",
-    "Préparez votre séjour {prep} {nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil/jour{sea_label_comma}. {rain_label}. Score {score}/10.",
-    "{nom_bare} en {month_lc} {year} : score {score}/10 — {tmax}°C, {sun}h de soleil{sea_label_comma}. {rain_label}."
+    "{verdict} — {nom_bare} en {month_lc} {year}. {tmax}°C, {sun}h soleil/jour{sea_label_comma}. {rain_label}. Score {score}/10.",
+    "{nom_bare} en {month_lc} vaut-il le déplacement ? Score {score}/10 — {tmax}°C, {sun}h soleil/jour{sea_label_comma}. Meilleur mois : {best_month} ({best_score}/10).",
+    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h soleil/jour{sea_label_comma}. {rain_label}. {verdict} — 10 ans de données météo.",
+    "{verdict_emoji} {verdict} : {nom_bare} en {month_lc} affiche {tmax}°C et {sun}h soleil/jour{sea_label_comma}. Score {score}/10 vs meilleur mois {best_month} ({best_score}/10)."
   ],
   "monthly_h1s": [
     "Météo {prep} {nom_bare}<br/><em>en {month_lc}</em>",
