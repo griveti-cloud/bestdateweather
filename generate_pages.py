@@ -1974,9 +1974,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
   var acData = [];
 
   function norm(s){{
-    return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'').trim();
+    return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
   }}
-
   function slugFromResult(r){{
     var slugMap = window.BDW_FICHE_SLUGS;
     if(!slugMap) return null;
@@ -2028,7 +2028,6 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
           var results = (data.results||[])
             .filter(function(r){{ return r.feature_code!=='AIRP'&&r.feature_code!=='RSTN'; }})
             .sort(function(a,b){{return (b.population||0)-(a.population||0);}})
-            .filter(function(r){{ return slugFromResult(r) !== null; }})
             .slice(0,6);
           showAC(results);
         }}).catch(function(){{}});
