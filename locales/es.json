@@ -712,11 +712,11 @@
     "score_fair": "No es la mejor ventana, pero es aceptable si las fechas son fijas. {best_month} ({best_score}/10) es significativamente mejor si es posible."
   },
   "monthly_titles": [
-    "{nom} {month} {year}: {score}/10 — ¿merece la pena?",
+    "{nom} {month} {year} — {score}/10: ¿vale la pena?",
     "¿Es {month} buen momento para {nom}? {score}/10 ({year})",
-    "{nom} en {month} {year}: {score}/10 — ¿vale el viaje?",
-    "Tiempo en {nom} en {month} {year}: {score}/10 — guía completa",
-    "{nom} en {month}: {score}/10 — ¿buena o mala época? ({year})"
+    "{nom} en {month} {year} — {score}/10: ¿vale el viaje?",
+    "Tiempo en {nom} en {month} {year} — {score}/10",
+    "{nom} en {month} — {score}/10: ¿buena o mala época? ({year})"
   ],
   "monthly_descs": [
     "¿Es {month} buena época para {nom}? Descubre la puntuación completa, datos meteorológicos y comparación con los mejores meses.",
