@@ -295,7 +295,7 @@
     "rain_word": "rain",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropical destination — heavy rain months benefit from an algorithmic adjustment: tropical showers are intense but brief and usually don't ruin a trip.</p>",
     "headline_tpl": "Best Time to Visit {nom}",
-    "og_title_tpl": "Best time to visit {nom} — weather &amp; tips",
+    "og_title_tpl": "Best Time to Visit {nom} {year} — Month-by-Month Weather Guide",
     "dataset_name_tpl": "Climate data for {nom} — monthly averages over 10 years",
     "dataset_desc_tpl": "Monthly temperatures, precipitation, sunshine and wind for {nom}. Averages computed from 10 years of ERA5 data (Open-Meteo).",
     "best_months_lbl_tpl": "Best month{s}",
@@ -412,7 +412,7 @@
     "legend_note": "◀ Current month · Source Open-Meteo · 10 years",
     "src_link": "methodology.html",
     "kicker_tpl": "Open-Meteo · 10 years · 12 months compared · {lat}°N {lon}°{dir}",
-    "og_title_tpl": "{nom} in {month} — {tmax}°C, {rain}% rain",
+    "og_title_tpl": "{nom} in {month} {year} — {tmax}°C & {sun}h sunshine",
     "bk_cta_tpl": "Find places to stay in {nom} in {month}",
     "sim_label": "Explore also",
     "verdict_period_rec": "Recommended period.",
@@ -440,7 +440,8 @@
     "editorial_highlights_label": "✍️ Our take",
     "editorial_highlights_title": "Best months in {nom}",
     "sec_similar_ski_tpl": "Similar ski resorts in {month_lc}",
-    "sim_label_ski": "⛷️ Comparable resorts"
+    "sim_label_ski": "⛷️ Comparable resorts",
+    "rain_pct_label": "{pct}% rainy days"
   },
   "narratives": {
     "tropical_rainy": "In {month}, {name} is in the middle of the rainy season ({rain}% rainy days). Tropical showers are usually short but intense — pack a light raincoat.",
@@ -551,7 +552,8 @@
   "annual_titles": [
     "Best Time to Visit {nom}: {best_month} is Ideal ({best_tmax}°C) [{year}]",
     "When to Visit {nom} [{year}] — Best Month: {best_month} ({best_tmax}°C)",
-    "Is {nom} Worth Visiting? Best Weather: {best_month} {best_tmax}°C [{year}]"
+    "Is {nom} Worth Visiting? Best Weather: {best_month} {best_tmax}°C [{year}]",
+    "Best Time to Visit {nom} {year}: Month-by-Month Weather Guide"
   ],
   "annual_h1s": [
     "Best Time to Visit<br/><em>{nom}</em>",
@@ -563,7 +565,8 @@
     "{best_month} is the best month to visit {nom}: {best_tmax}°C, {best_sun}h sun, score {best_score}/10. Full 12-month weather analysis.",
     "{nom} climate guide: best month is {best_month} ({best_tmax}°C, {best_sun}h/day). Avoid {worst_month} ({worst_rain}% rain). 10 years of data.",
     "Best time for {nom}: {best_month} ({best_score}/10) with {best_tmax}°C and {best_sun}h sunshine. Worst: {worst_month}. Plan smarter.",
-    "{nom} in {best_month}: {best_tmax}°C, {best_sun}h sun, {best_rain}% rain — ideal conditions. 10-year ERA5 climate analysis."
+    "{nom} in {best_month}: {best_tmax}°C, {best_sun}h sun, {best_rain}% rain — ideal conditions. 10-year ERA5 climate analysis.",
+    "{nom}: best month is {best_month} ({best_tmax}°C, {best_sun}h sun, {best_score}/10). Worst: {worst_month}. Full {year} weather guide."
   ],
   "annual_faq_mountain": [
     {
@@ -708,12 +711,14 @@
     "{nom} Weather in {month} {year} — {tmax}°C, {sun}h sunshine/day",
     "{nom} in {month} {year}: {tmax}°C, {sun}h sunshine — Weather Guide",
     "Is {month} a Good Time to Visit {nom}? [{year}] — {tmax}°C, {sun}h sun",
-    "{nom} in {month}: {season} weather {year} — {tmax}°C & {sun}h sun/day"
+    "{nom} in {month}: {season} weather {year} — {tmax}°C & {sun}h sun/day",
+    "{verdict_emoji} {nom} in {month} {year}: {tmax}°C, {sun}h sun — Is it worth it?"
   ],
   "monthly_descs": [
     "{nom} in {month} {year}: {tmax}°C, {sun}h sunshine/day, {rain_label}. Score {score}/10 — {verdict}.",
     "Is {month} {year} a good time to visit {nom}? {sun}h sun, {tmax}°C{sea_label_comma} score {score}/10. Based on 10 years of data.",
-    "Plan your {nom} trip in {month}: {tmax}°C, {sun}h sun/day{sea_label_comma} {rain_label}. Score {score}/10 — {verdict}."
+    "Plan your {nom} trip in {month}: {tmax}°C, {sun}h sun/day{sea_label_comma} {rain_label}. Score {score}/10 — {verdict}.",
+    "{verdict} time to visit {nom} in {month} {year}: {tmax}°C, {sun}h sunshine/day{sea_label_comma}. {rain_label}. Score {score}/10."
   ],
   "monthly_h1s": [
     "{nom} weather<br/><em>in {month}</em>",

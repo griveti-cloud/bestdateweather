@@ -294,7 +294,7 @@
     "rain_word": "pluie",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Destination tropicale — les mois de forte pluie bénéficient d'une correction algorithmique : les averses sont intenses mais courtes, et ne gâchent généralement pas le séjour.</p>",
     "headline_tpl": "Meilleure période pour partir {prep} {nom_bare}",
-    "og_title_tpl": "Meilleure période {prep} {nom_bare} — météo &amp; conseils",
+    "og_title_tpl": "Meilleure période pour {nom} {year} — Guide météo mois par mois",
     "dataset_name_tpl": "Données climatiques de {nom} — moyennes mensuelles sur 10 ans",
     "dataset_desc_tpl": "Températures, précipitations, ensoleillement et vent mensuels {nom_f}. Moyennes calculées sur 10 ans de données ERA5 (Open-Meteo).",
     "best_months_lbl_tpl": "Meilleur{s} mois",
@@ -427,7 +427,7 @@
     "legend_note": "◀ Mois consulté · Source Open-Meteo · 10 ans",
     "src_link": "methodologie.html",
     "kicker_tpl": "Open-Meteo · 10 ans · 12 mois comparés · {lat}°N {lon}°{dir}",
-    "og_title_tpl": "Météo {prep} {nom_bare} en {month_lc} — {tmax}°C, {rain}% pluie",
+    "og_title_tpl": "Météo {prep} {nom_bare} en {month_lc} {year} — {tmax}°C & {sun}h de soleil",
     "bk_cta_tpl": "Voir les hébergements {prep} {nom_bare} en {month_lc}",
     "sim_label": "Explorer aussi",
     "verdict_period_rec": "Période recommandée.",
@@ -439,7 +439,8 @@
     "editorial_highlights_label": "✍️ Notre avis",
     "editorial_highlights_title": "Les meilleurs mois à {nom}",
     "sec_similar_ski_tpl": "Stations ski similaires en {month_lc}",
-    "sim_label_ski": "⛷️ Stations comparables"
+    "sim_label_ski": "⛷️ Stations comparables",
+    "rain_pct_label": "{pct}% de jours pluvieux"
   },
   "narratives": {
     "tropical_rainy": "En {month_lc}, {name} est en pleine saison des pluies ({rain}% de jours pluvieux). Les averses tropicales sont généralement courtes mais intenses — prévoyez un imperméable léger.",
@@ -550,7 +551,8 @@
   "annual_titles": [
     "Meilleure période {prep} {nom_bare} : {best_month_lc} idéal ({best_tmax}°C) [{year}]",
     "Quand partir {prep} {nom_bare} [{year}] ? Meilleur mois : {best_month_lc} ({best_tmax}°C)",
-    "{nom_bare} : quelle période choisir ? {best_month_lc}, {best_tmax}°C [{year}]"
+    "{nom_bare} : quelle période choisir ? {best_month_lc}, {best_tmax}°C [{year}]",
+    "Meilleure période pour aller {prep} {nom_bare} {year} : guide météo mois par mois"
   ],
   "annual_h1s": [
     "Meilleure période pour partir<br/><em>{prep} {nom_bare}</em>",
@@ -562,7 +564,8 @@
     "{best_month} est le meilleur mois {prep} {nom_bare} : {best_tmax}°C, {best_sun}h soleil, score {best_score}/10. Analyse 12 mois sur 10 ans.",
     "Guide météo {prep} {nom_bare} : meilleur mois {best_month_lc} ({best_tmax}°C, {best_sun}h/jour). Évitez {worst_month_lc} ({worst_rain}% pluie).",
     "Meilleure période {prep} {nom_bare} : {best_month_lc} ({best_score}/10) avec {best_tmax}°C et {best_sun}h de soleil. Planifiez mieux.",
-    "{nom_bare} en {best_month_lc} : {best_tmax}°C, {best_sun}h soleil, {best_rain}% pluie — conditions idéales. Données ERA5 sur 10 ans."
+    "{nom_bare} en {best_month_lc} : {best_tmax}°C, {best_sun}h soleil, {best_rain}% pluie — conditions idéales. Données ERA5 sur 10 ans.",
+    "{nom_bare} : meilleur mois = {best_month} ({best_tmax}°C, {best_sun}h soleil, {best_score}/10). Pire : {worst_month}. Guide complet {year}."
   ],
   "annual_faq_mountain": [
     {
@@ -707,12 +710,14 @@
     "Météo {prep} {nom_bare} en {month_lc} {year} — {tmax}°C, {sun}h soleil/jour",
     "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil — Guide météo",
     "Partir {prep} {nom_bare} en {month_lc} {year} : bonne idée ? {tmax}°C, {sun}h soleil",
-    "{nom_bare} en {month_lc} : météo de {season_lc} {year} — {tmax}°C & {sun}h/jour"
+    "{nom_bare} en {month_lc} : météo de {season_lc} {year} — {tmax}°C & {sun}h/jour",
+    "{verdict_emoji} {nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h — Vaut-il le voyage ?"
   ],
   "monthly_descs": [
     "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil/jour, {rain_label}. Score {score}/10 — {verdict}.",
     "Partir {prep} {nom_bare} en {month_lc} {year} : bonne idée ? {sun}h de soleil, {tmax}°C — score {score}/10.",
-    "Préparez votre séjour {prep} {nom_bare} en {month_lc} : {tmax}°C, {sun}h de soleil/jour{sea_label_comma} {rain_label}. Score {score}/10."
+    "Préparez votre séjour {prep} {nom_bare} en {month_lc} : {tmax}°C, {sun}h de soleil/jour{sea_label_comma} {rain_label}. Score {score}/10.",
+    "{verdict} pour visiter {nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil/jour{sea_label_comma}. {rain_label}. Score {score}/10."
   ],
   "monthly_h1s": [
     "Météo {prep} {nom_bare}<br/><em>en {month_lc}</em>",

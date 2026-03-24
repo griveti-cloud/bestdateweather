@@ -481,8 +481,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     worst_rain = months[worst_idx]['rain_pct']
 
     # ── Title & description (5 desc variants, 3 title variants) ──
-    title_var = _stable_hash(slug_fr, 3)
-    desc_var  = _stable_hash(slug_fr + "desc", 5)
+    title_var = _stable_hash(slug_fr, len(C['annual_titles']))
+    desc_var  = _stable_hash(slug_fr + "desc", len(C['annual_descs']))
 
     # Best season name for richer descriptions
     _best_season_name = max(seas, key=lambda s: seas[s]['score'])
@@ -509,8 +509,9 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
             if _k in tpl_vars:
                 tpl_vars[_k] = c_to_f(tpl_vars[_k])
 
+    h1_var_a  = _stable_hash(slug_fr + "h1", len(C['annual_h1s']))
     title    = fill_tpl(C['annual_titles'][title_var], C, **tpl_vars)
-    h1_text  = fill_tpl(C['annual_h1s'][title_var],   C, **tpl_vars)
+    h1_text  = fill_tpl(C['annual_h1s'][h1_var_a],    C, **tpl_vars)
     desc     = fill_tpl(C['annual_descs'][desc_var],   C, **tpl_vars)
     og_title = fill_tpl(C['lbl_og_title_tpl'],         C, **tpl_vars)
 
@@ -1432,12 +1433,13 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     }, ensure_ascii=False)
 
     # ── Title / Desc / H1 (from locale template arrays) ──
-    title_var = _stable_hash(slug_fr + str(mi), 4)
-    desc_var  = _stable_hash(slug_fr + str(mi) + "d", 3)
-    h1_var    = _stable_hash(slug_fr + str(mi) + "h1", 3)
+    title_var = _stable_hash(slug_fr + str(mi), len(C['monthly_titles']))
+    desc_var  = _stable_hash(slug_fr + str(mi) + "d", len(C['monthly_descs']))
+    h1_var    = _stable_hash(slug_fr + str(mi) + "h1", len(C['monthly_h1s']))
 
     _verdict = C['lbl_m_verdict_period_rec'] if score >= 7.5 else C['lbl_m_verdict_period_avg'] if score >= 5.5 else C['lbl_m_verdict_period_bad']
-    tpl['verdict'] = _verdict
+    tpl['verdict'] = _verdict.rstrip('.')  # sans point final pour les titres
+    tpl['verdict_emoji'] = '✅' if score >= 7.5 else '🟡' if score >= 5.5 else '🔴'
 
     tpl['season'] = C['seasons_map'][mi]
     tpl['season_lc'] = C['seasons_map'][mi].lower()
@@ -1451,7 +1453,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         else:
             tpl['rain_label'] = C.get('tropical_showers', f"{int(m['rain_pct'])}% rain")
     else:
-        tpl['rain_label'] = f"{int(m['rain_pct'])}% rain"
+        _rain_lbl_tpl = C.get('lbl_m_rain_pct_label', '{pct}% rainy days')
+        tpl['rain_label'] = _rain_lbl_tpl.format(pct=int(m['rain_pct']))
 
     # ── sea_temp : disponible si renseigné dans climate.csv ──────────────────
     _sea = m.get('sea_temp')
