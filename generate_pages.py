@@ -904,6 +904,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <head>
 <!-- SCORING: generate_pages.py | lang={C['lang']} | slug={slug_fr} | tropical={dest["tropical"]} | generated={TODAY} -->
 <meta charset="UTF-8"/>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister();});});}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>{title}</title>
 <meta name="description" content="{desc}"/>
@@ -1726,6 +1727,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <html lang="{L['html_lang']}">
 <head>
 <meta charset="UTF-8"/>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister();});});}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>{title}</title>
 <meta name="description" content="{desc}"/>
