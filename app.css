@@ -939,3 +939,12 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 
 /* Fix sub-text inactif : contraste renforcé */
 .mode-btn:not(.active) .mode-btn-sub{color:var(--slate2)!important;opacity:1!important}
+
+/* Desktop : field-group en 2 colonnes côte à côte */
+@media(min-width:641px){
+  .field-group{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:12px!important;
+  }
+}
