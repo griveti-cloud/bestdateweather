@@ -1,19 +1,18 @@
-// BestDate Weather — Service Worker v2
-// Stratégie : Cache-first pour assets statiques, Network-first pour HTML
+// BestDate Weather — Service Worker v3
+// Stratégie : Cache UNIQUEMENT les assets statiques, JAMAIS les pages HTML
 
 const CACHE_NAME = 'bdw-v3';
 const STATIC_ASSETS = [
-  '/',
   '/app.css',
-  '/js/core.min.js?v=13',
-  '/js/weather-banner-2.min.js?v=3',
-  '/js/fiche-slugs.min.js',
+  '/js/core.min.js?v=17',
+  '/js/weather-banner-2.min.js?v=5',
+  '/js/dest-data.js?v=2',
+  '/js/favs.min.js?v=1',
   '/icon-192.png',
   '/icon-512.png',
   '/favicon.ico'
 ];
 
-// Install : précharger les assets critiques
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE_NAME)
@@ -22,7 +21,6 @@ self.addEventListener('install', e => {
   );
 });
 
-// Activate : purger les anciens caches
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
@@ -33,39 +31,30 @@ self.addEventListener('activate', e => {
   );
 });
 
-// Fetch : stratégie hybride
 self.addEventListener('fetch', e => {
   const { request } = e;
   const url = new URL(request.url);
 
-  // Ignorer requêtes non-GET et cross-origin (open-meteo, GA, etc.)
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
 
-  // Assets statiques (JS, CSS, images) → Cache-first
-  if (
-    url.pathname.match(/\.(js|css|png|ico|svg|woff2|webp|jpg)(\?|$)/) ||
-    url.pathname.startsWith('/icon')
-  ) {
+  // Pages HTML → TOUJOURS depuis le réseau, jamais depuis le cache
+  if (url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname === '') {
     e.respondWith(
-      caches.match(request).then(cached => cached || fetch(request))
+      fetch(request).catch(() => caches.match(request))
     );
     return;
   }
 
-  // Pages HTML → Network-first, fallback cache
-  e.respondWith(
-    fetch(request)
-      .then(response => {
-        // Mettre en cache les fiches et pages index
-        if (response.ok && (
-          url.pathname === '/' ||
-          url.pathname.match(/\/(fr|en|es|de|en-us)\//) 
-        )) {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
+  // Assets statiques (JS, CSS, images) → Cache-first
+  if (url.pathname.match(/\.(js|css|png|ico|svg|woff2|webp|jpg)(\?|$)/)) {
+    e.respondWith(
+      caches.match(request).then(cached => cached || fetch(request).then(response => {
+        if (response.ok) {
+          caches.open(CACHE_NAME).then(cache => cache.put(request, response.clone()));
         }
         return response;
-      })
-      .catch(() => caches.match(request))
-  );
+      }))
+    );
+    return;
+  }
 });
