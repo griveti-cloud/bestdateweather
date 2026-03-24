@@ -713,21 +713,21 @@
     "score_fair": "Not the best window, but acceptable if dates are constrained. {best_month} ({best_score}/10) is significantly better if possible."
   },
   "monthly_titles": [
-    "{nom} in {month} {year}: {score}/10 — {tension}",
-    "Is {month} a Good Time for {nom}? Score {score}/10 ({tmax}°F, {sun}h sun)",
-    "{verdict_emoji} {nom} {month} {year}: {score}/10 — {tmax}°F & {sun}h sunshine",
-    "{nom} in {month}: {tension} — {tmax}°F, {sun}h sun [{year}]",
-    "{nom} {month} weather {year}: {tmax}°F, {sun}h sun — {score}/10 (10-year data)"
+    "{nom} {month} {year}: {score}/10 — should you go?",
+    "Is {month} a Good Time to Visit {nom}? {score}/10 ({year})",
+    "{nom} in {month} {year}: {score}/10 — worth it?",
+    "{nom} {month} weather {year}: {score}/10 — plan your trip",
+    "{nom} in {month}: {score}/10 — good or bad month? ({year})"
   ],
   "monthly_descs": [
-    "{nom} scores {score}/10 in {month} {year}: {tmax}°F, {sun}h sunshine/day{sea_label_comma}. {rain_label}. Best month: {best_month} ({best_score}/10). 10-year data.",
-    "Is {month} good for {nom}? {verdict} — {score}/10, {tmax}°F, {sun}h sun/day{sea_label_comma}. {rain_label}. Compare all 12 months.",
-    "{verdict_emoji} {verdict}: {nom} in {month} averages {tmax}°F and {sun}h sunshine/day{sea_label_comma}. Score {score}/10 vs best month {best_month} ({best_score}/10).",
-    "{nom} {month} {year}: {tmax}°F, {sun}h sun{sea_label_comma}. {rain_label}. Score {score}/10. Based on 10 years of ERA5 climate data."
+    "Is {month} a good time to visit {nom}? See the full score, weather details and how it compares to the best months of the year.",
+    "Check if {month} is a good time to visit {nom}. Full score, weather breakdown and best months compared.",
+    "{nom} in {month} {year}: score {score}/10. Full weather breakdown — temperature, sunshine and rain. Compare all months.",
+    "Is {month} worth it for {nom}? Score {score}/10 — see weather details, monthly comparison and travel tips."
   ],
   "monthly_h1s": [
     "Is {month} a good time<br/><em>to visit {nom}?</em>",
-    "{nom} in {month}:<br/><em>{score}/10 — {tension}</em>",
+    "{nom} in {month}:<br/><em>worth the trip?</em>",
     "{nom} {month} weather:<br/><em>good or bad idea?</em>"
   ],
   "monthly_article_headline_tpl": "{nom} weather in {month} — Temperature, rain and tips",

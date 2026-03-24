@@ -712,21 +712,21 @@
     "score_fair": "No es la mejor ventana, pero es aceptable si las fechas son fijas. {best_month} ({best_score}/10) es significativamente mejor si es posible."
   },
   "monthly_titles": [
-    "{nom} en {month} {year}: {score}/10 — {tension}",
-    "¿{month} es buen momento para {nom}? Puntuación {score}/10 ({tmax}°C, {sun}h)",
-    "{verdict_emoji} {nom} {month} {year}: {score}/10 — {tmax}°C y {sun}h de sol",
-    "{nom} en {month}: {tension} — {tmax}°C, {sun}h [{year}]",
-    "Tiempo en {nom} en {month} {year}: {tmax}°C, {sun}h — {score}/10"
+    "{nom} {month} {year}: {score}/10 — ¿merece la pena?",
+    "¿Es {month} buen momento para {nom}? {score}/10 ({year})",
+    "{nom} en {month} {year}: {score}/10 — ¿vale el viaje?",
+    "Tiempo en {nom} en {month} {year}: {score}/10 — guía completa",
+    "{nom} en {month}: {score}/10 — ¿buena o mala época? ({year})"
   ],
   "monthly_descs": [
-    "{nom} obtiene {score}/10 en {month} {year}: {tmax}°C, {sun}h sol/día{sea_label_comma}. {rain_label}. Mejor mes: {best_month} ({best_score}/10). 10 años de datos.",
-    "{nom} en {month}: {verdict} — {score}/10, {tmax}°C, {sun}h sol/día{sea_label_comma}. {rain_label}. Compara los 12 meses.",
-    "{verdict_emoji} {verdict}: {nom} en {month} promedia {tmax}°C y {sun}h sol/día{sea_label_comma}. Puntuación {score}/10 vs mejor mes {best_month} ({best_score}/10).",
-    "{nom} en {month} {year}: {tmax}°C, {sun}h sol{sea_label_comma}. {rain_label}. Puntuación {score}/10. Datos ERA5 10 años."
+    "¿Es {month} buena época para {nom}? Descubre la puntuación completa, datos meteorológicos y comparación con los mejores meses.",
+    "Comprueba si {month} es buen momento para {nom}. Puntuación completa, análisis del tiempo y mejores meses comparados.",
+    "{nom} en {month} {year}: puntuación {score}/10. Análisis completo — temperatura, sol y lluvia. Compara todos los meses.",
+    "¿{nom} en {month} merece la pena? Puntuación {score}/10 — tiempo detallado y comparación mensual."
   ],
   "monthly_h1s": [
-    "¿Es {month} buena época<br/><em>para {nom}?</em>",
-    "{nom} en {month}:<br/><em>{score}/10 — {tension}</em>",
+    "¿Es {month} buena época<br/><em>para visitar {nom}?</em>",
+    "{nom} en {month}:<br/><em>¿merece la pena?</em>",
     "Tiempo en {nom} en {month}:<br/><em>¿buena o mala idea?</em>"
   ],
   "monthly_article_headline_tpl": "Tiempo en {nom} en {month} — Temperatura, lluvia y consejos",
