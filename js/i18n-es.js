@@ -3,7 +3,7 @@ window.BDW_T = {
  // Placeholders
  phBeach: 'Destino de playa…',
  phSki: 'Estación de esquí…',
- phDefault: 'París, Barcelona, Tokio…',
+ phDefault: '🌍  París, Barcelona, Tokio…',
 
  // Weather conditions
  storm: 'Tormenta', snow: 'Nieve', rain: 'Lluvia', showers: 'Chubascos',
@@ -183,7 +183,7 @@ window.BDW_T = {
 window.BDW_CFG = {
  dateLocale: 'es-ES',
  dateFormat: 'd/m/Y',
- datePlaceholder: 'dd/mm/aaaa',
+ datePlaceholder: '📅  Elegir fecha',
  fpLocale: 'es',
  defaultUnits: 'metric',
  flagBase: '../flags/',

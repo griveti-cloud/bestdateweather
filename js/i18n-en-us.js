@@ -4,7 +4,7 @@ window.BDW_T = {
  // Placeholders
  phBeach: 'Beach destination…',
  phSki: 'Ski resort…',
- phDefault: 'Paris, Barcelona, Tokyo…',
+ phDefault: '🌍  Paris, Barcelona, Tokyo…',
 
  // Weather conditions
  storm: 'Storm', snow: 'Snow', rain: 'Rain', showers: 'Showers',
@@ -184,7 +184,7 @@ window.BDW_T = {
 window.BDW_CFG = {
  dateLocale: 'en-US',
  dateFormat: 'm/d/Y',
- datePlaceholder: 'mm/dd/yyyy',
+ datePlaceholder: '📅  Choose a date',
  fpLocale: 'en',
  defaultUnits: 'us',
  flagBase: '../flags/',
