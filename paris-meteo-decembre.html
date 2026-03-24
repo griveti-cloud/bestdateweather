@@ -51,7 +51,7 @@
 .dest-search-ac.open{display:block;}
 .dest-search-ac-item{padding:10px 16px;cursor:pointer;font-size:13px;color:var(--navy);border-bottom:1px solid var(--cream2);display:flex;align-items:center;gap:8px;}
 .dest-search-ac-item:last-child{border-bottom:none;}
-.dest-search-ac-item:hover{background:var(--cream);}
+.dest-search-ac-item:hover,.dest-search-ac-item.hovered{background:var(--cream);}
 .dest-flag{vertical-align:middle;border-radius:2px;flex-shrink:0;}
 </style>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKLO0"></script>
@@ -293,99 +293,118 @@
  </div>
  </section>
 </main>
+<script src="js/fiche-slugs.js"></script>
 <script>
 (function(){
   var inp = document.getElementById('dest-search-inp');
   var ac  = document.getElementById('dest-search-ac');
   var btn = document.getElementById('dest-search-btn');
-  if(!inp) return;
-  var timer = null, results = [], selIdx = -1;
-  var lang = (document.documentElement.lang||'fr').toLowerCase();
-  var apiLang = lang === 'fr' ? 'fr' : lang === 'es' ? 'es' : lang === 'de' ? 'de' : 'en';
+  if(!inp || !ac || !btn) return;
+
   var monthSuffix = '-meteo-decembre.html';
-  var basePrefix = '';
-
-  function normalize(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,' ').trim();}
-  
-  function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
-
-  function showAC(items){
-    results = items; selIdx = -1;
-    ac.innerHTML = '';
-    if(!items.length){ac.classList.remove('open');return;}
-    items.slice(0,6).forEach(function(r,i){
-      var d = document.createElement('div');
-      d.className = 'dest-search-ac-item';
-      if(r.cc){
-        var img = document.createElement('img');
-        img.src = basePrefix + 'flags/' + r.cc + '.png';
-        img.width = 20; img.height = 15; img.alt = r.cc;
-        img.style.cssText = 'vertical-align:middle;border-radius:2px;margin-right:6px;flex-shrink:0';
-        img.onerror = function(){this.style.display='none';};
-        d.appendChild(img);
-      }
-      var txt = document.createElement('span');
-      txt.textContent = r.name;
-      if(r.country){
-        var ctry = document.createElement('span');
-        ctry.textContent = ' ' + r.country;
-        ctry.style.cssText = 'color:#9aabbb;font-size:11px';
-        txt.appendChild(ctry);
-      }
-      d.appendChild(txt);
-      d.onmousedown = function(e){ e.preventDefault(); selectDest(r); };
-      ac.appendChild(d);
-    });
-    ac.classList.add('open');
-  }
+  var basePrefix  = '';
+  var lang = (document.documentElement.lang||'fr').toLowerCase();
+  if(lang==='en-us') lang='en';
+  if(lang!=='en'&&lang!=='es'&&lang!=='de') lang='fr';
 
   var _selected = null;
-  function selectDest(r){
-    _selected = r;
-    inp.value = r.name + (r.country ? ', ' + r.country : '');
-    ac.classList.remove('open');
+  var acTimer = null;
+  var acData = [];
+
+  function norm(s){
+    return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'').trim();
   }
-  function goTo(r){
-    var s = slugify(r.name);
-    var url = basePrefix + s + monthSuffix;
-    window.location.href = url;
+
+  function slugFromResult(r){
+    var slugMap = window.BDW_FICHE_SLUGS;
+    if(!slugMap) return null;
+    var n = r.name;
+    var entry = slugMap[norm(n)];
+    if(!entry) entry = slugMap[norm(n.split(/[\s,\-]/)[0])];
+    if(!entry){ var bare=n.replace(/^(la |le |les |l'|l’)/i,''); entry=slugMap[norm(bare)]; }
+    if(!entry) return null;
+    return lang==='fr'?entry.fr:(lang==='es'?(entry.es||entry.en):(lang==='de'?(entry.de||entry.en):entry.en));
+  }
+
+  function showAC(items){
+    acData = items; ac.innerHTML = '';
+    if(!items.length){ ac.style.display='none'; return; }
+    items.forEach(function(r){
+      var d = document.createElement('div');
+      d.className = 'dest-search-ac-item';
+      if(r.country_code){
+        var img = document.createElement('img');
+        img.src = basePrefix+'flags/'+r.country_code.toLowerCase()+'.png';
+        img.width=20; img.height=15;
+        img.style.cssText='vertical-align:middle;border-radius:2px;margin-right:6px;flex-shrink:0';
+        img.onerror=function(){this.style.display='none';};
+        d.appendChild(img);
+      }
+      var span = document.createElement('span');
+      span.textContent = r.name;
+      d.appendChild(span);
+      d.onmousedown = function(e){
+        e.preventDefault();
+        _selected = r;
+        inp.value = r.name;
+        ac.style.display = 'none';
+      };
+      ac.appendChild(d);
+    });
+    ac.style.display = 'block';
   }
 
   inp.addEventListener('input', function(){
-    clearTimeout(timer);
+    clearTimeout(acTimer);
+    _selected = null;
     var q = inp.value.trim();
-    if(q.length < 2){ac.classList.remove('open');return;}
-    timer = setTimeout(function(){
-      fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=8&language='+apiLang)
+    if(q.length < 2){ ac.style.display='none'; return; }
+    acTimer = setTimeout(function(){
+      fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=10&language='+lang)
         .then(function(r){return r.json();})
         .then(function(data){
-          var items = (data.results||[])
-            .filter(function(r){return r.feature_code!=='AIRP'&&r.feature_code!=='RSTN';})
-            .slice(0,6)
-            .map(function(r){
-              return {name:r.name, country:r.country||'', cc:(r.country_code||'').toLowerCase(), lat:r.latitude, lon:r.longitude};
-            });
-          showAC(items);
+          var results = (data.results||[])
+            .filter(function(r){ return r.feature_code!=='AIRP'&&r.feature_code!=='RSTN'; })
+            .sort(function(a,b){return (b.population||0)-(a.population||0);})
+            .filter(function(r){ return slugFromResult(r) !== null; })
+            .slice(0,6);
+          showAC(results);
         }).catch(function(){});
     }, 280);
   });
 
   btn.addEventListener('click', function(){
-    if(_selected) goTo(_selected);
-    else if(results.length) goTo(results[0]);
-    else if(inp.value.trim()) goTo({name: inp.value.trim()});
+    var r = _selected || acData[0];
+    if(!r) return;
+    var slug = slugFromResult(r);
+    if(!slug) return;
+    window.location.href = basePrefix + slug + monthSuffix;
   });
 
   inp.addEventListener('keydown', function(e){
     var items = ac.querySelectorAll('.dest-search-ac-item');
-    if(e.key==='ArrowDown'){selIdx=Math.min(selIdx+1,items.length-1);items.forEach(function(el,i){el.style.background=i===selIdx?'var(--cream)':'';});}
-    else if(e.key==='ArrowUp'){selIdx=Math.max(selIdx-1,0);items.forEach(function(el,i){el.style.background=i===selIdx?'var(--cream)':'';});}
-    else if(e.key==='Enter'){if(selIdx>=0&&results[selIdx]) selectDest(results[selIdx]); else if(_selected) goTo(_selected); else if(results.length) goTo(results[0]);}
-    else if(e.key==='Escape'){ac.classList.remove('open');}
+    var n = items.length; var idx = -1;
+    items.forEach(function(el,i){ if(el.classList.contains('hovered')) idx=i; });
+    if(e.key==='ArrowDown'){
+      idx = Math.min(idx+1, n-1);
+      items.forEach(function(el,i){ el.classList.toggle('hovered', i===idx); });
+      e.preventDefault();
+    } else if(e.key==='ArrowUp'){
+      idx = Math.max(idx-1, 0);
+      items.forEach(function(el,i){ el.classList.toggle('hovered', i===idx); });
+      e.preventDefault();
+    } else if(e.key==='Enter'){
+      if(idx>=0 && acData[idx]){ _selected=acData[idx]; inp.value=acData[idx].name; ac.style.display='none'; }
+      else if(_selected || acData[0]){
+        var r = _selected || acData[0];
+        var slug = slugFromResult(r);
+        if(slug) window.location.href = basePrefix + slug + monthSuffix;
+      }
+    } else if(e.key==='Escape'){ ac.style.display='none'; }
   });
 
   document.addEventListener('click', function(e){
-    if(!inp.contains(e.target)&&!ac.contains(e.target)) ac.classList.remove('open');
+    if(!inp.contains(e.target)&&!ac.contains(e.target)) ac.style.display='none';
   });
 })();
 </script>
