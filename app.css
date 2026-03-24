@@ -813,3 +813,117 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .card-footer .footer-guides{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:1;min-width:0}
 .mode-btn-sub{white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis}
 .mode-btn{overflow:hidden}
+
+/* ══════════════════════════════════════════
+   REDESIGN 2 — Mode toggle pill + Form
+   ══════════════════════════════════════════ */
+
+/* Mode toggle → pill segmenté style iOS */
+.mode-toggle{
+  display:flex;
+  background:white;
+  border:1.5px solid var(--cream2);
+  border-radius:50px;
+  padding:4px;
+  gap:0;
+  margin-bottom:20px;
+  box-shadow:0 1px 4px rgba(26,31,46,.06);
+}
+.mode-btn{
+  flex:1;
+  padding:10px 12px;
+  border:none!important;
+  border-radius:50px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  gap:6px;
+  justify-content:center;
+  transition:background .18s,color .18s;
+}
+.mode-btn.active{
+  background:var(--navy)!important;
+  color:white!important;
+  box-shadow:0 2px 8px rgba(26,31,46,.18)!important;
+}
+.mode-btn.active svg{opacity:.9;stroke:white}
+.mode-btn svg{opacity:.5}
+.mode-btn:hover:not(.active){
+  background:var(--cream)!important;
+  border:none!important;
+  transform:none!important;
+}
+.mode-btn-title{font-size:13px;font-weight:700}
+.mode-btn-sub{font-size:10.5px;opacity:.7}
+.mode-btn.active .mode-btn-sub{opacity:.8}
+
+/* field-group → colonne unique sur mobile */
+.field-group{
+  display:flex;
+  flex-direction:column;
+  gap:10px!important;
+  margin-bottom:14px!important;
+}
+
+/* Inputs plus grands, font plus claire */
+.inp{
+  font-size:15px!important;
+  padding:15px 16px!important;
+  border:1.5px solid #e8e4da!important;
+  border-radius:14px!important;
+  background:#fefefe!important;
+  color:var(--navy)!important;
+  transition:border-color .15s,box-shadow .15s!important;
+}
+.inp::placeholder{
+  color:#a0acb8!important;
+  font-size:14px!important;
+}
+.inp:focus{
+  border-color:var(--gold)!important;
+  box-shadow:0 0 0 3px rgba(232,148,10,.1)!important;
+  outline:none!important;
+}
+
+/* CTA — full rounded, plus d'icône */
+.btn-go{
+  border-radius:50px!important;
+  font-size:16px!important;
+  font-weight:800!important;
+  letter-spacing:.3px!important;
+  padding:17px 24px!important;
+  box-shadow:0 6px 24px rgba(232,148,10,.4)!important;
+}
+.btn-go:hover:not(:disabled){
+  transform:translateY(-2px)!important;
+  box-shadow:0 8px 28px rgba(232,148,10,.45)!important;
+}
+
+/* date-hint → plus discret */
+.date-hint{
+  font-size:11px!important;
+  color:#9aabbb!important;
+  margin-top:4px!important;
+  padding-left:4px;
+}
+
+/* search-card — moins de padding */
+.search-card{
+  padding:20px!important;
+  border-radius:20px!important;
+}
+
+/* Supprimer les labels séparés si présents */
+.field-label{display:none!important}
+
+
+/* search-card dans main-card : pas de double shadow */
+.main-card .search-card{
+  box-shadow:none!important;
+  border:none!important;
+  background:transparent!important;
+  padding:20px 20px 16px!important;
+}
+
+/* main-card padding interne via wrap */
+.main-card .wrap{padding:0 0 8px}
+

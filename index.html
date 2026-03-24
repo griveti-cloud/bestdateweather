@@ -129,24 +129,20 @@
  <div id="date-form">
  <div class="field-group">
  <div class="field-wrap">
- <label class="field-label" for="inp-city">Ville ou destination</label>
- <div class="inp-wrap"><input class="inp" type="text" id="inp-city" placeholder="Paris, Barcelone, Tokyo…" autocomplete="off"/>
+ <div class="inp-wrap inp-wrap-icon"><input class="inp" type="text" id="inp-city" placeholder="🌍  Destination — Paris, Bali, Tokyo…" autocomplete="off"/>
  <button class="inp-clear" id="inp-city-clear" tabindex="-1" onclick="clearCity()">×</button></div>
  <div class="ac-list" id="ac-list"></div>
  <div id="city-hint" style="font-size:11px;color:var(--slate2);margin-top:5px;display:none">💡 Villes composées : utilisez les tirets — <em>Pointe-à-Pitre</em>, <em>Saint-Denis</em></div>
  </div>
  <div class="field-wrap">
- <label class="field-label" for="inp-date">Date du projet</label>
- <div style="position:relative">
- <input class="inp" type="text" id="inp-date" placeholder="jj/mm/aaaa" readonly style="position:relative;z-index:2;background:white;cursor:pointer" />
+ <div class="inp-wrap inp-wrap-icon" style="position:relative">
+ <input class="inp" type="text" id="inp-date" placeholder="📅  Date du projet" readonly style="position:relative;z-index:2;background:white;cursor:pointer" />
  
- </div>
  <div class="date-hint" id="date-hint">Projection saisonnière jusqu'à 12 mois</div>
  </div>
  </div>
 
  <button class="btn-go" id="btn-go" type="button">
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
  <span id="btn-go-text">Voir les conditions ce jour →</span>
  </button>
 <div id="cta-wow-example" style="display:none;text-align:center;font-size:11.5px;color:var(--slate2);margin-top:6px;line-height:1.5;padding:0 4px" id="cta-wow-example"><script>document.write(window.BDW_T&&BDW_T.wowExample||'')</script></div>
