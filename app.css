@@ -948,3 +948,9 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
     gap:12px!important;
   }
 }
+
+/* Desktop : mode-btn pas d'overflow caché + sub-text visible */
+@media(min-width:641px){
+  .mode-btn{overflow:visible!important}
+  .mode-btn-sub{white-space:nowrap!important;text-overflow:clip!important}
+}
