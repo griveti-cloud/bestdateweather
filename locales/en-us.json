@@ -415,9 +415,9 @@
     "og_title_tpl": "{nom} in {month} {year} — {tmax}°F & {sun}h sunshine",
     "bk_cta_tpl": "Find places to stay in {nom} in {month}",
     "sim_label": "Explore also",
-    "verdict_period_rec": "Recommended period.",
-    "verdict_period_avg": "Average period.",
-    "verdict_period_bad": "Climate is demanding this month.",
+    "verdict_period_rec": "Great time to visit",
+    "verdict_period_avg": "Decent time to visit",
+    "verdict_period_bad": "Challenging weather",
     "act_beach_na": "— No sea access",
     "back_annual_tpl": "← Best time for {name}",
     "compare_section": "Compare",
@@ -715,10 +715,10 @@
     "{verdict_emoji} {nom} in {month} {year}: {tmax}°F, {sun}h sun — Is it worth it?"
   ],
   "monthly_descs": [
-    "{nom} in {month} {year}: {tmax}°F, {sun}h sunshine/day, {rain_label}. Score {score}/10 — {verdict}.",
-    "Is {month} {year} a good time to visit {nom}? {sun}h sun, {tmax}°F{sea_label_comma} score {score}/10. Based on 10 years of data.",
-    "Plan your {nom} trip in {month}: {tmax}°F, {sun}h sun/day{sea_label_comma} {rain_label}. Score {score}/10 — {verdict}.",
-    "{verdict} time to visit {nom} in {month} {year}: {tmax}°F, {sun}h sunshine/day{sea_label_comma}. {rain_label}. Score {score}/10."
+    "{nom} in {month} {year}: {tmax}°F, {sun}h sunshine/day, {rain_label}. Weather score {score}/10 — {verdict}.",
+    "Is {month} {year} good for {nom}? {tmax}°F, {sun}h sun/day{sea_label_comma} — score {score}/10. Full weather guide & tips.",
+    "Plan your {nom} trip in {month} {year}: {tmax}°F, {sun}h sunshine/day{sea_label_comma}. {rain_label}. Score {score}/10.",
+    "{nom} in {month} {year} scores {score}/10: {tmax}°F, {sun}h sunshine/day{sea_label_comma}. {rain_label}."
   ],
   "monthly_h1s": [
     "{nom} weather<br/><em>in {month}</em>",

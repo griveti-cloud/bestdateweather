@@ -414,9 +414,9 @@
     "og_title_tpl": "{nom} im {month} {year} — {tmax}°C & {sun}h Sonne",
     "bk_cta_tpl": "Unterkunft in {nom} im {month} finden",
     "sim_label": "Auch erkunden",
-    "verdict_period_rec": "Empfohlener Reisezeitraum.",
-    "verdict_period_avg": "Durchschnittlicher Zeitraum.",
-    "verdict_period_bad": "Das Klima ist in diesem Monat anspruchsvoll.",
+    "verdict_period_rec": "Ausgezeichnete Reisezeit",
+    "verdict_period_avg": "Akzeptable Reisezeit",
+    "verdict_period_bad": "Anspruchsvolles Wetter",
     "act_beach_na": "— Kein Meereszugang",
     "back_annual_tpl": "← Beste Reisezeit für {name}",
     "compare_section": "Vergleich",
@@ -714,10 +714,10 @@
     "{verdict_emoji} {nom} im {month} {year}: {tmax}°C, {sun}h Sonne — Lohnt es sich?"
   ],
   "monthly_descs": [
-    "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne/Tag, {rain_label}. Score {score}/10 — {verdict}.",
-    "Ist {month} {year} eine gute Reisezeit für {nom}? {sun}h Sonne, {tmax}°C — Score {score}/10.",
-    "Plane deine Reise nach {nom} im {month}: {tmax}°C, {sun}h Sonne/Tag{sea_label_comma} {rain_label}. Score {score}/10.",
-    "{verdict} für einen Besuch in {nom} im {month} {year}: {tmax}°C, {sun}h Sonne/Tag{sea_label_comma}. {rain_label}. Score {score}/10."
+    "{nom} im {month} {year}: {tmax}°C, {sun}h Sonne/Tag, {rain_label}. Wetter-Score {score}/10 — {verdict}.",
+    "Lohnt sich {nom} im {month} {year}? {tmax}°C, {sun}h Sonne{sea_label_comma} — Score {score}/10. Vollständiger Reiseführer.",
+    "Plane deine Reise nach {nom} im {month} {year}: {tmax}°C, {sun}h Sonne/Tag{sea_label_comma}. {rain_label}. Score {score}/10.",
+    "{nom} im {month} {year}: Score {score}/10 — {tmax}°C, {sun}h Sonne{sea_label_comma}. {rain_label}."
   ],
   "monthly_h1s": [
     "{nom} Wetter<br/><em>im {month}</em>",

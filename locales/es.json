@@ -414,9 +414,9 @@
     "og_title_tpl": "{nom} en {month} {year} — {tmax}°C y {sun}h de sol",
     "bk_cta_tpl": "Alojarse en {nom} en {month}",
     "sim_label": "Explorar también",
-    "verdict_period_rec": "Período recomendado.",
-    "verdict_period_avg": "Período aceptable.",
-    "verdict_period_bad": "No recomendado.",
+    "verdict_period_rec": "Excelente momento para visitar",
+    "verdict_period_avg": "Período aceptable para visitar",
+    "verdict_period_bad": "Clima exigente este mes",
     "act_beach_na": "— Sin acceso al mar",
     "back_annual_tpl": "← Mejor época para {name}",
     "compare_section": "Comparar",
@@ -715,9 +715,9 @@
   ],
   "monthly_descs": [
     "{nom} en {month} {year}: {tmax}°C, {sun}h de sol/día, {rain_label}. Puntuación {score}/10 — {verdict}.",
-    "¿Es {month} {year} buen momento para ir a {nom}? {sun}h de sol, {tmax}°C — puntuación {score}/10.",
-    "Planifica tu viaje a {nom} en {month}: {tmax}°C, {sun}h de sol/día{sea_label_comma} {rain_label}. Puntuación {score}/10.",
-    "{verdict} para visitar {nom} en {month} {year}: {tmax}°C, {sun}h de sol/día{sea_label_comma}. {rain_label}. Puntuación {score}/10."
+    "¿Vale la pena ir a {nom} en {month} {year}? {tmax}°C, {sun}h de sol{sea_label_comma} — puntuación {score}/10. Guía completa.",
+    "Planifica tu viaje a {nom} en {month} {year}: {tmax}°C, {sun}h de sol/día{sea_label_comma}. {rain_label}. Puntuación {score}/10.",
+    "{nom} en {month} {year}: puntuación {score}/10 — {tmax}°C, {sun}h de sol{sea_label_comma}. {rain_label}."
   ],
   "monthly_h1s": [
     "Tiempo en {nom}<br/><em>en {month}</em>",
