@@ -947,3 +947,10 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
   .mode-btn{overflow:visible!important}
   .mode-btn-sub{white-space:nowrap!important;text-overflow:clip!important}
 }
+
+/* Wrapper du mode-toggle — padding cohérent avec search-card */
+.mode-toggle-wrap{
+  padding:16px 20px 0!important;
+  background:transparent!important;
+}
+/* Le pill reste intact (fond blanc, border, border-radius:50px) */
