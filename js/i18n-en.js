@@ -27,6 +27,10 @@ window.BDW_T = {
  modeEcmwf: 'ECMWF Trend \u2014 indicative',
  modeClimate: 'Historical climate profile',
  checkWeather: 'Check the weather',
+  findBestMonth: 'Find the best month →',
+  checkConditions: 'Check conditions that day →',
+  wowExample: 'e.g. Bali → best in July (8.2/10) · Monaco → August (9.4/10)',
+  suggestTitleDynamic: 'Best months ·',
 
  // Snow alerts
  snowAltLow: '❄ Altitude {e}m \u2014 too low to assess snow cover',

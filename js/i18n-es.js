@@ -27,6 +27,10 @@ window.BDW_T = {
  modeEcmwf: 'Tendencia ECMWF \u2014 indicativo',
  modeClimate: 'Perfil climático histórico',
  checkWeather: 'Ver el tiempo',
+  findBestMonth: 'Encontrar el mejor mes →',
+  checkConditions: 'Ver condiciones ese día →',
+  wowExample: 'Ej: Bali → mejor en julio (8.2/10) · Mónaco → agosto (9.4/10)',
+  suggestTitleDynamic: 'Mejores meses ·',
 
  // Snow alerts
  snowAltLow: '❄ Altitud {e}m \u2014 demasiado baja para evaluar el manto de nieve',

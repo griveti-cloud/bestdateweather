@@ -2101,6 +2101,16 @@ function switchMode(mode) {
  var ucfw = document.getElementById('uc-filter-wrap');
  if (ucfw) ucfw.style.display = 'none';
  if (isDate) { var empt = document.getElementById('empty'); if (empt) empt.style.display = 'block'; }
+ // CTA différencié selon le mode
+ var span = document.getElementById('btn-go-text');
+ if (span && T) {
+   span.textContent = isDate
+     ? (T.checkConditions || T.checkWeather)
+     : (T.findBestMonth || T.checkWeather);
+ }
+ // Exemple "wow" : visible seulement en mode 12 mois
+ var wow = document.getElementById('cta-wow-example');
+ if (wow) wow.style.display = isDate ? 'none' : 'block';
 }
 
 /* ── ANNUAL AUTOCOMPLETE ── */

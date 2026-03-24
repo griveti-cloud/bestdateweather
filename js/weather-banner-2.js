@@ -23,6 +23,8 @@
         rankingUrl: "/meilleures-destinations-meteo.html",
         suggestTitle: "Pour vous",
         suggestSub: "même région climatique",
+        suggestTitleDynamic: "Meilleurs mois ·",
+        lang: "fr",
         geoPrompt: "Où êtes-vous ? Entrez votre ville pour la météo locale",
         geoPlaceholder: "Votre ville…",
         geoAllow: "Autoriser",
@@ -71,6 +73,8 @@
         rankingUrl: "/en/best-weather-destinations.html",
         suggestTitle: "For you",
         suggestSub: "similar climate region",
+        suggestTitleDynamic: "Best months ·",
+        lang: "en",
         geoPrompt: "Where are you? Enter your city for local weather",
         geoPlaceholder: "Your city…",
         geoAllow: "Allow",
@@ -119,6 +123,8 @@
         rankingUrl: "/es/mejores-destinos-climaticos.html",
         suggestTitle: "Para ti",
         suggestSub: "región climática similar",
+        suggestTitleDynamic: "Mejores meses ·",
+        lang: "es",
         geoPrompt: "¿Dónde estás? Introduce tu ciudad para el tiempo local",
         geoPlaceholder: "Tu ciudad…",
         geoAllow: "Permitir",
@@ -167,6 +173,8 @@
         rankingUrl: "/de/beste-reiseziele-klima.html",
         suggestTitle: "Für Sie",
         suggestSub: "ähnliche Klimazone",
+        suggestTitleDynamic: "Beste Monate ·",
+        lang: "de",
         geoPrompt: "Wo sind Sie? Geben Sie Ihre Stadt für das lokale Wetter ein",
         geoPlaceholder: "Ihre Stadt…",
         geoAllow: "Erlauben",
@@ -602,9 +610,9 @@
       e.classList.remove("wb-hidden");
       for (var n = "", r = 0; r < t.length; r++) {
         var s = t[r];
-        n += '<a href="' + ("en" === a ? "/en/best-time-to-visit-" + s.slug + ".html" : "/meilleure-periode-" + s.slug + ".html") + '" class="wb-suggest" style="animation-delay:' + 80 * (3 + r) + 'ms;text-decoration:none"><div class="wb-suggest-top"><span class="wb-recent-flag">' + M(s.flag) + '</span><span class="wb-suggest-name">' + G(s.name) + '</span><span class="wb-suggest-reason">' + G(s.reason) + "</span></div>" + (s.score ? '<span class="wb-score" style="font-size:12px;padding:2px 8px;color:' + o(s.score) + ";background:" + l(s.score) + '">' + s.score.toFixed(1) + "</span>" : "") + "</a>"
+        n += '<a href="' + ("en" === a ? "/en/best-time-to-visit-" + s.slug + ".html" : "/meilleure-periode-" + s.slug + ".html") + '" class="wb-suggest" style="animation-delay:' + 80 * (3 + r) + 'ms;text-decoration:none"><div class="wb-suggest-top"><span class="wb-recent-flag">' + M(s.flag) + '</span><span class="wb-suggest-name">' + G(s.name) + '</span><span class="wb-suggest-reason">' + G(s.reason) + "</span></div>" + (s.score ? '<span class="wb-score" style="font-size:12px;padding:2px 8px;color:' + o(s.score) + ";background:" + l(s.score) + '">' + s.score.toFixed(1) + '/10' + "</span>" : "") + "</a>"
       }
-      e.innerHTML = '<div class="wb-section"><div class="wb-section-head"><span class="wb-section-title">' + i.suggestTitle + '</span><span class="wb-section-sub">' + i.suggestSub + "</span></div>" + n + "</div>"
+      var _months=i.lang==='en'||i.lang==='en-us'?['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']:i.lang==='es'?['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']:i.lang==='de'?['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez']:['jan','fév','mars','avr','mai','juin','juil','août','sep','oct','nov','déc'];var _dynTitle=(i.suggestTitleDynamic||i.suggestTitle)+' '+_months[new Date().getMonth()];e.innerHTML = '<div class="wb-section"><div class="wb-section-head"><span class="wb-section-title">' + _dynTitle + '</span><span class="wb-section-sub">' + i.suggestSub + "</span></div>" + n + "</div>"
     }
   }
 

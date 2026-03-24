@@ -27,6 +27,10 @@ window.BDW_T = {
  modeEcmwf: 'ECMWF-Trend \u2014 orientierend',
  modeClimate: 'Historisches Klimaprofil',
  checkWeather: 'Wetter prüfen',
+  findBestMonth: 'Besten Monat finden →',
+  checkConditions: 'Bedingungen prüfen →',
+  wowExample: 'Bsp: Bali → bester Monat Juli (8,2/10) · Monaco → August (9,4/10)',
+  suggestTitleDynamic: 'Beste Monate ·',
 
  // Snow alerts
  snowAltLow: '❄ Höhe {e}m \u2014 zu niedrig zur Beurteilung der Schneedecke',
