@@ -1955,6 +1955,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  </section>
 </main>
+<script src="{C['asset_prefix']}js/dest-data.js"></script>
 <script>
 (function(){{
   var inp = document.getElementById('dest-search-inp');
@@ -1969,24 +1970,14 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
   if(lang!=='en'&&lang!=='es'&&lang!=='de') lang='fr';
 
   var _selected = null;
-  var _suggestions = null;
 
   function normStr(s){{
     return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'').trim();
   }}
 
-  function loadAndSearch(q){{
-    if(!_suggestions){{
-      fetch(basePrefix+'data/suggestions.json')
-        .then(function(r){{return r.json();}})
-        .then(function(d){{ _suggestions=d; doSearch(q); }})
-        .catch(function(){{}});
-    }} else {{
-      doSearch(q);
-    }}
-  }}
-
   function doSearch(q){{
+    var suggestions = window.BDW_DEST_DATA;
+    if(!suggestions){{ ac.style.display='none'; return; }}
     var qNorm = normStr(q);
     var results = [];
     Object.keys(_suggestions).forEach(function(slug){{
@@ -2034,7 +2025,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     _selected = null;
     var q = inp.value.trim();
     if(q.length < 2){{ ac.style.display='none'; return; }}
-    timer = setTimeout(function(){{ loadAndSearch(q); }}, 180);
+    timer = setTimeout(function(){{ doSearch(q); }}, 180);
   }});
 
   btn.addEventListener('click', function(){{
