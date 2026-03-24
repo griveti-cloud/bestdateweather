@@ -1,7 +1,7 @@
-// BestDate Weather — Service Worker v1
+// BestDate Weather — Service Worker v2
 // Stratégie : Cache-first pour assets statiques, Network-first pour HTML
 
-const CACHE_NAME = 'bdw-v1';
+const CACHE_NAME = 'bdw-v2';
 const STATIC_ASSETS = [
   '/',
   '/app.css',
