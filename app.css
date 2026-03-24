@@ -683,6 +683,8 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
   justify-content:space-between;
   padding:8px 16px 10px;
   border-top:1px solid var(--cream2);
+  gap:8px;
+  overflow:hidden;
 }
 .footer-wordmark{
   font-family:'Fraunces','Fraunces Fallback',serif;
@@ -798,10 +800,16 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .inp:focus{outline:none!important;border-color:var(--gold)!important;box-shadow:0 0 0 3px rgba(232,148,10,.12)!important}
 
 /* card-footer : mélange langue → FR seulement */
-.footer-wordmark{font-size:11px;color:var(--slate2)}
+.footer-wordmark{font-size:11px;color:var(--slate2);white-space:nowrap}
 
 /* mode-btn hover plus net */
 .mode-btn:hover:not(.active){border-color:var(--slate3)!important;background:var(--cream)!important}
 
 /* wow example : plus lisible */
 #cta-wow-example{font-size:12px!important;color:var(--slate2);font-style:italic}
+
+/* Fix wrap footer et mode-btn */
+.card-footer .footer-wordmark,
+.card-footer .footer-guides{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:1;min-width:0}
+.mode-btn-sub{white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis}
+.mode-btn{overflow:hidden}
