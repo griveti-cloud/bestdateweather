@@ -446,7 +446,10 @@
     "tension_decent": "Correct — mais de meilleurs mois existent",
     "tension_off": "Basse saison — ça vaut le détour ?",
     "tension_tough": "Mois difficile — à savoir avant de partir",
-    "hstat_score": "Score météo"
+    "hstat_score": "Score météo",
+    "search_dest_label": "Comparer avec une autre destination",
+    "search_dest_placeholder": "🌍  Paris, Bali, Tokyo…",
+    "search_dest_btn": "Comparer →"
   },
   "narratives": {
     "tropical_rainy": "En {month_lc}, {name} est en pleine saison des pluies ({rain}% de jours pluvieux). Les averses tropicales sont généralement courtes mais intenses — prévoyez un imperméable léger.",

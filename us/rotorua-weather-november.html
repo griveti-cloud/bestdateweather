@@ -39,6 +39,19 @@
 .month-nav a{padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;background:white;border:1.5px solid #e8e0d0;color:var(--navy);}
 .month-nav a.active{background:var(--gold);color:white;border-color:var(--gold);}
 .month-nav a:hover{border-color:var(--gold);}
+.dest-search-section .section-label{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.dest-search-wrap{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;}
+.dest-search-input-wrap{flex:1;min-width:200px;position:relative;}
+.dest-search-inp{width:100%;padding:12px 16px;border:1.5px solid var(--cream2);border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--navy);background:white;outline:none;transition:border-color .15s;}
+.dest-search-inp:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,148,10,.1);}
+.dest-search-inp::placeholder{color:#a0acb8;}
+.dest-search-btn{padding:12px 20px;background:linear-gradient(135deg,var(--gold),#f5b020);border:none;border-radius:12px;color:white;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;transition:filter .2s;font-family:'DM Sans',sans-serif;}
+.dest-search-btn:hover{filter:brightness(1.07);}
+.dest-search-ac{position:absolute;top:100%;left:0;right:0;background:white;border:1.5px solid var(--cream2);border-radius:10px;box-shadow:0 4px 16px rgba(26,31,46,.1);z-index:50;display:none;margin-top:4px;max-height:200px;overflow-y:auto;}
+.dest-search-ac.open{display:block;}
+.dest-search-ac-item{padding:10px 16px;cursor:pointer;font-size:13px;color:var(--navy);border-bottom:1px solid var(--cream2);display:flex;align-items:center;gap:8px;}
+.dest-search-ac-item:last-child{border-bottom:none;}
+.dest-search-ac-item:hover{background:var(--cream);}
 </style>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKLO0"></script>
 </head>
@@ -122,6 +135,18 @@
  <div class="section-label">Browse by month</div>
  <h2 class="section-title">All months for Rotorua</h2>
  <div class="month-nav"><a href="rotorua-weather-january.html" class="mnav-rec">Jan</a><a href="rotorua-weather-february.html" class="mnav-rec">Feb</a><a href="rotorua-weather-march.html" class="mnav-rec">Mar</a><a href="rotorua-weather-april.html" class="mnav-rec">Apr</a><a href="rotorua-weather-may.html" class="mnav-mid">May</a><a href="rotorua-weather-june.html" class="mnav-mid">Jun</a><a href="rotorua-weather-july.html" class="mnav-mid">Jul</a><a href="rotorua-weather-august.html" class="mnav-mid">Aug</a><a href="rotorua-weather-september.html" class="mnav-mid">Sep</a><a href="rotorua-weather-october.html" class="mnav-mid">Oct</a><a href="rotorua-weather-november.html" class="active">Nov</a><a href="rotorua-weather-december.html" class="mnav-rec">Dec</a></div>
+ </section>
+
+ <section class="section dest-search-section">
+ <div class="section-label">Compare with another destination</div>
+ <div class="dest-search-wrap">
+   <div class="dest-search-input-wrap">
+     <input type="text" id="dest-search-inp" class="dest-search-inp" 
+            placeholder="🌍  Paris, Bali, Tokyo…" autocomplete="off"/>
+     <div class="dest-search-ac" id="dest-search-ac"></div>
+   </div>
+   <button class="dest-search-btn" id="dest-search-btn">Compare →</button>
+ </div>
  </section>
 
  <section class="section">
@@ -267,6 +292,79 @@
  </div>
  </section>
 </main>
+<script>
+(function(){
+  var inp = document.getElementById('dest-search-inp');
+  var ac  = document.getElementById('dest-search-ac');
+  var btn = document.getElementById('dest-search-btn');
+  if(!inp) return;
+  var timer = null, results = [], selIdx = -1;
+  var lang = (document.documentElement.lang||'fr').toLowerCase();
+  var apiLang = lang === 'fr' ? 'fr' : lang === 'es' ? 'es' : lang === 'de' ? 'de' : 'en';
+  var monthSuffix = '-weather-november.html';
+  var basePrefix = '../';
+
+  function normalize(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,' ').trim();}
+  
+  function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+
+  function showAC(items){
+    results = items; selIdx = -1;
+    ac.innerHTML = '';
+    if(!items.length){ac.classList.remove('open');return;}
+    items.slice(0,6).forEach(function(r,i){
+      var d = document.createElement('div');
+      d.className = 'dest-search-ac-item';
+      d.innerHTML = '<span>' + (r.flag||'') + '</span><span>' + r.name + (r.country ? ' <span style="color:#9aabbb;font-size:11px">'+r.country+'</span>' : '') + '</span>';
+      d.onclick = function(){ goTo(r); };
+      ac.appendChild(d);
+    });
+    ac.classList.add('open');
+  }
+
+  function goTo(r){
+    var s = slugify(r.name);
+    var url = basePrefix + s + monthSuffix;
+    window.location.href = url;
+  }
+
+  inp.addEventListener('input', function(){
+    clearTimeout(timer);
+    var q = inp.value.trim();
+    if(q.length < 2){ac.classList.remove('open');return;}
+    timer = setTimeout(function(){
+      fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=8&language='+apiLang)
+        .then(function(r){return r.json();})
+        .then(function(data){
+          var items = (data.results||[])
+            .filter(function(r){return r.feature_code!=='AIRP'&&r.feature_code!=='RSTN';})
+            .slice(0,6)
+            .map(function(r){
+              return {name:r.name, country:r.country||'', flag:'', lat:r.latitude, lon:r.longitude};
+            });
+          showAC(items);
+        }).catch(function(){});
+    }, 280);
+  });
+
+  btn.addEventListener('click', function(){
+    if(results.length) goTo(results[0]);
+    else if(inp.value.trim()) goTo({name: inp.value.trim()});
+  });
+
+  inp.addEventListener('keydown', function(e){
+    var items = ac.querySelectorAll('.dest-search-ac-item');
+    if(e.key==='ArrowDown'){selIdx=Math.min(selIdx+1,items.length-1);items.forEach(function(el,i){el.style.background=i===selIdx?'var(--cream)':'';});}
+    else if(e.key==='ArrowUp'){selIdx=Math.max(selIdx-1,0);items.forEach(function(el,i){el.style.background=i===selIdx?'var(--cream)':'';});}
+    else if(e.key==='Enter'){if(selIdx>=0&&results[selIdx]) goTo(results[selIdx]); else if(results.length) goTo(results[0]);}
+    else if(e.key==='Escape'){ac.classList.remove('open');}
+  });
+
+  document.addEventListener('click', function(e){
+    if(!inp.contains(e.target)&&!ac.contains(e.target)) ac.classList.remove('open');
+  });
+})();
+</script>
 <footer>
  <p class="txt-muted-label">bestdateweather.com</p>
  <p><a href="https://open-meteo.com/" rel="noopener" class="txt-muted">Weather data by Open-Meteo.com</a> · Sources: ECMWF, DWD, NOAA · CC BY 4.0</p>
@@ -274,7 +372,7 @@
 <p class="mt-8"><span style="white-space:nowrap"><a href="../en/best-time-to-visit-rotorua.html" class="txt-muted"><img src="../flags/gb.png" srcset="../flags/2x/gb.png 2x" width="20" height="15" alt="" loading="lazy" class="flag-icon-lg"> English</a></span> · <span style="white-space:nowrap"><a href="../meilleure-periode-rotorua.html" class="txt-muted"><img src="../flags/fr.png" srcset="../flags/2x/fr.png 2x" width="20" height="15" alt="" loading="lazy" class="flag-icon-lg"> Français</a></span> · <span style="white-space:nowrap"><a href="../es/mejor-epoca-rotorua.html" class="txt-muted"><img src="../flags/es.png" srcset="../flags/2x/es.png 2x" width="20" height="15" alt="" loading="lazy" class="flag-icon-lg"> Español</a></span> · <span style="white-space:nowrap"><a href="../de/beste-reisezeit-rotorua.html" class="txt-muted"><img src="../flags/de.png" srcset="../flags/2x/de.png 2x" width="20" height="15" alt="" loading="lazy" class="flag-icon-lg"> Deutsch</a></span></p>
  <p class="f11-muted"><a href="legal.html" class="txt-muted">Legal</a> · <a href="privacy.html" class="txt-muted">Privacy</a> · <a href="contact.html" class="txt-muted">Contact</a></p>
 </footer>
-<script src="../js/core.min.js?v=17" defer></script>
+<script src="../js/core.min.js?v=16" defer></script>
 <script src="../js/favs.min.js?v=1" defer></script>
 <script src="../js/share.js" defer></script>
 </body>

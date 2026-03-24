@@ -1632,6 +1632,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         'cta_btn':        C['lbl_m_cta_btn'],
         'cta_link':       C['lbl_m_cta_link'],
         'kicker':         C['lbl_m_kicker_tpl'].format(**tpl),
+        'search_dest_label': C.get('lbl_m_search_dest_label', 'Compare'),
+        'search_dest_placeholder': C.get('lbl_m_search_dest_placeholder', '🌍  Destination…'),
+        'search_dest_btn': C.get('lbl_m_search_dest_btn', 'Compare →'),
     }
 
     # ── Prev/Next URLs ──
@@ -1746,6 +1749,19 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .month-nav a{{padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;background:white;border:1.5px solid #e8e0d0;color:var(--navy);}}
 .month-nav a.active{{background:var(--gold);color:white;border-color:var(--gold);}}
 .month-nav a:hover{{border-color:var(--gold);}}
+.dest-search-section .section-label{{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}}
+.dest-search-wrap{{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;}}
+.dest-search-input-wrap{{flex:1;min-width:200px;position:relative;}}
+.dest-search-inp{{width:100%;padding:12px 16px;border:1.5px solid var(--cream2);border-radius:12px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--navy);background:white;outline:none;transition:border-color .15s;}}
+.dest-search-inp:focus{{border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,148,10,.1);}}
+.dest-search-inp::placeholder{{color:#a0acb8;}}
+.dest-search-btn{{padding:12px 20px;background:linear-gradient(135deg,var(--gold),#f5b020);border:none;border-radius:12px;color:white;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;transition:filter .2s;font-family:'DM Sans',sans-serif;}}
+.dest-search-btn:hover{{filter:brightness(1.07);}}
+.dest-search-ac{{position:absolute;top:100%;left:0;right:0;background:white;border:1.5px solid var(--cream2);border-radius:10px;box-shadow:0 4px 16px rgba(26,31,46,.1);z-index:50;display:none;margin-top:4px;max-height:200px;overflow-y:auto;}}
+.dest-search-ac.open{{display:block;}}
+.dest-search-ac-item{{padding:10px 16px;cursor:pointer;font-size:13px;color:var(--navy);border-bottom:1px solid var(--cream2);display:flex;align-items:center;gap:8px;}}
+.dest-search-ac-item:last-child{{border-bottom:none;}}
+.dest-search-ac-item:hover{{background:var(--cream);}}
 </style>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="{GYG_PARTNER_ID}"></script>
 </head>
@@ -1818,6 +1834,18 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <div class="section-label">{L['sec_nav']}</div>
  <h2 class="section-title">{L['sec_nav_title']}</h2>
  <div class="month-nav">{month_nav}</div>
+ </section>
+
+ <section class="section dest-search-section">
+ <div class="section-label">{L['search_dest_label']}</div>
+ <div class="dest-search-wrap">
+   <div class="dest-search-input-wrap">
+     <input type="text" id="dest-search-inp" class="dest-search-inp" 
+            placeholder="{L['search_dest_placeholder']}" autocomplete="off"/>
+     <div class="dest-search-ac" id="dest-search-ac"></div>
+   </div>
+   <button class="dest-search-btn" id="dest-search-btn">{L['search_dest_btn']}</button>
+ </div>
  </section>
 
  <section class="section">
@@ -1926,6 +1954,79 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  </section>
 </main>
+<script>
+(function(){{
+  var inp = document.getElementById('dest-search-inp');
+  var ac  = document.getElementById('dest-search-ac');
+  var btn = document.getElementById('dest-search-btn');
+  if(!inp) return;
+  var timer = null, results = [], selIdx = -1;
+  var lang = (document.documentElement.lang||'fr').toLowerCase();
+  var apiLang = lang === 'fr' ? 'fr' : lang === 'es' ? 'es' : lang === 'de' ? 'de' : 'en';
+  var monthSuffix = '{C['monthly_sep']}{C['month_url'][mi]}.html';
+  var basePrefix = '{C['asset_prefix']}';
+
+  function normalize(s){{return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,' ').trim();}}
+  
+  function slugify(s){{return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}}
+
+  function showAC(items){{
+    results = items; selIdx = -1;
+    ac.innerHTML = '';
+    if(!items.length){{ac.classList.remove('open');return;}}
+    items.slice(0,6).forEach(function(r,i){{
+      var d = document.createElement('div');
+      d.className = 'dest-search-ac-item';
+      d.innerHTML = '<span>' + (r.flag||'') + '</span><span>' + r.name + (r.country ? ' <span style="color:#9aabbb;font-size:11px">'+r.country+'</span>' : '') + '</span>';
+      d.onclick = function(){{ goTo(r); }};
+      ac.appendChild(d);
+    }});
+    ac.classList.add('open');
+  }}
+
+  function goTo(r){{
+    var s = slugify(r.name);
+    var url = basePrefix + s + monthSuffix;
+    window.location.href = url;
+  }}
+
+  inp.addEventListener('input', function(){{
+    clearTimeout(timer);
+    var q = inp.value.trim();
+    if(q.length < 2){{ac.classList.remove('open');return;}}
+    timer = setTimeout(function(){{
+      fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=8&language='+apiLang)
+        .then(function(r){{return r.json();}})
+        .then(function(data){{
+          var items = (data.results||[])
+            .filter(function(r){{return r.feature_code!=='AIRP'&&r.feature_code!=='RSTN';}})
+            .slice(0,6)
+            .map(function(r){{
+              return {{name:r.name, country:r.country||'', flag:'', lat:r.latitude, lon:r.longitude}};
+            }});
+          showAC(items);
+        }}).catch(function(){{}});
+    }}, 280);
+  }});
+
+  btn.addEventListener('click', function(){{
+    if(results.length) goTo(results[0]);
+    else if(inp.value.trim()) goTo({{name: inp.value.trim()}});
+  }});
+
+  inp.addEventListener('keydown', function(e){{
+    var items = ac.querySelectorAll('.dest-search-ac-item');
+    if(e.key==='ArrowDown'){{selIdx=Math.min(selIdx+1,items.length-1);items.forEach(function(el,i){{el.style.background=i===selIdx?'var(--cream)':'';}});}}
+    else if(e.key==='ArrowUp'){{selIdx=Math.max(selIdx-1,0);items.forEach(function(el,i){{el.style.background=i===selIdx?'var(--cream)':'';}});}}
+    else if(e.key==='Enter'){{if(selIdx>=0&&results[selIdx]) goTo(results[selIdx]); else if(results.length) goTo(results[0]);}}
+    else if(e.key==='Escape'){{ac.classList.remove('open');}}
+  }});
+
+  document.addEventListener('click', function(e){{
+    if(!inp.contains(e.target)&&!ac.contains(e.target)) ac.classList.remove('open');
+  }});
+}})();
+</script>
 {footer_html(cfg, dest)}
 </body>
 </html>'''

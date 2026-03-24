@@ -446,7 +446,10 @@
     "tension_decent": "Akzeptabel — aber es gibt bessere Monate",
     "tension_off": "Nebensaison — lohnt sich die Reise?",
     "tension_tough": "Schwieriger Monat — wichtige Infos",
-    "hstat_score": "Klimascore"
+    "hstat_score": "Klimascore",
+    "search_dest_label": "Mit einem anderen Ziel vergleichen",
+    "search_dest_placeholder": "🌍  Paris, Bali, Tokio…",
+    "search_dest_btn": "Vergleichen →"
   },
   "narratives": {
     "tropical_rainy": "Im {month} befindet sich {name} mitten in der Regenzeit ({rain}% Regentage). Tropenschauer sind meist kurz, aber intensiv — einen leichten Regenmantel einpacken.",

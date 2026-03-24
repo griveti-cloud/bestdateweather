@@ -447,7 +447,10 @@
     "tension_decent": "Decent — but better months exist",
     "tension_off": "Off-season — worth the trip?",
     "tension_tough": "Tough month — know before you go",
-    "hstat_score": "Climate score"
+    "hstat_score": "Climate score",
+    "search_dest_label": "Compare with another destination",
+    "search_dest_placeholder": "🌍  Paris, Bali, Tokyo…",
+    "search_dest_btn": "Compare →"
   },
   "narratives": {
     "tropical_rainy": "In {month}, {name} is in the middle of the rainy season ({rain}% rainy days). Tropical showers are usually short but intense — pack a light raincoat.",

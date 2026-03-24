@@ -446,7 +446,10 @@
     "tension_decent": "Correcto — pero hay mejores meses",
     "tension_off": "Temporada baja — ¿vale la pena?",
     "tension_tough": "Mes difícil — lo que debes saber antes",
-    "hstat_score": "Puntuación"
+    "hstat_score": "Puntuación",
+    "search_dest_label": "Comparar con otro destino",
+    "search_dest_placeholder": "🌍  París, Bali, Tokio…",
+    "search_dest_btn": "Comparar →"
   },
   "narratives": {
     "tropical_rainy": "En {month}, {name} está en plena temporada de lluvias ({rain}% de días con lluvia). Los aguaceros tropicales son normalmente breves pero intensos — lleva un impermeable ligero.",
