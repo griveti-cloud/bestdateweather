@@ -295,7 +295,7 @@
     "rain_word": "rain",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropical destination — heavy rain months benefit from an algorithmic adjustment: tropical showers are intense but brief and usually don't ruin a trip.</p>",
     "headline_tpl": "Best Time to Visit {nom}",
-    "og_title_tpl": "Best Time to Visit {nom} {year} — Month-by-Month Weather Guide",
+    "og_title_tpl": "Best Time to Visit {nom} {year} — {best_score}/10 climate score",
     "dataset_name_tpl": "Climate data for {nom} — monthly averages over 10 years",
     "dataset_desc_tpl": "Monthly temperatures, precipitation, sunshine and wind for {nom}. Averages computed from 10 years of ERA5 data (Open-Meteo).",
     "best_months_lbl_tpl": "Best month{s}",
@@ -555,23 +555,21 @@
     "hero_sub_key": "hero_sub_en"
   },
   "annual_titles": [
-    "Best Time to Visit {nom}: {best_month} is Ideal ({best_tmax}°F) [{year}]",
-    "When to Visit {nom} [{year}] — Best Month: {best_month} ({best_tmax}°F)",
-    "Is {nom} Worth Visiting? Best Weather: {best_month} {best_tmax}°F [{year}]",
-    "Best Time to Visit {nom} {year}: Month-by-Month Weather Guide"
+    "{nom} {year} — {best_score}/10: when to go?",
+    "Best Time to Visit {nom} {year} — {best_score}/10 (12-month ranking)",
+    "{nom} weather {year} — {best_score}/10: best & worst months",
+    "When to Visit {nom}? {year} — {best_score}/10 climate score"
   ],
   "annual_h1s": [
-    "Best Time to Visit<br/><em>{nom}</em>",
-    "Best Time to Visit<br/><em>{nom}</em> — When to Go",
-    "Best Time to Visit<br/><em>{nom}</em>"
+    "When is the best time<br/><em>to visit {nom}?</em>",
+    "Best time to visit<br/><em>{nom} — {best_score}/10</em>",
+    "{nom}: best & worst<br/><em>months to visit</em>"
   ],
   "annual_descs": [
-    "When is the best time to visit {nom}? {best_month} offers {best_tmax}°F and {best_sun}h sunshine/day. Score {best_score}/10 — 10-year data.",
-    "{best_month} is the best month to visit {nom}: {best_tmax}°F, {best_sun}h sun, score {best_score}/10. Full 12-month weather analysis.",
-    "{nom} climate guide: best month is {best_month} ({best_tmax}°F, {best_sun}h/day). Avoid {worst_month} ({worst_rain}% rain). 10 years of data.",
-    "Best time for {nom}: {best_month} ({best_score}/10) with {best_tmax}°F and {best_sun}h sunshine. Worst: {worst_month}. Plan smarter.",
-    "{nom} in {best_month}: {best_tmax}°F, {best_sun}h sun, {best_rain}% rain — ideal conditions. 10-year ERA5 climate analysis.",
-    "{nom}: best month is {best_month} ({best_tmax}°F, {best_sun}h sun, {best_score}/10). Worst: {worst_month}. Full {year} weather guide."
+    "When is the best time to visit {nom}? See scores for all 12 months, weather breakdown and best month ranked. Based on 10 years of data.",
+    "Check the best time to visit {nom}. Full 12-month climate score, temperature, sunshine and rain. {year} guide.",
+    "{nom} climate score: {best_score}/10. See which months to go and which to avoid. Full weather ranking based on 10 years of ERA5 data.",
+    "Is {nom} worth visiting? See the full month-by-month weather score and find the best time to go. {year} climate guide."
   ],
   "annual_faq_mountain": [
     {

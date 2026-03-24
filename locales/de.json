@@ -294,7 +294,7 @@
     "rain_word": "Regen",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropisches Reiseziel — starke Regenmonate profitieren von einer algorithmischen Anpassung: Tropenschauer sind intensiv, aber kurz und verderben die Reise meist nicht.</p>",
     "headline_tpl": "Beste Reisezeit für {nom}",
-    "og_title_tpl": "Beste Reisezeit für {nom} {year} — Wetter-Guide Monat für Monat",
+    "og_title_tpl": "Beste Reisezeit {nom} {year} — Klimabewertung {best_score}/10",
     "dataset_name_tpl": "Klimadaten für {nom} — monatliche Durchschnittswerte über 10 Jahre",
     "dataset_desc_tpl": "Monatliche Temperaturen, Niederschlag, Sonnenschein und Wind für {nom}. Durchschnittswerte aus 10 Jahren ERA5-Daten (Open-Meteo).",
     "best_months_lbl_tpl": "Beste{s} Monat{s}",
@@ -554,23 +554,21 @@
     "hero_sub_key": "hero_sub_de"
   },
   "annual_titles": [
-    "Beste Reisezeit für {nom}: {best_month} ist ideal ({best_tmax}°C) [{year}]",
-    "Wann nach {nom} reisen [{year}]? Bester Monat: {best_month} ({best_tmax}°C)",
-    "{nom}: Wann ist das Wetter am besten? {best_month}, {best_tmax}°C [{year}]",
-    "Beste Reisezeit für {nom} {year}: Wetter-Guide Monat für Monat"
+    "{nom} {year} — {best_score}/10: wann reisen?",
+    "Beste Reisezeit {nom} {year} — {best_score}/10 (12 Monate bewertet)",
+    "{nom} Wetter {year} — {best_score}/10: beste und schlechteste Monate",
+    "Wann nach {nom} reisen? {year} — Klimabewertung {best_score}/10"
   ],
   "annual_h1s": [
-    "Beste Reisezeit für<br/><em>{nom}</em>",
-    "Beste Reisezeit für<br/><em>{nom}</em>",
-    "Beste Reisezeit für<br/><em>{nom}</em>"
+    "Wann ist die beste Reisezeit<br/><em>für {nom}?</em>",
+    "Beste Reisezeit für<br/><em>{nom} — {best_score}/10</em>",
+    "{nom}: beste und schlechteste<br/><em>Reisemonate</em>"
   ],
   "annual_descs": [
-    "Wann ist die beste Reisezeit für {nom}? {best_month} bietet {best_tmax}°C und {best_sun}h Sonne/Tag. Score {best_score}/10.",
-    "{best_month} ist der beste Monat für {nom}: {best_tmax}°C, {best_sun}h Sonne, Score {best_score}/10. 12-Monats-Wetteranalyse.",
-    "Klimaführer für {nom}: bester Monat {best_month} ({best_tmax}°C, {best_sun}h/Tag). Meide {worst_month} ({worst_rain}% Regen). 10 Jahre Daten.",
-    "Beste Reisezeit für {nom}: {best_month} ({best_score}/10) mit {best_tmax}°C und {best_sun}h Sonne. Schlechteste: {worst_month}.",
-    "{nom} im {best_month}: {best_tmax}°C, {best_sun}h Sonne, {best_rain}% Regen — ideale Bedingungen. ERA5-Analyse über 10 Jahre.",
-    "{nom}: Bester Monat ist {best_month} ({best_tmax}°C, {best_sun}h Sonne, {best_score}/10). Schlechtester: {worst_month}. Vollständiger Guide {year}."
+    "Wann ist die beste Reisezeit für {nom}? Bewertungen für alle 12 Monate, Wetterdetails und Monatsranking. Basierend auf 10 Jahren Daten.",
+    "Beste Reisezeit für {nom}. Vollständiger 12-Monats-Klimascore, Temperatur, Sonne und Regen. Guide {year}.",
+    "{nom}: Klimabewertung {best_score}/10. Welche Monate sind ideal, welche zu meiden. Vollständiges Ranking mit ERA5-Daten.",
+    "Lohnt sich {nom}? Entdecken Sie die Monats-Klimabewertung und die beste Reisezeit. Klimaführer {year}."
   ],
   "annual_faq_mountain": [
     {

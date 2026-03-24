@@ -294,7 +294,7 @@
     "rain_word": "pluie",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Destination tropicale — les mois de forte pluie bénéficient d'une correction algorithmique : les averses sont intenses mais courtes, et ne gâchent généralement pas le séjour.</p>",
     "headline_tpl": "Meilleure période pour partir {prep} {nom_bare}",
-    "og_title_tpl": "Meilleure période pour {nom} {year} — Guide météo mois par mois",
+    "og_title_tpl": "Meilleure période {prep} {nom_bare} {year} — score {best_score}/10",
     "dataset_name_tpl": "Données climatiques de {nom} — moyennes mensuelles sur 10 ans",
     "dataset_desc_tpl": "Températures, précipitations, ensoleillement et vent mensuels {nom_f}. Moyennes calculées sur 10 ans de données ERA5 (Open-Meteo).",
     "best_months_lbl_tpl": "Meilleur{s} mois",
@@ -554,23 +554,21 @@
     "hero_sub_key": "hero_sub_fr"
   },
   "annual_titles": [
-    "Meilleure période {prep} {nom_bare} : {best_month_lc} idéal ({best_tmax}°C) [{year}]",
-    "Quand partir {prep} {nom_bare} [{year}] ? Meilleur mois : {best_month_lc} ({best_tmax}°C)",
-    "{nom_bare} : quelle période choisir ? {best_month_lc}, {best_tmax}°C [{year}]",
-    "Meilleure période pour aller {prep} {nom_bare} {year} : guide météo mois par mois"
+    "{nom_bare} {year} — {best_score}/10 : quand partir ?",
+    "Meilleure période {prep} {nom_bare} {year} — {best_score}/10 (12 mois classés)",
+    "Météo {prep} {nom_bare} {year} — {best_score}/10 : meilleurs et pires mois",
+    "Quand partir {prep} {nom_bare} ? {year} — score climatique {best_score}/10"
   ],
   "annual_h1s": [
-    "Meilleure période pour partir<br/><em>{prep} {nom_bare}</em>",
-    "Meilleure période<br/><em>{prep} {nom_bare}</em>",
-    "Meilleure période de visite<br/><em>{prep} {nom_bare}</em>"
+    "Quelle est la meilleure période<br/><em>pour partir {prep} {nom_bare} ?</em>",
+    "Meilleure période {prep}<br/><em>{nom_bare} — {best_score}/10</em>",
+    "{nom_bare} : meilleurs et pires<br/><em>mois pour visiter</em>"
   ],
   "annual_descs": [
-    "Quelle est la meilleure période {prep} {nom_bare} ? {best_month_lc} offre {best_tmax}°C et {best_sun}h de soleil/jour. Score {best_score}/10.",
-    "{best_month} est le meilleur mois {prep} {nom_bare} : {best_tmax}°C, {best_sun}h soleil, score {best_score}/10. Analyse 12 mois sur 10 ans.",
-    "Guide météo {prep} {nom_bare} : meilleur mois {best_month_lc} ({best_tmax}°C, {best_sun}h/jour). Évitez {worst_month_lc} ({worst_rain}% pluie).",
-    "Meilleure période {prep} {nom_bare} : {best_month_lc} ({best_score}/10) avec {best_tmax}°C et {best_sun}h de soleil. Planifiez mieux.",
-    "{nom_bare} en {best_month_lc} : {best_tmax}°C, {best_sun}h soleil, {best_rain}% pluie — conditions idéales. Données ERA5 sur 10 ans.",
-    "{nom_bare} : meilleur mois = {best_month} ({best_tmax}°C, {best_sun}h soleil, {best_score}/10). Pire : {worst_month}. Guide complet {year}."
+    "Quelle est la meilleure période pour {nom_bare} ? Scores des 12 mois, météo détaillée et classement. Basé sur 10 ans de données.",
+    "Découvrez la meilleure période {prep} {nom_bare}. Score climatique complet sur 12 mois, température, soleil et pluie. Guide {year}.",
+    "{nom_bare} : score climatique {best_score}/10. Quels mois privilégier, lesquels éviter. Classement complet sur 10 ans de données ERA5.",
+    "{nom_bare} vaut-il le voyage ? Découvrez le score météo mois par mois et la meilleure période. Guide climatique {year}."
   ],
   "annual_faq_mountain": [
     {

@@ -294,7 +294,7 @@
     "rain_word": "lluvia",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Destino tropical — los meses de lluvias intensas incluyen un ajuste algorítmico: los aguaceros tropicales son intensos pero breves y normalmente no arruinan el viaje.</p>",
     "headline_tpl": "Mejor Época para Visitar {nom}",
-    "og_title_tpl": "Mejor época para visitar {nom} {year} — Guía del clima mes a mes",
+    "og_title_tpl": "Mejor época para {nom} {year} — puntuación {best_score}/10",
     "dataset_name_tpl": "Datos climáticos de {nom} — medias mensuales a 10 años",
     "dataset_desc_tpl": "Temperaturas, precipitaciones, sol y viento mensuales para {nom}. Medias calculadas con 10 años de datos ERA5 (Open-Meteo).",
     "best_months_lbl_tpl": "Mejor{s} mes{es}",
@@ -554,23 +554,21 @@
     "hero_sub_key": "hero_sub_es"
   },
   "annual_titles": [
-    "Mejor Época para Visitar {nom}: {best_month} ideal ({best_tmax}°C) [{year}]",
-    "¿Cuándo ir a {nom} [{year}]? Mejor mes: {best_month} ({best_tmax}°C)",
-    "{nom}: ¿cuándo hace mejor tiempo? {best_month}, {best_tmax}°C [{year}]",
-    "Mejor época para visitar {nom} {year}: guía del clima mes a mes"
+    "{nom} {year} — {best_score}/10: ¿cuándo ir?",
+    "Mejor época para {nom} {year} — {best_score}/10 (12 meses clasificados)",
+    "Clima en {nom} {year} — {best_score}/10: mejores y peores meses",
+    "¿Cuándo visitar {nom}? {year} — puntuación climática {best_score}/10"
   ],
   "annual_h1s": [
-    "Mejor Época para Visitar<br/><em>{nom}</em>",
-    "Mejor Época para Visitar<br/><em>{nom}</em>",
-    "Mejor Época para Visitar<br/><em>{nom}</em>"
+    "¿Cuál es la mejor época<br/><em>para visitar {nom}?</em>",
+    "Mejor época para<br/><em>{nom} — {best_score}/10</em>",
+    "{nom}: mejores y peores<br/><em>meses para visitar</em>"
   ],
   "annual_descs": [
-    "¿Cuándo es la mejor época para visitar {nom}? {best_month} ofrece {best_tmax}°C y {best_sun}h de sol/día. Puntuación {best_score}/10.",
-    "{best_month} es el mejor mes para visitar {nom}: {best_tmax}°C, {best_sun}h sol, puntuación {best_score}/10. Análisis de 12 meses.",
-    "Guía del clima en {nom}: mejor mes {best_month} ({best_tmax}°C, {best_sun}h/día). Evita {worst_month} ({worst_rain}% lluvia). 10 años de datos.",
-    "Mejor época para {nom}: {best_month} ({best_score}/10) con {best_tmax}°C y {best_sun}h de sol. Peor: {worst_month}. Planifica mejor.",
-    "{nom} en {best_month}: {best_tmax}°C, {best_sun}h sol, {best_rain}% lluvia — condiciones ideales. Análisis ERA5 de 10 años.",
-    "{nom}: mejor mes es {best_month} ({best_tmax}°C, {best_sun}h sol, {best_score}/10). Peor: {worst_month}. Guía completa {year}."
+    "¿Cuál es la mejor época para {nom}? Puntuaciones de los 12 meses, datos meteorológicos y clasificación. Basado en 10 años de datos.",
+    "Consulta la mejor época para {nom}. Puntuación climática completa de 12 meses. Guía {year}.",
+    "{nom}: puntuación climática {best_score}/10. Qué meses elegir y cuáles evitar. Clasificación completa con datos ERA5.",
+    "¿Vale la pena {nom}? Descubre la puntuación meteorológica mes a mes. Guía climática {year}."
   ],
   "annual_faq_mountain": [
     {
