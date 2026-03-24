@@ -445,7 +445,8 @@
     "tension_great": "Excellent mois — ce qu'il faut savoir",
     "tension_decent": "Correct — mais de meilleurs mois existent",
     "tension_off": "Basse saison — ça vaut le détour ?",
-    "tension_tough": "Mois difficile — à savoir avant de partir"
+    "tension_tough": "Mois difficile — à savoir avant de partir",
+    "hstat_score": "Score météo"
   },
   "narratives": {
     "tropical_rainy": "En {month_lc}, {name} est en pleine saison des pluies ({rain}% de jours pluvieux). Les averses tropicales sont généralement courtes mais intenses — prévoyez un imperméable léger.",
@@ -626,14 +627,14 @@
       "Partir {prep} {nom_bare} en {month_lc} ? Excellente idée."
     ],
     "good": [
-      "{month} est une bonne période. {best_month} est légèrement meilleur.",
-      "{nom_bare} en {month_lc} : solide, même si {best_month_lc} reste le pic.",
-      "Bonne fenêtre en {month_lc} — {best_month_lc} est un cran au-dessus."
+      "{month} est une bonne période {prep} {nom_bare} — découvrez les détails.",
+      "Bonnes conditions en {month_lc} {prep} {nom_bare}. Voici ce qui vous attend.",
+      "{nom_bare} en {month_lc} : ça vaut le voyage — lisez l'analyse complète."
     ],
     "poor": [
-      "{month} affiche un climat prononcé — {best_month} offre des conditions plus douces.",
-      "Période compliquée en {month_lc}. Préférez {best_month_lc} si possible.",
-      "{nom_bare} en {month_lc} ? Pas la meilleure fenêtre — visez {best_month_lc}."
+      "{month} peut être compliqué {prep} {nom_bare} — voyez si ça vous convient.",
+      "Pas le mois le plus facile {prep} {nom_bare}. Découvrez à quoi vous attendre.",
+      "{nom_bare} en {month_lc} : vérifiez les conditions avant de réserver."
     ]
   },
   "monthly_verdicts": {

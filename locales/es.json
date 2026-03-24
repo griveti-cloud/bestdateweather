@@ -445,7 +445,8 @@
     "tension_great": "Mes excelente — lo que debes saber",
     "tension_decent": "Correcto — pero hay mejores meses",
     "tension_off": "Temporada baja — ¿vale la pena?",
-    "tension_tough": "Mes difícil — lo que debes saber antes"
+    "tension_tough": "Mes difícil — lo que debes saber antes",
+    "hstat_score": "Puntuación"
   },
   "narratives": {
     "tropical_rainy": "En {month}, {name} está en plena temporada de lluvias ({rain}% de días con lluvia). Los aguaceros tropicales son normalmente breves pero intensos — lleva un impermeable ligero.",
@@ -626,14 +627,14 @@
       "¿Visitar {nom} en {month}? Excelente elección."
     ],
     "good": [
-      "{month} es una buena época. {best_month} es ligeramente mejor.",
-      "{nom} en {month}: sólido, aunque {best_month} sigue siendo el mejor.",
-      "Buena ventana en {month} — {best_month} está un peldaño por encima."
+      "{month} es una buena época para {nom} — descubre todos los detalles.",
+      "Buenas condiciones en {month} para {nom}. Descubre qué esperar.",
+      "{nom} en {month}: vale la pena — lee el análisis completo."
     ],
     "poor": [
-      "{month} es una época difícil — {best_month} ofrece condiciones mucho mejores.",
-      "Condiciones duras en {month}. Considera {best_month} si es posible.",
-      "¿{nom} en {month}? No es la mejor ventana — apunta a {best_month}."
+      "{month} puede ser complicado en {nom} — comprueba si te conviene.",
+      "No el mes más fácil en {nom}. Descubre qué esperar.",
+      "{nom} en {month}: comprueba las condiciones antes de reservar."
     ]
   },
   "monthly_verdicts": {

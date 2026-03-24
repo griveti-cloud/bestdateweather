@@ -446,7 +446,8 @@
     "tension_great": "Great month — what to know",
     "tension_decent": "Decent — but better months exist",
     "tension_off": "Off-season — worth the trip?",
-    "tension_tough": "Tough month — know before you go"
+    "tension_tough": "Tough month — know before you go",
+    "hstat_score": "Climate score"
   },
   "narratives": {
     "tropical_rainy": "In {month}, {name} is in the middle of the rainy season ({rain}% rainy days). Tropical showers are usually short but intense — pack a light raincoat.",
@@ -627,14 +628,14 @@
       "Visiting {nom} in {month}? Excellent choice."
     ],
     "good": [
-      "{month} is a good time to visit. {best_month} is slightly better.",
-      "{nom} in {month}: solid, though {best_month} remains peak.",
-      "Good window in {month} — {best_month} is a notch above."
+      "{month} is a good time to visit {nom} — see the full breakdown.",
+      "Good conditions in {month} for {nom}. Find out what to expect.",
+      "{nom} in {month}: worth it — check the details."
     ],
     "poor": [
-      "{month} is a difficult time — {best_month} offers much better conditions.",
-      "Tough conditions in {month}. Consider {best_month} if possible.",
-      "{nom} in {month}? Not the best window — aim for {best_month}."
+      "{month} can be challenging in {nom} — see if it works for you.",
+      "Not the easiest month in {nom}. Find out what to expect.",
+      "{nom} in {month}: check the conditions before you book."
     ]
   },
   "monthly_verdicts": {

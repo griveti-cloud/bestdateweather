@@ -1562,6 +1562,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         'hstat_tmax':     C['lbl_m_hstat_tmax'],
         'hstat_rain':     C['lbl_m_hstat_rain'],
         'hstat_sun':      C['lbl_m_hstat_sun'],
+        'hstat_score':    C.get('lbl_m_hstat_score', 'Score'),
         'sec_summary':    C['lbl_m_sec_summary'],
         'sec_summary_title': C['lbl_m_sec_summary_title_tpl'].format(**tpl),
         'qf_tminmax':     C['lbl_m_qf_tminmax'],
@@ -1762,6 +1763,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <div><span class="hstat-val">{fmt_temp(m['tmax'], C)}</span><span class="hstat-lbl">{L['hstat_tmax']}</span></div>
  <div><span class="hstat-val">{m['rain_pct']}%</span><span class="hstat-lbl">{L['hstat_rain']}</span></div>
  <div><span class="hstat-val">{m['sun_h']}h</span><span class="hstat-lbl">{L['hstat_sun']}</span></div>
+ <div><span class="hstat-val" style="color:{txt};text-shadow:0 1px 4px rgba(0,0,0,.3)">{score:.1f}/10</span><span class="hstat-lbl">{L['hstat_score']}</span></div>
  </div>
 </header>
 <main class="page">
