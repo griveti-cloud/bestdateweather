@@ -1955,7 +1955,6 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  </section>
 </main>
-<script src="{C['asset_prefix']}js/fiche-slugs.js"></script>
 <script>
 (function(){{
   var inp = document.getElementById('dest-search-inp');
@@ -1970,33 +1969,46 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
   if(lang!=='en'&&lang!=='es'&&lang!=='de') lang='fr';
 
   var _selected = null;
-  var acTimer = null;
-  var acData = [];
+  var _suggestions = null;
 
-  function norm(s){{
-    return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-      .replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+  function normStr(s){{
+    return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'').trim();
   }}
-  function slugFromResult(r){{
-    var slugMap = window.BDW_FICHE_SLUGS;
-    if(!slugMap) return null;
-    var n = r.name;
-    var entry = slugMap[norm(n)];
-    if(!entry) entry = slugMap[norm(n.split(/[\s,\-]/)[0])];
-    if(!entry){{ var bare=n.replace(/^(la |le |les |l'|l\u2019)/i,''); entry=slugMap[norm(bare)]; }}
-    if(!entry) return null;
-    return lang==='fr'?entry.fr:(lang==='es'?(entry.es||entry.en):(lang==='de'?(entry.de||entry.en):entry.en));
+
+  function loadAndSearch(q){{
+    if(!_suggestions){{
+      fetch(basePrefix+'data/suggestions.json')
+        .then(function(r){{return r.json();}})
+        .then(function(d){{ _suggestions=d; doSearch(q); }})
+        .catch(function(){{}});
+    }} else {{
+      doSearch(q);
+    }}
+  }}
+
+  function doSearch(q){{
+    var qNorm = normStr(q);
+    var results = [];
+    Object.keys(_suggestions).forEach(function(slug){{
+      var d = _suggestions[slug];
+      var name = d[lang] || d.fr || d.en || '';
+      if(normStr(name).indexOf(qNorm) === 0) {{
+        results.push({{slug:slug, name:name, flag:d.flag}});
+      }}
+    }});
+    results.sort(function(a,b){{return a.name.localeCompare(b.name);}});
+    showAC(results.slice(0,6));
   }}
 
   function showAC(items){{
-    acData = items; ac.innerHTML = '';
+    ac.innerHTML = '';
     if(!items.length){{ ac.style.display='none'; return; }}
     items.forEach(function(r){{
       var d = document.createElement('div');
       d.className = 'dest-search-ac-item';
-      if(r.country_code){{
+      if(r.flag){{
         var img = document.createElement('img');
-        img.src = basePrefix+'flags/'+r.country_code.toLowerCase()+'.png';
+        img.src = basePrefix+'flags/'+r.flag+'.png';
         img.width=20; img.height=15;
         img.style.cssText='vertical-align:middle;border-radius:2px;margin-right:6px;flex-shrink:0';
         img.onerror=function(){{this.style.display='none';}};
@@ -2016,51 +2028,36 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     ac.style.display = 'block';
   }}
 
+  var timer = null;
   inp.addEventListener('input', function(){{
-    clearTimeout(acTimer);
+    clearTimeout(timer);
     _selected = null;
     var q = inp.value.trim();
     if(q.length < 2){{ ac.style.display='none'; return; }}
-    acTimer = setTimeout(function(){{
-      fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=10&language='+lang)
-        .then(function(r){{return r.json();}})
-        .then(function(data){{
-          var results = (data.results||[])
-            .filter(function(r){{ return r.feature_code!=='AIRP'&&r.feature_code!=='RSTN'; }})
-            .sort(function(a,b){{return (b.population||0)-(a.population||0);}})
-            .slice(0,6);
-          showAC(results);
-        }}).catch(function(){{}});
-    }}, 280);
+    timer = setTimeout(function(){{ loadAndSearch(q); }}, 180);
   }});
 
   btn.addEventListener('click', function(){{
-    var r = _selected || acData[0];
+    var r = _selected;
     if(!r) return;
-    var slug = slugFromResult(r);
-    if(!slug) return;
-    window.location.href = basePrefix + slug + monthSuffix;
+    window.location.href = basePrefix + r.slug + monthSuffix;
   }});
 
   inp.addEventListener('keydown', function(e){{
     var items = ac.querySelectorAll('.dest-search-ac-item');
-    var n = items.length; var idx = -1;
+    var idx = -1;
     items.forEach(function(el,i){{ if(el.classList.contains('hovered')) idx=i; }});
     if(e.key==='ArrowDown'){{
-      idx = Math.min(idx+1, n-1);
-      items.forEach(function(el,i){{ el.classList.toggle('hovered', i===idx); }});
+      idx=Math.min(idx+1,items.length-1);
+      items.forEach(function(el,i){{el.classList.toggle('hovered',i===idx);}});
       e.preventDefault();
     }} else if(e.key==='ArrowUp'){{
-      idx = Math.max(idx-1, 0);
-      items.forEach(function(el,i){{ el.classList.toggle('hovered', i===idx); }});
+      idx=Math.max(idx-1,0);
+      items.forEach(function(el,i){{el.classList.toggle('hovered',i===idx);}});
       e.preventDefault();
     }} else if(e.key==='Enter'){{
-      if(idx>=0 && acData[idx]){{ _selected=acData[idx]; inp.value=acData[idx].name; ac.style.display='none'; }}
-      else if(_selected || acData[0]){{
-        var r = _selected || acData[0];
-        var slug = slugFromResult(r);
-        if(slug) window.location.href = basePrefix + slug + monthSuffix;
-      }}
+      if(idx>=0 && items[idx]){{ items[idx].dispatchEvent(new MouseEvent('mousedown')); }}
+      else if(_selected) window.location.href = basePrefix + _selected.slug + monthSuffix;
     }} else if(e.key==='Escape'){{ ac.style.display='none'; }}
   }});
 
