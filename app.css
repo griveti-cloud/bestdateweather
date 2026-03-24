@@ -980,3 +980,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
   box-sizing:border-box!important;
   margin-bottom:16px!important;
 }
+
+/* Footer selon le mode actif */
+.card-footer-annual{display:none}
+.annual-mode-active .card-footer-annual{display:flex}
