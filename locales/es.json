@@ -707,22 +707,22 @@
     "score_fair": "No es la mejor ventana, pero es aceptable si las fechas son fijas. {best_month} ({best_score}/10) es significativamente mejor si es posible."
   },
   "monthly_titles": [
-    "{verdict_emoji} {nom} en {month} {year} — {tmax}°C, {sun}h sol ({verdict})",
-    "¿Es {month} bueno para {nom}? {verdict_emoji} {tmax}°C, {sun}h de sol [{year}]",
-    "{nom} en {month} {year}: {tmax}°C y {sun}h sol — {verdict} [{score}/10]",
-    "{nom} en {month}: {season_lc} {year} — {verdict_emoji} {tmax}°C, {sun}h sol/día",
-    "{nom} en {month} {year}: {tmax}°C, {sun}h sol — ¿Vale la pena el viaje?"
+    "¿{month} es buen momento para {nom}? {verdict_emoji} {tmax}°C, {sun}h sol ({year})",
+    "{verdict_emoji} {nom} en {month} {year} — {tmax}°C, {sun}h sol — Puntuación {score}/10",
+    "{nom} en {month} {year}: {tmax}°C, {sun}h sol — 10 años de datos meteorológicos",
+    "{nom} en {month} {year}: {tmax}°C y {sun}h sol — ¿Vale la pena el viaje?",
+    "{nom} en {month}: {season_lc} {year} — {verdict_emoji} {tmax}°C, {sun}h/día"
   ],
   "monthly_descs": [
-    "{verdict} — {nom} en {month} {year}. {tmax}°C, {sun}h sol/día{sea_label_comma}. {rain_label}. Puntuación {score}/10.",
-    "¿Vale la pena {nom} en {month}? Puntuación {score}/10 — {tmax}°C, {sun}h sol/día{sea_label_comma}. Mejor mes: {best_month} ({best_score}/10).",
-    "{nom} en {month} {year}: {tmax}°C, {sun}h sol/día{sea_label_comma}. {rain_label}. {verdict} — 10 años de datos meteorológicos.",
-    "{verdict_emoji} {verdict}: {nom} en {month} promedia {tmax}°C y {sun}h sol/día{sea_label_comma}. Puntuación {score}/10 vs mejor mes {best_month} ({best_score}/10)."
+    "¿Es {month} buena época para {nom}? Puntuación {score}/10 — {tmax}°C, {sun}h sol{sea_label_comma}. {rain_label}. Basado en 10 años de datos climáticos.",
+    "{verdict}: {nom} en {month} {year} — {tmax}°C, {sun}h sol/día{sea_label_comma}. {rain_label}. Compara los 12 meses.",
+    "{nom} en {month} {year}: {tmax}°C, {sun}h sol{sea_label_comma}. Puntuación {score}/10 (mejor: {best_month} {best_score}/10). Datos ERA5 10 años.",
+    "{verdict_emoji} {verdict} — {nom} en {month}: {tmax}°C, {sun}h sol/día{sea_label_comma}. {rain_label}. Puntuación {score}/10."
   ],
   "monthly_h1s": [
-    "Tiempo en {nom}<br/><em>en {month}</em>",
-    "{nom} en {month}<br/><em>¿qué tiempo hace?</em>",
-    "¿Visitar {nom}<br/><em>en {month}?</em>"
+    "¿Es {month} buena época<br/><em>para visitar {nom}?</em>",
+    "Tiempo en {nom}<br/><em>en {month} {year}</em>",
+    "{nom} en {month}:<br/><em>¿buena o mala idea?</em>"
   ],
   "monthly_article_headline_tpl": "Tiempo en {nom} en {month} — Temperatura, lluvia y consejos",
   "monthly_article_desc_tpl": "Tiempo en {nom} en {month}: {tmax}°C, {rain}% de días de lluvia. Puntuación {score}/10.",
