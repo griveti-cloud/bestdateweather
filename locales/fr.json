@@ -440,7 +440,12 @@
     "editorial_highlights_title": "Les meilleurs mois à {nom}",
     "sec_similar_ski_tpl": "Stations ski similaires en {month_lc}",
     "sim_label_ski": "⛷️ Stations comparables",
-    "rain_pct_label": "{pct}% de jours pluvieux"
+    "rain_pct_label": "{pct}% de jours pluvieux",
+    "tension_peak": "Haute saison — foule et prix ?",
+    "tension_great": "Excellent mois — ce qu'il faut savoir",
+    "tension_decent": "Correct — mais de meilleurs mois existent",
+    "tension_off": "Basse saison — ça vaut le détour ?",
+    "tension_tough": "Mois difficile — à savoir avant de partir"
   },
   "narratives": {
     "tropical_rainy": "En {month_lc}, {name} est en pleine saison des pluies ({rain}% de jours pluvieux). Les averses tropicales sont généralement courtes mais intenses — prévoyez un imperméable léger.",
@@ -707,22 +712,22 @@
     "score_fair": "Pas le meilleur créneau, mais acceptable pour qui a des contraintes de dates. {best_month} ({best_score}/10) est nettement préférable si possible."
   },
   "monthly_titles": [
-    "Partir {prep} {nom_bare} en {month_lc} ? {verdict_emoji} {tmax}°C, {sun}h soleil ({year})",
-    "{verdict_emoji} {nom_bare} en {month_lc} {year} — {tmax}°C, {sun}h soleil — Score {score}/10",
-    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h de soleil — 10 ans de données météo",
-    "{nom_bare} en {month_lc} {year} : {tmax}°C & {sun}h soleil — Ça vaut le voyage ?",
-    "{nom_bare} en {month_lc} : {season_lc} {year} — {verdict_emoji} {tmax}°C, {sun}h/jour"
+    "{nom_bare} en {month_lc} {year} : {score}/10 — {tension}",
+    "Partir {prep} {nom_bare} en {month_lc} ? Score {score}/10 ({tmax}°C, {sun}h)",
+    "{verdict_emoji} {nom_bare} {month_lc} {year} : {score}/10 — {tmax}°C & {sun}h de soleil",
+    "{nom_bare} en {month_lc} : {tension} — {tmax}°C, {sun}h [{year}]",
+    "Météo {prep} {nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h — {score}/10"
   ],
   "monthly_descs": [
-    "{month_lc} est-il une bonne période pour {nom_bare} ? Score {score}/10 — {tmax}°C, {sun}h soleil{sea_label_comma}. {rain_label}. Basé sur 10 ans de données climatiques.",
-    "{verdict} : {nom_bare} en {month_lc} {year} — {tmax}°C, {sun}h de soleil/jour{sea_label_comma}. {rain_label}. Comparez les 12 mois.",
-    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h soleil{sea_label_comma}. Score {score}/10 (meilleur : {best_month} {best_score}/10). Données ERA5 10 ans.",
-    "{verdict_emoji} {verdict} — {nom_bare} en {month_lc} : {tmax}°C, {sun}h soleil/jour{sea_label_comma}. {rain_label}. Score {score}/10."
+    "{nom_bare} obtient {score}/10 en {month_lc} {year} : {tmax}°C, {sun}h soleil/jour{sea_label_comma}. {rain_label}. Meilleur mois : {best_month} ({best_score}/10). Données 10 ans.",
+    "{nom_bare} en {month_lc} : {verdict} — {score}/10, {tmax}°C, {sun}h soleil/jour{sea_label_comma}. {rain_label}. Comparez les 12 mois.",
+    "{verdict_emoji} {verdict} : {nom_bare} en {month_lc} affiche {tmax}°C et {sun}h soleil/jour{sea_label_comma}. Score {score}/10 vs meilleur mois {best_month} ({best_score}/10).",
+    "{nom_bare} en {month_lc} {year} : {tmax}°C, {sun}h soleil{sea_label_comma}. {rain_label}. Score {score}/10. Données ERA5 sur 10 ans."
   ],
   "monthly_h1s": [
     "{month_lc} {prep} {nom_bare} :<br/><em>bonne ou mauvaise période ?</em>",
-    "Météo {prep} {nom_bare}<br/><em>en {month_lc} {year}</em>",
-    "Partir {prep} {nom_bare} en {month_lc} :<br/><em>bonne idée ?</em>"
+    "{nom_bare} en {month_lc} :<br/><em>{score}/10 — {tension}</em>",
+    "Météo {prep} {nom_bare}<br/><em>en {month_lc} {year}</em>"
   ],
   "monthly_article_headline_tpl": "Météo {prep} {nom_bare} en {month_lc} — Températures, pluie et conseils",
   "monthly_article_desc_tpl": "Météo {prep} {nom_bare} en {month_lc} : {tmax}°C, {rain}% de jours pluvieux. Score {score}/10.",

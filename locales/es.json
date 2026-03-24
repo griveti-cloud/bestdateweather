@@ -440,7 +440,12 @@
     "editorial_highlights_title": "Mejores meses en {nom}",
     "sec_similar_ski_tpl": "Estaciones de esquí similares en {month_lc}",
     "sim_label_ski": "⛷️ Estaciones comparables",
-    "rain_pct_label": "{pct}% días de lluvia"
+    "rain_pct_label": "{pct}% días de lluvia",
+    "tension_peak": "Temporada alta — ¿aglomeraciones y precios?",
+    "tension_great": "Mes excelente — lo que debes saber",
+    "tension_decent": "Correcto — pero hay mejores meses",
+    "tension_off": "Temporada baja — ¿vale la pena?",
+    "tension_tough": "Mes difícil — lo que debes saber antes"
   },
   "narratives": {
     "tropical_rainy": "En {month}, {name} está en plena temporada de lluvias ({rain}% de días con lluvia). Los aguaceros tropicales son normalmente breves pero intensos — lleva un impermeable ligero.",
@@ -707,22 +712,22 @@
     "score_fair": "No es la mejor ventana, pero es aceptable si las fechas son fijas. {best_month} ({best_score}/10) es significativamente mejor si es posible."
   },
   "monthly_titles": [
-    "¿{month} es buen momento para {nom}? {verdict_emoji} {tmax}°C, {sun}h sol ({year})",
-    "{verdict_emoji} {nom} en {month} {year} — {tmax}°C, {sun}h sol — Puntuación {score}/10",
-    "{nom} en {month} {year}: {tmax}°C, {sun}h sol — 10 años de datos meteorológicos",
-    "{nom} en {month} {year}: {tmax}°C y {sun}h sol — ¿Vale la pena el viaje?",
-    "{nom} en {month}: {season_lc} {year} — {verdict_emoji} {tmax}°C, {sun}h/día"
+    "{nom} en {month} {year}: {score}/10 — {tension}",
+    "¿{month} es buen momento para {nom}? Puntuación {score}/10 ({tmax}°C, {sun}h)",
+    "{verdict_emoji} {nom} {month} {year}: {score}/10 — {tmax}°C y {sun}h de sol",
+    "{nom} en {month}: {tension} — {tmax}°C, {sun}h [{year}]",
+    "Tiempo en {nom} en {month} {year}: {tmax}°C, {sun}h — {score}/10"
   ],
   "monthly_descs": [
-    "¿Es {month} buena época para {nom}? Puntuación {score}/10 — {tmax}°C, {sun}h sol{sea_label_comma}. {rain_label}. Basado en 10 años de datos climáticos.",
-    "{verdict}: {nom} en {month} {year} — {tmax}°C, {sun}h sol/día{sea_label_comma}. {rain_label}. Compara los 12 meses.",
-    "{nom} en {month} {year}: {tmax}°C, {sun}h sol{sea_label_comma}. Puntuación {score}/10 (mejor: {best_month} {best_score}/10). Datos ERA5 10 años.",
-    "{verdict_emoji} {verdict} — {nom} en {month}: {tmax}°C, {sun}h sol/día{sea_label_comma}. {rain_label}. Puntuación {score}/10."
+    "{nom} obtiene {score}/10 en {month} {year}: {tmax}°C, {sun}h sol/día{sea_label_comma}. {rain_label}. Mejor mes: {best_month} ({best_score}/10). 10 años de datos.",
+    "{nom} en {month}: {verdict} — {score}/10, {tmax}°C, {sun}h sol/día{sea_label_comma}. {rain_label}. Compara los 12 meses.",
+    "{verdict_emoji} {verdict}: {nom} en {month} promedia {tmax}°C y {sun}h sol/día{sea_label_comma}. Puntuación {score}/10 vs mejor mes {best_month} ({best_score}/10).",
+    "{nom} en {month} {year}: {tmax}°C, {sun}h sol{sea_label_comma}. {rain_label}. Puntuación {score}/10. Datos ERA5 10 años."
   ],
   "monthly_h1s": [
-    "¿Es {month} buena época<br/><em>para visitar {nom}?</em>",
-    "Tiempo en {nom}<br/><em>en {month} {year}</em>",
-    "{nom} en {month}:<br/><em>¿buena o mala idea?</em>"
+    "¿Es {month} buena época<br/><em>para {nom}?</em>",
+    "{nom} en {month}:<br/><em>{score}/10 — {tension}</em>",
+    "Tiempo en {nom} en {month}:<br/><em>¿buena o mala idea?</em>"
   ],
   "monthly_article_headline_tpl": "Tiempo en {nom} en {month} — Temperatura, lluvia y consejos",
   "monthly_article_desc_tpl": "Tiempo en {nom} en {month}: {tmax}°C, {rain}% de días de lluvia. Puntuación {score}/10.",

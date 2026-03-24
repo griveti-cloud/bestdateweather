@@ -1440,6 +1440,17 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     _verdict = C['lbl_m_verdict_period_rec'] if score >= 7.5 else C['lbl_m_verdict_period_avg'] if score >= 5.5 else C['lbl_m_verdict_period_bad']
     tpl['verdict'] = _verdict.rstrip('.')  # sans point final pour les titres
     tpl['verdict_emoji'] = '✅' if score >= 7.5 else '🟡' if score >= 5.5 else '🔴'
+    # Tension contextuelle selon niveau de score
+    if score >= 9.0:
+        tpl['tension'] = C.get('lbl_m_tension_peak', 'Peak season')
+    elif score >= 7.5:
+        tpl['tension'] = C.get('lbl_m_tension_great', 'Great month')
+    elif score >= 6.0:
+        tpl['tension'] = C.get('lbl_m_tension_decent', 'Decent')
+    elif score >= 4.5:
+        tpl['tension'] = C.get('lbl_m_tension_off', 'Off-season')
+    else:
+        tpl['tension'] = C.get('lbl_m_tension_tough', 'Tough month')
 
     tpl['season'] = C['seasons_map'][mi]
     tpl['season_lc'] = C['seasons_map'][mi].lower()
