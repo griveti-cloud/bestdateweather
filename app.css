@@ -734,19 +734,15 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .affil-chip--blue:hover{background:#fde9a0;border-color:var(--gold);color:#5a3800}
 
 
-/* ── Desktop 2-column layout ── */
+/* ── Desktop layout — colonne unique centrée ── */
 @media(min-width:960px){
-  header.app-header{max-width:940px}
+  header.app-header{max-width:680px}
 
   .wrap{
-    max-width:960px;
-    display:grid;
-    grid-template-columns:580px 1fr;
-    column-gap:24px;
-    align-items:start;
+    max-width:680px;
+    display:block;
   }
 
-  /* Left column */
   .main-card,
   .uc-filter-wrap,
   .hero,
@@ -754,31 +750,28 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
   .note,
   .empty,
   #foot-note{
-    grid-column:1;
     max-width:100%;
     margin-left:0;
     margin-right:0;
   }
 
-  /* Right column — sticky sidebar */
+  /* Sidebar guides — sous le widget, pleine largeur */
   .wb-extra-sections{
-    grid-column:2;
-    grid-row:1 / 99;
-    position:sticky;
-    top:20px;
-    max-height:calc(100vh - 40px);
-    overflow-y:auto;
+    position:static;
+    max-height:none;
+    overflow-y:visible;
     border-radius:14px;
     background:#fff;
     border:1.5px solid var(--cream2);
     box-shadow:var(--shadow);
     padding:8px 0;
+    margin-top:4px;
   }
 }
 
-@media(min-width:1160px){
-  .wrap{max-width:1100px;grid-template-columns:620px 1fr}
-  .main-card,.uc-filter-wrap,.hero,.sec-block,.note,.empty,#foot-note{max-width:620px}
+@media(min-width:1100px){
+  header.app-header{max-width:720px}
+  .wrap{max-width:720px}
 }
 
 /* ── REDESIGN 2026 — ajouts ── */
