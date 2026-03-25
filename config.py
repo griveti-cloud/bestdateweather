@@ -13,7 +13,7 @@ Mise à jour des IDs :
 # ── Affiliés ─────────────────────────────────────────────────────────────────
 
 # GetYourGuide — partner ID (https://partner.getyourguide.com)
-GYG_PARTNER_ID = '2MQKLO0'
+GYG_PARTNER_ID = '2MQKL00'
 
 # Travelpayouts — marker / shmarker (https://travelpayouts.com)
 TP_MARKER = '708106'
