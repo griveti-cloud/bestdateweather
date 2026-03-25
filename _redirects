@@ -1,4 +1,4 @@
-https://www.bestdateweather.com/:path* https://bestdateweather.com/:path* 301
+https://www.bestdateweather.com/* https://bestdateweather.com/:splat 301
 # REGEX (skipped): /meilleure-periode-(.+)-en-(janvier|fevrier|mars|avril|mai|juin|juillet|aout|septembre|octobre|novembre|decembre)\.html -> /$1-meteo-$2.html
 # REGEX (skipped): /en/best-time-to-visit-(.+)-in-(january|february|march|april|may|june|july|august|september|october|november|december)\.html -> /en/$1-weather-$2.html
 /g%C3%B6teborg-meteo-:month.html /goteborg-meteo-:month.html 301

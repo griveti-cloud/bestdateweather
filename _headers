@@ -1,4 +1,4 @@
-# Netlify _headers
+# _headers
 
 /widget/*
   X-Frame-Options: ALLOWALL
