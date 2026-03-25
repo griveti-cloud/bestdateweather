@@ -103,6 +103,19 @@
 <div class="project-card"><span class="proj-icon">🍽️</span><span class="proj-title">Corniche waterfront</span><span class="proj-text">Oct–Apr — 30 km promenade, seafood restaurants, sunset.</span><a href="https://www.getyourguide.com/s/?q=Jeddah%2C+Saudi+Arabia&partner_id=2MQKLO0&locale=en" target="_blank" rel="sponsored noopener" class="proj-gyg-btn">🎟️ See activities</a></div>
 <div class="project-card"><span class="proj-icon">💰</span><span class="proj-title">Budget</span><span class="proj-text">Nov–Feb — mild temperatures, outside Hajj season.</span><a href="https://www.getyourguide.com/s/?q=Jeddah%2C+Saudi+Arabia&partner_id=2MQKLO0&locale=en" target="_blank" rel="sponsored noopener" class="proj-gyg-btn">🎟️ See activities</a></div></div>
 </section>
+
+ <section class="section dest-search-section">
+ <div class="section-label">Compare with another destination</div>
+ <div class="dest-search-wrap">
+   <div class="dest-search-input-wrap">
+     <input type="text" id="dest-search-inp" class="dest-search-inp"
+            placeholder="🌍  Paris, Bali, Tokyo…" autocomplete="off"/>
+     <div class="dest-search-ac" id="dest-search-ac"></div>
+   </div>
+   <button class="dest-search-btn" id="dest-search-btn">Compare →</button>
+ </div>
+ </section>
+
 <section class="section">
  <div class="section-label">Monthly climate data</div>
  <h2 class="section-title">Jeddah weather month by month</h2>
@@ -211,5 +224,10 @@
 <script src="../js/favs.min.js?v=1" defer></script>
 <script src="../js/share.js" defer></script>
 <script src="../js/faq.js" defer></script>
+<script src="../js/dest-data.js?v=2"></script>
+<script src="../js/dest-search.js?v=2"></script>
+<script>
+if(window.initDestSearch) window.initDestSearch({suffix:'.html',prefix:'../best-time-to-visit-',lang:'en'});
+</script>
 </body>
 </html>

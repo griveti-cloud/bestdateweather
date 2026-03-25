@@ -963,6 +963,19 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <main class="page">
 {qf}
 {cards_section}
+
+ <section class="section dest-search-section">
+ <div class="section-label">{C['lbl_m_search_dest_label']}</div>
+ <div class="dest-search-wrap">
+   <div class="dest-search-input-wrap">
+     <input type="text" id="dest-search-inp" class="dest-search-inp"
+            placeholder="{C['lbl_m_search_dest_placeholder']}" autocomplete="off"/>
+     <div class="dest-search-ac" id="dest-search-ac"></div>
+   </div>
+   <button class="dest-search-btn" id="dest-search-btn">{C['lbl_m_search_dest_btn']}</button>
+ </div>
+ </section>
+
 {table_section}
 {seasonal_section}
 {booking_section}
@@ -977,6 +990,11 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 </main>
 {footer_html(C, dest)}
 <script src="{pfx}js/faq.js" defer></script>
+<script src="{pfx}js/dest-data.js?v=2"></script>
+<script src="{pfx}js/dest-search.js?v=2"></script>
+<script>
+if(window.initDestSearch) window.initDestSearch({{suffix:'{C['annual_suffix']}',prefix:'{C['asset_prefix']}{C['annual_prefix']}',lang:'{C['lang']}'}});
+</script>
 </body>
 </html>'''
     return html

@@ -103,6 +103,19 @@
 <div class="project-card"><span class="proj-icon">🏛️</span><span class="proj-title">Kotor à 30 min</span><span class="proj-text">Toute l'année — baie UNESCO, remparts, fjord monténégrin.</span><a href="https://www.getyourguide.fr/s/?q=Budva%2C+Mont%C3%A9n%C3%A9gro&partner_id=2MQKLO0&locale=fr" target="_blank" rel="sponsored noopener" class="proj-gyg-btn">🎟️ Voir les activités</a></div>
 <div class="project-card"><span class="proj-icon">💰</span><span class="proj-title">Budget</span><span class="proj-text">Mai ou sep-oct — plages quasi vides, prix -40%, mer encore chaude.</span><a href="https://www.getyourguide.fr/s/?q=Budva%2C+Mont%C3%A9n%C3%A9gro&partner_id=2MQKLO0&locale=fr" target="_blank" rel="sponsored noopener" class="proj-gyg-btn">🎟️ Voir les activités</a></div></div>
 </section>
+
+ <section class="section dest-search-section">
+ <div class="section-label">Comparer avec une autre destination</div>
+ <div class="dest-search-wrap">
+   <div class="dest-search-input-wrap">
+     <input type="text" id="dest-search-inp" class="dest-search-inp"
+            placeholder="🌍  Paris, Bali, Tokyo…" autocomplete="off"/>
+     <div class="dest-search-ac" id="dest-search-ac"></div>
+   </div>
+   <button class="dest-search-btn" id="dest-search-btn">Comparer →</button>
+ </div>
+ </section>
+
 <section class="section">
  <div class="section-label">Tableau climatique mensuel</div>
  <h2 class="section-title">Météo à Budva mois par mois</h2>
@@ -211,5 +224,10 @@
 <script src="js/favs.min.js?v=1" defer></script>
 <script src="js/share.js" defer></script>
 <script src="js/faq.js" defer></script>
+<script src="js/dest-data.js?v=2"></script>
+<script src="js/dest-search.js?v=2"></script>
+<script>
+if(window.initDestSearch) window.initDestSearch({suffix:'.html',prefix:'meilleure-periode-',lang:'fr'});
+</script>
 </body>
 </html>

@@ -96,6 +96,19 @@
  </div>
 </section>
 
+
+ <section class="section dest-search-section">
+ <div class="section-label">Mit einem anderen Ziel vergleichen</div>
+ <div class="dest-search-wrap">
+   <div class="dest-search-input-wrap">
+     <input type="text" id="dest-search-inp" class="dest-search-inp"
+            placeholder="🌍  Paris, Bali, Tokio…" autocomplete="off"/>
+     <div class="dest-search-ac" id="dest-search-ac"></div>
+   </div>
+   <button class="dest-search-btn" id="dest-search-btn">Vergleichen →</button>
+ </div>
+ </section>
+
 <section class="section">
  <div class="section-label">Monatliche Klimadaten</div>
  <h2 class="section-title">Barcelona Wetter Monat für Monat</h2>
@@ -204,5 +217,10 @@
 <script src="../js/favs.min.js?v=1" defer></script>
 <script src="../js/share.js" defer></script>
 <script src="../js/faq.js" defer></script>
+<script src="../js/dest-data.js?v=2"></script>
+<script src="../js/dest-search.js?v=2"></script>
+<script>
+if(window.initDestSearch) window.initDestSearch({suffix:'.html',prefix:'../beste-reisezeit-',lang:'de'});
+</script>
 </body>
 </html>

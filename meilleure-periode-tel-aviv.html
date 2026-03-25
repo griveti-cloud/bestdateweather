@@ -103,6 +103,19 @@
 <div class="project-card"><span class="proj-icon">🏛️</span><span class="proj-title">Bauhaus & White City</span><span class="proj-text">Toute l'année — plus de 4000 bâtiments Bauhaus UNESCO.</span><a href="https://www.getyourguide.fr/s/?q=Tel-Aviv%2C+Isra%C3%ABl&partner_id=2MQKLO0&locale=fr" target="_blank" rel="sponsored noopener" class="proj-gyg-btn">🎟️ Voir les activités</a></div>
 <div class="project-card"><span class="proj-icon">🎉</span><span class="proj-title">Vie nocturne</span><span class="proj-text">Toute l'année — Florentin, Rothschild et clubs jusqu'à l'aube.</span><a href="https://www.getyourguide.fr/s/?q=Tel-Aviv%2C+Isra%C3%ABl&partner_id=2MQKLO0&locale=fr" target="_blank" rel="sponsored noopener" class="proj-gyg-btn">🎟️ Voir les activités</a></div></div>
 </section>
+
+ <section class="section dest-search-section">
+ <div class="section-label">Comparer avec une autre destination</div>
+ <div class="dest-search-wrap">
+   <div class="dest-search-input-wrap">
+     <input type="text" id="dest-search-inp" class="dest-search-inp"
+            placeholder="🌍  Paris, Bali, Tokyo…" autocomplete="off"/>
+     <div class="dest-search-ac" id="dest-search-ac"></div>
+   </div>
+   <button class="dest-search-btn" id="dest-search-btn">Comparer →</button>
+ </div>
+ </section>
+
 <section class="section">
  <div class="section-label">Tableau climatique mensuel</div>
  <h2 class="section-title">Météo à Tel-Aviv mois par mois</h2>
@@ -211,5 +224,10 @@
 <script src="js/favs.min.js?v=1" defer></script>
 <script src="js/share.js" defer></script>
 <script src="js/faq.js" defer></script>
+<script src="js/dest-data.js?v=2"></script>
+<script src="js/dest-search.js?v=2"></script>
+<script>
+if(window.initDestSearch) window.initDestSearch({suffix:'.html',prefix:'meilleure-periode-',lang:'fr'});
+</script>
 </body>
 </html>
