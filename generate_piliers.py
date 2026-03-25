@@ -221,14 +221,17 @@ def get_rankings(climate, dests, month_idx):
     if remove:
         entries = [e for e in entries if e['slug_fr'] not in remove]
     # Keep only best-scoring destination per country (no city+country duplicate)
+    # NON_EUROPE_SLUGS (DOM-TOM, Canaries...) use a virtual key to not block EU mainland
     seen_countries = {}
     deduped = []
     for e in entries:
         pays = e['pays']
-        if pays not in seen_countries:
-            seen_countries[pays] = e['score']
+        # Treat non-Europe slugs as a separate bucket so mainland cities still qualify
+        dedup_key = f"__non_eu__{e['slug_fr']}" if e['slug_fr'] in NON_EUROPE_SLUGS else pays
+        if dedup_key not in seen_countries:
+            seen_countries[dedup_key] = e['score']
             deduped.append(e)
-        # else: skip — a higher-scoring entry for this country already included
+        # else: skip — a higher-scoring entry for this bucket already included
     return deduped[:TOP_N]
 
 def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=35):
@@ -284,12 +287,13 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=35):
     countries_with_cities = {e['pays'] for e in general if e['slug_fr'] not in COUNTRY_SLUGS}
     general = [e for e in general
                if e['slug_fr'] not in COUNTRY_SLUGS or e['pays'] not in countries_with_cities]
-    # 1 destination per country
+    # 1 destination per country (NON_EUROPE_SLUGS get their own bucket)
     seen_countries: dict = {}
     deduped: list = []
     for e in general:
-        if e['pays'] not in seen_countries:
-            seen_countries[e['pays']] = True
+        dedup_key = f"__non_eu__{e['slug_fr']}" if e['slug_fr'] in NON_EUROPE_SLUGS else e['pays']
+        if dedup_key not in seen_countries:
+            seen_countries[dedup_key] = True
             deduped.append(e)
     general_pool = deduped[:pool_size]
     general_slugs = {e['slug_fr'] for e in general_pool}
@@ -316,9 +320,11 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=35):
     eu_candidates.sort(key=lambda x: (-x['score'], x['nom_bare']))
     eu_seen: dict = {}
     eu_boost = []
+    MAX_EU_PER_COUNTRY = 6  # allow top-6 per country so ES/FR/IT/GR have multiple reps
     for e in eu_candidates:
-        if e['pays'] not in eu_seen and len(eu_boost) < 30:
-            eu_seen[e['pays']] = True
+        count = eu_seen.get(e['pays'], 0)
+        if count < MAX_EU_PER_COUNTRY and len(eu_boost) < 80:
+            eu_seen[e['pays']] = count + 1
             eu_boost.append(e)
 
     # --- Beach boost: top coastal destinations by beach_score, 1 per country ---
