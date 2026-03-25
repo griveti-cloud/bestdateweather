@@ -107,12 +107,20 @@ REGION_CHILDREN = {
 # Geographic sibling groups — within a country, only the highest-scoring slug shown
 # when multiple represent essentially the same area
 GEO_SIBLINGS = [
-    {'algarve', 'faro'},                         # Algarve region, Portugal
-    {'cote-azur', 'nice', 'cannes', 'monaco'},   # French Riviera
-    {'majorque', 'palma-de-majorque', 'alcudia'}, # Mallorca
-    {'chypre', 'larnaca', 'paphos'},              # Cyprus
-    {'malte', 'valletta', 'gozo'},                # Malta
-    {'corse', 'ajaccio'},                         # Corsica
+    {'algarve', 'faro'},                                      # Algarve region, Portugal
+    {'alentejo', 'evora'},                                    # Alentejo region, Portugal
+    {'cote-azur', 'nice', 'cannes', 'monaco'},                # French Riviera
+    {'provence', 'marseille', 'aix-en-provence'},             # Provence region, France
+    {'majorque', 'palma-de-majorque', 'alcudia'},             # Mallorca
+    {'chypre', 'larnaca', 'paphos'},                          # Cyprus
+    {'malte', 'valletta', 'gozo'},                            # Malta
+    {'corse', 'bonifacio'},                                   # Corsica
+    {'georgie', 'tbilissi'},                                  # Georgia country/city
+    {'montenegro', 'budva', 'kotor'},                         # Montenegro country/cities
+    {'albanie', 'tirana'},                                    # Albania country/city
+    {'slovenie', 'lac-bled', 'ljubljana', 'piran'},           # Slovenia
+    {'roumanie', 'bucarest', 'transylvanie'},                 # Romania
+    {'croatie', 'dubrovnik', 'split', 'hvar', 'trogir'},     # Croatia
 ]
 
 # ── Geographic region mapping (pays → region code) ────────────────────────────
@@ -656,6 +664,14 @@ def generate_page(mi, lang, dests, climate):
     no_meteo_msg   = pil['no_meteo_msg']
 
     # ── Pool JSON for JS rendering ────────────────────────────────────────────
+    # Build sibling index for JS dedup
+    _sib_map = {}
+    for _i, _grp in enumerate(GEO_SIBLINGS):
+        for _sl in _grp:
+            _sib_map[_sl] = _i
+    def _sibling_idx(slug):
+        return _sib_map.get(slug, -1)
+
     pool_json = json.dumps([{
         'n': get_nom(p, lang),
         'p': get_pays(p, lang),
@@ -673,6 +689,7 @@ def generate_page(mi, lang, dests, climate):
         'tmax': round(p['tmax'], 0),
         'reg': _reg(p['pays'], p['slug_fr']),
         'xeu': 1 if p['slug_fr'] in NON_EUROPE_SLUGS else 0,
+        'sib': _sibling_idx(p['slug_fr']),
     } for p in pool], ensure_ascii=False)
 
     region_tabs = build_region_tabs(lang)
@@ -705,7 +722,9 @@ def generate_page(mi, lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'
         'if(!tb)return;'
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);return rOk&&mOk;});'
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);return rOk&&mOk;});'+
+        'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d;});'+
+        'var _sibSeen={};list=list.filter(function(d){if(d.sib<0)return true;if(_sibSeen[d.sib])return false;_sibSeen[d.sib]=1;return true;});'
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'
         'list=list.slice(0,TOP);'
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:NO_METEO);msg.style.display="block";'        'var _s1e=document.getElementById("stat-score");if(_s1e)_s1e.textContent="—";'        'var _sce=document.getElementById("stat-count");if(_sce)_sce.textContent="0";'        'var _s3e=document.getElementById("stat-temp");if(_s3e)_s3e.textContent="—";'        'var _rie=document.getElementById("rt-intro");if(_rie)_rie.style.display="none";'        'return;}'
@@ -1139,6 +1158,14 @@ def generate_annual_page(lang, dests, climate):
     flag_prefix = gen['asset_prefix']
     annual_href_tpl2 = gen['annual_href_tpl']
 
+    # Build sibling index for JS dedup
+    _sib_map = {}
+    for _i, _grp in enumerate(GEO_SIBLINGS):
+        for _sl in _grp:
+            _sib_map[_sl] = _i
+    def _sibling_idx(slug):
+        return _sib_map.get(slug, -1)
+
     pool_json = json.dumps([{
         'n':   get_nom(e, lang),
         'p':   get_pays(e, lang) or e['pays'],
@@ -1184,6 +1211,8 @@ def generate_annual_page(lang, dests, climate):
         'if(!tb)return;'+
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'+
         'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);return rOk&&mOk;});'+
+        'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d;});'+
+        'var _sibSeen={};list=list.filter(function(d){if(d.sib<0)return true;if(_sibSeen[d.sib])return false;_sibSeen[d.sib]=1;return true;});'+
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
         'list=list.slice(0,TOP);'+
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:NO_METEO);msg.style.display="block";'        'var _s1e=document.getElementById("stat-score");if(_s1e)_s1e.textContent="—";'        'var _sce=document.getElementById("stat-count");if(_sce)_sce.textContent="0";'        'var _s3e=document.getElementById("stat-temp");if(_s3e)_s3e.textContent="—";'        'var _rie=document.getElementById("rt-intro");if(_rie)_rie.style.display="none";'        'return;}'+
