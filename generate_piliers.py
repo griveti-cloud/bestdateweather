@@ -107,20 +107,18 @@ REGION_CHILDREN = {
 # Geographic sibling groups — within a country, only the highest-scoring slug shown
 # when multiple represent essentially the same area
 GEO_SIBLINGS = [
+    # Régions et leurs villes — garder uniquement le meilleur représentant
     {'algarve', 'faro'},                                      # Algarve region, Portugal
     {'alentejo', 'evora'},                                    # Alentejo region, Portugal
     {'cote-azur', 'nice', 'cannes', 'monaco'},                # French Riviera
     {'provence', 'marseille', 'aix-en-provence'},             # Provence region, France
     {'majorque', 'palma-de-majorque', 'alcudia'},             # Mallorca
-    {'chypre', 'larnaca', 'paphos'},                          # Cyprus
-    {'malte', 'valletta', 'gozo'},                            # Malta
+    {'chypre', 'larnaca', 'paphos'},                          # Cyprus — région + villes
+    {'malte', 'valletta', 'gozo'},                            # Malta — région + villes
     {'corse', 'bonifacio'},                                   # Corsica
-    {'georgie', 'tbilissi'},                                  # Georgia country/city
-    {'montenegro', 'budva', 'kotor'},                         # Montenegro country/cities
-    {'albanie', 'tirana'},                                    # Albania country/city
-    {'slovenie', 'lac-bled', 'ljubljana', 'piran'},           # Slovenia
-    {'roumanie', 'bucarest', 'transylvanie'},                 # Romania
-    {'croatie', 'dubrovnik', 'split', 'hvar', 'trogir'},     # Croatia
+    # Note: pays (precision=country) sont déjà exclus des classements
+    # Les entrées albanie/georgie/montenegro/slovenie/roumanie/croatie
+    # sont désormais gérées par precision=country → inutile de les lister ici
 ]
 
 # ── Geographic region mapping (pays → region code) ────────────────────────────
@@ -211,6 +209,9 @@ def get_rankings(climate, dests, month_idx):
     for slug, dest in dests.items():
         if slug not in climate or month_idx not in climate[slug]:
             continue
+        # Exclude country-level entries from rankings (imprecise climate data)
+        if dest.get('precision') == 'country':
+            continue
         m = climate[slug][month_idx]
         ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
         entries.append({
@@ -268,6 +269,8 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=35):
         if slug in SKI_DUPES:
             continue
         if slug not in climate or month_idx not in climate[slug]:
+            continue
+        if dest.get('precision') == 'country':
             continue
         m = climate[slug][month_idx]
         ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])

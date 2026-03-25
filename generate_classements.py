@@ -243,6 +243,8 @@ def compute_annual(climate, dests, europe_only=False, caribbean_only=False):
         if slug not in dests:
             continue
         d = dests[slug]
+        if d.get('precision') == 'country':
+            continue
         if europe_only and (d['pays'] not in EUROPE_COUNTRIES or slug in NON_EUROPE_SLUGS):
             continue
         if caribbean_only and slug not in CARIBBEAN_SLUGS:
@@ -267,6 +269,8 @@ def compute_seasonal(climate, dests, months, europe_only=False, caribbean_only=F
         if slug not in dests:
             continue
         d = dests[slug]
+        if d.get('precision') == 'country':
+            continue
         if europe_only and (d['pays'] not in EUROPE_COUNTRIES or slug in NON_EUROPE_SLUGS):
             continue
         if caribbean_only and slug not in CARIBBEAN_SLUGS:
@@ -291,6 +295,8 @@ def compute_nomad(climate, dests):
         if slug not in dests:
             continue
         d = dests[slug]
+        if d.get('precision') == 'country':
+            continue
         if len(monthly) < 12:
             continue
         scores = [monthly[m]['score'] for m in range(1,13)]
@@ -317,6 +323,8 @@ def compute_beach(climate, dests):
         if slug not in dests:
             continue
         d = dests[slug]
+        if d.get('precision') == 'country':
+            continue
         # Only coastal destinations (have beach_score)
         if not all(m in monthly for m in range(1,13)):
             continue
@@ -347,6 +355,8 @@ def compute_beach_seasonal(climate, dests, months):
         if slug not in dests:
             continue
         d = dests[slug]
+        if d.get('precision') == 'country':
+            continue
         if not all(m in monthly for m in months):
             continue
         if monthly[months[0]].get('beach_score') is None:
