@@ -15,9 +15,9 @@ function updateAffilChips(loc) {
   var lang = (CFG && CFG.lang) ? CFG.lang : 'fr';
   var gygDomain = (CFG && CFG.gyg_domain) ? CFG.gyg_domain : 'getyourguide.fr';
 
-  // Hébergements — Expedia Travel Creator (Partnerize camref=1110IB57J)
+  // Hébergements — Expedia Travel Creator (Partnerize camref=1110lB57J)
   var expediaLandingPage = encodeURIComponent('https://www.expedia.com/Hotel-Search?destination=' + dest);
-  var hotelsUrl = 'https://expedia.com/affiliate?siteid=1&landingPage=' + expediaLandingPage + '&camref=1110IB57J&creativeref=1100168075&adref=PZqrOrxQe3';
+  var hotelsUrl = 'https://expedia.com/affiliate?siteid=1&landingPage=' + expediaLandingPage + '&camref=1110lB57J&creativeref=1100l68075&adref=PZqrOrxQe3';
   var elH = document.getElementById('affil-hotel');
   if (elH) { elH.href = hotelsUrl; if(T.chip_hotel) elH.innerHTML = '🏨 ' + T.chip_hotel; }
 
