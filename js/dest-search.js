@@ -7,6 +7,7 @@ window.initDestSearch = function(cfg) {
 
   var monthSuffix = cfg.suffix;
   var basePrefix  = cfg.prefix;
+  var assetPrefix = cfg.assetPrefix !== undefined ? cfg.assetPrefix : cfg.prefix;
   var lang        = cfg.lang;
   var _selected   = null;
   var timer       = null;
@@ -39,7 +40,7 @@ window.initDestSearch = function(cfg) {
       d.className = 'dest-search-ac-item';
       if (r.flag) {
         var img = document.createElement('img');
-        img.src = basePrefix + 'flags/' + r.flag + '.png';
+        img.src = assetPrefix + 'flags/' + r.flag + '.png';
         img.width = 20; img.height = 15;
         img.style.cssText = 'vertical-align:middle;border-radius:2px;margin-right:6px;flex-shrink:0';
         img.onerror = function() { this.style.display='none'; };
