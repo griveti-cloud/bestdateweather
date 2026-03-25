@@ -775,7 +775,10 @@
     "count_plural": "Reiseziele gefunden",
     "count_singular": "Reiseziel gefunden",
     "mountain_group": "⛷️ Bergstationen",
-    "city_group": "🌆 Städte & Reiseziele"
+    "city_group": "🌆 Städte & Reiseziele",
+    "methodo_general": "🌡️ Wetter-Score: Temperatur, Sonnenstunden und Regentage aus 10 Jahren ERA5-Daten.",
+    "methodo_beach": "🏖️ Strand-Score: warmes Meer, wenig Regen, viel Sonne. Nur Küstenziele.",
+    "methodo_ski": "⛷️ Ski-Score: Schnee, Kälte und Sonne. Nur Bergresorts."
   },
   "comp": {
     "th_month": "Monat",

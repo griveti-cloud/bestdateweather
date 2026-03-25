@@ -770,7 +770,10 @@
     "count_plural": "destinos encontrados",
     "count_singular": "destino encontrado",
     "mountain_group": "⛷️ Estaciones de montaña",
-    "city_group": "🌆 Ciudades & destinos"
+    "city_group": "🌆 Ciudades & destinos",
+    "methodo_general": "🌡️ Puntuación météo: temperatura, sol y días de lluvia según 10 años de datos ERA5.",
+    "methodo_beach": "🏖️ Puntuación playa: mar cálido, poca lluvia y mucho sol. Solo destinos costeros.",
+    "methodo_ski": "⛷️ Puntuación esquí: nieve, frío y sol. Solo estaciones de montaña."
   },
   "comp": {
     "th_month": "Mes",

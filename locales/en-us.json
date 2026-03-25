@@ -771,7 +771,10 @@
     "count_plural": "destinations found",
     "count_singular": "destination found",
     "mountain_group": "⛷️ Mountain resorts",
-    "city_group": "🌆 Cities & destinations"
+    "city_group": "🌆 Cities & destinations",
+    "methodo_general": "🌡️ Weather score: temperature, sunshine and rainy days based on 10 years of ERA5 data.",
+    "methodo_beach": "🏖️ Beach score: warm sea, low rain and high sunshine. Coastal destinations only.",
+    "methodo_ski": "⛷️ Ski score: snowfall, cold and sunshine. Mountain resorts only."
   },
   "comp": {
     "th_month": "Month",

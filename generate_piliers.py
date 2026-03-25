@@ -235,24 +235,14 @@ def get_rankings(climate, dests, month_idx):
             'ski_score': ski,
         })
     entries.sort(key=lambda x: (-x['score'], x['nom_bare']))
-    # Remove region parents when a child island is also ranked
+    # Remove region parents when a child island is also ranked (e.g. canaries vs tenerife)
     ranked = {e['slug_fr'] for e in entries}
     remove = {p for p, ch in REGION_CHILDREN.items() if p in ranked and ranked & ch}
     if remove:
         entries = [e for e in entries if e['slug_fr'] not in remove]
-    # Keep only best-scoring destination per country (no city+country duplicate)
-    # NON_EUROPE_SLUGS (DOM-TOM, Canaries...) use a virtual key to not block EU mainland
-    seen_countries = {}
-    deduped = []
-    for e in entries:
-        pays = e['pays']
-        # Treat non-Europe slugs as a separate bucket so mainland cities still qualify
-        dedup_key = f"__non_eu__{e['slug_fr']}" if e['slug_fr'] in NON_EUROPE_SLUGS else pays
-        if dedup_key not in seen_countries:
-            seen_countries[dedup_key] = e['score']
-            deduped.append(e)
-        # else: skip — a higher-scoring entry for this bucket already included
-    return deduped[:TOP_N]
+    # Pure score ranking — no per-country dedup
+    # Multiple cities from the same country can appear if they score high enough
+    return entries[:TOP_N]
 
 def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=35):
     """Return broader pool for beach/ski JS filtering.
@@ -397,7 +387,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .section{margin-bottom:36px}
 .eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#9c5f00;font-weight:700;margin-bottom:6px}
 .sec-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(18px,4vw,24px);margin-bottom:8px}
-.sec-intro{font-size:14px;color:var(--slate);margin-bottom:18px}
+.sec-intro{font-size:14px;color:var(--slate);margin-bottom:18px}.rt-methodo{font-size:12px;color:var(--slate);background:var(--cream);border-left:3px solid var(--gold);padding:7px 12px;border-radius:0 6px 6px 0;margin-bottom:14px;line-height:1.5}
 .rt{width:100%;border-collapse:collapse;font-size:13px}
 .rt th{background:var(--navy);color:white;padding:10px 10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;position:sticky;top:0;white-space:nowrap}
 .rt td{padding:9px 10px;border-bottom:1px solid var(--cream2);vertical-align:middle;white-space:nowrap}
@@ -758,7 +748,10 @@ def generate_page(mi, lang, dests, climate):
         '}'
         'var _rt=document.getElementById("rt-title");'
         'if(_rt){_rt.textContent=mode==="beach"?TITLE_BEACH:(mode==="ski"?TITLE_SKI:TITLE_METEO);}'
-        'var _ri=document.getElementById("rt-intro");'
+        'var _ri=document.getElementById("rt-intro");'+
+        'var _mm=document.getElementById("rt-methodo-"+mode);'+
+        '["rt-methodo-general","rt-methodo-beach","rt-methodo-ski"].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display="none";});'+
+        'if(_mm)_mm.style.display="";'
         'if(_ri){if(list.length===0){_ri.style.display="none";}else{_ri.style.display="";'
         'var _av10=list.slice(0,10);var _sc10=_av10.reduce(function(a,d){return a+(d[key]||d.s);},0)/_av10.length;'
         'var _at10=_av10.reduce(function(a,d){return a+(d.tmin+d.tmax)/2;},0)/_av10.length;'
@@ -901,6 +894,9 @@ def generate_page(mi, lang, dests, climate):
 <main class="page">
 <div class="filter-panel"><div class="filter-row"><span class="filter-label">{fp_period}</span><div class="filter-btns">{month_nav}</div></div><div class="filter-row"><span class="filter-label">{fp_region}</span><div class="filter-btns" id="reg-tabs">{region_tabs_inner}</div></div><div class="filter-row"><span class="filter-label">{fp_type}</span><div class="filter-btns" id="mode-tabs">{mode_tabs_inner}</div></div></div><div class="section"><div class="eyebrow">{sec_eyebrow}</div><h2 class="sec-title" id="rt-title">{sec_title}</h2><p class="sec-intro" id="rt-intro">{sec_intro}</p>
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
+<p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
+<p class="rt-methodo" id="rt-methodo-beach" style="display:none">{loc['hub']['methodo_beach']}</p>
+<p class="rt-methodo" id="rt-methodo-ski" style="display:none">{loc['hub']['methodo_ski']}</p>
 <div style="overflow-x:auto"><table class="rt" aria-label="Classement"><thead id="rt-head"><tr>{"".join(f"<th>{c}</th>" for c in loc['pilier']['th'])}</tr></thead><tbody id="rt-body">{table_body}</tbody></table></div>
 </div>
 <div class="cta-box"><a href="{cta_href}">{cta_text} →</a></div>
@@ -1305,6 +1301,9 @@ def generate_annual_page(lang, dests, climate):
 <div class="filter-panel"><div class="filter-row"><span class="filter-label">{fp_period}</span><div class="filter-btns">{month_nav}</div></div><div class="filter-row"><span class="filter-label">{fp_region}</span><div class="filter-btns" id="reg-tabs">{region_tabs_inner}</div></div><div class="filter-row"><span class="filter-label">{fp_type}</span><div class="filter-btns" id="mode-tabs">{mode_tabs_inner}</div></div></div>
 <div class="section">
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
+<p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
+<p class="rt-methodo" id="rt-methodo-beach" style="display:none">{loc['hub']['methodo_beach']}</p>
+<p class="rt-methodo" id="rt-methodo-ski" style="display:none">{loc['hub']['methodo_ski']}</p>
 <div style="overflow-x:auto"><table class="rt" aria-label="{sec_title}">
 <thead id="rt-head"><tr>{"".join(f"<th>{c}</th>" for c in th_list)}</tr></thead>
 <tbody id="rt-body">{rows}</tbody>
