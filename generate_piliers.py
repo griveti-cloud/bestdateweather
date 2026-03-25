@@ -1182,6 +1182,7 @@ def generate_annual_page(lang, dests, climate):
         'tmax': round(e['tmax'], 0),
         'reg': _reg(e['pays'], e.get('slug_fr', e.get('slug',''))),
         'xeu': 1 if e.get('slug', e.get('slug_fr','')) in NON_EUROPE_SLUGS else 0,
+        'sib': -1,
     } for e in annual_pool], ensure_ascii=False)
 
     mode_tabs_inner = (
