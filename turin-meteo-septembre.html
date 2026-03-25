@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister();});});}</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister();})});}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Turin en septembre — 7.9/10 : bonne ou mauvaise période ? (2026)</title>
 <meta name="description" content="Vérifiez si septembre est idéal pour Turin. Score complet, analyse météo et meilleurs mois comparés."/>
@@ -52,7 +52,7 @@
 .dest-search-ac.open{display:block;}
 .dest-search-ac-item{padding:10px 16px;cursor:pointer;font-size:13px;color:var(--navy);border-bottom:1px solid var(--cream2);display:flex;align-items:center;gap:8px;}
 .dest-search-ac-item:last-child{border-bottom:none;}
-.dest-search-ac-item:hover{background:var(--cream);}
+.dest-search-ac-item:hover,.dest-search-ac-item.hovered{background:var(--cream);}
 .dest-flag{vertical-align:middle;border-radius:2px;flex-shrink:0;}
 </style>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKLO0"></script>
@@ -294,94 +294,10 @@
  </div>
  </section>
 </main>
+<script src="js/dest-data.js?v=2"></script>
+<script src="js/dest-search.js?v=2"></script>
 <script>
-(function(){
-  var inp = document.getElementById('dest-search-inp');
-  var ac  = document.getElementById('dest-search-ac');
-  var btn = document.getElementById('dest-search-btn');
-  if(!inp) return;
-  var timer = null, results = [], selIdx = -1;
-  var lang = (document.documentElement.lang||'fr').toLowerCase();
-  var apiLang = lang === 'fr' ? 'fr' : lang === 'es' ? 'es' : lang === 'de' ? 'de' : 'en';
-  var monthSuffix = '-meteo-septembre.html';
-  var basePrefix = '';
-
-  function normalize(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,' ').trim();}
-  
-  function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
-
-  function showAC(items){
-    results = items; selIdx = -1;
-    ac.innerHTML = '';
-    if(!items.length){ac.classList.remove('open');return;}
-    items.slice(0,6).forEach(function(r,i){
-      var d = document.createElement('div');
-      d.className = 'dest-search-ac-item';
-      if(r.cc){
-        var img = document.createElement('img');
-        img.src = basePrefix + 'flags/' + r.cc + '.png';
-        img.width = 20; img.height = 15; img.alt = r.cc;
-        img.style.cssText = 'vertical-align:middle;border-radius:2px;margin-right:6px;flex-shrink:0';
-        img.onerror = function(){this.style.display='none';};
-        d.appendChild(img);
-      }
-      var txt = document.createElement('span');
-      txt.textContent = r.name;
-      if(r.country){
-        var ctry = document.createElement('span');
-        ctry.textContent = ' ' + r.country;
-        ctry.style.cssText = 'color:#9aabbb;font-size:11px';
-        txt.appendChild(ctry);
-      }
-      d.appendChild(txt);
-      d.onclick = function(){ goTo(r); };
-      ac.appendChild(d);
-    });
-    ac.classList.add('open');
-  }
-
-  function goTo(r){
-    var s = slugify(r.name);
-    var url = basePrefix + s + monthSuffix;
-    window.location.href = url;
-  }
-
-  inp.addEventListener('input', function(){
-    clearTimeout(timer);
-    var q = inp.value.trim();
-    if(q.length < 2){ac.classList.remove('open');return;}
-    timer = setTimeout(function(){
-      fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(q)+'&count=8&language='+apiLang)
-        .then(function(r){return r.json();})
-        .then(function(data){
-          var items = (data.results||[])
-            .filter(function(r){return r.feature_code!=='AIRP'&&r.feature_code!=='RSTN';})
-            .slice(0,6)
-            .map(function(r){
-              return {name:r.name, country:r.country||'', cc:(r.country_code||'').toLowerCase(), lat:r.latitude, lon:r.longitude};
-            });
-          showAC(items);
-        }).catch(function(){});
-    }, 280);
-  });
-
-  btn.addEventListener('click', function(){
-    if(results.length) goTo(results[0]);
-    else if(inp.value.trim()) goTo({name: inp.value.trim()});
-  });
-
-  inp.addEventListener('keydown', function(e){
-    var items = ac.querySelectorAll('.dest-search-ac-item');
-    if(e.key==='ArrowDown'){selIdx=Math.min(selIdx+1,items.length-1);items.forEach(function(el,i){el.style.background=i===selIdx?'var(--cream)':'';});}
-    else if(e.key==='ArrowUp'){selIdx=Math.max(selIdx-1,0);items.forEach(function(el,i){el.style.background=i===selIdx?'var(--cream)':'';});}
-    else if(e.key==='Enter'){if(selIdx>=0&&results[selIdx]) goTo(results[selIdx]); else if(results.length) goTo(results[0]);}
-    else if(e.key==='Escape'){ac.classList.remove('open');}
-  });
-
-  document.addEventListener('click', function(e){
-    if(!inp.contains(e.target)&&!ac.contains(e.target)) ac.classList.remove('open');
-  });
-})();
+if(window.initDestSearch) window.initDestSearch({suffix:'-meteo-septembre.html',prefix:'',lang:'fr'});
 </script>
 <footer>
  <p class="txt-muted-label">bestdateweather.com</p>
@@ -390,6 +306,7 @@
 <p class="mt-8"><span style="white-space:nowrap"><a href="en/best-time-to-visit-turin.html" class="txt-muted"><img src="flags/gb.png" srcset="flags/2x/gb.png 2x" width="20" height="15" alt="" loading="lazy" class="flag-icon-lg"> English</a></span> · <span style="white-space:nowrap"><a href="es/mejor-epoca-turin.html" class="txt-muted"><img src="flags/es.png" srcset="flags/2x/es.png 2x" width="20" height="15" alt="" loading="lazy" class="flag-icon-lg"> Español</a></span> · <span style="white-space:nowrap"><a href="us/best-time-to-visit-turin.html" class="txt-muted"><img src="flags/us.png" srcset="flags/2x/us.png 2x" width="20" height="15" alt="" loading="lazy" class="flag-icon-lg"> English (US)</a></span> · <span style="white-space:nowrap"><a href="de/beste-reisezeit-turin.html" class="txt-muted"><img src="flags/de.png" srcset="flags/2x/de.png 2x" width="20" height="15" alt="" loading="lazy" class="flag-icon-lg"> Deutsch</a></span></p>
  <p class="f11-muted"><a href="mentions-legales.html" class="txt-muted">Mentions légales</a> · <a href="confidentialite.html" class="txt-muted">Confidentialité</a> · <a href="contact.html" class="txt-muted">Contact</a></p>
 </footer>
+<script src="js/sw-register.js"></script>
 <script src="js/core.min.js?v=16" defer></script>
 <script src="js/favs.min.js?v=1" defer></script>
 <script src="js/share.js" defer></script>
