@@ -621,10 +621,14 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     activities_section = f'''<section class="section">
  <div class="section-label">{C['lbl_activities_section']}</div>
  <h2 class="section-title">{C['lbl_activities_title_tpl'].format(name=nom_f)}</h2>
- <div class="affil-box">
- <strong>{C['lbl_activities_cta']}</strong>
- <a href="{gyg_url}" target="_blank" rel="sponsored noopener" class="affil-btn">{C['lbl_activities_btn']}</a>
+ <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+      data-gyg-locale-code="{gyg_locale_code}"
+      data-gyg-widget="activities"
+      data-gyg-number-of-items="3"
+      data-gyg-partner-id="{GYG_PARTNER_ID}"
+      data-gyg-q="{gyg_dest}">
  </div>
+ <p class="gyg-fallback"><a href="{gyg_url}" target="_blank" rel="sponsored noopener">{C['lbl_activities_btn']}</a></p>
 </section>'''
 
     # ── Flights (Kiwi via Travelpayouts) ──
@@ -1722,10 +1726,14 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     activities_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_activities_section']}</div>
  <h2 class="section-title">{_act_title_m}</h2>
- <div class="affil-box">
- <p>{_act_text_m}</p>
- <a href="{gyg_url_m}" target="_blank" rel="sponsored noopener" class="affil-btn">{cfg['lbl_activities_btn']}</a>
+ <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+      data-gyg-locale-code="{gyg_locale_code_m}"
+      data-gyg-widget="activities"
+      data-gyg-number-of-items="3"
+      data-gyg-partner-id="{GYG_PARTNER_ID}"
+      data-gyg-q="{gyg_dest_m}">
  </div>
+ <p class="gyg-fallback"><a href="{gyg_url_m}" target="_blank" rel="sponsored noopener">{cfg['lbl_activities_btn']}</a></p>
 </section>'''
 
     # ── Flights (Kiwi via Travelpayouts) – monthly ──
