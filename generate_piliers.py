@@ -104,6 +104,17 @@ REGION_CHILDREN = {
                  'la-palma', 'la-gomera', 'el-hierro'},
 }
 
+# Geographic sibling groups — within a country, only the highest-scoring slug shown
+# when multiple represent essentially the same area
+GEO_SIBLINGS = [
+    {'algarve', 'faro'},                         # Algarve region, Portugal
+    {'cote-azur', 'nice', 'cannes', 'monaco'},   # French Riviera
+    {'majorque', 'palma-de-majorque', 'alcudia'}, # Mallorca
+    {'chypre', 'larnaca', 'paphos'},              # Cyprus
+    {'malte', 'valletta', 'gozo'},                # Malta
+    {'corse', 'ajaccio'},                         # Corsica
+]
+
 # ── Geographic region mapping (pays → region code) ────────────────────────────
 REGION_MAP = {
     # Europe
@@ -318,13 +329,25 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=35):
                      and not e['is_mountain']
                      and e['slug_fr'] not in all_in_pool]
     eu_candidates.sort(key=lambda x: (-x['score'], x['nom_bare']))
-    eu_seen: dict = {}
+    # Build sibling index: slug → sibling group id
+    sibling_of = {}
+    for i, grp in enumerate(GEO_SIBLINGS):
+        for slug in grp:
+            sibling_of[slug] = i
+
+    eu_seen: dict = {}       # pays → count
+    sibling_seen: set = set()  # sibling group ids already in eu_boost
     eu_boost = []
-    MAX_EU_PER_COUNTRY = 6  # allow top-6 per country so ES/FR/IT/GR have multiple reps
+    MAX_EU_PER_COUNTRY = 3  # allow top-3 per country so ES/FR/IT/GR have multiple reps
     for e in eu_candidates:
         count = eu_seen.get(e['pays'], 0)
+        sib = sibling_of.get(e['slug_fr'])
+        if sib is not None and sib in sibling_seen:
+            continue  # a sibling already in boost, skip
         if count < MAX_EU_PER_COUNTRY and len(eu_boost) < 80:
             eu_seen[e['pays']] = count + 1
+            if sib is not None:
+                sibling_seen.add(sib)
             eu_boost.append(e)
 
     # --- Beach boost: top coastal destinations by beach_score, 1 per country ---
