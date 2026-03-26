@@ -293,6 +293,17 @@ def compute_scores(months: list, slug: str = '') -> list:
 # Uniquement pour les destinations côtières (sea_temp disponible).
 # Échelle : 0 – 10, normalisation globale comme le score principal.
 
+def effective_classe(tmax: float, classe: str) -> str:
+    """Applique le déclassement chaleur (même logique que compute_scores).
+    tmax >= 42°C → 'avoid'  |  tmax >= 36°C + classe=='rec' → 'mid'
+    """
+    if tmax >= 42 and classe != 'avoid':
+        return 'avoid'
+    if tmax >= 36 and classe == 'rec':
+        return 'mid'
+    return classe
+
+
 def t_beach(tmax: float) -> float:
     """Confort thermique plage [0, 1]. Seuil abaissé à 16°C, pic à 28-32°C."""
     if tmax <= 16:  return 0.0
