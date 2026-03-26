@@ -447,6 +447,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     lon     = float(dest['lon'])
     pfx     = C['asset_prefix']
     booking_id = dest['booking_dest_id']
+    gyg_active = dest.get('gyg_active', 'True') == 'True'
 
     # Hero photo (optional)
     _photo = dest.get('_photo', {})
@@ -619,7 +620,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     gyg_dest = f"{nom}, {country_name}"
     gyg_dest_enc = quote_plus(gyg_dest)
     gyg_url = f"https://www.{gyg_domain}/s/?q={gyg_dest_enc}&partner_id={GYG_PARTNER_ID}&locale={gyg_lang}"
-    activities_section = f'''<section class="section">
+    if gyg_active:
+        activities_section = f'''<section class="section">
  <div class="section-label">{C['lbl_activities_section']}</div>
  <h2 class="section-title">{C['lbl_activities_title_tpl'].format(name=nom_f)}</h2>
  <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
@@ -631,6 +633,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  </div>
  <p class="gyg-fallback"><a href="{gyg_url}" target="_blank" rel="sponsored noopener">{C['lbl_activities_btn']}</a></p>
 </section>'''
+    else:
+        activities_section = ''
 
     # ── Flights (Kiwi via Travelpayouts) ──
     kiwi_to = quote_plus(f"{nom}-{country_name}")
@@ -1174,6 +1178,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     lat     = float(dest['lat'])
     lon     = float(dest['lon'])
     pfx     = C['asset_prefix']
+    gyg_active = dest.get('gyg_active', 'True') == 'True'
 
     m        = months[mi]
     score    = m['score']
@@ -1733,7 +1738,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     else:
         _act_text_m = ft.get('activity_a_indoor', cfg['lbl_activities_cta']).format(
             tmax=_tmax_disp, sun=m['sun_h'], rain=m['rain_pct'], name=nom_f, month_lc=mlc)
-    activities_section = f'''<section class="section">
+    if gyg_active:
+        activities_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_activities_section']}</div>
  <h2 class="section-title">{_act_title_m}</h2>
  <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
@@ -1745,6 +1751,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  <p class="gyg-fallback"><a href="{gyg_url_m}" target="_blank" rel="sponsored noopener">{cfg['lbl_activities_btn']}</a></p>
 </section>'''
+    else:
+        activities_section = ''
 
     # ── Flights (Kiwi via Travelpayouts) – monthly ──
     kiwi_to_m = quote_plus(f"{nom}-{country_name}")
