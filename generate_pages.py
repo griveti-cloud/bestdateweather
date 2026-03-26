@@ -688,6 +688,13 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         m_classe = months[idx]['classe']
         bg_lbl, txt_lbl, badge_lbl = fn['score_badge'](m_score, m_classe, t=is_tropical)
         badge_html = f'<span style="background:{bg_lbl};color:{txt_lbl};padding:1px 6px;border-radius:4px;font-size:.75rem;font-weight:600">{badge_lbl}</span>'
+        # Convert °C → °F in snippet text for en-us locale
+        if C['lang'] == 'en-us':
+            snippet = re.sub(
+                r'(-?\d+)°C',
+                lambda m: f"{c_to_f(int(m.group(1)))}°F",
+                snippet
+            )
         # Truncate to ~120 chars for annual view
         short = snippet[:120].rsplit(' ', 1)[0] + '…' if len(snippet) > 120 else snippet
         editorial_cards.append(
@@ -1263,6 +1270,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     _editorial_key = f"{slug_fr}:{mi + 1}:{_editorial_lang}"
     if _editorial_key in _EDITORIAL:
         verdict_txt = _EDITORIAL[_editorial_key]
+        if lang == 'en-us':
+            verdict_txt = re.sub(r'(-?\d+)°C', lambda m: f"{c_to_f(int(m.group(1)))}°F", verdict_txt)
     else:
         verdict_txt = C['monthly_verdicts'][vtier][hash_var].format(**tpl)
 
