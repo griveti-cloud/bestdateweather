@@ -1,3 +1,9 @@
 name = "bestdateweather-prod"
-compatibility_date = "2026-03-25"
-pages_build_output_dir = "."
+compatibility_date = "2026-03-26"
+main = "worker-assets.js"
+workers_dev = false
+preview_urls = false
+
+[assets]
+directory = "."
+binding = "ASSETS"
