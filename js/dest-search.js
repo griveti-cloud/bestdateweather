@@ -71,7 +71,8 @@ window.initDestSearch = function(cfg) {
   btn.addEventListener('click', function() {
     var r = _selected;
     if (!r) return;
-    window.location.href = basePrefix + r.slug + monthSuffix;
+    var slug = (r.slugs && r.slugs[lang]) ? r.slugs[lang] : r.slug;
+    window.location.href = basePrefix + slug + monthSuffix;
   });
 
   inp.addEventListener('keydown', function(e) {
@@ -88,7 +89,10 @@ window.initDestSearch = function(cfg) {
       e.preventDefault();
     } else if (e.key === 'Enter') {
       if (idx >= 0 && items[idx]) items[idx].dispatchEvent(new MouseEvent('mousedown'));
-      else if (_selected) window.location.href = basePrefix + _selected.slug + monthSuffix;
+      else if (_selected) {
+        var s = (_selected.slugs && _selected.slugs[lang]) ? _selected.slugs[lang] : _selected.slug;
+        window.location.href = basePrefix + s + monthSuffix;
+      }
     } else if (e.key === 'Escape') {
       ac.style.display = 'none';
     }
