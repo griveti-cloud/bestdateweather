@@ -43,15 +43,17 @@ DATA = os.path.join(DIR, 'data')
 # ── Version JS — source de vérité unique ───────────────────────────────────
 # Incrémenter ici + les fichiers index/app sont mis à jour automatiquement
 CORE_JS_VERSION = 28
+APP_CSS_VERSION  = 2   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
 
 def _sync_core_version():
-    """Propage CORE_JS_VERSION dans index.html et */app.html."""
+    """Propage CORE_JS_VERSION + APP_CSS_VERSION dans index.html et */app.html."""
     import glob as _glob
     targets = ['index.html'] + _glob.glob('*/app.html') + _glob.glob('*/index.html')
     for f in targets:
         if not os.path.exists(f): continue
         content = open(f, encoding='utf-8').read()
         new = re.sub(r'core\.min\.js\?v=\d+', f'core.min.js?v={CORE_JS_VERSION}', content)
+        new = re.sub(r'app\.css\?v=\d+', f'app.css?v={APP_CSS_VERSION}', new)
         if new != content:
             open(f, 'w', encoding='utf-8').write(new)
 

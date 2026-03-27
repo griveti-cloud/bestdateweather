@@ -183,6 +183,19 @@ if len(set(versions.values())) == 1:
 else:
     err(f"core.min.js versions divergent : {versions}")
 
+# Check app.css version too
+css_versions = {}
+for lang, f in index_files.items():
+    try:
+        content2 = open(f, encoding='utf-8').read()
+        m = re.search(r'app\.css\?v=(\d+)', content2)
+        if m: css_versions[lang] = m.group(1)
+    except: pass
+if len(set(css_versions.values())) == 1:
+    ok(f"app.css v{list(css_versions.values())[0]} identique sur {list(css_versions.keys())}")
+elif css_versions:
+    err(f"app.css versions divergent : {css_versions}")
+
 # ── 7. dew_point : couverture climate.csv ────────────────────────────────────
 print("\n7. dew_point_mean — couverture climate.csv")
 
