@@ -28,7 +28,8 @@ from urllib.parse import quote_plus
 from lib.common import (score_badge as _score_badge, best_months as _best_months,
                         budget_tier as _budget_tier, seasonal_stats as _seasonal_stats,
                         bar_chart, climate_table_html as _climate_table_html,
-                        weather_emoji, build_lang, fmt_temp, fmt_precip, fill_tpl, c_to_f)
+                        weather_emoji, build_lang, fmt_temp, fmt_precip, fill_tpl, c_to_f,
+                        travel_info_widget as _travel_info_widget)
 from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
                               dest_country, annual_url, monthly_url,
                               annual_url_cross, monthly_url_cross, hero_sub as _hero_sub,
@@ -43,7 +44,7 @@ DATA = os.path.join(DIR, 'data')
 # ── Version JS — source de vérité unique ───────────────────────────────────
 # Incrémenter ici + les fichiers index/app sont mis à jour automatiquement
 CORE_JS_VERSION = 28
-APP_CSS_VERSION  = 2   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
+APP_CSS_VERSION  = 3   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
 
 def _sync_core_version():
     """Propage CORE_JS_VERSION + APP_CSS_VERSION dans index.html et */app.html."""
@@ -615,6 +616,11 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  {tropical_note}
 </section>'''
 
+    # ── Travel Info Widget ──
+    _lang_code = C.get('lang', 'fr')
+    _pays = dest.get('pays', '')
+    travel_info_section = _travel_info_widget(_pays, nom, lang=_lang_code)
+
     # ── Seasonal analysis ──
     season_rows = ''
     for sname in C['season_order']:
@@ -1049,6 +1055,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  </section>
 
 {table_section}
+{travel_info_section}
 {seasonal_section}
 {booking_section}
 {activities_section}
@@ -1775,6 +1782,11 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
 </section>'''
 
+    # ── Travel Info Widget (monthly) ──
+    _m_lang = C.get('lang', 'fr')
+    _m_pays = dest.get('pays', '')
+    travel_info_section = _travel_info_widget(_m_pays, nom, lang=_m_lang)
+
     # ── Activities (GetYourGuide) – monthly ──
     gyg_domain_m = C['gyg_domain']
     gyg_lang_m = C['gyg_lang']
@@ -2020,6 +2032,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </section>
 
 {booking_section}
+{travel_info_section}
 {activities_section}
 {flights_section}
 

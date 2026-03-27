@@ -466,3 +466,164 @@ def shared_nav_html(home_href, cta_label, share_label="Share", slug_fr=None):
         f'<a class="nav-cta" href="{home_href}">{cta_label}</a>'
         f'</div></nav>'
     )
+
+
+# ── Travel Info Widget ────────────────────────────────────────────────────────
+
+import json as _json
+import os as _os
+
+_COUNTRY_INFO = None
+
+def _load_country_info():
+    global _COUNTRY_INFO
+    if _COUNTRY_INFO is None:
+        p = _os.path.join(_os.path.dirname(__file__), '..', 'data', 'country_info.json')
+        _COUNTRY_INFO = _json.load(open(p, encoding='utf-8'))
+    return _COUNTRY_INFO
+
+
+def _gpi_label(gpi: float, lang: str = 'fr') -> tuple:
+    """Return (label, color_class) for a GPI score."""
+    labels = {
+        'fr': [
+            (1.5, 'Très sûr', 'safe-high'),
+            (2.0, 'Sûr',      'safe-mid'),
+            (2.5, 'Prudence', 'safe-low'),
+            (3.0, 'Vigilance','safe-warn'),
+            (9.9, 'Dangereux','safe-danger'),
+        ],
+        'en': [
+            (1.5, 'Very Safe',          'safe-high'),
+            (2.0, 'Safe',               'safe-mid'),
+            (2.5, 'Exercise Caution',   'safe-low'),
+            (3.0, 'High Caution',       'safe-warn'),
+            (9.9, 'High Risk',          'safe-danger'),
+        ],
+    }
+    for threshold, label, cls in labels.get(lang, labels['en']):
+        if gpi < threshold:
+            return label, cls
+    return labels.get(lang, labels['en'])[-1][1], labels.get(lang, labels['en'])[-1][2]
+
+
+def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) -> str:
+    """
+    Generates the Essential Travel Info widget for a destination page.
+    Returns empty string if country data unavailable.
+    """
+    info = _load_country_info().get(pays)
+    if not info:
+        return ''
+
+    # Labels by language
+    lbl = {
+        'fr': {
+            'title': f'Infos pratiques — {nom}',
+            'currency': 'Monnaie',
+            'language': 'Langue(s)',
+            'drive': 'Conduite',
+            'drive_left': 'À gauche',
+            'drive_right': 'À droite',
+            'safety': 'Sécurité',
+            'gpi_note': 'Global Peace Index : 1 = très pacifique, 5 = peu pacifique',
+            'source': 'Source : Institute for Economics & Peace',
+            'more': '+{n} autres',
+        },
+        'en': {
+            'title': f'Essential Travel Info — {nom}',
+            'currency': 'Currency',
+            'language': 'Language(s)',
+            'drive': 'Driving',
+            'drive_left': 'Left side',
+            'drive_right': 'Right side',
+            'safety': 'Safety',
+            'gpi_note': 'Global Peace Index: 1 = most peaceful, 5 = least peaceful',
+            'source': 'Source: Institute for Economics & Peace',
+            'more': '+{n} more',
+        },
+    }.get(lang, {
+        'title': f'Essential Travel Info — {nom}',
+        'currency': 'Currency',
+        'language': 'Language(s)',
+        'drive': 'Driving',
+        'drive_left': 'Left side',
+        'drive_right': 'Right side',
+        'safety': 'Safety',
+        'gpi_note': 'Global Peace Index: 1 = most peaceful, 5 = least peaceful',
+        'source': 'Source: Institute for Economics & Peace',
+        'more': '+{n} more',
+    })
+
+    # Currency chip
+    currency_html = (
+        f'<div class="ti-chip">'
+        f'<div class="ti-chip-icon">💰</div>'
+        f'<div class="ti-chip-label">{lbl["currency"]}</div>'
+        f'<div class="ti-chip-val ti-chip-val--bold">{info["currency"]}</div>'
+        f'<div class="ti-chip-sub">{info["currency_symbol"]} · {info["currency_name"]}</div>'
+        f'</div>'
+    )
+
+    # Languages chip
+    langs = info.get('languages', [])
+    main_lang = langs[0] if langs else '–'
+    extra = len(langs) - 1
+    extra_html = (f'<span class="ti-chip-more">' +
+                  lbl['more'].format(n=extra) +
+                  '</span>') if extra > 0 else ''
+    language_html = (
+        f'<div class="ti-chip">'
+        f'<div class="ti-chip-icon">🗣️</div>'
+        f'<div class="ti-chip-label">{lbl["language"]}</div>'
+        f'<div class="ti-chip-val ti-chip-val--bold">{main_lang}</div>'
+        f'<div class="ti-chip-sub">{extra_html}</div>'
+        f'</div>'
+    )
+
+    # Driving chip
+    drive = info.get('drive', 'right')
+    drive_label = lbl['drive_left'] if drive == 'left' else lbl['drive_right']
+    drive_icon = '🚗⬅️' if drive == 'left' else '🚗➡️'
+    driving_html = (
+        f'<div class="ti-chip">'
+        f'<div class="ti-chip-icon">{drive_icon}</div>'
+        f'<div class="ti-chip-label">{lbl["drive"]}</div>'
+        f'<div class="ti-chip-val ti-chip-val--bold">{drive_label}</div>'
+        f'<div class="ti-chip-sub"></div>'
+        f'</div>'
+    )
+
+    # Safety chip
+    gpi = info.get('gpi', 2.0)
+    gpi_year = info.get('gpi_year', 2024)
+    safety_label, safety_cls = _gpi_label(gpi, 'fr' if lang == 'fr' else 'en')
+    safety_html = (
+        f'<div class="ti-chip ti-chip--{safety_cls}">'
+        f'<div class="ti-chip-icon">🛡️</div>'
+        f'<div class="ti-chip-label">{lbl["safety"]}</div>'
+        f'<div class="ti-chip-val ti-chip-val--{safety_cls}">{safety_label}</div>'
+        f'<div class="ti-chip-sub">GPI : {gpi:.3f}</div>'
+        f'</div>'
+    )
+
+    # Safety detail box
+    safety_detail = (
+        f'<div class="ti-safety-detail">'
+        f'<p class="ti-safety-note">ℹ️ <strong>{lbl["gpi_note"]}</strong></p>'
+        f'<p class="ti-safety-source">{lbl["source"]} ({gpi_year})</p>'
+        f'</div>'
+    )
+
+    return (
+        f'<section class="travel-info-widget">'
+        f'<h3 class="ti-title">{lbl["title"]}</h3>'
+        f'<div class="ti-chips">'
+        f'{currency_html}'
+        f'{language_html}'
+        f'{driving_html}'
+        f'{safety_html}'
+        f'</div>'
+        f'{safety_detail}'
+        f'</section>'
+    )
