@@ -48,7 +48,7 @@ APP_CSS_VERSION  = 2   # Bumper ici force le rechargement du cache CSS (app.css?
 def _sync_core_version():
     """Propage CORE_JS_VERSION + APP_CSS_VERSION dans index.html et */app.html."""
     import glob as _glob
-    targets = ['index.html'] + _glob.glob('*/app.html') + _glob.glob('*/index.html')
+    targets = ['index.html'] + _glob.glob('*/app.html')
     for f in targets:
         if not os.path.exists(f): continue
         content = open(f, encoding='utf-8').read()
