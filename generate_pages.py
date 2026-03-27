@@ -520,6 +520,28 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 
     # ── Climate table ──
     table_html = fn['climate_table_html'](months, nom, is_mountain)
+
+    # ── Avertissement chaleur (annuel) ──
+    _hot_months_38 = [MONTHS[i] for i in range(12) if months[i]['tmax'] >= 38]
+    _hot_months_35 = [MONTHS[i] for i in range(12) if months[i]['tmax'] >= 35 and months[i]['tmax'] < 38]
+    _hot_months_33 = [MONTHS[i] for i in range(12) if months[i]['tmax'] >= 33 and months[i]['tmax'] < 35]
+    if _hot_months_38:
+        _lbl_hot = C.get('lbl_heat_alert_severe', '🌡️ Chaleur très intense')
+        _hot_list = ', '.join(_hot_months_38)
+    elif _hot_months_35:
+        _lbl_hot = C.get('lbl_heat_alert_hot', '🌡️ Chaleur élevée')
+        _hot_list = ', '.join(_hot_months_35)
+    elif _hot_months_33:
+        _lbl_hot = C.get('lbl_heat_alert_warm', '🌡️ Chaleur notable')
+        _hot_list = ', '.join(_hot_months_33)
+    else:
+        _lbl_hot = None
+        _hot_list = ''
+    annual_heat_badge_html = (
+        f'<div class="heat-alert-badge" style="background:#fff3cd;border:1.5px solid #f59e0b;'
+        f'border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;color:#92400e;'
+        f'margin:8px 0 4px;display:block">{_lbl_hot} — {_hot_list}</div>'
+    ) if _lbl_hot else ''
     _custom_hsub = dest.get(C['dest_fields']['hero_sub_key'], '').strip()
     if is_mountain and not _custom_hsub and C.get('annual_hero_subs_ski'):
         _hash = int(hashlib.md5(dest.get("slug_fr", "").encode()).hexdigest()[:8], 16) % len(C["annual_hero_subs_ski"])
@@ -569,6 +591,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <div class="section-label">{C['lbl_table_section']}</div>
  <h2 class="section-title">{C['lbl_table_title_tpl'].format(name=nom_f)}</h2>
  {table_html}
+ {annual_heat_badge_html}
  {tropical_note}
 </section>'''
 

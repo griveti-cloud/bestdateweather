@@ -137,8 +137,8 @@
  <thead><tr><th>Mois</th><th>T° min</th><th>T° max</th><th>Jours de pluie (%)</th><th>Précip. mm/j</th><th>Soleil h/j</th><th>Score</th></tr></thead>
  <tbody><tr class="rec" data-tmax="26" data-rain="15" data-sun="10.9"><td>☀️ Janvier</td><td data-label="T° min">15°C</td><td data-label="T° max">26°C</td><td data-label="Pluie %">15%</td><td data-label="Précip. mm">1.2</td><td data-label="Soleil h/j">10.9h</td><td data-label="Score">8.9/10</td></tr>
 <tr class="rec" data-tmax="29" data-rain="10" data-sun="11.0"><td>☀️ Février</td><td data-label="T° min">15°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">10%</td><td data-label="Précip. mm">0.8</td><td data-label="Soleil h/j">11.0h</td><td data-label="Score">9.2/10</td></tr>
-<tr class="rec" data-tmax="33" data-rain="9" data-sun="11.0"><td>☀️ Mars</td><td data-label="T° min">18°C</td><td data-label="T° max">33°C</td><td data-label="Pluie %">9%</td><td data-label="Précip. mm">0.5</td><td data-label="Soleil h/j">11.0h</td><td data-label="Score">8.4/10</td></tr>
-<tr class="mid" data-tmax="34" data-rain="26" data-sun="11.2"><td>🌤️ Avril</td><td data-label="T° min">21°C</td><td data-label="T° max">34°C</td><td data-label="Pluie %">26%</td><td data-label="Précip. mm">2.2</td><td data-label="Soleil h/j">11.2h</td><td data-label="Score">6.9/10</td></tr>
+<tr class="rec" data-tmax="33" data-rain="9" data-sun="11.0"><td>☀️ Mars</td><td data-label="T° min">18°C</td><td data-label="T° max">33°C <span title="Chaleur notable" style="color:#f59e0b;font-size:.85em">☀️</span></td><td data-label="Pluie %">9%</td><td data-label="Précip. mm">0.5</td><td data-label="Soleil h/j">11.0h</td><td data-label="Score">8.4/10</td></tr>
+<tr class="mid" data-tmax="34" data-rain="26" data-sun="11.2"><td>🌤️ Avril</td><td data-label="T° min">21°C</td><td data-label="T° max">34°C <span title="Chaleur notable" style="color:#f59e0b;font-size:.85em">☀️</span></td><td data-label="Pluie %">26%</td><td data-label="Précip. mm">2.2</td><td data-label="Soleil h/j">11.2h</td><td data-label="Score">6.9/10</td></tr>
 <tr class="rec" data-tmax="32" data-rain="56" data-sun="11.8"><td>🌤️ Mai</td><td data-label="T° min">23°C</td><td data-label="T° max">32°C</td><td data-label="Pluie %">56%</td><td data-label="Précip. mm">6.1</td><td data-label="Soleil h/j">11.8h</td><td data-label="Score">7.7/10</td></tr>
 <tr class="rec" data-tmax="30" data-rain="84" data-sun="9.6"><td>🌦️ Juin</td><td data-label="T° min">23°C</td><td data-label="T° max">30°C</td><td data-label="Pluie %">84%</td><td data-label="Précip. mm">8.4</td><td data-label="Soleil h/j">9.6h</td><td data-label="Score">7.3/10</td></tr>
 <tr class="mid" data-tmax="30" data-rain="85" data-sun="8.7"><td>🌦️ Juillet</td><td data-label="T° min">23°C</td><td data-label="T° max">30°C</td><td data-label="Pluie %">85%</td><td data-label="Précip. mm">9.8</td><td data-label="Soleil h/j">8.7h</td><td data-label="Score">6.1/10</td></tr>
@@ -156,6 +156,7 @@
  <span><span class="legend-dot legend-avoid"></span>Climat prononcé</span>
  <span class="ml-auto">Source Open-Meteo · 10 ans</span>
 </div>
+ <div class="heat-alert-badge" style="background:#fff3cd;border:1.5px solid #f59e0b;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;color:#92400e;margin:8px 0 4px;display:block">🌡️ Chaleur notable — Mars, Avril</div>
  <p class="tropical-note">🌴 Destination tropicale — les mois de forte pluie bénéficient d'une correction algorithmique : les averses sont intenses mais courtes, et ne gâchent généralement pas le séjour.</p>
 </section>
 <section class="section">
