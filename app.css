@@ -986,20 +986,19 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .annual-mode-active .card-footer-annual{display:flex}
 
 /* ── Travel Info Widget ── */
-.travel-info-widget{background:white;border-radius:var(--r);padding:20px 20px 16px;box-shadow:0 2px 12px rgba(26,31,46,.07);margin:28px 0;border:1.5px solid var(--cream2)}
-.ti-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:14px}
-.ti-chips{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-@media(max-width:640px){.ti-chips{grid-template-columns:repeat(2,1fr);gap:8px}}
-.ti-chip{background:var(--cream);border:1.5px solid var(--cream2);border-radius:10px;padding:10px 12px;min-width:0}
-.ti-chip-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--slate3);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.travel-info-widget{background:white;border-radius:var(--r);padding:18px 20px 14px;box-shadow:0 2px 10px rgba(26,31,46,.07);margin:24px 0;border:1.5px solid var(--cream2)}
+.ti-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;letter-spacing:-.1px}
+.ti-chips{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+@media(max-width:680px){.ti-chips{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:340px){.ti-chips{grid-template-columns:1fr 1fr}}
+.ti-chip{background:var(--cream);border:1.5px solid var(--cream2);border-radius:10px;padding:10px 12px;min-width:0;overflow:hidden}
+.ti-chip-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--slate3);margin-bottom:4px}
 .ti-chip-row{display:flex;align-items:center;gap:6px}
-.ti-chip-icon{font-size:16px;line-height:1;flex-shrink:0}
-.ti-chip-val{font-size:13px;font-weight:800;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ti-chip-sub{font-size:10px;color:var(--slate2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ti-chip-more{background:var(--cream2);border-radius:6px;padding:1px 5px;font-size:9px;font-weight:700;color:var(--slate);flex-shrink:0}
-/* Safety levels */
-.ti-chip--safe-high{background:#f0fdf4;border-color:#bbf7d0}
-.ti-chip--safe-mid{background:#f0fdf4;border-color:#bbf7d0}
+.ti-chip-icon{font-size:15px;line-height:1;flex-shrink:0}
+.ti-chip-val{font-size:13px;font-weight:800;color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ti-chip-sub{font-size:10px;color:var(--slate2);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ti-chip-more{background:var(--cream2);border-radius:5px;padding:1px 5px;font-size:9px;font-weight:700;color:var(--slate);margin-left:2px}
+.ti-chip--safe-high,.ti-chip--safe-mid{background:#f0fdf4;border-color:#bbf7d0}
 .ti-chip--safe-low{background:#fffbeb;border-color:#fef08a}
 .ti-chip--safe-warn{background:#fff7ed;border-color:#fed7aa}
 .ti-chip--safe-danger{background:#fef2f2;border-color:#fecaca}
@@ -1007,22 +1006,6 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .ti-chip-val--safe-low{color:#a16207}
 .ti-chip-val--safe-warn{color:#c2410c}
 .ti-chip-val--safe-danger{color:#dc2626}
-/* Safety detail */
-.ti-safety-detail{background:var(--cream);border-radius:8px;padding:10px 14px;border:1px solid var(--cream2);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.ti-safety-note{font-size:11px;color:var(--slate2);flex:1}
+.ti-safety-detail{background:var(--cream);border-radius:8px;padding:9px 12px;border:1px solid var(--cream2);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.ti-safety-note{font-size:11px;color:var(--slate2);flex:1;min-width:0}
 .ti-safety-source{font-size:10px;color:var(--slate3);white-space:nowrap}
-/* Safety levels */
-.ti-chip--safe-high{background:#f0fdf4;border-color:#bbf7d0}
-.ti-chip--safe-mid{background:#f0fdf4;border-color:#bbf7d0}
-.ti-chip--safe-low{background:#fffbeb;border-color:#fef08a}
-.ti-chip--safe-warn{background:#fff7ed;border-color:#fed7aa}
-.ti-chip--safe-danger{background:#fef2f2;border-color:#fecaca}
-.ti-chip-val--safe-high{color:#15803d}
-.ti-chip-val--safe-mid{color:#15803d}
-.ti-chip-val--safe-low{color:#a16207}
-.ti-chip-val--safe-warn{color:#c2410c}
-.ti-chip-val--safe-danger{color:#dc2626}
-/* Safety detail */
-.ti-safety-detail{background:var(--cream);border-radius:10px;padding:12px 16px;border:1px solid var(--cream2)}
-.ti-safety-note{font-size:12px;color:var(--slate2);margin-bottom:4px}
-.ti-safety-source{font-size:11px;color:var(--slate3);text-align:right}
