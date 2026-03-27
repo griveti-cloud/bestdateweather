@@ -529,6 +529,9 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
             'gpi_note': 'Global Peace Index : 1 = très pacifique, 5 = peu pacifique',
             'source': 'Source : Institute for Economics & Peace',
             'more': '+{n} autres',
+            'budget': 'Budget',
+            'budget_labels': ['Budget', 'Abordable', 'Intermédiaire', 'Haut de gamme', 'Premium'],
+            'budget_icons': ['💚', '💚', '🟡', '🟠', '💎'],
         },
         'en': {
             'title': f'Essential Travel Info — {nom}',
@@ -541,6 +544,9 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
             'gpi_note': 'Global Peace Index: 1 = most peaceful, 5 = least peaceful',
             'source': 'Source: Institute for Economics & Peace',
             'more': '+{n} more',
+            'budget': 'Budget',
+            'budget_labels': ['Budget', 'Affordable', 'Mid-range', 'Upscale', 'Premium'],
+            'budget_icons': ['💚', '💚', '🟡', '🟠', '💎'],
         },
     }.get(lang, {
         'title': f'Essential Travel Info — {nom}',
@@ -553,6 +559,9 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
         'gpi_note': 'Global Peace Index: 1 = most peaceful, 5 = least peaceful',
         'source': 'Source: Institute for Economics & Peace',
         'more': '+{n} more',
+        'budget': 'Budget',
+        'budget_labels': ['Budget', 'Affordable', 'Mid-range', 'Upscale', 'Premium'],
+        'budget_icons': ['💚', '💚', '🟡', '🟠', '💎'],
     })
 
     # Currency chip
@@ -611,6 +620,21 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
         f'</div>'
     )
 
+    # Budget chip
+    budget_idx = info.get('budget_index', 3)
+    bidx = max(1, min(5, budget_idx)) - 1
+    budget_label = lbl['budget_labels'][bidx]
+    budget_icon  = lbl['budget_icons'][bidx]
+    budget_html = (
+        f'<div class="ti-chip ti-chip--budget-{budget_idx}">'
+        f'<div class="ti-chip-label">{lbl["budget"]}</div>'
+        f'<div class="ti-chip-row">'
+        f'<span class="ti-chip-icon">{budget_icon}</span>'
+        f'<span class="ti-chip-val ti-chip-val--budget-{budget_idx}">{budget_label}</span>'
+        f'</div>'
+        f'</div>'
+    )
+
     # Safety detail box
     safety_detail = (
         f'<div class="ti-safety-detail">'
@@ -627,6 +651,7 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
         f'{language_html}'
         f'{driving_html}'
         f'{safety_html}'
+        f'{budget_html}'
         f'</div>'
         f'{safety_detail}'
         f'</section>'
