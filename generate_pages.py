@@ -40,8 +40,24 @@ from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
 DIR  = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(DIR, 'data')
 
+# ── Version JS — source de vérité unique ───────────────────────────────────
+# Incrémenter ici + les fichiers index/app sont mis à jour automatiquement
+CORE_JS_VERSION = 28
+
+def _sync_core_version():
+    """Propage CORE_JS_VERSION dans index.html et */app.html."""
+    import glob as _glob
+    targets = ['index.html'] + _glob.glob('*/app.html') + _glob.glob('*/index.html')
+    for f in targets:
+        if not os.path.exists(f): continue
+        content = open(f, encoding='utf-8').read()
+        new = re.sub(r'core\.min\.js\?v=\d+', f'core.min.js?v={CORE_JS_VERSION}', content)
+        if new != content:
+            open(f, 'w', encoding='utf-8').write(new)
+
 # IDs partenaires — source de vérité dans config.py
 from config import BOOKING_AID, GYG_PARTNER_ID, TP_MARKER
+
 
 MONTHLY_GRAD = [
     'linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%)',
@@ -2165,6 +2181,9 @@ def main():
             print(f"  {e}")
     else:
         print("✅ No generation errors")
+
+    # Propager la version core.js dans index.html et */app.html
+    _sync_core_version()
 
     if overrides:
         print(f"ℹ️  {len(overrides)} override(s) applied from overrides.csv")

@@ -159,11 +159,16 @@ for lang, f in annual_files.items():
 print("\n6. Version core.min.js — cohérence entre index pages")
 
 index_files = {
-    'FR': 'index.html',
-    'EN': 'en/index.html',
-    'ES': 'es/index.html',
-    'DE': 'de/index.html',
-    'US': 'us/index.html',
+    'FR index': 'index.html',
+    'EN index': 'en/index.html',
+    'ES index': 'es/index.html',
+    'DE index': 'de/index.html',
+    'US index': 'us/index.html',
+    'FR app':   'index.html',
+    'EN app':   'en/app.html',
+    'ES app':   'es/app.html',
+    'DE app':   'de/app.html',
+    'US app':   'us/app.html',
 }
 versions = {}
 for lang, f in index_files.items():
