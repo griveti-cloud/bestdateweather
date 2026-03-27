@@ -311,6 +311,11 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
 
  <h3>Local climate specifics</h3>
  <p>Some climate regimes require adapted treatment. Destinations with strong monsoon seasonality (Southeast Asia, East Africa) are subject to adjustment: the wet season, although statistically unfavourable, often remains suitable for travel thanks to short, intense rainfall. This context is built into the seasonal classification for these destinations.</p>
+    <h3>Humidity &amp; dew point</h3>
+    <p>From March 2026, dew point temperature (ERA5 <code>dew_point_2m</code>) is factored into the annual reference score for all 697 destinations. When daily maximum temperature exceeds 26°C and the dew point exceeds 16°C, a progressive comfort penalty is applied — capturing the oppressive feel of humid heat that raw temperature alone does not convey.</p>
+    <p>Additionally, months where <strong>tmax ≥ 30°C and dew point ≥ 16°C</strong> are automatically downgraded from the <em>recommended</em> classification to <em>intermediate</em>. This corrects the historic under-scoring of hot-humid destinations such as Tokyo in summer or Singapore.</p>
+    <h3>Rain type: tropical showers vs. blocking rain</h3>
+    <p>Weather icons distinguish two rain patterns via a <strong>burstiness index</strong> (daily precipitation ÷ rain frequency): ⛈️ heavy blocking, 🌧️ blocking rain, and 🌦️ tropical showers — where high rain frequency coexists with ample sunshine and a largely exploitable day.</p>
 
  <div class="callout blue">
   <div class="callout-ico">ℹ️</div>
