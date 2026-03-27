@@ -267,20 +267,26 @@ def compute_scores(months: list, slug: str = '') -> list:
     """
     is_tropical = slug in TROPICAL_DESTINATIONS
 
-    # ── Déclassement chaleur extrême ──────────────────────────────────────
-    # Un mois ne peut pas être "recommandé" si la température est dangereuse.
-    # Seuils OMS/Météo-France : ≥38°C → avoid, ≥32°C → mid max (canicule Paris).
+    # ── Déclassement chaleur + humidité ──────────────────────────────────
+    # Un mois ne peut pas être "recommandé" si temp ou humidité excessive.
+    # Chaleur : ≥38°C → avoid, ≥34°C → mid max
+    # Humidité : tmax ≥ 30°C + dew_point ≥ 16°C → mid max (ressenti oppressant)
     HEAT_CAP_AVOID = 38  # °C — canicule sévère, stress thermique dangereux
     HEAT_CAP_MID   = 34  # °C — inconfortable pour la majorité des voyageurs
+    DEW_CAP_TMAX   = 30  # °C — seuil temp pour activer cap humidité
+    DEW_CAP_DEW    = 16  # °C — point de rosée = début gêne avec chaleur
 
     effective_months = []
     for m in months:
         em = dict(m)  # copie pour ne pas muter l'original
         tmax = em['tmax']
         cls = em['cls']
+        dew = em.get('dew_point')
         if tmax >= HEAT_CAP_AVOID and cls != 'avoid':
             em['cls'] = 'avoid'
         elif tmax >= HEAT_CAP_MID and cls == 'rec':
+            em['cls'] = 'mid'
+        elif tmax >= DEW_CAP_TMAX and dew is not None and dew >= DEW_CAP_DEW and cls == 'rec':
             em['cls'] = 'mid'
         effective_months.append(em)
 
@@ -325,13 +331,16 @@ def compute_scores(months: list, slug: str = '') -> list:
 # Uniquement pour les destinations côtières (sea_temp disponible).
 # Échelle : 0 – 10, normalisation globale comme le score principal.
 
-def effective_classe(tmax: float, classe: str) -> str:
-    """Applique le déclassement chaleur (même logique que compute_scores).
+def effective_classe(tmax: float, classe: str, dew_point: float = None) -> str:
+    """Applique le déclassement chaleur + humidité (même logique que compute_scores).
     tmax >= 38°C -> 'avoid'  |  tmax >= 34°C + classe=='rec' -> 'mid'
+    tmax >= 30°C + dew_point >= 16°C + classe=='rec' -> 'mid'  (cap humidité)
     """
     if tmax >= 38 and classe != 'avoid':
         return 'avoid'
     if tmax >= 34 and classe == 'rec':
+        return 'mid'
+    if tmax >= 30 and dew_point is not None and dew_point >= 16 and classe == 'rec':
         return 'mid'
     return classe
 
