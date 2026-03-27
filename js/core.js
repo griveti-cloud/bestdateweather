@@ -341,31 +341,40 @@ function fillUseCase(type) { currentUseCase = type; document.getElementById("sco
 
 function getIcon(h, temp, sol, rain, mm, snow, p25) {
  // rain% = driver principal | sol = driver secondaire | mm = seuils forts uniquement
- // Tropicaux (temp>=25) : averses convectives breves != pluie continue -> seuils assouplis
+ // Burstiness : ratio intensite/frequence — eleve = averses courtes tropicales
  mm = mm || 0;
  snow = snow || 0;
  p25 = p25 != null ? p25 : temp;
  var night = sol < 15;
  var tropical = temp >= 25;
  var isSnowing = snow > 0.1 || (p25 != null && p25 <= 2 && mm > 0.1);
+ // Burstiness proxy (mm par heure de pluie effective)
+ var burstiness = rain > 0 ? mm / (rain / 100) : 0;
+ var isHeavyBlocking = rain > 90 && mm >= 15 && sol < 200;
+ var isBlocking = rain > 70 && (sol < 150 || (mm >= 10 && burstiness < 12));
+ var isTropicalShower = tropical && rain >= 60 && mm >= 6 && sol >= 250 && burstiness >= 10;
+
  // Cas extremes temperature — priorite absolue
  if (temp >= 36 && rain < 20) return IC.hot;
  if (temp <= 4 && temp > 0 && rain > 20) return IC.snowlight;
  if (night) {
- if (rain > 75 || mm > 10) return IC.storm;
- if (isSnowing && rain > 15) return IC.nightsnow;
- if (temp <= 0 && rain > 20) return IC.nightsnow;
- if (rain > 45 && mm >= 1) return IC.nightrain;
- if (rain > 25) return IC.nightshower;
- if (sol < 5) return IC.moon;
- return IC.nightcloud;
+  if (isHeavyBlocking || rain > 75 || mm > 10) return IC.storm;
+  if (isSnowing && rain > 15) return IC.nightsnow;
+  if (temp <= 0 && rain > 20) return IC.nightsnow;
+  if (rain > 45 && mm >= 1) return IC.nightrain;
+  if (rain > 25) return IC.nightshower;
+  if (sol < 5) return IC.moon;
+  return IC.nightcloud;
  }
+ if (isHeavyBlocking) return IC.storm;
+ if (isBlocking && !isTropicalShower) return IC.heavyrain;
  if (rain > 75 || mm > 10) return IC.storm;
  if (isSnowing && rain > 15) return IC.snow;
  if (temp <= 0 && rain > 20) return IC.snow;
  if (rain > 60 && mm >= 1.5) return IC.heavyrain;
  if (rain > 60) return IC.rain;
  // Tropicaux : averses convectives breves != pluie continue
+ if (isTropicalShower) return IC.shower;
  if (tropical && rain > 45 && sol >= 350) return IC.shower;
  if (tropical && rain > 28 && sol >= 500) return IC.partcloud;
  if (tropical && rain <= 25 && sol >= 500) return IC.sun;
@@ -2494,37 +2503,41 @@ function monthColor(d) {
 function monthIconFromData(d) {
  var sun = d.sunHrs || 0;
  var pct = d.rainPct || 0;
+ var mm = d.avgPrecipMm || 0;
+ var avgTemp = d.avgTemp != null ? d.avgTemp : (d.avgTmax != null ? d.avgTmax - 4 : null);
+ var tmax = d.avgTmax || (avgTemp != null ? avgTemp + 4 : 25);
 
  // Snow
  var snowTemp = d.avgTmin != null ? d.avgTmin : d.avgTemp;
  if (snowTemp != null && snowTemp <= 2 && pct > 15) return IC.snow;
 
- // effPct = rainPct brut (mm P50 ≈ 0 partout → inutilisable pour pondérer)
- var effPct = pct;
+ // Burstiness : ratio intensite/frequence (meme logique que Python)
+ var rainFreq = pct / 100;
+ var burstiness = rainFreq > 0 ? mm / Math.max(rainFreq, 0.05) : 0;
+ var tropical = avgTemp != null && avgTemp >= 22;
 
- // Correction tropicale : pluies convectives courtes, soleil entre les averses
- var avgTemp = d.avgTemp != null ? d.avgTemp : (d.avgTmax != null ? d.avgTmax - 4 : null);
- if (avgTemp != null && avgTemp >= 22 && sun >= 4) {
-  var tropFactor = avgTemp >= 24 ? 0.55 : 0.55 + (24 - avgTemp) / 2 * 0.10;
-  effPct = effPct * tropFactor;
- }
+ // Pattern pluie (aligne avec _classify_rain_pattern Python)
+ var isHeavyBlocking = pct >= 90 && mm >= 14;
+ var isBlocking = pct >= 70 && (sun <= 7.5 || (mm >= 10 && burstiness < 12));
+ var isTropicalShower = tropical && pct >= 60 && mm >= 6 && sun >= 9.5 && burstiness >= 10;
 
- // ── Soleil dominant ─────────────────────────────────────────────
- if (effPct <= 25 && sun >= 6) return IC.sun;
- if (effPct <= 35 && sun >= 8) return IC.sun;
+ if (isHeavyBlocking) return IC.storm;
+ if (isBlocking && !isTropicalShower) return IC.rain;
+ if (isTropicalShower) return IC.shower;
 
- // ── Averses avec soleil ─────────────────────────────────────────
- if (effPct <= 55 && sun >= 7) return IC.shower;
- if (effPct <= 45 && sun >= 5) return IC.shower;
+ // Chaleur extreme seche
+ if (tmax >= 36 && pct < 20) return IC.hot;
 
- // ── Partiellement nuageux ───────────────────────────────────────
- if (effPct <= 45 && sun >= 3) return IC.partcloud;
- if (effPct <= 35) return IC.partcloud;
-
- // ── Pluie ───────────────────────────────────────────────────────
- if (effPct <= 65 && sun >= 3) return IC.lightrain;
- if (effPct <= 65) return IC.rain;
- if (effPct <= 80) return IC.rain;
+ // Fallback : logique soleil/pluie standard
+ if (pct <= 20 && sun >= 8) return IC.sun;
+ if (pct <= 30 && sun >= 10) return IC.sun;
+ if (pct <= 45 && sun >= 8) return IC.shower;
+ if (pct <= 55 && sun >= 7) return IC.shower;
+ if (pct <= 40 && sun >= 4) return IC.partcloud;
+ if (pct <= 30) return IC.partcloud;
+ if (pct <= 65 && sun >= 3) return IC.lightrain;
+ if (pct <= 65) return IC.rain;
+ if (pct <= 80) return IC.rain;
  return IC.heavyrain;
 }
 
