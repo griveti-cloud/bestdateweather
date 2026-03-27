@@ -329,9 +329,9 @@ function renderHistoricalChart(data){
   dots+emojis+ylbls+
   '</svg>';
  var leg='<div style="display:flex;gap:14px;margin-top:4px;font-size:11px;color:#888;flex-wrap:wrap">'+
-  '<span><span style="display:inline-block;width:12px;height:2px;background:#e07040;vertical-align:middle;margin-right:3px;border-radius:1px"></span>'+(T.hist_tmax||'Tmax')+'</span>'+
-  '<span><span style="display:inline-block;width:12px;height:2px;background:#b0a080;vertical-align:middle;margin-right:3px;border-radius:1px;border-top:2px dashed #b0a080"></span>'+(T.hist_tmean||'Avg')+'</span>'+
-  '<span><span style="display:inline-block;width:12px;height:2px;background:#6ea8d9;vertical-align:middle;margin-right:3px;border-radius:1px"></span>'+(T.hist_tmin||'Tmin')+'</span>'+
+  '<span><span style="display:inline-block;width:12px;height:2px;background:#e07040;vertical-align:middle;margin-right:3px;border-radius:1px"></span>'+(T.hist_tmax||'Max du jour')+'</span>'+
+  '<span><span style="display:inline-block;width:12px;height:2px;background:#b0a080;vertical-align:middle;margin-right:3px;border-radius:1px;border-top:2px dashed #b0a080"></span>'+(T.hist_tmean||'Moy. du jour')+'</span>'+
+  '<span><span style="display:inline-block;width:12px;height:2px;background:#6ea8d9;vertical-align:middle;margin-right:3px;border-radius:1px"></span>'+(T.hist_tmin||'Min du jour')+'</span>'+
   '</div>';
  ct.innerHTML=svg+leg;
  el.style.display='block';
@@ -1089,9 +1089,11 @@ function tIdeal(tmax) {
  if (tmax <= 14) return (tmax - 5) / 9 * 0.3;
  if (tmax <= 22) return 0.3 + (tmax - 14) / 8 * 0.5;
  if (tmax <= 28) return 0.8 + (tmax - 22) / 6 * 0.2;
- if (tmax <= 32) return 1.0 - (tmax - 28) / 4 * 0.25;
- if (tmax <= 36) return 0.75 - (tmax - 32) / 4 * 0.45;
- return Math.max(0.0, 0.30 - (tmax - 36) / 6 * 0.30);
+ if (tmax <= 30) return 1.0 - (tmax - 28) / 2 * 0.10;   // 1.0 → 0.90
+ if (tmax <= 33) return 0.90 - (tmax - 30) / 3 * 0.35;  // 0.90 → 0.55
+ if (tmax <= 36) return 0.55 - (tmax - 33) / 3 * 0.35;  // 0.55 → 0.20
+ if (tmax <= 40) return 0.20 - (tmax - 36) / 4 * 0.15;  // 0.20 → 0.05
+ return 0.0;
 }
 
 // scoring.py : raw_score() poids 40/35/25
@@ -1159,8 +1161,8 @@ function computeAnchoredScores(monthly, ficheKey) {
 
  // Heat cap: canicule ≥36°C → mid max, extreme ≥42°C → avoid
  items.forEach(function(it) {
-  if (it.tmax >= 42 && it.cls !== 'avoid') it.cls = 'avoid';
-  else if (it.tmax >= 36 && it.cls === 'rec') it.cls = 'mid';
+  if (it.tmax >= 38 && it.cls !== 'avoid') it.cls = 'avoid';
+  else if (it.tmax >= 32 && it.cls === 'rec') it.cls = 'mid';
  });
 
  ['avoid','mid','rec'].forEach(function(cls) {

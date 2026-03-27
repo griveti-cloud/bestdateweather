@@ -92,19 +92,21 @@ def t_ideal(tmax: float) -> float:
     Frais :               14 – 22°C  →  score 0.3 – 0.8
     Froid :                5 – 14°C  →  score 0.0 – 0.3
     Très froid :          ≤ 5°C       →  0.0
-    Chaud :               28 – 32°C  →  1.0 → 0.75 (pénalité douce)
-    Très chaud :          32 – 36°C  →  0.75 → 0.30 (pénalité accélérée)
-    Canicule :            36 – 42°C  →  0.30 → 0.0 (inhabitable)
-    Extrême :             > 42°C     →  0.0
+    Chaud :               28 – 30°C  →  1.0 → 0.90 (légèrement chaud)
+    Très chaud :          30 – 33°C  →  0.90 → 0.55 (inconfortable pour la plupart)
+    Canicule seuil OMS :  33 – 36°C  →  0.55 → 0.20 (seuil canicule)
+    Canicule sévère :     36 – 40°C  →  0.20 → 0.05 (dangereux)
+    Extrême :             > 40°C     →  0.0
     """
     if tmax <= 5:   return 0.0
     if tmax <= 14:  return (tmax - 5) / 9 * 0.3
     if tmax <= 22:  return 0.3 + (tmax - 14) / 8 * 0.5
     if tmax <= 28:  return 0.8 + (tmax - 22) / 6 * 0.2
-    if tmax <= 32:  return 1.0 - (tmax - 28) / 4 * 0.25
-    if tmax <= 36:  return 0.75 - (tmax - 32) / 4 * 0.45
-    # >36°C : chute rapide — 38°C ≈ 0.20, 40°C ≈ 0.10, 42°C = 0.0
-    return max(0.0, 0.30 - (tmax - 36) / 6 * 0.30)
+    if tmax <= 30:  return 1.0 - (tmax - 28) / 2 * 0.10   # 1.0 → 0.90
+    if tmax <= 33:  return 0.90 - (tmax - 30) / 3 * 0.35  # 0.90 → 0.55
+    if tmax <= 36:  return 0.55 - (tmax - 33) / 3 * 0.35  # 0.55 → 0.20
+    if tmax <= 40:  return 0.20 - (tmax - 36) / 4 * 0.15  # 0.20 → 0.05
+    return 0.0
 
 
 def effective_rain_pct(rain_pct: float, precip_mm: float = None) -> float:
@@ -237,9 +239,9 @@ def compute_scores(months: list, slug: str = '') -> list:
 
     # ── Déclassement chaleur extrême ──────────────────────────────────────
     # Un mois ne peut pas être "recommandé" si la température est dangereuse.
-    # Seuils : ≥42°C → avoid (alerte rouge canicule), ≥38°C → mid max.
-    HEAT_CAP_AVOID = 42  # °C — chaleur extrême, dangereux
-    HEAT_CAP_MID   = 36  # °C — canicule (seuil Météo-France), déconseillé "idéal"
+    # Seuils OMS/Météo-France : ≥38°C → avoid, ≥32°C → mid max (canicule Paris).
+    HEAT_CAP_AVOID = 38  # °C — canicule sévère, stress thermique dangereux
+    HEAT_CAP_MID   = 32  # °C — seuil canicule Paris, inconfortable pour la plupart
 
     effective_months = []
     for m in months:
@@ -295,11 +297,11 @@ def compute_scores(months: list, slug: str = '') -> list:
 
 def effective_classe(tmax: float, classe: str) -> str:
     """Applique le déclassement chaleur (même logique que compute_scores).
-    tmax >= 42°C → 'avoid'  |  tmax >= 36°C + classe=='rec' → 'mid'
+    tmax >= 38°C → 'avoid'  |  tmax >= 32°C + classe=='rec' → 'mid'
     """
-    if tmax >= 42 and classe != 'avoid':
+    if tmax >= 38 and classe != 'avoid':
         return 'avoid'
-    if tmax >= 36 and classe == 'rec':
+    if tmax >= 32 and classe == 'rec':
         return 'mid'
     return classe
 
