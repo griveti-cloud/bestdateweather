@@ -345,7 +345,8 @@ function getIcon(h, temp, sol, rain, mm, snow, p25) {
  mm = mm || 0;
  snow = snow || 0;
  p25 = p25 != null ? p25 : temp;
- var night = sol < 15;
+ // Nuit : sol < 15 Wh si données dispo, sinon fallback sur l'heure (0-5h et 21-23h)
+ var night = sol > 0 ? sol < 15 : (h < 6 || h >= 21);
  var tropical = temp >= 25;
  var isSnowing = snow > 0.1 || (p25 != null && p25 <= 2 && mm > 0.1);
  // Burstiness proxy (mm par heure de pluie effective)
@@ -394,7 +395,7 @@ function getLabel(h, temp, sol, rain, mm, snow, p25) {
  // Miroir exact de getIcon — meme logique, meme seuils
  mm = mm || 0; snow = snow || 0;
  p25 = p25 != null ? p25 : temp;
- var night = sol < 15;
+ var night = sol > 0 ? sol < 15 : (h < 6 || h >= 21);
  var tropical = temp >= 25;
  var isSnowing = snow > 0.1 || (p25 <= 2 && mm > 0.1);
  // Cas extremes temperature — priorite absolue
@@ -1217,16 +1218,17 @@ function scoreRainSmart(pct, mmDay, avgTemp) {
 }
 
 function scoreTemp(t, tMin, tMax) {
- // Courbe universelle alignee sur Python t_ideal — Δ max ±0.5pt vs Python
- // tMin/tMax conserves en signature (plage/ski utilisent des formules inline)
+ // Aligné sur scoring.py t_ideal() — mise à jour avec nouvelles pentes chaleur
  if (t == null) return 50;
  if (t <= 5)  return 0;
  if (t <= 14) return Math.round((t - 5) / 9 * 30);
  if (t <= 22) return Math.round(30 + (t - 14) / 8 * 50);
  if (t <= 28) return Math.round(80 + (t - 22) / 6 * 20);
- if (t <= 32) return Math.round(100 - (t - 28) / 4 * 25);
- if (t <= 36) return Math.round(75 - (t - 32) / 4 * 45);
- return Math.max(0, Math.round(30 - (t - 36) / 6 * 30));
+ if (t <= 31) return Math.round(100 - (t - 28) / 3 * 10);   // 100 -> 90
+ if (t <= 34) return Math.round(90 - (t - 31) / 3 * 30);    // 90 -> 60
+ if (t <= 37) return Math.round(60 - (t - 34) / 3 * 35);    // 60 -> 25
+ if (t <= 40) return Math.round(25 - (t - 37) / 3 * 20);    // 25 -> 5
+ return 0;
 }
 
 function scoreWind(kmh) {
@@ -1308,6 +1310,11 @@ function getVerdict(score, avgRain, avgTemp, avgWind, uc, isSeasonal) {
  // Dégrader d'un cran si pluie notable (cohérence emoji/score)
  if (avgRain > 28 && score >= 76) label = T.scGood;
  else if (avgRain > 35 && score >= 63) label = 'Variable';
+ // Dégrader si chaleur notable et label trop optimiste
+ if (avgTemp != null && uc !== 'ski') {
+  if (avgTemp > 32 && score >= 76) label = T.scGood;       // "Très favorable" → "Favorable"
+  else if (avgTemp > 29 && score >= 86) label = T.scVeryGood; // "Idéal" → "Très favorable"
+ }
  var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
  var driver = getMainDriver(avgRain, avgTemp, avgWind, scoreRain(avgRain), scoreTemp(avgTemp, cfg.tempMin, cfg.tempMax), scoreWind(avgWind), uc);
  // Mention chaleur explicite dans le verdict — 3 paliers distincts du seuil score
@@ -1381,13 +1388,17 @@ function computeAndRenderScore(sc, rows) {
  var avgWindDir=_wdCnt>0?(((Math.atan2(_sinW/_wdCnt,_cosW/_wdCnt)*180/Math.PI)+360)%360):null;
  window._avgWindDir=avgWindDir;
  var avgTemp = tCnt ? tSum / tCnt : null;
+ // Pour scoreTemp, utiliser tmax journalier (comme scoring.py t_ideal)
+ // avgTemp sous-estime la chaleur ressentie en journée
+ var tmaxDay = rows.length ? Math.max.apply(null, rows.map(function(r){return r.temp != null ? r.temp : -99;})) : avgTemp;
+ if (tmaxDay === -99) tmaxDay = avgTemp;
  var rhSum = 0, rhCnt = 0;
  for (var j=0; j<rows.length; j++) { if (rows[j].rh != null) { rhSum += rows[j].rh; rhCnt++; } }
  var avgRh = rhCnt ? rhSum / rhCnt : null;
 
  // Individual scores
  var sRain = scoreRainSmart(avgRain, mmSum, avgTemp);
- var sTemp = scoreTemp(avgTemp, cfg.tempMin, cfg.tempMax);
+ var sTemp = scoreTemp(tmaxDay != null ? tmaxDay : avgTemp, cfg.tempMin, cfg.tempMax);
  var sWind = scoreWind(avgWind);
  var sSun = scoreSun(peakSol);
 
