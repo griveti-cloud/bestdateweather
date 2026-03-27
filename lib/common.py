@@ -558,9 +558,11 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
     # Currency chip
     currency_html = (
         f'<div class="ti-chip">'
-        f'<div class="ti-chip-icon">💰</div>'
         f'<div class="ti-chip-label">{lbl["currency"]}</div>'
-        f'<div class="ti-chip-val ti-chip-val--bold">{info["currency"]}</div>'
+        f'<div class="ti-chip-row">'
+        f'<span class="ti-chip-icon">💰</span>'
+        f'<span class="ti-chip-val">{info["currency"]}</span>'
+        f'</div>'
         f'<div class="ti-chip-sub">{info["currency_symbol"]} · {info["currency_name"]}</div>'
         f'</div>'
     )
@@ -569,15 +571,14 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
     langs = info.get('languages', [])
     main_lang = langs[0] if langs else '–'
     extra = len(langs) - 1
-    extra_html = (f'<span class="ti-chip-more">' +
-                  lbl['more'].format(n=extra) +
-                  '</span>') if extra > 0 else ''
+    extra_html = (f' <span class="ti-chip-more">+{extra}</span>') if extra > 0 else ''
     language_html = (
         f'<div class="ti-chip">'
-        f'<div class="ti-chip-icon">🗣️</div>'
         f'<div class="ti-chip-label">{lbl["language"]}</div>'
-        f'<div class="ti-chip-val ti-chip-val--bold">{main_lang}</div>'
-        f'<div class="ti-chip-sub">{extra_html}</div>'
+        f'<div class="ti-chip-row">'
+        f'<span class="ti-chip-icon">🗣️</span>'
+        f'<span class="ti-chip-val">{main_lang}{extra_html}</span>'
+        f'</div>'
         f'</div>'
     )
 
@@ -587,10 +588,11 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
     drive_icon = '🚗⬅️' if drive == 'left' else '🚗➡️'
     driving_html = (
         f'<div class="ti-chip">'
-        f'<div class="ti-chip-icon">{drive_icon}</div>'
         f'<div class="ti-chip-label">{lbl["drive"]}</div>'
-        f'<div class="ti-chip-val ti-chip-val--bold">{drive_label}</div>'
-        f'<div class="ti-chip-sub"></div>'
+        f'<div class="ti-chip-row">'
+        f'<span class="ti-chip-icon">{drive_icon}</span>'
+        f'<span class="ti-chip-val">{drive_label}</span>'
+        f'</div>'
         f'</div>'
     )
 
@@ -600,18 +602,20 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
     safety_label, safety_cls = _gpi_label(gpi, 'fr' if lang == 'fr' else 'en')
     safety_html = (
         f'<div class="ti-chip ti-chip--{safety_cls}">'
-        f'<div class="ti-chip-icon">🛡️</div>'
         f'<div class="ti-chip-label">{lbl["safety"]}</div>'
-        f'<div class="ti-chip-val ti-chip-val--{safety_cls}">{safety_label}</div>'
-        f'<div class="ti-chip-sub">GPI : {gpi:.3f}</div>'
+        f'<div class="ti-chip-row">'
+        f'<span class="ti-chip-icon">🛡️</span>'
+        f'<span class="ti-chip-val ti-chip-val--{safety_cls}">{safety_label}</span>'
+        f'</div>'
+        f'<div class="ti-chip-sub">GPI {gpi:.2f}</div>'
         f'</div>'
     )
 
     # Safety detail box
     safety_detail = (
         f'<div class="ti-safety-detail">'
-        f'<p class="ti-safety-note">ℹ️ <strong>{lbl["gpi_note"]}</strong></p>'
-        f'<p class="ti-safety-source">{lbl["source"]} ({gpi_year})</p>'
+        f'<span class="ti-safety-note">{lbl["gpi_note"]}</span>'
+        f'<span class="ti-safety-source">{lbl["source"]} ({gpi_year})</span>'
         f'</div>'
     )
 
