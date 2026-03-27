@@ -1089,10 +1089,10 @@ function tIdeal(tmax) {
  if (tmax <= 14) return (tmax - 5) / 9 * 0.3;
  if (tmax <= 22) return 0.3 + (tmax - 14) / 8 * 0.5;
  if (tmax <= 28) return 0.8 + (tmax - 22) / 6 * 0.2;
- if (tmax <= 30) return 1.0 - (tmax - 28) / 2 * 0.10;   // 1.0 → 0.90
- if (tmax <= 33) return 0.90 - (tmax - 30) / 3 * 0.35;  // 0.90 → 0.55
- if (tmax <= 36) return 0.55 - (tmax - 33) / 3 * 0.35;  // 0.55 → 0.20
- if (tmax <= 40) return 0.20 - (tmax - 36) / 4 * 0.15;  // 0.20 → 0.05
+ if (tmax <= 31) return 1.0 - (tmax - 28) / 3 * 0.10;   // 1.0 -> 0.90
+ if (tmax <= 34) return 0.90 - (tmax - 31) / 3 * 0.30;  // 0.90 -> 0.60
+ if (tmax <= 37) return 0.60 - (tmax - 34) / 3 * 0.35;  // 0.60 -> 0.25
+ if (tmax <= 40) return 0.25 - (tmax - 37) / 3 * 0.20;  // 0.25 -> 0.05
  return 0.0;
 }
 
@@ -1162,7 +1162,7 @@ function computeAnchoredScores(monthly, ficheKey) {
  // Heat cap: canicule ≥36°C → mid max, extreme ≥42°C → avoid
  items.forEach(function(it) {
   if (it.tmax >= 38 && it.cls !== 'avoid') it.cls = 'avoid';
-  else if (it.tmax >= 32 && it.cls === 'rec') it.cls = 'mid';
+  else if (it.tmax >= 34 && it.cls === 'rec') it.cls = 'mid';
  });
 
  ['avoid','mid','rec'].forEach(function(cls) {
@@ -1299,6 +1299,14 @@ function getVerdict(score, avgRain, avgTemp, avgWind, uc, isSeasonal) {
  else if (avgRain > 35 && score >= 63) label = 'Variable';
  var cfg = UC_CONFIG[uc] || UC_CONFIG.general;
  var driver = getMainDriver(avgRain, avgTemp, avgWind, scoreRain(avgRain), scoreTemp(avgTemp, cfg.tempMin, cfg.tempMax), scoreWind(avgWind), uc);
+ // Mention chaleur explicite dans le verdict — 3 paliers distincts du seuil score
+ // avgTemp (moyenne journalière) > 27°C => tmax estimé ~33-35°C
+ var heatNote = null;
+ if (avgTemp != null && uc !== 'ski') {
+  if (avgTemp > 32)      heatNote = T.verdictExtreme;  // tmax ~38°C+
+  else if (avgTemp > 29) heatNote = T.verdictVeryHot;  // tmax ~35-38°C
+  else if (avgTemp > 27) heatNote = T.verdictHot;      // tmax ~33-35°C
+ }
  var action;
  if (uc === 'ski') {
   if (score >= 76) action = T.actGoodSnow;
@@ -1310,7 +1318,9 @@ function getVerdict(score, avgRain, avgTemp, avgWind, uc, isSeasonal) {
   if (score >= 76) action = T.actOptimalSwim;
   else if (score >= 50) action = driver ? T.actCautionBeach + ' — ' + driver : T.actCautionBeachFull;
   else action = driver ? T.actPoorBeach + ' — ' + driver : T.actPoorBeachFull;
-  return label + ' · ' + action + suffix;
+  var r = label + ' · ' + action;
+  if (heatNote) r += ' · ' + heatNote;
+  return r + suffix;
  }
  if (score >= 76) {
   action = driver ? T.actBookOk + ' — ' + driver + T.actResidual : T.actBookOk;
@@ -1319,7 +1329,9 @@ function getVerdict(score, avgRain, avgTemp, avgWind, uc, isSeasonal) {
  } else {
   action = driver ? T.actUnstable + ' — ' + driver : T.actUnstable;
  }
- return label + ' · ' + action + suffix;
+ var result = label + ' · ' + action;
+ if (heatNote) result += ' · ' + heatNote;
+ return result + suffix;
 }
 
 function getMainRisk(avgRain, avgTemp, avgWind, uc) {
@@ -1656,6 +1668,35 @@ function updateHero(sc, rows, mainHour, _scoreMetrics) {
  _snowAlert.textContent = T.snowPossible + _timeLbl + T.snowNearFreezing;
  } else {
  _snowAlert.style.display = 'none';
+ }
+
+ // Alerte chaleur (tmax probable > 34°C)
+ var _heatAlert = document.getElementById('heat-alert');
+ if (!_heatAlert) {
+  _heatAlert = document.createElement('div');
+  _heatAlert.id = 'heat-alert';
+  _heatAlert.style.cssText = 'background:#fff3cd;border:1.5px solid #f59e0b;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:700;color:#92400e;display:none;margin-top:10px;text-align:center';
+  var _heroTop2 = document.querySelector('.hero-top');
+  if (_heroTop2) _heroTop2.appendChild(_heatAlert);
+ }
+ // Calculer tmax probable (p75 ou temp max des heures de journée)
+ var _peakTemps = [];
+ for (var _hi = 0; _hi < sc.length; _hi++) {
+  var _hr = sc[_hi];
+  if (_hr.h >= 11 && _hr.h <= 17) {
+   var _t = _hr.p75 != null ? _hr.p75 : (_hr.temp != null ? _hr.temp : null);
+   if (_t != null) _peakTemps.push(_t);
+  }
+ }
+ var _estTmax = _peakTemps.length ? Math.max.apply(null, _peakTemps) : null;
+ if (_estTmax != null && _estTmax >= 37) {
+  _heatAlert.textContent = '🌡️ ' + T.heatAlertSevere + ' · ' + fmtTempRaw(_estTmax) + '° ' + (T.heatAlertPeak || '');
+  _heatAlert.style.display = 'block';
+ } else if (_estTmax != null && _estTmax >= 34) {
+  _heatAlert.textContent = '🌡️ ' + T.heatAlertHot + ' · ' + fmtTempRaw(_estTmax) + '° ' + (T.heatAlertPeak || '');
+  _heatAlert.style.display = 'block';
+ } else {
+  _heatAlert.style.display = 'none';
  }
 }
 

@@ -387,7 +387,7 @@ def footer_html(cfg, dest):
  <p class="f11-muted"><a href="{legal_url}" class="txt-muted">{legal_label}</a> · <a href="{priv_url}" class="txt-muted">{priv_label}</a> · <a href="{fc['contact'][0]}" class="txt-muted">{fc['contact'][1]}</a></p>
 </footer>
 <script src="{cfg['asset_prefix']}js/sw-register.js"></script>
-<script src="{cfg['asset_prefix']}js/core.min.js?v=21" defer></script>
+<script src="{cfg['asset_prefix']}js/core.min.js?v=22" defer></script>
 <script src="{cfg['asset_prefix']}js/favs.min.js?v=1" defer></script>
 <script src="{cfg['asset_prefix']}js/share.js" defer></script>'''
 
@@ -1203,6 +1203,22 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     bg, txt, verdict_lbl = fn['score_badge'](score, eff_classe, is_tropical)
     bud = fn['budget_tier'](score, all_scores)
 
+    # Badge chaleur statique (pages mensuelles et annuelles)
+    _tmax = m['tmax']
+    if _tmax >= 38:
+        _heat_lbl = C.get('lbl_heat_alert_severe', '🌡️ Chaleur très intense')
+    elif _tmax >= 35:
+        _heat_lbl = C.get('lbl_heat_alert_hot', '🌡️ Chaleur élevée')
+    elif _tmax >= 33:
+        _heat_lbl = C.get('lbl_heat_alert_warm', '🌡️ Chaleur notable')
+    else:
+        _heat_lbl = None
+    heat_badge_html = (
+        f'<div class="heat-alert-badge" style="background:#fff3cd;border:1.5px solid #f59e0b;'
+        f'border-radius:8px;padding:6px 14px;font-size:12.5px;font-weight:700;color:#92400e;'
+        f'display:inline-block;margin:6px 0 2px">{_heat_lbl} · {fmt_temp(_tmax, C)}</div>'
+    ) if _heat_lbl else ''
+
     prev_mi = (mi - 1) % 12
     next_mi = (mi + 1) % 12
 
@@ -1862,6 +1878,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <div class="section-label">{L['sec_verdict']}</div>
  <h2 class="section-title">{L['sec_verdict_title']}</h2>
  <div class="verdict-badge" style="background:{bg};color:{txt};border:1.5px solid {txt}">{verdict_lbl}</div>
+ {heat_badge_html}
  <div class="f14-body-mb">
  <p class="mb-8"><strong>{L['yes_lbl']}</strong> {oui_si}</p>
  <p><strong>{L['no_lbl']}</strong> {non_si}</p>
