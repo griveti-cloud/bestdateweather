@@ -142,6 +142,7 @@ def load_data(cfg):
             'classe'    : _effective_classe(int(row['tmax']), row['classe']),
             'sea_temp'  : row.get('sea_temp', ''),
             'beach_score': row.get('beach_score', ''),
+            'dew_point' : float(row['dew_point_mean']) if row.get('dew_point_mean', '').strip() else None,
         }
 
     cards_file = f'{DATA}/{cfg["cards_file"]}'
@@ -387,7 +388,7 @@ def footer_html(cfg, dest):
  <p class="f11-muted"><a href="{legal_url}" class="txt-muted">{legal_label}</a> · <a href="{priv_url}" class="txt-muted">{priv_label}</a> · <a href="{fc['contact'][0]}" class="txt-muted">{fc['contact'][1]}</a></p>
 </footer>
 <script src="{cfg['asset_prefix']}js/sw-register.js"></script>
-<script src="{cfg['asset_prefix']}js/core.min.js?v=22" defer></script>
+<script src="{cfg['asset_prefix']}js/core.min.js?v=23" defer></script>
 <script src="{cfg['asset_prefix']}js/favs.min.js?v=1" defer></script>
 <script src="{cfg['asset_prefix']}js/share.js" defer></script>'''
 

@@ -137,22 +137,52 @@ def effective_rain_pct(rain_pct: float, precip_mm: float = None) -> float:
     return min(100.0, rain_pct * factor)
 
 
+def dew_point_penalty(tmax: float, dew_point: float) -> float:
+    """
+    Pénalité humidité [0, 0.20] basée sur le point de rosée moyen.
+
+    Le point de rosée est le meilleur indicateur du ressenti humide :
+      < 10°C  → air très sec, pas de pénalité
+      10–16°C → légèrement humide, confort OK
+      16–18°C → seuil de gêne (début de sudation visible)
+      18–21°C → inconfort notable (la plupart des gens transpirent)
+      21–24°C → oppressant (voyageur moyen très gêné)
+      > 24°C  → dangereux combiné à forte chaleur
+
+    La pénalité ne s'applique QUE si tmax > 26°C (chaleur activant
+    l'inconfort thermique). En dessous, humidité = non problématique.
+    """
+    if tmax < 26 or dew_point is None:
+        return 0.0
+    if dew_point < 16:
+        return 0.0
+    # Pénalité progressive : 0 à 16°C → 0.20 à 26°C+
+    # Modulée par la chaleur : plus il fait chaud, plus c'est pénalisé
+    heat_factor = min(1.0, (tmax - 26) / 12)  # 0 à 26°C → 1 à 38°C
+    dew_factor  = min(1.0, (dew_point - 16) / 10)  # 0 à 16°C → 1 à 26°C
+    return round(0.20 * heat_factor * dew_factor, 3)
+
+
 def raw_score(tmax: float, rain_pct: float, sun_h: float,
-              precip_mm: float = None) -> float:
+              precip_mm: float = None, dew_point: float = None) -> float:
     """
     Score brut [0, 1] AVANT ancrage sur la plage de classe.
 
-    Poids :
+    Poids de base :
       40%  temperature  -> t_ideal(tmax)
       35%  pluie        -> 1 - effective_rain_pct / 100
       25%  soleil       -> sun_h / 15  (15h/j = maximum theorique = 1.0)
 
-    Si precip_mm est fourni, rain_pct est ajuste par l'intensite reelle.
+    Pénalité humidité soustraite après pondération (max -0.20 pts bruts)
+    uniquement quand tmax > 26°C ET dew_point > 16°C.
     """
     eff_rain = effective_rain_pct(rain_pct, precip_mm)
-    return (0.40 * t_ideal(tmax)
+    base = (0.40 * t_ideal(tmax)
           + 0.35 * max(0.0, 1.0 - eff_rain / 100.0)
           + 0.25 * min(1.0, sun_h / 15.0))
+    penalty = dew_point_penalty(tmax, dew_point)
+    return max(0.0, base - penalty)
+
 
 
 def _norm(values: list) -> list:
@@ -269,7 +299,7 @@ def compute_scores(months: list, slug: str = '') -> list:
         lo, hi = get_range(cls)
         glob_mn, glob_mx = GLOBAL_RAW_BOUNDS.get(cls, (0.0, 1.0))
         raws = [raw_score(effective_months[i]['tmax'], effective_months[i]['rain_pct'], effective_months[i]['sun_h'],
-                         effective_months[i].get('precip_mm'))
+                         effective_months[i].get('precip_mm'), effective_months[i].get('dew_point'))
                 for i in idxs]
         for j, i in enumerate(idxs):
             # Normalisation globale : position relative dans l'ensemble de la classe
