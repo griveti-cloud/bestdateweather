@@ -70,75 +70,123 @@ LANG_EN = build_lang('en')
 
 # ── Weather emoji ─────────────────────────────────────────────────────────────
 
+def _classify_rain_pattern(rain_pct, precip_mm, sun_h):
+    """
+    Distingue pluie bloquante vs averses tropicales courtes.
+
+    burstiness = intensité journalière / fréquence → élevé = pluies concentrées/courtes
+    Contexte : en climat convectif tropical, il peut pleuvoir 90% des jours
+    mais seulement 1-2h en fin d'après-midi → journée exploitable.
+
+    Returns: 'blocking' | 'tropical_showers' | 'heavy_blocking' | 'normal'
+    """
+    if rain_pct is None or rain_pct == 0:
+        return 'normal'
+    rain_freq = rain_pct / 100.0
+    burstiness = (precip_mm or 0) / max(rain_freq, 0.05)
+
+    # Pluie vraiment bloquante : peu de soleil OU pluie chronique sans intensité
+    is_blocking = (
+        rain_pct >= 70 and (
+            (sun_h is not None and sun_h <= 7.5) or
+            (precip_mm is not None and precip_mm >= 10 and burstiness < 12)
+        )
+    )
+    # Très bloquant : pic de saison des pluies (mai Guyane = 99% + 21mm + 8h)
+    is_heavy_blocking = (
+        rain_pct >= 90 and
+        precip_mm is not None and precip_mm >= 15 and
+        sun_h is not None and sun_h < 9
+    )
+    # Bloquant intermédiaire : très fréquent + intense même avec soleil correct
+    is_blocking_intense = (
+        rain_pct >= 90 and
+        precip_mm is not None and precip_mm >= 14
+    )
+    # Averses tropicales courtes : fréquent + intense + encore du soleil
+    is_tropical_showers = (
+        rain_pct >= 60 and
+        precip_mm is not None and precip_mm >= 6 and
+        sun_h is not None and sun_h >= 9.5 and
+        burstiness >= 10
+    )
+
+    if is_heavy_blocking:
+        return 'heavy_blocking'
+    if is_blocking_intense:
+        return 'heavy_blocking'
+    if is_blocking:
+        return 'blocking'
+    if is_tropical_showers:
+        return 'tropical_showers'
+    return 'normal'
+
+
 def weather_emoji(tmax, rain_pct, sun_h=None, precip_mm=None, score=None):
-    """Return a weather emoji based on temperature, rain, sunshine, intensity and score.
-    
-    In tropical climates (tmax >= 25), high rain_pct (frequency of rainy days) does NOT
-    mean all-day rain. Brief afternoon showers are normal. We use precip_mm (daily intensity)
-    and sun_h to distinguish tropical showers from actual bad weather.
+    """Return a weather emoji based on temperature, rain, sunshine, intensity.
+
+    Distingue 4 patterns pluie :
+    - heavy_blocking  : ⛈️  (saison des pluies intense)
+    - blocking        : 🌧️  (pluie fréquente et gênante)
+    - tropical_showers: 🌦️  (averses courtes, journée exploitable)
+    - normal          : ☀️/🌤️/⛅/🌦️ selon température et fréquence
     """
     # ── Extreme cold ──
     if tmax < 0:
         return '❄️'
     if tmax <= 4:
         return '🌨️'
-    # ── Extreme heat ──
+    # ── Extreme heat (sec — humide pris en charge plus bas) ──
+    if tmax >= 38:
+        return '🥵'
+
+    # ── Classify rain pattern (tropical awareness) ──
+    pattern = _classify_rain_pattern(rain_pct, precip_mm, sun_h)
+
+    if pattern == 'heavy_blocking':
+        return '⛈️'
+    if pattern == 'blocking':
+        return '🌧️'
+    if pattern == 'tropical_showers':
+        # Averses tropicales courtes : positif mais honnête
+        if tmax >= 36:
+            return '🥵'   # chaud + humide malgré tout
+        if sun_h is not None and sun_h >= 11:
+            return '🌦️'   # beaucoup de soleil + averses
+        return '🌦️'
+
+    # ── Normal path — tempéré ou tropical sec ──
     if tmax >= 36:
         return '🥵'
-    
-    # ── Tropical / warm climates (tmax >= 25) — softer rain thresholds ──
     if tmax >= 25:
-        # Sun hours take priority: 10h+ sun = significant clear skies regardless of rain frequency
+        # Tropical sans pluie problématique
         if sun_h is not None and sun_h >= 10:
-            if rain_pct < 25:
-                return '☀️'
-            if rain_pct < 60:
-                return '🌤️'
-            if rain_pct < 85:
-                return '⛅'  # lots of sun + frequent brief showers
-            return '🌦️'  # extreme rain frequency but still sunny
+            if rain_pct < 25:  return '☀️'
+            if rain_pct < 55:  return '🌤️'
+            if rain_pct < 80:  return '⛅'
+            return '🌦️'
         if sun_h is not None and sun_h >= 8:
-            if rain_pct < 30:
-                return '☀️'
-            if rain_pct < 55:
-                return '🌤️'
-            if rain_pct < 80:
-                return '⛅'
-            # 8h+ sun but 80%+ rain → heavy tropical rain season
-            if precip_mm is not None and precip_mm >= 12:
-                return '🌧️'
+            if rain_pct < 30:  return '☀️'
+            if rain_pct < 55:  return '🌤️'
+            if rain_pct < 75:  return '⛅'
             return '🌦️'
-        # Less than 8h sun — genuinely overcast/rainy
-        if rain_pct >= 75 and precip_mm is not None and precip_mm >= 8:
-            return '🌧️'
-        # Warm but less sun
-        if rain_pct < 25:
-            return '☀️'
-        if rain_pct < 45:
-            return '🌤️'
-        if rain_pct < 65:
-            return '🌦️'
+        if rain_pct < 25:  return '☀️'
+        if rain_pct < 50:  return '🌤️'
+        if rain_pct < 70:  return '🌦️'
         return '🌧️'
-    
-    # ── Mild / temperate climates (tmax 5-24) ──
-    if rain_pct >= 65:
-        return '🌧️'
-    if rain_pct >= 50:
-        return '🌦️'
+
+    # ── Tempéré (tmax 5-24) ──
+    if rain_pct >= 65:  return '🌧️'
+    if rain_pct >= 50:  return '🌦️'
     if tmax >= 22 and rain_pct < 50 and sun_h is not None and sun_h >= 10:
         return '🌤️'
-    if tmax >= 18 and rain_pct < 35:
-        return '🌤️'
+    if tmax >= 18 and rain_pct < 35:  return '🌤️'
     if tmax >= 18 and rain_pct < 45 and sun_h is not None and sun_h >= 9:
         return '🌤️'
-    if rain_pct >= 40 and tmax >= 12:
-        return '🌦️'
-    if tmax >= 15 and rain_pct < 40:
-        return '⛅'
-    if tmax >= 12 and rain_pct < 40:
-        return '⛅'
-    if rain_pct >= 35 and tmax >= 5:
-        return '🌦️'
+    if rain_pct >= 40 and tmax >= 12:  return '🌦️'
+    if tmax >= 15 and rain_pct < 40:   return '⛅'
+    if tmax >= 12 and rain_pct < 40:   return '⛅'
+    if rain_pct >= 35 and tmax >= 5:   return '🌦️'
     return '🌫️'
 
 
