@@ -1155,14 +1155,16 @@ function computeAnchoredScores(monthly, ficheKey) {
  var rain = m.rainPct != null ? m.rainPct : 30;
  var sun = m.sunHrs != null ? m.sunHrs : 5;
  var mm = m.avgPrecipMm != null ? m.avgPrecipMm : null;
+ var dew = m.dewPoint != null ? m.dewPoint : null;
  var raw = rawScoreFiche(tmax, rain, sun, mm);
- return { i: i, raw: raw, cls: autoClass(raw), tmax: tmax };
+ return { i: i, raw: raw, cls: autoClass(raw), tmax: tmax, dew: dew };
  });
 
  // Heat cap: canicule ≥36°C → mid max, extreme ≥42°C → avoid
  items.forEach(function(it) {
   if (it.tmax >= 38 && it.cls !== 'avoid') it.cls = 'avoid';
   else if (it.tmax >= 34 && it.cls === 'rec') it.cls = 'mid';
+  else if (it.tmax >= 30 && it.dew != null && it.dew >= 16 && it.cls === 'rec') it.cls = 'mid';
  });
 
  ['avoid','mid','rec'].forEach(function(cls) {
