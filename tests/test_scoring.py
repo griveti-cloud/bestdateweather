@@ -50,15 +50,22 @@ def test_t_ideal():
 
     # Run JS version
     js_code = """
+    function lerp(x, x0, x1, y0, y1) {
+     if (x <= x0) return y0;
+     if (x >= x1) return y1;
+     return y0 + (y1 - y0) * ((x - x0) / (x1 - x0));
+    }
     function tIdeal(tmax) {
-     // Aligned with scoring.py t_ideal() — breakpoints 32/36/42
+     // Aligned with scoring.py t_ideal() — breakpoints 28/31/34/37/40
      if (tmax <= 5)  return 0.0;
-     if (tmax <= 14) return (tmax - 5) / 9 * 0.3;
-     if (tmax <= 22) return 0.3 + (tmax - 14) / 8 * 0.5;
-     if (tmax <= 28) return 0.8 + (tmax - 22) / 6 * 0.2;
-     if (tmax <= 32) return 1.0 - (tmax - 28) / 4 * 0.25;
-     if (tmax <= 36) return 0.75 - (tmax - 32) / 4 * 0.45;
-     return Math.max(0, 0.30 - (tmax - 36) / 6 * 0.30);
+     if (tmax <= 14) return lerp(tmax, 5, 14, 0.0, 0.3);
+     if (tmax <= 22) return lerp(tmax, 14, 22, 0.3, 0.8);
+     if (tmax <= 28) return lerp(tmax, 22, 28, 0.8, 1.0);
+     if (tmax <= 31) return lerp(tmax, 28, 31, 1.0, 0.90);
+     if (tmax <= 34) return lerp(tmax, 31, 34, 0.90, 0.60);
+     if (tmax <= 37) return lerp(tmax, 34, 37, 0.60, 0.25);
+     if (tmax <= 40) return lerp(tmax, 37, 40, 0.25, 0.05);
+     return 0.0;
     }
     var temps = %s;
     console.log(JSON.stringify(temps.map(tIdeal)));
@@ -91,15 +98,21 @@ def test_raw_score():
     ]
 
     js_code = """
+    function lerp(x, x0, x1, y0, y1) {
+     if (x <= x0) return y0;
+     if (x >= x1) return y1;
+     return y0 + (y1 - y0) * ((x - x0) / (x1 - x0));
+    }
     function tIdeal(tmax) {
-     // Aligned with scoring.py t_ideal() — breakpoints 32/36/42
      if (tmax <= 5)  return 0.0;
-     if (tmax <= 14) return (tmax - 5) / 9 * 0.3;
-     if (tmax <= 22) return 0.3 + (tmax - 14) / 8 * 0.5;
-     if (tmax <= 28) return 0.8 + (tmax - 22) / 6 * 0.2;
-     if (tmax <= 32) return 1.0 - (tmax - 28) / 4 * 0.25;
-     if (tmax <= 36) return 0.75 - (tmax - 32) / 4 * 0.45;
-     return Math.max(0, 0.30 - (tmax - 36) / 6 * 0.30);
+     if (tmax <= 14) return lerp(tmax, 5, 14, 0.0, 0.3);
+     if (tmax <= 22) return lerp(tmax, 14, 22, 0.3, 0.8);
+     if (tmax <= 28) return lerp(tmax, 22, 28, 0.8, 1.0);
+     if (tmax <= 31) return lerp(tmax, 28, 31, 1.0, 0.90);
+     if (tmax <= 34) return lerp(tmax, 31, 34, 0.90, 0.60);
+     if (tmax <= 37) return lerp(tmax, 34, 37, 0.60, 0.25);
+     if (tmax <= 40) return lerp(tmax, 37, 40, 0.25, 0.05);
+     return 0.0;
     }
     function rawScoreFiche(tmax, rain, sun) {
      return 0.40 * tIdeal(tmax)
