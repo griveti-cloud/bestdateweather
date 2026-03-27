@@ -1924,6 +1924,7 @@ function run() {
  }
  var locP=selectedLoc?Promise.resolve(selectedLoc):geocode(city);
  locP.then(function(loc){
+  if (!selectedLoc) selectedLoc = loc;
  setP(5,loc.name+T.progFound);
  document.getElementById('r-loc').textContent=loc.name+' — '+(loc.country||'');
  document.getElementById('r-date').textContent=new Date(yr,mo,da,12,0,0).toLocaleDateString(CFG.dateLocale,{weekday:'long',day:'numeric',month:'long',year:'numeric'});
