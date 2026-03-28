@@ -45,7 +45,7 @@ DATA = os.path.join(DIR, 'data')
 # ── Version JS — source de vérité unique ───────────────────────────────────
 # Incrémenter ici + les fichiers index/app sont mis à jour automatiquement
 CORE_JS_VERSION = 29
-APP_CSS_VERSION  = 15   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
+APP_CSS_VERSION  = 16   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
 
 def _sync_core_version():
     """Propage CORE_JS_VERSION + APP_CSS_VERSION dans index.html et */app.html.
@@ -332,7 +332,7 @@ def head_css(cfg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="{font_url}"/></noscript>
-<link rel="stylesheet" href="{pfx}style.css?v=2"/>
+<link rel="stylesheet" href="{pfx}style.css?v=3"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''
@@ -628,18 +628,44 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     climate_trend_sec = _climate_trend_section(slug_fr, nom, lang=_lang_code,
                                                lat=float(dest['lat']), lon=float(dest['lon']))
 
-    # ── Seasonal analysis ──
-    season_rows = ''
+    # ── Seasonal analysis — 4 cards 2×2 visual ──
+    def _seas_cls(score):
+        if score >= 8.5: return 'seas-excellent'
+        if score >= 7.0: return 'seas-good'
+        if score >= 5.5: return 'seas-fair'
+        return 'seas-poor'
+
+    season_cards_html = ''
     for sname in C['season_order']:
-        s = seas[sname]
-        icon = SEASON_ICONS[sname]
+        s      = seas[sname]
+        icon   = SEASON_ICONS[sname]
         mrange = C['season_range'][sname]
-        season_rows += (f'<h3 class="sub-title">{icon} {sname} ({mrange}) — {s["verdict"]}</h3>'
-                        f'<p>{C["lbl_season_temp_tpl"].format(tmax=s["tmax"], rain=s["rain_pct"], sun=s["sun_h"], score=s["score"])}</p>\n')
+        cls    = _seas_cls(s['score'])
+        score_pct  = min(100, round(s['score'] / 10 * 100))
+        rain_pct   = min(100, int(s['rain_pct']))
+        sun_pct    = min(100, round(s['sun_h'] / 12 * 100))
+        season_cards_html += (
+            f'<div class="seas-card {cls}">'
+            f'<div class="seas-top">'
+            f'<span class="seas-emoji">{icon}</span>'
+            f'<div class="seas-title-block"><span class="seas-name">{sname}</span><span class="seas-range">{mrange}</span></div>'
+            f'<div class="seas-score-badge"><span class="seas-score-num">{s["score"]}</span><span class="seas-score-den">/10</span></div>'
+            f'</div>'
+            f'<div class="seas-temp-row"><span class="seas-temp-val">{s["tmax"]}°C</span><span class="seas-verdict-lbl">{s["verdict"]}</span></div>'
+            f'<div class="seas-bars">'
+            f'<div class="seas-bar-row"><span class="seas-bar-lbl">☀️ {s["sun_h"]}h/j</span>'
+            f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-sun" style="width:{sun_pct}%"></div></div></div>'
+            f'<div class="seas-bar-row"><span class="seas-bar-lbl">🌧️ {s["rain_pct"]}%</span>'
+            f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-rain" style="width:{rain_pct}%"></div></div></div>'
+            f'<div class="seas-bar-row"><span class="seas-bar-lbl">⭐ Score</span>'
+            f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-score" style="width:{score_pct}%"></div></div></div>'
+            f'</div>'
+            f'</div>'
+        )
     seasonal_section = f'''<section class="section">
  <div class="section-label">{C['lbl_season_section']}</div>
  <h2 class="section-title">{C['lbl_season_title']}</h2>
- {season_rows}
+ <div class="seas-grid">{season_cards_html}</div>
 </section>'''
 
     # ── Hotels.com (Expedia Group) ──
