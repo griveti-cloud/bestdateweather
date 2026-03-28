@@ -1959,6 +1959,14 @@ function run() {
  _histLoaded=false; _histLoading=false;
  var _hSec=document.getElementById('sec-history');
  if(_hSec){_hSec.style.display='';var _hCt=document.getElementById('hist-chart-container');if(_hCt)_hCt.innerHTML='<div class="hist-loader" style="text-align:center;padding:20px;color:#aaa;font-size:13px">⏳</div>';}
+ // Si le panel détails est déjà ouvert, relancer le fetch historique immédiatement
+ var _detailsPanel=document.getElementById('details-panel');
+ if(_detailsPanel && _detailsPanel.classList.contains('open') && selectedLoc && window._lastMo!=null && window._lastDa!=null){
+  _histLoading=true;
+  fetchHistoricalTemps(selectedLoc.lat,selectedLoc.lon,mo,da)
+   .then(function(data){_histLoaded=true;_histLoading=false;renderHistoricalChart(data);})
+   .catch(function(){_histLoading=false;if(_hSec)_hSec.style.display='none';});
+ }
  var today=new Date();today.setHours(0,0,0,0);
  var target=new Date(yr,mo,da,0,0,0);
  var diffDays=Math.round((target.getTime()-today.getTime())/86400000);
