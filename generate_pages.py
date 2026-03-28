@@ -1415,16 +1415,22 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     non_si = osi[key + '_no'].format(**fvars)
 
     # ── Month nav ──
-    MNAV_CLS = {'rec': 'mnav-rec', 'mid': 'mnav-mid', 'avoid': 'mnav-avoid'}
-    def _mnav_attr(i):
-        if i == mi:
-            return ' class="active"'
-        c = MNAV_CLS.get(months[i]['classe'], '')
-        return f' class="{c}"' if c else ''
+    MNAV_CLS = {'rec': 'month-btn-rec', 'mid': 'month-btn-mid', 'avoid': 'month-btn-avoid'}
+    def _mnav_item(i):
+        cls = MNAV_CLS.get(months[i]['classe'], 'month-btn-mid')
+        active = ' month-btn-active' if i == mi else ''
+        url = f'{slug}{C["monthly_sep"]}{C["month_url"][i]}.html'
+        emoji = weather_emoji(months[i]['tmax'], months[i]['rain_pct'], months[i]['sun_h'], months[i].get('precip'))
+        return (
+            f'<a href="{url}" class="month-btn {cls}{active}">'
+            f'<div class="mbtn-emoji">{emoji}</div>'
+            f'<div class="mbtn-name">{MONTHS[i]}</div>'
+            f'<div class="mbtn-temp">{fmt_temp(months[i]["tmax"], C)}</div>'
+            f'<div class="mbtn-score">{months[i]["score"]:.1f}</div>'
+            f'</a>'
+        )
 
-    month_nav = ''.join(
-        f'<a href="{slug}{C["monthly_sep"]}{C["month_url"][i]}.html"{_mnav_attr(i)}>{MABBR[i]}</a>'
-        for i in range(12))
+    month_nav = ''.join(_mnav_item(i) for i in range(12))
 
     # ── Annual table ──
     table_rows = ''
@@ -1915,10 +1921,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <style>
 .hero-band{{background:{MONTHLY_GRAD[mi]};}}
 .hero-title em{{color:#93c5fd;}}
-.month-nav{{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}}
-.month-nav a{{padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;background:white;border:1.5px solid #e8e0d0;color:var(--navy);}}
-.month-nav a.active{{background:var(--gold);color:white;border-color:var(--gold);}}
-.month-nav a:hover{{border-color:var(--gold);}}
+.month-btn-active{{box-shadow:0 0 0 3px var(--gold);}}
 .dest-search-section .section-label{{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}}
 .dest-search-wrap{{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;}}
 .dest-search-input-wrap{{flex:1;min-width:200px;position:relative;}}
@@ -2005,7 +2008,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <section class="section">
  <div class="section-label">{L['sec_nav']}</div>
  <h2 class="section-title">{L['sec_nav_title']}</h2>
- <div class="month-nav">{month_nav}</div>
+ <div class="grid-months">{month_nav}</div>
  </section>
 
  <section class="section dest-search-section">
