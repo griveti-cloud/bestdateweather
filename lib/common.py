@@ -511,28 +511,28 @@ def _mae_label(risk_level: int, lang: str = 'fr') -> tuple:
     """Return (label, color_class, icon) for a MAE risk level (1–4)."""
     data = {
         'fr': {
-            1: ('Vigilance normale',              'mae-1', '🟢'),
-            2: ('Vigilance renforcée',            'mae-2', '🟡'),
-            3: ('Déconseillé sauf impératif',     'mae-3', '🟠'),
-            4: ('Formellement déconseillé',        'mae-4', '🔴'),
+            1: ('Vigilance normale',     'mae-1', '🟢'),
+            2: ('Vigilance renforcée',   'mae-2', '🟡'),
+            3: ('Déconseillé',           'mae-3', '🟠'),
+            4: ('Formellement déconseillé', 'mae-4', '🔴'),
         },
         'en': {
-            1: ('Normal vigilance',               'mae-1', '🟢'),
-            2: ('Increased vigilance',            'mae-2', '🟡'),
-            3: ('Avoid if possible',              'mae-3', '🟠'),
-            4: ('Do not travel',                  'mae-4', '🔴'),
+            1: ('Normal vigilance',      'mae-1', '🟢'),
+            2: ('High vigilance',        'mae-2', '🟡'),
+            3: ('Avoid if possible',     'mae-3', '🟠'),
+            4: ('Do not travel',         'mae-4', '🔴'),
         },
         'es': {
-            1: ('Vigilancia normal',              'mae-1', '🟢'),
-            2: ('Vigilancia reforzada',           'mae-2', '🟡'),
-            3: ('Desaconsejado salvo imperativo', 'mae-3', '🟠'),
-            4: ('Formalmente desaconsejado',      'mae-4', '🔴'),
+            1: ('Vigilancia normal',     'mae-1', '🟢'),
+            2: ('Vigilancia reforzada',  'mae-2', '🟡'),
+            3: ('Desaconsejado',         'mae-3', '🟠'),
+            4: ('Formalmente desaconsejado', 'mae-4', '🔴'),
         },
         'de': {
-            1: ('Normale Wachsamkeit',            'mae-1', '🟢'),
-            2: ('Erhöhte Wachsamkeit',            'mae-2', '🟡'),
-            3: ('Nur bei zwingendem Grund',       'mae-3', '🟠'),
-            4: ('Dringend abgeraten',             'mae-4', '🔴'),
+            1: ('Normale Wachsamkeit',   'mae-1', '🟢'),
+            2: ('Erhöhte Wachsamkeit',   'mae-2', '🟡'),
+            3: ('Nicht empfohlen',       'mae-3', '🟠'),
+            4: ('Dringend abgeraten',    'mae-4', '🔴'),
         },
     }
     lang_key = 'fr' if lang == 'fr' else ('es' if lang == 'es' else ('de' if lang == 'de' else 'en'))
