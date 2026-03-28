@@ -330,21 +330,11 @@ def climate_table_html(months, nom, is_mountain=False, L=None):
             ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
             cls = best_class(m['classe'], ski)
             ski_col = f'<td>{ski:.1f}/10</td>'
-        # Indicateur chaleur dans la colonne tmax
-        tmax_val = m['tmax']
-        if tmax_val >= 38:
-            heat_icon = ' <span title="Chaleur très intense" style="color:#f59e0b;font-size:.85em">🌡️</span>'
-        elif tmax_val >= 35:
-            heat_icon = ' <span title="Chaleur élevée" style="color:#f59e0b;font-size:.85em">🥵</span>'
-        elif tmax_val >= 33:
-            heat_icon = ' <span title="Chaleur notable" style="color:#f59e0b;font-size:.85em">☀️</span>'
-        else:
-            heat_icon = ''
         rows += (f'<tr class="{cls}" data-tmax="{m["tmax"]}" '
                  f'data-rain="{m["rain_pct"]}" data-sun="{m["sun_h"]}">'
                  f'<td>{weather_emoji(m["tmax"], m["rain_pct"], m["sun_h"], m.get("precip"))} {L["months"][i]}</td>'
                  f'<td data-label="{L["th_tmin"]}">{fmt_temp(m["tmin"], L)}</td>'
-                 f'<td data-label="{L["th_tmax"]}">{fmt_temp(m["tmax"], L)}{heat_icon}</td>'
+                 f'<td data-label="{L["th_tmax"]}">{fmt_temp(m["tmax"], L)}</td>'
                  f'<td data-label="{L["th_rain"]}">{m["rain_pct"]}%</td>'
                  f'<td data-label="{L["th_precip"]}">{fmt_precip(m["precip"], L)}</td>'
                  f'<td data-label="{L["th_sun"]}">{m["sun_h"]}h</td>'
