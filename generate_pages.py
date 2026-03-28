@@ -1881,8 +1881,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     _month_lc_m  = month_lc(cfg, month)
     _pb_label_m  = cfg.get('lbl_plan_bar', 'Planifier votre voyage')
     _pb_hotel_m  = cfg.get('lbl_plan_hotel', '🏨 ' + cfg.get('lbl_booking_btn', 'Hébergement'))
-    _pb_activ_m  = f"🎟️ {cfg.get('lbl_chip_activ', 'Activités')} – {_month_lc_m}"
-    _pb_flight_m = f"✈️ {cfg.get('lbl_chip_flight', 'Vols')} – {_month_lc_m}"
+    _pb_activ_m  = cfg.get('lbl_plan_activ', '🎟️ ' + cfg.get('lbl_chip_activ', 'Activités'))
+    _pb_flight_m = cfg.get('lbl_plan_flight', '✈️ ' + cfg.get('lbl_chip_flight', 'Vols'))
     plan_bar_m = f'''<div class="plan-bar">
 <span class="plan-bar-label">{_pb_label_m}</span>
 <a href="{bk_url}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">{_pb_hotel_m}</a>
