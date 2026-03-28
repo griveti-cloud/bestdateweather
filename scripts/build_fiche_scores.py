@@ -76,12 +76,18 @@ def build_tropical_keys(dests):
 
 
 def inject_into_core_js(fiche, tropical):
-    """Replace FICHE_SCORES and TROPICAL_KEYS blocks in core.js."""
-    js = CORE_JS.read_text(encoding='utf-8')
+    """Write FICHE_SCORES to js/fiche-scores.js (and copy to js/fiche-slugs.js is not needed here)."""
+    root = CORE_JS.parent
+    fiche_js = root / 'fiche-scores.js'
 
     # Build FICHE_SCORES line
     fiche_json = json.dumps(fiche, separators=(',', ':'))
-    new_fiche = f'var FICHE_SCORES = {fiche_json};'
+    new_fiche = f'var FICHE_SCORES = {fiche_json};\n'
+
+    fiche_js.write_text(new_fiche, encoding='utf-8')
+
+    # Also update TROPICAL_KEYS in core.js if present
+    js = CORE_JS.read_text(encoding='utf-8')
 
     # Build TROPICAL_KEYS block
     lines = ['var TROPICAL_KEYS = {']
@@ -90,21 +96,11 @@ def inject_into_core_js(fiche, tropical):
     lines.append('};')
     new_tropical = '\n'.join(lines)
 
-    # Replace FICHE_SCORES (single line)
-    pattern_fiche = r'var FICHE_SCORES = \{.*?\};'
-    if not re.search(pattern_fiche, js):
-        print("ERROR: FICHE_SCORES block not found in core.js")
-        sys.exit(1)
-    js = re.sub(pattern_fiche, new_fiche, js, count=1)
-
     # Replace TROPICAL_KEYS (multiline block)
     pattern_tropical = r'var TROPICAL_KEYS = \{[^}]*\};'
-    if not re.search(pattern_tropical, js, re.DOTALL):
-        print("ERROR: TROPICAL_KEYS block not found in core.js")
-        sys.exit(1)
-    js = re.sub(pattern_tropical, new_tropical, js, count=1, flags=re.DOTALL)
-
-    CORE_JS.write_text(js, encoding='utf-8')
+    if re.search(pattern_tropical, js, re.DOTALL):
+        js = re.sub(pattern_tropical, new_tropical, js, count=1, flags=re.DOTALL)
+        CORE_JS.write_text(js, encoding='utf-8')
 
 
 def main():

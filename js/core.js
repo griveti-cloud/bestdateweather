@@ -1083,7 +1083,193 @@ var UC_CONFIG = {
 
 // Clés lat,lon des destinations à régime mousson.
 // scoring.py : TROPICAL_DESTINATIONS — synchroniser à chaque ajout.
-var TROPICAL_KEYS = {"-8.67,115.21":true,"13.75,100.52":true,"9.93,-84.08":true,"15.49,73.82":true,"15.88,108.33":true,"-20.35,57.55":true,"18.1,-77.3":true,"23.14,-82.36":true,"3.2,73.22":true,"7.88,98.39":true,"-21.11,55.54":true,"-22.9,-43.17":true,"20.62,-87.08":true,"-4.68,55.49":true,"13.36,103.86":true,"1.35,103.82":true,"-6.16,39.2":true,"13.19,-59.54":true,"-1.29,36.82":true,"-18.88,47.51":true,"18.79,98.98":true,"9.51,100.06":true,"21.03,105.85":true,"10.82,106.63":true,"22.32,114.17":true,"14.6,120.98":true,"3.14,101.69":true,"26.92,75.79":true,"7.87,80.77":true,"16.25,-61.55":true,"14.64,-61.02":true,"18.47,-69.9":true,"18.58,-68.4":true,"4.6,-74.08":true,"-17.53,-149.57":true,"-16.5,-151.74":true,"14.5,-14.45":true,"14.93,-23.51":true,"-6.37,35.75":true,"8.09,98.91":true,"7.53,99.04":true,"20.91,107.18":true,"16.05,108.22":true,"10.23,103.97":true,"-8.65,116.32":true,"-7.8,110.36":true,"-8.51,115.26":true,"10.21,118.99":true,"19.86,102.14":true,"10.85,76.27":true,"28.61,77.21":true,"25.05,-77.35":true,"13.91,-60.98":true,"18.07,-63.05":true,"20.63,-87.08":true,"20.65,-105.23":true,"8.98,-79.52":true,"6.25,-75.56":true,"-0.95,-90.97":true,"-17.71,177.99":true,"-22.28,166.46":true,"-12.78,45.23":true,"25.03,121.57":true,"17.9,-62.83":true,"11.19,119.39":true,"12.57,104.99":true,"7.74,98.78":true,"10.1,99.84":true,"12.93,100.88":true,"-8.35,116.04":true,"-8.73,115.54":true,"-8.55,119.49":true,"26.33,127.8":true,"10.32,123.89":true,"11.97,121.92":true,"6.35,99.73":true,"5.42,100.33":true,"16.87,96.2":true,"19.89,102.13":true,"12.17,-68.98":true,"12.51,-69.97":true,"18.47,-66.11":true,"10.65,-61.5":true,"17.12,-61.85":true,"17.06,-96.73":true,"14.63,-90.51":true,"17.25,-88.77":true,"12.11,-86.27":true,"-0.18,-78.47":true,"-16.92,145.77":true,"-19.72,63.43":true,"-13.33,48.27":true,"11.94,108.44":true,"-8.66,115.13":true,"4.94,-52.33":true,"-4.28,39.58":true,"14.69,-17.44":true,"12.24,109.19":true,"9.85,126.05":true,"4.97,115.06":true,"22.2,113.54":true,"11.56,104.92":true,"4.71,-74.07":true,"21.52,-87.38":true,"-4.04,39.67":true,"5.56,-0.19":true,"5.36,-4.01":true,"-1.94,30.06":true,"-6.16,39.19":true,"0.35,32.58":true,"6.52,3.38":true,"-6.79,39.28":true,"19.08,72.88":true,"6.93,79.84":true,"-12.97,-38.51":true,"10.39,-75.51":true,"25.05,-77.34":true,"21.77,-72.34":true,"-12.46,130.84":true,"-13.83,-171.76":true,"-17.73,168.32":true,"-21.21,-175.15":true,"16.46,107.6":true,"-25.97,32.57":true,"11.93,79.83":true,"21.31,-157.86":true,"-21.24,-159.78":true,"-25.69,-54.44":true,"10.31,-84.82":true,"8.48,-13.23":true,"12.37,-1.52":true,"6.37,2.39":true,"6.13,1.22":true,"4.05,9.77":true,"0.42,33.21":true,"-2.27,40.9":true,"-23.75,35.54":true,"-0.23,130.52":true,"-8.49,119.88":true,"19.91,99.83":true,"20.25,105.97":true,"12.0,120.2":true,"13.1,103.2":true,"17.1,121.55":true,"22.63,120.3":true,"15.33,76.46":true,"9.93,76.26":true,"6.87,81.05":true,"20.8,-156.32":true,"15.41,-61.37":true,"12.14,-68.26":true,"13.01,-61.23":true,"16.32,-86.53":true,"11.93,-85.96":true,"-3.12,-60.02":true,"-20.28,148.95":true,"-17.53,-149.83":true,"-6.31,147.18":true,"16.73,-22.93":true,"12.47,53.87":true,"17.97,102.6":true,"12.57,99.96":true,"12.07,102.33":true,"-0.39,9.45":true,"13.45,-16.57":true,"9.07,7.4":true,"6.69,-1.62":true,"-3.35,37.34":true,"0.06,32.46":true,"-12.45,-41.42":true,"-1.46,-48.5":true,"-5.79,-35.21":true,"19.31,-81.25":true,"18.34,-64.93":true,"13.15,-61.2":true,"13.35,-81.37":true,"2.19,102.25":true,"5.98,116.07":true,"15.86,-97.07":true,"20.97,-89.62":true,"10.94,108.29":true,"13.77,109.23":true,"7.51,134.58":true,"4.6,101.07":true,"21.8,-79.98":true};
+var TROPICAL_KEYS = {
+ "-0.18,-78.47": true, // Équateur
+ "-0.23,130.52": true, // Raja Ampat
+ "-0.39,9.45": true, // Libreville
+ "-0.95,-90.97": true, // Galápagos
+ "-1.29,36.82": true, // Kenya
+ "-1.46,-48.5": true, // Belém
+ "-1.94,30.06": true, // Kigali
+ "-12.45,-41.42": true, // Chapada Diamantina
+ "-12.46,130.84": true, // Darwin
+ "-12.78,45.23": true, // Mayotte
+ "-12.97,-38.51": true, // Salvador de Bahia
+ "-13.33,48.27": true, // Nosy Be
+ "-13.83,-171.76": true, // Samoa
+ "-16.5,-151.74": true, // Bora Bora
+ "-16.92,145.77": true, // Cairns
+ "-17.53,-149.57": true, // Tahiti
+ "-17.53,-149.83": true, // Moorea
+ "-17.71,177.99": true, // Fidji
+ "-17.73,168.32": true, // Vanuatu
+ "-18.88,47.51": true, // Madagascar
+ "-19.72,63.43": true, // Rodrigues
+ "-2.27,40.9": true, // Lamu
+ "-20.28,148.95": true, // Whitsundays
+ "-20.35,57.55": true, // Île Maurice
+ "-21.11,55.54": true, // La Réunion
+ "-21.21,-175.15": true, // Tonga
+ "-21.24,-159.78": true, // Îles Cook
+ "-22.28,166.46": true, // Nouméa
+ "-22.9,-43.17": true, // Rio de Janeiro
+ "-23.75,35.54": true, // Tofo
+ "-25.69,-54.44": true, // Iguazú
+ "-25.97,32.57": true, // Maputo
+ "-3.12,-60.02": true, // Manaus
+ "-3.35,37.34": true, // Moshi
+ "-4.04,39.67": true, // Mombasa
+ "-4.28,39.58": true, // Diani Beach
+ "-4.68,55.49": true, // Seychelles
+ "-5.79,-35.21": true, // Natal
+ "-6.16,39.19": true, // Stone Town
+ "-6.16,39.2": true, // Zanzibar
+ "-6.31,147.18": true, // Papouasie-Nouvelle-Guinée
+ "-6.37,35.75": true, // Tanzanie
+ "-6.79,39.28": true, // Dar es Salaam
+ "-7.8,110.36": true, // Yogyakarta
+ "-8.35,116.04": true, // Îles Gili
+ "-8.49,119.88": true, // Labuan Bajo
+ "-8.51,115.26": true, // Ubud
+ "-8.55,119.49": true, // Komodo
+ "-8.65,116.32": true, // Lombok
+ "-8.66,115.13": true, // Canggu
+ "-8.67,115.21": true, // Bali
+ "-8.73,115.54": true, // Nusa Penida
+ "0.06,32.46": true, // Entebbe
+ "0.35,32.58": true, // Kampala
+ "0.42,33.21": true, // Jinja
+ "1.35,103.82": true, // Singapour
+ "10.1,99.84": true, // Koh Tao
+ "10.21,118.99": true, // Palawan
+ "10.23,103.97": true, // Phú Quốc
+ "10.31,-84.82": true, // Monteverde
+ "10.32,123.89": true, // Cebu
+ "10.39,-75.51": true, // Carthagène des Indes
+ "10.65,-61.5": true, // Trinité-et-Tobago
+ "10.82,106.63": true, // Hô Chi Minh-Ville
+ "10.85,76.27": true, // Kerala
+ "10.94,108.29": true, // Mui Ne
+ "11.19,119.39": true, // El Nido
+ "11.56,104.92": true, // Phnom Penh
+ "11.93,-85.96": true, // Granada (Nicaragua)
+ "11.93,79.83": true, // Pondichéry
+ "11.94,108.44": true, // Đà Lạt
+ "11.97,121.92": true, // Boracay
+ "12.0,120.2": true, // Coron
+ "12.07,102.33": true, // Koh Chang
+ "12.11,-86.27": true, // Nicaragua
+ "12.14,-68.26": true, // Bonaire
+ "12.17,-68.98": true, // Curaçao
+ "12.24,109.19": true, // Nha Trang
+ "12.37,-1.52": true, // Ouagadougou
+ "12.47,53.87": true, // Socotra
+ "12.51,-69.97": true, // Aruba
+ "12.57,104.99": true, // Cambodge
+ "12.57,99.96": true, // Hua Hin
+ "12.93,100.88": true, // Pattaya
+ "13.01,-61.23": true, // Grenadines
+ "13.1,103.2": true, // Battambang
+ "13.15,-61.2": true, // Saint-Vincent
+ "13.19,-59.54": true, // Barbade
+ "13.35,-81.37": true, // Providencia
+ "13.36,103.86": true, // Siem Reap
+ "13.45,-16.57": true, // Banjul
+ "13.75,100.52": true, // Bangkok
+ "13.77,109.23": true, // Quy Nhon
+ "13.91,-60.98": true, // Sainte-Lucie
+ "14.5,-14.45": true, // Sénégal
+ "14.6,120.98": true, // Manille
+ "14.63,-90.51": true, // Guatemala
+ "14.64,-61.02": true, // Martinique
+ "14.69,-17.44": true, // Dakar
+ "14.93,-23.51": true, // Cap-Vert
+ "15.33,76.46": true, // Hampi
+ "15.41,-61.37": true, // Dominique
+ "15.49,73.82": true, // Goa
+ "15.86,-97.07": true, // Puerto Escondido
+ "15.88,108.33": true, // Hôi An
+ "16.05,108.22": true, // Da Nang
+ "16.25,-61.55": true, // Guadeloupe
+ "16.32,-86.53": true, // Roatán
+ "16.46,107.6": true, // Hué
+ "16.73,-22.93": true, // Sal
+ "16.87,96.2": true, // Yangon
+ "17.06,-96.73": true, // Oaxaca
+ "17.1,121.55": true, // Luzon Nord
+ "17.12,-61.85": true, // Antigua
+ "17.25,-88.77": true, // Belize
+ "17.9,-62.83": true, // Saint-Barthélemy
+ "17.97,102.6": true, // Vientiane
+ "18.07,-63.05": true, // Saint-Martin
+ "18.1,-77.3": true, // Jamaïque
+ "18.34,-64.93": true, // Saint Thomas
+ "18.47,-66.11": true, // San Juan
+ "18.47,-69.9": true, // République Dominicaine
+ "18.58,-68.4": true, // Punta Cana
+ "18.79,98.98": true, // Chiang Mai
+ "19.08,72.88": true, // Mumbai
+ "19.31,-81.25": true, // Îles Caïmans
+ "19.86,102.14": true, // Laos
+ "19.89,102.13": true, // Luang Prabang
+ "19.91,99.83": true, // Chiang Rai
+ "2.19,102.25": true, // Malacca
+ "20.25,105.97": true, // Ninh Binh
+ "20.62,-87.08": true, // Riviera Maya
+ "20.63,-87.08": true, // Playa del Carmen
+ "20.65,-105.23": true, // Puerto Vallarta
+ "20.8,-156.32": true, // Maui
+ "20.91,107.18": true, // Baie d'Hạ Long
+ "20.97,-89.62": true, // Mérida
+ "21.03,105.85": true, // Hanoï
+ "21.31,-157.86": true, // Honolulu
+ "21.52,-87.38": true, // Holbox
+ "21.77,-72.34": true, // Turks-et-Caïcos
+ "21.8,-79.98": true, // Trinidad
+ "22.2,113.54": true, // Macao
+ "22.32,114.17": true, // Hong Kong
+ "22.63,120.3": true, // Kaohsiung
+ "23.14,-82.36": true, // La Havane
+ "25.03,121.57": true, // Taipei
+ "25.05,-77.34": true, // Nassau
+ "25.05,-77.35": true, // Bahamas
+ "26.33,127.8": true, // Okinawa
+ "26.92,75.79": true, // Rajasthan
+ "28.61,77.21": true, // Delhi
+ "3.14,101.69": true, // Kuala Lumpur
+ "3.2,73.22": true, // Maldives
+ "4.05,9.77": true, // Douala
+ "4.6,-74.08": true, // Colombie
+ "4.6,101.07": true, // Ipoh
+ "4.71,-74.07": true, // Bogota
+ "4.94,-52.33": true, // Guyane
+ "4.97,115.06": true, // Bornéo
+ "5.36,-4.01": true, // Abidjan
+ "5.42,100.33": true, // Penang
+ "5.56,-0.19": true, // Accra
+ "5.98,116.07": true, // Kota Kinabalu
+ "6.13,1.22": true, // Lomé
+ "6.25,-75.56": true, // Medellín
+ "6.35,99.73": true, // Langkawi
+ "6.37,2.39": true, // Cotonou
+ "6.52,3.38": true, // Lagos
+ "6.69,-1.62": true, // Kumasi
+ "6.87,81.05": true, // Ella
+ "6.93,79.84": true, // Colombo
+ "7.51,134.58": true, // Palaos
+ "7.53,99.04": true, // Koh Lanta
+ "7.74,98.78": true, // Koh Phi Phi
+ "7.87,80.77": true, // Sri Lanka
+ "7.88,98.39": true, // Phuket
+ "8.09,98.91": true, // Krabi
+ "8.48,-13.23": true, // Freetown
+ "8.98,-79.52": true, // Panama
+ "9.07,7.4": true, // Abuja
+ "9.51,100.06": true, // Koh Samui
+ "9.85,126.05": true, // Siargao
+ "9.93,-84.08": true, // Costa Rica
+ "9.93,76.26": true, // Kochi
+};
 
 // Plages score par classe — scoring.py : SCORE_RANGES
 var SCORE_RANGES_FICHE = { avoid:[0.5,3.9], mid:[4.0,6.9], rec:[7.0,10.0] };
