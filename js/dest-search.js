@@ -25,9 +25,11 @@ window.initDestSearch = function(cfg) {
       var d = suggestions[slug];
       var name = d[lang] || d.fr || d.en || '';
       var nameNorm = normStr(name);
-      // Match at start of name, or after an article (la/le/les), or at start of any word
+      // Strip French definite articles from original name before normalizing
+      var nameNoArticle = name.replace(/^(les |le |la |l'|l')/i, '');
+      var nameStripped = normStr(nameNoArticle);
       var matchesStart = nameNorm.indexOf(qNorm) === 0;
-      var matchesAfterArticle = /^(la|le|les|l)/.test(nameNorm) && nameNorm.replace(/^(la|le|les|l)/, '').indexOf(qNorm) === 0;
+      var matchesAfterArticle = nameNoArticle !== name && nameStripped.indexOf(qNorm) === 0;
       if (matchesStart || matchesAfterArticle) {
         results.push({slug:slug, name:name, flag:d.flag});
       }
