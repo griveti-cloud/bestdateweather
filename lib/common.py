@@ -507,6 +507,39 @@ def _gpi_label(gpi: float, lang: str = 'fr') -> tuple:
     return labels.get(lang, labels['en'])[-1][1], labels.get(lang, labels['en'])[-1][2]
 
 
+def _mae_label(risk_level: int, lang: str = 'fr') -> tuple:
+    """Return (label, color_class, icon) for a MAE risk level (1–4)."""
+    data = {
+        'fr': {
+            1: ('Vigilance normale',              'mae-1', '🟢'),
+            2: ('Vigilance renforcée',            'mae-2', '🟡'),
+            3: ('Déconseillé sauf impératif',     'mae-3', '🟠'),
+            4: ('Formellement déconseillé',        'mae-4', '🔴'),
+        },
+        'en': {
+            1: ('Normal vigilance',               'mae-1', '🟢'),
+            2: ('Increased vigilance',            'mae-2', '🟡'),
+            3: ('Avoid if possible',              'mae-3', '🟠'),
+            4: ('Do not travel',                  'mae-4', '🔴'),
+        },
+        'es': {
+            1: ('Vigilancia normal',              'mae-1', '🟢'),
+            2: ('Vigilancia reforzada',           'mae-2', '🟡'),
+            3: ('Desaconsejado salvo imperativo', 'mae-3', '🟠'),
+            4: ('Formalmente desaconsejado',      'mae-4', '🔴'),
+        },
+        'de': {
+            1: ('Normale Wachsamkeit',            'mae-1', '🟢'),
+            2: ('Erhöhte Wachsamkeit',            'mae-2', '🟡'),
+            3: ('Nur bei zwingendem Grund',       'mae-3', '🟠'),
+            4: ('Dringend abgeraten',             'mae-4', '🔴'),
+        },
+    }
+    lang_key = 'fr' if lang == 'fr' else ('es' if lang == 'es' else ('de' if lang == 'de' else 'en'))
+    lvl = max(1, min(4, risk_level))
+    return data[lang_key][lvl]
+
+
 def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) -> str:
     """
     Generates the Essential Travel Info widget for a destination page.
@@ -605,16 +638,17 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
         f'</div>'
     )
 
-    # Safety chip
+    # Safety chip — MAE advisory level (primary) + GPI (subtitle)
+    risk_level = info.get('risk_level', 1)
     gpi = info.get('gpi', 2.0)
     gpi_year = info.get('gpi_year', 2024)
-    safety_label, safety_cls = _gpi_label(gpi, 'fr' if lang == 'fr' else 'en')
+    mae_label, mae_cls, mae_icon = _mae_label(risk_level, lang)
     safety_html = (
-        f'<div class="ti-chip ti-chip--{safety_cls}">'
+        f'<div class="ti-chip ti-chip--{mae_cls}">'
         f'<div class="ti-chip-label">{lbl["safety"]}</div>'
         f'<div class="ti-chip-row">'
-        f'<span class="ti-chip-icon">🛡️</span>'
-        f'<span class="ti-chip-val ti-chip-val--{safety_cls}">{safety_label}</span>'
+        f'<span class="ti-chip-icon">{mae_icon}</span>'
+        f'<span class="ti-chip-val ti-chip-val--{mae_cls}">{mae_label}</span>'
         f'</div>'
         f'<div class="ti-chip-sub">GPI {gpi:.2f}</div>'
         f'</div>'
@@ -636,10 +670,17 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
     )
 
     # Safety detail box
+    mae_source_lbl = {
+        'fr': 'Conseils aux voyageurs — Ministère des Affaires Étrangères',
+        'en': 'Travel advisories — French Ministry of Foreign Affairs',
+        'en-us': 'Travel advisories — French Ministry of Foreign Affairs',
+        'es': 'Consejos al viajero — Ministerio francés de Asuntos Exteriores',
+        'de': 'Reisehinweise — Französisches Außenministerium',
+    }
     safety_detail = (
         f'<div class="ti-safety-detail">'
-        f'<span class="ti-safety-note">{lbl["gpi_note"]}</span>'
-        f'<span class="ti-safety-source">{lbl["source"]} ({gpi_year})</span>'
+        f'<span class="ti-safety-note">{mae_source_lbl.get(lang, mae_source_lbl["en"])}</span>'
+        f'<span class="ti-safety-source">{lbl["gpi_note"]} ({gpi_year})</span>'
         f'</div>'
     )
 

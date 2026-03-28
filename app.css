@@ -1006,6 +1006,14 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .ti-chip-val--safe-low{color:#a16207}
 .ti-chip-val--safe-warn{color:#c2410c}
 .ti-chip-val--safe-danger{color:#dc2626}
+.ti-chip--mae-1{background:#f0fdf4;border-color:#bbf7d0}
+.ti-chip--mae-2{background:#fffbeb;border-color:#fde68a}
+.ti-chip--mae-3{background:#fff7ed;border-color:#fdba74}
+.ti-chip--mae-4{background:#fef2f2;border-color:#fecaca}
+.ti-chip-val--mae-1{color:#15803d}
+.ti-chip-val--mae-2{color:#92400e}
+.ti-chip-val--mae-3{color:#c2410c}
+.ti-chip-val--mae-4{color:#dc2626}
 .ti-safety-detail{background:var(--cream);border-radius:8px;padding:9px 12px;border:1px solid var(--cream2);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .ti-safety-note{font-size:11px;color:var(--slate2);flex:1;min-width:0}
 .ti-safety-source{font-size:10px;color:var(--slate3);white-space:nowrap}
