@@ -332,7 +332,7 @@ def head_css(cfg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="{font_url}"/></noscript>
-<link rel="stylesheet" href="{pfx}style.css?v=5"/>
+<link rel="stylesheet" href="{pfx}style.css?v=6"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''
@@ -1983,13 +1983,37 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <div class="section-label">{L['sec_summary']}</div>
  <h2 class="section-title">{L['sec_summary_title']}</h2>
  <div class="verdict-badge" style="background:{bg};color:{txt};border:1.5px solid {txt}">{verdict_lbl}</div>
- <div class="quick-facts">
- <div class="quick-facts-row"><div class="qf-label">🌡️ {L['qf_tminmax']}</div><div class="qf-value"><strong>{fmt_temp(m['tmin'], C)} – {fmt_temp(m['tmax'], C)}</strong></div></div>
- <div class="quick-facts-row"><div class="qf-label">🌧 {L['qf_rain']}</div><div class="qf-value"><strong>{m['rain_pct']}%</strong> {L['qf_rain_unit']}</div></div>
- <div class="quick-facts-row"><div class="qf-label">☀️ {L['qf_sun']}</div><div class="qf-value"><strong>{m['sun_h']}h</strong> {L['qf_sun_unit']}</div></div>
- <div class="quick-facts-row"><div class="qf-label">🌊 {L['qf_season']}</div><div class="qf-value"><strong>{season}</strong></div></div>
- <div class="quick-facts-row"><div class="qf-label">⭐ {L['qf_score']}</div><div class="qf-value"><strong>{score:.1f}/10</strong></div></div>
- <div class="quick-facts-row"><div class="qf-label">📅 {L['qf_best']}</div><div class="qf-value"><strong>{best_month}</strong> ({best_score:.1f}/10)</div></div>
+ <div class="stat-grid">
+   <div class="stat-chip">
+     <div class="stat-icon">🌡️</div>
+     <div class="stat-val">{fmt_temp(m['tmin'], C)}–{fmt_temp(m['tmax'], C)}</div>
+     <div class="stat-lbl">{L['qf_tminmax']}</div>
+   </div>
+   <div class="stat-chip">
+     <div class="stat-icon">🌧️</div>
+     <div class="stat-val">{m['rain_pct']}%</div>
+     <div class="stat-lbl">{L['qf_rain']}</div>
+   </div>
+   <div class="stat-chip">
+     <div class="stat-icon">☀️</div>
+     <div class="stat-val">{m['sun_h']}h</div>
+     <div class="stat-lbl">{L['qf_sun']}</div>
+   </div>
+   <div class="stat-chip stat-chip-wide">
+     <div class="stat-icon">⭐</div>
+     <div class="stat-val">{score:.1f}<span class="stat-val-sub">/10</span></div>
+     <div class="stat-lbl">{L['qf_score']}</div>
+   </div>
+   <div class="stat-chip stat-chip-wide">
+     <div class="stat-icon">📅</div>
+     <div class="stat-val">{best_month}</div>
+     <div class="stat-lbl">{L['qf_best']}</div>
+   </div>
+   <div class="stat-chip stat-chip-wide">
+     <div class="stat-icon">🌊</div>
+     <div class="stat-val">{season}</div>
+     <div class="stat-lbl">{L['qf_season']}</div>
+   </div>
  </div>
  </section>
 
