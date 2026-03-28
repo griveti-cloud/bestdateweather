@@ -24,7 +24,11 @@ window.initDestSearch = function(cfg) {
     Object.keys(suggestions).forEach(function(slug) {
       var d = suggestions[slug];
       var name = d[lang] || d.fr || d.en || '';
-      if (normStr(name).indexOf(qNorm) === 0) {
+      var nameNorm = normStr(name);
+      // Match at start of name, or after an article (la/le/les), or at start of any word
+      var matchesStart = nameNorm.indexOf(qNorm) === 0;
+      var matchesAfterArticle = /^(la|le|les|l)/.test(nameNorm) && nameNorm.replace(/^(la|le|les|l)/, '').indexOf(qNorm) === 0;
+      if (matchesStart || matchesAfterArticle) {
         results.push({slug:slug, name:name, flag:d.flag});
       }
     });
