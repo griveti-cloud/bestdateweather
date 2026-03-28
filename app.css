@@ -1020,3 +1020,16 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .ti-chip-val--budget-3{color:#a16207}
 .ti-chip-val--budget-4{color:#c2410c}
 .ti-chip-val--budget-5{color:#7c3aed}
+
+/* ── Climate Trend Section ── */
+.ct-section{margin-top:8px}
+.ct-chart-wrap{background:white;border-radius:var(--r);padding:16px 12px 8px;border:1.5px solid var(--cream2);margin-bottom:10px}
+.ct-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;padding:0 4px}
+.ct-leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--slate2)}
+.ct-leg-line{display:inline-block;width:20px;height:2.5px;border-radius:2px;flex-shrink:0}
+.ct-leg-line--dash{background:repeating-linear-gradient(90deg,#a3a3a3 0,#a3a3a3 4px,transparent 4px,transparent 6px) !important}
+.ct-cmip6{display:flex;align-items:center;gap:8px;background:var(--cream);border:1.5px solid var(--cream2);border-radius:10px;padding:10px 14px;margin-bottom:10px;flex-wrap:wrap}
+.ct-cmip6-label{font-size:11px;font-weight:700;color:var(--slate2);text-transform:uppercase;letter-spacing:.4px}
+.ct-cmip6-val{font-size:18px;font-weight:800;line-height:1}
+.ct-cmip6-unit{font-size:11px;color:var(--slate3)}
+.ct-note{font-size:10px;color:var(--slate3);text-align:right}

@@ -29,7 +29,8 @@ from lib.common import (score_badge as _score_badge, best_months as _best_months
                         budget_tier as _budget_tier, seasonal_stats as _seasonal_stats,
                         bar_chart, climate_table_html as _climate_table_html,
                         weather_emoji, build_lang, fmt_temp, fmt_precip, fill_tpl, c_to_f,
-                        travel_info_widget as _travel_info_widget)
+                        travel_info_widget as _travel_info_widget,
+                        climate_trend_section as _climate_trend_section)
 from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
                               dest_country, annual_url, monthly_url,
                               annual_url_cross, monthly_url_cross, hero_sub as _hero_sub,
@@ -44,7 +45,7 @@ DATA = os.path.join(DIR, 'data')
 # ── Version JS — source de vérité unique ───────────────────────────────────
 # Incrémenter ici + les fichiers index/app sont mis à jour automatiquement
 CORE_JS_VERSION = 29
-APP_CSS_VERSION  = 6   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
+APP_CSS_VERSION  = 7   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
 
 def _sync_core_version():
     """Propage CORE_JS_VERSION + APP_CSS_VERSION dans index.html et */app.html.
@@ -623,6 +624,10 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     _pays = dest.get('pays', '')
     travel_info_section = _travel_info_widget(_pays, nom, lang=_lang_code)
 
+    # ── Climate Trend Section ──
+    climate_trend_sec = _climate_trend_section(slug_fr, nom, lang=_lang_code,
+                                               lat=float(dest['lat']), lon=float(dest['lon']))
+
     # ── Seasonal analysis ──
     season_rows = ''
     for sname in C['season_order']:
@@ -1058,6 +1063,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 
 {table_section}
 {travel_info_section}
+{climate_trend_sec}
 {seasonal_section}
 {booking_section}
 {activities_section}

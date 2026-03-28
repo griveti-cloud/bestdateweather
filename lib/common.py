@@ -656,3 +656,175 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
         f'{safety_detail}'
         f'</section>'
     )
+
+
+# ── Climate Trend SVG ─────────────────────────────────────────────────────────
+
+_CLIMATE_TREND = None
+
+def _load_climate_trend():
+    global _CLIMATE_TREND
+    if _CLIMATE_TREND is None:
+        p = _os.path.join(_os.path.dirname(__file__), '..', 'data', 'climate_trend.json')
+        if _os.path.exists(p):
+            _CLIMATE_TREND = _json.load(open(p, encoding='utf-8'))
+        else:
+            _CLIMATE_TREND = {}
+    return _CLIMATE_TREND
+
+
+def climate_trend_section(slug_fr: str, nom: str, lang: str = 'fr', C: dict = None,
+                           lat: float = None, lon: float = None) -> str:
+    """
+    Generates climate trend section with SVG chart + CMIP6 rate.
+    Supports both slug_fr keys and lat/lon coord keys.
+    Returns empty string if data unavailable.
+    """
+    db = _load_climate_trend()
+    # Try coord key first (format: "lat,lon" with 2 decimals)
+    trend = None
+    if lat is not None and lon is not None:
+        coord_key = f"{float(lat):.2f},{float(lon):.2f}"
+        trend = db.get(coord_key)
+    if trend is None:
+        trend = db.get(slug_fr)
+    if not trend:
+        return ''
+
+    # Support both formats:
+    # New: {years:[...], tmax:[...], tmin:[...], tmoy:[...], cmip6_rate: X}
+    # Old: {annual: {"2016": {tmax, tmin, tmean}, ...}, cmip6_trend_per_decade: X}
+    if 'annual' in trend:
+        ann = trend['annual']
+        years = sorted(int(y) for y in ann.keys())
+        tmax  = [ann[str(y)]['tmax']  for y in years]
+        tmin  = [ann[str(y)]['tmin']  for y in years]
+        tmoy  = [ann[str(y)]['tmean'] for y in years]
+        cmip6 = trend.get('cmip6_trend_per_decade')
+    else:
+        years = trend.get('years', [])
+        tmax  = trend.get('tmax', [])
+        tmin  = trend.get('tmin', [])
+        tmoy  = trend.get('tmoy', [])
+        cmip6 = trend.get('cmip6_rate')
+
+    # Filter valid data points
+    valid = [(years[i], tmax[i], tmin[i], tmoy[i])
+             for i in range(len(years))
+             if tmax[i] is not None and tmin[i] is not None]
+    if len(valid) < 3:
+        return ''
+
+    # Labels
+    if lang == 'fr':
+        title_lbl  = f'Températures annuelles — {nom}'
+        sec_lbl    = 'TENDANCE CLIMATIQUE'
+        tmax_lbl   = 'T° max'
+        tmin_lbl   = 'T° min'
+        tmoy_lbl   = 'Moyenne'
+        cmip6_lbl  = 'Tendance projetée'
+        cmip6_unit = '°C/décennie (CMIP6 SSP2)'
+        note_lbl   = 'Moyennes annuelles ERA5 · données 2016–2025'
+    else:
+        title_lbl  = f'Annual Temperatures — {nom}'
+        sec_lbl    = 'CLIMATE TREND'
+        tmax_lbl   = 'Max temp'
+        tmin_lbl   = 'Min temp'
+        tmoy_lbl   = 'Average'
+        cmip6_lbl  = 'Projected trend'
+        cmip6_unit = '°C/decade (CMIP6 SSP2)'
+        note_lbl   = 'Annual ERA5 means · 2016–2025 data'
+
+    # SVG dimensions
+    W, H = 560, 180
+    PAD_L, PAD_R, PAD_T, PAD_B = 36, 12, 16, 32
+
+    all_vals = [v for row in [tmax, tmin, tmoy] for v in row if v is not None]
+    y_min = min(all_vals) - 1
+    y_max = max(all_vals) + 1
+    y_range = y_max - y_min or 1
+
+    chart_w = W - PAD_L - PAD_R
+    chart_h = H - PAD_T - PAD_B
+    n = len(valid)
+
+    def sx(i):
+        return PAD_L + (i / (n - 1)) * chart_w if n > 1 else PAD_L + chart_w / 2
+
+    def sy(v):
+        return PAD_T + (1 - (v - y_min) / y_range) * chart_h
+
+    def polyline(vals, color, width=1.5, dash=''):
+        pts = ' '.join(f'{sx(i):.1f},{sy(v):.1f}' for i, (_, tx, tn, tm) in enumerate(valid)
+                       if (v := (tx if vals == 'tmax' else tn if vals == 'tmin' else tm)) is not None)
+        dash_attr = f' stroke-dasharray="{dash}"' if dash else ''
+        return f'<polyline points="{pts}" fill="none" stroke="{color}" stroke-width="{width}" stroke-linejoin="round" stroke-linecap="round"{dash_attr}/>'
+
+    # Y-axis grid lines
+    grid_lines = ''
+    y_ticks = 4
+    for k in range(y_ticks + 1):
+        y_val = y_min + k / y_ticks * y_range
+        y_px  = sy(y_val)
+        grid_lines += (
+            f'<line x1="{PAD_L}" y1="{y_px:.1f}" x2="{W - PAD_R}" y2="{y_px:.1f}" '
+            f'stroke="#e8e0d0" stroke-width="1"/>'
+            f'<text x="{PAD_L - 4}" y="{y_px + 4:.1f}" text-anchor="end" '
+            f'font-size="9" fill="#9ca3af">{y_val:.0f}</text>'
+        )
+
+    # X-axis labels (every 2 years)
+    x_labels = ''
+    for i, (y, *_) in enumerate(valid):
+        if i % 2 == 0:
+            x_labels += (
+                f'<text x="{sx(i):.1f}" y="{H - 4}" text-anchor="middle" '
+                f'font-size="9" fill="#9ca3af">{y}</text>'
+            )
+
+    svg = (
+        f'<svg viewBox="0 0 {W} {H}" width="100%" style="display:block;overflow:visible" '
+        f'role="img" aria-label="{title_lbl}">'
+        f'{grid_lines}'
+        f'{polyline("tmin", "#93c5fd", 1.5)}'
+        f'{polyline("tmoy", "#a3a3a3", 1.2, "4 2")}'
+        f'{polyline("tmax", "#f97316", 2)}'
+        f'{x_labels}'
+        f'</svg>'
+    )
+
+    # Legend
+    legend = (
+        f'<div class="ct-legend">'
+        f'<span class="ct-leg-item"><span class="ct-leg-line" style="background:#f97316"></span>{tmax_lbl}</span>'
+        f'<span class="ct-leg-item"><span class="ct-leg-line ct-leg-line--dash" style="background:#a3a3a3"></span>{tmoy_lbl}</span>'
+        f'<span class="ct-leg-item"><span class="ct-leg-line" style="background:#93c5fd"></span>{tmin_lbl}</span>'
+        f'</div>'
+    )
+
+    # CMIP6 rate badge
+    if cmip6 is not None:
+        sign   = '+' if cmip6 >= 0 else ''
+        color  = '#c2410c' if cmip6 > 0.3 else '#a16207' if cmip6 > 0.15 else '#15803d'
+        cmip6_badge = (
+            f'<div class="ct-cmip6">'
+            f'<span class="ct-cmip6-label">📅 {cmip6_lbl}</span>'
+            f'<span class="ct-cmip6-val" style="color:{color}">{sign}{cmip6:.2f} °C</span>'
+            f'<span class="ct-cmip6-unit">{cmip6_unit}</span>'
+            f'</div>'
+        )
+    else:
+        cmip6_badge = ''
+
+    return (
+        f'<section class="section ct-section">'
+        f'<div class="section-label">{sec_lbl}</div>'
+        f'<h2 class="section-title">{title_lbl}</h2>'
+        f'<div class="ct-chart-wrap">'
+        f'{svg}'
+        f'{legend}'
+        f'</div>'
+        f'{cmip6_badge}'
+        f'<p class="ct-note">{note_lbl}</p>'
+        f'</section>'
+    )
