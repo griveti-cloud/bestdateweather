@@ -796,21 +796,23 @@ def climate_trend_section(slug_fr: str, nom: str, lang: str = 'fr', C: dict = No
     # Legend
     legend = (
         f'<div class="ct-legend">'
-        f'<span class="ct-leg-item"><span class="ct-leg-line" style="background:#f97316"></span>{tmax_lbl}</span>'
-        f'<span class="ct-leg-item"><span class="ct-leg-line ct-leg-line--dash" style="background:#a3a3a3"></span>{tmoy_lbl}</span>'
-        f'<span class="ct-leg-item"><span class="ct-leg-line" style="background:#93c5fd"></span>{tmin_lbl}</span>'
+        f'<span class="ct-leg-item"><span class="ct-leg-line" style="background:#f97316"></span> {tmax_lbl}</span>'
+        f'<span class="ct-leg-item"><span class="ct-leg-line ct-leg-line--dash"></span> {tmoy_lbl}</span>'
+        f'<span class="ct-leg-item"><span class="ct-leg-line" style="background:#93c5fd"></span> {tmin_lbl}</span>'
         f'</div>'
     )
 
     # CMIP6 rate badge
     if cmip6 is not None:
-        sign   = '+' if cmip6 >= 0 else ''
-        color  = '#c2410c' if cmip6 > 0.3 else '#a16207' if cmip6 > 0.15 else '#15803d'
+        sign  = '+' if cmip6 >= 0 else ''
+        color = '#c2410c' if cmip6 > 0.3 else '#a16207' if cmip6 > 0.15 else '#15803d'
         cmip6_badge = (
             f'<div class="ct-cmip6">'
-            f'<span class="ct-cmip6-label">📅 {cmip6_lbl}</span>'
-            f'<span class="ct-cmip6-val" style="color:{color}">{sign}{cmip6:.2f} °C</span>'
-            f'<span class="ct-cmip6-unit">{cmip6_unit}</span>'
+            f'<span class="ct-cmip6-icon">📅</span>'
+            f'<div class="ct-cmip6-body">'
+            f'<span class="ct-cmip6-label">{cmip6_lbl}</span>'
+            f'<span class="ct-cmip6-val" style="color:{color}">{sign}{cmip6:.2f}&thinsp;°C<span class="ct-cmip6-unit"> / {cmip6_unit}</span></span>'
+            f'</div>'
             f'</div>'
         )
     else:
