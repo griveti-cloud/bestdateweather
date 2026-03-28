@@ -37,6 +37,28 @@
 .hero-band{background:linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%);}
 .hero-title em{color:#93c5fd;}
 .month-btn-active{box-shadow:0 0 0 3px var(--gold);}
+/* Decision section redesign */
+.dec-card{background:var(--cream);border-radius:16px;padding:20px;border:1.5px solid #e8e0d0;}
+.dec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.dec-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;}
+.dec-score-pill{font-size:28px;font-weight:900;color:var(--navy);line-height:1;}
+.dec-score-denom{font-size:14px;font-weight:500;color:var(--slate2);}
+.dec-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.dec-stat{background:white;border-radius:12px;padding:12px 10px;text-align:center;border:1.5px solid #e8e0d0;}
+.dec-stat-top{display:flex;align-items:baseline;justify-content:center;gap:4px;margin-bottom:8px;}
+.dec-stat-icon{font-size:14px;}
+.dec-stat-val{font-size:16px;font-weight:800;color:var(--navy);}
+.dec-stat-lbl{font-size:10px;font-weight:600;color:var(--slate2);text-transform:uppercase;letter-spacing:.4px;margin-top:6px;}
+.dec-bar-track{height:4px;background:#e8e0d0;border-radius:2px;overflow:hidden;}
+.dec-bar-fill{height:100%;border-radius:2px;}
+.dec-bar-sun{background:linear-gradient(90deg,#fbbf24,#f59e0b);}
+.dec-bar-temp{background:linear-gradient(90deg,#f87171,#ef4444);}
+.dec-bar-rain{background:linear-gradient(90deg,#60a5fa,#3b82f6);}
+.dec-reasons{display:flex;flex-direction:column;gap:8px;}
+.dec-reason{display:flex;gap:10px;padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.4;}
+.dec-yes{background:#f0fdf4;border:1px solid #bbf7d0;}
+.dec-no{background:#fff7ed;border:1px solid #fed7aa;}
+.dec-avis{font-size:13px;line-height:1.6;color:var(--navy);margin-top:16px;padding:14px 16px;background:white;border-radius:12px;border:1.5px solid #e8e0d0;}
 .dest-search-section .section-label{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
 .dest-search-wrap{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;}
 .dest-search-input-wrap{flex:1;min-width:200px;position:relative;}
@@ -97,21 +119,38 @@
  </div>
  </section>
 
- <section class="section" class="mb-28">
+ <section class="section dec-section">
  <div class="section-label">Quick decision</div>
  <h2 class="section-title">Should you visit Valparaíso in January?</h2>
- <div class="verdict-badge" style="background:#dcfce7;color:#16a34a;border:1.5px solid #16a34a">✅ Good</div>
- 
- <div class="f14-body-mb">
- <p class="mb-8"><strong>✅ Yes if:</strong> you want great weather for all activities.</p>
- <p><strong>❌ No if:</strong> you're on a tight budget — prices are higher during peak season.</p>
+ <div class="dec-card" style="--dec-bg:#dcfce7;--dec-txt:#16a34a">
+   <div class="dec-header">
+     <span class="dec-badge" style="background:#dcfce7;color:#16a34a;border:1.5px solid #16a34a">✅ Good</span>
+     <span class="dec-score-pill">8.8<span class="dec-score-denom">/10</span></span>
+   </div>
+   
+   <div class="dec-stats">
+     <div class="dec-stat">
+       <div class="dec-stat-top"><span class="dec-stat-icon">☀️</span><span class="dec-stat-val">13.7h/d</span></div>
+       <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-sun" style="width:98%"></div></div>
+       <div class="dec-stat-lbl">Sunshine</div>
+     </div>
+     <div class="dec-stat">
+       <div class="dec-stat-top"><span class="dec-stat-icon">🌡️</span><span class="dec-stat-val">68°F</span></div>
+       <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-temp" style="width:50%"></div></div>
+       <div class="dec-stat-lbl">Temperature</div>
+     </div>
+     <div class="dec-stat">
+       <div class="dec-stat-top"><span class="dec-stat-icon">🌧️</span><span class="dec-stat-val">2%</span></div>
+       <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-rain" style="width:2%"></div></div>
+       <div class="dec-stat-lbl">Rain</div>
+     </div>
+   </div>
+   <div class="dec-reasons">
+     <div class="dec-reason dec-yes"><div><strong>✅ Yes if:</strong> you want great weather for all activities.</div></div>
+     <div class="dec-reason dec-no"><div><strong>❌ No if:</strong> you're on a tight budget — prices are higher during peak season.</div></div>
+   </div>
  </div>
- <div class="bar-wrap">
- <div>🌧 Rain : ░░░░░░░░░░ <span class="txt-gray">2%</span></div>
- <div>🌡 Temperature : █████░░░░░ <span class="txt-gray">68°F</span></div>
- <div>☀️ Sunshine : ██████████ <span class="txt-gray">13.7h/d</span></div>
- </div>
- <p class="f14-body-sep"><strong>Our take:</strong> Mild temperatures (68°F) and only 2% rainy days make January a good off-peak window for Valparaíso, typically less crowded. The sea is cool at 61°F — watersports are possible but extended swimming is not recommended. Score 8.4/10 — this is the annual peak for Valparaíso.</p>
+ <p class="dec-avis"><strong>Our take:</strong> Mild temperatures (68°F) and only 2% rainy days make January a good off-peak window for Valparaíso, typically less crowded. The sea is cool at 61°F — watersports are possible but extended swimming is not recommended. Score 8.4/10 — this is the annual peak for Valparaíso.</p>
  </section>
 
  <section class="section" class="mb-28">

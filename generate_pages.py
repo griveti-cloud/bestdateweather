@@ -1385,10 +1385,10 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     else:
         verdict_txt = C['monthly_verdicts'][vtier][hash_var].format(**tpl)
 
-    # Bars
-    rain_bar = bar_chart(m['rain_pct'])
-    temp_bar = bar_chart(min(m['tmax'], 40), 40)
-    sun_bar  = bar_chart(min(m['sun_h'], 14), 14)
+    # CSS bar widths (%)
+    rain_pct_bar = min(m['rain_pct'], 100)
+    temp_pct_bar = round(min(m['tmax'], 40) / 40 * 100)
+    sun_pct_bar  = round(min(m['sun_h'], 14) / 14 * 100)
 
     # ── Oui si / Yes if ──
     osi = C['monthly_oui_si']
@@ -1922,6 +1922,28 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .hero-band{{background:{MONTHLY_GRAD[mi]};}}
 .hero-title em{{color:#93c5fd;}}
 .month-btn-active{{box-shadow:0 0 0 3px var(--gold);}}
+/* Decision section redesign */
+.dec-card{{background:var(--cream);border-radius:16px;padding:20px;border:1.5px solid #e8e0d0;}}
+.dec-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}}
+.dec-badge{{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;}}
+.dec-score-pill{{font-size:28px;font-weight:900;color:var(--navy);line-height:1;}}
+.dec-score-denom{{font-size:14px;font-weight:500;color:var(--slate2);}}
+.dec-stats{{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}}
+.dec-stat{{background:white;border-radius:12px;padding:12px 10px;text-align:center;border:1.5px solid #e8e0d0;}}
+.dec-stat-top{{display:flex;align-items:baseline;justify-content:center;gap:4px;margin-bottom:8px;}}
+.dec-stat-icon{{font-size:14px;}}
+.dec-stat-val{{font-size:16px;font-weight:800;color:var(--navy);}}
+.dec-stat-lbl{{font-size:10px;font-weight:600;color:var(--slate2);text-transform:uppercase;letter-spacing:.4px;margin-top:6px;}}
+.dec-bar-track{{height:4px;background:#e8e0d0;border-radius:2px;overflow:hidden;}}
+.dec-bar-fill{{height:100%;border-radius:2px;}}
+.dec-bar-sun{{background:linear-gradient(90deg,#fbbf24,#f59e0b);}}
+.dec-bar-temp{{background:linear-gradient(90deg,#f87171,#ef4444);}}
+.dec-bar-rain{{background:linear-gradient(90deg,#60a5fa,#3b82f6);}}
+.dec-reasons{{display:flex;flex-direction:column;gap:8px;}}
+.dec-reason{{display:flex;gap:10px;padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.4;}}
+.dec-yes{{background:#f0fdf4;border:1px solid #bbf7d0;}}
+.dec-no{{background:#fff7ed;border:1px solid #fed7aa;}}
+.dec-avis{{font-size:13px;line-height:1.6;color:var(--navy);margin-top:16px;padding:14px 16px;background:white;border-radius:12px;border:1.5px solid #e8e0d0;}}
 .dest-search-section .section-label{{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}}
 .dest-search-wrap{{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;}}
 .dest-search-input-wrap{{flex:1;min-width:200px;position:relative;}}
@@ -1971,21 +1993,38 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  </section>
 
- <section class="section" class="mb-28">
+ <section class="section dec-section">
  <div class="section-label">{L['sec_verdict']}</div>
  <h2 class="section-title">{L['sec_verdict_title']}</h2>
- <div class="verdict-badge" style="background:{bg};color:{txt};border:1.5px solid {txt}">{verdict_lbl}</div>
- {heat_badge_html}
- <div class="f14-body-mb">
- <p class="mb-8"><strong>{L['yes_lbl']}</strong> {oui_si}</p>
- <p><strong>{L['no_lbl']}</strong> {non_si}</p>
+ <div class="dec-card" style="--dec-bg:{bg};--dec-txt:{txt}">
+   <div class="dec-header">
+     <span class="dec-badge" style="background:{bg};color:{txt};border:1.5px solid {txt}">{verdict_lbl}</span>
+     <span class="dec-score-pill">{score:.1f}<span class="dec-score-denom">/10</span></span>
+   </div>
+   {heat_badge_html}
+   <div class="dec-stats">
+     <div class="dec-stat">
+       <div class="dec-stat-top"><span class="dec-stat-icon">☀️</span><span class="dec-stat-val">{m['sun_h']}{C['locale']['comp']['sun_per_day_short']}</span></div>
+       <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-sun" style="width:{sun_pct_bar}%"></div></div>
+       <div class="dec-stat-lbl">{L['bar_sun']}</div>
+     </div>
+     <div class="dec-stat">
+       <div class="dec-stat-top"><span class="dec-stat-icon">🌡️</span><span class="dec-stat-val">{fmt_temp(m['tmax'], C)}</span></div>
+       <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-temp" style="width:{temp_pct_bar}%"></div></div>
+       <div class="dec-stat-lbl">{L['bar_temp']}</div>
+     </div>
+     <div class="dec-stat">
+       <div class="dec-stat-top"><span class="dec-stat-icon">🌧️</span><span class="dec-stat-val">{m['rain_pct']}%</span></div>
+       <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-rain" style="width:{rain_pct_bar}%"></div></div>
+       <div class="dec-stat-lbl">{L['bar_rain']}</div>
+     </div>
+   </div>
+   <div class="dec-reasons">
+     <div class="dec-reason dec-yes"><div><strong>{L['yes_lbl']}</strong> {oui_si}</div></div>
+     <div class="dec-reason dec-no"><div><strong>{L['no_lbl']}</strong> {non_si}</div></div>
+   </div>
  </div>
- <div class="bar-wrap">
- <div>🌧 {L['bar_rain']} : {rain_bar} <span class="txt-gray">{m['rain_pct']}%</span></div>
- <div>🌡 {L['bar_temp']} : {temp_bar} <span class="txt-gray">{fmt_temp(m['tmax'], C)}</span></div>
- <div>☀️ {L['bar_sun']} : {sun_bar} <span class="txt-gray">{m['sun_h']}{C['locale']['comp']['sun_per_day_short']}</span></div>
- </div>
- <p class="f14-body-sep"><strong>{L['verdict_intro']}</strong> {verdict_txt}</p>
+ <p class="dec-avis"><strong>{L['verdict_intro']}</strong> {verdict_txt}</p>
  </section>
 
  <section class="section" class="mb-28">
