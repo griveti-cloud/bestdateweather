@@ -30,7 +30,14 @@ window.initDestSearch = function(cfg) {
       var nameStripped = normStr(nameNoArticle);
       var matchesStart = nameNorm.indexOf(qNorm) === 0;
       var matchesAfterArticle = nameNoArticle !== name && nameStripped.indexOf(qNorm) === 0;
-      if (matchesStart || matchesAfterArticle) {
+      // Also search aliases (e.g. "cayenne" → Guyane, "fort-de-france" → Martinique)
+      var matchesAlias = false;
+      if (!matchesStart && !matchesAfterArticle && d.aliases) {
+        matchesAlias = d.aliases.some(function(a) {
+          return normStr(a).indexOf(qNorm) === 0;
+        });
+      }
+      if (matchesStart || matchesAfterArticle || matchesAlias) {
         results.push({slug:slug, name:name, flag:d.flag});
       }
     });

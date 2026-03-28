@@ -1108,8 +1108,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 </main>
 {footer_html(C, dest)}
 <script src="{pfx}js/faq.js" defer></script>
-<script src="{pfx}js/dest-data.js?v=3"></script>
-<script src="{pfx}js/dest-search.js?v=6"></script>
+<script src="{pfx}js/dest-data.js?v=4"></script>
+<script src="{pfx}js/dest-search.js?v=7"></script>
 <script>
 if(window.initDestSearch) window.initDestSearch({{suffix:'{C['annual_suffix']}',prefix:'{C['annual_prefix']}',assetPrefix:'{C['asset_prefix']}',lang:'{C['lang']}'}});
 </script>
@@ -2127,8 +2127,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  </section>
 </main>
-<script src="{C['asset_prefix']}js/dest-data.js?v=3"></script>
-<script src="{C['asset_prefix']}js/dest-search.js?v=6"></script>
+<script src="{C['asset_prefix']}js/dest-data.js?v=4"></script>
+<script src="{C['asset_prefix']}js/dest-search.js?v=7"></script>
 <script>
 if(window.initDestSearch) window.initDestSearch({{suffix:'{C['monthly_sep']}{C['month_url'][mi]}.html',prefix:'',lang:'{C['lang']}'}});
 </script>
