@@ -332,7 +332,7 @@ def head_css(cfg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="{font_url}"/></noscript>
-<link rel="stylesheet" href="{pfx}style.css?v=4"/>
+<link rel="stylesheet" href="{pfx}style.css?v=5"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''
@@ -748,7 +748,10 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     monthly_links = ''.join(
         f'<a href="{monthly_url(C, slug, i)}" class="month-btn '
         f'{MONTH_BTN_CLS.get(months[i]["classe"], "month-btn-mid")}">'
-        f'<div class="fw700-f13">{MONTHS[i]}</div>'
+        f'<div class="mbtn-emoji">{weather_emoji(months[i]["tmax"], months[i]["rain_pct"], months[i]["sun_h"], months[i].get("precip"))}</div>'
+        f'<div class="mbtn-name">{MONTHS[i]}</div>'
+        f'<div class="mbtn-temp">{fmt_temp(months[i]["tmax"], C)}</div>'
+        f'<div class="mbtn-score">{months[i]["score"]:.1f}</div>'
         f'</a>'
         for i in range(12)
     )

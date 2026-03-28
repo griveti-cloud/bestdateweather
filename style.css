@@ -268,7 +268,7 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 /* Layout utilities */
 .flex-wrap-14{display:flex;gap:14px;flex-wrap:wrap}
 .flex-col-12{display:flex;flex-direction:column;gap:12px}
-.grid-months{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:20px}
+.grid-months{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}@media(max-width:480px){.grid-months{grid-template-columns:repeat(3,1fr)}}
 .mt-22{margin-top:22px}
 .mb-28{margin-bottom:28px}
 .mt-8{margin-top:8px}
@@ -343,9 +343,9 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .row-highlight{background:#fef9c3;font-weight:700}
 
 /* Month grid buttons */
-.month-btn{display:block;padding:10px 8px;border-radius:10px;text-decoration:none;text-align:center}
-.month-btn-rec{background:#e8f8f0;border-color:#86efac}
-.month-btn-mid{background:#fffbeb;border-color:#fbbf24}
+.month-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 8px 10px;border-radius:12px;text-decoration:none;text-align:center;border:1.5px solid transparent;transition:transform .15s,box-shadow .15s}.month-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(26,31,46,.12)}.mbtn-emoji{font-size:20px;line-height:1}.mbtn-name{font-size:11px;font-weight:700;color:var(--navy);line-height:1.2}.mbtn-temp{font-size:11px;color:var(--slate2);font-weight:500}.mbtn-score{font-size:13px;font-weight:900;color:var(--navy);margin-top:1px}.month-btn-rec .mbtn-score{color:#15803d}.month-btn-mid .mbtn-score{color:#92400e}.month-btn-avoid .mbtn-score{color:#dc2626}
+.month-btn-rec{background:#f0fdf4;border-color:#86efac}
+.month-btn-mid{background:#fffbeb;border-color:#fde68a}
 .month-btn-avoid{background:#fef2f2;border-color:#fca5a5}
 
 /* Month nav (monthly pages) */
