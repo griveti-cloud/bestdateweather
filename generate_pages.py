@@ -47,7 +47,9 @@ CORE_JS_VERSION = 28
 APP_CSS_VERSION  = 6   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
 
 def _sync_core_version():
-    """Propage CORE_JS_VERSION + APP_CSS_VERSION dans index.html et */app.html."""
+    """Propage CORE_JS_VERSION + APP_CSS_VERSION dans index.html et */app.html.
+    Ajoute favs.min.js si absent.
+    """
     import glob as _glob
     targets = ['index.html'] + _glob.glob('*/app.html')
     for f in targets:
