@@ -793,25 +793,29 @@ def climate_trend_section(slug_fr: str, nom: str, lang: str = 'fr', C: dict = No
         f'</svg>'
     )
 
-    # Legend
+    # Legend — inline styles for reliability
+    leg_style = 'display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap'
+    dash_bg   = 'repeating-linear-gradient(90deg,#a3a3a3 0,#a3a3a3 4px,transparent 4px,transparent 6px)'
     legend = (
-        f'<div class="ct-legend">'
-        f'<span class="ct-leg-item"><span class="ct-leg-line" style="background:#f97316"></span> {tmax_lbl}</span>'
-        f'<span class="ct-leg-item"><span class="ct-leg-line ct-leg-line--dash"></span> {tmoy_lbl}</span>'
-        f'<span class="ct-leg-item"><span class="ct-leg-line" style="background:#93c5fd"></span> {tmin_lbl}</span>'
+        f'<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px">'
+        f'<span style="{leg_style}"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:#f97316;flex-shrink:0"></span>{tmax_lbl}</span>'
+        f'<span style="{leg_style}"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:{dash_bg};flex-shrink:0"></span>{tmoy_lbl}</span>'
+        f'<span style="{leg_style}"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:#93c5fd;flex-shrink:0"></span>{tmin_lbl}</span>'
         f'</div>'
     )
 
-    # CMIP6 rate badge
+    # CMIP6 rate badge — inline styles for reliability
     if cmip6 is not None:
         sign  = '+' if cmip6 >= 0 else ''
         color = '#c2410c' if cmip6 > 0.3 else '#a16207' if cmip6 > 0.15 else '#15803d'
         cmip6_badge = (
-            f'<div class="ct-cmip6">'
-            f'<span class="ct-cmip6-icon">📅</span>'
-            f'<div class="ct-cmip6-body">'
-            f'<span class="ct-cmip6-label">{cmip6_lbl}</span>'
-            f'<span class="ct-cmip6-val" style="color:{color}">{sign}{cmip6:.2f}&thinsp;°C<span class="ct-cmip6-unit"> / {cmip6_unit}</span></span>'
+            f'<div style="display:flex;align-items:center;gap:12px;background:#faf8f3;'
+            f'border:1.5px solid #e8e0d0;border-radius:10px;padding:12px 16px;margin-bottom:10px">'
+            f'<span style="font-size:20px;flex-shrink:0">📅</span>'
+            f'<div style="display:flex;flex-direction:column;gap:2px">'
+            f'<span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af">{cmip6_lbl}</span>'
+            f'<span style="font-size:20px;font-weight:800;color:{color};line-height:1.1">{sign}{cmip6:.2f}&thinsp;°C</span>'
+            f'<span style="font-size:11px;color:#718096">{cmip6_unit}</span>'
             f'</div>'
             f'</div>'
         )
