@@ -242,6 +242,7 @@ def seasonal_stats(months, L=None):
     for name, idxs in L['seasons'].items():
         ms = [months[i] for i in idxs]
         avg_t  = round(sum(m['tmax'] for m in ms) / len(ms))
+        avg_tmin = round(sum(m['tmin'] for m in ms) / len(ms))
         avg_r  = round(sum(m['rain_pct'] for m in ms) / len(ms))
         avg_s  = round(sum(m['sun_h'] for m in ms) / len(ms), 1)
         avg_sc = round(sum(m['score'] for m in ms) / len(ms), 1)
@@ -249,7 +250,7 @@ def seasonal_stats(months, L=None):
         elif avg_sc >= 7.0: verdict = L['verdict_good']
         elif avg_sc >= 5.5: verdict = L['verdict_fair']
         else:               verdict = L['verdict_poor']
-        result[name] = {'tmax': avg_t, 'rain_pct': avg_r, 'sun_h': avg_s,
+        result[name] = {'tmax': avg_t, 'tmin': avg_tmin, 'rain_pct': avg_r, 'sun_h': avg_s,
                         'score': avg_sc, 'verdict': verdict}
     return result
 

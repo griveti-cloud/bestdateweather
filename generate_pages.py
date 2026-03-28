@@ -332,7 +332,7 @@ def head_css(cfg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="{font_url}"/></noscript>
-<link rel="stylesheet" href="{pfx}style.css?v=3"/>
+<link rel="stylesheet" href="{pfx}style.css?v=4"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''
@@ -641,9 +641,11 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         icon   = SEASON_ICONS[sname]
         mrange = C['season_range'][sname]
         cls    = _seas_cls(s['score'])
-        score_pct  = min(100, round(s['score'] / 10 * 100))
         rain_pct   = min(100, int(s['rain_pct']))
         sun_pct    = min(100, round(s['sun_h'] / 12 * 100))
+        # tmin bar: scale 0-30°C
+        tmin_pct   = min(100, max(0, round(s['tmin'] / 30 * 100)))
+        lbl_tmin   = C.get('lbl_tmin_abbr', 'T° min')
         season_cards_html += (
             f'<div class="seas-card {cls}">'
             f'<div class="seas-top">'
@@ -651,14 +653,14 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
             f'<div class="seas-title-block"><span class="seas-name">{sname}</span><span class="seas-range">{mrange}</span></div>'
             f'<div class="seas-score-badge"><span class="seas-score-num">{s["score"]}</span><span class="seas-score-den">/10</span></div>'
             f'</div>'
-            f'<div class="seas-temp-row"><span class="seas-temp-val">{s["tmax"]}°C</span><span class="seas-verdict-lbl">{s["verdict"]}</span></div>'
+            f'<div class="seas-temp-row"><span class="seas-temp-val">{s["tmin"]}–{s["tmax"]}°C</span><span class="seas-verdict-lbl">{s["verdict"]}</span></div>'
             f'<div class="seas-bars">'
             f'<div class="seas-bar-row"><span class="seas-bar-lbl">☀️ {s["sun_h"]}h/j</span>'
             f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-sun" style="width:{sun_pct}%"></div></div></div>'
             f'<div class="seas-bar-row"><span class="seas-bar-lbl">🌧️ {s["rain_pct"]}%</span>'
             f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-rain" style="width:{rain_pct}%"></div></div></div>'
-            f'<div class="seas-bar-row"><span class="seas-bar-lbl">⭐ Score</span>'
-            f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-score" style="width:{score_pct}%"></div></div></div>'
+            f'<div class="seas-bar-row"><span class="seas-bar-lbl">🌡️ {s["tmin"]}°C</span>'
+            f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-tmin" style="width:{tmin_pct}%"></div></div></div>'
             f'</div>'
             f'</div>'
         )
