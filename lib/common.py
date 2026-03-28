@@ -671,16 +671,20 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
 
     # Safety detail box
     mae_source_lbl = {
-        'fr': 'Conseils aux voyageurs — Ministère des Affaires Étrangères',
-        'en': 'Travel advisories — French Ministry of Foreign Affairs',
-        'en-us': 'Travel advisories — French Ministry of Foreign Affairs',
-        'es': 'Consejos al viajero — Ministerio francés de Asuntos Exteriores',
-        'de': 'Reisehinweise — Französisches Außenministerium',
+        'fr': 'Conseils aux voyageurs MAE',
+        'en': 'French Foreign Ministry advisory',
+        'en-us': 'French Foreign Ministry advisory',
+        'es': 'Consejos viajero MAE Francia',
+        'de': 'Reisehinweise Außenministerium',
     }
+    gpi_sub = lbl["gpi_note"].replace(' : ', ': ')
     safety_detail = (
         f'<div class="ti-safety-detail">'
-        f'<span class="ti-safety-note">{mae_source_lbl.get(lang, mae_source_lbl["en"])}</span>'
-        f'<span class="ti-safety-source">{lbl["gpi_note"]} ({gpi_year})</span>'
+        f'<span class="ti-safety-note">'
+        f'{mae_source_lbl.get(lang, mae_source_lbl["en"])}'
+        f' &nbsp;·&nbsp; '
+        f'<span class="ti-safety-source">{gpi_sub} ({gpi_year})</span>'
+        f'</span>'
         f'</div>'
     )
 
