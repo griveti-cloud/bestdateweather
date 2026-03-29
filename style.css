@@ -344,7 +344,14 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .act-chip-val{font-size:14px;font-weight:700;color:var(--navy)}
 
 /* Compare list */
-.cmp-list{list-style:none;padding:0;border:1.5px solid var(--cream2);border-radius:10px;overflow:hidden;font-size:14px}
+.cmp-intro{font-size:13px;color:var(--slate2);margin-bottom:14px}
+.cmp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cmp-chip{background:white;border:1.5px solid var(--cream2);border-radius:14px;padding:14px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:5px}
+.cmp-icon{font-size:20px;line-height:1}
+.cmp-delta{font-size:22px;font-weight:900;line-height:1}
+.cmp-pos{color:#16a34a}
+.cmp-neg{color:#dc2626}
+.cmp-lbl{font-size:10px;font-weight:600;color:var(--slate2);text-transform:uppercase;letter-spacing:.4px;line-height:1.2}
 
 /* Bars section */
 .bar-wrap{background:#f8f8f4;border-radius:10px;padding:14px;font-size:13px;line-height:1.9;margin-bottom:14px}

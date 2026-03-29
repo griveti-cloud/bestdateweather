@@ -332,7 +332,7 @@ def head_css(cfg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="{font_url}"/></noscript>
-<link rel="stylesheet" href="{pfx}style.css?v=8"/>
+<link rel="stylesheet" href="{pfx}style.css?v=9"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''
@@ -1460,6 +1460,10 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     diff_t = round(bm['tmax'] - m['tmax'])
     diff_r = round(bm['rain_pct'] - m['rain_pct'])
     diff_s = round(bm['sun_h'] - m['sun_h'], 1)
+    # CSS classes for diff display
+    cmp_t_cls = 'cmp-pos' if diff_t >= 0 else 'cmp-neg'
+    cmp_r_cls = 'cmp-neg' if diff_r >= 0 else 'cmp-pos'  # less rain = good
+    cmp_s_cls = 'cmp-pos' if diff_s >= 0 else 'cmp-neg'
 
     # ── FAQ (locale-driven, language-agnostic) ──
     ft = C['faq_templates']
@@ -2103,29 +2107,35 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  · <a href="{annual_link}" class="txt-gold">{C['lbl_annual_view_link']}</a>
  </div>
 
- <section class="section" class="mb-28">
+ <section class="section">
  <div class="section-label">{L['sec_compare']}</div>
  <h2 class="section-title">{L['sec_compare_title']}</h2>
- <p class="f14-mb12">{L['compare_intro']}</p>
- <ul class="cmp-list">
- <li class="act-item-odd">🌡️ {L['cmp_tmax']} : <strong>{'+' if diff_t >= 0 else ''}{diff_t}{'°F' if C.get('imperial') else '°C'}</strong></li>
- <li class="act-item-even">🌧 {L['cmp_rain']} : <strong>{'+' if diff_r >= 0 else ''}{diff_r}%</strong></li>
- <li class="act-item-last">☀️ {L['cmp_sun']} : <strong>{'+' if diff_s >= 0 else ''}{diff_s}{C['locale']['comp']['sun_per_day']}</strong></li>
- </ul>
+ <p class="cmp-intro">{L['compare_intro']}</p>
+ <div class="cmp-grid">
+   <div class="cmp-chip">
+     <span class="cmp-icon">🌡️</span>
+     <span class="cmp-delta {cmp_t_cls}">{'+' if diff_t >= 0 else ''}{diff_t}{'°F' if C.get('imperial') else '°C'}</span>
+     <span class="cmp-lbl">{L['cmp_tmax']}</span>
+   </div>
+   <div class="cmp-chip">
+     <span class="cmp-icon">🌧️</span>
+     <span class="cmp-delta {cmp_r_cls}">{'+' if diff_r >= 0 else ''}{diff_r}%</span>
+     <span class="cmp-lbl">{L['cmp_rain']}</span>
+   </div>
+   <div class="cmp-chip">
+     <span class="cmp-icon">☀️</span>
+     <span class="cmp-delta {cmp_s_cls}">{'+' if diff_s >= 0 else ''}{diff_s}{C['locale']['comp']['sun_per_day']}</span>
+     <span class="cmp-lbl">{L['cmp_sun']}</span>
+   </div>
+ </div>
  </section>
 
- <section class="section" class="mb-28">
+ <section class="section">
  <div class="section-label">{L['sec_faq']}</div>
  <h2 class="section-title">{L['sec_faq_title']}</h2>
- <div class="flex-col-12">
- <div class="faq-card">
- <div class="fw700-mb">{faq_q1}</div>
- <div class="f14-detail">{faq_a1}</div>
- </div>
- <div class="faq-card">
- <div class="fw700-mb">{faq_q2}</div>
- <div class="f14-detail">{faq_a2}</div>
- </div>
+ <div class="faq-list">
+   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">{faq_q1}<span class="faq-icon">+</span></button><div class="faq-a">{faq_a1}</div></div>
+   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">{faq_q2}<span class="faq-icon">+</span></button><div class="faq-a">{faq_a2}</div></div>
  </div>
  </section>
 

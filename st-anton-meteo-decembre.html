@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap&font-display=swap" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap&font-display=swap"/></noscript>
-<link rel="stylesheet" href="style.css?v=8"/>
+<link rel="stylesheet" href="style.css?v=9"/>
 <link rel="icon" type="image/x-icon" href="favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>
@@ -238,29 +238,35 @@
  · <a href="meilleure-periode-st-anton.html" class="txt-gold">Voir toutes les périodes →</a>
  </div>
 
- <section class="section" class="mb-28">
+ <section class="section">
  <div class="section-label">Comparaison</div>
  <h2 class="section-title">Décembre vs Août (meilleur mois)</h2>
- <p class="f14-mb12">Le meilleur mois est <strong><a href="meilleure-periode-st-anton.html" class="txt-inherit">Août</a></strong> (score 7.5/10). Différence :</p>
- <ul class="cmp-list">
- <li class="act-item-odd">🌡️ Température max : <strong>+16°C</strong></li>
- <li class="act-item-even">🌧 Jours de pluie : <strong>+18%</strong></li>
- <li class="act-item-last">☀️ Ensoleillement : <strong>+5.7h/jour</strong></li>
- </ul>
+ <p class="cmp-intro">Le meilleur mois est <strong><a href="meilleure-periode-st-anton.html" class="txt-inherit">Août</a></strong> (score 7.5/10). Différence :</p>
+ <div class="cmp-grid">
+   <div class="cmp-chip">
+     <span class="cmp-icon">🌡️</span>
+     <span class="cmp-delta cmp-pos">+16°C</span>
+     <span class="cmp-lbl">Température max</span>
+   </div>
+   <div class="cmp-chip">
+     <span class="cmp-icon">🌧️</span>
+     <span class="cmp-delta cmp-neg">+18%</span>
+     <span class="cmp-lbl">Jours de pluie</span>
+   </div>
+   <div class="cmp-chip">
+     <span class="cmp-icon">☀️</span>
+     <span class="cmp-delta cmp-pos">+5.7h/jour</span>
+     <span class="cmp-lbl">Ensoleillement</span>
+   </div>
+ </div>
  </section>
 
- <section class="section" class="mb-28">
+ <section class="section">
  <div class="section-label">Questions fréquentes</div>
  <h2 class="section-title">FAQ — St-Anton en décembre</h2>
- <div class="flex-col-12">
- <div class="faq-card">
- <div class="fw700-mb">à St-Anton en décembre : est-ce une bonne période ?</div>
- <div class="f14-detail">Les conditions sont correctes (score ski 6.1/10) mais pas optimales. Vérifiez l'état des pistes avant de partir.</div>
- </div>
- <div class="faq-card">
- <div class="fw700-mb">Peut-on skier à St-Anton en décembre ?</div>
- <div class="f14-detail">Les conditions sont correctes (score ski 6.1/10) mais pas optimales. Vérifiez l'état des pistes avant de partir.</div>
- </div>
+ <div class="faq-list">
+   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">à St-Anton en décembre : est-ce une bonne période ?<span class="faq-icon">+</span></button><div class="faq-a">Les conditions sont correctes (score ski 6.1/10) mais pas optimales. Vérifiez l'état des pistes avant de partir.</div></div>
+   <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Peut-on skier à St-Anton en décembre ?<span class="faq-icon">+</span></button><div class="faq-a">Les conditions sont correctes (score ski 6.1/10) mais pas optimales. Vérifiez l'état des pistes avant de partir.</div></div>
  </div>
  </section>
 
