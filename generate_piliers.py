@@ -739,25 +739,30 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         f'<div class="fc-item" data-mode="ski" onclick="setMode(\'ski\')">{tab_ski}</div>'
     )
     filter_chips_html = (
-        f'<div class="fchip" id="fc-period" onclick=\"toggleFC('period',event)\">'
+        f'<div class="fchip has-filter" id="fc-period" data-fc="period" onclick="toggleFC(this.dataset.fc,event)">'
+
         f'<span id="fc-period-lbl">{pil.get("period_annual","Annuel") if mi < 0 else loc["month_abbr"][mi]}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-period">'
         f'<div class="fc-months" id="fc-months-grid">{month_nav.replace("month-nav","").replace("<div ","").replace("</div>","")}</div>'
         f'</div></div>'
-        f'<div class="fchip" id="fc-region" onclick=\"toggleFC('region',event)\">'
+        f'<div class="fchip" id="fc-region" data-fc="region" onclick="toggleFC(this.dataset.fc,event)">'
+
         f'<span id="fc-region-lbl">{pil.get("region_world","Monde")}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-region">{_reg_opts}</div></div>'
-        f'<div class="fchip" id="fc-type" onclick=\"toggleFC('type',event)\">'
+        f'<div class="fchip" id="fc-type" data-fc="type" onclick="toggleFC(this.dataset.fc,event)">'
+
         f'<span id="fc-type-lbl">{tab_meteo}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-type">{_type_opts}</div></div>'
-        f'<div class="fchip" id="fc-secu" onclick=\"toggleFC('secu',event)\">'
+        f'<div class="fchip" id="fc-secu" data-fc="secu" onclick="toggleFC(this.dataset.fc,event)">'
+
         f'<span id="fc-secu-lbl">{fp_secu}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-secu">{_secu_items}</div></div>'
-        f'<div class="fchip" id="fc-budget" onclick=\"toggleFC('budget',event)\">'
+        f'<div class="fchip" id="fc-budget" data-fc="budget" onclick="toggleFC(this.dataset.fc,event)">'
+
         f'<span id="fc-budget-lbl">{fp_budget}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-budget">{_budget_items}</div></div>'
@@ -1293,25 +1298,30 @@ def generate_annual_page(lang, dests, climate, country_info=None):
     )
     _ann_month_nav = build_month_nav(0, loc, is_annual=True)
     filter_chips_html = (
-        f'<div class="fchip" id="fc-period" onclick=\"toggleFC('period',event)\">'
+        f'<div class="fchip has-filter" id="fc-period" data-fc="period" onclick="toggleFC(this.dataset.fc,event)">'
+
         f'<span id="fc-period-lbl">{pil.get("period_annual","Annuel")}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-period">'
         f'<div class="fc-months" id="fc-months-grid"></div>'
         f'</div></div>'
-        f'<div class="fchip" id="fc-region" onclick=\"toggleFC('region',event)\">'
+        f'<div class="fchip" id="fc-region" data-fc="region" onclick="toggleFC(this.dataset.fc,event)">'
+
         f'<span id="fc-region-lbl">{pil.get("region_world","Monde")}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-region">{_reg_opts_ann}</div></div>'
-        f'<div class="fchip" id="fc-type" onclick=\"toggleFC('type',event)\">'
+        f'<div class="fchip" id="fc-type" data-fc="type" onclick="toggleFC(this.dataset.fc,event)">'
+
         f'<span id="fc-type-lbl">{tab_meteo}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-type">{_type_opts_ann}</div></div>'
-        f'<div class="fchip" id="fc-secu" onclick=\"toggleFC('secu',event)\">'
+        f'<div class="fchip" id="fc-secu" data-fc="secu" onclick="toggleFC(this.dataset.fc,event)">'
+
         f'<span id="fc-secu-lbl">{fp_secu}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-secu">{_secu_items_ann}</div></div>'
-        f'<div class="fchip" id="fc-budget" onclick=\"toggleFC('budget',event)\">'
+        f'<div class="fchip" id="fc-budget" data-fc="budget" onclick="toggleFC(this.dataset.fc,event)">'
+
         f'<span id="fc-budget-lbl">{fp_budget}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-budget">{_budget_items_ann}</div></div>'
