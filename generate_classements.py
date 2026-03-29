@@ -605,10 +605,10 @@ def make_table_seasonal(entries, n, lang, country_info=None):
 
 def make_table_sun(entries, n, lang, country_info=None):
     headers = {
-        'fr': ('Rang','Destination','Soleil/an','Score annuel',['Pluie moy.']),
-        'en': ('Rank','Destination','Sun/year','Annual score',['Avg. rain']),
-        'es': ('Pos.','Destino','Sol/año','Puntuación anual',['Lluvia media']),
-        'de': ('Rang','Ziel','Sonne/Jahr','Jahreswertung',['Ø Regen']),
+        'fr': ('Rang','Destination','Soleil/an','Score annuel',['Pluie moy.'],'Sécu.'),
+        'en': ('Rank','Destination','Sun/year','Annual score',['Avg. rain'],'Safety'),
+        'es': ('Pos.','Destino','Sol/año','Puntuación anual',['Lluvia media'],'Seg.'),
+        'de': ('Rang','Ziel','Sonne/Jahr','Jahreswertung',['Ø Regen'],'Sicher.'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -621,7 +621,8 @@ def make_table_sun(entries, n, lang, country_info=None):
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td>{entry["sun_annual"]:.0f}h</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
-            f'<td class="rt-sec">{entry["rain_avg"]:.0f}%</td></tr>'
+            f'<td class="rt-sec">{entry["rain_avg"]:.0f}%</td>'
+            f'<td class="safety-col">{safety_badge(d, country_info or {})}</td></tr>'
         )
     return (
         f'<table class="rt"><thead><tr>{"".join(f'<th class="rt-sec">{x[0]}</th>' if isinstance(x,list) else f'<th>{x}</th>' for x in h)}</tr></thead>'
@@ -630,10 +631,10 @@ def make_table_sun(entries, n, lang, country_info=None):
 
 def make_table_rain(entries, n, lang, country_info=None):
     headers = {
-        'fr': ('Rang','Destination','Pluie moy.','Score annuel',['Soleil/an']),
-        'en': ('Rank','Destination','Avg. rain','Annual score',['Sun/year']),
-        'es': ('Pos.','Destino','Lluvia media','Puntuación anual',['Sol/año']),
-        'de': ('Rang','Ziel','Ø Regen','Jahreswertung',['Sonne/Jahr']),
+        'fr': ('Rang','Destination','Pluie moy.','Score annuel',['Soleil/an'],'Sécu.'),
+        'en': ('Rank','Destination','Avg. rain','Annual score',['Sun/year'],'Safety'),
+        'es': ('Pos.','Destino','Lluvia media','Puntuación anual',['Sol/año'],'Seg.'),
+        'de': ('Rang','Ziel','Ø Regen','Jahreswertung',['Sonne/Jahr'],'Sicher.'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -646,7 +647,8 @@ def make_table_rain(entries, n, lang, country_info=None):
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td>{entry["rain_avg"]:.0f}%</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
-            f'<td class="rt-sec">{entry["sun_annual"]:.0f}h</td></tr>'
+            f'<td class="rt-sec">{entry["sun_annual"]:.0f}h</td>'
+            f'<td class="safety-col">{safety_badge(d, country_info or {})}</td></tr>'
         )
     return (
         f'<table class="rt"><thead><tr>{"".join(f'<th class="rt-sec">{x[0]}</th>' if isinstance(x,list) else f'<th>{x}</th>' for x in h)}</tr></thead>'
