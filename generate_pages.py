@@ -2109,7 +2109,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 {NAV}
 {plan_bar_m}
 </div>
-{_m_hero_img_block}<header class="hero-band">
+<header class="hero-band">
+{_m_hero_img_block}
  <div class="dest-tag"><img src="{pfx}flags/{flag}.png" srcset="{pfx}flags/2x/{flag}.png 2x" width="20" height="15" alt="{flag.upper()}" loading="lazy" class="flag-icon"> {nom} · {season}</div>
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hero_sub}</p>
