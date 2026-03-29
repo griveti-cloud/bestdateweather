@@ -1404,7 +1404,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{h1} — BestDateWeather</title>
-<meta name="description" content="{sub}">
+<meta name="description" content="{desc}">
 <link rel="canonical" href="{canonical}">
 {hreflang_tags}<style>{CSS}.pillar-hero{{padding-bottom:64px}}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap"/></noscript>
