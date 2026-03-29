@@ -2829,6 +2829,13 @@ function renderAnnual(loc, monthly) {
  var tminStr = d.avgTmin != null ? fmtTempRaw(d.avgTmin) + '°' : '–';
  var tempStr = d.avgTemp != null ? fmtTempRaw(d.avgTemp) + '°' : '–';
 
+ var dewHtml = '';
+ if (d.dewPoint != null && d.dewPoint >= 16) {
+  var dewLbl = d.dewPoint >= 22 ? T.dewSuffocating : (d.dewPoint >= 18 ? T.dewVeryHumid : T.dewHumid);
+  var dewClr = d.dewPoint >= 22 ? '#dc2626' : (d.dewPoint >= 18 ? '#f97316' : '#f59e0b');
+  dewHtml = '<span class="month-stat" style="color:'+dewClr+';font-weight:600">'+dewLbl+'</span>';
+ }
+
  card.innerHTML =
  '<div class="month-name">' + MONTHS_FR[idx] + '</div>' +
  '<div class="month-icon">' + monthIconFromData(d) + '</div>' +
@@ -2837,6 +2844,7 @@ function renderAnnual(loc, monthly) {
  '<div class="month-stats">' +
  '<span class="month-stat">💧 ' + d.rainPct + '% <span style="font-weight:400;color:var(--slate3);font-size:10px">(' + fmtPrecip(d.avgPrecipMm)+'/'+T.dayAbbr+')</span></span>' +
  '<span class="month-stat">☀ ' + Math.round(d.sunHrs) + 'h</span>' +
+ dewHtml +
  '</div>' +
  '<div class="month-bar"><div class="month-bar-fill" style="width:' + d.rainPct + '%"></div></div>' +
  scoreNum + badgeHtml + seasBadge;

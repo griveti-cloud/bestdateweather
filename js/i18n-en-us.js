@@ -117,6 +117,7 @@ window.BDW_T = {
  // Chips
  chipRain: 'Rain', chipPrecip: 'Precip.', chipTemp: 'Temp.',
  chipWind: 'Wind', chipSnow: 'Snow', chipHumidity: 'Humidity',
+ dewHumid: '💦 Humid', dewVeryHumid: '💦 Very humid', dewSuffocating: '💦 Oppressive',
  spreadStable: '🌡 Stable', spreadVariable: '🌡 Variable',
  forecast7dLabel: '7-day forecast', dayToday: 'Today',
 
