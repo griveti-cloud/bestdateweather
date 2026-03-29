@@ -380,9 +380,9 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .hero-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:2.5px;color:#9c5f00;margin-bottom:12px;font-weight:700}
 .hero-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(24px,5vw,38px);margin-bottom:10px;line-height:1.2}
 .hero-title em{color:var(--gold);font-style:italic}
-.hero-sub{font-size:15px;opacity:.75;max-width:600px;margin:0 auto 20px}
+.hero-sub{font-size:15px;color:#c8d0de;max-width:600px;margin:0 auto 20px}
 .hero-stats{display:flex;justify-content:center;gap:36px;margin-top:16px}
-.hstat{text-align:center}.hstat-val{display:block;font-size:22px;font-weight:700;color:var(--gold)}.hstat-lbl{font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:1px}
+.hstat{text-align:center}.hstat-val{display:block;font-size:22px;font-weight:700;color:var(--gold)}.hstat-lbl{font-size:11px;color:#a8b4c4;text-transform:uppercase;letter-spacing:1px}
 .page{max-width:960px;margin:0 auto;padding:28px 16px 40px}
 .section{margin-bottom:36px}
 .eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#9c5f00;font-weight:700;margin-bottom:6px}
