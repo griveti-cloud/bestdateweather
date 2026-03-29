@@ -312,7 +312,12 @@
     "hist_title": "Temperaturas históricas",
     "hist_hint": "Tendencia 10 años",
     "annual_view_link": "Ver todos los meses →",
-    "cards_gyg_btn": "🎟️ Ver actividades"
+    "cards_gyg_btn": "🎟️ Ver actividades",
+    "best_overall_short": "Mejor época",
+    "best_score_short": "Puntuación",
+    "optimal_temp_short": "Temperatura",
+    "least_rain_short": "Menos lluvia",
+    "wettest_short": "Más lluvioso"
   },
   "monthly": {
     "hero_tpl": "Tiempo en {name} en {month}",

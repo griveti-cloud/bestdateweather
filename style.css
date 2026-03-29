@@ -268,6 +268,16 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .summ-fill-rain{background:linear-gradient(90deg,#60a5fa,#3b82f6)}
 .summ-footer{padding-top:12px;border-top:1px solid var(--cream2);font-size:13px;color:var(--slate2)}
 .summ-best strong{color:var(--navy)}
+/* qf-grid — annual quick facts */
+.qf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+.qf-chip{background:white;border:1.5px solid var(--cream2);border-radius:14px;padding:14px 10px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
+.qf-chip-hero{grid-column:span 3;background:linear-gradient(135deg,#fffbeb,#fef3c7);border-color:#fde68a;flex-direction:row;justify-content:center;gap:12px;padding:16px}
+.qf-chip-hero .qf-chip-val{font-size:22px}
+.qf-chip-hero .qf-chip-lbl{text-align:left}
+.qf-chip-icon{font-size:20px;line-height:1}
+.qf-chip-val{font-size:18px;font-weight:900;color:var(--navy);line-height:1.1}
+.qf-chip-sub{font-size:11px;font-weight:500;color:var(--slate2)}
+.qf-chip-lbl{font-size:10px;font-weight:600;color:var(--slate2);text-transform:uppercase;letter-spacing:.4px;line-height:1.2}
 /* keep quick-facts for annual pages */
 .quick-facts{margin:24px 0;display:flex;flex-direction:column;gap:0;border-radius:14px;box-shadow:var(--shadow);border:1px solid var(--cream2);overflow:hidden}
 .quick-facts-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--cream2)}

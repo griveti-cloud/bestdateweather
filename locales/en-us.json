@@ -313,7 +313,12 @@
     "hist_title": "Historical temperatures",
     "hist_hint": "10-year trend",
     "annual_view_link": "See all months →",
-    "cards_gyg_btn": "🎟️ See activities"
+    "cards_gyg_btn": "🎟️ See activities",
+    "best_overall_short": "Best time",
+    "best_score_short": "Score",
+    "optimal_temp_short": "Temperature",
+    "least_rain_short": "Least rain",
+    "wettest_short": "Rainiest"
   },
   "monthly": {
     "hero_tpl": "{name} weather in {month}",

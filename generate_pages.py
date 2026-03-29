@@ -332,7 +332,7 @@ def head_css(cfg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="{font_url}"/></noscript>
-<link rel="stylesheet" href="{pfx}style.css?v=10"/>
+<link rel="stylesheet" href="{pfx}style.css?v=11"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''
@@ -580,12 +580,32 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     qf = f'''<section class="section">
  <div class="section-label">{C['lbl_quick_section']}</div>
  <h2 class="section-title">{C['lbl_quick_title_tpl'].format(name=nom_f)}</h2>
- <div class="quick-facts">
- <div class="quick-facts-row"><div class="qf-label">{C['lbl_best_overall']}</div><div class="qf-value"><strong>{MONTHS[best_idx]}</strong></div></div>
- <div class="quick-facts-row"><div class="qf-label">{C['lbl_optimal_temp']}</div><div class="qf-value"><strong>{fmt_temp(best_m["tmin"], C)}–{fmt_temp(best_m["tmax"], C)}</strong> {C['lbl_in']} {month_lc(C, MONTHS[best_idx])}</div></div>
- <div class="quick-facts-row"><div class="qf-label">{C['lbl_least_rain']}</div><div class="qf-value"><strong>{best_rain}%</strong> {C['lbl_rainy_days_in']} {month_lc(C, MONTHS[best_idx])}</div></div>
- <div class="quick-facts-row"><div class="qf-label">{C['lbl_wettest']}</div><div class="qf-value"><strong>{MONTHS[worst_idx]}</strong> ({worst_rain}%)</div></div>
- <div class="quick-facts-row"><div class="qf-label">{C['lbl_best_score']}</div><div class="qf-value"><strong>{best_score}/10</strong></div></div>
+ <div class="qf-grid">
+   <div class="qf-chip qf-chip-hero">
+     <div class="qf-chip-icon">🏆</div>
+     <div class="qf-chip-val">{MONTHS[best_idx]}</div>
+     <div class="qf-chip-lbl">{C['lbl_best_overall_short']}</div>
+   </div>
+   <div class="qf-chip">
+     <div class="qf-chip-icon">⭐</div>
+     <div class="qf-chip-val">{best_score}<span class="qf-chip-sub">/10</span></div>
+     <div class="qf-chip-lbl">{C['lbl_best_score_short']}</div>
+   </div>
+   <div class="qf-chip">
+     <div class="qf-chip-icon">🌡️</div>
+     <div class="qf-chip-val">{fmt_temp(best_m["tmin"], C)}–{fmt_temp(best_m["tmax"], C)}</div>
+     <div class="qf-chip-lbl">{C['lbl_optimal_temp_short']}</div>
+   </div>
+   <div class="qf-chip">
+     <div class="qf-chip-icon">🌧️</div>
+     <div class="qf-chip-val">{best_rain}%</div>
+     <div class="qf-chip-lbl">{C['lbl_least_rain_short']}</div>
+   </div>
+   <div class="qf-chip">
+     <div class="qf-chip-icon">☔</div>
+     <div class="qf-chip-val">{MONTHS[worst_idx]}</div>
+     <div class="qf-chip-lbl">{C['lbl_wettest_short']}</div>
+   </div>
  </div>
 </section>'''
 
