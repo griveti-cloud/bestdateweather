@@ -332,7 +332,7 @@ def head_css(cfg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="{font_url}"/></noscript>
-<link rel="stylesheet" href="{pfx}style.css?v=6"/>
+<link rel="stylesheet" href="{pfx}style.css?v=7"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''
@@ -1982,40 +1982,30 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
 </header>
 <main class="page">
- <section class="section">
+ <section class="section summ-section">
  <div class="section-label">{L['sec_summary']}</div>
  <h2 class="section-title">{L['sec_summary_title']}</h2>
- <div class="verdict-badge" style="background:{bg};color:{txt};border:1.5px solid {txt}">{verdict_lbl}</div>
- <div class="stat-grid">
-   <div class="stat-chip">
-     <div class="stat-icon">🌡️</div>
-     <div class="stat-val">{fmt_temp(m['tmin'], C)}–{fmt_temp(m['tmax'], C)}</div>
-     <div class="stat-lbl">{L['qf_tminmax']}</div>
+ <div class="summ-card">
+   <div class="summ-top">
+     <span class="summ-badge" style="background:{bg};color:{txt};border:1.5px solid {txt}">{verdict_lbl}</span>
+     <span class="summ-score" style="color:{txt}">{score:.1f}<span class="summ-score-den">/10</span></span>
    </div>
-   <div class="stat-chip">
-     <div class="stat-icon">🌧️</div>
-     <div class="stat-val">{m['rain_pct']}%</div>
-     <div class="stat-lbl">{L['qf_rain']}</div>
+   <div class="summ-temp-row">
+     <span class="summ-temp">{fmt_temp(m['tmin'], C)} — {fmt_temp(m['tmax'], C)}</span>
+     <span class="summ-season">{season}</span>
    </div>
-   <div class="stat-chip">
-     <div class="stat-icon">☀️</div>
-     <div class="stat-val">{m['sun_h']}h</div>
-     <div class="stat-lbl">{L['qf_sun']}</div>
+   <div class="summ-bars">
+     <div class="summ-bar-item">
+       <div class="summ-bar-header"><span>☀️ {m['sun_h']}h</span><span class="summ-bar-lbl">{L['qf_sun']}</span></div>
+       <div class="summ-track"><div class="summ-fill summ-fill-sun" style="width:{sun_pct_bar}%"></div></div>
+     </div>
+     <div class="summ-bar-item">
+       <div class="summ-bar-header"><span>🌧️ {m['rain_pct']}%</span><span class="summ-bar-lbl">{L['qf_rain']}</span></div>
+       <div class="summ-track"><div class="summ-fill summ-fill-rain" style="width:{rain_pct_bar}%"></div></div>
+     </div>
    </div>
-   <div class="stat-chip stat-chip-wide">
-     <div class="stat-icon">⭐</div>
-     <div class="stat-val">{score:.1f}<span class="stat-val-sub">/10</span></div>
-     <div class="stat-lbl">{L['qf_score']}</div>
-   </div>
-   <div class="stat-chip stat-chip-wide">
-     <div class="stat-icon">📅</div>
-     <div class="stat-val">{best_month}</div>
-     <div class="stat-lbl">{L['qf_best']}</div>
-   </div>
-   <div class="stat-chip stat-chip-wide">
-     <div class="stat-icon">🌊</div>
-     <div class="stat-val">{season}</div>
-     <div class="stat-lbl">{L['qf_season']}</div>
+   <div class="summ-footer">
+     <span class="summ-best">📅 {L['qf_best']} : <strong>{best_month}</strong> ({best_score:.1f}/10)</span>
    </div>
  </div>
  </section>

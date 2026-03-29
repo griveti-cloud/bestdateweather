@@ -249,14 +249,25 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 }
 
 /* Quick facts — table décision rapide remplacée par grille responsive */
-/* stat-grid — replaces quick-facts on monthly pages */
-.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
-.stat-chip{background:white;border:1.5px solid var(--cream2);border-radius:14px;padding:14px 10px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
-.stat-chip-wide{background:var(--cream)}
-.stat-icon{font-size:18px;line-height:1;margin-bottom:2px}
-.stat-val{font-size:17px;font-weight:900;color:var(--navy);line-height:1.1}
-.stat-val-sub{font-size:11px;font-weight:500;color:var(--slate2)}
-.stat-lbl{font-size:10px;font-weight:600;color:var(--slate2);text-transform:uppercase;letter-spacing:.4px;line-height:1.2}
+/* summ-card — monthly summary section */
+.summ-card{background:white;border:1.5px solid var(--cream2);border-radius:18px;padding:20px;margin:16px 0;box-shadow:0 2px 12px rgba(26,31,46,.06)}
+.summ-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.summ-badge{padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700}
+.summ-score{font-size:36px;font-weight:900;line-height:1}
+.summ-score-den{font-size:14px;font-weight:500;color:var(--slate2)}
+.summ-temp-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--cream);border-radius:12px;margin-bottom:14px}
+.summ-temp{font-size:22px;font-weight:900;color:var(--navy)}
+.summ-season{font-size:12px;font-weight:600;color:var(--slate2);text-transform:uppercase;letter-spacing:.5px}
+.summ-bars{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.summ-bar-item{}
+.summ-bar-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;font-size:14px;font-weight:700;color:var(--navy)}
+.summ-bar-lbl{font-size:11px;font-weight:500;color:var(--slate2)}
+.summ-track{height:6px;background:#e8e0d0;border-radius:3px;overflow:hidden}
+.summ-fill{height:100%;border-radius:3px}
+.summ-fill-sun{background:linear-gradient(90deg,#fbbf24,#f59e0b)}
+.summ-fill-rain{background:linear-gradient(90deg,#60a5fa,#3b82f6)}
+.summ-footer{padding-top:12px;border-top:1px solid var(--cream2);font-size:13px;color:var(--slate2)}
+.summ-best strong{color:var(--navy)}
 /* keep quick-facts for annual pages */
 .quick-facts{margin:24px 0;display:flex;flex-direction:column;gap:0;border-radius:14px;box-shadow:var(--shadow);border:1px solid var(--cream2);overflow:hidden}
 .quick-facts-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--cream2)}

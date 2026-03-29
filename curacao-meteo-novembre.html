@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap&font-display=swap" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap&font-display=swap"/></noscript>
-<link rel="stylesheet" href="style.css?v=6"/>
+<link rel="stylesheet" href="style.css?v=7"/>
 <link rel="icon" type="image/x-icon" href="favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>
@@ -105,40 +105,30 @@
  </div>
 </header>
 <main class="page">
- <section class="section">
+ <section class="section summ-section">
  <div class="section-label">Résumé du mois</div>
  <h2 class="section-title">Météo à Curaçao en novembre</h2>
- <div class="verdict-badge" style="background:#fef9c3;color:#ca8a04;border:1.5px solid #ca8a04">⚠️ Acceptable</div>
- <div class="stat-grid">
-   <div class="stat-chip">
-     <div class="stat-icon">🌡️</div>
-     <div class="stat-val">26°C–30°C</div>
-     <div class="stat-lbl">Température min / max</div>
+ <div class="summ-card">
+   <div class="summ-top">
+     <span class="summ-badge" style="background:#fef9c3;color:#ca8a04;border:1.5px solid #ca8a04">⚠️ Acceptable</span>
+     <span class="summ-score" style="color:#ca8a04">6.7<span class="summ-score-den">/10</span></span>
    </div>
-   <div class="stat-chip">
-     <div class="stat-icon">🌧️</div>
-     <div class="stat-val">73%</div>
-     <div class="stat-lbl">Jours pluvieux</div>
+   <div class="summ-temp-row">
+     <span class="summ-temp">26°C — 30°C</span>
+     <span class="summ-season">Automne</span>
    </div>
-   <div class="stat-chip">
-     <div class="stat-icon">☀️</div>
-     <div class="stat-val">11.0h</div>
-     <div class="stat-lbl">Soleil</div>
+   <div class="summ-bars">
+     <div class="summ-bar-item">
+       <div class="summ-bar-header"><span>☀️ 11.0h</span><span class="summ-bar-lbl">Soleil</span></div>
+       <div class="summ-track"><div class="summ-fill summ-fill-sun" style="width:79%"></div></div>
+     </div>
+     <div class="summ-bar-item">
+       <div class="summ-bar-header"><span>🌧️ 73%</span><span class="summ-bar-lbl">Jours pluvieux</span></div>
+       <div class="summ-track"><div class="summ-fill summ-fill-rain" style="width:73%"></div></div>
+     </div>
    </div>
-   <div class="stat-chip stat-chip-wide">
-     <div class="stat-icon">⭐</div>
-     <div class="stat-val">6.7<span class="stat-val-sub">/10</span></div>
-     <div class="stat-lbl">⭐ Score météo</div>
-   </div>
-   <div class="stat-chip stat-chip-wide">
-     <div class="stat-icon">📅</div>
-     <div class="stat-val">Mars</div>
-     <div class="stat-lbl">📅 Meilleur mois</div>
-   </div>
-   <div class="stat-chip stat-chip-wide">
-     <div class="stat-icon">🌊</div>
-     <div class="stat-val">Automne</div>
-     <div class="stat-lbl">🌊 Saison</div>
+   <div class="summ-footer">
+     <span class="summ-best">📅 📅 Meilleur mois : <strong>Mars</strong> (8.6/10)</span>
    </div>
  </div>
  </section>
