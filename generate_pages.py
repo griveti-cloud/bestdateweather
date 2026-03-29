@@ -1064,7 +1064,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <meta property="og:title" content="{og_title}"/>
 <meta property="og:description" content="{desc}"/>
 <meta property="og:url" content="{canonical}"/>
-<meta property="og:image" content="https://bestdateweather.com/og-image.png"/>
+<meta property="og:image" content="{_photo_url or 'https://bestdateweather.com/og-image.png'}"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <script type="application/ld+json">{article_schema}</script>
@@ -2006,6 +2006,30 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <a href="{flights_url_m}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">{_pb_flight_m}</a>
 </div>'''
 
+    # ── Monthly hero photo ──
+    _m_photo = dest.get('_photo', {})
+    _m_photo_url = _m_photo.get('url', '')
+    if _m_photo_url:
+        _m_hero_img_block = (
+            f'<img src="{_m_photo_url}" class="hero-bg-img" alt="{nom}"'
+            f' loading="eager" decoding="async" fetchpriority="high"/>'
+            f'<div class="hero-overlay"></div>'
+        )
+        _m_utm = 'utm_source=bestdateweather&utm_medium=referral'
+        _m_credit_name = _m_photo.get('credit_name', '').replace(' via Unsplash','').replace(' via unsplash','')
+        _m_credit_url  = _m_photo.get('credit_url', '')
+        _m_credit_url_utm = f'{_m_credit_url}?{_m_utm}' if _m_credit_url else ''
+        _m_unsplash_utm = f'https://unsplash.com/?{_m_utm}'
+        _m_hero_credit = (
+            f'<span class="hero-photo-credit">'
+            f'<a href="{_m_credit_url_utm}" target="_blank" rel="noopener">{_m_credit_name}</a>'
+            f' / <a href="{_m_unsplash_utm}" target="_blank" rel="noopener">Unsplash</a>'
+            f'</span>'
+        ) if _m_credit_name else ''
+    else:
+        _m_hero_img_block = ''
+        _m_hero_credit = ''
+
     html = f'''<!DOCTYPE html>
 <html lang="{L['html_lang']}">
 <head>
@@ -2020,13 +2044,14 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <meta property="og:title" content="{og_title}"/>
 <meta property="og:description" content="{desc}"/>
 <meta property="og:url" content="{canonical}"/>
-<meta property="og:image" content="https://bestdateweather.com/og-image.png"/>
+<meta property="og:image" content="{_m_photo_url or 'https://bestdateweather.com/og-image.png'}"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <script type="application/ld+json">{article_schema}</script>
 <script type="application/ld+json">{faq_schema}</script>
 <script type="application/ld+json">{breadcrumb_schema}</script>
 {GTAG_HTML(pfx)}
+{"<link rel=\"preload\" as=\"image\" href=\"" + _m_photo_url + "\" fetchpriority=\"high\"/>" if _m_photo_url else ""}
 {head_css(cfg)}
 <style>
 .hero-band{{background:{MONTHLY_GRAD[mi]};}}
@@ -2076,7 +2101,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 {NAV}
 {plan_bar_m}
 </div>
-<header class="hero-band">
+{_m_hero_img_block}<header class="hero-band">
  <div class="dest-tag"><img src="{pfx}flags/{flag}.png" srcset="{pfx}flags/2x/{flag}.png 2x" width="20" height="15" alt="{flag.upper()}" loading="lazy" class="flag-icon"> {nom} · {season}</div>
  <h1 class="hero-title">{h1_text}</h1>
  <p class="hero-sub">{hero_sub}</p>
@@ -2087,7 +2112,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <div><span class="hstat-val">{m['sun_h']}h</span><span class="hstat-lbl">{L['hstat_sun']}</span></div>
  <div><span class="hstat-val" style="color:{txt};text-shadow:0 1px 4px rgba(0,0,0,.3)">{score:.1f}/10</span><span class="hstat-lbl">{L['hstat_score']}</span></div>
  </div>
-</header>
+{_m_hero_credit}</header>
 <main class="page">
  <section class="section summ-section">
  <div class="section-label">{L['sec_summary']}</div>
