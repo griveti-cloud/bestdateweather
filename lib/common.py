@@ -799,7 +799,7 @@ def climate_trend_section(slug_fr: str, nom: str, lang: str = 'fr', C: dict = No
         dash_attr = f' stroke-dasharray="{dash}"' if dash else ''
         return f'<polyline points="{pts}" fill="none" stroke="{color}" stroke-width="{width}" stroke-linejoin="round" stroke-linecap="round"{dash_attr}/>'
 
-    # Y-axis grid lines
+    # Y-axis grid lines + labels
     grid_lines = ''
     y_ticks = 4
     for k in range(y_ticks + 1):
@@ -807,27 +807,41 @@ def climate_trend_section(slug_fr: str, nom: str, lang: str = 'fr', C: dict = No
         y_px  = sy(y_val)
         grid_lines += (
             f'<line x1="{PAD_L}" y1="{y_px:.1f}" x2="{W - PAD_R}" y2="{y_px:.1f}" '
-            f'stroke="#e8e0d0" stroke-width="1"/>'
-            f'<text x="{PAD_L - 4}" y="{y_px + 4:.1f}" text-anchor="end" '
-            f'font-size="10" fill="#6b7280" font-weight="500">{y_val:.0f}</text>'
+            f'stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/>'
+            f'<text x="{PAD_L - 6}" y="{y_px + 4:.1f}" text-anchor="end" '
+            f'font-size="10" fill="#6b7280" font-weight="600">{y_val:.0f}</text>'
         )
 
-    # X-axis labels (every 2 years)
+    # X-axis labels — ALL years, staggered (odd years slightly lower)
     x_labels = ''
     for i, (y, *_) in enumerate(valid):
-        if i % 2 == 0:
-            x_labels += (
-                f'<text x="{sx(i):.1f}" y="{H - 4}" text-anchor="middle" '
-                f'font-size="10" fill="#6b7280" font-weight="500">{y}</text>'
-            )
+        y_offset = H - 4 if i % 2 == 0 else H + 11
+        x_labels += (
+            f'<text x="{sx(i):.1f}" y="{y_offset}" text-anchor="middle" '
+            f'font-size="9.5" fill="#6b7280" font-weight="600">{y}</text>'
+        )
+        # Tick mark
+        x_labels += (
+            f'<line x1="{sx(i):.1f}" y1="{H - PAD_B + 2}" x2="{sx(i):.1f}" y2="{H - PAD_B + 6}" '
+            f'stroke="#d1d5db" stroke-width="1"/>'
+        )
+
+    # Dots at data points
+    dots = ''
+    for series, color in [('tmax', '#ef4444'), ('tmin', '#3b82f6')]:
+        for i, (_, tx, tn, tm) in enumerate(valid):
+            v = tx if series == 'tmax' else tn
+            if v is not None:
+                dots += f'<circle cx="{sx(i):.1f}" cy="{sy(v):.1f}" r="3" fill="{color}" stroke="white" stroke-width="1.5"/>'
 
     svg = (
-        f'<svg viewBox="0 0 {W} {H}" width="100%" style="display:block;overflow:visible" '
+        f'<svg viewBox="0 0 {W} {H + 14}" width="100%" style="display:block;overflow:visible" '
         f'role="img" aria-label="{title_lbl}">'
         f'{grid_lines}'
         f'{polyline("tmin", "#3b82f6", 2.5)}'
         f'{polyline("tmoy", "#9ca3af", 1.5, "5 3")}'
         f'{polyline("tmax", "#ef4444", 2.5)}'
+        f'{dots}'
         f'{x_labels}'
         f'</svg>'
     )
