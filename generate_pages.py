@@ -2005,7 +2005,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
      </div>
    </div>
    <div class="summ-footer">
-     <span class="summ-best">📅 {L['qf_best']} : <strong>{best_month}</strong> ({best_score:.1f}/10)</span>
+     <span class="summ-best">{L['qf_best']} : <strong>{best_month}</strong> ({best_score:.1f}/10)</span>
    </div>
  </div>
  </section>
