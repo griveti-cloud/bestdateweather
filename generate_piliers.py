@@ -744,7 +744,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         f'<span id="fc-period-lbl">{pil.get("period_annual","Annuel") if mi < 0 else loc["month_abbr"][mi]}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-period">'
-        f'<div class="fc-months" id="fc-months-grid">{month_nav.replace("month-nav","").replace("<div ","").replace("</div>","")}</div>'
+        f'<div class="fc-months" id="fc-months-grid">'+ month_nav.replace('<div class="month-nav" aria-label="'+pil.get('months_label','')+'">','').replace('</div>','') +f'</div>'
         f'</div></div>'
         f'<div class="fchip" id="fc-region" data-fc="region" onclick="toggleFC(this.dataset.fc,event)">'
 
