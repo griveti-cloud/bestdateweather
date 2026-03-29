@@ -339,7 +339,7 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 /* Activity list */
 .act-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
 .act-chip{background:white;border:1.5px solid var(--cream2);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
-.act-chip-budget{grid-column:span 2;background:var(--cream)}
+.act-chip-budget{background:var(--cream)}
 .act-chip-lbl{font-size:11px;font-weight:600;color:var(--slate2);text-transform:uppercase;letter-spacing:.4px}
 .act-chip-val{font-size:14px;font-weight:700;color:var(--navy)}
 
