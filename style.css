@@ -437,16 +437,15 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .rt .safety-col{text-align:center;width:30px;padding-left:2px;padding-right:2px;font-size:14px}
 /* Ranking tables mobile — no horizontal scroll */
 @media(max-width:520px){
-  div[style*="overflow-x"]{overflow-x:visible!important}
-  .rt{font-size:11px;table-layout:fixed;width:100%}
-  .rt th{padding:7px 4px;font-size:9px;letter-spacing:0;overflow:hidden;text-overflow:ellipsis}
-  .rt td{padding:7px 4px;white-space:normal;overflow:hidden}
-  .rt .rank{width:28px;font-size:13px;padding:7px 2px}
-  .rt td:nth-child(2){width:35%}
+  .rt{font-size:12px}
+  .rt th{padding:7px 5px;font-size:10px;letter-spacing:0;white-space:nowrap}
+  .rt td{padding:7px 5px}
+  .rt .rank{font-size:13px;padding:7px 3px}
   .rt .sc{font-size:12px;white-space:nowrap}
-  .rt .safety-col{width:28px;padding:7px 2px;font-size:14px;text-align:center}
-  .region-tag{font-size:9px;display:inline;margin-left:3px;color:var(--slate2)}
+  .rt .safety-col{padding:7px 3px;font-size:14px;text-align:center;white-space:nowrap}
+  .region-tag{display:none}
   .rt td.rt-sec,.rt th.rt-sec{display:none}
+  .rt td:nth-child(2),.rt th:nth-child(2){white-space:nowrap;max-width:130px;overflow:hidden;text-overflow:ellipsis}
 }
 @media(max-width:640px) and (min-width:521px){
   .rt td.rt-sec{opacity:.8}
