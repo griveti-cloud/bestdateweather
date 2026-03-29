@@ -2062,7 +2062,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 {"<link rel=\"preload\" as=\"image\" href=\"" + _m_photo_url + "\" fetchpriority=\"high\"/>" if _m_photo_url else ""}
 {head_css(cfg)}
 <style>
-.hero-band{{background:{MONTHLY_GRAD[mi]};}}
+.hero-band{{position:relative;overflow:hidden;background:{MONTHLY_GRAD[mi]};max-height:55vh;min-height:280px;}}
 .hero-title em{{color:#93c5fd;}}
 .month-btn-active{{box-shadow:0 0 0 3px var(--gold);}}
 /* Decision section redesign */
