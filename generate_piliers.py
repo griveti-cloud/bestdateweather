@@ -402,7 +402,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .dest-link{color:var(--text);text-decoration:none;font-weight:600}
 .dest-link:hover{color:var(--gold)}
 .region-tag{display:inline-block;font-size:10px;color:var(--slate);background:var(--cream);padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle}
-.filter-bar{display:flex;gap:6px;overflow:visible;padding:10px 14px;background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px 14px 0 0;position:relative;z-index:10;flex-wrap:nowrap}.filter-bar::-webkit-scrollbar{display:none}
+.filter-bar-wrap{overflow-x:auto;overflow-y:visible;background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px 14px 0 0;scrollbar-width:none}.filter-bar-wrap::-webkit-scrollbar{display:none}.filter-bar{display:flex;gap:6px;overflow:visible;padding:10px 14px;flex-wrap:nowrap;width:max-content;min-width:100%;position:relative}.filter-bar::-webkit-scrollbar{display:none}
 .fchip{display:inline-flex;align-items:center;gap:5px;padding:6px 10px 6px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);white-space:nowrap;flex-shrink:0;transition:all .15s;position:relative;user-select:none}
 .fchip.has-filter{background:var(--gold);color:white;border-color:var(--gold)}
 .fchip:hover:not(.has-filter){border-color:var(--gold)}
@@ -414,11 +414,11 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .fc-item.active{font-weight:700;color:var(--gold)}
 .fc-item.threshold-active{background:var(--cream);font-weight:600}
 .fc-months{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:4px}
-.fc-month-item{text-align:center;padding:6px 4px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;color:var(--navy);transition:background .1s}
+.fc-month-item{text-align:center;padding:6px 4px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;color:var(--navy);transition:background .1s;text-decoration:none;display:block}
 .fc-month-item:hover{background:var(--cream)}
 .fc-month-item.active{background:var(--gold);color:white;border-radius:6px}
 .fc-sep{height:1px;background:var(--cream2);margin:4px 0}
-.filter-bar+.section{border:1.5px solid var(--cream2);border-top:none;border-radius:0 0 14px 14px;padding:12px 14px 0;margin-bottom:16px}.cta-box{background:linear-gradient(135deg,#d4a853,#c69a3a);border-radius:14px;padding:24px;text-align:center;margin:28px 0}
+.filter-bar-wrap+.section{border:1.5px solid var(--cream2);border-top:none;border-radius:0 0 14px 14px;padding:12px 14px 0;margin-bottom:16px}.cta-box{background:linear-gradient(135deg,#d4a853,#c69a3a);border-radius:14px;padding:24px;text-align:center;margin:28px 0}
 .cta-box a{color:white;font-weight:700;font-size:17px;text-decoration:none;display:block;text-align:center}
 .related-pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px}
 .related-card{background:white;border:1.5px solid var(--cream2);border-radius:12px;padding:16px;text-decoration:none;color:var(--text);display:block}
@@ -967,7 +967,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 </div>
 </header>
 <main class="page">
-<div class="filter-bar" id="filter-bar">{filter_chips_html}</div><div class="section"><div class="eyebrow">{sec_eyebrow}</div><h2 class="sec-title" id="rt-title">{sec_title}</h2><p class="sec-intro" id="rt-intro">{sec_intro}</p>
+<div class="filter-bar-wrap"><div class="filter-bar" id="filter-bar">{filter_chips_html}</div></div><div class="section"><div class="eyebrow">{sec_eyebrow}</div><h2 class="sec-title" id="rt-title">{sec_title}</h2><p class="sec-intro" id="rt-intro">{sec_intro}</p>
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
 <p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
 <p class="rt-methodo" id="rt-methodo-beach" style="display:none">{loc['hub']['methodo_beach']}</p>
@@ -1423,7 +1423,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
 </div>
 </header>
 <main class="page">
-<div class="filter-bar" id="filter-bar">{filter_chips_html}</div>
+<div class="filter-bar-wrap"><div class="filter-bar" id="filter-bar">{filter_chips_html}</div></div>
 <div class="section">
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
 <p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
