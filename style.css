@@ -434,6 +434,7 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#9c5f00;font-weight:700;margin-bottom:6px}
 .sec-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(18px,4vw,24px);margin-bottom:8px}
 .sec-intro{font-size:14px;color:var(--slate);margin-bottom:18px}
+.rt .safety-col{text-align:center;width:36px;font-size:16px}
 @media(max-width:640px){.rt th:nth-child(5),.rt td:nth-child(5){display:none}.hero-stats{gap:20px}}
 .filter-panel{background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px 14px 0 0;padding:8px 14px 6px;margin-bottom:0;display:flex;flex-direction:column;gap:0}
 .filter-row{display:flex;flex-direction:column;gap:4px;padding:5px 0;border-bottom:1px solid var(--cream2)}

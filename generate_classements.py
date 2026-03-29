@@ -30,6 +30,10 @@ def load_destinations():
             dests[r['slug_fr']] = r
     return dests
 
+def load_country_info():
+    with open(ROOT / 'data/country_info.json', encoding='utf-8') as f:
+        return json.load(f)
+
 def load_climate():
     """Returns dict: slug -> list of {mois_num, score, classe, tmin, tmax, rain_pct, precip_mm, sun_h, sea_temp, beach_score}"""
     data = {}
@@ -529,14 +533,28 @@ def country_tag(d, lang, slug=''):
         return ''
     return f'<span class="region-tag">{e(tag)}</span>'
 
-def make_table_annual(entries, n, lang):
+def safety_badge(dest, country_info):
+    """Return a safety badge based on risk_level from country_info."""
+    pays = dest.get('pays', '')
+    info = country_info.get(pays, {})
+    level = info.get('risk_level', 1)
+    if level == 1:
+        return '<span class="safety-1" title="Sûr">🟢</span>'
+    elif level == 2:
+        return '<span class="safety-2" title="Vigilance normale">🟡</span>'
+    elif level == 3:
+        return '<span class="safety-3" title="Vigilance renforcée">🟠</span>'
+    else:
+        return '<span class="safety-4" title="Déconseillé">🔴</span>'
+
+def make_table_annual(entries, n, lang, country_info=None):
     """Generate top-N annual ranking table."""
     mois = get_mois(lang)
     headers = {
-        'fr': ('Rang','Destination','Meilleur mois','Score annuel','Soleil/an','Pluie moy.'),
-        'en': ('Rank','Destination','Best month','Annual score','Sun/year','Avg. rain'),
-        'es': ('Pos.','Destino','Mejor mes','Puntuación anual','Sol/año','Lluvia media'),
-        'de': ('Rang','Ziel','Bester Monat','Jahreswertung','Sonne/Jahr','Ø Regen'),
+        'fr': ('Rang','Destination','Meilleur mois','Score annuel','Soleil/an','Pluie moy.','Sécu.'),
+        'en': ('Rank','Destination','Best month','Annual score','Sun/year','Avg. rain','Safety'),
+        'es': ('Pos.','Destino','Mejor mes','Puntuación anual','Sol/año','Lluvia media','Seg.'),
+        'de': ('Rang','Ziel','Bester Monat','Jahreswertung','Sonne/Jahr','Ø Regen','Sicher.'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -550,19 +568,20 @@ def make_table_annual(entries, n, lang):
             f'<td>{mois[entry["best_month"]]}</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{entry["sun_annual"]:.0f}h</td>'
-            f'<td>{entry["rain_avg"]:.0f}%</td></tr>'
+            f'<td>{entry["rain_avg"]:.0f}%</td>'
+            f'<td class="safety-col">{safety_badge(d, country_info or {})}</td></tr>'
         )
     return (
         f'<table class="rt"><thead><tr>{"".join(f"<th>{x}</th>" for x in h)}</tr></thead>'
         f'<tbody>{"".join(rows)}</tbody></table>'
     )
 
-def make_table_seasonal(entries, n, lang):
+def make_table_seasonal(entries, n, lang, country_info=None):
     headers = {
-        'fr': ('Rang','Destination','Score','Temp. max','Soleil','Pluie'),
-        'en': ('Rank','Destination','Score','Max temp.','Sun','Rain'),
-        'es': ('Pos.','Destino','Puntuación','Temp. máx','Sol','Lluvia'),
-        'de': ('Rang','Ziel','Wertung','Max-Temp.','Sonne','Regen'),
+        'fr': ('Rang','Destination','Score','Temp. max','Soleil','Pluie','Sécu.'),
+        'en': ('Rank','Destination','Score','Max temp.','Sun','Rain','Safety'),
+        'es': ('Pos.','Destino','Puntuación','Temp. máx','Sol','Lluvia','Seg.'),
+        'de': ('Rang','Ziel','Wertung','Max-Temp.','Sonne','Regen','Sicher.'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -576,7 +595,8 @@ def make_table_seasonal(entries, n, lang):
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td>{_ft(entry["tmax_avg"], lang)}</td>'
             f'<td>{entry["sun"]:.0f}h</td>'
-            f'<td>{entry["rain_avg"]:.0f}%</td></tr>'
+            f'<td>{entry["rain_avg"]:.0f}%</td>'
+            f'<td class="safety-col">{safety_badge(d, country_info or {})}</td></tr>'
         )
     return (
         f'<table class="rt"><thead><tr>{"".join(f"<th>{x}</th>" for x in h)}</tr></thead>'
@@ -972,7 +992,7 @@ def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix=''):
 # PAGE GENERATORS
 # ══════════════════════════════════════════════════════════════════════════════
 
-def gen_mondial(dests, climate, lang):
+def gen_mondial(dests, climate, lang, country_info=None):
     annual   = dedup_country(compute_annual(climate, dests), dests)
     sunniest = dedup_country(compute_sunniest(climate, dests), dests)
     driest   = dedup_country(compute_driest(climate, dests), dests)
@@ -988,13 +1008,13 @@ def gen_mondial(dests, climate, lang):
         eu1=_dest_name(eu1['dest'], lang),    eu1_avg=f'{eu1["avg"]:.1f}',
     )
     _cl_render(pc, lang, ctx,
-               tables=[make_table_annual(annual, 20, lang),
+               tables=[make_table_annual(annual, 20, lang, country_info),
                        make_table_sun(sunniest, 10, lang),
                        make_table_rain(driest, 10, lang)],
                jsonld_data=annual, jsonld_n=40,
                print_suffix=f' ({n_dests} dests, top={top1["dest"]["nom_bare"]})')
 
-def gen_europe(dests, climate, lang):
+def gen_europe(dests, climate, lang, country_info=None):
     annual  = dedup_country(compute_annual(climate, dests, europe_only=True), dests)
     summer  = dedup_country(compute_seasonal(climate, dests, [6,7,8], europe_only=True), dests)
     winter  = dedup_country(compute_seasonal(climate, dests, [12,1,2], europe_only=True), dests)
@@ -1008,13 +1028,13 @@ def gen_europe(dests, climate, lang):
         winter1=_dest_name(winter[0]['dest'], lang),  winter1_avg=f'{winter[0]["avg"]:.1f}',
     )
     _cl_render(pc, lang, ctx,
-               tables=[make_table_annual(annual, 20, lang),
-                       make_table_seasonal(summer, 10, lang),
-                       make_table_seasonal(winter, 10, lang)],
+               tables=[make_table_annual(annual, 20, lang, country_info),
+                       make_table_seasonal(summer, 10, lang, country_info),
+                       make_table_seasonal(winter, 10, lang, country_info)],
                jsonld_data=annual, jsonld_n=20,
                print_suffix=f' (Europe, top={top1["dest"]["nom_bare"]})')
 
-def gen_ete(dests, climate, lang):
+def gen_ete(dests, climate, lang, country_info=None):
     summer  = dedup_country(compute_seasonal(climate, dests, [6,7,8]), dests)
     top1    = summer[0]
     n_dests = len(summer)
@@ -1026,11 +1046,11 @@ def gen_ete(dests, climate, lang):
         top3=_dest_name(summer[2]['dest'], lang), top3_avg=f'{summer[2]["avg"]:.1f}',
     )
     _cl_render(pc, lang, ctx,
-               tables=[make_table_seasonal(summer, 20, lang)],
+               tables=[make_table_seasonal(summer, 20, lang, country_info)],
                jsonld_data=summer, jsonld_n=20,
                print_suffix=f' (été, top={top1["dest"]["nom_bare"]})')
 
-def gen_hiver(dests, climate, lang):
+def gen_hiver(dests, climate, lang, country_info=None):
     winter  = dedup_country(compute_seasonal(climate, dests, [12,1,2]), dests)
     top1    = winter[0]
     n_dests = len(winter)
@@ -1042,11 +1062,11 @@ def gen_hiver(dests, climate, lang):
         top3=_dest_name(winter[2]['dest'], lang), top3_avg=f'{winter[2]["avg"]:.1f}',
     )
     _cl_render(pc, lang, ctx,
-               tables=[make_table_seasonal(winter, 20, lang)],
+               tables=[make_table_seasonal(winter, 20, lang, country_info)],
                jsonld_data=winter, jsonld_n=20,
                print_suffix=f' (hiver, top={top1["dest"]["nom_bare"]})')
 
-def gen_nomades(dests, climate, lang):
+def gen_nomades(dests, climate, lang, country_info=None):
     nomad   = dedup_country(compute_nomad(climate, dests), dests)
     top1    = nomad[0]
     n_dests = len(nomad)
@@ -1062,7 +1082,7 @@ def gen_nomades(dests, climate, lang):
                jsonld_data=nomad, jsonld_n=20,
                print_suffix=f' (nomades, top={top1["dest"]["nom_bare"]})')
 
-def gen_beach(dests, climate, lang):
+def gen_beach(dests, climate, lang, country_info=None):
     annual  = dedup_country(compute_beach(climate, dests), dests)
     summer  = dedup_country(compute_beach_seasonal(climate, dests, [6,7,8]), dests)
     winter  = dedup_country(compute_beach_seasonal(climate, dests, [12,1,2]), dests)
@@ -1083,7 +1103,7 @@ def gen_beach(dests, climate, lang):
                jsonld_data=annual, jsonld_n=25,
                print_suffix=f' (plage, {n_dests} coastal, top={top1["dest"]["nom_bare"]})')
 
-def gen_caribbean(dests, climate, lang):
+def gen_caribbean(dests, climate, lang, country_info=None):
     annual  = dedup_country(compute_annual(climate, dests, caribbean_only=True), dests)
     summer  = dedup_country(compute_seasonal(climate, dests, [12,1,2], caribbean_only=True), dests)  # "été" caribéen = hiver boréal
     winter  = dedup_country(compute_seasonal(climate, dests, [6,7,8], caribbean_only=True), dests)   # saison humide
@@ -1097,9 +1117,9 @@ def gen_caribbean(dests, climate, lang):
         wet1=_dest_name(winter[0]['dest'], lang),     wet1_avg=f'{winter[0]["avg"]:.1f}',
     )
     _cl_render(pc, lang, ctx,
-               tables=[make_table_annual(annual, n_dests, lang),
-                       make_table_seasonal(summer, n_dests, lang),
-                       make_table_seasonal(winter, n_dests, lang)],
+               tables=[make_table_annual(annual, n_dests, lang, country_info),
+                       make_table_seasonal(summer, n_dests, lang, country_info),
+                       make_table_seasonal(winter, n_dests, lang, country_info)],
                jsonld_data=annual, jsonld_n=n_dests,
                print_suffix=f' (Caraïbes, {n_dests} dests, top={top1["dest"]["nom_bare"]})')
 
@@ -1111,52 +1131,53 @@ def main():
     print('Loading data...')
     dests = load_destinations()
     climate = load_climate()
+    country_info = load_country_info()
     print(f'  {len(dests)} destinations, {len(climate)} climate entries')
 
     print('\nGenerating FR pages...')
-    gen_mondial(dests, climate, 'fr')
-    gen_europe(dests, climate, 'fr')
-    gen_ete(dests, climate, 'fr')
-    gen_hiver(dests, climate, 'fr')
-    gen_nomades(dests, climate, 'fr')
-    gen_beach(dests, climate, 'fr')
-    gen_caribbean(dests, climate, 'fr')
+    gen_mondial(dests, climate, 'fr', country_info)
+    gen_europe(dests, climate, 'fr', country_info)
+    gen_ete(dests, climate, 'fr', country_info)
+    gen_hiver(dests, climate, 'fr', country_info)
+    gen_nomades(dests, climate, 'fr', country_info)
+    gen_beach(dests, climate, 'fr', country_info)
+    gen_caribbean(dests, climate, 'fr', country_info)
 
     print('\nGenerating EN pages...')
-    gen_mondial(dests, climate, 'en')
-    gen_europe(dests, climate, 'en')
-    gen_ete(dests, climate, 'en')
-    gen_hiver(dests, climate, 'en')
-    gen_nomades(dests, climate, 'en')
-    gen_beach(dests, climate, 'en')
-    gen_caribbean(dests, climate, 'en')
+    gen_mondial(dests, climate, 'en', country_info)
+    gen_europe(dests, climate, 'en', country_info)
+    gen_ete(dests, climate, 'en', country_info)
+    gen_hiver(dests, climate, 'en', country_info)
+    gen_nomades(dests, climate, 'en', country_info)
+    gen_beach(dests, climate, 'en', country_info)
+    gen_caribbean(dests, climate, 'en', country_info)
 
     print('\nGenerating ES pages...')
-    gen_mondial(dests, climate, 'es')
-    gen_europe(dests, climate, 'es')
-    gen_ete(dests, climate, 'es')
-    gen_hiver(dests, climate, 'es')
-    gen_nomades(dests, climate, 'es')
-    gen_beach(dests, climate, 'es')
-    gen_caribbean(dests, climate, 'es')
+    gen_mondial(dests, climate, 'es', country_info)
+    gen_europe(dests, climate, 'es', country_info)
+    gen_ete(dests, climate, 'es', country_info)
+    gen_hiver(dests, climate, 'es', country_info)
+    gen_nomades(dests, climate, 'es', country_info)
+    gen_beach(dests, climate, 'es', country_info)
+    gen_caribbean(dests, climate, 'es', country_info)
 
     print('\nGenerating EN-US pages (°F)...')
-    gen_mondial(dests, climate, 'en-us')
-    gen_europe(dests, climate, 'en-us')
-    gen_ete(dests, climate, 'en-us')
-    gen_hiver(dests, climate, 'en-us')
-    gen_nomades(dests, climate, 'en-us')
-    gen_beach(dests, climate, 'en-us')
-    gen_caribbean(dests, climate, 'en-us')
+    gen_mondial(dests, climate, 'en-us', country_info)
+    gen_europe(dests, climate, 'en-us', country_info)
+    gen_ete(dests, climate, 'en-us', country_info)
+    gen_hiver(dests, climate, 'en-us', country_info)
+    gen_nomades(dests, climate, 'en-us', country_info)
+    gen_beach(dests, climate, 'en-us', country_info)
+    gen_caribbean(dests, climate, 'en-us', country_info)
 
     print('\nGenerating DE pages...')
-    gen_mondial(dests, climate, 'de')
-    gen_europe(dests, climate, 'de')
-    gen_ete(dests, climate, 'de')
-    gen_hiver(dests, climate, 'de')
-    gen_nomades(dests, climate, 'de')
-    gen_beach(dests, climate, 'de')
-    gen_caribbean(dests, climate, 'de')
+    gen_mondial(dests, climate, 'de', country_info)
+    gen_europe(dests, climate, 'de', country_info)
+    gen_ete(dests, climate, 'de', country_info)
+    gen_hiver(dests, climate, 'de', country_info)
+    gen_nomades(dests, climate, 'de', country_info)
+    gen_beach(dests, climate, 'de', country_info)
+    gen_caribbean(dests, climate, 'de', country_info)
 
     print('\n✅ All 35 ranking pages generated (FR + EN + ES + EN-US + DE).')
 
