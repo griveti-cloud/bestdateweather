@@ -852,9 +852,10 @@
     "fp_secu": "SÉCU.",
     "fp_budget": "BUDGET",
     "secu_labels": {
-      "1": "🟢 Sûr",
-      "2": "🟡 Vigilance",
-      "3": "🔴 Déconseillé"
+      "1": "🟢 Vigilance normale",
+      "2": "🟡 Vigilance renforcée",
+      "3": "🟠 Déconseillé",
+      "4": "🔴 Formellement déconseillé"
     },
     "budget_labels": {
       "1": "💚 Budget",

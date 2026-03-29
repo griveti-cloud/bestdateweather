@@ -852,9 +852,10 @@
     "fp_secu": "SEGUR.",
     "fp_budget": "PRECIO",
     "secu_labels": {
-      "1": "🟢 Seguro",
-      "2": "🟡 Precaución",
-      "3": "🔴 Desac."
+      "1": "🟢 Normal",
+      "2": "🟡 Reforzada",
+      "3": "🟠 Desaconsejado",
+      "4": "🔴 No viajar"
     },
     "budget_labels": {
       "1": "💚 Económico",

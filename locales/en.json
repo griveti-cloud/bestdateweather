@@ -853,9 +853,10 @@
     "fp_secu": "SAFETY",
     "fp_budget": "BUDGET",
     "secu_labels": {
-      "1": "🟢 Safe",
-      "2": "🟡 Caution",
-      "3": "🔴 Avoid"
+      "1": "🟢 Normal",
+      "2": "🟡 High vigilance",
+      "3": "🟠 Avoid if possible",
+      "4": "🔴 Do not travel"
     },
     "budget_labels": {
       "1": "💚 Budget",

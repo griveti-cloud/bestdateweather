@@ -857,9 +857,10 @@
     "fp_secu": "SICHER.",
     "fp_budget": "BUDGET",
     "secu_labels": {
-      "1": "🟢 Sicher",
-      "2": "🟡 Vorsicht",
-      "3": "🔴 Abgeraten"
+      "1": "🟢 Normal",
+      "2": "🟡 Erhöht",
+      "3": "🟠 Nicht empfohlen",
+      "4": "🔴 Dringend abgeraten"
     },
     "budget_labels": {
       "1": "💚 Günstig",
