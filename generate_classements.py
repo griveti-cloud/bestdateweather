@@ -618,7 +618,7 @@ def make_table_sun(entries, n, lang, country_info=None):
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}<span class="dest-safety">{safety_badge(d, country_info or {})}</span></td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a> <span class="dest-safety">{safety_badge(d, country_info or {})}</span>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td>{entry["sun_annual"]:.0f}h</td>'
             f'<td class="rt-sec">{entry["rain_avg"]:.0f}%</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td></tr>'
@@ -643,7 +643,7 @@ def make_table_rain(entries, n, lang, country_info=None):
         link = dest_link(entry['slug'], nom, lang, entry['dest'])
         rows.append(
             f'<tr><td class="rank">{rank_icon(i)}</td>'
-            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}<span class="dest-safety">{safety_badge(d, country_info or {})}</span></td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a> <span class="dest-safety">{safety_badge(d, country_info or {})}</span>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td>{entry["rain_avg"]:.0f}%</td>'
             f'<td class="rt-sec">{entry["sun_annual"]:.0f}h</td>'
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td></tr>'
