@@ -613,7 +613,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     # ── Cards section ──
     _gyg_domain_c  = C['gyg_domain']
     _gyg_lang_c    = C['lang']
-    _gyg_dest_c    = quote_plus(f"{nom}, {country}")
+    _gyg_dest_c    = quote_plus(f"{dest.get('nom_en') or dest.get('nom_bare') or nom}, {dest.get('country_en') or country}")
     _gyg_url_c     = f"https://www.{_gyg_domain_c}/s/?q={_gyg_dest_c}&partner_id={GYG_PARTNER_ID}&locale={_gyg_lang_c}"
     _gyg_btn_lbl   = C.get('lbl_cards_gyg_btn', '🎟️ Activities')
     tk, xk = C['card_title_key'], C['card_text_key']
@@ -725,7 +725,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     gyg_lang = C['lang']
     _GYG_LOCALE = {'fr':'fr-FR','en':'en-US','en-us':'en-US','es':'es-ES','de':'de-DE'}
     gyg_locale_code = _GYG_LOCALE.get(gyg_lang, 'en-US')
-    gyg_dest = f"{nom}, {country_name}"
+    gyg_dest = f"{dest.get('nom_en') or dest.get('nom_bare') or nom}, {dest.get('country_en') or country_name}"
     gyg_dest_enc = quote_plus(gyg_dest)
     gyg_url = f"https://www.{gyg_domain}/s/?q={gyg_dest_enc}&partner_id={GYG_PARTNER_ID}&locale={gyg_lang}"
     if gyg_active:
@@ -1950,7 +1950,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     gyg_lang_m = C['gyg_lang']
     _GYG_LOCALE_M = {'fr':'fr-FR','en':'en-US','en-us':'en-US','es':'es-ES','de':'de-DE'}
     gyg_locale_code_m = _GYG_LOCALE_M.get(C['lang'], 'en-US')
-    gyg_dest_m = f"{nom}, {country_name}"
+    gyg_dest_m = f"{dest.get('nom_en') or dest.get('nom_bare') or nom}, {dest.get('country_en') or country_name}"
     gyg_dest_m_enc = quote_plus(gyg_dest_m)
     gyg_url_m = f"https://www.{gyg_domain_m}/s/?q={gyg_dest_m_enc}&partner_id={GYG_PARTNER_ID}&locale={gyg_lang_m}"
     # Titre contextuel : "Que faire à Paris en juillet ?"
