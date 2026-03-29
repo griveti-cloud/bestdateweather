@@ -1082,7 +1082,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 {head_css(C)}
 {_preload_tag}
 <style>
-.hero-band{{position:relative;overflow:hidden;background:#0d1a3a;}}
+.hero-band{{position:relative;overflow:hidden;background:#0d1a3a;max-height:55vh;min-height:280px;}}
 .hero-bg-img{{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;}}
 .hero-overlay{{position:absolute;inset:0;background:linear-gradient(160deg,rgba(13,26,58,0.68) 0%,rgba(26,42,106,0.55) 55%,rgba(42,74,154,0.42) 100%);z-index:1;}}
 .hero-band>:not(.hero-bg-img):not(.hero-overlay){{position:relative;z-index:2;}}
