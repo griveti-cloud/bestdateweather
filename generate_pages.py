@@ -206,8 +206,9 @@ def load_data(cfg):
         for row in csv.DictReader(open(photos_path, encoding='utf-8-sig')):
             photos[row['slug_fr']] = {
                 'url': row['photo_url'],
-                'credit_name': row['photo_credit_name'],
+                'credit_name': row['photo_credit_name'].replace(' via Unsplash','').replace(' via unsplash',''),
                 'credit_url': row['photo_credit_url'],
+                'page_url':   row.get('photo_page_url', row['photo_credit_url']),
             }
 
     return dests, climate, cards, overrides, events, photos
@@ -1033,15 +1034,17 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         )
         # Unsplash attribution: photo link with UTM + "on Unsplash" link
         _utm = 'utm_source=bestdateweather&utm_medium=referral'
-        _credit_url_utm = f'{_photo_credit_url}?{_utm}' if _photo_credit_url else ''
+        _utm = 'utm_source=bestdateweather&utm_medium=referral'
+        _photographer = _photo_credit_name
+        _profile_url = f'{_photo_credit_url}?{_utm}' if _photo_credit_url else ''
+        _page_url_utm = f'{_photo.get("page_url", _photo_credit_url)}?{_utm}'
         _unsplash_utm = f'https://unsplash.com/?{_utm}'
-        _photographer = _photo_credit_name.replace(' via Unsplash', '').replace(' via unsplash', '')
         _hero_credit = (
             f'<span class="hero-photo-credit">'
-            f'<a href="{_credit_url_utm}" target="_blank" rel="noopener">{_photographer}</a>'
-            f' / <a href="{_unsplash_utm}" target="_blank" rel="noopener">Unsplash</a>'
+            f'<a href="{_profile_url}" target="_blank" rel="noopener">{_photographer}</a>'
+            f' on <a href="{_page_url_utm}" target="_blank" rel="noopener">Unsplash</a>'
             f'</span>'
-            if _photo_credit_name else ''
+            if _photographer else ''
         )
     else:
         _preload_tag = ''
@@ -2016,14 +2019,15 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
             f'<div class="hero-overlay"></div>'
         )
         _m_utm = 'utm_source=bestdateweather&utm_medium=referral'
-        _m_credit_name = _m_photo.get('credit_name', '').replace(' via Unsplash','').replace(' via unsplash','')
+        _m_credit_name = _m_photo.get('credit_name', '')
         _m_credit_url  = _m_photo.get('credit_url', '')
-        _m_credit_url_utm = f'{_m_credit_url}?{_m_utm}' if _m_credit_url else ''
-        _m_unsplash_utm = f'https://unsplash.com/?{_m_utm}'
+        _m_page_url    = _m_photo.get('page_url', _m_credit_url)
+        _m_profile_utm = f'{_m_credit_url}?{_m_utm}' if _m_credit_url else ''
+        _m_page_utm    = f'{_m_page_url}?{_m_utm}' if _m_page_url else ''
         _m_hero_credit = (
             f'<span class="hero-photo-credit">'
-            f'<a href="{_m_credit_url_utm}" target="_blank" rel="noopener">{_m_credit_name}</a>'
-            f' / <a href="{_m_unsplash_utm}" target="_blank" rel="noopener">Unsplash</a>'
+            f'<a href="{_m_profile_utm}" target="_blank" rel="noopener">{_m_credit_name}</a>'
+            f' on <a href="{_m_page_utm}" target="_blank" rel="noopener">Unsplash</a>'
             f'</span>'
         ) if _m_credit_name else ''
     else:

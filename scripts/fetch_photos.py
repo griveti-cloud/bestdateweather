@@ -43,11 +43,15 @@ def search_unsplash(query, access_key):
         # Use raw URL with width param — stable, hotlink-allowed
         url_cdn = photo["urls"]["raw"] + "&w=1400&q=85&fm=jpg&fit=crop&crop=entropy"
         credit_name = photo["user"]["name"]
-        credit_url  = f"https://unsplash.com/photos/{photo_id}"
+        username    = photo["user"]["username"]
+        utm         = "utm_source=bestdateweather&utm_medium=referral"
+        profile_url = f"https://unsplash.com/@{username}?{utm}"
+        photo_url_attr = f"https://unsplash.com/photos/{photo_id}?{utm}"
         return {
             "url": url_cdn,
-            "credit_name": f"{credit_name} via Unsplash",
-            "credit_url": credit_url,
+            "credit_name": credit_name,
+            "credit_url": profile_url,      # photographer profile (required by Unsplash)
+            "photo_url":  photo_url_attr,   # photo page (for "on Unsplash" link)
         }, remaining
     except Exception as e:
         print(f"  [ERROR] {e}")
@@ -111,7 +115,7 @@ def main():
     # Write header if file doesn't exist
     file_exists = os.path.exists(PHOTOS_CSV)
     with open(PHOTOS_CSV, "a", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["slug_fr","photo_url","photo_credit_name","photo_credit_url"])
+        writer = csv.DictWriter(f, fieldnames=["slug_fr","photo_url","photo_credit_name","photo_credit_url","photo_page_url"])
         if not file_exists:
             writer.writeheader()
 
@@ -128,6 +132,7 @@ def main():
                     "photo_url": photo["url"],
                     "photo_credit_name": photo["credit_name"],
                     "photo_credit_url": photo["credit_url"],
+                    "photo_page_url": photo.get("photo_url", ""),
                 })
                 f.flush()
                 print(f"✓ (remaining: {remaining})")
