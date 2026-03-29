@@ -597,7 +597,7 @@
     },
     {
       "q": "Was ist der regenreichste Monat in {nom}?",
-      "a": "Der {worst_month} ist der regenreichste Monat mit {worst_rain}% Regentagen."
+      "a": "Der {wettest_month} ist der regenreichste Monat mit {wettest_rain}% Regentagen."
     }
   ],
   "annual_faq_standard": [

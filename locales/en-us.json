@@ -598,7 +598,7 @@
     },
     {
       "q": "What is the wettest month in {nom}?",
-      "a": "{worst_month} is the wettest month with {worst_rain}% rainy days."
+      "a": "{worst_month} is the wettest month with {worst_month} has the lowest climate score of the year."
     }
   ],
   "annual_faq_standard": [
@@ -612,7 +612,7 @@
     },
     {
       "q": "What is the rainiest month in {nom}?",
-      "a": "{worst_month} is the most unfavourable month with {worst_rain}% rainy days and the lowest climate score of the year."
+      "a": "{worst_month} is the most unfavourable month with {worst_month} has the lowest climate score of the year and the lowest climate score of the year."
     },
     {
       "q": "What are the temperatures at night in {nom} in {best_month_lc}?",
@@ -624,7 +624,7 @@
     },
     {
       "q": "When should you avoid {nom}?",
-      "a": "{worst_month} is the most difficult month to visit {nom}, with {worst_rain}% rainy days. Climate conditions are at their lowest of the year during this period."
+      "a": "{worst_month} is the most difficult month to visit {nom}, with {worst_month} has the lowest climate score of the year. Climate conditions are at their lowest of the year during this period."
     }
   ],
   "annual_faq_winter_verdicts": {

@@ -597,7 +597,7 @@
     },
     {
       "q": "¿Cuál es el mes más lluvioso en {nom}?",
-      "a": "{worst_month} es el mes más lluvioso con {worst_rain}% de días de lluvia."
+      "a": "{wettest_month} es el mes más lluvioso con {wettest_rain}% de días de lluvia."
     }
   ],
   "annual_faq_standard": [

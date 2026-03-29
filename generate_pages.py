@@ -505,8 +505,10 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         best_m    = months[best_ski_idx]
         best_tmax = best_m['tmax']
         best_rain = best_m['rain_pct']
-    worst_idx  = min(range(12), key=lambda i: months[i]['score'])
-    worst_rain = months[worst_idx]['rain_pct']
+    worst_idx   = min(range(12), key=lambda i: months[i]['score'])
+    worst_rain  = months[worst_idx]['rain_pct']
+    wettest_idx = max(range(12), key=lambda i: months[i]['rain_pct'])
+    wettest_rain = months[wettest_idx]['rain_pct']
 
     # ── Title & description (5 desc variants, 3 title variants) ──
     title_var = _stable_hash(slug_fr, len(C['annual_titles']))
@@ -526,6 +528,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
                     best_sun=best_sun, best_tmin=best_m['tmin'],
                     worst_month=MONTHS[worst_idx], worst_month_lc=month_lc(C, MONTHS[worst_idx]),
                     worst_rain=worst_rain,
+                    wettest_month=MONTHS[wettest_idx], wettest_rain=wettest_rain,
                     best_season_lc=_best_season_name.lower(),
                     best_ski_month=MONTHS[best_ski_idx] if is_mountain else '',
                     best_ski_month_lc=month_lc(C, MONTHS[best_ski_idx]) if is_mountain else '')
@@ -847,6 +850,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
                         best_month=MONTHS[best_idx], best_month_lc=month_lc(C, MONTHS[best_idx]),
                         best_score=best_score, best_tmax=best_tmax,
                         worst_month=MONTHS[worst_idx], worst_rain=worst_rain,
+                        wettest_month=MONTHS[wettest_idx], wettest_rain=wettest_rain,
                         winter_ski_avg=winter_ski_avg, jan_tmax=months[0]['tmax'])
         faq_items = [(fill_tpl(item['q'], C, **faq_vars), fill_tpl(item['a'], C, **faq_vars))
                      for item in C['annual_faq_mountain']]
@@ -869,6 +873,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
                         best_score=best_score, best_rain=best_rain, best_tmax=_best_tmax_v,
                         best_tmin=_best_tmin, best_sun=_best_sun, temp_unit=_temp_unit,
                         worst_month=MONTHS[worst_idx], worst_rain=worst_rain,
+                        wettest_month=MONTHS[wettest_idx], wettest_rain=wettest_rain,
                         bests_suffix=bests_suffix,
                         winter_score=winter_score, winter_verdict=winter_verdict)
         faq_items = [(fill_tpl(item['q'], C, **faq_vars), fill_tpl(item['a'], C, **faq_vars))
