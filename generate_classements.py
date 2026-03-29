@@ -605,10 +605,10 @@ def make_table_seasonal(entries, n, lang, country_info=None):
 
 def make_table_sun(entries, n, lang, country_info=None):
     headers = {
-        'fr': ('#','Destination','Soleil/an','Score / Sécu.'),
-        'en': ('#','Destination','Sun/year','Score / Safety'),
+        'fr': ('#','Destination','Soleil','Score / Sécu.'),
+        'en': ('#','Destination','Sun/yr','Score / Safety'),
         'es': ('#','Destino','Sol/año','Score / Seg.'),
-        'de': ('#','Ziel','Sonne/Jahr','Score / Sich.'),
+        'de': ('#','Ziel','Sonne/J.','Score / Sich.'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
