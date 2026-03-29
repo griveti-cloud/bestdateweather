@@ -435,6 +435,7 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .sec-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(18px,4vw,24px);margin-bottom:8px}
 .sec-intro{font-size:14px;color:var(--slate);margin-bottom:18px}
 .rt .safety-col{text-align:center;width:30px;padding-left:2px;padding-right:2px;font-size:14px}
+.sc-merged{white-space:nowrap}
 /* Ranking tables mobile — no horizontal scroll */
 .rt-wrap{overflow-x:visible}
 @media(max-width:520px){
