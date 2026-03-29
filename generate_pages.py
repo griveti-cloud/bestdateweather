@@ -45,7 +45,7 @@ DATA = os.path.join(DIR, 'data')
 # ── Version JS — source de vérité unique ───────────────────────────────────
 # Incrémenter ici + les fichiers index/app sont mis à jour automatiquement
 CORE_JS_VERSION = 32
-APP_CSS_VERSION  = 16   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
+APP_CSS_VERSION  = 17   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
 
 def _sync_core_version():
     """Propage CORE_JS_VERSION + APP_CSS_VERSION dans index.html et */app.html.
