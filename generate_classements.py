@@ -624,7 +624,7 @@ def make_table_sun(entries, n, lang, country_info=None):
             f'<td class="sc sc-merged">{entry["avg"]:.1f}<span>/10</span> {safety_badge(d, country_info or {})}</td></tr>'
         )
     return (
-        f'<table class="rt"><thead><tr>{"".join(f'<th class="rt-sec">{x[0]}</th>' if isinstance(x,list) else f'<th>{x}</th>' for x in h)}</tr></thead>'
+        f'<table class="rt rt-compact"><thead><tr>{"".join(f'<th class="rt-sec">{x[0]}</th>' if isinstance(x,list) else f'<th>{x}</th>' for x in h)}</tr></thead>'
         f'<tbody>{"".join(rows)}</tbody></table>'
     )
 
@@ -649,7 +649,7 @@ def make_table_rain(entries, n, lang, country_info=None):
             f'<td class="sc sc-merged">{entry["avg"]:.1f}<span>/10</span> {safety_badge(d, country_info or {})}</td></tr>'
         )
     return (
-        f'<table class="rt"><thead><tr>{"".join(f'<th class="rt-sec">{x[0]}</th>' if isinstance(x,list) else f'<th>{x}</th>' for x in h)}</tr></thead>'
+        f'<table class="rt rt-compact"><thead><tr>{"".join(f'<th class="rt-sec">{x[0]}</th>' if isinstance(x,list) else f'<th>{x}</th>' for x in h)}</tr></thead>'
         f'<tbody>{"".join(rows)}</tbody></table>'
     )
 
