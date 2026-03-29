@@ -402,7 +402,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .dest-link{color:var(--text);text-decoration:none;font-weight:600}
 .dest-link:hover{color:var(--gold)}
 .region-tag{display:inline-block;font-size:10px;color:var(--slate);background:var(--cream);padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle}
-.filter-bar{display:flex;gap:6px;overflow-x:auto;padding:10px 14px;background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px 14px 0 0;scrollbar-width:none;-ms-overflow-style:none;position:relative;z-index:100}.filter-bar::-webkit-scrollbar{display:none}
+.filter-bar{display:flex;gap:6px;overflow:visible;padding:10px 14px;background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px 14px 0 0;position:relative;z-index:10;flex-wrap:nowrap}.filter-bar::-webkit-scrollbar{display:none}
 .fchip{display:inline-flex;align-items:center;gap:5px;padding:6px 10px 6px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);white-space:nowrap;flex-shrink:0;transition:all .15s;position:relative;user-select:none}
 .fchip.has-filter{background:var(--gold);color:white;border-color:var(--gold)}
 .fchip:hover:not(.has-filter){border-color:var(--gold)}
