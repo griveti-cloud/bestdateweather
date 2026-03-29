@@ -607,7 +607,7 @@ def make_table_sun(entries, n, lang, country_info=None):
     headers = {
         'fr': ('Rang','Destination','Soleil/an',['Pluie moy.'],'Score'),
         'en': ('Rank','Destination','Sun/year',['Avg. rain'],'Score'),
-        'es': ('Pos.','Destino','Sol/año',['Lluvia media'],'Punt.'),
+        'es': ('Pos.','Destino','Sol/año',['Lluvia media'],'Score'),
         'de': ('Rang','Ziel','Sonne/Jahr',['Ø Regen'],'Score'),
     }
     h = headers['en' if lang == 'en-us' else lang]
