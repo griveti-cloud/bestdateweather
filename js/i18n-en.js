@@ -37,6 +37,8 @@ window.BDW_T = {
  snowElevAt: ' to {e}m',
  snowEst: '❄ Estimated snow depth: {d} cm{e} · Open-Meteo measurement (geographic point, not ski resort)',
  snowNA: '❄ Snow depth data unavailable for this date',
+ snowDepthLabel: 'Snow depth est.', snowDepthPoor: 'Poor', snowDepthOk: 'Fair', snowDepthGood: 'Good', snowDepthExcellent: 'Excellent',
+ snowDepthSource: '10yr median · Open-Meteo · geo point, not resort',
  skiAltWarn: '⛷ Altitude {e}m — this location is in a valley. Scores reflect local weather, not nearby mountain resorts. Search for a specific ski resort instead (e.g. Val Thorens, Courchevel).',
  snowExpected: '❄️ Snow expected',
  snowCmTotal: ' cm total',

@@ -37,6 +37,8 @@ window.BDW_T = {
  snowElevAt: ' a {e}m',
  snowEst: '❄ Profundidad de nieve estimada: {d} cm{e} · Medición Open-Meteo (punto geográfico, no estación de esquí)',
  snowNA: '❄ Datos de nieve no disponibles para esta fecha',
+ snowDepthLabel: 'Nieve estimada', snowDepthPoor: 'Insuficiente', snowDepthOk: 'Aceptable', snowDepthGood: 'Buena', snowDepthExcellent: 'Excelente',
+ snowDepthSource: 'Mediana 10 años · Open-Meteo · punto geo, no estación',
  skiAltWarn: '⛷ Altitud {e}m — esta ubicación está en un valle. Las puntuaciones reflejan el tiempo local, no las estaciones de esquí cercanas. Busca una estación específica (p. ej. Formigal, Baqueira-Beret).',
  snowExpected: '❄️ Nieve prevista',
  snowCmTotal: ' cm en total',

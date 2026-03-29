@@ -33,10 +33,16 @@ window.BDW_T = {
   suggestTitleDynamic: 'Meilleurs mois ·',
 
  // Snow alerts
- snowAltLow: '❄ Altitude {e}m \u2014 trop basse pour évaluer l\'enneigement',
+ snowAltLow: '❄ Altitude {e}m — trop basse pour évaluer l\'enneigement',
  snowElevAt: ' à {e}m',
  snowEst: '❄ Enneigement estimé : {d} cm{e} · mesure Open-Meteo (point géographique, non domaine skiable)',
  snowNA: '❄ Données d\'enneigement indisponibles pour cette date',
+ snowDepthLabel: 'Enneigement estimé',
+ snowDepthPoor: 'Insuffisant',
+ snowDepthOk: 'Correct',
+ snowDepthGood: 'Bon',
+ snowDepthExcellent: 'Excellent',
+ snowDepthSource: 'Médiane 10 ans · Open-Meteo · point géo, hors domaine',
  skiAltWarn: '⛷ Altitude {e}m — cette localité est en vallée. Les scores reflètent la météo locale, pas celle des stations en altitude à proximité. Recherchez directement une station (ex : Val Thorens, Courchevel).',
  snowExpected: '❄️ Neige prévue',
  snowCmTotal: ' cm au total',
