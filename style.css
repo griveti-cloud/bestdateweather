@@ -435,11 +435,11 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .sec-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(18px,4vw,24px);margin-bottom:8px}
 .sec-intro{font-size:14px;color:var(--slate);margin-bottom:18px}
 .rt .safety-col{text-align:center;width:30px;padding-left:2px;padding-right:2px;font-size:14px}
-.sc-merged{white-space:nowrap}
+.sc-merged{white-space:nowrap;min-width:70px}
 /* Ranking tables mobile — no horizontal scroll */
 .rt-wrap{overflow-x:visible}
 @media(max-width:520px){
-  .rt{font-size:12px}
+  .rt{font-size:12px;max-width:100%;width:100%}
   .rt th{padding:7px 4px;font-size:9.5px;letter-spacing:0;white-space:nowrap}
   .rt td{padding:6px 4px;vertical-align:middle}
   .rt .rank{font-size:13px;padding:6px 2px;white-space:nowrap}
