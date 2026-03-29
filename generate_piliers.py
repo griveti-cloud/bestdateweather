@@ -38,6 +38,10 @@ def load_destinations():
             dests[r['slug_fr']] = r
     return dests
 
+def load_country_info():
+    with open(ROOT / 'data/country_info.json', encoding='utf-8') as f:
+        return json.load(f)
+
 def load_climate():
     data = {}
     with open(ROOT / 'data/climate.csv', encoding='utf-8-sig') as f:
@@ -419,6 +423,11 @@ footer a{color:#f5d060;text-decoration:none}
 .reg-tab{padding:5px 11px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s;white-space:nowrap}
 .reg-tab.active{background:var(--gold);color:white;border-color:var(--gold)}
 .reg-tab:hover:not(.active){border-color:var(--gold)}
+.filter-row-adv{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.filter-label-sep{margin-left:8px}
+.secu-tab,.budget-tab{padding:5px 10px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s;opacity:.35}
+.secu-tab.active,.budget-tab.active{opacity:1;border-color:var(--gold)}
+.secu-tab:hover,.budget-tab:hover{border-color:var(--gold);opacity:1}
 """
 
 FONTS = (
@@ -495,7 +504,7 @@ def build_related(mi, loc):
     return f'<div class="section"><div class="eyebrow">{pil["also_explore"]}</div><h2 class="sec-title">{pil["other_rankings"]}</h2><div class="related-pages">{"".join(cards)}</div></div>'
 
 
-def generate_page(mi, lang, dests, climate):
+def generate_page(mi, lang, dests, climate, country_info=None):
     """Generate one pillar page for month mi (0-indexed) in given language."""
     loc = load_locale(lang)
     gen = loc['gen']
@@ -683,6 +692,8 @@ def generate_page(mi, lang, dests, climate):
         'reg': _reg(p['pays'], p['slug_fr']),
         'xeu': 1 if p['slug_fr'] in NON_EUROPE_SLUGS else 0,
         'sib': _sibling_idx(p['slug_fr']),
+        'rl': (country_info or {}).get(p['pays'], {}).get('risk_level', 2),
+        'bi': (country_info or {}).get(p['pays'], {}).get('budget_index', 3),
     } for p in pool], ensure_ascii=False)
 
     region_tabs = build_region_tabs(lang)
@@ -699,11 +710,24 @@ def generate_page(mi, lang, dests, climate):
     fp_period = loc.get('fp_period', 'PÉRIODE')
     fp_region = loc.get('fp_region', 'RÉGION')
     fp_type   = loc.get('fp_type',   'TYPE')
+    fp_secu   = pil.get('fp_secu',   'SÉCU.')
+    fp_budget = pil.get('fp_budget', 'BUDGET')
+
+    def _secu_tabs():
+        sl = pil.get('secu_labels', {'1':'🟢','2':'🟡','3':'🔴'})
+        return ''.join(f'<button class="secu-tab active" data-rl="{rl}">{sl.get(rl,rl)}</button>' for rl in ['1','2','3'])
+
+    def _budget_tabs():
+        bl = pil.get('budget_labels', {'2':'€','3':'€€','5':'€€€'})
+        return ''.join(f'<button class="budget-tab active" data-bi="{bi}">{bl.get(bi,bi)}</button>' for bi in ['2','3','5'])
+
+    secu_tabs_inner   = _secu_tabs()
+    budget_tabs_inner = _budget_tabs()
 
     rank_js = (
         '<script>(function(){'
         f'var POOL={pool_json};'
-        'var TOP=25;var CUR_REG="all";'
+        'var TOP=25;var CUR_REG="all";var CUR_RL=3;var CUR_BI=5;'
         f'var TH_GEN="{e(th_score_gen)}",TH_BEACH="{e(th_score_beach)}",TH_SKI="{e(th_score_ski)}";'
         f'var NO_BEACH="{e(no_beach_msg)}",NO_SKI="{e(no_ski_msg)}",NO_METEO="{e(no_meteo_msg)}";'
         f'var TITLE_METEO="{e(sec_title)}",TITLE_BEACH="{e(pil.get("sec_title_beach",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc))}",TITLE_SKI="{e(pil.get("sec_title_ski",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc))}";'
@@ -715,7 +739,7 @@ def generate_page(mi, lang, dests, climate):
         'var msg=document.getElementById("rt-msg");'
         'if(!tb)return;'
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);return rOk&&mOk;});'+
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);var rlOk=(d.rl||1)<=CUR_RL;var biOk=(d.bi||3)<=CUR_BI;return rOk&&mOk&&rlOk&&biOk;});'+
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d;});'+
         'var _sibSeen={};list=list.filter(function(d){if(d.sib<0)return true;if(_sibSeen[d.sib])return false;_sibSeen[d.sib]=1;return true;});'
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'
@@ -774,7 +798,7 @@ def generate_page(mi, lang, dests, climate):
         'var activeMode=document.querySelector(".mode-tab.active");'
         'render(activeMode?activeMode.dataset.mode:"meteo");'
         '});'
-        'var _p=new URLSearchParams(location.search);var _initMode=_p.get("mode")||"meteo";var _initReg=_p.get("reg")||"all";CUR_REG=_initReg;if(_initReg!=="all"){document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.toggle("active",b.dataset.reg===_initReg);});}if(_initMode!=="meteo"){document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.toggle("active",b.dataset.mode===_initMode);});}render(_initMode);document.querySelectorAll(".month-nav a").forEach(function(a){a.addEventListener("click",function(ev){var am=document.querySelector(".mode-tab.active");var ar=document.querySelector(".reg-tab.active");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";if(m==="meteo"&&r==="all")return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);location.href=url+(q.length?"?"+q.join("&"):"");});});'
+        'document.getElementById("secu-tabs").addEventListener("click",function(ev){''var btn=ev.target.closest(".secu-tab");if(!btn)return;''CUR_RL=parseInt(btn.dataset.rl);''document.querySelectorAll(".secu-tab").forEach(function(b){b.classList.toggle("active",(b.dataset.rl||"3")<=String(CUR_RL));});''var am=document.querySelector(".mode-tab.active");render(am?am.dataset.mode:"meteo");''});''document.getElementById("budget-tabs").addEventListener("click",function(ev){''var btn=ev.target.closest(".budget-tab");if(!btn)return;''CUR_BI=parseInt(btn.dataset.bi);''document.querySelectorAll(".budget-tab").forEach(function(b){b.classList.toggle("active",(b.dataset.bi||"5")<=String(CUR_BI));});''var am=document.querySelector(".mode-tab.active");render(am?am.dataset.mode:"meteo");''});''var _p=new URLSearchParams(location.search);var _initMode=_p.get("mode")||"meteo";var _initReg=_p.get("reg")||"all";CUR_REG=_initReg;if(_initReg!=="all"){document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.toggle("active",b.dataset.reg===_initReg);});}if(_initMode!=="meteo"){document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.toggle("active",b.dataset.mode===_initMode);});}render(_initMode);document.querySelectorAll(".month-nav a").forEach(function(a){a.addEventListener("click",function(ev){var am=document.querySelector(".mode-tab.active");var ar=document.querySelector(".reg-tab.active");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";if(m==="meteo"&&r==="all")return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);location.href=url+(q.length?"?"+q.join("&"):"");});});'
         '})();</script>'
     )
 
@@ -892,7 +916,7 @@ def generate_page(mi, lang, dests, climate):
 </div>
 </header>
 <main class="page">
-<div class="filter-panel"><div class="filter-row"><span class="filter-label">{fp_period}</span><div class="filter-btns">{month_nav}</div></div><div class="filter-row"><span class="filter-label">{fp_region}</span><div class="filter-btns" id="reg-tabs">{region_tabs_inner}</div></div><div class="filter-row"><span class="filter-label">{fp_type}</span><div class="filter-btns" id="mode-tabs">{mode_tabs_inner}</div></div></div><div class="section"><div class="eyebrow">{sec_eyebrow}</div><h2 class="sec-title" id="rt-title">{sec_title}</h2><p class="sec-intro" id="rt-intro">{sec_intro}</p>
+<div class="filter-panel"><div class="filter-row"><span class="filter-label">{fp_period}</span><div class="filter-btns">{month_nav}</div></div><div class="filter-row"><span class="filter-label">{fp_region}</span><div class="filter-btns" id="reg-tabs">{region_tabs_inner}</div></div><div class="filter-row"><span class="filter-label">{fp_type}</span><div class="filter-btns" id="mode-tabs">{mode_tabs_inner}</div></div><div class="filter-row filter-row-adv"><span class="filter-label">{fp_secu}</span><div class="filter-btns" id="secu-tabs">{secu_tabs_inner}</div><span class="filter-label filter-label-sep">{fp_budget}</span><div class="filter-btns" id="budget-tabs">{budget_tabs_inner}</div></div></div><div class="section"><div class="eyebrow">{sec_eyebrow}</div><h2 class="sec-title" id="rt-title">{sec_title}</h2><p class="sec-intro" id="rt-intro">{sec_intro}</p>
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
 <p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
 <p class="rt-methodo" id="rt-methodo-beach" style="display:none">{loc['hub']['methodo_beach']}</p>
@@ -1049,7 +1073,7 @@ def get_annual_rankings(climate, dests, pool_size=80):
     return deduped[:pool_size]
 
 
-def generate_annual_page(lang, dests, climate):
+def generate_annual_page(lang, dests, climate, country_info=None):
     """Generate the all-year ranking page for a given language."""
     loc   = load_locale(lang)
     gen   = loc['gen']
@@ -1183,6 +1207,8 @@ def generate_annual_page(lang, dests, climate):
         'reg': _reg(e['pays'], e.get('slug_fr', e.get('slug',''))),
         'xeu': 1 if e.get('slug', e.get('slug_fr','')) in NON_EUROPE_SLUGS else 0,
         'sib': -1,
+        'rl': (country_info or {}).get(e['pays'], {}).get('risk_level', 2),
+        'bi': (country_info or {}).get(e['pays'], {}).get('budget_index', 3),
     } for e in annual_pool], ensure_ascii=False)
 
     mode_tabs_inner = (
@@ -1194,6 +1220,19 @@ def generate_annual_page(lang, dests, climate):
     fp_period = loc.get('fp_period', 'PÉRIODE')
     fp_region = loc.get('fp_region', 'RÉGION')
     fp_type   = loc.get('fp_type',   'TYPE')
+    fp_secu   = pil.get('fp_secu',   'SÉCU.')
+    fp_budget = pil.get('fp_budget', 'BUDGET')
+
+    def _secu_tabs_ann():
+        sl = pil.get('secu_labels', {'1':'🟢','2':'🟡','3':'🔴'})
+        return ''.join(f'<button class="secu-tab active" data-rl="{rl}">{sl.get(rl,rl)}</button>' for rl in ['1','2','3'])
+
+    def _budget_tabs_ann():
+        bl = pil.get('budget_labels', {'2':'€','3':'€€','5':'€€€'})
+        return ''.join(f'<button class="budget-tab active" data-bi="{bi}">{bl.get(bi,bi)}</button>' for bi in ['2','3','5'])
+
+    secu_tabs_inner   = _secu_tabs_ann()
+    budget_tabs_inner = _budget_tabs_ann()
 
     def _e(s): return s.replace('"', '&quot;')
     rank_js = (
@@ -1258,6 +1297,7 @@ def generate_annual_page(lang, dests, climate):
         'var activeMode=document.querySelector(".mode-tab.active");'+
         'render(activeMode?activeMode.dataset.mode:"meteo");'+
         '});'+
+        'document.getElementById("secu-tabs").addEventListener("click",function(ev){var btn=ev.target.closest(".secu-tab");if(!btn)return;CUR_RL=parseInt(btn.dataset.rl);document.querySelectorAll(".secu-tab").forEach(function(b){b.classList.toggle("active",(b.dataset.rl||"3")<=String(CUR_RL));});var am=document.querySelector(".mode-tab.active");render(am?am.dataset.mode:"meteo");});document.getElementById("budget-tabs").addEventListener("click",function(ev){var btn=ev.target.closest(".budget-tab");if(!btn)return;CUR_BI=parseInt(btn.dataset.bi);document.querySelectorAll(".budget-tab").forEach(function(b){b.classList.toggle("active",(b.dataset.bi||"5")<=String(CUR_BI));});var am=document.querySelector(".mode-tab.active");render(am?am.dataset.mode:"meteo");});'+
         'var _p=new URLSearchParams(location.search);var _initMode=_p.get("mode")||"meteo";var _initReg=_p.get("reg")||"all";CUR_REG=_initReg;if(_initReg!=="all"){document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.toggle("active",b.dataset.reg===_initReg);});}if(_initMode!=="meteo"){document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.toggle("active",b.dataset.mode===_initMode);});}render(_initMode);document.querySelectorAll(".month-nav a").forEach(function(a){a.addEventListener("click",function(ev){var am=document.querySelector(".mode-tab.active");var ar=document.querySelector(".reg-tab.active");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";if(m==="meteo"&&r==="all")return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);location.href=url+(q.length?"?"+q.join("&"):"");});});'+
         '})();</script>'
     )
@@ -1299,7 +1339,7 @@ def generate_annual_page(lang, dests, climate):
 </div>
 </header>
 <main class="page">
-<div class="filter-panel"><div class="filter-row"><span class="filter-label">{fp_period}</span><div class="filter-btns">{month_nav}</div></div><div class="filter-row"><span class="filter-label">{fp_region}</span><div class="filter-btns" id="reg-tabs">{region_tabs_inner}</div></div><div class="filter-row"><span class="filter-label">{fp_type}</span><div class="filter-btns" id="mode-tabs">{mode_tabs_inner}</div></div></div>
+<div class="filter-panel"><div class="filter-row"><span class="filter-label">{fp_period}</span><div class="filter-btns">{month_nav}</div></div><div class="filter-row"><span class="filter-label">{fp_region}</span><div class="filter-btns" id="reg-tabs">{region_tabs_inner}</div></div><div class="filter-row"><span class="filter-label">{fp_type}</span><div class="filter-btns" id="mode-tabs">{mode_tabs_inner}</div></div><div class="filter-row filter-row-adv"><span class="filter-label">{fp_secu}</span><div class="filter-btns" id="secu-tabs">{secu_tabs_inner}</div><span class="filter-label filter-label-sep">{fp_budget}</span><div class="filter-btns" id="budget-tabs">{budget_tabs_inner}</div></div></div>
 <div class="section">
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
 <p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
@@ -1369,6 +1409,7 @@ if __name__ == '__main__':
     print("generate_piliers.py — seasonal pillar pages")
     dests = load_destinations()
     climate = load_climate()
+    country_info = load_country_info()
     print(f"📦 {len(dests)} destinations, {len(climate)} climate entries\n")
 
     pages_by_lang = {lang: [] for lang in PILIER_LANGS}
@@ -1378,7 +1419,7 @@ if __name__ == '__main__':
         subdir = lang_loc['meta']['subdir']
         prefix = f"{subdir}/" if subdir else ""
         for mi in range(12):
-            result = generate_page(mi, lang, dests, climate)
+            result = generate_page(mi, lang, dests, climate, country_info)
             if result:
                 filename, canonical, hreflang_fr, hreflang_en, all_hreflang = result
                 pages_by_lang[lang].append({
@@ -1394,7 +1435,7 @@ if __name__ == '__main__':
     # Generate annual pages
     print("\n📅 Generating all-year pages...")
     for lang in PILIER_LANGS:
-        result = generate_annual_page(lang, dests, climate)
+        result = generate_annual_page(lang, dests, climate, country_info)
         if result:
             filename, canonical = result
             lang_loc = load_locale(lang)

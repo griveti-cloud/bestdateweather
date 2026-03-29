@@ -848,7 +848,19 @@
     "th_score_ski_annual": "Puntuación esquí",
     "no_beach_annual": "Sin destinos de playa en este ranking.",
     "no_ski_annual": "Sin estaciones de esquí en este ranking.",
-    "no_meteo_annual": "No hay destinos en esta región."
+    "no_meteo_annual": "No hay destinos en esta región.",
+    "fp_secu": "SEGUR.",
+    "fp_budget": "PRECIO",
+    "secu_labels": {
+      "1": "🟢 Seguro",
+      "2": "🟡 Precaución",
+      "3": "🔴 Desac."
+    },
+    "budget_labels": {
+      "2": "€",
+      "3": "€€",
+      "5": "€€€"
+    }
   },
   "ranking_footer": {
     "data_by": "Datos meteorológicos de Open-Meteo.com",

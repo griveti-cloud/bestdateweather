@@ -848,7 +848,19 @@
     "th_score_ski_annual": "Score ski",
     "no_beach_annual": "Aucune destination balnéaire dans ce classement.",
     "no_ski_annual": "Aucune station de ski dans ce classement.",
-    "no_meteo_annual": "Aucune destination dans cette région."
+    "no_meteo_annual": "Aucune destination dans cette région.",
+    "fp_secu": "SÉCU.",
+    "fp_budget": "BUDGET",
+    "secu_labels": {
+      "1": "🟢 Sûr",
+      "2": "🟡 Vigilance",
+      "3": "🔴 Déconseillé"
+    },
+    "budget_labels": {
+      "2": "€",
+      "3": "€€",
+      "5": "€€€"
+    }
   },
   "ranking_footer": {
     "data_by": "Données météo par Open-Meteo.com",

@@ -853,7 +853,19 @@
     "th_score_ski_annual": "Skiwertung",
     "no_beach_annual": "Keine Strandziele in diesem Ranking.",
     "no_ski_annual": "Keine Skigebiete in diesem Ranking.",
-    "no_meteo_annual": "Keine Ziele in dieser Region."
+    "no_meteo_annual": "Keine Ziele in dieser Region.",
+    "fp_secu": "SICHER.",
+    "fp_budget": "BUDGET",
+    "secu_labels": {
+      "1": "🟢 Sicher",
+      "2": "🟡 Vorsicht",
+      "3": "🔴 Abgeraten"
+    },
+    "budget_labels": {
+      "2": "€",
+      "3": "€€",
+      "5": "€€€"
+    }
   },
   "ranking_footer": {
     "data_by": "Wetterdaten von Open-Meteo.com",
