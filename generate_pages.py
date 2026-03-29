@@ -621,7 +621,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         f'<div class="project-card"><span class="proj-icon">{c["icon"]}</span>'
         f'<span class="proj-title">{c[tk]}</span>'
         f'<span class="proj-text">{c[xk]}</span>'
-        f'<a href="{_gyg_url_c}" target="_blank" rel="sponsored noopener" class="proj-gyg-btn">{_gyg_btn_lbl}</a></div>'
+        f'{"<a href=" + chr(34) + _gyg_url_c + chr(34) + " target=" + chr(34) + "_blank" + chr(34) + " rel=" + chr(34) + "sponsored noopener" + chr(34) + " class=" + chr(34) + "proj-gyg-btn" + chr(34) + ">" + _gyg_btn_lbl + "</a>" if gyg_active else ""}</div>'
         for c in dest_cards
     )
     cards_section = f'''<section class="section">
@@ -764,7 +764,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     plan_bar_html = f'''<div class="plan-bar">
 <span class="plan-bar-label">{_pb_label}</span>
 <a href="{booking_url}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">{_pb_hotel_lbl}</a>
-<a href="{gyg_url}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-activ">{_pb_activ_lbl}</a>
+{"<a href=\"" + gyg_url + "\" target=\"_blank\" rel=\"sponsored noopener\" class=\"plan-link plan-link-activ\">" + _pb_activ_lbl + "</a>" if gyg_active else ""}
 <a href="{flights_url}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">{_pb_flight_lbl}</a>
 </div>'''
 
@@ -1106,7 +1106,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{{background:var(--cream);}}
 .dest-flag{{vertical-align:middle;border-radius:2px;flex-shrink:0;}}
 </style>
-<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="{GYG_PARTNER_ID}"></script>
+{"<script async defer src=\"https://widget.getyourguide.com/dist/pa.umd.production.min.js\" data-gyg-partner-id=\"" + GYG_PARTNER_ID + "\"></script>" if gyg_active else ""}
 </head>
 <body>
 <div class="sticky-wrap">
@@ -2005,7 +2005,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     plan_bar_m = f'''<div class="plan-bar">
 <span class="plan-bar-label">{_pb_label_m}</span>
 <a href="{bk_url}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">{_pb_hotel_m}</a>
-<a href="{gyg_url_m}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-activ">{_pb_activ_m}</a>
+{"<a href=\"" + gyg_url_m + "\" target=\"_blank\" rel=\"sponsored noopener\" class=\"plan-link plan-link-activ\">" + _pb_activ_m + "</a>" if gyg_active else ""}
 <a href="{flights_url_m}" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">{_pb_flight_m}</a>
 </div>'''
 
@@ -2098,7 +2098,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{{background:var(--cream);}}
 .dest-flag{{vertical-align:middle;border-radius:2px;flex-shrink:0;}}
 </style>
-<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="{GYG_PARTNER_ID}"></script>
+{"<script async defer src=\"https://widget.getyourguide.com/dist/pa.umd.production.min.js\" data-gyg-partner-id=\"" + GYG_PARTNER_ID + "\"></script>" if gyg_active else ""}
 </head>
 <body>
 <div class="sticky-wrap">
