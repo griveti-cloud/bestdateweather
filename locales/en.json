@@ -858,9 +858,11 @@
       "3": "🔴 Avoid"
     },
     "budget_labels": {
-      "2": "€",
-      "3": "€€",
-      "5": "€€€"
+      "1": "💚 Budget",
+      "2": "💚 Affordable",
+      "3": "🟡 Mid-range",
+      "4": "🟠 Upscale",
+      "5": "💎 Premium"
     }
   },
   "ranking_footer": {

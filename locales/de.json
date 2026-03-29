@@ -862,9 +862,11 @@
       "3": "🔴 Abgeraten"
     },
     "budget_labels": {
-      "2": "€",
-      "3": "€€",
-      "5": "€€€"
+      "1": "💚 Günstig",
+      "2": "💚 Erschwinglich",
+      "3": "🟡 Mittelklasse",
+      "4": "🟠 Gehoben",
+      "5": "💎 Premium"
     }
   },
   "ranking_footer": {

@@ -857,9 +857,11 @@
       "3": "🔴 Desac."
     },
     "budget_labels": {
-      "2": "€",
-      "3": "€€",
-      "5": "€€€"
+      "1": "💚 Económico",
+      "2": "💚 Asequible",
+      "3": "🟡 Intermedio",
+      "4": "🟠 Alto",
+      "5": "💎 Premium"
     }
   },
   "ranking_footer": {

@@ -719,7 +719,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 
     def _budget_tabs():
         bl = pil.get('budget_labels', {'2':'€','3':'€€','5':'€€€'})
-        return ''.join(f'<button class="budget-tab active" data-bi="{bi}">{bl.get(bi,bi)}</button>' for bi in ['2','3','5'])
+        return ''.join(f'<button class="budget-tab active" data-bi="{bi}">{bl.get(bi,bi)}</button>' for bi in ['1','2','3','4','5'])
 
     secu_tabs_inner   = _secu_tabs()
     budget_tabs_inner = _budget_tabs()
@@ -1229,7 +1229,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
 
     def _budget_tabs_ann():
         bl = pil.get('budget_labels', {'2':'€','3':'€€','5':'€€€'})
-        return ''.join(f'<button class="budget-tab active" data-bi="{bi}">{bl.get(bi,bi)}</button>' for bi in ['2','3','5'])
+        return ''.join(f'<button class="budget-tab active" data-bi="{bi}">{bl.get(bi,bi)}</button>' for bi in ['1','2','3','4','5'])
 
     secu_tabs_inner   = _secu_tabs_ann()
     budget_tabs_inner = _budget_tabs_ann()
