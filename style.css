@@ -448,9 +448,12 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
   .region-tag{display:inline;font-size:9px;color:var(--slate2);margin-left:4px;background:none;padding:0;border-radius:0}
   .dest-safety{font-size:12px;margin-left:4px}
   .rt td.rt-sec,.rt th.rt-sec{display:none}
-  .rt-compact{font-size:11px}
+  .rt-compact{font-size:11px;table-layout:fixed;width:100%}
+  .rt-compact th:nth-child(1),.rt-compact td:nth-child(1){width:30px}
+  .rt-compact th:nth-child(3),.rt-compact td:nth-child(3){width:52px;text-align:left}
+  .rt-compact th:nth-child(5),.rt-compact td:nth-child(5){width:78px;white-space:nowrap}
   .rt-compact .region-tag{display:block;font-size:9px;background:none;padding:0;margin-left:0;border-radius:0}
-  .rt-compact .sc-last{white-space:nowrap}
+  .rt-compact td:nth-child(2){overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 }
 @media(max-width:640px) and (min-width:521px){
   .rt td.rt-sec{opacity:.8}
