@@ -850,7 +850,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'function toggleFC(id,ev){if(ev)ev.stopPropagation();var chip=document.getElementById("fc-"+id);var drop=document.getElementById("fcd-"+id);var wasOpen=chip.classList.contains("open");closeFC();if(!wasOpen){chip.classList.add("open");var r=chip.getBoundingClientRect();drop.style.cssText="display:block;position:fixed;top:"+(r.bottom+4)+"px;left:"+Math.max(8,r.left)+"px;z-index:9999;min-width:160px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;box-shadow:0 8px 24px rgba(26,31,46,.18);padding:6px";}}'+
 
         'document.addEventListener("click",function(e){if(!e.target.closest(".fchip"))closeFC();});'+
-        '})();</script>'
+        'window.toggleFC=toggleFC;window.setMode=setMode;window.setReg=setReg;window.setSecu=setSecu;window.setBudget=setBudget;''})();</script>'
     )
 
     # Schema.org
@@ -1383,7 +1383,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
 
         'document.addEventListener("click",function(e){if(!e.target.closest(".fchip"))closeFC();});'+
         'var _p=new URLSearchParams(location.search);var _initMode=_p.get("mode")||"meteo";var _initReg=_p.get("reg")||"all";var _initRL=parseInt(_p.get("rl")||"4");var _initBI=parseInt(_p.get("bi")||"5");CUR_REG=_initReg;CUR_RL=_initRL;CUR_BI=_initBI;if(_initReg!=="all")setReg(_initReg);if(_initMode!=="meteo")setMode(_initMode);if(_initRL<4)setSecu(_initRL);if(_initBI<5)setBudget(_initBI);render(_initMode);document.querySelectorAll(".month-nav a").forEach(function(a){a.addEventListener("click",function(ev){var am=document.querySelector(".mode-tab.active");var ar=document.querySelector(".reg-tab.active");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";var rl=CUR_RL;var bi=CUR_BI;if(m==="meteo"&&r==="all"&&rl===4&&bi===5)return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);if(rl<4)q.push("rl="+rl);if(bi<5)q.push("bi="+bi);location.href=url+(q.length?"?"+q.join("&"):"");});});'+
-        '})();</script>'
+        'window.toggleFC=toggleFC;window.setMode=setMode;window.setReg=setReg;window.setSecu=setSecu;window.setBudget=setBudget;''})();</script>'
     )
 
     # hreflang
