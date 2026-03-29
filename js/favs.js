@@ -226,7 +226,7 @@ window.bdwClearFavs = bdwClearFavs;
       }
       btn.disabled = true;
       btn.textContent = '...';
-      fetch('/.netlify/functions/subscribe', {
+      fetch('/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: emailVal, source: 'favori' })
