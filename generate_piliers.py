@@ -739,25 +739,25 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         f'<div class="fc-item" data-mode="ski" onclick="setMode(\'ski\')">{tab_ski}</div>'
     )
     filter_chips_html = (
-        f'<div class="fchip" id="fc-period" onclick="toggleFC(\'period\')">'
+        f'<div class="fchip" id="fc-period" onclick=\"toggleFC('period',event)\">'
         f'<span id="fc-period-lbl">{pil.get("period_annual","Annuel") if mi < 0 else loc["month_abbr"][mi]}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-period">'
         f'<div class="fc-months" id="fc-months-grid">{month_nav.replace("month-nav","").replace("<div ","").replace("</div>","")}</div>'
         f'</div></div>'
-        f'<div class="fchip" id="fc-region" onclick="toggleFC(\'region\')">'
+        f'<div class="fchip" id="fc-region" onclick=\"toggleFC('region',event)\">'
         f'<span id="fc-region-lbl">{pil.get("region_world","Monde")}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-region">{_reg_opts}</div></div>'
-        f'<div class="fchip" id="fc-type" onclick="toggleFC(\'type\')">'
+        f'<div class="fchip" id="fc-type" onclick=\"toggleFC('type',event)\">'
         f'<span id="fc-type-lbl">{tab_meteo}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-type">{_type_opts}</div></div>'
-        f'<div class="fchip" id="fc-secu" onclick="toggleFC(\'secu\')">'
+        f'<div class="fchip" id="fc-secu" onclick=\"toggleFC('secu',event)\">'
         f'<span id="fc-secu-lbl">{fp_secu}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-secu">{_secu_items}</div></div>'
-        f'<div class="fchip" id="fc-budget" onclick="toggleFC(\'budget\')">'
+        f'<div class="fchip" id="fc-budget" onclick=\"toggleFC('budget',event)\">'
         f'<span id="fc-budget-lbl">{fp_budget}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-budget">{_budget_items}</div></div>'
@@ -842,7 +842,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'function setSecu(rl){CUR_RL=rl;document.querySelectorAll(".fc-item[data-rl]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.rl)<=rl);b.classList.toggle("active",parseInt(b.dataset.rl)===rl);});var ls=document.querySelector(".fc-item[data-rl=\'"+rl+"\' ]");if(ls)document.getElementById("fc-secu-lbl").textContent="\u2264 "+ls.textContent.trim();document.getElementById("fc-secu").classList.toggle("has-filter",rl<4);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
         'function setBudget(bi){CUR_BI=bi;document.querySelectorAll(".fc-item[data-bi]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.bi)<=bi);b.classList.toggle("active",parseInt(b.dataset.bi)===bi);});var lb=document.querySelector(".fc-item[data-bi=\'"+bi+"\' ]");if(lb)document.getElementById("fc-budget-lbl").textContent="\u2264 "+lb.textContent.trim();document.getElementById("fc-budget").classList.toggle("has-filter",bi<5);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
         'function closeFC(){document.querySelectorAll(".fchip.open").forEach(function(c){c.classList.remove("open");});}'+
-        'function toggleFC(id){var chip=document.getElementById("fc-"+id);var wasOpen=chip.classList.contains("open");closeFC();if(!wasOpen)chip.classList.add("open");}'+
+        'function toggleFC(id,ev){if(ev)ev.stopPropagation();var chip=document.getElementById("fc-"+id);var wasOpen=chip.classList.contains("open");closeFC();if(!wasOpen)chip.classList.add("open");}'+
         'document.addEventListener("click",function(e){if(!e.target.closest(".fchip"))closeFC();});'+
         '})();</script>'
     )
@@ -1293,25 +1293,25 @@ def generate_annual_page(lang, dests, climate, country_info=None):
     )
     _ann_month_nav = build_month_nav(0, loc, is_annual=True)
     filter_chips_html = (
-        f'<div class="fchip" id="fc-period" onclick="toggleFC(\'period\')">'
+        f'<div class="fchip" id="fc-period" onclick=\"toggleFC('period',event)\">'
         f'<span id="fc-period-lbl">{pil.get("period_annual","Annuel")}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-period">'
         f'<div class="fc-months" id="fc-months-grid"></div>'
         f'</div></div>'
-        f'<div class="fchip" id="fc-region" onclick="toggleFC(\'region\')">'
+        f'<div class="fchip" id="fc-region" onclick=\"toggleFC('region',event)\">'
         f'<span id="fc-region-lbl">{pil.get("region_world","Monde")}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-region">{_reg_opts_ann}</div></div>'
-        f'<div class="fchip" id="fc-type" onclick="toggleFC(\'type\')">'
+        f'<div class="fchip" id="fc-type" onclick=\"toggleFC('type',event)\">'
         f'<span id="fc-type-lbl">{tab_meteo}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-type">{_type_opts_ann}</div></div>'
-        f'<div class="fchip" id="fc-secu" onclick="toggleFC(\'secu\')">'
+        f'<div class="fchip" id="fc-secu" onclick=\"toggleFC('secu',event)\">'
         f'<span id="fc-secu-lbl">{fp_secu}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-secu">{_secu_items_ann}</div></div>'
-        f'<div class="fchip" id="fc-budget" onclick="toggleFC(\'budget\')">'
+        f'<div class="fchip" id="fc-budget" onclick=\"toggleFC('budget',event)\">'
         f'<span id="fc-budget-lbl">{fp_budget}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-budget">{_budget_items_ann}</div></div>'
@@ -1368,7 +1368,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'function setSecu(rl){CUR_RL=rl;document.querySelectorAll(".fc-item[data-rl]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.rl)<=rl);b.classList.toggle("active",parseInt(b.dataset.rl)===rl);});var ls=document.querySelector(".fc-item[data-rl=\'"+rl+"\' ]");if(ls)document.getElementById("fc-secu-lbl").textContent="\u2264 "+ls.textContent.trim();document.getElementById("fc-secu").classList.toggle("has-filter",rl<4);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
         'function setBudget(bi){CUR_BI=bi;document.querySelectorAll(".fc-item[data-bi]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.bi)<=bi);b.classList.toggle("active",parseInt(b.dataset.bi)===bi);});var lb=document.querySelector(".fc-item[data-bi=\'"+bi+"\' ]");if(lb)document.getElementById("fc-budget-lbl").textContent="\u2264 "+lb.textContent.trim();document.getElementById("fc-budget").classList.toggle("has-filter",bi<5);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
         'function closeFC(){document.querySelectorAll(".fchip.open").forEach(function(c){c.classList.remove("open");});}'+
-        'function toggleFC(id){var chip=document.getElementById("fc-"+id);var wasOpen=chip.classList.contains("open");closeFC();if(!wasOpen)chip.classList.add("open");}'+
+        'function toggleFC(id,ev){if(ev)ev.stopPropagation();var chip=document.getElementById("fc-"+id);var wasOpen=chip.classList.contains("open");closeFC();if(!wasOpen)chip.classList.add("open");}'+
         'document.addEventListener("click",function(e){if(!e.target.closest(".fchip"))closeFC();});'+
         'var _p=new URLSearchParams(location.search);var _initMode=_p.get("mode")||"meteo";var _initReg=_p.get("reg")||"all";var _initRL=parseInt(_p.get("rl")||"4");var _initBI=parseInt(_p.get("bi")||"5");CUR_REG=_initReg;CUR_RL=_initRL;CUR_BI=_initBI;if(_initReg!=="all")setReg(_initReg);if(_initMode!=="meteo")setMode(_initMode);if(_initRL<4)setSecu(_initRL);if(_initBI<5)setBudget(_initBI);render(_initMode);document.querySelectorAll(".month-nav a").forEach(function(a){a.addEventListener("click",function(ev){var am=document.querySelector(".mode-tab.active");var ar=document.querySelector(".reg-tab.active");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";var rl=CUR_RL;var bi=CUR_BI;if(m==="meteo"&&r==="all"&&rl===4&&bi===5)return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);if(rl<4)q.push("rl="+rl);if(bi<5)q.push("bi="+bi);location.href=url+(q.length?"?"+q.join("&"):"");});});'+
         '})();</script>'
