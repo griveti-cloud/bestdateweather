@@ -337,10 +337,11 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .faq-card{border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white}
 
 /* Activity list */
-.act-list{list-style:none;padding:0;border:1.5px solid var(--cream2);border-radius:12px;overflow:hidden;font-size:14px}
-.act-item-odd{padding:10px 16px;border-bottom:1px solid var(--cream2);background:white}
-.act-item-even{padding:10px 16px;border-bottom:1px solid var(--cream2)}
-.act-item-last{padding:10px 16px}
+.act-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.act-chip{background:white;border:1.5px solid var(--cream2);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.act-chip-budget{grid-column:span 2;background:var(--cream)}
+.act-chip-lbl{font-size:11px;font-weight:600;color:var(--slate2);text-transform:uppercase;letter-spacing:.4px}
+.act-chip-val{font-size:14px;font-weight:700;color:var(--navy)}
 
 /* Compare list */
 .cmp-list{list-style:none;padding:0;border:1.5px solid var(--cream2);border-radius:10px;overflow:hidden;font-size:14px}
@@ -349,7 +350,8 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .bar-wrap{background:#f8f8f4;border-radius:10px;padding:14px;font-size:13px;line-height:1.9;margin-bottom:14px}
 
 /* Context section */
-.ctx-section{border-left:3px solid var(--gold);padding-left:18px}
+.ctx-section{}
+.ctx-body{font-size:14px;line-height:1.8;color:var(--slate);background:white;border:1.5px solid var(--cream2);border-radius:12px;padding:16px}
 
 /* E-E-A-T note */
 .eeat-note{margin:20px 0;padding:14px 18px;background:#f8f6f2;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;color:var(--slate2);line-height:1.7}

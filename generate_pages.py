@@ -332,7 +332,7 @@ def head_css(cfg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="{font_url}"/></noscript>
-<link rel="stylesheet" href="{pfx}style.css?v=7"/>
+<link rel="stylesheet" href="{pfx}style.css?v=8"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''
@@ -2044,21 +2044,21 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <p class="dec-avis"><strong>{L['verdict_intro']}</strong> {verdict_txt}</p>
  </section>
 
- <section class="section" class="mb-28">
+ <section class="section">
  <div class="section-label">{L['sec_activity']}</div>
  <h2 class="section-title">{L['sec_activity_title']}</h2>
- <ul class="act-list">
- <li class="act-item-odd">🏙️ {L['act_city']} : <strong>{act_city}</strong></li>
- <li class="act-item-even">🚶 {L['act_ext']} : <strong>{act_ext}</strong></li>
- <li class="act-item-odd">{L['act_beach']} : <strong>{act_beach}</strong></li>
- <li class="act-item-last">💰 {L['act_budget']} : <strong>{bud}</strong></li>
- </ul>
+ <div class="act-grid">
+   <div class="act-chip"><span class="act-chip-lbl">{L['act_city']}</span><span class="act-chip-val">{act_city}</span></div>
+   <div class="act-chip"><span class="act-chip-lbl">{L['act_ext']}</span><span class="act-chip-val">{act_ext}</span></div>
+   <div class="act-chip"><span class="act-chip-lbl">{L['act_beach']}</span><span class="act-chip-val">{act_beach}</span></div>
+   <div class="act-chip act-chip-budget"><span class="act-chip-lbl">{L['act_budget']}</span><span class="act-chip-val">{bud}</span></div>
+ </div>
  </section>
 
- <section class="section" class="ctx-section mb-28">
+ <section class="section ctx-section">
  <div class="section-label">{L['sec_context']}</div>
  <h2 class="section-title">{L['sec_context_title']}</h2>
- <p class="f14-context">{ctx_para}</p>
+ <p class="ctx-body">{ctx_para}</p>
  </section>
 
  <section class="section">
