@@ -37,7 +37,7 @@ window.BDW_T = {
  snowElevAt: ' à {e}m',
  snowEst: '❄ Enneigement estimé : {d} cm{e} · mesure Open-Meteo (point géographique, non domaine skiable)',
  snowNA: '❄ Données d\'enneigement indisponibles pour cette date',
- snowDepthLabel: 'Enneigement estimé',
+ snowDepthLabel: 'Enneig.',
  snowDepthPoor: 'Insuffisant',
  snowDepthOk: 'Correct',
  snowDepthGood: 'Bon',

@@ -37,7 +37,7 @@ window.BDW_T = {
  snowElevAt: ' bis {e}m',
  snowEst: '❄ Geschätzte Schneehöhe: {d} cm{e} · Open-Meteo-Messung (geografischer Punkt, kein Skigebiet)',
  snowNA: '❄ Schneehöhendaten für dieses Datum nicht verfügbar',
- snowDepthLabel: 'Schneetiefe (Schätzung)', snowDepthPoor: 'Ungenügend', snowDepthOk: 'Ausreichend', snowDepthGood: 'Gut', snowDepthExcellent: 'Hervorragend',
+ snowDepthLabel: 'Schneehöhe', snowDepthPoor: 'Ungenügend', snowDepthOk: 'Ausreichend', snowDepthGood: 'Gut', snowDepthExcellent: 'Hervorragend',
  snowDepthSource: 'Median 10J · Open-Meteo · Geopunkt, kein Skigebiet',
  skiAltWarn: '⛷ Höhe {e}m — dieser Ort liegt in einem Tal. Scores spiegeln das lokale Wetter wider, nicht nahegelegene Bergresorts. Besser nach einem spezifischen Skigebiet suchen (z.B. Val Thorens, Courchevel).',
  snowExpected: '❄️ Schnee erwartet',
