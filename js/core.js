@@ -155,7 +155,7 @@ function quickFill(type) {
  }
  if (type === 'ski' && _sdEl2 && selectedLoc && window._lastYr != null) {
   fetchSnowDepth(selectedLoc.lat, selectedLoc.lon, window._lastYr, window._lastMo, window._lastDa).then(function(res) {
-   renderSnowDepth(_sdEl2, res);
+   renderSnowChip(res);
   });
  }
  } else {
@@ -781,32 +781,27 @@ function fetchArchive(lat, lon, refDate) {
  return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&hourly=temperature_2m,precipitation,snowfall,windspeed_10m,winddirection_10m,shortwave_radiation,relative_humidity_2m&timezone=auto').then(function(r){if(!r.ok)throw new Error('Archive error');return r.json();}).then(function(d){if(d.utc_offset_seconds!=null)_locTzOffset=d.utc_offset_seconds;if(d.elevation!=null)_modelElevation=Math.round(d.elevation);return d;});
 }
 
-function renderSnowDepth(el, res) {
- if (!el || !res) return;
+function renderSnowChip(res) {
+ var chipsEl = document.getElementById('score-chips');
+ if (!chipsEl || !res) return;
+ var old = document.getElementById('snow-depth-chip');
+ if (old) old.remove();
  var elev = res.elevation ? Math.round(res.elevation) : null;
- el.style.cssText = 'background:#f0f4ff;border:1.5px solid #6366f1;border-radius:12px;padding:14px 16px;margin-top:10px;display:block';
- if (elev && elev < 600) {
-  el.innerHTML = '<div style="font-size:12px;color:#94a3b8;font-weight:500">❄ ' + T.snowAltLow.replace('{e}', elev) + '</div>';
-  return;
- }
- if (res.depth == null) {
-  el.innerHTML = '<div style="font-size:12px;color:#94a3b8;font-weight:500">❄ ' + T.snowNA + '</div>';
-  return;
- }
- var qLabel, qColor, barPct;
- if (res.depth < 30)       { qLabel = T.snowDepthPoor;      qColor = '#ef4444'; barPct = Math.round(res.depth / 30 * 25); }
- else if (res.depth < 80)  { qLabel = T.snowDepthOk;        qColor = '#f97316'; barPct = Math.round(25 + (res.depth - 30) / 50 * 25); }
- else if (res.depth < 150) { qLabel = T.snowDepthGood;      qColor = '#3b82f6'; barPct = Math.round(50 + (res.depth - 80) / 70 * 25); }
- else                      { qLabel = T.snowDepthExcellent; qColor = '#1a7a4a'; barPct = Math.min(95, Math.round(75 + (res.depth - 150) / 100 * 20)); }
- var elevNote = elev ? ' <span style="font-size:10px;color:#94a3b8">à ' + elev + 'm</span>' : '';
- el.innerHTML =
-  '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#4f46e5;margin-bottom:8px">❄ ' + T.snowDepthLabel + elevNote + '</div>' +
-  '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">' +
-  '<span style="font-size:30px;font-weight:800;color:' + qColor + ';line-height:1">' + res.depth + '<span style="font-size:14px;font-weight:500">cm</span></span>' +
-  '<span style="background:' + qColor + '22;color:' + qColor + ';font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px">' + qLabel + '</span>' +
-  '</div>' +
-  '<div style="height:6px;background:#dde3f0;border-radius:3px;overflow:hidden;margin-bottom:8px"><div style="height:100%;width:' + barPct + '%;background:' + qColor + ';border-radius:3px"></div></div>' +
-  '<div style="font-size:10px;color:#94a3b8">' + T.snowDepthSource + '</div>';
+ if (elev && elev < 600) return;
+ var val, qColor;
+ if (res.depth == null)    { val = '–';               qColor = '#94a3b8'; }
+ else if (res.depth < 30)  { val = res.depth + ' cm'; qColor = '#ef4444'; }
+ else if (res.depth < 80)  { val = res.depth + ' cm'; qColor = '#f97316'; }
+ else if (res.depth < 150) { val = res.depth + ' cm'; qColor = '#3b82f6'; }
+ else                      { val = res.depth + ' cm'; qColor = '#1a7a4a'; }
+ var chip = document.createElement('div');
+ chip.id = 'snow-depth-chip';
+ chip.className = 'score-chip';
+ chip.title = T.snowDepthSource || '';
+ chip.innerHTML = '<span class="score-chip-dot" style="background:' + qColor + '"></span>' +
+  '<span class="score-chip-lbl">' + (T.snowDepthLabel || '❄') + '</span>' +
+  '<span class="score-chip-val">' + val + '</span>';
+ chipsEl.appendChild(chip);
 }
 
 function fetchSnowDepth(lat, lon, yr, mo, da) {
@@ -2271,7 +2266,7 @@ function run() {
     }
     if (currentUseCase === 'ski' && _sdEl) {
      fetchSnowDepth(loc.lat, loc.lon, yr, mo, da).then(function(res) {
-      renderSnowDepth(_sdEl, res);
+      renderSnowChip(res);
      });
     }
     progEl.style.display='none';btnEl.disabled=false;
