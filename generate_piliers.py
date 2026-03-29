@@ -402,8 +402,23 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .dest-link{color:var(--text);text-decoration:none;font-weight:600}
 .dest-link:hover{color:var(--gold)}
 .region-tag{display:inline-block;font-size:10px;color:var(--slate);background:var(--cream);padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle}
-.filter-panel{background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px 14px 0 0;padding:8px 14px 6px;margin-bottom:0;display:flex;flex-direction:column;gap:0}.filter-row{display:flex;flex-direction:column;gap:6px;padding:5px 0;border-bottom:1px solid var(--cream2)}.filter-row:last-child{border-bottom:none;padding-bottom:2px}.filter-label{font-size:9px;font-weight:700;color:var(--slate);letter-spacing:.08em;text-transform:uppercase}.filter-btns{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.month-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.month-nav a{padding:4px 8px;border-radius:10px;font-size:11px;font-weight:600;text-decoration:none;background:white;border:1.5px solid var(--cream2);color:var(--navy);white-space:nowrap;flex-shrink:0}.month-nav a.active{background:var(--gold);color:white;border-color:var(--gold)}.month-nav a:hover{border-color:var(--gold)}
-.filter-panel+.section{border:1.5px solid var(--cream2);border-top:none;border-radius:0 0 14px 14px;padding:12px 14px 0;margin-bottom:16px}.cta-box{background:linear-gradient(135deg,#d4a853,#c69a3a);border-radius:14px;padding:24px;text-align:center;margin:28px 0}
+.filter-bar{display:flex;gap:6px;overflow-x:auto;padding:10px 14px;background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px 14px 0 0;scrollbar-width:none;-ms-overflow-style:none;position:relative;z-index:100}.filter-bar::-webkit-scrollbar{display:none}
+.fchip{display:inline-flex;align-items:center;gap:5px;padding:6px 10px 6px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);white-space:nowrap;flex-shrink:0;transition:all .15s;position:relative;user-select:none}
+.fchip.has-filter{background:var(--gold);color:white;border-color:var(--gold)}
+.fchip:hover:not(.has-filter){border-color:var(--gold)}
+.fchip-arrow{font-size:9px;opacity:.6;margin-left:1px}
+.fc-drop{display:none;position:absolute;top:calc(100% + 6px);left:0;background:white;border:1.5px solid var(--cream2);border-radius:12px;box-shadow:0 8px 24px rgba(26,31,46,.15);z-index:999;min-width:160px;padding:6px}
+.fchip.open .fc-drop{display:block}
+.fc-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;color:var(--navy);transition:background .1s;white-space:nowrap}
+.fc-item:hover{background:var(--cream)}
+.fc-item.active{font-weight:700;color:var(--gold)}
+.fc-item.threshold-active{background:var(--cream);font-weight:600}
+.fc-months{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:4px}
+.fc-month-item{text-align:center;padding:6px 4px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;color:var(--navy);transition:background .1s}
+.fc-month-item:hover{background:var(--cream)}
+.fc-month-item.active{background:var(--gold);color:white;border-radius:6px}
+.fc-sep{height:1px;background:var(--cream2);margin:4px 0}
+.filter-bar+.section{border:1.5px solid var(--cream2);border-top:none;border-radius:0 0 14px 14px;padding:12px 14px 0;margin-bottom:16px}.cta-box{background:linear-gradient(135deg,#d4a853,#c69a3a);border-radius:14px;padding:24px;text-align:center;margin:28px 0}
 .cta-box a{color:white;font-weight:700;font-size:17px;text-decoration:none;display:block;text-align:center}
 .related-pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px}
 .related-card{background:white;border:1.5px solid var(--cream2);border-radius:12px;padding:16px;text-decoration:none;color:var(--text);display:block}
@@ -415,19 +430,7 @@ footer a{color:#f5d060;text-decoration:none}
 .nav-share{display:none}
 @media(pointer:coarse),(max-width:768px){.nav-share{display:flex}}
 @media(max-width:640px){.rt th:nth-child(5),.rt td:nth-child(5){display:none}.hero-stats{gap:20px}}
-.mode-tabs{display:flex;gap:6px;flex-wrap:wrap}
-.mode-tab{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s}
-.mode-tab.active{background:var(--gold);color:white;border-color:var(--gold);border-radius:10px}
-.mode-tab:hover:not(.active){border-color:var(--gold)}
-.reg-tabs{display:flex;gap:6px;flex-wrap:wrap}
-.reg-tab{padding:5px 11px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s;white-space:nowrap}
-.reg-tab.active{background:var(--gold);color:white;border-color:var(--gold)}
-.reg-tab:hover:not(.active){border-color:var(--gold)}
-.filter-row-adv{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.filter-label-sep{margin-left:8px}
-.secu-tab,.budget-tab{padding:5px 10px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);transition:all .15s;opacity:.35}
-.secu-tab.active,.budget-tab.active{opacity:1;border-color:var(--gold)}
-.secu-tab:hover,.budget-tab:hover{border-color:var(--gold);opacity:1}
+/* filter tabs now chip-dropdown */
 """
 
 FONTS = (
@@ -724,6 +727,42 @@ def generate_page(mi, lang, dests, climate, country_info=None):
     secu_tabs_inner   = _secu_tabs()
     budget_tabs_inner = _budget_tabs()
 
+    # ── Chip-dropdown filter bar HTML ──
+    sl = pil.get('secu_labels', {'1':'🟢','2':'🟡','3':'🟠','4':'🔴'})
+    bl = pil.get('budget_labels', {'1':'💚 Budget','2':'💚 Abordable','3':'🟡 Intermédiaire','4':'🟠 Haut de gamme','5':'💎 Premium'})
+    _secu_items = ''.join(f'<div class="fc-item" data-rl="{r}" onclick="setSecu({r})">{sl.get(str(r),str(r))}</div>' for r in range(1,5))
+    _budget_items = ''.join(f'<div class="fc-item" data-bi="{b}" onclick="setBudget({b})">{bl.get(str(b),str(b))}</div>' for b in range(1,6))
+    _reg_opts = region_tabs.replace('class="reg-tab active"','class="fc-item active" onclick="setReg(this.dataset.reg)"').replace('class="reg-tab"','class="fc-item" onclick="setReg(this.dataset.reg)"')
+    _type_opts = (
+        f'<div class="fc-item active" data-mode="meteo" onclick="setMode(\'meteo\')">{tab_meteo}</div>'
+        f'<div class="fc-item" data-mode="beach" onclick="setMode(\'beach\')">{tab_beach}</div>'
+        f'<div class="fc-item" data-mode="ski" onclick="setMode(\'ski\')">{tab_ski}</div>'
+    )
+    filter_chips_html = (
+        f'<div class="fchip" id="fc-period" onclick="toggleFC(\'period\')">'
+        f'<span id="fc-period-lbl">{pil.get("period_annual","Annuel") if mi < 0 else loc["month_abbr"][mi]}</span>'
+        f'<span class="fchip-arrow">▾</span>'
+        f'<div class="fc-drop" id="fcd-period">'
+        f'<div class="fc-months" id="fc-months-grid">{month_nav.replace("month-nav","").replace("<div ","").replace("</div>","")}</div>'
+        f'</div></div>'
+        f'<div class="fchip" id="fc-region" onclick="toggleFC(\'region\')">'
+        f'<span id="fc-region-lbl">{pil.get("region_world","Monde")}</span>'
+        f'<span class="fchip-arrow">▾</span>'
+        f'<div class="fc-drop" id="fcd-region">{_reg_opts}</div></div>'
+        f'<div class="fchip" id="fc-type" onclick="toggleFC(\'type\')">'
+        f'<span id="fc-type-lbl">{tab_meteo}</span>'
+        f'<span class="fchip-arrow">▾</span>'
+        f'<div class="fc-drop" id="fcd-type">{_type_opts}</div></div>'
+        f'<div class="fchip" id="fc-secu" onclick="toggleFC(\'secu\')">'
+        f'<span id="fc-secu-lbl">{fp_secu}</span>'
+        f'<span class="fchip-arrow">▾</span>'
+        f'<div class="fc-drop" id="fcd-secu">{_secu_items}</div></div>'
+        f'<div class="fchip" id="fc-budget" onclick="toggleFC(\'budget\')">'
+        f'<span id="fc-budget-lbl">{fp_budget}</span>'
+        f'<span class="fchip-arrow">▾</span>'
+        f'<div class="fc-drop" id="fcd-budget">{_budget_items}</div></div>'
+    )
+
     rank_js = (
         '<script>(function(){'
         f'var POOL={pool_json};'
@@ -798,7 +837,13 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'var activeMode=document.querySelector(".mode-tab.active");'
         'render(activeMode?activeMode.dataset.mode:"meteo");'
         '});'
-        'document.getElementById("secu-tabs").addEventListener("click",function(ev){''var btn=ev.target.closest(".secu-tab");if(!btn)return;''CUR_RL=parseInt(btn.dataset.rl);''document.querySelectorAll(".secu-tab").forEach(function(b){b.classList.toggle("active",(b.dataset.rl||"4")<=String(CUR_RL));});''var am=document.querySelector(".mode-tab.active");render(am?am.dataset.mode:"meteo");''});''document.getElementById("budget-tabs").addEventListener("click",function(ev){''var btn=ev.target.closest(".budget-tab");if(!btn)return;''CUR_BI=parseInt(btn.dataset.bi);''document.querySelectorAll(".budget-tab").forEach(function(b){b.classList.toggle("active",(b.dataset.bi||"5")<=String(CUR_BI));});''var am=document.querySelector(".mode-tab.active");render(am?am.dataset.mode:"meteo");''});''var _p=new URLSearchParams(location.search);var _initMode=_p.get("mode")||"meteo";var _initReg=_p.get("reg")||"all";var _initRL=parseInt(_p.get("rl")||"4");var _initBI=parseInt(_p.get("bi")||"5");CUR_REG=_initReg;CUR_RL=_initRL;CUR_BI=_initBI;if(_initReg!=="all"){document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.toggle("active",b.dataset.reg===_initReg);});}if(_initMode!=="meteo"){document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.toggle("active",b.dataset.mode===_initMode);});}if(_initRL<4){document.querySelectorAll(".secu-tab").forEach(function(b){b.classList.toggle("active",(b.dataset.rl||"4")<=String(CUR_RL));});}if(_initBI<5){document.querySelectorAll(".budget-tab").forEach(function(b){b.classList.toggle("active",(b.dataset.bi||"5")<=String(CUR_BI));});}render(_initMode);document.querySelectorAll(".month-nav a").forEach(function(a){a.addEventListener("click",function(ev){var am=document.querySelector(".mode-tab.active");var ar=document.querySelector(".reg-tab.active");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";var rl=CUR_RL;var bi=CUR_BI;if(m==="meteo"&&r==="all"&&rl===4&&bi===5)return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);if(rl<4)q.push("rl="+rl);if(bi<5)q.push("bi="+bi);location.href=url+(q.length?"?"+q.join("&"):"");});});'
+        'function setMode(m){document.querySelectorAll(".fc-item[data-mode]").forEach(function(b){b.classList.toggle("active",b.dataset.mode===m);});var lm=document.querySelector(".fc-item.active[data-mode]");if(lm)document.getElementById("fc-type-lbl").textContent=lm.textContent.trim();document.getElementById("fc-type").classList.toggle("has-filter",m!=="meteo");closeFC();render(m);}'+
+        'function setReg(r){CUR_REG=r;document.querySelectorAll(".fc-item[data-reg]").forEach(function(b){b.classList.toggle("active",b.dataset.reg===r);});var lr=document.querySelector(".fc-item.active[data-reg]");if(lr)document.getElementById("fc-region-lbl").textContent=lr.textContent.trim();document.getElementById("fc-region").classList.toggle("has-filter",r!=="all");closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
+        'function setSecu(rl){CUR_RL=rl;document.querySelectorAll(".fc-item[data-rl]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.rl)<=rl);b.classList.toggle("active",parseInt(b.dataset.rl)===rl);});var ls=document.querySelector(".fc-item[data-rl=\'"+rl+"\' ]");if(ls)document.getElementById("fc-secu-lbl").textContent="\u2264 "+ls.textContent.trim();document.getElementById("fc-secu").classList.toggle("has-filter",rl<4);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
+        'function setBudget(bi){CUR_BI=bi;document.querySelectorAll(".fc-item[data-bi]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.bi)<=bi);b.classList.toggle("active",parseInt(b.dataset.bi)===bi);});var lb=document.querySelector(".fc-item[data-bi=\'"+bi+"\' ]");if(lb)document.getElementById("fc-budget-lbl").textContent="\u2264 "+lb.textContent.trim();document.getElementById("fc-budget").classList.toggle("has-filter",bi<5);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
+        'function closeFC(){document.querySelectorAll(".fchip.open").forEach(function(c){c.classList.remove("open");});}'+
+        'function toggleFC(id){var chip=document.getElementById("fc-"+id);var wasOpen=chip.classList.contains("open");closeFC();if(!wasOpen)chip.classList.add("open");}'+
+        'document.addEventListener("click",function(e){if(!e.target.closest(".fchip"))closeFC();});'+
         '})();</script>'
     )
 
@@ -916,7 +961,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 </div>
 </header>
 <main class="page">
-<div class="filter-panel"><div class="filter-row"><span class="filter-label">{fp_period}</span><div class="filter-btns">{month_nav}</div></div><div class="filter-row"><span class="filter-label">{fp_region}</span><div class="filter-btns" id="reg-tabs">{region_tabs_inner}</div></div><div class="filter-row"><span class="filter-label">{fp_type}</span><div class="filter-btns" id="mode-tabs">{mode_tabs_inner}</div></div><div class="filter-row filter-row-adv"><span class="filter-label">{fp_secu}</span><div class="filter-btns" id="secu-tabs">{secu_tabs_inner}</div><span class="filter-label filter-label-sep">{fp_budget}</span><div class="filter-btns" id="budget-tabs">{budget_tabs_inner}</div></div></div><div class="section"><div class="eyebrow">{sec_eyebrow}</div><h2 class="sec-title" id="rt-title">{sec_title}</h2><p class="sec-intro" id="rt-intro">{sec_intro}</p>
+<div class="filter-bar" id="filter-bar">{filter_chips_html}</div><div class="section"><div class="eyebrow">{sec_eyebrow}</div><h2 class="sec-title" id="rt-title">{sec_title}</h2><p class="sec-intro" id="rt-intro">{sec_intro}</p>
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
 <p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
 <p class="rt-methodo" id="rt-methodo-beach" style="display:none">{loc['hub']['methodo_beach']}</p>
@@ -1234,6 +1279,43 @@ def generate_annual_page(lang, dests, climate, country_info=None):
     secu_tabs_inner   = _secu_tabs_ann()
     budget_tabs_inner = _budget_tabs_ann()
 
+    # ── Chip-dropdown filter bar HTML (annual) ──
+    _sl = pil.get('secu_labels', {'1':'🟢','2':'🟡','3':'🟠','4':'🔴'})
+    _bl = pil.get('budget_labels', {'1':'💚 Budget','2':'💚 Abordable','3':'🟡 Intermédiaire','4':'🟠 Haut de gamme','5':'💎 Premium'})
+    _reg_inner = build_region_tabs(lang)
+    _secu_items_ann = ''.join(f'<div class="fc-item" data-rl="{r}" onclick="setSecu({r})">{_sl.get(str(r),str(r))}</div>' for r in range(1,5))
+    _budget_items_ann = ''.join(f'<div class="fc-item" data-bi="{b}" onclick="setBudget({b})">{_bl.get(str(b),str(b))}</div>' for b in range(1,6))
+    _reg_opts_ann = _reg_inner.replace('class="reg-tab active"','class="fc-item active" onclick="setReg(this.dataset.reg)"').replace('class="reg-tab"','class="fc-item" onclick="setReg(this.dataset.reg)"')
+    _type_opts_ann = (
+        f'<div class="fc-item active" data-mode="meteo" onclick="setMode(\'meteo\')">{tab_meteo}</div>'
+        f'<div class="fc-item" data-mode="beach" onclick="setMode(\'beach\')">{tab_beach}</div>'
+        f'<div class="fc-item" data-mode="ski" onclick="setMode(\'ski\')">{tab_ski}</div>'
+    )
+    _ann_month_nav = build_month_nav(0, loc, is_annual=True)
+    filter_chips_html = (
+        f'<div class="fchip" id="fc-period" onclick="toggleFC(\'period\')">'
+        f'<span id="fc-period-lbl">{pil.get("period_annual","Annuel")}</span>'
+        f'<span class="fchip-arrow">▾</span>'
+        f'<div class="fc-drop" id="fcd-period">'
+        f'<div class="fc-months" id="fc-months-grid"></div>'
+        f'</div></div>'
+        f'<div class="fchip" id="fc-region" onclick="toggleFC(\'region\')">'
+        f'<span id="fc-region-lbl">{pil.get("region_world","Monde")}</span>'
+        f'<span class="fchip-arrow">▾</span>'
+        f'<div class="fc-drop" id="fcd-region">{_reg_opts_ann}</div></div>'
+        f'<div class="fchip" id="fc-type" onclick="toggleFC(\'type\')">'
+        f'<span id="fc-type-lbl">{tab_meteo}</span>'
+        f'<span class="fchip-arrow">▾</span>'
+        f'<div class="fc-drop" id="fcd-type">{_type_opts_ann}</div></div>'
+        f'<div class="fchip" id="fc-secu" onclick="toggleFC(\'secu\')">'
+        f'<span id="fc-secu-lbl">{fp_secu}</span>'
+        f'<span class="fchip-arrow">▾</span>'
+        f'<div class="fc-drop" id="fcd-secu">{_secu_items_ann}</div></div>'
+        f'<div class="fchip" id="fc-budget" onclick="toggleFC(\'budget\')">'
+        f'<span id="fc-budget-lbl">{fp_budget}</span>'
+        f'<span class="fchip-arrow">▾</span>'
+        f'<div class="fc-drop" id="fcd-budget">{_budget_items_ann}</div></div>'
+    )
     def _e(s): return s.replace('"', '&quot;')
     rank_js = (
         '<script>(function(){'+
@@ -1281,24 +1363,14 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'var _s3=document.getElementById("stat-temp");if(_s3)_s3.textContent=Math.round(_avgT)+"°";'+
         '}'+
         '}'+
-        'document.getElementById("mode-tabs").addEventListener("click",function(ev){'+
-        'var btn=ev.target.closest(".mode-tab");'+
-        'if(!btn)return;'+
-        'document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.remove("active");});'+
-        'btn.classList.add("active");'+
-        'render(btn.dataset.mode);'+
-        '});'+
-        'document.getElementById("reg-tabs").addEventListener("click",function(ev){'+
-        'var btn=ev.target.closest(".reg-tab");'+
-        'if(!btn)return;'+
-        'document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.remove("active");});'+
-        'btn.classList.add("active");'+
-        'CUR_REG=btn.dataset.reg;'+
-        'var activeMode=document.querySelector(".mode-tab.active");'+
-        'render(activeMode?activeMode.dataset.mode:"meteo");'+
-        '});'+
-        'document.getElementById("secu-tabs").addEventListener("click",function(ev){var btn=ev.target.closest(".secu-tab");if(!btn)return;CUR_RL=parseInt(btn.dataset.rl);document.querySelectorAll(".secu-tab").forEach(function(b){b.classList.toggle("active",(b.dataset.rl||"4")<=String(CUR_RL));});var am=document.querySelector(".mode-tab.active");render(am?am.dataset.mode:"meteo");});document.getElementById("budget-tabs").addEventListener("click",function(ev){var btn=ev.target.closest(".budget-tab");if(!btn)return;CUR_BI=parseInt(btn.dataset.bi);document.querySelectorAll(".budget-tab").forEach(function(b){b.classList.toggle("active",(b.dataset.bi||"5")<=String(CUR_BI));});var am=document.querySelector(".mode-tab.active");render(am?am.dataset.mode:"meteo");});'+
-        'var _p=new URLSearchParams(location.search);var _initMode=_p.get("mode")||"meteo";var _initReg=_p.get("reg")||"all";var _initRL=parseInt(_p.get("rl")||"4");var _initBI=parseInt(_p.get("bi")||"5");CUR_REG=_initReg;CUR_RL=_initRL;CUR_BI=_initBI;if(_initReg!=="all"){document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.toggle("active",b.dataset.reg===_initReg);});}if(_initMode!=="meteo"){document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.toggle("active",b.dataset.mode===_initMode);});}if(_initRL<4){document.querySelectorAll(".secu-tab").forEach(function(b){b.classList.toggle("active",(b.dataset.rl||"4")<=String(CUR_RL));});}if(_initBI<5){document.querySelectorAll(".budget-tab").forEach(function(b){b.classList.toggle("active",(b.dataset.bi||"5")<=String(CUR_BI));});}render(_initMode);document.querySelectorAll(".month-nav a").forEach(function(a){a.addEventListener("click",function(ev){var am=document.querySelector(".mode-tab.active");var ar=document.querySelector(".reg-tab.active");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";var rl=CUR_RL;var bi=CUR_BI;if(m==="meteo"&&r==="all"&&rl===4&&bi===5)return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);if(rl<4)q.push("rl="+rl);if(bi<5)q.push("bi="+bi);location.href=url+(q.length?"?"+q.join("&"):"");});});'+
+        'function setMode(m){document.querySelectorAll(".fc-item[data-mode]").forEach(function(b){b.classList.toggle("active",b.dataset.mode===m);});var lm=document.querySelector(".fc-item.active[data-mode]");if(lm)document.getElementById("fc-type-lbl").textContent=lm.textContent.trim();document.getElementById("fc-type").classList.toggle("has-filter",m!=="meteo");closeFC();render(m);}'+
+        'function setReg(r){CUR_REG=r;document.querySelectorAll(".fc-item[data-reg]").forEach(function(b){b.classList.toggle("active",b.dataset.reg===r);});var lr=document.querySelector(".fc-item.active[data-reg]");if(lr)document.getElementById("fc-region-lbl").textContent=lr.textContent.trim();document.getElementById("fc-region").classList.toggle("has-filter",r!=="all");closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
+        'function setSecu(rl){CUR_RL=rl;document.querySelectorAll(".fc-item[data-rl]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.rl)<=rl);b.classList.toggle("active",parseInt(b.dataset.rl)===rl);});var ls=document.querySelector(".fc-item[data-rl=\'"+rl+"\' ]");if(ls)document.getElementById("fc-secu-lbl").textContent="\u2264 "+ls.textContent.trim();document.getElementById("fc-secu").classList.toggle("has-filter",rl<4);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
+        'function setBudget(bi){CUR_BI=bi;document.querySelectorAll(".fc-item[data-bi]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.bi)<=bi);b.classList.toggle("active",parseInt(b.dataset.bi)===bi);});var lb=document.querySelector(".fc-item[data-bi=\'"+bi+"\' ]");if(lb)document.getElementById("fc-budget-lbl").textContent="\u2264 "+lb.textContent.trim();document.getElementById("fc-budget").classList.toggle("has-filter",bi<5);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
+        'function closeFC(){document.querySelectorAll(".fchip.open").forEach(function(c){c.classList.remove("open");});}'+
+        'function toggleFC(id){var chip=document.getElementById("fc-"+id);var wasOpen=chip.classList.contains("open");closeFC();if(!wasOpen)chip.classList.add("open");}'+
+        'document.addEventListener("click",function(e){if(!e.target.closest(".fchip"))closeFC();});'+
+        'var _p=new URLSearchParams(location.search);var _initMode=_p.get("mode")||"meteo";var _initReg=_p.get("reg")||"all";var _initRL=parseInt(_p.get("rl")||"4");var _initBI=parseInt(_p.get("bi")||"5");CUR_REG=_initReg;CUR_RL=_initRL;CUR_BI=_initBI;if(_initReg!=="all")setReg(_initReg);if(_initMode!=="meteo")setMode(_initMode);if(_initRL<4)setSecu(_initRL);if(_initBI<5)setBudget(_initBI);render(_initMode);document.querySelectorAll(".month-nav a").forEach(function(a){a.addEventListener("click",function(ev){var am=document.querySelector(".mode-tab.active");var ar=document.querySelector(".reg-tab.active");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";var rl=CUR_RL;var bi=CUR_BI;if(m==="meteo"&&r==="all"&&rl===4&&bi===5)return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);if(rl<4)q.push("rl="+rl);if(bi<5)q.push("bi="+bi);location.href=url+(q.length?"?"+q.join("&"):"");});});'+
         '})();</script>'
     )
 
@@ -1339,7 +1411,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
 </div>
 </header>
 <main class="page">
-<div class="filter-panel"><div class="filter-row"><span class="filter-label">{fp_period}</span><div class="filter-btns">{month_nav}</div></div><div class="filter-row"><span class="filter-label">{fp_region}</span><div class="filter-btns" id="reg-tabs">{region_tabs_inner}</div></div><div class="filter-row"><span class="filter-label">{fp_type}</span><div class="filter-btns" id="mode-tabs">{mode_tabs_inner}</div></div><div class="filter-row filter-row-adv"><span class="filter-label">{fp_secu}</span><div class="filter-btns" id="secu-tabs">{secu_tabs_inner}</div><span class="filter-label filter-label-sep">{fp_budget}</span><div class="filter-btns" id="budget-tabs">{budget_tabs_inner}</div></div></div>
+<div class="filter-bar" id="filter-bar">{filter_chips_html}</div>
 <div class="section">
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
 <p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
