@@ -333,7 +333,7 @@ def head_css(cfg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="{font_url}"/></noscript>
-<link rel="stylesheet" href="{pfx}style.css?v=13"/>
+<link rel="stylesheet" href="{pfx}style.css?v=14"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''
@@ -941,11 +941,10 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
             sf = sd.get('flag', '')
             s_slug = dest_slug(C, sd) if sd else sim_slug
             sim_cards += (
-                f'<a href="{annual_url(C, s_slug)}" class="sim-card">'
-                f'<div class="f13-slate3"><img src="{pfx}flags/{sf}.png" srcset="{pfx}flags/2x/{sf}.png 2x" loading="lazy" width="16" height="12" '
-                f'alt="{sf}" class="flag-icon">{sc}</div>'
-                f'<div class="fw700-navy">{sn}</div>'
-                f'<div class="f12-slate2">{sim_label}</div>'
+                f'<a href="{annual_url(C, s_slug)}" class="sim-card-sm">'
+                f'<span class="nearby-name"><img src="{pfx}flags/{sf}.png" loading="lazy" width="16" height="12" '
+                f'alt="" class="flag-icon">{sn}</span>'
+                f'<span class="nearby-meta">{sim_label}</span>'
                 f'</a>')
         similar_section = f'''<section class="section">
  <div class="section-label">{C['lbl_similar_section']}</div>
