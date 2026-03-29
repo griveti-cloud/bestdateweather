@@ -455,6 +455,7 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
   .rt-compact th:nth-child(3),.rt-compact td:nth-child(3){width:58px;text-align:left}
   .rt-compact th:nth-child(4),.rt-compact td:nth-child(4){white-space:nowrap}
   .rt-compact .region-tag{display:block;font-size:9px;background:none;padding:0;margin-left:0;border-radius:0}
+  .sc-last span[class^="safety-"]{margin-left:6px}
 }
 @media(max-width:640px) and (min-width:521px){
   .rt td.rt-sec{opacity:.8}
