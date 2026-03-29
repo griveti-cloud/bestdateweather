@@ -772,12 +772,15 @@ def climate_trend_section(slug_fr: str, nom: str, lang: str = 'fr', C: dict = No
         note_lbl   = 'Annual ERA5 means · 2016–2025 data'
 
     # SVG dimensions
-    W, H = 560, 180
-    PAD_L, PAD_R, PAD_T, PAD_B = 36, 12, 16, 32
+    W, H = 560, 220
+    PAD_L, PAD_R, PAD_T, PAD_B = 40, 16, 20, 36
 
     all_vals = [v for row in [tmax, tmin, tmoy] for v in row if v is not None]
-    y_min = min(all_vals) - 1
-    y_max = max(all_vals) + 1
+    _raw_min = min(all_vals)
+    _raw_max = max(all_vals)
+    _span = max(_raw_max - _raw_min, 4)  # min 4°C visible range
+    y_min = _raw_min - _span * 0.25
+    y_max = _raw_max + _span * 0.25
     y_range = y_max - y_min or 1
 
     chart_w = W - PAD_L - PAD_R
@@ -806,7 +809,7 @@ def climate_trend_section(slug_fr: str, nom: str, lang: str = 'fr', C: dict = No
             f'<line x1="{PAD_L}" y1="{y_px:.1f}" x2="{W - PAD_R}" y2="{y_px:.1f}" '
             f'stroke="#e8e0d0" stroke-width="1"/>'
             f'<text x="{PAD_L - 4}" y="{y_px + 4:.1f}" text-anchor="end" '
-            f'font-size="9" fill="#9ca3af">{y_val:.0f}</text>'
+            f'font-size="10" fill="#6b7280" font-weight="500">{y_val:.0f}</text>'
         )
 
     # X-axis labels (every 2 years)
@@ -815,16 +818,16 @@ def climate_trend_section(slug_fr: str, nom: str, lang: str = 'fr', C: dict = No
         if i % 2 == 0:
             x_labels += (
                 f'<text x="{sx(i):.1f}" y="{H - 4}" text-anchor="middle" '
-                f'font-size="9" fill="#9ca3af">{y}</text>'
+                f'font-size="10" fill="#6b7280" font-weight="500">{y}</text>'
             )
 
     svg = (
         f'<svg viewBox="0 0 {W} {H}" width="100%" style="display:block;overflow:visible" '
         f'role="img" aria-label="{title_lbl}">'
         f'{grid_lines}'
-        f'{polyline("tmin", "#93c5fd", 1.5)}'
-        f'{polyline("tmoy", "#a3a3a3", 1.2, "4 2")}'
-        f'{polyline("tmax", "#f97316", 2)}'
+        f'{polyline("tmin", "#3b82f6", 2.5)}'
+        f'{polyline("tmoy", "#9ca3af", 1.5, "5 3")}'
+        f'{polyline("tmax", "#ef4444", 2.5)}'
         f'{x_labels}'
         f'</svg>'
     )
@@ -835,7 +838,7 @@ def climate_trend_section(slug_fr: str, nom: str, lang: str = 'fr', C: dict = No
     legend = (
         f'<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px">'
         f'<span style="{leg_style}"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:#f97316;flex-shrink:0"></span>{tmax_lbl}</span>'
-        f'<span style="{leg_style}"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:{dash_bg};flex-shrink:0"></span>{tmoy_lbl}</span>'
+        f'<span style="{leg_style}"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:repeating-linear-gradient(90deg,#9ca3af 0,#9ca3af 5px,transparent 5px,transparent 8px);flex-shrink:0"></span>{tmoy_lbl}</span>'
         f'<span style="{leg_style}"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:#93c5fd;flex-shrink:0"></span>{tmin_lbl}</span>'
         f'</div>'
     )
