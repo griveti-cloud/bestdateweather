@@ -572,6 +572,9 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         hsub = C['annual_hero_subs_ski'][_hash].format(**tpl_vars)
     else:
         hsub = _hero_sub(C, dest)
+    # Convert km → miles on imperial (en-us) pages
+    if C.get('imperial') and hsub:
+        hsub = re.sub(r'(\d+(?:[,.]\d+)?)\s*km', lambda m: f"{round(float(m.group(1).replace(',','.'))*0.621371)} mi", hsub)
 
     # ── Quick facts ──
     qf = f'''<section class="section">
