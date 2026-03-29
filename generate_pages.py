@@ -333,7 +333,7 @@ def head_css(cfg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="{font_url}"/></noscript>
-<link rel="stylesheet" href="{pfx}style.css?v=14"/>
+<link rel="stylesheet" href="{pfx}style.css?v=15"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''

@@ -605,10 +605,10 @@ def make_table_seasonal(entries, n, lang, country_info=None):
 
 def make_table_sun(entries, n, lang, country_info=None):
     headers = {
-        'fr': ('Rang','Destination','Soleil/an','Score / Sécu.'),
-        'en': ('Rank','Destination','Sun/year','Score / Safety'),
-        'es': ('Pos.','Destino','Sol/año','Score / Seg.'),
-        'de': ('Rang','Ziel','Sonne/Jahr','Score / Sich.'),
+        'fr': ('#','Destination','Soleil/an','Score / Sécu.'),
+        'en': ('#','Destination','Sun/year','Score / Safety'),
+        'es': ('#','Destino','Sol/año','Score / Seg.'),
+        'de': ('#','Ziel','Sonne/Jahr','Score / Sich.'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -629,10 +629,10 @@ def make_table_sun(entries, n, lang, country_info=None):
 
 def make_table_rain(entries, n, lang, country_info=None):
     headers = {
-        'fr': ('Rang','Destination','Pluie moy.','Score / Sécu.'),
-        'en': ('Rank','Destination','Avg. rain','Score / Safety'),
-        'es': ('Pos.','Destino','Lluvia media','Score / Seg.'),
-        'de': ('Rang','Ziel','Ø Regen','Score / Sich.'),
+        'fr': ('#','Destination','Pluie','Score / Sécu.'),
+        'en': ('#','Destination','Avg. rain','Score / Safety'),
+        'es': ('#','Destino','Lluvia','Score / Seg.'),
+        'de': ('#','Ziel','Regen','Score / Sich.'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
