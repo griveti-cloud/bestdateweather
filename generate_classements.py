@@ -605,10 +605,10 @@ def make_table_seasonal(entries, n, lang, country_info=None):
 
 def make_table_sun(entries, n, lang, country_info=None):
     headers = {
-        'fr': ('Rang','Destination','Soleil/an',['Pluie moy.'],'Score / Sécu.'),
-        'en': ('Rank','Destination','Sun/year',['Avg. rain'],'Score'),
-        'es': ('Pos.','Destino','Sol/año',['Lluvia media'],'Score'),
-        'de': ('Rang','Ziel','Sonne/Jahr',['Ø Regen'],'Score'),
+        'fr': ('Rang','Destination','Soleil/an','Score / Sécu.'),
+        'en': ('Rank','Destination','Sun/year','Score / Safety'),
+        'es': ('Pos.','Destino','Sol/año','Score / Seg.'),
+        'de': ('Rang','Ziel','Sonne/Jahr','Score / Sich.'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -620,7 +620,6 @@ def make_table_sun(entries, n, lang, country_info=None):
             f'<tr><td class="rank">{rank_icon(i)}</td>'
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td>{entry["sun_annual"]:.0f}h</td>'
-            f'<td class="rt-sec">{entry["rain_avg"]:.0f}%</td>'
             f'<td class="sc sc-last">{entry["avg"]:.1f}<span>/10</span>&nbsp;{safety_badge(d, country_info or {})}</td></tr>'
         )
     return (
@@ -630,10 +629,10 @@ def make_table_sun(entries, n, lang, country_info=None):
 
 def make_table_rain(entries, n, lang, country_info=None):
     headers = {
-        'fr': ('Rang','Destination','Pluie moy.',['Soleil/an'],'Score / Sécu.'),
-        'en': ('Rank','Destination','Avg. rain',['Sun/year'],'Score'),
-        'es': ('Pos.','Destino','Lluvia media',['Sol/año'],'Punt.'),
-        'de': ('Rang','Ziel','Ø Regen',['Sonne/Jahr'],'Score'),
+        'fr': ('Rang','Destination','Pluie moy.','Score / Sécu.'),
+        'en': ('Rank','Destination','Avg. rain','Score / Safety'),
+        'es': ('Pos.','Destino','Lluvia media','Score / Seg.'),
+        'de': ('Rang','Ziel','Ø Regen','Score / Sich.'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -645,7 +644,6 @@ def make_table_rain(entries, n, lang, country_info=None):
             f'<tr><td class="rank">{rank_icon(i)}</td>'
             f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
             f'<td>{entry["rain_avg"]:.0f}%</td>'
-            f'<td class="rt-sec">{entry["sun_annual"]:.0f}h</td>'
             f'<td class="sc sc-last">{entry["avg"]:.1f}<span>/10</span>&nbsp;{safety_badge(d, country_info or {})}</td></tr>'
         )
     return (
