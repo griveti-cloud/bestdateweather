@@ -317,7 +317,10 @@
     "best_score_short": "Puntuación",
     "optimal_temp_short": "Temperatura",
     "least_rain_short": "Menos lluvia",
-    "wettest_short": "Más lluvioso"
+    "wettest_short": "Más lluvioso",
+    "lbl_nearby_section": "Cerca",
+    "lbl_nearby_title_annual": "Destinos cercanos a {nom}",
+    "lbl_nearby_title_monthly": "Destinos cercanos en {month}"
   },
   "monthly": {
     "hero_tpl": "Tiempo en {name} en {month}",

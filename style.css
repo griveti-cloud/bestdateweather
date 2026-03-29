@@ -520,3 +520,10 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 
 
 @media(max-width:540px){.seas-grid{grid-template-columns:1fr}}
+
+/* nearby-grid */
+.nearby-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:8px 0}
+.nearby-card{display:flex;flex-direction:column;gap:4px;padding:12px 14px;background:white;border:1.5px solid var(--cream2);border-radius:12px;text-decoration:none;transition:border-color .15s,box-shadow .15s}
+.nearby-card:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(232,148,10,.15)}
+.nearby-name{font-size:13px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px}
+.nearby-meta{font-size:11px;color:var(--slate2);font-weight:500}

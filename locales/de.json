@@ -317,7 +317,10 @@
     "best_score_short": "Score",
     "optimal_temp_short": "Temperatur",
     "least_rain_short": "Wenig Regen",
-    "wettest_short": "Regenreichster"
+    "wettest_short": "Regenreichster",
+    "lbl_nearby_section": "In der Nähe",
+    "lbl_nearby_title_annual": "Reiseziele nahe {nom}",
+    "lbl_nearby_title_monthly": "Nahe gelegene Ziele im {month}"
   },
   "monthly": {
     "hero_tpl": "{name} Wetter im {month}",

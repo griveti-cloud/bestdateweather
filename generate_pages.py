@@ -332,7 +332,7 @@ def head_css(cfg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="{font_url}"/></noscript>
-<link rel="stylesheet" href="{pfx}style.css?v=12"/>
+<link rel="stylesheet" href="{pfx}style.css?v=13"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''
@@ -892,6 +892,30 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 
     # ── Similar destinations ──
     similar_section = ''
+    # ── Nearby section (geographic proximity) ──
+    _nearby = _nearby_destinations(dest, all_dests, n=5)
+    _nearby_cards = ''
+    if _nearby:
+        _pfx_flag = f"{C['asset_prefix']}flags/"
+        for _dist, _nd in _nearby:
+            _nd_slug = dest_slug(C, _nd)
+            _nd_name = dest_name(C, _nd)
+            _nd_url = annual_url(C, _nd_slug)
+            _dist_lbl = f"{round(_dist)} km"
+            _nearby_cards += (
+                f'<a href="{_nd_url}" class="nearby-card">'
+                f'<img src="{_pfx_flag}{_nd.get("flag","")}.png" loading="lazy" width="16" height="12" alt="" class="flag-icon">'
+                f'<span class="nearby-name">{_nd_name}</span>'
+                f'<span class="nearby-meta">{_dist_lbl}</span>'
+                f'</a>'
+            )
+    _nearby_lbl = C.get('lbl_nearby_section', 'À proximité')
+    _nearby_title = C.get('lbl_nearby_title_annual', f'Destinations proches').format(nom=nom)
+    nearby_section = f'''<section class="section">
+ <div class="section-label">{_nearby_lbl}</div>
+ <h2 class="section-title">{_nearby_title}</h2>
+ <div class="nearby-grid">{_nearby_cards}</div>
+</section>''' if _nearby_cards else ''
     sim_list = (similarities or {}).get(slug_fr, [])
     if sim_list and all_dests:
         sim_cards = ''
@@ -1126,6 +1150,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 {editorial_highlights_section}
 {faq_section}
 {similar_section}
+{nearby_section}
 {ranking_section}
 {pillar_comparison_section}
 </main>
@@ -1231,6 +1256,37 @@ def context_paragraph(cfg, nom, nom_f, m, mi, score, best_month, best_score, is_
 
 
 # ── HELPER: SIM CARDS ──────────────────────────────────────────────────────
+
+import math as _math_geo
+
+
+def _nearby_destinations(dest, all_dests, n=5):
+    try:
+        lat0 = float(dest.get('lat', 0))
+        lon0 = float(dest.get('lon', 0))
+    except (ValueError, TypeError):
+        return []
+    slug_fr = dest.get('slug_fr', '')
+    results = []
+    for d in all_dests.values():
+        if d.get('slug_fr') == slug_fr:
+            continue
+        if d.get('monthly', 'True').strip().lower() not in ('true', '1', 'yes', ''):
+            continue
+        try:
+            lat1 = float(d.get('lat', 0))
+            lon1 = float(d.get('lon', 0))
+        except (ValueError, TypeError):
+            continue
+        dlat = _math_geo.radians(lat1 - lat0)
+        dlon = _math_geo.radians(lon1 - lon0)
+        a = (_math_geo.sin(dlat/2)**2 +
+             _math_geo.cos(_math_geo.radians(lat0)) * _math_geo.cos(_math_geo.radians(lat1)) * _math_geo.sin(dlon/2)**2)
+        dist = 6371 * 2 * _math_geo.asin(_math_geo.sqrt(a))
+        results.append((dist, d))
+    results.sort(key=lambda x: x[0])
+    return results[:n]
+
 
 def _build_sim_cards(cfg, sim_list, all_dests, climate_for_sim, mi):
     C = cfg
@@ -1715,6 +1771,33 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         sim_section_label = C['lbl_m_sim_label']
 
     # ── Monthly score crosslinks (top-50, pays différent, même mois) ──
+    # ── Nearby section (monthly) ──
+    _nearby_m = _nearby_destinations(dest, all_dests, n=5)
+    _nearby_cards_m = ''
+    if _nearby_m:
+        _pfx_flag_m = f"{C['asset_prefix']}flags/"
+        for _dist_m, _nd_m in _nearby_m:
+            _nd_slug_m = dest_slug(C, _nd_m)
+            _nd_name_m = dest_name(C, _nd_m)
+            _nd_url_m = f"{_nd_slug_m}{C['monthly_sep']}{C['month_url'][mi]}.html"
+            _nd_cli_m = all_climate.get(_nd_m['slug_fr'], [{}]*12)
+            _nd_sc_m = _nd_cli_m[mi].get('score', 0) if mi < len(_nd_cli_m) else 0
+            _nd_tx_m = fmt_temp(_nd_cli_m[mi].get('tmax', 0), C) if mi < len(_nd_cli_m) else ''
+            _nearby_cards_m += (
+                f'<a href="{_nd_url_m}" class="nearby-card">'
+                f'<img src="{_pfx_flag_m}{_nd_m.get("flag","")}.png" loading="lazy" width="16" height="12" alt="" class="flag-icon">'
+                f'<span class="nearby-name">{_nd_name_m}</span>'
+                f'<span class="nearby-meta">{round(_dist_m)} km · {_nd_sc_m:.1f}/10 · {_nd_tx_m}</span>'
+                f'</a>'
+            )
+    _nearby_lbl_m = C.get('lbl_nearby_section', 'À proximité')
+    _nearby_title_m = C.get('lbl_nearby_title_monthly', 'Destinations proches').format(month=month_lc(C, MONTHS[mi]), nom=nom)
+    nearby_section_monthly = f'''<section class="section">
+ <div class="section-label">{_nearby_lbl_m}</div>
+ <h2 class="section-title">{_nearby_title_m}</h2>
+ <div class="nearby-grid">{_nearby_cards_m}</div>
+</section>''' if _nearby_cards_m else ''
+
     crosslink_section_html = ''
     if monthly_crosslinks:
         cl_slugs = (monthly_crosslinks.get(slug_fr) or {}).get(mi, [])
@@ -2191,6 +2274,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <div class="flex-wrap-14">{sim_cards_html}</div>
  </section>
 
+ {nearby_section_monthly}
  {crosslink_section_html}
 
  <section class="section">
