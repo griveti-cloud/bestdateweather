@@ -436,8 +436,8 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .sec-intro{font-size:14px;color:var(--slate);margin-bottom:18px}
 .rt .safety-col{text-align:center;width:30px;padding-left:2px;padding-right:2px;font-size:14px}
 /* Ranking tables mobile — no horizontal scroll */
+.rt-wrap{overflow-x:visible}
 @media(max-width:520px){
-  [style*="overflow-x:auto"]{overflow-x:visible!important}
   .rt{font-size:12px}
   .rt th{padding:7px 4px;font-size:9.5px;letter-spacing:0;white-space:nowrap}
   .rt td{padding:6px 4px;vertical-align:middle}

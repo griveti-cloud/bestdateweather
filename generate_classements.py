@@ -809,7 +809,7 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
             f'<div class="eyebrow">{sec["eyebrow"]}</div>'
             f'<h2 class="sec-title">{sec["h2"]}</h2>'
             f'<p class="sec-intro">{sec["intro"]}</p>'
-            f'<div style="overflow-x:auto">{sec["table"]}</div>'
+            f'<div class="rt-wrap">{sec["table"]}</div>'
             f'</div>'
         )
 
