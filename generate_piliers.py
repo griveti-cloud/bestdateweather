@@ -699,7 +699,10 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 
         f'<span id="fc-budget-lbl">{fp_budget}</span>'
         f'<span class="fchip-arrow">▾</span>'
-        f'<div class="fc-drop" id="fcd-budget">{_budget_items}</div></div>'
+        f'<div class="fc-drop" id="fcd-budget">{_budget_items}'
+        f'<div style="font-size:10px;color:#888;padding:6px 8px 2px;border-top:1px solid #f0ebe0;margin-top:4px">'
+        f'Budget indicatif · Source : Numbeo 2026 · À vérifier avant de réserver'
+        f'</div></div></div>'
     )
 
     rank_js = (

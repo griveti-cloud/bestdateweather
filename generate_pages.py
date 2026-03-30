@@ -1489,6 +1489,28 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         f'</div>'
     )
 
+    # Budget stat for decision card
+    _budget_icons = {1:'💚',2:'🟡',3:'🟠',4:'💸',5:'💎'}
+    _budget_labels = {
+        'fr':{1:'Budget',2:'Abordable',3:'Intermédiaire',4:'Haut de gamme',5:'Premium'},
+        'en':{1:'Budget',2:'Affordable',3:'Mid-range',4:'Upscale',5:'Premium'},
+        'es':{1:'Económico',2:'Asequible',3:'Intermedio',4:'Alto',5:'Premium'},
+        'de':{1:'Günstig',2:'Erschwinglich',3:'Mittelklasse',4:'Gehoben',5:'Premium'},
+    }
+    _ci = __import__('json').load(open('data/country_info.json'))
+    _bi = _ci.get(dest.get('pays',''), {}).get('budget_index', 3)
+    _bi = max(1, min(5, _bi))
+    _blang = C['lang'] if C['lang'] in _budget_labels else 'en'
+    _budget_lbl_text = _budget_labels[_blang][_bi]
+    _budget_lbl = C['locale'].get('dec', {}).get('budget_lbl', 'Budget')
+    _dec_budget_stat = (
+        f'<div class="dec-stat" title="Budget indicatif · Numbeo 2026">'
+        f'<div class="dec-stat-top"><span class="dec-stat-icon">{_budget_icons[_bi]}</span>'
+        f'<span class="dec-stat-val" style="font-size:11px">{_budget_lbl_text}</span></div>'
+        f'<div class="dec-stat-lbl">{_budget_lbl}</div>'
+        f'</div>'
+    )
+
     # ── Oui si / Yes if ──
     osi = C['monthly_oui_si']
     fvars = dict(sun=m['sun_h'], tmax=m['tmax'], rain=m['rain_pct'])
@@ -2089,7 +2111,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .dec-badge{{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;}}
 .dec-score-pill{{font-size:28px;font-weight:900;color:var(--navy);line-height:1;}}
 .dec-score-denom{{font-size:14px;font-weight:500;color:var(--slate2);}}
-.dec-stats{{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}}@media(max-width:480px){{.dec-stats{{grid-template-columns:repeat(2,1fr);}}}}
+.dec-stats{{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;}}@media(max-width:480px){{.dec-stats{{grid-template-columns:repeat(2,1fr);}}}}
 .dec-stat{{background:white;border-radius:12px;padding:12px 10px;text-align:center;border:1.5px solid #e8e0d0;}}
 .dec-stat-top{{display:flex;align-items:baseline;justify-content:center;gap:4px;margin-bottom:8px;}}
 .dec-stat-icon{{font-size:14px;}}
@@ -2195,6 +2217,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
        <div class="dec-stat-lbl">{L['bar_rain']}</div>
      </div>
      {_dec_secu_stat}
+     {_dec_budget_stat}
    </div>
    <div class="dec-reasons">
      <div class="dec-reason dec-yes"><div><strong>{L['yes_lbl']}</strong> {oui_si}</div></div>
