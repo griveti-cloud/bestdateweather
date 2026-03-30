@@ -64,6 +64,7 @@
 .dest-search-ac-item:last-child{border-bottom:none;}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{background:var(--cream);}
 .dest-flag{vertical-align:middle;border-radius:2px;flex-shrink:0;}
+.dest-map-section{margin-bottom:0}.dest-map-col{display:flex;flex-direction:column;gap:6px;width:260px;flex-shrink:0}.dest-map-card{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;position:relative}.dest-map-lbl{position:absolute;top:8px;left:8px;z-index:1000;background:rgba(255,255,255,.92);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.3px;pointer-events:none;text-transform:uppercase}.dest-map-el--world{height:130px;width:100%;display:block}.dest-map-el--macro{height:150px;width:100%;display:block}.dest-map-credit{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}.dest-map-credit a{color:#aaa}@media(max-width:600px){.dest-map-col{width:100%}}.leaflet-control-zoom{display:none!important}
 </style>
 
 </head>
@@ -172,6 +173,7 @@
  
  
 </section>
+<section class="section dest-map-section"><div class="section-label">Localisation</div><div class="dest-map-wrap" data-dest-map="1" data-lat="45.322" data-lon="6.538" data-macro-zoom="3" data-world-id="dmap-world-les_menuires" data-macro-id="dmap-macro-les_menuires"><div class="dest-map-col"><div class="dest-map-card"><div class="dest-map-lbl">🌍 Monde</div><div id="dmap-world-les_menuires" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Contexte géographique</div><div id="dmap-macro-les_menuires" class="dest-map-el dest-map-el--macro"></div><div class="dest-map-credit">© <a href="https://openstreetmap.org" rel="noopener" target="_blank">OpenStreetMap</a></div></div></div></div></section>
 <section class="travel-info-widget"><h3 class="ti-title">Infos pratiques — Les Menuires</h3><div class="ti-chips"><div class="ti-chip"><div class="ti-chip-label">Monnaie</div><div class="ti-chip-row"><span class="ti-chip-icon">💰</span><span class="ti-chip-val">EUR</span></div><div class="ti-chip-sub">€ · Euro</div></div><div class="ti-chip"><div class="ti-chip-label">Langue(s)</div><div class="ti-chip-row"><span class="ti-chip-icon">🗣️</span><span class="ti-chip-val">Français</span></div></div><div class="ti-chip"><div class="ti-chip-label">Conduite</div><div class="ti-chip-row"><span class="ti-chip-icon">🚗➡️</span><span class="ti-chip-val">À droite</span></div></div><div class="ti-chip ti-chip--mae-1" data-advisory-cc="FR" data-advisory-lang="fr"><div class="ti-chip-label">Sécurité</div><div class="ti-chip-row"><span class="ti-chip-icon">🟢</span><span class="ti-chip-val ti-chip-val--mae-1">Vigilance normale</span></div><div class="ti-chip-sub">GPI 1.61</div></div><div class="ti-chip ti-chip--budget-4"><div class="ti-chip-label">Budget</div><div class="ti-chip-row"><span class="ti-chip-icon">🟠</span><span class="ti-chip-val ti-chip-val--budget-4">Haut de gamme</span></div></div></div><div class="ti-safety-detail" id="ti-advisory-note-FR"><span class="ti-safety-note">Conseils aux voyageurs MAE &nbsp;·&nbsp; <span class="ti-safety-source">Global Peace Index: 1 = très pacifique, 5 = peu pacifique (2024)</span></span><span class="ti-advisory-live" style="display:none;font-size:10px;color:#888;margin-left:6px"></span></div></section>
 
 <section class="section">
@@ -253,5 +255,6 @@
 if(window.initDestSearch) window.initDestSearch({suffix:'.html',prefix:'meilleure-periode-',assetPrefix:'',lang:'fr'});
 </script>
 <script src="js/advisory.min.js?v=1" defer></script>
+<script src="js/dest-map.min.js?v=1" defer></script>
 </body>
 </html>

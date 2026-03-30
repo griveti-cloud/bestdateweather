@@ -417,6 +417,41 @@ def footer_html(cfg, dest):
 <script src="{cfg['asset_prefix']}js/share.js" defer></script>'''
 
 
+def _dest_map_section(dest, C, pfx=''):
+    """2-level map insert: world planisphere + continental macro view."""
+    try:
+        lat = float(dest['lat'])
+        lon = float(dest['lon'])
+    except (KeyError, ValueError):
+        return ''
+    lang = C.get('lang', 'fr')
+    lbl_world   = {'fr':'Monde','en':'World','en-us':'World','es':'Mundo','de':'Welt'}.get(lang,'World')
+    lbl_macro   = {'fr':'Contexte géographique','en':'Geographic context','en-us':'Geographic context','es':'Contexto geográfico','de':'Geografischer Kontext'}.get(lang,'Geographic context')
+    lbl_section = {'fr':'Localisation','en':'Location','en-us':'Location','es':'Ubicación','de':'Lage'}.get(lang,'Location')
+    abs_lat = abs(lat)
+    macro_zoom = 3 if (abs_lat > 55 or lon < -120 or lon > 150) else 3
+    uid = dest.get('slug_fr','dest').replace('-','_')
+    return (
+        f'<section class="section dest-map-section">'
+        f'<div class="section-label">{lbl_section}</div>'
+        f'<div class="dest-map-wrap" data-dest-map="1" data-lat="{lat}" data-lon="{lon}"'
+        f' data-macro-zoom="{macro_zoom}" data-world-id="dmap-world-{uid}" data-macro-id="dmap-macro-{uid}">'
+        f'<div class="dest-map-col">'
+        f'<div class="dest-map-card">'
+        f'<div class="dest-map-lbl">\U0001f30d {lbl_world}</div>'
+        f'<div id="dmap-world-{uid}" class="dest-map-el dest-map-el--world"></div>'
+        f'</div>'
+        f'<div class="dest-map-card">'
+        f'<div class="dest-map-lbl">\U0001f50d {lbl_macro}</div>'
+        f'<div id="dmap-macro-{uid}" class="dest-map-el dest-map-el--macro"></div>'
+        f'<div class="dest-map-credit">\u00a9 <a href="https://openstreetmap.org" rel="noopener" target="_blank">OpenStreetMap</a></div>'
+        f'</div>'
+        f'</div>'
+        f'</div>'
+        f'</section>'
+    )
+
+
 def _resolve_prep_and_bare(cfg, dest):
     """Return (prep, nom_bare) for the current language.
 
@@ -650,6 +685,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     _lang_code = C.get('lang', 'fr')
     _pays = dest.get('pays', '')
     travel_info_section = _travel_info_widget(_pays, nom, lang=_lang_code, iso2=dest.get('flag',''))
+    map_section = _dest_map_section(dest, C, pfx=pfx)
 
     # ── Climate Trend Section ──
     climate_trend_sec = _climate_trend_section(slug_fr, nom, lang=_lang_code,
@@ -1109,6 +1145,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 .dest-search-ac-item:last-child{{border-bottom:none;}}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{{background:var(--cream);}}
 .dest-flag{{vertical-align:middle;border-radius:2px;flex-shrink:0;}}
+.dest-map-section{{margin-bottom:0}}.dest-map-col{{display:flex;flex-direction:column;gap:6px;width:260px;flex-shrink:0}}.dest-map-card{{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;position:relative}}.dest-map-lbl{{position:absolute;top:8px;left:8px;z-index:1000;background:rgba(255,255,255,.92);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.3px;pointer-events:none;text-transform:uppercase}}.dest-map-el--world{{height:130px;width:100%;display:block}}.dest-map-el--macro{{height:150px;width:100%;display:block}}.dest-map-credit{{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}}.dest-map-credit a{{color:#aaa}}@media(max-width:600px){{.dest-map-col{{width:100%}}}}.leaflet-control-zoom{{display:none!important}}
 </style>
 {"<script async defer src=\"https://widget.getyourguide.com/dist/pa.umd.production.min.js\" data-gyg-partner-id=\"" + GYG_PARTNER_ID + "\"></script>" if gyg_active else ""}
 </head>
@@ -1147,6 +1184,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  </section>
 
 {table_section}
+{map_section}
 {travel_info_section}
 {climate_trend_sec}
 {seasonal_section}
@@ -1169,6 +1207,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 if(window.initDestSearch) window.initDestSearch({{suffix:'{C['annual_suffix']}',prefix:'{C['annual_prefix']}',assetPrefix:'{C['asset_prefix']}',lang:'{C['lang']}'}});
 </script>
 <script src="{pfx}js/advisory.min.js?v=1" defer></script>
+<script src="{pfx}js/dest-map.min.js?v=1" defer></script>
 </body>
 </html>'''
     return html
@@ -1983,6 +2022,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     _m_lang = C.get('lang', 'fr')
     _m_pays = dest.get('pays', '')
     travel_info_section = _travel_info_widget(_m_pays, nom, lang=_m_lang, iso2=dest.get('flag',''))
+    map_section_m = _dest_map_section(dest, cfg, pfx=pfx)
 
     # ── Activities (GetYourGuide) – monthly ──
     gyg_domain_m = C['gyg_domain']
@@ -2141,6 +2181,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .dest-search-ac-item:last-child{{border-bottom:none;}}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{{background:var(--cream);}}
 .dest-flag{{vertical-align:middle;border-radius:2px;flex-shrink:0;}}
+.dest-map-section{{margin-bottom:0}}.dest-map-col{{display:flex;flex-direction:column;gap:6px;width:260px;flex-shrink:0}}.dest-map-card{{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;position:relative}}.dest-map-lbl{{position:absolute;top:8px;left:8px;z-index:1000;background:rgba(255,255,255,.92);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.3px;pointer-events:none;text-transform:uppercase}}.dest-map-el--world{{height:130px;width:100%;display:block}}.dest-map-el--macro{{height:150px;width:100%;display:block}}.dest-map-credit{{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}}.dest-map-credit a{{color:#aaa}}@media(max-width:600px){{.dest-map-col{{width:100%}}}}.leaflet-control-zoom{{display:none!important}}
 </style>
 {"<script async defer src=\"https://widget.getyourguide.com/dist/pa.umd.production.min.js\" data-gyg-partner-id=\"" + GYG_PARTNER_ID + "\"></script>" if gyg_active else ""}
 </head>
@@ -2319,6 +2360,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </section>
 
 {booking_section}
+{map_section_m}
 {travel_info_section}
 {activities_section}
 {flights_section}
@@ -2383,6 +2425,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 if(window.initDestSearch) window.initDestSearch({{suffix:'{C['monthly_sep']}{C['month_url'][mi]}.html',prefix:'',lang:'{C['lang']}'}});
 </script>
 <script src="{pfx}js/advisory.min.js?v=1" defer></script>
+<script src="{pfx}js/dest-map.min.js?v=1" defer></script>
 {footer_html(cfg, dest)}
 </body>
 </html>'''

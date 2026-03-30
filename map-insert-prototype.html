@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prototype carte insert — BestDateWeather</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui,sans-serif; background: #f5f0e8; padding: 24px; }
+.page-sim { max-width: 860px; margin: 0 auto; background: white; border-radius: 16px; padding: 32px; box-shadow: 0 4px 24px rgba(0,0,0,.08); }
+h2 { margin-bottom: 16px; font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+.tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab { padding: 8px 16px; border-radius: 8px; border: 1.5px solid #e8e0d0; background: white; font-size: 13px; font-weight: 600; cursor: pointer; color: #555; }
+.tab.active { background: #1a1f2e; color: white; border-color: #1a1f2e; }
+.variant { display: none; }
+.variant.active { display: block; }
+.label-v { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 14px; }
+
+/* A: side by side */
+.map-section { display: flex; gap: 20px; align-items: flex-start; }
+.map-wrap { flex: 0 0 260px; border-radius: 12px; overflow: hidden; border: 1.5px solid #e8e0d0; }
+.map-el { height: 200px; width: 100%; display: block; }
+.map-credit { font-size: 9px; color: #aaa; padding: 3px 8px; background: #faf7f2; border-top: 1px solid #f0ebe0; }
+.dest-intro { flex: 1; }
+.dest-intro h1 { font-size: 22px; font-weight: 800; color: #1a1f2e; margin-bottom: 4px; }
+.country-tag { display: inline-block; background: #f0ebe0; color: #5a4a3a; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; }
+.dest-intro p { font-size: 14px; color: #555; line-height: 1.6; }
+
+/* B: banner */
+.map-banner-wrap { position: relative; margin-bottom: 16px; }
+.map-banner { width: 100%; height: 140px; border-radius: 12px; overflow: hidden; border: 1.5px solid #e8e0d0; }
+.map-banner .map-el { height: 140px; }
+.banner-label { position: absolute; top: 10px; left: 10px; background: white; border-radius: 8px; padding: 4px 10px; font-size: 12px; font-weight: 700; color: #1a1f2e; box-shadow: 0 2px 8px rgba(0,0,0,.15); z-index: 1000; pointer-events: none; }
+
+/* C: mini in hero */
+.hero { background: linear-gradient(135deg, #1a1f2e 0%, #2d3a5e 100%); border-radius: 12px; padding: 24px; color: white; position: relative; overflow: hidden; min-height: 160px; }
+.hero h1 { font-size: 26px; font-weight: 800; margin-bottom: 4px; }
+.hero .score { font-size: 38px; font-weight: 900; color: #f59e0b; }
+.mini-map { position: absolute; top: 16px; right: 16px; width: 160px; height: 120px; border-radius: 10px; overflow: hidden; border: 2px solid rgba(255,255,255,.25); box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+.mini-map .map-el { height: 120px; width: 160px; }
+.hero-content { max-width: calc(100% - 190px); }
+
+.leaflet-control-attribution { font-size: 8px !important; }
+.leaflet-control-zoom { display: none !important; }
+</style>
+</head>
+<body>
+<div class="page-sim">
+  <h2>Prototype carte insert · 3 variantes</h2>
+  <div class="tabs">
+    <div class="tab active" onclick="show('a',this)">A — Côte à côte</div>
+    <div class="tab" onclick="show('b',this)">B — Bandeau</div>
+    <div class="tab" onclick="show('c',this)">C — Mini héro</div>
+  </div>
+
+  <div class="variant active" id="va">
+    <p class="label-v">Variante A · carte à gauche, intro à droite</p>
+    <div class="map-section">
+      <div class="map-wrap">
+        <div class="map-el" id="ma"></div>
+        <div class="map-credit">© OpenStreetMap contributors</div>
+      </div>
+      <div class="dest-intro">
+        <h1>Marrakech</h1>
+        <span class="country-tag">🇲🇦 Maroc · Afrique du Nord</span>
+        <p>Marrakech bénéficie d'un climat semi-aride avec des étés chauds et des hivers doux. Avec <strong>3 300h de soleil par an</strong>, c'est l'une des destinations les plus ensoleillées d'Afrique du Nord.<br><br>Le meilleur mois : <strong>avril</strong> — 26°C, 18% de pluie.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="variant" id="vb">
+    <p class="label-v">Variante B · bandeau pleine largeur compact</p>
+    <div class="map-banner-wrap">
+      <div class="map-banner"><div class="map-el" id="mb"></div></div>
+      <div class="banner-label">📍 Bora Bora, Polynésie française</div>
+    </div>
+    <div class="dest-intro">
+      <h1>Bora Bora</h1>
+      <span class="country-tag">🇵🇫 Polynésie française · Océanie</span>
+      <p>Bora Bora jouit d'un climat tropical humide toute l'année. La saison sèche (mai–octobre) offre les meilleures conditions avec des températures autour de <strong>27°C</strong>.</p>
+    </div>
+  </div>
+
+  <div class="variant" id="vc">
+    <p class="label-v">Variante C · miniature dans le héro</p>
+    <div class="hero">
+      <div class="hero-content">
+        <h1>Tokyo</h1>
+        <div style="font-size:13px;opacity:.65;margin-bottom:10px">🇯🇵 Japon · Asie</div>
+        <div class="score">8.2<span style="font-size:16px;font-weight:400;opacity:.7">/10</span></div>
+        <div style="font-size:12px;opacity:.5;margin-top:4px">Score météo · mars</div>
+      </div>
+      <div class="mini-map"><div class="map-el" id="mc"></div></div>
+    </div>
+    <div class="dest-intro" style="margin-top:20px">
+      <p>Tokyo, capitale du Japon, expérience un climat humide subtropical. Le printemps (mars–mai) est la période idéale — cerisiers en fleurs, <strong>15–20°C</strong>.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var maps={}, cfgs={
+  a:{lat:31.63,lon:-8.0,zoom:5,el:'ma'},
+  b:{lat:-16.5,lon:-151.74,zoom:5,el:'mb'},
+  c:{lat:35.69,lon:139.69,zoom:5,el:'mc'}
+};
+function initMap(id){
+  if(maps[id])return;
+  var c=cfgs[id];
+  var m=L.map(c.el,{zoomControl:false,scrollWheelZoom:false,doubleClickZoom:false,dragging:true}).setView([c.lat,c.lon],c.zoom);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://openstreetmap.org">OSM</a>',maxZoom:18}).addTo(m);
+  var pin=L.divIcon({html:'<div style="width:12px;height:12px;background:#e55;border-radius:50%;border:2.5px solid white;box-shadow:0 2px 6px rgba(0,0,0,.4)"></div>',iconSize:[12,12],iconAnchor:[6,6],className:''});
+  L.marker([c.lat,c.lon],{icon:pin,interactive:false}).addTo(m);
+  maps[id]=m;
+}
+function show(id,tab){
+  document.querySelectorAll('.variant').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('v'+id).classList.add('active');
+  tab.classList.add('active');
+  setTimeout(()=>initMap(id),50);
+}
+window.addEventListener('load',()=>initMap('a'));
+</script>
+</body>
+</html>
