@@ -183,7 +183,23 @@ MACARONESIA_SLUGS = {
     'azores',                             # Açores
     'cap-vert','sal','praia',             # Cap-Vert (déjà af mais par sécurité)
 }
+
+# Outre-mer & non-EU islands → true geographic region
+SLUG_REGION_OVERRIDE = {
+    # Caraïbes / Amériques
+    'martinique': 'am', 'guadeloupe': 'am', 'saint-martin': 'am',
+    'saint-barthelemy': 'am', 'saint-pierre-et-miquelon': 'am',
+    'bermudes': 'am', 'guyane': 'am',
+    # Afrique / Océan Indien
+    'reunion': 'af', 'mayotte': 'af',
+    # Pacifique / Océanie
+    'polynesie': 'oc', 'bora-bora': 'oc', 'nouvelle-caledonie': 'oc',
+    'moorea': 'oc',
+}
+
 def _reg(pays, slug=None):
+    if slug and slug in SLUG_REGION_OVERRIDE:
+        return SLUG_REGION_OVERRIDE[slug]
     if slug and slug in MACARONESIA_SLUGS:
         return 'af'
     return REGION_MAP.get(pays, 'other')
@@ -694,7 +710,6 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'tmin': round(p['tmin'], 0),
         'tmax': round(p['tmax'], 0),
         'reg': _reg(p['pays'], p['slug_fr']),
-        'xeu': 1 if p['slug_fr'] in NON_EUROPE_SLUGS else 0,
         'sib': _sibling_idx(p['slug_fr']),
         'rl': (country_info or {}).get(p['pays'], {}).get('risk_level', 2),
         'bi': (country_info or {}).get(p['pays'], {}).get('budget_index', 3),
@@ -784,7 +799,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'var msg=document.getElementById("rt-msg");'+
         'if(!tb)return;'+
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'+
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);var rlOk=(d.rl||1)<=CUR_RL;var biOk=(d.bi||3)<=CUR_BI;return rOk&&mOk&&rlOk&&biOk;});'+
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG);var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);var rlOk=(d.rl||1)<=CUR_RL;var biOk=(d.bi||3)<=CUR_BI;return rOk&&mOk&&rlOk&&biOk;});'+
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d;});'+
         'var _sibSeen={};list=list.filter(function(d){if(d.sib<0)return true;if(_sibSeen[d.sib])return false;_sibSeen[d.sib]=1;return true;});'+
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
@@ -1243,7 +1258,6 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'tmin': round(e['tmin'], 0),
         'tmax': round(e['tmax'], 0),
         'reg': _reg(e['pays'], e.get('slug_fr', e.get('slug',''))),
-        'xeu': 1 if e.get('slug', e.get('slug_fr','')) in NON_EUROPE_SLUGS else 0,
         'sib': -1,
         'rl': (country_info or {}).get(e['pays'], {}).get('risk_level', 2),
         'bi': (country_info or {}).get(e['pays'], {}).get('budget_index', 3),
@@ -1329,7 +1343,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'var msg=document.getElementById("rt-msg");'+
         'if(!tb)return;'+
         'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'+
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);var rlOk=(d.rl||1)<=CUR_RL;var biOk=(d.bi||3)<=CUR_BI;return rOk&&mOk&&rlOk&&biOk;});'+
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG);var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);var rlOk=(d.rl||1)<=CUR_RL;var biOk=(d.bi||3)<=CUR_BI;return rOk&&mOk&&rlOk&&biOk;});'+
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d;});'+
         'var _sibSeen={};list=list.filter(function(d){if(d.sib<0)return true;if(_sibSeen[d.sib])return false;_sibSeen[d.sib]=1;return true;});'+
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
