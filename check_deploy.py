@@ -214,6 +214,42 @@ if has_dew > 400:
 else:
     err(f"monthly.json: dewPoint absent ou incomplet ({has_dew} dest)")
 
+# ── Validation JS inline (pages piliers) ─────────────────────────────────────
+import subprocess, re as _re
+
+PILIER_CHECKS = [
+    'ou-partir-en-avril.html',
+    'ou-partir-en-janvier.html',
+    'meilleures-destinations-meteo.html',
+]
+DEAD_ELEMENTS = ['mode-tabs', 'reg-tabs', 'secu-tabs', 'budget-tabs']
+
+for page in PILIER_CHECKS:
+    if not os.path.exists(page):
+        warn(f"JS check: {page} introuvable")
+        continue
+    content = open(page).read()
+    start = content.find('<script>(function()')
+    end = content.find('})();', start)
+    if start < 0 or end < 0:
+        err(f"JS {page}: IIFE introuvable (closing missing)")
+        continue
+    js = content[start+8:end+5]
+    # Syntaxe
+    r = subprocess.run(['node', '--check', '--input-type=module'],
+                       input=js, capture_output=True, text=True)
+    if r.returncode != 0:
+        err(f"JS {page}: syntaxe invalide — {r.stderr.strip()[:120]}")
+    else:
+        ok(f"JS syntaxe OK: {page}")
+    # render() présent
+    if 'render(' not in js:
+        err(f"JS {page}: render() absent — table vide au chargement")
+    # Listeners sur éléments supprimés
+    for dead in DEAD_ELEMENTS:
+        if f'getElementById("{dead}")' in js:
+            err(f"JS {page}: listener mort sur #{dead}")
+
 # ── Résumé ────────────────────────────────────────────────────────────────────
 print(f"\n{'='*55}")
 if not ERRORS and not WARNINGS:
