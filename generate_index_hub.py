@@ -2,6 +2,7 @@
 """Regenerate SEO destination hub: search + 6 accordions + sub-accordions."""
 import csv, re, os
 import html as html_mod
+from lib.regions import reg as _reg_pilier, NON_EUROPE_SLUGS, MACARONESIA_SLUGS
 
 # ── slug → (mega_region, sub_region) overrides ──
 # Priorité sur MAPPING[pays] pour les territoires géographiquement hors-métropole

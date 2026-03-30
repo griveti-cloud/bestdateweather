@@ -7,6 +7,7 @@ Usage: python3 generate_classements.py
 import csv, html, json, statistics
 from pathlib import Path
 from lib.common import footer_ranking_html, shared_nav_html
+from lib.regions import reg as _reg, NON_EUROPE_SLUGS, REGION_LABELS, MACARONESIA_SLUGS
 
 # ── Locale loading ───────────────────────────────────────────────────────────
 _locale_cache = {}
