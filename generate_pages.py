@@ -446,32 +446,29 @@ def _dest_map_section(dest, C, pfx=''):
 
     intro_html = (
         f'<div class="dest-map-intro">'
+        f'<div class="dest-map-intro-body">'
         f'<div class="dest-map-country">{flag_img}{pays_disp}</div>'
-        + (f'<p class="dest-map-hsub">{hsub}</p>' if hsub else '')
-        + f'<div class="dest-map-coords">{lbl_coords} : {lat_str}, {lon_str}</div>'
+        + (f'<div class="dest-map-hsub">{hsub}</div>' if hsub else '')
+        + f'<div class="dest-map-coords">{lat_str} · {lon_str}</div>'
+        f'</div>'
         f'</div>'
     )
 
     return (
         f'<section class="section dest-map-section">'
         f'<div class="section-label">{lbl_section}</div>'
-        f'<div class="dest-map-layout">'
-        f'<div class="dest-map-wrap" data-dest-map="1" data-lat="{lat}" data-lon="{lon}"'
+        f'<div class="dest-map-row" data-dest-map="1" data-lat="{lat}" data-lon="{lon}"'
         f' data-macro-zoom="{macro_zoom}" data-world-id="dmap-world-{uid}" data-macro-id="dmap-macro-{uid}">'
-        f'<div class="dest-map-col">'
         f'<div class="dest-map-card">'
-        f'<div class="dest-map-lbl">\U0001f30d {lbl_world}</div>'
         f'<div id="dmap-world-{uid}" class="dest-map-el dest-map-el--world"></div>'
+        f'<div class="dest-map-lbl">\U0001f30d {lbl_world}</div>'
         f'</div>'
         f'<div class="dest-map-card">'
-        f'<div class="dest-map-lbl">\U0001f50d {lbl_macro}</div>'
         f'<div id="dmap-macro-{uid}" class="dest-map-el dest-map-el--macro"></div>'
-        f'<div class="dest-map-credit">\u00a9 <a href="https://openstreetmap.org" rel="noopener" target="_blank">OpenStreetMap</a></div>'
-        f'</div>'
+        f'<div class="dest-map-lbl">\U0001f50d {lbl_macro}</div>'
         f'</div>'
         f'</div>'
         f'{intro_html}'
-        f'</div>'
         f'</section>'
     )
 
@@ -1169,7 +1166,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 .dest-search-ac-item:last-child{{border-bottom:none;}}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{{background:var(--cream);}}
 .dest-flag{{vertical-align:middle;border-radius:2px;flex-shrink:0;}}
-.dest-map-section{{margin-bottom:0}}.dest-map-layout{{display:flex;gap:20px;align-items:flex-start}}.dest-map-wrap{{flex-shrink:0}}.dest-map-col{{display:flex;flex-direction:column;gap:6px;width:260px}}.dest-map-card{{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;position:relative}}.dest-map-lbl{{position:absolute;top:8px;left:8px;z-index:1000;background:rgba(255,255,255,.92);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.3px;pointer-events:none;text-transform:uppercase}}.dest-map-el--world{{height:130px;width:100%;display:block}}.dest-map-el--macro{{height:155px;width:100%;display:block}}.dest-map-credit{{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}}.dest-map-credit a{{color:#aaa}}.dest-map-intro{{flex:1;min-width:0;padding-top:4px}}.dest-map-country{{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:10px;display:flex;align-items:center;gap:4px}}.dest-map-hsub{{font-size:13px;color:#555;line-height:1.65;margin-bottom:12px}}.dest-map-coords{{font-size:11px;color:#aaa;font-family:monospace}}@media(max-width:600px){{.dest-map-layout{{flex-direction:column}}.dest-map-col{{width:100%}}}}.leaflet-control-zoom{{display:none!important}}
+.dest-map-section{{margin-bottom:0}}.dest-map-layout{{}}.dest-map-row{{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}}.dest-map-wrap{{}}.dest-map-col{{}}.dest-map-card{{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;position:relative;background:#e8f0f8}}.dest-map-lbl{{position:absolute;bottom:8px;left:8px;z-index:1000;background:rgba(255,255,255,.88);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.3px;pointer-events:none;text-transform:uppercase}}.dest-map-el--world{{height:160px;width:100%;display:block}}.dest-map-el--macro{{height:160px;width:100%;display:block}}.dest-map-credit{{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}}.dest-map-credit a{{color:#aaa}}.dest-map-intro{{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#faf7f2;border-radius:10px;border:1.5px solid #e8e0d0}}.dest-map-country{{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:4px}}.dest-map-hsub{{font-size:13px;color:#666;line-height:1.6;margin-bottom:6px}}.dest-map-coords{{font-size:11px;color:#bbb;font-family:monospace}}@media(max-width:600px){{.dest-map-row{{grid-template-columns:1fr}}.dest-map-el--world,.dest-map-el--macro{{height:140px}}}}.leaflet-control-zoom{{display:none!important}}
 </style>
 {"<script async defer src=\"https://widget.getyourguide.com/dist/pa.umd.production.min.js\" data-gyg-partner-id=\"" + GYG_PARTNER_ID + "\"></script>" if gyg_active else ""}
 </head>
@@ -2205,7 +2202,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .dest-search-ac-item:last-child{{border-bottom:none;}}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{{background:var(--cream);}}
 .dest-flag{{vertical-align:middle;border-radius:2px;flex-shrink:0;}}
-.dest-map-section{{margin-bottom:0}}.dest-map-layout{{display:flex;gap:20px;align-items:flex-start}}.dest-map-wrap{{flex-shrink:0}}.dest-map-col{{display:flex;flex-direction:column;gap:6px;width:260px}}.dest-map-card{{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;position:relative}}.dest-map-lbl{{position:absolute;top:8px;left:8px;z-index:1000;background:rgba(255,255,255,.92);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.3px;pointer-events:none;text-transform:uppercase}}.dest-map-el--world{{height:130px;width:100%;display:block}}.dest-map-el--macro{{height:155px;width:100%;display:block}}.dest-map-credit{{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}}.dest-map-credit a{{color:#aaa}}.dest-map-intro{{flex:1;min-width:0;padding-top:4px}}.dest-map-country{{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:10px;display:flex;align-items:center;gap:4px}}.dest-map-hsub{{font-size:13px;color:#555;line-height:1.65;margin-bottom:12px}}.dest-map-coords{{font-size:11px;color:#aaa;font-family:monospace}}@media(max-width:600px){{.dest-map-layout{{flex-direction:column}}.dest-map-col{{width:100%}}}}.leaflet-control-zoom{{display:none!important}}
+.dest-map-section{{margin-bottom:0}}.dest-map-layout{{}}.dest-map-row{{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}}.dest-map-wrap{{}}.dest-map-col{{}}.dest-map-card{{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;position:relative;background:#e8f0f8}}.dest-map-lbl{{position:absolute;bottom:8px;left:8px;z-index:1000;background:rgba(255,255,255,.88);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.3px;pointer-events:none;text-transform:uppercase}}.dest-map-el--world{{height:160px;width:100%;display:block}}.dest-map-el--macro{{height:160px;width:100%;display:block}}.dest-map-credit{{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}}.dest-map-credit a{{color:#aaa}}.dest-map-intro{{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#faf7f2;border-radius:10px;border:1.5px solid #e8e0d0}}.dest-map-country{{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:4px}}.dest-map-hsub{{font-size:13px;color:#666;line-height:1.6;margin-bottom:6px}}.dest-map-coords{{font-size:11px;color:#bbb;font-family:monospace}}@media(max-width:600px){{.dest-map-row{{grid-template-columns:1fr}}.dest-map-el--world,.dest-map-el--macro{{height:140px}}}}.leaflet-control-zoom{{display:none!important}}
 </style>
 {"<script async defer src=\"https://widget.getyourguide.com/dist/pa.umd.production.min.js\" data-gyg-partner-id=\"" + GYG_PARTNER_ID + "\"></script>" if gyg_active else ""}
 </head>
