@@ -863,7 +863,9 @@
       "3": "🟡 Intermédiaire",
       "4": "🟠 Haut de gamme",
       "5": "💎 Premium"
-    }
+    },
+    "period_annual": "Annuel",
+    "region_world": "Monde"
   },
   "ranking_footer": {
     "data_by": "Données météo par Open-Meteo.com",

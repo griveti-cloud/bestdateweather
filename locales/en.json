@@ -864,7 +864,9 @@
       "3": "🟡 Mid-range",
       "4": "🟠 Upscale",
       "5": "💎 Premium"
-    }
+    },
+    "period_annual": "Annual",
+    "region_world": "World"
   },
   "ranking_footer": {
     "data_by": "Weather data by Open-Meteo.com",

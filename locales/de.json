@@ -868,7 +868,9 @@
       "3": "🟡 Mittelklasse",
       "4": "🟠 Gehoben",
       "5": "💎 Premium"
-    }
+    },
+    "period_annual": "Jährlich",
+    "region_world": "Weltweit"
   },
   "ranking_footer": {
     "data_by": "Wetterdaten von Open-Meteo.com",
