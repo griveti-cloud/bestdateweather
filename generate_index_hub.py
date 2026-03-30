@@ -375,8 +375,8 @@ FLAT_MEGAS = {'caraïbes', 'ameriques-n', 'ameriques-s', 'oceanie', 'af-nord', '
 # 5 mega-regions in order (France merged into Europe)
 MEGAS = [
     ('europe',     1, {'fr': '🌐 Europe',                         'en': '🌐 Europe',                    'es': '🌐 Europa',                'de': '🌐 Europa'}),
-    ('af-nord',    2, {'fr': '🌐 Afrique du Nord',
-    ('atl',        3, {'fr': '🌐 Îles Atlantiques',             'en': '🌐 Atlantic Islands',          'es': '🌐 Islas Atlánticas',        'de': '🌐 Atlantische Inseln'}),               'en': '🌐 North Africa',              'es': '🌐 África del Norte',        'de': '🌐 Nordafrika'}),
+    ('af-nord',    2, {'fr': '🌐 Afrique du Nord',               'en': '🌐 North Africa',              'es': '🌐 África del Norte',        'de': '🌐 Nordafrika'}),
+    ('atl',        3, {'fr': '🌐 Îles Atlantiques',             'en': '🌐 Atlantic Islands',          'es': '🌐 Islas Atlánticas',        'de': '🌐 Atlantische Inseln'}),
     ('af-sub',     4, {'fr': '🌐 Afrique & Océan Indien',         'en': '🌐 Africa & Indian Ocean',     'es': '🌐 África & Océano Índico',  'de': '🌐 Afrika & Indischer Ozean'}),
     ('me',         5, {'fr': '🌐 Moyen-Orient & Asie Centrale',   'en': '🌐 Middle East & Central Asia','es': '🌐 Oriente Medio & Asia Central','de': '🌐 Naher Osten & Zentralasien'}),
     ('asie',       6, {'fr': '🌐 Asie',                           'en': '🌐 Asia',                      'es': '🌐 Asia',                   'de': '🌐 Asien'}),
