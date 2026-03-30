@@ -213,11 +213,13 @@ CARIBBEAN_COUNTRIES = {
 }
 NORTH_AM_COUNTRIES = {'États-Unis','Canada','Mexique'}
 
+NORTH_AFRICA_COUNTRIES = {'Maroc','Tunisie','Algérie','Égypte','Libye','Soudan'}
+
 def _reg(pays, slug=None):
     if slug and slug in SLUG_REGION_OVERRIDE:
         return SLUG_REGION_OVERRIDE[slug]
     if slug and slug in MACARONESIA_SLUGS:
-        return 'af'
+        return 'af-nord'
     base = REGION_MAP.get(pays, 'other')
     if base == 'am':
         if pays in CARIBBEAN_COUNTRIES:
@@ -225,22 +227,26 @@ def _reg(pays, slug=None):
         if pays in NORTH_AM_COUNTRIES:
             return 'am-n'
         return 'am-s'
+    if base == 'af':
+        if pays in NORTH_AFRICA_COUNTRIES:
+            return 'af-nord'
+        return 'af'
     return base
 
 _REGION_LABELS = {
-    'fr': {'all':'Monde','eu':'Europe','af':'Afrique',
+    'fr': {'all':'Monde','eu':'Europe','af-nord':'Afrique du Nord','af':'Afrique & Océan Indien',
            'am-n':'Amér. du Nord','am-s':'Amér. du Sud','car':'Caraïbes',
            'as':'Asie','me':'Moyen-Orient','oc':'Océanie'},
-    'en': {'all':'World','eu':'Europe','af':'Africa',
+    'en': {'all':'World','eu':'Europe','af-nord':'North Africa','af':'Africa & Indian Ocean',
            'am-n':'N. America','am-s':'S. America','car':'Caribbean',
            'as':'Asia','me':'Middle East','oc':'Oceania'},
-    'en-us': {'all':'World','eu':'Europe','af':'Africa',
+    'en-us': {'all':'World','eu':'Europe','af-nord':'North Africa','af':'Africa & Indian Ocean',
            'am-n':'N. America','am-s':'S. America','car':'Caribbean',
            'as':'Asia','me':'Middle East','oc':'Oceania'},
-    'es': {'all':'Mundo','eu':'Europa','af':'África',
+    'es': {'all':'Mundo','eu':'Europa','af-nord':'África del Norte','af':'África & Océano Índico',
            'am-n':'Norteamérica','am-s':'Sudamérica','car':'Caribe',
            'as':'Asia','me':'Oriente Medio','oc':'Oceanía'},
-    'de': {'all':'Welt','eu':'Europa','af':'Afrika',
+    'de': {'all':'Welt','eu':'Europa','af-nord':'Nordafrika','af':'Afrika & Indischer Ozean',
            'am-n':'Nordamerika','am-s':'Südamerika','car':'Karibik',
            'as':'Asien','me':'Naher Osten','oc':'Ozeanien'},
 }
