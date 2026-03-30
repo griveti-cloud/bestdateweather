@@ -18,10 +18,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 37.1,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Albanie": {
     "currency": "ALL",
@@ -38,10 +39,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 45.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Algérie": {
     "currency": "DZD",
@@ -59,10 +61,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 28.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Allemagne": {
     "currency": "EUR",
@@ -79,10 +82,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 68.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Andorre": {
     "currency": "EUR",
@@ -99,10 +103,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 55.1,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Antigua-et-Barbuda": {
     "currency": "XCD",
@@ -119,11 +124,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 55,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: Caribbean average (Barbados 54)"
+    "budget_proxy_basis": "Regional proxy: Caribbean average (Barbados 54)",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Barbados Numbeo proxy"
   },
   "Arabie Saoudite": {
     "currency": "SAR",
@@ -140,10 +147,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 44.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Argentine": {
     "currency": "ARS",
@@ -160,10 +168,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 41.3,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Arménie": {
     "currency": "AMD",
@@ -180,10 +189,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 40.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Aruba": {
     "currency": "AWG",
@@ -201,11 +211,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 73,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: Dutch Caribbean, Netherlands COL as reference"
+    "budget_proxy_basis": "Regional proxy: Dutch Caribbean, Netherlands COL as reference",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Netherlands Numbeo proxy (Dutch territory)"
   },
   "Australie": {
     "currency": "AUD",
@@ -222,10 +234,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 67.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Autriche": {
     "currency": "EUR",
@@ -242,10 +255,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 71.2,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Azerbaïdjan": {
     "currency": "AZN",
@@ -262,10 +276,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 30.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Bahamas": {
     "currency": "BSD",
@@ -282,10 +297,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 98.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Bahreïn": {
     "currency": "BHD",
@@ -302,10 +318,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 47.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Barbade": {
     "currency": "BBD",
@@ -317,16 +334,18 @@
     ],
     "gpi": 1.714,
     "gpi_year": 2024,
-    "budget_index": 4,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
-    "budget_source": "Regional proxy 2026 + override",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 55,
     "budget_is_proxy": true,
-    "budget_override": true,
-    "budget_override_reason": "Premium Caribbean island; no Numbeo direct data; tourist market comparable to Bahamas/Cayman Islands"
+    "budget_override": false,
+    "budget_override_reason": "Premium Caribbean island; no Numbeo direct data; tourist market comparable to Bahamas/Cayman Islands",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Trinidad & Tobago Numbeo proxy"
   },
   "Belgique": {
     "currency": "EUR",
@@ -345,10 +364,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 68.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Belize": {
     "currency": "BZD",
@@ -365,10 +385,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 46.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Bhoutan": {
     "currency": "BTN",
@@ -385,11 +406,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 23,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: South Asia (Nepal 22.6)"
+    "budget_proxy_basis": "Regional proxy: South Asia (Nepal 22.6)",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Nepal Numbeo proxy (similar Himalayan economy)"
   },
   "Bolivie": {
     "currency": "BOB",
@@ -408,10 +431,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 27.3,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Bosnie-Herzégovine": {
     "currency": "BAM",
@@ -430,10 +454,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 38.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Botswana": {
     "currency": "BWP",
@@ -451,10 +476,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 32.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Brésil": {
     "currency": "BRL",
@@ -471,10 +497,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 30.1,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Bulgarie": {
     "currency": "BGN",
@@ -491,10 +518,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 41.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Burkina Faso": {
     "currency": "XOF",
@@ -511,11 +539,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 25,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: West Africa average"
+    "budget_proxy_basis": "Regional proxy: West Africa average",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Sub-Saharan Africa regional average"
   },
   "Bénin": {
     "currency": "XOF",
@@ -532,11 +562,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 25,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: West Africa average"
+    "budget_proxy_basis": "Regional proxy: West Africa average",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Sub-Saharan Africa regional average"
   },
   "Cambodge": {
     "currency": "KHR",
@@ -553,10 +585,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 34.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Cameroun": {
     "currency": "XAF",
@@ -574,10 +607,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 40.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Canada": {
     "currency": "CAD",
@@ -595,10 +629,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 63.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Cap-Vert": {
     "currency": "CVE",
@@ -615,10 +650,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 46.3,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Chili": {
     "currency": "CLP",
@@ -635,10 +671,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 39.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Chine": {
     "currency": "CNY",
@@ -655,10 +692,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 30.5,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Chypre": {
     "currency": "EUR",
@@ -676,10 +714,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 58.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Colombie": {
     "currency": "COP",
@@ -696,10 +735,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 31.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Corée du Sud": {
     "currency": "KRW",
@@ -716,10 +756,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 61.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Costa Rica": {
     "currency": "CRC",
@@ -736,10 +777,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 52.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Croatie": {
     "currency": "EUR",
@@ -756,10 +798,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 52.4,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Cuba": {
     "currency": "CUP",
@@ -776,10 +819,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 41.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Curaçao": {
     "currency": "ANG",
@@ -797,10 +841,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 73.4,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Côte d'Ivoire": {
     "currency": "XOF",
@@ -817,10 +862,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 44.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Danemark": {
     "currency": "DKK",
@@ -837,10 +883,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 78.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Dominique": {
     "currency": "XCD",
@@ -857,11 +904,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 50,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: Eastern Caribbean average"
+    "budget_proxy_basis": "Regional proxy: Eastern Caribbean average",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Small Caribbean island regional average"
   },
   "Espagne": {
     "currency": "EUR",
@@ -878,10 +927,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 51.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Estonie": {
     "currency": "EUR",
@@ -898,10 +948,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 59.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Fidji": {
     "currency": "FJD",
@@ -919,10 +970,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 34.3,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Finlande": {
     "currency": "EUR",
@@ -940,10 +992,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 69.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "France": {
     "currency": "EUR",
@@ -960,10 +1013,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 67.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Gabon": {
     "currency": "XAF",
@@ -980,11 +1034,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 35,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: Central Africa, oil economy"
+    "budget_proxy_basis": "Regional proxy: Central Africa, oil economy",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Central Africa regional average"
   },
   "Gambie": {
     "currency": "GMD",
@@ -1001,11 +1057,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 22,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: West Africa low-income"
+    "budget_proxy_basis": "Regional proxy: West Africa low-income",
+    "budget_year": 2026,
+    "budget_proxy_reason": "West Africa regional average"
   },
   "Ghana": {
     "currency": "GHS",
@@ -1022,10 +1080,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 33.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Gibraltar": {
     "currency": "GIP",
@@ -1042,10 +1101,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 70.2,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Grèce": {
     "currency": "EUR",
@@ -1062,10 +1122,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 54.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Guatemala": {
     "currency": "GTQ",
@@ -1082,10 +1143,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 40.4,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Géorgie": {
     "currency": "GEL",
@@ -1102,10 +1164,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 33.1,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Honduras": {
     "currency": "HNL",
@@ -1122,10 +1185,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 36.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Hongrie": {
     "currency": "HUF",
@@ -1142,10 +1206,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 46.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Inde": {
     "currency": "INR",
@@ -1163,10 +1228,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 18.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Indonésie": {
     "currency": "IDR",
@@ -1183,10 +1249,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 26.1,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Iran": {
     "currency": "IRR",
@@ -1203,10 +1270,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 22.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Irlande": {
     "currency": "EUR",
@@ -1224,10 +1292,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 70.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Islande": {
     "currency": "ISK",
@@ -1244,10 +1313,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 97.2,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Israël": {
     "currency": "ILS",
@@ -1265,10 +1335,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 79.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Italie": {
     "currency": "EUR",
@@ -1285,10 +1356,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 61.4,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Jamaïque": {
     "currency": "JMD",
@@ -1305,10 +1377,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 54.5,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Japon": {
     "currency": "JPY",
@@ -1325,11 +1398,12 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL 2026 + documented override",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "override",
     "budget_numbeo_col": 47.49,
     "budget_is_proxy": false,
     "budget_override": true,
-    "budget_override_reason": "Tourist hotel prices significantly exceed local COL; Tokyo Numbeo city index=73"
+    "budget_override_reason": "Tourist prices significantly above local COL (Numbeo Tokyo city=73)",
+    "budget_year": 2026
   },
   "Jordanie": {
     "currency": "JOD",
@@ -1346,10 +1420,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 39.4,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Kazakhstan": {
     "currency": "KZT",
@@ -1367,10 +1442,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 29.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Kenya": {
     "currency": "KES",
@@ -1388,10 +1464,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 28.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Kirghizistan": {
     "currency": "KGS",
@@ -1409,10 +1486,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 27.2,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Koweït": {
     "currency": "KWD",
@@ -1429,10 +1507,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 42.5,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Laos": {
     "currency": "LAK",
@@ -1449,11 +1528,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 26,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: Southeast Asia low-income (Cambodia 34, Vietnam 26)"
+    "budget_proxy_basis": "Regional proxy: Southeast Asia low-income (Cambodia 34, Vietnam 26)",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Vietnam Numbeo proxy (similar SE Asia economy)"
   },
   "Lettonie": {
     "currency": "EUR",
@@ -1470,10 +1551,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 52.3,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Liban": {
     "currency": "LBP",
@@ -1490,10 +1572,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 41.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Lituanie": {
     "currency": "EUR",
@@ -1510,10 +1593,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 51.2,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Macédoine du Nord": {
     "currency": "MKD",
@@ -1531,10 +1615,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 35.5,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Madagascar": {
     "currency": "MGA",
@@ -1552,10 +1637,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 22.5,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Malaisie": {
     "currency": "MYR",
@@ -1572,10 +1658,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 34.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Malawi": {
     "currency": "MWK",
@@ -1593,11 +1680,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 22,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: Southern Africa low-income"
+    "budget_proxy_basis": "Regional proxy: Southern Africa low-income",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Sub-Saharan Africa regional average"
   },
   "Maldives": {
     "currency": "MVR",
@@ -1614,11 +1703,12 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL 2026 + documented override",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
-    "budget_is_proxy": true,
+    "budget_method": "override",
+    "budget_numbeo_col": 48.9,
+    "budget_is_proxy": false,
     "budget_override": true,
-    "budget_override_reason": "Resort-only destination; no Numbeo data; structural luxury pricing"
+    "budget_override_reason": "Resort-only destination, no local economy pricing for tourists",
+    "budget_year": 2026
   },
   "Malte": {
     "currency": "EUR",
@@ -1636,10 +1726,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 56.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Maroc": {
     "currency": "MAD",
@@ -1657,10 +1748,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 31.4,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Maurice": {
     "currency": "MUR",
@@ -1678,10 +1770,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 38.3,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Mexique": {
     "currency": "MXN",
@@ -1698,10 +1791,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 42.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Monaco": {
     "currency": "EUR",
@@ -1718,11 +1812,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 88,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: France COL × 1.4 — ultra-premium enclave"
+    "budget_proxy_basis": "Regional proxy: France COL × 1.4 — ultra-premium enclave",
+    "budget_year": 2026,
+    "budget_proxy_reason": "France Numbeo ×1.3 premium"
   },
   "Mongolie": {
     "currency": "MNT",
@@ -1739,10 +1835,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 31.4,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Monténégro": {
     "currency": "EUR",
@@ -1759,10 +1856,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 42.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Mozambique": {
     "currency": "MZN",
@@ -1779,10 +1877,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 36.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Myanmar": {
     "currency": "MMK",
@@ -1799,10 +1898,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 38.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Namibie": {
     "currency": "NAD",
@@ -1819,10 +1919,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 36.3,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Nicaragua": {
     "currency": "NIO",
@@ -1839,10 +1940,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 34.2,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Nigeria": {
     "currency": "NGN",
@@ -1859,10 +1961,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 27.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Norvège": {
     "currency": "NOK",
@@ -1879,10 +1982,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 83.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Nouvelle-Calédonie": {
     "currency": "XPF",
@@ -1899,11 +2003,12 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL 2026 + documented override",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "override",
     "budget_numbeo_col": 67.72,
     "budget_is_proxy": false,
     "budget_override": true,
-    "budget_override_reason": "Remote Pacific; structural island premium"
+    "budget_override_reason": "Remote island destination, logistics costs inflate all prices",
+    "budget_year": 2026
   },
   "Nouvelle-Zélande": {
     "currency": "NZD",
@@ -1921,10 +2026,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 60.2,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Népal": {
     "currency": "NPR",
@@ -1941,10 +2047,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 22.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Oman": {
     "currency": "OMR",
@@ -1961,10 +2068,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 43.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Ouganda": {
     "currency": "UGX",
@@ -1982,10 +2090,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 27.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Ouzbékistan": {
     "currency": "UZS",
@@ -2002,10 +2111,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 27.3,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Palaos": {
     "currency": "USD",
@@ -2023,11 +2133,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 60,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: Pacific island, no Numbeo data"
+    "budget_proxy_basis": "Regional proxy: Pacific island, no Numbeo data",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Pacific island regional average"
   },
   "Panama": {
     "currency": "PAB",
@@ -2044,10 +2156,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 45.5,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Papouasie-Nouvelle-Guinée": {
     "currency": "PGK",
@@ -2065,10 +2178,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 47.5,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Paraguay": {
     "currency": "PYG",
@@ -2086,10 +2200,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 28.4,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Pays-Bas": {
     "currency": "EUR",
@@ -2106,10 +2221,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 73.4,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Pays-Bas caribéens": {
     "currency": "USD",
@@ -2127,10 +2243,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 73.4,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Philippines": {
     "currency": "PHP",
@@ -2148,10 +2265,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 30.1,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Pologne": {
     "currency": "PLN",
@@ -2168,10 +2286,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 47.3,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Polynésie française": {
     "currency": "XPF",
@@ -2189,11 +2308,12 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL 2026 + documented override",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
-    "budget_is_proxy": true,
+    "budget_method": "override",
+    "budget_numbeo_col": 67.72,
+    "budget_is_proxy": false,
     "budget_override": true,
-    "budget_override_reason": "Remote Pacific; structural island premium; proxy France COL underestimates"
+    "budget_override_reason": "Remote island destination, logistics costs inflate all prices",
+    "budget_year": 2026
   },
   "Porto Rico": {
     "currency": "USD",
@@ -2211,10 +2331,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 68.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Portugal": {
     "currency": "EUR",
@@ -2231,11 +2352,12 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL 2026 + documented override",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "override",
     "budget_numbeo_col": 48.82,
     "budget_is_proxy": false,
     "budget_override": true,
-    "budget_override_reason": "COL=48.8 borderline; budget/mid-range tourism market comparable to Spain"
+    "budget_override_reason": "Tourist prices in line with southern Europe neighbors (Spain=51)",
+    "budget_year": 2026
   },
   "Pérou": {
     "currency": "PEN",
@@ -2253,10 +2375,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 33.5,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Qatar": {
     "currency": "QAR",
@@ -2273,11 +2396,12 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL 2026 + documented override",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "override",
     "budget_numbeo_col": 50.41,
     "budget_is_proxy": false,
     "budget_override": true,
-    "budget_override_reason": "Numbeo reflects expat residential costs; tourist hotel rates are high-end"
+    "budget_override_reason": "Hotel/tourism prices well above local COL (expat-skewed index)",
+    "budget_year": 2026
   },
   "Roumanie": {
     "currency": "RON",
@@ -2294,10 +2418,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 40.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Royaume-Uni": {
     "currency": "GBP",
@@ -2314,10 +2439,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 67.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Russie": {
     "currency": "RUB",
@@ -2334,10 +2460,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 36.5,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Rwanda": {
     "currency": "RWF",
@@ -2356,10 +2483,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 25.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "République Dominicaine": {
     "currency": "DOP",
@@ -2376,10 +2504,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 38.2,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Saint-Vincent-et-les-Grenadines": {
     "currency": "XCD",
@@ -2396,11 +2525,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 48,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: Eastern Caribbean average"
+    "budget_proxy_basis": "Regional proxy: Eastern Caribbean average",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Eastern Caribbean regional average"
   },
   "Sainte-Lucie": {
     "currency": "XCD",
@@ -2417,11 +2548,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 52,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Numbeo available"
+    "budget_proxy_basis": "Numbeo available",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Eastern Caribbean regional average"
   },
   "Samoa": {
     "currency": "WST",
@@ -2439,11 +2572,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 45,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: Polynesia mid-range"
+    "budget_proxy_basis": "Regional proxy: Polynesia mid-range",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Pacific island regional average"
   },
   "Serbie": {
     "currency": "RSD",
@@ -2460,10 +2595,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 42.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Seychelles": {
     "currency": "SCR",
@@ -2477,16 +2613,17 @@
     ],
     "gpi": 1.754,
     "gpi_year": 2024,
-    "budget_index": 4,
+    "budget_index": 5,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL 2026 + documented override",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": 64.5,
+    "budget_method": "override",
+    "budget_numbeo_col": 64.47,
     "budget_is_proxy": false,
     "budget_override": true,
-    "budget_override_reason": "Island resort destination; tourist accommodation prices significantly above local COL=64.5; comparable to Mauritius premium market"
+    "budget_override_reason": "Premium resort destination, tourist prices far above local COL",
+    "budget_year": 2026
   },
   "Sierra Leone": {
     "currency": "SLL",
@@ -2503,11 +2640,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 22,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: West Africa low-income"
+    "budget_proxy_basis": "Regional proxy: West Africa low-income",
+    "budget_year": 2026,
+    "budget_proxy_reason": "West Africa regional average"
   },
   "Singapour": {
     "currency": "SGD",
@@ -2527,10 +2666,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 87.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Slovaquie": {
     "currency": "EUR",
@@ -2547,10 +2687,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 49.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Slovénie": {
     "currency": "EUR",
@@ -2567,10 +2708,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 54.1,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Sri Lanka": {
     "currency": "LKR",
@@ -2588,10 +2730,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 33.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Suisse": {
     "currency": "CHF",
@@ -2610,10 +2753,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 110.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Suède": {
     "currency": "SEK",
@@ -2630,10 +2774,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 68.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Sénégal": {
     "currency": "XOF",
@@ -2651,10 +2796,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 48.5,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Tadjikistan": {
     "currency": "TJS",
@@ -2671,10 +2817,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 27.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Tanzanie": {
     "currency": "TZS",
@@ -2692,10 +2839,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 26.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Taïwan": {
     "currency": "TWD",
@@ -2712,10 +2860,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 49.7,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Tchéquie": {
     "currency": "CZK",
@@ -2732,10 +2881,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 53.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Thaïlande": {
     "currency": "THB",
@@ -2752,10 +2902,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 38.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Togo": {
     "currency": "XOF",
@@ -2772,11 +2923,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 24,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: West Africa low-income"
+    "budget_proxy_basis": "Regional proxy: West Africa low-income",
+    "budget_year": 2026,
+    "budget_proxy_reason": "West Africa regional average"
   },
   "Tonga": {
     "currency": "TOP",
@@ -2794,11 +2947,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 45,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: Pacific island average"
+    "budget_proxy_basis": "Regional proxy: Pacific island average",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Pacific island regional average"
   },
   "Trinité-et-Tobago": {
     "currency": "TTD",
@@ -2815,10 +2970,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 52.0,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Tunisie": {
     "currency": "TND",
@@ -2835,10 +2991,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 29.1,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Turks-et-Caïcos": {
     "currency": "USD",
@@ -2855,10 +3012,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 67.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Turquie": {
     "currency": "TRY",
@@ -2875,10 +3033,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 39.2,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Ukraine": {
     "currency": "UAH",
@@ -2895,10 +3054,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 28.2,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Uruguay": {
     "currency": "UYU",
@@ -2915,10 +3075,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 55.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Vanuatu": {
     "currency": "VUV",
@@ -2937,11 +3098,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 48,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: Melanesia average"
+    "budget_proxy_basis": "Regional proxy: Melanesia average",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Pacific island regional average"
   },
   "Viêt Nam": {
     "currency": "VND",
@@ -2958,10 +3121,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 26.4,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Vietnam": {
     "currency": "VND",
@@ -2978,10 +3142,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 26.4,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Yémen": {
     "currency": "YER",
@@ -2998,10 +3163,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 53.1,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Zambie": {
     "currency": "ZMW",
@@ -3018,10 +3184,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 29.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Zimbabwe": {
     "currency": "ZWL",
@@ -3040,10 +3207,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 35.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Écosse": {
     "currency": "GBP",
@@ -3061,10 +3229,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 67.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Égypte": {
     "currency": "EGP",
@@ -3081,10 +3250,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 21.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Émirats Arabes Unis": {
     "currency": "AED",
@@ -3101,11 +3271,12 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL 2026 + documented override",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "override",
     "budget_numbeo_col": 55.16,
     "budget_is_proxy": false,
     "budget_override": true,
-    "budget_override_reason": "Numbeo reflects expat residential costs; Dubai hotel market is high-end"
+    "budget_override_reason": "Hotel/tourism prices well above local COL (expat-skewed index)",
+    "budget_year": 2026
   },
   "Émirats arabes unis": {
     "currency": "AED",
@@ -3122,11 +3293,12 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL 2026 + documented override",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "override",
     "budget_numbeo_col": 55.16,
     "budget_is_proxy": false,
     "budget_override": true,
-    "budget_override_reason": "Duplicate entry; same as Émirats Arabes Unis"
+    "budget_override_reason": "Same as UAE",
+    "budget_year": 2026
   },
   "Équateur": {
     "currency": "USD",
@@ -3143,10 +3315,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 30.9,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "États-Unis": {
     "currency": "USD",
@@ -3163,10 +3336,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 68.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Éthiopie": {
     "currency": "ETB",
@@ -3183,10 +3357,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 41.8,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Îles Caïmans": {
     "currency": "KYD",
@@ -3203,10 +3378,11 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 115.6,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   },
   "Îles Cook": {
     "currency": "NZD",
@@ -3224,11 +3400,13 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Regional proxy 2026",
-    "budget_method": "calibrated_thresholds_v1",
-    "budget_numbeo_col": null,
+    "budget_method": "calibrated_thresholds",
+    "budget_numbeo_col": 60,
     "budget_is_proxy": true,
     "budget_override": false,
-    "budget_proxy_basis": "Regional proxy: South Pacific island"
+    "budget_proxy_basis": "Regional proxy: South Pacific island",
+    "budget_year": 2026,
+    "budget_proxy_reason": "Pacific island regional average"
   },
   "Îles Vierges américaines": {
     "currency": "USD",
@@ -3245,9 +3423,10 @@
     "risk_updated": "2026-03-28",
     "risk_source": "MAE-static-2026-03",
     "budget_source": "Numbeo COL Index 2026",
-    "budget_method": "calibrated_thresholds_v1",
+    "budget_method": "calibrated_thresholds",
     "budget_numbeo_col": 111.3,
     "budget_is_proxy": false,
-    "budget_override": false
+    "budget_override": false,
+    "budget_year": 2026
   }
 }
