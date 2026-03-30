@@ -826,22 +826,6 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         '_ri.innerHTML="<strong>"+_sc10.toFixed(1)+"/10</strong> · "+Math.round(_at10)+"°"+" · "+list.length+" destinations";'+
         '}}'+
         '}'+
-        'document.getElementById("mode-tabs").addEventListener("click",function(ev){'+
-        'var btn=ev.target.closest(".mode-tab");'+
-        'if(!btn)return;'+
-        'document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.remove("active");});'+
-        'btn.classList.add("active");'+
-        'render(btn.dataset.mode);'+
-        '});'+
-        'document.getElementById("reg-tabs").addEventListener("click",function(ev){'+
-        'var btn=ev.target.closest(".reg-tab");'+
-        'if(!btn)return;'+
-        'document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.remove("active");});'+
-        'btn.classList.add("active");'+
-        'CUR_REG=btn.dataset.reg;'+
-        'var activeMode=document.querySelector(".mode-tab.active");'+
-        'render(activeMode?activeMode.dataset.mode:"meteo");'+
-        '});'+
         'function setMode(m){document.querySelectorAll(".fc-item[data-mode]").forEach(function(b){b.classList.toggle("active",b.dataset.mode===m);});var lm=document.querySelector(".fc-item.active[data-mode]");if(lm)document.getElementById("fc-type-lbl").textContent=lm.textContent.trim();document.getElementById("fc-type").classList.toggle("has-filter",m!=="meteo");closeFC();render(m);}'+
         'function setReg(r){CUR_REG=r;document.querySelectorAll(".fc-item[data-reg]").forEach(function(b){b.classList.toggle("active",b.dataset.reg===r);});var lr=document.querySelector(".fc-item.active[data-reg]");if(lr)document.getElementById("fc-region-lbl").textContent=lr.textContent.trim();document.getElementById("fc-region").classList.toggle("has-filter",r!=="all");closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
         'function setSecu(rl){CUR_RL=rl;document.querySelectorAll(".fc-item[data-rl]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.rl)<=rl);b.classList.toggle("active",parseInt(b.dataset.rl)===rl);});var ls=document.querySelector(".fc-item[data-rl=\'"+rl+"\' ]");if(ls)document.getElementById("fc-secu-lbl").textContent="\u2264 "+ls.textContent.trim();document.getElementById("fc-secu").classList.toggle("has-filter",rl<4);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
