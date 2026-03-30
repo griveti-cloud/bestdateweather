@@ -418,7 +418,7 @@ def footer_html(cfg, dest):
 
 
 def _dest_map_section(dest, C, pfx=''):
-    """2-level map insert: world planisphere + continental macro view."""
+    """2-level map insert: world planisphere + continental macro view, with intro text."""
     try:
         lat = float(dest['lat'])
         lon = float(dest['lon'])
@@ -428,12 +428,34 @@ def _dest_map_section(dest, C, pfx=''):
     lbl_world   = {'fr':'Monde','en':'World','en-us':'World','es':'Mundo','de':'Welt'}.get(lang,'World')
     lbl_macro   = {'fr':'Contexte géographique','en':'Geographic context','en-us':'Geographic context','es':'Contexto geográfico','de':'Geografischer Kontext'}.get(lang,'Geographic context')
     lbl_section = {'fr':'Localisation','en':'Location','en-us':'Location','es':'Ubicación','de':'Lage'}.get(lang,'Location')
-    abs_lat = abs(lat)
-    macro_zoom = 3 if (abs_lat > 55 or lon < -120 or lon > 150) else 3
+    macro_zoom  = 3
     uid = dest.get('slug_fr','dest').replace('-','_')
+
+    # Intro text: hero_sub + country tag
+    hsub_key = C.get('dest_fields', {}).get('hero_sub_key', 'hero_sub_fr')
+    hsub = dest.get(hsub_key, '') or dest.get('hero_sub_fr', '')
+    flag = dest.get('flag','')
+    pays_key = C.get('dest_fields', {}).get('country_key', 'pays')
+    pays_disp = dest.get(pays_key) or dest.get('pays', '')
+    nom  = dest.get(C.get('dest_fields',{}).get('nom_key','nom_fr'), dest.get('nom_fr',''))
+    lbl_coords = {'fr':'Coordonnées','en':'Coordinates','en-us':'Coordinates','es':'Coordenadas','de':'Koordinaten'}.get(lang,'Coordinates')
+    lat_str = f"{abs(lat):.2f}°{'N' if lat>=0 else 'S'}"
+    lon_str = f"{abs(lon):.2f}°{'E' if lon>=0 else 'W'}"
+
+    flag_img = f'<img src="{pfx}flags/{flag}.png" width="16" height="12" alt="{flag.upper()}" style="vertical-align:middle;border-radius:2px;margin-right:5px">' if flag else ''
+
+    intro_html = (
+        f'<div class="dest-map-intro">'
+        f'<div class="dest-map-country">{flag_img}{pays_disp}</div>'
+        + (f'<p class="dest-map-hsub">{hsub}</p>' if hsub else '')
+        + f'<div class="dest-map-coords">{lbl_coords} : {lat_str}, {lon_str}</div>'
+        f'</div>'
+    )
+
     return (
         f'<section class="section dest-map-section">'
         f'<div class="section-label">{lbl_section}</div>'
+        f'<div class="dest-map-layout">'
         f'<div class="dest-map-wrap" data-dest-map="1" data-lat="{lat}" data-lon="{lon}"'
         f' data-macro-zoom="{macro_zoom}" data-world-id="dmap-world-{uid}" data-macro-id="dmap-macro-{uid}">'
         f'<div class="dest-map-col">'
@@ -447,6 +469,8 @@ def _dest_map_section(dest, C, pfx=''):
         f'<div class="dest-map-credit">\u00a9 <a href="https://openstreetmap.org" rel="noopener" target="_blank">OpenStreetMap</a></div>'
         f'</div>'
         f'</div>'
+        f'</div>'
+        f'{intro_html}'
         f'</div>'
         f'</section>'
     )
@@ -1145,7 +1169,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 .dest-search-ac-item:last-child{{border-bottom:none;}}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{{background:var(--cream);}}
 .dest-flag{{vertical-align:middle;border-radius:2px;flex-shrink:0;}}
-.dest-map-section{{margin-bottom:0}}.dest-map-col{{display:flex;flex-direction:column;gap:6px;width:260px;flex-shrink:0}}.dest-map-card{{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;position:relative}}.dest-map-lbl{{position:absolute;top:8px;left:8px;z-index:1000;background:rgba(255,255,255,.92);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.3px;pointer-events:none;text-transform:uppercase}}.dest-map-el--world{{height:130px;width:100%;display:block}}.dest-map-el--macro{{height:150px;width:100%;display:block}}.dest-map-credit{{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}}.dest-map-credit a{{color:#aaa}}@media(max-width:600px){{.dest-map-col{{width:100%}}}}.leaflet-control-zoom{{display:none!important}}
+.dest-map-section{{margin-bottom:0}}.dest-map-layout{{display:flex;gap:20px;align-items:flex-start}}.dest-map-wrap{{flex-shrink:0}}.dest-map-col{{display:flex;flex-direction:column;gap:6px;width:260px}}.dest-map-card{{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;position:relative}}.dest-map-lbl{{position:absolute;top:8px;left:8px;z-index:1000;background:rgba(255,255,255,.92);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.3px;pointer-events:none;text-transform:uppercase}}.dest-map-el--world{{height:130px;width:100%;display:block}}.dest-map-el--macro{{height:155px;width:100%;display:block}}.dest-map-credit{{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}}.dest-map-credit a{{color:#aaa}}.dest-map-intro{{flex:1;min-width:0;padding-top:4px}}.dest-map-country{{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:10px;display:flex;align-items:center;gap:4px}}.dest-map-hsub{{font-size:13px;color:#555;line-height:1.65;margin-bottom:12px}}.dest-map-coords{{font-size:11px;color:#aaa;font-family:monospace}}@media(max-width:600px){{.dest-map-layout{{flex-direction:column}}.dest-map-col{{width:100%}}}}.leaflet-control-zoom{{display:none!important}}
 </style>
 {"<script async defer src=\"https://widget.getyourguide.com/dist/pa.umd.production.min.js\" data-gyg-partner-id=\"" + GYG_PARTNER_ID + "\"></script>" if gyg_active else ""}
 </head>
@@ -2181,7 +2205,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .dest-search-ac-item:last-child{{border-bottom:none;}}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{{background:var(--cream);}}
 .dest-flag{{vertical-align:middle;border-radius:2px;flex-shrink:0;}}
-.dest-map-section{{margin-bottom:0}}.dest-map-col{{display:flex;flex-direction:column;gap:6px;width:260px;flex-shrink:0}}.dest-map-card{{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;position:relative}}.dest-map-lbl{{position:absolute;top:8px;left:8px;z-index:1000;background:rgba(255,255,255,.92);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.3px;pointer-events:none;text-transform:uppercase}}.dest-map-el--world{{height:130px;width:100%;display:block}}.dest-map-el--macro{{height:150px;width:100%;display:block}}.dest-map-credit{{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}}.dest-map-credit a{{color:#aaa}}@media(max-width:600px){{.dest-map-col{{width:100%}}}}.leaflet-control-zoom{{display:none!important}}
+.dest-map-section{{margin-bottom:0}}.dest-map-layout{{display:flex;gap:20px;align-items:flex-start}}.dest-map-wrap{{flex-shrink:0}}.dest-map-col{{display:flex;flex-direction:column;gap:6px;width:260px}}.dest-map-card{{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;position:relative}}.dest-map-lbl{{position:absolute;top:8px;left:8px;z-index:1000;background:rgba(255,255,255,.92);border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.3px;pointer-events:none;text-transform:uppercase}}.dest-map-el--world{{height:130px;width:100%;display:block}}.dest-map-el--macro{{height:155px;width:100%;display:block}}.dest-map-credit{{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}}.dest-map-credit a{{color:#aaa}}.dest-map-intro{{flex:1;min-width:0;padding-top:4px}}.dest-map-country{{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:10px;display:flex;align-items:center;gap:4px}}.dest-map-hsub{{font-size:13px;color:#555;line-height:1.65;margin-bottom:12px}}.dest-map-coords{{font-size:11px;color:#aaa;font-family:monospace}}@media(max-width:600px){{.dest-map-layout{{flex-direction:column}}.dest-map-col{{width:100%}}}}.leaflet-control-zoom{{display:none!important}}
 </style>
 {"<script async defer src=\"https://widget.getyourguide.com/dist/pa.umd.production.min.js\" data-gyg-partner-id=\"" + GYG_PARTNER_ID + "\"></script>" if gyg_active else ""}
 </head>
