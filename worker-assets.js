@@ -45,10 +45,59 @@ async function handleSubscribe(request, env) {
   }
 }
 
+// ── Travel advisories cache (in-memory, per worker instance) ──
+let _advisoryCache = null;
+let _advisoryCacheAt = 0;
+const ADVISORY_TTL = 6 * 3600 * 1000; // 6h
+
+// Map ISO2 → risk level 1-4 from Auswärtiges Amt
+function parseAdvisories(data) {
+  const resp = data.response || {};
+  const result = { _updated: new Date().toISOString().slice(0,10), _source: 'Auswärtiges Amt (DE)' };
+  for (const k of Object.keys(resp)) {
+    if (k === 'lastModified') continue;
+    const v = resp[k];
+    if (!v || typeof v !== 'object' || !v.countryCode) continue;
+    const w = v.warning, pw = v.partialWarning, sw = v.situationWarning, spw = v.situationPartWarning;
+    result[v.countryCode] = w ? 4 : sw ? 3 : (pw || spw) ? 2 : 1;
+  }
+  return result;
+}
+
+async function handleAdvisories(request) {
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+    'Cache-Control': 'public, max-age=21600',
+  };
+  const now = Date.now();
+  if (_advisoryCache && (now - _advisoryCacheAt) < ADVISORY_TTL) {
+    return new Response(JSON.stringify(_advisoryCache), { headers });
+  }
+  try {
+    const r = await fetch('https://www.auswaertiges-amt.de/opendata/travelwarning', {
+      headers: { 'User-Agent': 'BestDateWeather/1.0' },
+      cf: { cacheTtl: 21600, cacheEverything: true },
+    });
+    if (!r.ok) throw new Error('upstream ' + r.status);
+    const data = await r.json();
+    _advisoryCache = parseAdvisories(data);
+    _advisoryCacheAt = now;
+    return new Response(JSON.stringify(_advisoryCache), { headers });
+  } catch(e) {
+    // Return stale cache if available, otherwise error
+    if (_advisoryCache) return new Response(JSON.stringify(_advisoryCache), { headers });
+    return new Response(JSON.stringify({ error: e.message }), { status: 502, headers });
+  }
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const path = url.pathname;
+
+    // ── Travel advisories endpoint ──
+    if (path === '/api/advisories') return handleAdvisories(request);
 
     // ── Subscribe endpoint ──
     if (path === '/subscribe') return handleSubscribe(request, env);
