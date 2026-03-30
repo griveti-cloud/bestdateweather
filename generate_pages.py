@@ -637,6 +637,24 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         hsub = re.sub(r'(\d+(?:[,.]\d+)?)\s*km', lambda m: f"{round(float(m.group(1).replace(',','.'))*0.621371)} mi", hsub)
 
     # ── Quick facts ──
+    # Secu + budget for qf chips
+    import json as _json
+    _ci_data = _json.load(open('data/country_info.json'))
+    _qf_pays = dest.get('pays', '')
+    _qf_flag = (dest.get('flag') or '').upper()
+    _qf_rl   = max(1, min(4, _ci_data.get(_qf_pays, {}).get('risk_level', 1)))
+    _qf_bi   = max(1, min(5, _ci_data.get(_qf_pays, {}).get('budget_index', 3)))
+    _qf_lang = C.get('lang', 'fr')
+    _secu_icons = {1:'🟢',2:'🟡',3:'🟠',4:'🔴'}
+    _secu_lbls  = {'fr':{1:'Vigilance normale',2:'Vigilance renforcée',3:'Déconseillé',4:'Formellement déconseillé'},'en':{1:'Normal vigilance',2:'High vigilance',3:'Avoid if possible',4:'Do not travel'},'es':{1:'Vigilancia normal',2:'Vigilancia reforzada',3:'Desaconsejado',4:'Formalmente desaconsejado'},'de':{1:'Normale Wachsamkeit',2:'Erhöhte Wachsamkeit',3:'Nicht empfohlen',4:'Dringend abgeraten'}}
+    _budget_icons= {1:'💚',2:'🟡',3:'🟠',4:'💸',5:'💎'}
+    _budget_lbls = {'fr':{1:'Économique',2:'Abordable',3:'Intermédiaire',4:'Haut de gamme',5:'Premium'},'en':{1:'Economy',2:'Affordable',3:'Mid-range',4:'Upscale',5:'Premium'},'es':{1:'Económico',2:'Asequible',3:'Intermedio',4:'Alto',5:'Premium'},'de':{1:'Günstig',2:'Erschwinglich',3:'Mittelklasse',4:'Gehoben',5:'Premium'}}
+    _qf_secu_icon = _secu_icons[_qf_rl]
+    _qf_secu_lbl  = _secu_lbls.get(_qf_lang, _secu_lbls['en'])[_qf_rl]
+    _qf_budget_icon= _budget_icons[_qf_bi]
+    _qf_budget_lbl = _budget_lbls.get(_qf_lang, _budget_lbls['en'])[_qf_bi]
+    _lbl_secu   = C['locale'].get('dec', {}).get('secu_lbl', 'Sécurité')
+    _lbl_budget = C['locale'].get('dec', {}).get('budget_lbl', 'Budget')
     qf = f'''<section class="section">
  <div class="section-label">{C['lbl_quick_section']}</div>
  <h2 class="section-title">{C['lbl_quick_title_tpl'].format(name=nom_f)}</h2>
@@ -665,6 +683,16 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
      <div class="qf-chip-icon">☔</div>
      <div class="qf-chip-val">{MONTHS[worst_idx]}</div>
      <div class="qf-chip-lbl">{C['lbl_wettest_short']}</div>
+   </div>
+   <div class="qf-chip" data-advisory-cc="{_qf_flag}" title="Auswärtiges Amt (DE) · à vérifier avant de voyager">
+     <div class="qf-chip-icon">{_qf_secu_icon}</div>
+     <div class="qf-chip-val" style="font-size:12px">{_qf_secu_lbl}</div>
+     <div class="qf-chip-lbl">{_lbl_secu}</div>
+   </div>
+   <div class="qf-chip" title="Budget indicatif · Numbeo 2026">
+     <div class="qf-chip-icon">{_qf_budget_icon}</div>
+     <div class="qf-chip-val" style="font-size:12px">{_qf_budget_lbl}</div>
+     <div class="qf-chip-lbl">{_lbl_budget}</div>
    </div>
  </div>
 </section>'''
