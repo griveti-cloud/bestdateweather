@@ -422,55 +422,92 @@ def _dest_map_section(dest, C, pfx=''):
     try:
         lat = float(dest['lat'])
         lon = float(dest['lon'])
-    except (KeyError, ValueError):
+        lang = C.get('lang', 'fr')
+        lbl_world   = {'fr':'Monde','en':'World','en-us':'World','es':'Mundo','de':'Welt'}.get(lang,'World')
+        lbl_macro   = {'fr':'Contexte géographique','en':'Geographic context','en-us':'Geographic context','es':'Contexto geográfico','de':'Geografischer Kontext'}.get(lang,'Geographic context')
+        lbl_section = {'fr':'Localisation','en':'Location','en-us':'Location','es':'Ubicación','de':'Lage'}.get(lang,'Location')
+        macro_zoom  = 3
+        uid = dest.get('slug_fr','dest').replace('-','_')
+
+        hsub_key  = C.get('dest_fields', {}).get('hero_sub_key', 'hero_sub_fr')
+        hsub      = dest.get(hsub_key, '') or dest.get('hero_sub_fr', '')
+        flag      = dest.get('flag','')
+        pays_key  = C.get('dest_fields', {}).get('country_key', 'pays')
+        pays_disp = dest.get(pays_key) or dest.get('pays', '')
+        lat_str   = f"{abs(lat):.2f}°{'N' if lat>=0 else 'S'}"
+        lon_str   = f"{abs(lon):.2f}°{'E' if lon>=0 else 'W'}"
+        flag_img  = (f'<img src="{pfx}flags/{flag}.png" width="16" height="12" alt="{flag.upper()}"'
+                     f' style="vertical-align:middle;border-radius:2px;margin-right:5px">') if flag else ''
+
+        intro_html = (
+            f'<div class="dest-map-intro">'
+            f'<div class="dest-map-intro-body">'
+            f'<div class="dest-map-country">{flag_img}{pays_disp}</div>'
+            + (f'<div class="dest-map-hsub">{hsub}</div>' if hsub else '')
+            + f'<div class="dest-map-coords">{lat_str} · {lon_str}</div>'
+            f'</div>'
+            f'</div>'
+        )
+
+        return (
+            f'<section class="section dest-map-section">'
+            f'<div class="section-label">{lbl_section}</div>'
+            f'<div class="dest-map-row" data-dest-map="1" data-lat="{lat}" data-lon="{lon}"'
+            f' data-macro-zoom="{macro_zoom}" data-world-id="dmap-world-{uid}" data-macro-id="dmap-macro-{uid}">'
+            f'<div class="dest-map-card">'
+            f'<div class="dest-map-lbl">\U0001f30d {lbl_world}</div>'
+            f'<div id="dmap-world-{uid}" class="dest-map-el dest-map-el--world"></div>'
+            f'</div>'
+            f'<div class="dest-map-card">'
+            f'<div class="dest-map-lbl">\U0001f50d {lbl_macro}</div>'
+            f'<div id="dmap-macro-{uid}" class="dest-map-el dest-map-el--macro"></div>'
+            f'</div>'
+            f'</div>'
+            f'{intro_html}'
+            f'</section>'
+        )
+    except Exception:
         return ''
-    lang = C.get('lang', 'fr')
-    lbl_world   = {'fr':'Monde','en':'World','en-us':'World','es':'Mundo','de':'Welt'}.get(lang,'World')
-    lbl_macro   = {'fr':'Contexte géographique','en':'Geographic context','en-us':'Geographic context','es':'Contexto geográfico','de':'Geografischer Kontext'}.get(lang,'Geographic context')
-    lbl_section = {'fr':'Localisation','en':'Location','en-us':'Location','es':'Ubicación','de':'Lage'}.get(lang,'Location')
-    macro_zoom  = 3
-    uid = dest.get('slug_fr','dest').replace('-','_')
 
-    # Intro text: hero_sub + country tag
-    hsub_key = C.get('dest_fields', {}).get('hero_sub_key', 'hero_sub_fr')
-    hsub = dest.get(hsub_key, '') or dest.get('hero_sub_fr', '')
-    flag = dest.get('flag','')
-    pays_key = C.get('dest_fields', {}).get('country_key', 'pays')
-    pays_disp = dest.get(pays_key) or dest.get('pays', '')
-    nom  = dest.get(C.get('dest_fields',{}).get('nom_key','nom_fr'), dest.get('nom_fr',''))
-    lbl_coords = {'fr':'Coordonnées','en':'Coordinates','en-us':'Coordinates','es':'Coordenadas','de':'Koordinaten'}.get(lang,'Coordinates')
-    lat_str = f"{abs(lat):.2f}°{'N' if lat>=0 else 'S'}"
-    lon_str = f"{abs(lon):.2f}°{'E' if lon>=0 else 'W'}"
 
-    flag_img = f'<img src="{pfx}flags/{flag}.png" width="16" height="12" alt="{flag.upper()}" style="vertical-align:middle;border-radius:2px;margin-right:5px">' if flag else ''
 
-    intro_html = (
-        f'<div class="dest-map-intro">'
-        f'<div class="dest-map-intro-body">'
-        f'<div class="dest-map-country">{flag_img}{pays_disp}</div>'
-        + (f'<div class="dest-map-hsub">{hsub}</div>' if hsub else '')
-        + f'<div class="dest-map-coords">{lat_str} · {lon_str}</div>'
-        f'</div>'
-        f'</div>'
-    )
+def _ressenti(tmax, dew, lang='fr'):
+    """Return (label, color) for thermal comfort based on Tmax + dew point.
+    Seuils calibrés GPT/Claude — valides pour tous les climats (tropical, sec, tempéré, alpin).
+    """
+    LABELS = {
+        'froid':          {'fr':'Froid',          'en':'Cold',          'es':'Frío',       'de':'Kalt'},
+        'frais':          {'fr':'Frais',           'en':'Fresh',         'es':'Fresco',     'de':'Frisch'},
+        'confortable':    {'fr':'Confortable',     'en':'Comfortable',   'es':'Cómodo',     'de':'Angenehm'},
+        'lourd':          {'fr':'Lourd',           'en':'Oppressive',    'es':'Pesado',     'de':'Schwül'},
+        'tres_eprouvant': {'fr':'Très éprouvant',  'en':'Exhausting',    'es':'Agotador',   'de':'Erschöpfend'},
+    }
+    COLORS = {
+        'froid':          '#7c3aed',
+        'frais':          '#0ea5e9',
+        'confortable':    '#22c55e',
+        'lourd':          '#f97316',
+        'tres_eprouvant': '#ef4444',
+    }
+    if tmax is None or dew is None:
+        return None, None
+    if tmax < 0:                        key = 'froid'
+    elif dew < 16 and tmax < 20:        key = 'frais'
+    elif dew < 18 and tmax <= 32:       key = 'confortable'
+    elif dew <= 22 and tmax <= 38:      key = 'lourd'
+    else:                               key = 'tres_eprouvant'
+    l = lang if lang in ('fr','en','es','de') else 'en'
+    return LABELS[key][l], COLORS[key]
 
-    return (
-        f'<section class="section dest-map-section">'
-        f'<div class="section-label">{lbl_section}</div>'
-        f'<div class="dest-map-row" data-dest-map="1" data-lat="{lat}" data-lon="{lon}"'
-        f' data-macro-zoom="{macro_zoom}" data-world-id="dmap-world-{uid}" data-macro-id="dmap-macro-{uid}">'
-        f'<div class="dest-map-card">'
-        f'<div class="dest-map-lbl">\U0001f30d {lbl_world}</div>'
-        f'<div id="dmap-world-{uid}" class="dest-map-el dest-map-el--world"></div>'
-        f'</div>'
-        f'<div class="dest-map-card">'
-        f'<div class="dest-map-lbl">\U0001f50d {lbl_macro}</div>'
-        f'<div id="dmap-macro-{uid}" class="dest-map-el dest-map-el--macro"></div>'
-        f'</div>'
-        f'</div>'
-        f'{intro_html}'
-        f'</section>'
-    )
+
+def _precip_cell(mo, C):
+    """Precip cell with ressenti badge below."""
+    precip_str = fmt_precip(mo['precip'], C)
+    r_lbl, r_col = _ressenti(mo['tmax'], mo.get('dew_point'), C.get('lang', 'fr'))
+    badge = (f'<br><span style="font-size:10px;font-weight:700;color:{r_col};'
+             f'letter-spacing:.2px">{r_lbl}</span>') if r_lbl else ''
+    lbl = C.get('lbl_m_th_precip', 'Précip.')
+    return f'<td data-label="{lbl}" style="white-space:nowrap">{precip_str}{badge}</td>'
 
 
 def _resolve_prep_and_bare(cfg, dest):
@@ -1642,6 +1679,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     month_nav = ''.join(_mnav_item(i) for i in range(12))
 
     # ── Annual table ──
+
     table_rows = ''
     for i, mo in enumerate(months):
         highlight = ' class="row-highlight"' if i == mi else ''
@@ -1657,8 +1695,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
                        f'<td data-label="{C["lbl_m_th_tmin"]}">{fmt_temp(mo["tmin"], C)}</td>'
                        f'<td data-label="{C["lbl_m_th_tmax"]}">{fmt_temp(mo["tmax"], C)}</td>'
                        f'<td data-label="{C["lbl_m_th_rain"]}">{mo["rain_pct"]}%</td>'
-                       f'<td data-label="{C["lbl_m_th_precip"]}">{fmt_precip(mo["precip"], C)}</td>'
-                       f'<td data-label="{C["lbl_m_th_sun"]}">{mo["sun_h"]}h</td>'
+                       + _precip_cell(mo, C)
+                       + f'<td data-label="{C["lbl_m_th_sun"]}">{mo["sun_h"]}h</td>'
                        f'<td data-label="{C["lbl_m_th_score"]}">{mo["score"]:.1f}/10</td>{ski_col}</tr>\n')
 
     # Best month diff

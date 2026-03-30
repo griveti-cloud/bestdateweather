@@ -30,12 +30,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap&font-display=swap" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap&font-display=swap"/></noscript>
-<link rel="stylesheet" href="../style.css?v=14"/>
+<link rel="stylesheet" href="../style.css?v=17"/>
 <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>
 <style>
-.hero-band{background:linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%);}
+.hero-band{position:relative;overflow:hidden;background:linear-gradient(160deg,#0d1a3a 0%,#1a2a6a 55%,#2a4a9a 100%);max-height:55vh;min-height:280px;}
+.hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(13,26,58,0.68) 0%,rgba(26,42,106,0.55) 55%,rgba(42,74,154,0.42) 100%);z-index:1;}
+.hero-band>:not(.hero-bg-img):not(.hero-overlay){position:relative;z-index:2;}
+.hero-photo-credit{position:absolute;bottom:6px;right:10px;font-size:.65rem;color:rgba(255,255,255,.65);z-index:3;letter-spacing:.01em;}
+.hero-photo-credit a{color:rgba(255,255,255,.65);text-decoration:none;}.hero-photo-credit a:hover{color:white;text-decoration:underline;}
 .hero-title em{color:#93c5fd;}
 .month-btn-active{box-shadow:0 0 0 3px var(--gold);}
 /* Decision section redesign */
@@ -44,7 +49,7 @@
 .dec-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;}
 .dec-score-pill{font-size:28px;font-weight:900;color:var(--navy);line-height:1;}
 .dec-score-denom{font-size:14px;font-weight:500;color:var(--slate2);}
-.dec-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.dec-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;}@media(max-width:480px){.dec-stats{grid-template-columns:repeat(2,1fr);}}
 .dec-stat{background:white;border-radius:12px;padding:12px 10px;text-align:center;border:1.5px solid #e8e0d0;}
 .dec-stat-top{display:flex;align-items:baseline;justify-content:center;gap:4px;margin-bottom:8px;}
 .dec-stat-icon{font-size:14px;}
@@ -74,6 +79,7 @@
 .dest-search-ac-item:last-child{border-bottom:none;}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{background:var(--cream);}
 .dest-flag{vertical-align:middle;border-radius:2px;flex-shrink:0;}
+.dest-map-section{margin-bottom:0}.dest-map-layout{}.dest-map-row{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}.dest-map-wrap{}.dest-map-col{}.dest-map-card{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;background:#e8f0f8}.dest-map-lbl{display:block;padding:5px 10px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.4px;text-transform:uppercase;background:#f5f0e8;border-bottom:1px solid #e8e0d0}.dest-map-el--world{height:160px;width:100%;display:block}.dest-map-el--macro{height:160px;width:100%;display:block}.dest-map-credit{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}.dest-map-credit a{color:#aaa}.dest-map-intro{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#faf7f2;border-radius:10px;border:1.5px solid #e8e0d0}.dest-map-country{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:4px}.dest-map-hsub{font-size:13px;color:#666;line-height:1.6;margin-bottom:6px}.dest-map-coords{font-size:11px;color:#bbb;font-family:monospace}@media(max-width:600px){.dest-map-row{grid-template-columns:1fr}.dest-map-el--world,.dest-map-el--macro{height:140px}}.leaflet-control-zoom{display:none!important}
 </style>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 </head>
@@ -94,6 +100,7 @@
 </div>
 </div>
 <header class="hero-band">
+
  <div class="dest-tag"><img src="../flags/tz.png" srcset="../flags/2x/tz.png 2x" width="20" height="15" alt="TZ" loading="lazy" class="flag-icon"> Moshi · Invierno</div>
  <h1 class="hero-title">¿Es Enero buena época<br/><em>para visitar Moshi?</em></h1>
  <p class="hero-sub">Enero no es temporada de esquí en Moshi. Apunta a Enero.</p>
@@ -159,6 +166,8 @@
        <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-rain" style="width:25%"></div></div>
        <div class="dec-stat-lbl">Lluvia</div>
      </div>
+     <div class="dec-stat" data-advisory-cc="TZ"><div class="dec-stat-top"><span class="dec-stat-icon">🟢</span><span class="dec-stat-val dec-stat-val--secu dec-stat-val--mae-1" style="font-size:11px">Vigilancia normal</span></div><div class="dec-stat-lbl">Sécurité</div></div>
+     <div class="dec-stat" title="Budget indicatif · Numbeo 2026"><div class="dec-stat-top"><span class="dec-stat-icon">💚</span><span class="dec-stat-val" style="font-size:11px">Económico</span></div><div class="dec-stat-lbl">Budget</div></div>
    </div>
    <div class="dec-reasons">
      <div class="dec-reason dec-yes"><div><strong>✅ Sí si:</strong> buscas el máximo de sol — 11.8h al día de media.</div></div>
@@ -209,18 +218,18 @@
  <div class="climate-table-wrap mountain">
  <table class="climate-table climate-table--horizontal" aria-label="Comparación mes a mes Moshi">
  <thead><tr><th>Mes</th><th>Mín °C</th><th>Máx °C</th><th>Lluvia %</th><th>Precip mm</th><th>Sol h/día</th><th>Puntuación</th><th>Puntuación ski 🎿</th></tr></thead>
- <tbody><tr class="rec" class="row-highlight"><td>🌤️ Enero</td><td data-label="Mín °C">19°C</td><td data-label="Máx °C">31°C</td><td data-label="Lluvia %">25%</td><td data-label="Precip mm">1.2</td><td data-label="Sol h/día">11.8h</td><td data-label="Puntuación">8.7/10</td><td>2.0/10</td></tr>
-<tr class="rec"><td>☀️ Febrero</td><td data-label="Mín °C">19°C</td><td data-label="Máx °C">32°C</td><td data-label="Lluvia %">19%</td><td data-label="Precip mm">1.1</td><td data-label="Sol h/día">11.8h</td><td data-label="Puntuación">8.6/10</td><td>2.0/10</td></tr>
-<tr class="mid"><td>🌤️ Marzo</td><td data-label="Mín °C">20°C</td><td data-label="Máx °C">31°C</td><td data-label="Lluvia %">42%</td><td data-label="Precip mm">5.0</td><td data-label="Sol h/día">11.4h</td><td data-label="Puntuación">6.9/10</td><td>1.9/10</td></tr>
-<tr class="rec"><td>🌦️ Abril</td><td data-label="Mín °C">20°C</td><td data-label="Máx °C">27°C</td><td data-label="Lluvia %">87%</td><td data-label="Precip mm">9.2</td><td data-label="Sol h/día">10.0h</td><td data-label="Puntuación">7.4/10</td><td>1.7/10</td></tr>
-<tr class="rec"><td>⛅ Mayo</td><td data-label="Mín °C">19°C</td><td data-label="Máx °C">25°C</td><td data-label="Lluvia %">56%</td><td data-label="Precip mm">4.0</td><td data-label="Sol h/día">9.0h</td><td data-label="Puntuación">7.7/10</td><td>1.5/10</td></tr>
-<tr class="rec"><td>🌤️ Junio</td><td data-label="Mín °C">17°C</td><td data-label="Máx °C">24°C</td><td data-label="Lluvia %">21%</td><td data-label="Precip mm">0.8</td><td data-label="Sol h/día">9.9h</td><td data-label="Puntuación">8.5/10</td><td>1.7/10</td></tr>
-<tr class="rec"><td>🌤️ Julio</td><td data-label="Mín °C">17°C</td><td data-label="Máx °C">24°C</td><td data-label="Lluvia %">14%</td><td data-label="Precip mm">0.6</td><td data-label="Sol h/día">9.7h</td><td data-label="Puntuación">8.6/10</td><td>1.7/10</td></tr>
-<tr class="rec"><td>☀️ Agosto</td><td data-label="Mín °C">17°C</td><td data-label="Máx °C">26°C</td><td data-label="Lluvia %">14%</td><td data-label="Precip mm">0.6</td><td data-label="Sol h/día">10.7h</td><td data-label="Puntuación">9.0/10</td><td>1.8/10</td></tr>
-<tr class="rec"><td>☀️ Septiembre</td><td data-label="Mín °C">18°C</td><td data-label="Máx °C">28°C</td><td data-label="Lluvia %">11%</td><td data-label="Precip mm">0.6</td><td data-label="Sol h/día">11.0h</td><td data-label="Puntuación">9.3/10</td><td>1.8/10</td></tr>
-<tr class="rec"><td>🌤️ Octubre</td><td data-label="Mín °C">18°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">25%</td><td data-label="Precip mm">1.5</td><td data-label="Sol h/día">11.5h</td><td data-label="Puntuación">8.8/10</td><td>1.9/10</td></tr>
-<tr class="rec"><td>🌤️ Noviembre</td><td data-label="Mín °C">19°C</td><td data-label="Máx °C">29°C</td><td data-label="Lluvia %">44%</td><td data-label="Precip mm">2.4</td><td data-label="Sol h/día">11.7h</td><td data-label="Puntuación">8.4/10</td><td>2.0/10</td></tr>
-<tr class="rec"><td>🌤️ Diciembre</td><td data-label="Mín °C">19°C</td><td data-label="Máx °C">29°C</td><td data-label="Lluvia %">34%</td><td data-label="Precip mm">1.6</td><td data-label="Sol h/día">11.7h</td><td data-label="Puntuación">8.7/10</td><td>2.0/10</td></tr>
+ <tbody><tr class="rec" class="row-highlight"><td>🌤️ Enero</td><td data-label="Mín °C">19°C</td><td data-label="Máx °C">31°C</td><td data-label="Lluvia %">25%</td><td data-label="Precip mm" style="white-space:nowrap">1.2<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Cómodo</span></td><td data-label="Sol h/día">11.8h</td><td data-label="Puntuación">8.7/10</td><td>2.0/10</td></tr>
+<tr class="rec"><td>☀️ Febrero</td><td data-label="Mín °C">19°C</td><td data-label="Máx °C">32°C</td><td data-label="Lluvia %">19%</td><td data-label="Precip mm" style="white-space:nowrap">1.1<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Cómodo</span></td><td data-label="Sol h/día">11.8h</td><td data-label="Puntuación">8.6/10</td><td>2.0/10</td></tr>
+<tr class="mid"><td>🌤️ Marzo</td><td data-label="Mín °C">20°C</td><td data-label="Máx °C">31°C</td><td data-label="Lluvia %">42%</td><td data-label="Precip mm" style="white-space:nowrap">5.0<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Cómodo</span></td><td data-label="Sol h/día">11.4h</td><td data-label="Puntuación">6.9/10</td><td>1.9/10</td></tr>
+<tr class="rec"><td>🌦️ Abril</td><td data-label="Mín °C">20°C</td><td data-label="Máx °C">27°C</td><td data-label="Lluvia %">87%</td><td data-label="Precip mm" style="white-space:nowrap">9.2<br><span style="font-size:10px;font-weight:700;color:#f97316;letter-spacing:.2px">Pesado</span></td><td data-label="Sol h/día">10.0h</td><td data-label="Puntuación">7.4/10</td><td>1.7/10</td></tr>
+<tr class="rec"><td>⛅ Mayo</td><td data-label="Mín °C">19°C</td><td data-label="Máx °C">25°C</td><td data-label="Lluvia %">56%</td><td data-label="Precip mm" style="white-space:nowrap">4.0<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Cómodo</span></td><td data-label="Sol h/día">9.0h</td><td data-label="Puntuación">7.7/10</td><td>1.5/10</td></tr>
+<tr class="rec"><td>🌤️ Junio</td><td data-label="Mín °C">17°C</td><td data-label="Máx °C">24°C</td><td data-label="Lluvia %">21%</td><td data-label="Precip mm" style="white-space:nowrap">0.8<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Cómodo</span></td><td data-label="Sol h/día">9.9h</td><td data-label="Puntuación">8.5/10</td><td>1.7/10</td></tr>
+<tr class="rec"><td>🌤️ Julio</td><td data-label="Mín °C">17°C</td><td data-label="Máx °C">24°C</td><td data-label="Lluvia %">14%</td><td data-label="Precip mm" style="white-space:nowrap">0.6<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Cómodo</span></td><td data-label="Sol h/día">9.7h</td><td data-label="Puntuación">8.6/10</td><td>1.7/10</td></tr>
+<tr class="rec"><td>☀️ Agosto</td><td data-label="Mín °C">17°C</td><td data-label="Máx °C">26°C</td><td data-label="Lluvia %">14%</td><td data-label="Precip mm" style="white-space:nowrap">0.6<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Cómodo</span></td><td data-label="Sol h/día">10.7h</td><td data-label="Puntuación">9.0/10</td><td>1.8/10</td></tr>
+<tr class="rec"><td>☀️ Septiembre</td><td data-label="Mín °C">18°C</td><td data-label="Máx °C">28°C</td><td data-label="Lluvia %">11%</td><td data-label="Precip mm" style="white-space:nowrap">0.6<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Cómodo</span></td><td data-label="Sol h/día">11.0h</td><td data-label="Puntuación">9.3/10</td><td>1.8/10</td></tr>
+<tr class="rec"><td>🌤️ Octubre</td><td data-label="Mín °C">18°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">25%</td><td data-label="Precip mm" style="white-space:nowrap">1.5<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Cómodo</span></td><td data-label="Sol h/día">11.5h</td><td data-label="Puntuación">8.8/10</td><td>1.9/10</td></tr>
+<tr class="rec"><td>🌤️ Noviembre</td><td data-label="Mín °C">19°C</td><td data-label="Máx °C">29°C</td><td data-label="Lluvia %">44%</td><td data-label="Precip mm" style="white-space:nowrap">2.4<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Cómodo</span></td><td data-label="Sol h/día">11.7h</td><td data-label="Puntuación">8.4/10</td><td>2.0/10</td></tr>
+<tr class="rec"><td>🌤️ Diciembre</td><td data-label="Mín °C">19°C</td><td data-label="Máx °C">29°C</td><td data-label="Lluvia %">34%</td><td data-label="Precip mm" style="white-space:nowrap">1.6<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Cómodo</span></td><td data-label="Sol h/día">11.7h</td><td data-label="Puntuación">8.7/10</td><td>2.0/10</td></tr>
 </tbody>
  </table>
  </div>
@@ -279,7 +288,8 @@
  <a href="https://expedia.com/affiliate?siteid=1&landingPage=https%3A%2F%2Fwww.expedia.com%2FHotel-Search%3Fdestination%3DMoshi%2C+Tanzania&camref=1110lB57J&creativeref=1100l68075&adref=PZtywJ7qWh" target="_blank" rel="sponsored noopener" class="affil-btn">Buscar en Expedia</a>
  </div>
 </section>
-<section class="travel-info-widget"><h3 class="ti-title">Essential Travel Info — Moshi</h3><div class="ti-chips"><div class="ti-chip"><div class="ti-chip-label">Currency</div><div class="ti-chip-row"><span class="ti-chip-icon">💰</span><span class="ti-chip-val">TZS</span></div><div class="ti-chip-sub">TSh · Shilling tanzanien</div></div><div class="ti-chip"><div class="ti-chip-label">Language(s)</div><div class="ti-chip-row"><span class="ti-chip-icon">🗣️</span><span class="ti-chip-val">Swahili <span class="ti-chip-more">+1</span></span></div></div><div class="ti-chip"><div class="ti-chip-label">Driving</div><div class="ti-chip-row"><span class="ti-chip-icon">🚗⬅️</span><span class="ti-chip-val">Left side</span></div></div><div class="ti-chip ti-chip--mae-2"><div class="ti-chip-label">Safety</div><div class="ti-chip-row"><span class="ti-chip-icon">🟡</span><span class="ti-chip-val ti-chip-val--mae-2">Vigilancia reforzada</span></div><div class="ti-chip-sub">GPI 2.05</div></div><div class="ti-chip ti-chip--budget-1"><div class="ti-chip-label">Budget</div><div class="ti-chip-row"><span class="ti-chip-icon">💚</span><span class="ti-chip-val ti-chip-val--budget-1">Budget</span></div></div></div><div class="ti-safety-detail"><span class="ti-safety-note">Consejos viajero MAE Francia &nbsp;·&nbsp; <span class="ti-safety-source">Global Peace Index: 1 = most peaceful, 5 = least peaceful (2024)</span></span></div></section>
+<section class="section dest-map-section"><div class="section-label">Ubicación</div><div class="dest-map-row" data-dest-map="1" data-lat="-3.35" data-lon="37.34" data-macro-zoom="3" data-world-id="dmap-world-moshi" data-macro-id="dmap-macro-moshi"><div class="dest-map-card"><div class="dest-map-lbl">🌍 Mundo</div><div id="dmap-world-moshi" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Contexto geográfico</div><div id="dmap-macro-moshi" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="../flags/tz.png" width="16" height="12" alt="TZ" style="vertical-align:middle;border-radius:2px;margin-right:5px">Tanzania</div><div class="dest-map-hsub">Moshi, campo base del Kilimanjaro — animado pueblo mercado al pie del techo de África, café local y luz matinal sobre las nieves eternas.</div><div class="dest-map-coords">3.35°S · 37.34°E</div></div></div></section>
+<section class="travel-info-widget"><h3 class="ti-title">Essential Travel Info — Moshi</h3><div class="ti-chips"><div class="ti-chip"><div class="ti-chip-label">Currency</div><div class="ti-chip-row"><span class="ti-chip-icon">💰</span><span class="ti-chip-val">TZS</span></div><div class="ti-chip-sub">TSh · Shilling tanzanien</div></div><div class="ti-chip"><div class="ti-chip-label">Language(s)</div><div class="ti-chip-row"><span class="ti-chip-icon">🗣️</span><span class="ti-chip-val">Swahili <span class="ti-chip-more">+1</span></span></div></div><div class="ti-chip"><div class="ti-chip-label">Driving</div><div class="ti-chip-row"><span class="ti-chip-icon">🚗⬅️</span><span class="ti-chip-val">Left side</span></div></div><div class="ti-chip ti-chip--mae-1" data-advisory-cc="TZ" data-advisory-lang="es"><div class="ti-chip-label">Safety</div><div class="ti-chip-row"><span class="ti-chip-icon">🟢</span><span class="ti-chip-val ti-chip-val--mae-1">Vigilancia normal</span></div><div class="ti-chip-sub">GPI 2.05</div></div><div class="ti-chip ti-chip--budget-1"><div class="ti-chip-label">Budget</div><div class="ti-chip-row"><span class="ti-chip-icon">💚</span><span class="ti-chip-val ti-chip-val--budget-1">Economy</span></div></div></div><div class="ti-safety-detail" id="ti-advisory-note-TZ"><span class="ti-safety-note">Consejos viajero MAE Francia &nbsp;·&nbsp; <span class="ti-safety-source">Global Peace Index: 1 = most peaceful, 5 = least peaceful (2024)</span></span><span class="ti-advisory-live" style="display:none;font-size:10px;color:#888;margin-left:6px"></span></div></section>
 <section class="section">
  <div class="section-label">Actividades y excursiones</div>
  <h2 class="section-title">¿Qué hacer en Moshi en Enero?</h2>
@@ -368,6 +378,8 @@
 <script>
 if(window.initDestSearch) window.initDestSearch({suffix:'-clima-enero.html',prefix:'',lang:'es'});
 </script>
+<script src="../js/advisory.min.js?v=1" defer></script>
+<script src="../js/dest-map.min.js?v=1" defer></script>
 <footer>
  <p class="txt-muted-label">bestdateweather.com</p>
  <p><a href="https://open-meteo.com/" rel="noopener" class="txt-muted">Datos meteorológicos por Open-Meteo.com</a> · Fuentes: ECMWF, DWD, NOAA · CC BY 4.0</p>

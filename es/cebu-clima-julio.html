@@ -30,12 +30,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap&font-display=swap" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap&font-display=swap"/></noscript>
-<link rel="stylesheet" href="../style.css?v=14"/>
+<link rel="stylesheet" href="../style.css?v=17"/>
 <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>
 <style>
-.hero-band{background:linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%);}
+.hero-band{position:relative;overflow:hidden;background:linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%);max-height:55vh;min-height:280px;}
+.hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(13,26,58,0.68) 0%,rgba(26,42,106,0.55) 55%,rgba(42,74,154,0.42) 100%);z-index:1;}
+.hero-band>:not(.hero-bg-img):not(.hero-overlay){position:relative;z-index:2;}
+.hero-photo-credit{position:absolute;bottom:6px;right:10px;font-size:.65rem;color:rgba(255,255,255,.65);z-index:3;letter-spacing:.01em;}
+.hero-photo-credit a{color:rgba(255,255,255,.65);text-decoration:none;}.hero-photo-credit a:hover{color:white;text-decoration:underline;}
 .hero-title em{color:#93c5fd;}
 .month-btn-active{box-shadow:0 0 0 3px var(--gold);}
 /* Decision section redesign */
@@ -44,7 +49,7 @@
 .dec-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;}
 .dec-score-pill{font-size:28px;font-weight:900;color:var(--navy);line-height:1;}
 .dec-score-denom{font-size:14px;font-weight:500;color:var(--slate2);}
-.dec-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.dec-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;}@media(max-width:480px){.dec-stats{grid-template-columns:repeat(2,1fr);}}
 .dec-stat{background:white;border-radius:12px;padding:12px 10px;text-align:center;border:1.5px solid #e8e0d0;}
 .dec-stat-top{display:flex;align-items:baseline;justify-content:center;gap:4px;margin-bottom:8px;}
 .dec-stat-icon{font-size:14px;}
@@ -74,6 +79,7 @@
 .dest-search-ac-item:last-child{border-bottom:none;}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{background:var(--cream);}
 .dest-flag{vertical-align:middle;border-radius:2px;flex-shrink:0;}
+.dest-map-section{margin-bottom:0}.dest-map-layout{}.dest-map-row{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}.dest-map-wrap{}.dest-map-col{}.dest-map-card{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;background:#e8f0f8}.dest-map-lbl{display:block;padding:5px 10px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.4px;text-transform:uppercase;background:#f5f0e8;border-bottom:1px solid #e8e0d0}.dest-map-el--world{height:160px;width:100%;display:block}.dest-map-el--macro{height:160px;width:100%;display:block}.dest-map-credit{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}.dest-map-credit a{color:#aaa}.dest-map-intro{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#faf7f2;border-radius:10px;border:1.5px solid #e8e0d0}.dest-map-country{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:4px}.dest-map-hsub{font-size:13px;color:#666;line-height:1.6;margin-bottom:6px}.dest-map-coords{font-size:11px;color:#bbb;font-family:monospace}@media(max-width:600px){.dest-map-row{grid-template-columns:1fr}.dest-map-el--world,.dest-map-el--macro{height:140px}}.leaflet-control-zoom{display:none!important}
 </style>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 </head>
@@ -93,7 +99,8 @@
 <a href="https://c111.travelpayouts.com/click?shmarker=708106&promo_id=3791&source_type=customlink&type=click&custom_url=https%3A%2F%2Fwww.kiwi.com%2Fdeep%3Fto%3DCebu-Filipinas%26departure%3D2026-07-01%26lang%3Des" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Vuelos</a>
 </div>
 </div>
-<img src="https://images.unsplash.com/photo-1549848314-6feb163cb2d4?w=1400&q=85&fm=jpg&fit=crop&crop=entropy" class="hero-bg-img" alt="Cebu" loading="eager" decoding="async" fetchpriority="high"/><div class="hero-overlay"></div><header class="hero-band">
+<header class="hero-band">
+<img src="https://images.unsplash.com/photo-1549848314-6feb163cb2d4?w=1400&q=85&fm=jpg&fit=crop&crop=entropy" class="hero-bg-img" alt="Cebu" loading="eager" decoding="async" fetchpriority="high"/><div class="hero-overlay"></div>
  <div class="dest-tag"><img src="../flags/ph.png" srcset="../flags/2x/ph.png 2x" width="20" height="15" alt="PH" loading="lazy" class="flag-icon"> Cebu · Verano</div>
  <h1 class="hero-title">¿Es Julio buena época<br/><em>para visitar Cebu?</em></h1>
  <p class="hero-sub">No el mes más fácil en Cebu. Descubre qué esperar.</p>
@@ -159,6 +166,8 @@
        <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-rain" style="width:89%"></div></div>
        <div class="dec-stat-lbl">Lluvia</div>
      </div>
+     <div class="dec-stat" data-advisory-cc="PH"><div class="dec-stat-top"><span class="dec-stat-icon">🟡</span><span class="dec-stat-val dec-stat-val--secu dec-stat-val--mae-2" style="font-size:11px">Vigilancia reforzada</span></div><div class="dec-stat-lbl">Sécurité</div></div>
+     <div class="dec-stat" title="Budget indicatif · Numbeo 2026"><div class="dec-stat-top"><span class="dec-stat-icon">🟡</span><span class="dec-stat-val" style="font-size:11px">Asequible</span></div><div class="dec-stat-lbl">Budget</div></div>
    </div>
    <div class="dec-reasons">
      <div class="dec-reason dec-yes"><div><strong>✅ Sí si:</strong> quieres una experiencia fuera de lo común a precios de ganga.</div></div>
@@ -209,18 +218,18 @@
  <div class="climate-table-wrap">
  <table class="climate-table climate-table--horizontal" aria-label="Comparación mes a mes Cebu">
  <thead><tr><th>Mes</th><th>Mín °C</th><th>Máx °C</th><th>Lluvia %</th><th>Precip mm</th><th>Sol h/día</th><th>Puntuación</th></tr></thead>
- <tbody><tr class="rec"><td>🌦️ Enero</td><td data-label="Mín °C">24°C</td><td data-label="Máx °C">28°C</td><td data-label="Lluvia %">70%</td><td data-label="Precip mm">7.4</td><td data-label="Sol h/día">10.8h</td><td data-label="Puntuación">7.6/10</td></tr>
-<tr class="rec"><td>⛅ Febrero</td><td data-label="Mín °C">24°C</td><td data-label="Máx °C">28°C</td><td data-label="Lluvia %">59%</td><td data-label="Precip mm">4.9</td><td data-label="Sol h/día">11.5h</td><td data-label="Puntuación">7.9/10</td></tr>
-<tr class="rec"><td>🌤️ Marzo</td><td data-label="Mín °C">24°C</td><td data-label="Máx °C">29°C</td><td data-label="Lluvia %">50%</td><td data-label="Precip mm">3.9</td><td data-label="Sol h/día">11.9h</td><td data-label="Puntuación">8.0/10</td></tr>
-<tr class="mid"><td>⛅ Abril</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">57%</td><td data-label="Precip mm">3.9</td><td data-label="Sol h/día">11.9h</td><td data-label="Puntuación">6.9/10</td></tr>
-<tr class="mid"><td>🌦️ Mayo</td><td data-label="Mín °C">26°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">85%</td><td data-label="Precip mm">7.2</td><td data-label="Sol h/día">11.9h</td><td data-label="Puntuación">6.1/10</td></tr>
-<tr class="mid"><td>🌦️ Junio</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">91%</td><td data-label="Precip mm">9.4</td><td data-label="Sol h/día">11.1h</td><td data-label="Puntuación">5.7/10</td></tr>
-<tr class="mid" class="row-highlight"><td>🌦️ Julio</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">89%</td><td data-label="Precip mm">8.9</td><td data-label="Sol h/día">10.6h</td><td data-label="Puntuación">5.7/10</td></tr>
-<tr class="mid"><td>🌦️ Agosto</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">83%</td><td data-label="Precip mm">7.3</td><td data-label="Sol h/día">11.0h</td><td data-label="Puntuación">6.0/10</td></tr>
-<tr class="mid"><td>🌦️ Septiembre</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">86%</td><td data-label="Precip mm">8.1</td><td data-label="Sol h/día">10.7h</td><td data-label="Puntuación">5.8/10</td></tr>
-<tr class="rec"><td>🌧️ Octubre</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">29°C</td><td data-label="Lluvia %">94%</td><td data-label="Precip mm">10.8</td><td data-label="Sol h/día">10.2h</td><td data-label="Puntuación">7.2/10</td></tr>
-<tr class="rec"><td>🌦️ Noviembre</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">29°C</td><td data-label="Lluvia %">88%</td><td data-label="Precip mm">8.5</td><td data-label="Sol h/día">10.9h</td><td data-label="Puntuación">7.3/10</td></tr>
-<tr class="rec"><td>🌦️ Diciembre</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">29°C</td><td data-label="Lluvia %">84%</td><td data-label="Precip mm">7.6</td><td data-label="Sol h/día">10.7h</td><td data-label="Puntuación">7.3/10</td></tr>
+ <tbody><tr class="rec"><td>🌦️ Enero</td><td data-label="Mín °C">24°C</td><td data-label="Máx °C">28°C</td><td data-label="Lluvia %">70%</td><td data-label="Precip mm" style="white-space:nowrap">7.4<br><span style="font-size:10px;font-weight:700;color:#ef4444;letter-spacing:.2px">Agotador</span></td><td data-label="Sol h/día">10.8h</td><td data-label="Puntuación">7.6/10</td></tr>
+<tr class="rec"><td>⛅ Febrero</td><td data-label="Mín °C">24°C</td><td data-label="Máx °C">28°C</td><td data-label="Lluvia %">59%</td><td data-label="Precip mm" style="white-space:nowrap">4.9<br><span style="font-size:10px;font-weight:700;color:#ef4444;letter-spacing:.2px">Agotador</span></td><td data-label="Sol h/día">11.5h</td><td data-label="Puntuación">7.9/10</td></tr>
+<tr class="rec"><td>🌤️ Marzo</td><td data-label="Mín °C">24°C</td><td data-label="Máx °C">29°C</td><td data-label="Lluvia %">50%</td><td data-label="Precip mm" style="white-space:nowrap">3.9<br><span style="font-size:10px;font-weight:700;color:#ef4444;letter-spacing:.2px">Agotador</span></td><td data-label="Sol h/día">11.9h</td><td data-label="Puntuación">8.0/10</td></tr>
+<tr class="mid"><td>⛅ Abril</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">57%</td><td data-label="Precip mm" style="white-space:nowrap">3.9<br><span style="font-size:10px;font-weight:700;color:#ef4444;letter-spacing:.2px">Agotador</span></td><td data-label="Sol h/día">11.9h</td><td data-label="Puntuación">6.9/10</td></tr>
+<tr class="mid"><td>🌦️ Mayo</td><td data-label="Mín °C">26°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">85%</td><td data-label="Precip mm" style="white-space:nowrap">7.2<br><span style="font-size:10px;font-weight:700;color:#ef4444;letter-spacing:.2px">Agotador</span></td><td data-label="Sol h/día">11.9h</td><td data-label="Puntuación">6.1/10</td></tr>
+<tr class="mid"><td>🌦️ Junio</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">91%</td><td data-label="Precip mm" style="white-space:nowrap">9.4<br><span style="font-size:10px;font-weight:700;color:#ef4444;letter-spacing:.2px">Agotador</span></td><td data-label="Sol h/día">11.1h</td><td data-label="Puntuación">5.7/10</td></tr>
+<tr class="mid" class="row-highlight"><td>🌦️ Julio</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">89%</td><td data-label="Precip mm" style="white-space:nowrap">8.9<br><span style="font-size:10px;font-weight:700;color:#ef4444;letter-spacing:.2px">Agotador</span></td><td data-label="Sol h/día">10.6h</td><td data-label="Puntuación">5.7/10</td></tr>
+<tr class="mid"><td>🌦️ Agosto</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">83%</td><td data-label="Precip mm" style="white-space:nowrap">7.3<br><span style="font-size:10px;font-weight:700;color:#ef4444;letter-spacing:.2px">Agotador</span></td><td data-label="Sol h/día">11.0h</td><td data-label="Puntuación">6.0/10</td></tr>
+<tr class="mid"><td>🌦️ Septiembre</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">30°C</td><td data-label="Lluvia %">86%</td><td data-label="Precip mm" style="white-space:nowrap">8.1<br><span style="font-size:10px;font-weight:700;color:#ef4444;letter-spacing:.2px">Agotador</span></td><td data-label="Sol h/día">10.7h</td><td data-label="Puntuación">5.8/10</td></tr>
+<tr class="rec"><td>🌧️ Octubre</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">29°C</td><td data-label="Lluvia %">94%</td><td data-label="Precip mm" style="white-space:nowrap">10.8<br><span style="font-size:10px;font-weight:700;color:#ef4444;letter-spacing:.2px">Agotador</span></td><td data-label="Sol h/día">10.2h</td><td data-label="Puntuación">7.2/10</td></tr>
+<tr class="rec"><td>🌦️ Noviembre</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">29°C</td><td data-label="Lluvia %">88%</td><td data-label="Precip mm" style="white-space:nowrap">8.5<br><span style="font-size:10px;font-weight:700;color:#ef4444;letter-spacing:.2px">Agotador</span></td><td data-label="Sol h/día">10.9h</td><td data-label="Puntuación">7.3/10</td></tr>
+<tr class="rec"><td>🌦️ Diciembre</td><td data-label="Mín °C">25°C</td><td data-label="Máx °C">29°C</td><td data-label="Lluvia %">84%</td><td data-label="Precip mm" style="white-space:nowrap">7.6<br><span style="font-size:10px;font-weight:700;color:#ef4444;letter-spacing:.2px">Agotador</span></td><td data-label="Sol h/día">10.7h</td><td data-label="Puntuación">7.3/10</td></tr>
 </tbody>
  </table>
  </div>
@@ -279,7 +288,8 @@
  <a href="https://expedia.com/affiliate?siteid=1&landingPage=https%3A%2F%2Fwww.expedia.com%2FHotel-Search%3Fdestination%3DCebu%2C+Filipinas&camref=1110lB57J&creativeref=1100l68075&adref=PZtywJ7qWh" target="_blank" rel="sponsored noopener" class="affil-btn">Buscar en Expedia</a>
  </div>
 </section>
-<section class="travel-info-widget"><h3 class="ti-title">Essential Travel Info — Cebu</h3><div class="ti-chips"><div class="ti-chip"><div class="ti-chip-label">Currency</div><div class="ti-chip-row"><span class="ti-chip-icon">💰</span><span class="ti-chip-val">PHP</span></div><div class="ti-chip-sub">₱ · Peso philippin</div></div><div class="ti-chip"><div class="ti-chip-label">Language(s)</div><div class="ti-chip-row"><span class="ti-chip-icon">🗣️</span><span class="ti-chip-val">Filipino <span class="ti-chip-more">+1</span></span></div></div><div class="ti-chip"><div class="ti-chip-label">Driving</div><div class="ti-chip-row"><span class="ti-chip-icon">🚗➡️</span><span class="ti-chip-val">Right side</span></div></div><div class="ti-chip ti-chip--mae-2"><div class="ti-chip-label">Safety</div><div class="ti-chip-row"><span class="ti-chip-icon">🟡</span><span class="ti-chip-val ti-chip-val--mae-2">Vigilancia reforzada</span></div><div class="ti-chip-sub">GPI 2.02</div></div><div class="ti-chip ti-chip--budget-1"><div class="ti-chip-label">Budget</div><div class="ti-chip-row"><span class="ti-chip-icon">💚</span><span class="ti-chip-val ti-chip-val--budget-1">Budget</span></div></div></div><div class="ti-safety-detail"><span class="ti-safety-note">Consejos viajero MAE Francia &nbsp;·&nbsp; <span class="ti-safety-source">Global Peace Index: 1 = most peaceful, 5 = least peaceful (2024)</span></span></div></section>
+<section class="section dest-map-section"><div class="section-label">Ubicación</div><div class="dest-map-row" data-dest-map="1" data-lat="10.32" data-lon="123.89" data-macro-zoom="3" data-world-id="dmap-world-cebu" data-macro-id="dmap-macro-cebu"><div class="dest-map-card"><div class="dest-map-lbl">🌍 Mundo</div><div id="dmap-world-cebu" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Contexto geográfico</div><div id="dmap-macro-cebu" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="../flags/ph.png" width="16" height="12" alt="PH" style="vertical-align:middle;border-radius:2px;margin-right:5px">Filipinas</div><div class="dest-map-hsub">Cebu, Filipinas entre buceo y cascadas — tiburones ballena de Oslob, Kawasan Falls e islotes vírgenes.</div><div class="dest-map-coords">10.32°N · 123.89°E</div></div></div></section>
+<section class="travel-info-widget"><h3 class="ti-title">Essential Travel Info — Cebu</h3><div class="ti-chips"><div class="ti-chip"><div class="ti-chip-label">Currency</div><div class="ti-chip-row"><span class="ti-chip-icon">💰</span><span class="ti-chip-val">PHP</span></div><div class="ti-chip-sub">₱ · Peso philippin</div></div><div class="ti-chip"><div class="ti-chip-label">Language(s)</div><div class="ti-chip-row"><span class="ti-chip-icon">🗣️</span><span class="ti-chip-val">Filipino <span class="ti-chip-more">+1</span></span></div></div><div class="ti-chip"><div class="ti-chip-label">Driving</div><div class="ti-chip-row"><span class="ti-chip-icon">🚗➡️</span><span class="ti-chip-val">Right side</span></div></div><div class="ti-chip ti-chip--mae-2" data-advisory-cc="PH" data-advisory-lang="es"><div class="ti-chip-label">Safety</div><div class="ti-chip-row"><span class="ti-chip-icon">🟡</span><span class="ti-chip-val ti-chip-val--mae-2">Vigilancia reforzada</span></div><div class="ti-chip-sub">GPI 2.02</div></div><div class="ti-chip ti-chip--budget-2"><div class="ti-chip-label">Budget</div><div class="ti-chip-row"><span class="ti-chip-icon">💚</span><span class="ti-chip-val ti-chip-val--budget-2">Affordable</span></div></div></div><div class="ti-safety-detail" id="ti-advisory-note-PH"><span class="ti-safety-note">Consejos viajero MAE Francia &nbsp;·&nbsp; <span class="ti-safety-source">Global Peace Index: 1 = most peaceful, 5 = least peaceful (2024)</span></span><span class="ti-advisory-live" style="display:none;font-size:10px;color:#888;margin-left:6px"></span></div></section>
 <section class="section">
  <div class="section-label">Actividades y excursiones</div>
  <h2 class="section-title">¿Qué hacer en Cebu en Julio?</h2>
@@ -368,6 +378,8 @@
 <script>
 if(window.initDestSearch) window.initDestSearch({suffix:'-clima-julio.html',prefix:'',lang:'es'});
 </script>
+<script src="../js/advisory.min.js?v=1" defer></script>
+<script src="../js/dest-map.min.js?v=1" defer></script>
 <footer>
  <p class="txt-muted-label">bestdateweather.com</p>
  <p><a href="https://open-meteo.com/" rel="noopener" class="txt-muted">Datos meteorológicos por Open-Meteo.com</a> · Fuentes: ECMWF, DWD, NOAA · CC BY 4.0</p>

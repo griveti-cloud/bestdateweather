@@ -30,12 +30,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap&font-display=swap" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap&font-display=swap"/></noscript>
-<link rel="stylesheet" href="../style.css?v=14"/>
+<link rel="stylesheet" href="../style.css?v=17"/>
 <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>
 <style>
-.hero-band{background:linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%);}
+.hero-band{position:relative;overflow:hidden;background:linear-gradient(160deg,#2a1a0a 0%,#6a3a1a 55%,#d97706 100%);max-height:55vh;min-height:280px;}
+.hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(13,26,58,0.68) 0%,rgba(26,42,106,0.55) 55%,rgba(42,74,154,0.42) 100%);z-index:1;}
+.hero-band>:not(.hero-bg-img):not(.hero-overlay){position:relative;z-index:2;}
+.hero-photo-credit{position:absolute;bottom:6px;right:10px;font-size:.65rem;color:rgba(255,255,255,.65);z-index:3;letter-spacing:.01em;}
+.hero-photo-credit a{color:rgba(255,255,255,.65);text-decoration:none;}.hero-photo-credit a:hover{color:white;text-decoration:underline;}
 .hero-title em{color:#93c5fd;}
 .month-btn-active{box-shadow:0 0 0 3px var(--gold);}
 /* Decision section redesign */
@@ -44,7 +49,7 @@
 .dec-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;}
 .dec-score-pill{font-size:28px;font-weight:900;color:var(--navy);line-height:1;}
 .dec-score-denom{font-size:14px;font-weight:500;color:var(--slate2);}
-.dec-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.dec-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;}@media(max-width:480px){.dec-stats{grid-template-columns:repeat(2,1fr);}}
 .dec-stat{background:white;border-radius:12px;padding:12px 10px;text-align:center;border:1.5px solid #e8e0d0;}
 .dec-stat-top{display:flex;align-items:baseline;justify-content:center;gap:4px;margin-bottom:8px;}
 .dec-stat-icon{font-size:14px;}
@@ -74,6 +79,7 @@
 .dest-search-ac-item:last-child{border-bottom:none;}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{background:var(--cream);}
 .dest-flag{vertical-align:middle;border-radius:2px;flex-shrink:0;}
+.dest-map-section{margin-bottom:0}.dest-map-layout{}.dest-map-row{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}.dest-map-wrap{}.dest-map-col{}.dest-map-card{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;background:#e8f0f8}.dest-map-lbl{display:block;padding:5px 10px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.4px;text-transform:uppercase;background:#f5f0e8;border-bottom:1px solid #e8e0d0}.dest-map-el--world{height:160px;width:100%;display:block}.dest-map-el--macro{height:160px;width:100%;display:block}.dest-map-credit{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}.dest-map-credit a{color:#aaa}.dest-map-intro{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#faf7f2;border-radius:10px;border:1.5px solid #e8e0d0}.dest-map-country{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:4px}.dest-map-hsub{font-size:13px;color:#666;line-height:1.6;margin-bottom:6px}.dest-map-coords{font-size:11px;color:#bbb;font-family:monospace}@media(max-width:600px){.dest-map-row{grid-template-columns:1fr}.dest-map-el--world,.dest-map-el--macro{height:140px}}.leaflet-control-zoom{display:none!important}
 </style>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 </head>
@@ -93,7 +99,8 @@
 <a href="https://c111.travelpayouts.com/click?shmarker=708106&promo_id=3791&source_type=customlink&type=click&custom_url=https%3A%2F%2Fwww.kiwi.com%2Fdeep%3Fto%3DJohannesburg-South%2BAfrica%26departure%3D2026-08-01%26lang%3Den" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Flights</a>
 </div>
 </div>
-<img src="https://images.unsplash.com/photo-1604348489791-f95132c5d8c0?w=1400&q=85&fm=jpg&fit=crop&crop=entropy" class="hero-bg-img" alt="Johannesburg" loading="eager" decoding="async" fetchpriority="high"/><div class="hero-overlay"></div><header class="hero-band">
+<header class="hero-band">
+<img src="https://images.unsplash.com/photo-1604348489791-f95132c5d8c0?w=1400&q=85&fm=jpg&fit=crop&crop=entropy" class="hero-bg-img" alt="Johannesburg" loading="eager" decoding="async" fetchpriority="high"/><div class="hero-overlay"></div>
  <div class="dest-tag"><img src="../flags/za.png" srcset="../flags/2x/za.png 2x" width="20" height="15" alt="ZA" loading="lazy" class="flag-icon"> Johannesburg · Summer</div>
  <h1 class="hero-title">Is August a good time<br/><em>to visit Johannesburg?</em></h1>
  <p class="hero-sub">Johannesburg in August: near-perfect conditions.</p>
@@ -159,6 +166,8 @@
        <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-rain" style="width:3%"></div></div>
        <div class="dec-stat-lbl">Rain</div>
      </div>
+     <div class="dec-stat" data-advisory-cc="ZA"><div class="dec-stat-top"><span class="dec-stat-icon">🟢</span><span class="dec-stat-val dec-stat-val--secu dec-stat-val--mae-1" style="font-size:11px">Normal vigilance</span></div><div class="dec-stat-lbl">Sécurité</div></div>
+     <div class="dec-stat" title="Budget indicatif · Numbeo 2026"><div class="dec-stat-top"><span class="dec-stat-icon">🟡</span><span class="dec-stat-val" style="font-size:11px">Affordable</span></div><div class="dec-stat-lbl">Budget</div></div>
    </div>
    <div class="dec-reasons">
      <div class="dec-reason dec-yes"><div><strong>✅ Yes if:</strong> you want long sunny days and outdoor activities.</div></div>
@@ -209,18 +218,18 @@
  <div class="climate-table-wrap">
  <table class="climate-table climate-table--horizontal" aria-label="Month-by-month comparison Johannesburg">
  <thead><tr><th>Month</th><th>Min °C</th><th>Max °C</th><th>Rain %</th><th>Precip mm</th><th>Sun h/d</th><th>Score</th></tr></thead>
- <tbody><tr class="rec"><td>🌤️ January</td><td data-label="Min °C">15°C</td><td data-label="Max °C">25°C</td><td data-label="Rain %">45%</td><td data-label="Precip mm">3.9</td><td data-label="Sun h/d">12.9h</td><td data-label="Score">8.3/10</td></tr>
-<tr class="rec"><td>🌤️ February</td><td data-label="Min °C">15°C</td><td data-label="Max °C">25°C</td><td data-label="Rain %">50%</td><td data-label="Precip mm">4.2</td><td data-label="Sun h/d">12.2h</td><td data-label="Score">8.1/10</td></tr>
-<tr class="rec"><td>🌤️ March</td><td data-label="Min °C">13°C</td><td data-label="Max °C">24°C</td><td data-label="Rain %">32%</td><td data-label="Precip mm">2.0</td><td data-label="Sun h/d">11.7h</td><td data-label="Score">8.4/10</td></tr>
-<tr class="rec"><td>🌤️ April</td><td data-label="Min °C">11°C</td><td data-label="Max °C">21°C</td><td data-label="Rain %">27%</td><td data-label="Precip mm">2.1</td><td data-label="Sun h/d">10.9h</td><td data-label="Score">8.1/10</td></tr>
-<tr class="rec"><td>🌤️ May</td><td data-label="Min °C">7°C</td><td data-label="Max °C">20°C</td><td data-label="Rain %">7%</td><td data-label="Precip mm">0.5</td><td data-label="Sun h/d">10.1h</td><td data-label="Score">8.2/10</td></tr>
-<tr class="rec"><td>🌤️ June</td><td data-label="Min °C">5°C</td><td data-label="Max °C">18°C</td><td data-label="Rain %">5%</td><td data-label="Precip mm">0.3</td><td data-label="Sun h/d">10.1h</td><td data-label="Score">8.0/10</td></tr>
-<tr class="rec"><td>⛅ July</td><td data-label="Min °C">4°C</td><td data-label="Max °C">17°C</td><td data-label="Rain %">2%</td><td data-label="Precip mm">0.1</td><td data-label="Sun h/d">10.4h</td><td data-label="Score">7.9/10</td></tr>
-<tr class="rec" class="row-highlight"><td>🌤️ August</td><td data-label="Min °C">7°C</td><td data-label="Max °C">21°C</td><td data-label="Rain %">3%</td><td data-label="Precip mm">0.2</td><td data-label="Sun h/d">10.7h</td><td data-label="Score">8.6/10</td></tr>
-<tr class="rec"><td>☀️ September</td><td data-label="Min °C">10°C</td><td data-label="Max °C">25°C</td><td data-label="Rain %">10%</td><td data-label="Precip mm">0.4</td><td data-label="Sun h/d">11.7h</td><td data-label="Score">9.1/10</td></tr>
-<tr class="rec"><td>☀️ October</td><td data-label="Min °C">12°C</td><td data-label="Max °C">26°C</td><td data-label="Rain %">24%</td><td data-label="Precip mm">1.4</td><td data-label="Sun h/d">12.0h</td><td data-label="Score">8.9/10</td></tr>
-<tr class="rec"><td>🌤️ November</td><td data-label="Min °C">13°C</td><td data-label="Max °C">26°C</td><td data-label="Rain %">43%</td><td data-label="Precip mm">2.8</td><td data-label="Sun h/d">12.6h</td><td data-label="Score">8.4/10</td></tr>
-<tr class="rec"><td>⛅ December</td><td data-label="Min °C">15°C</td><td data-label="Max °C">25°C</td><td data-label="Rain %">55%</td><td data-label="Precip mm">3.8</td><td data-label="Sun h/d">12.7h</td><td data-label="Score">8.1/10</td></tr>
+ <tbody><tr class="rec"><td>🌤️ January</td><td data-label="Min °C">15°C</td><td data-label="Max °C">25°C</td><td data-label="Rain %">45%</td><td data-label="Precip mm" style="white-space:nowrap">3.9<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Comfortable</span></td><td data-label="Sun h/d">12.9h</td><td data-label="Score">8.3/10</td></tr>
+<tr class="rec"><td>🌤️ February</td><td data-label="Min °C">15°C</td><td data-label="Max °C">25°C</td><td data-label="Rain %">50%</td><td data-label="Precip mm" style="white-space:nowrap">4.2<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Comfortable</span></td><td data-label="Sun h/d">12.2h</td><td data-label="Score">8.1/10</td></tr>
+<tr class="rec"><td>🌤️ March</td><td data-label="Min °C">13°C</td><td data-label="Max °C">24°C</td><td data-label="Rain %">32%</td><td data-label="Precip mm" style="white-space:nowrap">2.0<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Comfortable</span></td><td data-label="Sun h/d">11.7h</td><td data-label="Score">8.4/10</td></tr>
+<tr class="rec"><td>🌤️ April</td><td data-label="Min °C">11°C</td><td data-label="Max °C">21°C</td><td data-label="Rain %">27%</td><td data-label="Precip mm" style="white-space:nowrap">2.1<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Comfortable</span></td><td data-label="Sun h/d">10.9h</td><td data-label="Score">8.1/10</td></tr>
+<tr class="rec"><td>🌤️ May</td><td data-label="Min °C">7°C</td><td data-label="Max °C">20°C</td><td data-label="Rain %">7%</td><td data-label="Precip mm" style="white-space:nowrap">0.5<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Comfortable</span></td><td data-label="Sun h/d">10.1h</td><td data-label="Score">8.2/10</td></tr>
+<tr class="rec"><td>🌤️ June</td><td data-label="Min °C">5°C</td><td data-label="Max °C">18°C</td><td data-label="Rain %">5%</td><td data-label="Precip mm" style="white-space:nowrap">0.3<br><span style="font-size:10px;font-weight:700;color:#0ea5e9;letter-spacing:.2px">Fresh</span></td><td data-label="Sun h/d">10.1h</td><td data-label="Score">8.0/10</td></tr>
+<tr class="rec"><td>⛅ July</td><td data-label="Min °C">4°C</td><td data-label="Max °C">17°C</td><td data-label="Rain %">2%</td><td data-label="Precip mm" style="white-space:nowrap">0.1<br><span style="font-size:10px;font-weight:700;color:#0ea5e9;letter-spacing:.2px">Fresh</span></td><td data-label="Sun h/d">10.4h</td><td data-label="Score">7.9/10</td></tr>
+<tr class="rec" class="row-highlight"><td>🌤️ August</td><td data-label="Min °C">7°C</td><td data-label="Max °C">21°C</td><td data-label="Rain %">3%</td><td data-label="Precip mm" style="white-space:nowrap">0.2<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Comfortable</span></td><td data-label="Sun h/d">10.7h</td><td data-label="Score">8.6/10</td></tr>
+<tr class="rec"><td>☀️ September</td><td data-label="Min °C">10°C</td><td data-label="Max °C">25°C</td><td data-label="Rain %">10%</td><td data-label="Precip mm" style="white-space:nowrap">0.4<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Comfortable</span></td><td data-label="Sun h/d">11.7h</td><td data-label="Score">9.1/10</td></tr>
+<tr class="rec"><td>☀️ October</td><td data-label="Min °C">12°C</td><td data-label="Max °C">26°C</td><td data-label="Rain %">24%</td><td data-label="Precip mm" style="white-space:nowrap">1.4<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Comfortable</span></td><td data-label="Sun h/d">12.0h</td><td data-label="Score">8.9/10</td></tr>
+<tr class="rec"><td>🌤️ November</td><td data-label="Min °C">13°C</td><td data-label="Max °C">26°C</td><td data-label="Rain %">43%</td><td data-label="Precip mm" style="white-space:nowrap">2.8<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Comfortable</span></td><td data-label="Sun h/d">12.6h</td><td data-label="Score">8.4/10</td></tr>
+<tr class="rec"><td>⛅ December</td><td data-label="Min °C">15°C</td><td data-label="Max °C">25°C</td><td data-label="Rain %">55%</td><td data-label="Precip mm" style="white-space:nowrap">3.8<br><span style="font-size:10px;font-weight:700;color:#22c55e;letter-spacing:.2px">Comfortable</span></td><td data-label="Sun h/d">12.7h</td><td data-label="Score">8.1/10</td></tr>
 </tbody>
  </table>
  </div>
@@ -279,7 +288,8 @@
  <a href="https://expedia.com/affiliate?siteid=1&landingPage=https%3A%2F%2Fwww.expedia.com%2FHotel-Search%3Fdestination%3DJohannesburg%2C+South+Africa&camref=1110lB57J&creativeref=1100l68075&adref=PZtywJ7qWh" target="_blank" rel="sponsored noopener" class="affil-btn">Search on Expedia</a>
  </div>
 </section>
-<section class="travel-info-widget"><h3 class="ti-title">Essential Travel Info — Johannesburg</h3><div class="ti-chips"><div class="ti-chip"><div class="ti-chip-label">Currency</div><div class="ti-chip-row"><span class="ti-chip-icon">💰</span><span class="ti-chip-val">ZAR</span></div><div class="ti-chip-sub">R · Rand sud-africain</div></div><div class="ti-chip"><div class="ti-chip-label">Language(s)</div><div class="ti-chip-row"><span class="ti-chip-icon">🗣️</span><span class="ti-chip-val">Zulu <span class="ti-chip-more">+4</span></span></div></div><div class="ti-chip"><div class="ti-chip-label">Driving</div><div class="ti-chip-row"><span class="ti-chip-icon">🚗⬅️</span><span class="ti-chip-val">Left side</span></div></div><div class="ti-chip ti-chip--mae-2"><div class="ti-chip-label">Safety</div><div class="ti-chip-row"><span class="ti-chip-icon">🟡</span><span class="ti-chip-val ti-chip-val--mae-2">High vigilance</span></div><div class="ti-chip-sub">GPI 2.10</div></div><div class="ti-chip ti-chip--budget-2"><div class="ti-chip-label">Budget</div><div class="ti-chip-row"><span class="ti-chip-icon">💚</span><span class="ti-chip-val ti-chip-val--budget-2">Affordable</span></div></div></div><div class="ti-safety-detail"><span class="ti-safety-note">French Foreign Ministry advisory &nbsp;·&nbsp; <span class="ti-safety-source">Global Peace Index: 1 = most peaceful, 5 = least peaceful (2024)</span></span></div></section>
+<section class="section dest-map-section"><div class="section-label">Location</div><div class="dest-map-row" data-dest-map="1" data-lat="-26.2" data-lon="28.05" data-macro-zoom="3" data-world-id="dmap-world-johannesburg" data-macro-id="dmap-macro-johannesburg"><div class="dest-map-card"><div class="dest-map-lbl">🌍 World</div><div id="dmap-world-johannesburg" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Geographic context</div><div id="dmap-macro-johannesburg" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="../flags/za.png" width="16" height="12" alt="ZA" style="vertical-align:middle;border-radius:2px;margin-right:5px">South Africa</div><div class="dest-map-hsub">Johannesburg, Africa's economic heartland — Apartheid Museum, Maboneng and gateway to Kruger.</div><div class="dest-map-coords">26.20°S · 28.05°E</div></div></div></section>
+<section class="travel-info-widget"><h3 class="ti-title">Essential Travel Info — Johannesburg</h3><div class="ti-chips"><div class="ti-chip"><div class="ti-chip-label">Currency</div><div class="ti-chip-row"><span class="ti-chip-icon">💰</span><span class="ti-chip-val">ZAR</span></div><div class="ti-chip-sub">R · Rand sud-africain</div></div><div class="ti-chip"><div class="ti-chip-label">Language(s)</div><div class="ti-chip-row"><span class="ti-chip-icon">🗣️</span><span class="ti-chip-val">Zulu <span class="ti-chip-more">+4</span></span></div></div><div class="ti-chip"><div class="ti-chip-label">Driving</div><div class="ti-chip-row"><span class="ti-chip-icon">🚗⬅️</span><span class="ti-chip-val">Left side</span></div></div><div class="ti-chip ti-chip--mae-1" data-advisory-cc="ZA" data-advisory-lang="en"><div class="ti-chip-label">Safety</div><div class="ti-chip-row"><span class="ti-chip-icon">🟢</span><span class="ti-chip-val ti-chip-val--mae-1">Normal vigilance</span></div><div class="ti-chip-sub">GPI 2.10</div></div><div class="ti-chip ti-chip--budget-2"><div class="ti-chip-label">Budget</div><div class="ti-chip-row"><span class="ti-chip-icon">💚</span><span class="ti-chip-val ti-chip-val--budget-2">Affordable</span></div></div></div><div class="ti-safety-detail" id="ti-advisory-note-ZA"><span class="ti-safety-note">French Foreign Ministry advisory &nbsp;·&nbsp; <span class="ti-safety-source">Global Peace Index: 1 = most peaceful, 5 = least peaceful (2024)</span></span><span class="ti-advisory-live" style="display:none;font-size:10px;color:#888;margin-left:6px"></span></div></section>
 <section class="section">
  <div class="section-label">Activities & tours</div>
  <h2 class="section-title">What to do in Johannesburg in August?</h2>
@@ -368,6 +378,8 @@
 <script>
 if(window.initDestSearch) window.initDestSearch({suffix:'-weather-august.html',prefix:'',lang:'en'});
 </script>
+<script src="../js/advisory.min.js?v=1" defer></script>
+<script src="../js/dest-map.min.js?v=1" defer></script>
 <footer>
  <p class="txt-muted-label">bestdateweather.com</p>
  <p><a href="https://open-meteo.com/" rel="noopener" class="txt-muted">Weather data by Open-Meteo.com</a> · Sources: ECMWF, DWD, NOAA · CC BY 4.0</p>
