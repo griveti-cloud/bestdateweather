@@ -25,7 +25,7 @@ if os.path.exists(_EDITORIAL_FILE):
         _EDITORIAL = json.load(_f)
 from datetime import date
 from urllib.parse import quote_plus
-from lib.common import (score_badge as _score_badge, best_months as _best_months,
+from lib.common import (get_mae_label, get_risk_level,score_badge as _score_badge, best_months as _best_months,
                         budget_tier as _budget_tier, seasonal_stats as _seasonal_stats,
                         bar_chart, climate_table_html as _climate_table_html,
                         weather_emoji, build_lang, fmt_temp, fmt_precip, fill_tpl, c_to_f,
@@ -1477,6 +1477,18 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     temp_pct_bar = round(min(m['tmax'], 40) / 40 * 100)
     sun_pct_bar  = round(min(m['sun_h'], 14) / 14 * 100)
 
+    # Security stat for decision card
+    _secu_mae_label, _secu_mae_cls, _secu_mae_icon = get_mae_label(dest.get('pays',''), C['lang'])
+    _secu_cc = (dest.get('flag') or '').upper()
+    _secu_lbl = C['locale'].get('dec', {}).get('secu_lbl', 'Sécurité')
+    _dec_secu_stat = (
+        f'<div class="dec-stat" data-advisory-cc="{_secu_cc}">'
+        f'<div class="dec-stat-top"><span class="dec-stat-icon">{_secu_mae_icon}</span>'
+        f'<span class="dec-stat-val dec-stat-val--secu dec-stat-val--{_secu_mae_cls}" style="font-size:11px">{_secu_mae_label}</span></div>'
+        f'<div class="dec-stat-lbl">{_secu_lbl}</div>'
+        f'</div>'
+    )
+
     # ── Oui si / Yes if ──
     osi = C['monthly_oui_si']
     fvars = dict(sun=m['sun_h'], tmax=m['tmax'], rain=m['rain_pct'])
@@ -2077,7 +2089,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .dec-badge{{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;}}
 .dec-score-pill{{font-size:28px;font-weight:900;color:var(--navy);line-height:1;}}
 .dec-score-denom{{font-size:14px;font-weight:500;color:var(--slate2);}}
-.dec-stats{{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}}
+.dec-stats{{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}}@media(max-width:480px){{.dec-stats{{grid-template-columns:repeat(2,1fr);}}}}
 .dec-stat{{background:white;border-radius:12px;padding:12px 10px;text-align:center;border:1.5px solid #e8e0d0;}}
 .dec-stat-top{{display:flex;align-items:baseline;justify-content:center;gap:4px;margin-bottom:8px;}}
 .dec-stat-icon{{font-size:14px;}}
@@ -2182,6 +2194,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
        <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-rain" style="width:{rain_pct_bar}%"></div></div>
        <div class="dec-stat-lbl">{L['bar_rain']}</div>
      </div>
+     {_dec_secu_stat}
    </div>
    <div class="dec-reasons">
      <div class="dec-reason dec-yes"><div><strong>{L['yes_lbl']}</strong> {oui_si}</div></div>

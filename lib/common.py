@@ -531,6 +531,20 @@ def _mae_label(risk_level: int, lang: str = 'fr') -> tuple:
     return data[lang_key][lvl]
 
 
+def get_risk_level(pays: str) -> int:
+    """Return risk level (1-4) for a country from country_info.json."""
+    info = _load_country_info().get(pays, {})
+    return max(1, min(4, info.get('risk_level', 1)))
+
+def get_country_iso2(pays: str) -> str:
+    """Return ISO2 code stored in country_info, fallback empty string."""
+    info = _load_country_info().get(pays, {})
+    return info.get('iso2', '')
+
+def get_mae_label(pays: str, lang: str = 'fr') -> tuple:
+    """Return (label, cls, icon) for the risk level of a country."""
+    return _mae_label(get_risk_level(pays), lang)
+
 def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None, iso2: str = '') -> str:
     """
     Generates the Essential Travel Info widget for a destination page.

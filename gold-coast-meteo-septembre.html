@@ -49,7 +49,7 @@
 .dec-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;}
 .dec-score-pill{font-size:28px;font-weight:900;color:var(--navy);line-height:1;}
 .dec-score-denom{font-size:14px;font-weight:500;color:var(--slate2);}
-.dec-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.dec-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}@media(max-width:480px){.dec-stats{grid-template-columns:repeat(2,1fr);}}
 .dec-stat{background:white;border-radius:12px;padding:12px 10px;text-align:center;border:1.5px solid #e8e0d0;}
 .dec-stat-top{display:flex;align-items:baseline;justify-content:center;gap:4px;margin-bottom:8px;}
 .dec-stat-icon{font-size:14px;}
@@ -165,6 +165,7 @@
        <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-rain" style="width:23%"></div></div>
        <div class="dec-stat-lbl">Pluie</div>
      </div>
+     <div class="dec-stat" data-advisory-cc="AU"><div class="dec-stat-top"><span class="dec-stat-icon">🟢</span><span class="dec-stat-val dec-stat-val--secu dec-stat-val--mae-1" style="font-size:11px">Vigilance normale</span></div><div class="dec-stat-lbl">Sécurité</div></div>
    </div>
    <div class="dec-reasons">
      <div class="dec-reason dec-yes"><div><strong>✅ Oui si :</strong> combiner bonne météo et tarifs plus doux qu'en pleine saison.</div></div>
