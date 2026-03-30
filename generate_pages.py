@@ -1697,7 +1697,10 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
                        f'<td data-label="{C["lbl_m_th_rain"]}">{mo["rain_pct"]}%</td>'
                        + _precip_cell(mo, C)
                        + f'<td data-label="{C["lbl_m_th_sun"]}">{mo["sun_h"]}h</td>'
-                       f'<td data-label="{C["lbl_m_th_score"]}">{mo["score"]:.1f}/10</td>{ski_col}</tr>\n')
+                       '<td data-label="' + C["lbl_m_th_score"] + '">' +
+                       f'{mo["score"]:.1f}/10' +
+                       (lambda r,c: f'<br><span style="font-size:9px;font-weight:700;color:{c};letter-spacing:.2px">{r}</span>' if r else '')(*_ressenti(mo["tmax"], mo.get("dew_point"), C.get("lang","fr"))) +
+                       f'</td>{ski_col}</tr>\n')
 
     # Best month diff
     bm = months[best_idx]
