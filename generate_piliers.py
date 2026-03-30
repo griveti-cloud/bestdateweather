@@ -769,79 +769,79 @@ def generate_page(mi, lang, dests, climate, country_info=None):
     )
 
     rank_js = (
-        '<script>(function(){'
-        f'var POOL={pool_json};'
-        'var TOP=25;var CUR_REG="all";var CUR_RL=4;var CUR_BI=5;'
-        f'var TH_GEN="{e(th_score_gen)}",TH_BEACH="{e(th_score_beach)}",TH_SKI="{e(th_score_ski)}";'
-        f'var NO_BEACH="{e(no_beach_msg)}",NO_SKI="{e(no_ski_msg)}",NO_METEO="{e(no_meteo_msg)}";'
-        f'var TITLE_METEO="{e(sec_title)}",TITLE_BEACH="{e(pil.get("sec_title_beach",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc))}",TITLE_SKI="{e(pil.get("sec_title_ski",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc))}";'
-        'function sc(s){return s>=8.6?"#1a7a4a":s>=7.6?"#2d9e60":s>=6.3?"#84cc16":s>=5?"#f59e0b":s>=3.5?"#f97316":"#ef4444";}'
-        'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'
-        'function render(mode){'
-        'var tb=document.getElementById("rt-body");'
-        'var th=document.getElementById("rt-head");'
-        'var msg=document.getElementById("rt-msg");'
-        'if(!tb)return;'
-        'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'
+        '<script>(function(){'+
+        f'var POOL={pool_json};'+
+        'var TOP=25;var CUR_REG="all";var CUR_RL=4;var CUR_BI=5;'+
+        f'var TH_GEN="{e(th_score_gen)}",TH_BEACH="{e(th_score_beach)}",TH_SKI="{e(th_score_ski)}";'+
+        f'var NO_BEACH="{e(no_beach_msg)}",NO_SKI="{e(no_ski_msg)}",NO_METEO="{e(no_meteo_msg)}";'+
+        f'var TITLE_METEO="{e(sec_title)}",TITLE_BEACH="{e(pil.get("sec_title_beach",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc))}",TITLE_SKI="{e(pil.get("sec_title_ski",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc))}";'+
+        'function sc(s){return s>=8.6?"#1a7a4a":s>=7.6?"#2d9e60":s>=6.3?"#84cc16":s>=5?"#f59e0b":s>=3.5?"#f97316":"#ef4444";}'+
+        'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'+
+        'function render(mode){'+
+        'var tb=document.getElementById("rt-body");'+
+        'var th=document.getElementById("rt-head");'+
+        'var msg=document.getElementById("rt-msg");'+
+        'if(!tb)return;'+
+        'var key=mode==="beach"?"b":mode==="ski"?"k":"s";'+
         'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG&&!(CUR_REG==="eu"&&d.xeu));var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):(d.m!==1);var rlOk=(d.rl||1)<=CUR_RL;var biOk=(d.bi||3)<=CUR_BI;return rOk&&mOk&&rlOk&&biOk;});'+
         'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d;});'+
-        'var _sibSeen={};list=list.filter(function(d){if(d.sib<0)return true;if(_sibSeen[d.sib])return false;_sibSeen[d.sib]=1;return true;});'
-        'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'
-        'list=list.slice(0,TOP);'
-        'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:NO_METEO);msg.style.display="block";'        'var _s1e=document.getElementById("stat-score");if(_s1e)_s1e.textContent="—";'        'var _sce=document.getElementById("stat-count");if(_sce)_sce.textContent="0";'        'var _s3e=document.getElementById("stat-temp");if(_s3e)_s3e.textContent="—";'        'var _rie=document.getElementById("rt-intro");if(_rie)_rie.style.display="none";'        'return;}'
-        'msg.style.display="none";'
-        'var label=mode==="beach"?TH_BEACH:mode==="ski"?TH_SKI:TH_GEN;'
-        'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th></tr>";'
-        'var html="";'
-        'list.forEach(function(d,i){'
-        'var v=d[key]!=null?d[key]:d.s;'
-        'var tmp=d.tmin!=null?(d.tmin.toFixed(0)+"°–"+d.tmax.toFixed(0)+"°"):"—";'
-        'html+="<tr>"'
-        '+"<td class=\'rank\'>"+ri(i+1)+"</td>"'
-        '+"<td><img src=\'"+d.ap+"\' width=\'16\' height=\'12\' alt=\'\' style=\'vertical-align:middle;margin-right:6px;border-radius:1px\'><a href=\'"+d.h+"\' class=\'dest-link\'>"+d.n+"</a>"+(d.p?"<span style=\'display:block;font-size:11px;color:#5a6c7d\'>"+d.p+"</span>":"")+"</td>"'
-        '+"<td class=\'sc\' style=\'color:"+sc(v)+"\'>"+v.toFixed(1)+"<span>/10</span></td>"'
-        '+"<td>"+tmp+"</td>"'
-        '+"<td>"+(d.r!=null?d.r.toFixed(0)+"%":"—")+"</td>"'
-        '+"<td>"+(d.sun!=null?d.sun.toFixed(1)+"h":"—")+"</td>"'
-        '+"</tr>";'
-        '});'
-        'tb.innerHTML=html;'
-        'var _s1=document.getElementById("stat-score");'
-        'if(_s1&&list.length){'
-        'var _top=list[0];var _topV=_top[key]!=null?_top[key]:_top.s;'
-        '_s1.textContent=_topV.toFixed(1);'
-        'document.getElementById("stat-count").textContent=list.length;'
-        'var _avgT=list.slice(0,10).reduce(function(a,d){return a+(d.tmin+d.tmax)/2;},0)/Math.min(10,list.length);'
-        'var _s3=document.getElementById("stat-temp");if(_s3)_s3.textContent=Math.round(_avgT)+"°";'
-        '}'
-        'var _rt=document.getElementById("rt-title");'
-        'if(_rt){_rt.textContent=mode==="beach"?TITLE_BEACH:(mode==="ski"?TITLE_SKI:TITLE_METEO);}'
+        'var _sibSeen={};list=list.filter(function(d){if(d.sib<0)return true;if(_sibSeen[d.sib])return false;_sibSeen[d.sib]=1;return true;});'+
+        'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
+        'list=list.slice(0,TOP);'+
+        'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:NO_METEO);msg.style.display="block";'        'var _s1e=document.getElementById("stat-score");if(_s1e)_s1e.textContent="—";'        'var _sce=document.getElementById("stat-count");if(_sce)_sce.textContent="0";'        'var _s3e=document.getElementById("stat-temp");if(_s3e)_s3e.textContent="—";'        'var _rie=document.getElementById("rt-intro");if(_rie)_rie.style.display="none";'        'return;}'+
+        'msg.style.display="none";'+
+        'var label=mode==="beach"?TH_BEACH:mode==="ski"?TH_SKI:TH_GEN;'+
+        'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th></tr>";'+
+        'var html="";'+
+        'list.forEach(function(d,i){'+
+        'var v=d[key]!=null?d[key]:d.s;'+
+        'var tmp=d.tmin!=null?(d.tmin.toFixed(0)+"°–"+d.tmax.toFixed(0)+"°"):"—";'+
+        'html+="<tr>"'+
+        '+"<td class=\'rank\'>"+ri(i+1)+"</td>"'+
+        '+"<td><img src=\'"+d.ap+"\' width=\'16\' height=\'12\' alt=\'\' style=\'vertical-align:middle;margin-right:6px;border-radius:1px\'><a href=\'"+d.h+"\' class=\'dest-link\'>"+d.n+"</a>"+(d.p?"<span style=\'display:block;font-size:11px;color:#5a6c7d\'>"+d.p+"</span>":"")+"</td>"'+
+        '+"<td class=\'sc\' style=\'color:"+sc(v)+"\'>"+v.toFixed(1)+"<span>/10</span></td>"'+
+        '+"<td>"+tmp+"</td>"'+
+        '+"<td>"+(d.r!=null?d.r.toFixed(0)+"%":"—")+"</td>"'+
+        '+"<td>"+(d.sun!=null?d.sun.toFixed(1)+"h":"—")+"</td>"'+
+        '+"</tr>";'+
+        '});'+
+        'tb.innerHTML=html;'+
+        'var _s1=document.getElementById("stat-score");'+
+        'if(_s1&&list.length){'+
+        'var _top=list[0];var _topV=_top[key]!=null?_top[key]:_top.s;'+
+        '_s1.textContent=_topV.toFixed(1);'+
+        'document.getElementById("stat-count").textContent=list.length;'+
+        'var _avgT=list.slice(0,10).reduce(function(a,d){return a+(d.tmin+d.tmax)/2;},0)/Math.min(10,list.length);'+
+        'var _s3=document.getElementById("stat-temp");if(_s3)_s3.textContent=Math.round(_avgT)+"°";'+
+        '}'+
+        'var _rt=document.getElementById("rt-title");'+
+        'if(_rt){_rt.textContent=mode==="beach"?TITLE_BEACH:(mode==="ski"?TITLE_SKI:TITLE_METEO);}'+
         'var _ri=document.getElementById("rt-intro");'+
         'var _mm=document.getElementById("rt-methodo-"+mode);'+
         '["rt-methodo-general","rt-methodo-beach","rt-methodo-ski"].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display="none";});'+
-        'if(_mm)_mm.style.display="";'
-        'if(_ri){if(list.length===0){_ri.style.display="none";}else{_ri.style.display="";'
-        'var _av10=list.slice(0,10);var _sc10=_av10.reduce(function(a,d){return a+(d[key]||d.s);},0)/_av10.length;'
-        'var _at10=_av10.reduce(function(a,d){return a+(d.tmin+d.tmax)/2;},0)/_av10.length;'
-        '_ri.innerHTML="<strong>"+_sc10.toFixed(1)+"/10</strong> · "+Math.round(_at10)+"°"+" · "+list.length+" destinations";'
-        '}}'
-        '}'
-        'document.getElementById("mode-tabs").addEventListener("click",function(ev){'
-        'var btn=ev.target.closest(".mode-tab");'
-        'if(!btn)return;'
-        'document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.remove("active");});'
-        'btn.classList.add("active");'
-        'render(btn.dataset.mode);'
-        '});'
-        'document.getElementById("reg-tabs").addEventListener("click",function(ev){'
-        'var btn=ev.target.closest(".reg-tab");'
-        'if(!btn)return;'
-        'document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.remove("active");});'
-        'btn.classList.add("active");'
-        'CUR_REG=btn.dataset.reg;'
-        'var activeMode=document.querySelector(".mode-tab.active");'
-        'render(activeMode?activeMode.dataset.mode:"meteo");'
-        '});'
+        'if(_mm)_mm.style.display="";'+
+        'if(_ri){if(list.length===0){_ri.style.display="none";}else{_ri.style.display="";'+
+        'var _av10=list.slice(0,10);var _sc10=_av10.reduce(function(a,d){return a+(d[key]||d.s);},0)/_av10.length;'+
+        'var _at10=_av10.reduce(function(a,d){return a+(d.tmin+d.tmax)/2;},0)/_av10.length;'+
+        '_ri.innerHTML="<strong>"+_sc10.toFixed(1)+"/10</strong> · "+Math.round(_at10)+"°"+" · "+list.length+" destinations";'+
+        '}}'+
+        '}'+
+        'document.getElementById("mode-tabs").addEventListener("click",function(ev){'+
+        'var btn=ev.target.closest(".mode-tab");'+
+        'if(!btn)return;'+
+        'document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.remove("active");});'+
+        'btn.classList.add("active");'+
+        'render(btn.dataset.mode);'+
+        '});'+
+        'document.getElementById("reg-tabs").addEventListener("click",function(ev){'+
+        'var btn=ev.target.closest(".reg-tab");'+
+        'if(!btn)return;'+
+        'document.querySelectorAll(".reg-tab").forEach(function(b){b.classList.remove("active");});'+
+        'btn.classList.add("active");'+
+        'CUR_REG=btn.dataset.reg;'+
+        'var activeMode=document.querySelector(".mode-tab.active");'+
+        'render(activeMode?activeMode.dataset.mode:"meteo");'+
+        '});'+
         'function setMode(m){document.querySelectorAll(".fc-item[data-mode]").forEach(function(b){b.classList.toggle("active",b.dataset.mode===m);});var lm=document.querySelector(".fc-item.active[data-mode]");if(lm)document.getElementById("fc-type-lbl").textContent=lm.textContent.trim();document.getElementById("fc-type").classList.toggle("has-filter",m!=="meteo");closeFC();render(m);}'+
         'function setReg(r){CUR_REG=r;document.querySelectorAll(".fc-item[data-reg]").forEach(function(b){b.classList.toggle("active",b.dataset.reg===r);});var lr=document.querySelector(".fc-item.active[data-reg]");if(lr)document.getElementById("fc-region-lbl").textContent=lr.textContent.trim();document.getElementById("fc-region").classList.toggle("has-filter",r!=="all");closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
         'function setSecu(rl){CUR_RL=rl;document.querySelectorAll(".fc-item[data-rl]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.rl)<=rl);b.classList.toggle("active",parseInt(b.dataset.rl)===rl);});var ls=document.querySelector(".fc-item[data-rl=\'"+rl+"\' ]");if(ls)document.getElementById("fc-secu-lbl").textContent="\u2264 "+ls.textContent.trim();document.getElementById("fc-secu").classList.toggle("has-filter",rl<4);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
@@ -850,7 +850,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'function toggleFC(id,ev){if(ev)ev.stopPropagation();var chip=document.getElementById("fc-"+id);var drop=document.getElementById("fcd-"+id);var wasOpen=chip.classList.contains("open");closeFC();if(!wasOpen){chip.classList.add("open");var r=chip.getBoundingClientRect();var l=Math.max(8,Math.min(r.left,window.innerWidth-168));drop.style.cssText="display:block;position:fixed;top:"+(r.bottom+4)+"px;left:"+l+"px;z-index:9999;min-width:160px;max-width:220px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;box-shadow:0 8px 24px rgba(26,31,46,.18);padding:6px";}}'+
 
         'window.goMonth=function(el,ev){var am=document.querySelector(".fc-item.active[data-mode]");var ar=document.querySelector(".fc-item.active[data-reg]");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";var rl=CUR_RL;var bi=CUR_BI;if(m==="meteo"&&r==="all"&&rl===4&&bi===5)return true;ev.preventDefault();var url=el.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);if(rl<4)q.push("rl="+rl);if(bi<5)q.push("bi="+bi);location.href=url+(q.length?"?"+q.join("&"):"");return false;};'+
-        'window.toggleFC=toggleFC;window.setMode=setMode;window.setReg=setReg;window.setSecu=setSecu;window.setBudget=setBudget;'+
+        'window.toggleFC=toggleFC;window.setMode=setMode;window.setReg=setReg;window.setSecu=setSecu;window.setBudget=setBudget;'
     )
 
     # Schema.org
@@ -1384,7 +1384,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
 
         'var _p=new URLSearchParams(location.search);var _initMode=_p.get("mode")||"meteo";var _initReg=_p.get("reg")||"all";var _initRL=parseInt(_p.get("rl")||"4");var _initBI=parseInt(_p.get("bi")||"5");CUR_REG=_initReg;CUR_RL=_initRL;CUR_BI=_initBI;if(_initReg!=="all")setReg(_initReg);if(_initMode!=="meteo")setMode(_initMode);if(_initRL<4)setSecu(_initRL);if(_initBI<5)setBudget(_initBI);render(_initMode);document.querySelectorAll(".month-nav a").forEach(function(a){a.addEventListener("click",function(ev){var am=document.querySelector(".mode-tab.active");var ar=document.querySelector(".reg-tab.active");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";var rl=CUR_RL;var bi=CUR_BI;if(m==="meteo"&&r==="all"&&rl===4&&bi===5)return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);if(rl<4)q.push("rl="+rl);if(bi<5)q.push("bi="+bi);location.href=url+(q.length?"?"+q.join("&"):"");});});'+
         'window.goMonth=function(el,ev){var am=document.querySelector(".fc-item.active[data-mode]");var ar=document.querySelector(".fc-item.active[data-reg]");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";var rl=CUR_RL;var bi=CUR_BI;if(m==="meteo"&&r==="all"&&rl===4&&bi===5)return true;ev.preventDefault();var url=el.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);if(rl<4)q.push("rl="+rl);if(bi<5)q.push("bi="+bi);location.href=url+(q.length?"?"+q.join("&"):"");return false;};'+
-        'window.toggleFC=toggleFC;window.setMode=setMode;window.setReg=setReg;window.setSecu=setSecu;window.setBudget=setBudget;'+
+        'window.toggleFC=toggleFC;window.setMode=setMode;window.setReg=setReg;window.setSecu=setSecu;window.setBudget=setBudget;'
     )
 
     # hreflang
