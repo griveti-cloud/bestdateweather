@@ -97,11 +97,12 @@ def get_nom(entry, lang):
 def get_pays(entry, lang):
     """Return the localised country name for a destination entry.
     CSV columns: pays (FR), country_en, country_es, country_de.
+    Also handles pays_en/pays_es/pays_de aliases from get_annual_pool.
     """
     if lang == 'fr':    return entry.get('pays', '')
-    if lang == 'es':    return entry.get('country_es') or entry.get('pays', '')
-    if lang == 'de':    return entry.get('country_de') or entry.get('pays', '')
-    return entry.get('country_en') or entry.get('pays', '')
+    if lang == 'es':    return entry.get('country_es') or entry.get('pays_es') or entry.get('pays', '')
+    if lang == 'de':    return entry.get('country_de') or entry.get('pays_de') or entry.get('pays', '')
+    return entry.get('country_en') or entry.get('pays_en') or entry.get('pays', '')
 
 REGION_CHILDREN = {
     'canaries': {'lanzarote', 'fuerteventura', 'gran-canaria', 'tenerife',
