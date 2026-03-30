@@ -1384,6 +1384,55 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         hl_code = hl_loc['meta'].get('hreflang', hl_lang)
         hreflang_tags += f'<link rel="alternate" hreflang="{hl_code}" href="{hl_url}">\n'
 
+    th_html = ''.join(f'<th>{c}</th>' for c in th_list)
+    page_html = f"""<!DOCTYPE html>
+<html lang="{loc['meta']['html_lang']}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{h1} — BestDateWeather</title>
+<meta name="description" content="{sub}">
+<link rel="canonical" href="{canonical}">
+{hreflang_tags}<style>{CSS}.pillar-hero{{padding-bottom:64px}}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap"/></noscript>
+<link rel="stylesheet" href="{gen['asset_prefix']}style.css"/>
+</head>
+<body>
+{shared_nav_html(gen['home_url'], gen['try_app_label'], gen['share_label'])}
+<header class="pillar-hero">
+<div class="hero-eyebrow">{pil["hero_eyebrow_prefix"]}{YEAR}</div>
+<h1 class="hero-title">{h1}</h1>
+<p class="hero-sub">{sub}</p>
+<div class="hero-stats">
+<div class="hstat"><span class="hstat-val" id="stat-score">{top['score']:.1f}</span><span class="hstat-lbl">{pil["score_n1"]}</span></div>
+<div class="hstat"><span class="hstat-val" id="stat-count">{TOP_N}</span><span class="hstat-lbl">{pil["top_n_label"]}</span></div>
+<div class="hstat"><span class="hstat-val" id="stat-temp">{avg_temp:.0f}{ft_unit()}</span><span class="hstat-lbl">{pil["top10_avg"]}</span></div>
+</div>
+</header>
+<main class="page">
+<div class="filter-bar-wrap"><div class="filter-bar" id="filter-bar">{filter_chips_html}</div></div>
+<div class="section">
+<p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
+<p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
+<p class="rt-methodo" id="rt-methodo-beach" style="display:none">{loc['hub']['methodo_beach']}</p>
+<p class="rt-methodo" id="rt-methodo-ski" style="display:none">{loc['hub']['methodo_ski']}</p>
+<div style="overflow-x:auto"><table class="rt" aria-label="{sec_title}">
+<thead id="rt-head"><tr>{th_html}</tr></thead>
+<tbody id="rt-body">{rows}</tbody>
+</table></div>
+</div>
+</main>
+{footer}
+{rank_js}
+<script src="{gen['asset_prefix']}js/share.js" defer></script>
+</body></html>"""
+
+    filepath.parent.mkdir(parents=True, exist_ok=True)
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(page_html)
+
+    return filename, canonical
+
 
 def update_sitemaps(fr_pages, en_pages):
     """Append new pillar pages to existing sitemaps if not already present."""
