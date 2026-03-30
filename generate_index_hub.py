@@ -20,15 +20,22 @@ SLUG_OVERRIDE = {
     'saint-pierre-et-miquelon': ('ameriques-n', 'Amérique du Nord'),
     # Bermudes (Royaume-Uni) → Caraïbes
     'bermudes':       ('caraïbes', 'Caraïbes'),
-    # Canaries (Espagne) → Macaronésie
-    'canaries':       ('af-sub', 'Macaronésie'),
-    'tenerife':       ('af-sub', 'Macaronésie'),
-    'gran-canaria':   ('af-sub', 'Macaronésie'),
-    'fuerteventura':  ('af-sub', 'Macaronésie'),
-    'lanzarote':      ('af-sub', 'Macaronésie'),
-    'la-palma':       ('af-sub', 'Macaronésie'),
-    'la-gomera':      ('af-sub', 'Macaronésie'),
-    'el-hierro':      ('af-sub', 'Macaronésie'),
+    # Canaries/Madère/Cap-Vert → Îles Atlantiques
+    'canaries':       ('atl', 'Îles Atlantiques'),
+    'tenerife':       ('atl', 'Îles Atlantiques'),
+    'gran-canaria':   ('atl', 'Îles Atlantiques'),
+    'fuerteventura':  ('atl', 'Îles Atlantiques'),
+    'lanzarote':      ('atl', 'Îles Atlantiques'),
+    'la-palma':       ('atl', 'Îles Atlantiques'),
+    'la-gomera':      ('atl', 'Îles Atlantiques'),
+    'el-hierro':      ('atl', 'Îles Atlantiques'),
+    # Macaronésie → Îles Atlantiques
+    'madere':         ('atl', 'Îles Atlantiques'),
+    'funchal':        ('atl', 'Îles Atlantiques'),
+    'cap-vert':       ('atl', 'Îles Atlantiques'),
+    'sal':            ('atl', 'Îles Atlantiques'),
+    'praia':          ('atl', 'Îles Atlantiques'),
+    'azores':         ('atl', 'Îles Atlantiques'),
 }
 
 # ── pays → (mega_region, sub_region) ──
@@ -87,7 +94,7 @@ MAPPING = {
     'Algérie': ('af-nord', 'Afrique du Nord'),
     'Tunisie': ('af-nord', 'Afrique du Nord'),
     'Égypte': ('af-nord', 'Afrique du Nord'),
-    'Cap-Vert': ('af-nord', "Afrique de l'Ouest"),
+    'Cap-Vert': ('atl', 'Îles Atlantiques'),
     "Côte d'Ivoire": ('afrique-mo', "Afrique de l'Ouest"),
     'Ghana': ('af-sub', "Afrique de l'Ouest"),
     'Nigeria': ('af-sub', "Afrique de l'Ouest"),
@@ -363,19 +370,20 @@ COUNTRY_NAMES_TRANS = {
 MIN_COUNTRY_SIZE = 3  # own accordion if >= 3 destinations
 OTHERS_LABEL = {'fr':'Autres pays','en':'Other countries','es':'Otros países'}
 # Megas that show a flat destination grid (no country sub-accordions)
-FLAT_MEGAS = {'caraïbes', 'ameriques-n', 'ameriques-s', 'oceanie', 'af-nord', 'af-sub'}
+FLAT_MEGAS = {'caraïbes', 'ameriques-n', 'ameriques-s', 'oceanie', 'af-nord', 'af-sub', 'atl'}
 
 # 5 mega-regions in order (France merged into Europe)
 MEGAS = [
     ('europe',     1, {'fr': '🌐 Europe',                         'en': '🌐 Europe',                    'es': '🌐 Europa',                'de': '🌐 Europa'}),
-    ('af-nord',    2, {'fr': '🌐 Afrique du Nord',               'en': '🌐 North Africa',              'es': '🌐 África del Norte',        'de': '🌐 Nordafrika'}),
-    ('af-sub',     3, {'fr': '🌐 Afrique & Océan Indien',         'en': '🌐 Africa & Indian Ocean',     'es': '🌐 África & Océano Índico',  'de': '🌐 Afrika & Indischer Ozean'}),
-    ('me',         4, {'fr': '🌐 Moyen-Orient & Asie Centrale',   'en': '🌐 Middle East & Central Asia','es': '🌐 Oriente Medio & Asia Central','de': '🌐 Naher Osten & Zentralasien'}),
-    ('asie',       5, {'fr': '🌐 Asie',                           'en': '🌐 Asia',                      'es': '🌐 Asia',                   'de': '🌐 Asien'}),
-    ('ameriques-n',6, {'fr': '🌐 Amér. du Nord',                  'en': '🌐 N. America',                'es': '🌐 Norteamérica',           'de': '🌐 Nordamerika'}),
-    ('caraïbes',   7, {'fr': '🌐 Caraïbes',                       'en': '🌐 Caribbean',                 'es': '🌐 Caribe',                 'de': '🌐 Karibik'}),
-    ('ameriques-s',8, {'fr': '🌐 Amér. du Sud',                   'en': '🌐 S. America',                'es': '🌐 Sudamérica',             'de': '🌐 Südamerika'}),
-    ('oceanie',    9, {'fr': '🌐 Océanie',                        'en': '🌐 Oceania',                   'es': '🌐 Oceanía',                'de': '🌐 Ozeanien'}),
+    ('af-nord',    2, {'fr': '🌐 Afrique du Nord',
+    ('atl',        3, {'fr': '🌐 Îles Atlantiques',             'en': '🌐 Atlantic Islands',          'es': '🌐 Islas Atlánticas',        'de': '🌐 Atlantische Inseln'}),               'en': '🌐 North Africa',              'es': '🌐 África del Norte',        'de': '🌐 Nordafrika'}),
+    ('af-sub',     4, {'fr': '🌐 Afrique & Océan Indien',         'en': '🌐 Africa & Indian Ocean',     'es': '🌐 África & Océano Índico',  'de': '🌐 Afrika & Indischer Ozean'}),
+    ('me',         5, {'fr': '🌐 Moyen-Orient & Asie Centrale',   'en': '🌐 Middle East & Central Asia','es': '🌐 Oriente Medio & Asia Central','de': '🌐 Naher Osten & Zentralasien'}),
+    ('asie',       6, {'fr': '🌐 Asie',                           'en': '🌐 Asia',                      'es': '🌐 Asia',                   'de': '🌐 Asien'}),
+    ('ameriques-n',7, {'fr': '🌐 Amér. du Nord',                  'en': '🌐 N. America',                'es': '🌐 Norteamérica',           'de': '🌐 Nordamerika'}),
+    ('caraïbes',   8, {'fr': '🌐 Caraïbes',                       'en': '🌐 Caribbean',                 'es': '🌐 Caribe',                 'de': '🌐 Karibik'}),
+    ('ameriques-s',9, {'fr': '🌐 Amér. du Sud',                   'en': '🌐 S. America',                'es': '🌐 Sudamérica',             'de': '🌐 Südamerika'}),
+    ('oceanie',   10, {'fr': '🌐 Océanie',                        'en': '🌐 Oceania',                   'es': '🌐 Oceanía',                'de': '🌐 Ozeanien'}),
 ]
 
 # Sub-region name translations per language
@@ -399,6 +407,7 @@ SUB_NAMES = {
     'Mexique & Amérique Centrale':  {'fr': 'Mexique & Amérique Centrale',  'en': 'Mexico & Central America',        'es': 'México y América Central',     'de': 'Mexiko & Mittelamerika'},
     'Amérique du Sud':              {'fr': 'Amérique du Sud',              'en': 'South America',                   'es': 'América del Sur',              'de': 'Südamerika'},
     'Australie & Nouvelle-Zélande': {'fr': 'Australie & Nouvelle-Zélande','en': 'Australia & New Zealand',         'es': 'Australia y Nueva Zelanda',    'de': 'Australien & Neuseeland'},
+    'Îles Atlantiques':        {'fr': 'Îles Atlantiques',         'en': 'Atlantic Islands',                'es': 'Islas Atlánticas',             'de': 'Atlantische Inseln'},
     'Pacifique & Outre-mer':        {'fr': 'Pacifique',                    'en': 'Pacific',                         'es': 'Pacífico',                     'de': 'Pazifik'},
 }
 
@@ -423,6 +432,7 @@ SUB_ORDER = {
     'Mexique & Amérique Centrale': 3,
     'Amérique du Sud': 4,
     'Australie & Nouvelle-Zélande': 1,
+    'Îles Atlantiques':        {'fr': 'Îles Atlantiques',         'en': 'Atlantic Islands',                'es': 'Islas Atlánticas',             'de': 'Atlantische Inseln'},
     'Pacifique & Outre-mer': 2,
 }
 
