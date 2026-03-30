@@ -16,7 +16,12 @@
     "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 37.1,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Albanie": {
     "currency": "ALL",
@@ -28,10 +33,15 @@
     ],
     "gpi": 1.784,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 45.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Algérie": {
     "currency": "DZD",
@@ -47,7 +57,12 @@
     "budget_index": 1,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 28.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Allemagne": {
     "currency": "EUR",
@@ -62,7 +77,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 68.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Andorre": {
     "currency": "EUR",
@@ -74,10 +94,15 @@
     ],
     "gpi": 1.258,
     "gpi_year": 2024,
-    "budget_index": 4,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 55.1,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Antigua-et-Barbuda": {
     "currency": "XCD",
@@ -89,10 +114,16 @@
     ],
     "gpi": 1.548,
     "gpi_year": 2024,
-    "budget_index": 4,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: Caribbean average (Barbados 54)"
   },
   "Arabie Saoudite": {
     "currency": "SAR",
@@ -104,10 +135,15 @@
     ],
     "gpi": 2.195,
     "gpi_year": 2024,
-    "budget_index": 3,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 44.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Argentine": {
     "currency": "ARS",
@@ -119,10 +155,15 @@
     ],
     "gpi": 1.867,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 41.3,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Arménie": {
     "currency": "AMD",
@@ -134,10 +175,15 @@
     ],
     "gpi": 2.186,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 40.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Aruba": {
     "currency": "AWG",
@@ -153,7 +199,13 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: Dutch Caribbean, Netherlands COL as reference"
   },
   "Australie": {
     "currency": "AUD",
@@ -168,7 +220,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 67.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Autriche": {
     "currency": "EUR",
@@ -183,7 +240,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 71.2,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Azerbaïdjan": {
     "currency": "AZN",
@@ -198,7 +260,12 @@
     "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 30.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Bahamas": {
     "currency": "BSD",
@@ -213,7 +280,12 @@
     "budget_index": 5,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 98.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Bahreïn": {
     "currency": "BHD",
@@ -225,10 +297,15 @@
     ],
     "gpi": 1.893,
     "gpi_year": 2024,
-    "budget_index": 3,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 47.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Barbade": {
     "currency": "BBD",
@@ -243,7 +320,13 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026 + override",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": true,
+    "budget_override_reason": "Premium Caribbean island; no Numbeo direct data; tourist market comparable to Bahamas/Cayman Islands"
   },
   "Belgique": {
     "currency": "EUR",
@@ -260,7 +343,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 68.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Belize": {
     "currency": "BZD",
@@ -272,10 +360,15 @@
     ],
     "gpi": 2.374,
     "gpi_year": 2024,
-    "budget_index": 3,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 46.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Bhoutan": {
     "currency": "BTN",
@@ -287,10 +380,16 @@
     ],
     "gpi": 1.481,
     "gpi_year": 2024,
-    "budget_index": 3,
+    "budget_index": 1,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: South Asia (Nepal 22.6)"
   },
   "Bolivie": {
     "currency": "BOB",
@@ -307,7 +406,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 27.3,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Bosnie-Herzégovine": {
     "currency": "BAM",
@@ -321,10 +425,15 @@
     ],
     "gpi": 1.685,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 38.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Botswana": {
     "currency": "BWP",
@@ -340,7 +449,12 @@
     "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 32.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Brésil": {
     "currency": "BRL",
@@ -355,7 +469,12 @@
     "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 30.1,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Bulgarie": {
     "currency": "BGN",
@@ -370,7 +489,12 @@
     "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 41.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Burkina Faso": {
     "currency": "XOF",
@@ -385,7 +509,13 @@
     "budget_index": 1,
     "risk_level": 4,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: West Africa average"
   },
   "Bénin": {
     "currency": "XOF",
@@ -400,7 +530,13 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: West Africa average"
   },
   "Cambodge": {
     "currency": "KHR",
@@ -412,10 +548,15 @@
     ],
     "gpi": 1.978,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 34.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Cameroun": {
     "currency": "XAF",
@@ -428,10 +569,15 @@
     ],
     "gpi": 2.458,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 40.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Canada": {
     "currency": "CAD",
@@ -444,10 +590,15 @@
     ],
     "gpi": 1.384,
     "gpi_year": 2024,
-    "budget_index": 4,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 63.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Cap-Vert": {
     "currency": "CVE",
@@ -462,7 +613,12 @@
     "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 46.3,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Chili": {
     "currency": "CLP",
@@ -477,7 +633,12 @@
     "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 39.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Chine": {
     "currency": "CNY",
@@ -492,7 +653,12 @@
     "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 30.5,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Chypre": {
     "currency": "EUR",
@@ -508,7 +674,12 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 58.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Colombie": {
     "currency": "COP",
@@ -520,10 +691,15 @@
     ],
     "gpi": 2.278,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 31.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Corée du Sud": {
     "currency": "KRW",
@@ -538,7 +714,12 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 61.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Costa Rica": {
     "currency": "CRC",
@@ -550,10 +731,15 @@
     ],
     "gpi": 1.694,
     "gpi_year": 2024,
-    "budget_index": 2,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 52.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Croatie": {
     "currency": "EUR",
@@ -568,7 +754,12 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 52.4,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Cuba": {
     "currency": "CUP",
@@ -583,7 +774,12 @@
     "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 41.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Curaçao": {
     "currency": "ANG",
@@ -599,7 +795,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 73.4,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Côte d'Ivoire": {
     "currency": "XOF",
@@ -614,7 +815,12 @@
     "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 44.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Danemark": {
     "currency": "DKK",
@@ -626,10 +832,15 @@
     ],
     "gpi": 1.296,
     "gpi_year": 2024,
-    "budget_index": 5,
+    "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 78.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Dominique": {
     "currency": "XCD",
@@ -644,7 +855,13 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: Eastern Caribbean average"
   },
   "Espagne": {
     "currency": "EUR",
@@ -659,7 +876,12 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 51.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Estonie": {
     "currency": "EUR",
@@ -674,7 +896,12 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 59.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Fidji": {
     "currency": "FJD",
@@ -687,10 +914,15 @@
     ],
     "gpi": 1.826,
     "gpi_year": 2024,
-    "budget_index": 3,
+    "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 34.3,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Finlande": {
     "currency": "EUR",
@@ -706,7 +938,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 69.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "France": {
     "currency": "EUR",
@@ -721,7 +958,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 67.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Gabon": {
     "currency": "XAF",
@@ -736,7 +978,13 @@
     "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: Central Africa, oil economy"
   },
   "Gambie": {
     "currency": "GMD",
@@ -751,7 +999,13 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: West Africa low-income"
   },
   "Ghana": {
     "currency": "GHS",
@@ -763,10 +1017,15 @@
     ],
     "gpi": 1.982,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 33.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Gibraltar": {
     "currency": "GIP",
@@ -781,7 +1040,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 70.2,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Grèce": {
     "currency": "EUR",
@@ -796,7 +1060,12 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 54.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Guatemala": {
     "currency": "GTQ",
@@ -808,10 +1077,15 @@
     ],
     "gpi": 2.306,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 40.4,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Géorgie": {
     "currency": "GEL",
@@ -823,10 +1097,15 @@
     ],
     "gpi": 1.87,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 33.1,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Honduras": {
     "currency": "HNL",
@@ -838,10 +1117,15 @@
     ],
     "gpi": 2.394,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 36.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Hongrie": {
     "currency": "HUF",
@@ -856,7 +1140,12 @@
     "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 46.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Inde": {
     "currency": "INR",
@@ -872,7 +1161,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 18.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Indonésie": {
     "currency": "IDR",
@@ -887,7 +1181,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 26.1,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Iran": {
     "currency": "IRR",
@@ -902,7 +1201,12 @@
     "budget_index": 1,
     "risk_level": 3,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 22.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Irlande": {
     "currency": "EUR",
@@ -915,10 +1219,15 @@
     ],
     "gpi": 1.282,
     "gpi_year": 2024,
-    "budget_index": 5,
+    "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 70.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Islande": {
     "currency": "ISK",
@@ -933,7 +1242,12 @@
     "budget_index": 5,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 97.2,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Israël": {
     "currency": "ILS",
@@ -946,10 +1260,15 @@
     ],
     "gpi": 2.954,
     "gpi_year": 2024,
-    "budget_index": 5,
+    "budget_index": 4,
     "risk_level": 3,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 79.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Italie": {
     "currency": "EUR",
@@ -964,7 +1283,12 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 61.4,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Jamaïque": {
     "currency": "JMD",
@@ -976,10 +1300,15 @@
     ],
     "gpi": 2.374,
     "gpi_year": 2024,
-    "budget_index": 2,
+    "budget_index": 3,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 54.5,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Japon": {
     "currency": "JPY",
@@ -994,7 +1323,13 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL 2026 + documented override",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 47.49,
+    "budget_is_proxy": false,
+    "budget_override": true,
+    "budget_override_reason": "Tourist hotel prices significantly exceed local COL; Tokyo Numbeo city index=73"
   },
   "Jordanie": {
     "currency": "JOD",
@@ -1009,7 +1344,12 @@
     "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 39.4,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Kazakhstan": {
     "currency": "KZT",
@@ -1022,10 +1362,15 @@
     ],
     "gpi": 1.785,
     "gpi_year": 2024,
-    "budget_index": 2,
+    "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 29.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Kenya": {
     "currency": "KES",
@@ -1041,7 +1386,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 28.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Kirghizistan": {
     "currency": "KGS",
@@ -1057,7 +1407,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 27.2,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Koweït": {
     "currency": "KWD",
@@ -1069,10 +1424,15 @@
     ],
     "gpi": 1.958,
     "gpi_year": 2024,
-    "budget_index": 3,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 42.5,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Laos": {
     "currency": "LAK",
@@ -1087,7 +1447,13 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: Southeast Asia low-income (Cambodia 34, Vietnam 26)"
   },
   "Lettonie": {
     "currency": "EUR",
@@ -1102,7 +1468,12 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 52.3,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Liban": {
     "currency": "LBP",
@@ -1117,7 +1488,12 @@
     "budget_index": 2,
     "risk_level": 3,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 41.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Lituanie": {
     "currency": "EUR",
@@ -1129,10 +1505,15 @@
     ],
     "gpi": 1.677,
     "gpi_year": 2024,
-    "budget_index": 2,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 51.2,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Macédoine du Nord": {
     "currency": "MKD",
@@ -1145,10 +1526,15 @@
     ],
     "gpi": 1.821,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 35.5,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Madagascar": {
     "currency": "MGA",
@@ -1164,7 +1550,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 22.5,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Malaisie": {
     "currency": "MYR",
@@ -1176,10 +1567,15 @@
     ],
     "gpi": 1.539,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 34.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Malawi": {
     "currency": "MWK",
@@ -1195,7 +1591,13 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: Southern Africa low-income"
   },
   "Maldives": {
     "currency": "MVR",
@@ -1210,7 +1612,13 @@
     "budget_index": 5,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL 2026 + documented override",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": true,
+    "budget_override_reason": "Resort-only destination; no Numbeo data; structural luxury pricing"
   },
   "Malte": {
     "currency": "EUR",
@@ -1226,7 +1634,12 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 56.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Maroc": {
     "currency": "MAD",
@@ -1239,10 +1652,15 @@
     ],
     "gpi": 1.837,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 31.4,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Maurice": {
     "currency": "MUR",
@@ -1255,10 +1673,15 @@
     ],
     "gpi": 1.718,
     "gpi_year": 2024,
-    "budget_index": 3,
+    "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 38.3,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Mexique": {
     "currency": "MXN",
@@ -1273,7 +1696,12 @@
     "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 42.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Monaco": {
     "currency": "EUR",
@@ -1288,7 +1716,13 @@
     "budget_index": 5,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: France COL × 1.4 — ultra-premium enclave"
   },
   "Mongolie": {
     "currency": "MNT",
@@ -1300,10 +1734,15 @@
     ],
     "gpi": 1.607,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 31.4,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Monténégro": {
     "currency": "EUR",
@@ -1318,7 +1757,12 @@
     "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 42.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Mozambique": {
     "currency": "MZN",
@@ -1330,10 +1774,15 @@
     ],
     "gpi": 2.265,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 3,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 36.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Myanmar": {
     "currency": "MMK",
@@ -1345,10 +1794,15 @@
     ],
     "gpi": 2.806,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 4,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 38.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Namibie": {
     "currency": "NAD",
@@ -1363,7 +1817,12 @@
     "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 36.3,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Nicaragua": {
     "currency": "NIO",
@@ -1375,10 +1834,15 @@
     ],
     "gpi": 2.078,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 34.2,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Nigeria": {
     "currency": "NGN",
@@ -1393,7 +1857,12 @@
     "budget_index": 1,
     "risk_level": 3,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 27.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Norvège": {
     "currency": "NOK",
@@ -1408,7 +1877,12 @@
     "budget_index": 5,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 83.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Nouvelle-Calédonie": {
     "currency": "XPF",
@@ -1420,10 +1894,16 @@
     ],
     "gpi": 1.6,
     "gpi_year": 2024,
-    "budget_index": 4,
+    "budget_index": 5,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL 2026 + documented override",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 67.72,
+    "budget_is_proxy": false,
+    "budget_override": true,
+    "budget_override_reason": "Remote Pacific; structural island premium"
   },
   "Nouvelle-Zélande": {
     "currency": "NZD",
@@ -1436,10 +1916,15 @@
     ],
     "gpi": 1.44,
     "gpi_year": 2024,
-    "budget_index": 4,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 60.2,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Népal": {
     "currency": "NPR",
@@ -1454,7 +1939,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 22.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Oman": {
     "currency": "OMR",
@@ -1466,10 +1956,15 @@
     ],
     "gpi": 1.578,
     "gpi_year": 2024,
-    "budget_index": 3,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 43.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Ouganda": {
     "currency": "UGX",
@@ -1485,7 +1980,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 27.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Ouzbékistan": {
     "currency": "UZS",
@@ -1500,7 +2000,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 27.3,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Palaos": {
     "currency": "USD",
@@ -1513,10 +2018,16 @@
     ],
     "gpi": 1.4,
     "gpi_year": 2024,
-    "budget_index": 4,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: Pacific island, no Numbeo data"
   },
   "Panama": {
     "currency": "PAB",
@@ -1531,7 +2042,12 @@
     "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 45.5,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Papouasie-Nouvelle-Guinée": {
     "currency": "PGK",
@@ -1547,7 +2063,12 @@
     "budget_index": 2,
     "risk_level": 3,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 47.5,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Paraguay": {
     "currency": "PYG",
@@ -1563,7 +2084,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 28.4,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Pays-Bas": {
     "currency": "EUR",
@@ -1578,7 +2104,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 73.4,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Pays-Bas caribéens": {
     "currency": "USD",
@@ -1594,7 +2125,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 73.4,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Philippines": {
     "currency": "PHP",
@@ -1607,10 +2143,15 @@
     ],
     "gpi": 2.022,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 30.1,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Pologne": {
     "currency": "PLN",
@@ -1625,7 +2166,12 @@
     "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 47.3,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Polynésie française": {
     "currency": "XPF",
@@ -1641,7 +2187,13 @@
     "budget_index": 5,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL 2026 + documented override",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": true,
+    "budget_override_reason": "Remote Pacific; structural island premium; proxy France COL underestimates"
   },
   "Porto Rico": {
     "currency": "USD",
@@ -1654,10 +2206,15 @@
     ],
     "gpi": 2.0,
     "gpi_year": 2024,
-    "budget_index": 3,
+    "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 68.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Portugal": {
     "currency": "EUR",
@@ -1669,10 +2226,16 @@
     ],
     "gpi": 1.268,
     "gpi_year": 2024,
-    "budget_index": 3,
+    "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL 2026 + documented override",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 48.82,
+    "budget_is_proxy": false,
+    "budget_override": true,
+    "budget_override_reason": "COL=48.8 borderline; budget/mid-range tourism market comparable to Spain"
   },
   "Pérou": {
     "currency": "PEN",
@@ -1685,10 +2248,15 @@
     ],
     "gpi": 2.006,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 33.5,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Qatar": {
     "currency": "QAR",
@@ -1703,7 +2271,13 @@
     "budget_index": 4,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL 2026 + documented override",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 50.41,
+    "budget_is_proxy": false,
+    "budget_override": true,
+    "budget_override_reason": "Numbeo reflects expat residential costs; tourist hotel rates are high-end"
   },
   "Roumanie": {
     "currency": "RON",
@@ -1718,7 +2292,12 @@
     "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 40.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Royaume-Uni": {
     "currency": "GBP",
@@ -1733,7 +2312,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 67.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Russie": {
     "currency": "RUB",
@@ -1748,7 +2332,12 @@
     "budget_index": 2,
     "risk_level": 4,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 36.5,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Rwanda": {
     "currency": "RWF",
@@ -1762,10 +2351,15 @@
     ],
     "gpi": 2.049,
     "gpi_year": 2024,
-    "budget_index": 2,
+    "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 25.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "République Dominicaine": {
     "currency": "DOP",
@@ -1780,7 +2374,12 @@
     "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 38.2,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Saint-Vincent-et-les-Grenadines": {
     "currency": "XCD",
@@ -1795,7 +2394,13 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: Eastern Caribbean average"
   },
   "Sainte-Lucie": {
     "currency": "XCD",
@@ -1807,10 +2412,16 @@
     ],
     "gpi": 1.9,
     "gpi_year": 2024,
-    "budget_index": 4,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Numbeo available"
   },
   "Samoa": {
     "currency": "WST",
@@ -1823,10 +2434,16 @@
     ],
     "gpi": 1.6,
     "gpi_year": 2024,
-    "budget_index": 3,
+    "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: Polynesia mid-range"
   },
   "Serbie": {
     "currency": "RSD",
@@ -1838,10 +2455,15 @@
     ],
     "gpi": 1.863,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 42.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Seychelles": {
     "currency": "SCR",
@@ -1855,10 +2477,16 @@
     ],
     "gpi": 1.754,
     "gpi_year": 2024,
-    "budget_index": 5,
+    "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL 2026 + documented override",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 64.5,
+    "budget_is_proxy": false,
+    "budget_override": true,
+    "budget_override_reason": "Island resort destination; tourist accommodation prices significantly above local COL=64.5; comparable to Mauritius premium market"
   },
   "Sierra Leone": {
     "currency": "SLL",
@@ -1873,7 +2501,13 @@
     "budget_index": 1,
     "risk_level": 3,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: West Africa low-income"
   },
   "Singapour": {
     "currency": "SGD",
@@ -1891,7 +2525,12 @@
     "budget_index": 5,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 87.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Slovaquie": {
     "currency": "EUR",
@@ -1903,10 +2542,15 @@
     ],
     "gpi": 1.644,
     "gpi_year": 2024,
-    "budget_index": 2,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 49.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Slovénie": {
     "currency": "EUR",
@@ -1921,7 +2565,12 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 54.1,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Sri Lanka": {
     "currency": "LKR",
@@ -1934,10 +2583,15 @@
     ],
     "gpi": 1.956,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 33.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Suisse": {
     "currency": "CHF",
@@ -1954,7 +2608,12 @@
     "budget_index": 5,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 110.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Suède": {
     "currency": "SEK",
@@ -1969,7 +2628,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 68.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Sénégal": {
     "currency": "XOF",
@@ -1982,10 +2646,15 @@
     ],
     "gpi": 1.93,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 3,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 48.5,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Tadjikistan": {
     "currency": "TJS",
@@ -2000,7 +2669,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 27.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Tanzanie": {
     "currency": "TZS",
@@ -2016,7 +2690,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 26.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Taïwan": {
     "currency": "TWD",
@@ -2028,10 +2707,15 @@
     ],
     "gpi": 1.585,
     "gpi_year": 2024,
-    "budget_index": 2,
+    "budget_index": 3,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 49.7,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Tchéquie": {
     "currency": "CZK",
@@ -2043,10 +2727,15 @@
     ],
     "gpi": 1.479,
     "gpi_year": 2024,
-    "budget_index": 2,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 53.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Thaïlande": {
     "currency": "THB",
@@ -2058,10 +2747,15 @@
     ],
     "gpi": 2.001,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 38.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Togo": {
     "currency": "XOF",
@@ -2076,7 +2770,13 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: West Africa low-income"
   },
   "Tonga": {
     "currency": "TOP",
@@ -2089,10 +2789,16 @@
     ],
     "gpi": 1.6,
     "gpi_year": 2024,
-    "budget_index": 3,
+    "budget_index": 2,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: Pacific island average"
   },
   "Trinité-et-Tobago": {
     "currency": "TTD",
@@ -2107,7 +2813,12 @@
     "budget_index": 3,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 52.0,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Tunisie": {
     "currency": "TND",
@@ -2122,7 +2833,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 29.1,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Turks-et-Caïcos": {
     "currency": "USD",
@@ -2134,10 +2850,15 @@
     ],
     "gpi": 1.5,
     "gpi_year": 2024,
-    "budget_index": 5,
+    "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 67.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Turquie": {
     "currency": "TRY",
@@ -2149,10 +2870,15 @@
     ],
     "gpi": 2.245,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 39.2,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Ukraine": {
     "currency": "UAH",
@@ -2167,7 +2893,12 @@
     "budget_index": 1,
     "risk_level": 4,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 28.2,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Uruguay": {
     "currency": "UYU",
@@ -2179,10 +2910,15 @@
     ],
     "gpi": 1.714,
     "gpi_year": 2024,
-    "budget_index": 2,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 55.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Vanuatu": {
     "currency": "VUV",
@@ -2199,7 +2935,13 @@
     "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: Melanesia average"
   },
   "Viêt Nam": {
     "currency": "VND",
@@ -2214,7 +2956,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 26.4,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Vietnam": {
     "currency": "VND",
@@ -2229,7 +2976,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 26.4,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Yémen": {
     "currency": "YER",
@@ -2241,10 +2993,15 @@
     ],
     "gpi": 3.392,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 3,
     "risk_level": 4,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 53.1,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Zambie": {
     "currency": "ZMW",
@@ -2259,7 +3016,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 29.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Zimbabwe": {
     "currency": "ZWL",
@@ -2273,10 +3035,15 @@
     ],
     "gpi": 2.191,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 35.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Écosse": {
     "currency": "GBP",
@@ -2292,7 +3059,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 67.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Égypte": {
     "currency": "EGP",
@@ -2307,7 +3079,12 @@
     "budget_index": 1,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 21.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Émirats Arabes Unis": {
     "currency": "AED",
@@ -2322,7 +3099,13 @@
     "budget_index": 4,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL 2026 + documented override",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 55.16,
+    "budget_is_proxy": false,
+    "budget_override": true,
+    "budget_override_reason": "Numbeo reflects expat residential costs; Dubai hotel market is high-end"
   },
   "Émirats arabes unis": {
     "currency": "AED",
@@ -2337,7 +3120,13 @@
     "budget_index": 4,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL 2026 + documented override",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 55.16,
+    "budget_is_proxy": false,
+    "budget_override": true,
+    "budget_override_reason": "Duplicate entry; same as Émirats Arabes Unis"
   },
   "Équateur": {
     "currency": "USD",
@@ -2349,10 +3138,15 @@
     ],
     "gpi": 2.354,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 2,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 30.9,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "États-Unis": {
     "currency": "USD",
@@ -2367,7 +3161,12 @@
     "budget_index": 4,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 68.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Éthiopie": {
     "currency": "ETB",
@@ -2379,10 +3178,15 @@
     ],
     "gpi": 2.739,
     "gpi_year": 2024,
-    "budget_index": 1,
+    "budget_index": 2,
     "risk_level": 3,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 41.8,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Îles Caïmans": {
     "currency": "KYD",
@@ -2397,7 +3201,12 @@
     "budget_index": 5,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 115.6,
+    "budget_is_proxy": false,
+    "budget_override": false
   },
   "Îles Cook": {
     "currency": "NZD",
@@ -2410,10 +3219,16 @@
     ],
     "gpi": 1.5,
     "gpi_year": 2024,
-    "budget_index": 4,
+    "budget_index": 3,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Regional proxy 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": null,
+    "budget_is_proxy": true,
+    "budget_override": false,
+    "budget_proxy_basis": "Regional proxy: South Pacific island"
   },
   "Îles Vierges américaines": {
     "currency": "USD",
@@ -2425,9 +3240,14 @@
     ],
     "gpi": 2.0,
     "gpi_year": 2024,
-    "budget_index": 4,
+    "budget_index": 5,
     "risk_level": 1,
     "risk_updated": "2026-03-28",
-    "risk_source": "MAE-static-2026-03"
+    "risk_source": "MAE-static-2026-03",
+    "budget_source": "Numbeo COL Index 2026",
+    "budget_method": "calibrated_thresholds_v1",
+    "budget_numbeo_col": 111.3,
+    "budget_is_proxy": false,
+    "budget_override": false
   }
 }
