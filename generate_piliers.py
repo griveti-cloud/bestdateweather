@@ -186,33 +186,63 @@ MACARONESIA_SLUGS = {
 
 # Outre-mer & non-EU islands → true geographic region
 SLUG_REGION_OVERRIDE = {
-    # Caraïbes / Amériques
-    'martinique': 'am', 'guadeloupe': 'am', 'saint-martin': 'am',
-    'saint-barthelemy': 'am', 'saint-pierre-et-miquelon': 'am',
-    'bermudes': 'am', 'guyane': 'am',
+    # Caraïbes
+    'martinique': 'car', 'guadeloupe': 'car', 'saint-martin': 'car',
+    'saint-barthelemy': 'car', 'saint-pierre-et-miquelon': 'am-n',
+    'bermudes': 'car', 'guyane': 'am-s',
     # Afrique / Océan Indien
     'reunion': 'af', 'mayotte': 'af',
     # Pacifique / Océanie
     'polynesie': 'oc', 'bora-bora': 'oc', 'nouvelle-caledonie': 'oc',
     'moorea': 'oc',
+    # Caribbean islands explicitly
+    'punta-cana': 'car', 'nassau': 'car', 'barbade': 'car',
+    'sainte-lucie': 'car', 'saint-thomas': 'car', 'san-juan': 'car',
+    'roatan': 'car', 'curacao': 'car', 'aruba': 'car',
+    'dominique': 'car', 'grenadines': 'car', 'saint-vincent': 'car',
+    'cayman-islands': 'car', 'turks-et-caicos': 'car', 'bonaire': 'car',
+    'providencia': 'car',
 }
+
+CARIBBEAN_COUNTRIES = {
+    'Cuba','République Dominicaine','Bahamas','Barbade','Sainte-Lucie',
+    'Jamaïque','Curaçao','Aruba','Trinité-et-Tobago',
+    'Antigua-et-Barbuda','Dominique','Turks-et-Caïcos',
+    'Îles Caïmans','Îles Vierges américaines','Saint-Vincent-et-les-Grenadines',
+    'Pays-Bas caribéens',
+}
+NORTH_AM_COUNTRIES = {'États-Unis','Canada','Mexique'}
 
 def _reg(pays, slug=None):
     if slug and slug in SLUG_REGION_OVERRIDE:
         return SLUG_REGION_OVERRIDE[slug]
     if slug and slug in MACARONESIA_SLUGS:
         return 'af'
-    return REGION_MAP.get(pays, 'other')
+    base = REGION_MAP.get(pays, 'other')
+    if base == 'am':
+        if pays in CARIBBEAN_COUNTRIES:
+            return 'car'
+        if pays in NORTH_AM_COUNTRIES:
+            return 'am-n'
+        return 'am-s'
+    return base
 
 _REGION_LABELS = {
     'fr': {'all':'Monde','eu':'Europe','af':'Afrique',
-           'am':'Amériques','as':'Asie','me':'Moyen-Orient','oc':'Océanie'},
+           'am-n':'Amér. du Nord','am-s':'Amér. du Sud','car':'Caraïbes',
+           'as':'Asie','me':'Moyen-Orient','oc':'Océanie'},
     'en': {'all':'World','eu':'Europe','af':'Africa',
-           'am':'Americas','as':'Asia','me':'Middle East','oc':'Oceania'},
+           'am-n':'N. America','am-s':'S. America','car':'Caribbean',
+           'as':'Asia','me':'Middle East','oc':'Oceania'},
+    'en-us': {'all':'World','eu':'Europe','af':'Africa',
+           'am-n':'N. America','am-s':'S. America','car':'Caribbean',
+           'as':'Asia','me':'Middle East','oc':'Oceania'},
     'es': {'all':'Mundo','eu':'Europa','af':'África',
-           'am':'Américas','as':'Asia','me':'Oriente Medio','oc':'Oceanía'},
+           'am-n':'Norteamérica','am-s':'Sudamérica','car':'Caribe',
+           'as':'Asia','me':'Oriente Medio','oc':'Oceanía'},
     'de': {'all':'Welt','eu':'Europa','af':'Afrika',
-           'am':'Amerika','as':'Asien','me':'Naher Osten','oc':'Ozeanien'},
+           'am-n':'Nordamerika','am-s':'Südamerika','car':'Karibik',
+           'as':'Asien','me':'Naher Osten','oc':'Ozeanien'},
 }
 
 def build_region_tabs(lang):
