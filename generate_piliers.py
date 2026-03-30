@@ -849,7 +849,6 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'function closeFC(){document.querySelectorAll(".fchip.open").forEach(function(c){c.classList.remove("open");var id=c.id.replace("fc-","");var d=document.getElementById("fcd-"+id);if(d)d.style.display="none";});}'+
         'function toggleFC(id,ev){if(ev)ev.stopPropagation();var chip=document.getElementById("fc-"+id);var drop=document.getElementById("fcd-"+id);var wasOpen=chip.classList.contains("open");closeFC();if(!wasOpen){chip.classList.add("open");var r=chip.getBoundingClientRect();var l=Math.max(8,Math.min(r.left,window.innerWidth-168));drop.style.cssText="display:block;position:fixed;top:"+(r.bottom+4)+"px;left:"+l+"px;z-index:9999;min-width:160px;max-width:220px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;box-shadow:0 8px 24px rgba(26,31,46,.18);padding:6px";}}'+
 
-        '''+
         'document.querySelectorAll("#fcd-period a").forEach(function(a){function doNav(ev){ev.stopPropagation();var am=document.querySelector(".fc-item.active[data-mode]");var ar=document.querySelector(".fc-item.active[data-reg]");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";var rl=CUR_RL;var bi=CUR_BI;if(m==="meteo"&&r==="all"&&rl===4&&bi===5)return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);if(rl<4)q.push("rl="+rl);if(bi<5)q.push("bi="+bi);location.href=url+(q.length?"?"+q.join("&"):"");}a.addEventListener("click",doNav);a.addEventListener("touchend",function(ev){ev.preventDefault();doNav.call(this,ev);});});'
     )
 
@@ -934,6 +933,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
     footer = footer_ranking_html(lang, [{'url': c['url'], 'flag': c['flag'], 'label': c['label']} for c in cross_links])
 
     flag_prefix = gen['asset_prefix']
+    th_html = ''.join(f'<th>{c}</th>' for c in loc['pilier']['th'])
 
     page_html = f"""<!DOCTYPE html>
 <html lang="{lang}">
@@ -972,7 +972,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 <p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
 <p class="rt-methodo" id="rt-methodo-beach" style="display:none">{loc['hub']['methodo_beach']}</p>
 <p class="rt-methodo" id="rt-methodo-ski" style="display:none">{loc['hub']['methodo_ski']}</p>
-<div style="overflow-x:auto"><table class="rt" aria-label="Classement"><thead id="rt-head"><tr>{"".join(f"<th>{c}</th>" for c in loc['pilier']['th'])}</tr></thead><tbody id="rt-body">{table_body}</tbody></table></div>
+<div style="overflow-x:auto"><table class="rt" aria-label="Classement"><thead id="rt-head"><tr>{th_html}</tr></thead><tbody id="rt-body">{table_body}</tbody></table></div>
 </div>
 <div class="cta-box"><a href="{cta_href}">{cta_text} →</a></div>
 {related}
@@ -1381,7 +1381,6 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'function closeFC(){document.querySelectorAll(".fchip.open").forEach(function(c){c.classList.remove("open");var id=c.id.replace("fc-","");var d=document.getElementById("fcd-"+id);if(d)d.style.display="none";});}'+
         'function toggleFC(id,ev){if(ev)ev.stopPropagation();var chip=document.getElementById("fc-"+id);var drop=document.getElementById("fcd-"+id);var wasOpen=chip.classList.contains("open");closeFC();if(!wasOpen){chip.classList.add("open");var r=chip.getBoundingClientRect();var l=Math.max(8,Math.min(r.left,window.innerWidth-168));drop.style.cssText="display:block;position:fixed;top:"+(r.bottom+4)+"px;left:"+l+"px;z-index:9999;min-width:160px;max-width:220px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;box-shadow:0 8px 24px rgba(26,31,46,.18);padding:6px";}}'+
 
-        '''+
         'var _p=new URLSearchParams(location.search);var _initMode=_p.get("mode")||"meteo";var _initReg=_p.get("reg")||"all";var _initRL=parseInt(_p.get("rl")||"4");var _initBI=parseInt(_p.get("bi")||"5");CUR_REG=_initReg;CUR_RL=_initRL;CUR_BI=_initBI;if(_initReg!=="all")setReg(_initReg);if(_initMode!=="meteo")setMode(_initMode);if(_initRL<4)setSecu(_initRL);if(_initBI<5)setBudget(_initBI);render(_initMode);document.querySelectorAll(".month-nav a").forEach(function(a){a.addEventListener("click",function(ev){var am=document.querySelector(".mode-tab.active");var ar=document.querySelector(".reg-tab.active");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";var rl=CUR_RL;var bi=CUR_BI;if(m==="meteo"&&r==="all"&&rl===4&&bi===5)return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);if(rl<4)q.push("rl="+rl);if(bi<5)q.push("bi="+bi);location.href=url+(q.length?"?"+q.join("&"):"");});});'+
         'document.querySelectorAll("#fcd-period a").forEach(function(a){function doNav(ev){ev.stopPropagation();var am=document.querySelector(".fc-item.active[data-mode]");var ar=document.querySelector(".fc-item.active[data-reg]");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";var rl=CUR_RL;var bi=CUR_BI;if(m==="meteo"&&r==="all"&&rl===4&&bi===5)return;ev.preventDefault();var url=this.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);if(rl<4)q.push("rl="+rl);if(bi<5)q.push("bi="+bi);location.href=url+(q.length?"?"+q.join("&"):"");}a.addEventListener("click",doNav);a.addEventListener("touchend",function(ev){ev.preventDefault();doNav.call(this,ev);});});'
     )
@@ -1397,54 +1396,6 @@ def generate_annual_page(lang, dests, climate, country_info=None):
                    f'https://bestdateweather.com/{hl_sub}/{hl_file}')
         hl_code = hl_loc['meta'].get('hreflang', hl_lang)
         hreflang_tags += f'<link rel="alternate" hreflang="{hl_code}" href="{hl_url}">\n'
-
-    page_html = f"""<!DOCTYPE html>
-<html lang="{loc['meta']['html_lang']}">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{h1} — BestDateWeather</title>
-<meta name="description" content="{desc}">
-<link rel="canonical" href="{canonical}">
-{hreflang_tags}<style>{CSS}.pillar-hero{{padding-bottom:64px}}</style>
-<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap"/></noscript>
-<link rel="stylesheet" href="{gen['asset_prefix']}style.css"/>
-</head>
-<body>
-{shared_nav_html(gen['home_url'], gen['try_app_label'], gen['share_label'])}
-<header class="pillar-hero">
-<div class="hero-eyebrow">{pil["hero_eyebrow_prefix"]}{YEAR}</div>
-<h1 class="hero-title">{h1}</h1>
-<p class="hero-sub">{sub}</p>
-<div class="hero-stats">
-<div class="hstat"><span class="hstat-val" id="stat-score">{top['score']:.1f}</span><span class="hstat-lbl">{pil["score_n1"]}</span></div>
-<div class="hstat"><span class="hstat-val" id="stat-count">{TOP_N}</span><span class="hstat-lbl">{pil["top_n_label"]}</span></div>
-<div class="hstat"><span class="hstat-val" id="stat-temp">{avg_temp:.0f}{ft_unit()}</span><span class="hstat-lbl">{pil["top10_avg"]}</span></div>
-</div>
-</header>
-<main class="page">
-<div class="filter-bar-wrap"><div class="filter-bar" id="filter-bar">{filter_chips_html}</div></div>
-<div class="section">
-<p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
-<p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
-<p class="rt-methodo" id="rt-methodo-beach" style="display:none">{loc['hub']['methodo_beach']}</p>
-<p class="rt-methodo" id="rt-methodo-ski" style="display:none">{loc['hub']['methodo_ski']}</p>
-<div style="overflow-x:auto"><table class="rt" aria-label="{sec_title}">
-<thead id="rt-head"><tr>{"".join(f"<th>{c}</th>" for c in th_list)}</tr></thead>
-<tbody id="rt-body">{rows}</tbody>
-</table></div>
-</div>
-</main>
-{footer}
-{rank_js}
-<script src="{gen['asset_prefix']}js/share.js" defer></script>
-</body></html>"""
-
-    filepath.parent.mkdir(parents=True, exist_ok=True)
-    with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(page_html)
-
-    return filename, canonical
 
 
 def update_sitemaps(fr_pages, en_pages):
