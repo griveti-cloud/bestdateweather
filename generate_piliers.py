@@ -732,7 +732,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
     bl = pil.get('budget_labels', {'1':'💚 Budget','2':'💚 Abordable','3':'🟡 Intermédiaire','4':'🟠 Haut de gamme','5':'💎 Premium'})
     _secu_items = ''.join(f'<div class="fc-item" data-rl="{r}" onclick="setSecu({r})">{sl.get(str(r),str(r))}</div>' for r in range(1,5))
     _budget_items = ''.join(f'<div class="fc-item" data-bi="{b}" onclick="setBudget({b})">{bl.get(str(b),str(b))}</div>' for b in range(1,6))
-    _reg_opts = region_tabs.replace('class="reg-tab active"','class="fc-item active" onclick="setReg(this.dataset.reg)"').replace('class="reg-tab"','class="fc-item" onclick="setReg(this.dataset.reg)"')
+    _reg_opts = region_tabs.replace('class="reg-tab active"','class="fc-item active" onclick="event.stopPropagation();setReg(this.dataset.reg)"').replace('class="reg-tab"','class="fc-item" onclick="event.stopPropagation();setReg(this.dataset.reg)"')
     _type_opts = (
         f'<div class="fc-item active" data-mode="meteo" onclick="setMode(\'meteo\')">{tab_meteo}</div>'
         f'<div class="fc-item" data-mode="beach" onclick="setMode(\'beach\')">{tab_beach}</div>'
@@ -1277,7 +1277,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
     _reg_inner = build_region_tabs(lang)
     _secu_items_ann = ''.join(f'<div class="fc-item" data-rl="{r}" onclick="setSecu({r})">{_sl.get(str(r),str(r))}</div>' for r in range(1,5))
     _budget_items_ann = ''.join(f'<div class="fc-item" data-bi="{b}" onclick="setBudget({b})">{_bl.get(str(b),str(b))}</div>' for b in range(1,6))
-    _reg_opts_ann = _reg_inner.replace('class="reg-tab active"','class="fc-item active" onclick="setReg(this.dataset.reg)"').replace('class="reg-tab"','class="fc-item" onclick="setReg(this.dataset.reg)"')
+    _reg_opts_ann = _reg_inner.replace('class="reg-tab active"','class="fc-item active" onclick="event.stopPropagation();setReg(this.dataset.reg)"').replace('class="reg-tab"','class="fc-item" onclick="event.stopPropagation();setReg(this.dataset.reg)"')
     _type_opts_ann = (
         f'<div class="fc-item active" data-mode="meteo" onclick="setMode(\'meteo\')">{tab_meteo}</div>'
         f'<div class="fc-item" data-mode="beach" onclick="setMode(\'beach\')">{tab_beach}</div>'
