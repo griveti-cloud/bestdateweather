@@ -539,14 +539,11 @@ def safety_badge(dest, country_info):
     pays = dest.get('pays', '')
     info = country_info.get(pays, {})
     level = info.get('risk_level', 1)
-    if level == 1:
-        return '<span class="safety-1" title="Sûr">🟢</span>'
-    elif level == 2:
-        return '<span class="safety-2" title="Vigilance normale">🟡</span>'
-    elif level == 3:
-        return '<span class="safety-3" title="Vigilance renforcée">🟠</span>'
-    else:
-        return '<span class="safety-4" title="Déconseillé">🔴</span>'
+    cc = (dest.get('flag') or '').upper()
+    attr = f' data-advisory-cc="{cc}"' if cc else ''
+    icons = {1: ('safety-1', '🟢'), 2: ('safety-2', '🟡'), 3: ('safety-3', '🟠'), 4: ('safety-4', '🔴')}
+    cls, icon = icons.get(level, icons[1])
+    return f'<span class="{cls}"{attr}>{icon}</span>'
 
 def make_table_annual(entries, n, lang, country_info=None):
     """Generate top-N annual ranking table."""
@@ -850,6 +847,7 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 </main>
 {footer_html}
 <script src="{load_locale(lang)['classements']['share_js']}"></script>
+<script src="js/advisory.min.js?v=1" defer></script>
 </body></html>"""
 
 

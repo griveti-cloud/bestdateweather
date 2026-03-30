@@ -531,7 +531,7 @@ def _mae_label(risk_level: int, lang: str = 'fr') -> tuple:
     return data[lang_key][lvl]
 
 
-def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) -> str:
+def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None, iso2: str = '') -> str:
     """
     Generates the Essential Travel Info widget for a destination page.
     Returns empty string if country data unavailable.
@@ -635,7 +635,7 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
     gpi_year = info.get('gpi_year', 2024)
     mae_label, mae_cls, mae_icon = _mae_label(risk_level, lang)
     safety_html = (
-        f'<div class="ti-chip ti-chip--{mae_cls}">'
+        f'<div class="ti-chip ti-chip--{mae_cls}" data-advisory-cc="{iso2.upper() if iso2 else ""}" data-advisory-lang="{lang}">'
         f'<div class="ti-chip-label">{lbl["safety"]}</div>'
         f'<div class="ti-chip-row">'
         f'<span class="ti-chip-icon">{mae_icon}</span>'
@@ -670,12 +670,13 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None) ->
     }
     gpi_sub = lbl["gpi_note"].replace(' : ', ': ')
     safety_detail = (
-        f'<div class="ti-safety-detail">'
+        f'<div class="ti-safety-detail" id="ti-advisory-note-{iso2.upper() if iso2 else pays[:3]}">'
         f'<span class="ti-safety-note">'
         f'{mae_source_lbl.get(lang, mae_source_lbl["en"])}'
         f' &nbsp;·&nbsp; '
         f'<span class="ti-safety-source">{gpi_sub} ({gpi_year})</span>'
         f'</span>'
+        f'<span class="ti-advisory-live" style="display:none;font-size:10px;color:#888;margin-left:6px"></span>'
         f'</div>'
     )
 

@@ -649,7 +649,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     # ── Travel Info Widget ──
     _lang_code = C.get('lang', 'fr')
     _pays = dest.get('pays', '')
-    travel_info_section = _travel_info_widget(_pays, nom, lang=_lang_code)
+    travel_info_section = _travel_info_widget(_pays, nom, lang=_lang_code, iso2=dest.get('flag',''))
 
     # ── Climate Trend Section ──
     climate_trend_sec = _climate_trend_section(slug_fr, nom, lang=_lang_code,
@@ -1168,6 +1168,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 <script>
 if(window.initDestSearch) window.initDestSearch({{suffix:'{C['annual_suffix']}',prefix:'{C['annual_prefix']}',assetPrefix:'{C['asset_prefix']}',lang:'{C['lang']}'}});
 </script>
+<script src="{pfx}js/advisory.min.js?v=1" defer></script>
 </body>
 </html>'''
     return html
@@ -1947,7 +1948,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     # ── Travel Info Widget (monthly) ──
     _m_lang = C.get('lang', 'fr')
     _m_pays = dest.get('pays', '')
-    travel_info_section = _travel_info_widget(_m_pays, nom, lang=_m_lang)
+    travel_info_section = _travel_info_widget(_m_pays, nom, lang=_m_lang, iso2=dest.get('flag',''))
 
     # ── Activities (GetYourGuide) – monthly ──
     gyg_domain_m = C['gyg_domain']
@@ -2345,6 +2346,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 <script>
 if(window.initDestSearch) window.initDestSearch({{suffix:'{C['monthly_sep']}{C['month_url'][mi]}.html',prefix:'',lang:'{C['lang']}'}});
 </script>
+<script src="{pfx}js/advisory.min.js?v=1" defer></script>
 {footer_html(cfg, dest)}
 </body>
 </html>'''
