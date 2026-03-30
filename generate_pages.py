@@ -1552,8 +1552,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     # Budget stat for decision card
     _budget_icons = {1:'💚',2:'🟡',3:'🟠',4:'💸',5:'💎'}
     _budget_labels = {
-        'fr':{1:'Budget',2:'Abordable',3:'Intermédiaire',4:'Haut de gamme',5:'Premium'},
-        'en':{1:'Budget',2:'Affordable',3:'Mid-range',4:'Upscale',5:'Premium'},
+        'fr':{1:'Économique',2:'Abordable',3:'Intermédiaire',4:'Haut de gamme',5:'Premium'},
+        'en':{1:'Economy',2:'Affordable',3:'Mid-range',4:'Upscale',5:'Premium'},
         'es':{1:'Económico',2:'Asequible',3:'Intermedio',4:'Alto',5:'Premium'},
         'de':{1:'Günstig',2:'Erschwinglich',3:'Mittelklasse',4:'Gehoben',5:'Premium'},
     }

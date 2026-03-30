@@ -568,7 +568,7 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None, is
             'source': 'Source : Institute for Economics & Peace',
             'more': '+{n} autres',
             'budget': 'Budget',
-            'budget_labels': ['Budget', 'Abordable', 'Intermédiaire', 'Haut de gamme', 'Premium'],
+            'budget_labels': ['Économique', 'Abordable', 'Intermédiaire', 'Haut de gamme', 'Premium'],
             'budget_icons': ['💚', '💚', '🟡', '🟠', '💎'],
         },
         'en': {
@@ -583,7 +583,7 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None, is
             'source': 'Source: Institute for Economics & Peace',
             'more': '+{n} more',
             'budget': 'Budget',
-            'budget_labels': ['Budget', 'Affordable', 'Mid-range', 'Upscale', 'Premium'],
+            'budget_labels': ['Economy', 'Affordable', 'Mid-range', 'Upscale', 'Premium'],
             'budget_icons': ['💚', '💚', '🟡', '🟠', '💎'],
         },
     }.get(lang, {
@@ -598,7 +598,7 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None, is
         'source': 'Source: Institute for Economics & Peace',
         'more': '+{n} more',
         'budget': 'Budget',
-        'budget_labels': ['Budget', 'Affordable', 'Mid-range', 'Upscale', 'Premium'],
+        'budget_labels': ['Economy', 'Affordable', 'Mid-range', 'Upscale', 'Premium'],
         'budget_icons': ['💚', '💚', '🟡', '🟠', '💎'],
     })
 
