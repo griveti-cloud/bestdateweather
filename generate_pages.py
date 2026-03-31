@@ -831,9 +831,9 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     # ── Hotels.com (Expedia Group) ──
     booking_section = ''
     country_name = country
-    hotels_dest = quote_plus(f"{nom}, {country_name}")
+    _exp_dest = quote_plus(f"{dest.get('nom_en') or dest.get('nom_bare') or nom}, {dest.get('country_en') or country_name}")
     hotels_subdomain = C['booking_domain']
-    booking_url = f"https://expedia.com/affiliate?siteid=1&landingPage={quote_plus('https://www.expedia.com/Hotel-Search?destination=' + nom + ', ' + country_name)}&camref=1110lB57J&creativeref=1100l68075&adref=PZtywJ7qWh"
+    booking_url = f"https://www.expedia.com/Hotel-Search?destination={_exp_dest}&camref=1110lB57J"
 
     off_months = [month_lc(C, MONTHS[i])
                   for i in range(12) if months[i]['score'] >= 6.5 and months[i]['score'] < best_score - 1.5]
@@ -2134,9 +2134,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     # ── Hotels.com (monthly) ──
     country_name = dest_country(cfg, dest)
-    hotels_dest_m = quote_plus(f"{nom}, {country_name}")
+    _exp_dest_m = quote_plus(f"{dest.get('nom_en') or dest.get('nom_bare') or nom}, {dest.get('country_en') or country_name}")
     hotels_subdomain_m = cfg['booking_domain']
-    bk_url = f"https://expedia.com/affiliate?siteid=1&landingPage={quote_plus('https://www.expedia.com/Hotel-Search?destination=' + nom + ', ' + country_name)}&camref=1110lB57J&creativeref=1100l68075&adref=PZtywJ7qWh"
+    bk_url = f"https://www.expedia.com/Hotel-Search?destination={_exp_dest_m}&camref=1110lB57J"
     bk_cta = C['lbl_m_bk_cta_tpl'].format(**tpl)
     booking_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_booking_section']}</div>
