@@ -879,9 +879,9 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         activities_section = ''
 
     # ── Flights (Kiwi via Travelpayouts) ──
-    kiwi_to = quote_plus(f"{nom}-{country_name}")
-    kiwi_deep = f"https://www.kiwi.com/deep?to={kiwi_to}&lang={gyg_lang}"
-    flights_url = f"https://c111.travelpayouts.com/click?shmarker={TP_MARKER}&promo_id=3791&source_type=customlink&type=click&custom_url={quote_plus(kiwi_deep)}"
+    _kiwi_city = quote_plus(dest.get('nom_en') or dest.get('nom_bare') or nom)
+    _kiwi_country = quote_plus(dest.get('country_en') or country_name)
+    flights_url = f"https://www.kiwi.com/deep?affilid={TP_MARKER}&to={_kiwi_city}%2C{_kiwi_country}&lang={gyg_lang}"
     flights_section = f'''<section class="section">
  <div class="section-label">{C['lbl_flights_section']}</div>
  <h2 class="section-title">{C['lbl_flights_title_tpl'].format(name=nom_f)}</h2>
@@ -2192,9 +2192,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         activities_section = ''
 
     # ── Flights (Kiwi via Travelpayouts) – monthly ──
-    kiwi_to_m = quote_plus(f"{nom}-{country_name}")
-    kiwi_deep_m = f"https://www.kiwi.com/deep?to={kiwi_to_m}&departure={YEAR}-{mi+1:02d}-01&lang={gyg_lang_m}"
-    flights_url_m = f"https://c111.travelpayouts.com/click?shmarker={TP_MARKER}&promo_id=3791&source_type=customlink&type=click&custom_url={quote_plus(kiwi_deep_m)}"
+    _kiwi_city_m = quote_plus(dest.get('nom_en') or dest.get('nom_bare') or nom)
+    _kiwi_country_m = quote_plus(dest.get('country_en') or country_name)
+    flights_url_m = f"https://www.kiwi.com/deep?affilid={TP_MARKER}&to={_kiwi_city_m}%2C{_kiwi_country_m}&departure={YEAR}-{mi+1:02d}-01&lang={gyg_lang_m}"
     flights_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_flights_section']}</div>
  <h2 class="section-title">{cfg['lbl_flights_title_tpl'].format(name=nom_f)}</h2>
