@@ -1029,7 +1029,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
             _nd_slug = dest_slug(C, _nd)
             _nd_name = dest_name(C, _nd)
             _nd_url = annual_url(C, _nd_slug)
-            _dist_lbl = f"{round(_dist)} km"
+            _dist_lbl = f"{round(_dist * 0.621371)} mi" if C.get("imperial") else f"{round(_dist)} km"
             _nearby_cards += (
                 f'<a href="{_nd_url}" class="nearby-card">'
                 f'<img src="{_pfx_flag}{_nd.get("flag","")}.png" loading="lazy" width="16" height="12" alt="" class="flag-icon">'
@@ -1975,7 +1975,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
                 f'<a href="{_nd_url_m}" class="nearby-card">'
                 f'<img src="{_pfx_flag_m}{_nd_m.get("flag","")}.png" loading="lazy" width="16" height="12" alt="" class="flag-icon">'
                 f'<span class="nearby-name">{_nd_name_m}</span>'
-                f'<span class="nearby-meta">{round(_dist_m)} km · {_nd_sc_m:.1f}/10 · {_nd_tx_m}</span>'
+                + (f'<span class="nearby-meta">{round(_dist_m * 0.621371)} mi · {_nd_sc_m:.1f}/10 · {_nd_tx_m}</span>' if C.get("imperial") else f'<span class="nearby-meta">{round(_dist_m)} km · {_nd_sc_m:.1f}/10 · {_nd_tx_m}</span>') +
                 f'</a>'
             )
     _nearby_lbl_m = C.get('lbl_nearby_section', 'À proximité')
