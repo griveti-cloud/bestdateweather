@@ -209,8 +209,8 @@
   },
   "tiers": {
     "peak": "💸 Haute saison",
-    "low": "✅ Prix bas",
-    "shoulder": "🌿 Prix modérés"
+    "low": "✅ Basse saison",
+    "shoulder": "🌿 Mi-saison"
   },
   "verdicts": {
     "excellent": "Excellente période",
@@ -398,7 +398,7 @@
     "lbl_city": "🏙️ City-trip / culture",
     "lbl_ext": "🚶 Activités extérieures",
     "lbl_beach": "🏖️ Plage / baignade",
-    "lbl_budget": "💰 Budget",
+    "lbl_budget": "📅 Saisonnalité",
     "rain_unit": "des jours",
     "sun_unit": "par jour en moyenne",
     "qf_tminmax": "Température min / max",
