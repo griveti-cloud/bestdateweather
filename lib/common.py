@@ -322,22 +322,24 @@ def bar_chart(pct, max_val=100):
 def ressenti(tmax, dew, lang='fr'):
     """Return (label, color) for thermal comfort. Seuils calibrés GPT/Claude."""
     LABELS = {
-        'froid':          {'fr':'Froid',         'en':'Cold',        'es':'Frío',      'de':'Kalt'},
-        'frais':          {'fr':'Frais',          'en':'Fresh',       'es':'Fresco',    'de':'Frisch'},
-        'confortable':    {'fr':'Confortable',    'en':'Comfortable', 'es':'Cómodo',    'de':'Angenehm'},
-        'lourd':          {'fr':'Lourd',          'en':'Oppressive',  'es':'Pesado',    'de':'Schwül'},
-        'tres_eprouvant': {'fr':'Très éprouvant', 'en':'Exhausting',  'es':'Agotador',  'de':'Erschöpfend'},
+        'froid':          {'fr':'Froid',         'en':'Cold',         'en-us':'Cold',       'es':'Frío',        'de':'Kalt'},
+        'frais':          {'fr':'Frais',          'en':'Fresh',        'en-us':'Fresh',      'es':'Fresco',      'de':'Frisch'},
+        'confortable':    {'fr':'Confortable',    'en':'Comfortable',  'en-us':'Comfortable','es':'Cómodo',      'de':'Angenehm'},
+        'lourd':          {'fr':'Lourd',          'en':'Oppressive',   'en-us':'Oppressive', 'es':'Pesado',      'de':'Schwül'},
+        'chaleur_humide': {'fr':'Chaleur humide', 'en':'Humid heat',   'en-us':'Humid heat', 'es':'Calor húmedo','de':'Feuchte Hitze'},
+        'tres_chaud':     {'fr':'Très chaud',     'en':'Very hot',     'en-us':'Very hot',   'es':'Muy caluroso','de':'Sehr heiß'},
     }
     COLORS = {'froid':'#7c3aed','frais':'#0ea5e9','confortable':'#22c55e',
-              'lourd':'#f97316','tres_eprouvant':'#ef4444'}
+              'lourd':'#f97316','chaleur_humide':'#ef4444','tres_chaud':'#dc2626'}
     if tmax is None or dew is None:
         return None, None
     if tmax < 0:                      key = 'froid'
     elif dew < 16 and tmax < 20:      key = 'frais'
     elif dew < 18 and tmax <= 32:     key = 'confortable'
     elif dew <= 22 and tmax <= 38:    key = 'lourd'
-    else:                             key = 'tres_eprouvant'
-    l = lang if lang in ('fr','en','es','de') else 'en'
+    elif dew > 22:                    key = 'chaleur_humide'
+    else:                             key = 'tres_chaud'
+    l = lang if lang in ('fr','en','en-us','es','de') else 'en'
     return LABELS[key][l], COLORS[key]
 
 def climate_table_html(months, nom, is_mountain=False, L=None):
