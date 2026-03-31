@@ -1679,7 +1679,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         dest, months, best_idx, C, nom,
         is_mountain=_is_mountain_m, is_coastal=_is_coastal_m,
         oui_si=oui_si, non_si=non_si, verdict_txt=verdict_txt,
-        is_monthly=True, mi_current=mi
+        is_monthly=True, mi_current=mi,
+        best_month_name=MONTHS[best_idx], best_month_score=best_score
     )
 
     # ── Month nav ──
@@ -2416,34 +2417,6 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
 {_m_hero_credit}</header>
 <main class="page">
- <section class="section summ-section">
- <div class="section-label">{L['sec_summary']}</div>
- <h2 class="section-title">{L['sec_summary_title']}</h2>
- <div class="summ-card">
-   <div class="summ-top">
-     <span class="summ-badge" style="background:{bg};color:{txt};border:1.5px solid {txt}">{verdict_lbl}</span>
-     <span class="summ-score" style="color:{txt}">{score:.1f}<span class="summ-score-den">/10</span></span>
-   </div>
-   <div class="summ-temp-row">
-     <span class="summ-temp">{fmt_temp(m['tmin'], C)} — {fmt_temp(m['tmax'], C)}</span>
-     <span class="summ-season">{season}</span>
-   </div>
-   <div class="summ-bars">
-     <div class="summ-bar-item">
-       <div class="summ-bar-header"><span>☀️ {m['sun_h']}h</span><span class="summ-bar-lbl">{L['qf_sun']}</span></div>
-       <div class="summ-track"><div class="summ-fill summ-fill-sun" style="width:{sun_pct_bar}%"></div></div>
-     </div>
-     <div class="summ-bar-item">
-       <div class="summ-bar-header"><span>🌧️ {m['rain_pct']}%</span><span class="summ-bar-lbl">{L['qf_rain']}</span></div>
-       <div class="summ-track"><div class="summ-fill summ-fill-rain" style="width:{rain_pct_bar}%"></div></div>
-     </div>
-   </div>
-   <div class="summ-footer">
-     <span class="summ-best">{L['qf_best']} : <strong>{best_month}</strong> ({best_score:.1f}/10)</span>
-   </div>
- </div>
- </section>
-
  <section class="section dec-section">
  <div class="section-label">{L['sec_verdict']}</div>
  <h2 class="section-title">{L['sec_verdict_title']}</h2>

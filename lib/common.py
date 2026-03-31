@@ -951,7 +951,8 @@ def climate_trend_section(slug_fr: str, nom: str, lang: str = 'fr', C: dict = No
 def decision_card_html(dest, months, mi_best, C, nom,
                        is_mountain=False, is_coastal=False,
                        oui_si='', non_si='', verdict_txt='',
-                       is_monthly=False, mi_current=None) -> str:
+                       is_monthly=False, mi_current=None,
+                       best_month_name='', best_month_score=0.0) -> str:
     """
     Unified decision + practical info card.
     Works for both annual pages (mi_best = best month index)
@@ -1319,7 +1320,10 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'<div class="verdict-text-wrap">'
         f'<div class="verdict-month">{month_name}</div>'
         f'<div class="verdict-pill">✦ {verdict_lbl}</div>'
-        f'</div></div>'
+        + (f'<div class="verdict-best-ref" style="font-size:10px;color:rgba(0,0,0,.45);margin-top:4px">'
+           f'{L.get("lbl_m_qf_best_month","Meilleur mois")} : <strong>{best_month_name}</strong> ({best_month_score:.1f}/10)</div>'
+           if is_monthly and best_month_name else '')
+        + f'</div></div>'
         f'<div class="verdict-score-wrap">'
         f'<div class="verdict-score">{score:.1f}<span class="verdict-score-denom">/10</span></div>'
         f'<div class="verdict-score-lbl">{best_lbl}</div>'
