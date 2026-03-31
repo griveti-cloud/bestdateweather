@@ -320,7 +320,10 @@
     "wettest_short": "Plus pluvieux",
     "lbl_nearby_section": "À proximité",
     "lbl_nearby_title_annual": "Destinations proches de {nom}",
-    "lbl_nearby_title_monthly": "Destinations proches en {month}"
+    "lbl_nearby_title_monthly": "Destinations proches en {month}",
+    "heat_alert_severe": "🌡️ Chaleur très intense",
+    "heat_alert_hot": "🌡️ Chaleur élevée",
+    "heat_alert_warm": "🌡️ Chaleur notable"
   },
   "monthly": {
     "hero_tpl": "Météo {name} en {month_lc}",

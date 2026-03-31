@@ -321,7 +321,10 @@
     "wettest_short": "Rainiest",
     "lbl_nearby_section": "Nearby",
     "lbl_nearby_title_annual": "Destinations near {nom}",
-    "lbl_nearby_title_monthly": "Nearby destinations in {month}"
+    "lbl_nearby_title_monthly": "Nearby destinations in {month}",
+    "heat_alert_severe": "🌡️ Extreme heat",
+    "heat_alert_hot": "🌡️ High heat",
+    "heat_alert_warm": "🌡️ Notable heat"
   },
   "monthly": {
     "hero_tpl": "{name} weather in {month}",
