@@ -307,7 +307,7 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  <h3>Three season levels</h3>
  <p>Each month is first classified by its overall seasonal character: <strong>recommended</strong>, <strong>intermediate</strong> or <strong>to avoid</strong>. This classification considers local reality beyond the numbers alone — for example, a tropical destination during monsoon season is different from a Nordic destination in winter.</p>
  <div class="card-grid">
-  <div class="card-mini"><div class="label" style="color:var(--green)">● Recommended</div><div class="val">7.0 – 10.0</div><div class="sub">Generally ideal conditions</div></div>
+  <div class="card-mini"><div class="label" style="color:var(--green)">● Best period</div><div class="val">7.0 – 10.0</div><div class="sub">Generally ideal conditions</div></div>
   <div class="card-mini"><div class="label" style="color:var(--gold)">● Intermediate</div><div class="val">4.0 – 6.9</div><div class="sub">Acceptable conditions, some trade-offs</div></div>
   <div class="card-mini"><div class="label" style="color:#dc2626">● To avoid</div><div class="val">0.5 – 3.9</div><div class="sub">Difficult or inadvisable conditions</div></div>
  </div>
@@ -318,8 +318,24 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  <h3>Local climate specifics</h3>
  <p>Some climate regimes require adapted treatment. Destinations with strong monsoon seasonality (Southeast Asia, East Africa) are subject to adjustment: the wet season, although statistically unfavourable, often remains suitable for travel thanks to short, intense rainfall. This context is built into the seasonal classification for these destinations.</p>
     <h3>Humidity &amp; dew point</h3>
-    <p>From March 2026, dew point temperature (ERA5 <code>dew_point_2m</code>) is factored into the annual reference score for all 697 destinations. When daily maximum temperature exceeds 26°C and the dew point exceeds 16°C, a progressive comfort penalty is applied — capturing the oppressive feel of humid heat that raw temperature alone does not convey.</p>
-    <p>Additionally, months where <strong>tmax ≥ 30°C and dew point ≥ 16°C</strong> are automatically downgraded from the <em>recommended</em> classification to <em>intermediate</em>. This corrects the historic under-scoring of hot-humid destinations such as Tokyo in summer or Singapore.</p>
+    <h3>Score weighting</h3>
+    <p>Within each level, months are ranked by a combined analysis of three factors:</p>
+    <ul>
+      <li><strong>40%</strong> — Thermal comfort <code>t_ideal(tmax)</code>: optimum 72–82°F, progressive penalty beyond</li>
+      <li><strong>35%</strong> — Corrected precipitation (tropical short showers ≠ blocking rain)</li>
+      <li><strong>25%</strong> — Sunshine (capped at 15 h/day)</li>
+    </ul>
+    <p>A <strong>humidity penalty</strong> is subtracted when Tmax &gt; 79°F and dew point &gt; 61°F (up to −0.20 raw points).</p>
+
+    <h3>Automatic hot-humid downgrade</h3>
+    <p>A month classified as "Best period" may be automatically downgraded if physical data contradicts it:</p>
+    <ul>
+      <li>Tmax ≥ 100°F → <em>Challenging conditions</em></li>
+      <li>Tmax ≥ 93°F → <em>Decent period</em> (intense dry heat)</li>
+      <li>Tmax ≥ 86°F + dew point ≥ 61°F → <em>Decent period</em></li>
+      <li>Tmax ≥ 79°F + dew point ≥ 72°F → <em>Decent period</em> (tropical humid heat — V3, March 2026)</li>
+    </ul>
+    <p>The last rule prevents months like January in French Guiana (82°F, dew 73°F) from being classified "Best period" when the felt experience is clearly oppressive.</p>
     <h3>Rain type: tropical showers vs. blocking rain</h3>
     <p>Weather icons distinguish two rain patterns via a <strong>burstiness index</strong> (daily precipitation ÷ rain frequency): ⛈️ heavy blocking, 🌧️ blocking rain, and 🌦️ tropical showers — where high rain frequency coexists with ample sunshine and a largely exploitable day.</p>
 

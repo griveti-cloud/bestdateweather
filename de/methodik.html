@@ -168,6 +168,20 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
   <p>Der <strong>P50-Wert</strong> (Median) wird dem Durchschnitt vorgezogen, um die Robustheit gegenüber Extremjahren zu gewährleisten. Für jeden Monat werden mindestens 8 Jahre Daten benötigt, damit ein Score als gültig gilt.</p>
   </section>
 
+  <!-- V3 HERABSTUFUNG -->
+  <section class="section" id="herabstufung">
+  <div class="section-num">5b</div>
+  <h2>Automatische Herabstufung: feuchte Hitze</h2>
+  <p>Ein Monat, der als "Beste Periode" eingestuft ist, kann automatisch herabgestuft werden, wenn physikalische Daten dies widerlegen:</p>
+  <ul>
+    <li>Tmax ≥ 38°C → <em>Schwierige Bedingungen</em></li>
+    <li>Tmax ≥ 34°C → <em>Gute Periode</em> (intensive Trockenhitze)</li>
+    <li>Tmax ≥ 30°C + Taupunkt ≥ 16°C → <em>Gute Periode</em></li>
+    <li>Tmax ≥ 26°C + Taupunkt ≥ 22°C → <em>Gute Periode</em> (tropische Feuchtewärme — V3, März 2026)</li>
+  </ul>
+  <p>Die letzte Regel verhindert, dass z. B. der Januar in Französisch-Guayana (28°C, Taupunkt 22,5°C) als "Beste Periode" eingestuft wird, obwohl das Gefühlsklima eindeutig schwül ist.</p>
+  </section>
+
   <!-- THERMISCHES KOMFORTGEFÜHL -->
   <section class="section" id="komfort">
   <div class="section-num">6</div>
