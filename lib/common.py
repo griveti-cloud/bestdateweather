@@ -1066,7 +1066,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
     row_prat    = L.get('lbl_dec_row_pratique', '🧳 Pratique')
     row_mer     = L.get('lbl_dec_row_mer', '🌊 Mer')
     row_ski     = L.get('lbl_dec_row_ski', '⛷️ Ski')
-    best_lbl    = L.get('lbl_dec_best_score_lbl', 'Score')
+    best_lbl    = L.get('lbl_dec_score_lbl', L.get('lbl_m_score_label', 'Score météo')) if is_monthly else L.get('lbl_dec_best_score_lbl', 'Meilleur score')
     ideal_lbl   = L.get('lbl_dec_ideal_lbl', 'Idéal')
     eviter_lbl  = L.get('lbl_dec_eviter_lbl', 'À éviter')
 
