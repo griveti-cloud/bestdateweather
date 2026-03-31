@@ -65,6 +65,89 @@
 .dec-yes{background:#f0fdf4;border:1px solid #bbf7d0;}
 .dec-no{background:#fff7ed;border:1px solid #fed7aa;}
 .dec-avis{font-size:13px;line-height:1.6;color:var(--navy);margin-top:16px;padding:14px 16px;background:white;border-radius:12px;border:1.5px solid #e8e0d0;}
+/* ── New unified decision card ── */
+.decision-card{background:white;border-radius:20px;box-shadow:0 8px 40px rgba(26,31,46,.10);overflow:hidden;}
+.verdict-banner{padding:18px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,.05);position:relative;overflow:hidden;}
+.verdict-banner::before{content:'';position:absolute;right:-40px;top:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(255,255,255,.3),transparent 70%);pointer-events:none;}
+.v-rec{background:linear-gradient(135deg,#fef9c3,#fef3d0 60%,#fde68a);}
+.v-mid{background:linear-gradient(135deg,#fff7ed,#fed7aa 60%,#fdba74);}
+.v-avoid{background:linear-gradient(135deg,#fef2f2,#fecaca 60%,#fca5a5);}
+.verdict-left{display:flex;align-items:center;gap:12px;}
+.verdict-emoji{font-size:26px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.12));}
+.verdict-month{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;line-height:1;margin-bottom:5px;}
+.v-rec .verdict-month,.v-rec .verdict-score{color:#c8940a;}
+.v-mid .verdict-month,.v-mid .verdict-score{color:#ea580c;}
+.v-avoid .verdict-month,.v-avoid .verdict-score{color:#dc2626;}
+.verdict-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:3px 10px;border-radius:20px;border:1.5px solid;}
+.v-rec .verdict-pill{color:#c8940a;background:rgba(200,148,10,.1);border-color:rgba(200,148,10,.3);}
+.v-mid .verdict-pill{color:#ea580c;background:rgba(234,88,12,.08);border-color:rgba(234,88,12,.25);}
+.v-avoid .verdict-pill{color:#dc2626;background:rgba(220,38,38,.08);border-color:rgba(220,38,38,.25);}
+.verdict-score-wrap{text-align:right;}
+.verdict-score{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;line-height:1;}
+.verdict-score-denom{font-size:14px;font-weight:500;opacity:.5;}
+.verdict-score-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--slate2);margin-top:3px;}
+.row-divider{display:grid;align-items:center;grid-template-columns:1fr auto 1fr;gap:12px;padding:0 24px;height:30px;background:var(--cream);border-top:1px solid var(--cream2);border-bottom:1px solid var(--cream2);}
+.row-divider-line{height:1px;background:var(--cream2);}
+.row-divider-label{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--slate2);white-space:nowrap;}
+.info-row{display:grid;border-bottom:1px solid var(--cream2);}
+.info-row.cols-5{grid-template-columns:repeat(5,1fr);}
+.info-row.cols-4{grid-template-columns:repeat(4,1fr);}
+.info-cell{padding:15px 10px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;border-right:1px solid var(--cream2);transition:background .15s;}
+.info-cell:last-child{border-right:none;}
+.info-cell:hover{background:#fdfcf9;}
+.ic-ico{font-size:19px;line-height:1;margin-bottom:1px;}
+.ic-val{font-size:12.5px;font-weight:800;color:var(--navy);line-height:1.25;text-align:center;}
+.ic-mono{font-family:monospace;font-size:14px;letter-spacing:-.5px;}
+.ic-sub{font-size:10px;color:var(--slate2);line-height:1.3;text-align:center;}
+.ic-lbl{font-size:8px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--slate2);margin-top:2px;}
+.mb{width:100%;height:2.5px;background:var(--cream2);border-radius:2px;margin-top:3px;}
+.mf{height:100%;border-radius:2px;}
+.bs{background:linear-gradient(90deg,#fbbf24,#d97706);}
+.br{background:linear-gradient(90deg,#fca5a5,#ef4444);}
+.bb{background:linear-gradient(90deg,#93c5fd,#3b82f6);}
+.bc{background:linear-gradient(90deg,#67e8f9,#0891b2);}
+.bsk{background:linear-gradient(90deg,#a5f3fc,#0284c7);}
+.rb{display:inline-flex;align-items:center;gap:3px;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:10px;margin-top:3px;line-height:1.3;}
+.rb-orange{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;}
+.rb-red{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;}
+.rb-green{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;}
+.rb-blue{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;}
+.rb-sky{background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd;}
+.sea-cold{color:#0369a1;}.sea-ok{color:#0891b2;}.sea-warm{color:#16a34a;}.sea-hot{color:#ea580c;}
+.dec-secu-low{color:#16a34a;}.dec-secu-medium{color:#ca8a04;}.dec-secu-high{color:#ea580c;}.dec-secu-critical{color:#dc2626;}
+.dec-budget-1{color:#059669;}.dec-budget-2{color:#16a34a;}.dec-budget-3{color:#ca8a04;}.dec-budget-4{color:#ea580c;}.dec-budget-5{color:#7c3aed;}
+.season-strip{display:grid;grid-template-columns:repeat(12,1fr);height:6px;border-bottom:1px solid var(--cream2);}
+.ss-rec{background:#22c55e;}.ss-mid{background:#f97316;}.ss-avoid{background:#ef4444;}
+.month-strip{display:grid;grid-template-columns:repeat(12,1fr);border-bottom:1px solid var(--cream2);background:#fdfcf9;}
+.ms-cell{text-align:center;padding:5px 2px;font-size:8px;font-weight:700;letter-spacing:.3px;color:var(--slate2);text-transform:uppercase;border-right:1px solid var(--cream2);line-height:1;}
+.ms-cell:last-child{border-right:none;}
+.ms-cell.rec{color:#16a34a;}.ms-cell.mid{color:#ea580c;}.ms-cell.avoid{color:#dc2626;}
+.best-months{padding:11px 22px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;border-bottom:1px solid var(--cream2);}
+.bm-lbl{font-size:9px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--slate2);}
+.bm-pill{font-size:11px;font-weight:700;color:#16a34a;background:#f0fdf4;border:1.5px solid #bbf7d0;padding:2px 9px;border-radius:20px;}
+.bm-avoid{color:#dc2626;background:#fef2f2;border-color:#fecaca;}
+.reasons-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--cream2);}
+.reason-cell{padding:13px 18px;font-size:12px;line-height:1.6;color:#555;}
+.reason-cell:first-child{border-right:1px solid var(--cream2);}
+.reason-cell strong{display:block;font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;}
+.reason-cell.yes strong{color:#16a34a;}.reason-cell.no strong{color:#9ca3af;}
+.verdict-editorial{padding:14px 22px;font-size:12.5px;line-height:1.7;color:#556;border-bottom:1px solid var(--cream2);font-style:italic;}
+.verdict-editorial strong{font-style:normal;font-weight:700;color:var(--navy);}
+.source-footer{padding:9px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;}
+.source-tag{font-size:9px;font-weight:600;color:var(--slate2);display:flex;align-items:center;gap:4px;}
+.source-dot{width:3px;height:3px;border-radius:50%;background:var(--slate2);opacity:.4;}
+@media(max-width:600px){
+  .info-row.cols-5{grid-template-columns:repeat(3,1fr);}
+  .info-row.cols-5 .info-cell:nth-child(3){border-right:none;}
+  .info-row.cols-5 .info-cell:nth-child(4),.info-row.cols-5 .info-cell:nth-child(5){border-top:1px solid var(--cream2);}
+  .info-row.cols-4{grid-template-columns:repeat(2,1fr);}
+  .info-row.cols-4 .info-cell:nth-child(2){border-right:none;}
+  .info-row.cols-4 .info-cell:nth-child(3),.info-row.cols-4 .info-cell:nth-child(4){border-top:1px solid var(--cream2);}
+  .reasons-row{grid-template-columns:1fr;}
+  .reason-cell:first-child{border-right:none;border-bottom:1px solid var(--cream2);}
+  .verdict-banner{flex-direction:column;gap:10px;align-items:flex-start;}
+  .month-strip .ms-cell{font-size:6.5px;padding:4px 1px;}
+}
 .dest-search-section .section-label{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
 .dest-search-wrap{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;}
 .dest-search-input-wrap{flex:1;min-width:200px;position:relative;}
@@ -144,37 +227,7 @@
  <section class="section dec-section">
  <div class="section-label">Décision rapide</div>
  <h2 class="section-title">Faut-il partir au Le Cap en septembre ?</h2>
- <div class="dec-card" style="--dec-bg:#dcfce7;--dec-txt:#16a34a">
-   <div class="dec-header">
-     <span class="dec-badge" style="background:#dcfce7;color:#16a34a;border:1.5px solid #16a34a">✅ Favorable</span>
-     <span class="dec-score-pill">7.6<span class="dec-score-denom">/10</span></span>
-   </div>
-   
-   <div class="dec-stats">
-     <div class="dec-stat">
-       <div class="dec-stat-top"><span class="dec-stat-icon">☀️</span><span class="dec-stat-val">10.7h/j</span></div>
-       <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-sun" style="width:76%"></div></div>
-       <div class="dec-stat-lbl">Soleil</div>
-     </div>
-     <div class="dec-stat">
-       <div class="dec-stat-top"><span class="dec-stat-icon">🌡️</span><span class="dec-stat-val">17°C</span></div>
-       <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-temp" style="width:42%"></div></div>
-       <div class="dec-stat-lbl">Température</div>
-     </div>
-     <div class="dec-stat">
-       <div class="dec-stat-top"><span class="dec-stat-icon">🌧️</span><span class="dec-stat-val">25%</span></div>
-       <div class="dec-bar-track"><div class="dec-bar-fill dec-bar-rain" style="width:25%"></div></div>
-       <div class="dec-stat-lbl">Pluie</div>
-     </div>
-     <div class="dec-stat" data-advisory-cc="ZA"><div class="dec-stat-top"><span class="dec-stat-icon">🟢</span><span class="dec-stat-val dec-stat-val--secu dec-stat-val--mae-1" style="font-size:11px">Vigilance normale</span></div><div class="dec-stat-lbl">Sécurité</div></div>
-     <div class="dec-stat" title="Budget indicatif · Numbeo 2026"><div class="dec-stat-top"><span class="dec-stat-icon">🟡</span><span class="dec-stat-val" style="font-size:11px">Abordable</span></div><div class="dec-stat-lbl">Budget</div></div>
-   </div>
-   <div class="dec-reasons">
-     <div class="dec-reason dec-yes"><div><strong>✅ Oui si :</strong> explorer la ville à pied sans souffrir de la chaleur.</div></div>
-     <div class="dec-reason dec-no"><div><strong>❌ Non si :</strong> chercher une destination balnéaire — l'eau et l'air sont encore frais.</div></div>
-   </div>
- </div>
- <p class="dec-avis"><strong>Notre avis :</strong> Le Cap en septembre : 17°C, 10.7h de soleil et 25% de jours avec pluie. Des conditions favorables pour un séjour. Eau fraîche (15°C) : les sports nautiques sont envisageables, la baignade longue déconseillée. Score 7.2/10 — inférieur au pic (Janvier, 9.1/10) sans être décevant pour autant.</p>
+ <div class="decision-card"><div class="verdict-banner v-rec"><div class="verdict-left"><div class="verdict-emoji">🏆</div><div class="verdict-text-wrap"><div class="verdict-month">Septembre</div><div class="verdict-pill">✦ Meilleure période</div></div></div><div class="verdict-score-wrap"><div class="verdict-score">7.6<span class="verdict-score-denom">/10</span></div><div class="verdict-score-lbl">Meilleur score</div></div></div><div class="row-divider"><div class="row-divider-line"></div><div class="row-divider-label">☀️ Météo en meilleure période</div><div class="row-divider-line"></div></div><div class="info-row cols-5"><div class="info-cell"><div class="ic-ico">☀️</div><div class="ic-val">10.7h/j</div><div class="mb"><div class="mf bs" style="width:76%"></div></div><div class="ic-lbl">Soleil</div></div><div class="info-cell"><div class="ic-ico">🌡️</div><div class="ic-val">11.0°C–17.0°C</div><div class="mb"><div class="mf br" style="width:42%"></div></div><div class="ressenti-badge rb rb-blue">Frais</div><div class="ic-lbl">Temp. / Ressenti</div></div><div class="info-cell"><div class="ic-ico">🌂</div><div class="ic-val">25%</div><div class="mb"><div class="mf bb" style="width:25%"></div></div><div class="ic-lbl">Pluie</div></div><div class="info-cell" data-advisory-cc="ZA"><div class="ic-ico">🟢</div><div class="ic-val dec-secu-mae-1" style="font-size:11px">Vigilance normale</div><div class="ic-lbl">Sécurité</div></div><div class="info-cell"><div class="ic-ico">💚</div><div class="ic-val dec-budget-2">Abordable</div><div class="ic-lbl">Budget</div></div></div><div class="row-divider"><div class="row-divider-line"></div><div class="row-divider-label">🧳 Informations pratiques</div><div class="row-divider-line"></div></div><div class="info-row cols-4"><div class="info-cell"><div class="ic-ico">💰</div><div class="ic-val ic-mono">ZAR</div><div class="ic-sub">R · Rand sud-africain</div><div class="ic-lbl">Monnaie</div></div><div class="info-cell"><div class="ic-ico">🗣️</div><div class="ic-val">Zulu, Xhosa +3</div><div class="ic-lbl">Langue</div></div><div class="info-cell"><div class="ic-ico">🚗↩️</div><div class="ic-val" style="font-size:11px">À gauche</div><div class="ic-lbl">Conduite</div></div><div class="info-cell"><div class="ic-ico">🌧️</div><div class="ic-val">Juin</div><div class="ic-sub">40% jours de pluie</div><div class="ic-lbl">Plus pluvieux</div></div></div><div class="rd"><div class="rdl"></div><div class="rdt">🌊 Température de la mer</div><div class="rdl"></div></div><div class="info-row cols-4"><div class="info-cell"><div class="ic-ico">🥶</div><div class="ic-val sea-cold">14.1°C</div><div class="mb"><div class="mf bc" style="width:20%"></div></div><div class="ic-lbl">Hiver</div></div><div class="info-cell"><div class="ic-ico">🥶</div><div class="ic-val sea-cold">14.1°C</div><div class="mb"><div class="mf bc" style="width:20%"></div></div><div class="ic-lbl">Printemps</div></div><div class="info-cell"><div class="ic-ico">🥶</div><div class="ic-val sea-cold">13.9°C</div><div class="mb"><div class="mf bc" style="width:20%"></div></div><div class="ic-lbl">Été · Pic</div></div><div class="info-cell"><div class="ic-ico">🥶</div><div class="ic-val sea-cold">15.0°C</div><div class="mb"><div class="mf bc" style="width:25%"></div></div><div class="ic-lbl">Automne</div></div></div><div class="reasons-row"><div class="reason-cell yes"><strong>✅ Oui si</strong> explorer la ville à pied sans souffrir de la chaleur.</div><div class="reason-cell no"><strong>⚠️ Attention si</strong> chercher une destination balnéaire — l'eau et l'air sont encore frais.</div></div><div class="verdict-editorial"><strong>En résumé :</strong> Le Cap en septembre : 17°C, 10.7h de soleil et 25% de jours avec pluie. Des conditions favorables pour un séjour. Eau fraîche (15°C) : les sports nautiques sont envisageables, la baignade longue déconseillée. Score 7.2/10 — inférieur au pic (Janvier, 9.1/10) sans être décevant pour autant.</div><div class="source-footer"><div class="source-tag">🛡️ Auswärtiges Amt (DE)<span class="source-dot"></span>à vérifier avant de voyager<span class="source-dot"></span>2026-03-30</div><div class="source-tag">ERA5 · Open-Meteo · 10 ans<span class="source-dot"></span>Numbeo 2026</div></div></div>
  </section>
 
  <section class="section">
@@ -289,7 +342,6 @@
  </div>
 </section>
 <section class="section dest-map-section"><div class="section-label">Localisation</div><div class="dest-map-row" data-dest-map="1" data-lat="-33.92" data-lon="18.42" data-macro-zoom="3" data-world-id="dmap-world-le_cap" data-macro-id="dmap-macro-le_cap"><div class="dest-map-card"><div class="dest-map-lbl">🌍 Monde</div><div id="dmap-world-le_cap" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Contexte géographique</div><div id="dmap-macro-le_cap" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="flags/za.png" width="16" height="12" alt="ZA" style="vertical-align:middle;border-radius:2px;margin-right:5px">Afrique du Sud</div><div class="dest-map-hsub">Le Cap, entre Table Mountain, vignobles et paysages spectaculaires — la perle de l'Afrique du Sud.</div><div class="dest-map-coords">33.92°S · 18.42°E</div></div></div></section>
-<section class="travel-info-widget"><h3 class="ti-title">Infos pratiques — Le Cap</h3><div class="ti-chips"><div class="ti-chip"><div class="ti-chip-label">Monnaie</div><div class="ti-chip-row"><span class="ti-chip-icon">💰</span><span class="ti-chip-val">ZAR</span></div><div class="ti-chip-sub">R · Rand sud-africain</div></div><div class="ti-chip"><div class="ti-chip-label">Langue(s)</div><div class="ti-chip-row"><span class="ti-chip-icon">🗣️</span><span class="ti-chip-val">Zulu <span class="ti-chip-more">+4</span></span></div></div><div class="ti-chip"><div class="ti-chip-label">Conduite</div><div class="ti-chip-row"><span class="ti-chip-icon">🚗⬅️</span><span class="ti-chip-val">À gauche</span></div></div><div class="ti-chip ti-chip--mae-1" data-advisory-cc="ZA" data-advisory-lang="fr"><div class="ti-chip-label">Sécurité</div><div class="ti-chip-row"><span class="ti-chip-icon">🟢</span><span class="ti-chip-val ti-chip-val--mae-1">Vigilance normale</span></div><div class="ti-chip-sub">GPI 2.10</div></div><div class="ti-chip ti-chip--budget-2"><div class="ti-chip-label">Budget</div><div class="ti-chip-row"><span class="ti-chip-icon">💚</span><span class="ti-chip-val ti-chip-val--budget-2">Abordable</span></div></div></div><div class="ti-safety-detail" id="ti-advisory-note-ZA"><span class="ti-safety-note">Conseils aux voyageurs MAE &nbsp;·&nbsp; <span class="ti-safety-source">Global Peace Index: 1 = très pacifique, 5 = peu pacifique (2024)</span></span><span class="ti-advisory-live" style="display:none;font-size:10px;color:#888;margin-left:6px"></span></div></section>
 <section class="section">
  <div class="section-label">Activités & visites</div>
  <h2 class="section-title">Que faire au Le Cap en septembre ?</h2>

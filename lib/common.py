@@ -944,3 +944,408 @@ def climate_trend_section(slug_fr: str, nom: str, lang: str = 'fr', C: dict = No
         f'<p class="ct-note">{note_lbl}</p>'
         f'</section>'
     )
+
+
+# ── Decision card (fusion Décision + Infos pratiques) ─────────────────────────
+
+def decision_card_html(dest, months, mi_best, C, nom,
+                       is_mountain=False, is_coastal=False,
+                       oui_si='', non_si='', verdict_txt='',
+                       is_monthly=False, mi_current=None) -> str:
+    """
+    Unified decision + practical info card.
+    Works for both annual pages (mi_best = best month index)
+    and monthly pages (is_monthly=True, mi_current = current month).
+    """
+    from scoring import compute_ski_score
+    import json as _json
+
+    lang = C.get('lang', 'fr')
+    L = C  # C already has all lbl_* keys
+
+    # ── Country info ──
+    ci = _load_country_info()
+    pays = dest.get('pays', '')
+    info = ci.get(pays, {})
+    currency     = info.get('currency', '')
+    currency_name = info.get('currency_name', '')
+    currency_sym  = info.get('currency_symbol', '')
+    languages    = info.get('languages', [])
+    drive        = info.get('drive', 'right')
+    budget_idx   = max(1, min(5, info.get('budget_index', 3)))
+    risk_level   = info.get('risk_level', 1)
+    iso2         = (dest.get('flag') or '').upper()
+
+    # ── Month to display ──
+    mi = mi_current if is_monthly else mi_best
+    m  = months[mi]
+    score = float(m.get('score', 0))
+
+    # ── Verdict colors (reuse existing dec CSS vars) ──
+    classe = m.get('classe', 'mid')
+    if classe == 'rec':
+        vb_cls = 'v-rec'; txt = '#c8940a'; bg = '#fef9c3'
+        verdict_lbl = L.get('lbl_table_legend_ideal', L.get('table_legend_ideal', 'Meilleure période'))
+        emoji = '🏆'
+    elif classe == 'avoid':
+        vb_cls = 'v-avoid'; txt = '#dc2626'; bg = '#fef2f2'
+        verdict_lbl = L.get('lbl_table_legend_off', L.get('table_legend_off', 'Conditions marquées'))
+        emoji = '⚠️'
+    else:
+        vb_cls = 'v-mid'; txt = '#ea580c'; bg = '#fff7ed'
+        verdict_lbl = L.get('lbl_table_legend_fair', L.get('table_legend_fair', 'Période correcte'))
+        emoji = '📅'
+
+    # ── Month name ──
+    months_names = C.get('months', ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'])
+    month_name = months_names[mi] if mi < len(months_names) else ''
+
+    # ── Ressenti ──
+    r_lbl, r_col = ressenti(float(m.get('tmax', 25)), m.get('dew_point'), lang)
+    if r_lbl and r_col:
+        # Map color to CSS class
+        col_map = {'#ef4444':'rb-red','#dc2626':'rb-red','#f97316':'rb-orange',
+                   '#22c55e':'rb-green','#0ea5e9':'rb-blue','#7c3aed':'rb-sky'}
+        rb_cls = col_map.get(r_col, 'rb-orange')
+        ressenti_badge = f'<div class="ressenti-badge rb {rb_cls}">{r_lbl}</div>'
+    else:
+        ressenti_badge = ''
+
+    # ── Bar widths ──
+    sun_h    = float(m.get('sun_h', 0))
+    rain_pct = float(m.get('rain_pct', 0))
+    tmax     = float(m.get('tmax', 20))
+    sun_bar  = round(min(sun_h, 14) / 14 * 100)
+    rain_bar = min(int(rain_pct), 100)
+    temp_bar = round(min(tmax, 40) / 40 * 100)
+
+    # ── Temp display ──
+    tmin_str = fmt_temp(float(m.get('tmin', 15)), C)
+    tmax_str = fmt_temp(tmax, C)
+    sun_str  = f"{sun_h}{C.get('locale', {}).get('comp', {}).get('sun_per_day_short', 'h/j')}"
+
+    # ── Security ──
+    from lib.common import _mae_label
+    secu_lbl, secu_cls, secu_icon = _mae_label(risk_level, lang)
+
+    # ── Budget ──
+    _budget_labels = {
+        'fr': {1:'Économique',2:'Abordable',3:'Intermédiaire',4:'Haut de gamme',5:'Premium'},
+        'en': {1:'Economy',2:'Affordable',3:'Mid-range',4:'Upscale',5:'Premium'},
+        'en-us':{1:'Economy',2:'Affordable',3:'Mid-range',4:'Upscale',5:'Premium'},
+        'es': {1:'Económico',2:'Asequible',3:'Intermedio',4:'Alto',5:'Premium'},
+        'de': {1:'Günstig',2:'Erschwinglich',3:'Mittelklasse',4:'Gehoben',5:'Premium'},
+    }
+    _budget_icons = {1:'💚',2:'💚',3:'🟡',4:'🟠',5:'💎'}
+    blang = lang if lang in _budget_labels else 'en'
+    budget_lbl_text = _budget_labels[blang][budget_idx]
+    budget_icon = _budget_icons[budget_idx]
+
+    # ── Drive ──
+    drive_lbl = L.get('lbl_dec_lbl_drive_left') if drive == 'left' else L.get('lbl_dec_lbl_drive_right')
+    drive_icon = '🚗↩️' if drive == 'left' else '🚗'
+
+    # ── Languages (max 2 + overflow) ──
+    lang_str = ', '.join(languages[:2])
+    if len(languages) > 2:
+        more = L.get('lbl_more', '+{n}').format(n=len(languages)-2) if '{n}' in L.get('lbl_more','') else f'+{len(languages)-2}'
+        lang_str += f' {more}'
+
+    # ── Wettest month ──
+    wettest_mi  = max(range(12), key=lambda i: float(months[i].get('rain_pct', 0)))
+    wettest_name = months_names[wettest_mi] if wettest_mi < len(months_names) else ''
+    wettest_pct  = int(float(months[wettest_mi].get('rain_pct', 0)))
+    is_mtn_dest  = dest.get('mountain','') in ('True','true','1')
+    jours_lbl = L.get('lbl_dec_jours_prec') if is_mtn_dest else L.get('lbl_dec_jours_pluie')
+
+    # ── Labels ──
+    def lbl(key):
+        return L.get(f'lbl_dec_lbl_{key}', key)
+
+    row_meteo   = L.get('lbl_dec_row_meteo', '☀️ Météo')
+    row_prat    = L.get('lbl_dec_row_pratique', '🧳 Pratique')
+    row_mer     = L.get('lbl_dec_row_mer', '🌊 Mer')
+    row_ski     = L.get('lbl_dec_row_ski', '⛷️ Ski')
+    best_lbl    = L.get('lbl_dec_best_score_lbl', 'Score')
+    ideal_lbl   = L.get('lbl_dec_ideal_lbl', 'Idéal')
+    eviter_lbl  = L.get('lbl_dec_eviter_lbl', 'À éviter')
+
+    # ── Source strip ──
+    secu_source = info.get('risk_source', 'Auswärtiges Amt (DE)')
+    secu_date   = info.get('risk_updated', '')[:10] if info.get('risk_updated','') else ''
+    verify_lbl  = {'fr':'à vérifier avant de voyager','en':'verify before travel',
+                   'en-us':'verify before travel','es':'verificar antes de viajar',
+                   'de':'vor der Reise prüfen'}.get(lang, 'verify before travel')
+
+    # ══════════════════════════════════════════
+    # ANNUAL ONLY: season band + best/worst pills
+    # ══════════════════════════════════════════
+    season_band = ''
+    best_avoid_strip = ''
+
+    if not is_monthly:
+        # 12-month color band
+        cls_map = {'rec':'ss-rec','mid':'ss-mid','avoid':'ss-avoid'}
+        band_cells = ''.join(
+            f'<div class="{cls_map.get(months[i].get("classe","mid"),"ss-mid")}"></div>'
+            for i in range(12)
+        )
+        short_months = [mn[:3] for mn in months_names[:12]]
+        month_cells = ''.join(
+            '<div class="ms-cell ' + months[i].get('classe','mid') + '">' + short_months[i] + '</div>'
+            for i in range(12)
+        )
+        season_band = (
+            f'<div class="season-strip">{band_cells}</div>'
+            f'<div class="month-strip">{month_cells}</div>'
+        )
+
+        # Best months (rec class, sorted by score desc, top 4)
+        rec_months = sorted(
+            [(i, float(months[i].get('score',0))) for i in range(12) if months[i].get('classe')=='rec'],
+            key=lambda x: -x[1]
+        )[:4]
+        avoid_months = sorted(
+            [(i, float(months[i].get('score',0))) for i in range(12) if months[i].get('classe')=='avoid'],
+            key=lambda x: x[1]
+        )[:3]
+
+        best_pills = ''.join(f'<span class="bm-pill">{short_months[i]}</span>' for i,_ in rec_months)
+        avoid_pills = ''.join(f'<span class="bm-pill bm-avoid">{short_months[i]}</span>' for i,_ in avoid_months) or '<span class="bm-pill bm-avoid">—</span>'
+
+        best_avoid_strip = (
+            f'<div class="best-months">'
+            f'<span class="bm-lbl">{ideal_lbl}</span>{best_pills}'
+            f'<span class="bm-lbl" style="margin-left:8px">{eviter_lbl}</span>{avoid_pills}'
+            f'</div>'
+        )
+
+    # ══════════════════════════════════════════
+    # ROW 1 : Météo
+    # ══════════════════════════════════════════
+    row1 = (
+        f'<div class="info-row cols-5">'
+        f'<div class="info-cell">'
+        f'<div class="ic-ico">☀️</div>'
+        f'<div class="ic-val">{sun_str}</div>'
+        f'<div class="mb"><div class="mf bs" style="width:{sun_bar}%"></div></div>'
+        f'<div class="ic-lbl">{lbl("soleil")}</div>'
+        f'</div>'
+        f'<div class="info-cell">'
+        f'<div class="ic-ico">🌡️</div>'
+        f'<div class="ic-val">{tmin_str}–{tmax_str}</div>'
+        f'<div class="mb"><div class="mf br" style="width:{temp_bar}%"></div></div>'
+        f'{ressenti_badge}'
+        f'<div class="ic-lbl">{lbl("temp")}</div>'
+        f'</div>'
+        f'<div class="info-cell">'
+        f'<div class="ic-ico">🌂</div>'
+        f'<div class="ic-val">{int(rain_pct)}%</div>'
+        f'<div class="mb"><div class="mf bb" style="width:{rain_bar}%"></div></div>'
+        f'<div class="ic-lbl">{lbl("pluie")}</div>'
+        f'</div>'
+        f'<div class="info-cell" data-advisory-cc="{iso2}">'
+        f'<div class="ic-ico">{secu_icon}</div>'
+        f'<div class="ic-val dec-secu-{secu_cls}" style="font-size:11px">{secu_lbl}</div>'
+        f'<div class="ic-lbl">{lbl("secu")}</div>'
+        f'</div>'
+        f'<div class="info-cell">'
+        f'<div class="ic-ico">{budget_icon}</div>'
+        f'<div class="ic-val dec-budget-{budget_idx}">{budget_lbl_text}</div>'
+        f'<div class="ic-lbl">{lbl("budget")}</div>'
+        f'</div>'
+        f'</div>'
+    )
+
+    # ══════════════════════════════════════════
+    # ROW 2 : Pratique
+    # ══════════════════════════════════════════
+    row2 = (
+        f'<div class="info-row cols-4">'
+        f'<div class="info-cell">'
+        f'<div class="ic-ico">💰</div>'
+        f'<div class="ic-val ic-mono">{currency}</div>'
+        f'<div class="ic-sub">{currency_sym} · {currency_name}</div>'
+        f'<div class="ic-lbl">{lbl("monnaie")}</div>'
+        f'</div>'
+        f'<div class="info-cell">'
+        f'<div class="ic-ico">🗣️</div>'
+        f'<div class="ic-val">{lang_str}</div>'
+        f'<div class="ic-lbl">{lbl("langue")}</div>'
+        f'</div>'
+        f'<div class="info-cell">'
+        f'<div class="ic-ico">{drive_icon}</div>'
+        f'<div class="ic-val" style="font-size:11px">{drive_lbl}</div>'
+        f'<div class="ic-lbl">{lbl("conduite")}</div>'
+        f'</div>'
+        f'<div class="info-cell">'
+        f'<div class="ic-ico">🌧️</div>'
+        f'<div class="ic-val">{wettest_name}</div>'
+        f'<div class="ic-sub">{wettest_pct}% {jours_lbl}</div>'
+        f'<div class="ic-lbl">{lbl("wettest")}</div>'
+        f'</div>'
+        f'</div>'
+    )
+
+    # ══════════════════════════════════════════
+    # ROW 3 (conditional) : Mer ou Ski
+    # ══════════════════════════════════════════
+    row3 = ''
+    if is_coastal:
+        # Sea temp: group by season (index 0-11)
+        season_groups = [(0,2,'hiver'),(3,5,'print'),(6,8,'ete'),(9,11,'auto')]
+        sea_cells = ''
+        for start, end, key in season_groups:
+            temps = [float(months[i].get('sea_temp',0)) for i in range(start,end+1) if months[i].get('sea_temp','').strip()]
+            if not temps:
+                continue
+            avg = round(sum(temps)/len(temps), 1)
+            # Color class
+            if avg < 16: sc = 'sea-cold'; ico = '🥶'
+            elif avg < 21: sc = 'sea-ok'; ico = '🌊'
+            elif avg < 26: sc = 'sea-warm'; ico = '🏖️'
+            else: sc = 'sea-hot'; ico = '☀️'
+            bar_w = round((avg - 10) / 20 * 100)
+            sea_cells += (
+                f'<div class="info-cell">'
+                f'<div class="ic-ico">{ico}</div>'
+                f'<div class="ic-val {sc}">{fmt_temp(avg, C)}</div>'
+                f'<div class="mb"><div class="mf bc" style="width:{bar_w}%"></div></div>'
+                f'<div class="ic-lbl">{L.get(f"lbl_dec_lbl_mer_{key}", key)}</div>'
+                f'</div>'
+            )
+        if sea_cells:
+            row3 = (
+                f'<div class="rd"><div class="rdl"></div>'
+                f'<div class="rdt">{row_mer}</div>'
+                f'<div class="rdl"></div></div>'
+                f'<div class="info-row cols-4">{sea_cells}</div>'
+            )
+
+    elif is_mountain:
+        # Ski scores: find best ski month + rando month + season
+        ski_scores = [(i, compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)))) for i in range(12)]
+        best_ski = max(ski_scores, key=lambda x: x[1])
+        # Rando = warmest month with score > 5
+        rando_months = [(i,s) for i,s in ski_scores if float(months[i].get('tmax',0)) > 8 and s < 5.5]
+        best_rando = max(rando_months, key=lambda x: float(months[x[0]].get('score',0))) if rando_months else None
+        # Ski season = consecutive months with ski > 5.5
+        ski_season = [months_names[i][:3] for i,s in ski_scores if s >= 5.5]
+        ski_season_str = f"{ski_season[0]}–{ski_season[-1]}" if len(ski_season) >= 2 else (ski_season[0] if ski_season else '—')
+
+        best_ski_name = months_names[best_ski[0]][:3]
+        ski_bar = round(best_ski[1] / 10 * 100)
+
+        rando_cell = ''
+        if best_rando:
+            ri, rs = best_rando
+            rando_name = months_names[ri][:3]
+            rando_climate_score = float(months[ri].get('score', 0))
+            rando_bar = round(rando_climate_score / 10 * 100)
+            rando_cell = (
+                f'<div class="info-cell">'
+                f'<div class="ic-ico">🏔️</div>'
+                f'<div class="ic-val" style="color:#16a34a;font-size:15px;font-weight:900">'
+                f'{rando_climate_score:.1f}<span style="font-size:10px;opacity:.5">/10</span></div>'
+                f'<div class="mb"><div class="mf bs" style="width:{rando_bar}%"></div></div>'
+                f'<div class="ic-lbl">{rando_name} · {L.get("lbl_dec_lbl_randonnee","Rando")}</div>'
+                f'</div>'
+            )
+
+        row3 = (
+            f'<div class="rd"><div class="rdl"></div>'
+            f'<div class="rdt">{row_ski}</div>'
+            f'<div class="rdl"></div></div>'
+            f'<div class="info-row cols-4">'
+            f'<div class="info-cell">'
+            f'<div class="ic-ico">⛷️</div>'
+            f'<div class="ic-val" style="color:#0369a1;font-size:15px;font-weight:900">'
+            f'{best_ski[1]:.1f}<span style="font-size:10px;opacity:.5">/10</span></div>'
+            f'<div class="mb"><div class="mf bsk" style="width:{ski_bar}%"></div></div>'
+            f'<div class="ic-lbl">{best_ski_name} · {L.get("lbl_dec_lbl_ski_best","Best")}</div>'
+            f'</div>'
+            f'{rando_cell}'
+            f'<div class="info-cell">'
+            f'<div class="ic-ico">📅</div>'
+            f'<div class="ic-val" style="font-size:11px">{ski_season_str}</div>'
+            f'<div class="ic-sub">{L.get("lbl_dec_lbl_ski_saison","Saison")} ski</div>'
+            f'<div class="ic-lbl">{L.get("lbl_dec_lbl_ski_saison","Saison")}</div>'
+            f'</div>'
+            f'</div>'
+        )
+
+    # ══════════════════════════════════════════
+    # Oui si / Non si + verdict text (monthly only)
+    # ══════════════════════════════════════════
+    reasons = ''
+    verdict_para = ''
+    if is_monthly and (oui_si or non_si):
+        yes_lbl = C.get('yes_lbl', '✅ Oui si')
+        no_lbl  = C.get('no_lbl',  '⚠️ Attention si')
+        reasons = (
+            f'<div class="reasons-row">'
+            f'<div class="reason-cell yes"><strong>{yes_lbl}</strong> {oui_si}</div>'
+            f'<div class="reason-cell no"><strong>{no_lbl}</strong> {non_si}</div>'
+            f'</div>'
+        )
+    if is_monthly and verdict_txt:
+        intro = C.get('verdict_intro', 'En résumé :')
+        verdict_para = (
+            f'<div class="verdict-editorial">'
+            f'<strong>{intro}</strong> {verdict_txt}'
+            f'</div>'
+        )
+
+    # ══════════════════════════════════════════
+    # SOURCE FOOTER
+    # ══════════════════════════════════════════
+    source = (
+        f'<div class="source-footer">'
+        f'<div class="source-tag">🛡️ {secu_source}'
+        f'<span class="source-dot"></span>{verify_lbl}'
+        f'{f"<span class=\"source-dot\"></span>{secu_date}" if secu_date else ""}'
+        f'</div>'
+        f'<div class="source-tag">ERA5 · Open-Meteo · 10 ans<span class="source-dot"></span>Numbeo 2026</div>'
+        f'</div>'
+    )
+
+    # ══════════════════════════════════════════
+    # VERDICT BANNER
+    # ══════════════════════════════════════════
+    banner = (
+        f'<div class="verdict-banner {vb_cls}">'
+        f'<div class="verdict-left">'
+        f'<div class="verdict-emoji">{emoji}</div>'
+        f'<div class="verdict-text-wrap">'
+        f'<div class="verdict-month">{month_name}</div>'
+        f'<div class="verdict-pill">✦ {verdict_lbl}</div>'
+        f'</div></div>'
+        f'<div class="verdict-score-wrap">'
+        f'<div class="verdict-score">{score:.1f}<span class="verdict-score-denom">/10</span></div>'
+        f'<div class="verdict-score-lbl">{best_lbl}</div>'
+        f'</div></div>'
+    )
+
+    # ══════════════════════════════════════════
+    # ASSEMBLE
+    # ══════════════════════════════════════════
+    def divider(label):
+        return (f'<div class="row-divider"><div class="row-divider-line"></div>'
+                f'<div class="row-divider-label">{label}</div>'
+                f'<div class="row-divider-line"></div></div>')
+
+    return (
+        f'<div class="decision-card">'
+        f'{banner}'
+        f'{season_band}'
+        f'{best_avoid_strip}'
+        f'{divider(row_meteo)}'
+        f'{row1}'
+        f'{divider(row_prat)}'
+        f'{row2}'
+        f'{row3}'
+        f'{reasons}'
+        f'{verdict_para}'
+        f'{source}'
+        f'</div>'
+    )
