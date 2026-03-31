@@ -781,7 +781,9 @@
     "city_group": "🌆 Ciudades & destinos",
     "methodo_general": "🌡️ Puntuación météo: temperatura, sol y días de lluvia según 10 años de datos ERA5.",
     "methodo_beach": "🏖️ Puntuación playa: mar cálido, poca lluvia y mucho sol. Solo destinos costeros.",
-    "methodo_ski": "⛷️ Puntuación esquí: nieve, frío y sol. Solo estaciones de montaña."
+    "methodo_ski": "⛷️ Puntuación esquí: nieve, frío y sol. Solo estaciones de montaña.",
+    "tropical_note_html": "<p class=\"tropical-note\">🌴 Clima tropical: calor y humedad elevados todo el año. Las diferencias entre meses reflejan principalmente la frecuencia de lluvias.</p>",
+    "tropical_note": "🌴 Clima tropical: calor y humedad elevados todo el año. Las diferencias entre meses reflejan principalmente la frecuencia de lluvias."
   },
   "comp": {
     "th_month": "Mes",

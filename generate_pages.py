@@ -1677,6 +1677,21 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     # ── Annual table ──
 
+    # Compute dominant ressenti for the destination
+    # If ≥9/12 months share same label → show badge once above table, not per row
+    _all_ressenti = [_ressenti(mo['tmax'], mo.get('dew_point'), C.get('lang','fr'))[0] for mo in months]
+    _dominant_label = max(set(l for l in _all_ressenti if l), key=lambda x: _all_ressenti.count(x)) if any(_all_ressenti) else None
+    _dominant_count = _all_ressenti.count(_dominant_label) if _dominant_label else 0
+    _show_row_ressenti = _dominant_count < 9  # show per-row only if varied
+    _dominant_color = _ressenti(months[0]['tmax'], months[0].get('dew_point'), C.get('lang','fr'))[1] if not _show_row_ressenti else None
+    _table_header_badge = (
+        f'<div class="table-ressenti-badge" style="margin-bottom:8px">'
+        f'<span style="font-size:11px;font-weight:700;color:{_dominant_color}">'
+        f'{_dominant_label}</span>'
+        f'<span style="font-size:10px;color:#aaa;margin-left:6px">({C.get("lbl_m_th_score","Score")} — {_dominant_count}/12 mois)</span>'
+        f'</div>'
+    ) if not _show_row_ressenti and _dominant_label else ''
+
     table_rows = ''
     for i, mo in enumerate(months):
         highlight = ' class="row-highlight"' if i == mi else ''
@@ -1696,7 +1711,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
                        + f'<td data-label="{C["lbl_m_th_sun"]}">{mo["sun_h"]}h</td>'
                        '<td data-label="' + C["lbl_m_th_score"] + '">' +
                        f'{mo["score"]:.1f}/10' +
-                       (lambda r,c: f'<br><span style="font-size:9px;font-weight:700;color:{c};letter-spacing:.2px">{r}</span>' if r else '')(*_ressenti(mo["tmax"], mo.get("dew_point"), C.get("lang","fr"))) +
+                       (lambda r,c: f'<br><span style="font-size:9px;font-weight:700;color:{c};letter-spacing:.2px">{r}</span>' if (r and _show_row_ressenti) else '')(*_ressenti(mo["tmax"], mo.get("dew_point"), C.get("lang","fr"))) +
                        f'</td>{ski_col}</tr>\n')
 
     # Best month diff
@@ -2393,7 +2408,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <section class="section">
  <div class="section-label">{L['sec_table']}</div>
  <h2 class="section-title">{L['sec_table_title']}</h2>
- <div class="{'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'}">
+{_table_header_badge} <div class="{'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'}">
  <table class="climate-table climate-table--horizontal" aria-label="{L['sec_table_title']} {nom}">
  <thead><tr><th>{L['th_month']}</th><th>{L['th_tmin']}</th><th>{L['th_tmax']}</th><th>{L['th_rain']}</th><th>{L['th_precip']}</th><th>{L['th_sun']}</th><th>{L['th_score']}</th>{'<th>' + L['th_ski'] + '</th>' if is_mountain else ''}</tr></thead>
  <tbody>{table_rows}</tbody>

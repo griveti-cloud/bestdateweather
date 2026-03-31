@@ -343,6 +343,20 @@ def climate_table_html(months, nom, is_mountain=False, L=None):
     """Generate climate table HTML."""
     if L is None:
         L = LANG_FR
+    # Dominant ressenti: if ≥9/12 months identical → header badge, no per-row
+    _lang_r = L.get('lang', 'fr')
+    _all_r = [ressenti(m['tmax'], m.get('dew_point'), _lang_r)[0] for m in months]
+    _dom_lbl = max(set(l for l in _all_r if l), key=lambda x: _all_r.count(x)) if any(_all_r) else None
+    _dom_cnt = _all_r.count(_dom_lbl) if _dom_lbl else 0
+    _show_row_r = _dom_cnt < 9
+    _dom_col = ressenti(months[0]['tmax'], months[0].get('dew_point'), _lang_r)[1] if not _show_row_r else None
+    _header_badge = (
+        f'<div class="table-ressenti-badge" style="margin-bottom:8px">'
+        f'<span style="font-size:11px;font-weight:700;color:{_dom_col}">{_dom_lbl}</span>'
+        f'<span style="font-size:10px;color:#aaa;margin-left:6px">({_dom_cnt}/12 mois)</span>'
+        f'</div>'
+    ) if not _show_row_r and _dom_lbl else ''
+
     rows = ''
     for i, m in enumerate(months):
         cls = m['classe']
@@ -362,13 +376,13 @@ def climate_table_html(months, nom, is_mountain=False, L=None):
                  f'<td data-label="{L["th_sun"]}">{m["sun_h"]}h</td>'
                  '<td data-label="' + L['th_score'] + '">' +
                  f'{m["score"]:.1f}/10' +
-                 (lambda r,c: f'<br><span style="font-size:9px;font-weight:700;color:{c};letter-spacing:.2px">{r}</span>' if r else '')(*ressenti(m['tmax'], m.get('dew_point'), L.get('lang','fr'))) +
+                 (lambda r,c: f'<br><span style="font-size:9px;font-weight:700;color:{c};letter-spacing:.2px">{r}</span>' if (r and _show_row_r) else '')(*ressenti(m['tmax'], m.get('dew_point'), L.get('lang','fr'))) +
                  f'</td>{ski_col}</tr>\n')
     ski_header = L['table_ski_header'] if is_mountain else ''
     wrap_class = 'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'
     legend_ideal_label = L.get('legend_ideal_mtn', L['legend_ideal']) if is_mountain else L['legend_ideal']
     legend_off_label   = L.get('legend_off_mtn',   L['legend_off'])   if is_mountain else L['legend_off']
-    return f'''<div class="{wrap_class}">
+    return f'''{_header_badge}<div class="{wrap_class}">
  <table class="climate-table climate-table--horizontal" aria-label="{L['table_aria'].format(nom=nom)}">
  <thead><tr>{L['table_headers']}{ski_header}</tr></thead>
  <tbody>{rows}</tbody>

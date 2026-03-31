@@ -786,7 +786,9 @@
     "city_group": "🌆 Städte & Reiseziele",
     "methodo_general": "🌡️ Wetter-Score: Temperatur, Sonnenstunden und Regentage aus 10 Jahren ERA5-Daten.",
     "methodo_beach": "🏖️ Strand-Score: warmes Meer, wenig Regen, viel Sonne. Nur Küstenziele.",
-    "methodo_ski": "⛷️ Ski-Score: Schnee, Kälte und Sonne. Nur Bergresorts."
+    "methodo_ski": "⛷️ Ski-Score: Schnee, Kälte und Sonne. Nur Bergresorts.",
+    "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropisches Klima: Ganzjährig hohe Hitze und Luftfeuchtigkeit. Unterschiede zwischen den Monaten spiegeln hauptsächlich die Regenhäufigkeit wider.</p>",
+    "tropical_note": "🌴 Tropisches Klima: Ganzjährig hohe Hitze und Luftfeuchtigkeit. Unterschiede zwischen den Monaten spiegeln hauptsächlich die Regenhäufigkeit wider."
   },
   "comp": {
     "th_month": "Monat",

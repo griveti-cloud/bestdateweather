@@ -782,7 +782,9 @@
     "city_group": "🌆 Cities & destinations",
     "methodo_general": "🌡️ Weather score: temperature, sunshine and rainy days based on 10 years of ERA5 data.",
     "methodo_beach": "🏖️ Beach score: warm sea, low rain and high sunshine. Coastal destinations only.",
-    "methodo_ski": "⛷️ Ski score: snowfall, cold and sunshine. Mountain resorts only."
+    "methodo_ski": "⛷️ Ski score: snowfall, cold and sunshine. Mountain resorts only.",
+    "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropical climate: high heat and humidity year-round. Differences between months mainly reflect rainfall frequency.</p>",
+    "tropical_note": "🌴 Tropical climate: high heat and humidity year-round. Differences between months mainly reflect rainfall frequency."
   },
   "comp": {
     "th_month": "Month",

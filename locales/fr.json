@@ -781,7 +781,9 @@
     "city_group": "🌆 Villes & destinations",
     "methodo_general": "🌡️ Score météo : température, ensoleillement et jours de pluie sur 10 ans de données ERA5.",
     "methodo_beach": "🏖️ Score plage : mer chaude, faible pluie et fort ensoleillement. Destinations côtières uniquement.",
-    "methodo_ski": "⛷️ Score ski : enneigement, froid et ensoleillement. Stations de montagne uniquement."
+    "methodo_ski": "⛷️ Score ski : enneigement, froid et ensoleillement. Stations de montagne uniquement.",
+    "tropical_note_html": "<p class=\"tropical-note\">🌴 Climat tropical : chaleur et humidité élevées toute l'année. Les différences entre mois reflètent principalement la fréquence des pluies.</p>",
+    "tropical_note": "🌴 Climat tropical : chaleur et humidité élevées toute l'année. Les différences entre mois reflètent principalement la fréquence des pluies."
   },
   "comp": {
     "th_month": "Mois",
