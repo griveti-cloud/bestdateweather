@@ -317,6 +317,28 @@ def bar_chart(pct, max_val=100):
     return '█' * filled + '░' * (10 - filled)
 
 
+
+def ressenti(tmax, dew, lang='fr'):
+    """Return (label, color) for thermal comfort. Seuils calibrés GPT/Claude."""
+    LABELS = {
+        'froid':          {'fr':'Froid',         'en':'Cold',        'es':'Frío',      'de':'Kalt'},
+        'frais':          {'fr':'Frais',          'en':'Fresh',       'es':'Fresco',    'de':'Frisch'},
+        'confortable':    {'fr':'Confortable',    'en':'Comfortable', 'es':'Cómodo',    'de':'Angenehm'},
+        'lourd':          {'fr':'Lourd',          'en':'Oppressive',  'es':'Pesado',    'de':'Schwül'},
+        'tres_eprouvant': {'fr':'Très éprouvant', 'en':'Exhausting',  'es':'Agotador',  'de':'Erschöpfend'},
+    }
+    COLORS = {'froid':'#7c3aed','frais':'#0ea5e9','confortable':'#22c55e',
+              'lourd':'#f97316','tres_eprouvant':'#ef4444'}
+    if tmax is None or dew is None:
+        return None, None
+    if tmax < 0:                      key = 'froid'
+    elif dew < 16 and tmax < 20:      key = 'frais'
+    elif dew < 18 and tmax <= 32:     key = 'confortable'
+    elif dew <= 22 and tmax <= 38:    key = 'lourd'
+    else:                             key = 'tres_eprouvant'
+    l = lang if lang in ('fr','en','es','de') else 'en'
+    return LABELS[key][l], COLORS[key]
+
 def climate_table_html(months, nom, is_mountain=False, L=None):
     """Generate climate table HTML."""
     if L is None:
@@ -338,7 +360,10 @@ def climate_table_html(months, nom, is_mountain=False, L=None):
                  f'<td data-label="{L["th_rain"]}">{m["rain_pct"]}%</td>'
                  f'<td data-label="{L["th_precip"]}">{fmt_precip(m["precip"], L)}</td>'
                  f'<td data-label="{L["th_sun"]}">{m["sun_h"]}h</td>'
-                 f'<td data-label="{L["th_score"]}">{m["score"]:.1f}/10</td>{ski_col}</tr>\n')
+                 '<td data-label="' + L['th_score'] + '">' +
+                 f'{m["score"]:.1f}/10' +
+                 (lambda r,c: f'<br><span style="font-size:9px;font-weight:700;color:{c};letter-spacing:.2px">{r}</span>' if r else '')(*ressenti(m['tmax'], m.get('dew_point'), L.get('lang','fr'))) +
+                 f'</td>{ski_col}</tr>\n')
     ski_header = L['table_ski_header'] if is_mountain else ''
     wrap_class = 'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'
     legend_ideal_label = L.get('legend_ideal_mtn', L['legend_ideal']) if is_mountain else L['legend_ideal']
