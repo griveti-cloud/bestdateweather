@@ -1240,6 +1240,9 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 .dest-search-ac-item:last-child{{border-bottom:none;}}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{{background:var(--cream);}}
 .dest-flag{{vertical-align:middle;border-radius:2px;flex-shrink:0;}}
+.eeat-footer{{padding:12px 16px;font-size:11px;color:var(--slate2);border-top:1px solid var(--cream2);margin-top:8px;line-height:1.6;text-align:center;}}
+.eeat-link{{color:var(--gold);text-decoration:none;font-weight:600;}}
+.eeat-link:hover{{text-decoration:underline;}}
 .dest-map-section{{margin-bottom:0}}.dest-map-layout{{}}.dest-map-row{{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}}.dest-map-wrap{{}}.dest-map-col{{}}.dest-map-card{{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;background:#e8f0f8}}.dest-map-lbl{{display:block;padding:5px 10px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.4px;text-transform:uppercase;background:#f5f0e8;border-bottom:1px solid #e8e0d0}}.dest-map-el--world{{height:160px;width:100%;display:block}}.dest-map-el--macro{{height:160px;width:100%;display:block}}.dest-map-credit{{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}}.dest-map-credit a{{color:#aaa}}.dest-map-intro{{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#faf7f2;border-radius:10px;border:1.5px solid #e8e0d0}}.dest-map-country{{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:4px}}.dest-map-hsub{{font-size:13px;color:#666;line-height:1.6;margin-bottom:6px}}.dest-map-coords{{font-size:11px;color:#bbb;font-family:monospace}}@media(max-width:600px){{.dest-map-row{{grid-template-columns:1fr}}.dest-map-el--world,.dest-map-el--macro{{height:140px}}}}.leaflet-control-zoom{{display:none!important}}
 </style>
 {"<script async defer src=\"https://widget.getyourguide.com/dist/pa.umd.production.min.js\" data-gyg-partner-id=\"" + GYG_PARTNER_ID + "\"></script>" if gyg_active else ""}
@@ -2093,6 +2096,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         'src_text':       C['lbl_m_src_text_tpl'].format(**tpl),
         'src_link_text':  C['lbl_m_src_link_text'],
         'src_link':       C['lbl_m_src_link'],
+        'src_era5_short': C.get('lbl_m_src_era5_short', 'ERA5 · Open-Meteo · 10 ans'),
         'sec_compare':    C['lbl_m_sec_compare'],
         'sec_compare_title': C['lbl_m_sec_compare_title_tpl'].format(**tpl),
         'compare_intro':  C['lbl_m_compare_intro_tpl'].format(**tpl),
@@ -2394,6 +2398,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .dest-search-ac-item:last-child{{border-bottom:none;}}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{{background:var(--cream);}}
 .dest-flag{{vertical-align:middle;border-radius:2px;flex-shrink:0;}}
+.eeat-footer{{padding:12px 16px;font-size:11px;color:var(--slate2);border-top:1px solid var(--cream2);margin-top:8px;line-height:1.6;text-align:center;}}
+.eeat-link{{color:var(--gold);text-decoration:none;font-weight:600;}}
+.eeat-link:hover{{text-decoration:underline;}}
 .dest-map-section{{margin-bottom:0}}.dest-map-layout{{}}.dest-map-row{{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}}.dest-map-wrap{{}}.dest-map-col{{}}.dest-map-card{{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;background:#e8f0f8}}.dest-map-lbl{{display:block;padding:5px 10px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.4px;text-transform:uppercase;background:#f5f0e8;border-bottom:1px solid #e8e0d0}}.dest-map-el--world{{height:160px;width:100%;display:block}}.dest-map-el--macro{{height:160px;width:100%;display:block}}.dest-map-credit{{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}}.dest-map-credit a{{color:#aaa}}.dest-map-intro{{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#faf7f2;border-radius:10px;border:1.5px solid #e8e0d0}}.dest-map-country{{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:4px}}.dest-map-hsub{{font-size:13px;color:#666;line-height:1.6;margin-bottom:6px}}.dest-map-coords{{font-size:11px;color:#bbb;font-family:monospace}}@media(max-width:600px){{.dest-map-row{{grid-template-columns:1fr}}.dest-map-el--world,.dest-map-el--macro{{height:140px}}}}.leaflet-control-zoom{{display:none!important}}
 </style>
 {"<script async defer src=\"https://widget.getyourguide.com/dist/pa.umd.production.min.js\" data-gyg-partner-id=\"" + GYG_PARTNER_ID + "\"></script>" if gyg_active else ""}
@@ -2475,12 +2482,6 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  </section>
 
- <div class="eeat-note" class="eeat-note">
- <strong class="txt-navy-block">{L['src_label']}</strong>
- {L['src_text']}
- <a href="{L['src_link']}" class="txt-gold">{L['src_link_text']}</a>
- · <a href="{annual_link}" class="txt-gold">{C['lbl_annual_view_link']}</a>
- </div>
 
  <section class="section">
  <div class="section-label">{L['sec_compare']}</div>
@@ -2571,6 +2572,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </a>
  </div>
  </section>
+<div class="eeat-footer">📊 <span>{L['src_era5_short']}</span> — <a href="{L['src_link']}" class="eeat-link">{L['src_link_text']}</a> · <a href="{annual_link}" class="eeat-link">{C['lbl_annual_view_link']}</a></div>
 </main>
 <script src="{C['asset_prefix']}js/dest-data.js?v=4"></script>
 <script src="{C['asset_prefix']}js/faq.js" defer></script>

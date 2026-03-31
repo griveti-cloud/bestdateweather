@@ -490,7 +490,8 @@
     "hstat_score": "Score météo",
     "search_dest_label": "Comparer avec une autre destination",
     "search_dest_placeholder": "🌍  Paris, Bali, Tokyo…",
-    "search_dest_btn": "Comparer →"
+    "search_dest_btn": "Comparer →",
+    "src_era5_short": "Données ERA5 · Open-Meteo · 10 ans · Numbeo 2026"
   },
   "narratives": {
     "tropical_rainy": "En {month_lc}, {name} est en pleine saison des pluies ({rain}% de jours pluvieux). Les averses tropicales sont généralement courtes mais intenses — prévoyez un imperméable léger.",

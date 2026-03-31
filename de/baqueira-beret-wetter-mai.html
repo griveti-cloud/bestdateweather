@@ -162,6 +162,9 @@
 .dest-search-ac-item:last-child{border-bottom:none;}
 .dest-search-ac-item:hover,.dest-search-ac-item.hovered{background:var(--cream);}
 .dest-flag{vertical-align:middle;border-radius:2px;flex-shrink:0;}
+.eeat-footer{padding:12px 16px;font-size:11px;color:var(--slate2);border-top:1px solid var(--cream2);margin-top:8px;line-height:1.6;text-align:center;}
+.eeat-link{color:var(--gold);text-decoration:none;font-weight:600;}
+.eeat-link:hover{text-decoration:underline;}
 .dest-map-section{margin-bottom:0}.dest-map-layout{}.dest-map-row{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}.dest-map-wrap{}.dest-map-col{}.dest-map-card{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;background:#e8f0f8}.dest-map-lbl{display:block;padding:5px 10px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.4px;text-transform:uppercase;background:#f5f0e8;border-bottom:1px solid #e8e0d0}.dest-map-el--world{height:160px;width:100%;display:block}.dest-map-el--macro{height:160px;width:100%;display:block}.dest-map-credit{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}.dest-map-credit a{color:#aaa}.dest-map-intro{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#faf7f2;border-radius:10px;border:1.5px solid #e8e0d0}.dest-map-country{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:4px}.dest-map-hsub{font-size:13px;color:#666;line-height:1.6;margin-bottom:6px}.dest-map-coords{font-size:11px;color:#bbb;font-family:monospace}@media(max-width:600px){.dest-map-row{grid-template-columns:1fr}.dest-map-el--world,.dest-map-el--macro{height:140px}}.leaflet-control-zoom{display:none!important}
 </style>
 
@@ -266,12 +269,6 @@
  </div>
  </section>
 
- <div class="eeat-note" class="eeat-note">
- <strong class="txt-navy-block">📊 Datenquelle</strong>
- Daten basieren auf <strong>10 Jahren ERA5-Aufzeichnungen</strong> via Open-Meteo, mit ECMWF-Saisonanpassung. Im Mai hat Baqueira-Beret durchschnittlich <strong>10°C</strong>, 54% Regentage und 10.5h Sonnenschein pro Tag. Wetter-Gesamtscore: <strong>4.3/10</strong>. Diese Seite wird automatisch aus Klimadaten generiert. <a href="/ueber-uns.html" class="txt-muted">Mehr erfahren →</a>
- <a href="methodik.html" class="txt-gold">Methodik ansehen →</a>
- · <a href="beste-reisezeit-baqueira-beret.html" class="txt-gold">Alle Monate anzeigen →</a>
- </div>
 
  <section class="section">
  <div class="section-label">Vergleich</div>
@@ -384,6 +381,7 @@
  </a>
  </div>
  </section>
+<div class="eeat-footer">📊 <span>ERA5-Daten · Open-Meteo · 10 Jahre · Numbeo 2026</span> — <a href="methodik.html" class="eeat-link">Methodik ansehen →</a> · <a href="beste-reisezeit-baqueira-beret.html" class="eeat-link">Alle Monate anzeigen →</a></div>
 </main>
 <script src="../js/dest-data.js?v=4"></script>
 <script src="../js/faq.js" defer></script>

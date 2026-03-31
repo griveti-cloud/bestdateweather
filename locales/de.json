@@ -490,7 +490,8 @@
     "hstat_score": "Klimascore",
     "search_dest_label": "Mit einem anderen Ziel vergleichen",
     "search_dest_placeholder": "🌍  Paris, Bali, Tokio…",
-    "search_dest_btn": "Vergleichen →"
+    "search_dest_btn": "Vergleichen →",
+    "src_era5_short": "ERA5-Daten · Open-Meteo · 10 Jahre · Numbeo 2026"
   },
   "narratives": {
     "tropical_rainy": "Im {month} befindet sich {name} mitten in der Regenzeit ({rain}% Regentage). Tropenschauer sind meist kurz, aber intensiv — einen leichten Regenmantel einpacken.",
