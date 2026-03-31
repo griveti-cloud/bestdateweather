@@ -202,7 +202,7 @@
   "badges": {
     "excellent": "✅ Excelente",
     "good": "✅ Bueno",
-    "fair": "⚠️ Aceptable",
+    "fair": "⚠️ Período correcto",
     "poor": "❌ Clima marcado",
     "tropical_good": "✅ Agradable",
     "tropical_fair": "🌴 Tropical"
@@ -215,18 +215,18 @@
   "verdicts": {
     "excellent": "Época ideal",
     "good": "Buena época",
-    "fair": "Aceptable",
+    "fair": "Período correcto",
     "poor": "Clima marcado"
   },
   "table": {
     "aria": "Tabla climática mensual de {nom}",
     "headers": "<th>Mes</th><th>Mín °C</th><th>Máx °C</th><th>Días de lluvia (%)</th><th>Precip. mm/día</th><th>Sol h/día</th><th>Puntuación</th>",
     "ski_header": "<th>Puntuación ski 🎿</th>",
-    "legend_ideal": "Ideal",
-    "legend_fair": "Aceptable",
+    "legend_ideal": "Mejor período",
+    "legend_fair": "Período correcto",
     "legend_off": "Clima marcado",
     "legend_source": "Fuente: Open-Meteo · 10 años",
-    "legend_ideal_mtn": "Ideal (esquí o verano)",
+    "legend_ideal_mtn": "Mejor período (esquí o verano)",
     "legend_off_mtn": "Temporada baja"
   },
   "nav": {
@@ -422,7 +422,7 @@
     "og_title_tpl": "{nom} en {month} {year} — {tmax}°C y {sun}h de sol",
     "bk_cta_tpl": "Alojarse en {nom} en {month}",
     "sim_label": "Explorar también",
-    "verdict_period_rec": "Ideal",
+    "verdict_period_rec": "Mejor período",
     "verdict_period_avg": "Correcto",
     "verdict_period_bad": "Difícil",
     "act_beach_na": "— Sin acceso al mar",
@@ -505,7 +505,7 @@
     "ski_a_bad_mountain": "No se recomienda el esquí en {month} (puntuación ski {ski}/10). Las temperaturas ({tmax}°C) limitan la cobertura de nieve.",
     "mountain_summer_q": "¿Qué hacer en {name} en {month}?",
     "mountain_summer_a_good": "Sí, {month} es uno de los mejores meses para visitar {name} (puntuación {score}/10). {tmax}°C, {sun}h de sol — perfecto para el senderismo.",
-    "mountain_summer_a_mid": "Sí, {month} es una buena época ({score}/10). Ideal para actividades al aire libre y senderismo.",
+    "mountain_summer_a_mid": "Sí, {month} es una buena época ({score}/10). Mejor período para actividades al aire libre y senderismo.",
     "mountain_summer_a_transition": "Período de transición con puntuación verano de {score}/10 y puntuación ski de {ski}/10. No es ni la mejor época para esquiar ni para el verano.",
     "activity_q": "¿Qué hacer en {name} en {month}?",
     "activity_a_outdoor": "Con {tmax}°C y {sun}h de sol, todas las actividades al aire libre son posibles: senderismo, turismo y terrazas.",
@@ -538,7 +538,7 @@
   },
   "verdict_words": {
     "rec": "Favorables",
-    "mid": "Aceptables",
+    "mid": "Período correctos",
     "avoid": "Marcadas"
   },
   "console": {
@@ -593,7 +593,7 @@
     },
     {
       "q": "¿Hace calor en {nom} en verano?",
-      "a": "En {best_month}, las temperaturas alcanzan {best_tmax}°C de media. Ideal para el senderismo y las actividades al aire libre."
+      "a": "En {best_month}, las temperaturas alcanzan {best_tmax}°C de media. Mejor período para el senderismo y las actividades al aire libre."
     },
     {
       "q": "¿Cuál es el mes más lluvioso en {nom}?",
@@ -1142,7 +1142,7 @@
     },
     "nomades": {
       "title_tpl": "Mejores destinos nómadas digitales 2026 — clima constante todo el año",
-      "desc_tpl": "{n} destinos clasificados por regularidad climática. Ideal para trabajadores remotos y nómadas.",
+      "desc_tpl": "{n} destinos clasificados por regularidad climática. Mejor período para trabajadores remotos y nómadas.",
       "h1": "Mejores destinos<br/><em>nómadas digitales 2026</em>",
       "hero_sub_tpl": "{top1} lidera: {top1_avg}/10 de media, desviación {top1_stdev}.",
       "stats": [
@@ -1314,7 +1314,7 @@
       "Poca nieve en {nom_bare} en {month_lc} — {best_ski_month_lc} es el pico de esquí."
     ]
   },
-  "legend_ideal_mtn": "Ideal (esquí o verano)",
+  "legend_ideal_mtn": "Mejor período (esquí o verano)",
   "legend_off_mtn": "Temporada baja",
   "fp_period": "PERÍODO",
   "fp_region": "REGIÓN",
@@ -1330,7 +1330,7 @@
     "ski_good": "Buenas condiciones de esquí {nom_f} con nieve generalmente fiable ({tmax}°C en el valle). Telesillas en pleno funcionamiento.",
     "ski_shoulder": "Temporada intermedia {nom_f}: nieve variable según la altitud. Las pistas bajas pueden tener poca nieve con {tmax}°C en el valle.",
     "ski_poor": "Condiciones de esquí difíciles {nom_f} este mes ({tmax}°C en el valle). La nieve es poco fiable, con cierres parciales o fin de temporada.",
-    "ski_offseason": "Fuera de temporada de esquí {nom_f} — los telesillas están cerrados. Ideal para senderismo, BTT o actividades estivales de montaña."
+    "ski_offseason": "Fuera de temporada de esquí {nom_f} — los telesillas están cerrados. Mejor período para senderismo, BTT o actividades estivales de montaña."
   },
   "temp_unit": "°C",
   "tropical_showers": "lluvias tropicales breves",

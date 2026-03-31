@@ -202,7 +202,7 @@
   "badges": {
     "excellent": "✅ Ausgezeichnet",
     "good": "✅ Gut",
-    "fair": "⚠️ Akzeptabel",
+    "fair": "⚠️ Gute Periode",
     "poor": "❌ Schlecht",
     "tropical_good": "✅ Angenehm",
     "tropical_fair": "🌴 Tropisch"
@@ -215,18 +215,18 @@
   "verdicts": {
     "excellent": "Ausgezeichnete Zeit",
     "good": "Gute Zeit",
-    "fair": "Akzeptabel",
+    "fair": "Gute Periode",
     "poor": "Anspruchsvolles Klima"
   },
   "table": {
     "aria": "Monatliche Klimatabelle {nom}",
     "headers": "<th>Monat</th><th>Min °C</th><th>Max °C</th><th>Regentage (%)</th><th>Niederschl. mm/T</th><th>Sonne h/T</th><th>Score</th>",
     "ski_header": "<th>Ski-Score 🎿</th>",
-    "legend_ideal": "Ideal",
-    "legend_fair": "Akzeptabel",
+    "legend_ideal": "Beste Periode",
+    "legend_fair": "Gute Periode",
     "legend_off": "Anspruchsvolles Klima",
     "legend_source": "Quelle: Open-Meteo · 10 Jahre",
-    "legend_ideal_mtn": "Ideal (Ski oder Sommer)",
+    "legend_ideal_mtn": "Beste Periode (Ski oder Sommer)",
     "legend_off_mtn": "Nebensaison"
   },
   "nav": {
@@ -422,8 +422,8 @@
     "og_title_tpl": "{nom} im {month} {year} — {tmax}°C & {sun}h Sonne",
     "bk_cta_tpl": "Unterkunft in {nom} im {month} finden",
     "sim_label": "Auch erkunden",
-    "verdict_period_rec": "Ideal",
-    "verdict_period_avg": "Akzeptabel",
+    "verdict_period_rec": "Beste Periode",
+    "verdict_period_avg": "Gute Periode",
     "verdict_period_bad": "Schwierig",
     "act_beach_na": "— Kein Meereszugang",
     "back_annual_tpl": "← Beste Reisezeit für {name}",
@@ -451,7 +451,7 @@
     "rain_pct_label": "{pct}% Regentage",
     "tension_peak": "Hochsaison — Massen & hohe Preise?",
     "tension_great": "Toller Monat — was du wissen solltest",
-    "tension_decent": "Akzeptabel — aber es gibt bessere Monate",
+    "tension_decent": "Gute Periode — aber es gibt bessere Monate",
     "tension_off": "Nebensaison — lohnt sich die Reise?",
     "tension_tough": "Schwieriger Monat — wichtige Infos",
     "hstat_score": "Klimascore",
@@ -505,7 +505,7 @@
     "ski_a_bad_mountain": "Skifahren wird im {month} nicht empfohlen (Ski-Score {ski}/10). Temperaturen ({tmax}°C) schränken die Schneelage ein.",
     "mountain_summer_q": "Was kann man in {name} im {month} unternehmen?",
     "mountain_summer_a_good": "Ja, der {month} ist eine der besten Reisezeiten für {name} (Score {score}/10). {tmax}°C, {sun}h Sonnenschein — perfekt zum Wandern.",
-    "mountain_summer_a_mid": "Ja, der {month} ist eine gute Reisezeit ({score}/10). Ideal für Outdoor-Aktivitäten und Wanderungen.",
+    "mountain_summer_a_mid": "Ja, der {month} ist eine gute Reisezeit ({score}/10). Beste Periode für Outdoor-Aktivitäten und Wanderungen.",
     "mountain_summer_a_transition": "Übergangszeit mit einem Sommer-Score von {score}/10 und Ski-Score von {ski}/10. Weder die beste Ski- noch Sommersaison.",
     "activity_q": "Was kann man in {name} im {month} unternehmen?",
     "activity_a_outdoor": "Mit {tmax}°C und {sun}h Sonnenschein sind alle Outdoor-Aktivitäten möglich: Wandern, Sightseeing und Terrassen.",
@@ -538,7 +538,7 @@
   },
   "verdict_words": {
     "rec": "Günstig",
-    "mid": "Akzeptabel",
+    "mid": "Gute Periode",
     "avoid": "Anspruchsvoll"
   },
   "console": {
@@ -593,7 +593,7 @@
     },
     {
       "q": "Ist es in {nom} im Sommer warm?",
-      "a": "Im {best_month} betragen die Temperaturen durchschnittlich {best_tmax}°C. Ideal zum Wandern und für Outdoor-Aktivitäten."
+      "a": "Im {best_month} betragen die Temperaturen durchschnittlich {best_tmax}°C. Beste Periode zum Wandern und für Outdoor-Aktivitäten."
     },
     {
       "q": "Was ist der regenreichste Monat in {nom}?",
@@ -1139,7 +1139,7 @@
     },
     "nomades": {
       "title_tpl": "Beste Digital-Nomaden-Ziele 2026 — Wetter-Konsistenz-Ranking",
-      "desc_tpl": "{n} Reiseziele nach Wetter-Konsistenz gerankt. Ideal für digitale Nomaden.",
+      "desc_tpl": "{n} Reiseziele nach Wetter-Konsistenz gerankt. Beste Periode für digitale Nomaden.",
       "h1": "Beste Digital-Nomaden-<br/><em>Ziele 2026</em>",
       "hero_sub_tpl": "{top1} führt: {top1_avg}/10 Ø, Stdabw. {top1_stdev}.",
       "stats": [
@@ -1290,7 +1290,7 @@
   },
   "monthly_hero_subs_ski": {
     "ski_excellent": [
-      "Ideale Skibedingungen in {nom_bare} im {month_lc} — Schnee und Kälte garantiert.",
+      "Beste Periodee Skibedingungen in {nom_bare} im {month_lc} — Schnee und Kälte garantiert.",
       "{month}: Hochsaison in {nom_bare}. Optimale Bedingungen.",
       "Das Beste der Skisaison in {nom_bare} — {month_lc} enttäuscht nicht."
     ],
@@ -1305,7 +1305,7 @@
       "Wenig Schnee in {nom_bare} im {month_lc} — {best_ski_month_lc} ist die Skispitze."
     ]
   },
-  "legend_ideal_mtn": "Ideal (Ski oder Sommer)",
+  "legend_ideal_mtn": "Beste Periode (Ski oder Sommer)",
   "legend_off_mtn": "Nebensaison",
   "fp_period": "ZEITRAUM",
   "fp_region": "REGION",
@@ -1314,7 +1314,7 @@
     "Beste Skizeit in {nom_bare}: {best_ski_month_lc} bietet optimale Schneebedingungen.",
     "{best_ski_month} ist die Hauptskisaison in {nom_bare}.",
     "Ski in {nom_bare}: {best_ski_month_lc} bietet die besten Bedingungen.",
-    "{nom_bare} — Skigebiet. Ideale Saison: {best_ski_month_lc}."
+    "{nom_bare} — Skigebiet. Beste Periodee Saison: {best_ski_month_lc}."
   ],
   "context_paragraphs_ski": {
     "ski_peak": "Hochsaison Ski {nom_f}: optimale Schneelage und vollständig geöffnetes Skigebiet. Die beste Zeit für die Pisten.",

@@ -202,7 +202,7 @@
   "badges": {
     "excellent": "✅ Excellent",
     "good": "✅ Favorable",
-    "fair": "⚠️ Acceptable",
+    "fair": "⚠️ Période correcte",
     "poor": "❌ Peu favorable",
     "tropical_good": "✅ Agréable",
     "tropical_fair": "🌴 Tropical"
@@ -216,17 +216,17 @@
     "excellent": "Excellente période",
     "good": "Bonne période",
     "fair": "Période acceptable",
-    "poor": "Climat prononcé"
+    "poor": "Conditions marquées"
   },
   "table": {
     "aria": "Tableau climat mensuel {nom}",
     "headers": "<th>Mois</th><th>T° min</th><th>T° max</th><th>Jours de pluie (%)</th><th>Précip. mm/j</th><th>Soleil h/j</th><th>Score</th>",
     "ski_header": "<th>Score ski 🎿</th>",
-    "legend_ideal": "Idéal",
-    "legend_fair": "Acceptable",
-    "legend_off": "Climat prononcé",
+    "legend_ideal": "Meilleure période",
+    "legend_fair": "Période correcte",
+    "legend_off": "Conditions marquées",
     "legend_source": "Source Open-Meteo · 10 ans",
-    "legend_ideal_mtn": "Idéal (ski ou été)",
+    "legend_ideal_mtn": "Meilleure période (ski ou été)",
     "legend_off_mtn": "Hors saison"
   },
   "nav": {
@@ -438,7 +438,7 @@
     "og_title_tpl": "Météo {prep} {nom_bare} en {month_lc} {year} — {tmax}°C & {sun}h de soleil",
     "bk_cta_tpl": "Voir les hébergements {prep} {nom_bare} en {month_lc}",
     "sim_label": "Explorer aussi",
-    "verdict_period_rec": "Idéal",
+    "verdict_period_rec": "Meilleure période",
     "verdict_period_avg": "Correct",
     "verdict_period_bad": "Difficile",
     "act_beach_na": "— Sans accès mer",
@@ -505,7 +505,7 @@
     "ski_a_bad_mountain": "Le ski n'est pas recommandé en {month_lc} (score ski {ski}/10). Les températures ({tmax}°C) limitent l'enneigement.",
     "mountain_summer_q": "Que faire {name} en {month_lc} ?",
     "mountain_summer_a_good": "Oui, {month_lc} est l'une des meilleures périodes {name} (score {score}/10). {tmax}°C, {sun}h de soleil — idéal pour la randonnée.",
-    "mountain_summer_a_mid": "Oui, {month_lc} est une bonne période ({score}/10). Idéal pour les activités outdoor et la randonnée.",
+    "mountain_summer_a_mid": "Oui, {month_lc} est une bonne période ({score}/10). Meilleure période pour les activités outdoor et la randonnée.",
     "mountain_summer_a_transition": "Période de transition avec un score été de {score}/10 et ski de {ski}/10. Ni la meilleure saison de ski ni d'été.",
     "activity_q": "Que faire {name} en {month_lc} ?",
     "activity_a_outdoor": "Avec {tmax}°C et {sun}h de soleil, toutes les activités extérieures sont possibles : randonnées, visites de sites et terrasses.",
@@ -593,7 +593,7 @@
     },
     {
       "q": "Fait-il chaud {prep} {nom_bare} en été ?",
-      "a": "En {best_month_lc}, il fait {best_tmax}°C en moyenne. Idéal pour la randonnée et les activités outdoor."
+      "a": "En {best_month_lc}, il fait {best_tmax}°C en moyenne. Meilleure période pour la randonnée et les activités outdoor."
     },
     {
       "q": "Quel est le mois le plus pluvieux {prep} {nom_bare} ?",
@@ -628,7 +628,7 @@
   ],
   "annual_faq_winter_verdicts": {
     "ok": "Conditions acceptables pour les visites culturelles.",
-    "bad": "Climat prononcé — la haute saison offre des conditions plus douces."
+    "bad": "Conditions marquées — la haute saison offre des conditions plus douces."
   },
   "annual_faq_bests_suffix": "La période {bests_str} offre des conditions comparables.",
   "monthly_hero_subs": {
@@ -666,7 +666,7 @@
     ],
     "poor": [
       "{month} présente un climat prononcé {prep} {nom_bare}. {best_month} ({best_score}/10) offre des conditions plus clémentes.",
-      "Climat prononcé en {month_lc} ({score}/10). {best_month_lc} offre des conditions plus clémentes si vos dates sont flexibles.",
+      "Conditions marquées en {month_lc} ({score}/10). {best_month_lc} offre des conditions plus clémentes si vos dates sont flexibles.",
       "{nom_bare} en {month_lc} : {rain}% de pluie, {sun}h de soleil. Mieux vaut reporter à {best_month_lc}."
     ]
   },
@@ -827,7 +827,7 @@
     "all_year_sub": "Les 25 destinations avec le meilleur climat sur 12 mois, classées par score annuel moyen.",
     "all_year_eyebrow": "Où partir selon la météo ?",
     "all_year_sec": "Top 25 destinations — Score annuel",
-    "all_year_intro": "Score moyen calculé sur les 12 mois de l'année. Idéal pour choisir une destination qui offre un bon climat toute l'année.",
+    "all_year_intro": "Score moyen calculé sur les 12 mois de l'année. Meilleure période pour choisir une destination qui offre un bon climat toute l'année.",
     "sec_title_meteo": "Top {n} destinations en {month}",
     "sec_title_beach": "Top {n} destinations plage en {month}",
     "sec_title_ski": "Top {n} stations ski en {month}",
@@ -1130,7 +1130,7 @@
     },
     "nomades": {
       "title_tpl": "Meilleures destinations digital nomads 2026 — Météo et régularité climatique",
-      "desc_tpl": "{n} destinations classées par constance météo. Idéal pour les nomades digitaux.",
+      "desc_tpl": "{n} destinations classées par constance météo. Meilleure période pour les nomades digitaux.",
       "h1": "Meilleures destinations<br/><em>nomades digitaux 2026</em>",
       "hero_sub_tpl": "{top1} en tête : {top1_avg}/10 moyen, écart-type {top1_stdev}.",
       "stats": [
@@ -1293,7 +1293,7 @@
       "Peu de neige en {month_lc} {prep} {nom_bare} — {best_ski_month_lc} est le pic ski."
     ]
   },
-  "legend_ideal_mtn": "Idéal (ski ou été)",
+  "legend_ideal_mtn": "Meilleure période (ski ou été)",
   "legend_off_mtn": "Hors saison",
   "fp_period": "PÉRIODE",
   "fp_region": "RÉGION",

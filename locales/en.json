@@ -216,18 +216,18 @@
   "verdicts": {
     "excellent": "Excellent time",
     "good": "Good time",
-    "fair": "Acceptable",
+    "fair": "Decent period",
     "poor": "Challenging climate"
   },
   "table": {
     "aria": "Monthly climate table {nom}",
     "headers": "<th>Month</th><th>Min °C</th><th>Max °C</th><th>Rainy days (%)</th><th>Precip. mm/d</th><th>Sun h/d</th><th>Score</th>",
     "ski_header": "<th>Ski score 🎿</th>",
-    "legend_ideal": "Ideal",
+    "legend_ideal": "Best period",
     "legend_fair": "Fair",
     "legend_off": "Challenging climate",
     "legend_source": "Source: Open-Meteo · 10 years",
-    "legend_ideal_mtn": "Ideal (ski or summer)",
+    "legend_ideal_mtn": "Best period (ski or summer)",
     "legend_off_mtn": "Off season"
   },
   "nav": {
@@ -423,7 +423,7 @@
     "og_title_tpl": "{nom} in {month} {year} — {tmax}°C & {sun}h sunshine",
     "bk_cta_tpl": "Find places to stay in {nom} in {month}",
     "sim_label": "Explore also",
-    "verdict_period_rec": "Ideal",
+    "verdict_period_rec": "Best period",
     "verdict_period_avg": "Decent",
     "verdict_period_bad": "Challenging",
     "act_beach_na": "— No sea access",
@@ -539,7 +539,7 @@
   },
   "verdict_words": {
     "rec": "Favourable",
-    "mid": "Acceptable",
+    "mid": "Decent period",
     "avoid": "Challenging"
   },
   "console": {
@@ -594,7 +594,7 @@
     },
     {
       "q": "Is it warm in {nom} in summer?",
-      "a": "In {best_month}, temperatures average {best_tmax}°C. Ideal for hiking and outdoor activities."
+      "a": "In {best_month}, temperatures average {best_tmax}°C. Best period for hiking and outdoor activities."
     },
     {
       "q": "What is the wettest month in {nom}?",
@@ -628,7 +628,7 @@
     }
   ],
   "annual_faq_winter_verdicts": {
-    "ok": "Acceptable conditions for cultural visits.",
+    "ok": "Decent period conditions for cultural visits.",
     "bad": "Difficult period — prefer the peak season."
   },
   "annual_faq_bests_suffix": "The months of {bests_str} offer comparable conditions.",
@@ -640,7 +640,7 @@
     ],
     "good": [
       "{month} is a good time to visit {nom} — see the full breakdown.",
-      "Good conditions in {month} for {nom}. Find out what to expect.",
+      "Decent period in {month} for {nom}. Find out what to expect.",
       "{nom} in {month}: worth it — check the details."
     ],
     "poor": [
@@ -1131,7 +1131,7 @@
     },
     "nomades": {
       "title_tpl": "Best digital nomad destinations 2026 — Weather consistency ranking",
-      "desc_tpl": "{n} destinations ranked by weather consistency. Ideal for digital nomads.",
+      "desc_tpl": "{n} destinations ranked by weather consistency. Best period for digital nomads.",
       "h1": "Best digital nomad<br/><em>destinations 2026</em>",
       "hero_sub_tpl": "{top1} leads: {top1_avg}/10 average, std dev {top1_stdev}.",
       "stats": [
@@ -1294,7 +1294,7 @@
       "Little snow in {nom_bare} in {month_lc} — {best_ski_month_lc} is peak ski."
     ]
   },
-  "legend_ideal_mtn": "Ideal (ski or summer)",
+  "legend_ideal_mtn": "Best period (ski or summer)",
   "legend_off_mtn": "Off season",
   "fp_period": "PERIOD",
   "fp_region": "REGION",

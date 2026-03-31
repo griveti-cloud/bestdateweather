@@ -288,6 +288,8 @@ def compute_scores(months: list, slug: str = '') -> list:
             em['cls'] = 'mid'
         elif tmax >= DEW_CAP_TMAX and dew is not None and dew >= DEW_CAP_DEW and cls == 'rec':
             em['cls'] = 'mid'
+        elif tmax >= 26 and dew is not None and dew >= 22 and cls == 'rec':
+            em['cls'] = 'mid'  # chaleur humide tropicale (dew ≥ 22°C + tmax ≥ 26°C)
         effective_months.append(em)
 
     # Plages effectives selon type de destination
@@ -342,6 +344,8 @@ def effective_classe(tmax: float, classe: str, dew_point: float = None) -> str:
         return 'mid'
     if tmax >= 30 and dew_point is not None and dew_point >= 16 and classe == 'rec':
         return 'mid'
+    if tmax >= 26 and dew_point is not None and dew_point >= 22 and classe == 'rec':
+        return 'mid'  # chaleur humide tropicale
     return classe
 
 
