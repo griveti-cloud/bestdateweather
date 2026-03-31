@@ -1371,6 +1371,7 @@ function computeAnchoredScores(monthly, ficheKey) {
   if (it.tmax >= 38 && it.cls !== 'avoid') it.cls = 'avoid';
   else if (it.tmax >= 34 && it.cls === 'rec') it.cls = 'mid';
   else if (it.tmax >= 30 && it.dew != null && it.dew >= 16 && it.cls === 'rec') it.cls = 'mid';
+  else if (it.tmax >= 26 && it.dew != null && it.dew >= 22 && it.cls === 'rec') it.cls = 'mid'; // V3: chaleur humide tropicale
  });
 
  ['avoid','mid','rec'].forEach(function(cls) {
@@ -2827,10 +2828,17 @@ function renderAnnual(loc, monthly) {
  var tempStr = d.avgTemp != null ? fmtTempRaw(d.avgTemp) + '°' : '–';
 
  var dewHtml = '';
- if (d.dewPoint != null && d.dewPoint >= 16) {
-  var dewLbl = d.dewPoint >= 22 ? T.dewSuffocating : (d.dewPoint >= 18 ? T.dewVeryHumid : T.dewHumid);
-  var dewClr = d.dewPoint >= 22 ? '#dc2626' : (d.dewPoint >= 18 ? '#f97316' : '#f59e0b');
-  dewHtml = '<span class="month-stat" style="color:'+dewClr+';font-weight:600">'+dewLbl+'</span>';
+ if (d.dewPoint != null || d.avgTmax != null) {
+  var _tmax = d.avgTmax != null ? d.avgTmax : 20;
+  var _dew = d.dewPoint;
+  var dewLbl = '', dewClr = '';
+  if (_tmax < 0) { dewLbl = T.ressentiFroid; dewClr = '#7c3aed'; }
+  else if (_dew != null && _dew < 16 && _tmax < 20) { dewLbl = T.ressentiFrais; dewClr = '#0ea5e9'; }
+  else if (_dew != null && _dew < 18 && _tmax <= 32) { dewLbl = T.ressentiConfortable; dewClr = '#22c55e'; }
+  else if (_dew != null && _dew <= 22 && _tmax <= 38) { dewLbl = T.ressentiLourd; dewClr = '#f97316'; }
+  else if (_dew != null && _dew > 22) { dewLbl = T.ressentiHumide; dewClr = '#ef4444'; }
+  else if (_tmax > 38) { dewLbl = T.ressentiTresChaud; dewClr = '#dc2626'; }
+  if (dewLbl) dewHtml = '<span class="month-stat" style="color:'+dewClr+';font-weight:600">'+dewLbl+'</span>';
  }
 
  card.innerHTML =

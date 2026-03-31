@@ -118,7 +118,7 @@ window.BDW_T = {
  // Chips
  chipRain: 'Regen', chipPrecip: 'Niederschl.', chipTemp: 'Temp.',
  chipWind: 'Wind', chipSnow: 'Schnee', chipHumidity: 'Luftfeuchtigkeit',
- dewHumid: '💦 Feucht', dewVeryHumid: '💦 Sehr feucht', dewSuffocating: '💦 Drückend',
+ dewHumid: '💦 Feucht', dewVeryHumid: '💦 Sehr feucht', dewSuffocating: '💦 Drückend', ressentiFroid: '🟣 Kalt', ressentiFrais: '🔵 Frisch', ressentiConfortable: '🟢 Angenehm', ressentiLourd: '🟠 Schwül', ressentiHumide: '🔴 Feuchte Hitze', ressentiTresChaud: '🔴 Sehr heiß',
  spreadStable: '🌡 Stabil', spreadVariable: '🌡 Wechselhaft',
  forecast7dLabel: '7-Tage-Vorhersage', dayToday: 'Heute',
 

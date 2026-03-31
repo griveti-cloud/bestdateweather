@@ -45,7 +45,7 @@ DATA = os.path.join(DIR, 'data')
 
 # ── Version JS — source de vérité unique ───────────────────────────────────
 # Incrémenter ici + les fichiers index/app sont mis à jour automatiquement
-CORE_JS_VERSION = 32
+CORE_JS_VERSION = 33
 APP_CSS_VERSION  = 17   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
 
 def _sync_core_version():
@@ -413,7 +413,7 @@ def footer_html(cfg, dest):
  <p class="f11-muted"><a href="{legal_url}" class="txt-muted">{legal_label}</a> · <a href="{priv_url}" class="txt-muted">{priv_label}</a> · <a href="{fc['contact'][0]}" class="txt-muted">{fc['contact'][1]}</a></p>
 </footer>
 <script src="{cfg['asset_prefix']}js/sw-register.js"></script>
-<script src="{cfg['asset_prefix']}js/core.min.js?v=28" defer></script>
+<script src="{cfg['asset_prefix']}js/core.min.js?v=33" defer></script>
 <script src="{cfg['asset_prefix']}js/favs.min.js?v=1" defer></script>
 <script src="{cfg['asset_prefix']}js/share.js" defer></script>'''
 
