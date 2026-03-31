@@ -280,7 +280,12 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  </div>
 
  <h3>Veredictos</h3>
- <p>La puntuación final se convierte en un veredicto cualitativo: <strong>Ideal</strong> (≥ 8,0/10), <strong>Favorable</strong> (6,5–7,9/10), <strong>Aceptable</strong> (4,5–6,4/10), <strong>Temporada baja</strong> (&lt; 4,5/10). Estos umbrales son idénticos en todos los perfiles.</p>
+ <p>La puntuación final se corresponde con uno de tres niveles cualitativos:</p>
+ <div class="card-grid">
+  <div class="card-mini"><div class="label" style="color:var(--green)">● Mejor período</div><div class="val">7,0 – 10,0</div><div class="sub">Condiciones climáticamente favorables</div></div>
+  <div class="card-mini"><div class="label" style="color:var(--gold)">● Período correcto</div><div class="val">4,0 – 6,9</div><div class="sub">Condiciones aceptables con algunos compromisos</div></div>
+  <div class="card-mini"><div class="label" style="color:#dc2626">● Condiciones marcadas</div><div class="val">0,5 – 3,9</div><div class="sub">Condiciones difíciles para la mayoría de viajeros</div></div>
+ </div>
 
  <div class="callout green">
   <div class="callout-ico">✓</div>
@@ -314,7 +319,36 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  </section>
 
  <section class="section" id="correccion-ecmwf">
- <div class="section-num">6</div>
+ 
+ <!-- SENSACIÓN TÉRMICA -->
+ <section class="section" id="sensacion-termica">
+ <div class="section-num">10</div>
+ <h2>Sensación térmica</h2>
+ <p>Cada mes muestra un <strong>distintivo de confort térmico</strong> basado en la temperatura máxima y el <strong>punto de rocío</strong>. Seis niveles:</p>
+ <table>
+  <thead><tr><th>Nivel</th><th>Condición</th><th>Significado</th></tr></thead>
+  <tbody>
+   <tr><td>🔵 Fresco</td><td>Rocío &lt; 16°C + Tmax &lt; 20°C</td><td>Aire seco y fresco</td></tr>
+   <tr><td>🟢 Cómodo</td><td>Rocío &lt; 18°C + Tmax ≤ 32°C</td><td>Condiciones agradables</td></tr>
+   <tr><td>🟠 Pesado</td><td>Rocío ≤ 22°C + Tmax ≤ 38°C</td><td>Calor o humedad notable</td></tr>
+   <tr><td>🔴 Calor húmedo</td><td>Rocío &gt; 22°C</td><td>Clima cálido y húmedo (trópicos)</td></tr>
+   <tr><td>🔴 Muy caluroso</td><td>Rocío ≤ 22°C + Tmax &gt; 38°C</td><td>Calor seco extremo (desiertos)</td></tr>
+   <tr><td>🟣 Frío</td><td>Tmax &lt; 0°C</td><td>Temperaturas bajo cero</td></tr>
+  </tbody>
+ </table>
+ </section>
+
+ <!-- INFO PRÁCTICA -->
+ <section class="section" id="info-practica">
+ <div class="section-num">9</div>
+ <h2>Información práctica por destino</h2>
+ <h3>Seguridad</h3>
+ <p>El nivel de seguridad (1–4) proviene del <strong>Auswärtiges Amt</strong> (Ministerio de Asuntos Exteriores alemán), vía API oficial en tiempo real con caché de 6 horas. Verifique siempre los consejos de viaje de su gobierno antes de partir.</p>
+ <h3>Presupuesto</h3>
+ <p>El índice de presupuesto (1–5) se basa en el <strong>Índice Numbeo de Coste de Vida 2026</strong>, calibrado sobre 14 destinos de referencia. Este índice es orientativo — refleja el coste de vida local, no los precios turísticos en tiempo real.</p>
+ </section>
+
+<div class="section-num">6</div>
  <h2>Corrección estacional ECMWF</h2>
  <p>Cuando el horizonte temporal se sitúa entre D+8 y D+210, la climatología histórica se ajusta por señales de anomalía del modelo estacional ECMWF. Este mecanismo fusiona progresivamente los datos históricos con las tendencias proyectadas, tratando la temperatura, las precipitaciones y el viento de forma diferente según su predictibilidad respectiva a medio plazo.</p>
  <p>El objetivo es detectar desviaciones significativas de la norma — una temporada anormalmente lluviosa, un invierno más suave de lo habitual — sin pretender la precisión de una previsión a corto plazo.</p>

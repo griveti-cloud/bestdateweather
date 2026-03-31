@@ -167,8 +167,25 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
   <p>Für jedes der 617 Ziele berechnen wir ein vollständiges Klimaprofil aus 10 Jahren ERA5-Daten: Monatsdurchschnitte für Temperatur, Niederschlag, Sonnenstunden, Wind und Meeresoberflächentemperatur. Dieser Referenz-Score dient als Klimaprofil für Tage, die über D+210 hinausliegen, oder wenn Echtzeit-API-Daten nicht verfügbar sind.</p>
   <p>Der <strong>P50-Wert</strong> (Median) wird dem Durchschnitt vorgezogen, um die Robustheit gegenüber Extremjahren zu gewährleisten. Für jeden Monat werden mindestens 8 Jahre Daten benötigt, damit ein Score als gültig gilt.</p>
   </section>
-  <section class="section" id="ecmwf">
+
+  <!-- THERMISCHES KOMFORTGEFÜHL -->
+  <section class="section" id="komfort">
   <div class="section-num">6</div>
+  <h2>Thermisches Komfortgefühl</h2>
+  <p>Jeder Monat zeigt ein <strong>Komfort-Badge</strong> basierend auf Höchsttemperatur und <strong>Taupunkt</strong>. Sechs Stufen: Kalt · Frisch · Angenehm · Schwül · Feuchte Hitze (Taupunkt &gt; 22°C) · Sehr heiß (Trockenhitze, Tmax &gt; 38°C).</p>
+  <p>Die Unterscheidung zwischen <em>feuchter Hitze</em> (Tropen wie Französisch-Guayana, Singapur) und <em>trockener Hitze</em> (Wüsten, Naher Osten) ist physikalisch bedeutsam: Bei hohem Taupunkt kann der Körper Schweiß nicht verdunsten.</p>
+  </section>
+
+  <!-- PRAKTISCHE INFOS -->
+  <section class="section" id="praktisch">
+  <div class="section-num">9</div>
+  <h2>Praktische Informationen je Ziel</h2>
+  <p><strong>Sicherheit:</strong> Reisehinweis-Level 1–4 vom <strong>Auswärtigen Amt</strong>, Echtzeit-API, 6-Stunden-Cache. Bitte prüfen Sie stets die aktuellen Hinweise des Auswärtigen Amts vor der Abreise.</p>
+  <p><strong>Budget:</strong> Budget-Index 1–5 basierend auf dem <strong>Numbeo-Lebenshaltungskostenindex 2026</strong>, kalibriert auf 14 Referenzziele. Indikativ — spiegelt lokale Lebenshaltungskosten wider, keine Echtzeit-Tourismuspreise.</p>
+  </section>
+
+  <section class="section" id="ecmwf">
+  <div class="section-num">10</div>
   <h2>ECMWF-Saisonalkorrektur</h2>
   <p>Für Daten zwischen D+8 und D+210 wenden wir eine Korrektur basierend auf dem ECMWF-Saisonalmodell an. Konkret wird das historische Klimaprofil durch drei Anomalie-Signale angepasst:</p>
   <ul>

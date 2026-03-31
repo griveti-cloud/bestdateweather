@@ -284,7 +284,13 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  </div>
 
  <h3>Verdicts</h3>
- <p>The final score is converted into a qualitative verdict: <strong>Ideal</strong> (≥ 8.0/10), <strong>Favourable</strong> (6.5–7.9/10), <strong>Acceptable</strong> (4.5–6.4/10), <strong>Off season</strong> (&lt; 4.5/10). These thresholds are identical across all profiles.</p>
+ <p>The final score maps to one of three qualitative levels:</p>
+ <div class="card-grid">
+  <div class="card-mini"><div class="label" style="color:var(--green)">● Best period</div><div class="val">7.0 – 10.0</div><div class="sub">Climatically favourable conditions</div></div>
+  <div class="card-mini"><div class="label" style="color:var(--gold)">● Decent period</div><div class="val">4.0 – 6.9</div><div class="sub">Acceptable conditions with some trade-offs</div></div>
+  <div class="card-mini"><div class="label" style="color:#dc2626">● Challenging conditions</div><div class="val">0.5 – 3.9</div><div class="sub">Difficult conditions for most travellers</div></div>
+ </div>
+ <p>These classes are comparable across all destinations — a score of 7.5 in Lisbon and Bangkok represents the same absolute climate quality for a traveller.</p>
 
  <div class="callout green">
   <div class="callout-ico">✓</div>
@@ -323,9 +329,42 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  </div>
  </section>
 
- <!-- 6. ECMWF SEASONAL CORRECTION -->
- <section class="section" id="ecmwf-correction">
+ <!-- THERMAL COMFORT BADGE -->
+ <section class="section" id="thermal-comfort">
  <div class="section-num">6</div>
+ <h2>Thermal comfort badge</h2>
+ <p>Each month in the climate table displays a <strong>comfort badge</strong> based on maximum temperature and <strong>dew point</strong>. Six levels:</p>
+
+ <table>
+  <thead><tr><th>Level</th><th>Condition</th><th>Meaning</th></tr></thead>
+  <tbody>
+   <tr><td>🔵 Fresh</td><td>Dew &lt; 16°C + Tmax &lt; 20°C</td><td>Dry and cool, very comfortable</td></tr>
+   <tr><td>🟢 Comfortable</td><td>Dew &lt; 18°C + Tmax ≤ 32°C</td><td>Pleasant conditions for most activities</td></tr>
+   <tr><td>🟠 Oppressive</td><td>Dew ≤ 22°C + Tmax ≤ 38°C</td><td>Noticeable heat or humidity</td></tr>
+   <tr><td>🔴 Humid heat</td><td>Dew &gt; 22°C</td><td>Hot and humid — typical of tropical zones (French Guiana, Singapore…)</td></tr>
+   <tr><td>🔴 Very hot</td><td>Dew ≤ 22°C + Tmax &gt; 38°C</td><td>Extreme dry heat (deserts, Middle East in summer)</td></tr>
+   <tr><td>🟣 Cold</td><td>Tmax &lt; 0°C</td><td>Sub-zero temperatures</td></tr>
+  </tbody>
+ </table>
+ <p>If ≥ 9/12 months share the same level, the badge appears once in the table header rather than on every row.</p>
+ </section>
+
+ <!-- PRACTICAL INFO -->
+ <section class="section" id="practical-info">
+ <div class="section-num">7</div>
+ <h2>Practical information per destination</h2>
+
+ <h3>Safety</h3>
+ <p>The safety level (1–4) comes from the <strong>Auswärtiges Amt</strong> (German Federal Foreign Office) official public API, fetched in real time and cached for 6 hours. Always verify your government's travel advice before departure (GOV.UK Travel, State.gov).</p>
+
+ <h3>Budget</h3>
+ <p>The budget index (1–5) is derived from the <strong>Numbeo Cost of Living Index 2026</strong>, calibrated on 14 benchmark destinations. Eight documented exceptions and 21 regional proxies cover the full 158-country catalogue. This index is indicative — it reflects local cost of living, not real-time tourist prices.</p>
+ </section>
+
+
+ <!-- 8. ECMWF SEASONAL CORRECTION -->
+ <section class="section" id="ecmwf-correction">
+ <div class="section-num">10</div>
  <h2>ECMWF seasonal correction</h2>
  <p>When the time horizon falls between D+8 and D+210, the historical climatology is adjusted by anomaly signals from the ECMWF seasonal model. This mechanism progressively merges historical data with projected trends, treating temperature, precipitation and wind differently according to their respective predictability at medium range.</p>
  <p>The goal is to detect significant deviations from the norm — an abnormally wet season, a milder winter than average — without claiming the precision of a short-term forecast.</p>
@@ -356,7 +395,7 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
 
  <!-- 7. LIMITATIONS -->
  <section class="section" id="limitations">
- <div class="section-num">7</div>
+ <div class="section-num">9</div>
  <h2>What our tool does not do</h2>
  <p>We prefer to be clear about limitations rather than downplay them.</p>
 
