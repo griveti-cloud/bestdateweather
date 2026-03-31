@@ -292,7 +292,7 @@
     "chip_activ": "Aktivitäten",
     "chip_flight": "Flüge",
     "rain_word": "Regen",
-    "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropisches Reiseziel — starke Regenmonate profitieren von einer algorithmischen Anpassung: Tropenschauer sind intensiv, aber kurz und verderben die Reise meist nicht.</p>",
+    "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropisches Klima: Ganzjährig hohe Hitze und Luftfeuchtigkeit. Unterschiede zwischen den Monaten spiegeln hauptsächlich die Regenhäufigkeit wider.</p>",
     "headline_tpl": "Beste Reisezeit für {nom}",
     "og_title_tpl": "Beste Reisezeit {nom} {year} — Klimabewertung {best_score}/10",
     "dataset_name_tpl": "Klimadaten für {nom} — monatliche Durchschnittswerte über 10 Jahre",

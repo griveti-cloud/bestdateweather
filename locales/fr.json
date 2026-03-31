@@ -292,7 +292,7 @@
     "chip_activ": "Activités",
     "chip_flight": "Vols",
     "rain_word": "pluie",
-    "tropical_note_html": "<p class=\"tropical-note\">🌴 Destination tropicale — les mois de forte pluie bénéficient d'une correction algorithmique : les averses sont intenses mais courtes, et ne gâchent généralement pas le séjour.</p>",
+    "tropical_note_html": "<p class=\"tropical-note\">🌴 Climat tropical : chaleur et humidité élevées toute l'année. Les différences entre mois reflètent principalement la fréquence des pluies.</p>",
     "headline_tpl": "Meilleure période pour partir {prep} {nom_bare}",
     "og_title_tpl": "Meilleure période {prep} {nom_bare} {year} — score {best_score}/10",
     "dataset_name_tpl": "Données climatiques de {nom} — moyennes mensuelles sur 10 ans",

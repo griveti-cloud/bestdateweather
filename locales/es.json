@@ -292,7 +292,7 @@
     "chip_activ": "Actividades",
     "chip_flight": "Vuelos",
     "rain_word": "lluvia",
-    "tropical_note_html": "<p class=\"tropical-note\">🌴 Destino tropical — los meses de lluvias intensas incluyen un ajuste algorítmico: los aguaceros tropicales son intensos pero breves y normalmente no arruinan el viaje.</p>",
+    "tropical_note_html": "<p class=\"tropical-note\">🌴 Clima tropical: calor y humedad elevados todo el año. Las diferencias entre meses reflejan principalmente la frecuencia de lluvias.</p>",
     "headline_tpl": "Mejor Época para Visitar {nom}",
     "og_title_tpl": "Mejor época para {nom} {year} — puntuación {best_score}/10",
     "dataset_name_tpl": "Datos climáticos de {nom} — medias mensuales a 10 años",

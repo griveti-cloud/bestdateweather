@@ -293,7 +293,7 @@
     "chip_activ": "Activities",
     "chip_flight": "Flights",
     "rain_word": "rain",
-    "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropical destination — heavy rain months benefit from an algorithmic adjustment: tropical showers are intense but brief and usually don't ruin a trip.</p>",
+    "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropical climate: high heat and humidity year-round. Differences between months mainly reflect rainfall frequency.</p>",
     "headline_tpl": "Best Time to Visit {nom}",
     "og_title_tpl": "Best Time to Visit {nom} {year} — {best_score}/10 climate score",
     "dataset_name_tpl": "Climate data for {nom} — monthly averages over 10 years",
