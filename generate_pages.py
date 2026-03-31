@@ -501,13 +501,10 @@ def _ressenti(tmax, dew, lang='fr'):
 
 
 def _precip_cell(mo, C):
-    """Precip cell with ressenti badge below."""
+    """Precip cell — mm value only, badge is in Score column."""
     precip_str = fmt_precip(mo['precip'], C)
-    r_lbl, r_col = _ressenti(mo['tmax'], mo.get('dew_point'), C.get('lang', 'fr'))
-    badge = (f'<br><span style="font-size:10px;font-weight:700;color:{r_col};'
-             f'letter-spacing:.2px">{r_lbl}</span>') if r_lbl else ''
     lbl = C.get('lbl_m_th_precip', 'Précip.')
-    return f'<td data-label="{lbl}" style="white-space:nowrap">{precip_str}{badge}</td>'
+    return f'<td data-label="{lbl}">{precip_str}</td>'
 
 
 def _resolve_prep_and_bare(cfg, dest):
