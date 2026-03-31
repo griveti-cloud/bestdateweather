@@ -307,7 +307,13 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  </div>
 
  <h3>Verdicts</h3>
- <p>Le score final est converti en verdict qualitatif : <strong>Idéal</strong> (≥ 8.0/10), <strong>Favorable</strong> (6.5–7.9/10), <strong>Acceptable</strong> (4.5–6.4/10), <strong>Défavorable</strong> (&lt; 4.5/10). Ces seuils sont identiques pour tous les profils.</p>
+ <p>Le score final est converti en verdict qualitatif selon trois niveaux :</p>
+ <div class="card-grid">
+  <div class="card-mini"><div class="label" style="color:var(--green)">● Meilleure période</div><div class="val">7,0 – 10,0</div><div class="sub">Conditions climatiquement favorables</div></div>
+  <div class="card-mini"><div class="label" style="color:var(--gold)">● Période correcte</div><div class="val">4,0 – 6,9</div><div class="sub">Conditions acceptables, quelques compromis</div></div>
+  <div class="card-mini"><div class="label" style="color:#dc2626">● Conditions marquées</div><div class="val">0,5 – 3,9</div><div class="sub">Conditions difficiles pour la majorité des voyageurs</div></div>
+ </div>
+ <p>Ces trois classes sont comparables entre toutes les destinations — un score de 7,5 à Lisbonne et à Bangkok correspond à la même qualité climatique absolue pour un voyageur.</p>
 
  <div class="callout green">
  <div class="callout-ico">✓</div>
@@ -330,20 +336,88 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  </div>
 
  <h3>Calibration multi-critères</h3>
- <p>À l'intérieur de chaque niveau, les mois sont différenciés par une analyse combinée du confort thermique, des précipitations et de l'ensoleillement, calibrée sur 10 ans de données ERA5 (10 dernières années). La pondération de ces critères et les fonctions de confort utilisées sont issues d'une calibration interne.</p>
+ <p>À l'intérieur de chaque niveau, les mois sont différenciés par une analyse combinée du confort thermique, des précipitations et de l'ensoleillement, calibrée sur 10 ans de données ERA5. La pondération est la suivante :</p>
+ <ul>
+  <li><strong>40 %</strong> — Confort thermique <code>t_ideal(tmax)</code> : optimum 22–28°C, pénalité progressive au-delà</li>
+  <li><strong>35 %</strong> — Précipitations corrigées par l'intensité (pluies tropicales courtes ≠ pluies bloquantes)</li>
+  <li><strong>25 %</strong> — Ensoleillement (plafonné à 15 h/j)</li>
+ </ul>
+ <p>Une <strong>pénalité humidité</strong> est soustraite si Tmax > 26°C et point de rosée > 16°C (jusqu'à −0,20 pts bruts).</p>
+
+ <h3>Déclassement automatique chaleur humide</h3>
+ <p>Un mois classé « Meilleure période » peut être rétrogradé automatiquement si les données physiques le contredisent :</p>
+ <ul>
+  <li>Tmax ≥ 38°C → <em>Conditions marquées</em></li>
+  <li>Tmax ≥ 34°C → <em>Période correcte</em> (chaleur sèche intense)</li>
+  <li>Tmax ≥ 30°C + point de rosée ≥ 16°C → <em>Période correcte</em></li>
+  <li>Tmax ≥ 26°C + point de rosée ≥ 22°C → <em>Période correcte</em> (chaleur humide tropicale)</li>
+ </ul>
+ <p>Ce dernier critère permet d'éviter qu'un mois comme janvier en Guyane (28°C, rosée à 22,5°C) soit classé « Meilleure période » alors que le ressenti est objectivement lourd.</p>
 
  <h3>Spécificités climatiques locales</h3>
- <p>Certains régimes climatiques requièrent un traitement adapté. Les destinations à forte saisonnalité de mousson (Asie du Sud-Est, Afrique de l'Est) font l'objet d'un ajustement : la saison humide, bien que statistiquement défavorable, reste souvent voyageable grâce à des pluies courtes et intenses. Ce contexte est intégré dans la classification saisonnière de ces destinations.</p>
+ <p>Les destinations à forte saisonnalité de mousson (Asie du Sud-Est, Afrique de l'Est) font l'objet d'un ajustement : la saison humide, bien que statistiquement défavorable, reste souvent voyageable grâce à des pluies courtes et intenses. Ce contexte est intégré dans la classification saisonnière.</p>
 
  <div class="callout blue">
  <div class="callout-ico">ℹ️</div>
- <div class="callout-body">Le score de référence annuel est affiché dans la vue <strong>12 mois</strong> de l'application pour les destinations reconnues. Pour toute autre destination, un score est calculé à la volée selon la même approche multi-critères.</div>
+ <div class="callout-body">Le score est <strong>absolu et cross-destinations</strong> — il compare les mois entre toutes les destinations du catalogue, pas seulement au sein d'une même destination. Il est semi-absolu : la classification initiale (Meilleure période / Période correcte / Conditions marquées) encode une réalité locale que les données numériques seules ne capturent pas entièrement.</div>
+ </div>
+ </section>
+
+ <!-- RESSENTI THERMIQUE -->
+ <section class="section" id="ressenti">
+ <div class="section-num">6</div>
+ <h2>Ressenti thermique</h2>
+ <p>En complément du score, chaque mois affiche un <strong>badge de ressenti</strong> basé sur la combinaison de la température maximale et du <strong>point de rosée</strong> (variable ERA5 <code>dew_point_2m_mean</code>). Le point de rosée est l'indicateur le plus fiable du confort humide : il mesure la charge d'humidité réelle dans l'air, indépendamment de la température.</p>
+
+ <table>
+  <thead><tr><th>Niveau</th><th>Condition</th><th>Signification</th></tr></thead>
+  <tbody>
+   <tr><td>🔵 Frais</td><td>Rosée &lt; 16°C + Tmax &lt; 20°C</td><td>Air sec et frais, très confortable</td></tr>
+   <tr><td>🟢 Confortable</td><td>Rosée &lt; 18°C + Tmax ≤ 32°C</td><td>Conditions agréables pour la majorité des activités</td></tr>
+   <tr><td>🟠 Lourd</td><td>Rosée ≤ 22°C + Tmax ≤ 38°C</td><td>Chaleur ou humidité notable — prévoyez des pauses</td></tr>
+   <tr><td>🔴 Chaleur humide</td><td>Rosée &gt; 22°C</td><td>Clima chaud et humide, typique des tropiques (Guyane, Singapour…)</td></tr>
+   <tr><td>🔴 Très chaud</td><td>Rosée ≤ 22°C + Tmax &gt; 38°C</td><td>Chaleur sèche extrême (déserts, Moyen-Orient en été)</td></tr>
+   <tr><td>🟣 Froid</td><td>Tmax &lt; 0°C</td><td>Températures négatives</td></tr>
+  </tbody>
+ </table>
+
+ <p>Le badge apparaît sous le score dans le tableau climatique mensuel. Si tous les mois d'une destination partagent le même niveau (ex : Guyane 12/12 = Chaleur humide), le badge est affiché une seule fois en en-tête du tableau plutôt que répété sur chaque ligne.</p>
+
+ <div class="callout blue">
+ <div class="callout-ico">ℹ️</div>
+ <div class="callout-body">La <strong>Chaleur humide</strong> et la <strong>Chaleur sèche</strong> sont deux expériences physiquement différentes : à 30°C avec une rosée à 23°C (Singapour), la transpiration ne s'évapore pas. À 39°C avec une rosée à 12°C (Marrakech en juillet), la chaleur est intense mais le corps peut réguler sa température. Ces deux situations sont désormais distinguées.</div>
+ </div>
+ </section>
+
+ <!-- INFOS PRATIQUES -->
+ <section class="section" id="infos-pratiques">
+ <div class="section-num">7</div>
+ <h2>Informations pratiques par destination</h2>
+ <p>Chaque fiche destination inclut des informations pratiques sourcées indépendamment des données météo.</p>
+
+ <h3>Sécurité</h3>
+ <p>Le niveau de sécurité (1–4) provient de l'<strong>Auswärtiges Amt</strong> (ministère des Affaires étrangères allemand), via son API publique officielle. Les données sont récupérées en temps réel et mises en cache 6 heures. Quatre niveaux :</p>
+ <ul>
+  <li>1 — Vigilance normale</li>
+  <li>2 — Vigilance renforcée</li>
+  <li>3 — Déconseillé sauf raison impérative</li>
+  <li>4 — Formellement déconseillé</li>
+ </ul>
+ <p>Ces niveaux sont indicatifs. <strong>Vérifiez systématiquement</strong> les conseils aux voyageurs de votre pays avant tout départ (France.fr/Diplomatie, GOV.UK Travel, State.gov).</p>
+
+ <h3>Budget</h3>
+ <p>L'indice budget (1–5) est dérivé du <strong>Numbeo Cost of Living Index 2026</strong>, calibré sur 14 destinations-étalon avec des seuils à [30, 48, 65, 82]. 8 exceptions documentées corrigent les cas où le coût touristique diverge structurellement du coût de la vie local (Maldives, Polynésie française, Japon, Qatar, UAE…). 21 pays sans couverture Numbeo sont estimés par proxy régional documenté.</p>
+ <p>Cet indice est <strong>indicatif</strong> — il reflète le coût de la vie local, pas les prix touristiques en temps réel.</p>
+
+ <div class="callout blue">
+ <div class="callout-ico">ℹ️</div>
+ <div class="callout-body">L'ensemble des sources, seuils et exceptions sont documentés dans <code>data/country_info.json</code> avec les champs <code>budget_method</code>, <code>budget_source</code>, <code>budget_year</code> et <code>risk_source</code>.</div>
  </div>
  </section>
 
  <!-- 4c. CORRECTION SAISONNIÈRE -->
  <section class="section" id="correction-ecmwf">
- <div class="section-num">6</div>
+ <div class="section-num">8</div>
  <h2>Correction saisonnière ECMWF</h2>
  <p>Lorsque l'horizon est entre J+8 et J+210, la climatologie historique est ajustée par les signaux d'anomalie du modèle saisonnier ECMWF. Ce mécanisme fusionne progressivement les données historiques avec les tendances projetées, en traitant différemment la température, les précipitations et le vent selon leur prévisibilité respective à moyen terme.</p>
  <p>L'objectif est de détecter les écarts significatifs par rapport à la normale — une saison anormalement humide, un hiver plus doux que la moyenne — sans prétendre à la précision d'une prévision court terme.</p>
@@ -374,7 +448,7 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
 
  <!-- 5. LIMITES -->
  <section class="section" id="limites">
- <div class="section-num">7</div>
+ <div class="section-num">9</div>
  <h2>Ce que notre outil ne fait pas</h2>
  <p>Nous préférons être clairs sur les limites plutôt que de les minimiser.</p>
 
@@ -394,7 +468,7 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
 
  <!-- 6. FAQ -->
  <section class="section" id="faq">
- <div class="section-num">8</div>
+ <div class="section-num">10</div>
  <h2>Questions fréquentes</h2>
 
  <div class="card">
