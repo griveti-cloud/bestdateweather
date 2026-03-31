@@ -60,6 +60,7 @@ def build_lang(lang):
         'val_score_class': loc['validation']['score_class'],
         'val_no_climate': loc['validation']['no_climate'],
         'val_card_missing': loc['validation']['card_missing'],
+        'lang': lang,
     }
 
 

@@ -224,7 +224,7 @@
     "ski_header": "<th>Puntuación ski 🎿</th>",
     "legend_ideal": "Mejor período",
     "legend_fair": "Período correcto",
-    "legend_off": "Clima marcado",
+    "legend_off": "Condiciones marcadas",
     "legend_source": "Fuente: Open-Meteo · 10 años",
     "legend_ideal_mtn": "Mejor período (esquí o verano)",
     "legend_off_mtn": "Temporada baja"

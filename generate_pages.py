@@ -1679,16 +1679,18 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     # Compute dominant ressenti for the destination
     # If ≥9/12 months share same label → show badge once above table, not per row
-    _all_ressenti = [_ressenti(mo['tmax'], mo.get('dew_point'), C.get('lang','fr'))[0] for mo in months]
+    _rlang = C.get('lang','fr')
+    _all_ressenti = [_ressenti(mo['tmax'], mo.get('dew_point'), _rlang)[0] for mo in months]
     _dominant_label = max(set(l for l in _all_ressenti if l), key=lambda x: _all_ressenti.count(x)) if any(_all_ressenti) else None
     _dominant_count = _all_ressenti.count(_dominant_label) if _dominant_label else 0
     _show_row_ressenti = _dominant_count < 9  # show per-row only if varied
-    _dominant_color = _ressenti(months[0]['tmax'], months[0].get('dew_point'), C.get('lang','fr'))[1] if not _show_row_ressenti else None
+    _dominant_color = _ressenti(months[0]['tmax'], months[0].get('dew_point'), _rlang)[1] if not _show_row_ressenti else None
+    _months_lbl = {'fr':'mois','en':'months','en-us':'months','es':'meses','de':'Monate'}.get(_rlang,'months')
     _table_header_badge = (
         f'<div class="table-ressenti-badge" style="margin-bottom:8px">'
         f'<span style="font-size:11px;font-weight:700;color:{_dominant_color}">'
         f'{_dominant_label}</span>'
-        f'<span style="font-size:10px;color:#aaa;margin-left:6px">({C.get("lbl_m_th_score","Score")} — {_dominant_count}/12 mois)</span>'
+        f'<span style="font-size:10px;color:#aaa;margin-left:6px">({_dominant_count}/12 {_months_lbl})</span>'
         f'</div>'
     ) if not _show_row_ressenti and _dominant_label else ''
 
@@ -1711,7 +1713,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
                        + f'<td data-label="{C["lbl_m_th_sun"]}">{mo["sun_h"]}h</td>'
                        '<td data-label="' + C["lbl_m_th_score"] + '">' +
                        f'{mo["score"]:.1f}/10' +
-                       (lambda r,c: f'<br><span style="font-size:9px;font-weight:700;color:{c};letter-spacing:.2px">{r}</span>' if (r and _show_row_ressenti) else '')(*_ressenti(mo["tmax"], mo.get("dew_point"), C.get("lang","fr"))) +
+                       (lambda r,c: f'<br><span style="font-size:9px;font-weight:700;color:{c};letter-spacing:.2px">{r}</span>' if (r and _show_row_ressenti) else '')(*_ressenti(mo["tmax"], mo.get("dew_point"), _rlang)) +
                        f'</td>{ski_col}</tr>\n')
 
     # Best month diff

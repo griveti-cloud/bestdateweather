@@ -224,8 +224,8 @@
     "headers": "<th>Month</th><th>Min °C</th><th>Max °C</th><th>Rainy days (%)</th><th>Precip. mm/d</th><th>Sun h/d</th><th>Score</th>",
     "ski_header": "<th>Ski score 🎿</th>",
     "legend_ideal": "Best period",
-    "legend_fair": "Fair",
-    "legend_off": "Challenging climate",
+    "legend_fair": "Decent period",
+    "legend_off": "Challenging conditions",
     "legend_source": "Source: Open-Meteo · 10 years",
     "legend_ideal_mtn": "Best period (ski or summer)",
     "legend_off_mtn": "Off season"

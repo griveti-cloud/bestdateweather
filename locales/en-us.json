@@ -223,9 +223,9 @@
     "aria": "Monthly climate table {nom}",
     "headers": "<th>Month</th><th>Min °F</th><th>Max °F</th><th>Rainy days (%)</th><th>Precip. in/d</th><th>Sun h/d</th><th>Score</th>",
     "ski_header": "<th>Ski score 🎿</th>",
-    "legend_ideal": "Ideal",
-    "legend_fair": "Fair",
-    "legend_off": "Challenging climate",
+    "legend_ideal": "Best period",
+    "legend_fair": "Decent period",
+    "legend_off": "Challenging conditions",
     "legend_source": "Source: Open-Meteo · 10 years",
     "legend_ideal_mtn": "Ideal (ski or summer)",
     "legend_off_mtn": "Off season"
