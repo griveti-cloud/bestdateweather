@@ -323,7 +323,10 @@
     "lbl_nearby_title_monthly": "Destinos cercanos en {month}",
     "heat_alert_severe": "🌡️ Calor muy intenso",
     "heat_alert_hot": "🌡️ Calor elevado",
-    "heat_alert_warm": "🌡️ Calor notable"
+    "heat_alert_warm": "🌡️ Calor notable",
+    "nearby_section": "Cerca",
+    "nearby_title_annual": "Destinos cercanos",
+    "nearby_title_monthly": "Destinos cercanos en {month}"
   },
   "monthly": {
     "hero_tpl": "Tiempo en {name} en {month}",

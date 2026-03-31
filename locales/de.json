@@ -323,7 +323,10 @@
     "lbl_nearby_title_monthly": "Nahe gelegene Ziele im {month}",
     "heat_alert_severe": "🌡️ Extreme Hitze",
     "heat_alert_hot": "🌡️ Hohe Hitze",
-    "heat_alert_warm": "🌡️ Merkliche Hitze"
+    "heat_alert_warm": "🌡️ Merkliche Hitze",
+    "nearby_section": "In der Nähe",
+    "nearby_title_annual": "Nahe Reiseziele",
+    "nearby_title_monthly": "Nahe Reiseziele im {month}"
   },
   "monthly": {
     "hero_tpl": "{name} Wetter im {month}",
