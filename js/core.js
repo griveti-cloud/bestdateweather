@@ -2347,22 +2347,30 @@ function markRecommendedMonths() {
 /* ── MODE SWITCH ── */
 function switchMode(mode) {
  var isDate = mode === 'date';
- // Sync destination between the two inputs before switching
- var _inpCity = document.getElementById('inp-city');
- var _annCity = document.getElementById('ann-city');
- if (isDate && _annCity && _inpCity) {
-  // Annual → Date: copy ann-city value to inp-city
-  if (_annCity.value.trim()) { _inpCity.value = _annCity.value; selectedLoc = selectedLoc || annSelectedLoc; }
- } else if (!isDate && _inpCity && _annCity) {
-  // Date → Annual: copy inp-city value to ann-city
-  if (_inpCity.value.trim()) { _annCity.value = _inpCity.value; annSelectedLoc = annSelectedLoc || selectedLoc; }
- }
  var md = document.getElementById('mode-date');
  var ma = document.getElementById('mode-annual');
  var aw = document.getElementById('annual-wrap');
  if (md) md.className = 'mode-btn' + (isDate ? ' active' : '');
  if (ma) ma.className = 'mode-btn' + (!isDate ? ' active' : '');
  if (aw) aw.style.display = isDate ? 'none' : 'block';
+ // Sync destination — AFTER display is set (browser may reset hidden inputs)
+ var _inpCity = document.getElementById('inp-city');
+ var _annCity = document.getElementById('ann-city');
+ if (isDate && _annCity && _inpCity) {
+  if (_annCity.value.trim()) {
+   _inpCity.value = _annCity.value;
+   selectedLoc = selectedLoc || annSelectedLoc;
+   var cl = document.getElementById('inp-city-clear');
+   if (cl) cl.classList.toggle('visible', true);
+  }
+ } else if (!isDate && _inpCity && _annCity) {
+  if (_inpCity.value.trim()) {
+   _annCity.value = _inpCity.value;
+   annSelectedLoc = annSelectedLoc || selectedLoc;
+   var cl2 = document.getElementById('ann-city-clear');
+   if (cl2) cl2.classList.toggle('visible', true);
+  }
+ }
  var dateEls = ['date-form','hero','sec-hourly','sec-scenarios','empty','foot-note'];
  dateEls.forEach(function(id){
   var el = document.getElementById(id);
