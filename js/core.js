@@ -2347,6 +2347,16 @@ function markRecommendedMonths() {
 /* ── MODE SWITCH ── */
 function switchMode(mode) {
  var isDate = mode === 'date';
+ // Sync destination between the two inputs before switching
+ var _inpCity = document.getElementById('inp-city');
+ var _annCity = document.getElementById('ann-city');
+ if (isDate && _annCity && _inpCity) {
+  // Annual → Date: copy ann-city value to inp-city
+  if (_annCity.value.trim()) { _inpCity.value = _annCity.value; selectedLoc = selectedLoc || annSelectedLoc; }
+ } else if (!isDate && _inpCity && _annCity) {
+  // Date → Annual: copy inp-city value to ann-city
+  if (_inpCity.value.trim()) { _annCity.value = _inpCity.value; annSelectedLoc = annSelectedLoc || selectedLoc; }
+ }
  var md = document.getElementById('mode-date');
  var ma = document.getElementById('mode-annual');
  var aw = document.getElementById('annual-wrap');
