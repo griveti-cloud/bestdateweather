@@ -1741,10 +1741,17 @@ function computeAndRenderScore(sc, rows) {
   var rhScore = Math.max(0, 100 - Math.max(0, avgRh - 50) * 1.5);
   chips.push({ lbl: T.chipHumidity, val: Math.round(avgRh)+'%', score: rhScore });
  }
- // Ressenti thermique (dew point approximé depuis RH + T)
- if (avgRh != null && avgTemp != null) {
-  var _dew = avgTemp - (100 - avgRh) / 5;
-  var _tmax = avgTemp + 3; // approximation tmax depuis tmoy
+ // Ressenti thermique — dew point depuis RH si dispo, sinon depuis T seule
+ if (avgTemp != null) {
+  var _dew;
+  if (avgRh != null) {
+   _dew = avgTemp - (100 - avgRh) / 5;
+  } else {
+   // Fallback : estimation conservative (hypothèse RH=60% si T>20, 70% si T>28)
+   var _rh0 = avgTemp > 28 ? 70 : (avgTemp > 20 ? 60 : 50);
+   _dew = avgTemp - (100 - _rh0) / 5;
+  }
+  var _tmax = avgTemp + 3;
   var _rlbl = '', _rclr = '';
   if (avgTemp < 0) { _rlbl = T.ressentiFroid; _rclr = '#7c3aed'; }
   else if (_dew < 16 && avgTemp < 20) { _rlbl = T.ressentiFrais; _rclr = '#0ea5e9'; }
