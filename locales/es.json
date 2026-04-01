@@ -1371,5 +1371,13 @@
   "temp_unit": "°C",
   "tropical_showers": "lluvias tropicales breves",
   "tropical_rainy_season": "temporada de lluvias",
-  "sea_temp_label": "mar {sea_temp}°C"
+  "sea_temp_label": "mar {sea_temp}°C",
+  "tropical_seasons": {
+    "names": [
+      "Temporada seca",
+      "Temporada lluviosa"
+    ],
+    "section_title": "Qué esperar según el período",
+    "section_label": "RÉGIMEN CLIMÁTICO"
+  }
 }

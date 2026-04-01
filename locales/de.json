@@ -1362,5 +1362,13 @@
   "temp_unit": "°C",
   "tropical_showers": "kurze tropische Schauer",
   "tropical_rainy_season": "Regenzeit",
-  "sea_temp_label": "Meer {sea_temp}°C"
+  "sea_temp_label": "Meer {sea_temp}°C",
+  "tropical_seasons": {
+    "names": [
+      "Trockenzeit",
+      "Regenzeit"
+    ],
+    "section_title": "Was nach Jahreszeit zu erwarten ist",
+    "section_label": "KLIMAMUSTER"
+  }
 }

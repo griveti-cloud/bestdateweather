@@ -1351,5 +1351,13 @@
   "temp_unit": "°C",
   "tropical_showers": "brief tropical showers",
   "tropical_rainy_season": "rainy season",
-  "sea_temp_label": "{sea_temp}°C sea"
+  "sea_temp_label": "{sea_temp}°C sea",
+  "tropical_seasons": {
+    "names": [
+      "Dry season",
+      "Wet season"
+    ],
+    "section_title": "What to expect by period",
+    "section_label": "CLIMATE PATTERN"
+  }
 }

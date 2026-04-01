@@ -793,38 +793,101 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         if score >= 5.5: return 'seas-fair'
         return 'seas-poor'
 
-    season_cards_html = ''
-    for sname in C['season_order']:
-        s      = seas[sname]
-        icon   = SEASON_ICONS[sname]
-        mrange = C['season_range'][sname]
-        cls    = _seas_cls(s['score'])
-        rain_pct   = min(100, int(s['rain_pct']))
-        sun_pct    = min(100, round(s['sun_h'] / 12 * 100))
-        # tmin bar: scale 0-30°C
-        tmin_pct   = min(100, max(0, round(s['tmin'] / 30 * 100)))
-        lbl_tmin   = C.get('lbl_tmin_abbr', 'T° min')
-        season_cards_html += (
-            f'<div class="seas-card {cls}">'
-            f'<div class="seas-top">'
-            f'<span class="seas-emoji">{icon}</span>'
-            f'<div class="seas-title-block"><span class="seas-name">{sname}</span><span class="seas-range">{mrange}</span></div>'
-            f'<div class="seas-score-badge"><span class="seas-score-num">{s["score"]}</span><span class="seas-score-den">/10</span></div>'
-            f'</div>'
-            f'<div class="seas-temp-row"><span class="seas-temp-val">{fmt_temp(s["tmin"], C)}–{fmt_temp(s["tmax"], C)}</span><span class="seas-verdict-lbl">{s["verdict"]}</span></div>'
-            f'<div class="seas-bars">'
-            f'<div class="seas-bar-row"><span class="seas-bar-lbl">☀️ {s["sun_h"]}{C["locale"]["comp"]["sun_per_day_short"]}</span>'
-            f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-sun" style="width:{sun_pct}%"></div></div></div>'
-            f'<div class="seas-bar-row"><span class="seas-bar-lbl">🌧️ {s["rain_pct"]}%</span>'
-            f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-rain" style="width:{rain_pct}%"></div></div></div>'
-            f'<div class="seas-bar-row"><span class="seas-bar-lbl">🌡️ {fmt_temp(s["tmin"], C)}</span>'
-            f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-tmin" style="width:{tmin_pct}%"></div></div></div>'
-            f'</div>'
-            f'</div>'
-        )
+    # ── Season cards — tropical vs temperate ──
+    _trop_seasons = C['locale'].get('tropical_seasons', {})
+    MONTHS_SHORT = [mn[:3] for mn in C.get('months', MONTHS)]
+
+    if is_tropical and _trop_seasons:
+        # Tropical: compute dry / wet split from actual rain data
+        _dry_months  = [i for i in range(12) if float(months[i].get('rain_pct', 0)) < 60]
+        _wet_months  = [i for i in range(12) if float(months[i].get('rain_pct', 0)) >= 60]
+        _trop_groups = [
+            (_trop_seasons['names'][0], '☀️', _dry_months),
+            (_trop_seasons['names'][1], '🌧️', _wet_months),
+        ]
+        season_cards_html = ''
+        for _sname, _sicon, _midxs in _trop_groups:
+            if not _midxs: continue
+            _ms = [months[i] for i in _midxs]
+            _avg_score = round(sum(float(m.get('score',0)) for m in _ms) / len(_ms), 1)
+            _avg_sun   = round(sum(float(m.get('sun_h',0)) for m in _ms) / len(_ms), 1)
+            _avg_rain  = round(sum(float(m.get('rain_pct',0)) for m in _ms) / len(_ms))
+            _avg_tmin  = round(sum(float(m.get('tmin',0)) for m in _ms) / len(_ms))
+            _avg_tmax  = round(sum(float(m.get('tmax',0)) for m in _ms) / len(_ms))
+            # Build unique month abbreviations (handle Juin/Juillet collision in FR)
+            _unique_abbrev = {}
+            _seen_ab = {}
+            for _aidx, _amn in enumerate(MONTHS):
+                _ab = _amn[:3]
+                if _ab in _seen_ab:
+                    _unique_abbrev[_seen_ab[_ab]] = MONTHS[_seen_ab[_ab]][:4]
+                    _unique_abbrev[_aidx] = _amn[:4]
+                else:
+                    _seen_ab[_ab] = _aidx
+                    _unique_abbrev[_aidx] = _ab
+            _mnames = ', '.join(_unique_abbrev[i] for i in _midxs)
+            _sun_pct   = min(100, round(_avg_sun / 12 * 100))
+            _rain_pct  = min(100, _avg_rain)
+            _tmin_pct  = min(100, max(0, round(_avg_tmin / 35 * 100)))
+            _cls = _seas_cls(_avg_score)
+            if _avg_score >= 7.0: _verdict = C.get('table_legend_ideal', 'Meilleure période')
+            elif _avg_score >= 4.0: _verdict = C.get('table_legend_fair', 'Période correcte')
+            else: _verdict = C.get('table_legend_off', 'Conditions marquées')
+            season_cards_html += (
+                f'<div class="seas-card {_cls}">'
+                f'<div class="seas-top">'
+                f'<span class="seas-emoji">{_sicon}</span>'
+                f'<div class="seas-title-block"><span class="seas-name">{_sname}</span><span class="seas-range">{_mnames}</span></div>'
+                f'<div class="seas-score-badge"><span class="seas-score-num">{_avg_score}</span><span class="seas-score-den">/10</span></div>'
+                f'</div>'
+                f'<div class="seas-temp-row"><span class="seas-temp-val">{fmt_temp(_avg_tmin, C)}–{fmt_temp(_avg_tmax, C)}</span><span class="seas-verdict-lbl">{_verdict}</span></div>'
+                f'<div class="seas-bars">'
+                f'<div class="seas-bar-row"><span class="seas-bar-lbl">☀️ {_avg_sun}{C["locale"]["comp"]["sun_per_day_short"]}</span>'
+                f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-sun" style="width:{_sun_pct}%"></div></div></div>'
+                f'<div class="seas-bar-row"><span class="seas-bar-lbl">🌧️ {_avg_rain}%</span>'
+                f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-rain" style="width:{_rain_pct}%"></div></div></div>'
+                f'<div class="seas-bar-row"><span class="seas-bar-lbl">🌡️ {fmt_temp(_avg_tmin, C)}</span>'
+                f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-tmin" style="width:{_tmin_pct}%"></div></div></div>'
+                f'</div>'
+                f'</div>'
+            )
+        _seas_title = _trop_seasons.get('section_title', C['lbl_season_title'])
+        _seas_label = _trop_seasons.get('section_label', C['lbl_season_section'])
+    else:
+        # Temperate: 4 standard seasons
+        season_cards_html = ''
+        for sname in C['season_order']:
+            s      = seas[sname]
+            icon   = SEASON_ICONS[sname]
+            mrange = C['season_range'][sname]
+            cls    = _seas_cls(s['score'])
+            rain_pct   = min(100, int(s['rain_pct']))
+            sun_pct    = min(100, round(s['sun_h'] / 12 * 100))
+            tmin_pct   = min(100, max(0, round(s['tmin'] / 30 * 100)))
+            season_cards_html += (
+                f'<div class="seas-card {cls}">'
+                f'<div class="seas-top">'
+                f'<span class="seas-emoji">{icon}</span>'
+                f'<div class="seas-title-block"><span class="seas-name">{sname}</span><span class="seas-range">{mrange}</span></div>'
+                f'<div class="seas-score-badge"><span class="seas-score-num">{s["score"]}</span><span class="seas-score-den">/10</span></div>'
+                f'</div>'
+                f'<div class="seas-temp-row"><span class="seas-temp-val">{fmt_temp(s["tmin"], C)}–{fmt_temp(s["tmax"], C)}</span><span class="seas-verdict-lbl">{s["verdict"]}</span></div>'
+                f'<div class="seas-bars">'
+                f'<div class="seas-bar-row"><span class="seas-bar-lbl">☀️ {s["sun_h"]}{C["locale"]["comp"]["sun_per_day_short"]}</span>'
+                f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-sun" style="width:{sun_pct}%"></div></div></div>'
+                f'<div class="seas-bar-row"><span class="seas-bar-lbl">🌧️ {s["rain_pct"]}%</span>'
+                f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-rain" style="width:{rain_pct}%"></div></div></div>'
+                f'<div class="seas-bar-row"><span class="seas-bar-lbl">🌡️ {fmt_temp(s["tmin"], C)}</span>'
+                f'<div class="seas-bar-track"><div class="seas-bar-fill seas-fill-tmin" style="width:{tmin_pct}%"></div></div></div>'
+                f'</div>'
+                f'</div>'
+            )
+        _seas_title = C['lbl_season_title']
+        _seas_label = C['lbl_season_section']
+
     seasonal_section = f'''<section class="section">
- <div class="section-label">{C['lbl_season_section']}</div>
- <h2 class="section-title">{C['lbl_season_title']}</h2>
+ <div class="section-label">{_seas_label}</div>
+ <h2 class="section-title">{_seas_title}</h2>
  <div class="seas-grid">{season_cards_html}</div>
 </section>'''
 
