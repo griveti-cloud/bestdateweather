@@ -24,7 +24,7 @@ Usage:
 """
 
 import csv, json, sys, time, os, argparse
-import urllib.request, urllib.parse
+import urllib.request, urllib.parse, urllib.error
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEST_CSV  = os.path.join(ROOT, 'data', 'destinations.csv')

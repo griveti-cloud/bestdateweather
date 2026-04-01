@@ -359,7 +359,9 @@
     "dec_budget_2": "Asequible",
     "dec_budget_3": "Moderado",
     "dec_budget_4": "Caro",
-    "dec_budget_5": "Muy caro"
+    "dec_budget_5": "Muy caro",
+    "dec_lbl_mer_seche": "Temporada seca",
+    "dec_lbl_mer_humide": "Temporada húmeda"
   },
   "monthly": {
     "hero_tpl": "Tiempo en {name} en {month}",

@@ -359,7 +359,9 @@
     "dec_budget_2": "Erschwinglich",
     "dec_budget_3": "Mittelklasse",
     "dec_budget_4": "Teuer",
-    "dec_budget_5": "Sehr teuer"
+    "dec_budget_5": "Sehr teuer",
+    "dec_lbl_mer_seche": "Trockenzeit",
+    "dec_lbl_mer_humide": "Regenzeit"
   },
   "monthly": {
     "hero_tpl": "{name} Wetter im {month}",

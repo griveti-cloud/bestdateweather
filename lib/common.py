@@ -952,7 +952,8 @@ def decision_card_html(dest, months, mi_best, C, nom,
                        is_mountain=False, is_coastal=False,
                        oui_si='', non_si='', verdict_txt='',
                        is_monthly=False, mi_current=None,
-                       best_month_name='', best_month_score=0.0) -> str:
+                       best_month_name='', best_month_score=0.0,
+                       is_tropical=False) -> str:
     """
     Unified decision + practical info card.
     Works for both annual pages (mi_best = best month index)
@@ -1194,11 +1195,27 @@ def decision_card_html(dest, months, mi_best, C, nom,
     # ══════════════════════════════════════════
     row3 = ''
     if is_coastal:
-        # Sea temp: group by season (index 0-11)
-        season_groups = [(0,2,'hiver'),(3,5,'print'),(6,8,'ete'),(9,11,'auto')]
+        # Sea temp: group by season — tropical = 2 groups, temperate = 4
+        _trop_sea = is_tropical and C.get('locale', {}).get('tropical_seasons')
+        if _trop_sea:
+            _dry_m  = [i for i in range(12) if float(months[i].get('rain_pct', 0)) < 60]
+            _wet_m  = [i for i in range(12) if float(months[i].get('rain_pct', 0)) >= 60]
+            _ts = C['locale']['tropical_seasons']['names']
+            season_groups = [
+                (None, None, 'seche',  _dry_m),
+                (None, None, 'humide', _wet_m),
+            ]
+        else:
+            season_groups = [(0,2,'hiver'),(3,5,'print'),(6,8,'ete'),(9,11,'auto')]
         sea_cells = ''
-        for start, end, key in season_groups:
-            temps = [float(months[i].get('sea_temp',0)) for i in range(start,end+1) if months[i].get('sea_temp','').strip()]
+        for entry in season_groups:
+            if _trop_sea:
+                _, _, key, idxs = entry
+                temps = [float(months[i].get('sea_temp',0)) for i in idxs if months[i].get('sea_temp','').strip()]
+            else:
+                start, end, key = entry
+                idxs = list(range(start, end+1))
+                temps = [float(months[i].get('sea_temp',0)) for i in idxs if months[i].get('sea_temp','').strip()]
             if not temps:
                 continue
             avg = round(sum(temps)/len(temps), 1)
@@ -1221,7 +1238,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
                 f'<div class="rd"><div class="rdl"></div>'
                 f'<div class="rdt">{row_mer}</div>'
                 f'<div class="rdl"></div></div>'
-                f'<div class="info-row cols-4">{sea_cells}</div>'
+                f'<div class="info-row {"cols-2" if _trop_sea else "cols-4"}">{sea_cells}</div>'
             )
 
     elif is_mountain:

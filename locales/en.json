@@ -360,7 +360,9 @@
     "dec_budget_2": "Affordable",
     "dec_budget_3": "Moderate",
     "dec_budget_4": "Expensive",
-    "dec_budget_5": "Very expensive"
+    "dec_budget_5": "Very expensive",
+    "dec_lbl_mer_seche": "Dry season",
+    "dec_lbl_mer_humide": "Wet season"
   },
   "monthly": {
     "hero_tpl": "{name} weather in {month}",

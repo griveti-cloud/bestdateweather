@@ -359,7 +359,9 @@
     "dec_budget_2": "Abordable",
     "dec_budget_3": "Modéré",
     "dec_budget_4": "Coûteux",
-    "dec_budget_5": "Très coûteux"
+    "dec_budget_5": "Très coûteux",
+    "dec_lbl_mer_seche": "Saison sèche",
+    "dec_lbl_mer_humide": "Saison humide"
   },
   "monthly": {
     "hero_tpl": "Météo {name} en {month_lc}",
