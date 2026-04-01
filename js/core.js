@@ -1741,17 +1741,31 @@ function computeAndRenderScore(sc, rows) {
   var rhScore = Math.max(0, 100 - Math.max(0, avgRh - 50) * 1.5);
   chips.push({ lbl: T.chipHumidity, val: Math.round(avgRh)+'%', score: rhScore });
  }
+ // Ressenti thermique (dew point approximé depuis RH + T)
+ if (avgRh != null && avgTemp != null) {
+  var _dew = avgTemp - (100 - avgRh) / 5;
+  var _tmax = avgTemp + 3; // approximation tmax depuis tmoy
+  var _rlbl = '', _rclr = '';
+  if (avgTemp < 0) { _rlbl = T.ressentiFroid; _rclr = '#7c3aed'; }
+  else if (_dew < 16 && avgTemp < 20) { _rlbl = T.ressentiFrais; _rclr = '#0ea5e9'; }
+  else if (_dew < 18 && _tmax <= 32) { _rlbl = T.ressentiConfortable; _rclr = '#22c55e'; }
+  else if (_dew <= 22 && _tmax <= 38) { _rlbl = T.ressentiLourd; _rclr = '#f97316'; }
+  else if (_dew > 22) { _rlbl = T.ressentiHumide; _rclr = '#ef4444'; }
+  else if (_tmax > 38) { _rlbl = T.ressentiTresChaud; _rclr = '#dc2626'; }
+  if (_rlbl) chips.push({ lbl: T.chipRessenti || '🌡 Ressenti', val: _rlbl, score: null, color: _rclr, noDot: false, valColor: _rclr });
+ }
  var chipsEl = document.getElementById('score-chips');
  chipsEl.innerHTML = '';
  for (var b=0; b<chips.length; b++) {
  var chipColor = chips[b].color || getScoreColor(chips[b].score);
  var chip = document.createElement('div');
  chip.className = 'score-chip';
- chip.innerHTML = chips[b].noDot
+ var _vc = chips[b].valColor ? ' style="color:'+chips[b].valColor+';font-weight:700"' : '';
+chip.innerHTML = chips[b].noDot
  ? '<span class="score-chip-lbl" style="padding-left:2px">' + chips[b].lbl + '</span>'
  : '<span class="score-chip-dot" style="background:'+chipColor+'"></span>' +
    '<span class="score-chip-lbl">' + chips[b].lbl + '</span>' +
-   '<span class="score-chip-val">' + chips[b].val + '</span>';
+   '<span class="score-chip-val"'+_vc+'>' + chips[b].val + '</span>';
  chipsEl.appendChild(chip);
  }
  // Ré-injecter le chip SST s'il a déjà été récupéré
