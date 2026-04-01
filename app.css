@@ -303,7 +303,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .annual-subtitle{font-size:12px;color:var(--slate2);margin-top:3px}
 
 .months-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.month-card{background:white;border-radius:var(--r-sm);padding:8px 10px 22px;box-shadow:var(--shadow);border:1.5px solid var(--cream2);cursor:default;transition:transform .18s,opacity .18s;position:relative;overflow:hidden}
+.month-card{background:white;border-radius:var(--r-sm);padding:8px 10px 22px;box-shadow:var(--shadow);border:1.5px solid var(--cream2);cursor:default;transition:transform .18s,opacity .18s;position:relative}
 .month-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--month-color,var(--cream2))}
 .month-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(26,31,46,.1)}
 .mc-top{display:flex;align-items:center;gap:6px;margin-top:10px}
