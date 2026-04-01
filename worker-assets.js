@@ -96,6 +96,23 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
+    // ── Servir notre robots.txt (override CF managed) ──
+    if (path === '/robots.txt') {
+      const body = `User-agent: *
+Allow: /
+Disallow: /en/app.html?
+Disallow: /es/app.html?
+Disallow: /us/app.html?
+Disallow: /de/app.html?
+Disallow: /app.html?
+Disallow: /index.html?
+Disallow: /data/
+Disallow: /widget/
+
+Sitemap: https://bestdateweather.com/sitemap-index.xml`;
+      return new Response(body, { headers: { 'Content-Type': 'text/plain', 'Cache-Control': 'public, max-age=86400' } });
+    }
+
     // ── Travel advisories endpoint ──
     if (path === '/api/advisories') return handleAdvisories(request);
 
