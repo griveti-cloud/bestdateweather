@@ -303,7 +303,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .annual-subtitle{font-size:12px;color:var(--slate2);margin-top:3px}
 
 .months-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.month-card{background:white;border-radius:var(--r-sm);padding:8px 10px 22px;box-shadow:var(--shadow);border:1.5px solid var(--cream2);cursor:default;transition:transform .18s,opacity .18s;position:relative}
+.month-card{background:white;border-radius:var(--r-sm);padding:8px 10px 8px;box-shadow:var(--shadow);border:1.5px solid var(--cream2);cursor:default;transition:transform .18s,opacity .18s;position:relative}
 .month-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--month-color,var(--cream2))}
 .month-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(26,31,46,.1)}
 .mc-top{display:flex;align-items:center;gap:6px;margin-top:10px}
@@ -316,7 +316,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .mc-stats{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
 .mc-stats span{font-size:9px;color:var(--slate2);font-weight:500}
 .mc-dew{font-size:9px}
-.month-bar{position:absolute;bottom:14px;left:10px;right:10px;height:3px;background:var(--cream2);border-radius:2px;overflow:hidden}
+.month-bar{height:3px;background:var(--cream2);border-radius:2px;overflow:hidden;margin:4px 0 2px}
 .month-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#90c8f8,#4a9fd4)}
 @media(max-width:600px){.months-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:400px){.months-grid{grid-template-columns:repeat(2,1fr)}}
@@ -336,7 +336,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 
 /* score badge */
 .month-score{border-radius:6px;padding:2px 6px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;white-space:nowrap}
-.month-seas-badge{position:absolute;bottom:7px;left:10px;right:10px;text-align:center;font-size:7px;font-weight:700;letter-spacing:.3px;background:#dbeafe;color:#1e40af;padding:2px 4px;border-radius:3px;text-transform:uppercase;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.month-seas-badge{display:block;font-size:7px;font-weight:700;letter-spacing:.3px;background:#dbeafe;color:#1e40af;padding:2px 4px;border-radius:3px;text-transform:uppercase;line-height:1.4;text-align:center}
 .month-badge{display:none;position:absolute;top:0;right:6px;left:auto;transform:none;font-size:8px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;padding:2px 6px;border-radius:0 0 6px 6px;white-space:nowrap}
 .month-badge.rec{display:block;background:#1a7a4a;color:white}
 .month-badge.avoid{display:block;background:#f97316;color:white}
