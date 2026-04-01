@@ -2772,6 +2772,27 @@ var MONTHS_SHORT = T.monthsShort;
 function renderAnnual(loc, monthly) {
  _lastMonthly = monthly; _lastAnnLoc = loc;
  document.getElementById('ann-city-name').textContent = loc.name + (loc.country ? ' — ' + loc.country : '');
+ // Fiche destination link (annual mode)
+ (function(){
+  var afw = document.getElementById('ann-fiche-link-wrap');
+  if (!afw) return;
+  afw.style.display = 'none'; afw.innerHTML = '';
+  var slugMap = window.BDW_FICHE_SLUGS;
+  if (!slugMap) return;
+  var _normStr = function(s){return s.toLowerCase().replace(/[àâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[îï]/g,'i').replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/ç/g,'c').replace(/[^a-z0-9 ]/g,'').trim();};
+  var entry = slugMap[_normStr(loc.name)];
+  if (!entry) entry = slugMap[_normStr(loc.name.split(/[\s,\-]/)[0])];
+  if (!entry) { var bare = loc.name.replace(/^(la |le |les |l'|l’)/i,''); entry = slugMap[_normStr(bare)]; }
+  if (!entry) return;
+  var isFr = (CFG.dateLocale==='fr-FR'||CFG.dateLocale==='fr');
+  var isEs = (CFG.dateLocale==='es-ES'||CFG.dateLocale==='es');
+  var isDe = (CFG.dateLocale==='de-DE'||CFG.dateLocale==='de');
+  var ficheSlug = isFr ? entry.fr : (isEs ? (entry.es||entry.en) : entry.en);
+  var ficheUrl = isFr ? 'meilleure-periode-'+ficheSlug+'.html' : (isEs ? '../es/mejor-epoca-'+ficheSlug+'.html' : (isDe ? '../de/beste-reisezeit-'+ficheSlug+'.html' : 'best-time-to-visit-'+ficheSlug+'.html'));
+  var label = isFr ? ('Analyse complète de ' + loc.name) : (isEs ? ('Guía completa de ' + loc.name) : (isDe ? ((T.guide_label||'Reiseführer') + ' ' + loc.name) : ('Complete guide for ' + loc.name)));
+  afw.innerHTML = '<a class="fiche-link-btn" href="' + ficheUrl + '">↗ ' + label + '</a>';
+  afw.style.display = 'block';
+ })();
  var grid = document.getElementById('months-grid'); grid.innerHTML = '';
 
  var uc = currentUseCase !== 'general' ? currentUseCase : null;
