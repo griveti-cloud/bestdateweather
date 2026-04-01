@@ -313,7 +313,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .mc-icon svg{width:22px;height:22px}
 .mc-right{flex:1;min-width:0}
 .mc-temp{font-size:13px;font-weight:700;color:var(--navy);line-height:1.2;white-space:nowrap}
-.mc-stats{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
+.mc-stats{display:flex;gap:4px;flex-wrap:nowrap;margin-top:2px;overflow:hidden}
 .mc-stats span{font-size:9px;color:var(--slate2);font-weight:500}
 .mc-dew{font-size:9px}
 .month-bar{height:3px;background:var(--cream2);border-radius:2px;overflow:hidden;margin:4px 0 2px}
