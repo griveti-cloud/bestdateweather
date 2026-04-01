@@ -353,7 +353,8 @@
     "dec_ideal_lbl": "Ideal",
     "dec_eviter_lbl": "Meiden",
     "dec_jours_pluie": "Regentage",
-    "dec_jours_prec": "Niederschlagstage"
+    "dec_jours_prec": "Niederschlagstage",
+    "budget_sublabel": "Kosten am Reiseziel"
   },
   "monthly": {
     "hero_tpl": "{name} Wetter im {month}",

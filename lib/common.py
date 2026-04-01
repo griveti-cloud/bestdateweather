@@ -1031,11 +1031,11 @@ def decision_card_html(dest, months, mi_best, C, nom,
 
     # ── Budget ──
     _budget_labels = {
-        'fr': {1:'Économique',2:'Abordable',3:'Intermédiaire',4:'Haut de gamme',5:'Premium'},
-        'en': {1:'Economy',2:'Affordable',3:'Mid-range',4:'Upscale',5:'Premium'},
-        'en-us':{1:'Economy',2:'Affordable',3:'Mid-range',4:'Upscale',5:'Premium'},
-        'es': {1:'Económico',2:'Asequible',3:'Intermedio',4:'Alto',5:'Premium'},
-        'de': {1:'Günstig',2:'Erschwinglich',3:'Mittelklasse',4:'Gehoben',5:'Premium'},
+        'fr':    {1:'Économique', 2:'Abordable', 3:'Modéré',    4:'Coûteux',   5:'Très coûteux'},
+        'en':    {1:'Budget',     2:'Affordable', 3:'Moderate',  4:'Expensive', 5:'Very expensive'},
+        'en-us': {1:'Budget',     2:'Affordable', 3:'Moderate',  4:'Expensive', 5:'Very expensive'},
+        'es':    {1:'Económico',  2:'Asequible',  3:'Moderado',  4:'Caro',      5:'Muy caro'},
+        'de':    {1:'Günstig',    2:'Erschwinglich',3:'Moderat', 4:'Teuer',     5:'Sehr teuer'},
     }
     _budget_icons = {1:'💚',2:'💚',3:'🟡',4:'🟠',5:'💎'}
     blang = lang if lang in _budget_labels else 'en'
@@ -1153,6 +1153,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'<div class="info-cell">'
         f'<div class="ic-ico">{budget_icon}</div>'
         f'<div class="ic-val dec-budget-{budget_idx}">{budget_lbl_text}</div>'
+        f'<div class="ic-sub">{L.get("lbl_dec_budget_sublabel", L.get("lbl_budget_sublabel", ""))}' + '</div>'
         f'<div class="ic-lbl">{lbl("budget")}</div>'
         f'</div>'
         f'</div>'

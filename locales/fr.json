@@ -353,7 +353,8 @@
     "dec_ideal_lbl": "Idéal",
     "dec_eviter_lbl": "À éviter",
     "dec_jours_pluie": "jours de pluie",
-    "dec_jours_prec": "jours de précip."
+    "dec_jours_prec": "jours de précip.",
+    "budget_sublabel": "Coût de la destination"
   },
   "monthly": {
     "hero_tpl": "Météo {name} en {month_lc}",

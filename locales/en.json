@@ -354,7 +354,8 @@
     "dec_ideal_lbl": "Best months",
     "dec_eviter_lbl": "Avoid",
     "dec_jours_pluie": "rain days",
-    "dec_jours_prec": "precip. days"
+    "dec_jours_prec": "precip. days",
+    "budget_sublabel": "Cost of destination"
   },
   "monthly": {
     "hero_tpl": "{name} weather in {month}",
