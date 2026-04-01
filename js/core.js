@@ -2862,7 +2862,7 @@ function renderAnnual(loc, monthly) {
     if (d.seasTempDelta != null) seasParts.push((d.seasTempDelta > 0 ? '+' : '') + d.seasTempDelta + '°');
     if (d.seasRainDelta != null) seasParts.push((d.seasRainDelta > 0 ? '+' : '') + d.seasRainDelta + '% '+T.wordRain);
     var seasDetail = seasParts.length ? ' · ' + seasParts.join(' · ') : '';
-    var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">'+T.ecmwfTrend + (seasDetail ? '<br><span style="font-weight:500;text-transform:none;letter-spacing:0;color:#3b82f6">' + seasParts.join(' · ') + '</span>' : '') + '</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
+    var seasBadge = d.hasSeasonal ? '<div class="month-seas-badge">'+T.ecmwfTrend+'</div>' : '<div class="month-seas-badge" style="visibility:hidden">·</div>';
  var isBest = uc && idx === sorted[0].idx && sorted[0].score >= 60;
  var badgeHtml = (isRec ? '<div class="month-badge rec">'+T.badgeRec+'</div>' : (isAvoid ? '<div class="month-badge avoid">'+T.badgeAvoid+'</div>' : '')) + (isBest ? '<div class="month-best-badge">'+T.badgeBest+'</div>' : '');
 
