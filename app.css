@@ -357,7 +357,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 
 /* SEO HUB toggle mobile */
 .seo-hub-toggle{display:none;width:100%;background:#faf8f3;border:1px solid #e8e0d0;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#5a6c7d;text-align:left;cursor:pointer;align-items:center;justify-content:space-between}
-#seo-hub{contain-intrinsic-size:auto 2000px}
+#seo-hub{content-visibility:auto;contain-intrinsic-size:auto 2000px}
 .seo-hub-toggle.open .seo-hub-toggle-icon{transform:rotate(180deg)}
 @media(max-width:640px){
  .seo-hub-toggle{display:flex}
