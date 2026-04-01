@@ -2885,17 +2885,16 @@ function renderAnnual(loc, monthly) {
  }
 
  card.innerHTML =
- '<div class="month-name">' + MONTHS_FR[idx] + '</div>' +
- '<div class="month-icon">' + monthIconFromData(d) + '</div>' +
- '<div class="month-temp">' + tminStr + ' / ' + tmaxStr + '</div>' +
- '<div class="month-range">'+T.avgLabel+' ' + tempStr + '</div>' +
- '<div class="month-stats">' +
- '<span class="month-stat">💧 ' + d.rainPct + '% <span style="font-weight:400;color:var(--slate3);font-size:10px">(' + fmtPrecip(d.avgPrecipMm)+'/'+T.dayAbbr+')</span></span>' +
- '<span class="month-stat">☀ ' + Math.round(d.sunHrs) + 'h</span>' +
- dewHtml +
+ '<div class="mc-top">' +
+   '<div class="mc-left"><div class="month-name">' + MONTHS_FR[idx] + '</div>' + scoreNum + '</div>' +
+   '<div class="mc-icon">' + monthIconFromData(d) + '</div>' +
+   '<div class="mc-right">' +
+     '<div class="mc-temp">' + tminStr + ' / ' + tmaxStr + '</div>' +
+     '<div class="mc-stats"><span>💧' + d.rainPct + '%</span><span>☀ ' + Math.round(d.sunHrs) + 'h</span>' + dewHtml + '</div>' +
+   '</div>' +
  '</div>' +
  '<div class="month-bar"><div class="month-bar-fill" style="width:' + d.rainPct + '%"></div></div>' +
- scoreNum + badgeHtml + seasBadge;
+ badgeHtml + seasBadge;
 
  grid.appendChild(card);
  }
