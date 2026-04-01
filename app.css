@@ -79,7 +79,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .field-wrap{position:relative}
 .field-label{font-size:12px;font-weight:600;color:var(--slate2);letter-spacing:0;text-transform:none;margin-bottom:6px;display:flex;align-items:center;gap:5px}
 .field-label svg{opacity:.6}
-.inp{width:100%;background:white;border:1.5px solid var(--cream2);border-radius:var(--r);color:var(--navy);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:15px;font-weight:500;padding:14px 40px 14px 16px;outline:none;transition:opacity .15s}
+.inp{width:100%;background:white;border:1.5px solid var(--cream2);border-radius:var(--r);color:var(--navy);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:15px;font-weight:500;padding:14px 40px 14px 16px;outline:none;transition:opacity .15s;will-change:transform}
 .inp::placeholder{color:var(--slate3);font-weight:400}
 #inp-date::placeholder{color:var(--slate2)}#inp-date{color:var(--navy)}
 .inp:focus{outline:3px solid rgba(232,148,10,.35);outline-offset:0;background:white}
@@ -242,7 +242,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 
 /* ── MODE TOGGLE ── */
 .mode-toggle{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.mode-btn{padding:12px 14px;border:1.5px solid var(--cream2);border-radius:var(--r);background:white;font-family:"DM Sans","DM Sans Fallback",sans-serif;color:var(--slate2);cursor:pointer;transition:background .2s,opacity .15s,transform .15s;display:flex;align-items:center;gap:10px;text-align:left;box-shadow:0 1px 4px rgba(26,31,46,.05)}
+.mode-btn{padding:12px 14px;border:1.5px solid var(--cream2);border-radius:var(--r);background:white;font-family:"DM Sans","DM Sans Fallback",sans-serif;color:var(--slate2);cursor:pointer;transition:background .2s,opacity .15s,transform .15s;display:flex;align-items:center;gap:10px;text-align:left;box-shadow:0 1px 4px rgba(26,31,46,.05);will-change:transform}
 .mode-btn:hover:not(.active){border-color:var(--slate3);color:var(--navy);transform:translateY(-1px)}
 .mode-btn.active{background:var(--gold-light);color:var(--navy);border-color:var(--gold);box-shadow:0 2px 12px rgba(232,148,10,.18)}
 .mode-btn svg{width:16px;height:16px;flex-shrink:0;opacity:.6}

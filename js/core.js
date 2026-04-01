@@ -3024,23 +3024,28 @@ document.addEventListener('DOMContentLoaded', function() {
  // Sync date placeholder from i18n config
  var inpDate = document.getElementById('inp-date');
  if (inpDate && CFG.datePlaceholder) inpDate.placeholder = CFG.datePlaceholder;
- flatpickr(document.getElementById('inp-date'), {
- dateFormat: CFG.dateFormat || 'd/m/Y',
- locale: CFG.fpLocale || 'fr',
- minDate: 'today',
- maxDate: new Date(new Date().setFullYear(new Date().getFullYear()+1)),
- disableMobile: true,
- onChange: function(selectedDates, dateStr) {
- var el = document.getElementById('inp-date');
- el.classList.toggle('has-val', selectedDates.length > 0);
- if (selectedDates.length > 0) {
- var d = selectedDates[0];
- el._isoValue = d.getFullYear()+'-'+(d.getMonth()<9?'0':'')+(d.getMonth()+1)+'-'+(d.getDate()<10?'0':'')+d.getDate();
- } else {
- el._isoValue = '';
+ // Flatpickr initialisé lazily au premier focus/clic pour réduire TBT
+ function _initFP() {
+  if (window._fpI) return; window._fpI = 1;
+  flatpickr(document.getElementById('inp-date'), {
+  dateFormat: CFG.dateFormat || 'd/m/Y',
+  locale: CFG.fpLocale || 'fr',
+  minDate: 'today',
+  maxDate: new Date(new Date().setFullYear(new Date().getFullYear()+1)),
+  disableMobile: true,
+  onChange: function(selectedDates, dateStr) {
+  var el = document.getElementById('inp-date');
+  el.classList.toggle('has-val', selectedDates.length > 0);
+  if (selectedDates.length > 0) {
+  var d = selectedDates[0];
+  el._isoValue = d.getFullYear()+'-'+(d.getMonth()<9?'0':'')+(d.getMonth()+1)+'-'+(d.getDate()<10?'0':'')+d.getDate();
+  } else {
+  el._isoValue = '';
+  }
+  }
+  });
  }
- }
- });
+ if (inpDate) { ['focus','click','touchstart'].forEach(function(e){inpDate.addEventListener(e,_initFP,{once:true,passive:true});}); }
 });
 document.getElementById('inp-city').oninput=function(){
  selectedLoc=null;
