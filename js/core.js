@@ -2366,11 +2366,13 @@ function switchMode(mode) {
   }, 0);
  } else if (!isDate && _inpCity && _annCity) {
   var _v2 = _inpCity.value.trim(), _loc2 = selectedLoc;
+  console.log('[switchMode] date->annual, inp-city value:', JSON.stringify(_v2), 'selectedLoc:', _loc2 ? _loc2.name : null);
   if (_v2) setTimeout(function() {
    _annCity.value = _v2;
    if (_loc2) annSelectedLoc = annSelectedLoc || _loc2;
    var cl2 = document.getElementById('ann-city-clear');
    if (cl2) cl2.classList.add('visible');
+   console.log('[switchMode] ann-city set to:', _annCity.value);
   }, 0);
  }
  var dateEls = ['date-form','hero','sec-hourly','sec-scenarios','empty','foot-note'];
