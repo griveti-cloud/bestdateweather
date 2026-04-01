@@ -2516,7 +2516,6 @@ function runAnnual() {
     }
     clim.seasRainDelta = (appliedRainDelta != null && Math.abs(appliedRainDelta) >= 3) ? appliedRainDelta : null;
     clim.hasSeasonal = true;
-    console.log("[SEAS] mi="+mi+" hasSeasonal=true tMean="+seas.tMean.toFixed(1));
  }
  setAnnP(100, T.progDone);
  renderAnnual(loc, monthly);
