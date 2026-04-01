@@ -79,7 +79,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .field-wrap{position:relative}
 .field-label{font-size:12px;font-weight:600;color:var(--slate2);letter-spacing:0;text-transform:none;margin-bottom:6px;display:flex;align-items:center;gap:5px}
 .field-label svg{opacity:.6}
-.inp{width:100%;background:white;border:1.5px solid var(--cream2);border-radius:var(--r);color:var(--navy);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:15px;font-weight:500;padding:14px 40px 14px 16px;outline:none;transition:box-shadow .2s,border-color .15s}
+.inp{width:100%;background:white;border:1.5px solid var(--cream2);border-radius:var(--r);color:var(--navy);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:15px;font-weight:500;padding:14px 40px 14px 16px;outline:none;transition:opacity .15s}
 .inp::placeholder{color:var(--slate3);font-weight:400}
 #inp-date::placeholder{color:var(--slate2)}#inp-date{color:var(--navy)}
 .inp:focus{outline:3px solid rgba(232,148,10,.35);outline-offset:0;background:white;border-color:var(--gold)}
@@ -721,7 +721,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
   color:var(--slate2);
   text-decoration:none;
   font-weight:500;
-  transition:color .15s;
+  transition:opacity .15s;
 }
 .footer-guides:hover{color:var(--navy)}
 
