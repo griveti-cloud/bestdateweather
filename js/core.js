@@ -2353,23 +2353,25 @@ function switchMode(mode) {
  if (md) md.className = 'mode-btn' + (isDate ? ' active' : '');
  if (ma) ma.className = 'mode-btn' + (!isDate ? ' active' : '');
  if (aw) aw.style.display = isDate ? 'none' : 'block';
- // Sync destination — AFTER display is set (browser may reset hidden inputs)
+ // Sync destination — via setTimeout to avoid browser reset after display change
  var _inpCity = document.getElementById('inp-city');
  var _annCity = document.getElementById('ann-city');
  if (isDate && _annCity && _inpCity) {
-  if (_annCity.value.trim()) {
-   _inpCity.value = _annCity.value;
-   selectedLoc = selectedLoc || annSelectedLoc;
+  var _v = _annCity.value.trim(), _loc = annSelectedLoc;
+  if (_v) setTimeout(function() {
+   _inpCity.value = _v;
+   if (_loc) selectedLoc = selectedLoc || _loc;
    var cl = document.getElementById('inp-city-clear');
-   if (cl) cl.classList.toggle('visible', true);
-  }
+   if (cl) cl.classList.add('visible');
+  }, 0);
  } else if (!isDate && _inpCity && _annCity) {
-  if (_inpCity.value.trim()) {
-   _annCity.value = _inpCity.value;
-   annSelectedLoc = annSelectedLoc || selectedLoc;
+  var _v2 = _inpCity.value.trim(), _loc2 = selectedLoc;
+  if (_v2) setTimeout(function() {
+   _annCity.value = _v2;
+   if (_loc2) annSelectedLoc = annSelectedLoc || _loc2;
    var cl2 = document.getElementById('ann-city-clear');
-   if (cl2) cl2.classList.toggle('visible', true);
-  }
+   if (cl2) cl2.classList.add('visible');
+  }, 0);
  }
  var dateEls = ['date-form','hero','sec-hourly','sec-scenarios','empty','foot-note'];
  dateEls.forEach(function(id){
