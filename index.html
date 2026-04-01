@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
-<script defer src="js/ga.js"></script>
+<!-- Google tag — chargé après load pour ne pas bloquer LCP -->
+<script>window.addEventListener("load",function(){var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL";document.head.appendChild(s);});</script>
+<script defer src="js/ga.js?v=11c00f"></script>
 <meta charset="UTF-8"/>
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister();});});}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -26,7 +26,7 @@
   border:1px solid rgba(26,31,46,.05);
   overflow:visible;
   margin-bottom:20px;
-} .app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:center}.seo-hub-toggle{display:flex}.app-footer{padding:20px 20px 40px;font-size:11px;min-height:80px}</style>
+} .app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:center}.seo-hub-toggle{display:flex}.app-footer{padding:20px 20px 40px;font-size:11px;min-height:80px}.app-title{animation:none}</style>
 <link rel="preload" href="app.css?v=15" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
 <noscript><link rel="stylesheet" href="app.css?v=15"/></noscript>
 <link rel="stylesheet" href="css/weather-banner.css?v=2" media="print" onload="this.media='all'"/><noscript><link rel="stylesheet" href="css/weather-banner.css?v=2"/></noscript>
@@ -1988,14 +1988,14 @@
  <p style="margin-top:4px;font-size:11px;color:#6b7280"><a href="mentions-legales.html" style="color:inherit;text-decoration:none">Mentions légales</a> &nbsp;·&nbsp; <a href="confidentialite.html" style="color:inherit;text-decoration:none">Confidentialité</a> &nbsp;·&nbsp; <a href="contact.html" style="color:inherit;text-decoration:none">Contact</a></p>
 </div>
 
-<script defer src="js/share.js" defer></script>
+<script defer src="?v=adc494" defer></script>
 <script defer src="js/i18n-fr.min.js?v=5"></script>
-<script defer src="js/fiche-scores.js"></script>
-<script defer src="js/fiche-slugs.min.js"></script>
+<script defer src="?v=639443"></script>
+<script defer src="js/fiche-slugs.min.js?v=edd3b9"></script>
 <script defer src="js/core.min.js?v=41"></script>
 <script defer src="js/favs.min.js?v=1"></script>
 
-<script src="js/sw-register.js" defer></script>
+<script src="?v=948975" defer></script>
 <script defer src="js/weather-banner-2.min.js?v=5"></script>
 
 </body>
