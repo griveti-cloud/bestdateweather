@@ -900,11 +900,11 @@
       "4": "🔴 Formellement déconseillé"
     },
     "budget_labels": {
-      "1": "Économique",
+      "1": "💵 Économique",
       "2": "💚 Abordable",
-      "3": "🟡 Intermédiaire",
-      "4": "🟠 Haut de gamme",
-      "5": "💎 Premium"
+      "3": "🟡 Modéré",
+      "4": "🟠 Coûteux",
+      "5": "💎 Très coûteux"
     },
     "period_annual": "Annuel",
     "region_world": "Monde"

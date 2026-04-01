@@ -686,8 +686,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     _qf_lang = C.get('lang', 'fr')
     _secu_icons = {1:'🟢',2:'🟡',3:'🟠',4:'🔴'}
     _secu_lbls  = {'fr':{1:'Vigilance normale',2:'Vigilance renforcée',3:'Déconseillé',4:'Formellement déconseillé'},'en':{1:'Normal vigilance',2:'High vigilance',3:'Avoid if possible',4:'Do not travel'},'es':{1:'Vigilancia normal',2:'Vigilancia reforzada',3:'Desaconsejado',4:'Formalmente desaconsejado'},'de':{1:'Normale Wachsamkeit',2:'Erhöhte Wachsamkeit',3:'Nicht empfohlen',4:'Dringend abgeraten'}}
-    _budget_icons= {1:'💚',2:'🟡',3:'🟠',4:'💸',5:'💎'}
-    _budget_lbls = {'fr':{1:'Économique',2:'Abordable',3:'Modéré',4:'Coûteux',5:'Premium'},'en':{1:'Economy',2:'Affordable',3:'Moderate',4:'Expensive',5:'Premium'},'es':{1:'Económico',2:'Asequible',3:'Intermedio',4:'Alto',5:'Premium'},'de':{1:'Günstig',2:'Erschwinglich',3:'Mittelklasse',4:'Gehoben',5:'Premium'}}
+    _budget_icons= {1:'💵',2:'💚',3:'🟡',4:'🟠',5:'💎'}
+    _budget_lbls = {'fr':{1:'Économique',2:'Abordable',3:'Modéré',4:'Coûteux',5:'Très coûteux'},'en':{1:'Economy',2:'Affordable',3:'Moderate',4:'Expensive',5:'Very expensive'},'es':{1:'Económico',2:'Asequible',3:'Moderado',4:'Caro',5:'Muy caro'},'de':{1:'Günstig',2:'Erschwinglich',3:'Mittelklasse',4:'Teuer',5:'Sehr teuer'}}}
     _qf_secu_icon = _secu_icons[_qf_rl]
     _qf_secu_lbl  = _secu_lbls.get(_qf_lang, _secu_lbls['en'])[_qf_rl]
     _qf_budget_icon= _budget_icons[_qf_bi]
@@ -1706,7 +1706,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     )
 
     # Budget stat for decision card
-    _budget_icons = {1:'💚',2:'🟡',3:'🟠',4:'💸',5:'💎'}
+    _budget_icons= {1:'💵',2:'💚',3:'🟡',4:'🟠',5:'💎'}
     _budget_labels = {
         'fr':    {1:'Économique', 2:'Abordable', 3:'Modéré',    4:'Coûteux',   5:'Très coûteux'},
         'en':    {1:'Budget',     2:'Affordable', 3:'Moderate',  4:'Expensive', 5:'Very expensive'},

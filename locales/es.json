@@ -900,11 +900,11 @@
       "4": "🔴 No viajar"
     },
     "budget_labels": {
-      "1": "💚 Económico",
+      "1": "💵 Económico",
       "2": "💚 Asequible",
-      "3": "🟡 Intermedio",
-      "4": "🟠 Alto",
-      "5": "💎 Premium"
+      "3": "🟡 Moderado",
+      "4": "🟠 Caro",
+      "5": "💎 Muy caro"
     },
     "period_annual": "Anual",
     "region_world": "Mundo"

@@ -905,11 +905,11 @@
       "4": "🔴 Dringend abgeraten"
     },
     "budget_labels": {
-      "1": "💚 Günstig",
+      "1": "💵 Günstig",
       "2": "💚 Erschwinglich",
       "3": "🟡 Mittelklasse",
-      "4": "🟠 Gehoben",
-      "5": "💎 Premium"
+      "4": "🟠 Teuer",
+      "5": "💎 Sehr teuer"
     },
     "period_annual": "Jährlich",
     "region_world": "Weltweit"
