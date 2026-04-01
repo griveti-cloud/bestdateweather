@@ -15,7 +15,10 @@ jobs:
         run: npm install -g wrangler@4.77.0
 
       - name: Deploy to Cloudflare Workers Assets
-        run: wrangler deploy
+        run: |
+          for i in 1 2 3; do
+            wrangler deploy && break || { echo "Attempt $i failed, retrying..."; sleep 15; }
+          done
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: b41738c7ecde63202108d350cd786f4b
