@@ -2890,7 +2890,7 @@ function renderAnnual(loc, monthly) {
    '<div class="mc-icon">' + monthIconFromData(d) + '</div>' +
    '<div class="mc-right">' +
      '<div class="mc-temp">' + tminStr + ' / ' + tmaxStr + '</div>' +
-     '<div class="mc-stats"><span>💧' + d.rainPct + '%</span><span>☀ ' + Math.round(d.sunHrs) + 'h</span>' + dewHtml + '</div>' +
+     '<div class="mc-stats"><span>💧' + d.rainPct + '%</span><span>☀️ ' + Math.round(d.sunHrs) + 'h</span>' + dewHtml + '</div>' +
    '</div>' +
  '</div>' +
  '<div class="month-bar"><div class="month-bar-fill" style="width:' + d.rainPct + '%"></div></div>' +
