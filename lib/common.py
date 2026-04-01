@@ -610,7 +610,7 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None, is
             'source': 'Source : Institute for Economics & Peace',
             'more': '+{n} autres',
             'budget': 'Budget',
-            'budget_labels': ['Économique', 'Abordable', 'Intermédiaire', 'Haut de gamme', 'Premium'],
+            'budget_labels': ['Économique', 'Abordable', 'Modéré', 'Coûteux', 'Très coûteux'],
             'budget_icons': ['💚', '💚', '🟡', '🟠', '💎'],
         },
         'en': {
@@ -625,7 +625,7 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None, is
             'source': 'Source: Institute for Economics & Peace',
             'more': '+{n} more',
             'budget': 'Budget',
-            'budget_labels': ['Economy', 'Affordable', 'Mid-range', 'Upscale', 'Premium'],
+            'budget_labels': ['Budget-friendly', 'Affordable', 'Moderate', 'Expensive', 'Very expensive'],
             'budget_icons': ['💚', '💚', '🟡', '🟠', '💎'],
         },
     }.get(lang, {
@@ -640,7 +640,7 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None, is
         'source': 'Source: Institute for Economics & Peace',
         'more': '+{n} more',
         'budget': 'Budget',
-        'budget_labels': ['Economy', 'Affordable', 'Mid-range', 'Upscale', 'Premium'],
+        'budget_labels': ['Budget-friendly', 'Affordable', 'Moderate', 'Expensive', 'Very expensive'],
         'budget_icons': ['💚', '💚', '🟡', '🟠', '💎'],
     })
 
@@ -1032,8 +1032,8 @@ def decision_card_html(dest, months, mi_best, C, nom,
     # ── Budget ──
     _budget_labels = {
         'fr':    {1:'Économique', 2:'Abordable', 3:'Modéré',    4:'Coûteux',   5:'Très coûteux'},
-        'en':    {1:'Budget',     2:'Affordable', 3:'Moderate',  4:'Expensive', 5:'Very expensive'},
-        'en-us': {1:'Budget',     2:'Affordable', 3:'Moderate',  4:'Expensive', 5:'Very expensive'},
+        'en':    {1:'Budget-friendly', 2:'Affordable', 3:'Moderate',  4:'Expensive', 5:'Very expensive'},
+        'en-us': {1:'Budget-friendly', 2:'Affordable', 3:'Moderate',  4:'Expensive', 5:'Very expensive'},
         'es':    {1:'Económico',  2:'Asequible',  3:'Moderado',  4:'Caro',      5:'Muy caro'},
         'de':    {1:'Günstig',    2:'Erschwinglich',3:'Moderat', 4:'Teuer',     5:'Sehr teuer'},
     }

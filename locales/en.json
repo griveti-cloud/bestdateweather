@@ -355,7 +355,12 @@
     "dec_eviter_lbl": "Avoid",
     "dec_jours_pluie": "rain days",
     "dec_jours_prec": "precip. days",
-    "budget_sublabel": "Cost of destination"
+    "budget_sublabel": "Cost of destination",
+    "dec_budget_1": "Budget-friendly",
+    "dec_budget_2": "Affordable",
+    "dec_budget_3": "Moderate",
+    "dec_budget_4": "Expensive",
+    "dec_budget_5": "Very expensive"
   },
   "monthly": {
     "hero_tpl": "{name} weather in {month}",

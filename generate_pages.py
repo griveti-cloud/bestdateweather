@@ -687,7 +687,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     _secu_icons = {1:'🟢',2:'🟡',3:'🟠',4:'🔴'}
     _secu_lbls  = {'fr':{1:'Vigilance normale',2:'Vigilance renforcée',3:'Déconseillé',4:'Formellement déconseillé'},'en':{1:'Normal vigilance',2:'High vigilance',3:'Avoid if possible',4:'Do not travel'},'es':{1:'Vigilancia normal',2:'Vigilancia reforzada',3:'Desaconsejado',4:'Formalmente desaconsejado'},'de':{1:'Normale Wachsamkeit',2:'Erhöhte Wachsamkeit',3:'Nicht empfohlen',4:'Dringend abgeraten'}}
     _budget_icons= {1:'💚',2:'🟡',3:'🟠',4:'💸',5:'💎'}
-    _budget_lbls = {'fr':{1:'Économique',2:'Abordable',3:'Intermédiaire',4:'Haut de gamme',5:'Premium'},'en':{1:'Economy',2:'Affordable',3:'Mid-range',4:'Upscale',5:'Premium'},'es':{1:'Económico',2:'Asequible',3:'Intermedio',4:'Alto',5:'Premium'},'de':{1:'Günstig',2:'Erschwinglich',3:'Mittelklasse',4:'Gehoben',5:'Premium'}}
+    _budget_lbls = {'fr':{1:'Économique',2:'Abordable',3:'Modéré',4:'Coûteux',5:'Premium'},'en':{1:'Economy',2:'Affordable',3:'Moderate',4:'Expensive',5:'Premium'},'es':{1:'Económico',2:'Asequible',3:'Intermedio',4:'Alto',5:'Premium'},'de':{1:'Günstig',2:'Erschwinglich',3:'Mittelklasse',4:'Gehoben',5:'Premium'}}
     _qf_secu_icon = _secu_icons[_qf_rl]
     _qf_secu_lbl  = _secu_lbls.get(_qf_lang, _secu_lbls['en'])[_qf_rl]
     _qf_budget_icon= _budget_icons[_qf_bi]
@@ -1608,8 +1608,21 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     if not is_coastal:
         act_beach = C['lbl_m_act_beach_na']
     else:
-        act_beach = (C['lbl_m_act_beach_good'] if score >= 7.5 and m['tmax'] >= 25
-                     else (C['lbl_m_act_beach_ok'] if score >= 6.5 and m['tmax'] >= 20 else C['lbl_m_act_beach_bad']))
+        # Beach: score-based but tmax > 38 = "possible but extreme heat" not flat "bad"
+        # Water is swimmable at any tmax; the issue is being on the beach in 40°C+ sun
+        _sea = float(m.get('sea_temp') or 0)
+        _beach_tmax = m['tmax']
+        if _beach_tmax >= 38:
+            # Extreme heat — water ok but beach harsh; use 'ok' not 'bad'
+            act_beach = C['lbl_m_act_beach_ok']
+        elif score >= 7.5 and _beach_tmax >= 25:
+            act_beach = C['lbl_m_act_beach_good']
+        elif score >= 6.5 and _beach_tmax >= 20:
+            act_beach = C['lbl_m_act_beach_ok']
+        elif _beach_tmax < 18:
+            act_beach = C['lbl_m_act_beach_bad']  # too cold to swim
+        else:
+            act_beach = C['lbl_m_act_beach_bad']
 
     # Context flags
     is_hot      = m['tmax'] >= 30

@@ -354,7 +354,12 @@
     "dec_eviter_lbl": "Meiden",
     "dec_jours_pluie": "Regentage",
     "dec_jours_prec": "Niederschlagstage",
-    "budget_sublabel": "Kosten am Reiseziel"
+    "budget_sublabel": "Kosten am Reiseziel",
+    "dec_budget_1": "Günstig",
+    "dec_budget_2": "Erschwinglich",
+    "dec_budget_3": "Mittelklasse",
+    "dec_budget_4": "Teuer",
+    "dec_budget_5": "Sehr teuer"
   },
   "monthly": {
     "hero_tpl": "{name} Wetter im {month}",
