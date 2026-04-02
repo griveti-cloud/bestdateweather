@@ -585,6 +585,19 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     best_tmax  = best_m['tmax']
     is_mountain = dest.get('mountain', 'False').strip() == 'True'
     is_coastal  = dest.get('coastal', 'False').strip().lower() in ('true', '1', 'yes')
+    # Pour les stations de ski : recalculer les scores saisons avec le score ski
+    if is_mountain:
+        from scoring import compute_ski_score as _csk
+        _season_idxs = C['locale'].get('season_months', {})
+        for _sname, _sidxs in _season_idxs.items():
+            _ski_ms = [months[i] for i in _sidxs]
+            _ski_sc = [_csk(m['tmax'], m['rain_pct'], m['sun_h']) for m in _ski_ms]
+            _avg_ski = round(sum(_ski_sc) / len(_ski_sc), 1)
+            seas[_sname]['score'] = _avg_ski
+            if _avg_ski >= 8.5:   seas[_sname]['verdict'] = C['locale'].get('verdict_excellent', 'Excellent')
+            elif _avg_ski >= 7.0: seas[_sname]['verdict'] = C['locale'].get('verdict_good', 'Bonne période')
+            elif _avg_ski >= 5.5: seas[_sname]['verdict'] = C['locale'].get('verdict_fair', 'Période acceptable')
+            else:                 seas[_sname]['verdict'] = C['locale'].get('verdict_poor', 'Conditions marquées')
     # Best ski month for mountain destinations
     if is_mountain:
         from scoring import compute_ski_score
