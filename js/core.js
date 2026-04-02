@@ -1777,19 +1777,21 @@ function computeAndRenderScore(sc, rows) {
  }
 
  // ── Type de pluie (burstiness) ──────────────────────────────────────
- var _avgPrecipDay = rows.length > 0 ? mmSum / rows.length : 0;
+ // _avgPrecipDay : rows[i].mm = mm/h moyen → × 24 = mm/jour équivalent
+ var _avgPrecipDay = rows.length > 0 ? (mmSum / rows.length) * 24 : 0;
  var _rainFreq = avgRain / 100;
  var _burst = _rainFreq > 0.05 ? _avgPrecipDay / _rainFreq : 0;
  var _sunH = peakSol / 50; // estimation heures soleil depuis radiation peak
  var _rainTypeLbl = null;
  if (avgRain >= 90 && _avgPrecipDay >= 14 && _sunH < 9) {
-  _rainTypeLbl = T.rainTypeHeavy || (T.rainType && T.rainType.heavy_blocking) || null;
- } else if (avgRain >= 60 && _avgPrecipDay >= 5 && _sunH >= 9 && _burst >= 8) {
-  _rainTypeLbl = T.rainTypeTropical || (T.rainType && T.rainType.tropical_showers) || null;
+  _rainTypeLbl = T.rainTypeHeavy || null;
+ } else if ((_burst >= 15 && avgRain >= 40 && _sunH >= 8) || (avgRain >= 60 && _burst >= 8 && _sunH >= 9)) {
+  // Tropical : burst élevé (averses courtes intenses) quel que soit le seuil de fréquence
+  _rainTypeLbl = T.rainTypeTropical || null;
  } else if (avgRain >= 60 && _sunH < 5 && _burst < 12) {
-  _rainTypeLbl = T.rainTypeBlocking || (T.rainType && T.rainType.blocking) || null;
+  _rainTypeLbl = T.rainTypeBlocking || null;
  } else if (avgRain >= 70 && _sunH < 7 && _burst < 10) {
-  _rainTypeLbl = T.rainTypeBlocking || (T.rainType && T.rainType.blocking) || null;
+  _rainTypeLbl = T.rainTypeBlocking || null;
  }
  if (_rainTypeLbl) chips.push({ lbl: T.chipRainType || '🌧️', val: _rainTypeLbl, score: null, color: '#0369a1', valColor: '#0369a1' });
 

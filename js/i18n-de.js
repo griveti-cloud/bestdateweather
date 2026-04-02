@@ -276,4 +276,8 @@ window.BDW_CFG = {
  waveLight: 'Leichte See',
  waveSurf: 'Surfbedingungen',
  waveRough: 'Rauhe See'
+,
+ heatAlertSevere: 'Extreme Hitze',
+ heatAlertHot: 'Starke Hitze',
+ heatAlertPeak: '— Spitze'
 };
