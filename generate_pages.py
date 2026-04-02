@@ -168,6 +168,8 @@ def load_data(cfg):
             'beach_score': row.get('beach_score', ''),
             'dew_point' : float(row['dew_point_mean']) if row.get('dew_point_mean', '').strip() else None,
             'uv_index'  : float(row['uv_index']) if row.get('uv_index', '').strip() else None,
+            'wave_h'    : float(row['wave_height_mean']) if row.get('wave_height_mean', '').strip() else None,
+            'swell_p'   : float(row['swell_period_mean']) if row.get('swell_period_mean', '').strip() else None,
         }
 
     cards_file = f'{DATA}/{cfg["cards_file"]}'

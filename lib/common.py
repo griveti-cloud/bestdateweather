@@ -145,6 +145,24 @@ def compute_weather_stability(rain_pct, precip_mm, sun_h):
     return 'stable'
 
 
+def classify_waves(wave_h, swell_period):
+    """
+    Classifie les conditions de mer depuis wave_height + swell_period.
+    Returns: 'calm' | 'light' | 'surf' | 'rough' | None
+    """
+    if wave_h is None:
+        return None
+    if wave_h < 0.5:
+        return 'calm'
+    if wave_h < 0.9:
+        return 'light'
+    if wave_h >= 1.0 and swell_period is not None and swell_period >= 8:
+        return 'surf'
+    if wave_h >= 1.8:
+        return 'rough'
+    return None
+
+
 def weather_emoji(tmax, rain_pct, sun_h=None, precip_mm=None, score=None):
     """Return a weather emoji based on temperature, rain, sunshine, intensity.
 
@@ -1321,12 +1339,43 @@ def decision_card_html(dest, months, mi_best, C, nom,
                 f'<div class="ic-lbl">{L.get(f"lbl_dec_lbl_mer_{key}", key)}</div>'
                 f'</div>'
             )
-        if sea_cells:
+        # Wave chip pour page mensuelle
+        wave_cell = ''
+        if is_monthly and mi_current is not None:
+            _wh = m.get('wave_h')
+            _sp = m.get('swell_p')
+            _wave_cls = classify_waves(_wh, _sp)
+            _wave_labels = {
+                'fr':    {'calm': 'Mer calme', 'light': 'Mer douce', 'surf': 'Conditions surf', 'rough': 'Mer agitée'},
+                'en':    {'calm': 'Calm sea',  'light': 'Gentle sea','surf': 'Surf conditions','rough': 'Rough sea'},
+                'en-us': {'calm': 'Calm sea',  'light': 'Gentle sea','surf': 'Surf conditions','rough': 'Rough sea'},
+                'es':    {'calm': 'Mar calmo', 'light': 'Mar suave', 'surf': 'Condiciones surf','rough': 'Mar agitado'},
+                'de':    {'calm': 'Ruhige See','light': 'Leichte See','surf': 'Surfbedingungen','rough': 'Rauhe See'},
+            }
+            _wave_colors = {'calm': '#22c55e', 'light': '#0ea5e9', 'surf': '#f59e0b', 'rough': '#f97316'}
+            _wave_icons  = {'calm': '🟢', 'light': '🔵', 'surf': '🏄', 'rough': '🟠'}
+            if _wave_cls and _wh is not None:
+                _wlbl = _wave_labels.get(lang, _wave_labels['en']).get(_wave_cls, '')
+                _wcol = _wave_colors.get(_wave_cls, '#64748b')
+                _wico = _wave_icons.get(_wave_cls, '🌊')
+                _wh_str = f'{_wh:.1f}m'
+                _sp_str = f' · {_sp:.0f}s' if _sp else ''
+                wave_cell = (
+                    f'<div class="info-cell">'
+                    f'<div class="ic-ico">{_wico}</div>'
+                    f'<div class="ic-val" style="color:{_wcol};font-weight:700">{_wh_str}{_sp_str}</div>'
+                    f'<div class="mb"><div class="mf" style="width:{min(100,int(_wh/3*100))}%;background:{_wcol}"></div></div>'
+                    f'<div class="ic-lbl">{_wlbl}</div>'
+                    f'</div>'
+                )
+
+        if sea_cells or wave_cell:
+            _sea_cols = 'cols-2' if _trop_sea else ('cols-4' if not wave_cell else 'cols-5')
             row3 = (
                 f'<div class="rd"><div class="rdl"></div>'
                 f'<div class="rdt">{row_mer}</div>'
                 f'<div class="rdl"></div></div>'
-                f'<div class="info-row {"cols-2" if _trop_sea else "cols-4"}">{sea_cells}</div>'
+                f'<div class="info-row {_sea_cols}">{sea_cells}{wave_cell}</div>'
             )
 
     elif is_mountain:
