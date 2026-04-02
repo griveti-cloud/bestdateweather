@@ -1451,6 +1451,13 @@ function scoreHumidity(rh, avgTemp) {
  return Math.round(20 * tempFactor * rhFactor);       // malus 0-20 pts
 }
 
+function aqiPenalty(aqi) {
+ // Malus AQI [0, 8] points sur score /100. Seuil >60, max à AQI 120+.
+ if (!aqi || aqi <= 60) return 0;
+ return Math.round(8 * Math.min(1, (aqi - 60) / 60));
+}
+
+
 function scoreHumidityPlage(rh, avgTemp) {
  // Plage : humidité acceptable même haute si T confortable
  // Mais RH > 80% + T > 30°C = inconfort marqué (surtout tropiques)
@@ -1693,6 +1700,25 @@ function computeAndRenderScore(sc, rows) {
    sWind * w.wind / 100 +
    sSun * w.sun / 100
   ) - humMalus;
+ }
+ // Penalite AQI depuis FICHE_AQI (lookup coord arrondie + mois courant)
+ if (typeof FICHE_AQI !== 'undefined' && typeof selectedLoc !== 'undefined' && selectedLoc) {
+  var _aqiCoord = (Math.round(selectedLoc.lat * 100) / 100) + ',' + (Math.round(selectedLoc.lon * 100) / 100);
+  var _aqiEntry = FICHE_AQI[_aqiCoord];
+  if (!_aqiEntry) {
+   // Tolérance ±0.1 comme dans lookupFicheScores
+   for (var _ak in FICHE_AQI) {
+    var _ap = _ak.split(',');
+    if (Math.abs(parseFloat(_ap[0]) - selectedLoc.lat) < 0.15 && Math.abs(parseFloat(_ap[1]) - selectedLoc.lon) < 0.15) {
+     _aqiEntry = FICHE_AQI[_ak]; break;
+    }
+   }
+  }
+  if (_aqiEntry) {
+   var _aqiMonth = (window._lastMo != null) ? window._lastMo : new Date().getMonth();
+   var _aqiVal = _aqiEntry[_aqiMonth] || 0;
+   if (_aqiVal > 60) total = total - aqiPenalty(_aqiVal);
+  }
  }
  total = Math.min(100, Math.max(0, total));
 
