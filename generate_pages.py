@@ -1626,15 +1626,21 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         # Water is swimmable at any tmax; the issue is being on the beach in 40°C+ sun
         _sea = float(m.get('sea_temp') or 0)
         _beach_tmax = m['tmax']
+        # Sea temp is the primary factor for swimming comfort
+        # Score général pénalise la pluie mais eau chaude = baignade ok
         if _beach_tmax >= 38:
-            # Extreme heat — water ok but beach harsh; use 'ok' not 'bad'
+            act_beach = C['lbl_m_act_beach_ok']
+        elif _sea >= 24 and _beach_tmax >= 22:
+            # Mer chaude + temps chaud = baignade recommandée peu importe la pluie
+            act_beach = C['lbl_m_act_beach_good'] if (score >= 6.5 or _sea >= 27) else C['lbl_m_act_beach_ok']
+        elif _sea >= 20 and _beach_tmax >= 18:
             act_beach = C['lbl_m_act_beach_ok']
         elif score >= 7.5 and _beach_tmax >= 25:
             act_beach = C['lbl_m_act_beach_good']
         elif score >= 6.5 and _beach_tmax >= 20:
             act_beach = C['lbl_m_act_beach_ok']
         elif _beach_tmax < 18:
-            act_beach = C['lbl_m_act_beach_bad']  # too cold to swim
+            act_beach = C['lbl_m_act_beach_bad']
         else:
             act_beach = C['lbl_m_act_beach_bad']
 
