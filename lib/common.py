@@ -120,6 +120,31 @@ def _classify_rain_pattern(rain_pct, precip_mm, sun_h):
     return 'normal'
 
 
+def compute_weather_stability(rain_pct, precip_mm, sun_h):
+    """
+    Prévisibilité / stabilité météo du mois.
+    Returns: 'stable' | 'variable' | 'unstable'
+    """
+    if rain_pct is None:
+        return 'stable'
+    if rain_pct < 25:
+        return 'stable'
+    rain_freq = rain_pct / 100.0
+    burst = (precip_mm or 0) / max(rain_freq, 0.05)
+    # Très peu de soleil + pluie → changeant
+    if sun_h is not None and sun_h < 2 and rain_pct >= 40:
+        return 'unstable'
+    # Pluie fréquente + peu de soleil + pluie non concentrée
+    if rain_pct >= 60 and (sun_h is None or sun_h < 5) and burst < 12:
+        return 'unstable'
+    if rain_pct >= 70 and (sun_h is None or sun_h < 7) and burst < 10:
+        return 'unstable'
+    # Pluie modérée à fréquente
+    if rain_pct >= 35:
+        return 'variable'
+    return 'stable'
+
+
 def weather_emoji(tmax, rain_pct, sun_h=None, precip_mm=None, score=None):
     """Return a weather emoji based on temperature, rain, sunshine, intensity.
 
@@ -1043,6 +1068,26 @@ def decision_card_html(dest, months, mi_best, C, nom,
         )
     else:
         _uv_sub = ''
+
+    # Weather stability label — affiché seulement si variable ou unstable
+    _stab = compute_weather_stability(rain_pct, precip_mm, sun_h)
+    _stab_labels = {
+        'fr':    {'variable': 'Météo variable', 'unstable': 'Météo changeante'},
+        'en':    {'variable': 'Variable weather', 'unstable': 'Changeable weather'},
+        'en-us': {'variable': 'Variable weather', 'unstable': 'Changeable weather'},
+        'es':    {'variable': 'Tiempo variable', 'unstable': 'Tiempo cambiante'},
+        'de':    {'variable': 'Wechselhaftes Wetter', 'unstable': 'Unbeständiges Wetter'},
+    }
+    _stab_colors = {'variable': '#8b5cf6', 'unstable': '#6366f1'}
+    if _stab in ('variable', 'unstable'):
+        _stab_lbl = _stab_labels.get(lang, _stab_labels['en']).get(_stab, '')
+        _stab_color = _stab_colors[_stab]
+        _stab_sub = (
+            f'<div class="ic-sub" style="font-size:9px;font-weight:700;color:{_stab_color};'
+            f'margin-top:2px;text-transform:uppercase;letter-spacing:.3px">{_stab_lbl}</div>'
+        )
+    else:
+        _stab_sub = ''
     rain_bar  = min(int(rain_pct), 100)
     temp_bar  = round(min(tmax, 40) / 40 * 100)
 
@@ -1172,6 +1217,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'<div class="ic-val">{sun_str}</div>'
         f'<div class="mb"><div class="mf bs" style="width:{sun_bar}%"></div></div>'
         f'{_uv_sub}'
+        f'{_stab_sub}'
         f'<div class="ic-lbl">{lbl("soleil")}</div>'
         f'</div>'
         f'<div class="info-cell">'
