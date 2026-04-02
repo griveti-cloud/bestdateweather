@@ -126,6 +126,16 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
     const mEN = path.match(PATTERN_EN);
     if (mEN) return Response.redirect(`${url.origin}/en/${mEN[1]}-weather-${mEN[2]}.html`, 301);
 
+    // ── Proxy /data/monthly.json depuis GitHub (hors limite 20k assets CF) ──
+    if (path === '/data/monthly.json') {
+      const r = await fetch('https://raw.githubusercontent.com/griveti-cloud/bestdateweather/main/data/monthly.json', {
+        cf: { cacheTtl: 86400, cacheEverything: true }
+      });
+      if (!r.ok) return new Response('{}', { status: 200, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=86400' } });
+      const body = await r.text();
+      return new Response(body, { status: 200, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=86400', 'Access-Control-Allow-Origin': '*' } });
+    }
+
     // ── Proxy /data/suggestions.json depuis GitHub (hors limite 20k assets CF) ──
     if (path === '/data/suggestions.json') {
       const r = await fetch('https://raw.githubusercontent.com/griveti-cloud/bestdateweather/main/data/suggestions.json', {
