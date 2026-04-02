@@ -161,7 +161,7 @@ def load_data(cfg):
             'rain_pct': int(row['rain_pct']),
             'precip'  : float(row['precip_mm']),
             'sun_h'   : float(row['sun_h']),
-            'score'     : (lambda s, aqi: round(max(0.0, s - (0.08 * min(1.0, (aqi-60)/60) if aqi and aqi > 60 else 0) * 10), 1))(float(row['score']), round(float(row['aqi_mean'])) if row.get('aqi_mean','').strip() else None),
+            'score'     : float(row['score']),
             'classe'    : _effective_classe(int(row['tmax']), row['classe'],
                             float(row['dew_point_mean']) if row.get('dew_point_mean','').strip() and float(row.get('dew_point_mean',0) or 0) > 0.5 else None),
             'sea_temp'  : row.get('sea_temp', ''),
