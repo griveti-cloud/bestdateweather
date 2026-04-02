@@ -282,4 +282,22 @@ window.BDW_CFG = {
  'YT':'Mayotte','PM':'Saint-Pierre-et-Miquelon','NC':'Nouvelle-Calédonie',
  'PF':'Polynésie française','WF':'Wallis-et-Futuna','BL':'Saint-Barthélemy','MF':'Saint-Martin'
 }
+,
+ chipRainType: '🌧️ Pluie',
+ chipStability: '🔁 Stabilité',
+ chipUV: '☀️ UV',
+ chipWaves: '🌊 Vagues',
+ rainTypeTropical: 'Averses courtes',
+ rainTypeBlocking: 'Pluie persistante',
+ rainTypeHeavy: 'Pluie bloquante',
+ stabVariable: 'Météo variable',
+ stabUnstable: 'Météo changeante',
+ uvModerate: 'UV Modéré',
+ uvHigh: 'UV Élevé',
+ uvVeryHigh: 'UV Très élevé',
+ uvExtreme: 'UV Extrême',
+ waveCalm: 'Mer calme',
+ waveLight: 'Mer douce',
+ waveSurf: 'Conditions surf',
+ waveRough: 'Mer agitée'
 };

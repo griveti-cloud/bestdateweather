@@ -260,4 +260,22 @@ window.BDW_CFG = {
  'YT':'Mayotte','PM':'San Pedro y Miquelón','NC':'Nueva Caledonia',
  'PF':'Polinesia Francesa','WF':'Wallis y Futuna','BL':'San Bartolomé','MF':'San Martín'
 }
+,
+ chipRainType: '🌧️ Lluvia',
+ chipStability: '🔁 Estabilidad',
+ chipUV: '☀️ UV',
+ chipWaves: '🌊 Olas',
+ rainTypeTropical: 'Chubascos cortos',
+ rainTypeBlocking: 'Lluvia persistente',
+ rainTypeHeavy: 'Lluvia intensa',
+ stabVariable: 'Tiempo variable',
+ stabUnstable: 'Tiempo cambiante',
+ uvModerate: 'UV Moderado',
+ uvHigh: 'UV Alto',
+ uvVeryHigh: 'UV Muy alto',
+ uvExtreme: 'UV Extremo',
+ waveCalm: 'Mar calmo',
+ waveLight: 'Mar suave',
+ waveSurf: 'Condiciones surf',
+ waveRough: 'Mar agitado'
 };

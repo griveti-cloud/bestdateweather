@@ -259,4 +259,22 @@ window.BDW_CFG = {
  'YT':'Mayotte','PM':'Saint Pierre and Miquelon','NC':'New Caledonia',
  'PF':'French Polynesia','WF':'Wallis and Futuna','BL':'Saint Barthélemy','MF':'Saint Martin'
 }
+,
+ chipRainType: '🌧️ Rain',
+ chipStability: '🔁 Stability',
+ chipUV: '☀️ UV',
+ chipWaves: '🌊 Waves',
+ rainTypeTropical: 'Short showers',
+ rainTypeBlocking: 'Persistent rain',
+ rainTypeHeavy: 'Heavy rain',
+ stabVariable: 'Variable weather',
+ stabUnstable: 'Changeable weather',
+ uvModerate: 'UV Moderate',
+ uvHigh: 'UV High',
+ uvVeryHigh: 'UV Very High',
+ uvExtreme: 'UV Extreme',
+ waveCalm: 'Calm sea',
+ waveLight: 'Gentle sea',
+ waveSurf: 'Surf conditions',
+ waveRough: 'Rough sea'
 };

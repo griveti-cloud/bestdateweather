@@ -633,9 +633,9 @@ function fetchMarineSST(lat, lon, yr, mo, da, slug) {
 
  var url;
  if (diffDays === 0 || (diffDays >= 1 && diffDays <= 7)) {
- url = 'https://marine-api.open-meteo.com/v1/marine?latitude='+lat+'&longitude='+lon+'&hourly=sea_surface_temperature&forecast_days=8';
+ url = 'https://marine-api.open-meteo.com/v1/marine?latitude='+lat+'&longitude='+lon+'&hourly=sea_surface_temperature&daily=wave_height_max,swell_wave_period_max&forecast_days=8';
  } else {
- url = 'https://marine-api.open-meteo.com/v1/marine?latitude='+lat+'&longitude='+lon+'&hourly=sea_surface_temperature&start_date='+dateStr+'&end_date='+dateStr;
+ url = 'https://marine-api.open-meteo.com/v1/marine?latitude='+lat+'&longitude='+lon+'&hourly=sea_surface_temperature&daily=wave_height_max,swell_wave_period_max&start_date='+dateStr+'&end_date='+dateStr;
  }
 
  return fetch(url)
@@ -659,7 +659,11 @@ function fetchMarineSST(lat, lon, yr, mo, da, slug) {
  for (var k=0;k<vals.length;k++) { if (vals[k]!=null) { sst=vals[k]; break; } }
  }
  if (sst===null) return tryClimatology();
- return {sst: Math.round(sst*10)/10, fallback:false};
+ var _waveD = d.daily || {};
+    var _wh = _waveD.wave_height_max && _waveD.wave_height_max[0] != null ? Math.round(_waveD.wave_height_max[0]*100)/100 : null;
+    var _sp = _waveD.swell_wave_period_max && _waveD.swell_wave_period_max[0] != null ? Math.round(_waveD.swell_wave_period_max[0]*10)/10 : null;
+    window._lastWaveResult = {waveH: _wh, swellP: _sp};
+    return {sst: Math.round(sst*10)/10, fallback:false};
  })
  .catch(function(){ return tryClimatology(); });
 }
@@ -681,7 +685,7 @@ function renderSeaChip(sstResult) {
 }
 
 function fetchForecast(lat, lon, yr, mo, da) {
- var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,precipitation,snowfall,windspeed_10m,winddirection_10m,shortwave_radiation,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum&timezone=auto&forecast_days=8';
+ var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&hourly=temperature_2m,precipitation_probability,precipitation,snowfall,windspeed_10m,winddirection_10m,shortwave_radiation,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,uv_index_max&timezone=auto&forecast_days=8';
  // _locTzOffset is global
  return fetch(url).then(function(r){if(!r.ok)throw new Error(T.errForecast);return r.json();}).then(function(data){
  if (data.utc_offset_seconds != null) _locTzOffset = data.utc_offset_seconds;
@@ -778,7 +782,7 @@ function render7DayStrip(diffDays) {
 
 function fetchArchive(lat, lon, refDate) {
  var s=toISO(addDays(refDate,-10)), e=toISO(addDays(refDate,10));
- return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&hourly=temperature_2m,precipitation,snowfall,windspeed_10m,winddirection_10m,shortwave_radiation,relative_humidity_2m&timezone=auto').then(function(r){if(!r.ok)throw new Error('Archive error');return r.json();}).then(function(d){if(d.utc_offset_seconds!=null)_locTzOffset=d.utc_offset_seconds;if(d.elevation!=null)_modelElevation=Math.round(d.elevation);return d;});
+ return fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+lat+'&longitude='+lon+'&start_date='+s+'&end_date='+e+'&hourly=temperature_2m,precipitation,snowfall,windspeed_10m,winddirection_10m,shortwave_radiation,relative_humidity_2m,uv_index&timezone=auto').then(function(r){if(!r.ok)throw new Error('Archive error');return r.json();}).then(function(d){if(d.utc_offset_seconds!=null)_locTzOffset=d.utc_offset_seconds;if(d.elevation!=null)_modelElevation=Math.round(d.elevation);return d;});
 }
 
 function renderSnowChip(res) {
@@ -838,14 +842,14 @@ function buildClimatology(lat, lon, yr, mo, da) {
  var trend=Math.max(0,(target.getTime()-now.getTime())/(1000*60*60*24*365.25))*0.03;
  var endYr=now.getFullYear()-1, years=[];
  for(var y=endYr-9;y<=endYr;y++) years.push(y);
- var buckets=[]; for(var h=0;h<24;h++) buckets.push({t:[],p:[],w:[],s:[],sn:[],rh:[],wd:[]});
+ var buckets=[]; for(var h=0;h<24;h++) buckets.push({t:[],p:[],w:[],s:[],sn:[],rh:[],wd:[],uv:[]});
  var idx=0;
  function step(){
  if(idx>=years.length) return Promise.resolve(buildRows(buckets,trend));
  var yr2=years[idx++];
  return fetchArchive(lat,lon,new Date(yr2,mo,da,12,0,0)).then(function(data){
  var T=data.hourly.temperature_2m, P=data.hourly.precipitation, W=data.hourly.windspeed_10m, WD=data.hourly.winddirection_10m||[], S=data.hourly.shortwave_radiation||[], SN=data.hourly.snowfall||[], RH=data.hourly.relative_humidity_2m||[];
- for(var i=0;i<data.hourly.time.length;i++){var hh=new Date(data.hourly.time[i]).getHours();if(T[i]!=null)buckets[hh].t.push(T[i]);if(P[i]!=null)buckets[hh].p.push(P[i]);if(W[i]!=null)buckets[hh].w.push(W[i]);if(WD[i]!=null)buckets[hh].wd.push(WD[i]);if(S[i]!=null)buckets[hh].s.push(S[i]);if(SN[i]!=null)buckets[hh].sn.push(SN[i]);if(RH[i]!=null)buckets[hh].rh.push(RH[i]);}
+ for(var i=0;i<data.hourly.time.length;i++){var hh=new Date(data.hourly.time[i]).getHours();if(T[i]!=null)buckets[hh].t.push(T[i]);if(P[i]!=null)buckets[hh].p.push(P[i]);if(W[i]!=null)buckets[hh].w.push(W[i]);if(WD[i]!=null)buckets[hh].wd.push(WD[i]);if(S[i]!=null)buckets[hh].s.push(S[i]);if(SN[i]!=null)buckets[hh].sn.push(SN[i]);if(RH[i]!=null)buckets[hh].rh.push(RH[i]);var UV=data.hourly.uv_index||[];if(UV[i]!=null)buckets[hh].uv.push(UV[i]);}
  }).catch(function(){}).then(function(){setP(Math.round((idx/years.length)*90),'Analyse '+yr2+'…');return new Promise(function(res){setTimeout(res,20);});}).then(step);
  }
  return step();
@@ -862,8 +866,9 @@ function buildRows(buckets, trend) {
     var tempFreq=null;
     if(p50v!=null&&b.t.length>0){var _inRange=0;for(var _ti=0;_ti<b.t.length;_ti++)if(Math.abs(b.t[_ti]-p50v)<=2)_inRange++;tempFreq=Math.round(_inRange/b.t.length*100);}
     var avgRh = b.rh && b.rh.length > 0 ? b.rh.reduce(function(s,v){return s+v;},0)/b.rh.length : null;
+    var avgUV = b.uv && b.uv.length > 0 ? Math.round(10*b.uv.reduce(function(s,v){return s+v;},0)/b.uv.length)/10 : null;
     var windDirMean=null;if(b.wd&&b.wd.length>0){var _sinS=0,_cosS=0;for(var _di=0;_di<b.wd.length;_di++){var _rad=b.wd[_di]*Math.PI/180;_sinS+=Math.sin(_rad);_cosS+=Math.cos(_rad);}windDirMean=((Math.atan2(_sinS/b.wd.length,_cosS/b.wd.length)*180/Math.PI)+360)%360;}
-    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50v,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50v,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,mm:b.p.length>0?(b.p.reduce(function(s,v){return s+v;},0)/b.p.length):0,snow:avgSnow,windP50:pct(b.w,50),windDir:windDirMean,solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0),tempFreq:tempFreq,rh:avgRh});
+    rows.push({h:h,label:(h<10?'0':'')+h+'h',p25:p25!=null?parseFloat((p25+trend).toFixed(1)):null,p50:p50v,p75:p75!=null?parseFloat((p75+trend).toFixed(1)):null,temp:p50v,rain:b.p.length>0?Math.round(wet/b.p.length*100):0,mm:b.p.length>0?(b.p.reduce(function(s,v){return s+v;},0)/b.p.length):0,snow:avgSnow,windP50:pct(b.w,50),windDir:windDirMean,solP25:Math.max(0,pct(b.s,25)||0),solP50:Math.max(0,pct(b.s,50)||0),solP75:Math.max(0,pct(b.s,75)||0),sol:Math.max(0,pct(b.s,50)||0),tempFreq:tempFreq,rh:avgRh,uv:avgUV});
  }
  return rows;
 }
@@ -1592,6 +1597,15 @@ function computeAndRenderScore(sc, rows) {
  var rhSum = 0, rhCnt = 0;
  for (var j=0; j<rows.length; j++) { if (rows[j].rh != null) { rhSum += rows[j].rh; rhCnt++; } }
  var avgRh = rhCnt ? rhSum / rhCnt : null;
+ // UV — depuis climatologie (rows.uv) ou forecast daily
+ var uvSum = 0, uvCnt = 0;
+ for (var j=0; j<rows.length; j++) { if (rows[j].uv != null) { uvSum += rows[j].uv; uvCnt++; } }
+ var avgUV = uvCnt ? Math.round(10*uvSum/uvCnt)/10 : null;
+ // Fallback forecast daily uv_index_max
+ if (avgUV == null && window._forecastDaily && window._forecastDaily.uv_index_max) {
+  var _fuvs = window._forecastDaily.uv_index_max.filter(function(v){return v!=null;});
+  if (_fuvs.length) avgUV = Math.round(10*_fuvs.reduce(function(s,v){return s+v;},0)/_fuvs.length)/10;
+ }
 
  // Individual scores
  var sRain = scoreRainSmart(avgRain, mmSum, avgTemp);
@@ -1761,6 +1775,57 @@ function computeAndRenderScore(sc, rows) {
   else if (_tmax > 38) { _rlbl = T.ressentiTresChaud; _rclr = '#dc2626'; }
   if (_rlbl) chips.push({ lbl: T.chipRessenti || '🌡 Ressenti', val: _rlbl, score: null, color: _rclr, noDot: false, valColor: _rclr });
  }
+
+ // ── Type de pluie (burstiness) ──────────────────────────────────────
+ var _avgPrecipDay = rows.length > 0 ? mmSum / rows.length : 0;
+ var _rainFreq = avgRain / 100;
+ var _burst = _rainFreq > 0.05 ? _avgPrecipDay / _rainFreq : 0;
+ var _sunH = peakSol / 50; // estimation heures soleil depuis radiation peak
+ var _rainTypeLbl = null;
+ if (avgRain >= 90 && _avgPrecipDay >= 14 && _sunH < 9) {
+  _rainTypeLbl = T.rainTypeHeavy || (T.rainType && T.rainType.heavy_blocking) || null;
+ } else if (avgRain >= 60 && _avgPrecipDay >= 5 && _sunH >= 9 && _burst >= 8) {
+  _rainTypeLbl = T.rainTypeTropical || (T.rainType && T.rainType.tropical_showers) || null;
+ } else if (avgRain >= 60 && _sunH < 5 && _burst < 12) {
+  _rainTypeLbl = T.rainTypeBlocking || (T.rainType && T.rainType.blocking) || null;
+ } else if (avgRain >= 70 && _sunH < 7 && _burst < 10) {
+  _rainTypeLbl = T.rainTypeBlocking || (T.rainType && T.rainType.blocking) || null;
+ }
+ if (_rainTypeLbl) chips.push({ lbl: T.chipRainType || '🌧️', val: _rainTypeLbl, score: null, color: '#0369a1', valColor: '#0369a1' });
+
+ // ── Stabilité météo ──────────────────────────────────────────────────
+ var _stabLbl = null;
+ if (avgRain >= 25) {
+  if ((_sunH < 2 && avgRain >= 40) || (avgRain >= 60 && _sunH < 5 && _burst < 12) || (avgRain >= 70 && _sunH < 7 && _burst < 10)) {
+   _stabLbl = T.stabUnstable || null;
+  } else if (avgRain >= 35) {
+   _stabLbl = T.stabVariable || null;
+  }
+ }
+ if (_stabLbl) chips.push({ lbl: T.chipStability || '🔁', val: _stabLbl, score: null, color: '#8b5cf6', valColor: '#8b5cf6' });
+
+ // ── UV Index ────────────────────────────────────────────────────────
+ if (avgUV != null && avgUV >= 3) {
+  var _uvLbl, _uvColor;
+  if (avgUV >= 11)     { _uvLbl = T.uvExtreme  || 'UV Extreme';   _uvColor = '#ef4444'; }
+  else if (avgUV >= 8) { _uvLbl = T.uvVeryHigh || 'UV Very High'; _uvColor = '#f97316'; }
+  else if (avgUV >= 6) { _uvLbl = T.uvHigh     || 'UV High';      _uvColor = '#f59e0b'; }
+  else                 { _uvLbl = T.uvModerate  || 'UV Moderate';  _uvColor = '#84cc16'; }
+  chips.push({ lbl: T.chipUV || '☀️ UV', val: _uvLbl, score: null, color: _uvColor, valColor: _uvColor });
+ }
+
+ // ── Vagues (Marine) — si destination côtière ──────────────────────
+ if (window._lastWaveResult && window._lastWaveResult.waveH != null) {
+  var _wh = window._lastWaveResult.waveH;
+  var _sp = window._lastWaveResult.swellP;
+  var _wLbl = null, _wColor = null;
+  if (_wh < 0.5)                             { _wLbl = T.waveCalm  || 'Calm sea';          _wColor = '#22c55e'; }
+  else if (_wh < 0.9)                        { _wLbl = T.waveLight || 'Gentle sea';         _wColor = '#0ea5e9'; }
+  else if (_wh >= 1.0 && _sp != null && _sp >= 8) { _wLbl = T.waveSurf  || 'Surf conditions'; _wColor = '#f59e0b'; }
+  else if (_wh >= 1.8)                       { _wLbl = T.waveRough || 'Rough sea';          _wColor = '#f97316'; }
+  if (_wLbl) chips.push({ lbl: T.chipWaves || '🌊', val: _wLbl + ' ' + _wh.toFixed(1) + 'm', score: null, color: _wColor, valColor: _wColor });
+ }
+
  var chipsEl = document.getElementById('score-chips');
  chipsEl.innerHTML = '';
  for (var b=0; b<chips.length; b++) {
