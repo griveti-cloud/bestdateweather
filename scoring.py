@@ -163,6 +163,29 @@ def dew_point_penalty(tmax: float, dew_point: float) -> float:
     return round(0.20 * heat_factor * dew_factor, 3)
 
 
+def aqi_penalty(aqi_mean: float) -> float:
+    """
+    Pénalité qualité de l'air [0.0, 0.08] sur le score /10 (post-processing).
+
+    Seuil : AQI European > 60 (Moderate/Poor).
+    Maximum à AQI = 120+ (Very Poor / Extremely Poor).
+
+    Application : soustraite directement du score /10 final (pas du raw_score),
+    pour rendre l'impact transparent et auditable.
+
+    Cas typiques :
+      Delhi janvier    AQI=138 → pénalité 0.080 → -0.8 pts /10
+      Pékin décembre   AQI=129 → pénalité 0.080 → -0.8 pts /10
+      Dubaï juin       AQI= 89 → pénalité 0.039 → -0.4 pts /10
+      Milan décembre   AQI= 77 → pénalité 0.023 → -0.2 pts /10
+      Paris juillet    AQI= 25 → pénalité 0.000 → inchangé
+    """
+    if aqi_mean is None or aqi_mean <= 60:
+        return 0.0
+    factor = min(1.0, (aqi_mean - 60) / 60)  # linéaire 0 à 60 → 1 à 120+
+    return round(0.08 * factor, 3)
+
+
 def raw_score(tmax: float, rain_pct: float, sun_h: float,
               precip_mm: float = None, dew_point: float = None) -> float:
     """
@@ -317,7 +340,11 @@ def compute_scores(months: list, slug: str = '') -> list:
                 norm = 0.5
             # Courbe de puissance : étire les différences en haut de l'échelle
             stretched = norm ** SCORE_POWER
-            val_10 = round(lo + stretched * (hi - lo), 1)
+            val_10_raw = lo + stretched * (hi - lo)
+            # Malus AQI (post-processing, transparent et auditable)
+            _aqi = effective_months[i].get('aqi_mean')
+            _aqi_pen = aqi_penalty(float(_aqi) if _aqi is not None else None)
+            val_10 = round(max(0.0, val_10_raw - _aqi_pen * 10), 1)
             scores[i] = {
                 'month'     : effective_months[i].get('month', ''),
                 'score_10'  : val_10,

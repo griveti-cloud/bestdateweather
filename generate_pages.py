@@ -161,7 +161,7 @@ def load_data(cfg):
             'rain_pct': int(row['rain_pct']),
             'precip'  : float(row['precip_mm']),
             'sun_h'   : float(row['sun_h']),
-            'score'     : float(row['score']),
+            'score'     : (lambda s, aqi: round(max(0.0, s - (0.08 * min(1.0, (aqi-60)/60) if aqi and aqi > 60 else 0) * 10), 1))(float(row['score']), round(float(row['aqi_mean'])) if row.get('aqi_mean','').strip() else None),
             'classe'    : _effective_classe(int(row['tmax']), row['classe'],
                             float(row['dew_point_mean']) if row.get('dew_point_mean','').strip() and float(row.get('dew_point_mean',0) or 0) > 0.5 else None),
             'sea_temp'  : row.get('sea_temp', ''),
@@ -171,6 +171,7 @@ def load_data(cfg):
             'wave_h'    : float(row['wave_height_mean']) if row.get('wave_height_mean', '').strip() else None,
             'swell_p'   : float(row['swell_period_mean']) if row.get('swell_period_mean', '').strip() else None,
             'aqi'       : round(float(row['aqi_mean'])) if row.get('aqi_mean', '').strip() else None,
+            'aqi_mean'  : round(float(row['aqi_mean'])) if row.get('aqi_mean', '').strip() else None,
         }
 
     cards_file = f'{DATA}/{cfg["cards_file"]}'
