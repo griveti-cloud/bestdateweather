@@ -1997,10 +1997,10 @@ function updateHero(sc, rows, mainHour, _scoreMetrics) {
  }
  var _estTmax = _peakTemps.length ? Math.max.apply(null, _peakTemps) : null;
  if (_estTmax != null && _estTmax >= 37) {
-  _heatAlert.textContent = '🌡️ ' + T.heatAlertSevere + ' · ' + fmtTempRaw(_estTmax) + '° ' + (T.heatAlertPeak || '');
+  _heatAlert.textContent = '🌡️ ' + (T.heatAlertSevere || T.heroCanicule || 'Extreme heat') + ' · ' + fmtTempRaw(_estTmax) + '°';
   _heatAlert.style.display = 'block';
  } else if (_estTmax != null && _estTmax >= 34) {
-  _heatAlert.textContent = '🌡️ ' + T.heatAlertHot + ' · ' + fmtTempRaw(_estTmax) + '° ' + (T.heatAlertPeak || '');
+  _heatAlert.textContent = '🌡️ ' + (T.heatAlertHot || T.drvHotGen || 'High heat') + ' · ' + fmtTempRaw(_estTmax) + '°';
   _heatAlert.style.display = 'block';
  } else {
   _heatAlert.style.display = 'none';
