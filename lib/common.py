@@ -1106,6 +1106,25 @@ def decision_card_html(dest, months, mi_best, C, nom,
         )
     else:
         _stab_sub = ''
+
+    # AQI — affiché seulement si > 60
+    _aqi_val = m.get('aqi')
+    _aqi_sub = ''
+    if _aqi_val is not None and _aqi_val > 60:
+        _aqi_labels = {
+            'fr':    {60: 'Air modéré', 80: 'Pollution élevée', 100: 'Air très pollué'},
+            'en':    {60: 'Moderate air', 80: 'High pollution',  100: 'Very poor air'},
+            'en-us': {60: 'Moderate air', 80: 'High pollution',  100: 'Very poor air'},
+            'es':    {60: 'Aire moderado',80: 'Contaminación',   100: 'Aire muy contaminado'},
+            'de':    {60: 'Mäßige Luft',  80: 'Luftverschmutzung', 100: 'Sehr schlechte Luft'},
+        }
+        _aqi_lvl = 100 if _aqi_val > 100 else (80 if _aqi_val > 80 else 60)
+        _aqi_lbl = _aqi_labels.get(lang, _aqi_labels['en']).get(_aqi_lvl, '')
+        _aqi_color = '#ef4444' if _aqi_val > 100 else ('#f97316' if _aqi_val > 80 else '#f59e0b')
+        _aqi_sub = (
+            f'<div class="ic-sub" style="font-size:9px;font-weight:700;color:{_aqi_color};'
+            f'margin-top:2px;text-transform:uppercase;letter-spacing:.3px">{_aqi_lbl}</div>'
+        )
     rain_bar  = min(int(rain_pct), 100)
     temp_bar  = round(min(tmax, 40) / 40 * 100)
 
@@ -1255,6 +1274,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'<div class="info-cell" data-advisory-cc="{iso2}">'
         f'<div class="ic-ico">{secu_icon}</div>'
         f'<div class="ic-val dec-secu-{secu_cls}" style="font-size:11px">{secu_lbl}</div>'
+        f'{_aqi_sub}'
         f'<div class="ic-lbl">{lbl("secu")}</div>'
         f'</div>'
         f'<div class="info-cell">'
