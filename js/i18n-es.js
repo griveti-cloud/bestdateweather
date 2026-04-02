@@ -277,8 +277,7 @@ window.BDW_CFG = {
  waveCalm: 'Mar calmo',
  waveLight: 'Mar suave',
  waveSurf: 'Condiciones surf',
- waveRough: 'Mar agitado'
-,
+ waveRough: 'Mar agitado',
  heatAlertSevere: 'Calor extremo',
  heatAlertHot: 'Calor intenso',
  heatAlertPeak: '— pico'
