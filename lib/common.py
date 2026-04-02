@@ -75,51 +75,48 @@ def _classify_rain_pattern(rain_pct, precip_mm, sun_h):
     """
     Distingue pluie bloquante vs averses tropicales courtes.
 
-    burstiness = intensité journalière / fréquence → élevé = pluies concentrées/courtes
+    burstiness = mm/j moyen / fréquence pluie → élevé = pluies concentrées
     Contexte : en climat convectif tropical, il peut pleuvoir 90% des jours
     mais seulement 1-2h en fin d'après-midi → journée exploitable.
 
-    Returns: 'blocking' | 'tropical_showers' | 'heavy_blocking' | 'normal'
+    Returns: 'heavy_blocking' | 'blocking' | 'tropical_showers' | 'normal'
     """
     if rain_pct is None or rain_pct == 0:
         return 'normal'
     rain_freq = rain_pct / 100.0
     burstiness = (precip_mm or 0) / max(rain_freq, 0.05)
 
-    # Pluie vraiment bloquante : peu de soleil OU pluie chronique sans intensité
-    is_blocking = (
-        rain_pct >= 70 and (
-            (sun_h is not None and sun_h <= 7.5) or
-            (precip_mm is not None and precip_mm >= 10 and burstiness < 12)
-        )
-    )
-    # Très bloquant : pic de saison des pluies (mai Guyane = 99% + 21mm + 8h)
+    # 1. Très bloquant : pic saison des pluies intense + peu de soleil
     is_heavy_blocking = (
         rain_pct >= 90 and
-        precip_mm is not None and precip_mm >= 15 and
+        precip_mm is not None and precip_mm >= 14 and
         sun_h is not None and sun_h < 9
     )
-    # Bloquant intermédiaire : très fréquent + intense même avec soleil correct
-    is_blocking_intense = (
-        rain_pct >= 90 and
-        precip_mm is not None and precip_mm >= 14
-    )
-    # Averses tropicales courtes : fréquent + intense + encore du soleil
+
+    # 2. Averses tropicales : convectif avec encore du soleil — vérifié AVANT blocking
     is_tropical_showers = (
         rain_pct >= 60 and
-        precip_mm is not None and precip_mm >= 6 and
-        sun_h is not None and sun_h >= 9.5 and
-        burstiness >= 10
+        precip_mm is not None and precip_mm >= 5 and
+        sun_h is not None and sun_h >= 9.0 and
+        burstiness >= 8
+    )
+
+    # 3. Bloquant : pluie fréquente + peu de soleil OU chronique sans intensité
+    is_blocking = (
+        rain_pct >= 65 and (
+            (sun_h is not None and sun_h <= 5.0) or
+            (sun_h is not None and sun_h <= 7.5 and rain_pct >= 70) or
+            (precip_mm is not None and precip_mm >= 10 and burstiness < 10 and
+             (sun_h is None or sun_h < 9.0))
+        )
     )
 
     if is_heavy_blocking:
         return 'heavy_blocking'
-    if is_blocking_intense:
-        return 'heavy_blocking'
-    if is_blocking:
-        return 'blocking'
     if is_tropical_showers:
         return 'tropical_showers'
+    if is_blocking:
+        return 'blocking'
     return 'normal'
 
 
@@ -1015,11 +1012,27 @@ def decision_card_html(dest, months, mi_best, C, nom,
 
     # ── Bar widths ──
     sun_h    = float(m.get('sun_h', 0))
-    rain_pct = float(m.get('rain_pct', 0))
-    tmax     = float(m.get('tmax', 20))
-    sun_bar  = round(min(sun_h, 14) / 14 * 100)
-    rain_bar = min(int(rain_pct), 100)
-    temp_bar = round(min(tmax, 40) / 40 * 100)
+    rain_pct  = float(m.get('rain_pct', 0))
+    precip_mm = float(m.get('precip_mm', 0) or m.get('precip', 0) or 0)
+    tmax      = float(m.get('tmax', 20))
+    sun_bar   = round(min(sun_h, 14) / 14 * 100)
+    rain_bar  = min(int(rain_pct), 100)
+    temp_bar  = round(min(tmax, 40) / 40 * 100)
+
+    # Rain type label (burstiness logic)
+    _rain_pattern = _classify_rain_pattern(rain_pct, precip_mm, sun_h)
+    _rain_type_labels = {
+        'fr':    {'tropical_showers': 'Averses courtes', 'blocking': 'Pluie persistante', 'heavy_blocking': 'Pluie bloquante', 'normal': ''},
+        'en':    {'tropical_showers': 'Short showers',   'blocking': 'Persistent rain',   'heavy_blocking': 'Heavy rain',      'normal': ''},
+        'en-us': {'tropical_showers': 'Short showers',   'blocking': 'Persistent rain',   'heavy_blocking': 'Heavy rain',      'normal': ''},
+        'es':    {'tropical_showers': 'Chubascos cortos','blocking': 'Lluvia persistente', 'heavy_blocking': 'Lluvia intensa',  'normal': ''},
+        'de':    {'tropical_showers': 'Kurze Schauer',   'blocking': 'Anhaltender Regen', 'heavy_blocking': 'Starkregen',      'normal': ''},
+    }
+    _rain_type_lbl = _rain_type_labels.get(lang, _rain_type_labels['en']).get(_rain_pattern, '')
+    _rain_sub = (
+        f'<div class="ic-sub" style="font-size:9px;font-weight:700;color:#0369a1;margin-top:2px;'
+        f'text-transform:uppercase;letter-spacing:.3px">{_rain_type_lbl}</div>'
+    ) if _rain_type_lbl else ''
 
     # ── Temp display ──
     tmin_str = fmt_temp(float(m.get('tmin', 15)), C)
@@ -1144,6 +1157,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'<div class="ic-ico">🌂</div>'
         f'<div class="ic-val">{int(rain_pct)}%</div>'
         f'<div class="mb"><div class="mf bb" style="width:{rain_bar}%"></div></div>'
+        f'{_rain_sub}'
         f'<div class="ic-lbl">{lbl("pluie")}</div>'
         f'</div>'
         f'<div class="info-cell" data-advisory-cc="{iso2}">'
