@@ -336,7 +336,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 
 /* score badge */
 .month-score{border-radius:6px;padding:2px 6px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;white-space:nowrap}
-.month-seas-badge{display:block;font-size:7px;font-weight:700;letter-spacing:.3px;background:#dbeafe;color:#1e40af;padding:2px 4px;border-radius:3px;text-transform:uppercase;line-height:1.4;text-align:center}
+.month-seas-badge{display:block;font-size:8px;font-weight:800;letter-spacing:.2px;background:#1e40af;color:white;padding:2px 5px;border-radius:3px;text-transform:uppercase;line-height:1.4;text-align:center;margin-top:4px}
 .month-badge{display:none;position:absolute;top:0;right:6px;left:auto;transform:none;font-size:8px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;padding:2px 6px;border-radius:0 0 6px 6px;white-space:nowrap}
 .month-badge.rec{display:block;background:#1a7a4a;color:white}
 .month-badge.avoid{display:block;background:#f97316;color:white}
