@@ -1016,6 +1016,33 @@ def decision_card_html(dest, months, mi_best, C, nom,
     precip_mm = float(m.get('precip_mm', 0) or m.get('precip', 0) or 0)
     tmax      = float(m.get('tmax', 20))
     sun_bar   = round(min(sun_h, 14) / 14 * 100)
+
+    # UV index label
+    _uv_val = m.get('uv_index')
+    _uv_labels = {
+        'fr':    {1:'UV Faible', 2:'UV Modéré', 3:'UV Élevé', 4:'UV Très élevé', 5:'UV Extrême'},
+        'en':    {1:'UV Low',    2:'UV Moderate',3:'UV High',  4:'UV Very High',   5:'UV Extreme'},
+        'en-us': {1:'UV Low',    2:'UV Moderate',3:'UV High',  4:'UV Very High',   5:'UV Extreme'},
+        'es':    {1:'UV Bajo',   2:'UV Moderado',3:'UV Alto',  4:'UV Muy alto',    5:'UV Extremo'},
+        'de':    {1:'UV Niedrig',2:'UV Mäßig',   3:'UV Hoch',  4:'UV Sehr hoch',   5:'UV Extrem'},
+    }
+    _uv_colors = {1:'#22c55e', 2:'#84cc16', 3:'#f59e0b', 4:'#f97316', 5:'#ef4444'}
+    def _uv_level(v):
+        if v is None or v < 3: return 0
+        if v < 6:  return 2  # Modéré
+        if v < 8:  return 3  # Élevé
+        if v < 11: return 4  # Très élevé
+        return 5             # Extrême
+    _uv_lvl = _uv_level(_uv_val)
+    if _uv_lvl > 0:
+        _uv_lbl = _uv_labels.get(lang, _uv_labels['en']).get(_uv_lvl, '')
+        _uv_color = _uv_colors.get(_uv_lvl, '#f59e0b')
+        _uv_sub = (
+            f'<div class="ic-sub" style="font-size:9px;font-weight:700;color:{_uv_color};'
+            f'margin-top:2px;text-transform:uppercase;letter-spacing:.3px">{_uv_lbl}</div>'
+        )
+    else:
+        _uv_sub = ''
     rain_bar  = min(int(rain_pct), 100)
     temp_bar  = round(min(tmax, 40) / 40 * 100)
 
@@ -1144,6 +1171,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'<div class="ic-ico">☀️</div>'
         f'<div class="ic-val">{sun_str}</div>'
         f'<div class="mb"><div class="mf bs" style="width:{sun_bar}%"></div></div>'
+        f'{_uv_sub}'
         f'<div class="ic-lbl">{lbl("soleil")}</div>'
         f'</div>'
         f'<div class="info-cell">'

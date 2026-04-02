@@ -167,6 +167,7 @@ def load_data(cfg):
             'sea_temp'  : row.get('sea_temp', ''),
             'beach_score': row.get('beach_score', ''),
             'dew_point' : float(row['dew_point_mean']) if row.get('dew_point_mean', '').strip() else None,
+            'uv_index'  : float(row['uv_index']) if row.get('uv_index', '').strip() else None,
         }
 
     cards_file = f'{DATA}/{cfg["cards_file"]}'
