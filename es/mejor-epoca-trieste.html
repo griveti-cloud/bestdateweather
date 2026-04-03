@@ -82,7 +82,7 @@
 </nav>
 <div class="plan-bar">
 <span class="plan-bar-label">Planifica tu viaje</span>
-<a href="https://www.expedia.com/Hotel-Search?destination=Trieste%2C+Italy&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Alojamiento</a>
+<a href="https://www.expedia.com/Hotel-Search?destination=Trieste%2C+Italy&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Alojamiento</a>
 <a href="https://www.getyourguide.es/s/?q=Trieste%2C+Italy&partner_id=2MQKL00&locale=es" target="_blank" rel="sponsored noopener" class="plan-link plan-link-activ">🎟️ Actividades</a>
 <a href="https://www.kiwi.com/deep?affilid=708106&to=Trieste%2CItaly&lang=es" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Vuelos</a>
 </div>
@@ -167,10 +167,22 @@
 <section class="section">
  <div class="section-label">Alojamiento</div>
  <h2 class="section-title">Alojarse en Trieste</h2>
- <div class="affil-box">
- <strong>Ver disponibilidad en el período recomendado</strong>
- <p>Consejo : los meses de temporada baja (Enero, Febrero) son los más baratos pero el tiempo es claramente peor.</p>
- <a href="https://www.expedia.com/Hotel-Search?destination=Trieste%2C+Italy&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="affil-btn">Buscar en Expedia</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">Consejo : los meses de temporada baja (Enero, Febrero) son los más baratos pero el tiempo es claramente peor.</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">Llegada</label>
+    <input type="date" id="hw-trieste-ci" class="hw-date" value="2027-04-15" min="2026-04-03">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">Salida</label>
+    <input type="date" id="hw-trieste-co" class="hw-date" value="2027-04-22" min="2026-04-03">
+   </div>
+   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-trieste-ci').value,co=document.getElementById('hw-trieste-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Trieste%2C+Italy&camref=1110lB57J'+'&startDate='+ci+'&endDate='+co;window.open(url,'_blank');})()">
+    Ver disponibilidad ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>
 <section class="section">

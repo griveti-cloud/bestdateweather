@@ -180,7 +180,7 @@
 </nav>
 <div class="plan-bar">
 <span class="plan-bar-label">Planifier votre voyage</span>
-<a href="https://www.expedia.com/Hotel-Search?destination=Yerevan%2C+Armenia&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hébergement</a>
+<a href="https://www.expedia.com/Hotel-Search?destination=Yerevan%2C+Armenia&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hébergement</a>
 <a href="https://www.getyourguide.fr/s/?q=Yerevan%2C+Armenia&partner_id=2MQKL00&locale=fr" target="_blank" rel="sponsored noopener" class="plan-link plan-link-activ">🎟️ Activités</a>
 <a href="https://www.kiwi.com/deep?affilid=708106&to=Yerevan%2CArmenia&departure=2026-02-01&lang=fr" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Vols</a>
 </div>
@@ -305,9 +305,22 @@
 <section class="section">
  <div class="section-label">Hébergement</div>
  <h2 class="section-title">Trouver un hébergement à Erevan</h2>
- <div class="affil-box">
- <strong>Voir les hébergements à Erevan en février</strong>
- <a href="https://www.expedia.com/Hotel-Search?destination=Yerevan%2C+Armenia&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="affil-btn">Rechercher sur Expedia</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">Voir les hébergements à Erevan en février</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">Arrivée</label>
+    <input type="date" id="hw-yerevan-m1-ci" class="hw-date" value="2027-02-15" min="2026-04-03">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">Départ</label>
+    <input type="date" id="hw-yerevan-m1-co" class="hw-date" value="2027-02-22" min="2026-04-03">
+   </div>
+   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-yerevan-m1-ci').value,co=document.getElementById('hw-yerevan-m1-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Yerevan%2C+Armenia&camref=1110lB57J'+('&startDate=')+ci+('&endDate=')+co;window.open(url,'_blank');})()">
+    Voir les disponibilités ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>
 <section class="section dest-map-section"><div class="section-label">Localisation</div><div class="dest-map-row" data-dest-map="1" data-lat="40.18" data-lon="44.51" data-macro-zoom="3" data-world-id="dmap-world-yerevan" data-macro-id="dmap-macro-yerevan"><div class="dest-map-card"><div class="dest-map-lbl">🌍 Monde</div><div id="dmap-world-yerevan" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Contexte géographique</div><div id="dmap-macro-yerevan" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="flags/am.png" width="16" height="12" alt="AM" style="vertical-align:middle;border-radius:2px;margin-right:5px">Arménie</div><div class="dest-map-hsub">Erevan, ville rose au pied de l'Ararat — architecture soviétique et cafés branchés, vignobles millénaires et vue imprenable sur le mont sacré.</div><div class="dest-map-coords">40.18°N · 44.51°E</div></div></div></section>

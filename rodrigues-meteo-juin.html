@@ -180,7 +180,7 @@
 </nav>
 <div class="plan-bar">
 <span class="plan-bar-label">Planifier votre voyage</span>
-<a href="https://www.expedia.com/Hotel-Search?destination=Rodrigues%2C+Mauritius&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hébergement</a>
+<a href="https://www.expedia.com/Hotel-Search?destination=Rodrigues%2C+Mauritius&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hébergement</a>
 <a href="https://www.getyourguide.fr/s/?q=Rodrigues%2C+Mauritius&partner_id=2MQKL00&locale=fr" target="_blank" rel="sponsored noopener" class="plan-link plan-link-activ">🎟️ Activités</a>
 <a href="https://www.kiwi.com/deep?affilid=708106&to=Rodrigues%2CMauritius&departure=2026-06-01&lang=fr" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Vols</a>
 </div>
@@ -305,9 +305,22 @@
 <section class="section">
  <div class="section-label">Hébergement</div>
  <h2 class="section-title">Trouver un hébergement à Rodrigues</h2>
- <div class="affil-box">
- <strong>Voir les hébergements à Rodrigues en juin</strong>
- <a href="https://www.expedia.com/Hotel-Search?destination=Rodrigues%2C+Mauritius&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="affil-btn">Rechercher sur Expedia</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">Voir les hébergements à Rodrigues en juin</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">Arrivée</label>
+    <input type="date" id="hw-rodrigues-m5-ci" class="hw-date" value="2026-06-15" min="2026-04-03">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">Départ</label>
+    <input type="date" id="hw-rodrigues-m5-co" class="hw-date" value="2026-06-22" min="2026-04-03">
+   </div>
+   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-rodrigues-m5-ci').value,co=document.getElementById('hw-rodrigues-m5-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Rodrigues%2C+Mauritius&camref=1110lB57J'+('&startDate=')+ci+('&endDate=')+co;window.open(url,'_blank');})()">
+    Voir les disponibilités ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>
 <section class="section dest-map-section"><div class="section-label">Localisation</div><div class="dest-map-row" data-dest-map="1" data-lat="-19.72" data-lon="63.43" data-macro-zoom="3" data-world-id="dmap-world-rodrigues" data-macro-id="dmap-macro-rodrigues"><div class="dest-map-card"><div class="dest-map-lbl">🌍 Monde</div><div id="dmap-world-rodrigues" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Contexte géographique</div><div id="dmap-macro-rodrigues" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="flags/mu.png" width="16" height="12" alt="MU" style="vertical-align:middle;border-radius:2px;margin-right:5px">Maurice</div><div class="dest-map-hsub">Rodrigues, île authentique de l'océan Indien — lagon préservé, tortues géantes et créolité mauricienne.</div><div class="dest-map-coords">19.72°S · 63.43°E</div></div></div></section>

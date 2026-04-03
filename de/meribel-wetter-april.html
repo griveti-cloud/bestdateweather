@@ -180,7 +180,7 @@
 </nav>
 <div class="plan-bar">
 <span class="plan-bar-label">Reise planen</span>
-<a href="https://www.expedia.com/Hotel-Search?destination=M%C3%A9ribel%2C+France&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Unterkunft</a>
+<a href="https://www.expedia.com/Hotel-Search?destination=M%C3%A9ribel%2C+France&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Unterkunft</a>
 <a href="https://www.getyourguide.de/s/?q=M%C3%A9ribel%2C+France&partner_id=2MQKL00&locale=de" target="_blank" rel="sponsored noopener" class="plan-link plan-link-activ">🎟️ Aktivitäten</a>
 <a href="https://www.kiwi.com/deep?affilid=708106&to=M%C3%A9ribel%2CFrance&departure=2026-04-01&lang=de" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Flüge</a>
 </div>
@@ -305,9 +305,22 @@
 <section class="section">
  <div class="section-label">Unterkunft</div>
  <h2 class="section-title">Unterkunft in Méribel finden</h2>
- <div class="affil-box">
- <strong>Unterkunft in Méribel im April finden</strong>
- <a href="https://www.expedia.com/Hotel-Search?destination=M%C3%A9ribel%2C+France&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="affil-btn">Auf Expedia suchen</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">Unterkunft in Méribel im April finden</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">Ankunft</label>
+    <input type="date" id="hw-meribel-m3-ci" class="hw-date" value="2027-04-15" min="2026-04-03">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">Abreise</label>
+    <input type="date" id="hw-meribel-m3-co" class="hw-date" value="2027-04-22" min="2026-04-03">
+   </div>
+   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-meribel-m3-ci').value,co=document.getElementById('hw-meribel-m3-co').value;var url='https://www.expedia.com/Hotel-Search?destination=M%C3%A9ribel%2C+France&camref=1110lB57J'+('&startDate=')+ci+('&endDate=')+co;window.open(url,'_blank');})()">
+    Verfügbarkeit prüfen ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>
 <section class="section dest-map-section"><div class="section-label">Lage</div><div class="dest-map-row" data-dest-map="1" data-lat="45.4" data-lon="6.56" data-macro-zoom="3" data-world-id="dmap-world-meribel" data-macro-id="dmap-macro-meribel"><div class="dest-map-card"><div class="dest-map-lbl">🌍 Welt</div><div id="dmap-world-meribel" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Geografischer Kontext</div><div id="dmap-macro-meribel" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="../flags/fr.png" width="16" height="12" alt="FR" style="vertical-align:middle;border-radius:2px;margin-right:5px">Frankreich</div><div class="dest-map-hsub">Méribel, Herz der Trois Vallées — Holzchalets, zuverlässiger Schnee und direkter Zugang zu 600 km Pisten.</div><div class="dest-map-coords">45.40°N · 6.56°E</div></div></div></section>

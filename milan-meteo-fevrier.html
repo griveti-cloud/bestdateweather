@@ -180,7 +180,7 @@
 </nav>
 <div class="plan-bar">
 <span class="plan-bar-label">Planifier votre voyage</span>
-<a href="https://www.expedia.com/Hotel-Search?destination=Milan%2C+Italy&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hébergement</a>
+<a href="https://www.expedia.com/Hotel-Search?destination=Milan%2C+Italy&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hébergement</a>
 <a href="https://www.getyourguide.fr/s/?q=Milan%2C+Italy&partner_id=2MQKL00&locale=fr" target="_blank" rel="sponsored noopener" class="plan-link plan-link-activ">🎟️ Activités</a>
 <a href="https://www.kiwi.com/deep?affilid=708106&to=Milan%2CItaly&departure=2026-02-01&lang=fr" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Vols</a>
 </div>
@@ -305,9 +305,22 @@
 <section class="section">
  <div class="section-label">Hébergement</div>
  <h2 class="section-title">Trouver un hébergement à Milan</h2>
- <div class="affil-box">
- <strong>Voir les hébergements à Milan en février</strong>
- <a href="https://www.expedia.com/Hotel-Search?destination=Milan%2C+Italy&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="affil-btn">Rechercher sur Expedia</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">Voir les hébergements à Milan en février</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">Arrivée</label>
+    <input type="date" id="hw-milan-m1-ci" class="hw-date" value="2027-02-15" min="2026-04-03">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">Départ</label>
+    <input type="date" id="hw-milan-m1-co" class="hw-date" value="2027-02-22" min="2026-04-03">
+   </div>
+   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-milan-m1-ci').value,co=document.getElementById('hw-milan-m1-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Milan%2C+Italy&camref=1110lB57J'+('&startDate=')+ci+('&endDate=')+co;window.open(url,'_blank');})()">
+    Voir les disponibilités ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>
 <section class="section dest-map-section"><div class="section-label">Localisation</div><div class="dest-map-row" data-dest-map="1" data-lat="45.46" data-lon="9.19" data-macro-zoom="3" data-world-id="dmap-world-milan" data-macro-id="dmap-macro-milan"><div class="dest-map-card"><div class="dest-map-lbl">🌍 Monde</div><div id="dmap-world-milan" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Contexte géographique</div><div id="dmap-macro-milan" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="flags/it.png" width="16" height="12" alt="IT" style="vertical-align:middle;border-radius:2px;margin-right:5px">Italie</div><div class="dest-map-hsub">Milan, capitale de la mode et du design — Duomo, La Cène de Vinci, apéritivo dans les Navigli.</div><div class="dest-map-coords">45.46°N · 9.19°E</div></div></div></section>

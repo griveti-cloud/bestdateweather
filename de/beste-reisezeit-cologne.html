@@ -82,7 +82,7 @@
 </nav>
 <div class="plan-bar">
 <span class="plan-bar-label">Reise planen</span>
-<a href="https://www.expedia.com/Hotel-Search?destination=Cologne%2C+Germany&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Unterkunft</a>
+<a href="https://www.expedia.com/Hotel-Search?destination=Cologne%2C+Germany&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Unterkunft</a>
 <a href="https://www.getyourguide.de/s/?q=Cologne%2C+Germany&partner_id=2MQKL00&locale=de" target="_blank" rel="sponsored noopener" class="plan-link plan-link-activ">🎟️ Aktivitäten</a>
 <a href="https://www.kiwi.com/deep?affilid=708106&to=Cologne%2CGermany&lang=de" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Flüge</a>
 </div>
@@ -160,10 +160,22 @@
 <section class="section">
  <div class="section-label">Unterkunft</div>
  <h2 class="section-title">Unterkunft in Köln finden</h2>
- <div class="affil-box">
- <strong>Verfügbarkeit im empfohlenen Zeitraum prüfen</strong>
- <p>Tipp : Nebensaison (Dezember, Januar) ist am günstigsten, aber das Wetter ist deutlich schlechter.</p>
- <a href="https://www.expedia.com/Hotel-Search?destination=Cologne%2C+Germany&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="affil-btn">Auf Expedia suchen</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">Tipp : Nebensaison (Dezember, Januar) ist am günstigsten, aber das Wetter ist deutlich schlechter.</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">Ankunft</label>
+    <input type="date" id="hw-cologne-ci" class="hw-date" value="2027-04-15" min="2026-04-03">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">Abreise</label>
+    <input type="date" id="hw-cologne-co" class="hw-date" value="2027-04-22" min="2026-04-03">
+   </div>
+   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-cologne-ci').value,co=document.getElementById('hw-cologne-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Cologne%2C+Germany&camref=1110lB57J'+'&startDate='+ci+'&endDate='+co;window.open(url,'_blank');})()">
+    Verfügbarkeit prüfen ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>
 <section class="section">

@@ -180,7 +180,7 @@
 </nav>
 <div class="plan-bar">
 <span class="plan-bar-label">Planifier votre voyage</span>
-<a href="https://www.expedia.com/Hotel-Search?destination=Socotra%2C+Yemen&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hébergement</a>
+<a href="https://www.expedia.com/Hotel-Search?destination=Socotra%2C+Yemen&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hébergement</a>
 
 <a href="https://www.kiwi.com/deep?affilid=708106&to=Socotra%2CYemen&departure=2026-04-01&lang=fr" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Vols</a>
 </div>
@@ -305,9 +305,22 @@
 <section class="section">
  <div class="section-label">Hébergement</div>
  <h2 class="section-title">Trouver un hébergement à Socotra</h2>
- <div class="affil-box">
- <strong>Voir les hébergements à Socotra en avril</strong>
- <a href="https://www.expedia.com/Hotel-Search?destination=Socotra%2C+Yemen&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="affil-btn">Rechercher sur Expedia</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">Voir les hébergements à Socotra en avril</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">Arrivée</label>
+    <input type="date" id="hw-socotra-m3-ci" class="hw-date" value="2027-04-15" min="2026-04-03">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">Départ</label>
+    <input type="date" id="hw-socotra-m3-co" class="hw-date" value="2027-04-22" min="2026-04-03">
+   </div>
+   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-socotra-m3-ci').value,co=document.getElementById('hw-socotra-m3-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Socotra%2C+Yemen&camref=1110lB57J'+('&startDate=')+ci+('&endDate=')+co;window.open(url,'_blank');})()">
+    Voir les disponibilités ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>
 <section class="section dest-map-section"><div class="section-label">Localisation</div><div class="dest-map-row" data-dest-map="1" data-lat="12.47" data-lon="53.87" data-macro-zoom="3" data-world-id="dmap-world-socotra" data-macro-id="dmap-macro-socotra"><div class="dest-map-card"><div class="dest-map-lbl">🌍 Monde</div><div id="dmap-world-socotra" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Contexte géographique</div><div id="dmap-macro-socotra" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="flags/ye.png" width="16" height="12" alt="YE" style="vertical-align:middle;border-radius:2px;margin-right:5px">Yémen</div><div class="dest-map-hsub">Socotra, Galápagos de l'océan Indien — arbres dragon, plages vierges et biodiversité unique.</div><div class="dest-map-coords">12.47°N · 53.87°E</div></div></div></section>

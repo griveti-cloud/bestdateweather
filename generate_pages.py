@@ -46,7 +46,7 @@ DATA = os.path.join(DIR, 'data')
 # ── Version JS — source de vérité unique ───────────────────────────────────
 # Incrémenter ici + les fichiers index/app sont mis à jour automatiquement
 CORE_JS_VERSION = 51
-APP_CSS_VERSION  = 17   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
+APP_CSS_VERSION  = 18   # Bumper ici force le rechargement du cache CSS (app.css?v=N)
 
 def _sync_core_version():
     """Propage CORE_JS_VERSION + APP_CSS_VERSION dans index.html et */app.html.
@@ -910,12 +910,30 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <div class="seas-grid">{season_cards_html}</div>
 </section>'''
 
-    # ── Hotels.com (Expedia Group) ──
+    # ── Hotels.com (Expedia Group) — widget avec form dates ──
     booking_section = ''
     country_name = country
-    _exp_dest = quote_plus(f"{dest.get('nom_en') or dest.get('nom_bare') or nom}, {dest.get('country_en') or country_name}")
-    hotels_subdomain = C['booking_domain']
-    booking_url = f"https://www.expedia.com/Hotel-Search?destination={_exp_dest}&locale=fr_FR&camref=1110lB57J"
+    _exp_dest_raw = f"{dest.get('nom_en') or dest.get('nom_bare') or nom}, {dest.get('country_en') or country_name}"
+    _exp_dest = quote_plus(_exp_dest_raw)
+    booking_url_base = f"https://www.expedia.com/Hotel-Search?destination={_exp_dest}&camref=1110lB57J"
+
+    # Calculer les dates suggérées : 1er mois "recommandé" de l'année à venir
+    import datetime
+    today = datetime.date.today()
+    _best_checkin = None
+    for m_idx in range(12):
+        if months[m_idx]['score'] >= 7.0:
+            # Prochain mois avec ce numéro
+            m_num = m_idx + 1
+            year = today.year if m_num > today.month else today.year + 1
+            _best_checkin = datetime.date(year, m_num, 15)
+            _best_checkout = datetime.date(year, m_num, 22)
+            break
+    if not _best_checkin:
+        _best_checkin = today + datetime.timedelta(days=60)
+        _best_checkout = _best_checkin + datetime.timedelta(days=7)
+    _ci_str = _best_checkin.strftime('%Y-%m-%d')
+    _co_str = _best_checkout.strftime('%Y-%m-%d')
 
     off_months = [month_lc(C, MONTHS[i])
                   for i in range(12) if months[i]['score'] >= 6.5 and months[i]['score'] < best_score - 1.5]
@@ -926,13 +944,32 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         m1 = month_lc(C, MONTHS[worst_idx])
         m2 = month_lc(C, MONTHS[(worst_idx+1)%12])
         budget_tip = f"{C['lbl_tip_prefix']} : {C['lbl_tip_offpeak_tpl'].format(m1=m1, m2=m2)}"
+
+    _hw_lang = C.get('lang','fr')
+    _lbl_ci  = {'fr':'Arrivée','en':'Check-in','en-us':'Check-in','es':'Llegada','de':'Ankunft'}.get(_hw_lang,'Check-in')
+    _lbl_co  = {'fr':'Départ','en':'Check-out','en-us':'Check-out','es':'Salida','de':'Abreise'}.get(_hw_lang,'Check-out')
+    _lbl_btn = {'fr':'Voir les disponibilités','en':'Check availability','en-us':'Check availability','es':'Ver disponibilidad','de':'Verfügbarkeit prüfen'}.get(_hw_lang,'Check availability')
+    _widget_id = f"hw-{dest.get('slug_fr','dest')}"
+
     booking_section = f'''<section class="section">
  <div class="section-label">{C['lbl_booking_section']}</div>
  <h2 class="section-title">{C['lbl_booking_title_tpl'].format(name=nom_f)}</h2>
- <div class="affil-box">
- <strong>{C['lbl_booking_cta']}</strong>
- <p>{budget_tip}</p>
- <a href="{booking_url}" target="_blank" rel="sponsored noopener" class="affil-btn">{C['lbl_booking_btn']}</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">{budget_tip}</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">{_lbl_ci}</label>
+    <input type="date" id="{_widget_id}-ci" class="hw-date" value="{_ci_str}" min="{today.strftime('%Y-%m-%d')}">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">{_lbl_co}</label>
+    <input type="date" id="{_widget_id}-co" class="hw-date" value="{_co_str}" min="{today.strftime('%Y-%m-%d')}">
+   </div>
+   <button class="hw-btn" onclick="(function(){{var ci=document.getElementById(\'{_widget_id}-ci\').value,co=document.getElementById(\'{_widget_id}-co\').value;var url=\'{booking_url_base}\'+\'&startDate=\'+ci+\'&endDate=\'+co;window.open(url,\'_blank\');}})()">
+    {_lbl_btn} ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>'''
 
@@ -973,6 +1010,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  </div>
 </section>'''
     # ── Plan bar (compact affiliate strip) ──
+    booking_url = booking_url_base  # alias pour plan_bar
     _pb_hotel_lbl = C.get('lbl_plan_hotel', '🏨 ' + C.get('lbl_booking_btn', 'Hébergement'))
     _pb_activ_lbl = C.get('lbl_plan_activ', '🎟️ ' + C.get('lbl_activities_btn', 'Activités'))
     _pb_flight_lbl = C.get('lbl_plan_flight', '✈️ ' + C.get('lbl_flights_btn', 'Vols'))
@@ -2240,18 +2278,44 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     # ── HEAD CSS / NAV / FOOTER from gen_annual helpers ──
     NAV      = nav_html(cfg, slug_fr=slug_fr)
 
-    # ── Hotels.com (monthly) ──
+    # ── Hotels.com (monthly) — widget avec form dates ──
+    import datetime as _dt
     country_name = dest_country(cfg, dest)
     _exp_dest_m = quote_plus(f"{dest.get('nom_en') or dest.get('nom_bare') or nom}, {dest.get('country_en') or country_name}")
-    hotels_subdomain_m = cfg['booking_domain']
-    bk_url = f"https://www.expedia.com/Hotel-Search?destination={_exp_dest_m}&locale=fr_FR&camref=1110lB57J"
+    bk_url_base = f"https://www.expedia.com/Hotel-Search?destination={_exp_dest_m}&camref=1110lB57J"
+    bk_url = bk_url_base  # alias pour plan_bar mensuel
     bk_cta = C['lbl_m_bk_cta_tpl'].format(**tpl)
+    _today_m = _dt.date.today()
+    # Dates pré-remplies : 15→22 du mois courant (mi is 0-indexed)
+    _m_year = _today_m.year if (mi + 1) > _today_m.month else _today_m.year + 1
+    _m_ci = _dt.date(_m_year, mi + 1, 15)
+    _m_co = _dt.date(_m_year, mi + 1, 22)
+    _m_ci_str = _m_ci.strftime('%Y-%m-%d')
+    _m_co_str = _m_co.strftime('%Y-%m-%d')
+    _m_lang = C.get('lang', 'fr')
+    _m_lbl_ci  = {'fr':'Arrivée','en':'Check-in','en-us':'Check-in','es':'Llegada','de':'Ankunft'}.get(_m_lang,'Check-in')
+    _m_lbl_co  = {'fr':'Départ','en':'Check-out','en-us':'Check-out','es':'Salida','de':'Abreise'}.get(_m_lang,'Check-out')
+    _m_lbl_btn = {'fr':'Voir les disponibilités','en':'Check availability','en-us':'Check availability','es':'Ver disponibilidad','de':'Verfügbarkeit prüfen'}.get(_m_lang,'Check availability')
+    _m_widget_id = f"hw-{dest.get('slug_fr','dest')}-m{mi}"
     booking_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_booking_section']}</div>
  <h2 class="section-title">{cfg['lbl_booking_title_tpl'].format(name=nom_f)}</h2>
- <div class="affil-box">
- <strong>{bk_cta}</strong>
- <a href="{bk_url}" target="_blank" rel="sponsored noopener" class="affil-btn">{cfg['lbl_booking_btn']}</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">{bk_cta}</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">{_m_lbl_ci}</label>
+    <input type="date" id="{_m_widget_id}-ci" class="hw-date" value="{_m_ci_str}" min="{_today_m.strftime('%Y-%m-%d')}">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">{_m_lbl_co}</label>
+    <input type="date" id="{_m_widget_id}-co" class="hw-date" value="{_m_co_str}" min="{_today_m.strftime('%Y-%m-%d')}">
+   </div>
+   <button class="hw-btn" onclick="(function(){{var ci=document.getElementById(\'{_m_widget_id}-ci\').value,co=document.getElementById(\'{_m_widget_id}-co\').value;var url=\'{bk_url_base}\'+(\'&startDate=\')+ci+(\'&endDate=\')+co;window.open(url,\'_blank\');}})()">
+    {_m_lbl_btn} ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>'''
 

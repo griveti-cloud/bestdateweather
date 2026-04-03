@@ -180,7 +180,7 @@
 </nav>
 <div class="plan-bar">
 <span class="plan-bar-label">Planifica tu viaje</span>
-<a href="https://www.expedia.com/Hotel-Search?destination=Zadar%2C+Croatia&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Alojamiento</a>
+<a href="https://www.expedia.com/Hotel-Search?destination=Zadar%2C+Croatia&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Alojamiento</a>
 <a href="https://www.getyourguide.es/s/?q=Zadar%2C+Croatia&partner_id=2MQKL00&locale=es" target="_blank" rel="sponsored noopener" class="plan-link plan-link-activ">🎟️ Actividades</a>
 <a href="https://www.kiwi.com/deep?affilid=708106&to=Zadar%2CCroatia&departure=2026-02-01&lang=es" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Vuelos</a>
 </div>
@@ -305,9 +305,22 @@
 <section class="section">
  <div class="section-label">Alojamiento</div>
  <h2 class="section-title">Alojarse en Zadar</h2>
- <div class="affil-box">
- <strong>Alojarse en Zadar en Febrero</strong>
- <a href="https://www.expedia.com/Hotel-Search?destination=Zadar%2C+Croatia&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="affil-btn">Buscar en Expedia</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">Alojarse en Zadar en Febrero</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">Llegada</label>
+    <input type="date" id="hw-zadar-m1-ci" class="hw-date" value="2027-02-15" min="2026-04-03">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">Salida</label>
+    <input type="date" id="hw-zadar-m1-co" class="hw-date" value="2027-02-22" min="2026-04-03">
+   </div>
+   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-zadar-m1-ci').value,co=document.getElementById('hw-zadar-m1-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Zadar%2C+Croatia&camref=1110lB57J'+('&startDate=')+ci+('&endDate=')+co;window.open(url,'_blank');})()">
+    Ver disponibilidad ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>
 <section class="section dest-map-section"><div class="section-label">Ubicación</div><div class="dest-map-row" data-dest-map="1" data-lat="44.12" data-lon="15.23" data-macro-zoom="3" data-world-id="dmap-world-zadar" data-macro-id="dmap-macro-zadar"><div class="dest-map-card"><div class="dest-map-lbl">🌍 Mundo</div><div id="dmap-world-zadar" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Contexto geográfico</div><div id="dmap-macro-zadar" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="../flags/hr.png" width="16" height="12" alt="HR" style="vertical-align:middle;border-radius:2px;margin-right:5px">Croacia</div><div class="dest-map-hsub">Zadar, el órgano marino y la puesta de sol de Hitchcock — paseo romano e islas Kornati cercanas.</div><div class="dest-map-coords">44.12°N · 15.23°E</div></div></div></section>

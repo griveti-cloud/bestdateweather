@@ -180,7 +180,7 @@
 </nav>
 <div class="plan-bar">
 <span class="plan-bar-label">Plan your trip</span>
-<a href="https://www.expedia.com/Hotel-Search?destination=Jasn%C3%A1%2C+Slovakia&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hotels</a>
+<a href="https://www.expedia.com/Hotel-Search?destination=Jasn%C3%A1%2C+Slovakia&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hotels</a>
 
 <a href="https://www.kiwi.com/deep?affilid=708106&to=Jasn%C3%A1%2CSlovakia&departure=2026-10-01&lang=en" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Flights</a>
 </div>
@@ -305,9 +305,22 @@
 <section class="section">
  <div class="section-label">Accommodation</div>
  <h2 class="section-title">Find a place to stay in Jasná</h2>
- <div class="affil-box">
- <strong>Find places to stay in Jasná in October</strong>
- <a href="https://www.expedia.com/Hotel-Search?destination=Jasn%C3%A1%2C+Slovakia&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="affil-btn">Search on Expedia</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">Find places to stay in Jasná in October</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">Check-in</label>
+    <input type="date" id="hw-jasna-m9-ci" class="hw-date" value="2026-10-15" min="2026-04-03">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">Check-out</label>
+    <input type="date" id="hw-jasna-m9-co" class="hw-date" value="2026-10-22" min="2026-04-03">
+   </div>
+   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-jasna-m9-ci').value,co=document.getElementById('hw-jasna-m9-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Jasn%C3%A1%2C+Slovakia&camref=1110lB57J'+('&startDate=')+ci+('&endDate=')+co;window.open(url,'_blank');})()">
+    Check availability ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>
 <section class="section dest-map-section"><div class="section-label">Location</div><div class="dest-map-row" data-dest-map="1" data-lat="48.938" data-lon="19.609" data-macro-zoom="3" data-world-id="dmap-world-jasna" data-macro-id="dmap-macro-jasna"><div class="dest-map-card"><div class="dest-map-lbl">🌍 World</div><div id="dmap-world-jasna" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Geographic context</div><div id="dmap-macro-jasna" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="../flags/sk.png" width="16" height="12" alt="SK" style="vertical-align:middle;border-radius:2px;margin-right:5px">Slovakia</div><div class="dest-map-hsub">Jasná, Slovakia's largest resort in the Low Tatras — 40km of runs, affordable ski option in Central Europe.</div><div class="dest-map-coords">48.94°N · 19.61°E</div></div></div></section>

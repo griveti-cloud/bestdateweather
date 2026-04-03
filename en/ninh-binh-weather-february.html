@@ -180,7 +180,7 @@
 </nav>
 <div class="plan-bar">
 <span class="plan-bar-label">Plan your trip</span>
-<a href="https://www.expedia.com/Hotel-Search?destination=Ninh+Binh%2C+Vietnam&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hotels</a>
+<a href="https://www.expedia.com/Hotel-Search?destination=Ninh+Binh%2C+Vietnam&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hotels</a>
 
 <a href="https://www.kiwi.com/deep?affilid=708106&to=Ninh+Binh%2CVietnam&departure=2026-02-01&lang=en" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Flights</a>
 </div>
@@ -305,9 +305,22 @@
 <section class="section">
  <div class="section-label">Accommodation</div>
  <h2 class="section-title">Find a place to stay in Ninh Binh</h2>
- <div class="affil-box">
- <strong>Find places to stay in Ninh Binh in February</strong>
- <a href="https://www.expedia.com/Hotel-Search?destination=Ninh+Binh%2C+Vietnam&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="affil-btn">Search on Expedia</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">Find places to stay in Ninh Binh in February</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">Check-in</label>
+    <input type="date" id="hw-ninh-binh-m1-ci" class="hw-date" value="2027-02-15" min="2026-04-03">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">Check-out</label>
+    <input type="date" id="hw-ninh-binh-m1-co" class="hw-date" value="2027-02-22" min="2026-04-03">
+   </div>
+   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-ninh-binh-m1-ci').value,co=document.getElementById('hw-ninh-binh-m1-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Ninh+Binh%2C+Vietnam&camref=1110lB57J'+('&startDate=')+ci+('&endDate=')+co;window.open(url,'_blank');})()">
+    Check availability ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>
 <section class="section dest-map-section"><div class="section-label">Location</div><div class="dest-map-row" data-dest-map="1" data-lat="20.25" data-lon="105.97" data-macro-zoom="3" data-world-id="dmap-world-ninh_binh" data-macro-id="dmap-macro-ninh_binh"><div class="dest-map-card"><div class="dest-map-lbl">🌍 World</div><div id="dmap-world-ninh_binh" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Geographic context</div><div id="dmap-macro-ninh_binh" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="../flags/vn.png" width="16" height="12" alt="VN" style="vertical-align:middle;border-radius:2px;margin-right:5px">Vietnam</div><div class="dest-map-hsub">Ninh Binh, Ha Long Bay on land — karst peaks, rice paddies and pagodas between rivers and caves.</div><div class="dest-map-coords">20.25°N · 105.97°E</div></div></div></section>

@@ -82,7 +82,7 @@
 </nav>
 <div class="plan-bar">
 <span class="plan-bar-label">Plan your trip</span>
-<a href="https://www.expedia.com/Hotel-Search?destination=Budva%2C+Montenegro&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hotels</a>
+<a href="https://www.expedia.com/Hotel-Search?destination=Budva%2C+Montenegro&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-link plan-link-hotel">🏨 Hotels</a>
 <a href="https://www.getyourguide.com/s/?q=Budva%2C+Montenegro&partner_id=2MQKL00&locale=en" target="_blank" rel="sponsored noopener" class="plan-link plan-link-activ">🎟️ Activities</a>
 <a href="https://www.kiwi.com/deep?affilid=708106&to=Budva%2CMontenegro&lang=en" target="_blank" rel="sponsored noopener" class="plan-link plan-link-flight">✈️ Flights</a>
 </div>
@@ -167,10 +167,22 @@
 <section class="section">
  <div class="section-label">Accommodation</div>
  <h2 class="section-title">Find a place to stay in Budva</h2>
- <div class="affil-box">
- <strong>Check availability during the recommended period</strong>
- <p>Tip : April, July offer a good weather/price balance — decent score with fewer crowds.</p>
- <a href="https://www.expedia.com/Hotel-Search?destination=Budva%2C+Montenegro&locale=fr_FR&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="affil-btn">Search on Expedia</a>
+ <div class="hotel-widget">
+  <p class="hw-tip">Tip : April, July offer a good weather/price balance — decent score with fewer crowds.</p>
+  <div class="hw-form">
+   <div class="hw-field">
+    <label class="hw-lbl">Check-in</label>
+    <input type="date" id="hw-budva-ci" class="hw-date" value="2027-04-15" min="2026-04-03">
+   </div>
+   <div class="hw-field">
+    <label class="hw-lbl">Check-out</label>
+    <input type="date" id="hw-budva-co" class="hw-date" value="2027-04-22" min="2026-04-03">
+   </div>
+   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-budva-ci').value,co=document.getElementById('hw-budva-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Budva%2C+Montenegro&camref=1110lB57J'+'&startDate='+ci+'&endDate='+co;window.open(url,'_blank');})()">
+    Check availability ↗
+   </button>
+  </div>
+  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
  </div>
 </section>
 <section class="section">
