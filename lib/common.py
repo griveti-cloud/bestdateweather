@@ -163,6 +163,111 @@ def classify_waves(wave_h, swell_period):
     return None
 
 
+# Traduction des noms de langues (source: FR dans country_info.json)
+_LANG_NAMES = {
+    'Afrikaans':       {'en': 'Afrikaans',   'es': 'Afrikáans',   'de': 'Afrikaans'},
+    'Albanais':        {'en': 'Albanian',     'es': 'Albanés',     'de': 'Albanisch'},
+    'Allemand':        {'en': 'German',       'es': 'Alemán',      'de': 'Deutsch'},
+    'Amharique':       {'en': 'Amharic',      'es': 'Amhárico',    'de': 'Amharisch'},
+    'Anglais':         {'en': 'English',      'es': 'Inglés',      'de': 'Englisch'},
+    'Arabe':           {'en': 'Arabic',       'es': 'Árabe',       'de': 'Arabisch'},
+    'Arménien':        {'en': 'Armenian',     'es': 'Armenio',     'de': 'Armenisch'},
+    'Aymara':          {'en': 'Aymara',       'es': 'Aimara',      'de': 'Aymara'},
+    'Azerbaïdjanais':  {'en': 'Azerbaijani',  'es': 'Azerbaiyano', 'de': 'Aserbaidschanisch'},
+    'Berbère':         {'en': 'Berber',       'es': 'Bereber',     'de': 'Berberisch'},
+    'Birman':          {'en': 'Burmese',      'es': 'Birmano',     'de': 'Burmesisch'},
+    'Bislama':         {'en': 'Bislama',      'es': 'Bislama',     'de': 'Bislama'},
+    'Bosnien':         {'en': 'Bosnian',      'es': 'Bosnio',      'de': 'Bosnisch'},
+    'Bulgare':         {'en': 'Bulgarian',    'es': 'Búlgaro',     'de': 'Bulgarisch'},
+    'Catalan':         {'en': 'Catalan',      'es': 'Catalán',     'de': 'Katalanisch'},
+    'Chichewa':        {'en': 'Chichewa',     'es': 'Chichewa',    'de': 'Chichewa'},
+    'Cingalais':       {'en': 'Sinhala',      'es': 'Cingalés',    'de': 'Singhalesisch'},
+    'Cook Islands Maori': {'en': 'Cook Islands Māori', 'es': 'Maorí de Cook', 'de': 'Cookinseln-Māori'},
+    'Coréen':          {'en': 'Korean',       'es': 'Coreano',     'de': 'Koreanisch'},
+    'Croate':          {'en': 'Croatian',     'es': 'Croata',      'de': 'Kroatisch'},
+    'Créole':          {'en': 'Creole',       'es': 'Criollo',     'de': 'Kreolisch'},
+    'Danois':          {'en': 'Danish',       'es': 'Danés',       'de': 'Dänisch'},
+    'Dhivehi':         {'en': 'Dhivehi',      'es': 'Dhivehi',     'de': 'Dhivehi'},
+    'Dzongkha':        {'en': 'Dzongkha',     'es': 'Dzongkha',    'de': 'Dzongkha'},
+    'Espagnol':        {'en': 'Spanish',      'es': 'Español',     'de': 'Spanisch'},
+    'Estonien':        {'en': 'Estonian',     'es': 'Estonio',     'de': 'Estnisch'},
+    'Fidjien':         {'en': 'Fijian',       'es': 'Fiyiano',     'de': 'Fidschianisch'},
+    'Filipino':        {'en': 'Filipino',     'es': 'Filipino',    'de': 'Filipino'},
+    'Finnois':         {'en': 'Finnish',      'es': 'Finlandés',   'de': 'Finnisch'},
+    'Français':        {'en': 'French',       'es': 'Francés',     'de': 'Französisch'},
+    'Gaélique':        {'en': 'Gaelic',       'es': 'Gaélico',     'de': 'Gälisch'},
+    'Grec':            {'en': 'Greek',        'es': 'Griego',      'de': 'Griechisch'},
+    'Guaraní':         {'en': 'Guaraní',      'es': 'Guaraní',     'de': 'Guaraní'},
+    'Géorgien':        {'en': 'Georgian',     'es': 'Georgiano',   'de': 'Georgisch'},
+    'Hindi':           {'en': 'Hindi',        'es': 'Hindi',       'de': 'Hindi'},
+    'Hongrois':        {'en': 'Hungarian',    'es': 'Húngaro',     'de': 'Ungarisch'},
+    'Hébreu':          {'en': 'Hebrew',       'es': 'Hebreo',      'de': 'Hebräisch'},
+    'Indonésien':      {'en': 'Indonesian',   'es': 'Indonesio',   'de': 'Indonesisch'},
+    'Irlandais':       {'en': 'Irish',        'es': 'Irlandés',    'de': 'Irisch'},
+    'Islandais':       {'en': 'Icelandic',    'es': 'Islandés',    'de': 'Isländisch'},
+    'Italien':         {'en': 'Italian',      'es': 'Italiano',    'de': 'Italienisch'},
+    'Japonais':        {'en': 'Japanese',     'es': 'Japonés',     'de': 'Japanisch'},
+    'Kazakh':          {'en': 'Kazakh',       'es': 'Kazajo',      'de': 'Kasachisch'},
+    'Khmer':           {'en': 'Khmer',        'es': 'Jemer',       'de': 'Khmer'},
+    'Kinyarwanda':     {'en': 'Kinyarwanda',  'es': 'Kinyarwanda', 'de': 'Kinyarwanda'},
+    'Kirghiz':         {'en': 'Kyrgyz',       'es': 'Kirguís',     'de': 'Kirgisisch'},
+    'Laotien':         {'en': 'Lao',          'es': 'Laosiano',    'de': 'Laotisch'},
+    'Letton':          {'en': 'Latvian',      'es': 'Letón',       'de': 'Lettisch'},
+    'Lituanien':       {'en': 'Lithuanian',   'es': 'Lituano',     'de': 'Litauisch'},
+    'Macédonien':      {'en': 'Macedonian',   'es': 'Macedonio',   'de': 'Mazedonisch'},
+    'Malais':          {'en': 'Malay',        'es': 'Malayo',      'de': 'Malaiisch'},
+    'Malgache':        {'en': 'Malagasy',     'es': 'Malgache',    'de': 'Malagasy'},
+    'Maltais':         {'en': 'Maltese',      'es': 'Maltés',      'de': 'Maltesisch'},
+    'Mandarin':        {'en': 'Mandarin',     'es': 'Mandarín',    'de': 'Mandarin'},
+    'Maori':           {'en': 'Māori',        'es': 'Maorí',       'de': 'Māori'},
+    'Mongol':          {'en': 'Mongolian',    'es': 'Mongol',      'de': 'Mongolisch'},
+    'Monténégrin':     {'en': 'Montenegrin',  'es': 'Montenegrino','de': 'Montenegrinisch'},
+    'Ndebele':         {'en': 'Ndebele',      'es': 'Ndebele',     'de': 'Ndebele'},
+    'Norvégien':       {'en': 'Norwegian',    'es': 'Noruego',     'de': 'Norwegisch'},
+    'Néerlandais':     {'en': 'Dutch',        'es': 'Neerlandés',  'de': 'Niederländisch'},
+    'Népalais':        {'en': 'Nepali',       'es': 'Nepalés',     'de': 'Nepalesisch'},
+    'Ouzbek':          {'en': 'Uzbek',        'es': 'Uzbeko',      'de': 'Usbekisch'},
+    'Palauan':         {'en': 'Palauan',      'es': 'Palauano',    'de': 'Palauisch'},
+    'Papiamento':      {'en': 'Papiamento',   'es': 'Papiamento',  'de': 'Papiamento'},
+    'Persan':          {'en': 'Persian',      'es': 'Persa',       'de': 'Persisch'},
+    'Polonais':        {'en': 'Polish',       'es': 'Polaco',      'de': 'Polnisch'},
+    'Portugais':       {'en': 'Portuguese',   'es': 'Portugués',   'de': 'Portugiesisch'},
+    'Quechua':         {'en': 'Quechua',      'es': 'Quechua',     'de': 'Quechua'},
+    'Roumain':         {'en': 'Romanian',     'es': 'Rumano',      'de': 'Rumänisch'},
+    'Russe':           {'en': 'Russian',      'es': 'Ruso',        'de': 'Russisch'},
+    'Samoan':          {'en': 'Samoan',       'es': 'Samoano',     'de': 'Samoanisch'},
+    'Serbe':           {'en': 'Serbian',      'es': 'Serbio',      'de': 'Serbisch'},
+    'Setswana':        {'en': 'Setswana',     'es': 'Setswana',    'de': 'Setswana'},
+    'Shona':           {'en': 'Shona',        'es': 'Shona',       'de': 'Shona'},
+    'Slovaque':        {'en': 'Slovak',       'es': 'Eslovaco',    'de': 'Slowakisch'},
+    'Slovène':         {'en': 'Slovenian',    'es': 'Esloveno',    'de': 'Slowenisch'},
+    'Sotho':           {'en': 'Sotho',        'es': 'Sotho',       'de': 'Sotho'},
+    'Suédois':         {'en': 'Swedish',      'es': 'Sueco',       'de': 'Schwedisch'},
+    'Swahili':         {'en': 'Swahili',      'es': 'Swahili',     'de': 'Swahili'},
+    'Tadjik':          {'en': 'Tajik',        'es': 'Tayiko',      'de': 'Tadschikisch'},
+    'Tahitien':        {'en': 'Tahitian',     'es': 'Tahitiano',   'de': 'Tahitianisch'},
+    'Tamoul':          {'en': 'Tamil',        'es': 'Tamil',       'de': 'Tamilisch'},
+    'Tchèque':         {'en': 'Czech',        'es': 'Checo',       'de': 'Tschechisch'},
+    'Thaï':            {'en': 'Thai',         'es': 'Tailandés',   'de': 'Thaiisch'},
+    'Tok Pisin':       {'en': 'Tok Pisin',    'es': 'Tok Pisin',   'de': 'Tok Pisin'},
+    'Tongan':          {'en': 'Tongan',       'es': 'Tongano',     'de': 'Tongaisch'},
+    'Turc':            {'en': 'Turkish',      'es': 'Turco',       'de': 'Türkisch'},
+    'Ukrainien':       {'en': 'Ukrainian',    'es': 'Ucraniano',   'de': 'Ukrainisch'},
+    'Vietnamien':      {'en': 'Vietnamese',   'es': 'Vietnamita',  'de': 'Vietnamesisch'},
+    'Wolof':           {'en': 'Wolof',        'es': 'Wólof',       'de': 'Wolof'},
+    'Xhosa':           {'en': 'Xhosa',        'es': 'Xhosa',       'de': 'Xhosa'},
+    'Zulu':            {'en': 'Zulu',         'es': 'Zulú',        'de': 'Zulu'},
+}
+
+def _translate_lang(lang_fr: str, target_lang: str) -> str:
+    """Traduit un nom de langue depuis le français vers la langue cible."""
+    if target_lang in ('fr',):
+        return lang_fr
+    entry = _LANG_NAMES.get(lang_fr, {})
+    key = 'en' if target_lang in ('en', 'en-us') else target_lang
+    return entry.get(key, lang_fr)
+
+
 def weather_emoji(tmax, rain_pct, sun_h=None, precip_mm=None, score=None):
     """Return a weather emoji based on temperature, rain, sunshine, intensity.
 
@@ -698,7 +803,7 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None, is
 
     # Languages chip
     langs = info.get('languages', [])
-    main_lang = langs[0] if langs else '–'
+    main_lang = _translate_lang(langs[0], lang) if langs else '–' 
     extra = len(langs) - 1
     extra_html = (f' <span class="ti-chip-more">+{extra}</span>') if extra > 0 else ''
     language_html = (
@@ -1170,7 +1275,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
     drive_icon = '🚗↩️' if drive == 'left' else '🚗'
 
     # ── Languages (max 2 + overflow) ──
-    lang_str = ', '.join(languages[:2])
+    lang_str = ', '.join(_translate_lang(l, lang) for l in languages[:2])
     if len(languages) > 2:
         more = L.get('lbl_more', '+{n}').format(n=len(languages)-2) if '{n}' in L.get('lbl_more','') else f'+{len(languages)-2}'
         lang_str += f' {more}'
