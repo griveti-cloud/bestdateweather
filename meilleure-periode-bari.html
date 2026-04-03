@@ -167,23 +167,12 @@
 <section class="section">
  <div class="section-label">Hébergement</div>
  <h2 class="section-title">Trouver un hébergement à Bari</h2>
- <div class="hotel-widget">
-  <p class="hw-tip">Conseil : février, mars offrent un bon compromis météo/prix — score correct avec moins d'affluence.</p>
-  <div class="hw-form">
-   <div class="hw-field">
-    <label class="hw-lbl">Arrivée</label>
-    <input type="date" id="hw-bari-ci" class="hw-date" value="2027-02-15" min="2026-04-03">
-   </div>
-   <div class="hw-field">
-    <label class="hw-lbl">Départ</label>
-    <input type="date" id="hw-bari-co" class="hw-date" value="2027-02-22" min="2026-04-03">
-   </div>
-   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-bari-ci').value,co=document.getElementById('hw-bari-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Bari%2C+Italy&camref=1110lB57J'+'&startDate='+ci+'&endDate='+co;window.open(url,'_blank');})()">
-    Voir les disponibilités ↗
-   </button>
-  </div>
-  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
- </div>
+ <p style="font-size:13.5px;color:var(--slate);margin:4px 0 16px;line-height:1.6">Conseil : février, mars offrent un bon compromis météo/prix — score correct avec moins d'affluence.</p>
+ <div class="eg-widget" data-widget="search" data-program="fr-expedia"
+      data-lobs="stays" data-network="pz" data-camref="1100l5Ftd3"
+      data-destination="Bari" data-pubref=""></div>
+ <script class="eg-widgets-script" src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js"></script>
+ <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener" style="color:#999">Expedia</a></p>
 </section>
 <section class="section">
  <div class="section-label">Activités & visites</div>

@@ -951,26 +951,28 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     _lbl_btn = {'fr':'Voir les disponibilités','en':'Check availability','en-us':'Check availability','es':'Ver disponibilidad','de':'Verfügbarkeit prüfen'}.get(_hw_lang,'Check availability')
     _widget_id = f"hw-{dest.get('slug_fr','dest')}"
 
+    # Expedia Group widget officiel — config par langue
+    _EG_CFG = {
+        'fr':    ('fr-expedia', '1100l5Ftd3'),
+        'en':    ('uk-expedia', '1110lB57H'),
+        'en-us': ('us-expedia', '1110lB57J'),
+        'es':    ('us-expedia', '1110lB57J'),  # expedia.es non disponible → fallback US
+        'de':    ('de-expedia', '1110lB57K'),
+    }
+    _eg_lang = C.get('lang', 'fr')
+    _eg_program, _eg_camref = _EG_CFG.get(_eg_lang, _EG_CFG['en'])
+    # Destination pré-remplie (nom EN pour Expedia)
+    _eg_dest = dest.get('nom_en') or dest.get('nom_bare') or nom
+
     booking_section = f'''<section class="section">
  <div class="section-label">{C['lbl_booking_section']}</div>
  <h2 class="section-title">{C['lbl_booking_title_tpl'].format(name=nom_f)}</h2>
- <div class="hotel-widget">
-  <p class="hw-tip">{budget_tip}</p>
-  <div class="hw-form">
-   <div class="hw-field">
-    <label class="hw-lbl">{_lbl_ci}</label>
-    <input type="date" id="{_widget_id}-ci" class="hw-date" value="{_ci_str}" min="{today.strftime('%Y-%m-%d')}">
-   </div>
-   <div class="hw-field">
-    <label class="hw-lbl">{_lbl_co}</label>
-    <input type="date" id="{_widget_id}-co" class="hw-date" value="{_co_str}" min="{today.strftime('%Y-%m-%d')}">
-   </div>
-   <button class="hw-btn" onclick="(function(){{var ci=document.getElementById(\'{_widget_id}-ci\').value,co=document.getElementById(\'{_widget_id}-co\').value;var url=\'{booking_url_base}\'+\'&startDate=\'+ci+\'&endDate=\'+co;window.open(url,\'_blank\');}})()">
-    {_lbl_btn} ↗
-   </button>
-  </div>
-  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
- </div>
+ <p style="font-size:13.5px;color:var(--slate);margin:4px 0 16px;line-height:1.6">{budget_tip}</p>
+ <div class="eg-widget" data-widget="search" data-program="{_eg_program}"
+      data-lobs="stays" data-network="pz" data-camref="{_eg_camref}"
+      data-destination="{_eg_dest}" data-pubref=""></div>
+ <script class="eg-widgets-script" src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js"></script>
+ <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener" style="color:#999">Expedia</a></p>
 </section>'''
 
     # ── Activities (GetYourGuide) ──
@@ -2282,41 +2284,28 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     import datetime as _dt
     country_name = dest_country(cfg, dest)
     _exp_dest_m = quote_plus(f"{dest.get('nom_en') or dest.get('nom_bare') or nom}, {dest.get('country_en') or country_name}")
-    bk_url_base = f"https://www.expedia.com/Hotel-Search?destination={_exp_dest_m}&camref=1110lB57J"
-    bk_url = bk_url_base  # alias pour plan_bar mensuel
-    bk_cta = C['lbl_m_bk_cta_tpl'].format(**tpl)
-    _today_m = _dt.date.today()
-    # Dates pré-remplies : 15→22 du mois courant (mi is 0-indexed)
-    _m_year = _today_m.year if (mi + 1) > _today_m.month else _today_m.year + 1
-    _m_ci = _dt.date(_m_year, mi + 1, 15)
-    _m_co = _dt.date(_m_year, mi + 1, 22)
-    _m_ci_str = _m_ci.strftime('%Y-%m-%d')
-    _m_co_str = _m_co.strftime('%Y-%m-%d')
+    _EG_CFG_M = {
+        'fr':    ('fr-expedia', '1100l5Ftd3'),
+        'en':    ('uk-expedia', '1110lB57H'),
+        'en-us': ('us-expedia', '1110lB57J'),
+        'es':    ('us-expedia', '1110lB57J'),
+        'de':    ('de-expedia', '1110lB57K'),
+    }
     _m_lang = C.get('lang', 'fr')
-    _m_lbl_ci  = {'fr':'Arrivée','en':'Check-in','en-us':'Check-in','es':'Llegada','de':'Ankunft'}.get(_m_lang,'Check-in')
-    _m_lbl_co  = {'fr':'Départ','en':'Check-out','en-us':'Check-out','es':'Salida','de':'Abreise'}.get(_m_lang,'Check-out')
-    _m_lbl_btn = {'fr':'Voir les disponibilités','en':'Check availability','en-us':'Check availability','es':'Ver disponibilidad','de':'Verfügbarkeit prüfen'}.get(_m_lang,'Check availability')
-    _m_widget_id = f"hw-{dest.get('slug_fr','dest')}-m{mi}"
+    _m_eg_program, _m_eg_camref = _EG_CFG_M.get(_m_lang, _EG_CFG_M['en'])
+    _m_eg_dest = dest.get('nom_en') or dest.get('nom_bare') or nom
+    bk_cta = C['lbl_m_bk_cta_tpl'].format(**tpl)
+    bk_url = f"https://www.expedia.com/Hotel-Search?destination={_exp_dest_m}&camref={_m_eg_camref}"
+    bk_url_base = bk_url
     booking_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_booking_section']}</div>
  <h2 class="section-title">{cfg['lbl_booking_title_tpl'].format(name=nom_f)}</h2>
- <div class="hotel-widget">
-  <p class="hw-tip">{bk_cta}</p>
-  <div class="hw-form">
-   <div class="hw-field">
-    <label class="hw-lbl">{_m_lbl_ci}</label>
-    <input type="date" id="{_m_widget_id}-ci" class="hw-date" value="{_m_ci_str}" min="{_today_m.strftime('%Y-%m-%d')}">
-   </div>
-   <div class="hw-field">
-    <label class="hw-lbl">{_m_lbl_co}</label>
-    <input type="date" id="{_m_widget_id}-co" class="hw-date" value="{_m_co_str}" min="{_today_m.strftime('%Y-%m-%d')}">
-   </div>
-   <button class="hw-btn" onclick="(function(){{var ci=document.getElementById(\'{_m_widget_id}-ci\').value,co=document.getElementById(\'{_m_widget_id}-co\').value;var url=\'{bk_url_base}\'+(\'&startDate=\')+ci+(\'&endDate=\')+co;window.open(url,\'_blank\');}})()">
-    {_m_lbl_btn} ↗
-   </button>
-  </div>
-  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
- </div>
+ <p style="font-size:13.5px;color:var(--slate);margin:4px 0 16px;line-height:1.6">{bk_cta}</p>
+ <div class="eg-widget" data-widget="search" data-program="{_m_eg_program}"
+      data-lobs="stays" data-network="pz" data-camref="{_m_eg_camref}"
+      data-destination="{_m_eg_dest}" data-pubref=""></div>
+ <script class="eg-widgets-script" src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js"></script>
+ <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener" style="color:#999">Expedia</a></p>
 </section>'''
 
     # ── Travel Info Widget (monthly) ──

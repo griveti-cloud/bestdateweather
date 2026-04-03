@@ -160,23 +160,12 @@
 <section class="section">
  <div class="section-label">Unterkunft</div>
  <h2 class="section-title">Unterkunft in Machu Picchu finden</h2>
- <div class="hotel-widget">
-  <p class="hw-tip">Tipp : Nebensaison (Februar, März) ist am günstigsten, aber das Wetter ist deutlich schlechter.</p>
-  <div class="hw-form">
-   <div class="hw-field">
-    <label class="hw-lbl">Ankunft</label>
-    <input type="date" id="hw-machu-picchu-ci" class="hw-date" value="2026-05-15" min="2026-04-03">
-   </div>
-   <div class="hw-field">
-    <label class="hw-lbl">Abreise</label>
-    <input type="date" id="hw-machu-picchu-co" class="hw-date" value="2026-05-22" min="2026-04-03">
-   </div>
-   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-machu-picchu-ci').value,co=document.getElementById('hw-machu-picchu-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Machu+Picchu%2C+Peru&camref=1110lB57J'+'&startDate='+ci+'&endDate='+co;window.open(url,'_blank');})()">
-    Verfügbarkeit prüfen ↗
-   </button>
-  </div>
-  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
- </div>
+ <p style="font-size:13.5px;color:var(--slate);margin:4px 0 16px;line-height:1.6">Tipp : Nebensaison (Februar, März) ist am günstigsten, aber das Wetter ist deutlich schlechter.</p>
+ <div class="eg-widget" data-widget="search" data-program="de-expedia"
+      data-lobs="stays" data-network="pz" data-camref="1110lB57K"
+      data-destination="Machu Picchu" data-pubref=""></div>
+ <script class="eg-widgets-script" src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js"></script>
+ <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener" style="color:#999">Expedia</a></p>
 </section>
 <section class="section">
  <div class="section-label">Aktivitäten & Touren</div>

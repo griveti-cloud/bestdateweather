@@ -160,23 +160,12 @@
 <section class="section">
  <div class="section-label">Accommodation</div>
  <h2 class="section-title">Find a place to stay in Asheville</h2>
- <div class="hotel-widget">
-  <p class="hw-tip">Tip : off-peak months (January, February) are cheapest but weather is significantly worse.</p>
-  <div class="hw-form">
-   <div class="hw-field">
-    <label class="hw-lbl">Check-in</label>
-    <input type="date" id="hw-asheville-ci" class="hw-date" value="2027-03-15" min="2026-04-03">
-   </div>
-   <div class="hw-field">
-    <label class="hw-lbl">Check-out</label>
-    <input type="date" id="hw-asheville-co" class="hw-date" value="2027-03-22" min="2026-04-03">
-   </div>
-   <button class="hw-btn" onclick="(function(){var ci=document.getElementById('hw-asheville-ci').value,co=document.getElementById('hw-asheville-co').value;var url='https://www.expedia.com/Hotel-Search?destination=Asheville%2C+United+States&camref=1110lB57J'+'&startDate='+ci+'&endDate='+co;window.open(url,'_blank');})()">
-    Check availability ↗
-   </button>
-  </div>
-  <p class="hw-powered">Via <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener">Expedia</a> · <span style="font-size:10px;color:#aaa">lien affilié</span></p>
- </div>
+ <p style="font-size:13.5px;color:var(--slate);margin:4px 0 16px;line-height:1.6">Tip : off-peak months (January, February) are cheapest but weather is significantly worse.</p>
+ <div class="eg-widget" data-widget="search" data-program="us-expedia"
+      data-lobs="stays" data-network="pz" data-camref="1110lB57J"
+      data-destination="Asheville" data-pubref=""></div>
+ <script class="eg-widgets-script" src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js"></script>
+ <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener" style="color:#999">Expedia</a></p>
 </section>
 <section class="section">
  <div class="section-label">Activities & tours</div>
