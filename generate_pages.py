@@ -1015,7 +1015,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     flights_url = f"https://www.kiwi.com/deep?affilid={TP_MARKER}&to={quote_plus(dest.get('nom_en') or dest.get('nom_bare') or nom)}&lang={_tp_locale}"
     flights_section = f'''<section class="section">
  <div class="section-label">{C['lbl_flights_section']}</div>
- <h2 class="section-title">{C['lbl_flights_title_tpl'].format(name=nom_f)}</h2>
+ <h2 class="section-title">{C['lbl_flights_title_tpl'].format(name=nom_bare)}</h2>
  <script async src="https://tpwgt.com/content?currency={_tp_currency}&trs=504506&shmarker=708106&locale={_tp_locale}&default_origin={_tp_origin}{_tp_dest_param}&stops=any&show_hotels=false&powered_by=true&border_radius=0&plain=true&color_button=%2300A991&color_button_text=%23ffffff&promo_id=3414&campaign_id=111" charset="utf-8"></script>
  <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="{flights_url}" target="_blank" rel="sponsored noopener" style="color:#999">Kiwi.com</a></p>
 </section>'''
@@ -2374,7 +2374,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     flights_url_m = f"https://www.kiwi.com/deep?affilid={TP_MARKER}&to={quote_plus(dest.get('nom_en') or dest.get('nom_bare') or nom)}&lang={_tp_m_locale}"
     flights_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_flights_section']}</div>
- <h2 class="section-title">{cfg['lbl_flights_title_tpl'].format(name=nom_f)}</h2>
+ <h2 class="section-title">{cfg['lbl_flights_title_tpl'].format(name=nom_bare)}</h2>
  <script async src="https://tpwgt.com/content?currency={_tp_m_currency}&trs=504506&shmarker=708106&locale={_tp_m_locale}&default_origin={_tp_m_origin}{_tp_m_dest_param}&stops=any&show_hotels=false&powered_by=true&border_radius=0&plain=true&color_button=%2300A991&color_button_text=%23ffffff&promo_id=3414&campaign_id=111" charset="utf-8"></script>
  <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="{flights_url_m}" target="_blank" rel="sponsored noopener" style="color:#999">Kiwi.com</a></p>
 </section>'''
