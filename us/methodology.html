@@ -339,6 +339,9 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
     <h3>Rain type: tropical showers vs. blocking rain</h3>
     <p>Weather icons distinguish two rain patterns via a <strong>burstiness index</strong> (daily precipitation ÷ rain frequency): ⛈️ heavy blocking, 🌧️ blocking rain, and 🌦️ tropical showers — where high rain frequency coexists with ample sunshine and a largely exploitable day.</p>
 
+ <h3>Air Quality Penalty</h3>
+ <p>An <strong>air quality penalty</strong> is subtracted from the final reference score when the monthly AQI average exceeds 60 (European AQI scale). The penalty is progressive, capped at −0.8 points: no penalty at AQI ≤ 60, linear increase to −0.8 pts at AQI ≥ 120. Data from <strong>Open-Meteo Air Quality API</strong> (2024, <code>european_aqi</code>). 131 destinations affected. Examples: Delhi January (8.0 → 7.2), Beijing December (5.2 → 4.4), Dubai June (3.9 → 3.5), Paris July (unchanged).</p>
+
  <div class="callout blue">
   <div class="callout-ico">ℹ️</div>
   <div class="callout-body">The annual reference score is displayed in the app's <strong>12-month view</strong> for recognised destinations. For any other location, a score is calculated on the fly using the same multi-criteria approach.</div>
@@ -365,6 +368,28 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  <p>If ≥ 9/12 months share the same level, the badge appears once in the table header rather than on every row.</p>
  </section>
 
+ <!-- CONTEXTUAL INDICATORS -->
+ <section class="section" id="indicators">
+ <div class="section-num">X</div>
+ <h2>Contextual Indicators</h2>
+ <p>In addition to the score, each monthly page displays contextual indicators that enrich weather interpretation without affecting the main score.</p>
+
+ <h3>UV Index</h3>
+ <p>The monthly average UV index comes from the <strong>Open-Meteo Historical Forecast API</strong> (<code>uv_index</code>). Displayed as an informational badge when UV ≥ 3. Four levels: Moderate (3–5), High (6–7), Very High (8–10), Extreme (≥ 11). UV is a health risk indicator — it does not affect the climate score.</p>
+
+ <h3>Rain Type</h3>
+ <p>Precipitation is characterised using ERA5 <code>rain_pct</code> (frequency) and <code>precip_mm</code> (intensity). A burst index (mm/day ÷ frequency) distinguishes: <strong>Short showers</strong> (high burst, good sunshine — typical tropical rains), <strong>Persistent rain</strong> (high frequency, little sun, moderate intensity), <strong>Heavy rain</strong> (very high frequency, little sun, high intensity).</p>
+
+ <h3>Weather Stability</h3>
+ <p>A badge indicates whether the month is <strong>Variable</strong> or <strong>Changeable</strong> based on the combination of rain frequency, sunshine hours and burst index. Dry or stable months show no badge.</p>
+
+ <h3>Sea Conditions (coastal destinations)</h3>
+ <p>For 322 coastal destinations, significant wave height (<code>wave_height_max</code>) and swell period (<code>swell_wave_period_max</code>) come from the <strong>Open-Meteo Marine API</strong>. Four levels: Calm sea (&lt; 0.5m), Gentle sea (0.5–0.9m), Surf conditions (≥ 1.0m + period ≥ 8s), Rough sea (≥ 1.8m).</p>
+
+ <h3>Air Quality Badge</h3>
+ <p>Beyond the score penalty, a contextual badge appears on monthly pages when monthly average AQI exceeds 60: <strong>Moderate air</strong> (61–80), <strong>High pollution</strong> (81–100), <strong>Very poor air</strong> (&gt; 100).</p>
+ </section>
+
  <!-- PRACTICAL INFO -->
  <section class="section" id="practical-info">
  <div class="section-num">7</div>
@@ -380,7 +405,7 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
 
  <!-- 8. ECMWF SEASONAL CORRECTION -->
  <section class="section" id="ecmwf-correction">
- <div class="section-num">10</div>
+ <div class="section-num">8</div>
  <h2>ECMWF seasonal correction</h2>
  <p>When the time horizon falls between D+8 and D+210, the historical climatology is adjusted by anomaly signals from the ECMWF seasonal model. This mechanism progressively merges historical data with projected trends, treating temperature, precipitation and wind differently according to their respective predictability at medium range.</p>
  <p>The goal is to detect significant deviations from the norm — an abnormally wet season, a milder winter than average — without claiming the precision of a short-term forecast.</p>
@@ -431,7 +456,7 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
 
  <!-- 8. FAQ -->
  <section class="section" id="faq">
- <div class="section-num">8</div>
+ <div class="section-num">10</div>
  <h2>Frequently asked questions</h2>
 
  <div class="card">
