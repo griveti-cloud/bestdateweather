@@ -12,7 +12,8 @@
     "switchMode": "readonly",
     "runAnnual": "readonly",
     "run": "readonly",
-    "BDW_FICHE_SLUGS": "readonly"
+    "BDW_FICHE_SLUGS": "readonly",
+    "FICHE_AQI": "readonly"
   },
   "rules": {
     "no-undef": "error",
