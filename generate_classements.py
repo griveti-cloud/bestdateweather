@@ -457,6 +457,8 @@ nav{background:white;border-bottom:1px solid var(--cream2);padding:14px 24px;dis
 .dest-link{color:var(--text);text-decoration:none;font-weight:600}
 .dest-link:hover{color:var(--gold)}
 .region-tag{display:inline-block;font-size:10px;color:var(--slate);background:var(--cream);padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle}
+.safety-col,.budget-col{text-align:center;width:52px;font-size:15px}
+.budget-1{color:#22c55e}.budget-2{color:#84cc16}.budget-3{color:#f59e0b}.budget-4{color:#f97316}.budget-5{color:#ef4444}
 .card{background:white;border:1.5px solid var(--cream2);border-radius:14px;padding:24px;margin-bottom:20px}
 .card h3{font-family:'Playfair Display',Georgia,serif;font-size:17px;margin-bottom:8px}
 .card p{font-size:14px;color:var(--slate);line-height:1.7}
@@ -545,14 +547,31 @@ def safety_badge(dest, country_info):
     cls, icon = icons.get(level, icons[1])
     return f'<span class="{cls}"{attr}>{icon}</span>'
 
+def budget_badge(dest, country_info, lang):
+    """Return a budget badge from country_info budget_index."""
+    pays = dest.get('pays', '')
+    info = country_info.get(pays, {})
+    idx = max(1, min(5, info.get('budget_index', 3)))
+    icons = {1: '💚', 2: '💛', 3: '🟡', 4: '🟠', 5: '🔴'}
+    labels = {
+        'fr':    {1:'Éco.',  2:'Abord.', 3:'Modéré', 4:'Coûteux', 5:'Cher'},
+        'en':    {1:'Budget',2:'Afford.',3:'Moderate',4:'Pricey',  5:'Expensive'},
+        'en-us': {1:'Budget',2:'Afford.',3:'Moderate',4:'Pricey',  5:'Expensive'},
+        'es':    {1:'Econ.', 2:'Acces.', 3:'Moderado',4:'Caro',    5:'Muy caro'},
+        'de':    {1:'Güns.', 2:'Erschw.',3:'Mittel',  4:'Teuer',   5:'Sehr teuer'},
+    }
+    lbl = labels.get(lang, labels['en']).get(idx, '')
+    return f'<span class="budget-{idx}" title="{lbl}">{icons[idx]}</span>'
+
+
 def make_table_annual(entries, n, lang, country_info=None):
     """Generate top-N annual ranking table."""
     mois = get_mois(lang)
     headers = {
-        'fr': ('Rang','Destination',['Meilleur mois'],'Score annuel',['Soleil/an'],['Pluie moy.'],'Sécu.'),
-        'en': ('Rank','Destination',['Best month'],'Annual score',['Sun/year'],['Avg. rain'],'Safety'),
-        'es': ('Pos.','Destino',['Mejor mes'],'Puntuación anual',['Sol/año'],['Lluvia media'],'Seg.'),
-        'de': ('Rang','Ziel',['Bester Monat'],'Jahreswertung',['Sonne/Jahr'],['Ø Regen'],'Sicher.'),
+        'fr': ('Rang','Destination',['Meilleur mois'],'Score annuel',['Soleil/an'],['Pluie moy.'],'Sécu.','Budget'),
+        'en': ('Rank','Destination',['Best month'],'Annual score',['Sun/year'],['Avg. rain'],'Safety','Budget'),
+        'es': ('Pos.','Destino',['Mejor mes'],'Puntuación anual',['Sol/año'],['Lluvia media'],'Seg.','Budget'),
+        'de': ('Rang','Ziel',['Bester Monat'],'Jahreswertung',['Sonne/Jahr'],['Ø Regen'],'Sicher.','Budget'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -567,7 +586,8 @@ def make_table_annual(entries, n, lang, country_info=None):
             f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
             f'<td class="rt-sec">{entry["sun_annual"]:.0f}h</td>'
             f'<td class="rt-sec">{entry["rain_avg"]:.0f}%</td>'
-            f'<td class="safety-col">{safety_badge(d, country_info or {})}</td></tr>'
+            f'<td class="safety-col">{safety_badge(d, country_info or {})}</td>'
+            f'<td class="budget-col">{budget_badge(d, country_info or {}, lang)}</td></tr>'
         )
     return (
         f'<table class="rt"><thead><tr>{"".join(f'<th class="rt-sec">{x[0]}</th>' if isinstance(x,list) else f'<th>{x}</th>' for x in h)}</tr></thead>'
@@ -576,10 +596,10 @@ def make_table_annual(entries, n, lang, country_info=None):
 
 def make_table_seasonal(entries, n, lang, country_info=None):
     headers = {
-        'fr': ('Rang','Destination','Score',['Temp. max'],['Soleil'],['Pluie'],'Sécu.'),
-        'en': ('Rank','Destination','Score',['Max temp.'],['Sun'],['Rain'],'Safety'),
-        'es': ('Pos.','Destino','Puntuación',['Temp. máx'],['Sol'],['Lluvia'],'Seg.'),
-        'de': ('Rang','Ziel','Wertung',['Max-Temp.'],['Sonne'],['Regen'],'Sicher.'),
+        'fr': ('Rang','Destination','Score',['Temp. max'],['Soleil'],['Pluie'],'Sécu.','Budget'),
+        'en': ('Rank','Destination','Score',['Max temp.'],['Sun'],['Rain'],'Safety','Budget'),
+        'es': ('Pos.','Destino','Puntuación',['Temp. máx'],['Sol'],['Lluvia'],'Seg.','Budget'),
+        'de': ('Rang','Ziel','Wertung',['Max-Temp.'],['Sonne'],['Regen'],'Sicher.','Budget'),
     }
     h = headers['en' if lang == 'en-us' else lang]
     rows = []
@@ -594,7 +614,8 @@ def make_table_seasonal(entries, n, lang, country_info=None):
             f'<td class="rt-sec">{_ft(entry["tmax_avg"], lang)}</td>'
             f'<td class="rt-sec">{entry["sun"]:.0f}h</td>'
             f'<td class="rt-sec">{entry["rain_avg"]:.0f}%</td>'
-            f'<td class="safety-col">{safety_badge(d, country_info or {})}</td></tr>'
+            f'<td class="safety-col">{safety_badge(d, country_info or {})}</td>'
+            f'<td class="budget-col">{budget_badge(d, country_info or {}, lang)}</td></tr>'
         )
     return (
         f'<table class="rt"><thead><tr>{"".join(f'<th class="rt-sec">{x[0]}</th>' if isinstance(x,list) else f'<th>{x}</th>' for x in h)}</tr></thead>'
