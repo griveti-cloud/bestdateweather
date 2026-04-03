@@ -339,7 +339,7 @@ def head_css(cfg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="{font_url}" media="print" onload="this.media='all'"/>
 <noscript><link rel="stylesheet" href="{font_url}"/></noscript>
-<link rel="stylesheet" href="{pfx}style.css?v=18"/>
+<link rel="stylesheet" href="{pfx}style.css?v=19"/>
 <link rel="icon" type="image/x-icon" href="{pfx}favicon.ico"/>
 <link rel="apple-touch-icon" sizes="180x180" href="{pfx}apple-touch-icon.png"/>
 <meta name="theme-color" content="#1a1f2e"/>'''
@@ -972,7 +972,10 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
       data-lobs="stays" data-network="pz" data-camref="{_eg_camref}"
       data-destination="{_eg_dest}" data-pubref=""></div>
  <script class="eg-widgets-script" src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js"></script>
- <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener" style="color:#999">Expedia</a></p>
+ <div class="affil-fallback">
+  <a href="https://www.expedia.com/Hotel-Search?destination={_eg_dest}&camref={_eg_camref}" target="_blank" rel="sponsored noopener" class="affil-btn">{C.get('lbl_booking_btn','Voir les hôtels')}</a>
+  <p class="affil-note">lien affilié · Expedia</p>
+ </div>
 </section>'''
 
     # ── Activities (GetYourGuide) ──
@@ -1017,7 +1020,10 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <div class="section-label">{C['lbl_flights_section']}</div>
  <h2 class="section-title">{C['lbl_flights_title_tpl'].format(name=nom_bare)}</h2>
  <script async src="https://tpwgt.com/content?currency={_tp_currency}&trs=504506&shmarker=708106&locale={_tp_locale}&default_origin={_tp_origin}{_tp_dest_param}&stops=any&show_hotels=false&powered_by=true&border_radius=0&plain=true&color_button=%2300A991&color_button_text=%23ffffff&promo_id=3414&campaign_id=111" charset="utf-8"></script>
- <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="{flights_url}" target="_blank" rel="sponsored noopener" style="color:#999">Kiwi.com</a></p>
+ <div class="affil-fallback">
+  <a href="{flights_url}" target="_blank" rel="sponsored noopener" class="affil-btn">{C.get('lbl_flights_btn','Rechercher un vol')}</a>
+  <p class="affil-note">lien affilié · Kiwi.com</p>
+ </div>
 </section>'''
     # ── Plan bar (compact affiliate strip) ──
     booking_url = booking_url_base  # alias pour plan_bar
@@ -2313,7 +2319,10 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
       data-lobs="stays" data-network="pz" data-camref="{_m_eg_camref}"
       data-destination="{_m_eg_dest}" data-pubref=""></div>
  <script class="eg-widgets-script" src="https://creator.expediagroup.com/products/widgets/assets/eg-widgets.js"></script>
- <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="https://www.expedia.com" target="_blank" rel="sponsored noopener" style="color:#999">Expedia</a></p>
+ <div class="affil-fallback">
+  <a href="https://www.expedia.com/Hotel-Search?destination={_m_eg_dest}&camref={_m_eg_camref}" target="_blank" rel="sponsored noopener" class="affil-btn">{cfg.get('lbl_booking_btn','Voir les hôtels')}</a>
+  <p class="affil-note">lien affilié · Expedia</p>
+ </div>
 </section>'''
 
     # ── Travel Info Widget (monthly) ──
@@ -2376,7 +2385,10 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <div class="section-label">{cfg['lbl_flights_section']}</div>
  <h2 class="section-title">{cfg['lbl_flights_title_tpl'].format(name=nom_bare)}</h2>
  <script async src="https://tpwgt.com/content?currency={_tp_m_currency}&trs=504506&shmarker=708106&locale={_tp_m_locale}&default_origin={_tp_m_origin}{_tp_m_dest_param}&stops=any&show_hotels=false&powered_by=true&border_radius=0&plain=true&color_button=%2300A991&color_button_text=%23ffffff&promo_id=3414&campaign_id=111" charset="utf-8"></script>
- <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="{flights_url_m}" target="_blank" rel="sponsored noopener" style="color:#999">Kiwi.com</a></p>
+ <div class="affil-fallback">
+  <a href="{flights_url_m}" target="_blank" rel="sponsored noopener" class="affil-btn">{cfg.get('lbl_flights_btn','Rechercher un vol')}</a>
+  <p class="affil-note">lien affilié · Kiwi.com</p>
+ </div>
 </section>'''
 
     # ── Plan bar mensuel ──

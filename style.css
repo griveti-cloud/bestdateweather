@@ -681,3 +681,9 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .hw-powered{font-size:11px;color:#888;margin:8px 0 0;text-align:right}
 .hw-powered a{color:#1976d2;text-decoration:none}
 @media(max-width:600px){.hw-form{flex-direction:column}.hw-btn{width:100%}}
+
+/* Fallback affilié (bouton visible si widget JS ne charge pas) */
+.affil-fallback{margin-top:14px;text-align:center}
+.affil-note{font-size:10px;color:#aaa;margin:6px 0 0}
+/* Masquer le fallback si le widget EG a rendu */
+.eg-widget[data-eg-rendered] + script + .affil-fallback{display:none}
