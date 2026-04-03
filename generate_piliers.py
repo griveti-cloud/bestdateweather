@@ -728,7 +728,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:NO_METEO);msg.style.display="block";'        'var _s1e=document.getElementById("stat-score");if(_s1e)_s1e.textContent="—";'        'var _sce=document.getElementById("stat-count");if(_sce)_sce.textContent="0";'        'var _s3e=document.getElementById("stat-temp");if(_s3e)_s3e.textContent="—";'        'var _rie=document.getElementById("rt-intro");if(_rie)_rie.style.display="none";'        'return;}'+
         'msg.style.display="none";'+
         'var label=mode==="beach"?TH_BEACH:mode==="ski"?TH_SKI:TH_GEN;'+
-        'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th><th style=\"text-align:center\">S\u00e9cu.</th><th style=\"text-align:center\">Budget</th></tr>";'+
+        'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th><th style=\'text-align:center\'>S\u00e9cu.</th><th style=\'text-align:center\'>Budget</th></tr>";'+
         'var html="";'+
         'list.forEach(function(d,i){'+
         'var v=d[key]!=null?d[key]:d.s;'+
@@ -1274,7 +1274,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:NO_METEO);msg.style.display="block";'        'var _s1e=document.getElementById("stat-score");if(_s1e)_s1e.textContent="—";'        'var _sce=document.getElementById("stat-count");if(_sce)_sce.textContent="0";'        'var _s3e=document.getElementById("stat-temp");if(_s3e)_s3e.textContent="—";'        'var _rie=document.getElementById("rt-intro");if(_rie)_rie.style.display="none";'        'return;}'+
         'msg.style.display="none";'+
         'var label=mode==="beach"?TH_BEACH:mode==="ski"?TH_SKI:TH_GEN;'+
-        'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th><th style=\"text-align:center\">S\u00e9cu.</th><th style=\"text-align:center\">Budget</th></tr>";'+
+        'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th><th style=\'text-align:center\'>S\u00e9cu.</th><th style=\'text-align:center\'>Budget</th></tr>";'+
         'var html="";'+
         'list.forEach(function(d,i){'+
         'var v=d[key]!=null?d[key]:d.s;'+
