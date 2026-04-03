@@ -1000,16 +1000,24 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         activities_section = ''
 
     # ── Flights (Kiwi via Travelpayouts) ──
-    _kiwi_city = quote_plus(dest.get('nom_en') or dest.get('nom_bare') or nom)
-    _kiwi_country = quote_plus(dest.get('country_en') or country_name)
-    flights_url = f"https://www.kiwi.com/deep?affilid={TP_MARKER}&to={_kiwi_city}%2C{_kiwi_country}&lang={gyg_lang}"
+    # Travelpayouts Flights widget — config par langue
+    _TP_FLIGHT_CFG = {
+        'fr':    ('fr', 'eur', 'PAR'),
+        'en':    ('en', 'gbp', 'LON'),
+        'en-us': ('en', 'usd', 'NYC'),
+        'es':    ('es', 'eur', 'MAD'),
+        'de':    ('de', 'eur', 'BER'),
+    }
+    _tp_lang_key = C.get('lang', 'fr')
+    _tp_locale, _tp_currency, _tp_origin = _TP_FLIGHT_CFG.get(_tp_lang_key, _TP_FLIGHT_CFG['en'])
+    _tp_dest_iata = dest.get('iata', '')  # colonne optionnelle destinations.csv
+    _tp_dest_param = f'&default_destination={_tp_dest_iata}' if _tp_dest_iata else ''
+    flights_url = f"https://www.kiwi.com/deep?affilid={TP_MARKER}&to={quote_plus(dest.get('nom_en') or dest.get('nom_bare') or nom)}&lang={_tp_locale}"
     flights_section = f'''<section class="section">
  <div class="section-label">{C['lbl_flights_section']}</div>
  <h2 class="section-title">{C['lbl_flights_title_tpl'].format(name=nom_f)}</h2>
- <div class="affil-box">
- <strong>{C['lbl_flights_cta']}</strong>
- <a href="{flights_url}" target="_blank" rel="sponsored noopener" class="affil-btn">{C['lbl_flights_btn']}</a>
- </div>
+ <script async src="https://tpwgt.com/content?currency={_tp_currency}&trs=504506&shmarker=708106&locale={_tp_locale}&default_origin={_tp_origin}{_tp_dest_param}&stops=any&show_hotels=false&powered_by=true&border_radius=0&plain=true&color_button=%2300A991&color_button_text=%23ffffff&promo_id=3414&campaign_id=111" charset="utf-8"></script>
+ <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="{flights_url}" target="_blank" rel="sponsored noopener" style="color:#999">Kiwi.com</a></p>
 </section>'''
     # ── Plan bar (compact affiliate strip) ──
     booking_url = booking_url_base  # alias pour plan_bar
@@ -2352,17 +2360,23 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     else:
         activities_section = ''
 
-    # ── Flights (Kiwi via Travelpayouts) – monthly ──
-    _kiwi_city_m = quote_plus(dest.get('nom_en') or dest.get('nom_bare') or nom)
-    _kiwi_country_m = quote_plus(dest.get('country_en') or country_name)
-    flights_url_m = f"https://www.kiwi.com/deep?affilid={TP_MARKER}&to={_kiwi_city_m}%2C{_kiwi_country_m}&departure={YEAR}-{mi+1:02d}-01&lang={gyg_lang_m}"
+    # ── Flights (Travelpayouts widget) – monthly ──
+    _TP_M_CFG = {
+        'fr':    ('fr', 'eur', 'PAR'),
+        'en':    ('en', 'gbp', 'LON'),
+        'en-us': ('en', 'usd', 'NYC'),
+        'es':    ('es', 'eur', 'MAD'),
+        'de':    ('de', 'eur', 'BER'),
+    }
+    _tp_m_locale, _tp_m_currency, _tp_m_origin = _TP_M_CFG.get(C.get('lang','fr'), _TP_M_CFG['en'])
+    _tp_m_dest_iata = dest.get('iata', '')
+    _tp_m_dest_param = f'&default_destination={_tp_m_dest_iata}' if _tp_m_dest_iata else ''
+    flights_url_m = f"https://www.kiwi.com/deep?affilid={TP_MARKER}&to={quote_plus(dest.get('nom_en') or dest.get('nom_bare') or nom)}&lang={_tp_m_locale}"
     flights_section = f'''<section class="section">
  <div class="section-label">{cfg['lbl_flights_section']}</div>
  <h2 class="section-title">{cfg['lbl_flights_title_tpl'].format(name=nom_f)}</h2>
- <div class="affil-box">
- <strong>{cfg['lbl_flights_cta']}</strong>
- <a href="{flights_url_m}" target="_blank" rel="sponsored noopener" class="affil-btn">{cfg['lbl_flights_btn']}</a>
- </div>
+ <script async src="https://tpwgt.com/content?currency={_tp_m_currency}&trs=504506&shmarker=708106&locale={_tp_m_locale}&default_origin={_tp_m_origin}{_tp_m_dest_param}&stops=any&show_hotels=false&powered_by=true&border_radius=0&plain=true&color_button=%2300A991&color_button_text=%23ffffff&promo_id=3414&campaign_id=111" charset="utf-8"></script>
+ <p style="font-size:10px;color:#aaa;margin:6px 0 0;text-align:right">lien affilié · <a href="{flights_url_m}" target="_blank" rel="sponsored noopener" style="color:#999">Kiwi.com</a></p>
 </section>'''
 
     # ── Plan bar mensuel ──
