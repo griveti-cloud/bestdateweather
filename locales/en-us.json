@@ -763,11 +763,7 @@
     "score_fair": "Not the best window, but acceptable if dates are constrained. {best_month} ({best_score}/10) is significantly better if possible."
   },
   "monthly_titles": [
-    "{nom} {month} {year} — {score}/10: worth it?",
-    "Is {month} a Good Time to Visit {nom}? {score}/10 ({year})",
-    "{nom} in {month} {year} — {score}/10: worth the trip?",
-    "{nom} {month} weather {year} — {score}/10 (10-year data)",
-    "{nom} in {month} — {score}/10: good or bad month? ({year})"
+    "{nom} Weather in {month} {year} — {score}/10 · {tmin}–{tmax}°F · {sun}h sun"
   ],
   "monthly_descs": [
     "Is {month} a good time to visit {nom}? See the full score, weather details and how it compares to the best months of the year.",

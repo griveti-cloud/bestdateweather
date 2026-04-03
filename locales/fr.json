@@ -764,11 +764,7 @@
     "score_fair": "Pas le meilleur créneau, mais acceptable pour qui a des contraintes de dates. {best_month} ({best_score}/10) est nettement préférable si possible."
   },
   "monthly_titles": [
-    "{nom_bare} {month_lc} {year} — {score}/10 : ça vaut le voyage ?",
-    "Partir {prep} {nom_bare} en {month_lc} ? {score}/10 ({year})",
-    "{nom_bare} en {month_lc} {year} — {score}/10 : ça vaut le détour ?",
-    "Météo {prep} {nom_bare} en {month_lc} {year} — {score}/10",
-    "{nom_bare} en {month_lc} — {score}/10 : bonne ou mauvaise période ? ({year})"
+    "{nom} en {month} {year} — {score}/10 · {tmin}–{tmax}°C · {sun}h de soleil"
   ],
   "monthly_descs": [
     "{month_lc} est-il une bonne période pour {nom_bare} ? Découvrez le score complet, les données météo et la comparaison avec les meilleurs mois.",

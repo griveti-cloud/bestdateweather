@@ -764,11 +764,7 @@
     "score_fair": "Kein optimales Fenster, aber akzeptabel bei festen Terminen. Der {best_month} ({best_score}/10) ist deutlich besser, wenn möglich."
   },
   "monthly_titles": [
-    "{nom} {month} {year} — {score}/10: lohnt es sich?",
-    "Ist {month} gut für {nom}? {score}/10 ({year})",
-    "{nom} im {month} {year} — {score}/10: die Reise wert?",
-    "Wetter {nom} im {month} {year} — {score}/10",
-    "{nom} im {month} — {score}/10: gute oder schlechte Reisezeit? ({year})"
+    "{nom} Wetter {month} {year} — {score}/10 · {tmin}–{tmax}°C · {sun}h Sonne"
   ],
   "monthly_descs": [
     "Ist {month} eine gute Reisezeit für {nom}? Vollständiger Score, Wetterdaten und Vergleich mit den besten Monaten.",
