@@ -901,11 +901,11 @@
       "4": "🔴 Do not travel"
     },
     "budget_labels": {
-      "1": "💵 Economy",
-      "2": "💚 Affordable",
+      "1": "💚 Budget",
+      "2": "💛 Affordable",
       "3": "🟡 Moderate",
       "4": "🟠 Expensive",
-      "5": "💎 Very expensive"
+      "5": "🔴 Very expensive"
     },
     "period_annual": "Annual",
     "region_world": "World"
