@@ -797,7 +797,7 @@ def travel_info_widget(pays: str, nom: str, lang: str = 'fr', L: dict = None, is
         f'<span class="ti-chip-icon">💰</span>'
         f'<span class="ti-chip-val">{info["currency"]}</span>'
         f'</div>'
-        f'<div class="ti-chip-sub">{info["currency_symbol"]} · {info["currency_name"]}</div>'
+        f'<div class="ti-chip-sub">{info["currency_symbol"]} · {info.get("currency_name_" + ("en" if lang in ("en","en-us") else lang), info.get("currency_name_en", info["currency_name"]))}</div>'
         f'</div>'
     )
 
@@ -1399,7 +1399,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'<div class="info-cell">'
         f'<div class="ic-ico">💰</div>'
         f'<div class="ic-val ic-mono">{currency}</div>'
-        f'<div class="ic-sub">{currency_sym} · {currency_name}</div>'
+        f'<div class="ic-sub">{currency_sym} · {info.get("currency_name_" + ("en" if lang in ("en","en-us") else lang), info.get("currency_name_en", currency_name))}</div>'
         f'<div class="ic-lbl">{lbl("monnaie")}</div>'
         f'</div>'
         f'<div class="info-cell">'

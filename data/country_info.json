@@ -26,7 +26,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "South African rand"
   },
   "Albanie": {
     "currency": "ALL",
@@ -51,7 +52,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Albanian lek"
   },
   "Algérie": {
     "currency": "DZD",
@@ -77,7 +79,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Algerian dinar"
   },
   "Allemagne": {
     "currency": "EUR",
@@ -102,7 +105,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Andorre": {
     "currency": "EUR",
@@ -127,7 +131,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Antigua-et-Barbuda": {
     "currency": "XCD",
@@ -155,7 +160,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "East Caribbean dollar"
   },
   "Arabie Saoudite": {
     "currency": "SAR",
@@ -180,7 +186,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Saudi riyal"
   },
   "Argentine": {
     "currency": "ARS",
@@ -205,7 +212,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Argentine peso"
   },
   "Arménie": {
     "currency": "AMD",
@@ -230,7 +238,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Armenian dram"
   },
   "Aruba": {
     "currency": "AWG",
@@ -259,7 +268,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Aruban florin"
   },
   "Australie": {
     "currency": "AUD",
@@ -284,7 +294,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Australian dollar"
   },
   "Autriche": {
     "currency": "EUR",
@@ -309,7 +320,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Azerbaïdjan": {
     "currency": "AZN",
@@ -334,7 +346,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Azerbaijani manat"
   },
   "Bahamas": {
     "currency": "BSD",
@@ -359,7 +372,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Bahamian dollar"
   },
   "Bahreïn": {
     "currency": "BHD",
@@ -384,7 +398,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Bahraini dinar"
   },
   "Barbade": {
     "currency": "BBD",
@@ -411,7 +426,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Barbadian dollar"
   },
   "Belgique": {
     "currency": "EUR",
@@ -438,7 +454,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Belize": {
     "currency": "BZD",
@@ -463,7 +480,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Belize dollar"
   },
   "Bhoutan": {
     "currency": "BTN",
@@ -491,7 +509,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Bhutanese ngultrum"
   },
   "Bolivie": {
     "currency": "BOB",
@@ -518,7 +537,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Bolivian boliviano"
   },
   "Bosnie-Herzégovine": {
     "currency": "BAM",
@@ -545,7 +565,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Bosnia and Herzegovina convertible mark"
   },
   "Botswana": {
     "currency": "BWP",
@@ -571,7 +592,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Botswana pula"
   },
   "Brésil": {
     "currency": "BRL",
@@ -596,7 +618,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Brazilian real"
   },
   "Bulgarie": {
     "currency": "BGN",
@@ -621,7 +644,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Bulgarian lev"
   },
   "Burkina Faso": {
     "currency": "XOF",
@@ -649,7 +673,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "CFA franc"
   },
   "Bénin": {
     "currency": "XOF",
@@ -677,7 +702,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "CFA franc"
   },
   "Cambodge": {
     "currency": "KHR",
@@ -702,7 +728,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Cambodian riel"
   },
   "Cameroun": {
     "currency": "XAF",
@@ -728,7 +755,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "CFA franc"
   },
   "Canada": {
     "currency": "CAD",
@@ -754,7 +782,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Canadian dollar"
   },
   "Cap-Vert": {
     "currency": "CVE",
@@ -779,7 +808,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Cape Verdean escudo"
   },
   "Chili": {
     "currency": "CLP",
@@ -804,7 +834,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Chilean peso"
   },
   "Chine": {
     "currency": "CNY",
@@ -829,7 +860,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Chinese yuan"
   },
   "Chypre": {
     "currency": "EUR",
@@ -855,7 +887,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Colombie": {
     "currency": "COP",
@@ -880,7 +913,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Colombian peso"
   },
   "Corée du Sud": {
     "currency": "KRW",
@@ -905,7 +939,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "South Korean won"
   },
   "Costa Rica": {
     "currency": "CRC",
@@ -930,7 +965,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Costa Rican colón"
   },
   "Croatie": {
     "currency": "EUR",
@@ -955,7 +991,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Cuba": {
     "currency": "CUP",
@@ -980,7 +1017,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Cuban peso"
   },
   "Curaçao": {
     "currency": "ANG",
@@ -1006,7 +1044,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Netherlands Antillean guilder"
   },
   "Côte d'Ivoire": {
     "currency": "XOF",
@@ -1031,7 +1070,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "CFA franc"
   },
   "Danemark": {
     "currency": "DKK",
@@ -1056,7 +1096,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Danish krone"
   },
   "Dominique": {
     "currency": "XCD",
@@ -1084,7 +1125,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "East Caribbean dollar"
   },
   "Espagne": {
     "currency": "EUR",
@@ -1109,7 +1151,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Estonie": {
     "currency": "EUR",
@@ -1134,7 +1177,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Fidji": {
     "currency": "FJD",
@@ -1160,7 +1204,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Fijian dollar"
   },
   "Finlande": {
     "currency": "EUR",
@@ -1186,7 +1231,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "France": {
     "currency": "EUR",
@@ -1211,7 +1257,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Gabon": {
     "currency": "XAF",
@@ -1239,7 +1286,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "CFA franc"
   },
   "Gambie": {
     "currency": "GMD",
@@ -1267,7 +1315,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Gambian dalasi"
   },
   "Ghana": {
     "currency": "GHS",
@@ -1292,7 +1341,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Ghanaian cedi"
   },
   "Gibraltar": {
     "currency": "GIP",
@@ -1317,7 +1367,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Gibraltar pound"
   },
   "Grèce": {
     "currency": "EUR",
@@ -1342,7 +1393,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Guatemala": {
     "currency": "GTQ",
@@ -1367,7 +1419,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Guatemalan quetzal"
   },
   "Géorgie": {
     "currency": "GEL",
@@ -1392,7 +1445,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Georgian lari"
   },
   "Honduras": {
     "currency": "HNL",
@@ -1417,7 +1471,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Honduran lempira"
   },
   "Hongrie": {
     "currency": "HUF",
@@ -1442,7 +1497,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Hungarian forint"
   },
   "Inde": {
     "currency": "INR",
@@ -1468,7 +1524,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Indian rupee"
   },
   "Indonésie": {
     "currency": "IDR",
@@ -1493,7 +1550,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Indonesian rupiah"
   },
   "Iran": {
     "currency": "IRR",
@@ -1518,7 +1576,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Iranian rial"
   },
   "Irlande": {
     "currency": "EUR",
@@ -1544,7 +1603,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Islande": {
     "currency": "ISK",
@@ -1569,7 +1629,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Icelandic króna"
   },
   "Israël": {
     "currency": "ILS",
@@ -1595,7 +1656,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Israeli new shekel"
   },
   "Italie": {
     "currency": "EUR",
@@ -1620,7 +1682,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Jamaïque": {
     "currency": "JMD",
@@ -1645,7 +1708,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Jamaican dollar"
   },
   "Japon": {
     "currency": "JPY",
@@ -1672,7 +1736,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Japanese yen"
   },
   "Jordanie": {
     "currency": "JOD",
@@ -1697,7 +1762,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Jordanian dinar"
   },
   "Kazakhstan": {
     "currency": "KZT",
@@ -1723,7 +1789,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Kazakhstani tenge"
   },
   "Kenya": {
     "currency": "KES",
@@ -1749,7 +1816,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Kenyan shilling"
   },
   "Kirghizistan": {
     "currency": "KGS",
@@ -1775,7 +1843,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Kyrgyzstani som"
   },
   "Koweït": {
     "currency": "KWD",
@@ -1800,7 +1869,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Kuwaiti dinar"
   },
   "Laos": {
     "currency": "LAK",
@@ -1828,7 +1898,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Lao kip"
   },
   "Lettonie": {
     "currency": "EUR",
@@ -1853,7 +1924,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Liban": {
     "currency": "LBP",
@@ -1878,7 +1950,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Lebanese pound"
   },
   "Lituanie": {
     "currency": "EUR",
@@ -1903,7 +1976,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Macédoine du Nord": {
     "currency": "MKD",
@@ -1929,7 +2003,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Macedonian denar"
   },
   "Madagascar": {
     "currency": "MGA",
@@ -1955,7 +2030,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Malagasy ariary"
   },
   "Malaisie": {
     "currency": "MYR",
@@ -1980,7 +2056,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Malaysian ringgit"
   },
   "Malawi": {
     "currency": "MWK",
@@ -2009,7 +2086,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Malawian kwacha"
   },
   "Maldives": {
     "currency": "MVR",
@@ -2036,7 +2114,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Maldivian rufiyaa"
   },
   "Malte": {
     "currency": "EUR",
@@ -2062,7 +2141,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Maroc": {
     "currency": "MAD",
@@ -2088,7 +2168,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Moroccan dirham"
   },
   "Maurice": {
     "currency": "MUR",
@@ -2114,7 +2195,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Mauritian rupee"
   },
   "Mexique": {
     "currency": "MXN",
@@ -2139,7 +2221,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Mexican peso"
   },
   "Monaco": {
     "currency": "EUR",
@@ -2167,7 +2250,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Mongolie": {
     "currency": "MNT",
@@ -2192,7 +2276,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Mongolian tögrög"
   },
   "Monténégro": {
     "currency": "EUR",
@@ -2217,7 +2302,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Mozambique": {
     "currency": "MZN",
@@ -2242,7 +2328,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Mozambican metical"
   },
   "Myanmar": {
     "currency": "MMK",
@@ -2267,7 +2354,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Burmese kyat"
   },
   "Namibie": {
     "currency": "NAD",
@@ -2292,7 +2380,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Namibian dollar"
   },
   "Nicaragua": {
     "currency": "NIO",
@@ -2317,7 +2406,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Nicaraguan córdoba"
   },
   "Nigeria": {
     "currency": "NGN",
@@ -2342,7 +2432,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Nigerian naira"
   },
   "Norvège": {
     "currency": "NOK",
@@ -2367,7 +2458,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Norwegian krone"
   },
   "Nouvelle-Calédonie": {
     "currency": "XPF",
@@ -2394,7 +2486,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "CFP franc"
   },
   "Nouvelle-Zélande": {
     "currency": "NZD",
@@ -2420,7 +2513,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "New Zealand dollar"
   },
   "Népal": {
     "currency": "NPR",
@@ -2445,7 +2539,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Nepalese rupee"
   },
   "Oman": {
     "currency": "OMR",
@@ -2470,7 +2565,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Omani rial"
   },
   "Ouganda": {
     "currency": "UGX",
@@ -2496,7 +2592,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Ugandan shilling"
   },
   "Ouzbékistan": {
     "currency": "UZS",
@@ -2521,7 +2618,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Uzbekistani sum"
   },
   "Palaos": {
     "currency": "USD",
@@ -2550,7 +2648,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "United States dollar"
   },
   "Panama": {
     "currency": "PAB",
@@ -2575,7 +2674,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Panamanian balboa"
   },
   "Papouasie-Nouvelle-Guinée": {
     "currency": "PGK",
@@ -2601,7 +2701,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Papua New Guinean kina"
   },
   "Paraguay": {
     "currency": "PYG",
@@ -2627,7 +2728,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Paraguayan guaraní"
   },
   "Pays-Bas": {
     "currency": "EUR",
@@ -2652,7 +2754,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Pays-Bas caribéens": {
     "currency": "USD",
@@ -2678,7 +2781,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "United States dollar"
   },
   "Philippines": {
     "currency": "PHP",
@@ -2704,7 +2808,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Philippine peso"
   },
   "Pologne": {
     "currency": "PLN",
@@ -2729,7 +2834,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Polish złoty"
   },
   "Polynésie française": {
     "currency": "XPF",
@@ -2757,7 +2863,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "CFP franc"
   },
   "Porto Rico": {
     "currency": "USD",
@@ -2783,7 +2890,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "United States dollar"
   },
   "Portugal": {
     "currency": "EUR",
@@ -2810,7 +2918,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Pérou": {
     "currency": "PEN",
@@ -2836,7 +2945,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Peruvian sol"
   },
   "Qatar": {
     "currency": "QAR",
@@ -2863,7 +2973,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Qatari riyal"
   },
   "Roumanie": {
     "currency": "RON",
@@ -2888,7 +2999,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Romanian leu"
   },
   "Royaume-Uni": {
     "currency": "GBP",
@@ -2913,7 +3025,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Pound sterling"
   },
   "Russie": {
     "currency": "RUB",
@@ -2938,7 +3051,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Russian ruble"
   },
   "Rwanda": {
     "currency": "RWF",
@@ -2965,7 +3079,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Rwandan franc"
   },
   "République Dominicaine": {
     "currency": "DOP",
@@ -2990,7 +3105,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Dominican peso"
   },
   "Saint-Vincent-et-les-Grenadines": {
     "currency": "XCD",
@@ -3018,7 +3134,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "East Caribbean dollar"
   },
   "Sainte-Lucie": {
     "currency": "XCD",
@@ -3046,7 +3163,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "East Caribbean dollar"
   },
   "Samoa": {
     "currency": "WST",
@@ -3075,7 +3193,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Samoan tālā"
   },
   "Serbie": {
     "currency": "RSD",
@@ -3100,7 +3219,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Serbian dinar"
   },
   "Seychelles": {
     "currency": "SCR",
@@ -3127,7 +3247,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Seychellois rupee"
   },
   "Sierra Leone": {
     "currency": "SLL",
@@ -3155,7 +3276,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Sierra Leonean leone"
   },
   "Singapour": {
     "currency": "SGD",
@@ -3183,7 +3305,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Singapore dollar"
   },
   "Slovaquie": {
     "currency": "EUR",
@@ -3208,7 +3331,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Slovénie": {
     "currency": "EUR",
@@ -3233,7 +3357,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Euro"
   },
   "Sri Lanka": {
     "currency": "LKR",
@@ -3259,7 +3384,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Sri Lankan rupee"
   },
   "Suisse": {
     "currency": "CHF",
@@ -3286,7 +3412,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Swiss franc"
   },
   "Suède": {
     "currency": "SEK",
@@ -3311,7 +3438,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Swedish krona"
   },
   "Sénégal": {
     "currency": "XOF",
@@ -3337,7 +3465,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "CFA franc"
   },
   "Tadjikistan": {
     "currency": "TJS",
@@ -3362,7 +3491,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Tajikistani somoni"
   },
   "Tanzanie": {
     "currency": "TZS",
@@ -3388,7 +3518,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Tanzanian shilling"
   },
   "Taïwan": {
     "currency": "TWD",
@@ -3413,7 +3544,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "New Taiwan dollar"
   },
   "Tchéquie": {
     "currency": "CZK",
@@ -3438,7 +3570,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Czech koruna"
   },
   "Thaïlande": {
     "currency": "THB",
@@ -3463,7 +3596,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Thai baht"
   },
   "Togo": {
     "currency": "XOF",
@@ -3491,7 +3625,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "CFA franc"
   },
   "Tonga": {
     "currency": "TOP",
@@ -3520,7 +3655,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Tongan paʻanga"
   },
   "Trinité-et-Tobago": {
     "currency": "TTD",
@@ -3545,7 +3681,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Trinidad and Tobago dollar"
   },
   "Tunisie": {
     "currency": "TND",
@@ -3570,7 +3707,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Tunisian dinar"
   },
   "Turks-et-Caïcos": {
     "currency": "USD",
@@ -3595,7 +3733,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "United States dollar"
   },
   "Turquie": {
     "currency": "TRY",
@@ -3620,7 +3759,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Turkish lira"
   },
   "Ukraine": {
     "currency": "UAH",
@@ -3645,7 +3785,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Ukrainian hryvnia"
   },
   "Uruguay": {
     "currency": "UYU",
@@ -3670,7 +3811,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Uruguayan peso"
   },
   "Vanuatu": {
     "currency": "VUV",
@@ -3700,7 +3842,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Vanuatu vatu"
   },
   "Viêt Nam": {
     "currency": "VND",
@@ -3725,7 +3868,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Vietnamese dong"
   },
   "Vietnam": {
     "currency": "VND",
@@ -3750,7 +3894,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Vietnamese dong"
   },
   "Yémen": {
     "currency": "YER",
@@ -3775,7 +3920,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Yemeni rial"
   },
   "Zambie": {
     "currency": "ZMW",
@@ -3800,7 +3946,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Zambian kwacha"
   },
   "Zimbabwe": {
     "currency": "ZWL",
@@ -3827,7 +3974,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Zimbabwean dollar"
   },
   "Écosse": {
     "currency": "GBP",
@@ -3853,7 +4001,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Pound sterling"
   },
   "Égypte": {
     "currency": "EGP",
@@ -3878,7 +4027,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Egyptian pound"
   },
   "Émirats Arabes Unis": {
     "currency": "AED",
@@ -3905,7 +4055,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "UAE dirham"
   },
   "Émirats arabes unis": {
     "currency": "AED",
@@ -3932,7 +4083,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "UAE dirham"
   },
   "Équateur": {
     "currency": "USD",
@@ -3957,7 +4109,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "United States dollar"
   },
   "États-Unis": {
     "currency": "USD",
@@ -3982,7 +4135,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "United States dollar"
   },
   "Éthiopie": {
     "currency": "ETB",
@@ -4007,7 +4161,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Ethiopian birr"
   },
   "Îles Caïmans": {
     "currency": "KYD",
@@ -4032,7 +4187,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "Cayman Islands dollar"
   },
   "Îles Cook": {
     "currency": "NZD",
@@ -4061,7 +4217,8 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "New Zealand dollar"
   },
   "Îles Vierges américaines": {
     "currency": "USD",
@@ -4086,6 +4243,7 @@
       48,
       65,
       82
-    ]
+    ],
+    "currency_name_en": "United States dollar"
   }
 }
