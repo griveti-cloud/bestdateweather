@@ -1226,7 +1226,7 @@
       "fr_file": "classement-destinations-meteo-nomades-2026.html",
       "en_file": "best-destinations-digital-nomads-weather-2026.html",
       "es_file": "mejores-destinos-nomadas-digitales-2026.html",
-      "meth": "<div class=\"meth\"><strong>Metodología</strong><p>Puntuación nómada = estabilidad meteorológica (media anual − 0,5 × desviación típica) + bonificación/penalización seguridad + bonificación/penalización presupuesto. Datos meteorológicos: archivo ERA5 de 10 años vía Open-Meteo. Seguridad: Auswärtiges Amt (DE). Presupuesto: Numbeo Cost of Living 2026. Destinos con nivel de riesgo 4 (zonas de guerra) excluidos. {n} destinos analizados.</p></div>"
+      "meth": "<div class=\"meth\"><strong>Metodología</strong><p>Puntuación nómada = estabilidad meteorológica (media anual − 0,5 × desviación típica) + ajuste seguridad + ajuste presupuesto + ajuste internet. Infraestructura internet: Ookla Speedtest Global Index 2024-2025 (4 niveles: &gt;150 Mbps a &lt;15 Mbps). Seguridad: Auswärtiges Amt (DE). Presupuesto: Numbeo 2026. Destinos risk=4 (zonas de guerra) excluidos. {n} destinos analizados.</p></div>"
     },
     "beach": {
       "title_tpl": "Mejores destinos playa 2026 — ranking clima y temperatura del mar",

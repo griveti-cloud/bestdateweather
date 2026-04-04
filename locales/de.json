@@ -1219,7 +1219,7 @@
       "en_file": "best-destinations-digital-nomads-weather-2026.html",
       "es_file": "mejores-destinos-nomadas-digitales-2026.html",
       "de_file": "beste-reiseziele-digital-nomaden-wetter-2026.html",
-      "meth": "<div class=\"meth\"><strong>Methodik</strong><p>Nomaden-Score = Wetterstabilität (Jahresdurchschnitt − 0,5 × Standardabweichung) + Sicherheits-Bonus/Malus + Budget-Bonus/Malus. Wetterdaten: 10-Jahres-ERA5-Archiv via Open-Meteo. Sicherheit: Auswärtiges Amt. Budget: Numbeo Cost of Living 2026. Reiseziele mit Risikolevel 4 (Kriegsgebiete) ausgeschlossen. {n} Reiseziele analysiert.</p></div>"
+      "meth": "<div class=\"meth\"><strong>Methodik</strong><p>Nomaden-Score = Wetterstabilität (Jahresdurchschnitt − 0,5 × Standardabweichung) + Sicherheits-Anpassung + Budget-Anpassung + Internet-Anpassung. Internet-Infrastruktur: Ookla Speedtest Global Index 2024-2025 (4 Stufen: &gt;150 Mbps bis &lt;15 Mbps). Sicherheit: Auswärtiges Amt. Budget: Numbeo 2026. Reiseziele mit Risikolevel 4 (Kriegsgebiete) ausgeschlossen. {n} Reiseziele analysiert.</p></div>"
     },
     "beach": {
       "title_tpl": "Beste Strandreiseziele 2026 — Wetter & Meer-Ranking",

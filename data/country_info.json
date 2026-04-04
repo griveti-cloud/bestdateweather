@@ -27,7 +27,8 @@
       65,
       82
     ],
-    "currency_name_en": "South African rand"
+    "currency_name_en": "South African rand",
+    "internet_tier": 2
   },
   "Albanie": {
     "currency": "ALL",
@@ -53,7 +54,8 @@
       65,
       82
     ],
-    "currency_name_en": "Albanian lek"
+    "currency_name_en": "Albanian lek",
+    "internet_tier": 1
   },
   "Algérie": {
     "currency": "DZD",
@@ -80,7 +82,8 @@
       65,
       82
     ],
-    "currency_name_en": "Algerian dinar"
+    "currency_name_en": "Algerian dinar",
+    "internet_tier": 3
   },
   "Allemagne": {
     "currency": "EUR",
@@ -106,7 +109,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Andorre": {
     "currency": "EUR",
@@ -132,7 +136,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Antigua-et-Barbuda": {
     "currency": "XCD",
@@ -161,7 +166,8 @@
       65,
       82
     ],
-    "currency_name_en": "East Caribbean dollar"
+    "currency_name_en": "East Caribbean dollar",
+    "internet_tier": 3
   },
   "Arabie Saoudite": {
     "currency": "SAR",
@@ -187,7 +193,8 @@
       65,
       82
     ],
-    "currency_name_en": "Saudi riyal"
+    "currency_name_en": "Saudi riyal",
+    "internet_tier": 1
   },
   "Argentine": {
     "currency": "ARS",
@@ -213,7 +220,8 @@
       65,
       82
     ],
-    "currency_name_en": "Argentine peso"
+    "currency_name_en": "Argentine peso",
+    "internet_tier": 2
   },
   "Arménie": {
     "currency": "AMD",
@@ -239,7 +247,8 @@
       65,
       82
     ],
-    "currency_name_en": "Armenian dram"
+    "currency_name_en": "Armenian dram",
+    "internet_tier": 2
   },
   "Aruba": {
     "currency": "AWG",
@@ -269,7 +278,8 @@
       65,
       82
     ],
-    "currency_name_en": "Aruban florin"
+    "currency_name_en": "Aruban florin",
+    "internet_tier": 2
   },
   "Australie": {
     "currency": "AUD",
@@ -295,7 +305,8 @@
       65,
       82
     ],
-    "currency_name_en": "Australian dollar"
+    "currency_name_en": "Australian dollar",
+    "internet_tier": 1
   },
   "Autriche": {
     "currency": "EUR",
@@ -321,7 +332,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Azerbaïdjan": {
     "currency": "AZN",
@@ -347,7 +359,8 @@
       65,
       82
     ],
-    "currency_name_en": "Azerbaijani manat"
+    "currency_name_en": "Azerbaijani manat",
+    "internet_tier": 2
   },
   "Bahamas": {
     "currency": "BSD",
@@ -373,7 +386,8 @@
       65,
       82
     ],
-    "currency_name_en": "Bahamian dollar"
+    "currency_name_en": "Bahamian dollar",
+    "internet_tier": 2
   },
   "Bahreïn": {
     "currency": "BHD",
@@ -399,7 +413,8 @@
       65,
       82
     ],
-    "currency_name_en": "Bahraini dinar"
+    "currency_name_en": "Bahraini dinar",
+    "internet_tier": 1
   },
   "Barbade": {
     "currency": "BBD",
@@ -427,7 +442,8 @@
       65,
       82
     ],
-    "currency_name_en": "Barbadian dollar"
+    "currency_name_en": "Barbadian dollar",
+    "internet_tier": 2
   },
   "Belgique": {
     "currency": "EUR",
@@ -455,7 +471,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Belize": {
     "currency": "BZD",
@@ -481,7 +498,8 @@
       65,
       82
     ],
-    "currency_name_en": "Belize dollar"
+    "currency_name_en": "Belize dollar",
+    "internet_tier": 2
   },
   "Bhoutan": {
     "currency": "BTN",
@@ -510,7 +528,8 @@
       65,
       82
     ],
-    "currency_name_en": "Bhutanese ngultrum"
+    "currency_name_en": "Bhutanese ngultrum",
+    "internet_tier": 4
   },
   "Bolivie": {
     "currency": "BOB",
@@ -538,7 +557,8 @@
       65,
       82
     ],
-    "currency_name_en": "Bolivian boliviano"
+    "currency_name_en": "Bolivian boliviano",
+    "internet_tier": 2
   },
   "Bosnie-Herzégovine": {
     "currency": "BAM",
@@ -566,7 +586,8 @@
       65,
       82
     ],
-    "currency_name_en": "Bosnia and Herzegovina convertible mark"
+    "currency_name_en": "Bosnia and Herzegovina convertible mark",
+    "internet_tier": 1
   },
   "Botswana": {
     "currency": "BWP",
@@ -593,7 +614,8 @@
       65,
       82
     ],
-    "currency_name_en": "Botswana pula"
+    "currency_name_en": "Botswana pula",
+    "internet_tier": 3
   },
   "Brésil": {
     "currency": "BRL",
@@ -619,7 +641,8 @@
       65,
       82
     ],
-    "currency_name_en": "Brazilian real"
+    "currency_name_en": "Brazilian real",
+    "internet_tier": 2
   },
   "Bulgarie": {
     "currency": "BGN",
@@ -645,7 +668,8 @@
       65,
       82
     ],
-    "currency_name_en": "Bulgarian lev"
+    "currency_name_en": "Bulgarian lev",
+    "internet_tier": 1
   },
   "Burkina Faso": {
     "currency": "XOF",
@@ -674,7 +698,8 @@
       65,
       82
     ],
-    "currency_name_en": "CFA franc"
+    "currency_name_en": "CFA franc",
+    "internet_tier": 4
   },
   "Bénin": {
     "currency": "XOF",
@@ -703,7 +728,8 @@
       65,
       82
     ],
-    "currency_name_en": "CFA franc"
+    "currency_name_en": "CFA franc",
+    "internet_tier": 3
   },
   "Cambodge": {
     "currency": "KHR",
@@ -729,7 +755,8 @@
       65,
       82
     ],
-    "currency_name_en": "Cambodian riel"
+    "currency_name_en": "Cambodian riel",
+    "internet_tier": 3
   },
   "Cameroun": {
     "currency": "XAF",
@@ -756,7 +783,8 @@
       65,
       82
     ],
-    "currency_name_en": "CFA franc"
+    "currency_name_en": "CFA franc",
+    "internet_tier": 3
   },
   "Canada": {
     "currency": "CAD",
@@ -783,7 +811,8 @@
       65,
       82
     ],
-    "currency_name_en": "Canadian dollar"
+    "currency_name_en": "Canadian dollar",
+    "internet_tier": 1
   },
   "Cap-Vert": {
     "currency": "CVE",
@@ -809,7 +838,8 @@
       65,
       82
     ],
-    "currency_name_en": "Cape Verdean escudo"
+    "currency_name_en": "Cape Verdean escudo",
+    "internet_tier": 3
   },
   "Chili": {
     "currency": "CLP",
@@ -835,7 +865,8 @@
       65,
       82
     ],
-    "currency_name_en": "Chilean peso"
+    "currency_name_en": "Chilean peso",
+    "internet_tier": 1
   },
   "Chine": {
     "currency": "CNY",
@@ -861,7 +892,8 @@
       65,
       82
     ],
-    "currency_name_en": "Chinese yuan"
+    "currency_name_en": "Chinese yuan",
+    "internet_tier": 1
   },
   "Chypre": {
     "currency": "EUR",
@@ -888,7 +920,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Colombie": {
     "currency": "COP",
@@ -914,7 +947,8 @@
       65,
       82
     ],
-    "currency_name_en": "Colombian peso"
+    "currency_name_en": "Colombian peso",
+    "internet_tier": 2
   },
   "Corée du Sud": {
     "currency": "KRW",
@@ -940,7 +974,8 @@
       65,
       82
     ],
-    "currency_name_en": "South Korean won"
+    "currency_name_en": "South Korean won",
+    "internet_tier": 1
   },
   "Costa Rica": {
     "currency": "CRC",
@@ -966,7 +1001,8 @@
       65,
       82
     ],
-    "currency_name_en": "Costa Rican colón"
+    "currency_name_en": "Costa Rican colón",
+    "internet_tier": 2
   },
   "Croatie": {
     "currency": "EUR",
@@ -992,7 +1028,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Cuba": {
     "currency": "CUP",
@@ -1018,7 +1055,8 @@
       65,
       82
     ],
-    "currency_name_en": "Cuban peso"
+    "currency_name_en": "Cuban peso",
+    "internet_tier": 2
   },
   "Curaçao": {
     "currency": "ANG",
@@ -1045,7 +1083,8 @@
       65,
       82
     ],
-    "currency_name_en": "Netherlands Antillean guilder"
+    "currency_name_en": "Netherlands Antillean guilder",
+    "internet_tier": 2
   },
   "Côte d'Ivoire": {
     "currency": "XOF",
@@ -1071,7 +1110,8 @@
       65,
       82
     ],
-    "currency_name_en": "CFA franc"
+    "currency_name_en": "CFA franc",
+    "internet_tier": 3
   },
   "Danemark": {
     "currency": "DKK",
@@ -1097,7 +1137,8 @@
       65,
       82
     ],
-    "currency_name_en": "Danish krone"
+    "currency_name_en": "Danish krone",
+    "internet_tier": 1
   },
   "Dominique": {
     "currency": "XCD",
@@ -1126,7 +1167,8 @@
       65,
       82
     ],
-    "currency_name_en": "East Caribbean dollar"
+    "currency_name_en": "East Caribbean dollar",
+    "internet_tier": 3
   },
   "Espagne": {
     "currency": "EUR",
@@ -1152,7 +1194,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Estonie": {
     "currency": "EUR",
@@ -1178,7 +1221,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Fidji": {
     "currency": "FJD",
@@ -1205,7 +1249,8 @@
       65,
       82
     ],
-    "currency_name_en": "Fijian dollar"
+    "currency_name_en": "Fijian dollar",
+    "internet_tier": 3
   },
   "Finlande": {
     "currency": "EUR",
@@ -1232,7 +1277,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "France": {
     "currency": "EUR",
@@ -1258,7 +1304,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Gabon": {
     "currency": "XAF",
@@ -1287,7 +1334,8 @@
       65,
       82
     ],
-    "currency_name_en": "CFA franc"
+    "currency_name_en": "CFA franc",
+    "internet_tier": 3
   },
   "Gambie": {
     "currency": "GMD",
@@ -1316,7 +1364,8 @@
       65,
       82
     ],
-    "currency_name_en": "Gambian dalasi"
+    "currency_name_en": "Gambian dalasi",
+    "internet_tier": 4
   },
   "Ghana": {
     "currency": "GHS",
@@ -1342,7 +1391,8 @@
       65,
       82
     ],
-    "currency_name_en": "Ghanaian cedi"
+    "currency_name_en": "Ghanaian cedi",
+    "internet_tier": 3
   },
   "Gibraltar": {
     "currency": "GIP",
@@ -1368,7 +1418,8 @@
       65,
       82
     ],
-    "currency_name_en": "Gibraltar pound"
+    "currency_name_en": "Gibraltar pound",
+    "internet_tier": 1
   },
   "Grèce": {
     "currency": "EUR",
@@ -1394,7 +1445,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Guatemala": {
     "currency": "GTQ",
@@ -1420,7 +1472,8 @@
       65,
       82
     ],
-    "currency_name_en": "Guatemalan quetzal"
+    "currency_name_en": "Guatemalan quetzal",
+    "internet_tier": 2
   },
   "Géorgie": {
     "currency": "GEL",
@@ -1446,7 +1499,8 @@
       65,
       82
     ],
-    "currency_name_en": "Georgian lari"
+    "currency_name_en": "Georgian lari",
+    "internet_tier": 2
   },
   "Honduras": {
     "currency": "HNL",
@@ -1472,7 +1526,8 @@
       65,
       82
     ],
-    "currency_name_en": "Honduran lempira"
+    "currency_name_en": "Honduran lempira",
+    "internet_tier": 2
   },
   "Hongrie": {
     "currency": "HUF",
@@ -1498,7 +1553,8 @@
       65,
       82
     ],
-    "currency_name_en": "Hungarian forint"
+    "currency_name_en": "Hungarian forint",
+    "internet_tier": 1
   },
   "Inde": {
     "currency": "INR",
@@ -1525,7 +1581,8 @@
       65,
       82
     ],
-    "currency_name_en": "Indian rupee"
+    "currency_name_en": "Indian rupee",
+    "internet_tier": 2
   },
   "Indonésie": {
     "currency": "IDR",
@@ -1551,7 +1608,8 @@
       65,
       82
     ],
-    "currency_name_en": "Indonesian rupiah"
+    "currency_name_en": "Indonesian rupiah",
+    "internet_tier": 2
   },
   "Iran": {
     "currency": "IRR",
@@ -1577,7 +1635,8 @@
       65,
       82
     ],
-    "currency_name_en": "Iranian rial"
+    "currency_name_en": "Iranian rial",
+    "internet_tier": 2
   },
   "Irlande": {
     "currency": "EUR",
@@ -1604,7 +1663,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Islande": {
     "currency": "ISK",
@@ -1630,7 +1690,8 @@
       65,
       82
     ],
-    "currency_name_en": "Icelandic króna"
+    "currency_name_en": "Icelandic króna",
+    "internet_tier": 1
   },
   "Israël": {
     "currency": "ILS",
@@ -1657,7 +1718,8 @@
       65,
       82
     ],
-    "currency_name_en": "Israeli new shekel"
+    "currency_name_en": "Israeli new shekel",
+    "internet_tier": 1
   },
   "Italie": {
     "currency": "EUR",
@@ -1683,7 +1745,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Jamaïque": {
     "currency": "JMD",
@@ -1709,7 +1772,8 @@
       65,
       82
     ],
-    "currency_name_en": "Jamaican dollar"
+    "currency_name_en": "Jamaican dollar",
+    "internet_tier": 2
   },
   "Japon": {
     "currency": "JPY",
@@ -1737,7 +1801,8 @@
       65,
       82
     ],
-    "currency_name_en": "Japanese yen"
+    "currency_name_en": "Japanese yen",
+    "internet_tier": 1
   },
   "Jordanie": {
     "currency": "JOD",
@@ -1763,7 +1828,8 @@
       65,
       82
     ],
-    "currency_name_en": "Jordanian dinar"
+    "currency_name_en": "Jordanian dinar",
+    "internet_tier": 2
   },
   "Kazakhstan": {
     "currency": "KZT",
@@ -1790,7 +1856,8 @@
       65,
       82
     ],
-    "currency_name_en": "Kazakhstani tenge"
+    "currency_name_en": "Kazakhstani tenge",
+    "internet_tier": 2
   },
   "Kenya": {
     "currency": "KES",
@@ -1817,7 +1884,8 @@
       65,
       82
     ],
-    "currency_name_en": "Kenyan shilling"
+    "currency_name_en": "Kenyan shilling",
+    "internet_tier": 3
   },
   "Kirghizistan": {
     "currency": "KGS",
@@ -1844,7 +1912,8 @@
       65,
       82
     ],
-    "currency_name_en": "Kyrgyzstani som"
+    "currency_name_en": "Kyrgyzstani som",
+    "internet_tier": 2
   },
   "Koweït": {
     "currency": "KWD",
@@ -1870,7 +1939,8 @@
       65,
       82
     ],
-    "currency_name_en": "Kuwaiti dinar"
+    "currency_name_en": "Kuwaiti dinar",
+    "internet_tier": 1
   },
   "Laos": {
     "currency": "LAK",
@@ -1899,7 +1969,8 @@
       65,
       82
     ],
-    "currency_name_en": "Lao kip"
+    "currency_name_en": "Lao kip",
+    "internet_tier": 3
   },
   "Lettonie": {
     "currency": "EUR",
@@ -1925,7 +1996,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Liban": {
     "currency": "LBP",
@@ -1951,7 +2023,8 @@
       65,
       82
     ],
-    "currency_name_en": "Lebanese pound"
+    "currency_name_en": "Lebanese pound",
+    "internet_tier": 3
   },
   "Lituanie": {
     "currency": "EUR",
@@ -1977,7 +2050,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Macédoine du Nord": {
     "currency": "MKD",
@@ -2004,7 +2078,8 @@
       65,
       82
     ],
-    "currency_name_en": "Macedonian denar"
+    "currency_name_en": "Macedonian denar",
+    "internet_tier": 1
   },
   "Madagascar": {
     "currency": "MGA",
@@ -2031,7 +2106,8 @@
       65,
       82
     ],
-    "currency_name_en": "Malagasy ariary"
+    "currency_name_en": "Malagasy ariary",
+    "internet_tier": 3
   },
   "Malaisie": {
     "currency": "MYR",
@@ -2057,7 +2133,8 @@
       65,
       82
     ],
-    "currency_name_en": "Malaysian ringgit"
+    "currency_name_en": "Malaysian ringgit",
+    "internet_tier": 2
   },
   "Malawi": {
     "currency": "MWK",
@@ -2087,7 +2164,8 @@
       65,
       82
     ],
-    "currency_name_en": "Malawian kwacha"
+    "currency_name_en": "Malawian kwacha",
+    "internet_tier": 4
   },
   "Maldives": {
     "currency": "MVR",
@@ -2115,7 +2193,8 @@
       65,
       82
     ],
-    "currency_name_en": "Maldivian rufiyaa"
+    "currency_name_en": "Maldivian rufiyaa",
+    "internet_tier": 2
   },
   "Malte": {
     "currency": "EUR",
@@ -2142,7 +2221,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Maroc": {
     "currency": "MAD",
@@ -2169,7 +2249,8 @@
       65,
       82
     ],
-    "currency_name_en": "Moroccan dirham"
+    "currency_name_en": "Moroccan dirham",
+    "internet_tier": 2
   },
   "Maurice": {
     "currency": "MUR",
@@ -2196,7 +2277,8 @@
       65,
       82
     ],
-    "currency_name_en": "Mauritian rupee"
+    "currency_name_en": "Mauritian rupee",
+    "internet_tier": 2
   },
   "Mexique": {
     "currency": "MXN",
@@ -2222,7 +2304,8 @@
       65,
       82
     ],
-    "currency_name_en": "Mexican peso"
+    "currency_name_en": "Mexican peso",
+    "internet_tier": 2
   },
   "Monaco": {
     "currency": "EUR",
@@ -2251,7 +2334,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Mongolie": {
     "currency": "MNT",
@@ -2277,7 +2361,8 @@
       65,
       82
     ],
-    "currency_name_en": "Mongolian tögrög"
+    "currency_name_en": "Mongolian tögrög",
+    "internet_tier": 3
   },
   "Monténégro": {
     "currency": "EUR",
@@ -2303,7 +2388,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Mozambique": {
     "currency": "MZN",
@@ -2329,7 +2415,8 @@
       65,
       82
     ],
-    "currency_name_en": "Mozambican metical"
+    "currency_name_en": "Mozambican metical",
+    "internet_tier": 3
   },
   "Myanmar": {
     "currency": "MMK",
@@ -2355,7 +2442,8 @@
       65,
       82
     ],
-    "currency_name_en": "Burmese kyat"
+    "currency_name_en": "Burmese kyat",
+    "internet_tier": 4
   },
   "Namibie": {
     "currency": "NAD",
@@ -2381,7 +2469,8 @@
       65,
       82
     ],
-    "currency_name_en": "Namibian dollar"
+    "currency_name_en": "Namibian dollar",
+    "internet_tier": 3
   },
   "Nicaragua": {
     "currency": "NIO",
@@ -2407,7 +2496,8 @@
       65,
       82
     ],
-    "currency_name_en": "Nicaraguan córdoba"
+    "currency_name_en": "Nicaraguan córdoba",
+    "internet_tier": 2
   },
   "Nigeria": {
     "currency": "NGN",
@@ -2433,7 +2523,8 @@
       65,
       82
     ],
-    "currency_name_en": "Nigerian naira"
+    "currency_name_en": "Nigerian naira",
+    "internet_tier": 3
   },
   "Norvège": {
     "currency": "NOK",
@@ -2459,7 +2550,8 @@
       65,
       82
     ],
-    "currency_name_en": "Norwegian krone"
+    "currency_name_en": "Norwegian krone",
+    "internet_tier": 1
   },
   "Nouvelle-Calédonie": {
     "currency": "XPF",
@@ -2487,7 +2579,8 @@
       65,
       82
     ],
-    "currency_name_en": "CFP franc"
+    "currency_name_en": "CFP franc",
+    "internet_tier": 2
   },
   "Nouvelle-Zélande": {
     "currency": "NZD",
@@ -2514,7 +2607,8 @@
       65,
       82
     ],
-    "currency_name_en": "New Zealand dollar"
+    "currency_name_en": "New Zealand dollar",
+    "internet_tier": 1
   },
   "Népal": {
     "currency": "NPR",
@@ -2540,7 +2634,8 @@
       65,
       82
     ],
-    "currency_name_en": "Nepalese rupee"
+    "currency_name_en": "Nepalese rupee",
+    "internet_tier": 3
   },
   "Oman": {
     "currency": "OMR",
@@ -2566,7 +2661,8 @@
       65,
       82
     ],
-    "currency_name_en": "Omani rial"
+    "currency_name_en": "Omani rial",
+    "internet_tier": 2
   },
   "Ouganda": {
     "currency": "UGX",
@@ -2593,7 +2689,8 @@
       65,
       82
     ],
-    "currency_name_en": "Ugandan shilling"
+    "currency_name_en": "Ugandan shilling",
+    "internet_tier": 3
   },
   "Ouzbékistan": {
     "currency": "UZS",
@@ -2619,7 +2716,8 @@
       65,
       82
     ],
-    "currency_name_en": "Uzbekistani sum"
+    "currency_name_en": "Uzbekistani sum",
+    "internet_tier": 2
   },
   "Palaos": {
     "currency": "USD",
@@ -2649,7 +2747,8 @@
       65,
       82
     ],
-    "currency_name_en": "United States dollar"
+    "currency_name_en": "United States dollar",
+    "internet_tier": 3
   },
   "Panama": {
     "currency": "PAB",
@@ -2675,7 +2774,8 @@
       65,
       82
     ],
-    "currency_name_en": "Panamanian balboa"
+    "currency_name_en": "Panamanian balboa",
+    "internet_tier": 2
   },
   "Papouasie-Nouvelle-Guinée": {
     "currency": "PGK",
@@ -2702,7 +2802,8 @@
       65,
       82
     ],
-    "currency_name_en": "Papua New Guinean kina"
+    "currency_name_en": "Papua New Guinean kina",
+    "internet_tier": 4
   },
   "Paraguay": {
     "currency": "PYG",
@@ -2729,7 +2830,8 @@
       65,
       82
     ],
-    "currency_name_en": "Paraguayan guaraní"
+    "currency_name_en": "Paraguayan guaraní",
+    "internet_tier": 2
   },
   "Pays-Bas": {
     "currency": "EUR",
@@ -2755,7 +2857,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Pays-Bas caribéens": {
     "currency": "USD",
@@ -2782,7 +2885,9 @@
       65,
       82
     ],
-    "currency_name_en": "United States dollar"
+    "currency_name_en": "United States dollar",
+    "internet_tier": 2,
+    "internet_tier_estimated": true
   },
   "Philippines": {
     "currency": "PHP",
@@ -2809,7 +2914,8 @@
       65,
       82
     ],
-    "currency_name_en": "Philippine peso"
+    "currency_name_en": "Philippine peso",
+    "internet_tier": 2
   },
   "Pologne": {
     "currency": "PLN",
@@ -2835,7 +2941,8 @@
       65,
       82
     ],
-    "currency_name_en": "Polish złoty"
+    "currency_name_en": "Polish złoty",
+    "internet_tier": 1
   },
   "Polynésie française": {
     "currency": "XPF",
@@ -2864,7 +2971,8 @@
       65,
       82
     ],
-    "currency_name_en": "CFP franc"
+    "currency_name_en": "CFP franc",
+    "internet_tier": 2
   },
   "Porto Rico": {
     "currency": "USD",
@@ -2891,7 +2999,8 @@
       65,
       82
     ],
-    "currency_name_en": "United States dollar"
+    "currency_name_en": "United States dollar",
+    "internet_tier": 1
   },
   "Portugal": {
     "currency": "EUR",
@@ -2919,7 +3028,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Pérou": {
     "currency": "PEN",
@@ -2946,7 +3056,8 @@
       65,
       82
     ],
-    "currency_name_en": "Peruvian sol"
+    "currency_name_en": "Peruvian sol",
+    "internet_tier": 2
   },
   "Qatar": {
     "currency": "QAR",
@@ -2974,7 +3085,8 @@
       65,
       82
     ],
-    "currency_name_en": "Qatari riyal"
+    "currency_name_en": "Qatari riyal",
+    "internet_tier": 1
   },
   "Roumanie": {
     "currency": "RON",
@@ -3000,7 +3112,8 @@
       65,
       82
     ],
-    "currency_name_en": "Romanian leu"
+    "currency_name_en": "Romanian leu",
+    "internet_tier": 1
   },
   "Royaume-Uni": {
     "currency": "GBP",
@@ -3026,7 +3139,8 @@
       65,
       82
     ],
-    "currency_name_en": "Pound sterling"
+    "currency_name_en": "Pound sterling",
+    "internet_tier": 1
   },
   "Russie": {
     "currency": "RUB",
@@ -3052,7 +3166,8 @@
       65,
       82
     ],
-    "currency_name_en": "Russian ruble"
+    "currency_name_en": "Russian ruble",
+    "internet_tier": 2
   },
   "Rwanda": {
     "currency": "RWF",
@@ -3080,7 +3195,8 @@
       65,
       82
     ],
-    "currency_name_en": "Rwandan franc"
+    "currency_name_en": "Rwandan franc",
+    "internet_tier": 3
   },
   "République Dominicaine": {
     "currency": "DOP",
@@ -3106,7 +3222,8 @@
       65,
       82
     ],
-    "currency_name_en": "Dominican peso"
+    "currency_name_en": "Dominican peso",
+    "internet_tier": 2
   },
   "Saint-Vincent-et-les-Grenadines": {
     "currency": "XCD",
@@ -3135,7 +3252,8 @@
       65,
       82
     ],
-    "currency_name_en": "East Caribbean dollar"
+    "currency_name_en": "East Caribbean dollar",
+    "internet_tier": 2
   },
   "Sainte-Lucie": {
     "currency": "XCD",
@@ -3164,7 +3282,8 @@
       65,
       82
     ],
-    "currency_name_en": "East Caribbean dollar"
+    "currency_name_en": "East Caribbean dollar",
+    "internet_tier": 2
   },
   "Samoa": {
     "currency": "WST",
@@ -3194,7 +3313,8 @@
       65,
       82
     ],
-    "currency_name_en": "Samoan tālā"
+    "currency_name_en": "Samoan tālā",
+    "internet_tier": 3
   },
   "Serbie": {
     "currency": "RSD",
@@ -3220,7 +3340,8 @@
       65,
       82
     ],
-    "currency_name_en": "Serbian dinar"
+    "currency_name_en": "Serbian dinar",
+    "internet_tier": 1
   },
   "Seychelles": {
     "currency": "SCR",
@@ -3248,7 +3369,8 @@
       65,
       82
     ],
-    "currency_name_en": "Seychellois rupee"
+    "currency_name_en": "Seychellois rupee",
+    "internet_tier": 2
   },
   "Sierra Leone": {
     "currency": "SLL",
@@ -3277,7 +3399,8 @@
       65,
       82
     ],
-    "currency_name_en": "Sierra Leonean leone"
+    "currency_name_en": "Sierra Leonean leone",
+    "internet_tier": 4
   },
   "Singapour": {
     "currency": "SGD",
@@ -3306,7 +3429,8 @@
       65,
       82
     ],
-    "currency_name_en": "Singapore dollar"
+    "currency_name_en": "Singapore dollar",
+    "internet_tier": 1
   },
   "Slovaquie": {
     "currency": "EUR",
@@ -3332,7 +3456,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Slovénie": {
     "currency": "EUR",
@@ -3358,7 +3483,8 @@
       65,
       82
     ],
-    "currency_name_en": "Euro"
+    "currency_name_en": "Euro",
+    "internet_tier": 1
   },
   "Sri Lanka": {
     "currency": "LKR",
@@ -3385,7 +3511,8 @@
       65,
       82
     ],
-    "currency_name_en": "Sri Lankan rupee"
+    "currency_name_en": "Sri Lankan rupee",
+    "internet_tier": 2
   },
   "Suisse": {
     "currency": "CHF",
@@ -3413,7 +3540,8 @@
       65,
       82
     ],
-    "currency_name_en": "Swiss franc"
+    "currency_name_en": "Swiss franc",
+    "internet_tier": 1
   },
   "Suède": {
     "currency": "SEK",
@@ -3439,7 +3567,8 @@
       65,
       82
     ],
-    "currency_name_en": "Swedish krona"
+    "currency_name_en": "Swedish krona",
+    "internet_tier": 1
   },
   "Sénégal": {
     "currency": "XOF",
@@ -3466,7 +3595,8 @@
       65,
       82
     ],
-    "currency_name_en": "CFA franc"
+    "currency_name_en": "CFA franc",
+    "internet_tier": 3
   },
   "Tadjikistan": {
     "currency": "TJS",
@@ -3492,7 +3622,8 @@
       65,
       82
     ],
-    "currency_name_en": "Tajikistani somoni"
+    "currency_name_en": "Tajikistani somoni",
+    "internet_tier": 3
   },
   "Tanzanie": {
     "currency": "TZS",
@@ -3519,7 +3650,8 @@
       65,
       82
     ],
-    "currency_name_en": "Tanzanian shilling"
+    "currency_name_en": "Tanzanian shilling",
+    "internet_tier": 3
   },
   "Taïwan": {
     "currency": "TWD",
@@ -3545,7 +3677,8 @@
       65,
       82
     ],
-    "currency_name_en": "New Taiwan dollar"
+    "currency_name_en": "New Taiwan dollar",
+    "internet_tier": 1
   },
   "Tchéquie": {
     "currency": "CZK",
@@ -3571,7 +3704,8 @@
       65,
       82
     ],
-    "currency_name_en": "Czech koruna"
+    "currency_name_en": "Czech koruna",
+    "internet_tier": 1
   },
   "Thaïlande": {
     "currency": "THB",
@@ -3597,7 +3731,8 @@
       65,
       82
     ],
-    "currency_name_en": "Thai baht"
+    "currency_name_en": "Thai baht",
+    "internet_tier": 2
   },
   "Togo": {
     "currency": "XOF",
@@ -3626,7 +3761,8 @@
       65,
       82
     ],
-    "currency_name_en": "CFA franc"
+    "currency_name_en": "CFA franc",
+    "internet_tier": 3
   },
   "Tonga": {
     "currency": "TOP",
@@ -3656,7 +3792,8 @@
       65,
       82
     ],
-    "currency_name_en": "Tongan paʻanga"
+    "currency_name_en": "Tongan paʻanga",
+    "internet_tier": 3
   },
   "Trinité-et-Tobago": {
     "currency": "TTD",
@@ -3682,7 +3819,8 @@
       65,
       82
     ],
-    "currency_name_en": "Trinidad and Tobago dollar"
+    "currency_name_en": "Trinidad and Tobago dollar",
+    "internet_tier": 2
   },
   "Tunisie": {
     "currency": "TND",
@@ -3708,7 +3846,8 @@
       65,
       82
     ],
-    "currency_name_en": "Tunisian dinar"
+    "currency_name_en": "Tunisian dinar",
+    "internet_tier": 2
   },
   "Turks-et-Caïcos": {
     "currency": "USD",
@@ -3734,7 +3873,8 @@
       65,
       82
     ],
-    "currency_name_en": "United States dollar"
+    "currency_name_en": "United States dollar",
+    "internet_tier": 2
   },
   "Turquie": {
     "currency": "TRY",
@@ -3760,7 +3900,8 @@
       65,
       82
     ],
-    "currency_name_en": "Turkish lira"
+    "currency_name_en": "Turkish lira",
+    "internet_tier": 2
   },
   "Ukraine": {
     "currency": "UAH",
@@ -3786,7 +3927,8 @@
       65,
       82
     ],
-    "currency_name_en": "Ukrainian hryvnia"
+    "currency_name_en": "Ukrainian hryvnia",
+    "internet_tier": 1
   },
   "Uruguay": {
     "currency": "UYU",
@@ -3812,7 +3954,8 @@
       65,
       82
     ],
-    "currency_name_en": "Uruguayan peso"
+    "currency_name_en": "Uruguayan peso",
+    "internet_tier": 2
   },
   "Vanuatu": {
     "currency": "VUV",
@@ -3843,7 +3986,8 @@
       65,
       82
     ],
-    "currency_name_en": "Vanuatu vatu"
+    "currency_name_en": "Vanuatu vatu",
+    "internet_tier": 3
   },
   "Viêt Nam": {
     "currency": "VND",
@@ -3869,7 +4013,8 @@
       65,
       82
     ],
-    "currency_name_en": "Vietnamese dong"
+    "currency_name_en": "Vietnamese dong",
+    "internet_tier": 2
   },
   "Vietnam": {
     "currency": "VND",
@@ -3895,7 +4040,8 @@
       65,
       82
     ],
-    "currency_name_en": "Vietnamese dong"
+    "currency_name_en": "Vietnamese dong",
+    "internet_tier": 2
   },
   "Yémen": {
     "currency": "YER",
@@ -3921,7 +4067,8 @@
       65,
       82
     ],
-    "currency_name_en": "Yemeni rial"
+    "currency_name_en": "Yemeni rial",
+    "internet_tier": 4
   },
   "Zambie": {
     "currency": "ZMW",
@@ -3947,7 +4094,8 @@
       65,
       82
     ],
-    "currency_name_en": "Zambian kwacha"
+    "currency_name_en": "Zambian kwacha",
+    "internet_tier": 3
   },
   "Zimbabwe": {
     "currency": "ZWL",
@@ -3975,7 +4123,8 @@
       65,
       82
     ],
-    "currency_name_en": "Zimbabwean dollar"
+    "currency_name_en": "Zimbabwean dollar",
+    "internet_tier": 3
   },
   "Écosse": {
     "currency": "GBP",
@@ -4002,7 +4151,8 @@
       65,
       82
     ],
-    "currency_name_en": "Pound sterling"
+    "currency_name_en": "Pound sterling",
+    "internet_tier": 1
   },
   "Égypte": {
     "currency": "EGP",
@@ -4028,7 +4178,8 @@
       65,
       82
     ],
-    "currency_name_en": "Egyptian pound"
+    "currency_name_en": "Egyptian pound",
+    "internet_tier": 2
   },
   "Émirats Arabes Unis": {
     "currency": "AED",
@@ -4056,7 +4207,8 @@
       65,
       82
     ],
-    "currency_name_en": "UAE dirham"
+    "currency_name_en": "UAE dirham",
+    "internet_tier": 1
   },
   "Émirats arabes unis": {
     "currency": "AED",
@@ -4084,7 +4236,8 @@
       65,
       82
     ],
-    "currency_name_en": "UAE dirham"
+    "currency_name_en": "UAE dirham",
+    "internet_tier": 1
   },
   "Équateur": {
     "currency": "USD",
@@ -4110,7 +4263,8 @@
       65,
       82
     ],
-    "currency_name_en": "United States dollar"
+    "currency_name_en": "United States dollar",
+    "internet_tier": 2
   },
   "États-Unis": {
     "currency": "USD",
@@ -4136,7 +4290,8 @@
       65,
       82
     ],
-    "currency_name_en": "United States dollar"
+    "currency_name_en": "United States dollar",
+    "internet_tier": 1
   },
   "Éthiopie": {
     "currency": "ETB",
@@ -4162,7 +4317,8 @@
       65,
       82
     ],
-    "currency_name_en": "Ethiopian birr"
+    "currency_name_en": "Ethiopian birr",
+    "internet_tier": 4
   },
   "Îles Caïmans": {
     "currency": "KYD",
@@ -4188,7 +4344,8 @@
       65,
       82
     ],
-    "currency_name_en": "Cayman Islands dollar"
+    "currency_name_en": "Cayman Islands dollar",
+    "internet_tier": 2
   },
   "Îles Cook": {
     "currency": "NZD",
@@ -4218,7 +4375,8 @@
       65,
       82
     ],
-    "currency_name_en": "New Zealand dollar"
+    "currency_name_en": "New Zealand dollar",
+    "internet_tier": 3
   },
   "Îles Vierges américaines": {
     "currency": "USD",
@@ -4244,6 +4402,7 @@
       65,
       82
     ],
-    "currency_name_en": "United States dollar"
+    "currency_name_en": "United States dollar",
+    "internet_tier": 1
   }
 }

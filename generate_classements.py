@@ -340,7 +340,12 @@ def compute_nomad(climate, dests, country_info=None):
         # Bonus/malus budget (nomades préfèrent destinations abordables)
         budget_adj = {1: 0.5, 2: 0.3, 3: 0.0, 4: -0.3, 5: -0.6}.get(budget, 0.0)
 
-        nomad_score = meteo_score + secu_adj + budget_adj
+        # Bonus/malus infrastructure internet (Ookla Speedtest 2024-2025)
+        # Tier 1 >150 Mbps, Tier 2 50-150, Tier 3 15-50, Tier 4 <15
+        inet_tier = int(info.get('internet_tier', 3))
+        inet_adj  = {1: 0.4, 2: 0.2, 3: 0.0, 4: -0.6}.get(inet_tier, 0.0)
+
+        nomad_score = meteo_score + secu_adj + budget_adj + inet_adj
 
         results.append({
             'slug': slug, 'dest': d, 'avg': avg, 'stdev': stdev,
