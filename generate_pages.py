@@ -1676,37 +1676,26 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     if not is_coastal:
         act_beach = C['lbl_m_act_beach_na']
     else:
-        # Beach: score-based but tmax > 38 = "possible but extreme heat" not flat "bad"
-        # Water is swimmable at any tmax; the issue is being on the beach in 40°C+ sun
-        _sea = float(m.get('sea_temp') or 0)
-        _beach_tmax = m['tmax']
-        # Sea temp is the primary factor for swimming comfort
-        # Score général pénalise la pluie mais eau chaude = baignade ok
-        # Sea temp est le critère principal pour îles côtières (tmax peut être
-        # tiré vers le bas par l'altitude intérieure, ex. La Réunion)
-        if _sea >= 26:
-            # Eau très chaude → baignade OK peu importe la météo
-            act_beach = C['lbl_m_act_beach_good'] if score >= 6.0 else C['lbl_m_act_beach_ok']
-        elif _sea >= 24:
-            # Eau chaude → baignade OK si pas trop froid dehors (>= 18°C suffit pour côtes)
-            if _beach_tmax >= 18:
-                act_beach = C['lbl_m_act_beach_good'] if score >= 6.5 else C['lbl_m_act_beach_ok']
-            else:
-                act_beach = C['lbl_m_act_beach_ok']
-        elif _sea >= 22:
-            act_beach = C['lbl_m_act_beach_ok'] if _beach_tmax >= 18 else C['lbl_m_act_beach_bad']
-        elif _sea >= 20 and _beach_tmax >= 18:
-            act_beach = C['lbl_m_act_beach_ok']
-        elif score >= 7.5 and _beach_tmax >= 25:
+        # Utiliser beach_score pré-calculé (intègre sea_temp + tmax + pluie + soleil + houle)
+        # Plus cohérent avec le classement plage et les données wave_height_mean
+        _bs = float(m.get('beach_score') or 0)
+        if _bs >= 7.5:
             act_beach = C['lbl_m_act_beach_good']
-        elif score >= 6.5 and _beach_tmax >= 20:
+        elif _bs >= 5.5:
             act_beach = C['lbl_m_act_beach_ok']
-        elif _beach_tmax < 18 and _sea < 20:
+        elif _bs >= 3.0:
             act_beach = C['lbl_m_act_beach_bad']
-        elif _beach_tmax >= 38:
-            act_beach = C['lbl_m_act_beach_ok']
         else:
             act_beach = C['lbl_m_act_beach_bad']
+        # Fallback si beach_score absent : utiliser sea_temp
+        if _bs == 0:
+            _sea = float(m.get('sea_temp') or 0)
+            if _sea >= 26:
+                act_beach = C['lbl_m_act_beach_good'] if score >= 6.0 else C['lbl_m_act_beach_ok']
+            elif _sea >= 22:
+                act_beach = C['lbl_m_act_beach_ok']
+            else:
+                act_beach = C['lbl_m_act_beach_bad']
 
     # Context flags
     is_hot      = m['tmax'] >= 30
