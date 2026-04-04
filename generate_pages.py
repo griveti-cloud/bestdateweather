@@ -1682,19 +1682,29 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         _beach_tmax = m['tmax']
         # Sea temp is the primary factor for swimming comfort
         # Score général pénalise la pluie mais eau chaude = baignade ok
-        if _beach_tmax >= 38:
-            act_beach = C['lbl_m_act_beach_ok']
-        elif _sea >= 24 and _beach_tmax >= 22:
-            # Mer chaude + temps chaud = baignade recommandée peu importe la pluie
-            act_beach = C['lbl_m_act_beach_good'] if (score >= 6.5 or _sea >= 27) else C['lbl_m_act_beach_ok']
+        # Sea temp est le critère principal pour îles côtières (tmax peut être
+        # tiré vers le bas par l'altitude intérieure, ex. La Réunion)
+        if _sea >= 26:
+            # Eau très chaude → baignade OK peu importe la météo
+            act_beach = C['lbl_m_act_beach_good'] if score >= 6.0 else C['lbl_m_act_beach_ok']
+        elif _sea >= 24:
+            # Eau chaude → baignade OK si pas trop froid dehors (>= 18°C suffit pour côtes)
+            if _beach_tmax >= 18:
+                act_beach = C['lbl_m_act_beach_good'] if score >= 6.5 else C['lbl_m_act_beach_ok']
+            else:
+                act_beach = C['lbl_m_act_beach_ok']
+        elif _sea >= 22:
+            act_beach = C['lbl_m_act_beach_ok'] if _beach_tmax >= 18 else C['lbl_m_act_beach_bad']
         elif _sea >= 20 and _beach_tmax >= 18:
             act_beach = C['lbl_m_act_beach_ok']
         elif score >= 7.5 and _beach_tmax >= 25:
             act_beach = C['lbl_m_act_beach_good']
         elif score >= 6.5 and _beach_tmax >= 20:
             act_beach = C['lbl_m_act_beach_ok']
-        elif _beach_tmax < 18:
+        elif _beach_tmax < 18 and _sea < 20:
             act_beach = C['lbl_m_act_beach_bad']
+        elif _beach_tmax >= 38:
+            act_beach = C['lbl_m_act_beach_ok']
         else:
             act_beach = C['lbl_m_act_beach_bad']
 
