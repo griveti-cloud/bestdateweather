@@ -105,8 +105,15 @@ def get_pays(entry, lang):
     return entry.get('country_en') or entry.get('pays_en') or entry.get('pays', '')
 
 REGION_CHILDREN = {
-    'canaries': {'lanzarote', 'fuerteventura', 'gran-canaria', 'tenerife',
-                 'la-palma', 'la-gomera', 'el-hierro'},
+    'canaries':  {'lanzarote', 'fuerteventura', 'gran-canaria', 'tenerife',
+                  'la-palma', 'la-gomera', 'el-hierro'},
+    'algarve':   {'faro'},
+    'madere':    {'funchal'},
+    'majorque':  {'palma-de-majorque', 'alcudia'},
+    'cote-azur': {'nice', 'cannes'},
+    'provence':  {'marseille'},
+    'toscane':   {'florence', 'sienne'},
+    'sicile':    {'palerme', 'catane', 'taormina'},
 }
 
 # Geographic sibling groups — within a country, only the highest-scoring slug shown
