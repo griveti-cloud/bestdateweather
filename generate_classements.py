@@ -4,7 +4,7 @@ Generate all 10 ranking pages (5 FR + 5 EN) from climate.csv + destinations.csv.
 Usage: python3 generate_classements.py
 """
 
-import csv, html, json, statistics
+import csv, html, json, re, statistics
 from pathlib import Path
 from lib.common import footer_ranking_html, shared_nav_html
 from lib.regions import reg as _reg, NON_EUROPE_SLUGS, REGION_LABELS, MACARONESIA_SLUGS
@@ -549,6 +549,16 @@ nav{background:white;border-bottom:1px solid var(--cream2);padding:14px 24px;dis
 footer{background:var(--navy);color:#b8bcc8;text-align:center;padding:36px 20px;font-size:12px;line-height:2}
 footer a{color:#f5d060;text-decoration:none}
 @media(max-width:640px){.rt th:nth-child(5),.rt td:nth-child(5),.rt th:nth-child(6),.rt td:nth-child(6){display:none}.hero-stats{gap:20px}}
+
+/* Grille photos destinations */
+.dest-photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:24px 0}
+.dest-photo-card{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:4/3;display:block;text-decoration:none}
+.dest-photo-card img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+.dest-photo-card:hover img{transform:scale(1.05)}
+.dest-photo-overlay{position:absolute;bottom:0;left:0;right:0;padding:8px 10px;background:linear-gradient(transparent,rgba(0,0,0,.65));color:white}
+.dest-photo-name{font-size:13px;font-weight:700;display:block}
+.dest-photo-rank{font-size:10px;opacity:.85}
+@media(max-width:480px){.dest-photos{grid-template-columns:repeat(2,1fr)}}
 """
 
 def e(s):
@@ -1157,7 +1167,37 @@ def gen_hiver(dests, climate, lang, country_info=None):
                jsonld_data=winter, jsonld_n=20,
                print_suffix=f' (hiver, top={top1["dest"]["nom_bare"]})')
 
+def _make_photo_grid(entries, n, lang, photo_db, rank_labels=None):
+    """Génère une grille de photos pour les n premières destinations du classement."""
+    RANK_EMOJI = {1: '🥇', 2: '🥈', 3: '🥉'}
+    cards = []
+    rank = 1
+    for e in entries[:n]:
+        slug = e['slug']
+        photo = photo_db.get(slug, {})
+        url = photo.get('photo_url', '').strip()
+        if not url:
+            rank += 1
+            continue
+        nom = _dest_name(e['dest'], lang)
+        rank_lbl = RANK_EMOJI.get(rank, f'#{rank}')
+        # Resize Unsplash: 400px wide, crop
+        img_url = re.sub(r'\?.*$', '', url) + '?w=400&q=75&fm=jpg&fit=crop&crop=entropy' if 'unsplash' in url else url
+        cards.append(
+            f'<a href="{e["dest"].get("slug_fr","")}-meteo.html" class="dest-photo-card">' +
+            f'<img src="{img_url}" alt="{nom}" loading="lazy" width="400" height="300">' +
+            f'<div class="dest-photo-overlay">' +
+            f'<span class="dest-photo-rank">{rank_lbl}</span>' +
+            f'<span class="dest-photo-name">{nom}</span>' +
+            f'</div></a>'
+        )
+        rank += 1
+    return f'<div class="dest-photos">{" ".join(cards)}</div>' if cards else ''
+
+
 def gen_nomades(dests, climate, lang, country_info=None):
+    import csv as _csv
+    photo_db = {r['slug_fr']: r for r in _csv.DictReader(open(ROOT / 'data/destination_photos.csv'))}
     nomad   = dedup_country(compute_nomad(climate, dests, country_info), dests)
     top1    = nomad[0]
     n_dests = len(nomad)
@@ -1168,8 +1208,10 @@ def gen_nomades(dests, climate, lang, country_info=None):
         top2=_dest_name(nomad[1]['dest'], lang), top2_avg=f'{nomad[1]["avg"]:.1f}',
         top1_stdev=f'{top1["stdev"]:.2f}',
     )
+    photo_grid = _make_photo_grid(nomad, 12, lang, photo_db)
+    table_html = make_table_nomad(nomad, 20, lang) + photo_grid
     _cl_render(pc, lang, ctx,
-               tables=[make_table_nomad(nomad, 20, lang)],
+               tables=[table_html],
                jsonld_data=nomad, jsonld_n=20,
                print_suffix=f' (nomades, top={top1["dest"]["nom_bare"]})')
 

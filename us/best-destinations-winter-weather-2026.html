@@ -71,6 +71,16 @@ nav{background:white;border-bottom:1px solid var(--cream2);padding:14px 24px;dis
 footer{background:var(--navy);color:#b8bcc8;text-align:center;padding:36px 20px;font-size:12px;line-height:2}
 footer a{color:#f5d060;text-decoration:none}
 @media(max-width:640px){.rt th:nth-child(5),.rt td:nth-child(5),.rt th:nth-child(6),.rt td:nth-child(6){display:none}.hero-stats{gap:20px}}
+
+/* Grille photos destinations */
+.dest-photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:24px 0}
+.dest-photo-card{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:4/3;display:block;text-decoration:none}
+.dest-photo-card img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+.dest-photo-card:hover img{transform:scale(1.05)}
+.dest-photo-overlay{position:absolute;bottom:0;left:0;right:0;padding:8px 10px;background:linear-gradient(transparent,rgba(0,0,0,.65));color:white}
+.dest-photo-name{font-size:13px;font-weight:700;display:block}
+.dest-photo-rank{font-size:10px;opacity:.85}
+@media(max-width:480px){.dest-photos{grid-template-columns:repeat(2,1fr)}}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap"/></noscript>
 <link rel="stylesheet" href="../style.css"/>
