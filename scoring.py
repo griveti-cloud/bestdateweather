@@ -394,25 +394,51 @@ def t_sea(sea_temp: float) -> float:
     if sea_temp <= 30:  return 0.90 + (sea_temp - 26) / 4 * 0.10
     return max(0.5, 1.0 - (sea_temp - 30) / 5 * 0.5)
 
-def raw_beach_score(tmax: float, rain_pct: float, sun_h: float, sea_temp: float) -> float:
+def t_wave(wave_h: float) -> float:
+    """Score conditions de mer [0, 1] selon hauteur de houle (m).
+    < 0.5m : parfait (lagon, eau calme)
+    0.5-1.0m : très bon (légères vagues, baignade aisée)
+    1.0-1.5m : bon (vagues modérées, baignade possible)
+    1.5-2.0m : moyen (mer formée, baignade difficile)
+    > 2.0m : mauvais (mer agitée, dangereux)
+    """
+    if wave_h <= 0.5:  return 1.0
+    if wave_h <= 1.0:  return 1.0 - (wave_h - 0.5) / 0.5 * 0.15
+    if wave_h <= 1.5:  return 0.85 - (wave_h - 1.0) / 0.5 * 0.25
+    if wave_h <= 2.0:  return 0.60 - (wave_h - 1.5) / 0.5 * 0.30
+    return max(0.0, 0.30 - (wave_h - 2.0) / 2.0 * 0.30)
+
+
+def raw_beach_score(tmax: float, rain_pct: float, sun_h: float, sea_temp: float,
+                    wave_h: float = None) -> float:
     """
     Score brut plage [0, 1].
 
-    Poids :
-      30%  température air  → t_beach(tmax)      [↑ vs ancien 25%]
-      30%  température mer  → t_sea(sea_temp)     [↑ vs ancien 25%]
-      20%  pluie            → 1 - rain_pct / 100  [↓ vs ancien 30%]
+    Sans vagues (wave_h=None) :
+      30%  température air  → t_beach(tmax)
+      30%  température mer  → t_sea(sea_temp)
+      20%  pluie            → 1 - rain_pct / 100
       20%  soleil           → sun_h / 15
 
-    Ratio pluie réduit car rain_pct mesure % jours avec pluie (pas durée) :
-    les averses tropicales courtes (Caraïbes, Asie) ne gâchent pas la plage
-    autant qu'une journée couverte méditerranéenne ou nordique.
-    Température air+mer = critère dominant pour le confort balnéaire.
+    Avec vagues (wave_h fourni) :
+      25%  température air
+      25%  température mer
+      20%  conditions vagues → t_wave(wave_h)
+      15%  pluie
+      15%  soleil
     """
+    rain_s = max(0.0, 1.0 - rain_pct / 100.0)
+    sun_s  = min(1.0, sun_h / 15.0)
+    if wave_h is not None:
+        return (0.25 * t_beach(tmax)
+              + 0.25 * t_sea(sea_temp)
+              + 0.20 * t_wave(wave_h)
+              + 0.15 * rain_s
+              + 0.15 * sun_s)
     return (0.30 * t_beach(tmax)
           + 0.30 * t_sea(sea_temp)
-          + 0.20 * max(0.0, 1.0 - rain_pct / 100.0)
-          + 0.20 * min(1.0, sun_h / 15.0))
+          + 0.20 * rain_s
+          + 0.20 * sun_s)
 
 
 # ── SCORING MONTAGNE / SKI ─────────────────────────────────────────────────
