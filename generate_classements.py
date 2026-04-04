@@ -1183,8 +1183,9 @@ def _make_photo_grid(entries, n, lang, photo_db, rank_labels=None):
         rank_lbl = RANK_EMOJI.get(rank, f'#{rank}')
         # Resize Unsplash: 400px wide, crop
         img_url = re.sub(r'\?.*$', '', url) + '?w=400&q=75&fm=jpg&fit=crop&crop=entropy' if 'unsplash' in url else url
+        link = dest_link(slug, nom, lang, e['dest'])
         cards.append(
-            f'<a href="{e["dest"].get("slug_fr","")}-meteo.html" class="dest-photo-card">' +
+            f'<a href="{link}" class="dest-photo-card">' +
             f'<img src="{img_url}" alt="{nom}" loading="lazy" width="400" height="300">' +
             f'<div class="dest-photo-overlay">' +
             f'<span class="dest-photo-rank">{rank_lbl}</span>' +
