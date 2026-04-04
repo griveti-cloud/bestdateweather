@@ -1208,7 +1208,7 @@
       "fr_file": "classement-destinations-meteo-nomades-2026.html",
       "en_file": "best-destinations-digital-nomads-weather-2026.html",
       "es_file": "mejores-destinos-nomadas-digitales-2026.html",
-      "meth": "<div class=\"meth\"><strong>Methodology</strong><p>Nomad score = weather stability (annual avg − 0.5 × std dev) + safety adj + budget adj + internet adj. Internet infrastructure: Ookla Speedtest Global Index 2024-2025 (4 tiers: &gt;150 Mbps to &lt;15 Mbps). Safety: Auswärtiges Amt (DE). Budget: Numbeo 2026. Risk=4 destinations (war zones) and worst month &lt;4.0/10 excluded. {n} destinations analyzed.</p></div>"
+      "meth": "<div class=\"meth\"><strong>Methodology</strong><p>Nomad score = weather stability (annual avg − 0.5 × std dev) + safety (Auswärtiges Amt) + budget (Numbeo 2026) + internet (Ookla Speedtest 2024-2025) + air quality (AQI Open-Meteo) + digital nomad visa (official programs 2024-2025). Risk=4 destinations and worst month &lt;4.0/10 excluded. {n} destinations analyzed.</p></div>"
     },
     "beach": {
       "title_tpl": "Best beach destinations 2026 — Weather & sea ranking",

@@ -54,6 +54,7 @@ def load_climate():
                 'sun_h': float(r['sun_h']),
                 'sea_temp': float(r['sea_temp']) if r.get('sea_temp') else None,
                 'beach_score': float(r['beach_score']) if r.get('beach_score') else None,
+                'aqi_mean': float(r['aqi_mean']) if r.get('aqi_mean','').strip() else None,
             }
     return data
 
@@ -294,12 +295,15 @@ def compute_seasonal(climate, dests, months, europe_only=False, caribbean_only=F
     return results
 
 def compute_nomad(climate, dests, country_info=None):
-    """Nomad ranking: météo stable + sécurité + budget.
+    """Nomad ranking: météo + sécurité + budget + internet + AQI + visa nomade.
     Critères :
     - Stabilité météo : avg annuel - 0.5×écart-type (constance 12 mois)
-    - Sécurité : risk_level=4 → exclu, risk_level=3 → malus -1.5, 2 → -0.5
-    - Budget : budget_index 1-2 (économique) → bonus +0.3, 4-5 (cher) → malus -0.5
-    - Worst month >= 4.5 : le pire mois doit être vivable
+    - Sécurité : risk_level=4 → exclu, 3 → malus -1.5, 2 → 0, 1 → +0.3
+    - Budget : budget_index 1 → +0.5, 2 → +0.3, 4 → -0.3, 5 → -0.6
+    - Internet : Ookla tier 1 (>150Mbps) → +0.4, tier 4 (<15Mbps) → -0.6
+    - AQI : moy annuelle < 30 → +0.2, > 80 → -0.5, > 120 → -1.0
+    - Visa nomade : programme officiel → +0.2 à +0.4
+    - Worst month < 4.0 → exclu
     """
     ci = country_info or {}
     results = []
@@ -341,17 +345,33 @@ def compute_nomad(climate, dests, country_info=None):
         budget_adj = {1: 0.5, 2: 0.3, 3: 0.0, 4: -0.3, 5: -0.6}.get(budget, 0.0)
 
         # Bonus/malus infrastructure internet (Ookla Speedtest 2024-2025)
-        # Tier 1 >150 Mbps, Tier 2 50-150, Tier 3 15-50, Tier 4 <15
         inet_tier = int(info.get('internet_tier', 3))
         inet_adj  = {1: 0.4, 2: 0.2, 3: 0.0, 4: -0.6}.get(inet_tier, 0.0)
 
-        nomad_score = meteo_score + secu_adj + budget_adj + inet_adj
+        # Bonus/malus qualité de l'air (AQI moyen annuel)
+        aqi_vals = [monthly[m].get('aqi_mean', '') for m in range(1, 13)]
+        aqi_vals_f = [float(v) for v in aqi_vals if str(v).strip()]
+        if aqi_vals_f:
+            aqi_avg = sum(aqi_vals_f) / len(aqi_vals_f)
+            if aqi_avg < 20:    aqi_adj = 0.3
+            elif aqi_avg < 35:  aqi_adj = 0.2
+            elif aqi_avg < 55:  aqi_adj = 0.0
+            elif aqi_avg < 80:  aqi_adj = -0.2
+            elif aqi_avg < 120: aqi_adj = -0.5
+            else:               aqi_adj = -1.0
+        else:
+            aqi_adj = 0.0
+
+        # Bonus visa digital nomad (programme officiel)
+        visa_adj = float(info.get('nomad_visa_bonus', 0.0))
+
+        nomad_score = meteo_score + secu_adj + budget_adj + inet_adj + aqi_adj + visa_adj
 
         results.append({
             'slug': slug, 'dest': d, 'avg': avg, 'stdev': stdev,
             'nomad_score': nomad_score, 'worst_month': worst_month,
             'worst_score': worst_score, 'monthly': monthly,
-            'risk': risk, 'budget': budget,
+            'risk': risk, 'budget': budget, 'aqi_avg': aqi_avg if aqi_vals_f else 0, 'visa_adj': visa_adj,
         })
     results.sort(key=lambda x: -x['nomad_score'])
     return results

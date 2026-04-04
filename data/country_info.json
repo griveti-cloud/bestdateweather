@@ -28,7 +28,8 @@
       82
     ],
     "currency_name_en": "South African rand",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.2
   },
   "Albanie": {
     "currency": "ALL",
@@ -55,7 +56,8 @@
       82
     ],
     "currency_name_en": "Albanian lek",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.2
   },
   "Algérie": {
     "currency": "DZD",
@@ -83,7 +85,8 @@
       82
     ],
     "currency_name_en": "Algerian dinar",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Allemagne": {
     "currency": "EUR",
@@ -110,7 +113,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Andorre": {
     "currency": "EUR",
@@ -137,7 +141,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Antigua-et-Barbuda": {
     "currency": "XCD",
@@ -167,7 +172,8 @@
       82
     ],
     "currency_name_en": "East Caribbean dollar",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.4
   },
   "Arabie Saoudite": {
     "currency": "SAR",
@@ -194,7 +200,8 @@
       82
     ],
     "currency_name_en": "Saudi riyal",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.2
   },
   "Argentine": {
     "currency": "ARS",
@@ -221,7 +228,8 @@
       82
     ],
     "currency_name_en": "Argentine peso",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.2
   },
   "Arménie": {
     "currency": "AMD",
@@ -248,7 +256,8 @@
       82
     ],
     "currency_name_en": "Armenian dram",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.3
   },
   "Aruba": {
     "currency": "AWG",
@@ -279,7 +288,8 @@
       82
     ],
     "currency_name_en": "Aruban florin",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Australie": {
     "currency": "AUD",
@@ -306,7 +316,8 @@
       82
     ],
     "currency_name_en": "Australian dollar",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Autriche": {
     "currency": "EUR",
@@ -333,7 +344,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Azerbaïdjan": {
     "currency": "AZN",
@@ -360,7 +372,8 @@
       82
     ],
     "currency_name_en": "Azerbaijani manat",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Bahamas": {
     "currency": "BSD",
@@ -387,7 +400,8 @@
       82
     ],
     "currency_name_en": "Bahamian dollar",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Bahreïn": {
     "currency": "BHD",
@@ -414,7 +428,8 @@
       82
     ],
     "currency_name_en": "Bahraini dinar",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Barbade": {
     "currency": "BBD",
@@ -443,7 +458,8 @@
       82
     ],
     "currency_name_en": "Barbadian dollar",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.4
   },
   "Belgique": {
     "currency": "EUR",
@@ -472,7 +488,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Belize": {
     "currency": "BZD",
@@ -499,7 +516,8 @@
       82
     ],
     "currency_name_en": "Belize dollar",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Bhoutan": {
     "currency": "BTN",
@@ -529,7 +547,8 @@
       82
     ],
     "currency_name_en": "Bhutanese ngultrum",
-    "internet_tier": 4
+    "internet_tier": 4,
+    "nomad_visa_bonus": 0.0
   },
   "Bolivie": {
     "currency": "BOB",
@@ -558,7 +577,8 @@
       82
     ],
     "currency_name_en": "Bolivian boliviano",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Bosnie-Herzégovine": {
     "currency": "BAM",
@@ -587,7 +607,8 @@
       82
     ],
     "currency_name_en": "Bosnia and Herzegovina convertible mark",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Botswana": {
     "currency": "BWP",
@@ -615,7 +636,8 @@
       82
     ],
     "currency_name_en": "Botswana pula",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Brésil": {
     "currency": "BRL",
@@ -642,7 +664,8 @@
       82
     ],
     "currency_name_en": "Brazilian real",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.3
   },
   "Bulgarie": {
     "currency": "BGN",
@@ -669,7 +692,8 @@
       82
     ],
     "currency_name_en": "Bulgarian lev",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Burkina Faso": {
     "currency": "XOF",
@@ -699,7 +723,8 @@
       82
     ],
     "currency_name_en": "CFA franc",
-    "internet_tier": 4
+    "internet_tier": 4,
+    "nomad_visa_bonus": 0.0
   },
   "Bénin": {
     "currency": "XOF",
@@ -729,7 +754,8 @@
       82
     ],
     "currency_name_en": "CFA franc",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Cambodge": {
     "currency": "KHR",
@@ -756,7 +782,8 @@
       82
     ],
     "currency_name_en": "Cambodian riel",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Cameroun": {
     "currency": "XAF",
@@ -784,7 +811,8 @@
       82
     ],
     "currency_name_en": "CFA franc",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Canada": {
     "currency": "CAD",
@@ -812,7 +840,8 @@
       82
     ],
     "currency_name_en": "Canadian dollar",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Cap-Vert": {
     "currency": "CVE",
@@ -839,7 +868,8 @@
       82
     ],
     "currency_name_en": "Cape Verdean escudo",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.4
   },
   "Chili": {
     "currency": "CLP",
@@ -866,7 +896,8 @@
       82
     ],
     "currency_name_en": "Chilean peso",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Chine": {
     "currency": "CNY",
@@ -893,7 +924,8 @@
       82
     ],
     "currency_name_en": "Chinese yuan",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Chypre": {
     "currency": "EUR",
@@ -921,7 +953,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.3
   },
   "Colombie": {
     "currency": "COP",
@@ -948,7 +981,8 @@
       82
     ],
     "currency_name_en": "Colombian peso",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.3
   },
   "Corée du Sud": {
     "currency": "KRW",
@@ -975,7 +1009,8 @@
       82
     ],
     "currency_name_en": "South Korean won",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.3
   },
   "Costa Rica": {
     "currency": "CRC",
@@ -1002,7 +1037,8 @@
       82
     ],
     "currency_name_en": "Costa Rican colón",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.4
   },
   "Croatie": {
     "currency": "EUR",
@@ -1029,7 +1065,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Cuba": {
     "currency": "CUP",
@@ -1056,7 +1093,8 @@
       82
     ],
     "currency_name_en": "Cuban peso",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Curaçao": {
     "currency": "ANG",
@@ -1084,7 +1122,8 @@
       82
     ],
     "currency_name_en": "Netherlands Antillean guilder",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Côte d'Ivoire": {
     "currency": "XOF",
@@ -1111,7 +1150,8 @@
       82
     ],
     "currency_name_en": "CFA franc",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Danemark": {
     "currency": "DKK",
@@ -1138,7 +1178,8 @@
       82
     ],
     "currency_name_en": "Danish krone",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Dominique": {
     "currency": "XCD",
@@ -1168,7 +1209,8 @@
       82
     ],
     "currency_name_en": "East Caribbean dollar",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.4
   },
   "Espagne": {
     "currency": "EUR",
@@ -1195,7 +1237,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Estonie": {
     "currency": "EUR",
@@ -1222,7 +1265,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Fidji": {
     "currency": "FJD",
@@ -1250,7 +1294,8 @@
       82
     ],
     "currency_name_en": "Fijian dollar",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Finlande": {
     "currency": "EUR",
@@ -1278,7 +1323,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "France": {
     "currency": "EUR",
@@ -1305,7 +1351,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Gabon": {
     "currency": "XAF",
@@ -1335,7 +1382,8 @@
       82
     ],
     "currency_name_en": "CFA franc",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Gambie": {
     "currency": "GMD",
@@ -1365,7 +1413,8 @@
       82
     ],
     "currency_name_en": "Gambian dalasi",
-    "internet_tier": 4
+    "internet_tier": 4,
+    "nomad_visa_bonus": 0.0
   },
   "Ghana": {
     "currency": "GHS",
@@ -1392,7 +1441,8 @@
       82
     ],
     "currency_name_en": "Ghanaian cedi",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Gibraltar": {
     "currency": "GIP",
@@ -1419,7 +1469,8 @@
       82
     ],
     "currency_name_en": "Gibraltar pound",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Grèce": {
     "currency": "EUR",
@@ -1446,7 +1497,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Guatemala": {
     "currency": "GTQ",
@@ -1473,7 +1525,8 @@
       82
     ],
     "currency_name_en": "Guatemalan quetzal",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Géorgie": {
     "currency": "GEL",
@@ -1500,7 +1553,8 @@
       82
     ],
     "currency_name_en": "Georgian lari",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.4
   },
   "Honduras": {
     "currency": "HNL",
@@ -1527,7 +1581,8 @@
       82
     ],
     "currency_name_en": "Honduran lempira",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Hongrie": {
     "currency": "HUF",
@@ -1554,7 +1609,8 @@
       82
     ],
     "currency_name_en": "Hungarian forint",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.3
   },
   "Inde": {
     "currency": "INR",
@@ -1582,7 +1638,8 @@
       82
     ],
     "currency_name_en": "Indian rupee",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Indonésie": {
     "currency": "IDR",
@@ -1609,7 +1666,8 @@
       82
     ],
     "currency_name_en": "Indonesian rupiah",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.4
   },
   "Iran": {
     "currency": "IRR",
@@ -1636,7 +1694,8 @@
       82
     ],
     "currency_name_en": "Iranian rial",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Irlande": {
     "currency": "EUR",
@@ -1664,7 +1723,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Islande": {
     "currency": "ISK",
@@ -1691,7 +1751,8 @@
       82
     ],
     "currency_name_en": "Icelandic króna",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Israël": {
     "currency": "ILS",
@@ -1719,7 +1780,8 @@
       82
     ],
     "currency_name_en": "Israeli new shekel",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Italie": {
     "currency": "EUR",
@@ -1746,7 +1808,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Jamaïque": {
     "currency": "JMD",
@@ -1773,7 +1836,8 @@
       82
     ],
     "currency_name_en": "Jamaican dollar",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.3
   },
   "Japon": {
     "currency": "JPY",
@@ -1802,7 +1866,8 @@
       82
     ],
     "currency_name_en": "Japanese yen",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.2
   },
   "Jordanie": {
     "currency": "JOD",
@@ -1829,7 +1894,8 @@
       82
     ],
     "currency_name_en": "Jordanian dinar",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Kazakhstan": {
     "currency": "KZT",
@@ -1857,7 +1923,8 @@
       82
     ],
     "currency_name_en": "Kazakhstani tenge",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Kenya": {
     "currency": "KES",
@@ -1885,7 +1952,8 @@
       82
     ],
     "currency_name_en": "Kenyan shilling",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Kirghizistan": {
     "currency": "KGS",
@@ -1913,7 +1981,8 @@
       82
     ],
     "currency_name_en": "Kyrgyzstani som",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Koweït": {
     "currency": "KWD",
@@ -1940,7 +2009,8 @@
       82
     ],
     "currency_name_en": "Kuwaiti dinar",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Laos": {
     "currency": "LAK",
@@ -1970,7 +2040,8 @@
       82
     ],
     "currency_name_en": "Lao kip",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Lettonie": {
     "currency": "EUR",
@@ -1997,7 +2068,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.3
   },
   "Liban": {
     "currency": "LBP",
@@ -2024,7 +2096,8 @@
       82
     ],
     "currency_name_en": "Lebanese pound",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Lituanie": {
     "currency": "EUR",
@@ -2051,7 +2124,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Macédoine du Nord": {
     "currency": "MKD",
@@ -2079,7 +2153,8 @@
       82
     ],
     "currency_name_en": "Macedonian denar",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Madagascar": {
     "currency": "MGA",
@@ -2107,7 +2182,8 @@
       82
     ],
     "currency_name_en": "Malagasy ariary",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Malaisie": {
     "currency": "MYR",
@@ -2134,7 +2210,8 @@
       82
     ],
     "currency_name_en": "Malaysian ringgit",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.4
   },
   "Malawi": {
     "currency": "MWK",
@@ -2165,7 +2242,8 @@
       82
     ],
     "currency_name_en": "Malawian kwacha",
-    "internet_tier": 4
+    "internet_tier": 4,
+    "nomad_visa_bonus": 0.0
   },
   "Maldives": {
     "currency": "MVR",
@@ -2194,7 +2272,8 @@
       82
     ],
     "currency_name_en": "Maldivian rufiyaa",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Malte": {
     "currency": "EUR",
@@ -2222,7 +2301,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Maroc": {
     "currency": "MAD",
@@ -2250,7 +2330,8 @@
       82
     ],
     "currency_name_en": "Moroccan dirham",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Maurice": {
     "currency": "MUR",
@@ -2278,7 +2359,8 @@
       82
     ],
     "currency_name_en": "Mauritian rupee",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.4
   },
   "Mexique": {
     "currency": "MXN",
@@ -2305,7 +2387,8 @@
       82
     ],
     "currency_name_en": "Mexican peso",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.3
   },
   "Monaco": {
     "currency": "EUR",
@@ -2335,7 +2418,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Mongolie": {
     "currency": "MNT",
@@ -2362,7 +2446,8 @@
       82
     ],
     "currency_name_en": "Mongolian tögrög",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Monténégro": {
     "currency": "EUR",
@@ -2389,7 +2474,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.2
   },
   "Mozambique": {
     "currency": "MZN",
@@ -2416,7 +2502,8 @@
       82
     ],
     "currency_name_en": "Mozambican metical",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Myanmar": {
     "currency": "MMK",
@@ -2443,7 +2530,8 @@
       82
     ],
     "currency_name_en": "Burmese kyat",
-    "internet_tier": 4
+    "internet_tier": 4,
+    "nomad_visa_bonus": 0.0
   },
   "Namibie": {
     "currency": "NAD",
@@ -2470,7 +2558,8 @@
       82
     ],
     "currency_name_en": "Namibian dollar",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.2
   },
   "Nicaragua": {
     "currency": "NIO",
@@ -2497,7 +2586,8 @@
       82
     ],
     "currency_name_en": "Nicaraguan córdoba",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Nigeria": {
     "currency": "NGN",
@@ -2524,7 +2614,8 @@
       82
     ],
     "currency_name_en": "Nigerian naira",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Norvège": {
     "currency": "NOK",
@@ -2551,7 +2642,8 @@
       82
     ],
     "currency_name_en": "Norwegian krone",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.3
   },
   "Nouvelle-Calédonie": {
     "currency": "XPF",
@@ -2580,7 +2672,8 @@
       82
     ],
     "currency_name_en": "CFP franc",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Nouvelle-Zélande": {
     "currency": "NZD",
@@ -2608,7 +2701,8 @@
       82
     ],
     "currency_name_en": "New Zealand dollar",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Népal": {
     "currency": "NPR",
@@ -2635,7 +2729,8 @@
       82
     ],
     "currency_name_en": "Nepalese rupee",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Oman": {
     "currency": "OMR",
@@ -2662,7 +2757,8 @@
       82
     ],
     "currency_name_en": "Omani rial",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.3
   },
   "Ouganda": {
     "currency": "UGX",
@@ -2690,7 +2786,8 @@
       82
     ],
     "currency_name_en": "Ugandan shilling",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Ouzbékistan": {
     "currency": "UZS",
@@ -2717,7 +2814,8 @@
       82
     ],
     "currency_name_en": "Uzbekistani sum",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Palaos": {
     "currency": "USD",
@@ -2748,7 +2846,8 @@
       82
     ],
     "currency_name_en": "United States dollar",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Panama": {
     "currency": "PAB",
@@ -2775,7 +2874,8 @@
       82
     ],
     "currency_name_en": "Panamanian balboa",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.4
   },
   "Papouasie-Nouvelle-Guinée": {
     "currency": "PGK",
@@ -2803,7 +2903,8 @@
       82
     ],
     "currency_name_en": "Papua New Guinean kina",
-    "internet_tier": 4
+    "internet_tier": 4,
+    "nomad_visa_bonus": 0.0
   },
   "Paraguay": {
     "currency": "PYG",
@@ -2831,7 +2932,8 @@
       82
     ],
     "currency_name_en": "Paraguayan guaraní",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Pays-Bas": {
     "currency": "EUR",
@@ -2858,7 +2960,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Pays-Bas caribéens": {
     "currency": "USD",
@@ -2887,7 +2990,8 @@
     ],
     "currency_name_en": "United States dollar",
     "internet_tier": 2,
-    "internet_tier_estimated": true
+    "internet_tier_estimated": true,
+    "nomad_visa_bonus": 0.0
   },
   "Philippines": {
     "currency": "PHP",
@@ -2915,7 +3019,8 @@
       82
     ],
     "currency_name_en": "Philippine peso",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Pologne": {
     "currency": "PLN",
@@ -2942,7 +3047,8 @@
       82
     ],
     "currency_name_en": "Polish złoty",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Polynésie française": {
     "currency": "XPF",
@@ -2972,7 +3078,8 @@
       82
     ],
     "currency_name_en": "CFP franc",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Porto Rico": {
     "currency": "USD",
@@ -3000,7 +3107,8 @@
       82
     ],
     "currency_name_en": "United States dollar",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Portugal": {
     "currency": "EUR",
@@ -3029,7 +3137,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Pérou": {
     "currency": "PEN",
@@ -3057,7 +3166,8 @@
       82
     ],
     "currency_name_en": "Peruvian sol",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Qatar": {
     "currency": "QAR",
@@ -3086,7 +3196,8 @@
       82
     ],
     "currency_name_en": "Qatari riyal",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Roumanie": {
     "currency": "RON",
@@ -3113,7 +3224,8 @@
       82
     ],
     "currency_name_en": "Romanian leu",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.3
   },
   "Royaume-Uni": {
     "currency": "GBP",
@@ -3140,7 +3252,8 @@
       82
     ],
     "currency_name_en": "Pound sterling",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Russie": {
     "currency": "RUB",
@@ -3167,7 +3280,8 @@
       82
     ],
     "currency_name_en": "Russian ruble",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Rwanda": {
     "currency": "RWF",
@@ -3196,7 +3310,8 @@
       82
     ],
     "currency_name_en": "Rwandan franc",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.3
   },
   "République Dominicaine": {
     "currency": "DOP",
@@ -3223,7 +3338,8 @@
       82
     ],
     "currency_name_en": "Dominican peso",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Saint-Vincent-et-les-Grenadines": {
     "currency": "XCD",
@@ -3253,7 +3369,8 @@
       82
     ],
     "currency_name_en": "East Caribbean dollar",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Sainte-Lucie": {
     "currency": "XCD",
@@ -3283,7 +3400,8 @@
       82
     ],
     "currency_name_en": "East Caribbean dollar",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.4
   },
   "Samoa": {
     "currency": "WST",
@@ -3314,7 +3432,8 @@
       82
     ],
     "currency_name_en": "Samoan tālā",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Serbie": {
     "currency": "RSD",
@@ -3341,7 +3460,8 @@
       82
     ],
     "currency_name_en": "Serbian dinar",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.2
   },
   "Seychelles": {
     "currency": "SCR",
@@ -3370,7 +3490,8 @@
       82
     ],
     "currency_name_en": "Seychellois rupee",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.3
   },
   "Sierra Leone": {
     "currency": "SLL",
@@ -3400,7 +3521,8 @@
       82
     ],
     "currency_name_en": "Sierra Leonean leone",
-    "internet_tier": 4
+    "internet_tier": 4,
+    "nomad_visa_bonus": 0.0
   },
   "Singapour": {
     "currency": "SGD",
@@ -3430,7 +3552,8 @@
       82
     ],
     "currency_name_en": "Singapore dollar",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.3
   },
   "Slovaquie": {
     "currency": "EUR",
@@ -3457,7 +3580,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Slovénie": {
     "currency": "EUR",
@@ -3484,7 +3608,8 @@
       82
     ],
     "currency_name_en": "Euro",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Sri Lanka": {
     "currency": "LKR",
@@ -3512,7 +3637,8 @@
       82
     ],
     "currency_name_en": "Sri Lankan rupee",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Suisse": {
     "currency": "CHF",
@@ -3541,7 +3667,8 @@
       82
     ],
     "currency_name_en": "Swiss franc",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Suède": {
     "currency": "SEK",
@@ -3568,7 +3695,8 @@
       82
     ],
     "currency_name_en": "Swedish krona",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Sénégal": {
     "currency": "XOF",
@@ -3596,7 +3724,8 @@
       82
     ],
     "currency_name_en": "CFA franc",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Tadjikistan": {
     "currency": "TJS",
@@ -3623,7 +3752,8 @@
       82
     ],
     "currency_name_en": "Tajikistani somoni",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Tanzanie": {
     "currency": "TZS",
@@ -3651,7 +3781,8 @@
       82
     ],
     "currency_name_en": "Tanzanian shilling",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Taïwan": {
     "currency": "TWD",
@@ -3678,7 +3809,8 @@
       82
     ],
     "currency_name_en": "New Taiwan dollar",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.3
   },
   "Tchéquie": {
     "currency": "CZK",
@@ -3705,7 +3837,8 @@
       82
     ],
     "currency_name_en": "Czech koruna",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.3
   },
   "Thaïlande": {
     "currency": "THB",
@@ -3732,7 +3865,8 @@
       82
     ],
     "currency_name_en": "Thai baht",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.4
   },
   "Togo": {
     "currency": "XOF",
@@ -3762,7 +3896,8 @@
       82
     ],
     "currency_name_en": "CFA franc",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Tonga": {
     "currency": "TOP",
@@ -3793,7 +3928,8 @@
       82
     ],
     "currency_name_en": "Tongan paʻanga",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Trinité-et-Tobago": {
     "currency": "TTD",
@@ -3820,7 +3956,8 @@
       82
     ],
     "currency_name_en": "Trinidad and Tobago dollar",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Tunisie": {
     "currency": "TND",
@@ -3847,7 +3984,8 @@
       82
     ],
     "currency_name_en": "Tunisian dinar",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Turks-et-Caïcos": {
     "currency": "USD",
@@ -3874,7 +4012,8 @@
       82
     ],
     "currency_name_en": "United States dollar",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Turquie": {
     "currency": "TRY",
@@ -3901,7 +4040,8 @@
       82
     ],
     "currency_name_en": "Turkish lira",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Ukraine": {
     "currency": "UAH",
@@ -3928,7 +4068,8 @@
       82
     ],
     "currency_name_en": "Ukrainian hryvnia",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Uruguay": {
     "currency": "UYU",
@@ -3955,7 +4096,8 @@
       82
     ],
     "currency_name_en": "Uruguayan peso",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.3
   },
   "Vanuatu": {
     "currency": "VUV",
@@ -3987,7 +4129,8 @@
       82
     ],
     "currency_name_en": "Vanuatu vatu",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Viêt Nam": {
     "currency": "VND",
@@ -4014,7 +4157,8 @@
       82
     ],
     "currency_name_en": "Vietnamese dong",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.2
   },
   "Vietnam": {
     "currency": "VND",
@@ -4041,7 +4185,8 @@
       82
     ],
     "currency_name_en": "Vietnamese dong",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.2
   },
   "Yémen": {
     "currency": "YER",
@@ -4068,7 +4213,8 @@
       82
     ],
     "currency_name_en": "Yemeni rial",
-    "internet_tier": 4
+    "internet_tier": 4,
+    "nomad_visa_bonus": 0.0
   },
   "Zambie": {
     "currency": "ZMW",
@@ -4095,7 +4241,8 @@
       82
     ],
     "currency_name_en": "Zambian kwacha",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Zimbabwe": {
     "currency": "ZWL",
@@ -4124,7 +4271,8 @@
       82
     ],
     "currency_name_en": "Zimbabwean dollar",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Écosse": {
     "currency": "GBP",
@@ -4152,7 +4300,8 @@
       82
     ],
     "currency_name_en": "Pound sterling",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Égypte": {
     "currency": "EGP",
@@ -4179,7 +4328,8 @@
       82
     ],
     "currency_name_en": "Egyptian pound",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.0
   },
   "Émirats Arabes Unis": {
     "currency": "AED",
@@ -4208,7 +4358,8 @@
       82
     ],
     "currency_name_en": "UAE dirham",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Émirats arabes unis": {
     "currency": "AED",
@@ -4237,7 +4388,8 @@
       82
     ],
     "currency_name_en": "UAE dirham",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.4
   },
   "Équateur": {
     "currency": "USD",
@@ -4264,7 +4416,8 @@
       82
     ],
     "currency_name_en": "United States dollar",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.3
   },
   "États-Unis": {
     "currency": "USD",
@@ -4291,7 +4444,8 @@
       82
     ],
     "currency_name_en": "United States dollar",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   },
   "Éthiopie": {
     "currency": "ETB",
@@ -4318,7 +4472,8 @@
       82
     ],
     "currency_name_en": "Ethiopian birr",
-    "internet_tier": 4
+    "internet_tier": 4,
+    "nomad_visa_bonus": 0.0
   },
   "Îles Caïmans": {
     "currency": "KYD",
@@ -4345,7 +4500,8 @@
       82
     ],
     "currency_name_en": "Cayman Islands dollar",
-    "internet_tier": 2
+    "internet_tier": 2,
+    "nomad_visa_bonus": 0.3
   },
   "Îles Cook": {
     "currency": "NZD",
@@ -4376,7 +4532,8 @@
       82
     ],
     "currency_name_en": "New Zealand dollar",
-    "internet_tier": 3
+    "internet_tier": 3,
+    "nomad_visa_bonus": 0.0
   },
   "Îles Vierges américaines": {
     "currency": "USD",
@@ -4403,6 +4560,7 @@
       82
     ],
     "currency_name_en": "United States dollar",
-    "internet_tier": 1
+    "internet_tier": 1,
+    "nomad_visa_bonus": 0.0
   }
 }
