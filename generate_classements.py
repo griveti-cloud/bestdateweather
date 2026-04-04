@@ -293,8 +293,15 @@ def compute_seasonal(climate, dests, months, europe_only=False, caribbean_only=F
     results.sort(key=lambda x: -x['avg'])
     return results
 
-def compute_nomad(climate, dests):
-    """Nomad ranking: high average + low variance."""
+def compute_nomad(climate, dests, country_info=None):
+    """Nomad ranking: météo stable + sécurité + budget.
+    Critères :
+    - Stabilité météo : avg annuel - 0.5×écart-type (constance 12 mois)
+    - Sécurité : risk_level=4 → exclu, risk_level=3 → malus -1.5, 2 → -0.5
+    - Budget : budget_index 1-2 (économique) → bonus +0.3, 4-5 (cher) → malus -0.5
+    - Worst month >= 4.5 : le pire mois doit être vivable
+    """
+    ci = country_info or {}
     results = []
     for slug, monthly in climate.items():
         if slug not in dests:
@@ -307,14 +314,39 @@ def compute_nomad(climate, dests):
         scores = [monthly[m]['score'] for m in range(1,13)]
         avg = sum(scores) / 12
         stdev = statistics.stdev(scores)
-        # Nomad score = average - penalty for variance
-        nomad_score = avg - stdev * 0.5
         worst_month = min(range(1,13), key=lambda m: monthly[m]['score'])
         worst_score = monthly[worst_month]['score']
+
+        # Pire mois doit être vivable (nomade = résidence longue)
+        if worst_score < 4.0:
+            continue
+
+        # Sécu et budget depuis country_info
+        pays = d.get('pays', '')
+        info = ci.get(pays, {})
+        risk = int(info.get('risk_level', 2))
+        budget = int(info.get('budget_index', 3))
+
+        # Exclu si zone de guerre ou formellement déconseillé
+        if risk >= 4:
+            continue
+
+        # Score météo de base
+        meteo_score = avg - stdev * 0.5
+
+        # Bonus/malus sécu
+        secu_adj = {1: 0.3, 2: 0.0, 3: -1.5}.get(risk, 0.0)
+
+        # Bonus/malus budget (nomades préfèrent destinations abordables)
+        budget_adj = {1: 0.5, 2: 0.3, 3: 0.0, 4: -0.3, 5: -0.6}.get(budget, 0.0)
+
+        nomad_score = meteo_score + secu_adj + budget_adj
+
         results.append({
             'slug': slug, 'dest': d, 'avg': avg, 'stdev': stdev,
             'nomad_score': nomad_score, 'worst_month': worst_month,
             'worst_score': worst_score, 'monthly': monthly,
+            'risk': risk, 'budget': budget,
         })
     results.sort(key=lambda x: -x['nomad_score'])
     return results
@@ -1085,7 +1117,7 @@ def gen_hiver(dests, climate, lang, country_info=None):
                print_suffix=f' (hiver, top={top1["dest"]["nom_bare"]})')
 
 def gen_nomades(dests, climate, lang, country_info=None):
-    nomad   = dedup_country(compute_nomad(climate, dests), dests)
+    nomad   = dedup_country(compute_nomad(climate, dests, country_info), dests)
     top1    = nomad[0]
     n_dests = len(nomad)
     pc  = load_locale(lang)['classement_pages']['nomades']
