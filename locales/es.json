@@ -1217,9 +1217,9 @@
       "sections": [
         {
           "eyebrow": "Ranking nómadas",
-          "h2": "💻 Top 20 nómadas digitales — Constancia climática anual",
+          "h2": "💻 Top 20 — Puntuación Nómada Digital 2026",
           "intro_tpl": "Puntuación nomad = media anual penalizada por la varianza mensual. {n} destinos analizados.",
-          "intro": "Puntuación nomad = media anual penalizada por la varianza mensual."
+          "intro": "Puntuación compuesta: estabilidad meteorológica (constancia 12 meses) + seguridad + coste de vida + infraestructura internet (Ookla) + calidad del aire + visado nómada digital. Mayor puntuación = mejor destino para trabajo remoto a largo plazo."
         }
       ],
       "jsonld_title_tpl": "Mejores destinos nómadas digitales 2026",
