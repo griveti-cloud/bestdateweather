@@ -41,14 +41,15 @@ header.app-header{display:none!important}
 /* WRAP + MAIN CARD */
 .wrap{max-width:600px!important;margin:0 auto!important;padding:0 16px 20px!important}
 .main-card{background:rgba(7,13,22,.88)!important;backdrop-filter:blur(40px)!important;border:1px solid rgba(201,148,56,.2)!important;border-radius:20px!important;box-shadow:0 24px 64px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06)!important;overflow:hidden!important;margin-bottom:0!important}
-/* WEATHER BANNER */
+/* WEATHER BANNER — caché dans la card */
+.main-card #wb-container{display:none!important;min-height:0!important}
 .wb,.wb-top{background:transparent!important;border:none!important;box-shadow:none!important;border-radius:0!important}
 .wb-city-btn,.wb-temp{color:rgba(255,255,255,.92)!important}
 .wb-desc,.wb-minmax,.wb-meta-item{color:rgba(255,255,255,.5)!important}
 .wb-meta-dot{color:rgba(255,255,255,.25)!important}
 .wb-pin{opacity:.8}
 /* MODE TOGGLE */
-.mode-toggle-wrap .mode-toggle{gap:6px!important;background:rgba(255,255,255,.05)!important;border-radius:14px!important;padding:5px!important;margin:0 16px 0!important}
+.mode-toggle{background:rgba(255,255,255,.07)!important;border-radius:14px!important;padding:4px!important;gap:4px!important;margin-bottom:14px!important}
 .mode-btn{background:none!important;border:none!important;border-radius:10px!important;color:rgba(255,255,255,.5)!important;padding:10px 12px!important;transition:all .22s!important}
 .mode-btn.active{background:var(--v4-gold)!important;color:white!important;box-shadow:0 4px 14px rgba(201,148,56,.35)!important}
 .mode-btn:hover:not(.active){background:rgba(255,255,255,.07)!important;color:rgba(255,255,255,.8)!important;transform:none!important}
