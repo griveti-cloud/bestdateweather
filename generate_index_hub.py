@@ -732,6 +732,154 @@ def build_hub(destinations, loc):
     return '\n'.join(L)
 
 
+
+import datetime as _dt
+
+def _top_now_cards(destinations, loc, lang, n=6):
+    """Génère les cards V4 'Partir maintenant' pour le mois courant."""
+    import csv as _csv, statistics as _stat
+    MOIS = _dt.date.today().month
+    MOIS_NAMES = {
+        'fr': {1:'Janvier',2:'Février',3:'Mars',4:'Avril',5:'Mai',6:'Juin',
+               7:'Juillet',8:'Août',9:'Septembre',10:'Octobre',11:'Novembre',12:'Décembre'},
+        'en': {1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',
+               7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'},
+        'es': {1:'Enero',2:'Febrero',3:'Marzo',4:'Abril',5:'Mayo',6:'Junio',
+               7:'Julio',8:'Agosto',9:'Septiembre',10:'Octubre',11:'Noviembre',12:'Diciembre'},
+        'de': {1:'Januar',2:'Februar',3:'März',4:'April',5:'Mai',6:'Juni',
+               7:'Juli',8:'August',9:'September',10:'Oktober',11:'November',12:'Dezember'},
+    }
+    lang_key = 'en' if lang in ('en-us','en-US') else lang
+    mois_name = MOIS_NAMES.get(lang_key, MOIS_NAMES['fr']).get(MOIS, '')
+
+    # Titres section par langue
+    TITLES = {
+        'fr': f'Partir en <em>{mois_name}</em>',
+        'en': f'Travel in <em>{mois_name}</em>',
+        'es': f'Viajar en <em>{mois_name}</em>',
+        'de': f'Reisen im <em>{mois_name}</em>',
+    }
+    MORE = {'fr':'Tout voir →','en':'View all →','es':'Ver todo →','de':'Alle sehen →'}
+    sec_title = TITLES.get(lang_key, TITLES['fr'])
+    more_lbl = MORE.get(lang_key, MORE['fr'])
+    more_href = '' # link to classement été/hiver selon mois
+
+    # Charger climate + photos
+    try:
+        climate_raw = list(_csv.DictReader(open('data/climate.csv', encoding='utf-8-sig')))
+    except FileNotFoundError:
+        climate_raw = list(_csv.DictReader(open('../data/climate.csv', encoding='utf-8-sig')))
+    climate = {}
+    for r in climate_raw:
+        s=r['slug']; m=int(r['mois_num'])
+        climate.setdefault(s,{})[m]={
+            'score':float(r.get('score') or 0),
+            'tmax':float(r.get('tmax') or 0),
+            'rain_pct':float(r.get('rain_pct') or 0),
+        }
+
+    try:
+        photos = {r['slug_fr']: r for r in _csv.DictReader(open('data/destination_photos.csv'))}
+    except FileNotFoundError:
+        photos = {r['slug_fr']: r for r in _csv.DictReader(open('../data/destination_photos.csv'))}
+
+    is_fr = (lang == 'fr')
+    lang_k = 'en' if lang in ('en-us','en-US') else lang
+    name_key = 'nom_fr' if is_fr else (f'nom_{lang_k}' if lang_k in ('es','de') else 'nom_en')
+    slug_key = 'slug_fr' if is_fr else (f'slug_{lang_k}' if lang_k in ('es','de') else 'slug_en')
+    href_tpl = loc['gen']['annual_href_tpl']
+    asset_prefix = loc['gen']['asset_prefix']
+
+    seen_pays = set()
+    results = []
+    dest_map = {d['slug_fr']: d for d in destinations}
+
+    for slug, monthly in climate.items():
+        if slug not in dest_map or len(monthly) < 12: continue
+        d = dest_map[slug]
+        if d.get('precision') == 'country': continue
+        p = photos.get(slug, {})
+        if not p.get('photo_url', '').strip(): continue
+        pays = d.get('pays', '')
+        if pays in seen_pays: continue
+        seen_pays.add(pays)
+        score_m = monthly.get(MOIS, {}).get('score', 0)
+        tmax = monthly.get(MOIS, {}).get('tmax', 0)
+        rain = monthly.get(MOIS, {}).get('rain_pct', 0)
+        results.append({
+            'slug': slug, 'dest': d, 'score': score_m,
+            'tmax': tmax, 'rain': rain,
+            'photo': p['photo_url'],
+            'credit': p.get('photo_credit_name', ''),
+        })
+
+    results.sort(key=lambda x: -x['score'])
+    top = results[:n]
+    if not top:
+        return ''
+
+    # CSS inline pour les cards (compatible avec le thème existant cream)
+    css = """<style>
+.pm-section{padding:0 20px 32px;max-width:620px;margin:0 auto;font-family:'DM Sans',sans-serif}
+.pm-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px}
+.pm-eyebrow{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#c99438;font-weight:700;margin-bottom:5px}
+.pm-title{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:900;letter-spacing:-.4px;color:#09151f}
+.pm-title em{font-style:italic;color:#e8b84b}
+.pm-more{font-size:11px;color:#7a8fa3;text-decoration:none;white-space:nowrap}
+.pm-scroll{display:flex;gap:10px;overflow-x:auto;margin:0 -20px;padding:0 20px 6px;scrollbar-width:none}
+.pm-scroll::-webkit-scrollbar{display:none}
+.pm-card{flex:0 0 155px;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:9/14;cursor:pointer;text-decoration:none;display:block}
+.pm-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.pm-card:hover img{transform:scale(1.06)}
+.pm-card-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(9,21,31,.95) 0%,rgba(9,21,31,.05) 55%,transparent 75%)}
+.pm-score{position:absolute;bottom:12px;right:11px;background:linear-gradient(135deg,#c99438,#e8b84b);border-radius:100px;padding:4px 12px;font-family:'Playfair Display',Georgia,serif;font-size:16px;font-weight:900;color:#09151f;letter-spacing:-.2px;box-shadow:0 4px 12px rgba(201,148,56,.4)}
+.pm-body{position:absolute;bottom:0;left:0;right:0;padding:12px 11px 40px}
+.pm-name{font-family:'Playfair Display',Georgia,serif;font-size:15px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:2px}
+.pm-country{font-size:10px;color:rgba(255,255,255,.55)}
+.pm-bar{height:2px;background:rgba(255,255,255,.15);border-radius:2px;margin:6px 0 5px}
+.pm-bar-fill{height:100%;border-radius:2px;background:linear-gradient(to right,#c99438,#e8b84b)}
+.pm-stats{display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,.5)}
+</style>"""
+
+    cards_html = []
+    for r in top:
+        d = r['dest']
+        slug_val = d.get(slug_key, d.get('slug_fr', ''))
+        href = f"{asset_prefix}{href_tpl.format(slug=slug_val)}"
+        name = d.get(name_key) or d.get('nom_bare', '')
+        pays = d.get('pays', '')
+        score = r['score']
+        tmax = r['tmax']
+        rain = r['rain']
+        photo = r['photo']
+        # Resize Unsplash
+        import re as _re
+        img_url = _re.sub(r'\?.*$', '', photo.split('?')[0]) + '?w=400&q=75&fm=jpg&fit=crop&crop=entropy'
+        bar_pct = min(100, int(score * 10))
+        cards_html.append(
+            f'<a href="{href}" class="pm-card" target="_top">'
+            f'<img src="{img_url}" alt="{name}" loading="lazy" width="155" height="242"/>'
+            f'<div class="pm-card-grad"></div>'
+            f'<div class="pm-score">{score:.1f}</div>'
+            f'<div class="pm-body">'
+            f'<div class="pm-name">{name}</div>'
+            f'<div class="pm-country">{pays}</div>'
+            f'<div class="pm-bar"><div class="pm-bar-fill" style="width:{bar_pct}%"></div></div>'
+            f'<div class="pm-stats"><span>☀️ {tmax:.0f}°C</span><span>🌧 {rain:.0f}%</span></div>'
+            f'</div></a>'
+        )
+
+    return (
+        f'{css}'
+        f'<div class="pm-section">'
+        f'<div class="pm-eyebrow">{mois_name.upper()} {_dt.date.today().year}</div>'
+        f'<div class="pm-head">'
+        f'<div class="pm-title">{sec_title}</div>'
+        f'</div>'
+        f'<div class="pm-scroll">{"".join(cards_html)}</div>'
+        f'</div>'
+    )
+
 def inject(filepath, destinations, loc):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -774,6 +922,13 @@ def inject(filepath, destinations, loc):
 <script>
 {js}
 </script>"""
+
+    # Injecter section "Partir maintenant" avant SILO 1
+    pm_marker = '<!-- PARTIR-MAINTENANT -->'
+    pm_idx = content.find(pm_marker)
+    if pm_idx != -1:
+        pm_html = _top_now_cards(destinations, loc, loc['meta']['html_lang'].lower())
+        content = content[:pm_idx] + pm_marker + '\n' + pm_html + '\n\n' + content[pm_idx + len(pm_marker) + 1:]
 
     start_marker = '<!-- SILO 1 : MEILLEURE PERIODE - dominant -->'
     end_marker = '\n <!-- SILO 2'
