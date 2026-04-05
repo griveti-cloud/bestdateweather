@@ -79,19 +79,17 @@ main{background:var(--v4-navy)!important}
 .dh-search input{background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.1)!important;color:#fff!important}
 .dh-search input::placeholder{color:rgba(255,255,255,.3)!important}
 
-/* Fix champ date blanc + bouton Où partir */
-#inp-date{background:rgba(255,255,255,.07)!important;color:#fff!important;border-color:rgba(255,255,255,.1)!important}
-#inp-date::placeholder{color:rgba(255,255,255,.3)!important}
-#inp-date.has-val{color:#fff!important}
-/* Bouton Où partir — style cohérent dark */
-.seo-hub-toggle{
-  background:rgba(255,255,255,.06)!important;
-  border:1px solid rgba(201,148,56,.25)!important;
-  color:var(--v4-gold2)!important;
-  border-radius:14px!important;
-  font-weight:600!important;
-}
-.seo-hub-toggle:hover{background:rgba(201,148,56,.1)!important}
+/* Fix champ date blanc */
+body #inp-date{background:rgba(255,255,255,.07)!important;color:#fff!important;border-color:rgba(255,255,255,.1)!important}
+body #inp-date::placeholder{color:rgba(255,255,255,.3)!important}
+body #inp-date.has-val{color:#fff!important}
+/* Bouton Où partir */
+body .seo-hub-toggle{background:rgba(255,255,255,.05)!important;border:1px solid rgba(201,148,56,.2)!important;color:var(--v4-gold2)!important;border-radius:14px!important}
+body .seo-hub-toggle:hover{background:rgba(201,148,56,.08)!important}
+/* Titre gold */
+body .v4-hero-title em{color:var(--v4-gold2)!important;font-style:italic!important}
+/* Eyebrow visible */
+body .v4-eyebrow{display:inline-flex!important;opacity:1!important;visibility:visible!important}
 </style>
 
 <link rel="preload" href="app.css?v=18" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
