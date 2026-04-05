@@ -160,8 +160,8 @@ main{background:var(--v4-navy)!important}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"BestDateWeather","url":"https://bestdateweather.com","description":"La météo de n'importe quelle date, jusqu'à 12 mois","inLanguage":["fr","en"],"potentialAction":{"@type":"SearchAction","target":"https://bestdateweather.com/meilleure-periode-{search_term_string}.html","query-input":"required name=search_term_string"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "BestDateWeather", "url": "https://bestdateweather.com", "description": "Scores climatiques /10 pour 697 destinations de voyage, mois par mois. Trouvez la meilleure période pour partir.", "applicationCategory": "TravelApplication", "operatingSystem": "Web, iOS, Android", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "featureList": ["Scores climatiques /10 pour 697 destinations", "Analyse météo mois par mois", "10 ans de données ERA5 historiques", "Prévision en direct jusqu'à 12 mois", "Comparaison de destinations"], "inLanguage": "fr"}</script><style>
 /* V4 toggle — bloc indépendant pour garantir la cascade sur Android Chrome */
-.mode-toggle{display:flex!important;gap:6px!important;margin-bottom:16px!important;background:rgba(0,0,0,.25)!important;border-radius:12px!important;padding:4px!important}
-.mode-btn{flex:1!important;padding:9px 10px!important;border-radius:9px!important;border:none!important;cursor:pointer!important;font-family:'DM Sans',sans-serif!important;font-size:13px!important;font-weight:500!important;color:rgba(255,255,255,.6)!important;background:none!important;transition:all .22s!important;text-align:center!important;display:block!important;line-height:1.3!important;white-space:nowrap!important}
+.mode-toggle{display:flex!important;gap:6px!important;margin-bottom:16px!important;background:rgba(255,255,255,.05)!important;border-radius:12px!important;padding:4px!important}
+.mode-btn{flex:1!important;padding:10px 8px!important;border-radius:9px!important;border:none!important;cursor:pointer!important;font-family:'DM Sans',sans-serif!important;font-size:13px!important;font-weight:500!important;color:rgba(255,255,255,.55)!important;background:none!important;transition:all .22s!important;text-align:center!important;display:block!important;line-height:1.3!important;white-space:nowrap!important}
 .mode-btn.active{background:#c99438!important;color:#fff!important}
 .mode-btn-sub{display:none!important}
 .mode-btn svg{display:none!important}
@@ -197,14 +197,8 @@ main{background:var(--v4-navy)!important}
     <!-- ── Weather Banner ── -->
     <div id="wb-container" style="min-height:110px"></div>
 <div class="mode-toggle">
- <button class="mode-btn active" id="mode-date" onclick="switchMode('date')">
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
- <span><span class="mode-btn-title">Date</span><span class="mode-btn-sub">Voyage, mariages…</span></span>
- </button>
- <button class="mode-btn" id="mode-annual" onclick="switchMode('annual')">
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
- <span><span class="mode-btn-title">Vue 12 mois</span><span class="mode-btn-sub">Meilleur mois</span></span>
- </button>
+ <button class="mode-btn active" id="mode-date" onclick="switchMode('date')">📅 Par date</button>
+ <button class="mode-btn" id="mode-annual" onclick="switchMode('annual')">🌍 Vue 12 mois</button>
  </div>
 
  <!-- ANNUAL VIEW -->
