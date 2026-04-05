@@ -159,33 +159,13 @@ main{background:var(--v4-navy)!important}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"BestDateWeather","url":"https://bestdateweather.com","logo":"https://bestdateweather.com/og-image.png","description":"Anticipez la météo jusqu'à 12 mois à l'avance. Basé sur 10+ ans de données climatiques ERA5 / ECMWF.","contactPoint":{"@type":"ContactPoint","email":"contact@bestdateweather.com","contactType":"customer service"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"BestDateWeather","url":"https://bestdateweather.com","description":"La météo de n'importe quelle date, jusqu'à 12 mois","inLanguage":["fr","en"],"potentialAction":{"@type":"SearchAction","target":"https://bestdateweather.com/meilleure-periode-{search_term_string}.html","query-input":"required name=search_term_string"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "BestDateWeather", "url": "https://bestdateweather.com", "description": "Scores climatiques /10 pour 697 destinations de voyage, mois par mois. Trouvez la meilleure période pour partir.", "applicationCategory": "TravelApplication", "operatingSystem": "Web, iOS, Android", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "featureList": ["Scores climatiques /10 pour 697 destinations", "Analyse météo mois par mois", "10 ans de données ERA5 historiques", "Prévision en direct jusqu'à 12 mois", "Comparaison de destinations"], "inLanguage": "fr"}</script><style>
-/* V4 card — specs exactes de la maquette validée */
-/* CARD */
-.main-card{background:rgba(7,13,22,.9)!important;backdrop-filter:blur(40px)!important;border:1px solid rgba(201,148,56,.18)!important;border-radius:22px!important;padding:20px 18px!important;box-shadow:0 -8px 32px rgba(9,21,31,.6),0 28px 72px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.05)!important;overflow:hidden!important;margin-bottom:0!important}
-/* TOGGLE */
-.mode-toggle{display:flex!important;gap:6px!important;margin-bottom:16px!important;background:rgba(255,255,255,.05)!important;border-radius:12px!important;padding:4px!important}
-.mode-btn{flex:1!important;padding:9px 10px!important;border-radius:9px!important;border:none!important;cursor:pointer!important;font-family:'DM Sans',sans-serif!important;font-size:13px!important;font-weight:500!important;color:rgba(255,255,255,.45)!important;background:none!important;transition:all .22s!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;min-width:0!important}
+/* V4 toggle — bloc indépendant pour garantir la cascade sur Android Chrome */
+.mode-toggle{background:rgba(255,255,255,.05)!important;border-radius:12px!important;padding:4px!important;gap:6px!important;margin-bottom:16px!important;display:flex!important}
+.mode-btn{flex:1!important;background:none!important;border:none!important;border-radius:9px!important;color:rgba(255,255,255,.45)!important;padding:9px 10px!important;font-family:'DM Sans',sans-serif!important;font-size:13px!important;font-weight:500!important;cursor:pointer!important;transition:all .22s!important;display:flex!important;align-items:center!important;gap:8px!important;justify-content:center!important;min-width:0!important}
 .mode-btn.active{background:#c99438!important;color:#fff!important;box-shadow:0 4px 14px rgba(201,148,56,.35)!important}
 .mode-btn-sub{display:none!important}
-.mode-btn svg{width:15px!important;height:15px!important;opacity:.7!important;flex-shrink:0!important}
+.mode-btn svg{width:15px!important;height:15px!important;opacity:.7!important}
 .mode-btn.active svg{opacity:1!important}
-/* FIELDS */
-.field-group{gap:10px!important;margin-bottom:10px!important}
-.field-label{display:none!important}
-.inp{background:rgba(255,255,255,.07)!important;border:1.5px solid rgba(255,255,255,.1)!important;color:#fff!important;border-radius:13px!important;font-size:15px!important;padding:14px 14px 14px 16px!important;outline:none!important}
-.inp:focus{border-color:#c99438!important;background:rgba(255,255,255,.1)!important;outline:none!important}
-.inp::placeholder{color:rgba(255,255,255,.3)!important;font-weight:400!important}
-#inp-date,#inp-date:focus{background:rgba(255,255,255,.07)!important;color:rgba(255,255,255,.3)!important;border-color:rgba(255,255,255,.1)!important}
-#inp-date.has-val{color:#fff!important}
-/* CTA */
-.btn-go{width:100%!important;padding:16px!important;margin-top:4px!important;margin-bottom:0!important;background:linear-gradient(135deg,#c99438,#e8b84b)!important;border:none!important;border-radius:13px!important;font-size:16px!important;font-weight:700!important;color:#09151f!important;cursor:pointer!important;letter-spacing:.2px!important;box-shadow:0 8px 28px rgba(201,148,56,.35)!important;display:block!important}
-/* FOOTER CARD */
-.card-footer{border-top:1px solid rgba(255,255,255,.07)!important;background:transparent!important;display:flex!important;justify-content:space-around!important;padding-top:13px!important;margin-top:14px!important}
-.footer-wordmark,.footer-guides{color:rgba(255,255,255,.38)!important;font-size:11px!important}
-/* SEARCH CARD interne */
-.search-card{background:transparent!important;box-shadow:none!important;border:none!important;padding:0!important}
-/* WIDGET météo caché */
-.main-card #wb-container{display:none!important;min-height:0!important}
 </style>
 <body>
 <!-- ── V4 TOPBAR ── -->
@@ -219,12 +199,12 @@ main{background:var(--v4-navy)!important}
     <div id="wb-container" style="min-height:110px"></div>
 <div class="mode-toggle">
  <button class="mode-btn active" id="mode-date" onclick="switchMode('date')">
- <span style="font-size:15px">📅</span>
- <span class="mode-btn-title">Par date</span>
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+ <span><span class="mode-btn-title">Date</span><span class="mode-btn-sub">Voyage, mariages…</span></span>
  </button>
  <button class="mode-btn" id="mode-annual" onclick="switchMode('annual')">
- <span style="font-size:15px">🌍</span>
- <span class="mode-btn-title">Destination</span>
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+ <span><span class="mode-btn-title">Vue 12 mois</span><span class="mode-btn-sub">Meilleur mois</span></span>
  </button>
  </div>
 
@@ -266,9 +246,8 @@ main{background:var(--v4-navy)!important}
  <div class="note" id="ann-note" style="margin-top:14px"></div>
  </div>
 <div class="card-footer card-footer-annual">
-<span class="footer-wordmark" style="font-size:11px;font-family:inherit;font-weight:600;font-style:normal;letter-spacing:.2px">★ 4.9 · 12k voyageurs</span>
-<span class="footer-guides">📍 697 destinations</span>
-<span class="footer-guides">🕐 Mis à jour 2026</span>
+<span class="footer-wordmark" style="font-size:11px;color:var(--slate2);font-family:inherit;font-weight:600;font-style:normal;letter-spacing:.2px">⭐ ERA5 · 10 ans</span>
+<a href="#seo-hub" class="footer-guides" onclick="var h=document.getElementById('seo-hub');var b=document.querySelector('.seo-hub-toggle');if(!h.classList.contains('open')){h.classList.add('open');b.classList.add('open');}setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);return false;">📍 697 guides destinations</a>
 </div><!-- /.card-footer-annual -->
  </div>
 
@@ -285,14 +264,14 @@ main{background:var(--v4-navy)!important}
  </div>
  <div class="field-wrap">
  <div class="inp-wrap inp-wrap-icon" style="position:relative">
- <input class="inp" type="text" id="inp-date" placeholder="📅  Date de voyage" readonly style="position:relative;z-index:2;background:white;cursor:pointer" />
+ <input class="inp" type="text" id="inp-date" placeholder="📅  Date du projet" readonly style="position:relative;z-index:2;background:white;cursor:pointer" />
  
  
  </div>
  </div>
 
  <button class="btn-go" id="btn-go" type="button">
- <span id="btn-go-text">Voir les conditions →</span>
+ <span id="btn-go-text">Voir les conditions ce jour →</span>
  </button>
 <div id="cta-wow-example" style="display:none;text-align:center;font-size:11.5px;color:var(--slate2);margin-top:6px;line-height:1.5;padding:0 4px" id="cta-wow-example"><script>document.write(window.BDW_T&&BDW_T.wowExample||'')</script></div>
  <div class="prog-wrap" id="prog-wrap">
@@ -303,9 +282,8 @@ main{background:var(--v4-navy)!important}
  </div>
 
 <div class="card-footer">
-<span class="footer-wordmark" style="font-size:11px;font-family:inherit;font-weight:600;font-style:normal;letter-spacing:.2px">★ 4.9 · 12k voyageurs</span>
-<span class="footer-guides">📍 697 destinations</span>
-<span class="footer-guides">🕐 Mis à jour 2026</span>
+<span class="footer-wordmark" style="font-size:11px;color:var(--slate2);font-family:inherit;font-weight:600;font-style:normal;letter-spacing:.2px">⭐ ERA5 · 10 ans</span>
+<a href="#seo-hub" class="footer-guides" onclick="var h=document.getElementById('seo-hub');var b=document.querySelector('.seo-hub-toggle');if(!h.classList.contains('open')){h.classList.add('open');b.classList.add('open');}setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);return false;">📍 697 guides destinations</a>
 </div><!-- /.card-footer -->
 </div><!-- /.main-card -->
 
