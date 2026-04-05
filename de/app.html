@@ -36,7 +36,7 @@ body{background:var(--v4-navy)!important;min-height:100vh}
 #v4-hero-grad{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(9,21,31,.75) 0%,rgba(9,21,31,.02) 28%,rgba(9,21,31,.5) 56%,rgba(9,21,31,1) 74%,rgba(9,21,31,1) 100%),linear-gradient(to right,rgba(9,21,31,.4) 0%,transparent 60%)}
 #v4-hero::after{content:'';display:block;height:50px;background:linear-gradient(to bottom,transparent,var(--v4-navy));position:absolute;bottom:-1px;left:0;right:0;z-index:5}
 .v4-hero-content{position:relative;z-index:10;padding:0 20px 32px;padding-top:82px}
-.v4-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--v4-gold2);font-weight:600;background:rgba(9,21,31,.55);backdrop-filter:blur(12px);border:1px solid rgba(232,184,75,.25);border-radius:100px;padding:6px 14px 6px 10px}
+.v4-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--v4-gold2);font-weight:600;background:rgba(9,21,31,.7);backdrop-filter:blur(12px);border:1px solid rgba(232,184,75,.45);border-radius:100px;padding:6px 14px 6px 10px;box-shadow:0 2px 12px rgba(0,0,0,.3)}
 .v4-eyebrow-bar{width:16px;height:1.5px;background:var(--v4-gold2);flex-shrink:0}
 .v4-hero-title{font-family:'Playfair Display','Playfair Display Fallback',Georgia,serif;font-size:clamp(36px,9.5vw,58px);font-weight:900;line-height:.92;letter-spacing:-1.5px;color:#fff;margin-bottom:10px}
 .v4-hero-title em{font-style:italic;font-weight:400;color:var(--v4-gold2);display:block;letter-spacing:-1px}
@@ -90,7 +90,7 @@ main{background:var(--v4-navy)!important}
 body #inp-date{background:rgba(255,255,255,.07)!important;color:#fff!important;border-color:rgba(255,255,255,.1)!important}
 body #inp-date::placeholder{color:rgba(255,255,255,.3)!important}
 body .seo-hub-toggle{background:rgba(255,255,255,.05)!important;border:1px solid rgba(201,148,56,.2)!important;color:var(--v4-gold2)!important;border-radius:14px!important}
-body .v4-hero-title em{color:var(--v4-gold2)!important;font-style:italic!important}
+body .v4-hero-title em,h1.v4-hero-title em,#v4-hero .v4-hero-title em{color:#e8b84b!important;font-style:italic!important;font-weight:400!important}
 body .v4-eyebrow{display:inline-flex!important;visibility:visible!important}
 </style>
 <link rel="icon" type="image/x-icon" href="../favicon.ico"/><link rel="icon" type="image/svg+xml" href="../favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
@@ -489,7 +489,7 @@ body .v4-eyebrow{display:inline-flex!important;visibility:visible!important}
  BLOC SEO — Deux silos de destinations
  Crawlable par Google · Maillage interne complet
  ═══════════════════════════════════════════ -->
-<button class="seo-hub-toggle" onclick="var h=document.getElementById('seo-hub');var o=h.classList.toggle('open');this.classList.toggle('open');if(o)setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);" aria-expanded="false" aria-controls="seo-hub">
+<button class="seo-hub-toggle" style="background:rgba(255,255,255,.05)!important;border:1px solid rgba(201,148,56,.2)!important;color:#e8b84b!important;border-radius:14px!important" onclick="var h=document.getElementById('seo-hub');var o=h.classList.toggle('open');this.classList.toggle('open');if(o)setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);" aria-expanded="false" aria-controls="seo-hub">
  🌍 Reisezielführer anzeigen (672 Reiseziele)
  <span class="seo-hub-toggle-icon">⌄</span>
 </button>
