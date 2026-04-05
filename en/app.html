@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <meta name="description" content="Find out if your travel dates are worth it. Climate scores /10 for 697 destinations, month by month. Based on 10 years of ERA5 data."/>
 <title>BestDateWeather — Should you go? Climate scores for 697 destinations</title>
-<link rel="stylesheet" href="../app.css?v=18"/>
+<link rel="stylesheet" href="../app.css?v=17"/>
 <link rel="stylesheet" href="../css/weather-banner.css?v=2" media="print" onload="this.media='all'"/><noscript><link rel="stylesheet" href="../css/weather-banner.css?v=2"/></noscript>
 <style>
 /* EN overrides */
@@ -18,103 +18,6 @@
 .month-badge.avoid{background:#f59e0b}
 .month-card.is-avoid{border-color:#ef4444;border-top:3px solid #ef4444!important}
 .app-title{animation:none}.annual-wrap,.annual-result,.card-footer-annual,.uc-hint,.prog-wrap,.err-box,.hero,.sec-block,#score-block,#uc-filter-wrap,#foot-note,#empty{display:none}:root{ --cream:#faf8f3;--cream2:#f2ede2;--navy:#1a1f2e;--navy2:#252d42; --gold:#e8940a;--gold2:#f5b020;--gold-light:#fef3d0; --slate:#4a5568;--slate2:#5c687a;--slate3:#546070; --green:#1a7a4a;--green-bg:#e8f8f0; --blue:#1a5f9a;--blue-bg:#e8f2fc; --mist:#7a8fa8;--mist-bg:#eef3f8; --shadow:0 4px 24px rgba(26,31,46,.08);--shadow-lg:0 12px 48px rgba(26,31,46,.14); --r:18px;--r-sm:12px;--r-xs:8px; } body{font-family:'DM Sans','DM Sans Fallback',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;-webkit-font-smoothing:antialiased} .wrap{max-width:620px;margin:0 auto;padding:0 20px 20px} .main-card{ background:white; border-radius:var(--r); box-shadow:var(--shadow-lg); border:1px solid rgba(26,31,46,.05); overflow:visible; margin-bottom:20px; } header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:center} .seo-hub-toggle{display:flex;width:100%;background:#faf8f3;border:1px solid #e8e0d0;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#5a6c7d;text-align:left;cursor:pointer;align-items:center;justify-content:space-between} .app-title,.app-sub,.app-sub-seo,.app-proof,.app-disclaimer{animation:none!important}</style>
-<style id="v4-override">
-:root{--v4-navy:#09151f;--v4-navy2:#0d1e2d;--v4-gold:#c99438;--v4-gold2:#e8b84b;--v4-slate:#7a8fa3}
-body{background:var(--v4-navy)!important}
-/* TOPBAR */
-#v4-topbar{position:fixed;top:0;left:0;right:0;z-index:300;padding:11px 18px;display:flex;align-items:center;justify-content:space-between;background:rgba(9,21,31,.82);backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.07);transition:background .3s}
-#v4-topbar.scrolled{background:rgba(9,21,31,.97);border-bottom-color:rgba(201,148,56,.15)}
-.v4-brand{font-family:'Playfair Display',Georgia,serif;font-size:18px;font-weight:900;color:#fff;text-decoration:none}
-.v4-brand em{font-style:italic;color:#e8b84b}
-.v4-topbar-actions{display:flex;align-items:center;gap:10px}
-.v4-fav-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 8px;cursor:pointer;display:inline-flex;align-items:center;color:rgba(255,255,255,.7)}
-.v4-weather-chip{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:5px 13px;font-size:12px;color:rgba(255,255,255,.8);cursor:pointer}
-.v4-chip-temp{font-family:'Playfair Display',Georgia,serif;font-size:16px;font-weight:700;color:#e8b84b;margin-left:2px}
-/* HERO */
-#v4-hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
-#v4-hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=1400&q=85&fit=crop&crop=center') center 40%/cover no-repeat;animation:v4kb 22s ease-in-out infinite alternate}
-@keyframes v4kb{from{transform:scale(1)}to{transform:scale(1.06)}}
-#v4-hero-grad{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(9,21,31,.65) 0%,rgba(9,21,31,0) 30%,rgba(9,21,31,.4) 55%,rgba(9,21,31,.95) 78%,rgba(9,21,31,1) 100%),linear-gradient(to right,rgba(9,21,31,.3) 0%,transparent 60%)}
-#v4-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,var(--v4-navy));z-index:5}
-.v4-hero-content{position:relative;z-index:10;padding:88px 20px 28px}
-/* EYEBROW */
-.v4-eyebrow{display:inline-flex!important;align-items:center;gap:8px;margin-bottom:14px;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#e8b84b;font-weight:600;background:rgba(9,21,31,.72);backdrop-filter:blur(16px);border:1px solid rgba(232,184,75,.5);border-radius:100px;padding:6px 14px 6px 10px;box-shadow:0 2px 16px rgba(0,0,0,.4)}
-.v4-eyebrow-bar{width:16px;height:1.5px;background:#e8b84b;flex-shrink:0}
-/* TITRE */
-.v4-hero-title{font-family:'Playfair Display',Georgia,serif!important;font-size:clamp(38px,10vw,62px)!important;font-weight:900!important;line-height:.92!important;letter-spacing:-1.5px!important;color:#fff!important;margin-bottom:10px!important}
-#v4-hero h1.v4-hero-title em,body #v4-hero .v4-hero-title em{font-family:'Playfair Display',Georgia,serif!important;font-style:italic!important;font-weight:400!important;color:#e8b84b!important;display:block!important;letter-spacing:-1px!important}
-.v4-hero-tagline{font-family:'Cormorant Garamond','Times New Roman',serif!important;font-size:20px!important;font-weight:300!important;font-style:italic!important;color:rgba(255,255,255,.68)!important;margin-bottom:24px!important;text-shadow:0 2px 12px rgba(0,0,0,.5)!important}
-/* HEADER masqué */
-header.app-header{display:none!important}
-/* WRAP + MAIN CARD */
-.wrap{max-width:600px!important;margin:0 auto!important;padding:0 16px 20px!important}
-.main-card{background:rgba(7,13,22,.88)!important;backdrop-filter:blur(40px)!important;border:1px solid rgba(201,148,56,.2)!important;border-radius:20px!important;box-shadow:0 24px 64px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06)!important;overflow:hidden!important;margin-bottom:0!important}
-/* WEATHER BANNER */
-.wb,.wb-top{background:transparent!important;border:none!important;box-shadow:none!important;border-radius:0!important}
-.wb-city-btn,.wb-temp{color:rgba(255,255,255,.92)!important}
-.wb-desc,.wb-minmax,.wb-meta-item{color:rgba(255,255,255,.5)!important}
-.wb-meta-dot{color:rgba(255,255,255,.25)!important}
-.wb-pin{opacity:.8}
-/* MODE TOGGLE */
-.mode-toggle-wrap .mode-toggle{gap:6px!important;background:rgba(255,255,255,.05)!important;border-radius:14px!important;padding:5px!important;margin:0 16px 0!important}
-.mode-btn{background:none!important;border:none!important;border-radius:10px!important;color:rgba(255,255,255,.5)!important;padding:10px 12px!important;transition:all .22s!important}
-.mode-btn.active{background:var(--v4-gold)!important;color:white!important;box-shadow:0 4px 14px rgba(201,148,56,.35)!important}
-.mode-btn:hover:not(.active){background:rgba(255,255,255,.07)!important;color:rgba(255,255,255,.8)!important;transform:none!important}
-.mode-btn svg{opacity:.7}
-.mode-btn.active svg{opacity:1}
-.mode-btn-title{font-size:13px!important;font-weight:600!important}
-.mode-btn-sub{font-size:11px!important;color:rgba(255,255,255,.4)!important}
-.mode-btn.active .mode-btn-sub{color:rgba(255,255,255,.7)!important}
-/* SEARCH CARD */
-.search-card{background:transparent!important;box-shadow:none!important;border:none!important;padding:14px 16px!important}
-.field-group{gap:10px!important;margin-bottom:12px!important}
-.field-label{color:rgba(255,255,255,.55)!important;font-size:11px!important}
-.inp,.inp:focus{background:rgba(255,255,255,.07)!important;border:1.5px solid rgba(255,255,255,.1)!important;color:#fff!important;border-radius:13px!important}
-.inp:focus{border-color:var(--v4-gold)!important;background:rgba(255,255,255,.1)!important;outline:none!important}
-.inp::placeholder{color:rgba(255,255,255,.28)!important}
-body #inp-date,body #inp-date:focus{background:rgba(255,255,255,.07)!important;color:#fff!important;border-color:rgba(255,255,255,.1)!important;cursor:pointer!important}
-body #inp-date::placeholder{color:rgba(255,255,255,.28)!important}
-body #inp-date.has-val{color:#fff!important}
-/* BOUTON GO */
-.btn-go{border-radius:13px!important;font-size:15px!important}
-/* FOOTER CARD */
-.card-footer,.card-footer-annual{border-top:1px solid rgba(255,255,255,.07)!important;background:transparent!important}
-.footer-wordmark,.footer-guides{color:rgba(255,255,255,.38)!important}
-.footer-guides{border-color:rgba(255,255,255,.12)!important}
-/* AUTOCOMPLETE */
-.ac-list{background:#0d1e2d!important;border:1px solid rgba(255,255,255,.1)!important;border-radius:14px!important}
-.ac-item{color:rgba(255,255,255,.85)!important;border-bottom:1px solid rgba(255,255,255,.06)!important}
-.ac-item:hover,.ac-item.sel{background:rgba(201,148,56,.14)!important}
-.ac-sub{color:rgba(255,255,255,.38)!important}
-/* ANNUAL */
-.annual-btn{border-radius:13px!important}
-.annual-city-name{color:#fff!important}
-.annual-subtitle,.annual-subtitle-uc{color:rgba(255,255,255,.5)!important}
-.month-card{background:rgba(255,255,255,.06)!important;border-color:rgba(255,255,255,.1)!important}
-/* UC PILLS */
-.uc-pill{background:rgba(255,255,255,.06)!important;border-color:rgba(255,255,255,.1)!important;color:rgba(255,255,255,.7)!important}
-.uc-pill:hover,.uc-pill.active{background:rgba(201,148,56,.15)!important;border-color:var(--v4-gold)!important;color:#fff!important}
-.uc-filter-label,.uc-hint{color:rgba(255,255,255,.55)!important}
-/* MAIN après hero */
-main{background:var(--v4-navy)!important}
-/* SECTION PARTIR */
-.pm-section{background:var(--v4-navy)!important}
-.pm-title{color:#fff!important}
-/* SEO HUB */
-.dh-search input{background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.1)!important;color:#fff!important}
-.dh-search input::placeholder{color:rgba(255,255,255,.3)!important}
-.dh-card{background:rgba(255,255,255,.04)!important;border-color:rgba(255,255,255,.07)!important;color:rgba(255,255,255,.8)!important}
-.dh-card:hover{background:rgba(201,148,56,.1)!important;border-color:var(--v4-gold)!important}
-.dh-card-sub{color:rgba(255,255,255,.38)!important}
-.dh-count{color:rgba(255,255,255,.4)!important}
-.dh-intro-tag{color:var(--v4-gold)!important}
-.dh-intro-title{color:#fff!important}
-.dh-intro-sub,.dh-intro-desc{color:rgba(255,255,255,.5)!important}
-#seo-hub{background:var(--v4-navy)!important;border-top-color:rgba(255,255,255,.07)!important}
-</style>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet"/>
 <link rel="icon" type="image/x-icon" href="../favicon.ico"/><link rel="icon" type="image/svg+xml" href="../favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
 <link rel="manifest" href="../manifest.json"/>
 <meta name="apple-mobile-web-app-title" content="BestDate"/>
@@ -154,29 +57,22 @@ main{background:var(--v4-navy)!important}
 <body>
 
 
-<!-- ── V4 TOPBAR ── -->
-<div id="v4-topbar">
-  <a class="v4-brand" href="/../">Best<em>Date</em>Weather</a>
-  <div class="v4-topbar-actions">
-    <button id="btn-fav-home" onclick="bdwShowFavorites()" aria-label="Favorites" class="v4-fav-btn">
-      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-    </button>
-    <div class="v4-weather-chip" onclick="wbOpenCityModal()" id="v4-chip">
-      <span id="v4-chip-icon">☁️</span>
-      <span id="v4-chip-city">…</span>
-      <span class="v4-chip-temp" id="v4-chip-temp">–°</span>
-    </div>
-  </div>
-</div>
+<header class="app-header">
+ 
+ <h1 class="app-title">Best<em>Date</em>Weather</h1>
+ <div class="app-divider">
+  <span class="app-divider-line"></span>
+  <span class="app-divider-ico">🌤</span>
+  <span class="app-divider-line r"></span>
+ </div>
+ <p class="app-sub">Find the best month for your trip</p>
+<p class="app-sub-seo" style="font-size:13px;color:#4a5568;margin-top:4px;font-weight:500">697 destinations · 12 months · 10 years of ERA5 data</p>
+ <div class="unit-toggle" id="unit-toggle">
+  <button class="unit-btn active" id="btn-metric" onclick="setUnits('metric')">°C · km/h</button>
+  <button class="unit-btn" id="btn-us" onclick="setUnits('us')">°F · mph</button>
+ </div>
+</header>
 
-<!-- ── V4 HERO ── -->
-<div id="v4-hero">
-  <div id="v4-hero-bg"></div>
-  <div id="v4-hero-grad"></div>
-  <div class="v4-hero-content">
-    <div class="v4-eyebrow"><div class="v4-eyebrow-bar"></div>ERA5 · 10 ans · 697 destinations</div>
-    <h1 class="v4-hero-title">La météo<br><em>ne ment pas.</em></h1>
-    <p class="v4-hero-tagline">697 destinations analyzed, month by month.</p>
 <main>
 <div class="wrap">
 <div class="main-card">
@@ -459,80 +355,11 @@ main{background:var(--v4-navy)!important}
  <!-- EMPTY STATE -->
 </div>
 
-</div><!-- /.v4-hero -->
-<!-- PARTIR-MAINTENANT -->
-<style>
-.pm-section{padding:0 20px 32px;max-width:620px;margin:0 auto;font-family:'DM Sans',sans-serif}
-.pm-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px}
-.pm-eyebrow{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#c99438;font-weight:700;margin-bottom:5px}
-.pm-title{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:900;letter-spacing:-.4px;color:#09151f}
-.pm-title em{font-style:italic;color:#e8b84b}
-.pm-more{font-size:11px;color:#7a8fa3;text-decoration:none;white-space:nowrap}
-.pm-scroll{display:flex;gap:10px;overflow-x:auto;margin:0 -20px;padding:0 20px 6px;scrollbar-width:none}
-.pm-scroll::-webkit-scrollbar{display:none}
-.pm-card{flex:0 0 155px;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:9/14;cursor:pointer;text-decoration:none;display:block}
-.pm-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.pm-card:hover img{transform:scale(1.06)}
-.pm-card-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(9,21,31,.95) 0%,rgba(9,21,31,.05) 55%,transparent 75%)}
-.pm-score{position:absolute;bottom:12px;right:11px;background:linear-gradient(135deg,#c99438,#e8b84b);border-radius:100px;padding:4px 12px;font-family:'Playfair Display',Georgia,serif;font-size:16px;font-weight:900;color:#09151f;letter-spacing:-.2px;box-shadow:0 4px 12px rgba(201,148,56,.4)}
-.pm-body{position:absolute;bottom:0;left:0;right:0;padding:12px 11px 40px}
-.pm-name{font-family:'Playfair Display',Georgia,serif;font-size:15px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:2px}
-.pm-country{font-size:10px;color:rgba(255,255,255,.55)}
-.pm-bar{height:2px;background:rgba(255,255,255,.15);border-radius:2px;margin:6px 0 5px}
-.pm-bar-fill{height:100%;border-radius:2px;background:linear-gradient(to right,#c99438,#e8b84b)}
-.pm-stats{display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,.5)}
-</style><div class="pm-section"><div class="pm-eyebrow">APRIL 2026</div><div class="pm-head"><div class="pm-title">Travel in <em>April</em></div></div><div class="pm-scroll"><a href="../best-time-to-visit-cairo.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1541769740-098e80269166?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Cairo" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.4</div><div class="pm-body"><div class="pm-name">Cairo</div><div class="pm-country">Égypte</div><div class="pm-bar"><div class="pm-bar-fill" style="width:94%"></div></div><div class="pm-stats"><span>☀️ 30°C</span><span>🌧 2%</span></div></div></a><a href="../best-time-to-visit-victoria-falls.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1627347456206-d3df7d8484b0?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Victoria Falls" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.3</div><div class="pm-body"><div class="pm-name">Victoria Falls</div><div class="pm-country">Zimbabwe</div><div class="pm-bar"><div class="pm-bar-fill" style="width:93%"></div></div><div class="pm-stats"><span>☀️ 28°C</span><span>🌧 12%</span></div></div></a><a href="../best-time-to-visit-livingstone.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1682284023696-3c69530fba8f?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Livingstone" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.3</div><div class="pm-body"><div class="pm-name">Livingstone</div><div class="pm-country">Zambie</div><div class="pm-bar"><div class="pm-bar-fill" style="width:93%"></div></div><div class="pm-stats"><span>☀️ 28°C</span><span>🌧 13%</span></div></div></a><a href="../best-time-to-visit-banjul.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1517517224285-f3ff8462a3f9?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Banjul" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.3</div><div class="pm-body"><div class="pm-name">Banjul</div><div class="pm-country">Gambie</div><div class="pm-bar"><div class="pm-bar-fill" style="width:93%"></div></div><div class="pm-stats"><span>☀️ 29°C</span><span>🌧 0%</span></div></div></a><a href="../best-time-to-visit-sal.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1774801890418-d84c151d96e4?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Sal" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.2</div><div class="pm-body"><div class="pm-name">Sal</div><div class="pm-country">Cap-Vert</div><div class="pm-bar"><div class="pm-bar-fill" style="width:92%"></div></div><div class="pm-stats"><span>☀️ 25°C</span><span>🌧 1%</span></div></div></a><a href="../best-time-to-visit-windhoek.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1761018994560-551a33c1af4f?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Windhoek" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.1</div><div class="pm-body"><div class="pm-name">Windhoek</div><div class="pm-country">Namibie</div><div class="pm-bar"><div class="pm-bar-fill" style="width:91%"></div></div><div class="pm-stats"><span>☀️ 26°C</span><span>🌧 10%</span></div></div></a></div></div>
-
-<style>
-.pm-section{padding:0 20px 32px;max-width:620px;margin:0 auto;font-family:'DM Sans',sans-serif}
-.pm-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px}
-.pm-eyebrow{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#c99438;font-weight:700;margin-bottom:5px}
-.pm-title{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:900;letter-spacing:-.4px;color:#09151f}
-.pm-title em{font-style:italic;color:#e8b84b}
-.pm-more{font-size:11px;color:#7a8fa3;text-decoration:none;white-space:nowrap}
-.pm-scroll{display:flex;gap:10px;overflow-x:auto;margin:0 -20px;padding:0 20px 6px;scrollbar-width:none}
-.pm-scroll::-webkit-scrollbar{display:none}
-.pm-card{flex:0 0 155px;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:9/14;cursor:pointer;text-decoration:none;display:block}
-.pm-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.pm-card:hover img{transform:scale(1.06)}
-.pm-card-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(9,21,31,.95) 0%,rgba(9,21,31,.05) 55%,transparent 75%)}
-.pm-score{position:absolute;bottom:12px;right:11px;background:linear-gradient(135deg,#c99438,#e8b84b);border-radius:100px;padding:4px 12px;font-family:'Playfair Display',Georgia,serif;font-size:16px;font-weight:900;color:#09151f;letter-spacing:-.2px;box-shadow:0 4px 12px rgba(201,148,56,.4)}
-.pm-body{position:absolute;bottom:0;left:0;right:0;padding:12px 11px 40px}
-.pm-name{font-family:'Playfair Display',Georgia,serif;font-size:15px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:2px}
-.pm-country{font-size:10px;color:rgba(255,255,255,.55)}
-.pm-bar{height:2px;background:rgba(255,255,255,.15);border-radius:2px;margin:6px 0 5px}
-.pm-bar-fill{height:100%;border-radius:2px;background:linear-gradient(to right,#c99438,#e8b84b)}
-.pm-stats{display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,.5)}
-</style><div class="pm-section"><div class="pm-eyebrow">APRIL 2026</div><div class="pm-head"><div class="pm-title">Travel in <em>April</em></div></div><div class="pm-scroll"><a href="../best-time-to-visit-cairo.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1541769740-098e80269166?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Cairo" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.4</div><div class="pm-body"><div class="pm-name">Cairo</div><div class="pm-country">Égypte</div><div class="pm-bar"><div class="pm-bar-fill" style="width:94%"></div></div><div class="pm-stats"><span>☀️ 30°C</span><span>🌧 2%</span></div></div></a><a href="../best-time-to-visit-victoria-falls.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1627347456206-d3df7d8484b0?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Victoria Falls" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.3</div><div class="pm-body"><div class="pm-name">Victoria Falls</div><div class="pm-country">Zimbabwe</div><div class="pm-bar"><div class="pm-bar-fill" style="width:93%"></div></div><div class="pm-stats"><span>☀️ 28°C</span><span>🌧 12%</span></div></div></a><a href="../best-time-to-visit-livingstone.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1682284023696-3c69530fba8f?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Livingstone" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.3</div><div class="pm-body"><div class="pm-name">Livingstone</div><div class="pm-country">Zambie</div><div class="pm-bar"><div class="pm-bar-fill" style="width:93%"></div></div><div class="pm-stats"><span>☀️ 28°C</span><span>🌧 13%</span></div></div></a><a href="../best-time-to-visit-banjul.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1517517224285-f3ff8462a3f9?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Banjul" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.3</div><div class="pm-body"><div class="pm-name">Banjul</div><div class="pm-country">Gambie</div><div class="pm-bar"><div class="pm-bar-fill" style="width:93%"></div></div><div class="pm-stats"><span>☀️ 29°C</span><span>🌧 0%</span></div></div></a><a href="../best-time-to-visit-sal.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1774801890418-d84c151d96e4?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Sal" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.2</div><div class="pm-body"><div class="pm-name">Sal</div><div class="pm-country">Cap-Vert</div><div class="pm-bar"><div class="pm-bar-fill" style="width:92%"></div></div><div class="pm-stats"><span>☀️ 25°C</span><span>🌧 1%</span></div></div></a><a href="../best-time-to-visit-windhoek.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1761018994560-551a33c1af4f?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Windhoek" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.1</div><div class="pm-body"><div class="pm-name">Windhoek</div><div class="pm-country">Namibie</div><div class="pm-bar"><div class="pm-bar-fill" style="width:91%"></div></div><div class="pm-stats"><span>☀️ 26°C</span><span>🌧 10%</span></div></div></a></div></div>
-
-<style>
-.pm-section{padding:0 20px 32px;max-width:620px;margin:0 auto;font-family:'DM Sans',sans-serif}
-.pm-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px}
-.pm-eyebrow{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#c99438;font-weight:700;margin-bottom:5px}
-.pm-title{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:900;letter-spacing:-.4px;color:#09151f}
-.pm-title em{font-style:italic;color:#e8b84b}
-.pm-more{font-size:11px;color:#7a8fa3;text-decoration:none;white-space:nowrap}
-.pm-scroll{display:flex;gap:10px;overflow-x:auto;margin:0 -20px;padding:0 20px 6px;scrollbar-width:none}
-.pm-scroll::-webkit-scrollbar{display:none}
-.pm-card{flex:0 0 155px;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:9/14;cursor:pointer;text-decoration:none;display:block}
-.pm-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.pm-card:hover img{transform:scale(1.06)}
-.pm-card-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(9,21,31,.95) 0%,rgba(9,21,31,.05) 55%,transparent 75%)}
-.pm-score{position:absolute;bottom:12px;right:11px;background:linear-gradient(135deg,#c99438,#e8b84b);border-radius:100px;padding:4px 12px;font-family:'Playfair Display',Georgia,serif;font-size:16px;font-weight:900;color:#09151f;letter-spacing:-.2px;box-shadow:0 4px 12px rgba(201,148,56,.4)}
-.pm-body{position:absolute;bottom:0;left:0;right:0;padding:12px 11px 40px}
-.pm-name{font-family:'Playfair Display',Georgia,serif;font-size:15px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:2px}
-.pm-country{font-size:10px;color:rgba(255,255,255,.55)}
-.pm-bar{height:2px;background:rgba(255,255,255,.15);border-radius:2px;margin:6px 0 5px}
-.pm-bar-fill{height:100%;border-radius:2px;background:linear-gradient(to right,#c99438,#e8b84b)}
-.pm-stats{display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,.5)}
-</style><div class="pm-section"><div class="pm-eyebrow">APRIL 2026</div><div class="pm-head"><div class="pm-title">Travel in <em>April</em></div></div><div class="pm-scroll"><a href="../best-time-to-visit-cairo.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1541769740-098e80269166?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Cairo" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.4</div><div class="pm-body"><div class="pm-name">Cairo</div><div class="pm-country">Égypte</div><div class="pm-bar"><div class="pm-bar-fill" style="width:94%"></div></div><div class="pm-stats"><span>☀️ 30°C</span><span>🌧 2%</span></div></div></a><a href="../best-time-to-visit-victoria-falls.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1627347456206-d3df7d8484b0?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Victoria Falls" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.3</div><div class="pm-body"><div class="pm-name">Victoria Falls</div><div class="pm-country">Zimbabwe</div><div class="pm-bar"><div class="pm-bar-fill" style="width:93%"></div></div><div class="pm-stats"><span>☀️ 28°C</span><span>🌧 12%</span></div></div></a><a href="../best-time-to-visit-livingstone.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1682284023696-3c69530fba8f?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Livingstone" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.3</div><div class="pm-body"><div class="pm-name">Livingstone</div><div class="pm-country">Zambie</div><div class="pm-bar"><div class="pm-bar-fill" style="width:93%"></div></div><div class="pm-stats"><span>☀️ 28°C</span><span>🌧 13%</span></div></div></a><a href="../best-time-to-visit-banjul.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1517517224285-f3ff8462a3f9?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Banjul" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.3</div><div class="pm-body"><div class="pm-name">Banjul</div><div class="pm-country">Gambie</div><div class="pm-bar"><div class="pm-bar-fill" style="width:93%"></div></div><div class="pm-stats"><span>☀️ 29°C</span><span>🌧 0%</span></div></div></a><a href="../best-time-to-visit-sal.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1774801890418-d84c151d96e4?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Sal" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.2</div><div class="pm-body"><div class="pm-name">Sal</div><div class="pm-country">Cap-Vert</div><div class="pm-bar"><div class="pm-bar-fill" style="width:92%"></div></div><div class="pm-stats"><span>☀️ 25°C</span><span>🌧 1%</span></div></div></a><a href="../best-time-to-visit-windhoek.html" class="pm-card" target="_top"><img src="https://images.unsplash.com/photo-1761018994560-551a33c1af4f?w=400&q=75&fm=jpg&fit=crop&crop=entropy" alt="Windhoek" loading="lazy" width="155" height="242"/><div class="pm-card-grad"></div><div class="pm-score">9.1</div><div class="pm-body"><div class="pm-name">Windhoek</div><div class="pm-country">Namibie</div><div class="pm-bar"><div class="pm-bar-fill" style="width:91%"></div></div><div class="pm-stats"><span>☀️ 26°C</span><span>🌧 10%</span></div></div></a></div></div>
-
-
 <!-- ═══════════════════════════════════════════
  BLOC SEO — Deux silos de destinations
  Crawlable par Google · Maillage interne complet
  ═══════════════════════════════════════════ -->
-<button class="seo-hub-toggle" style="background:rgba(255,255,255,.05)!important;border:1px solid rgba(201,148,56,.2)!important;color:#e8b84b!important;border-radius:14px!important" onclick="var h=document.getElementById('seo-hub');var o=h.classList.toggle('open');this.classList.toggle('open');if(o)setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);" aria-expanded="false" aria-controls="seo-hub">
+<button class="seo-hub-toggle" onclick="var h=document.getElementById('seo-hub');var o=h.classList.toggle('open');this.classList.toggle('open');if(o)setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);" aria-expanded="false" aria-controls="seo-hub">
  🌍 View destination guides (697 destinations)
  <span class="seo-hub-toggle-icon">⌄</span>
 </button>
@@ -1031,7 +858,6 @@ main{background:var(--v4-navy)!important}
 <a href="best-time-to-visit-astana.html" target="_top" class="dh-card" data-name="Astana" data-country="Kazakhstan" data-aliases="nur sultan nour-sultan kazakhstan"><img src="../flags/kz.png" width="20" height="15" alt="KZ" style="border-radius:2px"><span><span class="dh-card-name">Astana</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-baku.html" target="_top" class="dh-card" data-name="Baku" data-country="Azerbaijan" data-aliases="Bakou azerbaidjan"><img src="../flags/az.png" width="20" height="15" alt="AZ" style="border-radius:2px"><span><span class="dh-card-name">Baku</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-belgrade.html" target="_top" class="dh-card" data-name="Belgrade" data-country="Serbia"><img src="../flags/rs.png" width="20" height="15" alt="RS" style="border-radius:2px"><span><span class="dh-card-name">Belgrade</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-bishkek.html" target="_top" class="dh-card" data-name="Bishkek" data-country="Kyrgyzstan" data-aliases="Bichkek"><img src="../flags/kg.png" width="20" height="15" alt="KG" style="border-radius:2px"><span><span class="dh-card-name">Bishkek</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-bratislava.html" target="_top" class="dh-card" data-name="Bratislava" data-country="Slovakia"><img src="../flags/sk.png" width="20" height="15" alt="SK" style="border-radius:2px"><span><span class="dh-card-name">Bratislava</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-bucharest.html" target="_top" class="dh-card" data-name="Bucharest" data-country="Romania" data-aliases="Bucarest"><img src="../flags/ro.png" width="20" height="15" alt="RO" style="border-radius:2px"><span><span class="dh-card-name">Bucharest</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-budapest.html" target="_top" class="dh-card" data-name="Budapest" data-country="Hungary"><img src="../flags/hu.png" width="20" height="15" alt="HU" style="border-radius:2px"><span><span class="dh-card-name">Budapest</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1060,6 +886,7 @@ main{background:var(--v4-navy)!important}
 <a href="best-time-to-visit-almaty.html" target="_top" class="dh-card" data-name="Almaty" data-country="Kazakhstan"><img src="../flags/kz.png" width="20" height="15" alt="KZ" style="border-radius:2px"><span><span class="dh-card-name">Almaty</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-andorra.html" target="_top" class="dh-card" data-name="Andorra" data-country="Andorra" data-aliases="Andorre andorre ski"><img src="../flags/ad.png" width="20" height="15" alt="AD" style="border-radius:2px"><span><span class="dh-card-name">Andorra</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-bansko.html" target="_top" class="dh-card" data-name="Bansko" data-country="Bulgaria" data-aliases="balkans pirin"><img src="../flags/bg.png" width="20" height="15" alt="BG" style="border-radius:2px"><span><span class="dh-card-name">Bansko</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-bishkek.html" target="_top" class="dh-card" data-name="Bishkek" data-country="Kyrgyzstan" data-aliases="Bichkek"><img src="../flags/kg.png" width="20" height="15" alt="KG" style="border-radius:2px"><span><span class="dh-card-name">Bishkek</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-dushanbe.html" target="_top" class="dh-card" data-name="Dushanbe" data-country="Tajikistan" data-aliases="Douchanbé tadjikistan tajikistan"><img src="../flags/tj.png" width="20" height="15" alt="TJ" style="border-radius:2px"><span><span class="dh-card-name">Dushanbe</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-grandvalira.html" target="_top" class="dh-card" data-name="Grandvalira" data-country="Andorra" data-aliases="andorre ski soldeu"><img src="../flags/ad.png" width="20" height="15" alt="AD" style="border-radius:2px"><span><span class="dh-card-name">Grandvalira</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-jasna.html" target="_top" class="dh-card" data-name="Jasná" data-country="Slovakia" data-aliases="tatras slovaquie"><img src="../flags/sk.png" width="20" height="15" alt="SK" style="border-radius:2px"><span><span class="dh-card-name">Jasná</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1073,12 +900,12 @@ main{background:var(--v4-navy)!important}
 <span class="dh-acc-meta"><span class="dh-acc-count">24</span>
 <span class="dh-acc-chev">▾</span></span></button>
 <div class="dh-acc-body">
+<div class="dh-group-label">🌆 Cities & destinations</div>
 <div class="dh-grid">
 <a href="best-time-to-visit-agadir.html" target="_top" class="dh-card" data-name="Agadir" data-country="Morocco"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Agadir</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-algiers.html" target="_top" class="dh-card" data-name="Algiers" data-country="Algeria" data-aliases="Alger"><img src="../flags/dz.png" width="20" height="15" alt="DZ" style="border-radius:2px"><span><span class="dh-card-name">Algiers</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-annaba.html" target="_top" class="dh-card" data-name="Annaba" data-country="Algeria"><img src="../flags/dz.png" width="20" height="15" alt="DZ" style="border-radius:2px"><span><span class="dh-card-name">Annaba</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-aswan.html" target="_top" class="dh-card" data-name="Aswan" data-country="Egypt" data-aliases="Assouan"><img src="../flags/eg.png" width="20" height="15" alt="EG" style="border-radius:2px"><span><span class="dh-card-name">Aswan</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-batna.html" target="_top" class="dh-card" data-name="Batna" data-country="Algeria"><img src="../flags/dz.png" width="20" height="15" alt="DZ" style="border-radius:2px"><span><span class="dh-card-name">Batna</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-cairo.html" target="_top" class="dh-card" data-name="Cairo" data-country="Egypt" data-aliases="Caire egypte"><img src="../flags/eg.png" width="20" height="15" alt="EG" style="border-radius:2px"><span><span class="dh-card-name">Cairo</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-casablanca.html" target="_top" class="dh-card" data-name="Casablanca" data-country="Morocco"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Casablanca</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-chefchaouen.html" target="_top" class="dh-card" data-name="Chefchaouen" data-country="Morocco"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Chefchaouen</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1094,10 +921,14 @@ main{background:var(--v4-navy)!important}
 <a href="best-time-to-visit-merzouga.html" target="_top" class="dh-card" data-name="Merzouga" data-country="Morocco"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Merzouga</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-oran.html" target="_top" class="dh-card" data-name="Oran" data-country="Algeria"><img src="../flags/dz.png" width="20" height="15" alt="DZ" style="border-radius:2px"><span><span class="dh-card-name">Oran</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-ouarzazate.html" target="_top" class="dh-card" data-name="Ouarzazate" data-country="Morocco"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Ouarzazate</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-oukaimeden.html" target="_top" class="dh-card" data-name="Oukaimeden" data-country="Morocco" data-aliases="atlas marrakech"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Oukaimeden</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-sharm-el-sheikh.html" target="_top" class="dh-card" data-name="Sharm el-Sheikh" data-country="Egypt"><img src="../flags/eg.png" width="20" height="15" alt="EG" style="border-radius:2px"><span><span class="dh-card-name">Sharm el-Sheikh</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-tangier.html" target="_top" class="dh-card" data-name="Tangier" data-country="Morocco" data-aliases="Tanger"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Tangier</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-tunis.html" target="_top" class="dh-card" data-name="Tunis" data-country="Tunisia"><img src="../flags/tn.png" width="20" height="15" alt="TN" style="border-radius:2px"><span><span class="dh-card-name">Tunis</span><span class="dh-card-sub">When to visit</span></span></a>
+</div>
+<div class="dh-group-label">⛷️ Mountain resorts</div>
+<div class="dh-grid">
+<a href="best-time-to-visit-batna.html" target="_top" class="dh-card" data-name="Batna" data-country="Algeria"><img src="../flags/dz.png" width="20" height="15" alt="DZ" style="border-radius:2px"><span><span class="dh-card-name">Batna</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-oukaimeden.html" target="_top" class="dh-card" data-name="Oukaimeden" data-country="Morocco" data-aliases="atlas marrakech"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Oukaimeden</span><span class="dh-card-sub">When to visit</span></span></a>
 </div>
 </div></div>
 <div class="dh-acc">
@@ -1284,7 +1115,6 @@ main{background:var(--v4-navy)!important}
 <a href="best-time-to-visit-mysore.html" target="_top" class="dh-card" data-name="Mysore" data-country="India" data-aliases="mysuru"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Mysore</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-pondicherry.html" target="_top" class="dh-card" data-name="Pondicherry" data-country="India" data-aliases="Pondichéry"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Pondicherry</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-rajasthan.html" target="_top" class="dh-card" data-name="Rajasthan" data-country="India" data-aliases="jaipur udaipur jodhpur jaisalmer pushkar"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Rajasthan</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-rishikesh.html" target="_top" class="dh-card" data-name="Rishikesh" data-country="India"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Rishikesh</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-udaipur.html" target="_top" class="dh-card" data-name="Udaipur" data-country="India"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Udaipur</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-varanasi.html" target="_top" class="dh-card" data-name="Varanasi" data-country="India"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Varanasi</span><span class="dh-card-sub">When to visit</span></span></a>
 </div>
@@ -1292,6 +1122,7 @@ main{background:var(--v4-navy)!important}
 <div class="dh-grid">
 <a href="best-time-to-visit-darjeeling.html" target="_top" class="dh-card" data-name="Darjeeling" data-country="India"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Darjeeling</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-gulmarg.html" target="_top" class="dh-card" data-name="Gulmarg" data-country="India" data-aliases="cachemire himalaya"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Gulmarg</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-rishikesh.html" target="_top" class="dh-card" data-name="Rishikesh" data-country="India"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Rishikesh</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-shimla.html" target="_top" class="dh-card" data-name="Shimla" data-country="India" data-aliases="simla"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Shimla</span><span class="dh-card-sub">When to visit</span></span></a>
 </div>
 </div></div>
@@ -1548,7 +1379,6 @@ main{background:var(--v4-navy)!important}
 <div class="dh-grid">
 <a href="best-time-to-visit-anchorage.html" target="_top" class="dh-card" data-name="Anchorage" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Anchorage</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-antigua-guatemala.html" target="_top" class="dh-card" data-name="Antigua Guatemala" data-country="Guatemala"><img src="../flags/gt.png" width="20" height="15" alt="GT" style="border-radius:2px"><span><span class="dh-card-name">Antigua Guatemala</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-asheville.html" target="_top" class="dh-card" data-name="Asheville" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Asheville</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-austin.html" target="_top" class="dh-card" data-name="Austin" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Austin</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-belize.html" target="_top" class="dh-card" data-name="Belize" data-country="Belize" data-aliases="belize-city san-pedro caye-caulker"><img src="../flags/bz.png" width="20" height="15" alt="BZ" style="border-radius:2px"><span><span class="dh-card-name">Belize</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-boston.html" target="_top" class="dh-card" data-name="Boston" data-country="USA"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Boston</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1604,7 +1434,6 @@ main{background:var(--v4-navy)!important}
 <a href="best-time-to-visit-san-francisco.html" target="_top" class="dh-card" data-name="San Francisco" data-country="USA"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">San Francisco</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-san-jose.html" target="_top" class="dh-card" data-name="San José" data-country="Costa Rica"><img src="../flags/cr.png" width="20" height="15" alt="CR" style="border-radius:2px"><span><span class="dh-card-name">San José</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-santa-barbara.html" target="_top" class="dh-card" data-name="Santa Barbara" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Santa Barbara</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-santa-fe.html" target="_top" class="dh-card" data-name="Santa Fe" data-country="United States" data-aliases="santa fe new mexico nm"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Santa Fe</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-savannah.html" target="_top" class="dh-card" data-name="Savannah" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Savannah</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-seattle.html" target="_top" class="dh-card" data-name="Seattle" data-country="USA"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Seattle</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-sedona.html" target="_top" class="dh-card" data-name="Sedona" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Sedona</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1616,6 +1445,7 @@ main{background:var(--v4-navy)!important}
 </div>
 <div class="dh-group-label">⛷️ Mountain resorts</div>
 <div class="dh-grid">
+<a href="best-time-to-visit-asheville.html" target="_top" class="dh-card" data-name="Asheville" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Asheville</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-aspen.html" target="_top" class="dh-card" data-name="Aspen" data-country="United States" data-aliases="snowmass"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Aspen</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-banff.html" target="_top" class="dh-card" data-name="Banff" data-country="Canada" data-aliases="lake louise sunshine village"><img src="../flags/ca.png" width="20" height="15" alt="CA" style="border-radius:2px"><span><span class="dh-card-name">Banff</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-big-white.html" target="_top" class="dh-card" data-name="Big White" data-country="Canada"><img src="../flags/ca.png" width="20" height="15" alt="CA" style="border-radius:2px"><span><span class="dh-card-name">Big White</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1629,6 +1459,7 @@ main{background:var(--v4-navy)!important}
 <a href="best-time-to-visit-park-city.html" target="_top" class="dh-card" data-name="Park City" data-country="United States" data-aliases="deer valley canyons"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Park City</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-revelstoke.html" target="_top" class="dh-card" data-name="Revelstoke" data-country="Canada" data-aliases="colombie-britannique canada"><img src="../flags/ca.png" width="20" height="15" alt="CA" style="border-radius:2px"><span><span class="dh-card-name">Revelstoke</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-san-miguel-de-allende.html" target="_top" class="dh-card" data-name="San Miguel de Allende" data-country="Mexico"><img src="../flags/mx.png" width="20" height="15" alt="MX" style="border-radius:2px"><span><span class="dh-card-name">San Miguel de Allende</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-santa-fe.html" target="_top" class="dh-card" data-name="Santa Fe" data-country="United States" data-aliases="santa fe new mexico nm"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Santa Fe</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-steamboat-springs.html" target="_top" class="dh-card" data-name="Steamboat Springs" data-country="United States" data-aliases="steamboat"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Steamboat Springs</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-stowe.html" target="_top" class="dh-card" data-name="Stowe" data-country="United States" data-aliases="vermont nouvelle-angleterre"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Stowe</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-sun-valley.html" target="_top" class="dh-card" data-name="Sun Valley" data-country="United States" data-aliases="idaho"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Sun Valley</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1688,14 +1519,11 @@ main{background:var(--v4-navy)!important}
 <a href="best-time-to-visit-cartagena-colombia.html" target="_top" class="dh-card" data-name="Cartagena" data-country="Colombia" data-aliases="Carthagène des Indes"><img src="../flags/co.png" width="20" height="15" alt="CO" style="border-radius:2px"><span><span class="dh-card-name">Cartagena</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-chile.html" target="_top" class="dh-card" data-name="Chile" data-country="Chile" data-aliases="Chili santiago valparaiso atacama pucon"><img src="../flags/cl.png" width="20" height="15" alt="CL" style="border-radius:2px"><span><span class="dh-card-name">Chile</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-colombia.html" target="_top" class="dh-card" data-name="Colombia" data-country="Colombia" data-aliases="Colombie bogota medellin cartagena cali"><img src="../flags/co.png" width="20" height="15" alt="CO" style="border-radius:2px"><span><span class="dh-card-name">Colombia</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-cuenca-ecuador.html" target="_top" class="dh-card" data-name="Cuenca" data-country="Ecuador" data-aliases="cuenca ecuador"><img src="../flags/ec.png" width="20" height="15" alt="EC" style="border-radius:2px"><span><span class="dh-card-name">Cuenca</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-cusco.html" target="_top" class="dh-card" data-name="Cusco" data-country="Peru"><img src="../flags/pe.png" width="20" height="15" alt="PE" style="border-radius:2px"><span><span class="dh-card-name">Cusco</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-cordoba-argentina.html" target="_top" class="dh-card" data-name="Córdoba" data-country="Argentina" data-aliases="cordoba argentine"><img src="../flags/ar.png" width="20" height="15" alt="AR" style="border-radius:2px"><span><span class="dh-card-name">Córdoba</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-florianopolis.html" target="_top" class="dh-card" data-name="Florianópolis" data-country="Brazil"><img src="../flags/br.png" width="20" height="15" alt="BR" style="border-radius:2px"><span><span class="dh-card-name">Florianópolis</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-galapagos.html" target="_top" class="dh-card" data-name="Galápagos" data-country="Ecuador" data-aliases="santa-cruz isabela san-cristobal"><img src="../flags/ec.png" width="20" height="15" alt="EC" style="border-radius:2px"><span><span class="dh-card-name">Galápagos</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-french-guiana.html" target="_top" class="dh-card" data-name="French Guiana" data-country="French Guiana" data-aliases="Guyane cayenne kourou saint-laurent-du-maroni matoury remire-montjoly"><img src="../flags/gf.png" width="20" height="15" alt="GF" style="border-radius:2px"><span><span class="dh-card-name">French Guiana</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-iguazu.html" target="_top" class="dh-card" data-name="Iguazú" data-country="Argentina"><img src="../flags/ar.png" width="20" height="15" alt="AR" style="border-radius:2px"><span><span class="dh-card-name">Iguazú</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-la-paz.html" target="_top" class="dh-card" data-name="La Paz" data-country="Bolivia"><img src="../flags/bo.png" width="20" height="15" alt="BO" style="border-radius:2px"><span><span class="dh-card-name">La Paz</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-lima.html" target="_top" class="dh-card" data-name="Lima" data-country="Peru" data-aliases="perou"><img src="../flags/pe.png" width="20" height="15" alt="PE" style="border-radius:2px"><span><span class="dh-card-name">Lima</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-machu-picchu.html" target="_top" class="dh-card" data-name="Machu Picchu" data-country="Peru"><img src="../flags/pe.png" width="20" height="15" alt="PE" style="border-radius:2px"><span><span class="dh-card-name">Machu Picchu</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-manaus.html" target="_top" class="dh-card" data-name="Manaus" data-country="Brazil"><img src="../flags/br.png" width="20" height="15" alt="BR" style="border-radius:2px"><span><span class="dh-card-name">Manaus</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1708,7 +1536,6 @@ main{background:var(--v4-navy)!important}
 <a href="best-time-to-visit-providencia.html" target="_top" class="dh-card" data-name="Providencia" data-country="Colombia" data-aliases="providencia colombia isla"><img src="../flags/co.png" width="20" height="15" alt="CO" style="border-radius:2px"><span><span class="dh-card-name">Providencia</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-punta-del-este.html" target="_top" class="dh-card" data-name="Punta del Este" data-country="Uruguay"><img src="../flags/uy.png" width="20" height="15" alt="UY" style="border-radius:2px"><span><span class="dh-card-name">Punta del Este</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-peru.html" target="_top" class="dh-card" data-name="Peru" data-country="Peru" data-aliases="Pérou lima cusco arequipa iquitos"><img src="../flags/pe.png" width="20" height="15" alt="PE" style="border-radius:2px"><span><span class="dh-card-name">Peru</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-quito.html" target="_top" class="dh-card" data-name="Quito" data-country="Ecuador"><img src="../flags/ec.png" width="20" height="15" alt="EC" style="border-radius:2px"><span><span class="dh-card-name">Quito</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-rio-de-janeiro.html" target="_top" class="dh-card" data-name="Rio de Janeiro" data-country="Brazil"><img src="../flags/br.png" width="20" height="15" alt="BR" style="border-radius:2px"><span><span class="dh-card-name">Rio de Janeiro</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-rosario.html" target="_top" class="dh-card" data-name="Rosario" data-country="Argentina"><img src="../flags/ar.png" width="20" height="15" alt="AR" style="border-radius:2px"><span><span class="dh-card-name">Rosario</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-salvador.html" target="_top" class="dh-card" data-name="Salvador" data-country="Brazil" data-aliases="Salvador de Bahia"><img src="../flags/br.png" width="20" height="15" alt="BR" style="border-radius:2px"><span><span class="dh-card-name">Salvador</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1723,7 +1550,11 @@ main{background:var(--v4-navy)!important}
 <div class="dh-grid">
 <a href="best-time-to-visit-bariloche.html" target="_top" class="dh-card" data-name="Bariloche" data-country="Argentina"><img src="../flags/ar.png" width="20" height="15" alt="AR" style="border-radius:2px"><span><span class="dh-card-name">Bariloche</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-chapada-diamantina.html" target="_top" class="dh-card" data-name="Chapada Diamantina" data-country="Brazil"><img src="../flags/br.png" width="20" height="15" alt="BR" style="border-radius:2px"><span><span class="dh-card-name">Chapada Diamantina</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-cuenca-ecuador.html" target="_top" class="dh-card" data-name="Cuenca" data-country="Ecuador" data-aliases="cuenca ecuador"><img src="../flags/ec.png" width="20" height="15" alt="EC" style="border-radius:2px"><span><span class="dh-card-name">Cuenca</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-cusco.html" target="_top" class="dh-card" data-name="Cusco" data-country="Peru"><img src="../flags/pe.png" width="20" height="15" alt="PE" style="border-radius:2px"><span><span class="dh-card-name">Cusco</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-la-paz.html" target="_top" class="dh-card" data-name="La Paz" data-country="Bolivia"><img src="../flags/bo.png" width="20" height="15" alt="BO" style="border-radius:2px"><span><span class="dh-card-name">La Paz</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-portillo.html" target="_top" class="dh-card" data-name="Portillo" data-country="Chile" data-aliases="andes ski chile"><img src="../flags/cl.png" width="20" height="15" alt="CL" style="border-radius:2px"><span><span class="dh-card-name">Portillo</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-quito.html" target="_top" class="dh-card" data-name="Quito" data-country="Ecuador"><img src="../flags/ec.png" width="20" height="15" alt="EC" style="border-radius:2px"><span><span class="dh-card-name">Quito</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-valle-nevado.html" target="_top" class="dh-card" data-name="Valle Nevado" data-country="Chile" data-aliases="andes chili santiago"><img src="../flags/cl.png" width="20" height="15" alt="CL" style="border-radius:2px"><span><span class="dh-card-name">Valle Nevado</span><span class="dh-card-sub">When to visit</span></span></a>
 </div>
 </div></div>
