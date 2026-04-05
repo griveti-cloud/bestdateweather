@@ -1059,13 +1059,17 @@ def _cl_layout(pc, lang):
     return canonical, footer, outfile, fr_file, en_file, es_file, de_file
 
 
-def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix=''):
+def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix='', photo_grid=''):
     title    = _tpl(pc['title_tpl'],    ctx)
     desc     = _tpl(pc['desc_tpl'],     ctx)
     h1       = pc['h1']
     hero_sub = _tpl(pc['hero_sub_tpl'], ctx)
     stats    = _stats_html(pc['stats'], ctx)
     insights = _insights_html(pc['insights_label'], pc['insights'], ctx)
+    # Insérer photo_grid après la première table
+    if photo_grid:
+        tables = list(tables)
+        tables[0] = tables[0] + photo_grid
     sections = _sections(pc['sections'], ctx, tables)
     jsonld   = make_jsonld(jsonld_data, jsonld_n, _tpl(pc['jsonld_title_tpl'], ctx), lang)
     _meth_tpl = pc.get('meth') or load_locale('en' if lang == 'en-us' else lang)['classements']['methodology']
@@ -1094,6 +1098,8 @@ def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix=''):
 # ══════════════════════════════════════════════════════════════════════════════
 
 def gen_mondial(dests, climate, lang, country_info=None):
+    import csv as _csv
+    photo_db = {r['slug_fr']: r for r in _csv.DictReader(open(ROOT / 'data/destination_photos.csv'))}
     annual   = dedup_country(compute_annual(climate, dests), dests)
     sunniest = dedup_country(compute_sunniest(climate, dests), dests)
     driest   = dedup_country(compute_driest(climate, dests), dests)
@@ -1113,9 +1119,12 @@ def gen_mondial(dests, climate, lang, country_info=None):
                        make_table_sun(sunniest, 10, lang, country_info),
                        make_table_rain(driest, 10, lang, country_info)],
                jsonld_data=annual, jsonld_n=40,
+               photo_grid=_make_photo_grid(annual, 12, lang, photo_db),
                print_suffix=f' ({n_dests} dests, top={top1["dest"]["nom_bare"]})')
 
 def gen_europe(dests, climate, lang, country_info=None):
+    import csv as _csv
+    photo_db = {r['slug_fr']: r for r in _csv.DictReader(open(ROOT / 'data/destination_photos.csv'))}
     annual  = dedup_country(compute_annual(climate, dests, europe_only=True), dests)
     summer  = dedup_country(compute_seasonal(climate, dests, [6,7,8], europe_only=True), dests)
     winter  = dedup_country(compute_seasonal(climate, dests, [12,1,2], europe_only=True), dests)
@@ -1133,9 +1142,12 @@ def gen_europe(dests, climate, lang, country_info=None):
                        make_table_seasonal(summer, 10, lang, country_info),
                        make_table_seasonal(winter, 10, lang, country_info)],
                jsonld_data=annual, jsonld_n=20,
+               photo_grid=_make_photo_grid(annual, 12, lang, photo_db),
                print_suffix=f' (Europe, top={top1["dest"]["nom_bare"]})')
 
 def gen_ete(dests, climate, lang, country_info=None):
+    import csv as _csv
+    photo_db = {r['slug_fr']: r for r in _csv.DictReader(open(ROOT / 'data/destination_photos.csv'))}
     summer  = dedup_country(compute_seasonal(climate, dests, [6,7,8]), dests)
     top1    = summer[0]
     n_dests = len(summer)
@@ -1149,9 +1161,12 @@ def gen_ete(dests, climate, lang, country_info=None):
     _cl_render(pc, lang, ctx,
                tables=[make_table_seasonal(summer, 20, lang, country_info)],
                jsonld_data=summer, jsonld_n=20,
+               photo_grid=_make_photo_grid(summer, 12, lang, photo_db),
                print_suffix=f' (été, top={top1["dest"]["nom_bare"]})')
 
 def gen_hiver(dests, climate, lang, country_info=None):
+    import csv as _csv
+    photo_db = {r['slug_fr']: r for r in _csv.DictReader(open(ROOT / 'data/destination_photos.csv'))}
     winter  = dedup_country(compute_seasonal(climate, dests, [12,1,2]), dests)
     top1    = winter[0]
     n_dests = len(winter)
@@ -1165,6 +1180,7 @@ def gen_hiver(dests, climate, lang, country_info=None):
     _cl_render(pc, lang, ctx,
                tables=[make_table_seasonal(winter, 20, lang, country_info)],
                jsonld_data=winter, jsonld_n=20,
+               photo_grid=_make_photo_grid(winter, 12, lang, photo_db),
                print_suffix=f' (hiver, top={top1["dest"]["nom_bare"]})')
 
 def _make_photo_grid(entries, n, lang, photo_db, rank_labels=None):
@@ -1217,6 +1233,8 @@ def gen_nomades(dests, climate, lang, country_info=None):
                print_suffix=f' (nomades, top={top1["dest"]["nom_bare"]})')
 
 def gen_beach(dests, climate, lang, country_info=None):
+    import csv as _csv
+    photo_db = {r['slug_fr']: r for r in _csv.DictReader(open(ROOT / 'data/destination_photos.csv'))}
     annual  = dedup_country(compute_beach(climate, dests), dests)
     summer  = dedup_country(compute_beach_seasonal(climate, dests, [6,7,8]), dests)
     winter  = dedup_country(compute_beach_seasonal(climate, dests, [12,1,2]), dests)
@@ -1235,9 +1253,12 @@ def gen_beach(dests, climate, lang, country_info=None):
                        make_table_beach(summer, 20, lang),
                        make_table_beach(winter, 20, lang)],
                jsonld_data=annual, jsonld_n=25,
+               photo_grid=_make_photo_grid(annual, 12, lang, photo_db),
                print_suffix=f' (plage, {n_dests} coastal, top={top1["dest"]["nom_bare"]})')
 
 def gen_caribbean(dests, climate, lang, country_info=None):
+    import csv as _csv
+    photo_db = {r['slug_fr']: r for r in _csv.DictReader(open(ROOT / 'data/destination_photos.csv'))}
     annual  = dedup_country(compute_annual(climate, dests, caribbean_only=True), dests)
     summer  = dedup_country(compute_seasonal(climate, dests, [12,1,2], caribbean_only=True), dests)  # "été" caribéen = hiver boréal
     winter  = dedup_country(compute_seasonal(climate, dests, [6,7,8], caribbean_only=True), dests)   # saison humide
@@ -1255,6 +1276,7 @@ def gen_caribbean(dests, climate, lang, country_info=None):
                        make_table_seasonal(summer, n_dests, lang, country_info),
                        make_table_seasonal(winter, n_dests, lang, country_info)],
                jsonld_data=annual, jsonld_n=n_dests,
+               photo_grid=_make_photo_grid(annual, 12, lang, photo_db),
                print_suffix=f' (Caraïbes, {n_dests} dests, top={top1["dest"]["nom_bare"]})')
 
 # ══════════════════════════════════════════════════════════════════════════════
