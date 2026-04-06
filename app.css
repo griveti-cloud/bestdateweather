@@ -1025,3 +1025,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .hw-powered{font-size:11px;color:#888;margin:8px 0 0;text-align:right}
 .hw-powered a{color:#1976d2;text-decoration:none}
 @media(max-width:600px){.hw-form{flex-direction:column}.hw-btn{width:100%}}
+
+/* Icônes emoji fixes dans les inputs — indépendantes de l'opacité placeholder */
+.inp-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none;z-index:3;opacity:.85}
+.inp-wrap-icon .inp{padding-left:42px}
