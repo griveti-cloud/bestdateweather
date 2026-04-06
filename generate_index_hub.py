@@ -998,6 +998,7 @@ def generate_from_template(lang, loc):
         '{{PAGE_TITLE}}':      meta.get('page_title', 'BestDateWeather'),
         '{{APP_SUB}}':         meta.get('app_sub', ''),
         '{{APP_SUB_SEO}}':     meta.get('app_sub_seo', ''),
+        '{{HOME_URL}}':        meta.get('home_url', 'index.html'),
     }
 
     for placeholder, value in replacements.items():
