@@ -3,9 +3,9 @@
    ═══════════════════════════════════════════════════ */
 
 /* ── BANNER ── */
-.wb{margin:0 16px 8px;padding:14px 16px 16px;background:linear-gradient(135deg,var(--navy) 0%,#2a3548 50%,#334460 100%);border-radius:var(--r);color:#fff;cursor:pointer;transition:transform .12s;position:relative;animation:fadeUp .35s ease both}
+.wb{margin:0 16px 8px;padding:14px 16px 16px;background:#0d1117;border-radius:var(--r);color:#fff;cursor:pointer;transition:transform .12s;position:relative;animation:fadeUp .35s ease both}
 .wb:active{transform:scale(.985)}
-.wb-shimmer{margin:0 16px 12px;padding:18px 16px;background:linear-gradient(135deg,var(--navy),#2a3548);border-radius:var(--r);display:flex;flex-direction:column;gap:10px}
+.wb-shimmer{margin:0 16px 12px;padding:18px 16px;background:#0d1117;border-radius:var(--r);display:flex;flex-direction:column;gap:10px}
 .wb-shimmer-line{height:14px;width:80%;border-radius:7px;background:linear-gradient(90deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.06) 100%);background-size:400px 100%;animation:wbShimmer 1.5s infinite}
 @keyframes wbShimmer{0%{background-position:-200px 0}100%{background-position:200px 0}}
 
