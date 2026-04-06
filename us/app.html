@@ -115,10 +115,10 @@ header.app-header{padding-top:64px!important}
  <div class="err-box" id="ann-err-box"></div>
  </div>
  <div id="ann-uc-wrap" style="padding:12px 0 4px;display:none">
- <div class="uc-filter-label" style="margin-bottom:10px;font-size:12px;color:var(--navy);text-transform:none;letter-spacing:0;font-weight:700">Affiner le score pour :</div>
+ <div class="uc-filter-label" style="margin-bottom:10px;font-size:12px;color:var(--navy);text-transform:none;letter-spacing:0;font-weight:700">Refine score for:</div>
  <div style="display:flex;flex-wrap:wrap;gap:6px;">
- <button class="uc-pill uc-pill-neutral" data-uc="general" id="ann-uc-general" onclick="quickFill('general')">🌤️ Juste la météo</button>
- <button class="uc-pill" data-uc="plage" onclick="quickFill('plage')">🏖️ Plage</button>
+ <button class="uc-pill uc-pill-neutral" data-uc="general" id="ann-uc-general" onclick="quickFill('general')">🌤️ Just the weather</button>
+ <button class="uc-pill" data-uc="plage" onclick="quickFill('plage')">🏖️ Beach</button>
  <button class="uc-pill" data-uc="ski" onclick="quickFill('ski')">⛷️ Ski</button>
  </div>
  </div>
@@ -182,11 +182,11 @@ header.app-header{padding-top:64px!important}
 
  <!-- USE CASE FILTER PILLS -->
  <div class="uc-filter-wrap" id="uc-filter-wrap" style="display:none">
- <div class="uc-filter-label">Affiner le score pour</div>
+ <div class="uc-filter-label">Refine score for:</div>
  <div class="uc-row" id="uc-row">
  <div class="uc-row-line">
- <button class="uc-pill uc-pill-neutral" data-uc="general" onclick="quickFill('general')">🌤️ Juste la météo</button>
- <button class="uc-pill" data-uc="plage" onclick="quickFill('plage')">🏖️ Plage</button>
+ <button class="uc-pill uc-pill-neutral" data-uc="general" onclick="quickFill('general')">🌤️ Just the weather</button>
+ <button class="uc-pill" data-uc="plage" onclick="quickFill('plage')">🏖️ Beach</button>
  <button class="uc-pill" data-uc="ski" onclick="quickFill('ski')">⛷️ Ski</button>
  </div>
  </div>
@@ -254,22 +254,22 @@ header.app-header{padding-top:64px!important}
 
 
 <button class="details-toggle" id="details-toggle" onclick="toggleDetails()" aria-expanded="false">
-  <span>{{UI_DETAILS_TOGGLE}}</span>
+  <span>See details — hourly, scenarios, astro</span>
   <span class="details-toggle-icon">&#8964;</span>
  </button>
  <div class="details-panel" id="details-panel">
   <div class="hero-stats">
  <div class="hstat">
  <div class="hstat-val" id="r-rain">–</div>
- <div class="hstat-lbl">{{UI_RAIN_PROB}}</div>
+ <div class="hstat-lbl">💧 Rain probability</div>
  </div>
  <div class="hstat">
  <div class="hstat-val" id="r-wind">–</div>
- <div class="hstat-lbl">{{UI_AVG_WIND}}</div>
+ <div class="hstat-lbl">💨 Avg wind</div>
  </div>
  <div class="hstat">
  <div class="hstat-val" id="r-sky">–</div>
- <div class="hstat-lbl">{{UI_SKY}}</div>
+ <div class="hstat-lbl">☁️ Sky</div>
  </div>
  </div>
  <div class="hero-astro">
@@ -277,28 +277,28 @@ header.app-header{padding-top:64px!important}
  <span class="astro-ico" id="astro-moon-ico"></span>
  <div>
  <div class="astro-val" id="astro-moon-name">–</div>
- <div class="astro-lbl">{{UI_MOON_PHASE}}</div>
+ <div class="astro-lbl">Moon phase</div>
  </div>
  </div>
  <div class="astro-item">
  <span class="astro-ico"><svg viewBox="0 0 28 28" fill="none" width="22" height="22"><circle cx="14" cy="10" r="5" fill="#f8d76a" opacity=".95"/><g stroke="#f8d76a" stroke-width="1.8" stroke-linecap="round"><line x1="14" y1="2" x2="14" y2="5"/><line x1="7" y1="4.5" x2="9" y2="6.5"/><line x1="21" y1="4.5" x2="19" y2="6.5"/><line x1="4.5" y1="10" x2="7" y2="10"/><line x1="23.5" y1="10" x2="21" y2="10"/></g><line x1="4" y1="19" x2="24" y2="19" stroke="rgba(26,31,46,.2)" stroke-width="1.5" stroke-linecap="round"/><g stroke="rgba(26,31,46,.4)" stroke-width="1.8" stroke-linecap="round"><line x1="9" y1="23" x2="11" y2="19.5"/><line x1="14" y1="24" x2="14" y2="20"/><line x1="19" y1="23" x2="17" y2="19.5"/></g></svg></span>
  <div>
  <div class="astro-val" id="astro-rise">–</div>
- <div class="astro-lbl">{{UI_SUNRISE}} (UTC)</div>
+ <div class="astro-lbl">Sunrise (UTC)</div>
  </div>
  </div>
  <div class="astro-item">
  <span class="astro-ico"><svg viewBox="0 0 28 28" fill="none" width="22" height="22"><circle cx="14" cy="10" r="5" fill="#f8b84a" opacity=".9"/><g stroke="#f8b84a" stroke-width="1.8" stroke-linecap="round"><line x1="14" y1="2" x2="14" y2="5"/><line x1="7" y1="4.5" x2="9" y2="6.5"/><line x1="21" y1="4.5" x2="19" y2="6.5"/><line x1="4.5" y1="10" x2="7" y2="10"/><line x1="23.5" y1="10" x2="21" y2="10"/></g><line x1="4" y1="19" x2="24" y2="19" stroke="rgba(26,31,46,.2)" stroke-width="1.5" stroke-linecap="round"/><g stroke="rgba(26,31,46,.4)" stroke-width="1.8" stroke-linecap="round"><line x1="9" y1="19.5" x2="11" y2="23"/><line x1="14" y1="20" x2="14" y2="24"/><line x1="19" y1="19.5" x2="17" y2="23"/></g></svg></span>
  <div>
  <div class="astro-val" id="astro-set">–</div>
- <div class="astro-lbl">{{UI_SUNSET}} (UTC)</div>
+ <div class="astro-lbl">Sunset (UTC)</div>
  </div>
  </div>
  </div>
 <!-- HOURLY -->
  <div class="sec-block" id="sec-hourly">
  <div class="sec-header">
- <div class="sec-title">{{UI_HOURLY}}</div>
+ <div class="sec-title">Hourly forecast</div>
  <div class="sec-hint">Températures & météo</div>
  </div>
  <div class="hourly-card"><div class="h-strip" id="h-strip"></div></div>
@@ -307,7 +307,7 @@ header.app-header{padding-top:64px!important}
  <!-- SCENARIOS -->
  <div class="sec-block" id="sec-scenarios">
  <div class="sec-header">
- <div class="sec-title">{{UI_SCENARIOS}}</div>
+ <div class="sec-title">Extreme scenarios</div>
  <div class="sec-hint">Enveloppes statistiques P10–P90</div>
  </div>
  <div class="sc-row">
@@ -316,7 +316,7 @@ header.app-header{padding-top:64px!important}
  <div>
  <span class="sc-label pess">Hypothèse basse</span>
  <div class="sc-ttl" id="sc-pess-ttl">Journée difficile</div>
- <div class="sc-sub"><span id="sc-pess-sub">{{UI_SC_PESS_DEFAULT}}</span></div>
+ <div class="sc-sub"><span id="sc-pess-sub">Cool · frequent rain</span></div>
  </div>
  </div>
  <div class="sc-strip" id="sc-pess-strip"></div>
@@ -339,7 +339,7 @@ header.app-header{padding-top:64px!important}
  <!-- HISTORICAL TEMPS -->
  <div class="sec-block" id="sec-history">
   <div class="sec-header">
-   <div class="sec-title">{{UI_HIST_TEMPS}}</div>
+   <div class="sec-title">Historical temperatures</div>
    <div class="sec-hint">Tendance sur 10 ans</div>
   </div>
   <div id="hist-chart-container" style="padding:4px 0;min-height:50px"><div class="hist-loader" style="text-align:center;padding:20px;color:#aaa;font-size:13px">⏳</div></div>

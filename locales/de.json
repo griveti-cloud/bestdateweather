@@ -70,7 +70,11 @@
     "UI_HOURLY": "Stündliche Vorhersage",
     "UI_SCENARIOS": "Extremszenarien",
     "UI_HIST_TEMPS": "Historische Temperaturen",
-    "UI_SC_PESS_DEFAULT": "Kühl · häufiger Regen"
+    "UI_SC_PESS_DEFAULT": "Kühl · häufiger Regen",
+    "UI_UC_LABEL": "Score verfeinern für:",
+    "UI_UC_GENERAL": "🌤️ Nur das Wetter",
+    "UI_UC_BEACH": "🏖️ Strand",
+    "UI_UC_SKI": "⛷️ Ski"
   },
   "months": [
     "Januar",

@@ -70,7 +70,11 @@
     "UI_HOURLY": "Hora a hora",
     "UI_SCENARIOS": "Escenarios extremos",
     "UI_HIST_TEMPS": "Temperaturas históricas",
-    "UI_SC_PESS_DEFAULT": "Fresco · lluvia frecuente"
+    "UI_SC_PESS_DEFAULT": "Fresco · lluvia frecuente",
+    "UI_UC_LABEL": "Ajustar puntuación para:",
+    "UI_UC_GENERAL": "🌤️ Solo el tiempo",
+    "UI_UC_BEACH": "🏖️ Playa",
+    "UI_UC_SKI": "⛷️ Esquí"
   },
   "months": [
     "Enero",

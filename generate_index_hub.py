@@ -1045,6 +1045,10 @@ def generate_from_template(lang, loc):
         '{{UI_SCENARIOS}}':        meta.get('UI_SCENARIOS', 'Extreme scenarios'),
         '{{UI_HIST_TEMPS}}':       meta.get('UI_HIST_TEMPS', 'Historical temperatures'),
         '{{UI_SC_PESS_DEFAULT}}':  meta.get('UI_SC_PESS_DEFAULT', 'Cool · frequent rain'),
+        '{{UI_UC_LABEL}}':          meta.get('UI_UC_LABEL', 'Refine score for:'),
+        '{{UI_UC_GENERAL}}':        meta.get('UI_UC_GENERAL', '🌤️ Just the weather'),
+        '{{UI_UC_BEACH}}':          meta.get('UI_UC_BEACH', '🏖️ Beach'),
+        '{{UI_UC_SKI}}':            meta.get('UI_UC_SKI', '⛷️ Ski'),
     }
 
     for placeholder, value in replacements.items():

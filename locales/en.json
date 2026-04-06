@@ -71,7 +71,11 @@
     "UI_HOURLY": "Hourly forecast",
     "UI_SCENARIOS": "Extreme scenarios",
     "UI_HIST_TEMPS": "Historical temperatures",
-    "UI_SC_PESS_DEFAULT": "Cool · frequent rain"
+    "UI_SC_PESS_DEFAULT": "Cool · frequent rain",
+    "UI_UC_LABEL": "Refine score for:",
+    "UI_UC_GENERAL": "🌤️ Just the weather",
+    "UI_UC_BEACH": "🏖️ Beach",
+    "UI_UC_SKI": "⛷️ Ski"
   },
   "months": [
     "January",
