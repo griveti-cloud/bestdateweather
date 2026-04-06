@@ -74,7 +74,15 @@
     "UI_UC_LABEL": "Ajustar puntuación para:",
     "UI_UC_GENERAL": "🌤️ Solo el tiempo",
     "UI_UC_BEACH": "🏖️ Playa",
-    "UI_UC_SKI": "⛷️ Esquí"
+    "UI_UC_SKI": "⛷️ Esquí",
+    "UI_SC_PESS_LABEL": "Hipótesis baja",
+    "UI_SC_OPT_LABEL": "Hipótesis alta",
+    "UI_SC_PESS_TTL": "Día difícil",
+    "UI_SC_OPT_TTL": "Día ideal",
+    "UI_SC_OPT_DEFAULT": "Calor · poca lluvia",
+    "UI_HINT_SCENARIOS": "Envolventes estadísticas P10–P90",
+    "UI_HINT_HOURLY": "Temperaturas y tiempo",
+    "UI_HINT_HIST": "Tendencia 10 años"
   },
   "months": [
     "Enero",

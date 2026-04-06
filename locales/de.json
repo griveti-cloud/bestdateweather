@@ -74,7 +74,15 @@
     "UI_UC_LABEL": "Score verfeinern für:",
     "UI_UC_GENERAL": "🌤️ Nur das Wetter",
     "UI_UC_BEACH": "🏖️ Strand",
-    "UI_UC_SKI": "⛷️ Ski"
+    "UI_UC_SKI": "⛷️ Ski",
+    "UI_SC_PESS_LABEL": "Ungünstiges Szenario",
+    "UI_SC_OPT_LABEL": "Günstiges Szenario",
+    "UI_SC_PESS_TTL": "Schwieriger Tag",
+    "UI_SC_OPT_TTL": "Idealer Tag",
+    "UI_SC_OPT_DEFAULT": "Warm · wenig Regen",
+    "UI_HINT_SCENARIOS": "Statistische Hüllkurven P10–P90",
+    "UI_HINT_HOURLY": "Temperaturen & Wetter",
+    "UI_HINT_HIST": "10-Jahres-Trend"
   },
   "months": [
     "Januar",

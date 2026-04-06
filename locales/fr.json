@@ -74,7 +74,15 @@
     "UI_UC_LABEL": "Affiner le score pour :",
     "UI_UC_GENERAL": "🌤️ Juste la météo",
     "UI_UC_BEACH": "🏖️ Plage",
-    "UI_UC_SKI": "⛷️ Ski"
+    "UI_UC_SKI": "⛷️ Ski",
+    "UI_SC_PESS_LABEL": "Hypothèse basse",
+    "UI_SC_OPT_LABEL": "Hypothèse haute",
+    "UI_SC_PESS_TTL": "Journée difficile",
+    "UI_SC_OPT_TTL": "Belle journée",
+    "UI_SC_OPT_DEFAULT": "Chaud · peu de pluie",
+    "UI_HINT_SCENARIOS": "Enveloppes statistiques P10–P90",
+    "UI_HINT_HOURLY": "Températures & météo",
+    "UI_HINT_HIST": "Tendance sur 10 ans"
   },
   "months": [
     "Janvier",

@@ -1049,6 +1049,14 @@ def generate_from_template(lang, loc):
         '{{UI_UC_GENERAL}}':        meta.get('UI_UC_GENERAL', '🌤️ Just the weather'),
         '{{UI_UC_BEACH}}':          meta.get('UI_UC_BEACH', '🏖️ Beach'),
         '{{UI_UC_SKI}}':            meta.get('UI_UC_SKI', '⛷️ Ski'),
+        '{{UI_SC_PESS_LABEL}}':    meta.get('UI_SC_PESS_LABEL', 'Low scenario'),
+        '{{UI_SC_OPT_LABEL}}':     meta.get('UI_SC_OPT_LABEL', 'High scenario'),
+        '{{UI_SC_PESS_TTL}}':      meta.get('UI_SC_PESS_TTL', 'Difficult day'),
+        '{{UI_SC_OPT_TTL}}':       meta.get('UI_SC_OPT_TTL', 'Ideal day'),
+        '{{UI_SC_OPT_DEFAULT}}':   meta.get('UI_SC_OPT_DEFAULT', 'Hot · little rain'),
+        '{{UI_HINT_SCENARIOS}}':   meta.get('UI_HINT_SCENARIOS', 'Statistical envelopes P10–P90'),
+        '{{UI_HINT_HOURLY}}':      meta.get('UI_HINT_HOURLY', 'Temperatures & weather'),
+        '{{UI_HINT_HIST}}':        meta.get('UI_HINT_HIST', '10-year trend'),
     }
 
     for placeholder, value in replacements.items():
