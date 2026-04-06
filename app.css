@@ -40,7 +40,7 @@
  --blue:#1a5f9a;--blue-bg:#e8f2fc;
  --mist:#7a8fa8;--mist-bg:#eef3f8;
  --shadow:0 4px 24px rgba(26,31,46,.08);--shadow-lg:0 12px 48px rgba(26,31,46,.14);
- --r:18px;--r-sm:12px;--r-xs:8px;
+ --r:13px;--r-sm:12px;--r-xs:8px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
