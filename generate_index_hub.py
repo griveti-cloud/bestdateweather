@@ -1034,6 +1034,17 @@ def generate_from_template(lang, loc):
         '{{UI_GUIDES_SUB}}':       meta.get('ui_guides_sub', ''),
         '{{UI_GUIDES_DESC}}':      meta.get('ui_guides_desc', ''),
         '{{UI_CARD_SUB}}':         meta.get('ui_card_sub', 'Best time to visit'),
+        '{{UI_DETAILS_TOGGLE}}':   meta.get('UI_DETAILS_TOGGLE', 'See details — hourly, scenarios, astro'),
+        '{{UI_RAIN_PROB}}':        meta.get('UI_RAIN_PROB', '💧 Rain probability'),
+        '{{UI_AVG_WIND}}':         meta.get('UI_AVG_WIND', '💨 Avg wind'),
+        '{{UI_SKY}}':              meta.get('UI_SKY', '☁️ Sky'),
+        '{{UI_MOON_PHASE}}':       meta.get('UI_MOON_PHASE', 'Moon phase'),
+        '{{UI_SUNRISE}}':          meta.get('UI_SUNRISE', 'Sunrise'),
+        '{{UI_SUNSET}}':           meta.get('UI_SUNSET', 'Sunset'),
+        '{{UI_HOURLY}}':           meta.get('UI_HOURLY', 'Hourly forecast'),
+        '{{UI_SCENARIOS}}':        meta.get('UI_SCENARIOS', 'Extreme scenarios'),
+        '{{UI_HIST_TEMPS}}':       meta.get('UI_HIST_TEMPS', 'Historical temperatures'),
+        '{{UI_SC_PESS_DEFAULT}}':  meta.get('UI_SC_PESS_DEFAULT', 'Cool · frequent rain'),
     }
 
     for placeholder, value in replacements.items():

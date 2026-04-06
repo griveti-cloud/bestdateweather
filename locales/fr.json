@@ -59,7 +59,18 @@
     "ui_guides_title": "Quand partir ? Météo mois par mois",
     "ui_guides_sub": "Données Open-Meteo · 10 ans · Tableaux climatiques mensuels · 697 destinations",
     "ui_guides_desc": "Nos guides analysent températures, précipitations, ensoleillement et saisonnalité pour déterminer objectivement les meilleurs mois selon votre projet — voyage, mariage, festival ou événement.",
-    "ui_card_sub": "Quand partir"
+    "ui_card_sub": "Quand partir",
+    "UI_DETAILS_TOGGLE": "Voir les détails — heure par heure, scénarios, astro",
+    "UI_RAIN_PROB": "💧 Pluie probable",
+    "UI_AVG_WIND": "💨 Vent moyen",
+    "UI_SKY": "☁️ Ciel",
+    "UI_MOON_PHASE": "Phase lunaire",
+    "UI_SUNRISE": "Lever soleil",
+    "UI_SUNSET": "Coucher soleil",
+    "UI_HOURLY": "Heure par heure",
+    "UI_SCENARIOS": "Scénarios extrêmes",
+    "UI_HIST_TEMPS": "Températures historiques",
+    "UI_SC_PESS_DEFAULT": "Frais · pluie fréquente"
   },
   "months": [
     "Janvier",

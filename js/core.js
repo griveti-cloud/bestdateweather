@@ -540,8 +540,8 @@ function renderAstro(lat, lon, yr, mo, da) {
  var riseEl = document.getElementById('astro-rise').parentElement && document.getElementById('astro-rise').nextElementSibling;
  var lblEls = document.querySelectorAll('.astro-lbl');
  for (var i=0; i<lblEls.length; i++) {
- if (lblEls[i].textContent.indexOf('Lever') >= 0) lblEls[i].textContent = T.sunrise + ' (' + tzLabel + ')';
- if (lblEls[i].textContent.indexOf('Coucher') >= 0) lblEls[i].textContent = T.sunset + ' (' + tzLabel + ')';
+ if (lblEls[i].textContent.match(/Lever|Sunrise|Sonnenaufgang|Amanecer/i)) lblEls[i].textContent = T.sunrise + ' (' + tzLabel + ')';
+ if (lblEls[i].textContent.match(/Coucher|Sunset|Sonnenuntergang|Atardecer/i)) lblEls[i].textContent = T.sunset + ' (' + tzLabel + ')';
  }
 }
 

@@ -59,7 +59,18 @@
     "ui_guides_title": "Wann reisen? Wetter Monat für Monat",
     "ui_guides_sub": "Open-Meteo-Daten · 10 Jahre · Monatliche Klimatabellen · 697 Ziele",
     "ui_guides_desc": "Unsere Guides analysieren Temperaturen, Niederschlag, Sonnenschein und Saisonalität, um die besten Reisemonate für Ihr Vorhaben objektiv zu bestimmen — Reise, Hochzeit, Festival oder Veranstaltung.",
-    "ui_card_sub": "Beste Reisezeit"
+    "ui_card_sub": "Beste Reisezeit",
+    "UI_DETAILS_TOGGLE": "Details — stündlich, Szenarien, Astro",
+    "UI_RAIN_PROB": "💧 Regenwahrscheinlichkeit",
+    "UI_AVG_WIND": "💨 Durchschnittlicher Wind",
+    "UI_SKY": "☁️ Himmel",
+    "UI_MOON_PHASE": "Mondphase",
+    "UI_SUNRISE": "Sonnenaufgang",
+    "UI_SUNSET": "Sonnenuntergang",
+    "UI_HOURLY": "Stündliche Vorhersage",
+    "UI_SCENARIOS": "Extremszenarien",
+    "UI_HIST_TEMPS": "Historische Temperaturen",
+    "UI_SC_PESS_DEFAULT": "Kühl · häufiger Regen"
   },
   "months": [
     "Januar",

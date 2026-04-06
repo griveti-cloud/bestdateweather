@@ -59,7 +59,18 @@
     "ui_guides_title": "¿Cuándo ir? Meteorología mes a mes",
     "ui_guides_sub": "Datos Open-Meteo · 10 años · Tablas climáticas mensuales · 697 destinos",
     "ui_guides_desc": "Nuestras guías analizan temperaturas, precipitaciones, insolación y estacionalidad para determinar objetivamente los mejores meses según tu proyecto — viaje, boda, festival o evento.",
-    "ui_card_sub": "Mejor época"
+    "ui_card_sub": "Mejor época",
+    "UI_DETAILS_TOGGLE": "Ver detalles — horario, escenarios, astro",
+    "UI_RAIN_PROB": "💧 Probabilidad lluvia",
+    "UI_AVG_WIND": "💨 Viento medio",
+    "UI_SKY": "☁️ Cielo",
+    "UI_MOON_PHASE": "Fase lunar",
+    "UI_SUNRISE": "Amanecer",
+    "UI_SUNSET": "Atardecer",
+    "UI_HOURLY": "Hora a hora",
+    "UI_SCENARIOS": "Escenarios extremos",
+    "UI_HIST_TEMPS": "Temperaturas históricas",
+    "UI_SC_PESS_DEFAULT": "Fresco · lluvia frecuente"
   },
   "months": [
     "Enero",
