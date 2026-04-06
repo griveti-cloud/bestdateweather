@@ -989,6 +989,17 @@ def generate_from_template(lang, loc):
         if fp_loc else ''
     )
 
+    # Charger les blocs de contenu traduits
+    blocks_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates', 'blocks')
+    lang_key = lang if lang in ('fr', 'en', 'es', 'de') else 'en'
+    def load_block(name):
+        path = os.path.join(blocks_dir, f'{name}-{lang_key}.html')
+        if os.path.exists(path):
+            return open(path, encoding='utf-8').read()
+        # Fallback FR
+        path_fr = os.path.join(blocks_dir, f'{name}-fr.html')
+        return open(path_fr, encoding='utf-8').read() if os.path.exists(path_fr) else ''
+
     replacements = {
         '{{LANG}}':                html_lang,
         '{{ASSET_PREFIX}}':        asset_prefix,
@@ -1012,6 +1023,10 @@ def generate_from_template(lang, loc):
         '{{UI_GUIDES_SUB}}':       meta.get('ui_guides_sub', ''),
         '{{UI_GUIDES_DESC}}':      meta.get('ui_guides_desc', ''),
         '{{UI_CARD_SUB}}':         meta.get('ui_card_sub', 'Best time to visit'),
+        '{{TRUST_BLOCK}}':         load_block('trust'),
+        '{{BRAND_BLOCK}}':         load_block('brand'),
+        '{{SILO2_BLOCK}}':         load_block('silo2'),
+        '{{SILO3_BLOCK}}':         load_block('silo3'),
     }
 
     for placeholder, value in replacements.items():
