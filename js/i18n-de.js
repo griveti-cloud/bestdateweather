@@ -187,7 +187,7 @@ window.BDW_T = {
 window.BDW_CFG = {
  dateLocale: 'de-DE',
  dateFormat: 'd.m.Y',
- datePlaceholder: '📅  Datum wählen',
+ datePlaceholder: 'Datum wählen',
  fpLocale: 'de',
  defaultUnits: 'metric',
  flagBase: '../flags/',
