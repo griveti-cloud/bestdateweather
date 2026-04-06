@@ -47,7 +47,15 @@
     "page_title": "BestDateWeather — Should you go? Climate scores for 697 destinations",
     "meta_desc": "Find out if your travel dates are worth it. Climate scores /10 for 697 destinations, month by month. Based on 10 years of ERA5 data.",
     "app_sub": "Find the best month for your trip",
-    "app_sub_seo": "697 destinations · 12 months · 10 years of ERA5 data"
+    "app_sub_seo": "697 destinations · 12 months · 10 years of ERA5 data",
+    "ui_mode_date": "Date",
+    "ui_mode_date_sub": "Travel, weddings…",
+    "ui_mode_annual": "12-month view",
+    "ui_mode_annual_sub": "Best month",
+    "ui_cta": "Check conditions that day →",
+    "ui_date_placeholder": "📅  Choose a date",
+    "ui_footer_era5": "ERA5 · 10 years",
+    "ui_footer_guides": "697 destination guides"
   },
   "months": [
     "January",

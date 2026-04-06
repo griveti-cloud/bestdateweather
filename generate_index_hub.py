@@ -990,15 +990,23 @@ def generate_from_template(lang, loc):
     )
 
     replacements = {
-        '{{LANG}}':            html_lang,
-        '{{ASSET_PREFIX}}':    asset_prefix,
-        '{{I18N_SCRIPT}}':     i18n_script,
-        '{{FLATPICKR_LOCALE}}': flatpickr_locale,
-        '{{META_DESC}}':       meta.get('meta_desc', ''),
-        '{{PAGE_TITLE}}':      meta.get('page_title', 'BestDateWeather'),
-        '{{APP_SUB}}':         meta.get('app_sub', ''),
-        '{{APP_SUB_SEO}}':     meta.get('app_sub_seo', ''),
-        '{{HOME_URL}}':        meta.get('home_url', 'index.html'),
+        '{{LANG}}':                html_lang,
+        '{{ASSET_PREFIX}}':        asset_prefix,
+        '{{I18N_SCRIPT}}':         i18n_script,
+        '{{FLATPICKR_LOCALE}}':    flatpickr_locale,
+        '{{META_DESC}}':           meta.get('meta_desc', ''),
+        '{{PAGE_TITLE}}':          meta.get('page_title', 'BestDateWeather'),
+        '{{APP_SUB}}':             meta.get('app_sub', ''),
+        '{{APP_SUB_SEO}}':         meta.get('app_sub_seo', ''),
+        '{{HOME_URL}}':            meta.get('home_url', 'index.html'),
+        '{{UI_MODE_DATE}}':        meta.get('ui_mode_date', 'Date'),
+        '{{UI_MODE_DATE_SUB}}':    meta.get('ui_mode_date_sub', ''),
+        '{{UI_MODE_ANNUAL}}':      meta.get('ui_mode_annual', '12-month view'),
+        '{{UI_MODE_ANNUAL_SUB}}':  meta.get('ui_mode_annual_sub', ''),
+        '{{UI_CTA}}':              meta.get('ui_cta', 'Check the weather →'),
+        '{{UI_DATE_PLACEHOLDER}}': meta.get('ui_date_placeholder', '📅  Choose a date'),
+        '{{UI_FOOTER_ERA5}}':      meta.get('ui_footer_era5', 'ERA5 · 10 years'),
+        '{{UI_FOOTER_GUIDES}}':    meta.get('ui_footer_guides', '697 destination guides'),
     }
 
     for placeholder, value in replacements.items():

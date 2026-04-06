@@ -46,7 +46,15 @@
     "page_title": "BestDateWeather — Klimabewertung für 697 Reiseziele: lohnt es sich?",
     "meta_desc": "Finde heraus, ob deine Reisedaten gut sind. Klimabewertungen /10 für 697 Ziele, Monat für Monat. Basierend auf 10 Jahren ERA5-Daten.",
     "app_sub": "Den besten Reisemonat finden",
-    "app_sub_seo": "697 Ziele · 12 Monate · 10 Jahre ERA5-Daten"
+    "app_sub_seo": "697 Ziele · 12 Monate · 10 Jahre ERA5-Daten",
+    "ui_mode_date": "Datum",
+    "ui_mode_date_sub": "Reise, Hochzeit…",
+    "ui_mode_annual": "12-Monats-Ansicht",
+    "ui_mode_annual_sub": "Bester Monat",
+    "ui_cta": "Wetter an diesem Tag prüfen →",
+    "ui_date_placeholder": "📅  Datum wählen",
+    "ui_footer_era5": "ERA5 · 10 Jahre",
+    "ui_footer_guides": "697 Reiseziel-Guides"
   },
   "months": [
     "Januar",
