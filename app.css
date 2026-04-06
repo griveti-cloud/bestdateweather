@@ -366,7 +366,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 }
 
 #inp-date:not(.has-val){color:var(--slate3)}
-#inp-date.has-val{color:var(--navy)}
+#inp-date.has-val{color:white}
 
 /* ── Destination Hub ── */
 .dh-search{position:relative;margin-bottom:24px}
