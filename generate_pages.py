@@ -418,6 +418,7 @@ def footer_html(cfg, dest):
  <p class="f11-muted"><a href="{legal_url}" class="txt-muted">{legal_label}</a> · <a href="{priv_url}" class="txt-muted">{priv_label}</a> · <a href="{fc['contact'][0]}" class="txt-muted">{fc['contact'][1]}</a></p>
 </footer>
 <script src="{cfg['asset_prefix']}js/sw-register.js"></script>
+<script src="{cfg['asset_prefix']}js/i18n-{cfg['lang']}.min.js"></script>
 <script src="{cfg['asset_prefix']}js/core.min.js?v={CORE_JS_VERSION}" defer></script>
 <script src="{cfg['asset_prefix']}js/favs.min.js?v=1" defer></script>
 <script src="{cfg['asset_prefix']}js/share.js" defer></script>'''
