@@ -814,7 +814,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .footer-wordmark{font-size:11px;color:var(--slate2);white-space:nowrap}
 
 /* mode-btn hover plus net */
-.mode-btn:hover:not(.active){border-color:var(--slate3)!important;background:var(--cream)!important}
+.mode-btn:hover:not(.active){border-color:rgba(255,255,255,.25)!important;background:rgba(255,255,255,.12)!important}
 
 /* wow example : plus lisible */
 #cta-wow-example{font-size:12px!important;color:var(--slate2);font-style:italic}
@@ -855,17 +855,17 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .main-card .wrap{padding:0 0 8px}
 
 
-/* Fix contraste mode toggle — texte inactif trop clair */
-.mode-btn{color:var(--navy)!important}
-.mode-btn svg{opacity:.7!important;stroke:var(--navy)}
-.mode-btn-title{color:var(--navy)!important;font-weight:700!important}
-.mode-btn-sub{color:var(--slate)!important;opacity:1!important}
+/* Fix contraste mode toggle — adapté fond sombre */
+.mode-btn{color:rgba(255,255,255,.75)!important}
+.mode-btn svg{opacity:.75!important;stroke:rgba(255,255,255,.75)}
+.mode-btn-title{color:rgba(255,255,255,.75)!important;font-weight:700!important}
+.mode-btn-sub{color:rgba(255,255,255,.5)!important;opacity:1!important}
 .mode-btn.active .mode-btn-title{color:white!important}
 .mode-btn.active .mode-btn-sub{color:rgba(255,255,255,.75)!important}
 .mode-btn.active svg{stroke:white!important;opacity:.9!important}
 
-/* Fix sub-text inactif : contraste renforcé */
-.mode-btn:not(.active) .mode-btn-sub{color:var(--slate2)!important;opacity:1!important}
+
+
 
 /* Desktop : field-group en 2 colonnes côte à côte */
 @media(min-width:641px){
