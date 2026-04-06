@@ -6,7 +6,7 @@
 
 :root{
   --cream:#faf8f3;--cream2:#f0ebe0;--navy:#1a1f2e;
-  --gold:#f09830;--gold2:#f5b83c;--gold-light:#fef4d8;
+  --gold:#c99438;--gold2:#e8b84b;--gold-light:#fef3d0;
   --slate:#4a5568;--slate2:#718096;--slate3:#a0aec0;
   --green:#1a7a4a;--green-bg:#e8f8f0;
   --red:#dc2626;--red-bg:#fef2f2;
@@ -150,7 +150,7 @@ footer a{color:var(--gold2);text-decoration:none}
 .cta-box strong{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;display:block;margin-bottom:10px}
 .cta-box p{color:rgba(255,255,255,.7);margin:0 0 20px;line-height:1.75;font-size:14px}
 .cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:white;text-decoration:none;font-weight:800;border-radius:10px;padding:12px 22px;font-size:14px;transition:all .2s}
-.cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(240,152,48,.4)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,148,56,.4)}
 .cta-sub{margin-top:12px;font-size:11px;color:rgba(255,255,255,.45)}
 
 /* Méthodologie strip */
@@ -342,7 +342,7 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 .nav-card{flex:1;min-width:140px;padding:16px;background:white;border:1.5px solid #e8e0d0;border-radius:12px;text-decoration:none;text-align:center}
 .nav-card-active{flex:1;min-width:140px;padding:16px;background:#fef9c3;border:1.5px solid var(--gold);border-radius:12px;text-decoration:none;text-align:center}
 .sim-card-sm{display:flex;flex-direction:column;gap:4px;padding:12px 14px;background:white;border:1.5px solid var(--cream2);border-radius:12px;text-decoration:none;transition:border-color .15s,box-shadow .15s}
-.sim-card-sm:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(240,152,48,.15)}
+.sim-card-sm:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(201,148,56,.15)}
 
 /* FAQ cards */
 .faq-card{border:1.5px solid var(--cream2);border-radius:10px;padding:16px;background:white}
@@ -551,7 +551,7 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 /* nearby-grid */
 .nearby-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:8px 0}
 .nearby-card{display:flex;flex-direction:column;gap:4px;padding:12px 14px;background:white;border:1.5px solid var(--cream2);border-radius:12px;text-decoration:none;transition:border-color .15s,box-shadow .15s}
-.nearby-card:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(240,152,48,.15)}
+.nearby-card:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(201,148,56,.15)}
 .nearby-name{font-size:13px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px}
 .nearby-meta{font-size:11px;color:var(--slate2);font-weight:500}
 /* ── Decision card (unified) ────────────────────────────────── */
