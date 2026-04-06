@@ -63,28 +63,28 @@
 /* ── RECENT SEARCHES ── */
 .wb-section{padding:0 12px;margin-bottom:0}
 .wb-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
-.wb-section-title{font-size:12px;font-weight:600;color:var(--navy);letter-spacing:-.2px}
+.wb-section-title{font-size:12px;font-weight:600;color:rgba(255,255,255,.7);letter-spacing:-.2px}
 .wb-section-action{font-size:11px;color:var(--mist);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif}
 .wb-section-action:hover{color:var(--gold)}
 .wb-section-sub{font-size:11px;color:var(--mist);font-style:italic}
 
-.wb-recent{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:var(--r-sm);padding:3px 10px;margin-bottom:1px;border:1px solid var(--cream2);cursor:pointer;transition:transform .1s;animation:fadeUp .3s ease both}
+.wb-recent{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.07);border-radius:var(--r-sm);padding:3px 10px;margin-bottom:1px;border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:transform .1s;animation:fadeUp .3s ease both}
 .wb-recent:hover{border-color:var(--gold)}
 .wb-recent:active{transform:scale(.985)}
 .wb-recent-left{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden}
 .wb-recent-flag{font-size:14px;line-height:1;flex-shrink:0}
 .wb-recent-info{min-width:0;display:flex;align-items:baseline;gap:4px;overflow:hidden}
-.wb-recent-name{font-size:12px;font-weight:600;color:var(--navy);white-space:nowrap;line-height:1}
+.wb-recent-name{font-size:12px;font-weight:600;color:rgba(255,255,255,.85);white-space:nowrap;line-height:1}
 .wb-recent-date{font-size:10px;color:var(--mist);white-space:nowrap;line-height:1}
 .wb-recent-mode{font-size:10px;color:var(--mist);opacity:.7}
 .wb-score{font-size:14px;font-weight:700;padding:3px 10px;border-radius:var(--r-xs);font-family:'DM Sans',sans-serif;flex-shrink:0}
 
 /* ── SUGGESTIONS ── */
-.wb-suggest{background:#fff;border-radius:var(--r-sm);padding:3px 10px;margin-bottom:1px;border:1px solid var(--cream2);border-left:3px solid var(--gold);cursor:pointer;transition:transform .1s;animation:fadeUp .3s ease both;text-decoration:none;display:flex;align-items:center;justify-content:space-between}
+.wb-suggest{background:rgba(255,255,255,.07);border-radius:var(--r-sm);padding:3px 10px;margin-bottom:1px;border:1px solid rgba(255,255,255,.1);border-left:3px solid var(--gold);cursor:pointer;transition:transform .1s;animation:fadeUp .3s ease both;text-decoration:none;display:flex;align-items:center;justify-content:space-between}
 .wb-suggest:hover{border-color:var(--gold)}
 .wb-suggest:active{transform:scale(.985)}
 .wb-suggest-top{display:flex;align-items:center;gap:5px;flex:1;min-width:0;overflow:hidden}
-.wb-suggest-name{font-size:12px;font-weight:600;color:var(--navy);white-space:nowrap;line-height:1}
+.wb-suggest-name{font-size:12px;font-weight:600;color:rgba(255,255,255,.85);white-space:nowrap;line-height:1}
 .wb-suggest-reason{font-size:10px;color:var(--mist);font-style:italic;white-space:nowrap;line-height:1}
 
 /* ── GEOLOCATION PROMPT ── */
