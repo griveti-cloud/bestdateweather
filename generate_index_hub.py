@@ -1000,6 +1000,17 @@ def generate_from_template(lang, loc):
         path_fr = os.path.join(blocks_dir, f'{name}-fr.html')
         return open(path_fr, encoding='utf-8').read() if os.path.exists(path_fr) else ''
 
+    # Passe 1 : substituer les blocs (qui peuvent contenir d'autres placeholders)
+    blocks = {
+        '{{TRUST_BLOCK}}':  load_block('trust'),
+        '{{BRAND_BLOCK}}':  load_block('brand'),
+        '{{SILO2_BLOCK}}':  load_block('silo2'),
+        '{{SILO3_BLOCK}}':  load_block('silo3'),
+    }
+    for placeholder, value in blocks.items():
+        content = content.replace(placeholder, value)
+
+    # Passe 2 : substituer tous les autres placeholders (y compris ASSET_PREFIX dans les blocs)
     replacements = {
         '{{LANG}}':                html_lang,
         '{{ASSET_PREFIX}}':        asset_prefix,
@@ -1023,10 +1034,6 @@ def generate_from_template(lang, loc):
         '{{UI_GUIDES_SUB}}':       meta.get('ui_guides_sub', ''),
         '{{UI_GUIDES_DESC}}':      meta.get('ui_guides_desc', ''),
         '{{UI_CARD_SUB}}':         meta.get('ui_card_sub', 'Best time to visit'),
-        '{{TRUST_BLOCK}}':         load_block('trust'),
-        '{{BRAND_BLOCK}}':         load_block('brand'),
-        '{{SILO2_BLOCK}}':         load_block('silo2'),
-        '{{SILO3_BLOCK}}':         load_block('silo3'),
     }
 
     for placeholder, value in replacements.items():
