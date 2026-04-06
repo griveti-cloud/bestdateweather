@@ -4,7 +4,7 @@ window.BDW_T = {
  // Placeholders
  phBeach: 'Beach destination…',
  phSki: 'Ski resort…',
- phDefault: '🌍  Paris, Barcelona, Tokyo…',
+ phDefault: 'Paris, Barcelona, Tokyo…',
 
  // Weather conditions
  storm: 'Storm', snow: 'Snow', rain: 'Rain', showers: 'Showers',
