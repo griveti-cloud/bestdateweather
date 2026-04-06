@@ -120,7 +120,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .uc-label-unused{font-size:10px;font-weight:700;color:var(--slate2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px}
 
 /* CTA button */
-.btn-go{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:var(--r-sm);color:white;font-family:'DM Sans','DM Sans Fallback',sans-serif;font-weight:700;font-size:16px;padding:17px;cursor:pointer;transition:filter .2s,transform .2s,opacity .2s;letter-spacing:.1px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 20px rgba(201,148,56,.35);margin-bottom:16px}
+.btn-go{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:var(--r);color:white;font-family:'DM Sans','DM Sans Fallback',sans-serif;font-weight:700;font-size:16px;padding:17px;cursor:pointer;transition:filter .2s,transform .2s,opacity .2s;letter-spacing:.1px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 20px rgba(201,148,56,.35);margin-bottom:16px}
 .btn-go:hover:not(:disabled){filter:brightness(1.06);transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,148,56,.35)}
 .btn-go:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
 .btn-go svg{width:18px;height:18px;opacity:.8}
