@@ -54,7 +54,12 @@
     "ui_cta": "Wetter an diesem Tag prüfen →",
     "ui_date_placeholder": "📅  Datum wählen",
     "ui_footer_era5": "ERA5 · 10 Jahre",
-    "ui_footer_guides": "697 Reiseziel-Guides"
+    "ui_footer_guides": "697 Reiseziel-Guides",
+    "ui_guides_tag": "Reiseziel-Guides",
+    "ui_guides_title": "Wann reisen? Wetter Monat für Monat",
+    "ui_guides_sub": "Open-Meteo-Daten · 10 Jahre · Monatliche Klimatabellen · 697 Ziele",
+    "ui_guides_desc": "Unsere Guides analysieren Temperaturen, Niederschlag, Sonnenschein und Saisonalität, um die besten Reisemonate für Ihr Vorhaben objektiv zu bestimmen — Reise, Hochzeit, Festival oder Veranstaltung.",
+    "ui_card_sub": "Beste Reisezeit"
   },
   "months": [
     "Januar",

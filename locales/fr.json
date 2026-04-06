@@ -54,7 +54,12 @@
     "ui_cta": "Voir les conditions ce jour →",
     "ui_date_placeholder": "📅  Date du projet",
     "ui_footer_era5": "ERA5 · 10 ans",
-    "ui_footer_guides": "697 guides destinations"
+    "ui_footer_guides": "697 guides destinations",
+    "ui_guides_tag": "Guides destinations",
+    "ui_guides_title": "Quand partir ? Météo mois par mois",
+    "ui_guides_sub": "Données Open-Meteo · 10 ans · Tableaux climatiques mensuels · 697 destinations",
+    "ui_guides_desc": "Nos guides analysent températures, précipitations, ensoleillement et saisonnalité pour déterminer objectivement les meilleurs mois selon votre projet — voyage, mariage, festival ou événement.",
+    "ui_card_sub": "Quand partir"
   },
   "months": [
     "Janvier",

@@ -55,7 +55,12 @@
     "ui_cta": "Check conditions that day →",
     "ui_date_placeholder": "📅  Choose a date",
     "ui_footer_era5": "ERA5 · 10 years",
-    "ui_footer_guides": "697 destination guides"
+    "ui_footer_guides": "697 destination guides",
+    "ui_guides_tag": "Destination guides",
+    "ui_guides_title": "When to visit? Weather month by month",
+    "ui_guides_sub": "Open-Meteo data · 10 years · Monthly climate tables · 697 destinations",
+    "ui_guides_desc": "Our guides analyze temperatures, precipitation, sunshine and seasonality to objectively determine the best months for your trip — travel, wedding, festival or event.",
+    "ui_card_sub": "Best time to visit"
   },
   "months": [
     "January",

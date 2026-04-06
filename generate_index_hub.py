@@ -1007,6 +1007,11 @@ def generate_from_template(lang, loc):
         '{{UI_DATE_PLACEHOLDER}}': meta.get('ui_date_placeholder', '📅  Choose a date'),
         '{{UI_FOOTER_ERA5}}':      meta.get('ui_footer_era5', 'ERA5 · 10 years'),
         '{{UI_FOOTER_GUIDES}}':    meta.get('ui_footer_guides', '697 destination guides'),
+        '{{UI_GUIDES_TAG}}':       meta.get('ui_guides_tag', 'Destination guides'),
+        '{{UI_GUIDES_TITLE}}':     meta.get('ui_guides_title', 'When to visit?'),
+        '{{UI_GUIDES_SUB}}':       meta.get('ui_guides_sub', ''),
+        '{{UI_GUIDES_DESC}}':      meta.get('ui_guides_desc', ''),
+        '{{UI_CARD_SUB}}':         meta.get('ui_card_sub', 'Best time to visit'),
     }
 
     for placeholder, value in replacements.items():
