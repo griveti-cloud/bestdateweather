@@ -952,6 +952,69 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from lib.page_config import load_locale, SUPPORTED_LANGS
 
 
+LANG_CONFIG = {
+    'fr':    {'output': 'index.html',   'i18n': 'js/i18n-fr.min.js?v=7',         'flatpickr_locale': 'fr'},
+    'en':    {'output': 'en/app.html',  'i18n': '../js/i18n-en.min.js?v=9',       'flatpickr_locale': None},
+    'en-us': {'output': 'us/app.html',  'i18n': '../js/i18n-en-us.min.js?v=9',    'flatpickr_locale': None},
+    'es':    {'output': 'es/app.html',  'i18n': '../js/i18n-es.min.js?v=9',       'flatpickr_locale': 'es'},
+    'de':    {'output': 'de/app.html',  'i18n': '../js/i18n-de.min.js?v=9',       'flatpickr_locale': 'de'},
+}
+
+FLATPICKR_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13'
+
+def generate_from_template(lang, loc):
+    """Génère le fichier hub depuis templates/app.template.html.
+    Toute modification de structure doit se faire dans le template — jamais
+    directement dans index.html ou les app.html multilingues.
+    """
+    cfg = LANG_CONFIG[lang]
+    meta = loc.get('meta', {})
+    asset_prefix = meta.get('asset_prefix', '../' if lang != 'fr' else '')
+    html_lang = meta.get('html_lang', lang)
+
+    template_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates', 'app.template.html')
+    if not os.path.exists(template_path):
+        print(f'  ⚠️  Template introuvable : {template_path}')
+        return False
+
+    content = open(template_path, encoding='utf-8').read()
+
+    # Substitution i18n script
+    i18n_script = f'<script defer src="{cfg["i18n"]}"></script>'
+
+    # Substitution flatpickr locale
+    fp_loc = cfg['flatpickr_locale']
+    flatpickr_locale = (
+        f'<script defer src="{FLATPICKR_CDN}/l10n/{fp_loc}.js"></script>\n'
+        if fp_loc else ''
+    )
+
+    replacements = {
+        '{{LANG}}':            html_lang,
+        '{{ASSET_PREFIX}}':    asset_prefix,
+        '{{I18N_SCRIPT}}':     i18n_script,
+        '{{FLATPICKR_LOCALE}}': flatpickr_locale,
+        '{{META_DESC}}':       meta.get('meta_desc', ''),
+        '{{PAGE_TITLE}}':      meta.get('page_title', 'BestDateWeather'),
+        '{{APP_SUB}}':         meta.get('app_sub', ''),
+        '{{APP_SUB_SEO}}':     meta.get('app_sub_seo', ''),
+    }
+
+    for placeholder, value in replacements.items():
+        content = content.replace(placeholder, value)
+
+    # Vérifier qu'il ne reste pas de placeholders non substitués
+    import re as _re
+    remaining = _re.findall(r'\{\{[A-Z_]+\}\}', content)
+    if remaining:
+        print(f'  ⚠️  Placeholders non substitués : {set(remaining)}')
+
+    output = cfg['output']
+    os.makedirs(os.path.dirname(output) if os.path.dirname(output) else '.', exist_ok=True)
+    open(output, 'w', encoding='utf-8').write(content)
+    return True
+
+
 def build_hub_footer(current_lang, current_loc):
     """Generate the lang-switcher div for a hub page footer.
 
@@ -1024,48 +1087,37 @@ with open('data/destinations.csv', encoding='utf-8-sig') as f:
         dests.append(r)
 print(f"📦 {len(dests)} destinations")
 
-loc_fr = load_locale('fr')
-print("\n🇫🇷 index.html...")
-if inject('index.html', dests, loc_fr):
-    c = len(re.findall(r'meilleure-periode-', open('index.html').read()))
-    print(f"  ✅ {c} liens")
+FLAGS = {'fr': '🇫🇷', 'en': '🇬🇧', 'en-us': '🇺🇸', 'es': '🇪🇸', 'de': '🇩🇪'}
+LINK_PATTERN = {'fr': 'meilleure-periode-', 'en': 'best-time-to-visit-', 'en-us': 'best-time-to-visit-', 'es': 'mejor-epoca-', 'de': 'beste-reisezeit-'}
 
-if os.path.exists('en/app.html'):
-    loc_en = load_locale('en')
-    print("\n🇬🇧 en/app.html...")
-    if 'SILO 1' in open('en/app.html').read():
-        if inject('en/app.html', dests, loc_en):
-            c = len(re.findall(r'best-time-to-visit-', open('en/app.html').read()))
-            print(f"  ✅ {c} liens")
+for lang in ['fr', 'en', 'en-us', 'es', 'de']:
+    cfg = LANG_CONFIG[lang]
+    loc = load_locale(lang)
+    output = cfg['output']
+    flag = FLAGS.get(lang, '🌍')
+    print(f"\n{flag} {output}...")
 
-if os.path.exists('es/app.html'):
-    loc_es = load_locale('es')
-    print("\n🇪🇸 es/app.html...")
-    if 'SILO 1' in open('es/app.html').read():
-        if inject('es/app.html', dests, loc_es):
-            c = len(re.findall(r'mejor-epoca-', open('es/app.html').read()))
-            print(f"  ✅ {c} liens")
+    # 1. Générer depuis le template (structure HTML commune)
+    if generate_from_template(lang, loc):
+        print(f"  ✅ Template appliqué")
+    else:
+        print(f"  ⚠️  Erreur template — fichier existant conservé")
 
-if os.path.exists('us/app.html'):
-    loc_us = load_locale('en-us')
-    print("\n🇺🇸 us/app.html...")
-    if 'SILO 1' in open('us/app.html').read():
-        if inject('us/app.html', dests, loc_us):
-            c = len(re.findall(r'best-time-to-visit-', open('us/app.html').read()))
-            print(f"  ✅ {c} liens")
+    # 2. Injecter les SILOs (destinations)
+    if 'SILO 1' in open(output).read():
+        if inject(output, dests, loc):
+            pattern = LINK_PATTERN.get(lang, 'meilleure-periode-')
+            c = len(re.findall(pattern, open(output).read()))
+            print(f"  ✅ {c} liens destinations")
+    else:
+        print(f"  ⚠️  Marqueur SILO 1 absent")
 
-    loc_de = load_locale('de')
-    print("\n🇩🇪 de/app.html...")
-    if os.path.exists('de/app.html') and 'SILO 1' in open('de/app.html').read():
-        if inject('de/app.html', dests, loc_de):
-            c = len(re.findall(r'beste-reisezeit-', open('de/app.html').read()))
-            print(f"  ✅ {c} liens")
-
-# Inject lang-switcher footers in all hub pages
+# Inject lang-switcher footers
 print("\n🔗 Injection footers langue...")
-for lang, filepath in [('fr','index.html'),('en','en/app.html'),('es','es/app.html'),('en-us','us/app.html'),('de','de/app.html')]:
+for lang in ['fr', 'en', 'en-us', 'es', 'de']:
+    filepath = LANG_CONFIG[lang]['output']
+    loc = load_locale(lang)
     if os.path.exists(filepath):
-        loc = load_locale(lang)
         if inject_hub_footer(filepath, lang, loc):
             print(f"  ✅ {filepath} footer mis à jour")
         else:

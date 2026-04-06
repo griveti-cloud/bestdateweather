@@ -42,7 +42,11 @@
     ],
     "subdir": "es",
     "flag": "flags/es.png",
-    "lang_label": "Español"
+    "lang_label": "Español",
+    "page_title": "BestDateWeather — ¿Vale la pena ir? Puntuaciones climáticas 697 destinos",
+    "meta_desc": "Descubre si tus fechas de viaje son buenas. Puntuaciones climáticas /10 para 697 destinos, mes a mes. Basado en 10 años de datos ERA5.",
+    "app_sub": "Encuentra el mejor mes para tu viaje",
+    "app_sub_seo": "697 destinos · 12 meses · 10 años de datos ERA5"
   },
   "months": [
     "Enero",

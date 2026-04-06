@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-<!-- Google tag — chargé après load -->
+<!-- Google tag — chargé après interaction/idle pour TBT -->
 <script>!function(){function l(){if(!window._gtmL){window._gtmL=1;var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL';document.head.appendChild(s);}};['click','touchstart','scroll','keydown'].forEach(function(e){window.addEventListener(e,l,{once:1,passive:1})});setTimeout(l,4000);}();</script>
 <script defer src="../js/ga.js?v=11c00f"></script>
 <meta charset="UTF-8"/>
@@ -9,25 +9,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <meta name="description" content="Find out if your travel dates are worth it. Climate scores /10 for 697 destinations, month by month. Based on 10 years of ERA5 data."/>
 <title>BestDateWeather — Should you go? Climate scores for 697 destinations</title>
-<link rel="stylesheet" href="../app.css?v=17"/>
+
+<style>@font-face { font-family: 'DM Sans Fallback'; src: local('Arial'), local('Helvetica Neue'); size-adjust: 97%; ascent-override: 94%; descent-override: 25%; line-gap-override: 0%; } @font-face { font-family: 'Playfair Display Fallback'; src: local('Georgia'), local('Times New Roman'); size-adjust: 105%; ascent-override: 88%; descent-override: 24%; line-gap-override: 0%; } @font-face { font-family: 'Fraunces Fallback'; src: local('Georgia'), local('Times New Roman'); font-weight: 900; size-adjust: 110%; ascent-override: 90%; descent-override: 20%; line-gap-override: 0%; } :root{ --cream:#faf8f3;--cream2:#f2ede2;--navy:#1a1f2e;--navy2:#252d42; --gold:#e8940a;--gold2:#f5b020;--gold-light:#fef3d0; --slate:#4a5568;--slate2:#5c687a;--slate3:#546070; --green:#1a7a4a;--green-bg:#e8f8f0; --blue:#1a5f9a;--blue-bg:#e8f2fc; --mist:#7a8fa8;--mist-bg:#eef3f8; --shadow:0 4px 24px rgba(26,31,46,.08);--shadow-lg:0 12px 48px rgba(26,31,46,.14); --r:18px;--r-sm:12px;--r-xs:8px; } *,*::before,*::after{box-sizing:border-box;margin:0;padding:0} html{scroll-behavior:smooth} body{font-family:'DM Sans','DM Sans Fallback',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;-webkit-font-smoothing:antialiased} img[src*="flags/"]{object-fit:contain;vertical-align:middle} @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}} @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}} header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:center} .app-title{font-family:'Fraunces','Fraunces Fallback',serif;font-size:clamp(30px,5.5vw,48px);font-weight:900;color:var(--navy);line-height:1.05;letter-spacing:-.5px;margin-bottom:8px;animation:fadeUp .4s ease both} .app-title em{font-style:italic;color:#b06800;font-weight:900} .app-sub{font-size:15px;color:var(--slate);font-weight:500;line-height:1.4;max-width:440px;margin:0 auto 4px;animation:fadeUp .4s .08s ease both} .app-proof{display:inline-flex;align-items:center;gap:6px;background:var(--gold-light);border:1px solid rgba(232,148,10,.25);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;color:#7a5500;letter-spacing:.3px;margin:0 auto 12px;white-space:nowrap;animation:fadeUp .4s .14s ease both} .app-proof-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0} .unit-toggle{display:flex;gap:6px;justify-content:center;margin:0 auto 12px} .unit-btn{background:none;border:1.5px solid var(--cream2);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--slate2);cursor:pointer;font-family:'DM Sans','DM Sans Fallback',sans-serif;transition:background .15s,opacity .15s} .unit-btn.active{background:var(--navy);border-color:var(--navy);color:white} .app-disclaimer{display:inline-flex;align-items:center;gap:7px;background:white;border:1px solid var(--cream2);border-radius:20px;padding:5px 14px;font-size:11px;color:var(--slate2);max-width:440px;margin:0 auto 28px;line-height:1.4;animation:fadeUp .4s .2s ease both;white-space:nowrap} .app-disclaimer-ico{flex-shrink:0;opacity:.5;font-size:12px} .wrap{max-width:620px;margin:0 auto;padding:0 20px 20px} .search-card{background:white;border-radius:var(--r);box-shadow:var(--shadow-lg);padding:24px;border:1px solid rgba(26,31,46,.04);margin-bottom:16px} .field-group{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px} @media(max-width:500px){.field-group{grid-template-columns:1fr}} .field-wrap{position:relative} .field-label{font-size:12px;font-weight:600;color:var(--slate2);letter-spacing:0;text-transform:none;margin-bottom:6px;display:flex;align-items:center;gap:5px} .field-label svg{opacity:.6} .inp{width:100%;background:white;border:1.5px solid var(--cream2);border-radius:var(--r);color:var(--navy);font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:15px;font-weight:500;padding:14px 40px 14px 16px;outline:none;transition:opacity .15s;will-change:transform} .inp::placeholder{color:var(--slate3);font-weight:400} #inp-date::placeholder{color:var(--slate2)}#inp-date{color:var(--navy)} .inp:focus{outline:3px solid rgba(232,148,10,.35);outline-offset:0;background:white} .inp[type=date]{color:var(--navy)} .inp[type=date]::-webkit-datetime-edit-fields-wrapper{opacity:1} .inp[type=date]::-webkit-calendar-picker-indicator{opacity:0.6;cursor:pointer} .date-hint{font-size:11px;color:var(--slate);font-weight:500;margin-top:5px;padding-left:2px} .inp-wrap{position:relative} .inp-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border:none;background:var(--cream2);border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center;color:var(--slate2);font-size:14px;line-height:1;padding:0;transition:opacity .15s} .inp-clear:hover{background:var(--slate3);color:white} .inp-clear.visible{display:flex} .field-wrap .inp{padding-right:40px} .ac-list{position:absolute;top:calc(100% + 6px);left:0;right:0;background:white;border-radius:var(--r-sm);box-shadow:var(--shadow-lg);border:1px solid var(--cream2);z-index:100;display:none;max-height:220px;overflow-y:auto} .ac-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;font-size:13px;font-weight:500;color:var(--navy);border-bottom:1px solid var(--cream)} .ac-item:last-child{border-bottom:none} .ac-item:hover,.ac-item.sel{background:var(--gold-light);color:var(--navy)} .ac-sub{font-size:11px;color:var(--slate3);font-weight:400} .uc-row{display:flex;gap:6px;flex-wrap:nowrap;margin-bottom:0;overflow-x:auto} .uc-filter-wrap{padding:16px 0 4px;} .uc-filter-label{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--slate3);margin-bottom:10px} .uc-pills-row{display:flex;flex-wrap:wrap;gap:6px;} .uc-pill{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;background:var(--cream);border:1.5px solid var(--cream2);border-radius:20px;font-size:11px;font-weight:600;color:var(--slate);cursor:pointer;transition:transform .18s,opacity .18s;white-space:nowrap} .uc-pill:hover{border-color:var(--gold);background:var(--gold-light);color:var(--navy)} #date-form.uc-required{opacity:.45;pointer-events:none;user-select:none} #date-form.uc-required::after{content:"";position:absolute;inset:0;cursor:not-allowed} #date-form{position:relative;transition:opacity .2s} .uc-hint{font-size:11px;color:var(--gold);font-weight:600;text-align:center;margin-bottom:8px;display:none} .uc-hint.visible{display:block} #annual-wrap .annual-city-row{position:relative} #annual-wrap.uc-required-ann .search-card{opacity:.45;pointer-events:none} .uc-pill.active{border-color:var(--gold);background:var(--gold-light);color:var(--navy);font-weight:700} .uc-pill-neutral{} .uc-label-unused{font-size:10px;font-weight:700;color:var(--slate2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px} .btn-go{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:var(--r);color:white;font-family:'DM Sans','DM Sans Fallback',sans-serif;font-weight:700;font-size:16px;padding:17px;cursor:pointer;transition:filter .2s,transform .2s,opacity .2s;letter-spacing:.1px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 20px rgba(232,148,10,.35);margin-bottom:16px} .btn-go:hover:not(:disabled){filter:brightness(1.06);transform:translateY(-1px);box-shadow:0 8px 24px rgba(232,148,10,.35)} .btn-go:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none} .btn-go svg{width:18px;height:18px;opacity:.8} .prog-wrap{margin-top:14px;display:none} .prog-labels{display:flex;justify-content:space-between;flex-shrink:0;font-size:11px;color:var(--slate2);margin-bottom:6px;font-weight:600} .prog-track{height:4px;background:var(--cream2);border-radius:2px;overflow:hidden} .prog-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:2px;transition:width .3s} .err-box{background:#fff5f5;border:2px solid #fca5a5;border-radius:var(--r-sm);padding:12px 16px;font-size:13px;color:#dc2626;margin-top:12px;display:none;font-weight:500} .footer-langs{white-space:nowrap;overflow-x:auto;font-size:12px} .mode-toggle{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px} .mode-btn{padding:12px 14px;border:1.5px solid var(--cream2);border-radius:var(--r);background:white;font-family:"DM Sans","DM Sans Fallback",sans-serif;color:var(--slate2);cursor:pointer;transition:background .2s,opacity .15s,transform .15s;display:flex;align-items:center;gap:10px;text-align:left;box-shadow:0 1px 4px rgba(26,31,46,.05);will-change:transform} .mode-btn:hover:not(.active){border-color:var(--slate3);color:var(--navy);transform:translateY(-1px)} .mode-btn.active{background:var(--gold-light);color:var(--navy);border-color:var(--gold);box-shadow:0 2px 12px rgba(232,148,10,.18)} .mode-btn svg{width:16px;height:16px;flex-shrink:0;opacity:.6} .mode-btn.active svg{opacity:1} .mode-btn-title{font-size:14px;font-weight:700;line-height:1.2;display:block} .mode-btn-sub{font-size:11.5px;line-height:1.3;display:block;margin-top:2px;color:var(--slate2)} .score-block{padding:20px 28px 18px;background:white;border-bottom:1px solid var(--cream2)} .score-row{display:flex;align-items:center;gap:20px} .score-ring-wrap{position:relative;flex-shrink:0;width:72px;height:72px} .score-ring-wrap svg{transform:rotate(-90deg)} .score-ring-bg{fill:none;stroke:var(--cream2);stroke-width:6} .score-ring-fill{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1),stroke .4s} .score-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display','Playfair Display Fallback',serif;font-size:16px;font-weight:700;color:var(--navy)} .score-info{flex:1;min-width:0} .score-usecase{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--slate3);margin-bottom:4px} .score-verdict{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px;line-height:1.35} .score-risk{font-size:11px;font-weight:500;color:var(--slate2);line-height:1.5} .score-chips{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px} .score-chip{display:flex;align-items:center;gap:5px;padding:7px 10px;background:var(--cream);border-radius:20px;border:1.5px solid var(--cream2);min-width:0;justify-content:space-between} .score-chip-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0} .score-chip-lbl{font-size:11px;font-weight:600;color:var(--slate);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .details-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--cream);border:1.5px solid var(--cream2);border-radius:var(--r-sm);cursor:pointer;font-family:'DM Sans','DM Sans Fallback',sans-serif;font-size:13px;font-weight:600;color:var(--slate2);margin-top:12px;transition:background .2s} .details-toggle:hover{background:var(--cream2)} .details-toggle-icon{font-size:18px;transition:transform .25s;display:inline-block} .details-toggle.open .details-toggle-icon{transform:rotate(180deg)} .details-panel{display:none;margin-top:0} .details-panel.open{display:block} .score-chip-val{font-size:11px;font-weight:700;color:var(--navy);white-space:nowrap;padding-left:3px} .score-info-btn{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--cream2);color:var(--slate3);font-size:10px;font-weight:700;cursor:pointer;border:none;margin-left:6px;vertical-align:middle;transition:all .15s;flex-shrink:0} .score-info-btn:hover{background:var(--navy);color:white} .score-tooltip{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:220px;min-width:200px;background:var(--navy);color:white;border-radius:10px;padding:12px 14px;font-size:11px;line-height:1.8;z-index:1000;box-shadow:0 8px 24px rgba(26,31,46,.35)} .score-tooltip::after{display:none} .score-info-wrap{position:relative;display:inline-block;z-index:1000} .score-tooltip.visible{display:block} .month-card.recommended{border-color:var(--gold) !important;box-shadow:0 4px 16px rgba(232,148,10,.2)} .month-card.recommended::before{background:var(--gold) !important} .month-badge-rec{position:absolute;top:8px;left:8px;background:var(--gold);color:white;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:2px 7px;border-radius:8px;display:none} .month-card.recommended .month-badge-rec{display:block} .annual-wrap{display:none} .annual-city-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:0} .annual-city-row .field-wrap{flex:1} @media(max-width:600px){.annual-city-row{flex-direction:column;align-items:stretch}.annual-btn{width:100%;padding:15px 20px;font-size:15px}.annual-city-row .field-wrap,.annual-city-row .inp-wrap,.annual-city-row .inp{width:100%;box-sizing:border-box}} .annual-btn{background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:var(--r-sm);color:white;font-family:'DM Sans','DM Sans Fallback',sans-serif;font-weight:700;font-size:14px;padding:13px 20px;cursor:pointer;transition:all .2s;white-space:nowrap} .annual-btn:hover:not(:disabled){background:var(--navy2);transform:translateY(-1px)} .annual-btn:disabled{opacity:.4;cursor:not-allowed;transform:none} .annual-result{display:none;margin-top:20px} .annual-header{margin-bottom:16px} .annual-city-name{font-family:'Playfair Display','Playfair Display Fallback',serif;font-size:22px;font-weight:700;color:var(--navy)} .annual-subtitle{font-size:12px;color:var(--slate2);margin-top:3px} .months-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px} .month-card{background:white;border-radius:var(--r-sm);padding:8px 10px 16px;box-shadow:var(--shadow);border:1.5px solid var(--cream2);cursor:default;transition:transform .18s,opacity .18s;position:relative;overflow:hidden} .month-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--month-color,var(--cream2))} .month-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(26,31,46,.1)} .mc-top{display:flex;align-items:center;gap:6px;margin-top:10px} .mc-left{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:38px} header.app-header{padding-top:10px} .app-title{margin-bottom:4px;font-size:clamp(24px,6vw,34px)} .app-divider{display:none} .app-sub{margin-bottom:4px;font-size:12px;line-height:1.4} .app-proof{margin-bottom:5px;padding:3px 10px;font-size:10px} .unit-toggle{margin-bottom:8px} .mode-toggle{margin-bottom:10px;gap:7px} .mode-btn{padding:9px 10px;gap:7px} .mode-btn svg{width:15px;height:15px} .mode-btn-title{font-size:12px} .mode-btn-sub{font-size:10px} .field-group{gap:10px;margin-bottom:12px} .field-label{margin-bottom:5px} .inp{padding:11px 36px 11px 14px;font-size:13px} .btn-go{padding:14px;font-size:14px} .date-hint{font-size:10px;margin-top:3px} } @media(max-height:960px) and (min-width:641px){ header.app-header{padding:10px 20px 0} .app-title{font-size:clamp(24px,3vw,34px);margin-bottom:4px} .app-divider{display:none} .app-sub{font-size:13px;margin-bottom:4px;line-height:1.4} .app-proof{margin-bottom:5px;padding:3px 10px;font-size:10px} .unit-toggle{margin-bottom:7px} .mode-toggle{margin-bottom:8px;gap:6px} .mode-btn{padding:8px 10px} .mode-btn-title{font-size:12px} .mode-btn-sub{font-size:10px} .search-card{padding:20px} } @media(max-height:780px) and (min-width:641px){ header.app-header{padding:6px 20px 0} .app-title{font-size:26px;margin-bottom:2px} .app-sub{font-size:11px;margin-bottom:2px} .app-proof{font-size:9px;padding:2px 8px;margin-bottom:4px} .unit-toggle{margin-bottom:5px} .mode-toggle{margin-bottom:8px} .search-card{padding:16px} .main-card{ background:white; border-radius:var(--r); box-shadow:var(--shadow-lg); border:1px solid rgba(26,31,46,.05); overflow:visible; margin-bottom:20px; } .main-card .wb, .main-card .wb-shimmer{ margin:0; border-radius:var(--r) var(--r) 0 0; animation:none; } .main-card .wb-hourly{ margin:0; border-radius:0; } .main-card .wb, .main-card .wb-shimmer, .main-card .wb-hourly, .main-card .wb-section{ width:100%; box-sizing:border-box; } .mode-toggle-wrap .mode-toggle{ width:100%!important; box-sizing:border-box!important; margin-bottom:16px!important; } .card-footer-annual{display:none} .annual-mode-active .card-footer-annual{display:flex} .travel-info-widget{background:white;border-radius:var(--r);padding:18px 20px 14px;box-shadow:0 2px 10px rgba(26,31,46,.07);margin:24px 0;border:1.5px solid var(--cream2)} .ti-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;letter-spacing:-.1px} .ti-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px} } .ti-chip{background:var(--cream);border:1.5px solid var(--cream2);border-radius:10px;padding:10px 12px;min-width:0;overflow:hidden;overflow-wrap:break-word;word-break:break-word;flex:1 1 140px;max-width:calc(20% - 7px)}.hero{background:white;border-radius:var(--r);box-shadow:var(--shadow-lg);overflow:hidden;margin-bottom:16px;display:none;border:1px solid var(--cream2);border-top:3px solid var(--gold);max-width:580px;margin-left:auto;margin-right:auto;transition:opacity .25s ease} .sec-block{display:none;margin-bottom:0} #score-block{display:none} #uc-filter-wrap{display:none} #foot-note{display:none} #empty{display:none} .seo-hub-toggle{display:flex;width:100%;background:#faf8f3;border:1px solid #e8e0d0;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#5a6c7d;text-align:left;cursor:pointer;align-items:center;justify-content:space-between}.app-title,.app-sub,.app-sub-seo,.app-proof,.app-disclaimer{animation:none!important}</style>
+<link rel="preload" href="../app.css?v=17" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+<noscript><link rel="stylesheet" href="../app.css?v=17"/></noscript>
 <link rel="stylesheet" href="../css/weather-banner.css?v=2" media="print" onload="this.media='all'"/><noscript><link rel="stylesheet" href="../css/weather-banner.css?v=2"/></noscript>
-<style>
-/* EN overrides */
-.app-sub{max-width:400px}
-.app-disclaimer{margin:0 auto 14px}
-.month-badge.avoid{background:#f59e0b}
-.month-card.is-avoid{border-color:#ef4444;border-top:3px solid #ef4444!important}
-.app-title{animation:none}.annual-wrap,.annual-result,.card-footer-annual,.uc-hint,.prog-wrap,.err-box,.hero,.sec-block,#score-block,#uc-filter-wrap,#foot-note,#empty{display:none}:root{ --cream:#faf8f3;--cream2:#f2ede2;--navy:#1a1f2e;--navy2:#252d42; --gold:#e8940a;--gold2:#f5b020;--gold-light:#fef3d0; --slate:#4a5568;--slate2:#5c687a;--slate3:#546070; --green:#1a7a4a;--green-bg:#e8f8f0; --blue:#1a5f9a;--blue-bg:#e8f2fc; --mist:#7a8fa8;--mist-bg:#eef3f8; --shadow:0 4px 24px rgba(26,31,46,.08);--shadow-lg:0 12px 48px rgba(26,31,46,.14); --r:18px;--r-sm:12px;--r-xs:8px; } body{font-family:'DM Sans','DM Sans Fallback',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;-webkit-font-smoothing:antialiased} .wrap{max-width:620px;margin:0 auto;padding:0 20px 20px} .main-card{ background:white; border-radius:var(--r); box-shadow:var(--shadow-lg); border:1px solid rgba(26,31,46,.05); overflow:visible; margin-bottom:20px; } header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:center} .seo-hub-toggle{display:flex;width:100%;background:#faf8f3;border:1px solid #e8e0d0;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#5a6c7d;text-align:left;cursor:pointer;align-items:center;justify-content:space-between} .app-title,.app-sub,.app-sub-seo,.app-proof,.app-disclaimer{animation:none!important}</style>
-<link rel="icon" type="image/x-icon" href="../favicon.ico"/><link rel="icon" type="image/svg+xml" href="../favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
+<link rel="icon" type="image/x-icon" href="../favicon.ico"/><link rel="icon" type="image/svg+xml" href="../favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
 <link rel="manifest" href="../manifest.json"/>
 <meta name="apple-mobile-web-app-title" content="BestDate"/>
 <meta name="application-name" content="BestDate"/>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com"/>
-<link rel="preload" href="../data/monthly.json" as="fetch" crossorigin/>
+
+
 
 <noscript></noscript>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
-
 <style id="flatpickr-css">/* flatpickr 4.6.13 */
 .flatpickr-calendar{background:transparent;opacity:0;display:none;text-align:center;visibility:hidden;padding:0;-webkit-animation:none;animation:none;direction:ltr;border:0;font-size:14px;line-height:24px;border-radius:5px;position:absolute;width:307.875px;-webkit-box-sizing:border-box;box-sizing:border-box;-ms-touch-action:manipulation;touch-action:manipulation;background:#fff;-webkit-box-shadow:1px 0 0 #e6e6e6,-1px 0 0 #e6e6e6,0 1px 0 #e6e6e6,0 -1px 0 #e6e6e6,0 3px 13px rgba(0,0,0,0.08);box-shadow:1px 0 0 #e6e6e6,-1px 0 0 #e6e6e6,0 1px 0 #e6e6e6,0 -1px 0 #e6e6e6,0 3px 13px rgba(0,0,0,0.08)}.flatpickr-calendar.open,.flatpickr-calendar.inline{opacity:1;max-height:640px;visibility:visible}.flatpickr-calendar.open{display:inline-block;z-index:99999}.flatpickr-calendar.animate.open{-webkit-animation:fpFadeInDown 300ms cubic-bezier(.23,1,.32,1);animation:fpFadeInDown 300ms cubic-bezier(.23,1,.32,1)}.flatpickr-calendar.inline{display:block;position:relative;top:2px}.flatpickr-calendar.static{position:absolute;top:calc(100% + 2px)}.flatpickr-calendar.static.open{z-index:999;display:block}.flatpickr-calendar.multiMonth .flatpickr-days .dayContainer:nth-child(n+1) .flatpickr-day.inRange:nth-child(7n+7){-webkit-box-shadow:none !important;box-shadow:none !important}.flatpickr-calendar.multiMonth .flatpickr-days .dayContainer:nth-child(n+2) .flatpickr-day.inRange:nth-child(7n+1){-webkit-box-shadow:-2px 0 0 #e6e6e6,5px 0 0 #e6e6e6;box-shadow:-2px 0 0 #e6e6e6,5px 0 0 #e6e6e6}.flatpickr-calendar .hasWeeks .dayContainer,.flatpickr-calendar .hasTime .dayContainer{border-bottom:0;border-bottom-right-radius:0;border-bottom-left-radius:0}.flatpickr-calendar .hasWeeks .dayContainer{border-left:0}.flatpickr-calendar.hasTime .flatpickr-time{height:40px;border-top:1px solid #e6e6e6}.flatpickr-calendar.noCalendar.hasTime .flatpickr-time{height:auto}.flatpickr-calendar:before,.flatpickr-calendar:after{position:absolute;display:block;pointer-events:none;border:solid transparent;content:'';height:0;width:0;left:22px}.flatpickr-calendar.rightMost:before,.flatpickr-calendar.arrowRight:before,.flatpickr-calendar.rightMost:after,.flatpickr-calendar.arrowRight:after{left:auto;right:22px}.flatpickr-calendar.arrowCenter:before,.flatpickr-calendar.arrowCenter:after{left:50%;right:50%}.flatpickr-calendar:before{border-width:5px;margin:0 -5px}.flatpickr-calendar:after{border-width:4px;margin:0 -4px}.flatpickr-calendar.arrowTop:before,.flatpickr-calendar.arrowTop:after{bottom:100%}.flatpickr-calendar.arrowTop:before{border-bottom-color:#e6e6e6}.flatpickr-calendar.arrowTop:after{border-bottom-color:#fff}.flatpickr-calendar.arrowBottom:before,.flatpickr-calendar.arrowBottom:after{top:100%}.flatpickr-calendar.arrowBottom:before{border-top-color:#e6e6e6}.flatpickr-calendar.arrowBottom:after{border-top-color:#fff}.flatpickr-calendar:focus{outline:0}.flatpickr-wrapper{position:relative;display:inline-block}.flatpickr-months{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}.flatpickr-months .flatpickr-month{background:transparent;color:rgba(0,0,0,0.9);fill:rgba(0,0,0,0.9);height:34px;line-height:1;text-align:center;position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;overflow:hidden;-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1}.flatpickr-months .flatpickr-prev-month,.flatpickr-months .flatpickr-next-month{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;text-decoration:none;cursor:pointer;position:absolute;top:0;height:34px;padding:10px;z-index:3;color:rgba(0,0,0,0.9);fill:rgba(0,0,0,0.9)}.flatpickr-months .flatpickr-prev-month.flatpickr-disabled,.flatpickr-months .flatpickr-next-month.flatpickr-disabled{display:none}.flatpickr-months .flatpickr-prev-month i,.flatpickr-months .flatpickr-next-month i{position:relative}.flatpickr-months .flatpickr-prev-month.flatpickr-prev-month,.flatpickr-months .flatpickr-next-month.flatpickr-prev-month{/*
  /*rtl:begin:ignore*/left:0/*
@@ -42,35 +38,34 @@
 /*
  /*rtl:end:ignore*/
 .flatpickr-months .flatpickr-prev-month:hover,.flatpickr-months .flatpickr-next-month:hover{color:#959ea9}.flatpickr-months .flatpickr-prev-month:hover svg,.flatpickr-months .flatpickr-next-month:hover svg{fill:#f64747}.flatpickr-months .flatpickr-prev-month svg,.flatpickr-months .flatpickr-next-month svg{width:14px;height:14px}.flatpickr-months .flatpickr-prev-month svg path,.flatpickr-months .flatpickr-next-month svg path{-webkit-transition:fill .1s;transition:fill .1s;fill:inherit}.numInputWrapper{position:relative;height:auto}.numInputWrapper input,.numInputWrapper span{display:inline-block}.numInputWrapper input{width:100%}.numInputWrapper input::-ms-clear{display:none}.numInputWrapper input::-webkit-outer-spin-button,.numInputWrapper input::-webkit-inner-spin-button{margin:0;-webkit-appearance:none}.numInputWrapper span{position:absolute;right:0;width:14px;padding:0 4px 0 2px;height:50%;line-height:50%;opacity:0;cursor:pointer;border:1px solid rgba(57,57,57,0.15);-webkit-box-sizing:border-box;box-sizing:border-box}.numInputWrapper span:hover{background:rgba(0,0,0,0.1)}.numInputWrapper span:active{background:rgba(0,0,0,0.2)}.numInputWrapper span:after{display:block;content:"";position:absolute}.numInputWrapper span.arrowUp{top:0;border-bottom:0}.numInputWrapper span.arrowUp:after{border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:4px solid rgba(57,57,57,0.6);top:26%}.numInputWrapper span.arrowDown{top:50%}.numInputWrapper span.arrowDown:after{border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid rgba(57,57,57,0.6);top:40%}.numInputWrapper span svg{width:inherit;height:auto}.numInputWrapper span svg path{fill:rgba(0,0,0,0.5)}.numInputWrapper:hover{background:rgba(0,0,0,0.05)}.numInputWrapper:hover span{opacity:1}.flatpickr-current-month{font-size:135%;line-height:inherit;font-weight:300;color:inherit;position:absolute;width:75%;left:12.5%;padding:7.48px 0 0 0;line-height:1;height:34px;display:inline-block;text-align:center;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}.flatpickr-current-month span.cur-month{font-family:inherit;font-weight:700;color:inherit;display:inline-block;margin-left:.5ch;padding:0}.flatpickr-current-month span.cur-month:hover{background:rgba(0,0,0,0.05)}.flatpickr-current-month .numInputWrapper{width:6ch;width:7ch\0;display:inline-block}.flatpickr-current-month .numInputWrapper span.arrowUp:after{border-bottom-color:rgba(0,0,0,0.9)}.flatpickr-current-month .numInputWrapper span.arrowDown:after{border-top-color:rgba(0,0,0,0.9)}.flatpickr-current-month input.cur-year{background:transparent;-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;cursor:text;padding:0 0 0 .5ch;margin:0;display:inline-block;font-size:inherit;font-family:inherit;font-weight:300;line-height:inherit;height:auto;border:0;border-radius:0;vertical-align:initial;-webkit-appearance:textfield;-moz-appearance:textfield;appearance:textfield}.flatpickr-current-month input.cur-year:focus{outline:0}.flatpickr-current-month input.cur-year[disabled],.flatpickr-current-month input.cur-year[disabled]:hover{font-size:100%;color:rgba(0,0,0,0.5);background:transparent;pointer-events:none}.flatpickr-current-month .flatpickr-monthDropdown-months{appearance:menulist;background:transparent;border:none;border-radius:0;box-sizing:border-box;color:inherit;cursor:pointer;font-size:inherit;font-family:inherit;font-weight:300;height:auto;line-height:inherit;margin:-1px 0 0 0;outline:none;padding:0 0 0 .5ch;position:relative;vertical-align:initial;-webkit-box-sizing:border-box;-webkit-appearance:menulist;-moz-appearance:menulist;width:auto}.flatpickr-current-month .flatpickr-monthDropdown-months:focus,.flatpickr-current-month .flatpickr-monthDropdown-months:active{outline:none}.flatpickr-current-month .flatpickr-monthDropdown-months:hover{background:rgba(0,0,0,0.05)}.flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month{background-color:transparent;outline:none;padding:0}.flatpickr-weekdays{background:transparent;text-align:center;overflow:hidden;width:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;height:28px}.flatpickr-weekdays .flatpickr-weekdaycontainer{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1}span.flatpickr-weekday{cursor:default;font-size:90%;background:transparent;color:rgba(0,0,0,0.54);line-height:1;margin:0;text-align:center;display:block;-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;font-weight:bolder}.dayContainer,.flatpickr-weeks{padding:1px 0 0 0}.flatpickr-days{position:relative;overflow:hidden;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:start;-webkit-align-items:flex-start;-ms-flex-align:start;align-items:flex-start;width:307.875px}.flatpickr-days:focus{outline:0}.dayContainer{padding:0;outline:0;text-align:left;width:307.875px;min-width:307.875px;max-width:307.875px;-webkit-box-sizing:border-box;box-sizing:border-box;display:inline-block;display:-ms-flexbox;display:-webkit-box;display:-webkit-flex;display:flex;-webkit-flex-wrap:wrap;flex-wrap:wrap;-ms-flex-wrap:wrap;-ms-flex-pack:justify;-webkit-justify-content:space-around;justify-content:space-around;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);opacity:1}.dayContainer + .dayContainer{-webkit-box-shadow:-1px 0 0 #e6e6e6;box-shadow:-1px 0 0 #e6e6e6}.flatpickr-day{background:none;border:1px solid transparent;border-radius:150px;-webkit-box-sizing:border-box;box-sizing:border-box;color:#393939;cursor:pointer;font-weight:400;width:14.2857143%;-webkit-flex-basis:14.2857143%;-ms-flex-preferred-size:14.2857143%;flex-basis:14.2857143%;max-width:39px;height:39px;line-height:39px;margin:0;display:inline-block;position:relative;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;text-align:center}.flatpickr-day.inRange,.flatpickr-day.prevMonthDay.inRange,.flatpickr-day.nextMonthDay.inRange,.flatpickr-day.today.inRange,.flatpickr-day.prevMonthDay.today.inRange,.flatpickr-day.nextMonthDay.today.inRange,.flatpickr-day:hover,.flatpickr-day.prevMonthDay:hover,.flatpickr-day.nextMonthDay:hover,.flatpickr-day:focus,.flatpickr-day.prevMonthDay:focus,.flatpickr-day.nextMonthDay:focus{cursor:pointer;outline:0;background:#e6e6e6;border-color:#e6e6e6}.flatpickr-day.today{border-color:#959ea9}.flatpickr-day.today:hover,.flatpickr-day.today:focus{border-color:#959ea9;background:#959ea9;color:#fff}.flatpickr-day.selected,.flatpickr-day.startRange,.flatpickr-day.endRange,.flatpickr-day.selected.inRange,.flatpickr-day.startRange.inRange,.flatpickr-day.endRange.inRange,.flatpickr-day.selected:focus,.flatpickr-day.startRange:focus,.flatpickr-day.endRange:focus,.flatpickr-day.selected:hover,.flatpickr-day.startRange:hover,.flatpickr-day.endRange:hover,.flatpickr-day.selected.prevMonthDay,.flatpickr-day.startRange.prevMonthDay,.flatpickr-day.endRange.prevMonthDay,.flatpickr-day.selected.nextMonthDay,.flatpickr-day.startRange.nextMonthDay,.flatpickr-day.endRange.nextMonthDay{background:#569ff7;-webkit-box-shadow:none;box-shadow:none;color:#fff;border-color:#569ff7}.flatpickr-day.selected.startRange,.flatpickr-day.startRange.startRange,.flatpickr-day.endRange.startRange{border-radius:50px 0 0 50px}.flatpickr-day.selected.endRange,.flatpickr-day.startRange.endRange,.flatpickr-day.endRange.endRange{border-radius:0 50px 50px 0}.flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n+1)),.flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n+1)),.flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n+1)){-webkit-box-shadow:-10px 0 0 #569ff7;box-shadow:-10px 0 0 #569ff7}.flatpickr-day.selected.startRange.endRange,.flatpickr-day.startRange.startRange.endRange,.flatpickr-day.endRange.startRange.endRange{border-radius:50px}.flatpickr-day.inRange{border-radius:0;-webkit-box-shadow:-5px 0 0 #e6e6e6,5px 0 0 #e6e6e6;box-shadow:-5px 0 0 #e6e6e6,5px 0 0 #e6e6e6}.flatpickr-day.flatpickr-disabled,.flatpickr-day.flatpickr-disabled:hover,.flatpickr-day.prevMonthDay,.flatpickr-day.nextMonthDay,.flatpickr-day.notAllowed,.flatpickr-day.notAllowed.prevMonthDay,.flatpickr-day.notAllowed.nextMonthDay{color:rgba(57,57,57,0.3);background:transparent;border-color:transparent;cursor:default}.flatpickr-day.flatpickr-disabled,.flatpickr-day.flatpickr-disabled:hover{cursor:not-allowed;color:rgba(57,57,57,0.1)}.flatpickr-day.week.selected{border-radius:0;-webkit-box-shadow:-5px 0 0 #569ff7,5px 0 0 #569ff7;box-shadow:-5px 0 0 #569ff7,5px 0 0 #569ff7}.flatpickr-day.hidden{visibility:hidden}.rangeMode .flatpickr-day{margin-top:1px}.flatpickr-weekwrapper{float:left}.flatpickr-weekwrapper .flatpickr-weeks{padding:0 12px;-webkit-box-shadow:1px 0 0 #e6e6e6;box-shadow:1px 0 0 #e6e6e6}.flatpickr-weekwrapper .flatpickr-weekday{float:none;width:100%;line-height:28px}.flatpickr-weekwrapper span.flatpickr-day,.flatpickr-weekwrapper span.flatpickr-day:hover{display:block;width:100%;max-width:none;color:rgba(57,57,57,0.3);background:transparent;cursor:default;border:none}.flatpickr-innerContainer{display:block;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-sizing:border-box;box-sizing:border-box;overflow:hidden}.flatpickr-rContainer{display:inline-block;padding:0;-webkit-box-sizing:border-box;box-sizing:border-box}.flatpickr-time{text-align:center;outline:0;display:block;height:0;line-height:40px;max-height:40px;-webkit-box-sizing:border-box;box-sizing:border-box;overflow:hidden;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}.flatpickr-time:after{content:"";display:table;clear:both}.flatpickr-time .numInputWrapper{-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;width:40%;height:40px;float:left}.flatpickr-time .numInputWrapper span.arrowUp:after{border-bottom-color:#393939}.flatpickr-time .numInputWrapper span.arrowDown:after{border-top-color:#393939}.flatpickr-time.hasSeconds .numInputWrapper{width:26%}.flatpickr-time.time24hr .numInputWrapper{width:49%}.flatpickr-time input{background:transparent;-webkit-box-shadow:none;box-shadow:none;border:0;border-radius:0;text-align:center;margin:0;padding:0;height:inherit;line-height:inherit;color:#393939;font-size:14px;position:relative;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-appearance:textfield;-moz-appearance:textfield;appearance:textfield}.flatpickr-time input.flatpickr-hour{font-weight:bold}.flatpickr-time input.flatpickr-minute,.flatpickr-time input.flatpickr-second{font-weight:400}.flatpickr-time input:focus{outline:0;border:0}.flatpickr-time .flatpickr-time-separator,.flatpickr-time .flatpickr-am-pm{height:inherit;float:left;line-height:inherit;color:#393939;font-weight:bold;width:2%;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-align-self:center;-ms-flex-item-align:center;align-self:center}.flatpickr-time .flatpickr-am-pm{outline:0;width:18%;cursor:pointer;text-align:center;font-weight:400}.flatpickr-time input:hover,.flatpickr-time .flatpickr-am-pm:hover,.flatpickr-time input:focus,.flatpickr-time .flatpickr-am-pm:focus{background:#eee}.flatpickr-input[readonly]{cursor:pointer}@-webkit-keyframes fpFadeInDown{from{opacity:0;-webkit-transform:translate3d(0,-20px,0);transform:translate3d(0,-20px,0)}to{opacity:1;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}@keyframes fpFadeInDown{from{opacity:0;-webkit-transform:translate3d(0,-20px,0);transform:translate3d(0,-20px,0)}to{opacity:1;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}</style>
-<link rel="canonical" href="https://bestdateweather.com/en/app.html"/>
+<link rel="canonical" href="https://bestdateweather.com/"/>
 <link rel="alternate" hreflang="fr" href="https://bestdateweather.com/"/>
 <link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/app.html"/>
 <link rel="alternate" hreflang="en-US" href="https://bestdateweather.com/us/app.html"/>
 <link rel="alternate" hreflang="es" href="https://bestdateweather.com/es/app.html"/>
 <link rel="alternate" hreflang="de" href="https://bestdateweather.com/de/app.html"/>
 <link rel="alternate" hreflang="x-default" href="https://bestdateweather.com/en/app.html"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="BestDateWeather — La météo de n'importe quelle date, jusqu'à 12 mois"/>
+<meta property="og:description" content="Anticipez la météo jusqu'à 12 mois à l'avance. N'importe quelle ville, n'importe quelle date. Basé sur 10+ ans de données climatiques ERA5 / ECMWF."/>
+<meta property="og:url" content="https://bestdateweather.com/"/>
 <meta property="og:image" content="https://bestdateweather.com/og-image.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://bestdateweather.com/og-image.png"/><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "BestDateWeather", "url": "https://bestdateweather.com", "description": "Climate scores /10 for 697 travel destinations, month by month. Find the best time to visit based on 10 years of ERA5 data.", "applicationCategory": "TravelApplication", "operatingSystem": "Web, iOS, Android", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "featureList": ["Climate scores /10 for 697 destinations", "Month-by-month weather analysis", "10-year ERA5 historical data", "Live forecast up to 12 months ahead", "Destination comparison"], "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.5", "ratingCount": "120"}}</script></head>
+<meta name="twitter:title" content="BestDateWeather — La météo de n'importe quelle date, jusqu'à 12 mois"/>
+<meta name="twitter:description" content="Anticipez la météo jusqu'à 12 mois à l'avance. Toute ville, toute date. 10 ans de données."/>
+<meta name="twitter:image" content="https://bestdateweather.com/og-image.png"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"BestDateWeather","url":"https://bestdateweather.com","logo":"https://bestdateweather.com/og-image.png","description":"Anticipez la météo jusqu'à 12 mois à l'avance. Basé sur 10+ ans de données climatiques ERA5 / ECMWF.","contactPoint":{"@type":"ContactPoint","email":"contact@bestdateweather.com","contactType":"customer service"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"BestDateWeather","url":"https://bestdateweather.com","description":"La météo de n'importe quelle date, jusqu'à 12 mois","inLanguage":["fr","en"],"potentialAction":{"@type":"SearchAction","target":"https://bestdateweather.com/meilleure-periode-{search_term_string}.html","query-input":"required name=search_term_string"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "BestDateWeather", "url": "https://bestdateweather.com", "description": "Scores climatiques /10 pour 697 destinations de voyage, mois par mois. Trouvez la meilleure période pour partir.", "applicationCategory": "TravelApplication", "operatingSystem": "Web, iOS, Android", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "featureList": ["Scores climatiques /10 pour 697 destinations", "Analyse météo mois par mois", "10 ans de données ERA5 historiques", "Prévision en direct jusqu'à 12 mois", "Comparaison de destinations"], "inLanguage": "fr"}</script></head>
 <body>
-
+<div style="position:fixed;top:12px;right:12px;z-index:999;display:flex;gap:8px"><button id="btn-fav-home" onclick="bdwShowFavorites()" aria-label="Mes favoris" style="background:white;border:1.5px solid #e8e0d0;border-radius:8px;padding:7px 9px;cursor:pointer;display:inline-flex;align-items:center;color:#5a6c7d;box-shadow:0 2px 8px rgba(0,0,0,.08)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></div>
 
 <header class="app-header">
- 
  <h1 class="app-title">Best<em>Date</em>Weather</h1>
- <div class="app-divider">
-  <span class="app-divider-line"></span>
-  <span class="app-divider-ico">🌤</span>
-  <span class="app-divider-line r"></span>
- </div>
  <p class="app-sub">Find the best month for your trip</p>
 <p class="app-sub-seo" style="font-size:13px;color:#4a5568;margin-top:4px;font-weight:500">697 destinations · 12 months · 10 years of ERA5 data</p>
- <div class="unit-toggle" id="unit-toggle">
-  <button class="unit-btn" id="btn-metric" onclick="setUnits('metric')">°C · km/h</button>
-  <button class="unit-btn active" id="btn-us" onclick="setUnits('us')">°F · mph</button>
- </div>
 </header>
 
 <main>
@@ -78,100 +73,93 @@
 <div class="main-card">
 <!-- ── Weather Banner ── -->
 <div id="wb-container" style="min-height:110px"></div>
-<div class="mode-toggle">
+<div class="mode-toggle-wrap"><div class="mode-toggle">
  <button class="mode-btn active" id="mode-date" onclick="switchMode('date')">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
- <span><span class="mode-btn-title">Date</span><span class="mode-btn-sub">Travel, wedding, event</span></span>
+ <span><span class="mode-btn-title">Date</span><span class="mode-btn-sub">Voyage, mariages…</span></span>
  </button>
  <button class="mode-btn" id="mode-annual" onclick="switchMode('annual')">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
- <span><span class="mode-btn-title">12-month view</span><span class="mode-btn-sub">Compare seasons</span></span>
+ <span><span class="mode-btn-title">Vue 12 mois</span><span class="mode-btn-sub">Meilleur mois</span></span>
  </button>
- </div>
+ </div></div>
 
  <!-- ANNUAL VIEW -->
  <div class="annual-wrap" id="annual-wrap">
  <div class="search-card">
  <div class="annual-city-row">
  <div class="field-wrap" style="flex:1">
- <label class="field-label" for="ann-city">
- <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
- Destination
- </label>
+ <label class="field-label" for="ann-city">Destination</label>
  <div class="inp-wrap"><input class="inp" type="text" id="ann-city" placeholder="🌍  Paris, Lisbonne, Tokyo, Bali…" autocomplete="off"/>
  <button class="inp-clear" id="ann-city-clear" tabindex="-1" onclick="clearAnnCity()">×</button></div>
  <div class="ac-list" id="ann-ac-list"></div>
  </div>
- <button class="annual-btn" id="ann-btn" onclick="runAnnual()">View year</button>
+ <button class="annual-btn" id="ann-btn" onclick="runAnnual()">Voir l'année</button>
  </div>
  <div class="prog-wrap" id="ann-prog-wrap">
- <div class="prog-labels"><span id="ann-prog-lbl">Loading…</span><span id="ann-prog-pct">0%</span></div>
+ <div class="prog-labels"><span id="ann-prog-lbl">Chargement…</span><span id="ann-prog-pct">0%</span></div>
  <div class="prog-track"><div class="prog-bar" id="ann-prog-bar"></div></div>
  </div>
  <div class="err-box" id="ann-err-box"></div>
  </div>
  <div id="ann-uc-wrap" style="padding:12px 0 4px;display:none">
- <div class="uc-filter-label" style="margin-bottom:10px;font-size:12px;color:var(--navy);text-transform:none;letter-spacing:0;font-weight:700">Refine score for:</div>
+ <div class="uc-filter-label" style="margin-bottom:10px;font-size:12px;color:var(--navy);text-transform:none;letter-spacing:0;font-weight:700">Affiner le score pour :</div>
  <div style="display:flex;flex-wrap:wrap;gap:6px;">
- <button class="uc-pill uc-pill-neutral" data-uc="general" id="ann-uc-general" onclick="quickFill('general')">🌤️ General weather</button>
- <button class="uc-pill" data-uc="plage" onclick="quickFill('plage')">🏖️ Beach</button>
+ <button class="uc-pill uc-pill-neutral" data-uc="general" id="ann-uc-general" onclick="quickFill('general')">🌤️ Juste la météo</button>
+ <button class="uc-pill" data-uc="plage" onclick="quickFill('plage')">🏖️ Plage</button>
  <button class="uc-pill" data-uc="ski" onclick="quickFill('ski')">⛷️ Ski</button>
  </div>
  </div>
  <div class="annual-result" id="annual-result">
  <div class="annual-header">
  <div class="annual-city-name" id="ann-city-name"></div>
- <div class="annual-subtitle" id="annual-subtitle">Monthly climate profile · 10-year average</div>
+ <div id="ann-fiche-link-wrap" style="display:none;margin:4px 0 0"></div>
+ <div class="annual-subtitle" id="annual-subtitle">Profil climatique mensuel · moyenne des 10 dernières années</div>
  <div class="annual-subtitle-uc" id="annual-subtitle-uc"></div>
  </div>
  <div id="ann-narrative" style="display:none;margin:14px 0 4px;background:linear-gradient(135deg,#fef9f0,#fdf4e3);border:1.5px solid #f0d98a;border-radius:12px;padding:14px 16px;font-size:13px;color:#1a1f2e;line-height:1.6"></div>
  <div class="months-grid" id="months-grid"></div>
  <div class="note" id="ann-note" style="margin-top:14px"></div>
  </div>
+<div class="card-footer card-footer-annual">
+<span class="footer-wordmark" style="font-size:11px;color:var(--slate2);font-family:inherit;font-weight:600;font-style:normal;letter-spacing:.2px">⭐ ERA5 · 10 ans</span>
+<a href="#seo-hub" class="footer-guides" onclick="var h=document.getElementById('seo-hub');var b=document.querySelector('.seo-hub-toggle');if(!h.classList.contains('open')){h.classList.add('open');b.classList.add('open');}setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);return false;">📍 697 guides destinations</a>
+</div><!-- /.card-footer-annual -->
  </div>
 
 
 
- <div class="uc-hint" id="uc-hint">⬆ Select a project type above first</div>
+ <div class="uc-hint" id="uc-hint">⬆ Sélectionnez d'abord un type de projet ci-dessus</div>
  <div id="date-form">
  <div class="field-group">
  <div class="field-wrap">
- <label class="field-label" for="inp-city">
- <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
- City or destination
- </label>
- <div class="inp-wrap"><input class="inp" type="text" id="inp-city" placeholder="Paris, Barcelona, Tokyo…" autocomplete="off"/>
+ <div class="inp-wrap inp-wrap-icon"><input class="inp" type="text" id="inp-city" placeholder="🌍  Destination — Paris, Bali, Tokyo…" autocomplete="off"/>
  <button class="inp-clear" id="inp-city-clear" tabindex="-1" onclick="clearCity()">×</button></div>
  <div class="ac-list" id="ac-list"></div>
- <div id="city-hint" style="font-size:11px;color:var(--slate2);margin-top:5px;display:none">💡 Compound names: use hyphens — <em>Pointe-à-Pitre</em>, <em>Saint-Denis</em></div>
+ <div id="city-hint" style="font-size:11px;color:var(--slate2);margin-top:5px;display:none">💡 Villes composées : utilisez les tirets — <em>Pointe-à-Pitre</em>, <em>Saint-Denis</em></div>
  </div>
  <div class="field-wrap">
- <label class="field-label" for="inp-date">
- <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
- Project date
- </label>
- <div style="position:relative">
- <input class="inp" type="text" id="inp-date" placeholder="dd/mm/yyyy" readonly style="position:relative;z-index:2;background:white;cursor:pointer" />
+ <div class="inp-wrap inp-wrap-icon" style="position:relative">
+ <input class="inp" type="text" id="inp-date" placeholder="📅  Date du projet" readonly style="position:relative;z-index:2;background:white;cursor:pointer" />
  
- </div>
- <div class="date-hint" id="date-hint">Seasonal projection up to 12 months</div>
+ 
  </div>
  </div>
 
  <button class="btn-go" id="btn-go" type="button">
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
- <span id="btn-go-text">Check the weather</span>
+ <span id="btn-go-text">Voir les conditions ce jour →</span>
  </button>
+<div id="cta-wow-example" style="display:none;text-align:center;font-size:11.5px;color:var(--slate2);margin-top:6px;line-height:1.5;padding:0 4px" id="cta-wow-example"><script>document.write(window.BDW_T&&BDW_T.wowExample||'')</script></div>
  <div class="prog-wrap" id="prog-wrap">
- <div class="prog-labels"><span id="prog-lbl">Loading…</span><span id="prog-pct">0%</span></div>
+ <div class="prog-labels"><span id="prog-lbl">Chargement…</span><span id="prog-pct">0%</span></div>
  <div class="prog-track"><div class="prog-bar" id="prog-bar"></div></div>
  </div>
  <div class="err-box" id="err-box"></div>
  </div>
 
 <div class="card-footer">
-<span class="footer-wordmark" style="font-size:11px;color:var(--slate2);font-family:inherit;font-weight:600;font-style:normal;letter-spacing:.2px">⭐ 10-year ERA5 data</span>
-<a href="#seo-hub" class="footer-guides" onclick="var h=document.getElementById('seo-hub');var b=document.querySelector('.seo-hub-toggle');if(!h.classList.contains('open')){h.classList.add('open');b.classList.add('open');}setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);return false;">📍 Destination guides · 697 cities</a>
+<span class="footer-wordmark" style="font-size:11px;color:var(--slate2);font-family:inherit;font-weight:600;font-style:normal;letter-spacing:.2px">⭐ ERA5 · 10 ans</span>
+<a href="#seo-hub" class="footer-guides" onclick="var h=document.getElementById('seo-hub');var b=document.querySelector('.seo-hub-toggle');if(!h.classList.contains('open')){h.classList.add('open');b.classList.add('open');}setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);return false;">📍 697 guides destinations</a>
 </div><!-- /.card-footer -->
 </div><!-- /.main-card -->
 <div class="wb-extra-sections">
@@ -182,11 +170,11 @@
 
  <!-- USE CASE FILTER PILLS -->
  <div class="uc-filter-wrap" id="uc-filter-wrap" style="display:none">
- <div class="uc-filter-label">Refine score for</div>
+ <div class="uc-filter-label">Affiner le score pour</div>
  <div class="uc-row" id="uc-row">
  <div class="uc-row-line">
- <button class="uc-pill uc-pill-neutral" data-uc="general" onclick="quickFill('general')">🌤️ General weather</button>
- <button class="uc-pill" data-uc="plage" onclick="quickFill('plage')">🏖️ Beach</button>
+ <button class="uc-pill uc-pill-neutral" data-uc="general" onclick="quickFill('general')">🌤️ Juste la météo</button>
+ <button class="uc-pill" data-uc="plage" onclick="quickFill('plage')">🏖️ Plage</button>
  <button class="uc-pill" data-uc="ski" onclick="quickFill('ski')">⛷️ Ski</button>
  </div>
  </div>
@@ -226,7 +214,7 @@
  </div>
  <div class="score-info">
  <div style="display:flex;align-items:center;margin-bottom:4px">
- <div class="score-usecase" id="score-usecase" style="margin-bottom:0">General weather</div>
+ <div class="score-usecase" id="score-usecase" style="margin-bottom:0">Météo générale</div>
  <div class="score-info-wrap">
  <button class="score-info-btn" id="score-info-btn" onclick="toggleScoreTooltip()">?</button>
  <div class="score-tooltip" id="score-tooltip"></div>
@@ -254,22 +242,22 @@
 
 
 <button class="details-toggle" id="details-toggle" onclick="toggleDetails()" aria-expanded="false">
-  <span>View details — hour by hour, scenarios, astro</span>
+  <span>Voir les détails — heure par heure, scénarios, astro</span>
   <span class="details-toggle-icon">&#8964;</span>
  </button>
  <div class="details-panel" id="details-panel">
   <div class="hero-stats">
  <div class="hstat">
  <div class="hstat-val" id="r-rain">–</div>
- <div class="hstat-lbl">💧 Rain likely</div>
+ <div class="hstat-lbl">💧 Pluie probable</div>
  </div>
  <div class="hstat">
  <div class="hstat-val" id="r-wind">–</div>
- <div class="hstat-lbl">💨 Mean wind</div>
+ <div class="hstat-lbl">💨 Vent moyen</div>
  </div>
  <div class="hstat">
  <div class="hstat-val" id="r-sky">–</div>
- <div class="hstat-lbl">☁️ Sky</div>
+ <div class="hstat-lbl">☁️ Ciel</div>
  </div>
  </div>
  <div class="hero-astro">
@@ -277,29 +265,29 @@
  <span class="astro-ico" id="astro-moon-ico"></span>
  <div>
  <div class="astro-val" id="astro-moon-name">–</div>
- <div class="astro-lbl">Moon phase</div>
+ <div class="astro-lbl">Phase lunaire</div>
  </div>
  </div>
  <div class="astro-item">
  <span class="astro-ico"><svg viewBox="0 0 28 28" fill="none" width="22" height="22"><circle cx="14" cy="10" r="5" fill="#f8d76a" opacity=".95"/><g stroke="#f8d76a" stroke-width="1.8" stroke-linecap="round"><line x1="14" y1="2" x2="14" y2="5"/><line x1="7" y1="4.5" x2="9" y2="6.5"/><line x1="21" y1="4.5" x2="19" y2="6.5"/><line x1="4.5" y1="10" x2="7" y2="10"/><line x1="23.5" y1="10" x2="21" y2="10"/></g><line x1="4" y1="19" x2="24" y2="19" stroke="rgba(26,31,46,.2)" stroke-width="1.5" stroke-linecap="round"/><g stroke="rgba(26,31,46,.4)" stroke-width="1.8" stroke-linecap="round"><line x1="9" y1="23" x2="11" y2="19.5"/><line x1="14" y1="24" x2="14" y2="20"/><line x1="19" y1="23" x2="17" y2="19.5"/></g></svg></span>
  <div>
  <div class="astro-val" id="astro-rise">–</div>
- <div class="astro-lbl">Sunrise (UTC)</div>
+ <div class="astro-lbl">Lever soleil (UTC)</div>
  </div>
  </div>
  <div class="astro-item">
  <span class="astro-ico"><svg viewBox="0 0 28 28" fill="none" width="22" height="22"><circle cx="14" cy="10" r="5" fill="#f8b84a" opacity=".9"/><g stroke="#f8b84a" stroke-width="1.8" stroke-linecap="round"><line x1="14" y1="2" x2="14" y2="5"/><line x1="7" y1="4.5" x2="9" y2="6.5"/><line x1="21" y1="4.5" x2="19" y2="6.5"/><line x1="4.5" y1="10" x2="7" y2="10"/><line x1="23.5" y1="10" x2="21" y2="10"/></g><line x1="4" y1="19" x2="24" y2="19" stroke="rgba(26,31,46,.2)" stroke-width="1.5" stroke-linecap="round"/><g stroke="rgba(26,31,46,.4)" stroke-width="1.8" stroke-linecap="round"><line x1="9" y1="19.5" x2="11" y2="23"/><line x1="14" y1="20" x2="14" y2="24"/><line x1="19" y1="19.5" x2="17" y2="23"/></g></svg></span>
  <div>
  <div class="astro-val" id="astro-set">–</div>
- <div class="astro-lbl">Sunset (UTC)</div>
+ <div class="astro-lbl">Coucher soleil (UTC)</div>
  </div>
  </div>
  </div>
 <!-- HOURLY -->
  <div class="sec-block" id="sec-hourly">
  <div class="sec-header">
- <div class="sec-title">Hour by hour</div>
- <div class="sec-hint">Temperatures & weather</div>
+ <div class="sec-title">Heure par heure</div>
+ <div class="sec-hint">Températures & météo</div>
  </div>
  <div class="hourly-card"><div class="h-strip" id="h-strip"></div></div>
  </div>
@@ -307,16 +295,16 @@
  <!-- SCENARIOS -->
  <div class="sec-block" id="sec-scenarios">
  <div class="sec-header">
- <div class="sec-title">Extreme scenarios</div>
- <div class="sec-hint">Statistical ranges P10–P90</div>
+ <div class="sec-title">Scénarios extrêmes</div>
+ <div class="sec-hint">Enveloppes statistiques P10–P90</div>
  </div>
  <div class="sc-row">
  <div class="sc-card pess">
  <div class="sc-head">
  <div>
- <span class="sc-label pess">Low estimate</span>
- <div class="sc-ttl" id="sc-pess-ttl">Difficult day</div>
- <div class="sc-sub"><span id="sc-pess-sub">Cool · frequent rain</span></div>
+ <span class="sc-label pess">Hypothèse basse</span>
+ <div class="sc-ttl" id="sc-pess-ttl">Journée difficile</div>
+ <div class="sc-sub"><span id="sc-pess-sub">Frais · pluie fréquente</span></div>
  </div>
  </div>
  <div class="sc-strip" id="sc-pess-strip"></div>
@@ -325,9 +313,9 @@
  <div class="sc-card opt">
  <div class="sc-head">
  <div>
- <span class="sc-label opt">High estimate</span>
- <div class="sc-ttl" id="sc-opt-ttl">Ideal day</div>
- <div class="sc-sub"><span id="sc-opt-sub">Warm · little rain</span></div>
+ <span class="sc-label opt">Hypothèse haute</span>
+ <div class="sc-ttl" id="sc-opt-ttl">Belle journée</div>
+ <div class="sc-sub"><span id="sc-opt-sub">Chaud · peu de pluie</span></div>
  </div>
  </div>
  <div class="sc-strip" id="sc-opt-strip"></div>
@@ -339,36 +327,39 @@
  <!-- HISTORICAL TEMPS -->
  <div class="sec-block" id="sec-history">
   <div class="sec-header">
-   <div class="sec-title">Historical temperatures</div>
-   <div class="sec-hint">10-year trend</div>
+   <div class="sec-title">Températures historiques</div>
+   <div class="sec-hint">Tendance sur 10 ans</div>
   </div>
   <div id="hist-chart-container" style="padding:4px 0;min-height:50px"><div class="hist-loader" style="text-align:center;padding:20px;color:#aaa;font-size:13px">⏳</div></div>
  </div>
- </div></div> <!-- /details-panel -->
+ </div></div>
 
+ 
 
  <!-- NOTES -->
  <div class="note" id="foot-note" style="display:none"></div>
 
 
  <!-- EMPTY STATE -->
+
 </div>
+
 
 <!-- ═══════════════════════════════════════════
  BLOC SEO — Deux silos de destinations
  Crawlable par Google · Maillage interne complet
  ═══════════════════════════════════════════ -->
 <button class="seo-hub-toggle" onclick="var h=document.getElementById('seo-hub');var o=h.classList.toggle('open');this.classList.toggle('open');if(o)setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);" aria-expanded="false" aria-controls="seo-hub">
- 🌍 View destination guides (697 destinations)
+ 📍 697 guides destinations
  <span class="seo-hub-toggle-icon">⌄</span>
 </button>
 <div id="seo-hub" class="desktop-only" style="background:#faf8f3;border-top:1px solid #e8e0d0;padding:52px 20px 60px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
  <div style="max-width:1100px;margin:0 auto">
 
- <p style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#7a5205;margin-bottom:12px" class="dh-intro-tag">Destination guides</p>
- <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:8px;letter-spacing:-.3px" class="dh-intro-title">When to go ? Monthly weather guide</h2>
- <p style="color:#4a5568;font-size:14px;margin-bottom:16px;line-height:1.7" class="dh-intro-sub">Open-Meteo data · 10 years · Monthly climate tables · 697 destinations</p>
- <p style="max-width:720px;margin-bottom:40px;font-size:15px;line-height:1.8;color:#4a5568" class="dh-intro-desc">Our guides analyse temperatures, rainfall, sunshine and seasonality to objectively determine the best months for your project — trip, wedding, festival or event.</p>
+ <p style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#7a5205;margin-bottom:12px" class="dh-intro-tag">Guides destinations</p>
+ <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#1a1f2e;margin-bottom:8px;letter-spacing:-.3px" class="dh-intro-title">Quand partir ? M&eacute;t&eacute;o mois par mois</h2>
+ <p style="color:#4a5568;font-size:14px;margin-bottom:16px;line-height:1.7" class="dh-intro-sub">Données Open-Meteo · 10 ans · Tableaux climatiques mensuels · 697 destinations</p>
+ <p style="max-width:720px;margin-bottom:40px;font-size:15px;line-height:1.8;color:#4a5568" class="dh-intro-desc">Nos guides analysent températures, précipitations, ensoleillement et saisonnalité pour déterminer objectivement les meilleurs mois selon votre projet — voyage, mariage, festival ou événement.</p>
 
  <!-- SILO 1 : MEILLEURE PERIODE - dominant -->
  <div style="margin-bottom:52px">
@@ -857,6 +848,7 @@
 <a href="best-time-to-visit-astana.html" target="_top" class="dh-card" data-name="Astana" data-country="Kazakhstan" data-aliases="nur sultan nour-sultan kazakhstan"><img src="../flags/kz.png" width="20" height="15" alt="KZ" style="border-radius:2px"><span><span class="dh-card-name">Astana</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-baku.html" target="_top" class="dh-card" data-name="Baku" data-country="Azerbaijan" data-aliases="Bakou azerbaidjan"><img src="../flags/az.png" width="20" height="15" alt="AZ" style="border-radius:2px"><span><span class="dh-card-name">Baku</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-belgrade.html" target="_top" class="dh-card" data-name="Belgrade" data-country="Serbia"><img src="../flags/rs.png" width="20" height="15" alt="RS" style="border-radius:2px"><span><span class="dh-card-name">Belgrade</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-bishkek.html" target="_top" class="dh-card" data-name="Bishkek" data-country="Kyrgyzstan" data-aliases="Bichkek"><img src="../flags/kg.png" width="20" height="15" alt="KG" style="border-radius:2px"><span><span class="dh-card-name">Bishkek</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-bratislava.html" target="_top" class="dh-card" data-name="Bratislava" data-country="Slovakia"><img src="../flags/sk.png" width="20" height="15" alt="SK" style="border-radius:2px"><span><span class="dh-card-name">Bratislava</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-bucharest.html" target="_top" class="dh-card" data-name="Bucharest" data-country="Romania" data-aliases="Bucarest"><img src="../flags/ro.png" width="20" height="15" alt="RO" style="border-radius:2px"><span><span class="dh-card-name">Bucharest</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-budapest.html" target="_top" class="dh-card" data-name="Budapest" data-country="Hungary"><img src="../flags/hu.png" width="20" height="15" alt="HU" style="border-radius:2px"><span><span class="dh-card-name">Budapest</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -885,7 +877,6 @@
 <a href="best-time-to-visit-almaty.html" target="_top" class="dh-card" data-name="Almaty" data-country="Kazakhstan"><img src="../flags/kz.png" width="20" height="15" alt="KZ" style="border-radius:2px"><span><span class="dh-card-name">Almaty</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-andorra.html" target="_top" class="dh-card" data-name="Andorra" data-country="Andorra" data-aliases="Andorre andorre ski"><img src="../flags/ad.png" width="20" height="15" alt="AD" style="border-radius:2px"><span><span class="dh-card-name">Andorra</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-bansko.html" target="_top" class="dh-card" data-name="Bansko" data-country="Bulgaria" data-aliases="balkans pirin"><img src="../flags/bg.png" width="20" height="15" alt="BG" style="border-radius:2px"><span><span class="dh-card-name">Bansko</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-bishkek.html" target="_top" class="dh-card" data-name="Bishkek" data-country="Kyrgyzstan" data-aliases="Bichkek"><img src="../flags/kg.png" width="20" height="15" alt="KG" style="border-radius:2px"><span><span class="dh-card-name">Bishkek</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-dushanbe.html" target="_top" class="dh-card" data-name="Dushanbe" data-country="Tajikistan" data-aliases="Douchanbé tadjikistan tajikistan"><img src="../flags/tj.png" width="20" height="15" alt="TJ" style="border-radius:2px"><span><span class="dh-card-name">Dushanbe</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-grandvalira.html" target="_top" class="dh-card" data-name="Grandvalira" data-country="Andorra" data-aliases="andorre ski soldeu"><img src="../flags/ad.png" width="20" height="15" alt="AD" style="border-radius:2px"><span><span class="dh-card-name">Grandvalira</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-jasna.html" target="_top" class="dh-card" data-name="Jasná" data-country="Slovakia" data-aliases="tatras slovaquie"><img src="../flags/sk.png" width="20" height="15" alt="SK" style="border-radius:2px"><span><span class="dh-card-name">Jasná</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -899,12 +890,12 @@
 <span class="dh-acc-meta"><span class="dh-acc-count">24</span>
 <span class="dh-acc-chev">▾</span></span></button>
 <div class="dh-acc-body">
-<div class="dh-group-label">🌆 Cities & destinations</div>
 <div class="dh-grid">
 <a href="best-time-to-visit-agadir.html" target="_top" class="dh-card" data-name="Agadir" data-country="Morocco"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Agadir</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-algiers.html" target="_top" class="dh-card" data-name="Algiers" data-country="Algeria" data-aliases="Alger"><img src="../flags/dz.png" width="20" height="15" alt="DZ" style="border-radius:2px"><span><span class="dh-card-name">Algiers</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-annaba.html" target="_top" class="dh-card" data-name="Annaba" data-country="Algeria"><img src="../flags/dz.png" width="20" height="15" alt="DZ" style="border-radius:2px"><span><span class="dh-card-name">Annaba</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-aswan.html" target="_top" class="dh-card" data-name="Aswan" data-country="Egypt" data-aliases="Assouan"><img src="../flags/eg.png" width="20" height="15" alt="EG" style="border-radius:2px"><span><span class="dh-card-name">Aswan</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-batna.html" target="_top" class="dh-card" data-name="Batna" data-country="Algeria"><img src="../flags/dz.png" width="20" height="15" alt="DZ" style="border-radius:2px"><span><span class="dh-card-name">Batna</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-cairo.html" target="_top" class="dh-card" data-name="Cairo" data-country="Egypt" data-aliases="Caire egypte"><img src="../flags/eg.png" width="20" height="15" alt="EG" style="border-radius:2px"><span><span class="dh-card-name">Cairo</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-casablanca.html" target="_top" class="dh-card" data-name="Casablanca" data-country="Morocco"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Casablanca</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-chefchaouen.html" target="_top" class="dh-card" data-name="Chefchaouen" data-country="Morocco"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Chefchaouen</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -920,14 +911,10 @@
 <a href="best-time-to-visit-merzouga.html" target="_top" class="dh-card" data-name="Merzouga" data-country="Morocco"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Merzouga</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-oran.html" target="_top" class="dh-card" data-name="Oran" data-country="Algeria"><img src="../flags/dz.png" width="20" height="15" alt="DZ" style="border-radius:2px"><span><span class="dh-card-name">Oran</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-ouarzazate.html" target="_top" class="dh-card" data-name="Ouarzazate" data-country="Morocco"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Ouarzazate</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-oukaimeden.html" target="_top" class="dh-card" data-name="Oukaimeden" data-country="Morocco" data-aliases="atlas marrakech"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Oukaimeden</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-sharm-el-sheikh.html" target="_top" class="dh-card" data-name="Sharm el-Sheikh" data-country="Egypt"><img src="../flags/eg.png" width="20" height="15" alt="EG" style="border-radius:2px"><span><span class="dh-card-name">Sharm el-Sheikh</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-tangier.html" target="_top" class="dh-card" data-name="Tangier" data-country="Morocco" data-aliases="Tanger"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Tangier</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-tunis.html" target="_top" class="dh-card" data-name="Tunis" data-country="Tunisia"><img src="../flags/tn.png" width="20" height="15" alt="TN" style="border-radius:2px"><span><span class="dh-card-name">Tunis</span><span class="dh-card-sub">When to visit</span></span></a>
-</div>
-<div class="dh-group-label">⛷️ Mountain resorts</div>
-<div class="dh-grid">
-<a href="best-time-to-visit-batna.html" target="_top" class="dh-card" data-name="Batna" data-country="Algeria"><img src="../flags/dz.png" width="20" height="15" alt="DZ" style="border-radius:2px"><span><span class="dh-card-name">Batna</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-oukaimeden.html" target="_top" class="dh-card" data-name="Oukaimeden" data-country="Morocco" data-aliases="atlas marrakech"><img src="../flags/ma.png" width="20" height="15" alt="MA" style="border-radius:2px"><span><span class="dh-card-name">Oukaimeden</span><span class="dh-card-sub">When to visit</span></span></a>
 </div>
 </div></div>
 <div class="dh-acc">
@@ -1114,6 +1101,7 @@
 <a href="best-time-to-visit-mysore.html" target="_top" class="dh-card" data-name="Mysore" data-country="India" data-aliases="mysuru"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Mysore</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-pondicherry.html" target="_top" class="dh-card" data-name="Pondicherry" data-country="India" data-aliases="Pondichéry"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Pondicherry</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-rajasthan.html" target="_top" class="dh-card" data-name="Rajasthan" data-country="India" data-aliases="jaipur udaipur jodhpur jaisalmer pushkar"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Rajasthan</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-rishikesh.html" target="_top" class="dh-card" data-name="Rishikesh" data-country="India"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Rishikesh</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-udaipur.html" target="_top" class="dh-card" data-name="Udaipur" data-country="India"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Udaipur</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-varanasi.html" target="_top" class="dh-card" data-name="Varanasi" data-country="India"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Varanasi</span><span class="dh-card-sub">When to visit</span></span></a>
 </div>
@@ -1121,7 +1109,6 @@
 <div class="dh-grid">
 <a href="best-time-to-visit-darjeeling.html" target="_top" class="dh-card" data-name="Darjeeling" data-country="India"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Darjeeling</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-gulmarg.html" target="_top" class="dh-card" data-name="Gulmarg" data-country="India" data-aliases="cachemire himalaya"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Gulmarg</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-rishikesh.html" target="_top" class="dh-card" data-name="Rishikesh" data-country="India"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Rishikesh</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-shimla.html" target="_top" class="dh-card" data-name="Shimla" data-country="India" data-aliases="simla"><img src="../flags/in.png" width="20" height="15" alt="IN" style="border-radius:2px"><span><span class="dh-card-name">Shimla</span><span class="dh-card-sub">When to visit</span></span></a>
 </div>
 </div></div>
@@ -1378,6 +1365,7 @@
 <div class="dh-grid">
 <a href="best-time-to-visit-anchorage.html" target="_top" class="dh-card" data-name="Anchorage" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Anchorage</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-antigua-guatemala.html" target="_top" class="dh-card" data-name="Antigua Guatemala" data-country="Guatemala"><img src="../flags/gt.png" width="20" height="15" alt="GT" style="border-radius:2px"><span><span class="dh-card-name">Antigua Guatemala</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-asheville.html" target="_top" class="dh-card" data-name="Asheville" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Asheville</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-austin.html" target="_top" class="dh-card" data-name="Austin" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Austin</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-belize.html" target="_top" class="dh-card" data-name="Belize" data-country="Belize" data-aliases="belize-city san-pedro caye-caulker"><img src="../flags/bz.png" width="20" height="15" alt="BZ" style="border-radius:2px"><span><span class="dh-card-name">Belize</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-boston.html" target="_top" class="dh-card" data-name="Boston" data-country="USA"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Boston</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1433,6 +1421,7 @@
 <a href="best-time-to-visit-san-francisco.html" target="_top" class="dh-card" data-name="San Francisco" data-country="USA"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">San Francisco</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-san-jose.html" target="_top" class="dh-card" data-name="San José" data-country="Costa Rica"><img src="../flags/cr.png" width="20" height="15" alt="CR" style="border-radius:2px"><span><span class="dh-card-name">San José</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-santa-barbara.html" target="_top" class="dh-card" data-name="Santa Barbara" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Santa Barbara</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-santa-fe.html" target="_top" class="dh-card" data-name="Santa Fe" data-country="United States" data-aliases="santa fe new mexico nm"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Santa Fe</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-savannah.html" target="_top" class="dh-card" data-name="Savannah" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Savannah</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-seattle.html" target="_top" class="dh-card" data-name="Seattle" data-country="USA"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Seattle</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-sedona.html" target="_top" class="dh-card" data-name="Sedona" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Sedona</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1444,7 +1433,6 @@
 </div>
 <div class="dh-group-label">⛷️ Mountain resorts</div>
 <div class="dh-grid">
-<a href="best-time-to-visit-asheville.html" target="_top" class="dh-card" data-name="Asheville" data-country="United States"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Asheville</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-aspen.html" target="_top" class="dh-card" data-name="Aspen" data-country="United States" data-aliases="snowmass"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Aspen</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-banff.html" target="_top" class="dh-card" data-name="Banff" data-country="Canada" data-aliases="lake louise sunshine village"><img src="../flags/ca.png" width="20" height="15" alt="CA" style="border-radius:2px"><span><span class="dh-card-name">Banff</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-big-white.html" target="_top" class="dh-card" data-name="Big White" data-country="Canada"><img src="../flags/ca.png" width="20" height="15" alt="CA" style="border-radius:2px"><span><span class="dh-card-name">Big White</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1458,7 +1446,6 @@
 <a href="best-time-to-visit-park-city.html" target="_top" class="dh-card" data-name="Park City" data-country="United States" data-aliases="deer valley canyons"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Park City</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-revelstoke.html" target="_top" class="dh-card" data-name="Revelstoke" data-country="Canada" data-aliases="colombie-britannique canada"><img src="../flags/ca.png" width="20" height="15" alt="CA" style="border-radius:2px"><span><span class="dh-card-name">Revelstoke</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-san-miguel-de-allende.html" target="_top" class="dh-card" data-name="San Miguel de Allende" data-country="Mexico"><img src="../flags/mx.png" width="20" height="15" alt="MX" style="border-radius:2px"><span><span class="dh-card-name">San Miguel de Allende</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-santa-fe.html" target="_top" class="dh-card" data-name="Santa Fe" data-country="United States" data-aliases="santa fe new mexico nm"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Santa Fe</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-steamboat-springs.html" target="_top" class="dh-card" data-name="Steamboat Springs" data-country="United States" data-aliases="steamboat"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Steamboat Springs</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-stowe.html" target="_top" class="dh-card" data-name="Stowe" data-country="United States" data-aliases="vermont nouvelle-angleterre"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Stowe</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-sun-valley.html" target="_top" class="dh-card" data-name="Sun Valley" data-country="United States" data-aliases="idaho"><img src="../flags/us.png" width="20" height="15" alt="US" style="border-radius:2px"><span><span class="dh-card-name">Sun Valley</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1518,11 +1505,14 @@
 <a href="best-time-to-visit-cartagena-colombia.html" target="_top" class="dh-card" data-name="Cartagena" data-country="Colombia" data-aliases="Carthagène des Indes"><img src="../flags/co.png" width="20" height="15" alt="CO" style="border-radius:2px"><span><span class="dh-card-name">Cartagena</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-chile.html" target="_top" class="dh-card" data-name="Chile" data-country="Chile" data-aliases="Chili santiago valparaiso atacama pucon"><img src="../flags/cl.png" width="20" height="15" alt="CL" style="border-radius:2px"><span><span class="dh-card-name">Chile</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-colombia.html" target="_top" class="dh-card" data-name="Colombia" data-country="Colombia" data-aliases="Colombie bogota medellin cartagena cali"><img src="../flags/co.png" width="20" height="15" alt="CO" style="border-radius:2px"><span><span class="dh-card-name">Colombia</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-cuenca-ecuador.html" target="_top" class="dh-card" data-name="Cuenca" data-country="Ecuador" data-aliases="cuenca ecuador"><img src="../flags/ec.png" width="20" height="15" alt="EC" style="border-radius:2px"><span><span class="dh-card-name">Cuenca</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-cusco.html" target="_top" class="dh-card" data-name="Cusco" data-country="Peru"><img src="../flags/pe.png" width="20" height="15" alt="PE" style="border-radius:2px"><span><span class="dh-card-name">Cusco</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-cordoba-argentina.html" target="_top" class="dh-card" data-name="Córdoba" data-country="Argentina" data-aliases="cordoba argentine"><img src="../flags/ar.png" width="20" height="15" alt="AR" style="border-radius:2px"><span><span class="dh-card-name">Córdoba</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-florianopolis.html" target="_top" class="dh-card" data-name="Florianópolis" data-country="Brazil"><img src="../flags/br.png" width="20" height="15" alt="BR" style="border-radius:2px"><span><span class="dh-card-name">Florianópolis</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-galapagos.html" target="_top" class="dh-card" data-name="Galápagos" data-country="Ecuador" data-aliases="santa-cruz isabela san-cristobal"><img src="../flags/ec.png" width="20" height="15" alt="EC" style="border-radius:2px"><span><span class="dh-card-name">Galápagos</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-french-guiana.html" target="_top" class="dh-card" data-name="French Guiana" data-country="French Guiana" data-aliases="Guyane cayenne kourou saint-laurent-du-maroni matoury remire-montjoly"><img src="../flags/gf.png" width="20" height="15" alt="GF" style="border-radius:2px"><span><span class="dh-card-name">French Guiana</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-iguazu.html" target="_top" class="dh-card" data-name="Iguazú" data-country="Argentina"><img src="../flags/ar.png" width="20" height="15" alt="AR" style="border-radius:2px"><span><span class="dh-card-name">Iguazú</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-la-paz.html" target="_top" class="dh-card" data-name="La Paz" data-country="Bolivia"><img src="../flags/bo.png" width="20" height="15" alt="BO" style="border-radius:2px"><span><span class="dh-card-name">La Paz</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-lima.html" target="_top" class="dh-card" data-name="Lima" data-country="Peru" data-aliases="perou"><img src="../flags/pe.png" width="20" height="15" alt="PE" style="border-radius:2px"><span><span class="dh-card-name">Lima</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-machu-picchu.html" target="_top" class="dh-card" data-name="Machu Picchu" data-country="Peru"><img src="../flags/pe.png" width="20" height="15" alt="PE" style="border-radius:2px"><span><span class="dh-card-name">Machu Picchu</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-manaus.html" target="_top" class="dh-card" data-name="Manaus" data-country="Brazil"><img src="../flags/br.png" width="20" height="15" alt="BR" style="border-radius:2px"><span><span class="dh-card-name">Manaus</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1535,6 +1525,7 @@
 <a href="best-time-to-visit-providencia.html" target="_top" class="dh-card" data-name="Providencia" data-country="Colombia" data-aliases="providencia colombia isla"><img src="../flags/co.png" width="20" height="15" alt="CO" style="border-radius:2px"><span><span class="dh-card-name">Providencia</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-punta-del-este.html" target="_top" class="dh-card" data-name="Punta del Este" data-country="Uruguay"><img src="../flags/uy.png" width="20" height="15" alt="UY" style="border-radius:2px"><span><span class="dh-card-name">Punta del Este</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-peru.html" target="_top" class="dh-card" data-name="Peru" data-country="Peru" data-aliases="Pérou lima cusco arequipa iquitos"><img src="../flags/pe.png" width="20" height="15" alt="PE" style="border-radius:2px"><span><span class="dh-card-name">Peru</span><span class="dh-card-sub">When to visit</span></span></a>
+<a href="best-time-to-visit-quito.html" target="_top" class="dh-card" data-name="Quito" data-country="Ecuador"><img src="../flags/ec.png" width="20" height="15" alt="EC" style="border-radius:2px"><span><span class="dh-card-name">Quito</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-rio-de-janeiro.html" target="_top" class="dh-card" data-name="Rio de Janeiro" data-country="Brazil"><img src="../flags/br.png" width="20" height="15" alt="BR" style="border-radius:2px"><span><span class="dh-card-name">Rio de Janeiro</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-rosario.html" target="_top" class="dh-card" data-name="Rosario" data-country="Argentina"><img src="../flags/ar.png" width="20" height="15" alt="AR" style="border-radius:2px"><span><span class="dh-card-name">Rosario</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-salvador.html" target="_top" class="dh-card" data-name="Salvador" data-country="Brazil" data-aliases="Salvador de Bahia"><img src="../flags/br.png" width="20" height="15" alt="BR" style="border-radius:2px"><span><span class="dh-card-name">Salvador</span><span class="dh-card-sub">When to visit</span></span></a>
@@ -1549,11 +1540,7 @@
 <div class="dh-grid">
 <a href="best-time-to-visit-bariloche.html" target="_top" class="dh-card" data-name="Bariloche" data-country="Argentina"><img src="../flags/ar.png" width="20" height="15" alt="AR" style="border-radius:2px"><span><span class="dh-card-name">Bariloche</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-chapada-diamantina.html" target="_top" class="dh-card" data-name="Chapada Diamantina" data-country="Brazil"><img src="../flags/br.png" width="20" height="15" alt="BR" style="border-radius:2px"><span><span class="dh-card-name">Chapada Diamantina</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-cuenca-ecuador.html" target="_top" class="dh-card" data-name="Cuenca" data-country="Ecuador" data-aliases="cuenca ecuador"><img src="../flags/ec.png" width="20" height="15" alt="EC" style="border-radius:2px"><span><span class="dh-card-name">Cuenca</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-cusco.html" target="_top" class="dh-card" data-name="Cusco" data-country="Peru"><img src="../flags/pe.png" width="20" height="15" alt="PE" style="border-radius:2px"><span><span class="dh-card-name">Cusco</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-la-paz.html" target="_top" class="dh-card" data-name="La Paz" data-country="Bolivia"><img src="../flags/bo.png" width="20" height="15" alt="BO" style="border-radius:2px"><span><span class="dh-card-name">La Paz</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-portillo.html" target="_top" class="dh-card" data-name="Portillo" data-country="Chile" data-aliases="andes ski chile"><img src="../flags/cl.png" width="20" height="15" alt="CL" style="border-radius:2px"><span><span class="dh-card-name">Portillo</span><span class="dh-card-sub">When to visit</span></span></a>
-<a href="best-time-to-visit-quito.html" target="_top" class="dh-card" data-name="Quito" data-country="Ecuador"><img src="../flags/ec.png" width="20" height="15" alt="EC" style="border-radius:2px"><span><span class="dh-card-name">Quito</span><span class="dh-card-sub">When to visit</span></span></a>
 <a href="best-time-to-visit-valle-nevado.html" target="_top" class="dh-card" data-name="Valle Nevado" data-country="Chile" data-aliases="andes chili santiago"><img src="../flags/cl.png" width="20" height="15" alt="CL" style="border-radius:2px"><span><span class="dh-card-name">Valle Nevado</span><span class="dh-card-sub">When to visit</span></span></a>
 </div>
 </div></div>
@@ -1677,232 +1664,229 @@
  <!-- SILO 2 : CLASSEMENTS -->
  <div style="margin-top:52px;padding-top:40px;border-top:1.5px solid #e8e0d0">
  <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">
- <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">🏆 Weather destination rankings</p>
+ <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">🏆 Classements destinations météo</p>
  <div style="flex:1;height:2px;background:linear-gradient(90deg,#e8940a,#e8e0d0)"></div>
  </div>
- <p style="color:#4a5568;font-size:14px;margin-bottom:24px;line-height:1.7">Objective rankings based on 10 years of climate data — find the best destination for your project.</p>
+ <p style="color:#4a5568;font-size:14px;margin-bottom:24px;line-height:1.7">Classements objectifs basés sur 10 ans de données climatiques — trouvez la meilleure destination pour votre projet.</p>
  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
- <a href="best-destinations-weather-ranking-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="classement-destinations-meteo-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">🌍</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Global ranking 2026</span><span style="font-size:11px;color:#5a6478">Best weather destinations</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Classement mondial 2026</span><span style="font-size:11px;color:#5a6478">Meilleures destinations météo</span></span>
  </a>
- <a href="best-europe-weather-ranking-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="classement-destinations-europe-meteo-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">🗺️</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Europe ranking 2026</span><span style="font-size:11px;color:#5a6478">Best weather in Europe</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Classement Europe 2026</span><span style="font-size:11px;color:#5a6478">Meilleure météo en Europe</span></span>
  </a>
- <a href="best-destinations-summer-weather-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="classement-destinations-meteo-ete-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">☀️</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Summer 2026</span><span style="font-size:11px;color:#5a6478">Top destinations June–August</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Été 2026</span><span style="font-size:11px;color:#5a6478">Top destinations juin–août</span></span>
  </a>
- <a href="best-destinations-winter-weather-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="classement-destinations-meteo-hiver-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">🌴</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Winter sun 2026</span><span style="font-size:11px;color:#5a6478">Warm destinations in winter</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Soleil d'hiver 2026</span><span style="font-size:11px;color:#5a6478">Destinations chaudes en hiver</span></span>
  </a>
- <a href="best-destinations-digital-nomads-weather-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="classement-destinations-meteo-nomades-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">💻</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Digital nomads 2026</span><span style="font-size:11px;color:#5a6478">Weather consistency ranking</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Nomades digitaux 2026</span><span style="font-size:11px;color:#5a6478">Classement constance météo</span></span>
  </a>
- <a href="best-beach-destinations-weather-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="classement-destinations-plage-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">🏖️</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Beach ranking 2026</span><span style="font-size:11px;color:#5a6478">Best coastal destinations</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Classement plages 2026</span><span style="font-size:11px;color:#5a6478">Meilleures destinations côtières</span></span>
  </a>
- <a href="best-caribbean-weather-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+ <a href="classement-destinations-caraibes-meteo-2026.html" target="_top" style="background:white;border-radius:12px;padding:16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
  <span style="font-size:22px">🌴</span>
- <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Caribbean 2026</span><span style="font-size:11px;color:#5a6478">Best Caribbean destinations</span></span>
+ <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Caraïbes 2026</span><span style="font-size:11px;color:#5a6478">Meilleures destinations caribéennes</span></span>
  </a>
- <div style="display:flex;align-items:center;gap:14px;margin:32px 0 18px;grid-column:1/-1">
- <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">📅 Where to go month by month</p>
+ </div>
+ <div style="display:flex;align-items:center;gap:14px;margin:32px 0 18px">
+ <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">📅 Où partir mois par mois</p>
  <div style="flex:1;height:2px;background:linear-gradient(90deg,#e8940a,#e8e0d0)"></div>
  </div>
- </div>
- <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:8px">
- <a href="where-to-go-in-january.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">January</a>
- <a href="where-to-go-in-february.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">February</a>
- <a href="where-to-go-in-march.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">March</a>
- <a href="where-to-go-in-april.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">April</a>
- <a href="where-to-go-in-may.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">May</a>
- <a href="where-to-go-in-june.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">June</a>
- <a href="where-to-go-in-july.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">July</a>
- <a href="where-to-go-in-august.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">August</a>
- <a href="where-to-go-in-september.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">September</a>
- <a href="where-to-go-in-october.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">October</a>
- <a href="where-to-go-in-november.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">November</a>
- <a href="where-to-go-in-december.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">December</a>
- </div>
-
+ <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px">
+ <a href="ou-partir-en-janvier.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Janvier</a>
+ <a href="ou-partir-en-fevrier.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Février</a>
+ <a href="ou-partir-en-mars.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Mars</a>
+ <a href="ou-partir-en-avril.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Avril</a>
+ <a href="ou-partir-en-mai.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Mai</a>
+ <a href="ou-partir-en-juin.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Juin</a>
+ <a href="ou-partir-en-juillet.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Juillet</a>
+ <a href="ou-partir-en-aout.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Août</a>
+ <a href="ou-partir-en-septembre.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Septembre</a>
+ <a href="ou-partir-en-octobre.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Octobre</a>
+ <a href="ou-partir-en-novembre.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Novembre</a>
+ <a href="ou-partir-en-decembre.html" target="_top" style="background:white;border-radius:10px;padding:12px 14px;text-decoration:none;border:1.5px solid #e8e0d0;font-size:13px;font-weight:600;color:#1a1f2e;text-align:center">Décembre</a>
  </div>
  </div>
  </div>
- 
-
-
-
-
 <!-- SILO 3 : COMPARATIFS -->
 <div style="max-width:860px;margin:0 auto;padding:32px 16px 0">
  <div style="padding-top:32px;border-top:1.5px solid #e8e0d0">
   <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">
-   <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">⚖️ Destination comparisons</p>
+   <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">⚖️ Comparatifs de destinations</p>
    <div style="flex:1;height:2px;background:linear-gradient(90deg,#e8940a,#e8e0d0)"></div>
   </div>
-  <p style="color:#4a5568;font-size:14px;margin-bottom:24px;line-height:1.7">Side-by-side weather comparisons to help you choose between similar destinations.</p>
+  <p style="color:#4a5568;font-size:14px;margin-bottom:24px;line-height:1.7">Comparaisons météo côte-à-côte pour choisir entre destinations similaires.</p>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,45%),1fr));gap:10px">
-  <a href="algarve-vs-canary-islands-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../algarve-ou-canaries-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">☀️</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Algarve vs Canary Islands</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Algarve ou Canaries</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="algarve-vs-french-riviera-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../algarve-ou-cote-azur-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🏄</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Algarve vs French Riviera</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Algarve ou Côte d'Azur</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="bali-vs-phuket-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../bali-ou-phuket-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🌏</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Bali vs Phuket</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Bali ou Phuket</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="bali-vs-dominican-republic-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../bali-ou-republique-dominicaine-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🌴</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Bali vs Dominican Republic</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Bali ou Rép. Dominicaine</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="bali-vs-sri-lanka-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../bali-ou-sri-lanka-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🌿</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Bali vs Sri Lanka</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Bali ou Sri Lanka</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="barcelona-vs-lisbon-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../barcelone-ou-lisbonne-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🏛️</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Barcelona vs Lisbon</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Barcelone ou Lisbonne</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="canary-islands-vs-madeira-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../canaries-ou-madere-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🌊</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Canary Islands vs Madeira</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Canaries ou Madère</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="cancun-vs-riviera-maya-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../cancun-ou-riviera-maya-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🐢</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Cancún vs Riviera Maya</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Cancún ou Riviera Maya</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="chiang-mai-vs-bangkok-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../chiang-mai-ou-bangkok-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🐘</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Chiang Mai vs Bangkok</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Chiang Mai ou Bangkok</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="corsica-vs-sardinia-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../corse-ou-sardaigne-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🏖️</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Corsica vs Sardinia</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Corse ou Sardaigne</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="costa-rica-vs-colombia-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../costa-rica-ou-colombie-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🦋</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Costa Rica vs Colombia</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Costa Rica ou Colombie</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="french-riviera-vs-costa-brava-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../cote-azur-ou-costa-brava-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">⛵</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">French Riviera vs Costa Brava</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Côte d'Azur ou Costa Brava</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="crete-vs-sardinia-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../crete-ou-sardaigne-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🏛️</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Crete vs Sardinia</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Crète ou Sardaigne</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="dubai-vs-abu-dhabi-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../dubai-ou-abu-dhabi-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🏙️</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Dubai vs Abu Dhabi</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Dubaï ou Abou Dabi</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="dubrovnik-vs-split-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../dubrovnik-ou-split-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">⚓</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Dubrovnik vs Split</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Dubrovnik ou Split</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="fuerteventura-vs-gran-canaria-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../fuerteventura-ou-gran-canaria-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🏄</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Fuerteventura vs Gran Canaria</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Fuerteventura ou Gran Canaria</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="guadeloupe-vs-martinique-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../guadeloupe-ou-martinique-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🌺</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Guadeloupe vs Martinique</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Guadeloupe ou Martinique</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="ibiza-vs-mallorca-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../ibiza-ou-majorque-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🎵</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Ibiza vs Mallorca</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Ibiza ou Majorque</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="mauritius-vs-reunion-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../ile-maurice-ou-reunion-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🌺</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Mauritius vs Réunion</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Maurice ou La Réunion</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="koh-samui-vs-koh-lanta-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../koh-samui-ou-koh-lanta-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">⛵</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Koh Samui vs Koh Lanta</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Koh Samui ou Koh Lanta</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="langkawi-vs-phuket-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../langkawi-ou-phuket-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🌴</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Langkawi vs Phuket</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Langkawi ou Phuket</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="lisbon-vs-porto-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../lisbonne-ou-porto-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🍷</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Lisbon vs Porto</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Lisbonne ou Porto</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="mallorca-vs-sardinia-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../majorque-ou-sardaigne-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🌊</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Mallorca vs Sardinia</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Majorque ou Sardaigne</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="maldives-vs-seychelles-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../maldives-ou-seychelles-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🏝️</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Maldives vs Seychelles</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Maldives ou Seychelles</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="maldives-vs-zanzibar-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../maldives-ou-zanzibar-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🐠</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Maldives vs Zanzibar</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Maldives ou Zanzibar</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="malta-vs-sicily-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../malte-ou-sicile-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🏛️</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Malta vs Sicily</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Malte ou Sicile</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="marrakech-vs-agadir-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../marrakech-ou-agadir-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🕌</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Marrakech vs Agadir</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Marrakech ou Agadir</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="marrakech-vs-fes-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../marrakech-ou-fes-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🕌</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Marrakech vs Fes</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Marrakech ou Fès</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="mykonos-vs-santorini-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../mykonos-ou-santorin-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">⛵</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Mykonos vs Santorini</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Mykonos ou Santorin</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="nice-vs-barcelona-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../nice-ou-barcelone-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🎨</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Nice vs Barcelona</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Nice ou Barcelone</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="dominican-republic-vs-jamaica-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../republique-dominicaine-ou-jamaique-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🎵</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Dominican Republic vs Jamaica</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Rép. Dominicaine ou Jamaïque</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="sicily-vs-crete-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../sicile-ou-crete-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🏛️</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Sicily vs Crete</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Sicile ou Crète</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
-  <a href="tenerife-vs-madeira-weather.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
+  <a href="../tenerife-ou-madere-climat.html" style="background:white;border-radius:12px;padding:14px 16px;text-decoration:none;border:1.5px solid #e8e0d0;display:flex;align-items:center;gap:12px">
    <span style="font-size:20px">🌋</span>
-   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Tenerife vs Madeira</span><span style="font-size:11px;color:#5a6478">Weather comparison</span></span>
+   <span><span style="font-size:13px;font-weight:700;color:#1a1f2e;display:block">Tenerife ou Madère</span><span style="font-size:11px;color:#5a6478">Comparatif météo</span></span>
   </a>
   </div>
  </div>
 </div>
 
+</section>
+
+
+
 <!-- ── Trust block ── -->
 <section class="trust-block">
  <div class="trust-block-inner">
-  <h2>Why are these estimates reliable?</h2>
-  <p class="trust-tagline">BestDateWeather is not a 1-year weather forecast. We analyse seasonal climate trends to estimate the most probable conditions for a given date.</p>
+  <h2>Pourquoi ces estimations sont-elles fiables ?</h2>
+  <p class="trust-tagline">BestDateWeather n'est pas une application météo classique à 7 jours. Nous analysons les tendances climatiques saisonnières pour estimer les conditions les plus probables à une date donnée.</p>
   <div class="trust-grid">
    <div class="trust-item">
     <div class="trust-item-icon">📊</div>
-    <h3>10 years of observed data</h3>
-    <p>Every estimate is based on real weather records from 2016 to 2025: temperature, precipitation, sunshine and wind, hour by hour.</p>
+    <h3>10 ans de données observées</h3>
+    <p>Chaque estimation repose sur de vraies données météo de 2016 à 2025 : températures, précipitations, ensoleillement et vent, heure par heure.</p>
    </div>
    <div class="trust-item">
     <div class="trust-item-icon">🌍</div>
-    <h3>ECMWF model integrated</h3>
-    <p>For dates within the next 7 months, seasonal trends from the European Centre for Medium-Range Weather Forecasts correct the historical averages.</p>
+    <h3>Modèle ECMWF intégré</h3>
+    <p>Pour les dates dans les 7 prochains mois, les tendances saisonnières du Centre européen de prévision météorologique corrigent les moyennes historiques.</p>
    </div>
    <div class="trust-item">
     <div class="trust-item-icon">📐</div>
-    <h3>Probabilistic score P10–P90</h3>
-    <p>The score out of 10 is not an exact forecast. It quantifies the probability of good conditions by aggregating 4 key factors: rain, temperature, wind, sunshine.</p>
+    <h3>Score probabiliste P10–P90</h3>
+    <p>Le score sur 10 n'est pas une prévision exacte. Il quantifie la probabilité de bonnes conditions en agrégeant 4 facteurs clés : pluie, température, vent, ensoleillement.</p>
    </div>
   </div>
  </div>
@@ -1911,82 +1895,84 @@
 <!-- ── SEO block ── -->
 <section class="seo-block" inert style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
  <div class="seo-block-inner">
-  <h2>What is the best time to travel?</h2>
-  <p>Choosing the ideal date involves far more than a 5-day forecast. Average temperatures, rain risk, sunshine, wind — every destination has its own climate rhythm. BestDateWeather analyses this data to give you a probabilistic estimate of expected conditions, month by month or day by day up to a year ahead.</p>
+  <h2>Quelle est la meilleure période pour voyager ?</h2>
+  <p>Choisir la date idéale dépasse largement les prévisions à 5 jours. Températures moyennes, risque de pluie, ensoleillement, vent — chaque destination a son propre rythme climatique. BestDateWeather analyse ces données pour vous donner une estimation probabiliste des conditions attendues, mois par mois ou jour par jour jusqu'à un an à l'avance.</p>
 
-  <h3>Popular destinations — when to go?</h3>
+  <h3>Destinations populaires — quand partir ?</h3>
   <div class="seo-links">
-   <a class="seo-link" href="../bali-meteo-juillet.html">Bali in July</a>
-   <a class="seo-link" href="../tenerife-meteo-janvier.html">Tenerife in January</a>
-   <a class="seo-link" href="../lisbonne-meteo-mai.html">Lisbon in May</a>
-   <a class="seo-link" href="../barcelone-meteo-juin.html">Barcelona in June</a>
-   <a class="seo-link" href="../new-york-meteo-octobre.html">New York in October</a>
-   <a class="seo-link" href="../phuket-meteo-mars.html">Phuket in March</a>
-   <a class="seo-link" href="../crete-meteo-septembre.html">Crete in September</a>
-   <a class="seo-link" href="../marrakech-meteo-avril.html">Marrakech in April</a>
-   <a class="seo-link" href="../paris-meteo-juin.html">Paris in June</a>
-   <a class="seo-link" href="../tokyo-meteo-avril.html">Tokyo in April</a>
+   <a class="seo-link" href="bali-meteo-juillet.html">Bali en juillet</a>
+   <a class="seo-link" href="tenerife-meteo-janvier.html">Tenerife en janvier</a>
+   <a class="seo-link" href="lisbonne-meteo-mai.html">Lisbonne en mai</a>
+   <a class="seo-link" href="barcelone-meteo-juin.html">Barcelone en juin</a>
+   <a class="seo-link" href="new-york-meteo-octobre.html">New York en octobre</a>
+   <a class="seo-link" href="phuket-meteo-mars.html">Phuket en mars</a>
+   <a class="seo-link" href="crete-meteo-septembre.html">Crète en septembre</a>
+   <a class="seo-link" href="marrakech-meteo-avril.html">Marrakech en avril</a>
+   <a class="seo-link" href="paris-meteo-juin.html">Paris en juin</a>
+   <a class="seo-link" href="tokyo-meteo-avril.html">Tokyo en avril</a>
   </div>
 
-  <h3>Monthly weather — detailed pages</h3>
+  <h3>Météo mois par mois — pages détaillées</h3>
   <div class="seo-links">
-   <a class="seo-link" href="../nice-meteo-juillet.html">Nice in July</a>
-   <a class="seo-link" href="../rome-meteo-mai.html">Rome in May</a>
-   <a class="seo-link" href="../dubai-meteo-novembre.html">Dubai in November</a>
-   <a class="seo-link" href="../cancun-meteo-decembre.html">Cancún in December</a>
-   <a class="seo-link" href="../maldives-meteo-fevrier.html">Maldives in February</a>
-   <a class="seo-link" href="../porto-meteo-mars.html">Porto in March</a>
-   <a class="seo-link" href="../corse-meteo-aout.html">Corsica in August</a>
-   <a class="seo-link" href="../ibiza-meteo-juin.html">Ibiza in June</a>
-   <a class="seo-link" href="../santorin-meteo-septembre.html">Santorini in September</a>
-   <a class="seo-link" href="../ile-maurice-meteo-juillet.html">Mauritius in July</a>
+   <a class="seo-link" href="nice-meteo-juillet.html">Nice en juillet</a>
+   <a class="seo-link" href="rome-meteo-mai.html">Rome en mai</a>
+   <a class="seo-link" href="dubai-meteo-novembre.html">Dubaï en novembre</a>
+   <a class="seo-link" href="cancun-meteo-decembre.html">Cancún en décembre</a>
+   <a class="seo-link" href="maldives-meteo-fevrier.html">Maldives en février</a>
+   <a class="seo-link" href="porto-meteo-mars.html">Porto en mars</a>
+   <a class="seo-link" href="corse-meteo-aout.html">Corse en août</a>
+   <a class="seo-link" href="ibiza-meteo-juin.html">Ibiza en juin</a>
+   <a class="seo-link" href="santorin-meteo-septembre.html">Santorin en septembre</a>
+   <a class="seo-link" href="ile-maurice-meteo-juillet.html">Maurice en juillet</a>
   </div>
 
-  <h3>How to read the weather score?</h3>
-  <p>The score out of 10 combines four weighted components: rain probability (highest weight for beach and travel), temperature against the ideal range for the activity, sunshine measured in hours of direct radiation, and wind speed. The P50 statistical median is used instead of the mean to prevent exceptional events — heatwaves, isolated storms — from skewing the estimate.</p>
+  <h3>Comment lire le score météo ?</h3>
+  <p>Le score sur 10 combine quatre composantes pondérées : probabilité de pluie (poids le plus élevé pour plage et voyage), température par rapport à la plage idéale pour l'activité, ensoleillement en heures de rayonnement direct, et vitesse du vent. La médiane statistique P50 est utilisée plutôt que la moyenne pour éviter que des événements exceptionnels — canicules, orages isolés — ne faussent l'estimation.</p>
 
-  <h3>Destination comparisons</h3>
+  <h3>Comparatifs de destinations</h3>
   <div class="seo-links">
-   <a class="seo-link" href="../bali-meteo-juillet.html">Bali vs Phuket in summer</a>
-   <a class="seo-link" href="../tenerife-meteo-fevrier.html">Canary Islands in winter</a>
-   <a class="seo-link" href="../cote-azur-meteo-aout.html">French Riviera in August</a>
-   <a class="seo-link" href="../maldives-meteo-mars.html">Maldives off-season</a>
-   <a class="seo-link" href="../barcelone-meteo-octobre.html">Mediterranean in autumn</a>
+   <a class="seo-link" href="bali-ou-phuket-climat.html">Bali vs Phuket en été</a>
+   <a class="seo-link" href="tenerife-meteo-fevrier.html">Canaries en hiver</a>
+   <a class="seo-link" href="cote-azur-meteo-aout.html">Côte d'Azur en août</a>
+   <a class="seo-link" href="maldives-meteo-mars.html">Maldives hors saison</a>
+   <a class="seo-link" href="barcelone-meteo-octobre.html">Méditerranée en automne</a>
   </div>
  </div>
 </section>
+
 
 
 
 <!-- ── Brand block ── -->
 <section class="brand-block">
  <div class="brand-block-inner">
-  <h2>Weather for big decisions</h2>
-  <p>An outdoor wedding, an important trip, a shoot, a sporting event — when weather truly matters, a simple 7-day forecast app is not enough.</p>
-  <p>BestDateWeather analyses seasonal climate trends to help you choose the most favourable moment, with a transparent method and verifiable data.</p>
+  <h2>La météo des grandes décisions</h2>
+  <p>Un mariage en extérieur, un voyage important, un tournage, un événement sportif — quand la météo compte vraiment, une simple application météo à 7 jours ne suffit pas.</p>
+  <p>BestDateWeather analyse les tendances climatiques saisonnières pour vous aider à choisir le moment le plus favorable, avec une méthode transparente et des données vérifiables.</p>
  </div>
-</section>
+
+
 
 </main>
 
 <div class="app-footer">
  <div style="font-weight:700;font-size:13px;color:var(--slate2);margin-bottom:6px">bestdateweather.com</div>
- <a href="https://open-meteo.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Weather data by Open-Meteo.com</a> &nbsp;·&nbsp; Sources ECMWF, DWD, NOAA, Météo-France &nbsp;·&nbsp; CC BY 4.0
- <p style="margin-top:8px"><a href="../methodology-en.html" style="color:inherit;text-decoration:none">Methodology</a> &nbsp;·&nbsp; <a href="../en/about.html" style="color:inherit;text-decoration:none">About</a> &nbsp;·&nbsp; <a href="../en/faq.html" style="color:inherit;text-decoration:none">FAQ</a></p>
+ <a href="https://open-meteo.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Données météo par Open-Meteo.com</a> &nbsp;·&nbsp; Sources ECMWF, DWD, NOAA, Météo-France &nbsp;·&nbsp; CC BY 4.0
+ <p style="margin-top:8px"><a href="methodologie.html" style="color:inherit;text-decoration:none">Méthodologie</a> &nbsp;·&nbsp; <a href="a-propos.html" style="color:inherit;text-decoration:none">À propos</a> &nbsp;·&nbsp; <a href="faq.html" style="color:inherit;text-decoration:none">FAQ</a> &nbsp;·&nbsp; <a href="widgets.html" style="color:inherit;text-decoration:none">Widgets voyage</a></p>
 <p class="footer-langs" style="margin-top:4px"><!-- HUB-FOOTER-START --><a href="../index.html" style="color:inherit;text-decoration:none"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a> &nbsp;·&nbsp; <a href="../en/app.html" style="color:inherit;text-decoration:none"><img src="../flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English</a> &nbsp;·&nbsp; <a href="../es/app.html" style="color:inherit;text-decoration:none"><img src="../flags/es.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Español</a> &nbsp;·&nbsp; <a href="../de/app.html" style="color:inherit;text-decoration:none"><img src="../flags/de.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Deutsch</a><!-- HUB-FOOTER-END --></p>
- <p style="margin-top:4px;font-size:11px;color:#6b7280"><a href="../en/legal.html" style="color:inherit;text-decoration:none">Legal notice</a> &nbsp;·&nbsp; <a href="../en/privacy.html" style="color:inherit;text-decoration:none">Privacy</a> &nbsp;·&nbsp; <a href="../en/contact.html" style="color:inherit;text-decoration:none">Contact</a></p>
+ <p style="margin-top:4px;font-size:11px;color:#6b7280"><a href="mentions-legales.html" style="color:inherit;text-decoration:none">Mentions légales</a> &nbsp;·&nbsp; <a href="confidentialite.html" style="color:inherit;text-decoration:none">Confidentialité</a> &nbsp;·&nbsp; <a href="contact.html" style="color:inherit;text-decoration:none">Contact</a></p>
 </div>
 
 <script defer src="../js/share.js?v=adc494"></script>
 <script defer src="../js/i18n-en-us.min.js?v=9"></script>
 <script defer src="../js/fiche-scores.js?v=639443"></script>
-<script src="../js/fiche-aqi.js"></script>
 <script defer src="../js/fiche-slugs.min.js?v=edd3b9"></script>
-<script defer src="../js/core.min.js?v=51"></script>
+<script defer src="../js/core.min.js?v=48"></script>
 <script defer src="../js/favs.min.js?v=1"></script>
 
-<script defer src="../js/sw-register.js?v=948975"></script>
-<script defer src="../js/a11y-inert.js"></script>
+<script src="../js/sw-register.js?v=948975" defer></script>
 <script defer src="../js/weather-banner-2.min.js?v=5"></script>
+
 </body>
 </html>
+<!-- cache bust Tue Mar 24 18:47:07 UTC 2026 -->
