@@ -1677,7 +1677,10 @@ def decision_card_html(dest, months, mi_best, C, nom,
     )[:3]
 
     _best_pills_hero = ''.join(
-        f'<span style="font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;background:rgba(34,197,94,.18);color:#166534;border:1px solid rgba(34,197,94,.35);{'outline:1.5px solid #f59e0b;background:rgba(245,158,11,.15);color:#92400e;' if i==mi_best else ''}">{_short[i]}{" ★" if i==mi_best else ""}</span>'
+        (''
+        f'<span style="font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;'
+        + ('background:rgba(34,197,94,.22);color:#166534;border:1px solid #16a34a;outline:2px solid #f59e0b;outline-offset:1px;' if i==mi_best else 'background:rgba(34,197,94,.15);color:#166534;border:1px solid rgba(34,197,94,.3);')
+        + f'">{_short[i]}{"+" if i==mi_best else ""}</span>')
         for i,_ in _rec_idxs
     ) if not is_monthly else ''
 
