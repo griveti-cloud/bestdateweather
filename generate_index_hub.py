@@ -1057,6 +1057,8 @@ def generate_from_template(lang, loc):
         '{{UI_HINT_SCENARIOS}}':   meta.get('UI_HINT_SCENARIOS', 'Statistical envelopes P10–P90'),
         '{{UI_HINT_HOURLY}}':      meta.get('UI_HINT_HOURLY', 'Temperatures & weather'),
         '{{UI_HINT_HIST}}':        meta.get('UI_HINT_HIST', '10-year trend'),
+        '{{UI_ANN_BTN}}':          meta.get('UI_ANN_BTN', 'See the year'),
+        '{{UI_ANN_SUBTITLE}}':     meta.get('UI_ANN_SUBTITLE', 'Monthly climate profile · 10-year average'),
     }
 
     for placeholder, value in replacements.items():

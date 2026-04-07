@@ -82,7 +82,9 @@
     "UI_SC_OPT_DEFAULT": "Calor · poca lluvia",
     "UI_HINT_SCENARIOS": "Envolventes estadísticas P10–P90",
     "UI_HINT_HOURLY": "Temperaturas y tiempo",
-    "UI_HINT_HIST": "Tendencia 10 años"
+    "UI_HINT_HIST": "Tendencia 10 años",
+    "UI_ANN_BTN": "Ver el año",
+    "UI_ANN_SUBTITLE": "Perfil climático mensual · media de 10 años"
   },
   "months": [
     "Enero",

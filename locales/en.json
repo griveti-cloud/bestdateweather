@@ -83,7 +83,9 @@
     "UI_SC_OPT_DEFAULT": "Hot · little rain",
     "UI_HINT_SCENARIOS": "Statistical envelopes P10–P90",
     "UI_HINT_HOURLY": "Temperatures & weather",
-    "UI_HINT_HIST": "10-year trend"
+    "UI_HINT_HIST": "10-year trend",
+    "UI_ANN_BTN": "See the year",
+    "UI_ANN_SUBTITLE": "Monthly climate profile · 10-year average"
   },
   "months": [
     "January",

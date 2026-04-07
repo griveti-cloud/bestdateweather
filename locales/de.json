@@ -82,7 +82,9 @@
     "UI_SC_OPT_DEFAULT": "Warm · wenig Regen",
     "UI_HINT_SCENARIOS": "Statistische Hüllkurven P10–P90",
     "UI_HINT_HOURLY": "Temperaturen & Wetter",
-    "UI_HINT_HIST": "10-Jahres-Trend"
+    "UI_HINT_HIST": "10-Jahres-Trend",
+    "UI_ANN_BTN": "Jahr anzeigen",
+    "UI_ANN_SUBTITLE": "Monatliches Klimaprofil · 10-Jahres-Durchschnitt"
   },
   "months": [
     "Januar",
