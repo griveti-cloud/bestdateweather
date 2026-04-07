@@ -953,11 +953,11 @@ from lib.page_config import load_locale, SUPPORTED_LANGS
 
 
 LANG_CONFIG = {
-    'fr':    {'output': 'index.html',   'i18n': 'js/i18n-fr.min.js?v=7',         'flatpickr_locale': 'fr'},
-    'en':    {'output': 'en/app.html',  'i18n': '../js/i18n-en.min.js?v=9',       'flatpickr_locale': None},
-    'en-us': {'output': 'us/app.html',  'i18n': '../js/i18n-en-us.min.js?v=9',    'flatpickr_locale': None},
-    'es':    {'output': 'es/app.html',  'i18n': '../js/i18n-es.min.js?v=9',       'flatpickr_locale': 'es'},
-    'de':    {'output': 'de/app.html',  'i18n': '../js/i18n-de.min.js?v=9',       'flatpickr_locale': 'de'},
+    'fr':    {'output': 'index.html',   'i18n': 'js/i18n-fr.min.js?v=11',         'flatpickr_locale': 'fr'},
+    'en':    {'output': 'en/app.html',  'i18n': '../js/i18n-en.min.js?v=11',       'flatpickr_locale': None},
+    'en-us': {'output': 'us/app.html',  'i18n': '../js/i18n-en-us.min.js?v=11',    'flatpickr_locale': None},
+    'es':    {'output': 'es/app.html',  'i18n': '../js/i18n-es.min.js?v=11',       'flatpickr_locale': 'es'},
+    'de':    {'output': 'de/app.html',  'i18n': '../js/i18n-de.min.js?v=11',       'flatpickr_locale': 'de'},
 }
 
 FLATPICKR_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13'
