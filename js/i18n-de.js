@@ -29,6 +29,9 @@ window.BDW_T = {
  checkWeather: 'Wetter prüfen',
   findBestMonth: 'Besten Monat finden →',
   checkConditions: 'Bedingungen prüfen →',
+  hist_tmax: 'Tagesmax.',
+  hist_tmean: 'Tagesdurchschn.',
+  hist_tmin: 'Tagesmin.',
   wowExample: 'Bsp: Bali → bester Monat Juli (8,2/10) · Monaco → August (9,4/10)',
   suggestTitleDynamic: 'Beste Monate ·',
 

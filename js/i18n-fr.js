@@ -29,6 +29,9 @@ window.BDW_T = {
  checkWeather: 'Voir la météo',
   findBestMonth: 'Trouver le meilleur mois →',
   checkConditions: 'Voir les conditions ce jour →',
+  hist_tmax: 'Max du jour',
+  hist_tmean: 'Moy. du jour',
+  hist_tmin: 'Min du jour',
   wowExample: 'Ex : Bali → meilleur en juillet (8.2/10) · Monaco → août (9.4/10)',
   suggestTitleDynamic: 'Meilleurs mois ·',
 
