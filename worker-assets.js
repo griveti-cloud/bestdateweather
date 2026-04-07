@@ -146,6 +146,53 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
       return new Response(body, { status: 200, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=86400', 'Access-Control-Allow-Origin': '*' } });
     }
 
+
+    // ── Geo-redirect sur la racine ──
+    // Uniquement sur "/" — respecte le choix manuel via cookie bdw_lang
+    if (path === '/' || path === '/index.html') {
+      // Respecter le choix manuel de l'utilisateur
+      const cookie = request.headers.get('Cookie') || '';
+      const langCookie = cookie.match(/bdw_lang=([a-z-]+)/);
+      if (langCookie) {
+        const chosen = langCookie[1];
+        if (chosen === 'en')    return Response.redirect(url.origin + '/en/app.html', 302);
+        if (chosen === 'en-us') return Response.redirect(url.origin + '/us/app.html', 302);
+        if (chosen === 'es')    return Response.redirect(url.origin + '/es/app.html', 302);
+        if (chosen === 'de')    return Response.redirect(url.origin + '/de/app.html', 302);
+        // chosen === 'fr' → laisser passer (index.html)
+      } else {
+        // Détection par IP (Cloudflare header) en priorité
+        const country = (request.cf && request.cf.country) || '';
+        // Accept-Language en fallback
+        const acceptLang = (request.headers.get('Accept-Language') || '').toLowerCase();
+
+        // Pays US → version US (°F)
+        if (country === 'US') {
+          return Response.redirect(url.origin + '/us/app.html', 302);
+        }
+        // Pays hispanophones
+        const ES_COUNTRIES = ['ES','MX','AR','CO','CL','PE','VE','EC','BO','PY','UY','CR','PA','HN','SV','GT','NI','DO','CU','PR'];
+        if (ES_COUNTRIES.includes(country)) {
+          return Response.redirect(url.origin + '/es/app.html', 302);
+        }
+        // Pays germanophones
+        if (['DE','AT','CH','LI','LU'].includes(country)) {
+          return Response.redirect(url.origin + '/de/app.html', 302);
+        }
+        // Pays francophones → index.html (par défaut, pas de redirect)
+        const FR_COUNTRIES = ['FR','BE','CA','CH','LU','MC','SN','CI','CM','MG','ML','BF','NE','TD','GN','BJ','TG','RW','BI','CD','CG','GA','CF','KM','DJ','MR','MU','SC','VU','WF','PF','NC','PM','GP','MQ','RE','YT','GF','BL','MF'];
+        if (FR_COUNTRIES.includes(country)) {
+          // Reste sur index.html, pas de redirect
+        } else {
+          // Tout le reste du monde → EN (fallback universel)
+          // Sauf si Accept-Language suggère FR
+          if (!acceptLang.startsWith('fr')) {
+            return Response.redirect(url.origin + '/en/app.html', 302);
+          }
+        }
+      }
+    }
+
     // ── Static assets ──
     return env.ASSETS.fetch(request);
   }

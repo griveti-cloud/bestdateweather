@@ -1102,8 +1102,10 @@ def build_hub_footer(current_lang, current_loc):
             href = "../index.html" if sub == '' else f"../{sub}/app.html"
             flag_src = f"../{flag_file}"
 
+        # Valeur du cookie selon la langue cible
+        cookie_val = 'en-us' if lang == 'en-us' else ('fr' if lang == 'fr' else lang)
         links.append(
-            f'<a href="{href}" style="color:inherit;text-decoration:none">'
+            f'<a href="{href}" onclick="document.cookie='bdw_lang={cookie_val};path=/;max-age=31536000'" style="color:inherit;text-decoration:none">' 
             f'<img src="{flag_src}" width="20" height="15" alt="" '
             f'style="vertical-align:middle;border-radius:2px"> {label}</a>'
         )
