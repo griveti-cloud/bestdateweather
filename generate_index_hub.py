@@ -1093,12 +1093,20 @@ def generate_from_template(lang, loc):
 import csv as _csv
 import datetime as _dt
 
-def _hero_gradient_home(tmax, tropical, rain_pct):
-    """Gradient contextuel selon profil climatique destination."""
+def _hero_gradient_home(tmax, tropical, rain_pct, idx=0):
+    """Gradient contextuel selon profil climatique + variante visuelle."""
+    hot_variants = [
+        'linear-gradient(135deg,#c2410c 0%,#ea580c 30%,#f59e0b 65%,#fbbf24 100%)',
+        'linear-gradient(135deg,#7c2d12 0%,#c2410c 35%,#f97316 70%,#fb923c 100%)',
+        'linear-gradient(135deg,#854d0e 0%,#d97706 40%,#fcd34d 80%,#fef3c7 100%)',
+        'linear-gradient(135deg,#991b1b 0%,#dc2626 35%,#f97316 70%,#fbbf24 100%)',
+        'linear-gradient(135deg,#78350f 0%,#b45309 40%,#f59e0b 80%,#fde68a 100%)',
+        'linear-gradient(135deg,#1e3a5f 0%,#1d4ed8 40%,#3b82f6 75%,#93c5fd 100%)',
+    ]
     if tropical and rain_pct < 55:
         return 'linear-gradient(135deg,#14532d 0%,#15803d 35%,#4ade80 75%,#86efac 100%)'
-    if tmax >= 26 and rain_pct < 15:
-        return 'linear-gradient(135deg,#c2410c 0%,#ea580c 30%,#f59e0b 65%,#fbbf24 100%)'
+    if tmax >= 26 and rain_pct < 20:
+        return hot_variants[idx % len(hot_variants)]
     if tmax >= 20 and rain_pct < 40:
         return 'linear-gradient(135deg,#854d0e 0%,#ca8a04 40%,#fbbf24 80%,#fef08a 100%)'
     if tmax <= 10:
@@ -1195,7 +1203,8 @@ def build_top_monthly(lang, loc):
                         'rain': round(rain),
                         'sun': round(sun),
                         'tropical': trop,
-                        'gradient': _hero_gradient_home(tmax, trop, rain),
+                        'gradient': _hero_gradient_home(tmax, trop, rain, len(scored)),
+                        'idx': len(scored),
                         'url': url_prefix + slug_dest + '.html',
                     })
             except: pass
@@ -1207,13 +1216,14 @@ def build_top_monthly(lang, loc):
 
     # Construire HTML
     cards_html = ''
-    for d in top6:
+    for i, d in enumerate(top6):
         sun_str = f"{d['sun']}h"
         rain_str = f"{d['rain']}%"
         score_str = f"{d['score']:.1f}"
+        gradient = _hero_gradient_home(d['tmax'], d['tropical'], d['rain'], i)
         cards_html += (
             f'<a class="top-card" href="{d["url"]}">'
-            f'<div class="top-card-img" style="background:{d["gradient"]}">'
+            f'<div class="top-card-img" style="background:{gradient}">'
             f'<div class="top-card-score">{score_str}</div>'
             f'<div><div class="top-card-name">{d["nom"]}</div>'
             f'<div class="top-card-month">{month_name}</div></div>'
