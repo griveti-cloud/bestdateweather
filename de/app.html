@@ -28,7 +28,7 @@ header.app-header{padding-top:64px!important}
 /* ═══════════════════════════════════════
    HOMEPAGE REDESIGN — nouvelles sections
 ═══════════════════════════════════════ */
-.page-hero{padding:28px 20px 0;max-width:620px;margin:0 auto}
+.page-hero{padding:28px 20px 20px;max-width:1160px;margin:0 auto;background:#0d1117}
 .page-hero .hero-kicker{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.9px;margin-bottom:10px}
 .page-hero .hero-h1{font-size:clamp(26px,6vw,36px);font-weight:900;color:#fff;font-family:'Fraunces','Fraunces Fallback',Georgia,serif;line-height:1.1;margin-bottom:8px}
 .page-hero .hero-h1 em{color:var(--gold);font-style:italic}
@@ -66,8 +66,10 @@ header.app-header{padding-top:64px!important}
 .trust-n{font-size:16px;font-weight:900;color:var(--gold);font-family:'Playfair Display','Playfair Display Fallback',Georgia,serif}
 .trust-l{font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
 @media(min-width:641px){
-  .page-hero{padding:36px 40px 0;max-width:1160px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:start}
-  .page-hero .hero-col{}
+  .page-hero{padding:36px 40px 32px;max-width:1160px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:center}
+  .page-hero .hero-col{min-width:0}
+.hero-search-col{width:100%}
+@media(min-width:641px){.hero-search-col{width:420px;flex-shrink:0}}
   .proj-shortcuts{max-width:none;margin-left:40px;margin-right:auto;width:calc(1160px / 2 - 44px)}
   .home-section{max-width:1160px;padding:0 40px}
   .home-divider{max-width:calc(1160px - 80px);padding:0 40px}
@@ -75,7 +77,7 @@ header.app-header{padding-top:64px!important}
   .top-card{min-width:0}
   .rank-grid-home{grid-template-columns:repeat(4,1fr)}
   .trust-bar{padding:16px 40px}
-  .wrap{max-width:1160px}
+  .wrap{max-width:1160px;padding:0}
 }
 </style>
 <link rel="preload" href="../app.css?v=42" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
