@@ -765,7 +765,7 @@
         d.geoState = "denied";
         k();
       });
-    }(), (t = document.getElementById("wb-ranking-section")) && i.rankingUrl && (t.innerHTML = '<a href="' + i.rankingUrl + '" style="display:block;text-align:center;background:var(--gold-light);color:#7a4d00;text-decoration:none;padding:6px 14px;border-radius:10px;margin:10px 16px 4px;border:1.5px solid var(--gold);font-family:\'DM Sans\',sans-serif;font-size:14px;font-weight:700;">' + i.rankingTitle + "</a>"), fetch("/data/suggestions.json").then(function(e) {
+    }(), (t = document.getElementById("wb-ranking-section")) && i.rankingUrl && (t.innerHTML = '<a href="' + i.rankingUrl + '" style="display:block;text-align:center;background:linear-gradient(135deg,var(--gold),var(--gold2));color:white;text-decoration:none;padding:10px 14px;border-radius:var(--r);margin:10px 16px 4px;border:none;font-family:\'DM Sans\',sans-serif;font-size:14px;font-weight:700;">' + i.rankingTitle + "</a>"), fetch("/data/suggestions.json").then(function(e) {
         return e.json()
       }).then(function(e) {
         y = e, window._wbSuggestions = e, x(), F()
