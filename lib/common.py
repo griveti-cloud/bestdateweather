@@ -1093,6 +1093,37 @@ def climate_trend_section(slug_fr: str, nom: str, lang: str = 'fr', C: dict = No
 
 # ── Decision card (fusion Décision + Infos pratiques) ─────────────────────────
 
+
+def _hero_gradient(tmax: float, rain_pct: float, is_tropical: bool) -> str:
+    """Retourne un gradient CSS contextuel selon le profil climatique."""
+    if is_tropical and rain_pct >= 55:
+        return 'linear-gradient(135deg,#14532d 0%,#15803d 35%,#4ade80 75%,#86efac 100%)'
+    if tmax >= 26 and rain_pct < 50:
+        return 'linear-gradient(135deg,#c2410c 0%,#ea580c 30%,#f59e0b 65%,#fbbf24 100%)'
+    if tmax <= 8:
+        return 'linear-gradient(135deg,#0c4a6e 0%,#0369a1 40%,#38bdf8 80%,#7dd3fc 100%)'
+    if rain_pct >= 60:
+        return 'linear-gradient(135deg,#44403c 0%,#78716c 40%,#a8a29e 80%,#d6d3d1 100%)'
+    # Tempéré intermédiaire
+    if tmax >= 18:
+        return 'linear-gradient(135deg,#854d0e 0%,#ca8a04 40%,#fbbf24 80%,#fef08a 100%)'
+    return 'linear-gradient(135deg,#1e3a5f 0%,#2563eb 40%,#60a5fa 80%,#bae6fd 100%)'
+
+
+def _heatmap_bar_color(score: float, is_best: bool) -> tuple:
+    """Retourne (fill_color, outline) — vert=bon, rouge=mauvais.
+    Best = vert le plus vif + outline gold. Jamais gold en fill."""
+    if is_best:
+        return ('#16a34a', '2px solid #f59e0b')
+    if score >= 7.5:
+        return ('rgba(34,197,94,.85)', 'none')
+    if score >= 5.5:
+        return ('rgba(34,197,94,.42)', 'none')
+    if score >= 4.0:
+        return ('rgba(249,115,22,.55)', 'none')
+    return ('rgba(239,68,68,.6)', 'none')
+
+
 def decision_card_html(dest, months, mi_best, C, nom,
                        is_mountain=False, is_coastal=False,
                        oui_si='', non_si='', verdict_txt='',
@@ -1611,6 +1642,114 @@ def decision_card_html(dest, months, mi_best, C, nom,
     )
 
     # ══════════════════════════════════════════
+    # HERO GRADIENT + HEATMAP (nouveau design)
+    # ══════════════════════════════════════════
+    _avg_tmax_all = sum(float(months[i].get('tmax', 20)) for i in range(12)) / 12
+    _avg_rain_all = sum(float(months[i].get('rain_pct', 30)) for i in range(12)) / 12
+    _hero_grad    = _hero_gradient(float(m.get('tmax', _avg_tmax_all)), rain_pct, is_tropical)
+
+    # Heatmap 12 mois
+    _hm_cells = ''
+    _short = [mn[:3] for mn in months_names[:12]]
+    _max_h = 48
+    for _i in range(12):
+        _sc  = float(months[_i].get('score', 0))
+        _best_i = (_i == mi_best) and not is_monthly
+        _col, _outline_val = _heatmap_bar_color(_sc, _best_i)
+        _h   = max(4, round(_sc / 10 * _max_h))
+        _outline = f'outline:{_outline_val};outline-offset:2px;' if _outline_val != 'none' else ''
+        _lbl_style = 'color:#92400e;font-weight:600' if _best_i else 'color:rgba(0,0,0,.35)'
+        _hm_cells += (
+            f'<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:{_max_h+16}px">'
+            f'<div style="width:100%;height:{_h}px;background:{_col};border-radius:3px;{_outline}"></div>'
+            f'<div style="font-size:9px;{_lbl_style};text-transform:uppercase;letter-spacing:.3px">{_short[_i]}</div>'
+            f'</div>'
+        )
+
+    # Pills best/avoid pour la heatmap hero
+    _rec_idxs = sorted(
+        [(i, float(months[i].get('score',0))) for i in range(12) if months[i].get('classe')=='rec'],
+        key=lambda x: -x[1]
+    )[:4]
+    _avoid_idxs = sorted(
+        [(i, float(months[i].get('score',0))) for i in range(12) if months[i].get('classe')=='avoid'],
+        key=lambda x: x[1]
+    )[:3]
+
+    _best_pills_hero = ''.join(
+        f'<span style="font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;background:rgba(34,197,94,.18);color:#166534;border:1px solid rgba(34,197,94,.35);{'outline:1.5px solid #f59e0b;background:rgba(245,158,11,.15);color:#92400e;' if i==mi_best else ''}">{_short[i]}{" ★" if i==mi_best else ""}</span>'
+        for i,_ in _rec_idxs
+    ) if not is_monthly else ''
+
+    _avoid_pills_hero = ''.join(
+        f'<span style="font-size:11px;padding:5px 12px;border-radius:20px;background:rgba(239,68,68,.1);color:#991b1b;border:1px solid rgba(239,68,68,.25)">{_short[i]}</span>'
+        for i,_ in _avoid_idxs
+    ) if not is_monthly else ''
+
+    _pills_row = ''
+    if _best_pills_hero or _avoid_pills_hero:
+        _best_lbl_pill  = L.get('lbl_dec_ideal_lbl', 'Meilleurs mois') if lang == 'fr' else ('Mejores meses' if lang=='es' else ('Beste Monate' if lang=='de' else 'Best months'))
+        _avoid_lbl_pill = L.get('lbl_dec_eviter_lbl', 'À éviter') if lang == 'fr' else ('Evitar' if lang=='es' else ('Meiden' if lang=='de' else 'Avoid'))
+        _pills_row = (
+            f'<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:12px 24px;background:#faf9f7;border-bottom:1px solid #eee8df">'
+            f'<span style="font-size:10px;color:#a37c60;font-weight:500">{_best_lbl_pill}</span>'
+            f'{_best_pills_hero}'
+        )
+        if _avoid_pills_hero:
+            _pills_row += (
+                f'<span style="color:#d4c4b5;font-size:14px;padding:0 2px">·</span>'
+                f'<span style="font-size:10px;color:#a37c60;font-weight:500">{_avoid_lbl_pill}</span>'
+                f'{_avoid_pills_hero}'
+            )
+        _pills_row += '</div>'
+
+    # Ligne de résumé météo sous le mois dans le hero
+    _sun_summary = f"{sun_h}{C.get('locale', {}).get('comp', {}).get('sun_per_day_short', 'h')}"
+    _rain_summary = f"{int(rain_pct)}%"
+    _temp_summary = f"{fmt_temp(float(m.get('tmin',15)), C)}–{fmt_temp(tmax, C)}"
+    _hero_summary = f"{_sun_summary} soleil · {_temp_summary} · {_rain_summary} pluie" if lang=='fr' else                     f"{_sun_summary} sun · {_temp_summary} · {_rain_summary} rain"
+
+    # Destination string pour le hero
+    _country_str  = dest.get(f'country_{lang}', dest.get('country_en', dest.get('pays', '')))
+    _dest_str     = f"{nom}, {_country_str}" if _country_str else nom
+
+    # HERO BLOCK
+    _hero_block = (
+        f'<div style="padding:28px 24px 22px;position:relative;overflow:hidden;background:{_hero_grad}">'
+        f'<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 75% 15%,rgba(255,255,255,.12) 0%,transparent 55%)"></div>'
+        f'<div style="position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;gap:12px">'
+        f'<div>'
+        f'<div style="font-size:10px;font-weight:500;color:rgba(255,255,255,.65);letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px">{_dest_str}</div>'
+        f'<div style="font-size:52px;font-weight:500;font-family:Georgia,serif;color:#fff;line-height:.9">{month_name}</div>'
+        f'<div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:8px;font-style:italic">{_hero_summary}</div>'
+        f'</div>'
+        f'<div style="text-align:right;flex-shrink:0">'
+        f'<div style="font-size:52px;font-weight:500;font-family:Georgia,serif;color:#fff;line-height:1">{score:.1f}</div>'
+        f'<div style="font-size:13px;color:rgba(255,255,255,.45)">/10</div>'
+        f'<div style="font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.6px;margin-top:2px">{best_lbl}</div>'
+        f'</div>'
+        f'</div>'
+        f'</div>'
+    )
+
+    # HEATMAP BLOCK (annual only)
+    _heatmap_block = ''
+    if not is_monthly:
+        _avoid_lbl_hm = 'Éviter' if lang=='fr' else ('Evitar' if lang=='es' else ('Meiden' if lang=='de' else 'Avoid'))
+        _best_lbl_hm  = 'Idéal'  if lang=='fr' else ('Ideal'  if lang=='es' else ('Ideal'  if lang=='de' else 'Best'))
+        _heatmap_block = (
+            f'<div style="padding:12px 24px 10px;background:#faf9f7;border-bottom:1px solid #eee8df">'
+            f'<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'
+            f'<div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(239,68,68,.6)"></div><span style="font-size:9px;color:#a37c60">{_avoid_lbl_hm}</span></div>'
+            f'<div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(249,115,22,.55)"></div><span style="font-size:9px;color:#a37c60"></span></div>'
+            f'<div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(34,197,94,.85)"></div><span style="font-size:9px;color:#a37c60">{_best_lbl_hm}</span></div>'
+            f'<div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:#16a34a;outline:2px solid #f59e0b;outline-offset:1px"></div><span style="font-size:9px;color:#92400e;font-weight:500">★ Best</span></div>'
+            f'</div>'
+            f'<div style="display:flex;gap:4px;align-items:flex-end">{_hm_cells}</div>'
+            f'</div>'
+        )
+
+    # ══════════════════════════════════════════
     # ASSEMBLE
     # ══════════════════════════════════════════
     def divider(label):
@@ -1619,10 +1758,11 @@ def decision_card_html(dest, months, mi_best, C, nom,
                 f'<div class="row-divider-line"></div></div>')
 
     return (
-        f'<div class="decision-card">'
-        f'{banner}'
-        f'{season_band}'
-        f'{best_avoid_strip}'
+        f'<div class="decision-card" style="overflow:hidden;border-radius:16px;box-shadow:0 2px 24px rgba(0,0,0,.08)">'
+        f'{_hero_block}'
+        f'{_heatmap_block}'
+        f'{_pills_row}'
+        f'<div style="background:#fff;padding:4px 0 0">'
         f'{divider(row_meteo)}'
         f'{row1}'
         f'{divider(row_prat)}'
@@ -1631,5 +1771,6 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'{reasons}'
         f'{verdict_para}'
         f'{source}'
+        f'</div>'
         f'</div>'
     )
