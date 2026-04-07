@@ -28,14 +28,16 @@ header.app-header{padding-top:64px!important}
 /* ═══════════════════════════════════════
    HOMEPAGE REDESIGN — nouvelles sections
 ═══════════════════════════════════════ */
-.page-hero{padding:28px 20px 20px;max-width:1160px;margin:0 auto;background:#0d1117}
-.page-hero .hero-kicker{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.9px;margin-bottom:10px}
-.page-hero .hero-h1{font-size:clamp(26px,6vw,36px);font-weight:900;color:#fff;font-family:'Fraunces','Fraunces Fallback',Georgia,serif;line-height:1.1;margin-bottom:8px}
+.page-hero{background:#0d1117;padding:44px 20px 0;display:flex;flex-direction:column;align-items:center}
+.hero-centered{text-align:center;max-width:680px;margin-bottom:28px}
+.page-hero .hero-kicker{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.9px;margin-bottom:12px}
+.page-hero .hero-h1{font-size:clamp(32px,5vw,52px);font-weight:900;color:#fff;font-family:'Fraunces','Fraunces Fallback',Georgia,serif;line-height:1.05;margin-bottom:12px}
 .page-hero .hero-h1 em{color:var(--gold);font-style:italic}
-.page-hero .hero-sub{font-size:13px;color:rgba(255,255,255,.45);line-height:1.6;margin-bottom:16px}
-.usp-pills-home{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
-.usp-pill-home{font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;border:0.5px solid rgba(201,148,56,.3);background:rgba(201,148,56,.08);color:#e8b84b;white-space:nowrap}
-.usecase-pills-home{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:16px}
+.page-hero .hero-sub{font-size:14px;color:rgba(255,255,255,.45);line-height:1.65}
+.hero-search-col{width:100%;max-width:580px}
+.usp-pills-home{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:20px 0 10px}
+.usp-pill-home{font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;border:0.5px solid rgba(201,148,56,.25);background:rgba(201,148,56,.07);color:rgba(232,184,75,.8);white-space:nowrap}
+.usecase-pills-home{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;padding:0 0 32px}
 .uc-home-lbl{font-size:10px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.6px;margin-right:2px}
 .uc-home-pill{font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;border:0.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:rgba(255,255,255,.55);cursor:pointer;transition:all .15s;font-family:'DM Sans','DM Sans Fallback',sans-serif}
 .uc-home-pill:hover{border-color:rgba(201,148,56,.4);background:rgba(201,148,56,.08);color:#e8b84b}
@@ -66,15 +68,9 @@ header.app-header{padding-top:64px!important}
 .trust-n{font-size:16px;font-weight:900;color:var(--gold);font-family:'Playfair Display','Playfair Display Fallback',Georgia,serif}
 .trust-l{font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
 @media(min-width:641px){
-  .page-hero{padding:36px 40px 32px;max-width:1160px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:center}
-  .page-hero .hero-col{min-width:0}
-.hero-search-col{width:100%}
-@media(min-width:641px){.hero-search-col{width:420px;flex-shrink:0}}
-  .proj-shortcuts{max-width:none;margin-left:40px;margin-right:auto;width:calc(1160px / 2 - 44px)}
-  .home-section{max-width:1160px;padding:0 40px}
-  .home-divider{max-width:calc(1160px - 80px);padding:0 40px}
-  .top-cards{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-  .top-card{min-width:0}
+  .page-hero{padding:52px 40px 0}
+  .hero-centered{max-width:720px}
+  .hero-search-col{max-width:620px}
   .rank-grid-home{grid-template-columns:repeat(4,1fr)}
   .trust-bar{padding:16px 40px}
   .wrap{max-width:1160px;padding:0}
@@ -142,25 +138,11 @@ header.app-header{padding-top:64px!important}
 </nav>
 
 <div class="page-hero">
- <div class="hero-col">
+ <div class="hero-centered">
   <div class="hero-kicker">Wetter für Ihre Projekte</div>
   <h1 class="hero-h1">Welches Wetter <em>für Ihre Reise?</em></h1>
   <p class="hero-sub">Klimabewertung /10 · 697 Reiseziele weltweit · bis zu 1 Jahr im Voraus · 10 Jahre ERA5-Daten</p>
-  <div class="usp-pills-home">
-   <span class="usp-pill-home">Score /10</span>
-   <span class="usp-pill-home">1 Jahr im Voraus</span>
-   <span class="usp-pill-home">697 destinations</span>
-   <span class="usp-pill-home">ERA5 · 10 ans</span>
-   <span class="usp-pill-home">UV · Vagues · AQI</span>
-  </div>
-  <div class="usecase-pills-home">
-   <span class="uc-home-lbl">Score verfeinern für:</span>
-   <button class="uc-home-pill uc-home-active" onclick="quickFill('general')">🌤️ 🌤️ Nur das Wetter</button>
-   <button class="uc-home-pill" onclick="quickFill('plage')">🏖️ 🏖️ Strand</button>
-   <button class="uc-home-pill" onclick="quickFill('ski')">⛷️ ⛷️ Ski</button>
-  </div>
  </div>
-
  <div class="hero-search-col">
   <div class="main-card">
   <!-- ── Weather Banner ── -->
@@ -258,6 +240,19 @@ header.app-header{padding-top:64px!important}
 <div id="wb-suggest-section"></div>
 </div><!-- /.main-card -->
  </div><!-- /.hero-search-col -->
+ <div class="usp-pills-home">
+  <span class="usp-pill-home">Score /10</span>
+  <span class="usp-pill-home">1 Jahr im Voraus</span>
+  <span class="usp-pill-home">697 destinations</span>
+  <span class="usp-pill-home">ERA5 · 10 ans</span>
+  <span class="usp-pill-home">UV · Vagues · AQI</span>
+ </div>
+ <div class="usecase-pills-home">
+  <span class="uc-home-lbl">Score verfeinern für:</span>
+  <button class="uc-home-pill uc-home-active" onclick="quickFill('general')">🌤️ 🌤️ Nur das Wetter</button>
+  <button class="uc-home-pill" onclick="quickFill('plage')">🏖️ 🏖️ Strand</button>
+  <button class="uc-home-pill" onclick="quickFill('ski')">⛷️ ⛷️ Ski</button>
+ </div>
 </div><!-- /.page-hero -->
 
  <!-- USE CASE FILTER PILLS -->
