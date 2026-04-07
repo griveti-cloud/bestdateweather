@@ -1,0 +1,9 @@
+name = "bestdateweather-staging"
+compatibility_date = "2026-03-26"
+main = "worker-assets.js"
+workers_dev = true
+preview_urls = true
+
+[assets]
+directory = "."
+binding = "ASSETS"
