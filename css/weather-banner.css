@@ -19,6 +19,8 @@
 .wb-share-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.35);padding:2px 4px;border-radius:5px;display:flex;align-items:center;transition:opacity .15s;flex-shrink:0}
 .wb-share-btn:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.1)}
 .wb-badge{font-size:9px;background:rgba(232,148,10,.3);border:1px solid rgba(232,148,10,.5);padding:1px 6px;border-radius:8px;font-weight:500;margin-left:4px;letter-spacing:.3px;text-transform:uppercase;color:#fad88a}
+.wb-badge-ip{cursor:pointer;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.65);transition:background .15s}
+.wb-badge-ip:hover{background:rgba(255,255,255,.2);color:#fff}
 .wb-desc{font-size:12px;opacity:.7;margin-top:2px;font-weight:300}
 .wb-right{display:flex;align-items:center;gap:4px;flex-shrink:0}
 .wb-icon{font-size:28px;line-height:1}

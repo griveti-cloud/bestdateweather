@@ -13,6 +13,7 @@
         uv: "UV",
         chosenCity: "ville choisie",
         changeCity: "Changer de ville",
+        approxLabel: "approx.",
         cityTitle: "Ville du bandeau météo",
         typeCity: "Tapez une ville…",
         usePosition: "Utiliser ma position",
@@ -63,6 +64,8 @@
         uv: "UV",
         chosenCity: "chosen city",
         changeCity: "Change city",
+        approxLabel: "approx.",
+        approxLabel: "approx.",
         cityTitle: "Banner weather city",
         typeCity: "Type a city…",
         usePosition: "Use my location",
@@ -113,6 +116,7 @@
         uv: "UV",
         chosenCity: "ciudad elegida",
         changeCity: "Cambiar de ciudad",
+        approxLabel: "aprox.",
         cityTitle: "Ciudad del banner meteorológico",
         typeCity: "Escribe una ciudad…",
         usePosition: "Usar mi ubicación",
@@ -163,6 +167,7 @@
         uv: "UV",
         chosenCity: "gewählte Stadt",
         changeCity: "Stadt ändern",
+        approxLabel: "ca.",
         cityTitle: "Stadt für Wetterbanner",
         typeCity: "Stadt eingeben…",
         usePosition: "Meinen Standort verwenden",
@@ -535,7 +540,7 @@
     var e = L();
     if (e && d.weather) {
       var t, n = d.weather,
-        a = "",
+        a = n.source === "ip" ? '<span class="wb-badge wb-badge-ip" onclick="event.stopPropagation();wbOpenCityModal()" title="' + (i.changeCity || "Changer") + '">~' + (i.approxLabel || "approx.") + '</span>' : (n.source === "manual" ? '<span class="wb-badge">' + (i.chosenCity || "") + '</span>' : ""),
         r = d.hourlyOpen ? "wb-expand open" : "wb-expand",
         o = '<div class="wb" id="wb-banner" onclick="wbToggleHourly()"><div class="wb-top"><div class="wb-left"><div class="wb-city"><span class="wb-pin">📍</span><button class="wb-city-btn" onclick="event.stopPropagation();wbOpenCityModal()" title="' + i.changeCity + '">' + G(n.city) + '<span class="wb-edit-ico">✎</span></button>' + a + '</div><div class="wb-desc">' + G(n.desc) + '</div></div><div class="wb-right"><span class="wb-icon">' + n.icon + '</span><div class="wb-temps"><span class="wb-temp">' + z(n.temp) + (R() ? "°F" : "°") + "</span>" + (null != n.tMin && null != n.tMax ? '<span class="wb-minmax">' + z(n.tMin) + "° / " + z(n.tMax) + "°</span>" : "") + '</div></div></div><div class="wb-meta"><span class="wb-meta-item">' + i.feels + " " + z(n.feels) + '°</span><span class="wb-meta-dot">·</span><span class="wb-meta-item">' + i.wind + " " + (null == (t = n.wind) ? "-" : R() ? Math.round(.621371 * t) : Math.round(t)) + (R() ? " mph" : " km/h") + '</span><span class="wb-meta-dot">·</span><span class="wb-meta-item">' + i.uv + " " + n.uv + '</span><span class="' + r + '">▼</span></div></div>',
         l = document.getElementById("wb-banner-zone");
@@ -734,16 +739,32 @@
   function H() {
     var t;
     ! function() {
+      // 1. Ville sauvegardée manuellement → priorité absolue
       var t = s(e);
-      if (t && t.name && t.lat && t.lon) return d.citySource = t.source || "manual", d.geoState = "granted", T(), void g(t.lat, t.lon, t.name, t.source || "manual");
-      "geolocation" in navigator ? (d.geoState = "loading", T(), navigator.geolocation.getCurrentPosition(function(e) {
-        d.geoState = "granted", u(e.coords.latitude, e.coords.longitude)
-      }, function(e) {
-        d.geoState = "denied", k()
-      }, {
-        timeout: 3e3,
-        maximumAge: 3e5
-      })) : (d.geoState = "denied", k())
+      if (t && t.name && t.lat && t.lon) {
+        d.citySource = t.source || "manual";
+        d.geoState = "granted";
+        T();
+        return void g(t.lat, t.lon, t.name, t.source || "manual");
+      }
+      // 2. Géoloc IP silencieuse via Cloudflare — zero permission
+      d.geoState = "ip";
+      T();
+      fetch("/api/geo").then(function(r) { return r.json(); }).then(function(geo) {
+        if (geo && geo.lat && geo.lon && geo.city) {
+          var cityName = geo.city;
+          d.geoState = "ip";
+          // Passer approx:true pour afficher le badge "(approx.)"
+          g(geo.lat, geo.lon, cityName, "ip");
+        } else {
+          // Pas de données IP → afficher le prompt discret (pas de popup)
+          d.geoState = "denied";
+          k();
+        }
+      }).catch(function() {
+        d.geoState = "denied";
+        k();
+      });
     }(), (t = document.getElementById("wb-ranking-section")) && i.rankingUrl && (t.innerHTML = '<a href="' + i.rankingUrl + '" style="display:block;text-align:center;background:var(--gold-light);color:#7a4d00;text-decoration:none;padding:6px 14px;border-radius:10px;margin:10px 16px 4px;border:1.5px solid var(--gold);font-family:\'DM Sans\',sans-serif;font-size:14px;font-weight:700;">' + i.rankingTitle + "</a>"), fetch("/data/suggestions.json").then(function(e) {
         return e.json()
       }).then(function(e) {

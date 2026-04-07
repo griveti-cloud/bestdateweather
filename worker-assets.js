@@ -116,6 +116,25 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
     // ── Travel advisories endpoint ──
     if (path === '/api/advisories') return handleAdvisories(request);
 
+
+    // ── Geo IP endpoint — retourne ville+coords depuis Cloudflare sans permission ──
+    if (path === '/api/geo') {
+      const cf = request.cf || {};
+      const city    = cf.city || '';
+      const lat     = cf.latitude  ? parseFloat(cf.latitude)  : null;
+      const lon     = cf.longitude ? parseFloat(cf.longitude) : null;
+      const country = cf.country   || '';
+      const tz      = cf.timezone  || '';
+      const data    = { city, lat, lon, country, tz, approx: true };
+      return new Response(JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Cache-Control': 'no-store',
+        }
+      });
+    }
+
     // ── Subscribe endpoint ──
     if (path === '/subscribe') return handleSubscribe(request, env);
 
