@@ -20,11 +20,67 @@
 .bdw-topbar-brand em{font-style:italic;color:#c99438;font-weight:400}
 .bdw-topbar-fav{background:none;border:none;padding:8px;cursor:pointer;color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;border-radius:8px;transition:color .15s,background .15s}
 .bdw-topbar-fav:hover{color:#fff;background:rgba(255,255,255,.1)}
+.bdw-nav-link{display:none!important}
+@media(min-width:641px){.bdw-nav-link{display:inline!important}}
+.bdw-topbar-fav:hover{color:#fff;background:rgba(255,255,255,.1)}
 header.app-header{padding-top:64px!important}
-.app-title{display:none}</style>
+.app-title{display:none}
+/* ═══════════════════════════════════════
+   HOMEPAGE REDESIGN — nouvelles sections
+═══════════════════════════════════════ */
+.page-hero{padding:28px 20px 0;max-width:620px;margin:0 auto}
+.page-hero .hero-kicker{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.9px;margin-bottom:10px}
+.page-hero .hero-h1{font-size:clamp(26px,6vw,36px);font-weight:900;color:#fff;font-family:'Fraunces','Fraunces Fallback',Georgia,serif;line-height:1.1;margin-bottom:8px}
+.page-hero .hero-h1 em{color:var(--gold);font-style:italic}
+.page-hero .hero-sub{font-size:13px;color:rgba(255,255,255,.45);line-height:1.6;margin-bottom:16px}
+.usp-pills-home{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.usp-pill-home{font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;border:0.5px solid rgba(201,148,56,.3);background:rgba(201,148,56,.08);color:#e8b84b;white-space:nowrap}
+.proj-shortcuts{display:flex;gap:7px;margin:0 20px 16px;max-width:calc(620px - 40px);margin-left:auto;margin-right:auto}
+.proj-shortcut{flex:1;background:rgba(255,255,255,.05);border:0.5px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:border-color .15s}
+.proj-shortcut:hover{border-color:rgba(201,148,56,.4)}
+.proj-shortcut-ico{font-size:18px;margin-bottom:4px}
+.proj-shortcut-lbl{font-size:10px;font-weight:500;color:rgba(255,255,255,.5)}
+.home-section{max-width:620px;margin:0 auto;padding:0 20px}
+.home-section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.home-section-title{font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.7px}
+.home-section-link{font-size:11px;color:var(--gold);text-decoration:none}
+.home-divider{height:0.5px;background:rgba(255,255,255,.06);margin:16px 20px;max-width:calc(620px - 40px);margin-left:auto;margin-right:auto}
+.top-cards{display:flex;gap:10px;overflow-x:auto;padding-bottom:2px}
+.top-cards::-webkit-scrollbar{display:none}
+.top-card{min-width:130px;border-radius:12px;overflow:hidden;flex-shrink:0;text-decoration:none;display:block}
+.top-card-img{height:80px;display:flex;flex-direction:column;justify-content:space-between;padding:8px 10px;position:relative}
+.top-card-score{font-size:14px;font-weight:900;color:#fff;font-family:'Playfair Display','Playfair Display Fallback',Georgia,serif;align-self:flex-end;background:rgba(0,0,0,.3);padding:1px 6px;border-radius:6px}
+.top-card-name{font-size:12px;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.top-card-month{font-size:10px;color:rgba(255,255,255,.75)}
+.top-card-foot{background:#131920;padding:6px 10px;display:flex;gap:8px}
+.top-card-stat{font-size:10px;color:rgba(255,255,255,.4)}
+.rank-grid-home{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rank-card-home{background:#1a1f2e;border-radius:10px;padding:12px;border:0.5px solid rgba(255,255,255,.06);cursor:pointer;text-decoration:none;display:block;transition:border-color .15s}
+.rank-card-home:hover{border-color:rgba(201,148,56,.35)}
+.rank-card-ico{font-size:18px;margin-bottom:6px}
+.rank-card-title{font-size:12px;font-weight:700;color:#fff;margin-bottom:3px}
+.rank-card-sub{font-size:10px;color:rgba(255,255,255,.35);line-height:1.4}
+.rank-card-arrow{font-size:10px;color:var(--gold);margin-top:6px}
+.trust-bar{display:flex;justify-content:space-around;padding:16px 20px;background:#060a0f;border-top:0.5px solid rgba(255,255,255,.05)}
+.trust-item{text-align:center}
+.trust-n{font-size:16px;font-weight:900;color:var(--gold);font-family:'Playfair Display','Playfair Display Fallback',Georgia,serif}
+.trust-l{font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+@media(min-width:641px){
+  .page-hero{padding:36px 40px 0;max-width:1160px;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:start}
+  .page-hero .hero-col{}
+  .proj-shortcuts{max-width:none;margin-left:40px;margin-right:auto;width:calc(1160px / 2 - 44px)}
+  .home-section{max-width:1160px;padding:0 40px}
+  .home-divider{max-width:calc(1160px - 80px);padding:0 40px}
+  .top-cards{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+  .top-card{min-width:0}
+  .rank-grid-home{grid-template-columns:repeat(4,1fr)}
+  .trust-bar{padding:16px 40px}
+  .wrap{max-width:1160px}
+}
+</style>
 <link rel="preload" href="../app.css?v=42" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
 <noscript><link rel="stylesheet" href="../app.css?v=42"/></noscript>
-<link rel="stylesheet" href="../css/weather-banner.css?v=4" media="print" onload="this.media='all'"/><noscript><link rel="stylesheet" href="../css/weather-banner.css?v=3"/></noscript>
+<link rel="stylesheet" href="../css/weather-banner.css?v=5" media="print" onload="this.media='all'"/><noscript><link rel="stylesheet" href="../css/weather-banner.css?v=3"/></noscript>
 <link rel="icon" type="image/x-icon" href="../favicon.ico"/><link rel="icon" type="image/svg+xml" href="../favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
 <link rel="manifest" href="../manifest.json"/>
 <meta name="apple-mobile-web-app-title" content="BestDate"/>
@@ -74,22 +130,33 @@ header.app-header{padding-top:64px!important}
 <body>
 <nav id="bdw-topbar">
   <a class="bdw-topbar-brand" href="../index.html">Best<em>Date</em>Weather</a>
-  <button id="btn-fav-home" onclick="bdwShowFavorites()" aria-label="Mes favoris" class="bdw-topbar-fav">
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-  </button>
+  <div style="display:flex;align-items:center;gap:16px">
+    <a href="../classement-destinations-meteo-2026.html" style="font-size:12px;color:rgba(255,255,255,.45);text-decoration:none;display:none" class="bdw-nav-link">Classements</a>
+    <a href="../index.html#destinations" style="font-size:12px;color:rgba(255,255,255,.45);text-decoration:none;display:none" class="bdw-nav-link">697 destinations</a>
+    <button id="btn-fav-home" onclick="bdwShowFavorites()" aria-label="Mes favoris" class="bdw-topbar-fav">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </button>
+  </div>
 </nav>
 
-<header class="app-header">
- <h1 class="app-title">Best<em>Date</em>Weather</h1>
- <p class="app-sub">Encuentra el mejor mes para tu viaje</p>
-<p class="app-sub-seo" style="font-size:13px;color:#4a5568;margin-top:4px;font-weight:500">697 destinos · 12 meses · 10 años de datos ERA5</p>
-</header>
+<div class="page-hero">
+ <div class="hero-col">
+  <div class="hero-kicker">El tiempo para tus proyectos</div>
+  <h1 class="hero-h1">¿Qué tiempo <em>en tu viaje?</em></h1>
+  <p class="hero-sub">Puntuación climática /10 · 697 destinos mundiales · hasta 1 año de antelación · 10 años de datos ERA5</p>
+  <div class="usp-pills-home">
+   <span class="usp-pill-home">Score /10</span>
+   <span class="usp-pill-home">1 año de antelación</span>
+   <span class="usp-pill-home">697 destinations</span>
+   <span class="usp-pill-home">ERA5 · 10 ans</span>
+   <span class="usp-pill-home">UV · Vagues · AQI</span>
+  </div>
+ </div>
 
-<main>
-<div class="wrap">
-<div class="main-card">
-<!-- ── Weather Banner ── -->
-<div id="wb-container" style="min-height:110px"></div>
+ <div class="hero-search-col">
+  <div class="main-card">
+  <!-- ── Weather Banner ── -->
+  <div id="wb-container" style="min-height:110px"></div>
 <div class="mode-toggle-wrap"><div class="mode-toggle">
  <button class="mode-btn active" id="mode-date" onclick="switchMode('date')">
  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -182,6 +249,27 @@ header.app-header{padding-top:64px!important}
 <div id="wb-recent-section"></div>
 <div id="wb-suggest-section"></div>
 </div><!-- /.main-card -->
+ </div><!-- /.hero-search-col -->
+</div><!-- /.page-hero -->
+
+<!-- PROJECT SHORTCUTS -->
+<div class="proj-shortcuts">
+ <button class="proj-shortcut" onclick="document.getElementById('inp-city').placeholder='Lieu de mariage…';document.getElementById('inp-city').focus()">
+  <div class="proj-shortcut-ico">💍</div><div class="proj-shortcut-lbl">Mariage</div>
+ </button>
+ <button class="proj-shortcut" onclick="document.getElementById('inp-city').placeholder='Destination vacances…';document.getElementById('inp-city').focus()">
+  <div class="proj-shortcut-ico">🏖️</div><div class="proj-shortcut-lbl">Vacances</div>
+ </button>
+ <button class="proj-shortcut" onclick="document.getElementById('inp-city').placeholder='Lieu d'événement…';document.getElementById('inp-city').focus()">
+  <div class="proj-shortcut-ico">🎪</div><div class="proj-shortcut-lbl">Événement</div>
+ </button>
+ <button class="proj-shortcut" onclick="quickFill('ski');document.getElementById('inp-city').focus()">
+  <div class="proj-shortcut-ico">⛷️</div><div class="proj-shortcut-lbl">Ski</div>
+ </button>
+ <button class="proj-shortcut" onclick="quickFill('plage');document.getElementById('inp-city').focus()">
+  <div class="proj-shortcut-ico">🏄</div><div class="proj-shortcut-lbl">Plage</div>
+ </button>
+</div>
 
  <!-- USE CASE FILTER PILLS -->
  <div class="uc-filter-wrap" id="uc-filter-wrap" style="display:none">
@@ -1884,6 +1972,20 @@ header.app-header{padding-top:64px!important}
 
 
 <!-- ── SEO block ── -->
+
+<!-- ══════════════════════════════════
+     SECTIONS HOMEPAGE — pré-calculées
+══════════════════════════════════ -->
+
+<!-- TOP DESTINATIONS CE MOIS -->
+<div class="home-divider"></div><div class="home-section"><div class="home-section-head"><div class="home-section-title">Mejores puntuaciones · Abril</div><a class="home-section-link" href="../es/mejores-destinos-climaticos.html">Ver clasificación →</a></div><div class="top-cards"><a class="top-card" href="../es/mejor-epoca-loreto-baja.html"><div class="top-card-img" style="background:linear-gradient(135deg,#c2410c 0%,#ea580c 30%,#f59e0b 65%,#fbbf24 100%)"><div class="top-card-score">9.7</div><div><div class="top-card-name">Loreto</div><div class="top-card-month">Abril</div></div></div><div class="top-card-foot"><span class="top-card-stat">☀️ 12h</span><span class="top-card-stat">💧 1%</span></div></a><a class="top-card" href="../es/mejor-epoca-hurghada.html"><div class="top-card-img" style="background:linear-gradient(135deg,#c2410c 0%,#ea580c 30%,#f59e0b 65%,#fbbf24 100%)"><div class="top-card-score">9.6</div><div><div class="top-card-name">Hurghada</div><div class="top-card-month">Abril</div></div></div><div class="top-card-foot"><span class="top-card-stat">☀️ 12h</span><span class="top-card-stat">💧 0%</span></div></a><a class="top-card" href="../es/mejor-epoca-cabo-san-lucas.html"><div class="top-card-img" style="background:linear-gradient(135deg,#c2410c 0%,#ea580c 30%,#f59e0b 65%,#fbbf24 100%)"><div class="top-card-score">9.6</div><div><div class="top-card-name">Cabo San Lucas</div><div class="top-card-month">Abril</div></div></div><div class="top-card-foot"><span class="top-card-stat">☀️ 12h</span><span class="top-card-stat">💧 0%</span></div></a><a class="top-card" href="../es/mejor-epoca-ouarzazate.html"><div class="top-card-img" style="background:linear-gradient(135deg,#c2410c 0%,#ea580c 30%,#f59e0b 65%,#fbbf24 100%)"><div class="top-card-score">9.6</div><div><div class="top-card-name">Ouarzazate</div><div class="top-card-month">Abril</div></div></div><div class="top-card-foot"><span class="top-card-stat">☀️ 12h</span><span class="top-card-stat">💧 4%</span></div></a><a class="top-card" href="../es/mejor-epoca-las-vegas.html"><div class="top-card-img" style="background:linear-gradient(135deg,#c2410c 0%,#ea580c 30%,#f59e0b 65%,#fbbf24 100%)"><div class="top-card-score">9.5</div><div><div class="top-card-name">Las Vegas</div><div class="top-card-month">Abril</div></div></div><div class="top-card-foot"><span class="top-card-stat">☀️ 12h</span><span class="top-card-stat">💧 5%</span></div></a><a class="top-card" href="../es/mejor-epoca-sharm-el-sheikh.html"><div class="top-card-img" style="background:linear-gradient(135deg,#c2410c 0%,#ea580c 30%,#f59e0b 65%,#fbbf24 100%)"><div class="top-card-score">9.5</div><div><div class="top-card-name">Sharm el-Sheikh</div><div class="top-card-month">Abril</div></div></div><div class="top-card-foot"><span class="top-card-stat">☀️ 12h</span><span class="top-card-stat">💧 1%</span></div></a></div></div>
+
+<!-- CLASSEMENTS -->
+<div class="home-divider"></div><div class="home-section"><div class="home-section-head"><div class="home-section-title">Clasificaciones por uso</div></div><div class="rank-grid-home"><a class="rank-card-home" href="../en/best-weather-destinations.html"><div class="rank-card-ico">🏆</div><div class="rank-card-title">Global top</div><div class="rank-card-sub">Best scores across all destinations</div><div class="rank-card-arrow">Ver →</div></a><a class="rank-card-home" href="../en/best-weather-destinations.html"><div class="rank-card-ico">🏖️</div><div class="rank-card-title">Beach & swimming</div><div class="rank-card-sub">Warm sea · sunshine · little rain</div><div class="rank-card-arrow">Ver →</div></a><a class="rank-card-home" href="../en/best-weather-destinations.html"><div class="rank-card-ico">⛷️</div><div class="rank-card-title">Ski & mountains</div><div class="rank-card-sub">Guaranteed snow · cold · clear sky</div><div class="rank-card-arrow">Ver →</div></a><a class="rank-card-home" href="../en/best-weather-destinations.html"><div class="rank-card-ico">🌿</div><div class="rank-card-title">Tropical</div><div class="rank-card-sub">Dry season · warm destinations</div><div class="rank-card-arrow">Ver →</div></a></div></div>
+
+<!-- TRUST BAR -->
+<div class="home-divider"></div><div class="trust-bar"><div class="trust-item"><div class="trust-n">697</div><div class="trust-l">destinos</div></div><div class="trust-item"><div class="trust-n">10 ans</div><div class="trust-l">10 años datos ERA5</div></div><div class="trust-item"><div class="trust-n">1 an</div><div class="trust-l">1 año de antelación</div></div><div class="trust-item"><div class="trust-n">5</div><div class="trust-l">idiomas</div></div></div>
+
 <section class="seo-block" inert style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
  <div class="seo-block-inner">
   <h2>Quelle est la meilleure période pour voyager ?</h2>
@@ -1950,7 +2052,7 @@ header.app-header{padding-top:64px!important}
  <div style="font-weight:700;font-size:13px;color:var(--slate2);margin-bottom:6px">bestdateweather.com</div>
  <a href="https://open-meteo.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Datos meteorológicos por Open-Meteo.com</a> &nbsp;·&nbsp; Sources: ECMWF, DWD, NOAA, Météo-France &nbsp;·&nbsp; CC BY 4.0
  <p style="margin-top:8px"><a href="../methodologie.html" style="color:inherit;text-decoration:none">Metodología</a> &nbsp;·&nbsp; <a href="../a-propos.html" style="color:inherit;text-decoration:none">Acerca de</a> &nbsp;·&nbsp; <a href="../faq.html" style="color:inherit;text-decoration:none">FAQ</a> &nbsp;·&nbsp; <a href="../widgets.html" style="color:inherit;text-decoration:none">Widgets de viaje</a></p>
-<p class="footer-langs" style="margin-top:4px"><!-- HUB-FOOTER-START --><a href="../index.html" style="color:inherit;text-decoration:none"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a> &nbsp;·&nbsp; <a href="../en/app.html" style="color:inherit;text-decoration:none"><img src="../flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English</a> &nbsp;·&nbsp; <a href="../us/app.html" style="color:inherit;text-decoration:none"><img src="../flags/us.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English (US)</a> &nbsp;·&nbsp; <a href="../de/app.html" style="color:inherit;text-decoration:none"><img src="../flags/de.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Deutsch</a><!-- HUB-FOOTER-END --></p>
+<p class="footer-langs" style="margin-top:4px"><!-- HUB-FOOTER-START --><a href="../index.html" onclick="document.cookie='bdw_lang=fr;path=/;max-age=31536000'" style="color:inherit;text-decoration:none"><img src="../flags/fr.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Français</a> &nbsp;·&nbsp; <a href="../en/app.html" onclick="document.cookie='bdw_lang=en;path=/;max-age=31536000'" style="color:inherit;text-decoration:none"><img src="../flags/gb.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English</a> &nbsp;·&nbsp; <a href="../us/app.html" onclick="document.cookie='bdw_lang=en-us;path=/;max-age=31536000'" style="color:inherit;text-decoration:none"><img src="../flags/us.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> English (US)</a> &nbsp;·&nbsp; <a href="../de/app.html" onclick="document.cookie='bdw_lang=de;path=/;max-age=31536000'" style="color:inherit;text-decoration:none"><img src="../flags/de.png" width="20" height="15" alt="" style="vertical-align:middle;border-radius:2px"> Deutsch</a><!-- HUB-FOOTER-END --></p>
  <p style="margin-top:4px;font-size:11px;color:#6b7280"><a href="../mentions-legales.html" style="color:inherit;text-decoration:none">Aviso legal</a> &nbsp;·&nbsp; <a href="../confidentialite.html" style="color:inherit;text-decoration:none">Privacidad</a> &nbsp;·&nbsp; <a href="../contact.html" style="color:inherit;text-decoration:none">Contact</a></p>
 </div>
 
@@ -1963,7 +2065,7 @@ header.app-header{padding-top:64px!important}
 <script defer src="../js/favs.min.js?v=1"></script>
 
 <script src="../js/sw-register.js?v=948975" defer></script>
-<script defer src="../js/weather-banner-2.min.js?v=7"></script>
+<script defer src="../js/weather-banner-2.min.js?v=9"></script>
 
 </body>
 </html>

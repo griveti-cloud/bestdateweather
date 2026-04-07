@@ -1059,6 +1059,15 @@ def generate_from_template(lang, loc):
         '{{UI_HINT_HIST}}':        meta.get('UI_HINT_HIST', '10-year trend'),
         '{{UI_ANN_BTN}}':          meta.get('UI_ANN_BTN', 'See the year'),
         '{{UI_ANN_SUBTITLE}}':     meta.get('UI_ANN_SUBTITLE', 'Monthly climate profile · 10-year average'),
+        # Hero section i18n
+        '{{HERO_KICKER}}':         meta.get('HERO_KICKER', 'Weather for your projects'),
+        '{{HERO_H1}}':             meta.get('HERO_H1', 'What weather <em>for your trip?</em>'),
+        '{{HERO_SUB}}':            meta.get('HERO_SUB', 'Climate scores /10 · 697 destinations · up to 1 year ahead · 10 years of ERA5 data'),
+        '{{USP_HORIZON}}':         meta.get('USP_HORIZON', '1 year ahead'),
+        # Dynamic sections — calculées à la génération
+        '{{TOP_MONTHLY_SECTION}}': build_top_monthly(lang, loc),
+        '{{RANKINGS_SECTION}}':    build_rankings_section(lang, loc),
+        '{{TRUST_BAR}}':           build_trust_bar(lang),
     }
 
     for placeholder, value in replacements.items():
@@ -1075,6 +1084,231 @@ def generate_from_template(lang, loc):
     open(output, 'w', encoding='utf-8').write(content)
     return True
 
+
+
+# ══════════════════════════════════════════
+# HOMEPAGE SECTIONS — génération statique
+# ══════════════════════════════════════════
+
+import csv as _csv
+import datetime as _dt
+
+def _hero_gradient_home(tmax, tropical, rain_pct):
+    """Gradient contextuel selon profil climatique destination."""
+    if tropical and rain_pct < 55:
+        return 'linear-gradient(135deg,#14532d 0%,#15803d 35%,#4ade80 75%,#86efac 100%)'
+    if tmax >= 26 and rain_pct < 15:
+        return 'linear-gradient(135deg,#c2410c 0%,#ea580c 30%,#f59e0b 65%,#fbbf24 100%)'
+    if tmax >= 20 and rain_pct < 40:
+        return 'linear-gradient(135deg,#854d0e 0%,#ca8a04 40%,#fbbf24 80%,#fef08a 100%)'
+    if tmax <= 10:
+        return 'linear-gradient(135deg,#0c4a6e 0%,#0369a1 40%,#38bdf8 80%,#7dd3fc 100%)'
+    if rain_pct >= 60:
+        return 'linear-gradient(135deg,#44403c 0%,#78716c 40%,#a8a29e 80%,#d6d3d1 100%)'
+    return 'linear-gradient(135deg,#1e3a5f 0%,#2563eb 40%,#60a5fa 80%,#bae6fd 100%)'
+
+
+def build_top_monthly(lang, loc):
+    """Calcule le top 6 destinations du mois courant et retourne le HTML."""
+    import os
+    mi = _dt.date.today().month
+    months_names = loc.get('months', ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'])
+    month_name = months_names[mi - 1] if mi <= len(months_names) else str(mi)
+
+    # Labels i18n
+    section_title = {
+        'fr': f'Meilleurs scores · {month_name}',
+        'en': f'Best scores · {month_name}',
+        'en-us': f'Best scores · {month_name}',
+        'es': f'Mejores puntuaciones · {month_name}',
+        'de': f'Beste Bewertungen · {month_name}',
+    }.get(lang, f'Best scores · {month_name}')
+
+    ranking_link_lbl = {
+        'fr': 'Voir le classement →',
+        'en': 'See ranking →',
+        'en-us': 'See ranking →',
+        'es': 'Ver clasificación →',
+        'de': 'Rangliste →',
+    }.get(lang, 'See ranking →')
+
+    # Lien vers page classement
+    ranking_url = {
+        'fr': 'classement-destinations-meteo-2026.html',
+        'en': '../en/best-weather-destinations.html',
+        'en-us': '../us/best-weather-destinations.html',
+        'es': '../es/mejores-destinos-climaticos.html',
+        'de': '../de/beste-reiseziele-klima.html',
+    }.get(lang, 'classement-destinations-meteo-2026.html')
+
+    asset_prefix = loc['meta'].get('asset_prefix', '')
+    subdir = loc['meta'].get('subdir', '')
+
+    # Charger les données
+    climate_month = {}
+    climate_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'climate.csv')
+    dest_path    = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'destinations.csv')
+
+    try:
+        with open(climate_path) as f:
+            for row in _csv.DictReader(f):
+                if int(row.get('mois_num', 0)) == mi:
+                    climate_month[row['slug']] = row
+        dest_info = {}
+        with open(dest_path) as f:
+            for row in _csv.DictReader(f):
+                dest_info[row['slug_fr']] = row
+    except Exception as e:
+        print(f'  ⚠️  build_top_monthly: {e}')
+        return ''
+
+    # Nom selon langue
+    nom_key = {'fr':'nom_fr','en':'nom_en','en-us':'nom_en','es':'nom_es','de':'nom_de'}.get(lang, 'nom_en')
+    slug_key = {'fr':'slug_fr','en':'slug_en','en-us':'slug_en','es':'slug_es','de':'slug_de'}.get(lang, 'slug_en')
+    url_prefix = {
+        'fr': 'meilleure-periode-',
+        'en': '../en/best-time-to-visit-',
+        'en-us': '../us/best-time-to-visit-',
+        'es': '../es/mejor-epoca-',
+        'de': '../de/beste-reisezeit-',
+    }.get(lang, 'meilleure-periode-')
+
+    # Calculer top 6
+    scored = []
+    for slug, row in climate_month.items():
+        if row.get('classe') == 'rec' and slug in dest_info:
+            d = dest_info[slug]
+            try:
+                tmax  = float(row.get('tmax') or 0)
+                rain  = float(row.get('rain_pct') or 0)
+                sun   = float(row.get('sun_h') or 0)
+                score = float(row.get('score') or 0)
+                trop  = d.get('tropical', '') in ('True','true','1')
+                slug_dest = d.get(slug_key, slug)
+                nom = d.get(nom_key) or d.get('nom_fr', slug)
+                if slug_dest:
+                    scored.append({
+                        'nom': nom,
+                        'slug_dest': slug_dest,
+                        'score': score,
+                        'tmax': round(tmax),
+                        'rain': round(rain),
+                        'sun': round(sun),
+                        'tropical': trop,
+                        'gradient': _hero_gradient_home(tmax, trop, rain),
+                        'url': url_prefix + slug_dest + '.html',
+                    })
+            except: pass
+
+    scored.sort(key=lambda x: -x['score'])
+    top6 = scored[:6]
+    if not top6:
+        return ''
+
+    # Construire HTML
+    cards_html = ''
+    for d in top6:
+        sun_str = f"{d['sun']}h"
+        rain_str = f"{d['rain']}%"
+        score_str = f"{d['score']:.1f}"
+        cards_html += (
+            f'<a class="top-card" href="{d["url"]}">'
+            f'<div class="top-card-img" style="background:{d["gradient"]}">'
+            f'<div class="top-card-score">{score_str}</div>'
+            f'<div><div class="top-card-name">{d["nom"]}</div>'
+            f'<div class="top-card-month">{month_name}</div></div>'
+            f'</div>'
+            f'<div class="top-card-foot">'
+            f'<span class="top-card-stat">☀️ {sun_str}</span>'
+            f'<span class="top-card-stat">💧 {rain_str}</span>'
+            f'</div>'
+            f'</a>'
+        )
+
+    return (
+        f'<div class="home-divider"></div>'
+        f'<div class="home-section">'
+        f'<div class="home-section-head">'
+        f'<div class="home-section-title">{section_title}</div>'
+        f'<a class="home-section-link" href="{ranking_url}">{ranking_link_lbl}</a>'
+        f'</div>'
+        f'<div class="top-cards">{cards_html}</div>'
+        f'</div>'
+    )
+
+
+def build_rankings_section(lang, loc):
+    """Génère la section classements par usage."""
+    titles = {
+        'fr': ('Classements par usage', 'Tous les classements →'),
+        'en': ('Rankings by use case', 'All rankings →'),
+        'en-us': ('Rankings by use case', 'All rankings →'),
+        'es': ('Clasificaciones por uso', 'Todas las clasificaciones →'),
+        'de': ('Ranglisten nach Verwendung', 'Alle Ranglisten →'),
+    }.get(lang, ('Rankings', 'See all →'))
+
+    cards_data = {
+        'fr': [
+            ('🏆', 'Top mondial', 'Meilleurs scores toutes destinations', 'classement-destinations-meteo-2026.html'),
+            ('🏖️', 'Plage & baignade', 'Mer chaude · soleil · peu de pluie', 'classement-destinations-meteo-2026.html'),
+            ('⛷️', 'Ski & montagne', 'Neige garantie · froid · ciel clair', 'classement-destinations-meteo-2026.html'),
+            ('🌿', 'Tropical', 'Saison sèche · destinations chaudes', 'classement-destinations-meteo-2026.html'),
+        ],
+        'en': [
+            ('🏆', 'Global top', 'Best scores across all destinations', '../en/best-weather-destinations.html'),
+            ('🏖️', 'Beach & swimming', 'Warm sea · sunshine · little rain', '../en/best-weather-destinations.html'),
+            ('⛷️', 'Ski & mountains', 'Guaranteed snow · cold · clear sky', '../en/best-weather-destinations.html'),
+            ('🌿', 'Tropical', 'Dry season · warm destinations', '../en/best-weather-destinations.html'),
+        ],
+    }
+    cards_data['en-us'] = cards_data['en']
+    cards_data['es'] = cards_data.get('es', cards_data['en'])
+    cards_data['de'] = cards_data.get('de', cards_data['en'])
+
+    cards = cards_data.get(lang, cards_data['en'])
+    arrow_lbl = {'fr':'Voir →','en':'See →','en-us':'See →','es':'Ver →','de':'Sehen →'}.get(lang,'→')
+
+    cards_html = ''
+    for ico, title, sub, url in cards:
+        cards_html += (
+            f'<a class="rank-card-home" href="{url}">'
+            f'<div class="rank-card-ico">{ico}</div>'
+            f'<div class="rank-card-title">{title}</div>'
+            f'<div class="rank-card-sub">{sub}</div>'
+            f'<div class="rank-card-arrow">{arrow_lbl}</div>'
+            f'</a>'
+        )
+
+    return (
+        f'<div class="home-divider"></div>'
+        f'<div class="home-section">'
+        f'<div class="home-section-head">'
+        f'<div class="home-section-title">{titles[0]}</div>'
+        f'</div>'
+        f'<div class="rank-grid-home">{cards_html}</div>'
+        f'</div>'
+    )
+
+
+def build_trust_bar(lang):
+    """Génère la trust bar avec les chiffres clés."""
+    labels = {
+        'fr': ('destinations', '10 ans données ERA5', "1 an à l'avance", 'langues'),
+        'en': ('destinations', '10 yrs ERA5 data', '1 year ahead', 'languages'),
+        'en-us': ('destinations', '10 yrs ERA5 data', '1 year ahead', 'languages'),
+        'es': ('destinos', '10 años datos ERA5', '1 año de antelación', 'idiomas'),
+        'de': ('Destinationen', '10 J. ERA5 Daten', '1 Jahr im Voraus', 'Sprachen'),
+    }.get(lang, ('destinations', '10 yrs ERA5', '1 year ahead', 'languages'))
+
+    return (
+        f'<div class="home-divider"></div>'
+        f'<div class="trust-bar">'
+        f'<div class="trust-item"><div class="trust-n">697</div><div class="trust-l">{labels[0]}</div></div>'
+        f'<div class="trust-item"><div class="trust-n">10 ans</div><div class="trust-l">{labels[1]}</div></div>'
+        f'<div class="trust-item"><div class="trust-n">1 an</div><div class="trust-l">{labels[2]}</div></div>'
+        f'<div class="trust-item"><div class="trust-n">5</div><div class="trust-l">{labels[3]}</div></div>'
+        f'</div>'
+    )
 
 def build_hub_footer(current_lang, current_loc):
     """Generate the lang-switcher div for a hub page footer.
@@ -1105,7 +1339,7 @@ def build_hub_footer(current_lang, current_loc):
         # Valeur du cookie selon la langue cible
         cookie_val = 'en-us' if lang == 'en-us' else ('fr' if lang == 'fr' else lang)
         links.append(
-            f'<a href="{href}" onclick="document.cookie='bdw_lang={cookie_val};path=/;max-age=31536000'" style="color:inherit;text-decoration:none">' 
+            f'<a href="{href}" onclick="document.cookie=\'bdw_lang={cookie_val};path=/;max-age=31536000\'" style="color:inherit;text-decoration:none">'
             f'<img src="{flag_src}" width="20" height="15" alt="" '
             f'style="vertical-align:middle;border-radius:2px"> {label}</a>'
         )

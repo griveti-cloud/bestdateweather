@@ -84,7 +84,11 @@
     "UI_HINT_HOURLY": "Temperaturas y tiempo",
     "UI_HINT_HIST": "Tendencia 10 años",
     "UI_ANN_BTN": "Ver el año",
-    "UI_ANN_SUBTITLE": "Perfil climático mensual · media de 10 años"
+    "UI_ANN_SUBTITLE": "Perfil climático mensual · media de 10 años",
+    "HERO_KICKER": "El tiempo para tus proyectos",
+    "HERO_H1": "¿Qué tiempo <em>en tu viaje?</em>",
+    "HERO_SUB": "Puntuación climática /10 · 697 destinos mundiales · hasta 1 año de antelación · 10 años de datos ERA5",
+    "USP_HORIZON": "1 año de antelación"
   },
   "months": [
     "Enero",

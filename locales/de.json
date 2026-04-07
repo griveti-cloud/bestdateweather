@@ -84,7 +84,11 @@
     "UI_HINT_HOURLY": "Temperaturen & Wetter",
     "UI_HINT_HIST": "10-Jahres-Trend",
     "UI_ANN_BTN": "Jahr anzeigen",
-    "UI_ANN_SUBTITLE": "Monatliches Klimaprofil · 10-Jahres-Durchschnitt"
+    "UI_ANN_SUBTITLE": "Monatliches Klimaprofil · 10-Jahres-Durchschnitt",
+    "HERO_KICKER": "Wetter für Ihre Projekte",
+    "HERO_H1": "Welches Wetter <em>für Ihre Reise?</em>",
+    "HERO_SUB": "Klimabewertung /10 · 697 Reiseziele weltweit · bis zu 1 Jahr im Voraus · 10 Jahre ERA5-Daten",
+    "USP_HORIZON": "1 Jahr im Voraus"
   },
   "months": [
     "Januar",
