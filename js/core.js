@@ -129,6 +129,7 @@ function quickFill(type) {
  var hintAnn = document.getElementById('uc-hint-ann');
  if (hintAnn) { hintAnn.style.display = 'none'; }
  var cityEl = document.getElementById('inp-city');
+ if (cityEl) { cityEl.blur(); }
  var placeholders = {
  plage:T.phBeach,
  ski:T.phSki
