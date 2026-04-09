@@ -3153,16 +3153,38 @@ document.addEventListener('DOMContentLoaded', function() {
   if (selectedDates.length > 0) {
   var d = selectedDates[0];
   el._isoValue = d.getFullYear()+'-'+(d.getMonth()<9?'0':'')+(d.getMonth()+1)+'-'+(d.getDate()<10?'0':'')+d.getDate();
+  // Sync fused display
+  var fusedInp = document.getElementById('inp-date-display');
+  if (fusedInp) { fusedInp.value = dateStr; fusedInp.classList.add('has-val'); }
+  var fusedWrap = document.querySelector('.fused-date-wrap');
+  if (fusedWrap) fusedWrap.classList.add('has-date');
   } else {
   el._isoValue = '';
+  var fusedInp = document.getElementById('inp-date-display');
+  if (fusedInp) { fusedInp.value = ''; fusedInp.classList.remove('has-val'); }
+  var fusedWrap = document.querySelector('.fused-date-wrap');
+  if (fusedWrap) fusedWrap.classList.remove('has-date');
   }
   }
   });
  }
  if (inpDate) { ['focus','click','touchstart'].forEach(function(e){inpDate.addEventListener(e,_initFP,{once:true,passive:true});}); }
+ // Connecter fused-date-wrap au flatpickr
+ var fusedWrap = document.querySelector('.fused-date-wrap');
+ if (fusedWrap) {
+  fusedWrap.addEventListener('click', function() {
+   switchMode('date');
+   _initFP();
+   var fp = document.getElementById('inp-date')._flatpickr;
+   if (fp) fp.open(); else document.getElementById('inp-date').click();
+  });
+ }
 });
 document.getElementById('inp-city').oninput=function(){
  selectedLoc=null;
+ // Sync vers ann-city pour mode annual
+ var annCity=document.getElementById('ann-city');
+ if(annCity) annCity.value=this.value;
  // Don't reset use case when typing city — user keeps their project selection
  var q=this.value.trim();clearTimeout(acTimer);
  document.getElementById('inp-city-clear').classList.toggle('visible',q.length>0);

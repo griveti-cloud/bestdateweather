@@ -14,6 +14,18 @@
 .shared-dest-wrap{padding:0 0 0}
 .annual-mode-active .shared-dest-wrap{display:none}
 .annual-mode-active .mode-toggle-wrap{display:none}
+/* Fused mode row */
+.fused-mode-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:10px}
+.fused-date-wrap{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.12);border-radius:var(--r);padding:12px 14px;cursor:pointer;transition:border-color .15s;min-width:0}
+.fused-date-wrap:hover{border-color:var(--gold)}
+.fused-date-wrap.has-date{border-color:rgba(201,148,56,.4);background:rgba(201,148,56,.06)}
+.fused-date-ico{font-size:16px;flex-shrink:0}
+.fused-date-inp{background:none!important;border:none!important;padding:0!important;font-size:14px!important;color:rgba(255,255,255,.9)!important;min-width:0;flex:1}
+.fused-date-inp::placeholder{color:rgba(255,255,255,.4)!important}
+.mode-btn-annual{display:flex;align-items:center;gap:6px;padding:12px 14px;border:1.5px solid rgba(255,255,255,.15);border-radius:var(--r);background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);cursor:pointer;font-family:"DM Sans",sans-serif;font-size:13px;font-weight:600;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.mode-btn-annual svg{width:15px;height:15px;stroke:rgba(255,255,255,.6);flex-shrink:0}
+.mode-btn-annual.active,.annual-mode-active .mode-btn-annual{background:linear-gradient(135deg,var(--gold),var(--gold2));color:white;border-color:var(--gold)}
+.annual-mode-active .fused-mode-row{display:none}
 .main-card .uc-filter-label{color:rgba(255,255,255,.5)}
 .main-card .annual-city-name{color:#fff}
 .main-card .annual-subtitle{color:rgba(255,255,255,.5)}
@@ -158,21 +170,23 @@ header.app-header{padding-top:64px!important}
   <div id="city-hint" style="font-size:11px;color:rgba(255,255,255,.45);margin-top:5px;display:none">💡 Villes composées : utilisez les tirets — <em>Pointe-à-Pitre</em>, <em>Saint-Denis</em></div>
  </div>
 </div>
-<div class="mode-toggle-wrap"><div class="mode-toggle">
- <button class="mode-btn active" id="mode-date" onclick="switchMode('date')">
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
- <span><span class="mode-btn-title">Date</span></span>
+<div class="fused-mode-row">
+ <div class="fused-date-wrap" onclick="switchMode('date');document.getElementById('inp-date').click()">
+  <span class="fused-date-ico">📅</span>
+  <input class="inp fused-date-inp" type="text" id="inp-date-display" placeholder="📅  Date du projet" readonly style="cursor:pointer;pointer-events:none"/>
+ </div>
+ <button class="mode-btn mode-btn-annual" id="mode-annual" onclick="switchMode('annual')">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+  <span class="mode-btn-title">Vue 12 mois</span>
  </button>
- <button class="mode-btn" id="mode-annual" onclick="switchMode('annual')">
- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
- <span><span class="mode-btn-title">Vue 12 mois</span></span>
- </button>
- </div></div>
+</div>
+<!-- mode-date et mode-annual IDs gardés pour compatibilité JS -->
+<button id="mode-date" style="display:none" onclick="switchMode('date')"></button>
 
  <!-- ANNUAL VIEW -->
  <div class="annual-wrap" id="annual-wrap">
  <div class="search-card">
- <div class="annual-city-row">
+ <div class="annual-city-row" style="display:none">
  <div class="field-wrap" style="flex:1">
  <label class="field-label" for="ann-city">Destination</label>
  <div class="inp-wrap"><input class="inp" type="text" id="ann-city" placeholder="🌍  Paris, Lisbonne, Tokyo, Bali…" autocomplete="off"/>
@@ -218,7 +232,7 @@ header.app-header{padding-top:64px!important}
  <div id="date-form">
  <div class="field-group">
  <div class="field-wrap">
- <div class="inp-wrap inp-wrap-icon" style="position:relative"><span class="inp-icon">📅</span>
+ <div class="inp-wrap inp-wrap-icon" style="position:relative;display:none"><span class="inp-icon">📅</span>
  <input class="inp" type="text" id="inp-date" placeholder="📅  Date du projet" readonly style="position:relative;z-index:2;background:rgba(255,255,255,.07);cursor:pointer" />
  
  
@@ -2043,7 +2057,7 @@ header.app-header{padding-top:64px!important}
 <script defer src="js/fiche-scores.js?v=639443"></script>
 <script src="js/fiche-aqi.js"></script>
 <script defer src="js/fiche-slugs.min.js?v=edd3b9"></script>
-<script defer src="js/core.min.js?v=51"></script>
+<script defer src="js/core.min.js?v=56"></script>
 <script defer src="js/favs.min.js?v=1"></script>
 
 <script src="js/sw-register.js?v=948975" defer></script>
