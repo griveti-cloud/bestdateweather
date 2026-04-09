@@ -3182,6 +3182,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 document.getElementById('inp-city').oninput=function(){
  selectedLoc=null;
+ this.classList.add('typing');
  // Sync vers ann-city pour mode annual
  var annCity=document.getElementById('ann-city');
  if(annCity) annCity.value=this.value;
