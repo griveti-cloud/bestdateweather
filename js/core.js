@@ -159,7 +159,7 @@ function quickFill(type) {
   });
  }
  } else {
- if (window === window.top) { cityEl.focus(); }
+ // Ne pas auto-focus — provoque bordure gold intrusive au chargement
  selectedLoc = null;
  }
  // Mark active pill LAST (after any recompute)
