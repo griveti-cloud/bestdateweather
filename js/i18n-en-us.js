@@ -29,7 +29,7 @@ window.BDW_T = {
  modeClimate: 'Historical climate profile',
  checkWeather: 'Check the weather',
   findBestMonth: 'Find the best month →',
-  checkConditions: 'Check conditions that day →',
+  checkConditions: 'Check the weather →',
   hist_tmax: 'Daily max',
   hist_tmean: 'Daily avg',
   hist_tmin: 'Daily min',

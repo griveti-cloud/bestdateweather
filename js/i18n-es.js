@@ -28,7 +28,7 @@ window.BDW_T = {
  modeClimate: 'Perfil climático histórico',
  checkWeather: 'Ver el tiempo',
   findBestMonth: 'Encontrar el mejor mes →',
-  checkConditions: 'Ver condiciones ese día →',
+  checkConditions: 'Ver el tiempo →',
   hist_tmax: 'Máx. del día',
   hist_tmean: 'Media del día',
   hist_tmin: 'Mín. del día',
