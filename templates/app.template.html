@@ -106,6 +106,26 @@ header.app-header{padding-top:64px!important}
   animation:none!important;
 }
 
+
+/* Flatpickr dark theme override */
+.flatpickr-calendar{background:#1a1f2e!important;border:1px solid rgba(255,255,255,.1)!important;box-shadow:0 8px 32px rgba(0,0,0,.5)!important;border-radius:12px!important}
+.flatpickr-months,.flatpickr-month{background:#1a1f2e!important;color:#fff!important;fill:#fff!important}
+.flatpickr-current-month{color:#fff!important}
+.flatpickr-current-month input.cur-year{color:#fff!important}
+.flatpickr-current-month .flatpickr-monthDropdown-months{color:#fff!important;background:#1a1f2e!important}
+.flatpickr-prev-month,.flatpickr-next-month{color:#fff!important;fill:#fff!important}
+.flatpickr-prev-month:hover,.flatpickr-next-month:hover{color:#c99438!important;fill:#c99438!important}
+.flatpickr-weekdays{background:#1a1f2e!important}
+span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!important}
+.flatpickr-days{border-color:rgba(255,255,255,.08)!important}
+.dayContainer{border-color:rgba(255,255,255,.08)!important}
+.flatpickr-day{color:rgba(255,255,255,.8)!important;border-color:transparent!important}
+.flatpickr-day:hover,.flatpickr-day:focus{background:rgba(201,148,56,.15)!important;border-color:rgba(201,148,56,.3)!important;color:#fff!important}
+.flatpickr-day.today{border-color:rgba(201,148,56,.5)!important}
+.flatpickr-day.today:hover{background:rgba(201,148,56,.2)!important}
+.flatpickr-day.selected,.flatpickr-day.selected:hover{background:linear-gradient(135deg,#c99438,#e8b84b)!important;border-color:#c99438!important;color:#fff!important}
+.flatpickr-day.prevMonthDay,.flatpickr-day.nextMonthDay{color:rgba(255,255,255,.2)!important}
+.flatpickr-day.flatpickr-disabled{color:rgba(255,255,255,.15)!important}
 </style>
 <link rel="preload" href="{{ASSET_PREFIX}}app.css?v=42" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
 <noscript><link rel="stylesheet" href="{{ASSET_PREFIX}}app.css?v=42"/></noscript>
