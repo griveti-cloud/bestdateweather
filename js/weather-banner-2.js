@@ -547,19 +547,10 @@
       l ? l.innerHTML = o : e.innerHTML = '<div id="wb-banner-zone">' + o + '</div><div id="wb-hourly-zone"></div>', P();
  // Mettre à jour la ligne topbar compacte
  var tbl = document.getElementById('wb-topbar-line');
- if (tbl && u.weather) {
-  var w = u.weather;
+ if (tbl && d.weather) {
+  var w = d.weather;
   var unit = R() ? '°F' : '°';
-  tbl.innerHTML = '<span style="font-size:14px">' + w.icon + '</span>'
-   + '<span style="font-weight:600;color:#fff">' + G(w.city) + '</span>'
-   + '<span style="opacity:.4">·</span>'
-   + '<span>' + z(w.temp) + unit + '</span>'
-   + '<span style="opacity:.4">·</span>'
-   + '<span>' + G(w.desc) + '</span>'
-   + '<span style="opacity:.4">·</span>'
-   + '<span>' + i.feels + ' ' + z(w.feels) + unit + '</span>'
-   + '<span style="opacity:.4">·</span>'
-   + '<span>' + i.wind + ' ' + (R() ? Math.round(.621371 * w.wind) + ' mph' : Math.round(w.wind) + ' km/h') + '</span>';
+  tbl.innerHTML = d.weather.icon + ' <b style="color:#fff">' + G(d.weather.city) + '</b> · ' + z(d.weather.temp) + (R()?'°F':'°') + ' · ' + G(d.weather.desc) + ' · ' + i.feels + ' ' + z(d.weather.feels) + (R()?'°F':'°') + ' · ' + i.wind + ' ' + (R()?Math.round(.621371*d.weather.wind)+' mph':Math.round(d.weather.wind)+' km/h') + ' · UV ' + d.weather.uv;
  }
     }
   }
