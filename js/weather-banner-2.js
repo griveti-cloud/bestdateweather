@@ -592,40 +592,7 @@
 
   function F() {
     var e = document.getElementById("wb-suggest-section");
-    if (e) {
-      var t = function() {
-        if (!y) return [];
-        var e = b();
-        if (0 === e.length) return [];
-        for (var t = null, n = "", i = 0; i < e.length; i++)
-          if (e[i].slug && y[e[i].slug]) {
-            t = y[e[i].slug], n = "fr" === a ? t.fr : t.en || t.fr;
-            break
-          } if (!t || !t.similar || !t.similar.length) return [];
-        for (var r = {}, o = 0; o < e.length; o++) e[o].slug && (r[e[o].slug] = !0);
-        for (var l = t.similar, s = [], c = 0; c < l.length; c++) {
-          if (!r[l[c].slug]) {
-            var d = "fr" === a ? l[c].fr : l[c].en || l[c].fr;
-            s.push({
-              name: d,
-              flag: l[c].flag || "",
-              slug: l[c].slug,
-              score: l[c].score_avg || 0,
-              reason: ("fr" === a ? "Climat proche de " : "Climate similar to ") + n
-            })
-          }
-          if (s.length >= 2) break
-        }
-        return s
-      }();
-      if (0 === t.length) return e.innerHTML = "", void e.classList.add("wb-hidden");
-      e.classList.remove("wb-hidden");
-      for (var n = "", r = 0; r < t.length; r++) {
-        var s = t[r];
-        n += '<a href="' + ("en" === a ? "/en/best-time-to-visit-" + s.slug + ".html" : "/meilleure-periode-" + s.slug + ".html") + '" class="wb-suggest" style="animation-delay:' + 80 * (3 + r) + 'ms;text-decoration:none"><div class="wb-suggest-top"><span class="wb-recent-flag">' + M(s.flag) + '</span><span class="wb-suggest-name">' + G(s.name) + '</span><span class="wb-suggest-reason">' + G(s.reason) + "</span></div>" + (s.score ? '<span class="wb-score" style="font-size:12px;padding:2px 8px;color:' + o(s.score) + ";background:" + l(s.score) + '">' + s.score.toFixed(1) + '/10' + "</span>" : "") + "</a>"
-      }
-      var _months=i.lang==='en'||i.lang==='en-us'?['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']:i.lang==='es'?['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']:i.lang==='de'?['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez']:['jan','fév','mars','avr','mai','juin','juil','août','sep','oct','nov','déc'];var _dynTitle=(i.suggestTitleDynamic||i.suggestTitle)+' '+_months[new Date().getMonth()];e.innerHTML = '<div class="wb-section"><div class="wb-section-head"><span class="wb-section-title">' + _dynTitle + '</span><span class="wb-section-sub">' + i.suggestSub + "</span></div>" + n + "</div>"
-    }
+    if (e) e.innerHTML = '';
   }
 
   function A() {
