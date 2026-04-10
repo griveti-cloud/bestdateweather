@@ -502,7 +502,7 @@
   }
 
   function L() {
-    return document.getElementById("wb-container-topbar") || document.getElementById("wb-container")
+    return document.getElementById("wb-container")
   }
 
   function T() {
