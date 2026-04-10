@@ -31,8 +31,8 @@
 .main-card .annual-subtitle{color:rgba(255,255,255,.5)}
 .main-card .annual-subtitle-uc{color:rgba(255,255,255,.6)}.app-title,.app-sub,.app-sub-seo,.app-proof,.app-disclaimer{animation:none!important}
 #bdw-topbar{position:fixed;top:0;left:0;right:0;z-index:500;background:#0d1117;border-bottom:0.5px solid rgba(255,255,255,.07);display:flex;flex-direction:column}
-.bdw-topbar-row1{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:0.5px solid rgba(255,255,255,.05)}
-.bdw-topbar-weather{min-height:36px;background:#111820}
+.bdw-topbar-row1{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+#wb-topbar-line{height:32px;display:flex;align-items:center;padding:0 16px;border-top:0.5px solid rgba(255,255,255,.08);font-size:11px;color:rgba(255,255,255,.7);gap:6px;white-space:nowrap;overflow:hidden}
 .wb-fixed-bar{position:fixed;top:52px;left:0;right:0;z-index:499;background:#111820;border-bottom:0.5px solid rgba(255,255,255,.06);min-height:0}
 .bdw-topbar-brand{font-family:'Fraunces','Fraunces Fallback',Georgia,serif;font-size:18px;font-weight:900;color:#fff;text-decoration:none;letter-spacing:-.3px;line-height:1}
 .bdw-topbar-brand em{font-style:italic;color:#c99438;font-weight:400}
@@ -106,37 +106,6 @@ header.app-header{padding-top:64px!important}
   animation:none!important;
 }
 
-#wb-container-topbar .wb{margin:0!important;border-radius:0!important;animation:none!important;padding:7px 16px!important}
-#wb-container-topbar .wb-top{display:flex;align-items:center;justify-content:space-between}
-#wb-container-topbar .wb-meta{display:none!important}
-#wb-container-topbar .wb-hourly{display:none!important}
-#wb-container-topbar .wb-section{display:none!important}
-#wb-container-topbar .wb-expand{display:none!important}
-#wb-container-topbar .wb-ranking-section,
-#wb-container-topbar .wb-recent-section,
-#wb-container-topbar .wb-suggest-section{display:none!important}
-#wb-container-topbar .wb-shimmer{margin:0!important;border-radius:0!important;padding:7px 16px!important}
-#wb-container-topbar .wb-geo-prompt{margin:0!important;border-radius:0!important;padding:7px 16px!important}
-#wb-container-topbar .wb-geo-input-wrap{display:none!important}
-#wb-container-topbar .wb-geo-results{display:none!important}
-.bdw-topbar-weather{min-height:0!important;border-top:0.5px solid rgba(255,255,255,.1)}
-#wb-container-topbar{overflow:hidden}
-#wb-container-topbar .wb{display:flex!important;align-items:center!important;flex-wrap:nowrap!important;gap:6px!important;padding:6px 16px!important}
-#wb-container-topbar .wb-top{flex:1;display:flex;align-items:center;justify-content:space-between;min-width:0}
-#wb-container-topbar .wb-left{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
-#wb-container-topbar .wb-city{display:flex;align-items:center;gap:4px;font-size:12px;white-space:nowrap}
-#wb-container-topbar .wb-desc{display:none!important}
-#wb-container-topbar .wb-meta{display:flex!important;align-items:center;gap:4px;font-size:11px;opacity:.6;white-space:nowrap;overflow:hidden;flex-shrink:1}
-#wb-container-topbar .wb-meta-dot{display:none!important}
-#wb-container-topbar .wb-meta-item{white-space:nowrap}
-#wb-container-topbar .wb-meta-item+.wb-meta-item::before{content:"·";margin:0 3px;opacity:.4}
-#wb-container-topbar .wb-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
-#wb-container-topbar .wb-icon{font-size:16px}
-#wb-container-topbar .wb-temp{font-size:14px!important;font-weight:700}
-#wb-container-topbar .wb-minmax{font-size:11px;opacity:.5}
-#wb-container-topbar .wb-temps{display:flex;align-items:baseline;gap:4px}
-#wb-container-topbar .wb-expand{display:none!important}
-#wb-container-topbar .wb-badge{font-size:9px}
 </style>
 <link rel="preload" href="{{ASSET_PREFIX}}app.css?v=42" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
 <noscript><link rel="stylesheet" href="{{ASSET_PREFIX}}app.css?v=42"/></noscript>
@@ -198,7 +167,7 @@ header.app-header{padding-top:64px!important}
       </button>
     </div>
   </div>
-  <div class="bdw-topbar-weather" id="wb-container-topbar"></div>
+  <div id="wb-topbar-line"></div>
 </nav>
 <div class="page-hero">
  <div class="hero-centered">
@@ -1884,7 +1853,7 @@ header.app-header{padding-top:64px!important}
 <script defer src="{{ASSET_PREFIX}}js/favs.min.js?v=1"></script>
 
 <script src="{{ASSET_PREFIX}}js/sw-register.js?v=948975" defer></script>
-<script defer src="{{ASSET_PREFIX}}js/weather-banner-2.min.js?v=10"></script>
+<script defer src="{{ASSET_PREFIX}}js/weather-banner-2.min.js?v=11"></script>
 
 </body>
 </html>

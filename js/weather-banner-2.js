@@ -544,7 +544,23 @@
         r = d.hourlyOpen ? "wb-expand open" : "wb-expand",
         o = '<div class="wb" id="wb-banner" onclick="wbToggleHourly()"><div class="wb-top"><div class="wb-left"><div class="wb-city"><span class="wb-pin">📍</span><button class="wb-city-btn" onclick="event.stopPropagation();wbOpenCityModal()" title="' + i.changeCity + '">' + G(n.city) + '<span class="wb-edit-ico">✎</span></button>' + a + '</div><div class="wb-desc">' + G(n.desc) + '</div></div><div class="wb-right"><span class="wb-icon">' + n.icon + '</span><div class="wb-temps"><span class="wb-temp">' + z(n.temp) + (R() ? "°F" : "°") + "</span>" + (null != n.tMin && null != n.tMax ? '<span class="wb-minmax">' + z(n.tMin) + "° / " + z(n.tMax) + "°</span>" : "") + '</div></div></div><div class="wb-meta"><span class="wb-meta-item">' + i.feels + " " + z(n.feels) + '°</span><span class="wb-meta-dot">·</span><span class="wb-meta-item">' + i.wind + " " + (null == (t = n.wind) ? "-" : R() ? Math.round(.621371 * t) : Math.round(t)) + (R() ? " mph" : " km/h") + '</span><span class="wb-meta-dot">·</span><span class="wb-meta-item">' + i.uv + " " + n.uv + '</span><span class="' + r + '">▼</span></div></div>',
         l = document.getElementById("wb-banner-zone");
-      l ? l.innerHTML = o : e.innerHTML = '<div id="wb-banner-zone">' + o + '</div><div id="wb-hourly-zone"></div>', P()
+      l ? l.innerHTML = o : e.innerHTML = '<div id="wb-banner-zone">' + o + '</div><div id="wb-hourly-zone"></div>', P();
+ // Mettre à jour la ligne topbar compacte
+ var tbl = document.getElementById('wb-topbar-line');
+ if (tbl && u.weather) {
+  var w = u.weather;
+  var unit = R() ? '°F' : '°';
+  tbl.innerHTML = '<span style="font-size:14px">' + w.icon + '</span>'
+   + '<span style="font-weight:600;color:#fff">' + G(w.city) + '</span>'
+   + '<span style="opacity:.4">·</span>'
+   + '<span>' + z(w.temp) + unit + '</span>'
+   + '<span style="opacity:.4">·</span>'
+   + '<span>' + G(w.desc) + '</span>'
+   + '<span style="opacity:.4">·</span>'
+   + '<span>' + i.feels + ' ' + z(w.feels) + unit + '</span>'
+   + '<span style="opacity:.4">·</span>'
+   + '<span>' + i.wind + ' ' + (R() ? Math.round(.621371 * w.wind) + ' mph' : Math.round(w.wind) + ' km/h') + '</span>';
+ }
     }
   }
 
