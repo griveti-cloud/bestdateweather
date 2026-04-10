@@ -276,9 +276,6 @@ span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!i
  <div class="uc-hint" id="uc-hint">⬆ Sélectionnez d'abord un type de projet ci-dessus</div>
  <div id="date-form">
 <input type="text" id="inp-date" placeholder="{{UI_DATE_PLACEHOLDER}}" readonly style="display:none;position:absolute" />
- <button class="btn-go" id="btn-go" type="button" style="margin-top:0">
- <span id="btn-go-text">{{UI_CTA}}</span>
- </button>
 <div id="cta-wow-example" style="display:none;text-align:center;font-size:11.5px;color:var(--slate2);margin-top:6px;line-height:1.5;padding:0 4px" id="cta-wow-example"><script>document.write(window.BDW_T&&BDW_T.wowExample||'')</script></div>
  <div class="prog-wrap" id="prog-wrap">
  <div class="prog-labels"><span id="prog-lbl">Chargement…</span><span id="prog-pct">0%</span></div>
@@ -287,6 +284,9 @@ span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!i
  <div class="err-box" id="err-box"></div>
  </div>
 
+ <button class="btn-go" id="btn-go" type="button" style="margin-top:0">
+ <span id="btn-go-text">{{UI_CTA}}</span>
+ </button>
 <div class="card-footer">
 <span class="footer-wordmark" style="font-size:11px;color:var(--slate2);font-family:inherit;font-weight:600;font-style:normal;letter-spacing:.2px">⭐ {{UI_FOOTER_ERA5}}</span>
 <a href="#seo-hub" class="footer-guides" onclick="var h=document.getElementById('seo-hub');var b=document.querySelector('.seo-hub-toggle');if(!h.classList.contains('open')){h.classList.add('open');b.classList.add('open');}setTimeout(function(){h.scrollIntoView({behavior:'smooth',block:'start'})},80);return false;">📍 {{UI_FOOTER_GUIDES}}</a>
