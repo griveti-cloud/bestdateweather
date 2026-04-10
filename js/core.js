@@ -2467,7 +2467,7 @@ function switchMode(mode) {
  var aw = document.getElementById('annual-wrap');
  if (md) md.className = 'mode-btn' + (isDate ? ' active' : '');
  if (ma) ma.className = 'mode-btn' + (!isDate ? ' active' : '');
- if (aw) aw.style.display = isDate ? 'none' : 'block';
+ if (aw) { aw.style.display = isDate ? 'none' : 'block'; aw.style.height = isDate ? '0' : ''; }
  // Sync destination — via setTimeout to avoid browser reset after display change
  var _inpCity = document.getElementById('inp-city');
  var _annCity = document.getElementById('ann-city');
