@@ -3075,7 +3075,10 @@ function renderAnnual(loc, monthly) {
 }
 
 
-document.getElementById('btn-go').onclick=function(){run();};
+document.getElementById('btn-go').onclick=function(){
+ var aw=document.getElementById('annual-wrap');
+ if(aw&&aw.style.display!=='none'){runAnnual();}else{run();}
+};
 // Annual autocomplete listeners
 function clearCity(){
  var el=document.getElementById('inp-city');
