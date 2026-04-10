@@ -178,8 +178,8 @@ header.app-header{padding-top:64px!important}
  </div>
  <div class="hero-search-col">
   <div class="main-card">
-  <!-- ── Weather Banner ── -->
-  <div id="wb-container" style="min-height:110px"></div>
+  <!-- ── Weather Banner (caché — données via wb-topbar-line) ── -->
+  <div id="wb-container" style="position:absolute;visibility:hidden;pointer-events:none;height:0;overflow:hidden"></div>
 <div class="shared-dest-wrap">
  <div class="field-wrap" style="margin:0 0 0">
   <div class="inp-wrap inp-wrap-icon"><span class="inp-icon">🌍</span><input class="inp" type="text" id="inp-city" placeholder="Paris, Barcelone, Tokyo…" autocomplete="off"/>
