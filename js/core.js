@@ -2500,10 +2500,7 @@ function switchMode(mode) {
  if (ucfw) ucfw.style.display = 'none';
  if (isDate) { var empt = document.getElementById('empty'); if (empt) empt.style.display = 'block'; }
  // Footer selon le mode actif
- var _fMain = document.querySelector('.card-footer:not(.card-footer-annual)');
- var _fAnn = document.querySelector('.card-footer-annual');
- if (_fMain) _fMain.style.display = isDate ? '' : 'none';
- if (_fAnn) _fAnn.style.display = isDate ? 'none' : 'flex';
+
  // CTA différencié selon le mode
  var span = document.getElementById('btn-go-text');
  if (span && T) {
