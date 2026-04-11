@@ -1167,6 +1167,12 @@ def build_top_monthly(lang, loc):
         with open(dest_path) as f:
             for row in _csv.DictReader(f):
                 dest_info[row['slug_fr']] = row
+        photo_db = {}
+        photos_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'destination_photos.csv')
+        with open(photos_path) as f:
+            for row in _csv.DictReader(f):
+                if row.get('photo_url','').strip():
+                    photo_db[row['slug_fr']] = row['photo_url'].strip()
     except Exception as e:
         print(f'  ⚠️  build_top_monthly: {e}')
         return ''
@@ -1196,6 +1202,9 @@ def build_top_monthly(lang, loc):
                 slug_dest = d.get(slug_key, slug)
                 nom = d.get(nom_key) or d.get('nom_fr', slug)
                 if slug_dest:
+                    raw_url = photo_db.get(slug, '')
+                    import re as _re2
+                    photo_url = (_re2.sub(r'\?.*$', '', raw_url) + '?w=400&q=80&fm=jpg&fit=crop&crop=entropy') if raw_url else ''
                     scored.append({
                         'nom': nom,
                         'slug_dest': slug_dest,
@@ -1205,6 +1214,7 @@ def build_top_monthly(lang, loc):
                         'sun': round(sun),
                         'tropical': trop,
                         'gradient': _hero_gradient_home(tmax, trop, rain, len(scored)),
+                        'photo_url': photo_url,
                         'idx': len(scored),
                         'url': url_prefix + slug_dest + '.html',
                     })
@@ -1222,9 +1232,11 @@ def build_top_monthly(lang, loc):
         rain_str = f"{d['rain']}%"
         score_str = f"{d['score']:.1f}"
         gradient = _hero_gradient_home(d['tmax'], d['tropical'], d['rain'], i)
+        _pu = d.get('photo_url', '')
+        _bg = ('linear-gradient(to top,rgba(0,0,0,.65) 0%,rgba(0,0,0,.1) 60%,transparent 100%),url(' + _pu + ') center/cover no-repeat') if _pu else gradient
         cards_html += (
             f'<a class="top-card" href="{d["url"]}">'
-            f'<div class="top-card-img" style="background:{gradient}">'
+            f'<div class="top-card-img" style="background:{_bg}">'
             f'<div class="top-card-score">{score_str}</div>'
             f'<div><div class="top-card-name">{d["nom"]}</div>'
             f'<div class="top-card-month">{month_name}</div></div>'
