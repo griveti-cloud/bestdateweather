@@ -914,7 +914,7 @@ def inject(filepath, destinations, loc):
     new_silo = f"""<!-- SILO 1 : MEILLEURE PERIODE - dominant -->
  <div style="margin-bottom:52px">
   <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px">
-   <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.9);margin:0">color:#1a1f2e;margin:0">&#127758;#127758; {title}</p>
+   <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.9);margin:0">🌍 {title}</p>
    <div style="flex:1;height:2px;background:linear-gradient(90deg,#e8940a,#e8e0d0)"></div>
   </div>
 {hub}
