@@ -453,7 +453,7 @@ CSS = """
 .dh-acc{border:1.5px solid rgba(255,255,255,.08);border-radius:14px;margin-bottom:10px;overflow:hidden;background:#131920}
 .dh-acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:#131920;border:none;cursor:pointer;font-family:inherit;text-align:left;gap:12px;color:rgba(255,255,255,.85)}
 .dh-acc-head:hover{background:#faf8f3}
-.dh-acc-label{font-size:16px;font-weight:700;color:#1a1f2e}
+.dh-acc-label{font-size:16px;font-weight:700;color:rgba(255,255,255,.9)}
 .dh-acc-meta{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .dh-acc-count{font-size:12px;color:#7a8fa8;background:rgba(255,255,255,.1);border-radius:20px;padding:2px 10px;font-weight:600;color:rgba(255,255,255,.6)}
 .dh-acc-chev{font-size:14px;color:#9ca3af;transition:transform .25s}
@@ -475,7 +475,7 @@ CSS = """
 .dh-card{background:#1a2230;border-radius:10px;padding:10px 12px;text-decoration:none;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:9px;transition:border-color .15s,box-shadow .15s}
 .dh-card:hover{border-color:#e8940a;box-shadow:0 2px 8px rgba(232,148,10,.12)}
 .dh-card img{flex-shrink:0}
-.dh-card-name{font-size:12px;font-weight:700;color:#1a1f2e;display:block;line-height:1.3}
+.dh-card-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.85);display:block;line-height:1.3}
 .dh-card-sub{font-size:10px;color:#7a8fa8}
 .dh-card.dh-hidden{display:none}
 .dh-no-results{display:none;text-align:center;padding:32px 16px;color:#7a8fa8;font-size:14px}
@@ -914,7 +914,7 @@ def inject(filepath, destinations, loc):
     new_silo = f"""<!-- SILO 1 : MEILLEURE PERIODE - dominant -->
  <div style="margin-bottom:52px">
   <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px">
-   <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">&#127758; {title}</p>
+   <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.9);margin:0">color:#1a1f2e;margin:0">&#127758;#127758; {title}</p>
    <div style="flex:1;height:2px;background:linear-gradient(90deg,#e8940a,#e8e0d0)"></div>
   </div>
 {hub}
