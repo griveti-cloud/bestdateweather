@@ -550,7 +550,7 @@
  if (tbl && d.weather) {
   var w = d.weather;
   var unit = R() ? '°F' : '°';
-  var _w=d.weather;var _tempStr=(null!=_w.tMin&&null!=_w.tMax)?z(_w.tMin)+'°/'+z(_w.tMax)+'°':z(_w.temp)+(R()?'°F':'°');tbl.innerHTML=_w.icon+' <b style="color:#fff">'+G(_w.city)+'</b> · '+_tempStr+' · '+G(_w.desc)+' · UV '+_w.uv;
+  var _w=d.weather;var _mm=(null!=_w.tMin&&null!=_w.tMax)?' ('+z(_w.tMin)+'°/'+z(_w.tMax)+'°)':'';tbl.innerHTML=_w.icon+' <button onclick="wbOpenCityModal()" style="background:none;border:none;color:#fff;font-weight:700;cursor:pointer;font-size:inherit;padding:0;font-family:inherit;">'+G(_w.city)+'</button> · '+z(_w.temp)+(R()?'°F':'°')+_mm+' · '+G(_w.desc)+' · UV '+_w.uv;
  }
     }
   }
