@@ -1067,7 +1067,7 @@ def generate_from_template(lang, loc):
         # Dynamic sections — calculées à la génération
         '{{TOP_MONTHLY_SECTION}}': build_top_monthly(lang, loc),
         '{{RANKINGS_SECTION}}':    build_rankings_section(lang, loc),
-        '{{TRUST_BAR}}':           build_trust_bar(lang),
+        '{{TRUST_BAR}}':           '',
     }
 
     for placeholder, value in replacements.items():
