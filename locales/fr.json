@@ -1361,6 +1361,57 @@
       "fr_file": "classement-destinations-caraibes-meteo-2026.html",
       "en_file": "best-caribbean-weather-2026.html",
       "es_file": "mejor-clima-caribe-2026.html"
+    },
+    "mensuel": {
+      "fr_file": "classement-destinations-meteo-avril-2026.html",
+      "en_file": "best-weather-destinations-april-2026.html",
+      "es_file": "mejores-destinos-clima-abril-2026.html",
+      "de_file": "beste-reiseziele-wetter-april-2026.html",
+      "title_tpl": "Top destinations météo en avril 2026 — Classement climatique",
+      "h1": "Où partir en <em>avril</em> ?",
+      "desc_tpl": "Les {n} meilleures destinations météo pour avril 2026, classées par score climatique.",
+      "hero_sub_tpl": "{n} destinations · {top1} en tête avec {top1_avg}/10 en avril.",
+      "insights_label": "Points clés",
+      "insights": [
+        [
+          "N°1 Avril",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "Plus ensoleillé",
+          "{sun1} — {sun1_h}h."
+        ],
+        [
+          "Plus sec",
+          "{dry1} — {dry1_r}% pluie."
+        ],
+        [
+          "Temp. max moy.",
+          "Top 10 : {tmax_avg}°C."
+        ]
+      ],
+      "stats": [
+        [
+          "{n}",
+          "Destinations"
+        ],
+        [
+          "Avril",
+          "Mois"
+        ],
+        [
+          "10 ans",
+          "ERA5"
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "CLASSEMENT AVRIL 2026",
+          "h2": "🏆 Top 25 destinations en avril",
+          "intro_tpl": "Score 0–10 · {n} destinations · ERA5 10 ans."
+        }
+      ],
+      "jsonld_title_tpl": "Top 25 destinations météo en avril 2026"
     }
   },
   "monthly_hero_subs_ski": {

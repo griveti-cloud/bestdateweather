@@ -1360,6 +1360,57 @@
       "fr_file": "classement-destinations-caraibes-meteo-2026.html",
       "en_file": "best-caribbean-weather-2026.html",
       "es_file": "mejor-clima-caribe-2026.html"
+    },
+    "mensuel": {
+      "fr_file": "classement-destinations-meteo-avril-2026.html",
+      "en_file": "best-weather-destinations-april-2026.html",
+      "es_file": "mejores-destinos-clima-abril-2026.html",
+      "de_file": "beste-reiseziele-wetter-april-2026.html",
+      "title_tpl": "Best weather destinations in April 2026 — Climate ranking",
+      "h1": "Where to go in <em>april</em>?",
+      "desc_tpl": "The {n} best weather destinations for April 2026, ranked by 10-year climate score.",
+      "hero_sub_tpl": "{n} destinations · {top1} leads with {top1_avg}/10 in April.",
+      "insights_label": "Key facts",
+      "insights": [
+        [
+          "#1 in April",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "Sunniest",
+          "{sun1} — {sun1_h}h."
+        ],
+        [
+          "Driest",
+          "{dry1} — {dry1_r}% rain."
+        ],
+        [
+          "Avg max temp.",
+          "Top 10: {tmax_avg}°C."
+        ]
+      ],
+      "stats": [
+        [
+          "{n}",
+          "Destinations"
+        ],
+        [
+          "April",
+          "Month"
+        ],
+        [
+          "10 yrs",
+          "ERA5"
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "RANKING APRIL 2026",
+          "h2": "🏆 Top 25 destinations in April",
+          "intro_tpl": "Climate score 0–10 · {n} destinations · 10-year ERA5 data."
+        }
+      ],
+      "jsonld_title_tpl": "Top 25 weather destinations in April 2026"
     }
   },
   "monthly_hero_subs_ski": {
