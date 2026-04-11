@@ -1240,7 +1240,6 @@ def build_top_monthly(lang, loc):
         f'<div class="home-section">'
         f'<div class="home-section-head">'
         f'<div class="home-section-title">{section_title}</div>'
-        f'<a class="home-section-link" href="{ranking_url}">{ranking_link_lbl}</a>'
         f'</div>'
         f'<div class="top-cards">{cards_html}</div>'
         f'</div>'
