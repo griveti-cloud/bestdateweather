@@ -1140,15 +1140,23 @@ def build_top_monthly(lang, loc):
         'de': 'Rangliste →',
     }.get(lang, 'See ranking →')
 
-    # Lien vers page pilier "Où partir en {mois}" existante
+    # Lien vers page pilier mensuelle dynamique
+    _mois_url = {1:'janvier',2:'fevrier',3:'mars',4:'avril',5:'mai',6:'juin',
+                 7:'juillet',8:'aout',9:'septembre',10:'octobre',11:'novembre',12:'decembre'}
+    _en_url   = {1:'january',2:'february',3:'march',4:'april',5:'may',6:'june',
+                 7:'july',8:'august',9:'september',10:'october',11:'november',12:'december'}
+    _es_url   = {1:'enero',2:'febrero',3:'marzo',4:'abril',5:'mayo',6:'junio',
+                 7:'julio',8:'agosto',9:'septiembre',10:'octubre',11:'noviembre',12:'diciembre'}
+    _de_url   = {1:'januar',2:'februar',3:'maerz',4:'april',5:'mai',6:'juni',
+                 7:'juli',8:'august',9:'september',10:'oktober',11:'november',12:'dezember'}
     _ranking_pages = {
-        'fr': 'ou-partir-en-avril.html',
-        'en': '../en/where-to-go-in-april.html',
-        'en-us': '../us/where-to-go-in-april.html',
-        'es': '../es/donde-ir-en-abril.html',
-        'de': '../de/wohin-im-april.html',
+        'fr':    f'ou-partir-en-{_mois_url[mi]}.html',
+        'en':    f'../en/where-to-go-in-{_en_url[mi]}.html',
+        'en-us': f'../us/where-to-go-in-{_en_url[mi]}.html',
+        'es':    f'../es/donde-ir-en-{_es_url[mi]}.html',
+        'de':    f'../de/wohin-im-{_de_url[mi]}.html',
     }
-    ranking_url = _ranking_pages.get(lang, 'ou-partir-en-avril.html')
+    ranking_url = _ranking_pages.get(lang, f'ou-partir-en-{_mois_url[mi]}.html')
 
     asset_prefix = loc['meta'].get('asset_prefix', '')
     subdir = loc['meta'].get('subdir', '')
