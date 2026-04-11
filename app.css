@@ -238,7 +238,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 /* ── FOOTER ── */
 @media(max-width:768px){.desktop-only{display:none}}
 .app-footer{text-align:center;padding:20px 20px 40px;font-size:11px;color:rgba(255,255,255,.5);overflow-x:hidden;max-width:100%}.app-footer a{color:rgba(255,255,255,.5)!important}.app-footer [style*="var(--slate2)"]{color:rgba(255,255,255,.6)!important}
-.footer-langs{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 6px;font-size:12px;margin:4px 0;overflow-x:visible}
+.footer-langs{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:3px 4px;font-size:11px;margin:4px 0;overflow-x:visible}
 
 /* ── MODE TOGGLE ── */
 .mode-toggle{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
