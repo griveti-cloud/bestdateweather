@@ -1140,20 +1140,18 @@ def build_top_monthly(lang, loc):
         'de': 'Rangliste →',
     }.get(lang, 'See ranking →')
 
-    # Lien vers page classement mensuel (depuis locale)
-    _mensuel_pc = loc.get('classement_pages', {}).get('mensuel', {})
+    # Lien vers page classement mondial avec filtre mois courant
     _subdir = loc['meta'].get('subdir', '')
-    _pfx = '../' if _subdir else ''
-    if lang == 'fr':
-        ranking_url = _mensuel_pc.get('fr_file', 'classement-destinations-meteo-2026.html')
-    elif lang in ('en', 'en-us'):
-        ranking_url = f"../{_subdir}/{_mensuel_pc.get('en_file', 'best-weather-destinations.html')}" if _subdir else f"en/{_mensuel_pc.get('en_file', 'best-weather-destinations.html')}"
-    elif lang == 'es':
-        ranking_url = f'../es/{_mensuel_pc.get("es_file", "mejores-destinos-clima.html")}'
-    elif lang == 'de':
-        ranking_url = f'../de/{_mensuel_pc.get("de_file", "beste-reiseziele-wetter.html")}'
-    else:
-        ranking_url = 'classement-destinations-meteo-2026.html'
+    _en_sub = _subdir or 'en'
+    _mp = '?mois=4'
+    _ranking_pages = {
+        'fr': 'classement-destinations-meteo-2026.html' + _mp,
+        'en': '../' + _en_sub + '/best-destinations-weather-ranking-2026.html' + _mp,
+        'en-us': '../us/best-destinations-weather-ranking-2026.html' + _mp,
+        'es': '../es/mejores-destinos-clima-2026.html' + _mp,
+        'de': '../de/beste-reiseziele-klima-2026.html' + _mp,
+    }
+    ranking_url = _ranking_pages.get(lang, 'classement-destinations-meteo-2026.html' + _mp)
 
     asset_prefix = loc['meta'].get('asset_prefix', '')
     subdir = loc['meta'].get('subdir', '')
