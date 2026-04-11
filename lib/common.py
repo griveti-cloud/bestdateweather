@@ -1695,13 +1695,13 @@ def decision_card_html(dest, months, mi_best, C, nom,
         _avoid_lbl_pill = L.get('lbl_dec_eviter_lbl', 'À éviter') if lang == 'fr' else ('Evitar' if lang=='es' else ('Meiden' if lang=='de' else 'Avoid'))
         _pills_row = (
             f'<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:12px 24px;background:#faf9f7;border-bottom:1px solid #eee8df">'
-            f'<span style="font-size:10px;color:#a37c60;font-weight:500">{_best_lbl_pill}</span>'
+            f'<span style="font-size:10px;color:#6b3d10;font-weight:600">{_best_lbl_pill}</span>'
             f'{_best_pills_hero}'
         )
         if _avoid_pills_hero:
             _pills_row += (
                 f'<span style="color:#d4c4b5;font-size:14px;padding:0 2px">·</span>'
-                f'<span style="font-size:10px;color:#a37c60;font-weight:500">{_avoid_lbl_pill}</span>'
+                f'<span style="font-size:10px;color:#6b3d10;font-weight:600">{_avoid_lbl_pill}</span>'
                 f'{_avoid_pills_hero}'
             )
         _pills_row += '</div>'
@@ -1743,9 +1743,9 @@ def decision_card_html(dest, months, mi_best, C, nom,
         _heatmap_block = (
             f'<div style="padding:12px 24px 10px;background:#faf9f7;border-bottom:1px solid #eee8df">'
             f'<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">'
-            f'<div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(239,68,68,.6)"></div><span style="font-size:9px;color:#a37c60">{_avoid_lbl_hm}</span></div>'
-            f'<div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(249,115,22,.55)"></div><span style="font-size:9px;color:#a37c60"></span></div>'
-            f'<div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(34,197,94,.85)"></div><span style="font-size:9px;color:#a37c60">{_best_lbl_hm}</span></div>'
+            f'<div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(239,68,68,.6)"></div><span style="font-size:9px;color:#6b3d10">{_avoid_lbl_hm}</span></div>'
+            f'<div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(249,115,22,.55)"></div><span style="font-size:9px;color:#6b3d10"></span></div>'
+            f'<div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(34,197,94,.85)"></div><span style="font-size:9px;color:#6b3d10">{_best_lbl_hm}</span></div>'
             f'<div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:#16a34a;outline:2px solid #f59e0b;outline-offset:1px"></div><span style="font-size:9px;color:#92400e;font-weight:500">★ Best</span></div>'
             f'</div>'
             f'<div style="display:flex;gap:4px;align-items:flex-end">{_hm_cells}</div>'
