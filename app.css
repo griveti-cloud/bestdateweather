@@ -360,7 +360,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 #seo-hub{contain-intrinsic-size:auto 2000px}
 .seo-hub-toggle.open .seo-hub-toggle-icon{transform:rotate(180deg)}
 @media(max-width:640px){
- .seo-hub-toggle{display:flex}
+ .seo-hub-toggle{display:flex;margin-top:20px}
  #seo-hub{display:none!important;padding:28px 16px 36px}
  #seo-hub.open{display:block!important}
 }
