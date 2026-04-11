@@ -237,7 +237,7 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 
 /* ── FOOTER ── */
 @media(max-width:768px){.desktop-only{display:none}}
-.app-footer{text-align:center;padding:20px 20px 40px;font-size:11px;color:var(--slate2)}
+.app-footer{text-align:center;padding:20px 20px 40px;font-size:11px;color:rgba(255,255,255,.5)}.app-footer a{color:rgba(255,255,255,.5)!important}.app-footer [style*="var(--slate2)"]{color:rgba(255,255,255,.6)!important}
 .footer-langs{white-space:nowrap;overflow-x:auto;font-size:12px}
 
 /* ── MODE TOGGLE ── */
@@ -446,8 +446,8 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 /* ── Brand block ── */
 .brand-block{padding:48px 24px;text-align:center}
 .brand-block-inner{max-width:680px;margin:0 auto}
-.brand-block-inner h2{font-family:'Playfair Display','Playfair Display Fallback',serif;font-size:clamp(20px,3vw,26px);font-weight:700;color:#1a1f2e;margin:0 0 16px}
-.brand-block-inner p{font-size:14px;line-height:1.8;color:#5a6478;margin:0 0 12px}
+.brand-block-inner h2{font-family:'Playfair Display','Playfair Display Fallback',serif;font-size:clamp(20px,3vw,26px);font-weight:700;color:rgba(255,255,255,.9);margin:0 0 16px}
+.brand-block-inner p{font-size:14px;line-height:1.8;color:rgba(255,255,255,.6);margin:0 0 12px}
 
 /* ── FLATPICKR ── */
 /* flatpickr 4.6.13 */
