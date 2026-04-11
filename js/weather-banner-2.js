@@ -550,7 +550,7 @@
  if (tbl && d.weather) {
   var w = d.weather;
   var unit = R() ? '°F' : '°';
-  var _w=d.weather;var _minmax=(null!=_w.tMin&&null!=_w.tMax)?' · '+z(_w.tMin)+'°/'+z(_w.tMax)+'°':'';tbl.innerHTML=_w.icon+' <b style="color:#fff">'+G(_w.city)+'</b> · '+z(_w.temp)+(R()?'°F':'°')+_minmax+' · '+G(_w.desc)+' · '+i.feels+' '+z(_w.feels)+(R()?'°F':'°')+' · '+i.wind+' '+(R()?Math.round(.621371*_w.wind)+' mph':Math.round(_w.wind)+' km/h')+' · UV '+_w.uv;
+  var _w=d.weather;var _tempStr=(null!=_w.tMin&&null!=_w.tMax)?z(_w.tMin)+'°/'+z(_w.tMax)+'°':z(_w.temp)+(R()?'°F':'°');tbl.innerHTML=_w.icon+' <b style="color:#fff">'+G(_w.city)+'</b> · '+_tempStr+' · '+G(_w.desc)+' · UV '+_w.uv;
  }
     }
   }
