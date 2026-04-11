@@ -58,7 +58,7 @@
     "ui_footer_guides": "697 destination guides",
     "ui_guides_tag": "Destination guides",
     "ui_guides_title": "When to visit? Weather month by month",
-    "ui_guides_sub": "Open-Meteo data · 10 years · Monthly climate tables · 697 destinations",
+    "ui_guides_sub": "Climate tables · best time to visit · monthly weather",
     "ui_guides_desc": "Our guides analyse temperatures, precipitation, sunshine and seasonality to objectively determine the best months for your trip — travel, wedding, festival or event.",
     "ui_card_sub": "Best time to visit",
     "UI_DETAILS_TOGGLE": "See details — hourly, scenarios, astro",
@@ -89,7 +89,8 @@
     "HERO_KICKER": "Weather for your projects",
     "HERO_H1": "What weather <em>for your trip?</em>",
     "HERO_SUB": "Climate score /10 · 697 worldwide destinations · up to 1 year ahead · 10 years of ERA5 data",
-    "USP_HORIZON": "1 year ahead"
+    "USP_HORIZON": "1 year ahead",
+    "UI_GUIDES_SUB": "Climate tables · best time to visit · monthly weather"
   },
   "months": [
     "January",
