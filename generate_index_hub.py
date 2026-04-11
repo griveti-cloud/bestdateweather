@@ -1260,15 +1260,15 @@ def build_rankings_section(lang, loc):
     cards_data = {
         'fr': [
             ('🏆', 'Top mondial', 'Meilleurs scores toutes destinations', 'classement-destinations-meteo-2026.html'),
-            ('🏖️', 'Plage & baignade', 'Mer chaude · soleil · peu de pluie', 'classement-destinations-meteo-2026.html'),
-            ('⛷️', 'Ski & montagne', 'Neige garantie · froid · ciel clair', 'classement-destinations-meteo-2026.html'),
-            ('🌿', 'Tropical', 'Saison sèche · destinations chaudes', 'classement-destinations-meteo-2026.html'),
+            ('🏖️', 'Plage & baignade', 'Mer chaude · soleil · peu de pluie', 'classement-destinations-plage-2026.html'),
+            ('⛷️', 'Ski & montagne', 'Neige garantie · froid · ciel clair', 'classement-destinations-meteo-hiver-2026.html'),
+            ('🌿', 'Tropical', 'Saison sèche · destinations chaudes', 'classement-destinations-caraibes-meteo-2026.html'),
         ],
         'en': [
-            ('🏆', 'Global top', 'Best scores across all destinations', '../en/best-weather-destinations.html'),
-            ('🏖️', 'Beach & swimming', 'Warm sea · sunshine · little rain', '../en/best-weather-destinations.html'),
-            ('⛷️', 'Ski & mountains', 'Guaranteed snow · cold · clear sky', '../en/best-weather-destinations.html'),
-            ('🌿', 'Tropical', 'Dry season · warm destinations', '../en/best-weather-destinations.html'),
+            ('🏆', 'Global top', 'Best scores across all destinations', '../en/best-destinations-weather-ranking-2026.html'),
+            ('🏖️', 'Beach & swimming', 'Warm sea · sunshine · little rain', '../en/best-beach-destinations-weather-2026.html'),
+            ('⛷️', 'Ski & mountains', 'Guaranteed snow · cold · clear sky', '../en/best-destinations-winter-weather-2026.html'),
+            ('🌿', 'Tropical', 'Dry season · warm destinations', '../en/best-caribbean-weather-2026.html'),
         ],
     }
     cards_data['en-us'] = cards_data['en']
