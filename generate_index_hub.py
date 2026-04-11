@@ -1355,8 +1355,14 @@ def build_hub_footer(current_lang, current_loc):
             f'style="vertical-align:middle;border-radius:2px"> {label}</a>'
         )
 
-    sep = ' &nbsp;·&nbsp; '
-    return sep.join(links)
+    parts = []
+    for i, link in enumerate(links):
+        if i == 0:
+            parts.append(f'<span style="white-space:nowrap">{link}</span>')
+        else:
+            parts.append('<span style="white-space:nowrap;opacity:.4">·</span>')
+            parts.append(f'<span style="white-space:nowrap">{link}</span>')
+    return ''.join(parts)
 
 
 def inject_hub_footer(filepath, current_lang, current_loc):
