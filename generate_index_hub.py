@@ -1140,18 +1140,15 @@ def build_top_monthly(lang, loc):
         'de': 'Rangliste →',
     }.get(lang, 'See ranking →')
 
-    # Lien vers page classement mondial avec filtre mois courant
-    _subdir = loc['meta'].get('subdir', '')
-    _en_sub = _subdir or 'en'
-    _mp = '?mois=4'
+    # Lien vers page pilier "Où partir en {mois}" existante
     _ranking_pages = {
-        'fr': 'classement-destinations-meteo-2026.html' + _mp,
-        'en': '../' + _en_sub + '/best-destinations-weather-ranking-2026.html' + _mp,
-        'en-us': '../us/best-destinations-weather-ranking-2026.html' + _mp,
-        'es': '../es/mejores-destinos-clima-2026.html' + _mp,
-        'de': '../de/beste-reiseziele-klima-2026.html' + _mp,
+        'fr': 'ou-partir-en-avril.html',
+        'en': '../en/where-to-go-in-april.html',
+        'en-us': '../us/where-to-go-in-april.html',
+        'es': '../es/donde-ir-en-abril.html',
+        'de': '../de/wohin-im-april.html',
     }
-    ranking_url = _ranking_pages.get(lang, 'classement-destinations-meteo-2026.html' + _mp)
+    ranking_url = _ranking_pages.get(lang, 'ou-partir-en-avril.html')
 
     asset_prefix = loc['meta'].get('asset_prefix', '')
     subdir = loc['meta'].get('subdir', '')

@@ -1117,108 +1117,12 @@ def gen_mondial(dests, climate, lang, country_info=None):
         dry1=_dest_name(dry1['dest'], lang),  dry1_r=int(dry1['rain_avg']),
         eu1=_dest_name(eu1['dest'], lang),    eu1_avg=f'{eu1["avg"]:.1f}',
     )
-    # Données mensuelles pour le filtre interactif
-    import json as _json
-    mois_locale = get_mois(lang)
-    monthly_data = []
-    for entry in annual:
-        slug = entry['slug']
-        d = entry['dest']
-        nom = d.get('nom_de', d['nom_en']) if lang == 'de' else (d['nom_en'] if lang in ('en','en-us','es') else d['nom_fr'])
-        pays = d.get('pays','')
-        row = {'slug': slug, 'nom': nom, 'pays': pays,
-               'url': dest_link(slug, nom, lang, d),
-               'secu': safety_badge(d, country_info or {}),
-               'budget': budget_badge(d, country_info or {}, lang),
-               'monthly': {}}
-        for m in range(1,13):
-            if slug in climate and m in climate[slug]:
-                cm = climate[slug][m]
-                row['monthly'][str(m)] = {
-                    'score': cm.get('score',0),
-                    'tmin': cm.get('tmin',0),
-                    'tmax': cm.get('tmax',0),
-                    'sun': cm.get('sun_h',0),
-                    'rain': cm.get('rain_pct',0),
-                }
-        monthly_data.append(row)
-
-    # Labels mois i18n
-    mois_names_short = list(mois_locale.values())  # ['Jan','Fév',...]
-    lbl_score = {'fr':'Score','en':'Score','en-us':'Score','es':'Puntuación','de':'Wertung'}.get(lang,'Score')
-    lbl_temp  = {'fr':'Temp.','en':'Temp.','en-us':'Temp.','es':'Temp.','de':'Temp.'}.get(lang,'Temp.')
-    lbl_sun   = {'fr':'Soleil/j','en':'Sun/day','en-us':'Sun/day','es':'Sol/día','de':'Sonne/T.'}.get(lang,'Sun')
-    lbl_rain  = {'fr':'Pluie','en':'Rain','en-us':'Rain','es':'Lluvia','de':'Regen'}.get(lang,'Rain')
-    lbl_dest  = {'fr':'Destination','en':'Destination','en-us':'Destination','es':'Destino','de':'Ziel'}.get(lang,'Destination')
-    lbl_rank  = {'fr':'#','en':'#','en-us':'#','es':'#','de':'#'}.get(lang,'#')
-    lbl_secu  = {'fr':'Sécu.','en':'Safety','en-us':'Safety','es':'Seg.','de':'Sich.'}.get(lang,'Safety')
-    lbl_budget= {'fr':'Budget','en':'Budget','en-us':'Budget','es':'Budget','de':'Budget'}.get(lang,'Budget')
-    lbl_filter_title = {'fr':'Classement par mois','en':'Monthly ranking','en-us':'Monthly ranking','es':'Clasificación mensual','de':'Monatsranking'}.get(lang,'Monthly ranking')
-
-    monthly_section_html = f'''<div class="section" id="monthly-filter-section">
-<div class="eyebrow" id="monthly-eyebrow">{lbl_filter_title}</div>
-<h2 class="sec-title" id="monthly-h2"></h2>
-<div class="month-pills" id="month-pills"></div>
-<div class="rt-wrap"><table class="rt" id="monthly-table">
-<thead><tr><th>{lbl_rank}</th><th>{lbl_dest}</th><th>{lbl_score}</th><th class="rt-sec">{lbl_temp}</th><th class="rt-sec">{lbl_sun}</th><th class="rt-sec">{lbl_rain}</th><th>{lbl_secu}</th><th>{lbl_budget}</th></tr></thead>
-<tbody id="monthly-tbody"></tbody></table></div>
-</div>
-<style>
-.month-pills{{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 16px}}
-.month-pill{{padding:5px 12px;border-radius:20px;border:1.5px solid #e8e0d0;background:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:#4a5568;transition:all .15s}}
-.month-pill.active{{background:linear-gradient(135deg,#c99438,#e8b84b);color:#fff;border-color:#c99438}}
-</style>
-<script>
-(function(){{
-var DATA={_json.dumps(monthly_data, ensure_ascii=False)};
-var MONTHS={_json.dumps(mois_names_short, ensure_ascii=False)};
-var sel=0;
-function getParam(){{var p=new URLSearchParams(window.location.search);var m=parseInt(p.get('mois')||p.get('month')||'0');return(m>=1&&m<=12)?m:new Date().getMonth()+1;}}
-function renderPills(){{
-  var c=document.getElementById('month-pills');c.innerHTML='';
-  for(var i=1;i<=12;i++){{
-    var b=document.createElement('button');b.className='month-pill'+(i===sel?' active':'');
-    b.textContent=MONTHS[i-1];b.dataset.m=i;
-    b.onclick=function(){{sel=+this.dataset.m;renderPills();renderTable();}};
-    c.appendChild(b);
-  }}
-}}
-function renderTable(){{
-  var tbody=document.getElementById('monthly-tbody');
-  var h2=document.getElementById('monthly-h2');
-  h2.textContent='🏆 Top 25 · '+MONTHS[sel-1];
-  var rows=DATA.filter(function(d){{return d.monthly[sel];}});
-  rows.sort(function(a,b){{return b.monthly[sel].score-a.monthly[sel].score;}});
-  rows=rows.slice(0,25);
-  var medals=['🥇','🥈','🥉'];
-  tbody.innerHTML=rows.map(function(d,i){{
-    var m=d.monthly[sel];
-    var rank=i<3?medals[i]:(i+1);
-    return '<tr><td class="rank">'+rank+'</td>'+
-      '<td><a href="'+d.url+'" class="dest-link">'+d.nom+'</a><span class="region-tag">'+d.pays+'</span></td>'+
-      '<td class="sc">'+m.score.toFixed(1)+'<span>/10</span></td>'+
-      '<td class="rt-sec">'+Math.round(m.tmin)+'°–'+Math.round(m.tmax)+'°</td>'+
-      '<td class="rt-sec">'+m.sun.toFixed(1)+'h</td>'+
-      '<td class="rt-sec">'+Math.round(m.rain)+'%</td>'+
-      '<td class="safety-col">'+d.secu+'</td>'+
-      '<td class="budget-col">'+d.budget+'</td></tr>';
-  }}).join('');
-}}
-sel=getParam();renderPills();renderTable();
-// Scroll vers la section si param URL présent
-if(new URLSearchParams(window.location.search).get('mois')){{
-  setTimeout(function(){{document.getElementById('monthly-filter-section').scrollIntoView({{behavior:'smooth'}});}},300);
-}}
-}})();
-</script>'''
-
     _cl_render(pc, lang, ctx,
                tables=[make_table_annual(annual, 20, lang, country_info),
                        make_table_sun(sunniest, 10, lang, country_info),
                        make_table_rain(driest, 10, lang, country_info)],
                jsonld_data=annual, jsonld_n=40,
                photo_grid=_make_photo_grid(annual, 12, lang, photo_db),
-               extra_sections_html=monthly_section_html,
                print_suffix=f' ({n_dests} dests, top={top1["dest"]["nom_bare"]})')
 
 def gen_europe(dests, climate, lang, country_info=None):
