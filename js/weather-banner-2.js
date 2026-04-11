@@ -550,7 +550,7 @@
  if (tbl && d.weather) {
   var w = d.weather;
   var unit = R() ? '°F' : '°';
-  tbl.innerHTML = d.weather.icon + ' <b style="color:#fff">' + G(d.weather.city) + '</b> · ' + z(d.weather.temp) + (R()?'°F':'°') + ' · ' + G(d.weather.desc) + ' · ' + i.feels + ' ' + z(d.weather.feels) + (R()?'°F':'°') + ' · ' + i.wind + ' ' + (R()?Math.round(.621371*d.weather.wind)+' mph':Math.round(d.weather.wind)+' km/h') + ' · UV ' + d.weather.uv;
+  var _w=d.weather;var _minmax=(null!=_w.tMin&&null!=_w.tMax)?' · '+z(_w.tMin)+'°/'+z(_w.tMax)+'°':'';tbl.innerHTML=_w.icon+' <b style="color:#fff">'+G(_w.city)+'</b> · '+z(_w.temp)+(R()?'°F':'°')+_minmax+' · '+G(_w.desc)+' · '+i.feels+' '+z(_w.feels)+(R()?'°F':'°')+' · '+i.wind+' '+(R()?Math.round(.621371*_w.wind)+' mph':Math.round(_w.wind)+' km/h')+' · UV '+_w.uv;
  }
     }
   }
@@ -736,8 +736,13 @@
           k();
         }
       }).catch(function() {
-        d.geoState = "denied";
-        k();
+        // Fallback: ipapi.co si /api/geo échoue
+        fetch('https://ipapi.co/json/').then(function(r){return r.json();}).then(function(geo){
+          if(geo&&geo.latitude&&geo.longitude&&geo.city){
+            d.geoState='ip';
+            g(geo.latitude,geo.longitude,geo.city,'ip');
+          } else { d.geoState='denied'; k(); }
+        }).catch(function(){ d.geoState='denied'; k(); });
       });
     }(), (t = document.getElementById("wb-ranking-section")) && i.rankingUrl && (t.innerHTML = '<a href="' + i.rankingUrl + '" style="display:block;text-align:center;background:linear-gradient(135deg,var(--gold),var(--gold2));color:white;text-decoration:none;padding:10px 14px;border-radius:var(--r);margin:10px 16px 4px;border:none;font-family:\'DM Sans\',sans-serif;font-size:14px;font-weight:700;">' + i.rankingTitle + "</a>"), fetch("/data/suggestions.json").then(function(e) {
         return e.json()
