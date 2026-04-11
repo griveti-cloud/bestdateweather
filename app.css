@@ -95,11 +95,11 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 .inp-clear:hover{background:var(--slate3);color:white}
 .inp-clear.visible{display:flex}
 .field-wrap .inp{padding-right:40px}
-.ac-list{position:absolute;top:calc(100% + 6px);left:0;right:0;background:white;border-radius:var(--r-sm);box-shadow:var(--shadow-lg);border:1px solid var(--cream2);z-index:100;display:none;max-height:220px;overflow-y:auto}
-.ac-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;font-size:13px;font-weight:500;color:var(--navy);border-bottom:1px solid var(--cream)}
+.ac-list{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#1a2230;border-radius:var(--r-sm);box-shadow:0 12px 40px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.1);z-index:100;display:none;max-height:220px;overflow-y:auto}
+.ac-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;font-size:13px;font-weight:500;color:rgba(255,255,255,.9);border-bottom:1px solid rgba(255,255,255,.06)}
 .ac-item:last-child{border-bottom:none}
-.ac-item:hover,.ac-item.sel{background:var(--gold-light);color:var(--navy)}
-.ac-sub{font-size:11px;color:var(--slate3);font-weight:400}
+.ac-item:hover,.ac-item.sel{background:rgba(201,148,56,.15);color:rgba(255,255,255,1)}
+.ac-sub{font-size:11px;color:rgba(255,255,255,.45);font-weight:400}
 
 /* Use case pills */
 .uc-row{display:flex;gap:6px;flex-wrap:nowrap;margin-bottom:0;overflow-x:auto}
