@@ -812,13 +812,16 @@
     "score_fair": "Not the best window, but acceptable if dates are constrained. {best_month} ({best_score}/10) is significantly better if possible."
   },
   "monthly_titles": [
-    "{nom} Weather in {month} {year} — {score}/10 · {tmin}–{tmax}°C · {sun}h sun"
+    "Is {month} Good for {nom}? Score {score}/10 — {tension}",
+    "{nom} in {month} {year}: {score}/10 — Weather & Travel Guide",
+    "{nom} {month} Weather {year} — {score}/10: {verdict}",
+    "Should You Go to {nom} in {month}? Score {score}/10"
   ],
   "monthly_descs": [
-    "Is {month} a good time to visit {nom}? See the full score, weather details and how it compares to the best months of the year.",
-    "Check if {month} is a good time to visit {nom}. Full score, weather breakdown and best months compared.",
-    "{nom} in {month} {year}: score {score}/10. Full weather breakdown — temperature, sunshine and rain. Compare all months.",
-    "Is {month} worth it for {nom}? Score {score}/10 — see weather details, monthly comparison and travel tips."
+    "Is {month} worth visiting {nom}? Climate score {score}/10 — temperature {tmin}–{tmax}°C, {sun}h sun. Full monthly breakdown and best time guide.",
+    "Planning a trip to {nom} in {month}? Score {score}/10. See temperature, sunshine, rain and how it ranks vs all 12 months.",
+    "{nom} in {month}: score {score}/10 ({verdict}). Weather data, best alternatives and month-by-month comparison. Based on 10 years of ERA5 data.",
+    "Should you go to {nom} in {month}? Score {score}/10. Full climate analysis — {tmin}–{tmax}°C, {sun}h sun. Find the best month to visit."
   ],
   "monthly_h1s": [
     "Is {month} a good time<br/><em>to visit {nom}?</em>",

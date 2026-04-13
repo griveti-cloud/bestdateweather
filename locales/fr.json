@@ -811,13 +811,16 @@
     "score_fair": "Pas le meilleur créneau, mais acceptable pour qui a des contraintes de dates. {best_month} ({best_score}/10) est nettement préférable si possible."
   },
   "monthly_titles": [
-    "{nom} en {month} {year} — {score}/10 · {tmin}–{tmax}°C · {sun}h de soleil"
+    "{nom} en {month} : vaut-il le voyage ? Score {score}/10 — {tension}",
+    "{nom} en {month} {year} : {score}/10 — {verdict}",
+    "Partir à {nom_bare} en {month_lc} {year} — Score {score}/10 — Guide météo",
+    "{nom_bare} en {month_lc} : bonne période ? Score {score}/10"
   ],
   "monthly_descs": [
-    "{month_lc} est-il une bonne période pour {nom_bare} ? Découvrez le score complet, les données météo et la comparaison avec les meilleurs mois.",
-    "Vérifiez si {month_lc} est idéal pour {nom_bare}. Score complet, analyse météo et meilleurs mois comparés.",
-    "{nom_bare} en {month_lc} {year} : score {score}/10. Analyse complète — température, soleil et pluie. Comparez tous les mois.",
-    "{nom_bare} en {month_lc} : ça vaut le déplacement ? Score {score}/10 — météo détaillée et comparaison mensuelle."
+    "{nom_bare} en {month_lc} vaut-il le voyage ? Score {score}/10 — {tmin}–{tmax}°C, {sun}h de soleil. Analyse complète et guide meilleure période.",
+    "Partir à {nom_bare} en {month_lc} ? Score {score}/10. Températures, ensoleillement, pluie et comparaison avec les 12 mois.",
+    "{nom_bare} en {month_lc} {year} : score {score}/10 ({verdict}). Données météo et meilleure période. Basé sur 10 ans de données ERA5.",
+    "Vaut-il mieux partir à {nom_bare} en {month_lc} ? Score {score}/10 — {tmin}–{tmax}°C, {sun}h de soleil. Trouvez le meilleur mois."
   ],
   "monthly_h1s": [
     "{month_lc} {prep} {nom_bare} :<br/><em>bonne ou mauvaise période ?</em>",
