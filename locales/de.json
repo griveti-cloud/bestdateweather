@@ -806,13 +806,16 @@
     "score_fair": "Kein optimales Fenster, aber akzeptabel bei festen Terminen. Der {best_month} ({best_score}/10) ist deutlich besser, wenn möglich."
   },
   "monthly_titles": [
-    "{nom} Wetter {month} {year} — {score}/10 · {tmin}–{tmax}°C · {sun}h Sonne"
+    "Lohnt sich {nom} im {month}? Score {score}/10 — {tension}",
+    "{nom} im {month} {year}: {score}/10 — {verdict}",
+    "{nom} {month} {year} — {score}/10: Reiseführer & Wetter",
+    "Reise nach {nom} im {month}: Score {score}/10 — Gut oder nicht?"
   ],
   "monthly_descs": [
-    "Ist {month} eine gute Reisezeit für {nom}? Vollständiger Score, Wetterdaten und Vergleich mit den besten Monaten.",
-    "Prüfen Sie, ob {month} gut für {nom} ist. Vollständiger Score, Wetteranalyse und beste Monate verglichen.",
-    "{nom} im {month} {year}: Score {score}/10. Vollständige Analyse — Temperatur, Sonne und Regen. Alle Monate vergleichen.",
-    "Lohnt sich {nom} im {month}? Score {score}/10 — detailliertes Wetter und Monatsvergleich."
+    "Lohnt sich {nom} im {month}? Score {score}/10 — {tmin}–{tmax}°C, {sun}h Sonne. Vollständige Analyse und beste Reisezeit.",
+    "Reise nach {nom} im {month}? Score {score}/10. Temperatur, Sonne, Regen und Vergleich aller 12 Monate.",
+    "{nom} im {month} {year}: Score {score}/10 ({verdict}). Klimadaten und beste Reisezeit. Basierend auf 10 Jahren ERA5-Daten.",
+    "Wann ist die beste Zeit für {nom}? Im {month}: {score}/10 — {tmin}–{tmax}°C, {sun}h Sonne."
   ],
   "monthly_h1s": [
     "Ist {month} eine gute Zeit<br/><em>{nom} zu besuchen?</em>",

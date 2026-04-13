@@ -806,13 +806,16 @@
     "score_fair": "No es la mejor ventana, pero es aceptable si las fechas son fijas. {best_month} ({best_score}/10) es significativamente mejor si es posible."
   },
   "monthly_titles": [
-    "{nom} en {month} {year} — {score}/10 · {tmin}–{tmax}°C · {sun}h de sol"
+    "¿Vale la pena {nom} en {month}? Puntuación {score}/10 — {tension}",
+    "{nom} en {month} {year}: {score}/10 — {verdict}",
+    "{nom} en {month} {year} — {score}/10: guía de viaje y clima",
+    "¿Es {month} buena época para {nom}? Puntuación {score}/10"
   ],
   "monthly_descs": [
-    "¿Es {month} buena época para {nom}? Descubre la puntuación completa, datos meteorológicos y comparación con los mejores meses.",
-    "Comprueba si {month} es buen momento para {nom}. Puntuación completa, análisis del tiempo y mejores meses comparados.",
-    "{nom} en {month} {year}: puntuación {score}/10. Análisis completo — temperatura, sol y lluvia. Compara todos los meses.",
-    "¿{nom} en {month} merece la pena? Puntuación {score}/10 — tiempo detallado y comparación mensual."
+    "¿Merece la pena {nom} en {month}? Puntuación {score}/10 — {tmin}–{tmax}°C, {sun}h de sol. Análisis completo y guía de mejor época.",
+    "¿Ir a {nom} en {month}? Puntuación {score}/10. Temperatura, sol, lluvia y comparación con los 12 meses.",
+    "{nom} en {month} {year}: puntuación {score}/10 ({verdict}). Datos climáticos y mejor época. Basado en 10 años de datos ERA5.",
+    "¿Cuándo es mejor ir a {nom}? En {month}: {score}/10 — {tmin}–{tmax}°C, {sun}h de sol. Encuentra el mejor mes."
   ],
   "monthly_h1s": [
     "¿Es {month} buena época<br/><em>para visitar {nom}?</em>",
