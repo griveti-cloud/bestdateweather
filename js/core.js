@@ -129,6 +129,7 @@ function quickFill(type) {
  var hintAnn = document.getElementById('uc-hint-ann');
  if (hintAnn) { hintAnn.style.display = 'none'; }
  var cityEl = document.getElementById('inp-city');
+ if (cityEl) { cityEl.blur(); }
  var placeholders = {
  plage:T.phBeach,
  ski:T.phSki
@@ -159,7 +160,7 @@ function quickFill(type) {
   });
  }
  } else {
- if (window === window.top) { cityEl.focus(); }
+ // Ne pas auto-focus — provoque bordure gold intrusive au chargement
  selectedLoc = null;
  }
  // Mark active pill LAST (after any recompute)
@@ -2466,7 +2467,7 @@ function switchMode(mode) {
  var aw = document.getElementById('annual-wrap');
  if (md) md.className = 'mode-btn' + (isDate ? ' active' : '');
  if (ma) ma.className = 'mode-btn' + (!isDate ? ' active' : '');
- if (aw) aw.style.display = isDate ? 'none' : 'block';
+ if (aw) { aw.style.display = isDate ? 'none' : 'block'; aw.style.height = isDate ? '0' : ''; }
  // Sync destination — via setTimeout to avoid browser reset after display change
  var _inpCity = document.getElementById('inp-city');
  var _annCity = document.getElementById('ann-city');
@@ -2499,10 +2500,7 @@ function switchMode(mode) {
  if (ucfw) ucfw.style.display = 'none';
  if (isDate) { var empt = document.getElementById('empty'); if (empt) empt.style.display = 'block'; }
  // Footer selon le mode actif
- var _fMain = document.querySelector('.card-footer:not(.card-footer-annual)');
- var _fAnn = document.querySelector('.card-footer-annual');
- if (_fMain) _fMain.style.display = isDate ? '' : 'none';
- if (_fAnn) _fAnn.style.display = isDate ? 'none' : 'flex';
+
  // CTA différencié selon le mode
  var span = document.getElementById('btn-go-text');
  if (span && T) {
@@ -3077,7 +3075,10 @@ function renderAnnual(loc, monthly) {
 }
 
 
-document.getElementById('btn-go').onclick=function(){run();};
+document.getElementById('btn-go').onclick=function(){
+ var aw=document.getElementById('annual-wrap');
+ if(aw&&aw.style.display!=='none'){runAnnual();}else{run();}
+};
 // Annual autocomplete listeners
 function clearCity(){
  var el=document.getElementById('inp-city');
@@ -3147,22 +3148,47 @@ document.addEventListener('DOMContentLoaded', function() {
   minDate: 'today',
   maxDate: new Date(new Date().setFullYear(new Date().getFullYear()+1)),
   disableMobile: true,
+  appendTo: document.body,
+  static: false,
   onChange: function(selectedDates, dateStr) {
   var el = document.getElementById('inp-date');
   el.classList.toggle('has-val', selectedDates.length > 0);
   if (selectedDates.length > 0) {
   var d = selectedDates[0];
   el._isoValue = d.getFullYear()+'-'+(d.getMonth()<9?'0':'')+(d.getMonth()+1)+'-'+(d.getDate()<10?'0':'')+d.getDate();
+  // Sync fused display
+  var fusedInp = document.getElementById('inp-date-display');
+  if (fusedInp) { fusedInp.value = dateStr; fusedInp.classList.add('has-val'); }
+  var fusedWrap = document.querySelector('.fused-date-wrap');
+  if (fusedWrap) fusedWrap.classList.add('has-date');
   } else {
   el._isoValue = '';
+  var fusedInp = document.getElementById('inp-date-display');
+  if (fusedInp) { fusedInp.value = ''; fusedInp.classList.remove('has-val'); }
+  var fusedWrap = document.querySelector('.fused-date-wrap');
+  if (fusedWrap) fusedWrap.classList.remove('has-date');
   }
   }
   });
  }
  if (inpDate) { ['focus','click','touchstart'].forEach(function(e){inpDate.addEventListener(e,_initFP,{once:true,passive:true});}); }
+ // Connecter fused-date-wrap au flatpickr
+ var fusedWrap = document.querySelector('.fused-date-wrap');
+ if (fusedWrap) {
+  fusedWrap.addEventListener('click', function() {
+   switchMode('date');
+   _initFP();
+   var fp = document.getElementById('inp-date')._flatpickr;
+   if (fp) fp.open(); else document.getElementById('inp-date').click();
+  });
+ }
 });
 document.getElementById('inp-city').oninput=function(){
  selectedLoc=null;
+ this.classList.add('typing');
+ // Sync vers ann-city pour mode annual
+ var annCity=document.getElementById('ann-city');
+ if(annCity) annCity.value=this.value;
  // Don't reset use case when typing city — user keeps their project selection
  var q=this.value.trim();clearTimeout(acTimer);
  document.getElementById('inp-city-clear').classList.toggle('visible',q.length>0);

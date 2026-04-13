@@ -42,7 +42,7 @@
     ],
     "subdir": "de",
     "flag": "flags/de.png",
-    "lang_label": "Deutsch",
+    "lang_label": "DE",
     "page_title": "BestDateWeather — Klimabewertung für 697 Reiseziele: lohnt es sich?",
     "meta_desc": "Finde heraus, ob deine Reisedaten gut sind. Klimabewertungen /10 für 697 Ziele, Monat für Monat. Basierend auf 10 Jahren ERA5-Daten.",
     "app_sub": "Den besten Reisemonat finden",
@@ -51,13 +51,13 @@
     "ui_mode_date_sub": "Reise, Hochzeit…",
     "ui_mode_annual": "12-Monats-Ansicht",
     "ui_mode_annual_sub": "Bester Monat",
-    "ui_cta": "Wetter an diesem Tag prüfen →",
-    "ui_date_placeholder": "📅  Datum wählen",
+    "ui_cta": "Wetter anzeigen →",
+    "ui_date_placeholder": "📅  Datum",
     "ui_footer_era5": "ERA5 · 10 Jahre",
     "ui_footer_guides": "697 Reiseziel-Guides",
     "ui_guides_tag": "Reiseziel-Guides",
     "ui_guides_title": "Wann reisen? Wetter Monat für Monat",
-    "ui_guides_sub": "Open-Meteo-Daten · 10 Jahre · Monatliche Klimatabellen · 697 Ziele",
+    "ui_guides_sub": "Klimatabellen · beste Reisezeit · Wetter Monat für Monat",
     "ui_guides_desc": "Unsere Guides analysieren Temperaturen, Niederschlag, Sonnenschein und Saisonalität, um die besten Reisemonate für Ihr Vorhaben objektiv zu bestimmen — Reise, Hochzeit, Festival oder Veranstaltung.",
     "ui_card_sub": "Beste Reisezeit",
     "UI_DETAILS_TOGGLE": "Details — stündlich, Szenarien, Astro",
@@ -84,7 +84,12 @@
     "UI_HINT_HOURLY": "Temperaturen & Wetter",
     "UI_HINT_HIST": "10-Jahres-Trend",
     "UI_ANN_BTN": "Jahr anzeigen",
-    "UI_ANN_SUBTITLE": "Monatliches Klimaprofil · 10-Jahres-Durchschnitt"
+    "UI_ANN_SUBTITLE": "Monatliches Klimaprofil · 10-Jahres-Durchschnitt",
+    "HERO_KICKER": "Wetter für Ihre Projekte",
+    "HERO_H1": "Welches Wetter <em>für Ihre Reise?</em>",
+    "HERO_SUB": "Klimabewertung /10 · 697 Reiseziele weltweit · bis zu 1 Jahr im Voraus · 10 Jahre ERA5-Daten",
+    "USP_HORIZON": "1 Jahr im Voraus",
+    "UI_GUIDES_SUB": "Klimatabellen · beste Reisezeit · Wetter Monat für Monat"
   },
   "months": [
     "Januar",
@@ -1372,6 +1377,57 @@
       "en_file": "best-caribbean-weather-2026.html",
       "es_file": "mejor-clima-caribe-2026.html",
       "de_file": "beste-karibik-wetter-2026.html"
+    },
+    "mensuel": {
+      "fr_file": "classement-destinations-meteo-avril-2026.html",
+      "en_file": "best-weather-destinations-april-2026.html",
+      "es_file": "mejores-destinos-clima-abril-2026.html",
+      "de_file": "beste-reiseziele-wetter-april-2026.html",
+      "title_tpl": "Beste Reiseziele im April 2026 — Klimaranking",
+      "h1": "Wohin im <em>april</em>?",
+      "desc_tpl": "Die {n} besten Reiseziele für April 2026 nach Klimascore.",
+      "hero_sub_tpl": "{n} Ziele · {top1} führt mit {top1_avg}/10 im April.",
+      "insights_label": "Highlights",
+      "insights": [
+        [
+          "Nr. 1 April",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "Sonnigste",
+          "{sun1} — {sun1_h}h."
+        ],
+        [
+          "Trockenste",
+          "{dry1} — {dry1_r}% Regen."
+        ],
+        [
+          "Ø Max-Temp.",
+          "Top 10: {tmax_avg}°C."
+        ]
+      ],
+      "stats": [
+        [
+          "{n}",
+          "Reiseziele"
+        ],
+        [
+          "April",
+          "Monat"
+        ],
+        [
+          "10 J.",
+          "ERA5"
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "RANKING APRIL 2026",
+          "h2": "🏆 Top 25 Reiseziele im April",
+          "intro_tpl": "Klimascore 0–10 · {n} Ziele · ERA5 10 Jahre."
+        }
+      ],
+      "jsonld_title_tpl": "Top 25 Reiseziele im April 2026"
     }
   },
   "monthly_hero_subs_ski": {

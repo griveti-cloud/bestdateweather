@@ -892,6 +892,7 @@ def make_related(lang, exclude_href=''):
 
 def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
               sections, jsonld_str, related_html, meth_html, footer_html, lang, canonical,
+              extra_sections_html='',
               hreflang_fr='', hreflang_en='', hreflang_es='', hreflang_de='', hreflang_us='',
               asset_prefix=''):
     fonts = (
@@ -946,6 +947,7 @@ def make_page(*, title, description, h1, hero_sub, stats_html, insights_html,
 {insights_html}
 <main class="page">
 {sections_html}
+{extra_sections_html}
 {meth_html}
 {related_html}
 </main>
@@ -1059,7 +1061,7 @@ def _cl_layout(pc, lang):
     return canonical, footer, outfile, fr_file, en_file, es_file, de_file
 
 
-def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix='', photo_grid=''):
+def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix='', photo_grid='', extra_sections_html=''):
     title    = _tpl(pc['title_tpl'],    ctx)
     desc     = _tpl(pc['desc_tpl'],     ctx)
     h1       = pc['h1']
@@ -1082,6 +1084,7 @@ def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix='', ph
         title=title, description=desc, h1=h1, hero_sub=hero_sub,
         stats_html=stats, insights_html=insights, sections=sections,
         jsonld_str=jsonld, related_html=related, meth_html=meth,
+        extra_sections_html=extra_sections_html,
         footer_html=footer, lang=lang, canonical=canonical,
         hreflang_fr=f'https://bestdateweather.com/{fr_file}',
         hreflang_en=f'https://bestdateweather.com/en/{en_file}',
@@ -1255,6 +1258,93 @@ def gen_beach(dests, climate, lang, country_info=None):
                jsonld_data=annual, jsonld_n=25,
                photo_grid=_make_photo_grid(annual, 12, lang, photo_db),
                print_suffix=f' (plage, {n_dests} coastal, top={top1["dest"]["nom_bare"]})')
+
+
+def compute_monthly_rank(climate, dests, mois_num):
+    """Classement pour un mois donné (1-12)."""
+    results = []
+    for slug, monthly in climate.items():
+        if slug not in dests:
+            continue
+        d = dests[slug]
+        if d.get('precision') == 'country':
+            continue
+        if mois_num not in monthly:
+            continue
+        m = monthly[mois_num]
+        results.append({
+            'slug': slug, 'dest': d,
+            'avg': m['score'],
+            'tmax': m.get('tmax', 0),
+            'tmin': m.get('tmin', 0),
+            'sun': m.get('sun_h', 0),
+            'rain_avg': m.get('rain_pct', 0),
+            'monthly': monthly,
+        })
+    results.sort(key=lambda x: -x['avg'])
+    return results
+
+
+def make_table_monthly(entries, n, lang, country_info=None):
+    """Table de classement mensuel : score, tmin-tmax, soleil, pluie."""
+    headers = {
+        'fr': ('#', 'Destination', 'Score', ['Temp.'], ['Soleil/j'], ['Pluie'], 'Sécu.', 'Budget'),
+        'en': ('#', 'Destination', 'Score', ['Temp.'], ['Sun/day'], ['Rain'], 'Safety', 'Budget'),
+        'es': ('#', 'Destino', 'Punt.', ['Temp.'], ['Sol/día'], ['Lluvia'], 'Seg.', 'Budget'),
+        'de': ('#', 'Ziel', 'Wert.', ['Temp.'], ['Sonne/T.'], ['Regen'], 'Sicher.', 'Budget'),
+    }
+    h = headers.get('en' if lang == 'en-us' else lang, headers['en'])
+    rows = []
+    for i, entry in enumerate(entries[:n], 1):
+        d = entry['dest']
+        nom = d.get('nom_de', d['nom_en']) if lang == 'de' else (d['nom_en'] if lang in ('en', 'en-us', 'es') else d['nom_fr'])
+        link = dest_link(entry['slug'], nom, lang, entry['dest'])
+        tmin_s = _ft(entry['tmin'], lang)
+        tmax_s = _ft(entry['tmax'], lang)
+        rows.append(
+            f'<tr><td class="rank">{rank_icon(i)}</td>'
+            f'<td><a href="{link}" class="dest-link">{e(nom)}</a>{country_tag(d, lang, entry["slug"])}</td>'
+            f'<td class="sc">{entry["avg"]:.1f}<span>/10</span></td>'
+            f'<td class="rt-sec">{tmin_s}–{tmax_s}</td>'
+            f'<td class="rt-sec">{entry["sun"]:.1f}h</td>'
+            f'<td class="rt-sec">{entry["rain_avg"]:.0f}%</td>'
+            f'<td class="safety-col">{safety_badge(d, country_info or {})}</td>'
+            f'<td class="budget-col">{budget_badge(d, country_info or {}, lang)}</td></tr>'
+        )
+    return (
+        f'<table class="rt"><thead><tr>{"".join(f"<th class=\"rt-sec\">{x[0]}</th>" if isinstance(x,list) else f"<th>{x}</th>" for x in h)}</tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody></table>'
+    )
+
+
+def gen_mensuel(dests, climate, lang, mois_num, country_info=None):
+    """Génère la page classement pour le mois courant."""
+    import csv as _csv
+    photo_db = {r['slug_fr']: r for r in _csv.DictReader(open(ROOT / 'data/destination_photos.csv'))}
+    ranked   = dedup_country(compute_monthly_rank(climate, dests, mois_num), dests)
+    sunniest = sorted([r for r in ranked if r['sun'] > 0], key=lambda x: -x['sun'])
+    driest   = sorted(ranked, key=lambda x: x['rain_avg'])
+    if not ranked:
+        return
+    top1 = ranked[0]
+    sun1 = sunniest[0] if sunniest else ranked[0]
+    dry1 = driest[0]
+    n_dests = len(ranked)
+    tmax_avg_top10 = sum(r['tmax'] for r in ranked[:10]) / min(10, len(ranked))
+    pc = load_locale(lang)['classement_pages']['mensuel']
+    ctx = dict(
+        n=n_dests,
+        top1=_dest_name(top1['dest'], lang), top1_avg=f'{top1["avg"]:.1f}',
+        sun1=_dest_name(sun1['dest'], lang), sun1_h=int(sun1['sun']),
+        dry1=_dest_name(dry1['dest'], lang), dry1_r=int(dry1['rain_avg']),
+        tmax_avg=f'{tmax_avg_top10:.0f}',
+    )
+    _cl_render(pc, lang, ctx,
+               tables=[make_table_monthly(ranked, 25, lang, country_info)],
+               jsonld_data=ranked, jsonld_n=25,
+               photo_grid=_make_photo_grid(ranked, 12, lang, photo_db),
+               print_suffix=f' (mensuel mois={mois_num}, top={top1["dest"]["nom_bare"]})')
+
 
 def gen_caribbean(dests, climate, lang, country_info=None):
     import csv as _csv

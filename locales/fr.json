@@ -42,7 +42,7 @@
     ],
     "subdir": "",
     "flag": "flags/fr.png",
-    "lang_label": "Français",
+    "lang_label": "FR",
     "page_title": "BestDateWeather — Partir ou pas ? Scores climatiques pour 697 destinations",
     "meta_desc": "Découvrez si vos dates de voyage en valent la peine. Scores climatiques /10 pour 697 destinations, mois par mois. Basé sur 10 ans de données ERA5.",
     "app_sub": "Choisissez le meilleur mois pour votre voyage",
@@ -51,13 +51,13 @@
     "ui_mode_date_sub": "Voyage, mariages…",
     "ui_mode_annual": "Vue 12 mois",
     "ui_mode_annual_sub": "Meilleur mois",
-    "ui_cta": "Voir les conditions ce jour →",
+    "ui_cta": "Voir la météo →",
     "ui_date_placeholder": "📅  Date du projet",
     "ui_footer_era5": "ERA5 · 10 ans",
     "ui_footer_guides": "697 guides destinations",
     "ui_guides_tag": "Guides destinations",
     "ui_guides_title": "Quand partir ? Météo mois par mois",
-    "ui_guides_sub": "Données Open-Meteo · 10 ans · Tableaux climatiques mensuels · 697 destinations",
+    "ui_guides_sub": "Tableaux climatiques · meilleure période · météo mois par mois",
     "ui_guides_desc": "Nos guides analysent températures, précipitations, ensoleillement et saisonnalité pour déterminer objectivement les meilleurs mois selon votre projet — voyage, mariage, festival ou événement.",
     "ui_card_sub": "Quand partir",
     "UI_DETAILS_TOGGLE": "Voir les détails — heure par heure, scénarios, astro",
@@ -84,7 +84,12 @@
     "UI_HINT_HOURLY": "Températures & météo",
     "UI_HINT_HIST": "Tendance sur 10 ans",
     "UI_ANN_BTN": "Voir l'année",
-    "UI_ANN_SUBTITLE": "Profil climatique mensuel · moyenne des 10 dernières années"
+    "UI_ANN_SUBTITLE": "Profil climatique mensuel · moyenne des 10 dernières années",
+    "HERO_KICKER": "Météo pour vos projets",
+    "HERO_H1": "Quel temps <em>pour votre voyage&nbsp;?</em>",
+    "HERO_SUB": "Score climatique /10 · 697 destinations mondiales · jusqu'à 1 an à l'avance · 10 ans de données ERA5",
+    "USP_HORIZON": "1 an à l'avance",
+    "UI_GUIDES_SUB": "Tableaux climatiques · meilleure période · météo mois par mois"
   },
   "months": [
     "Janvier",
@@ -1360,6 +1365,57 @@
       "fr_file": "classement-destinations-caraibes-meteo-2026.html",
       "en_file": "best-caribbean-weather-2026.html",
       "es_file": "mejor-clima-caribe-2026.html"
+    },
+    "mensuel": {
+      "fr_file": "classement-destinations-meteo-avril-2026.html",
+      "en_file": "best-weather-destinations-april-2026.html",
+      "es_file": "mejores-destinos-clima-abril-2026.html",
+      "de_file": "beste-reiseziele-wetter-april-2026.html",
+      "title_tpl": "Top destinations météo en avril 2026 — Classement climatique",
+      "h1": "Où partir en <em>avril</em> ?",
+      "desc_tpl": "Les {n} meilleures destinations météo pour avril 2026, classées par score climatique.",
+      "hero_sub_tpl": "{n} destinations · {top1} en tête avec {top1_avg}/10 en avril.",
+      "insights_label": "Points clés",
+      "insights": [
+        [
+          "N°1 Avril",
+          "{top1} — {top1_avg}/10."
+        ],
+        [
+          "Plus ensoleillé",
+          "{sun1} — {sun1_h}h."
+        ],
+        [
+          "Plus sec",
+          "{dry1} — {dry1_r}% pluie."
+        ],
+        [
+          "Temp. max moy.",
+          "Top 10 : {tmax_avg}°C."
+        ]
+      ],
+      "stats": [
+        [
+          "{n}",
+          "Destinations"
+        ],
+        [
+          "Avril",
+          "Mois"
+        ],
+        [
+          "10 ans",
+          "ERA5"
+        ]
+      ],
+      "sections": [
+        {
+          "eyebrow": "CLASSEMENT AVRIL 2026",
+          "h2": "🏆 Top 25 destinations en avril",
+          "intro_tpl": "Score 0–10 · {n} destinations · ERA5 10 ans."
+        }
+      ],
+      "jsonld_title_tpl": "Top 25 destinations météo en avril 2026"
     }
   },
   "monthly_hero_subs_ski": {

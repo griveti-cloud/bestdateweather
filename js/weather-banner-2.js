@@ -544,7 +544,14 @@
         r = d.hourlyOpen ? "wb-expand open" : "wb-expand",
         o = '<div class="wb" id="wb-banner" onclick="wbToggleHourly()"><div class="wb-top"><div class="wb-left"><div class="wb-city"><span class="wb-pin">📍</span><button class="wb-city-btn" onclick="event.stopPropagation();wbOpenCityModal()" title="' + i.changeCity + '">' + G(n.city) + '<span class="wb-edit-ico">✎</span></button>' + a + '</div><div class="wb-desc">' + G(n.desc) + '</div></div><div class="wb-right"><span class="wb-icon">' + n.icon + '</span><div class="wb-temps"><span class="wb-temp">' + z(n.temp) + (R() ? "°F" : "°") + "</span>" + (null != n.tMin && null != n.tMax ? '<span class="wb-minmax">' + z(n.tMin) + "° / " + z(n.tMax) + "°</span>" : "") + '</div></div></div><div class="wb-meta"><span class="wb-meta-item">' + i.feels + " " + z(n.feels) + '°</span><span class="wb-meta-dot">·</span><span class="wb-meta-item">' + i.wind + " " + (null == (t = n.wind) ? "-" : R() ? Math.round(.621371 * t) : Math.round(t)) + (R() ? " mph" : " km/h") + '</span><span class="wb-meta-dot">·</span><span class="wb-meta-item">' + i.uv + " " + n.uv + '</span><span class="' + r + '">▼</span></div></div>',
         l = document.getElementById("wb-banner-zone");
-      l ? l.innerHTML = o : e.innerHTML = '<div id="wb-banner-zone">' + o + '</div><div id="wb-hourly-zone"></div>', P()
+      l ? l.innerHTML = o : e.innerHTML = '<div id="wb-banner-zone">' + o + '</div><div id="wb-hourly-zone"></div>', P();
+ // Mettre à jour la ligne topbar compacte
+ var tbl = document.getElementById('wb-topbar-line');
+ if (tbl && d.weather) {
+  var w = d.weather;
+  var unit = R() ? '°F' : '°';
+  var _w=d.weather;var _mm=(null!=_w.tMin&&null!=_w.tMax)?' ('+z(_w.tMin)+'°/'+z(_w.tMax)+'°)':'';var _isDesk=window.innerWidth>=641;var _feels=null!=_w.feels?' · Ressenti '+z(_w.feels)+(R()?'°F':'°'):'';var _wind=null!=_w.wind?' · Vent '+(R()?Math.round(.621371*_w.wind):Math.round(_w.wind))+(R()?' mph':' km/h'):'';tbl.innerHTML=_w.icon+' <button onclick="wbOpenCityModal()" style="background:none;border:none;color:#fff;font-weight:700;cursor:pointer;font-size:inherit;padding:0;font-family:inherit;">'+G(_w.city)+'</button> · '+z(_w.temp)+(R()?'°F':'°')+_mm+' · '+G(_w.desc)+' · UV '+_w.uv+(_isDesk?_feels:'')+(_isDesk?_wind:'');
+ }
     }
   }
 
@@ -585,40 +592,7 @@
 
   function F() {
     var e = document.getElementById("wb-suggest-section");
-    if (e) {
-      var t = function() {
-        if (!y) return [];
-        var e = b();
-        if (0 === e.length) return [];
-        for (var t = null, n = "", i = 0; i < e.length; i++)
-          if (e[i].slug && y[e[i].slug]) {
-            t = y[e[i].slug], n = "fr" === a ? t.fr : t.en || t.fr;
-            break
-          } if (!t || !t.similar || !t.similar.length) return [];
-        for (var r = {}, o = 0; o < e.length; o++) e[o].slug && (r[e[o].slug] = !0);
-        for (var l = t.similar, s = [], c = 0; c < l.length; c++) {
-          if (!r[l[c].slug]) {
-            var d = "fr" === a ? l[c].fr : l[c].en || l[c].fr;
-            s.push({
-              name: d,
-              flag: l[c].flag || "",
-              slug: l[c].slug,
-              score: l[c].score_avg || 0,
-              reason: ("fr" === a ? "Climat proche de " : "Climate similar to ") + n
-            })
-          }
-          if (s.length >= 2) break
-        }
-        return s
-      }();
-      if (0 === t.length) return e.innerHTML = "", void e.classList.add("wb-hidden");
-      e.classList.remove("wb-hidden");
-      for (var n = "", r = 0; r < t.length; r++) {
-        var s = t[r];
-        n += '<a href="' + ("en" === a ? "/en/best-time-to-visit-" + s.slug + ".html" : "/meilleure-periode-" + s.slug + ".html") + '" class="wb-suggest" style="animation-delay:' + 80 * (3 + r) + 'ms;text-decoration:none"><div class="wb-suggest-top"><span class="wb-recent-flag">' + M(s.flag) + '</span><span class="wb-suggest-name">' + G(s.name) + '</span><span class="wb-suggest-reason">' + G(s.reason) + "</span></div>" + (s.score ? '<span class="wb-score" style="font-size:12px;padding:2px 8px;color:' + o(s.score) + ";background:" + l(s.score) + '">' + s.score.toFixed(1) + '/10' + "</span>" : "") + "</a>"
-      }
-      var _months=i.lang==='en'||i.lang==='en-us'?['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']:i.lang==='es'?['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']:i.lang==='de'?['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez']:['jan','fév','mars','avr','mai','juin','juil','août','sep','oct','nov','déc'];var _dynTitle=(i.suggestTitleDynamic||i.suggestTitle)+' '+_months[new Date().getMonth()];e.innerHTML = '<div class="wb-section"><div class="wb-section-head"><span class="wb-section-title">' + _dynTitle + '</span><span class="wb-section-sub">' + i.suggestSub + "</span></div>" + n + "</div>"
-    }
+    if (e) e.innerHTML = '';
   }
 
   function A() {
@@ -762,8 +736,13 @@
           k();
         }
       }).catch(function() {
-        d.geoState = "denied";
-        k();
+        // Fallback: ipapi.co si /api/geo échoue
+        fetch('https://ipapi.co/json/').then(function(r){return r.json();}).then(function(geo){
+          if(geo&&geo.latitude&&geo.longitude&&geo.city){
+            d.geoState='ip';
+            g(geo.latitude,geo.longitude,geo.city,'ip');
+          } else { d.geoState='denied'; k(); }
+        }).catch(function(){ d.geoState='denied'; k(); });
       });
     }(), (t = document.getElementById("wb-ranking-section")) && i.rankingUrl && (t.innerHTML = '<a href="' + i.rankingUrl + '" style="display:block;text-align:center;background:linear-gradient(135deg,var(--gold),var(--gold2));color:white;text-decoration:none;padding:10px 14px;border-radius:var(--r);margin:10px 16px 4px;border:none;font-family:\'DM Sans\',sans-serif;font-size:14px;font-weight:700;">' + i.rankingTitle + "</a>"), fetch("/data/suggestions.json").then(function(e) {
         return e.json()

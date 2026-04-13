@@ -441,7 +441,7 @@ SUB_ORDER = {
 CSS = """
 /* ── Destination Hub ── */
 .dh-search{position:relative;margin-bottom:24px}
-.dh-search input{width:100%;padding:14px 16px 14px 44px;border:1.5px solid #e8e0d0;border-radius:12px;font-size:15px;font-family:inherit;background:#fff;color:#1a1f2e;outline:none;transition:border-color .2s;box-sizing:border-box}
+.dh-search input{width:100%;padding:14px 16px 14px 44px;border:1.5px solid rgba(255,255,255,.12);border-radius:12px;font-size:15px;font-family:inherit;background:#131920;color:rgba(255,255,255,.85);outline:none;transition:border-color .2s;box-sizing:border-box}
 .dh-search input:focus{border-color:#e8940a}
 .dh-search input::placeholder{color:#9ca3af}
 .dh-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ca3af;pointer-events:none;font-size:18px}
@@ -450,19 +450,19 @@ CSS = """
 .dh-count{font-size:12px;color:#7a8fa8;margin:-16px 0 20px 4px;display:none}
 .dh-count.show{display:block}
 
-.dh-acc{border:1.5px solid #e8e0d0;border-radius:14px;margin-bottom:10px;overflow:hidden;background:#fff}
-.dh-acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:#fff;border:none;cursor:pointer;font-family:inherit;text-align:left;gap:12px}
+.dh-acc{border:1.5px solid rgba(255,255,255,.08);border-radius:14px;margin-bottom:10px;overflow:hidden;background:#131920}
+.dh-acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:#131920;border:none;cursor:pointer;font-family:inherit;text-align:left;gap:12px;color:rgba(255,255,255,.85)}
 .dh-acc-head:hover{background:#faf8f3}
-.dh-acc-label{font-size:16px;font-weight:700;color:#1a1f2e}
+.dh-acc-label{font-size:16px;font-weight:700;color:rgba(255,255,255,.9)}
 .dh-acc-meta{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.dh-acc-count{font-size:12px;color:#7a8fa8;background:#f0ebe0;border-radius:20px;padding:2px 10px;font-weight:600}
+.dh-acc-count{font-size:12px;color:#7a8fa8;background:rgba(255,255,255,.1);border-radius:20px;padding:2px 10px;font-weight:600;color:rgba(255,255,255,.6)}
 .dh-acc-chev{font-size:14px;color:#9ca3af;transition:transform .25s}
 .dh-acc.open>.dh-acc-head .dh-acc-chev{transform:rotate(180deg)}
 .dh-acc-body{display:none;padding:0 18px 14px}
 .dh-acc.open>.dh-acc-body{display:block}
 
-.dh-sub{border:1px solid #f0ebe0;border-radius:10px;margin-bottom:8px;overflow:hidden;background:#faf8f3}
-.dh-sub-head{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#faf8f3;border:none;cursor:pointer;font-family:inherit;text-align:left;gap:10px}
+.dh-sub{border:1px solid rgba(255,255,255,.06);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#0d1117}
+.dh-sub-head{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#0d1117;border:none;cursor:pointer;font-family:inherit;text-align:left;gap:10px;color:rgba(255,255,255,.7)}
 .dh-sub-head:hover{background:#f5f0e5}
 .dh-sub-label{font-size:13px;font-weight:700;color:#4a5568}
 .dh-sub-count{font-size:11px;color:#9ca3af;font-weight:600}
@@ -472,10 +472,10 @@ CSS = """
 .dh-sub.open>.dh-sub-body{display:block}
 
 .dh-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:8px}
-.dh-card{background:#fff;border-radius:10px;padding:10px 12px;text-decoration:none;border:1px solid #e8e0d0;display:flex;align-items:center;gap:9px;transition:border-color .15s,box-shadow .15s}
+.dh-card{background:#1a2230;border-radius:10px;padding:10px 12px;text-decoration:none;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:9px;transition:border-color .15s,box-shadow .15s}
 .dh-card:hover{border-color:#e8940a;box-shadow:0 2px 8px rgba(232,148,10,.12)}
 .dh-card img{flex-shrink:0}
-.dh-card-name{font-size:12px;font-weight:700;color:#1a1f2e;display:block;line-height:1.3}
+.dh-card-name{font-size:12px;font-weight:700;color:rgba(255,255,255,.85);display:block;line-height:1.3}
 .dh-card-sub{font-size:10px;color:#7a8fa8}
 .dh-card.dh-hidden{display:none}
 .dh-no-results{display:none;text-align:center;padding:32px 16px;color:#7a8fa8;font-size:14px}
@@ -914,7 +914,7 @@ def inject(filepath, destinations, loc):
     new_silo = f"""<!-- SILO 1 : MEILLEURE PERIODE - dominant -->
  <div style="margin-bottom:52px">
   <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px">
-   <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#1a1f2e;margin:0">&#127758; {title}</p>
+   <p style="font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.9);margin:0">🌍 {title}</p>
    <div style="flex:1;height:2px;background:linear-gradient(90deg,#e8940a,#e8e0d0)"></div>
   </div>
 {hub}
@@ -953,11 +953,11 @@ from lib.page_config import load_locale, SUPPORTED_LANGS
 
 
 LANG_CONFIG = {
-    'fr':    {'output': 'index.html',   'i18n': 'js/i18n-fr.min.js?v=11',         'flatpickr_locale': 'fr'},
-    'en':    {'output': 'en/app.html',  'i18n': '../js/i18n-en.min.js?v=11',       'flatpickr_locale': None},
-    'en-us': {'output': 'us/app.html',  'i18n': '../js/i18n-en-us.min.js?v=11',    'flatpickr_locale': None},
-    'es':    {'output': 'es/app.html',  'i18n': '../js/i18n-es.min.js?v=11',       'flatpickr_locale': 'es'},
-    'de':    {'output': 'de/app.html',  'i18n': '../js/i18n-de.min.js?v=11',       'flatpickr_locale': 'de'},
+    'fr':    {'output': 'index.html',   'i18n': 'js/i18n-fr.min.js?v=12',         'flatpickr_locale': 'fr'},
+    'en':    {'output': 'en/app.html',  'i18n': '../js/i18n-en.min.js?v=12',       'flatpickr_locale': None},
+    'en-us': {'output': 'us/app.html',  'i18n': '../js/i18n-en-us.min.js?v=12',    'flatpickr_locale': None},
+    'es':    {'output': 'es/app.html',  'i18n': '../js/i18n-es.min.js?v=12',       'flatpickr_locale': 'es'},
+    'de':    {'output': 'de/app.html',  'i18n': '../js/i18n-de.min.js?v=12',       'flatpickr_locale': 'de'},
 }
 
 FLATPICKR_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13'
@@ -1059,6 +1059,15 @@ def generate_from_template(lang, loc):
         '{{UI_HINT_HIST}}':        meta.get('UI_HINT_HIST', '10-year trend'),
         '{{UI_ANN_BTN}}':          meta.get('UI_ANN_BTN', 'See the year'),
         '{{UI_ANN_SUBTITLE}}':     meta.get('UI_ANN_SUBTITLE', 'Monthly climate profile · 10-year average'),
+        # Hero section i18n
+        '{{HERO_KICKER}}':         meta.get('HERO_KICKER', 'Weather for your projects'),
+        '{{HERO_H1}}':             meta.get('HERO_H1', 'What weather <em>for your trip?</em>'),
+        '{{HERO_SUB}}':            meta.get('HERO_SUB', 'Climate scores /10 · 697 destinations · up to 1 year ahead · 10 years of ERA5 data'),
+        '{{USP_HORIZON}}':         meta.get('USP_HORIZON', '1 year ahead'),
+        # Dynamic sections — calculées à la génération
+        '{{TOP_MONTHLY_SECTION}}': build_top_monthly(lang, loc),
+        '{{RANKINGS_SECTION}}':    build_rankings_section(lang, loc),
+        '{{TRUST_BAR}}':           '',
     }
 
     for placeholder, value in replacements.items():
@@ -1075,6 +1084,339 @@ def generate_from_template(lang, loc):
     open(output, 'w', encoding='utf-8').write(content)
     return True
 
+
+
+# ══════════════════════════════════════════
+# HOMEPAGE SECTIONS — génération statique
+# ══════════════════════════════════════════
+
+import csv as _csv
+import datetime as _dt
+
+def _hero_gradient_home(tmax, tropical, rain_pct, idx=0):
+    """Gradient contextuel selon profil climatique + variante visuelle."""
+    hot_variants = [
+        'linear-gradient(135deg,#c2410c 0%,#ea580c 30%,#f59e0b 65%,#fbbf24 100%)',
+        'linear-gradient(135deg,#7c2d12 0%,#c2410c 35%,#f97316 70%,#fb923c 100%)',
+        'linear-gradient(135deg,#854d0e 0%,#d97706 40%,#fcd34d 80%,#fef3c7 100%)',
+        'linear-gradient(135deg,#991b1b 0%,#dc2626 35%,#f97316 70%,#fbbf24 100%)',
+        'linear-gradient(135deg,#78350f 0%,#b45309 40%,#f59e0b 80%,#fde68a 100%)',
+        'linear-gradient(135deg,#1e3a5f 0%,#1d4ed8 40%,#3b82f6 75%,#93c5fd 100%)',
+    ]
+    if tropical and rain_pct < 55:
+        return 'linear-gradient(135deg,#14532d 0%,#15803d 35%,#4ade80 75%,#86efac 100%)'
+    if tmax >= 26 and rain_pct < 20:
+        return hot_variants[idx % len(hot_variants)]
+    if tmax >= 20 and rain_pct < 40:
+        return 'linear-gradient(135deg,#854d0e 0%,#ca8a04 40%,#fbbf24 80%,#fef08a 100%)'
+    if tmax <= 10:
+        return 'linear-gradient(135deg,#0c4a6e 0%,#0369a1 40%,#38bdf8 80%,#7dd3fc 100%)'
+    if rain_pct >= 60:
+        return 'linear-gradient(135deg,#44403c 0%,#78716c 40%,#a8a29e 80%,#d6d3d1 100%)'
+    return 'linear-gradient(135deg,#1e3a5f 0%,#2563eb 40%,#60a5fa 80%,#bae6fd 100%)'
+
+
+def build_top_monthly(lang, loc):
+    """Calcule le top 6 destinations du mois courant et retourne le HTML."""
+    import os
+    mi = _dt.date.today().month
+    months_names = loc.get('months', ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'])
+    month_name = months_names[mi - 1] if mi <= len(months_names) else str(mi)
+
+    # Labels i18n
+    section_title = {
+        'fr': f'Meilleurs scores · {month_name}',
+        'en': f'Best scores · {month_name}',
+        'en-us': f'Best scores · {month_name}',
+        'es': f'Mejores puntuaciones · {month_name}',
+        'de': f'Beste Bewertungen · {month_name}',
+    }.get(lang, f'Best scores · {month_name}')
+
+    ranking_link_lbl = {
+        'fr': 'Voir le classement →',
+        'en': 'See ranking →',
+        'en-us': 'See ranking →',
+        'es': 'Ver clasificación →',
+        'de': 'Rangliste →',
+    }.get(lang, 'See ranking →')
+
+    # Lien vers page pilier mensuelle dynamique
+    _mois_url = {1:'janvier',2:'fevrier',3:'mars',4:'avril',5:'mai',6:'juin',
+                 7:'juillet',8:'aout',9:'septembre',10:'octobre',11:'novembre',12:'decembre'}
+    _en_url   = {1:'january',2:'february',3:'march',4:'april',5:'may',6:'june',
+                 7:'july',8:'august',9:'september',10:'october',11:'november',12:'december'}
+    _es_url   = {1:'enero',2:'febrero',3:'marzo',4:'abril',5:'mayo',6:'junio',
+                 7:'julio',8:'agosto',9:'septiembre',10:'octubre',11:'noviembre',12:'diciembre'}
+    _de_url   = {1:'januar',2:'februar',3:'maerz',4:'april',5:'mai',6:'juni',
+                 7:'juli',8:'august',9:'september',10:'oktober',11:'november',12:'dezember'}
+    _ranking_pages = {
+        'fr':    f'ou-partir-en-{_mois_url[mi]}.html',
+        'en':    f'../en/where-to-go-in-{_en_url[mi]}.html',
+        'en-us': f'../us/where-to-go-in-{_en_url[mi]}.html',
+        'es':    f'../es/donde-ir-en-{_es_url[mi]}.html',
+        'de':    f'../de/wohin-im-{_de_url[mi]}.html',
+    }
+    ranking_url = _ranking_pages.get(lang, f'ou-partir-en-{_mois_url[mi]}.html')
+
+    asset_prefix = loc['meta'].get('asset_prefix', '')
+    subdir = loc['meta'].get('subdir', '')
+
+    # Charger les données
+    climate_month = {}
+    climate_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'climate.csv')
+    dest_path    = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'destinations.csv')
+
+    try:
+        with open(climate_path) as f:
+            for row in _csv.DictReader(f):
+                if int(row.get('mois_num', 0)) == mi:
+                    climate_month[row['slug']] = row
+        dest_info = {}
+        with open(dest_path) as f:
+            for row in _csv.DictReader(f):
+                dest_info[row['slug_fr']] = row
+        photo_db = {}
+        photos_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'destination_photos.csv')
+        with open(photos_path) as f:
+            for row in _csv.DictReader(f):
+                if row.get('photo_url','').strip():
+                    photo_db[row['slug_fr']] = row['photo_url'].strip()
+    except Exception as e:
+        print(f'  ⚠️  build_top_monthly: {e}')
+        return ''
+
+    # Nom selon langue
+    nom_key = {'fr':'nom_fr','en':'nom_en','en-us':'nom_en','es':'nom_es','de':'nom_de'}.get(lang, 'nom_en')
+    slug_key = {'fr':'slug_fr','en':'slug_en','en-us':'slug_en','es':'slug_es','de':'slug_de'}.get(lang, 'slug_en')
+    url_prefix = {
+        'fr': 'meilleure-periode-',
+        'en': '../en/best-time-to-visit-',
+        'en-us': '../us/best-time-to-visit-',
+        'es': '../es/mejor-epoca-',
+        'de': '../de/beste-reisezeit-',
+    }.get(lang, 'meilleure-periode-')
+
+    # Calculer top 6
+    scored = []
+    for slug, row in climate_month.items():
+        if row.get('classe') == 'rec' and slug in dest_info:
+            d = dest_info[slug]
+            try:
+                tmax  = float(row.get('tmax') or 0)
+                rain  = float(row.get('rain_pct') or 0)
+                sun   = float(row.get('sun_h') or 0)
+                score = float(row.get('score') or 0)
+                trop  = d.get('tropical', '') in ('True','true','1')
+                slug_dest = d.get(slug_key, slug)
+                nom = d.get(nom_key) or d.get('nom_fr', slug)
+                if slug_dest:
+                    raw_url = photo_db.get(slug, '')
+                    import re as _re2
+                    photo_url = (_re2.sub(r'\?.*$', '', raw_url) + '?w=400&q=80&fm=jpg&fit=crop&crop=entropy') if raw_url else ''
+                    scored.append({
+                        'nom': nom,
+                        'slug_dest': slug_dest,
+                        'score': score,
+                        'tmax': round(tmax),
+                        'rain': round(rain),
+                        'sun': round(sun),
+                        'tropical': trop,
+                        'gradient': _hero_gradient_home(tmax, trop, rain, len(scored)),
+                        'photo_url': photo_url,
+                        'idx': len(scored),
+                        'url': url_prefix + slug_dest + '.html',
+                    })
+            except: pass
+
+    scored.sort(key=lambda x: -x['score'])
+    top6 = scored[:6]
+    if not top6:
+        return ''
+
+    # Construire HTML
+    cards_html = ''
+    for i, d in enumerate(top6):
+        sun_str = f"{d['sun']}h"
+        rain_str = f"{d['rain']}%"
+        score_str = f"{d['score']:.1f}"
+        gradient = _hero_gradient_home(d['tmax'], d['tropical'], d['rain'], i)
+        _pu = d.get('photo_url', '')
+        _bg = ('linear-gradient(to top,rgba(0,0,0,.65) 0%,rgba(0,0,0,.1) 60%,transparent 100%),url(' + _pu + ') center/cover no-repeat') if _pu else gradient
+        cards_html += (
+            f'<a class="top-card" href="{d["url"]}">'
+            f'<div class="top-card-img" style="background:{_bg}">'
+            f'<div class="top-card-score">{score_str}</div>'
+            f'<div><div class="top-card-name">{d["nom"]}</div>'
+            f'<div class="top-card-month">{month_name}</div></div>'
+            f'</div>'
+            f'<div class="top-card-foot">'
+            f'<span class="top-card-stat">☀️ {sun_str}</span>'
+            f'<span class="top-card-stat">💧 {rain_str}</span>'
+            f'</div>'
+            f'</a>'
+        )
+
+    return (
+        f'<div class="home-divider"></div>'
+        f'<div class="home-section">'
+        f'<div class="home-section-head">'
+        f'<div class="home-section-title">{section_title}</div>'
+        f'<a class="home-section-link" href="{ranking_url}">{ranking_link_lbl}</a>'
+        f'</div>'
+        f'<div class="top-cards">{cards_html}</div>'
+        f'</div>'
+    )
+
+
+def build_rankings_section(lang, loc):
+    """4 sections horizontales photo-scroll (top mondial, plage, été, europe)."""
+    import os, re as _re3
+
+    asset_prefix = loc['meta'].get('asset_prefix', '')
+    nom_key  = {'fr':'nom_fr','en':'nom_en','en-us':'nom_en','es':'nom_es','de':'nom_de'}.get(lang,'nom_en')
+    slug_key = {'fr':'slug_fr','en':'slug_en','en-us':'slug_en','es':'slug_es','de':'slug_de'}.get(lang,'slug_en')
+    url_pfx  = {'fr':'meilleure-periode-','en':'../en/best-time-to-visit-','en-us':'../us/best-time-to-visit-',
+                'es':'../es/mejor-epoca-','de':'../de/beste-reisezeit-'}.get(lang,'meilleure-periode-')
+    link_lbl = {'fr':'Voir le classement →','en':'See ranking →','en-us':'See ranking →',
+                'es':'Ver clasificación →','de':'Rangliste →'}.get(lang,'See ranking →')
+
+    # Charger données
+    climate_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'climate.csv')
+    dest_path    = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'destinations.csv')
+    photos_path  = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'destination_photos.csv')
+    try:
+        import csv as _c2
+        climate_all = {}
+        with open(climate_path) as f:
+            for r in _c2.DictReader(f):
+                s = r['slug']; m = int(r.get('mois_num',0))
+                if s not in climate_all: climate_all[s] = {}
+                climate_all[s][m] = r
+        dest_info = {}
+        with open(dest_path) as f:
+            for r in _c2.DictReader(f): dest_info[r['slug_fr']] = r
+        photo_db = {}
+        with open(photos_path) as f:
+            for r in _c2.DictReader(f):
+                if r.get('photo_url','').strip(): photo_db[r['slug_fr']] = r['photo_url'].strip()
+    except Exception as e:
+        return ''
+
+    EUROPE = {'Albanie','Allemagne','Andorre','Autriche','Belgique','Bosnie','Bulgarie','Chypre','Croatie',
+              'Danemark','Espagne','Estonie','Finlande','France','Grèce','Hongrie','Irlande','Islande',
+              'Italie','Kosovo','Lettonie','Lituanie','Luxembourg','Macédoine','Malte','Moldavie',
+              'Monaco','Monténégro','Norvège','Pays-Bas','Pologne','Portugal','Roumanie','Serbie',
+              'Slovaquie','Slovénie','Suède','Suisse','Tchéquie','Turquie','Ukraine','Royaume-Uni'}
+    COASTAL = {'True','true','1'}
+
+    def _avg_score(slug):
+        ms = climate_all.get(slug, {})
+        if len(ms) < 12: return 0
+        return sum(float(ms[m].get('score',0)) for m in range(1,13)) / 12
+
+    def _summer_score(slug):
+        ms = climate_all.get(slug, {})
+        if not all(m in ms for m in [6,7,8]): return 0
+        return sum(float(ms[m].get('score',0)) for m in [6,7,8]) / 3
+
+    def _beach_score(slug):
+        ms = climate_all.get(slug, {})
+        if len(ms) < 12: return 0
+        d = dest_info.get(slug, {})
+        if d.get('coastal','') not in COASTAL: return 0
+        return sum(float(ms[m].get('score',0)) for m in range(1,13)) / 12
+
+    def _top(scorer, n=6, europe_only=False):
+        results = []
+        for slug, d in dest_info.items():
+            if d.get('precision') == 'country': continue
+            if europe_only and d.get('pays','') not in EUROPE: continue
+            sc = scorer(slug)
+            if sc <= 0: continue
+            sk = d.get(slug_key, slug)
+            nm = d.get(nom_key) or d.get('nom_fr', slug)
+            pu = photo_db.get(slug, '')
+            if pu: pu = _re3.sub(r'\?.*$', '', pu) + '?w=400&q=80&fm=jpg&fit=crop&crop=entropy'
+            if sk: results.append({'nom':nm,'slug_dest':sk,'score':sc,'photo_url':pu,
+                                   'url':url_pfx+sk+'.html'})
+        results.sort(key=lambda x: -x['score'])
+        return results[:n]
+
+    def _cards_html(items):
+        html = ''
+        for d in items:
+            pu = d.get('photo_url','')
+            if pu:
+                bg = f'linear-gradient(to top,rgba(0,0,0,.65) 0%,rgba(0,0,0,.1) 60%,transparent 100%),url({pu}) center/cover no-repeat'
+            else:
+                bg = 'linear-gradient(135deg,#1a2a3a,#243448)'
+            html += (
+                f'<a class="top-card" href="{d["url"]}">'
+                f'<div class="top-card-img" style="background:{bg}">'
+                f'<div class="top-card-score">{d["score"]:.1f}</div>'
+                f'<div><div class="top-card-name">{d["nom"]}</div></div>'
+                f'</div>'
+                f'<div class="top-card-foot">'
+                f'<span class="top-card-stat">⭐ {d["score"]:.1f}/10</span>'
+                f'</div>'
+                f'</a>'
+            )
+        return html
+
+    sections_cfg = {
+        'fr': [
+            ('🏆 Top mondial', 'classement-destinations-meteo-2026.html', _top(_avg_score)),
+            ('🏖️ Plage & baignade', 'classement-destinations-plage-2026.html', _top(_beach_score)),
+            ('☀️ Destinations été', 'classement-destinations-meteo-ete-2026.html', _top(_summer_score)),
+            ('🌍 Europe', 'classement-destinations-europe-meteo-2026.html', _top(_avg_score, europe_only=True)),
+        ],
+        'en': [
+            ('🏆 Global top', '../en/best-destinations-weather-ranking-2026.html', _top(_avg_score)),
+            ('🏖️ Beach', '../en/best-beach-destinations-weather-2026.html', _top(_beach_score)),
+            ('☀️ Summer', '../en/best-destinations-summer-weather-2026.html', _top(_summer_score)),
+            ('🌍 Europe', '../en/best-europe-weather-ranking-2026.html', _top(_avg_score, europe_only=True)),
+        ],
+    }
+    sections_cfg['en-us'] = [(t, u.replace('../en/',  '../us/'), d) for t,u,d in sections_cfg['en']]
+    sections_cfg['es']    = sections_cfg.get('es', sections_cfg['en'])
+    sections_cfg['de']    = sections_cfg.get('de', sections_cfg['en'])
+
+    sections = sections_cfg.get(lang, sections_cfg['en'])
+    html = ''
+    for title, url, items in sections:
+        if not items: continue
+        html += (
+            f'<div class="home-divider"></div>'
+            f'<div class="home-section">'
+            f'<div class="home-section-head">'
+            f'<div class="home-section-title">{title}</div>'
+            f'<a class="home-section-link" href="{url}">{link_lbl}</a>'
+            f'</div>'
+            f'<div class="top-cards">{_cards_html(items)}</div>'
+            f'</div>'
+        )
+    return html
+
+
+def build_trust_bar(lang):
+    """Génère la trust bar avec les chiffres clés."""
+    labels = {
+        'fr': ('destinations', '10 ans données ERA5', "1 an à l'avance", 'langues'),
+        'en': ('destinations', '10 yrs ERA5 data', '1 year ahead', 'languages'),
+        'en-us': ('destinations', '10 yrs ERA5 data', '1 year ahead', 'languages'),
+        'es': ('destinos', '10 años datos ERA5', '1 año de antelación', 'idiomas'),
+        'de': ('Destinationen', '10 J. ERA5 Daten', '1 Jahr im Voraus', 'Sprachen'),
+    }.get(lang, ('destinations', '10 yrs ERA5', '1 year ahead', 'languages'))
+
+    return (
+        f'<div class="home-divider"></div>'
+        f'<div class="trust-bar">'
+        f'<div class="trust-item"><div class="trust-n">697</div><div class="trust-l">{labels[0]}</div></div>'
+        f'<div class="trust-item"><div class="trust-n">10 ans</div><div class="trust-l">{labels[1]}</div></div>'
+        f'<div class="trust-item"><div class="trust-n">1 an</div><div class="trust-l">{labels[2]}</div></div>'
+        f'<div class="trust-item"><div class="trust-n">5</div><div class="trust-l">{labels[3]}</div></div>'
+        f'</div>'
+    )
 
 def build_hub_footer(current_lang, current_loc):
     """Generate the lang-switcher div for a hub page footer.
@@ -1105,13 +1447,19 @@ def build_hub_footer(current_lang, current_loc):
         # Valeur du cookie selon la langue cible
         cookie_val = 'en-us' if lang == 'en-us' else ('fr' if lang == 'fr' else lang)
         links.append(
-            f'<a href="{href}" onclick="document.cookie='bdw_lang={cookie_val};path=/;max-age=31536000'" style="color:inherit;text-decoration:none">' 
+            f'<a href="{href}" onclick="document.cookie=\'bdw_lang={cookie_val};path=/;max-age=31536000\'" style="color:inherit;text-decoration:none">'
             f'<img src="{flag_src}" width="20" height="15" alt="" '
             f'style="vertical-align:middle;border-radius:2px"> {label}</a>'
         )
 
-    sep = ' &nbsp;·&nbsp; '
-    return sep.join(links)
+    parts = []
+    for i, link in enumerate(links):
+        if i == 0:
+            parts.append(f'<span style="white-space:nowrap">{link}</span>')
+        else:
+            parts.append('<span style="white-space:nowrap;opacity:.4">·</span>')
+            parts.append(f'<span style="white-space:nowrap">{link}</span>')
+    return ''.join(parts)
 
 
 def inject_hub_footer(filepath, current_lang, current_loc):
