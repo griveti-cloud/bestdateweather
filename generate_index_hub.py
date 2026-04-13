@@ -1269,56 +1269,133 @@ def build_top_monthly(lang, loc):
 
 
 def build_rankings_section(lang, loc):
-    """Génère la section classements par usage."""
-    titles = {
-        'fr': ('Classements par usage', 'Tous les classements →'),
-        'en': ('Rankings by use case', 'All rankings →'),
-        'en-us': ('Rankings by use case', 'All rankings →'),
-        'es': ('Clasificaciones por uso', 'Todas las clasificaciones →'),
-        'de': ('Ranglisten nach Verwendung', 'Alle Ranglisten →'),
-    }.get(lang, ('Rankings', 'See all →'))
+    """4 sections horizontales photo-scroll (top mondial, plage, été, europe)."""
+    import os, re as _re3
 
-    cards_data = {
+    asset_prefix = loc['meta'].get('asset_prefix', '')
+    nom_key  = {'fr':'nom_fr','en':'nom_en','en-us':'nom_en','es':'nom_es','de':'nom_de'}.get(lang,'nom_en')
+    slug_key = {'fr':'slug_fr','en':'slug_en','en-us':'slug_en','es':'slug_es','de':'slug_de'}.get(lang,'slug_en')
+    url_pfx  = {'fr':'meilleure-periode-','en':'../en/best-time-to-visit-','en-us':'../us/best-time-to-visit-',
+                'es':'../es/mejor-epoca-','de':'../de/beste-reisezeit-'}.get(lang,'meilleure-periode-')
+    link_lbl = {'fr':'Voir le classement →','en':'See ranking →','en-us':'See ranking →',
+                'es':'Ver clasificación →','de':'Rangliste →'}.get(lang,'See ranking →')
+
+    # Charger données
+    climate_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'climate.csv')
+    dest_path    = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'destinations.csv')
+    photos_path  = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'destination_photos.csv')
+    try:
+        import csv as _c2
+        climate_all = {}
+        with open(climate_path) as f:
+            for r in _c2.DictReader(f):
+                s = r['slug']; m = int(r.get('mois_num',0))
+                if s not in climate_all: climate_all[s] = {}
+                climate_all[s][m] = r
+        dest_info = {}
+        with open(dest_path) as f:
+            for r in _c2.DictReader(f): dest_info[r['slug_fr']] = r
+        photo_db = {}
+        with open(photos_path) as f:
+            for r in _c2.DictReader(f):
+                if r.get('photo_url','').strip(): photo_db[r['slug_fr']] = r['photo_url'].strip()
+    except Exception as e:
+        return ''
+
+    EUROPE = {'Albanie','Allemagne','Andorre','Autriche','Belgique','Bosnie','Bulgarie','Chypre','Croatie',
+              'Danemark','Espagne','Estonie','Finlande','France','Grèce','Hongrie','Irlande','Islande',
+              'Italie','Kosovo','Lettonie','Lituanie','Luxembourg','Macédoine','Malte','Moldavie',
+              'Monaco','Monténégro','Norvège','Pays-Bas','Pologne','Portugal','Roumanie','Serbie',
+              'Slovaquie','Slovénie','Suède','Suisse','Tchéquie','Turquie','Ukraine','Royaume-Uni'}
+    COASTAL = {'True','true','1'}
+
+    def _avg_score(slug):
+        ms = climate_all.get(slug, {})
+        if len(ms) < 12: return 0
+        return sum(float(ms[m].get('score',0)) for m in range(1,13)) / 12
+
+    def _summer_score(slug):
+        ms = climate_all.get(slug, {})
+        if not all(m in ms for m in [6,7,8]): return 0
+        return sum(float(ms[m].get('score',0)) for m in [6,7,8]) / 3
+
+    def _beach_score(slug):
+        ms = climate_all.get(slug, {})
+        if len(ms) < 12: return 0
+        d = dest_info.get(slug, {})
+        if d.get('coastal','') not in COASTAL: return 0
+        return sum(float(ms[m].get('score',0)) for m in range(1,13)) / 12
+
+    def _top(scorer, n=6, europe_only=False):
+        results = []
+        for slug, d in dest_info.items():
+            if d.get('precision') == 'country': continue
+            if europe_only and d.get('pays','') not in EUROPE: continue
+            sc = scorer(slug)
+            if sc <= 0: continue
+            sk = d.get(slug_key, slug)
+            nm = d.get(nom_key) or d.get('nom_fr', slug)
+            pu = photo_db.get(slug, '')
+            if pu: pu = _re3.sub(r'\?.*$', '', pu) + '?w=400&q=80&fm=jpg&fit=crop&crop=entropy'
+            if sk: results.append({'nom':nm,'slug_dest':sk,'score':sc,'photo_url':pu,
+                                   'url':url_pfx+sk+'.html'})
+        results.sort(key=lambda x: -x['score'])
+        return results[:n]
+
+    def _cards_html(items):
+        html = ''
+        for d in items:
+            pu = d.get('photo_url','')
+            if pu:
+                bg = f'linear-gradient(to top,rgba(0,0,0,.65) 0%,rgba(0,0,0,.1) 60%,transparent 100%),url({pu}) center/cover no-repeat'
+            else:
+                bg = 'linear-gradient(135deg,#1a2a3a,#243448)'
+            html += (
+                f'<a class="top-card" href="{d["url"]}">'
+                f'<div class="top-card-img" style="background:{bg}">'
+                f'<div class="top-card-score">{d["score"]:.1f}</div>'
+                f'<div><div class="top-card-name">{d["nom"]}</div></div>'
+                f'</div>'
+                f'<div class="top-card-foot">'
+                f'<span class="top-card-stat">⭐ {d["score"]:.1f}/10</span>'
+                f'</div>'
+                f'</a>'
+            )
+        return html
+
+    sections_cfg = {
         'fr': [
-            ('🏆', 'Top mondial', 'Meilleurs scores toutes destinations', 'classement-destinations-meteo-2026.html'),
-            ('🏖️', 'Plage & baignade', 'Mer chaude · soleil · peu de pluie', 'classement-destinations-plage-2026.html'),
-            ('☀️', 'Destinations été', 'Soleil · chaleur · longues journées', 'classement-destinations-meteo-ete-2026.html'),
-            ('🌍', 'Europe', 'Meilleures destinations européennes', 'classement-destinations-europe-meteo-2026.html'),
+            ('🏆 Top mondial', 'classement-destinations-meteo-2026.html', _top(_avg_score)),
+            ('🏖️ Plage & baignade', 'classement-destinations-plage-2026.html', _top(_beach_score)),
+            ('☀️ Destinations été', 'classement-destinations-meteo-ete-2026.html', _top(_summer_score)),
+            ('🌍 Europe', 'classement-destinations-europe-meteo-2026.html', _top(_avg_score, europe_only=True)),
         ],
         'en': [
-            ('🏆', 'Global top', 'Best scores across all destinations', '../en/best-destinations-weather-ranking-2026.html'),
-            ('🏖️', 'Beach & swimming', 'Warm sea · sunshine · little rain', '../en/best-beach-destinations-weather-2026.html'),
-            ('☀️', 'Summer destinations', 'Sun · heat · long days', '../en/best-destinations-summer-weather-2026.html'),
-            ('🌍', 'Europe', 'Best European destinations', '../en/best-europe-weather-ranking-2026.html'),
+            ('🏆 Global top', '../en/best-destinations-weather-ranking-2026.html', _top(_avg_score)),
+            ('🏖️ Beach', '../en/best-beach-destinations-weather-2026.html', _top(_beach_score)),
+            ('☀️ Summer', '../en/best-destinations-summer-weather-2026.html', _top(_summer_score)),
+            ('🌍 Europe', '../en/best-europe-weather-ranking-2026.html', _top(_avg_score, europe_only=True)),
         ],
     }
-    cards_data['en-us'] = cards_data['en']
-    cards_data['es'] = cards_data.get('es', cards_data['en'])
-    cards_data['de'] = cards_data.get('de', cards_data['en'])
+    sections_cfg['en-us'] = [(t, u.replace('../en/',  '../us/'), d) for t,u,d in sections_cfg['en']]
+    sections_cfg['es']    = sections_cfg.get('es', sections_cfg['en'])
+    sections_cfg['de']    = sections_cfg.get('de', sections_cfg['en'])
 
-    cards = cards_data.get(lang, cards_data['en'])
-    arrow_lbl = {'fr':'Voir →','en':'See →','en-us':'See →','es':'Ver →','de':'Sehen →'}.get(lang,'→')
-
-    cards_html = ''
-    for ico, title, sub, url in cards:
-        cards_html += (
-            f'<a class="rank-card-home" href="{url}">'
-            f'<div class="rank-card-ico">{ico}</div>'
-            f'<div class="rank-card-title">{title}</div>'
-            f'<div class="rank-card-sub">{sub}</div>'
-            f'<div class="rank-card-arrow">{arrow_lbl}</div>'
-            f'</a>'
+    sections = sections_cfg.get(lang, sections_cfg['en'])
+    html = ''
+    for title, url, items in sections:
+        if not items: continue
+        html += (
+            f'<div class="home-divider"></div>'
+            f'<div class="home-section">'
+            f'<div class="home-section-head">'
+            f'<div class="home-section-title">{title}</div>'
+            f'<a class="home-section-link" href="{url}">{link_lbl}</a>'
+            f'</div>'
+            f'<div class="top-cards">{_cards_html(items)}</div>'
+            f'</div>'
         )
-
-    return (
-        f'<div class="home-divider"></div>'
-        f'<div class="home-section">'
-        f'<div class="home-section-head">'
-        f'<div class="home-section-title">{titles[0]}</div>'
-        f'</div>'
-        f'<div class="rank-grid-home">{cards_html}</div>'
-        f'</div>'
-    )
+    return html
 
 
 def build_trust_bar(lang):
