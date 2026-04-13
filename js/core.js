@@ -3148,6 +3148,8 @@ document.addEventListener('DOMContentLoaded', function() {
   minDate: 'today',
   maxDate: new Date(new Date().setFullYear(new Date().getFullYear()+1)),
   disableMobile: true,
+  appendTo: document.body,
+  static: false,
   onChange: function(selectedDates, dateStr) {
   var el = document.getElementById('inp-date');
   el.classList.toggle('has-val', selectedDates.length > 0);
