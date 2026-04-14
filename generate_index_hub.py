@@ -1363,17 +1363,65 @@ def build_rankings_section(lang, loc):
             )
         return html
 
+    def _top_nomad(n=12):
+        """Top n destinations par score nomade."""
+        try:
+            from generate_classements import compute_nomad as _cn
+            # Convertir climate_all (mois:dict_row) en format attendu par compute_nomad
+            climate_conv = {}
+            for slug, months in climate_all.items():
+                climate_conv[slug] = {}
+                for m, row in months.items():
+                    climate_conv[slug][m] = {
+                        'score': float(row.get('score') or 0),
+                        'tmax': float(row.get('tmax') or 0),
+                        'tmin': float(row.get('tmin') or 0),
+                        'rain_pct': float(row.get('rain_pct') or 0),
+                        'sun_h': float(row.get('sun_h') or 0),
+                        'beach_score': float(row.get('beach_score') or 0) if row.get('beach_score') else None,
+                        'aqi_mean': float(row.get('aqi_mean') or 0),
+                    }
+            results = _cn(climate_conv, dest_info)
+            top = results[:n]
+            out = []
+            for r in top:
+                slug = r['slug']
+                d = dest_info.get(slug)
+                if not d: continue
+                photo_url = photo_db.get(slug, '').strip()
+                if not photo_url: continue
+                photo_url = _re3.sub(r'\?.*$', '', photo_url) + '?w=300&q=70&fm=webp&fit=crop&crop=entropy'
+                out.append({
+                    'nom_fr': d.get('nom_fr', slug),
+                    'nom_en': d.get('nom_en', slug),
+                    'nom_es': d.get('nom_es', slug),
+                    'nom_de': d.get('nom_de', slug),
+                    'slug_fr': slug,
+                    'slug_en': d.get('slug_en', slug),
+                    'slug_es': d.get('slug_es', slug),
+                    'slug_de': d.get('slug_de', slug),
+                    'score': round(r['nomad_score'], 1),
+                    'photo_url': photo_url,
+                    'url': url_pfx + d.get(slug_key, slug) + '.html',
+                    'nom': d.get(nom_key, d.get('nom_fr', slug)),
+                })
+            return out
+        except Exception as e:
+            print(f'  ⚠️  _top_nomad: {e}')
+            import traceback; traceback.print_exc()
+            return []
+
     sections_cfg = {
         'fr': [
             ('🏆 Top mondial', 'meilleures-destinations-meteo.html', _top(_avg_score)),
             ('🏖️ Plage & baignade', 'meilleures-destinations-meteo.html?mode=beach', _top(_beach_score)),
-            ('☀️ Destinations été', 'meilleures-destinations-meteo.html?mode=meteo', _top(_summer_score)),
+            ('💻 Digital Nomad', 'meilleures-destinations-meteo.html?mode=nomad', _top_nomad()),
             ('🌍 Europe', 'meilleures-destinations-meteo.html?reg=eu', _top(_avg_score, europe_only=True)),
         ],
         'en': [
             ('🏆 Global top', '../en/best-weather-destinations.html', _top(_avg_score)),
             ('🏖️ Beach', '../en/best-weather-destinations.html?mode=beach', _top(_beach_score)),
-            ('☀️ Summer', '../en/best-weather-destinations.html?mode=meteo', _top(_summer_score)),
+            ('💻 Digital Nomad', '../en/best-weather-destinations.html?mode=nomad', _top_nomad()),
             ('🌍 Europe', '../en/best-weather-destinations.html?reg=eu', _top(_avg_score, europe_only=True)),
         ],
     }
