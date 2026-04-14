@@ -1196,10 +1196,10 @@ def build_top_monthly(lang, loc):
         'de': '../de/beste-reisezeit-',
     }.get(lang, 'meilleure-periode-')
 
-    # Calculer top 6
+    # Calculer top 13
     scored = []
     for slug, row in climate_month.items():
-        if row.get('classe') == 'rec' and slug in dest_info:
+        if slug in dest_info and float(row.get('score') or 0) >= 7.5:
             d = dest_info[slug]
             try:
                 tmax  = float(row.get('tmax') or 0)
@@ -1229,7 +1229,7 @@ def build_top_monthly(lang, loc):
             except: pass
 
     scored.sort(key=lambda x: -x['score'])
-    top6 = scored[:6]
+    top6 = scored[:13]
     if not top6:
         return ''
 
