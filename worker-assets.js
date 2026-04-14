@@ -2,6 +2,13 @@ const FR_MONTHS = 'janvier|fevrier|mars|avril|mai|juin|juillet|aout|septembre|oc
 const EN_MONTHS = 'january|february|march|april|may|june|july|august|september|october|november|december';
 const PATTERN_FR = new RegExp(`^/meilleure-periode-(.+)-en-(${FR_MONTHS})\\.html$`);
 const PATTERN_EN = new RegExp(`^/en/best-time-to-visit-(.+)-in-(${EN_MONTHS})\\.html$`);
+// Old annual pages at root → /en/
+const PATTERN_ANNUAL_ROOT = /^\/best-time-to-visit-(.+)\.html$/;
+// Old monthly pages with English months in FR slugs
+const EN_TO_FR_MONTH = {january:'janvier',february:'fevrier',march:'mars',april:'avril',may:'mai',june:'juin',july:'juillet',august:'aout',september:'septembre',october:'octobre',november:'novembre',december:'decembre'};
+const PATTERN_FR_EN_MONTH = new RegExp(`^/([a-z0-9-]+)-meteo-(january|february|march|april|may|june|july|august|september|october|november|december)\.html$`);
+// Old /us/best-time-to-visit-X-in-MONTH.html (without subdirectory check already handled for en)
+const PATTERN_US = new RegExp(`^/us/best-time-to-visit-(.+)-in-(${EN_MONTHS})\\.html$`);
 
 async function handleSubscribe(request, env) {
   const headers = {
@@ -144,6 +151,40 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
 
     const mEN = path.match(PATTERN_EN);
     if (mEN) return Response.redirect(`${url.origin}/en/${mEN[1]}-weather-${mEN[2]}.html`, 301);
+
+    // Old annual root pages → /en/
+    const mAnnRoot = path.match(PATTERN_ANNUAL_ROOT);
+    if (mAnnRoot) return Response.redirect(`${url.origin}/en/best-time-to-visit-${mAnnRoot[1]}.html`, 301);
+
+    // FR slug with English month → correct FR month
+    const mFREnMonth = path.match(PATTERN_FR_EN_MONTH);
+    if (mFREnMonth) return Response.redirect(`${url.origin}/${mFREnMonth[1]}-meteo-${EN_TO_FR_MONTH[mFREnMonth[2]]}.html`, 301);
+
+    // /us/best-time-to-visit-X-in-MONTH → /us/X-weather-MONTH
+    const mUS = path.match(PATTERN_US);
+    if (mUS) return Response.redirect(`${url.origin}/us/${mUS[1]}-weather-${mUS[2]}.html`, 301);
+
+    // Double subdirectory /us/us/ → /us/
+    if (path.startsWith('/us/us/')) return Response.redirect(`${url.origin}${path.replace('/us/us/', '/us/')}`, 301);
+
+    // Mariage/wedding pages → homepage
+    if (path.includes('mariage') || path.includes('wedding')) return Response.redirect(`${url.origin}/`, 301);
+
+    // /en/index.html → /en/app.html
+    if (path === '/en/index.html') return Response.redirect(`${url.origin}/en/app.html`, 301);
+
+    // Old pages renamed
+    if (path === '/methodology.html') return Response.redirect(`${url.origin}/methodologie.html`, 301);
+    if (path === '/privacy.html') return Response.redirect(`${url.origin}/confidentialite.html`, 301);
+    if (path === '/legal.html') return Response.redirect(`${url.origin}/mentions-legales.html`, 301);
+    if (path === '/destinations.html') return Response.redirect(`${url.origin}/`, 301);
+    if (path === '/methodik.html') return Response.redirect(`${url.origin}/de/app.html`, 301);
+
+    // amalfi-coast slugs → amalfi-coast EN page (not in FR)
+    if (path.startsWith('/amalfi-coast-meteo-')) {
+      const m = path.match(/^\/amalfi-coast-meteo-([a-z]+)\.html$/);
+      if (m) { const fr = EN_TO_FR_MONTH[m[1]] || m[1]; return Response.redirect(`${url.origin}/amalfi-meteo-${fr}.html`, 301); }
+    }
 
     // ── Proxy /data/monthly.json depuis GitHub (hors limite 20k assets CF) ──
     if (path === '/data/monthly.json') {
