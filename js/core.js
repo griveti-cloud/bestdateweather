@@ -3329,3 +3329,24 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
     }
   });
 })();
+
+// ── Drag-to-scroll horizontal pour .top-cards (desktop mouse) ──
+(function(){
+  function initDragScroll(el) {
+    var isDown = false, startX, scrollLeft;
+    el.addEventListener('mousedown', function(e) {
+      isDown = true; el.style.cursor = 'grabbing';
+      startX = e.pageX - el.offsetLeft;
+      scrollLeft = el.scrollLeft;
+    });
+    el.addEventListener('mouseleave', function() { isDown = false; el.style.cursor = 'grab'; });
+    el.addEventListener('mouseup', function() { isDown = false; el.style.cursor = 'grab'; });
+    el.addEventListener('mousemove', function(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      var x = e.pageX - el.offsetLeft;
+      el.scrollLeft = scrollLeft - (x - startX) * 1.5;
+    });
+  }
+  document.querySelectorAll('.top-cards').forEach(initDragScroll);
+})();

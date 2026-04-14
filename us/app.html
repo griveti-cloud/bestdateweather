@@ -65,7 +65,7 @@ header.app-header{padding-top:64px!important}
 .home-section-title{font-size:11px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.7px}
 .home-section-link{font-size:11px;color:var(--gold);text-decoration:none}
 .home-divider{height:0.5px;background:rgba(255,255,255,.06);margin:0 auto;max-width:calc(1160px - 80px)}
-.top-cards{display:flex;gap:10px;overflow-x:auto;padding:0 20px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.top-cards{display:flex;gap:10px;overflow-x:auto;padding:0 20px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(201,148,56,.4) transparent;cursor:grab}
 .top-cards::-webkit-scrollbar{display:none}
 .top-card{min-width:130px;border-radius:12px;overflow:hidden;flex-shrink:0;text-decoration:none;display:block}
 .top-card-img{height:80px;display:flex;flex-direction:column;justify-content:space-between;padding:8px 10px;position:relative}
@@ -149,7 +149,7 @@ span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!i
 .flatpickr-day.selected,.flatpickr-day.selected:hover{background:linear-gradient(135deg,#c99438,#e8b84b)!important;border-color:#c99438!important;color:#fff!important}
 .flatpickr-day.prevMonthDay,.flatpickr-day.nextMonthDay{color:rgba(255,255,255,.2)!important}
 .flatpickr-day.flatpickr-disabled{color:rgba(255,255,255,.15)!important}
-</style>
+.top-cards::-webkit-scrollbar{height:4px}.top-cards::-webkit-scrollbar-track{background:transparent}.top-cards::-webkit-scrollbar-thumb{background:rgba(201,148,56,.4);border-radius:2px}</style>
 <link rel="preload" href="../app.css?v=51" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
 <noscript><link rel="stylesheet" href="../app.css?v=51"/></noscript>
 <link rel="stylesheet" href="../css/weather-banner.css?v=5" media="print" onload="this.media='all'"/><noscript><link rel="stylesheet" href="../css/weather-banner.css?v=3"/></noscript>
@@ -2095,7 +2095,7 @@ span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!i
 <script defer src="../js/fiche-scores.js?v=639443"></script>
 <script src="../js/fiche-aqi.js"></script>
 <script defer src="../js/fiche-slugs.min.js?v=edd3b9"></script>
-<script defer src="../js/core.min.js?v=60"></script>
+<script defer src="../js/core.min.js?v=61"></script>
 <script defer src="../js/favs.min.js?v=1"></script>
 
 <script src="../js/sw-register.js?v=948975" defer></script>
