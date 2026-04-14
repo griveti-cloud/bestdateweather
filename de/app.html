@@ -61,7 +61,7 @@ header.app-header{padding-top:64px!important}
 .uc-home-pill:hover{border-color:rgba(201,148,56,.4);background:rgba(201,148,56,.08);color:#e8b84b}
 .uc-home-active{border-color:rgba(201,148,56,.4)!important;background:rgba(201,148,56,.1)!important;color:#e8b84b!important}
 .home-section{max-width:1160px;margin:0 auto;padding:10px 20px}
-.home-section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.home-section-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
 .home-section-title{font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.7px}
 .home-section-link{font-size:11px;color:var(--gold);text-decoration:none}
 .home-divider{height:0.5px;background:rgba(255,255,255,.06);margin:0 auto;max-width:calc(1160px - 80px)}
@@ -97,6 +97,15 @@ header.app-header{padding-top:64px!important}
   .bdw-topbar-brand{font-size:24px;letter-spacing:-.5px}
   #wb-topbar-line{height:36px;padding:0 32px;font-size:12px}
   body{padding-top:100px}
+  /* Top cards desktop : plus larges, aperçu partiel de la suivante */
+  .top-card{min-width:200px}
+  .top-card-img{height:130px}
+  .top-card-name{font-size:14px}
+  .top-card-score{font-size:16px}
+  .home-section{padding:16px 40px 8px}
+  .home-section-head{margin-bottom:14px}
+  .home-section-title{font-size:12px}
+  .home-divider{margin:0 40px}
 }
 
 
@@ -141,8 +150,8 @@ span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!i
 .flatpickr-day.prevMonthDay,.flatpickr-day.nextMonthDay{color:rgba(255,255,255,.2)!important}
 .flatpickr-day.flatpickr-disabled{color:rgba(255,255,255,.15)!important}
 </style>
-<link rel="preload" href="../app.css?v=42" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
-<noscript><link rel="stylesheet" href="../app.css?v=42"/></noscript>
+<link rel="preload" href="../app.css?v=51" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+<noscript><link rel="stylesheet" href="../app.css?v=51"/></noscript>
 <link rel="stylesheet" href="../css/weather-banner.css?v=5" media="print" onload="this.media='all'"/><noscript><link rel="stylesheet" href="../css/weather-banner.css?v=3"/></noscript>
 <link rel="icon" type="image/x-icon" href="../favicon.ico"/><link rel="icon" type="image/svg+xml" href="../favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
 <link rel="manifest" href="../manifest.json"/>
@@ -2087,7 +2096,7 @@ span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!i
 <script defer src="../js/fiche-scores.js?v=639443"></script>
 <script src="../js/fiche-aqi.js"></script>
 <script defer src="../js/fiche-slugs.min.js?v=edd3b9"></script>
-<script defer src="../js/core.min.js?v=55"></script>
+<script defer src="../js/core.min.js?v=60"></script>
 <script defer src="../js/favs.min.js?v=1"></script>
 
 <script src="../js/sw-register.js?v=948975" defer></script>
