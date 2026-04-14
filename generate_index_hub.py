@@ -735,7 +735,7 @@ def build_hub(destinations, loc):
 
 import datetime as _dt
 
-def _top_now_cards(destinations, loc, lang, n=12):
+def _top_now_cards(destinations, loc, lang, n=13):
     """Génère les cards V4 'Partir maintenant' pour le mois courant."""
     import csv as _csv, statistics as _stat
     MOIS = _dt.date.today().month
