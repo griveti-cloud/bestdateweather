@@ -1365,16 +1365,16 @@ def build_rankings_section(lang, loc):
 
     sections_cfg = {
         'fr': [
-            ('🏆 Top mondial', 'classement-destinations-meteo-2026.html', _top(_avg_score)),
-            ('🏖️ Plage & baignade', 'classement-destinations-plage-2026.html', _top(_beach_score)),
-            ('☀️ Destinations été', 'classement-destinations-meteo-ete-2026.html', _top(_summer_score)),
-            ('🌍 Europe', 'classement-destinations-europe-meteo-2026.html', _top(_avg_score, europe_only=True)),
+            ('🏆 Top mondial', 'meilleures-destinations-meteo.html', _top(_avg_score)),
+            ('🏖️ Plage & baignade', 'meilleures-destinations-meteo.html?mode=beach', _top(_beach_score)),
+            ('☀️ Destinations été', 'meilleures-destinations-meteo.html?mode=meteo', _top(_summer_score)),
+            ('🌍 Europe', 'meilleures-destinations-meteo.html?reg=eu', _top(_avg_score, europe_only=True)),
         ],
         'en': [
-            ('🏆 Global top', '../en/best-destinations-weather-ranking-2026.html', _top(_avg_score)),
-            ('🏖️ Beach', '../en/best-beach-destinations-weather-2026.html', _top(_beach_score)),
-            ('☀️ Summer', '../en/best-destinations-summer-weather-2026.html', _top(_summer_score)),
-            ('🌍 Europe', '../en/best-europe-weather-ranking-2026.html', _top(_avg_score, europe_only=True)),
+            ('🏆 Global top', '../en/best-weather-destinations.html', _top(_avg_score)),
+            ('🏖️ Beach', '../en/best-weather-destinations.html?mode=beach', _top(_beach_score)),
+            ('☀️ Summer', '../en/best-weather-destinations.html?mode=meteo', _top(_summer_score)),
+            ('🌍 Europe', '../en/best-weather-destinations.html?reg=eu', _top(_avg_score, europe_only=True)),
         ],
     }
     sections_cfg['en-us'] = [(t, u.replace('../en/',  '../us/'), d) for t,u,d in sections_cfg['en']]
