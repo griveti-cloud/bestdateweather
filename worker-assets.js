@@ -145,6 +145,12 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
     // ── Subscribe endpoint ──
     if (path === '/subscribe') return handleSubscribe(request, env);
 
+    // ── URLs sans extension → ajouter .html (301) ──
+    // Couvre ~600 URLs GSC sans .html : /us/X-weather-MONTH, /de/X-wetter-MONTH, /meilleure-periode-X, etc.
+    if (!path.includes('.') && path !== '/' && !path.startsWith('/api/') && path !== '/subscribe') {
+      return Response.redirect(`${url.origin}${path}.html`, 301);
+    }
+
     // ── Regex redirects ──
     const mFR = path.match(PATTERN_FR);
     if (mFR) return Response.redirect(`${url.origin}/${mFR[1]}-meteo-${mFR[2]}.html`, 301);
