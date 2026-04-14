@@ -65,7 +65,6 @@
         chosenCity: "chosen city",
         changeCity: "Change city",
         approxLabel: "approx.",
-        approxLabel: "approx.",
         cityTitle: "Banner weather city",
         typeCity: "Type a city…",
         usePosition: "Use my location",
