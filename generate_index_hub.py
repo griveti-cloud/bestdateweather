@@ -1212,7 +1212,7 @@ def build_top_monthly(lang, loc):
                 if slug_dest:
                     raw_url = photo_db.get(slug, '')
                     import re as _re2
-                    photo_url = (_re2.sub(r'\?.*$', '', raw_url) + '?w=400&q=80&fm=jpg&fit=crop&crop=entropy') if raw_url else ''
+                    photo_url = (_re2.sub(r'\?.*$', '', raw_url) + '?w=300&q=70&fm=webp&fit=crop&crop=entropy') if raw_url else ''
                     scored.append({
                         'nom': nom,
                         'slug_dest': slug_dest,
@@ -1261,7 +1261,7 @@ def build_top_monthly(lang, loc):
         f'<div class="home-section">'
         f'<div class="home-section-head">'
         f'<div class="home-section-title">{section_title}</div>'
-        f'<a class="home-section-link" href="{ranking_url}">{ranking_link_lbl}</a>'
+        f'<a class="home-section-link" href="{ranking_url}" aria-label="{ranking_link_lbl} — {section_title}">{ranking_link_lbl}</a>'
         f'</div>'
         f'<div class="top-cards">{cards_html}</div>'
         f'</div>'
@@ -1336,7 +1336,7 @@ def build_rankings_section(lang, loc):
             sk = d.get(slug_key, slug)
             nm = d.get(nom_key) or d.get('nom_fr', slug)
             pu = photo_db.get(slug, '')
-            if pu: pu = _re3.sub(r'\?.*$', '', pu) + '?w=400&q=80&fm=jpg&fit=crop&crop=entropy'
+            if pu: pu = _re3.sub(r'\?.*$', '', pu) + '?w=300&q=70&fm=webp&fit=crop&crop=entropy'
             if sk: results.append({'nom':nm,'slug_dest':sk,'score':sc,'photo_url':pu,
                                    'url':url_pfx+sk+'.html'})
         results.sort(key=lambda x: -x['score'])
@@ -1390,7 +1390,7 @@ def build_rankings_section(lang, loc):
             f'<div class="home-section">'
             f'<div class="home-section-head">'
             f'<div class="home-section-title">{title}</div>'
-            f'<a class="home-section-link" href="{url}">{link_lbl}</a>'
+            f'<a class="home-section-link" href="{url}" aria-label="{link_lbl} — {title}">{link_lbl}</a>'
             f'</div>'
             f'<div class="top-cards">{_cards_html(items)}</div>'
             f'</div>'
