@@ -735,7 +735,7 @@ def build_hub(destinations, loc):
 
 import datetime as _dt
 
-def _top_now_cards(destinations, loc, lang, n=6):
+def _top_now_cards(destinations, loc, lang, n=12):
     """Génère les cards V4 'Partir maintenant' pour le mois courant."""
     import csv as _csv, statistics as _stat
     MOIS = _dt.date.today().month
@@ -1326,7 +1326,7 @@ def build_rankings_section(lang, loc):
         if d.get('coastal','') not in COASTAL: return 0
         return sum(float(ms[m].get('score',0)) for m in range(1,13)) / 12
 
-    def _top(scorer, n=6, europe_only=False):
+    def _top(scorer, n=12, europe_only=False):
         results = []
         for slug, d in dest_info.items():
             if d.get('precision') == 'country': continue
