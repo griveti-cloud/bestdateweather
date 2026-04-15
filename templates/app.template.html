@@ -16,7 +16,7 @@
 .annual-mode-active .mode-toggle-wrap{display:none}
 /* Fused mode row */
 .fused-mode-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 16px 10px;align-items:stretch}
-.fused-date-wrap{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .15s;min-width:0}
+.fused-date-wrap{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);border-radius:var(--r);padding:14px;cursor:pointer;transition:all .15s;min-width:0;position:relative;overflow:visible}
 .fused-date-wrap:hover{border-color:var(--gold)}
 .fused-date-wrap.has-date{border-color:rgba(201,148,56,.4);background:rgba(201,148,56,.06)}
 .fused-date-ico{font-size:16px;flex-shrink:0}
@@ -1879,7 +1879,7 @@ span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!i
 <script defer src="{{ASSET_PREFIX}}js/fiche-scores.js?v=639443"></script>
 <script src="{{ASSET_PREFIX}}js/fiche-aqi.js"></script>
 <script defer src="{{ASSET_PREFIX}}js/fiche-slugs.min.js?v=edd3b9"></script>
-<script defer src="{{ASSET_PREFIX}}js/core.min.js?v=61"></script>
+<script defer src="{{ASSET_PREFIX}}js/core.min.js?v=62"></script>
 <script defer src="{{ASSET_PREFIX}}js/favs.min.js?v=1"></script>
 
 <script src="{{ASSET_PREFIX}}js/sw-register.js?v=948975" defer></script>

@@ -3148,7 +3148,8 @@ document.addEventListener('DOMContentLoaded', function() {
   minDate: 'today',
   maxDate: new Date(new Date().setFullYear(new Date().getFullYear()+1)),
   disableMobile: true,
-  appendTo: document.body,
+  appendTo: document.getElementById('inp-date').closest('.fused-date-wrap') || document.getElementById('inp-date').parentElement || document.body,
+  positionElement: document.getElementById('inp-date-display') || document.getElementById('inp-date'),
   static: false,
   onChange: function(selectedDates, dateStr) {
   var el = document.getElementById('inp-date');
