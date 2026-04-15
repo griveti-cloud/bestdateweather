@@ -3351,3 +3351,26 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
   }
   document.querySelectorAll('.top-cards').forEach(initDragScroll);
 })();
+function bdwShare() {
+  var title = document.title || 'BestDateWeather';
+  var url = window.location.href;
+  var text = 'Découvrez BestDateWeather — scores météo /10 pour 697 destinations';
+  if (navigator.share) {
+    navigator.share({ title: title, text: text, url: url }).catch(function(){});
+  } else {
+    // Fallback : copier l'URL
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(function(){
+        var btn = document.getElementById('btn-share');
+        if (btn) {
+          var orig = btn.innerHTML;
+          btn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#c99438" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+          setTimeout(function(){ btn.innerHTML = orig; }, 1500);
+        }
+      }).catch(function(){});
+    } else {
+      window.open('https://wa.me/?text=' + encodeURIComponent(text + ' ' + url), '_blank');
+    }
+  }
+}
+window.bdwShare = bdwShare;
