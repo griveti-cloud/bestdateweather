@@ -550,7 +550,7 @@ JS_TEMPLATE = """
    var acc=el.parentElement;
    var wasOpen=acc.classList.contains('open');
    acc.classList.toggle('open');
-   if(!wasOpen)setTimeout(function(){acc.scrollIntoView({behavior:'smooth',block:'start'})},80);
+   if(!wasOpen)setTimeout(function(){var top=acc.getBoundingClientRect().top+window.scrollY-96;window.scrollTo({top:Math.max(0,top),behavior:'smooth'});},80);
   });
  }
  document.querySelectorAll('.dh-acc-head').forEach(function(h){toggleAcc(h)});
