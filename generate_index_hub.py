@@ -962,6 +962,48 @@ LANG_CONFIG = {
 
 FLATPICKR_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13'
 
+
+def build_lang_switcher(lang, loc):
+    """Génère le flag actuel + les items du menu déroulant langue."""
+    current_sub = loc['meta']['subdir']
+    current_flag = loc['meta'].get('flag', 'flags/fr.png')
+    asset_prefix = loc['gen']['asset_prefix']
+
+    # Flag du bouton principal (langue courante)
+    flag_img = f'<img src="{asset_prefix}{current_flag}" width="20" height="15" alt="" style="border-radius:2px;display:block">'
+
+    # Items du dropdown
+    items = []
+    # Langue courante en premier (active, non cliquable)
+    lang_label = loc['meta'].get('lang_label', lang.upper())
+    items.append(
+        f'<a href="#" class="active" onclick="return false" style="cursor:default">'
+        f'<img src="{asset_prefix}{current_flag}" width="20" height="14" alt=""> {lang_label}</a>'
+    )
+
+    for other_lang in SUPPORTED_LANGS:
+        if other_lang == lang:
+            continue
+        other_loc = load_locale(other_lang)
+        other_sub = other_loc['meta']['subdir']
+        other_flag = other_loc['meta'].get('flag', 'flags/gb.png')
+        other_label = other_loc['meta'].get('lang_label', other_lang.upper())
+        cookie_val = 'en-us' if other_lang == 'en-us' else ('fr' if other_lang == 'fr' else other_lang)
+
+        if current_sub == '':
+            href = f"{other_sub}/app.html" if other_sub else "index.html"
+            flag_src = f"{asset_prefix}{other_flag}"
+        else:
+            href = "../index.html" if other_sub == '' else f"../{other_sub}/app.html"
+            flag_src = f"../{other_flag}"
+
+        items.append(
+            f'<a href="{href}" onclick="document.cookie=\'bdw_lang={cookie_val};path=/;max-age=31536000\'">'
+            f'<img src="{flag_src}" width="20" height="14" alt=""> {other_label}</a>'
+        )
+
+    return flag_img, '\n'.join(items)
+
 def generate_from_template(lang, loc):
     """Génère le fichier hub depuis templates/app.template.html.
     Toute modification de structure doit se faire dans le template — jamais
@@ -1069,6 +1111,11 @@ def generate_from_template(lang, loc):
         '{{RANKINGS_SECTION}}':    build_rankings_section(lang, loc),
         '{{TRUST_BAR}}':           '',
     }
+
+    # Sélecteur de langue
+    flag_img, drop_items = build_lang_switcher(lang, loc)
+    replacements['{{LANG_FLAG_IMG}}'] = flag_img
+    replacements['{{LANG_DROP_ITEMS}}'] = drop_items
 
     for placeholder, value in replacements.items():
         content = content.replace(placeholder, value)

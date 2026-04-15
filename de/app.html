@@ -39,6 +39,16 @@
 .bdw-topbar-fav{background:none;border:none;padding:8px;cursor:pointer;color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;border-radius:8px;transition:color .15s,background .15s}
 .bdw-topbar-fav:hover{color:#fff;background:rgba(255,255,255,.1)}
 .bdw-nav-link{display:none!important}
+.lang-switcher{position:relative;display:flex;align-items:center}
+.lang-btn{background:none;border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:5px 9px;cursor:pointer;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all .15s}
+.lang-btn:hover{border-color:rgba(255,255,255,.35);color:#fff;background:rgba(255,255,255,.08)}
+.lang-btn img{border-radius:2px;display:block}
+.lang-drop{display:none;position:absolute;top:calc(100% + 8px);right:0;background:#1a1f2e;border:1px solid rgba(255,255,255,.1);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:150px;z-index:9999;overflow:hidden}
+.lang-switcher.open .lang-drop{display:block}
+.lang-drop a{display:flex;align-items:center;gap:10px;padding:10px 14px;color:rgba(255,255,255,.8);text-decoration:none;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;transition:background .15s}
+.lang-drop a:hover{background:rgba(255,255,255,.08);color:#fff}
+.lang-drop a.active{color:#c99438;font-weight:700}
+.lang-drop a img{border-radius:2px;flex-shrink:0}
 @media(min-width:641px){.bdw-nav-link{display:inline!important}}
 .bdw-topbar-fav:hover{color:#fff;background:rgba(255,255,255,.1)}
 header.app-header{padding-top:64px!important}
@@ -204,6 +214,19 @@ span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!i
   <div class="bdw-topbar-row1">
     <a class="bdw-topbar-brand" href="../index.html">Best<em>Date</em>Weather</a>
     <div style="display:flex;align-items:center;gap:12px">
+      <div class="lang-switcher" id="lang-switcher">
+        <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()" aria-label="Langue">
+          <img src="../flags/de.png" width="20" height="15" alt="" style="border-radius:2px;display:block">
+          <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="lang-drop" id="lang-drop">
+          <a href="#" class="active" onclick="return false" style="cursor:default"><img src="../flags/de.png" width="20" height="14" alt=""> DE</a>
+<a href="../index.html" onclick="document.cookie='bdw_lang=fr;path=/;max-age=31536000'"><img src="../flags/fr.png" width="20" height="14" alt=""> FR</a>
+<a href="../en/app.html" onclick="document.cookie='bdw_lang=en;path=/;max-age=31536000'"><img src="../flags/gb.png" width="20" height="14" alt=""> EN</a>
+<a href="../us/app.html" onclick="document.cookie='bdw_lang=en-us;path=/;max-age=31536000'"><img src="../flags/us.png" width="20" height="14" alt=""> EN-US</a>
+<a href="../es/app.html" onclick="document.cookie='bdw_lang=es;path=/;max-age=31536000'"><img src="../flags/es.png" width="20" height="14" alt=""> ES</a>
+        </div>
+      </div>
       <button id="btn-share" onclick="bdwShare()" aria-label="Partager" class="bdw-topbar-fav" title="Partager">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
       </button>
@@ -214,6 +237,16 @@ span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!i
   </div>
   <div id="wb-topbar-line"></div>
 </nav>
+<script>
+function toggleLangMenu(){
+  var ls=document.getElementById('lang-switcher');
+  ls.classList.toggle('open');
+}
+document.addEventListener('click',function(e){
+  var ls=document.getElementById('lang-switcher');
+  if(ls&&!ls.contains(e.target))ls.classList.remove('open');
+});
+</script>
 <div class="page-hero">
  <div class="hero-centered">
   <div class="hero-kicker">Wetter für Ihre Projekte</div>
