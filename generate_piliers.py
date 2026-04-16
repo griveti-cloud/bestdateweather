@@ -876,8 +876,8 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'document.querySelectorAll(".profile-chip").forEach(function(c){c.classList.remove("tip-open");var _ti=c.querySelector(".pchip-info");if(_ti)_ti.style.cssText="display:none";});'+
         'if(!wasOpen){chip.classList.add("tip-open");'+
         'var ti=chip.querySelector(".pchip-info");'+
-        'if(ti){var r=chip.getBoundingClientRect();var tw=220;var l=Math.max(8,Math.min(r.left+r.width/2-tw/2,window.innerWidth-tw-8));var top=r.bottom+6;if(top+110>window.innerHeight)top=r.top-116;'+
-        'ti.style.cssText="display:block;position:fixed;top:"+top+"px;left:"+l+"px;width:"+tw+"px;max-width:85vw;z-index:9999";}'+
+        'if(ti){var r=chip.getBoundingClientRect();var tw=280;var l=Math.max(8,Math.min(r.left+r.width/2-tw/2,window.innerWidth-tw-8));var top=r.bottom+4;if(top+110>window.innerHeight)top=r.top-116;'+
+        'ti.style.cssText="display:block;position:fixed;top:"+top+"px;left:"+l+"px;width:"+tw+"px;max-width:90vw;z-index:9999";}'+
         'var _chip=chip;setTimeout(function(){_chip.classList.remove("tip-open");var _ti=_chip.querySelector(".pchip-info");if(_ti)_ti.style.cssText="display:none";},2500);}'+
         'e.stopPropagation();});'+
         '});'+
