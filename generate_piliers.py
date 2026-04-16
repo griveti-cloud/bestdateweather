@@ -346,7 +346,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .dest-link{color:var(--text);text-decoration:none;font-weight:600}
 .dest-link:hover{color:var(--gold)}
 .region-tag{display:inline-block;font-size:10px;color:var(--slate);background:var(--cream);padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:middle}
-.filter-bar-wrap{overflow-x:auto;overflow-y:visible;background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px 14px 0 0;scrollbar-width:none}.profile-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--cream);border:1.5px solid var(--cream2);border-top:none;border-radius:0 0 14px 14px;flex-wrap:wrap}.profile-bar-label{font-size:10px;font-weight:700;color:var(--slate3);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}.profile-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1.5px solid var(--cream2);border-radius:20px;font-size:12px;font-weight:600;color:var(--slate);background:white;cursor:pointer;transition:all .15s;white-space:nowrap;position:relative}.profile-chip:hover{border-color:var(--gold);color:var(--navy)}.profile-chip.active{background:var(--navy);border-color:var(--navy);color:white}.profile-chip .pchip-info{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--navy);color:white;border-radius:10px;padding:10px 12px;font-size:11px;line-height:1.6;width:200px;z-index:200;box-shadow:0 4px 16px rgba(0,0,0,.15);pointer-events:none;font-weight:400}.profile-chip:hover .pchip-info{display:block}.profile-impact{font-size:11px;color:var(--slate2);padding:4px 14px 8px;font-style:italic}.filter-bar-wrap::-webkit-scrollbar{display:none}.filter-bar{display:flex;gap:6px;overflow:visible;padding:10px 14px;flex-wrap:nowrap;width:max-content;min-width:100%;position:relative}.filter-bar::-webkit-scrollbar{display:none}
+.filter-bar-wrap{overflow-x:auto;overflow-y:visible;background:var(--cream);border:1.5px solid var(--cream2);border-radius:14px 14px 0 0;scrollbar-width:none}.profile-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--cream);border:1.5px solid var(--cream2);border-top:none;border-radius:0 0 14px 14px;flex-wrap:wrap}.profile-bar-label{font-size:10px;font-weight:700;color:var(--slate3);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}.profile-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1.5px solid var(--cream2);border-radius:20px;font-size:12px;font-weight:600;color:var(--slate);background:white;cursor:pointer;transition:all .15s;white-space:nowrap;position:relative}.profile-chip:hover{border-color:var(--gold);color:var(--navy)}.profile-chip.active{background:var(--navy);border-color:var(--navy);color:white}.profile-chip .pchip-info{display:none;position:fixed;bottom:auto;top:auto;left:50%;transform:translateX(-50%);background:var(--navy);color:white;border-radius:10px;padding:10px 12px;font-size:11px;line-height:1.6;width:220px;max-width:85vw;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.25);pointer-events:none;font-weight:400}.profile-chip.tip-open .pchip-info{display:block}.profile-impact{font-size:11px;color:var(--slate2);padding:4px 14px 8px;font-style:italic}.filter-bar-wrap::-webkit-scrollbar{display:none}.filter-bar{display:flex;gap:6px;overflow:visible;padding:10px 14px;flex-wrap:nowrap;width:max-content;min-width:100%;position:relative}.filter-bar::-webkit-scrollbar{display:none}
 .fchip{display:inline-flex;align-items:center;gap:5px;padding:6px 10px 6px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--cream2);background:white;color:var(--navy);white-space:nowrap;flex-shrink:0;transition:all .15s;position:relative;user-select:none}
 .fchip.has-filter{background:var(--gold);color:white;border-color:var(--gold)}
 .fchip:hover:not(.has-filter){border-color:var(--gold)}
@@ -758,7 +758,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
     _pl = _profile_labels.get('en' if lang not in ('fr',) else 'fr',
                                _profile_labels['en'])
     _profile_bar = (
-        f'<div class="profile-bar">'        f'<span class="profile-bar-label">{_pl["label"]} :</span>'        f'<button class="profile-chip active" data-prof="balanced" onclick="setProfile(\'balanced\')">'        f'{_pl["balanced"]}'        f'<span class="pchip-info">{_pl["tip_balanced"]}</span>'        f'</button>'        f'<button class="profile-chip" data-prof="cool" onclick="setProfile(\'cool\')">'        f'{_pl["cool"]}'        f'<span class="pchip-info">{_pl["tip_cool"]}</span>'        f'</button>'        f'<button class="profile-chip" data-prof="warm" onclick="setProfile(\'warm\')">'        f'{_pl["warm"]}'        f'<span class="pchip-info">{_pl["tip_warm"]}</span>'        f'</button>'        f'<button class="profile-chip" data-prof="humid" onclick="setProfile(\'humid\')">'        f'{_pl["humid"]}'        f'<span class="pchip-info">{_pl["tip_humid"]}</span>'        f'</button>'        f'</div>'        f'<p class="profile-impact" id="profile-impact" style="display:none">{_pl["impact"]}</p>'
+        f'<div class="profile-bar">'        f''        f'<button class="profile-chip active" data-prof="balanced" onclick="setProfile(\'balanced\')">'        f'{_pl["balanced"]}'        f'<span class="pchip-info">{_pl["tip_balanced"]}</span>'        f'</button>'        f'<button class="profile-chip" data-prof="cool" onclick="setProfile(\'cool\')">'        f'{_pl["cool"]}'        f'<span class="pchip-info">{_pl["tip_cool"]}</span>'        f'</button>'        f'<button class="profile-chip" data-prof="warm" onclick="setProfile(\'warm\')">'        f'{_pl["warm"]}'        f'<span class="pchip-info">{_pl["tip_warm"]}</span>'        f'</button>'        f'<button class="profile-chip" data-prof="humid" onclick="setProfile(\'humid\')">'        f'{_pl["humid"]}'        f'<span class="pchip-info">{_pl["tip_humid"]}</span>'        f'</button>'        f'</div>'        f'<p class="profile-impact" id="profile-impact" style="display:none">{_pl["impact"]}</p>'
     )
 
     rank_js = (
@@ -869,7 +869,18 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'var am=document.querySelector(".fc-item.active[data-mode]");'+
         'render(am?am.dataset.mode:"meteo");'+
         '}'+
-        'window.setProfile=setProfile;'+'window.toggleFC=toggleFC;window.setMode=setMode;window.setReg=setReg;window.setSecu=setSecu;window.setBudget=setBudget;'+'})();</script>'
+        'window.setProfile=setProfile;'+
+        'document.querySelectorAll(".profile-chip").forEach(function(chip){'+
+        'chip.addEventListener("click",function(e){'+
+        'var wasOpen=chip.classList.contains("tip-open");'+
+        'document.querySelectorAll(".profile-chip").forEach(function(c){c.classList.remove("tip-open");});'+
+        'if(!wasOpen)chip.classList.add("tip-open");'+
+        'setTimeout(function(){chip.classList.remove("tip-open");},2500);'+
+        'e.stopPropagation();});'+
+        '});'+
+        'document.addEventListener("click",function(){'+
+        'document.querySelectorAll(".profile-chip").forEach(function(c){c.classList.remove("tip-open");});'+
+        '});'+'window.toggleFC=toggleFC;window.setMode=setMode;window.setReg=setReg;window.setSecu=setSecu;window.setBudget=setBudget;'+'})();</script>'
     )
 
     # Schema.org
