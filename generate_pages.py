@@ -1085,9 +1085,19 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         + '</div>'
     )
 
+    _fiche_profile_css = (
+        '<style>'
+        '.fiche-profile-bar{display:flex;align-items:center;gap:8px;padding:10px 0 8px;flex-wrap:wrap}'
+        '.fiche-profile-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1.5px solid #e8e0d0;border-radius:20px;font-size:12px;font-weight:600;color:#3a4a5c;background:white;cursor:pointer;transition:all .15s;white-space:nowrap}'
+        '.fiche-profile-chip:hover{border-color:#c9a84c;color:#1a1f2e}'
+        '.fiche-profile-chip.active{background:#1a1f2e;border-color:#1a1f2e;color:white}'
+        '</style>'
+    )
+
     monthly_section = f'''<section class="section">
  <div class="section-label">{C['lbl_monthly_section']}</div>
  <h2 class="section-title">{C['lbl_monthly_title']}</h2>
+ {_fiche_profile_css}
  {_fiche_profile_bar}
  <div class="grid-months">
  {monthly_links}
@@ -1482,7 +1492,44 @@ if(window.initDestSearch) window.initDestSearch({{suffix:'{C['annual_suffix']}',
 </script>
 <script src="{pfx}js/advisory.min.js?v=1" defer></script>
 <script src="{pfx}js/dest-map.min.js?v=1" defer></script>
-<script>window.FICHE_PROF={_fiche_prof_json};</script>
+<script>
+window.FICHE_PROF={_fiche_prof_json};
+(function(){{
+  function _cls(s){{return s>=7?'month-btn-rec':s>=4?'month-btn-mid':'month-btn-avoid';}}
+  function ficheSetProfile(prof){{
+    var D=window.FICHE_PROF;if(!D)return;
+    document.querySelectorAll('.fiche-profile-chip').forEach(function(b){{b.classList.toggle('active',b.dataset.prof===prof);}});
+    document.querySelectorAll('.month-btn[data-mi]').forEach(function(btn){{
+      var mi=+btn.dataset.mi,d=D[mi];if(!d)return;
+      var s=prof==='cool'?d.sc:prof==='warm'?d.sw:prof==='humid'?d.sh:null;
+      if(s===null){{
+        if(btn.dataset.os){{btn.querySelector('.mbtn-score').textContent=parseFloat(btn.dataset.os).toFixed(1);btn.classList.remove('month-btn-rec','month-btn-mid','month-btn-avoid');if(btn.dataset.oc)btn.classList.add(btn.dataset.oc);}}
+        return;
+      }}
+      if(!btn.dataset.os){{
+        btn.dataset.os=btn.querySelector('.mbtn-score').textContent;
+        ['month-btn-rec','month-btn-mid','month-btn-avoid'].forEach(function(c){{if(btn.classList.contains(c))btn.dataset.oc=c;}});
+      }}
+      btn.querySelector('.mbtn-score').textContent=s.toFixed(1);
+      btn.classList.remove('month-btn-rec','month-btn-mid','month-btn-avoid');
+      btn.classList.add(_cls(s));
+    }});
+  }}
+  window.ficheSetProfile=ficheSetProfile;
+  function _bindChips(){{
+    document.querySelectorAll('.fiche-profile-chip').forEach(function(chip){{
+      chip.addEventListener('click',function(e){{
+        ficheSetProfile(chip.dataset.prof);
+        e.stopPropagation();
+      }});
+    }});
+    document.addEventListener('click',function(){{
+      document.querySelectorAll('.fiche-profile-chip').forEach(function(c){{c.classList.remove('tip-open');}});
+    }});
+  }}
+  if(document.readyState==='loading'){{document.addEventListener('DOMContentLoaded',_bindChips);}}else{{_bindChips();}}
+}})();
+</script>
 </body>
 </html>'''
     return html

@@ -198,6 +198,7 @@
 <section class="section">
  <div class="section-label">Météo par mois</div>
  <h2 class="section-title">Météo détaillée mois par mois</h2>
+ <style>.fiche-profile-bar{display:flex;align-items:center;gap:8px;padding:10px 0 8px;flex-wrap:wrap}.fiche-profile-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1.5px solid #e8e0d0;border-radius:20px;font-size:12px;font-weight:600;color:#3a4a5c;background:white;cursor:pointer;transition:all .15s;white-space:nowrap}.fiche-profile-chip:hover{border-color:#c9a84c;color:#1a1f2e}.fiche-profile-chip.active{background:#1a1f2e;border-color:#1a1f2e;color:white}</style>
  <div class="fiche-profile-bar"><button class="fiche-profile-chip active" data-prof="balanced" onclick="ficheSetProfile(&quot;balanced&quot;)">🌤️ Standard<span class="pchip-info" style="display:none">Confort optimal 22-28°C · Pluie pénalisée · Soleil valorisé</span></button><button class="fiche-profile-chip" data-prof="cool" onclick="ficheSetProfile(&quot;cool&quot;)">❄️ Frais<span class="pchip-info" style="display:none">Confort optimal 15-20°C · Chaleur rapidement pénalisée</span></button><button class="fiche-profile-chip" data-prof="warm" onclick="ficheSetProfile(&quot;warm&quot;)">🔥 Chaud<span class="pchip-info" style="display:none">Confort optimal 27-32°C · Froid fortement pénalisé</span></button><button class="fiche-profile-chip" data-prof="humid" onclick="ficheSetProfile(&quot;humid&quot;)">💧 Sec<span class="pchip-info" style="display:none">Pénalité humidité renforcée (dew > 14°C)</span></button></div>
  <div class="grid-months">
  <a href="tokyo-meteo-janvier.html" class="month-btn month-btn-mid" data-mi="0"><div class="mbtn-emoji">🌫️</div><div class="mbtn-name">Janvier</div><div class="mbtn-temp">9°C</div><div class="mbtn-score">5.4</div></a><a href="tokyo-meteo-fevrier.html" class="month-btn month-btn-mid" data-mi="1"><div class="mbtn-emoji">🌫️</div><div class="mbtn-name">Février</div><div class="mbtn-temp">10°C</div><div class="mbtn-score">5.4</div></a><a href="tokyo-meteo-mars.html" class="month-btn month-btn-mid" data-mi="2"><div class="mbtn-emoji">⛅</div><div class="mbtn-name">Mars</div><div class="mbtn-temp">14°C</div><div class="mbtn-score">5.3</div></a><a href="tokyo-meteo-avril.html" class="month-btn month-btn-rec" data-mi="3"><div class="mbtn-emoji">🌤️</div><div class="mbtn-name">Avril</div><div class="mbtn-temp">19°C</div><div class="mbtn-score">7.5</div></a><a href="tokyo-meteo-mai.html" class="month-btn month-btn-rec" data-mi="4"><div class="mbtn-emoji">🌤️</div><div class="mbtn-name">Mai</div><div class="mbtn-temp">23°C</div><div class="mbtn-score">8.0</div></a><a href="tokyo-meteo-juin.html" class="month-btn month-btn-rec" data-mi="5"><div class="mbtn-emoji">🌤️</div><div class="mbtn-name">Juin</div><div class="mbtn-temp">26°C</div><div class="mbtn-score">7.9</div></a><a href="tokyo-meteo-juillet.html" class="month-btn month-btn-mid" data-mi="6"><div class="mbtn-emoji">🌤️</div><div class="mbtn-name">Juillet</div><div class="mbtn-temp">30°C</div><div class="mbtn-score">6.8</div></a><a href="tokyo-meteo-aout.html" class="month-btn month-btn-mid" data-mi="7"><div class="mbtn-emoji">🌤️</div><div class="mbtn-name">Août</div><div class="mbtn-temp">32°C</div><div class="mbtn-score">6.9</div></a><a href="tokyo-meteo-septembre.html" class="month-btn month-btn-rec" data-mi="8"><div class="mbtn-emoji">🌤️</div><div class="mbtn-name">Septembre</div><div class="mbtn-temp">28°C</div><div class="mbtn-score">7.9</div></a><a href="tokyo-meteo-octobre.html" class="month-btn month-btn-rec" data-mi="9"><div class="mbtn-emoji">🌦️</div><div class="mbtn-name">Octobre</div><div class="mbtn-temp">21°C</div><div class="mbtn-score">7.5</div></a><a href="tokyo-meteo-novembre.html" class="month-btn month-btn-rec" data-mi="10"><div class="mbtn-emoji">⛅</div><div class="mbtn-name">Novembre</div><div class="mbtn-temp">17°C</div><div class="mbtn-score">7.4</div></a><a href="tokyo-meteo-decembre.html" class="month-btn month-btn-mid" data-mi="11"><div class="mbtn-emoji">🌫️</div><div class="mbtn-name">Décembre</div><div class="mbtn-temp">11°C</div><div class="mbtn-score">5.4</div></a>
@@ -254,6 +255,43 @@ if(window.initDestSearch) window.initDestSearch({suffix:'.html',prefix:'meilleur
 </script>
 <script src="js/advisory.min.js?v=1" defer></script>
 <script src="js/dest-map.min.js?v=1" defer></script>
-<script>window.FICHE_PROF={0:{sc:5.5,sw:4.6,sh:5.0},1:{sc:5.6,sw:4.6,sh:5.1},2:{sc:6.2,sw:4.3,sh:5.0},3:{sc:7.3,sw:4.9,sh:6.3},4:{sc:6.4,sw:6.0,sh:7.2},5:{sc:4.9,sw:6.2,sh:7.1},6:{sc:4.1,sw:7.1,sh:6.7},7:{sc:3.9,sw:7.7,sh:6.2},8:{sc:4.1,sw:6.3,sh:7.1},9:{sc:6.3,sw:4.9,sh:6.2},10:{sc:7.4,sw:4.8,sh:6.0},11:{sc:5.8,sw:4.6,sh:5.1}};</script>
+<script>
+window.FICHE_PROF={0:{sc:5.5,sw:4.6,sh:5.0},1:{sc:5.6,sw:4.6,sh:5.1},2:{sc:6.2,sw:4.3,sh:5.0},3:{sc:7.3,sw:4.9,sh:6.3},4:{sc:6.4,sw:6.0,sh:7.2},5:{sc:4.9,sw:6.2,sh:7.1},6:{sc:4.1,sw:7.1,sh:6.7},7:{sc:3.9,sw:7.7,sh:6.2},8:{sc:4.1,sw:6.3,sh:7.1},9:{sc:6.3,sw:4.9,sh:6.2},10:{sc:7.4,sw:4.8,sh:6.0},11:{sc:5.8,sw:4.6,sh:5.1}};
+(function(){
+  function _cls(s){return s>=7?'month-btn-rec':s>=4?'month-btn-mid':'month-btn-avoid';}
+  function ficheSetProfile(prof){
+    var D=window.FICHE_PROF;if(!D)return;
+    document.querySelectorAll('.fiche-profile-chip').forEach(function(b){b.classList.toggle('active',b.dataset.prof===prof);});
+    document.querySelectorAll('.month-btn[data-mi]').forEach(function(btn){
+      var mi=+btn.dataset.mi,d=D[mi];if(!d)return;
+      var s=prof==='cool'?d.sc:prof==='warm'?d.sw:prof==='humid'?d.sh:null;
+      if(s===null){
+        if(btn.dataset.os){btn.querySelector('.mbtn-score').textContent=parseFloat(btn.dataset.os).toFixed(1);btn.classList.remove('month-btn-rec','month-btn-mid','month-btn-avoid');if(btn.dataset.oc)btn.classList.add(btn.dataset.oc);}
+        return;
+      }
+      if(!btn.dataset.os){
+        btn.dataset.os=btn.querySelector('.mbtn-score').textContent;
+        ['month-btn-rec','month-btn-mid','month-btn-avoid'].forEach(function(c){if(btn.classList.contains(c))btn.dataset.oc=c;});
+      }
+      btn.querySelector('.mbtn-score').textContent=s.toFixed(1);
+      btn.classList.remove('month-btn-rec','month-btn-mid','month-btn-avoid');
+      btn.classList.add(_cls(s));
+    });
+  }
+  window.ficheSetProfile=ficheSetProfile;
+  function _bindChips(){
+    document.querySelectorAll('.fiche-profile-chip').forEach(function(chip){
+      chip.addEventListener('click',function(e){
+        ficheSetProfile(chip.dataset.prof);
+        e.stopPropagation();
+      });
+    });
+    document.addEventListener('click',function(){
+      document.querySelectorAll('.fiche-profile-chip').forEach(function(c){c.classList.remove('tip-open');});
+    });
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',_bindChips);}else{_bindChips();}
+})();
+</script>
 </body>
 </html>
