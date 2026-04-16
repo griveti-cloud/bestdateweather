@@ -995,7 +995,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 </div>
 </header>
 <main class="page">
-<div class="filter-bar-wrap"><div class="filter-bar" id="filter-bar">{filter_chips_html}</div></div>{_profile_bar}{_profile_bar}<div class="section"><div class="eyebrow">{sec_eyebrow}</div><h2 class="sec-title" id="rt-title">{sec_title}</h2><p class="sec-intro" id="rt-intro">{sec_intro}</p>
+<div class="filter-bar-wrap"><div class="filter-bar" id="filter-bar">{filter_chips_html}</div></div>{_profile_bar}<div class="section"><div class="eyebrow">{sec_eyebrow}</div><h2 class="sec-title" id="rt-title">{sec_title}</h2><p class="sec-intro" id="rt-intro">{sec_intro}</p>
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
 <p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
 <p class="rt-methodo" id="rt-methodo-beach" style="display:none">{loc['hub']['methodo_beach']}</p>
