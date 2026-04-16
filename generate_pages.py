@@ -1078,10 +1078,10 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     _tp = _tip.get(C['lang'], _tip['en'])
     _fiche_profile_bar = (
         '<div class="fiche-profile-bar">'
-        + f'<button class="fiche-profile-chip active" data-prof="balanced" onclick="ficheSetProfile(&quot;balanced&quot;)">{_pl["balanced"]}<span class="pchip-info">{_tp["balanced"]}</span></button>'
-        + f'<button class="fiche-profile-chip" data-prof="cool" onclick="ficheSetProfile(&quot;cool&quot;)">{_pl["cool"]}<span class="pchip-info">{_tp["cool"]}</span></button>'
-        + f'<button class="fiche-profile-chip" data-prof="warm" onclick="ficheSetProfile(&quot;warm&quot;)">{_pl["warm"]}<span class="pchip-info">{_tp["warm"]}</span></button>'
-        + f'<button class="fiche-profile-chip" data-prof="humid" onclick="ficheSetProfile(&quot;humid&quot;)">{_pl["humid"]}<span class="pchip-info">{_tp["humid"]}</span></button>'
+        + f'<button class="fiche-profile-chip active" data-prof="balanced" onclick="ficheSetProfile(&quot;balanced&quot;)">{_pl["balanced"]}<span class="pchip-info" style="display:none">{_tp["balanced"]}</span></button>'
+        + f'<button class="fiche-profile-chip" data-prof="cool" onclick="ficheSetProfile(&quot;cool&quot;)">{_pl["cool"]}<span class="pchip-info" style="display:none">{_tp["cool"]}</span></button>'
+        + f'<button class="fiche-profile-chip" data-prof="warm" onclick="ficheSetProfile(&quot;warm&quot;)">{_pl["warm"]}<span class="pchip-info" style="display:none">{_tp["warm"]}</span></button>'
+        + f'<button class="fiche-profile-chip" data-prof="humid" onclick="ficheSetProfile(&quot;humid&quot;)">{_pl["humid"]}<span class="pchip-info" style="display:none">{_tp["humid"]}</span></button>'
         + '</div>'
     )
 
