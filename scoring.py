@@ -186,6 +186,51 @@ def aqi_penalty(aqi_mean: float) -> float:
     return round(0.08 * factor, 3)
 
 
+def rh_from_dew_tmax(dew_point: float, tmax: float) -> float:
+    """
+    Approximation de l'humidité relative (%) depuis dew point et tmax.
+    Formule de Magnus : RH ≈ 100 × es(dew) / es(tmax)
+    """
+    import math
+    if dew_point is None or tmax is None:
+        return None
+    es_dew  = math.exp(17.27 * dew_point / (dew_point + 237.3))
+    es_tmax = math.exp(17.27 * tmax       / (tmax       + 237.3))
+    if es_tmax == 0:
+        return None
+    return min(100.0, max(0.0, 100.0 * es_dew / es_tmax))
+
+
+def dry_climate_penalty(tmax: float, dew_point: float) -> float:
+    """
+    Pénalité sécheresse [0, 0.10] pour les climats très secs à température élevée.
+
+    Basée sur l'humidité relative calculée depuis dew point + tmax.
+
+    Justification : air très sec (HR < 25%) provoque déshydratation invisible,
+    irritation des muqueuses, écart de ressenti froid/chaud extrême (nuits très
+    froides / journées brûlantes). Le TCI de Mieczkowski pénalise l'air très sec
+    via le tableau de Terjung (stress hygrothermique par aridité).
+
+    S'applique seulement si tmax > 25°C (la sécheresse n'est gênante qu'avec la
+    chaleur — en hiver l'air sec peut même être agréable).
+
+    Seuils :
+      RH > 30%  → pas de pénalité
+      RH 20-30% → pénalité légère (0 → 0.05)
+      RH < 20%  → pénalité forte (0.05 → 0.10)
+    """
+    if tmax is None or dew_point is None or tmax < 25:
+        return 0.0
+    rh = rh_from_dew_tmax(dew_point, tmax)
+    if rh is None or rh >= 30:
+        return 0.0
+    if rh >= 20:
+        # 0.0 à RH=30 → 0.05 à RH=20
+        return round(0.05 * (30 - rh) / 10, 3)
+    # 0.05 à RH=20 → 0.10 à RH=0
+    return round(0.05 + 0.05 * (20 - rh) / 20, 3)
+
 def raw_score(tmax: float, rain_pct: float, sun_h: float,
               precip_mm: float = None, dew_point: float = None) -> float:
     """
@@ -204,6 +249,7 @@ def raw_score(tmax: float, rain_pct: float, sun_h: float,
           + 0.35 * max(0.0, 1.0 - eff_rain / 100.0)
           + 0.25 * min(1.0, sun_h / 15.0))
     penalty = dew_point_penalty(tmax, dew_point)
+    penalty += dry_climate_penalty(tmax, dew_point)
     return max(0.0, base - penalty)
 
 
@@ -694,5 +740,8 @@ def profile_score(tmax, rain_pct, sun_h, dew_point, profile='balanced',
         raw -= dew_point_penalty_sensitive(tmax, dew_point)
     else:
         raw -= dew_point_penalty(tmax, dew_point or 0)
+    # Pénalité sécheresse dans tous les profils
+    raw -= dry_climate_penalty(tmax, dew_point)
 
     return max(0.0, min(1.0, raw))
+
