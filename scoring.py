@@ -615,3 +615,84 @@ if __name__ == '__main__':
             total_ok += 1
 
     print(f'\nTotal : {total_ok} OK / {total_fail} erreurs')
+
+
+# ── PROFILS DE SCORING PERSONNALISÉS ─────────────────────────────────────────
+
+def t_ideal_cool(tmax: float) -> float:
+    """Profil ❄️ Prefer cool — optimum 15-20°C, pénalise la chaleur plus tôt."""
+    if tmax <= 3:   return 0.0
+    if tmax <= 10:  return (tmax - 3) / 7 * 0.3
+    if tmax <= 18:  return 0.3 + (tmax - 10) / 8 * 0.6   # optimum 18°C
+    if tmax <= 22:  return 0.9 - (tmax - 18) / 4 * 0.2   # 0.9 -> 0.7
+    if tmax <= 27:  return 0.7 - (tmax - 22) / 5 * 0.4   # 0.7 -> 0.3
+    if tmax <= 32:  return 0.3 - (tmax - 27) / 5 * 0.25  # 0.3 -> 0.05
+    return 0.0
+
+
+def t_ideal_warm(tmax: float) -> float:
+    """Profil 🔥 Prefer warm — optimum 27-32°C, tolère la chaleur, pénalise le froid."""
+    if tmax <= 8:   return 0.0
+    if tmax <= 18:  return (tmax - 8) / 10 * 0.2          # froid fortement pénalisé
+    if tmax <= 24:  return 0.2 + (tmax - 18) / 6 * 0.4
+    if tmax <= 32:  return 0.6 + (tmax - 24) / 8 * 0.4   # optimum 32°C
+    if tmax <= 36:  return 1.0 - (tmax - 32) / 4 * 0.3   # 1.0 -> 0.7
+    if tmax <= 40:  return 0.7 - (tmax - 36) / 4 * 0.5   # 0.7 -> 0.2
+    return 0.0
+
+
+def dew_point_penalty_sensitive(tmax: float, dew_point: float) -> float:
+    """
+    Profil 💧 Humidity sensitive — pénalité dew point renforcée.
+    Seuil abaissé à 14°C (vs 16°C standard), pénalité max 0.35 (vs 0.20).
+    S'applique dès tmax > 22°C (vs 26°C standard).
+    """
+    if tmax < 22 or dew_point is None:
+        return 0.0
+    if dew_point < 14:
+        return 0.0
+    heat_factor = min(1.0, (tmax - 22) / 14)
+    dew_factor  = min(1.0, (dew_point - 14) / 10)
+    return round(0.35 * heat_factor * dew_factor, 3)
+
+
+def profile_score(tmax, rain_pct, sun_h, dew_point, profile='balanced',
+                  precip_mm=None):
+    """
+    Calcule un score brut [0,1] selon le profil utilisateur.
+    Utilise le même squelette que raw_score() mais avec des fonctions
+    de température et pénalités humidité adaptées.
+
+    Profils :
+      'balanced'  → comportement identique au moteur standard
+      'cool'      → t_ideal_cool, même pluie/soleil
+      'warm'      → t_ideal_warm, même pluie/soleil
+      'humid'     → t_ideal standard, dew_point_penalty_sensitive
+    """
+    # Poids communs
+    w_t, w_r, w_s = 0.40, 0.35, 0.25
+
+    # Température
+    if profile == 'cool':
+        t = t_ideal_cool(tmax)
+    elif profile == 'warm':
+        t = t_ideal_warm(tmax)
+    else:
+        t = t_ideal(tmax)
+
+    # Pluie
+    eff_rain = effective_rain_pct(rain_pct, precip_mm)
+    r = max(0.0, 1.0 - eff_rain / 100)
+
+    # Soleil
+    s = min(1.0, sun_h / 15.0)
+
+    raw = w_t * t + w_r * r + w_s * s
+
+    # Pénalité humidité
+    if profile == 'humid':
+        raw -= dew_point_penalty_sensitive(tmax, dew_point)
+    else:
+        raw -= dew_point_penalty(tmax, dew_point or 0)
+
+    return max(0.0, min(1.0, raw))
