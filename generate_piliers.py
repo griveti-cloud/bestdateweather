@@ -776,10 +776,12 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'var msg=document.getElementById("rt-msg");'+
         'if(!tb)return;'+
         'var key=mode==="beach"?"b":mode==="ski"?"k":mode==="nomad"?"nd":"s";'+
+        'var useProf=CUR_PROF!=="balanced"&&mode==="meteo";'+
+        'if(useProf){POOL.forEach(function(d){d._ps=_profScore(d,CUR_PROF);});}'+
         'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG);var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):mode==="nomad"?(d.nd!=null):(d.m!==1);var rlOk=mode==="nomad"?true:(d.rl||1)<=CUR_RL;var biOk=mode==="nomad"?true:(d.bi||3)<=CUR_BI;return rOk&&mOk&&rlOk&&biOk;});'+
-        'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d;});'+
+        'list.sort(function(a,b){var va=useProf?a._ps:(a[key]||0);var vb=useProf?b._ps:(b[key]||0);return vb-va;});'+
         'var _sibSeen={};list=list.filter(function(d){if(d.sib<0)return true;if(_sibSeen[d.sib])return false;_sibSeen[d.sib]=1;return true;});'+
-        'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
+        'list.sort(function(a,b){var va=useProf?a._ps:(a[key]||0);var vb=useProf?b._ps:(b[key]||0);var d=vb-va;return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
         'list=list.slice(0,TOP);'+
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:(mode==="nomad"?NO_NOMAD:NO_METEO));msg.style.display="block";'        'var _s1e=document.getElementById("stat-score");if(_s1e)_s1e.textContent="—";'        'var _sce=document.getElementById("stat-count");if(_sce)_sce.textContent="0";'        'var _s3e=document.getElementById("stat-temp");if(_s3e)_s3e.textContent="—";'        'var _rie=document.getElementById("rt-intro");if(_rie)_rie.style.display="none";'        'return;}'+
         'msg.style.display="none";'+
@@ -787,7 +789,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th><th style=\'text-align:center\'>S\u00e9cu.</th><th style=\'text-align:center\'>Budget</th></tr>";'+
         'var html="";'+
         'list.forEach(function(d,i){'+
-        'var v=d[key]!=null?d[key]:d.s;'+
+        'var v=useProf?d._ps:(d[key]!=null?d[key]:d.s);'+
         'var tmp=d.tmin!=null?(d.tmin.toFixed(0)+"°–"+d.tmax.toFixed(0)+"°"):"—";'+
         'html+="<tr data-pool-idx='"+(POOL.indexOf(d))+"'>"'+
         '+"<td class=\'rank\'>"+ri(i+1)+"</td>"'+
@@ -864,18 +866,8 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'document.querySelectorAll(".profile-chip").forEach(function(b){b.classList.toggle("active",b.dataset.prof===prof);});'+
         'var pi=document.getElementById("profile-impact");'+
         'if(pi)pi.style.display=prof==="balanced"?"none":"block";'+
-        'var tb=document.getElementById("rt-body");if(!tb)return;'+
-        'var rows=tb.querySelectorAll("tr");'+
-        'rows.forEach(function(tr){'+
-        'var cells=tr.querySelectorAll("td");if(cells.length<3)return;'+
-        'var idx=parseInt(tr.dataset.poolIdx);if(isNaN(idx))return;'+
-        'var d=POOL[idx];if(!d)return;'+
-        'var key=CUR_MODE==="beach"?"b":CUR_MODE==="ski"?"k":CUR_MODE==="nomad"?"nd":null;'+
-        'var v=key?d[key]:_profScore(d,prof);'+
-        'if(v==null)return;'+
-        'v=Math.round(v*10)/10;'+
-        'var sc=cells[2];if(sc){sc.style.color=_sc(v);sc.innerHTML=v.toFixed(1)+"<span>/10</span>";}'+
-        '});'+
+        'var am=document.querySelector(".fc-item.active[data-mode]");'+
+        'render(am?am.dataset.mode:"meteo");'+
         '}'+
         'window.setProfile=setProfile;'+'window.toggleFC=toggleFC;window.setMode=setMode;window.setReg=setReg;window.setSecu=setSecu;window.setBudget=setBudget;'+'})();</script>'
     )
@@ -1385,10 +1377,12 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'var msg=document.getElementById("rt-msg");'+
         'if(!tb)return;'+
         'var key=mode==="beach"?"b":mode==="ski"?"k":mode==="nomad"?"nd":"s";'+
+        'var useProf=CUR_PROF!=="balanced"&&mode==="meteo";'+
+        'if(useProf){POOL.forEach(function(d){d._ps=_profScore(d,CUR_PROF);});}'+
         'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG);var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):mode==="nomad"?(d.nd!=null):(d.m!==1);var rlOk=mode==="nomad"?true:(d.rl||1)<=CUR_RL;var biOk=mode==="nomad"?true:(d.bi||3)<=CUR_BI;return rOk&&mOk&&rlOk&&biOk;});'+
-        'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d;});'+
+        'list.sort(function(a,b){var va=useProf?a._ps:(a[key]||0);var vb=useProf?b._ps:(b[key]||0);return vb-va;});'+
         'var _sibSeen={};list=list.filter(function(d){if(d.sib<0)return true;if(_sibSeen[d.sib])return false;_sibSeen[d.sib]=1;return true;});'+
-        'list.sort(function(a,b){var d=(b[key]||0)-(a[key]||0);return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
+        'list.sort(function(a,b){var va=useProf?a._ps:(a[key]||0);var vb=useProf?b._ps:(b[key]||0);var d=vb-va;return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
         'list=list.slice(0,TOP);'+
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:(mode==="nomad"?NO_NOMAD:NO_METEO));msg.style.display="block";'        'var _s1e=document.getElementById("stat-score");if(_s1e)_s1e.textContent="—";'        'var _sce=document.getElementById("stat-count");if(_sce)_sce.textContent="0";'        'var _s3e=document.getElementById("stat-temp");if(_s3e)_s3e.textContent="—";'        'var _rie=document.getElementById("rt-intro");if(_rie)_rie.style.display="none";'        'return;}'+
         'msg.style.display="none";'+
@@ -1396,7 +1390,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th><th style=\'text-align:center\'>S\u00e9cu.</th><th style=\'text-align:center\'>Budget</th></tr>";'+
         'var html="";'+
         'list.forEach(function(d,i){'+
-        'var v=d[key]!=null?d[key]:d.s;'+
+        'var v=useProf?d._ps:(d[key]!=null?d[key]:d.s);'+
         'var tmp=d.tmin!=null?(d.tmin.toFixed(0)+"°–"+d.tmax.toFixed(0)+"°"):"—";'+
         'html+="<tr data-pool-idx='"+(POOL.indexOf(d))+"'>"'+
         '+"<td class=\'rank\'>"+ri(i+1)+"</td>"'+
