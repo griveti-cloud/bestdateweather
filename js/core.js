@@ -3386,20 +3386,15 @@ window.bdwShare = bdwShare;
   function ficheSetProfile(prof) {
     var prof_data = window.FICHE_PROF;
     if (!prof_data) return;
-
-    // Chips actives
     document.querySelectorAll('.fiche-profile-chip').forEach(function(b) {
       b.classList.toggle('active', b.dataset.prof === prof);
     });
-
-    // Mise à jour des boutons mois
     document.querySelectorAll('.month-btn[data-mi]').forEach(function(btn) {
       var mi = parseInt(btn.dataset.mi, 10);
       var d = prof_data[mi];
       if (!d) return;
       var score = prof === 'cool' ? d.sc : prof === 'warm' ? d.sw : prof === 'humid' ? d.sh : null;
       if (score === null) {
-        // Balanced : restaurer score original
         var orig = btn.dataset.origScore;
         if (orig) {
           btn.querySelector('.mbtn-score').textContent = parseFloat(orig).toFixed(1);
@@ -3409,7 +3404,6 @@ window.bdwShare = bdwShare;
         }
         return;
       }
-      // Sauvegarder état original au premier appel
       if (!btn.dataset.origScore) {
         btn.dataset.origScore = btn.querySelector('.mbtn-score').textContent;
         ['month-btn-rec', 'month-btn-mid', 'month-btn-avoid'].forEach(function(c) {
@@ -3422,44 +3416,42 @@ window.bdwShare = bdwShare;
     });
   }
 
-  // Tooltips tap-to-show (même logique que piliers)
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.fiche-profile-chip').forEach(function(chip) {
-      chip.addEventListener('click', function(e) {
-        ficheSetProfile(chip.dataset.prof);
-        var wasOpen = chip.classList.contains('tip-open');
-        document.querySelectorAll('.fiche-profile-chip').forEach(function(c) {
-          c.classList.remove('tip-open');
-          var ti = c.querySelector('.pchip-info');
-          if (ti) ti.style.cssText = 'display:none';
-        });
-        if (!wasOpen) {
-          chip.classList.add('tip-open');
-          var ti = chip.querySelector('.pchip-info');
-          if (ti) {
-            var r = chip.getBoundingClientRect();
-            var tw = 220;
-            var l = Math.max(8, Math.min(r.left + r.width / 2 - tw / 2, window.innerWidth - tw - 8));
-            var top = r.bottom + 4;
-            if (top + 110 > window.innerHeight) top = r.top - 116;
-            ti.style.cssText = 'display:block;position:fixed;top:' + top + 'px;left:' + l + 'px;width:' + tw + 'px;max-width:85vw;z-index:9999';
-          }
-          var _chip = chip;
-          setTimeout(function() {
-            _chip.classList.remove('tip-open');
-            var ti = _chip.querySelector('.pchip-info');
-            if (ti) ti.style.cssText = 'display:none';
-          }, 2500);
-        }
-        e.stopPropagation();
-      });
-    });
-    document.addEventListener('click', function() {
+  // Bind direct — core.js est defer, DOM prêt
+  document.querySelectorAll('.fiche-profile-chip').forEach(function(chip) {
+    chip.addEventListener('click', function(e) {
+      ficheSetProfile(chip.dataset.prof);
+      var wasOpen = chip.classList.contains('tip-open');
       document.querySelectorAll('.fiche-profile-chip').forEach(function(c) {
         c.classList.remove('tip-open');
         var ti = c.querySelector('.pchip-info');
         if (ti) ti.style.cssText = 'display:none';
       });
+      if (!wasOpen) {
+        chip.classList.add('tip-open');
+        var ti = chip.querySelector('.pchip-info');
+        if (ti) {
+          var r = chip.getBoundingClientRect();
+          var tw = 220;
+          var l = Math.max(8, Math.min(r.left + r.width / 2 - tw / 2, window.innerWidth - tw - 8));
+          var top = r.bottom + 4;
+          if (top + 110 > window.innerHeight) top = r.top - 116;
+          ti.style.cssText = 'display:block;position:fixed;top:' + top + 'px;left:' + l + 'px;width:' + tw + 'px;max-width:85vw;z-index:9999';
+        }
+        var _chip = chip;
+        setTimeout(function() {
+          _chip.classList.remove('tip-open');
+          var ti = _chip.querySelector('.pchip-info');
+          if (ti) ti.style.cssText = 'display:none';
+        }, 2500);
+      }
+      e.stopPropagation();
+    });
+  });
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.fiche-profile-chip').forEach(function(c) {
+      c.classList.remove('tip-open');
+      var ti = c.querySelector('.pchip-info');
+      if (ti) ti.style.cssText = 'display:none';
     });
   });
 
