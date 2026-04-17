@@ -24,6 +24,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .topbar-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .cta-btn{display:inline-flex;align-items:center;padding:6px 14px;background:linear-gradient(135deg,#c99438,#e8b84b);border-radius:20px;font-size:12px;font-weight:700;color:#1a1f2e;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:filter .15s}
 .cta-btn:hover{filter:brightness(1.08)}
+.share-btn{background:none;border:1.5px solid rgba(255,255,255,.18);border-radius:50%;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.6);flex-shrink:0;transition:all .15s;padding:0}
+.share-btn:hover{border-color:rgba(255,255,255,.4);color:white;background:rgba(255,255,255,.08)}
 .back:hover{color:white}
 .lang-btn{background:none;border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:4px 8px;cursor:pointer;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;font-family:inherit;transition:all .15s}
 .lang-btn:hover{border-color:rgba(255,255,255,.35);color:#fff;background:rgba(255,255,255,.08)}
@@ -99,6 +101,9 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           <a href="../de/karte.html" onclick="document.cookie='bdw_lang=de;path=/;max-age=31536000'"><img src="../flags/de.png" width="20" height="14" alt=""> DE</a>
         </div>
     </div>
+    <button class="share-btn" onclick="bdwShareMap()" title="Share">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      </button>
     <a href="../app.html" class="cta-btn">See the weather →</a>
   </div>
 </div>
@@ -217,6 +222,16 @@ function getScore(d,mi){
   return m[0];
 }
 
+function bdwShareMap(){
+  var url=window.location.href;
+  var title=document.title||'BestDateWeather';
+  if(navigator.share){navigator.share({title:title,url:url}).catch(function(){});}
+  else if(navigator.clipboard){navigator.clipboard.writeText(url).then(function(){
+    var btn=document.querySelector('.share-btn');
+    if(btn){var old=btn.innerHTML;btn.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#c9a84c" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';setTimeout(function(){btn.innerHTML=old;},1500);}
+  }).catch(function(){});}
+  else{window.open('https://wa.me/?text='+encodeURIComponent(url),'_blank');}
+}
 // Language selector
 function toggleLangMenu(){
   var drop=document.getElementById('lang-drop');
