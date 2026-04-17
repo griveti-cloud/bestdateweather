@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Widget météo voyage gratuit — Intégrez BestDateWeather sur votre site</title>
+<meta name="description" content="Ajoutez gratuitement un widget météo scientifique sur votre blog voyage ou office de tourisme. Données ERA5 10 ans, 697 destinations, aucune inscription."/>
+<meta property="og:title" content="Widget météo voyage gratuit — BestDateWeather"/>
+<meta property="og:description" content="Données ERA5 sur 10 ans, 697 destinations mondiales. Intégration en 30 secondes."/>
+<link rel="canonical" href="https://bestdateweather.com/integrer-widget.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #f7f4ef;
+  --ink: #0f0d0a;
+  --gold: #c8922a;
+  --gold2: #a3741e;
+  --navy: #1a1f2e;
+  --muted: #6b6457;
+  --border: #e0d9ce;
+  --card: #fff;
+  --green: #2d7a4f;
+  --radius: 14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:100}
+.nav-brand{font-family:'DM Sans',sans-serif;font-weight:700;font-size:17px;text-decoration:none;color:var(--ink)}
+.nav-brand em{font-style:italic;color:var(--gold);font-family:'Playfair Display',serif}
+.nav-cta{background:var(--gold);color:#fff;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;transition:.15s}
+.nav-cta:hover{background:var(--gold2)}
+@media(max-width:600px){nav{padding:14px 20px}}
+
+/* HERO */
+.hero{max-width:960px;margin:0 auto;padding:72px 32px 56px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+@media(max-width:700px){.hero{grid-template-columns:1fr;padding:48px 20px 40px;gap:36px}}
+.hero-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--gold);margin-bottom:14px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(36px,4.5vw,54px);font-weight:900;line-height:1.08;margin-bottom:20px}
+.hero h1 span{color:var(--gold)}
+.hero-desc{font-size:16px;color:var(--muted);line-height:1.65;margin-bottom:28px}
+.hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+.badge{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 13px;font-size:12px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:5px}
+.badge-check{color:var(--green);font-weight:800}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:var(--gold);color:#fff;padding:13px 26px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:.15s}
+.btn-primary:hover{background:var(--gold2)}
+.btn-secondary{background:transparent;color:var(--ink);padding:13px 22px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;border:1.5px solid var(--border);transition:.15s}
+.btn-secondary:hover{border-color:var(--ink)}
+.hero-widget{display:flex;justify-content:center}
+.widget-preview{border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(15,13,10,.12),0 4px 16px rgba(15,13,10,.08);border:1px solid var(--border)}
+
+/* STATS BAR */
+.stats-bar{background:var(--navy);padding:28px 32px}
+.stats-inner{max-width:960px;margin:0 auto;display:flex;justify-content:space-around;gap:16px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-val{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:#f5d060;line-height:1}
+.stat-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.45);margin-top:4px}
+
+/* WHY SECTION */
+.section{max-width:960px;margin:0 auto;padding:64px 32px}
+@media(max-width:600px){.section{padding:48px 20px}}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--gold);margin-bottom:10px}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,38px);font-weight:900;line-height:1.15;margin-bottom:40px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:700px){.cards{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.card-icon{font-size:28px;margin-bottom:14px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* FOR WHO */
+.for-who{background:var(--navy);padding:64px 32px}
+.for-who-inner{max-width:960px;margin:0 auto}
+.for-who .section-label{color:#f5d060}
+.for-who .section-title{color:#fff;margin-bottom:32px}
+.who-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:600px){.who-grid{grid-template-columns:1fr}}
+.who-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px}
+.who-card h3{font-size:14px;font-weight:700;color:#fff;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.who-card p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.55}
+
+/* FORMATS */
+.formats{max-width:960px;margin:0 auto;padding:64px 32px}
+.format-tabs{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+.tab{background:var(--card);border:1.5px solid var(--border);border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s;color:var(--muted)}
+.tab.active,.tab:hover{background:var(--gold);border-color:var(--gold);color:#fff}
+.format-preview{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;display:flex;flex-direction:column;align-items:center;gap:24px}
+.format-iframe{border:none;border-radius:12px;display:block}
+.code-block{width:100%;max-width:640px}
+.code-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.code-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.copy-btn{background:var(--gold);color:#fff;border:none;padding:6px 16px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.15s}
+.copy-btn:hover{background:var(--gold2)}
+.copy-btn.copied{background:var(--green)}
+pre{background:#0f0d0a;color:#a8e6cf;font-size:12px;padding:16px;border-radius:10px;overflow-x:auto;line-height:1.7;white-space:pre-wrap;word-break:break-all}
+
+/* CONTACT */
+.contact{background:linear-gradient(135deg,#1a1f2e 0%,#2a1f0e 100%);padding:72px 32px;text-align:center}
+.contact-inner{max-width:560px;margin:0 auto}
+.contact h2{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,40px);color:#fff;margin-bottom:16px}
+.contact p{font-size:15px;color:rgba(255,255,255,.6);margin-bottom:36px;line-height:1.6}
+.contact-email{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#fff;padding:16px 32px;border-radius:12px;font-size:16px;font-weight:700;text-decoration:none;transition:.15s}
+.contact-email:hover{background:var(--gold2)}
+.contact-note{margin-top:20px;font-size:12px;color:rgba(255,255,255,.35);line-height:1.6}
+
+/* FOOTER */
+footer{background:var(--navy);padding:24px 32px;text-align:center}
+footer a{color:#f5d060;text-decoration:none;font-size:13px}
+footer span{color:rgba(255,255,255,.3);font-size:13px;margin:0 8px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="index.html">Best<em>Date</em>Weather</a>
+  <a class="nav-cta" href="#contact">Nous contacter</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-eyebrow">Partenaires &amp; intégration</div>
+    <h1>Le widget météo <span>le plus précis</span> pour votre site</h1>
+    <p class="hero-desc">Offrez à vos lecteurs des données climatiques scientifiques sur 10 ans — gratuitement, sans inscription, en 30 secondes.</p>
+    <div class="hero-badges">
+      <span class="badge"><span class="badge-check">✓</span>100% gratuit</span>
+      <span class="badge"><span class="badge-check">✓</span>Aucune inscription</span>
+      <span class="badge"><span class="badge-check">✓</span>697 destinations</span>
+      <span class="badge"><span class="badge-check">✓</span>Données ERA5 · 10 ans</span>
+    </div>
+    <div class="hero-actions">
+      <a class="btn-primary" href="widgets.html">🔧 Créer mon widget</a>
+      <a class="btn-secondary" href="#formats">Voir les formats</a>
+    </div>
+  </div>
+  <div class="hero-widget">
+    <div class="widget-preview">
+      <iframe src="widget/agadir-medium.html" width="400" height="220" scrolling="no" class="format-iframe" title="Widget météo Agadir"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-val">697</div><div class="stat-lbl">Destinations</div></div>
+    <div class="stat"><div class="stat-val">10</div><div class="stat-lbl">Ans de données ERA5</div></div>
+    <div class="stat"><div class="stat-val">5</div><div class="stat-lbl">Langues</div></div>
+    <div class="stat"><div class="stat-val">0€</div><div class="stat-lbl">Coût d'intégration</div></div>
+  </div>
+</div>
+
+<!-- WHY -->
+<div class="section">
+  <div class="section-label">Pourquoi intégrer BestDateWeather</div>
+  <div class="section-title">Un contenu de valeur,<br>zéro effort de maintenance</div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <div class="card-title">Données scientifiques</div>
+      <div class="card-desc">Basé sur ERA5, la réanalyse climatique de référence du ECMWF. 10 ans de données réelles, pas des estimations.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">Intégration en 30 secondes</div>
+      <div class="card-desc">Un simple <code>&lt;iframe&gt;</code> à copier-coller. Aucune clé API, aucun compte, aucune configuration.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎨</div>
+      <div class="card-title">5 formats adaptés</div>
+      <div class="card-desc">De la vignette compacte au widget large, en thème clair ou sombre. S'adapte à tous les designs.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌍</div>
+      <div class="card-title">Couverture mondiale</div>
+      <div class="card-desc">697 destinations sur les 5 continents, des Canaries à Bali, de New York à Cape Town.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">Toujours à jour</div>
+      <div class="card-desc">Les données sont mises à jour automatiquement. Vous intégrez une fois, vos lecteurs ont toujours les dernières données.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔗</div>
+      <div class="card-title">Lien naturel inclus</div>
+      <div class="card-desc">Chaque widget inclut un lien vers la fiche complète de la destination. Valeur ajoutée pour vos lecteurs.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOR WHO -->
+<div class="for-who">
+  <div class="for-who-inner">
+    <div class="section-label">Pour qui ?</div>
+    <div class="section-title">Idéal pour votre site</div>
+    <div class="who-grid">
+      <div class="who-card">
+        <h3>✈️ Blogs voyage</h3>
+        <p>Enrichissez vos articles de destination avec un bloc météo scientifique. Vos lecteurs savent quand partir avant de réserver.</p>
+      </div>
+      <div class="who-card">
+        <h3>🏛️ Offices de tourisme</h3>
+        <p>Donnez à vos visiteurs les données climatiques de votre destination sur 12 mois. Outil de planification crédible et gratuit.</p>
+      </div>
+      <div class="who-card">
+        <h3>🏨 Agences de voyage</h3>
+        <p>Réduisez les questions "quand partir ?" sur vos fiches destination. Un widget suffit à guider le client.</p>
+      </div>
+      <div class="who-card">
+        <h3>💻 Sites de nomades digitaux</h3>
+        <p>Vos lecteurs planifient leurs déplacements à l'avance. Les scores ERA5 sont la référence pour choisir une base nomade.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORMATS -->
+<div class="formats" id="formats">
+  <div class="section-label">Formats disponibles</div>
+  <div class="section-title">5 tailles, 2 thèmes</div>
+  <div class="format-tabs">
+    <button class="tab active" onclick="setFormat('compact')">Compact 320×165</button>
+    <button class="tab" onclick="setFormat('small')">Small 350×240</button>
+    <button class="tab" onclick="setFormat('medium')">Medium 400×220</button>
+    <button class="tab" onclick="setFormat('large')">Large 400×460</button>
+    <button class="tab" onclick="setFormat('wide')">Wide 600×200</button>
+  </div>
+  <div class="format-preview">
+    <iframe id="widget-demo" src="widget/agadir-compact.html" width="320" height="165" scrolling="no" class="format-iframe" title="Aperçu widget"></iframe>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">Code à copier</span>
+        <button class="copy-btn" id="copy-btn" onclick="copyCode()">Copier</button>
+      </div>
+      <pre id="code-display">&lt;iframe src="https://bestdateweather.com/widget/agadir-compact.html"
+  width="320" height="165"
+  scrolling="no" frameborder="0"
+  style="border-radius:12px;border:none"
+  title="Météo Agadir — BestDateWeather"&gt;
+&lt;/iframe&gt;</pre>
+    </div>
+    <p style="font-size:12px;color:var(--muted);text-align:center">Exemple avec Agadir — <a href="widgets.html" style="color:var(--gold);font-weight:600">choisissez votre destination →</a></p>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact" id="contact">
+  <div class="contact-inner">
+    <h2>Partenariat ou question ?</h2>
+    <p>Une destination manquante, un format personnalisé, ou une intégration plus avancée ? Écrivez-nous, nous répondons sous 24h.</p>
+    <a class="contact-email" href="mailto:contact@bestdateweather.com">
+      ✉️ contact@bestdateweather.com
+    </a>
+    <p class="contact-note">BestDateWeather est un projet indépendant basé à Chatou, France.<br>Micro-entreprise — données open-source ERA5 / Open-Meteo.</p>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html">Accueil</a>
+  <span>·</span>
+  <a href="widgets.html">Builder de widgets</a>
+  <span>·</span>
+  <a href="meilleures-destinations-meteo.html">Classements</a>
+</footer>
+
+<script>
+const FORMATS = {
+  compact: { w: 320, h: 165, label: 'compact' },
+  small:   { w: 350, h: 240, label: 'small' },
+  medium:  { w: 400, h: 220, label: 'medium' },
+  large:   { w: 400, h: 460, label: 'large' },
+  wide:    { w: 600, h: 200, label: 'wide' },
+};
+let curFormat = 'compact';
+const DEST = 'agadir';
+const DEST_LABEL = 'Agadir';
+
+function setFormat(fmt) {
+  curFormat = fmt;
+  const f = FORMATS[fmt];
+  const iframe = document.getElementById('widget-demo');
+  iframe.src = `widget/${DEST}-${f.label}.html`;
+  iframe.width = f.w;
+  iframe.height = f.h;
+  updateCode();
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.onclick.toString().includes(`'${fmt}'`)));
+}
+
+function getCode() {
+  const f = FORMATS[curFormat];
+  return `<iframe src="https://bestdateweather.com/widget/${DEST}-${f.label}.html"\n  width="${f.w}" height="${f.h}"\n  scrolling="no" frameborder="0"\n  style="border-radius:12px;border:none"\n  title="Météo ${DEST_LABEL} — BestDateWeather">\n</iframe>`;
+}
+
+function updateCode() {
+  document.getElementById('code-display').textContent = getCode();
+}
+
+function copyCode() {
+  navigator.clipboard.writeText(getCode()).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '✓ Copié !';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copier'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
