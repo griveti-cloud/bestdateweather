@@ -36,7 +36,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:18px 3
 
 /* HERO */
 .hero{max-width:960px;margin:0 auto;padding:72px 32px 56px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-@media(max-width:700px){.hero{grid-template-columns:1fr;padding:48px 20px 40px;gap:36px}}
+@media(max-width:700px){.hero{grid-template-columns:1fr;padding:48px 20px 40px;gap:36px}.hero-w-desktop{display:none!important}.hero-w-mobile{display:block!important}.hero-widget-wrap{display:flex;justify-content:center}}
 .hero-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--gold);margin-bottom:14px}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4.5vw,54px);font-weight:900;line-height:1.08;margin-bottom:20px;overflow-wrap:break-word;hyphens:auto}
 .hero h1 span{color:var(--gold)}
@@ -138,7 +138,10 @@ footer span{color:rgba(255,255,255,.3);font-size:13px;margin:0 8px}
   </div>
   <div class="hero-widget">
     <div class="widget-preview">
-      <div style="width:100%;overflow:hidden;border-radius:14px"><iframe src="widget/agadir-medium.html" width="400" height="340" scrolling="no" frameborder="0" style="width:400px;max-width:100%;display:block;transform-origin:top left;border:none" title="Widget météo Agadir" id="hero-widget-frame"></iframe></div>
+      <div class="hero-widget-wrap">
+  <iframe src="widget/agadir-medium.html" width="400" height="340" scrolling="no" frameborder="0" class="hero-w-desktop" title="Widget météo Agadir" style="border:none;border-radius:14px;display:block"></iframe>
+  <iframe src="widget/agadir-compact.html" width="320" height="165" scrolling="no" frameborder="0" class="hero-w-mobile" title="Widget météo Agadir" style="border:none;border-radius:14px;display:none"></iframe>
+</div>
     </div>
   </div>
 </div>
@@ -267,20 +270,6 @@ footer span{color:rgba(255,255,255,.3);font-size:13px;margin:0 8px}
 </footer>
 
 <script>
-// Scale hero widget to fit container
-function scaleHeroWidget() {
-  const frame = document.getElementById('hero-widget-frame');
-  if (!frame) return;
-  const container = frame.parentElement;
-  const containerW = container.offsetWidth;
-  const scale = Math.min(1, containerW / 400);
-  frame.style.transform = 'scale(' + scale + ')';
-  frame.style.transformOrigin = 'top left';
-  container.style.height = Math.round(340 * scale) + 'px';
-}
-scaleHeroWidget();
-window.addEventListener('resize', scaleHeroWidget);
-
 const FORMATS = {
   compact: { w: 320, h: 165, label: 'compact' },
   small:   { w: 350, h: 240, label: 'small' },
