@@ -958,7 +958,9 @@
     "region_world": "Mundo",
     "secu_all": "Todos los destinos",
     "budget_all": "Todos los presupuestos",
-    "tab_nomad": "💻 Nómadas digitales"
+    "tab_nomad": "💻 Nómadas digitales",
+    "map_href": "../es/mapa.html",
+    "map_nav_label": "🗺️ Mapa"
   },
   "ranking_footer": {
     "data_by": "Datos meteorológicos de Open-Meteo.com",

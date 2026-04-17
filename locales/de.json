@@ -963,7 +963,9 @@
     "region_world": "Weltweit",
     "secu_all": "Alle Ziele",
     "budget_all": "Alle Budgets",
-    "tab_nomad": "💻 Digitale Nomaden"
+    "tab_nomad": "💻 Digitale Nomaden",
+    "map_href": "../de/karte.html",
+    "map_nav_label": "🗺️ Karte"
   },
   "ranking_footer": {
     "data_by": "Wetterdaten von Open-Meteo.com",

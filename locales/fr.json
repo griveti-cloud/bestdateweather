@@ -958,7 +958,9 @@
     "region_world": "Monde",
     "secu_all": "Toutes destinations",
     "budget_all": "Tous budgets",
-    "tab_nomad": "💻 Nomades"
+    "tab_nomad": "💻 Nomades",
+    "map_href": "carte.html",
+    "map_nav_label": "🗺️ Carte"
   },
   "ranking_footer": {
     "data_by": "Données météo par Open-Meteo.com",
