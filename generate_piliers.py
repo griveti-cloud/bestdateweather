@@ -1191,8 +1191,8 @@ def _build_profile_bar(lang):
     """Build the profile bar HTML for a given language."""
     _profile_labels = {
         'fr': {
-            'balanced': '🌤️ Balanced', 'cool': '❄️ Prefer cool',
-            'warm': '🔥 Prefer warm', 'humid': '💧 Humidity sensitive',
+            'balanced': '🌤️ Équilibré', 'cool': '❄️ Préfère frais',
+            'warm': '🔥 Préfère chaud', 'humid': '💧 Sensible humidité',
             'tip_balanced': 'Confort optimal 22-28°C · Pluie pénalisée · Soleil valorisé',
             'tip_cool': 'Confort optimal 15-20°C · Chaleur rapidement pénalisée · Froid toléré',
             'tip_warm': 'Confort optimal 27-32°C · Froid fortement pénalisé · Chaleur tolérée',
@@ -1208,8 +1208,26 @@ def _build_profile_bar(lang):
             'tip_humid': 'Strong humidity penalty (dew > 14°C) · Warm nights penalized',
             'impact': 'Scores update in real time based on your profile.',
         },
+        'es': {
+            'balanced': '🌤️ Equilibrado', 'cool': '❄️ Prefiero frío',
+            'warm': '🔥 Prefiero calor', 'humid': '💧 Sensible humedad',
+            'tip_balanced': 'Confort óptimo 22-28°C · Penaliza lluvia · Valora sol',
+            'tip_cool': 'Confort óptimo 15-20°C · Calor penalizado · Frío tolerado',
+            'tip_warm': 'Confort óptimo 27-32°C · Frío muy penalizado · Calor tolerado',
+            'tip_humid': 'Penalización humedad reforzada (rocío > 14°C)',
+            'impact': 'Las puntuaciones se adaptan a tu perfil en tiempo real.',
+        },
+        'de': {
+            'balanced': '🌤️ Ausgewogen', 'cool': '❄️ Kühl bevorzugt',
+            'warm': '🔥 Warm bevorzugt', 'humid': '💧 Feuchtigkeitssensibel',
+            'tip_balanced': 'Optimaler Komfort 22-28°C · Regen bestraft · Sonne bewertet',
+            'tip_cool': 'Optimaler Komfort 15-20°C · Hitze früh bestraft · Kälte toleriert',
+            'tip_warm': 'Optimaler Komfort 27-32°C · Kälte stark bestraft · Hitze toleriert',
+            'tip_humid': 'Verstärkte Feuchtigkeitsstrafe (Taupunkt > 14°C)',
+            'impact': 'Bewertungen passen sich in Echtzeit an Ihr Profil an.',
+        },
     }
-    _pl = _profile_labels.get('fr' if lang == 'fr' else 'en', _profile_labels['en'])
+    _pl = _profile_labels.get(lang if lang in _profile_labels else 'en', _profile_labels['en'])
     return (
         f'<div class="profile-bar">'
         + f'<button class="profile-chip active" data-prof="balanced" onclick="setProfile(&quot;balanced&quot;)">{_pl["balanced"]}<span class="pchip-info">{_pl["tip_balanced"]}</span></button>'
