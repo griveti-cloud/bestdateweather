@@ -111,72 +111,72 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   <div class="dd" id="dd-m">
     <button class="dd-btn sel" id="dd-m-btn" onclick="openDD('m')">Jährlich <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-m-menu">
-      <div class="dd-item" onclick="pickMonth(12)">Jährlich</div>
-      <div class="dd-item" onclick="pickMonth(0)">Januar</div>
-      <div class="dd-item" onclick="pickMonth(1)">Februar</div>
-      <div class="dd-item" onclick="pickMonth(2)">März</div>
-      <div class="dd-item on" onclick="pickMonth(3)">April</div>
-      <div class="dd-item" onclick="pickMonth(4)">Mai</div>
-      <div class="dd-item" onclick="pickMonth(5)">Juni</div>
-      <div class="dd-item" onclick="pickMonth(6)">Juli</div>
-      <div class="dd-item" onclick="pickMonth(7)">August</div>
-      <div class="dd-item" onclick="pickMonth(8)">September</div>
-      <div class="dd-item" onclick="pickMonth(9)">Oktober</div>
-      <div class="dd-item" onclick="pickMonth(10)">November</div>
-      <div class="dd-item" onclick="pickMonth(11)">Dezember</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMonth(12)">Jährlich</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMonth(0)">Januar</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMonth(1)">Februar</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMonth(2)">März</div>
+      <div class="dd-item on" onclick="event.stopPropagation();pickMonth(3)">April</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMonth(4)">Mai</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMonth(5)">Juni</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMonth(6)">Juli</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMonth(7)">August</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMonth(8)">September</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMonth(9)">Oktober</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMonth(10)">November</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMonth(11)">Dezember</div>
     </div>
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-mode">
     <button class="dd-btn" id="dd-mode-btn" onclick="openDD('mode')">☀️ Allgemeines Wetter <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-mode-menu">
-      <div class="dd-item on" onclick="pickMode('gen',"\u2600\ufe0f Allgemeines Wetter")">☀️ Allgemeines Wetter</div>
-      <div class="dd-item" onclick="pickMode('beach',"\ud83c\udfd6\ufe0f Strand")">🏖️ Strand</div>
-      <div class="dd-item" onclick="pickMode('ski',"\u26f7\ufe0f Ski")">⛷️ Ski</div>
-      <div class="dd-item" onclick="pickMode('nomad',"\ud83d\udcbb Digitale Nomaden")">💻 Digitale Nomaden</div>
+      <div class="dd-item on" onclick="event.stopPropagation();pickMode('gen',"\u2600\ufe0f Allgemeines Wetter")">☀️ Allgemeines Wetter</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMode('beach',"\ud83c\udfd6\ufe0f Strand")">🏖️ Strand</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMode('ski',"\u26f7\ufe0f Ski")">⛷️ Ski</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMode('nomad',"\ud83d\udcbb Digitale Nomaden")">💻 Digitale Nomaden</div>
     </div>
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-prof">
     <button class="dd-btn" id="dd-prof-btn" onclick="openDD('prof')">🌤️ Ausgewogen <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-prof-menu">
-      <div class="dd-item on" onclick="pickProf('bal',"\ud83c\udf24\ufe0f Ausgewogen")">🌤️ Ausgewogen</div>
-      <div class="dd-item" onclick="pickProf('cool',"\u2744\ufe0f K\u00fchl bevorzugt")">❄️ Kühl bevorzugt</div>
-      <div class="dd-item" onclick="pickProf('warm',"\ud83d\udd25 Warm bevorzugt")">🔥 Warm bevorzugt</div>
-      <div class="dd-item" onclick="pickProf('hum',"\ud83d\udca7 Feuchtigkeitssensibel")">💧 Feuchtigkeitssensibel</div>
+      <div class="dd-item on" onclick="event.stopPropagation();pickProf('bal',"\ud83c\udf24\ufe0f Ausgewogen")">🌤️ Ausgewogen</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickProf('cool',"\u2744\ufe0f K\u00fchl bevorzugt")">❄️ Kühl bevorzugt</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickProf('warm',"\ud83d\udd25 Warm bevorzugt")">🔥 Warm bevorzugt</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickProf('hum',"\ud83d\udca7 Feuchtigkeitssensibel")">💧 Feuchtigkeitssensibel</div>
     </div>
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-rl">
     <button class="dd-btn" id="dd-rl-btn" onclick="openDD('rl')">SICHER. <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-rl-menu">
-      <div class="dd-item on" onclick="pickRL(4)">Alle Ziele</div>
-      <div class="dd-item" onclick="pickRL(1)">≤ 🟢 Normal</div>
-      <div class="dd-item" onclick="pickRL(2)">≤ 🟡 Erhöht</div>
-      <div class="dd-item" onclick="pickRL(3)">≤ 🟠 Nicht empfohlen</div>
+      <div class="dd-item on" onclick="event.stopPropagation();pickRL(4)">Alle Ziele</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickRL(1)">≤ 🟢 Normal</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickRL(2)">≤ 🟡 Erhöht</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickRL(3)">≤ 🟠 Nicht empfohlen</div>
     </div>
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-bi">
     <button class="dd-btn" id="dd-bi-btn" onclick="openDD('bi')">BUDGET <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-bi-menu">
-      <div class="dd-item on" onclick="pickBI(5)">Alle Budgets</div>
-      <div class="dd-item" onclick="pickBI(1)">≤ 💚 Günstig</div>
-      <div class="dd-item" onclick="pickBI(2)">≤ 💛 Erschwinglich</div>
-      <div class="dd-item" onclick="pickBI(3)">≤ 🟡 Moderat</div>
-      <div class="dd-item" onclick="pickBI(4)">≤ 🟠 Teuer</div>
+      <div class="dd-item on" onclick="event.stopPropagation();pickBI(5)">Alle Budgets</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickBI(1)">≤ 💚 Günstig</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickBI(2)">≤ 💛 Erschwinglich</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickBI(3)">≤ 🟡 Moderat</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickBI(4)">≤ 🟠 Teuer</div>
     </div>
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-min">
     <button class="dd-btn" id="dd-min-btn" onclick="openDD('min')">★ Min. Score <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-min-menu">
-      <div class="dd-item on" onclick="pickMin(0)">Alle Scores</div>
-      <div class="dd-item" onclick="pickMin(5)">≥ 5.0</div>
-      <div class="dd-item" onclick="pickMin(6)">≥ 6.0</div>
-      <div class="dd-item" onclick="pickMin(7)">≥ 7.0</div>
-      <div class="dd-item" onclick="pickMin(8)">≥ 8.0</div>
-      <div class="dd-item" onclick="pickMin(9)">≥ 9.0</div>
+      <div class="dd-item on" onclick="event.stopPropagation();pickMin(0)">Alle Scores</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMin(5)">≥ 5.0</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMin(6)">≥ 6.0</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMin(7)">≥ 7.0</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMin(8)">≥ 8.0</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMin(9)">≥ 9.0</div>
     </div>
   </div>
 </div>
