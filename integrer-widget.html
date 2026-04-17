@@ -223,17 +223,17 @@ footer span{color:rgba(255,255,255,.3);font-size:13px;margin:0 8px}
 <!-- FORMATS -->
 <div class="formats" id="formats">
   <div class="section-label">Formats disponibles</div>
-  <div class="section-title">5 formats : du compact au large</div>
-  <div style="display:flex;gap:16px;margin-bottom:16px;font-size:12px;flex-wrap:wrap">
-  <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:14px;height:14px;background:#0f172a;border-radius:3px"></span><strong>Compact</strong> — thème sombre</span>
-  <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:14px;height:14px;background:#fff;border:1px solid #ccc;border-radius:3px"></span><strong>Small→Wide</strong> — thème clair</span>
-</div>
-<div class="format-tabs">
+  <div class="section-title">5 formats, 2 thèmes</div>
+  <div class="format-tabs">
     <button class="tab active" onclick="setFormat('compact')">Compact 320×165</button>
     <button class="tab" onclick="setFormat('small')">Small 350×240</button>
     <button class="tab" onclick="setFormat('medium')">Medium 400×220</button>
     <button class="tab" onclick="setFormat('large')">Large 400×460</button>
     <button class="tab" onclick="setFormat('wide')">Wide 600×200</button>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:24px">
+    <button class="tab active" id="theme-light" onclick="setTheme('light')" style="font-size:12px">☀️ Thème clair</button>
+    <button class="tab" id="theme-dark" onclick="setTheme('dark')" style="font-size:12px">🌙 Thème sombre</button>
   </div>
   <div class="format-preview">
     <iframe id="widget-demo" src="widget/agadir-compact.html" width="320" height="165" scrolling="no" class="format-iframe" title="Aperçu widget"></iframe>
@@ -282,23 +282,42 @@ const FORMATS = {
   wide:    { w: 600, h: 200, label: 'wide' },
 };
 let curFormat = 'compact';
+let curTheme = 'light';
 const DEST = 'agadir';
 const DEST_LABEL = 'Agadir';
 
-function setFormat(fmt) {
-  curFormat = fmt;
-  const f = FORMATS[fmt];
+function updateDemo() {
+  const f = FORMATS[curFormat];
+  const suf = getSuffix();
   const iframe = document.getElementById('widget-demo');
-  iframe.src = `widget/${DEST}-${f.label}.html`;
+  iframe.src = `widget/${DEST}-${f.label}${suf}.html`;
   iframe.width = f.w;
   iframe.height = f.h;
   updateCode();
-  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.onclick.toString().includes(`'${fmt}'`)));
+}
+
+function setFormat(fmt) {
+  curFormat = fmt;
+  document.querySelectorAll('.format-tabs .tab').forEach(t => t.classList.toggle('active', t.onclick.toString().includes(`'${fmt}'`)));
+  updateDemo();
+}
+
+function getSuffix() {
+  if (curFormat === 'compact') return '';  // compact toujours dark
+  return curTheme === 'dark' ? '-dark' : '';
 }
 
 function getCode() {
   const f = FORMATS[curFormat];
-  return `<iframe src="https://bestdateweather.com/widget/${DEST}-${f.label}.html"\n  width="${f.w}" height="${f.h}"\n  scrolling="no" frameborder="0"\n  style="border-radius:12px;border:none"\n  title="Météo ${DEST_LABEL} — BestDateWeather">\n</iframe>`;
+  const suf = getSuffix();
+  return `<iframe src="https://bestdateweather.com/widget/${DEST}-${f.label}${suf}.html"\n  width="${f.w}" height="${f.h}"\n  scrolling="no" frameborder="0"\n  style="border-radius:12px;border:none"\n  title="Météo ${DEST_LABEL} — BestDateWeather">\n</iframe>`;
+}
+
+function setTheme(theme) {
+  curTheme = theme;
+  document.getElementById('theme-light').classList.toggle('active', theme === 'light');
+  document.getElementById('theme-dark').classList.toggle('active', theme === 'dark');
+  updateDemo();
 }
 
 function updateCode() {
