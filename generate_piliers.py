@@ -1380,9 +1380,11 @@ def generate_annual_page(lang, dests, climate, country_info=None):
     rank_js = (
         '<script>(function(){'+
         f'var POOL={pool_json};'+
-        'var TOP=25;var CUR_REG="all";var CUR_RL=4;var CUR_BI=5;'+
+        'var TOP=25;var CUR_REG="all";var CUR_RL=4;var CUR_BI=5;var CUR_PROF="balanced";'+
         f'var TH_GEN="{_e(th_score_gen)}",TH_BEACH="{_e(th_score_beach)}",TH_SKI="{_e(th_score_ski)}";'+
-        f'var NO_BEACH="{_e(no_beach_msg)}",NO_SKI="{_e(no_ski_msg)}",NO_METEO="{_e(no_meteo_msg)}";'+
+        f'var NO_BEACH="{_e(no_beach_msg)}",NO_SKI="{_e(no_ski_msg)}",NO_METEO="{_e(no_meteo_msg)}",NO_NOMAD="—";'+
+        'function _profScore(){return 0;}'+
+
         'function sc(s){return s>=8.6?"#1a7a4a":s>=7.6?"#2d9e60":s>=6.3?"#84cc16":s>=5?"#f59e0b":s>=3.5?"#f97316":"#ef4444";}'+
         'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'+
         'function render(mode){'+
