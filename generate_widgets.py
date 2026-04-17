@@ -109,6 +109,26 @@ def wrap(body, w, bg='#fff', border='#e2e8f0'):
             f'background:{bg};border:1px solid {border};border-radius:12px;overflow:hidden;width:{w}px}}</style>'
             f'</head><body>{body}</body></html>')
 
+def wrap_dark(body, w):
+    return wrap(body, w, '#0f172a', '#1e293b')
+
+def dark_style(html):
+    """Convert light widget HTML to dark theme."""
+    return (html
+        .replace('background:#fff', 'background:#0f172a')
+        .replace('background:#f8fafc', 'background:#1a2236')
+        .replace('background:#f1f5f9', 'background:#1e293b')
+        .replace('border-bottom:1px solid #f1f5f9', 'border-bottom:1px solid #1e293b')
+        .replace('border:1px solid #e2e8f0', 'border:1px solid #1e293b')
+        .replace('border-bottom:1px solid #e2e8f0', 'border-bottom:1px solid #1e293b')
+        .replace('color:#0f172a', 'color:#f1f5f9')
+        .replace('color:#1e293b', 'color:#f1f5f9')
+        .replace('color:#64748b', 'color:#94a3b8')
+        .replace('color:#94a3b8', 'color:#64748b')
+        .replace('color:#cbd5e1', 'color:#475569')
+        .replace('background:#f1f5f9;color:#64748b', 'background:#1e293b;color:#94a3b8')
+    )
+
 # ─── 5 formats ───────────────────────────────────────────────────────────────
 
 def gen_compact(d):
@@ -243,6 +263,10 @@ def main():
             if html:
                 (out/f'{slug}-{fmt}.html').write_text(html, encoding='utf-8')
                 counts[fmt] += 1
+                # Générer aussi la version dark pour les formats light
+                if fmt != 'compact':  # compact est déjà dark
+                    html_dark = dark_style(html)
+                    (out/f'{slug}-{fmt}-dark.html').write_text(html_dark, encoding='utf-8')
     for fmt,n in counts.items():
         print(f'✅ {n:4d} {fmt}')
 
