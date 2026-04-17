@@ -16,10 +16,10 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .back:hover{color:white}
 .controls{position:fixed;top:52px;left:0;right:0;z-index:900;background:rgba(26,31,46,.97);border-bottom:1px solid rgba(255,255,255,.06);padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .clabel{font-size:11px;font-weight:600;color:#5a6c7d;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
-.mtabs{display:flex;gap:3px;flex-wrap:wrap}
-.mtab{padding:5px 9px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.55);transition:all .12s}
-.mtab:hover{border-color:#c9a84c;color:white}
-.mtab.on{background:#c9a84c;border-color:#c9a84c;color:#1a1f2e;font-weight:700}
+
+
+
+
 .sep{width:1px;height:22px;background:rgba(255,255,255,.1)}
 .stat{font-size:12px;color:rgba(255,255,255,.45);white-space:nowrap}
 .stat b{color:white}
@@ -68,34 +68,36 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   <a href="/en/app.html" class="back">← Rankings</a>
 </div>
 <div class="controls">
-  <span class="clabel">Month</span>
-  <div class="mtabs" id="mtabs"></div>
+  <div class="fdrop" id="dd-month" style="flex-shrink:0">
+    <button class="fdrop-btn" id="dd-month-btn" onclick="toggleDD('month')" style="border-color:rgba(255,255,255,.25)">Apr <span class="arr">▾</span></button>
+    <div class="fdrop-menu"><div class="fdrop-item" data-val="0" onclick="setCurMonth(0);closeDD()">January</div><div class="fdrop-item" data-val="1" onclick="setCurMonth(1);closeDD()">February</div><div class="fdrop-item" data-val="2" onclick="setCurMonth(2);closeDD()">March</div><div class="fdrop-item" data-val="3" onclick="setCurMonth(3);closeDD()">April</div><div class="fdrop-item" data-val="4" onclick="setCurMonth(4);closeDD()">May</div><div class="fdrop-item" data-val="5" onclick="setCurMonth(5);closeDD()">June</div><div class="fdrop-item" data-val="6" onclick="setCurMonth(6);closeDD()">July</div><div class="fdrop-item" data-val="7" onclick="setCurMonth(7);closeDD()">August</div><div class="fdrop-item" data-val="8" onclick="setCurMonth(8);closeDD()">September</div><div class="fdrop-item" data-val="9" onclick="setCurMonth(9);closeDD()">October</div><div class="fdrop-item" data-val="10" onclick="setCurMonth(10);closeDD()">November</div><div class="fdrop-item" data-val="11" onclick="setCurMonth(11);closeDD()">December</div>    </div>
+  </div>
   <div class="sep"></div>
   <div class="stat">Showing <b id="sc">697</b> destinations</div>
   <div class="stat">Top score <b id="sb">—</b>/10</div>
 </div>
 <div class="filters" id="filters">
   <div class="fdrop" id="dd-mode">
-    <button class="fdrop-btn" onclick="toggleDD('mode')">🌤 General <span class="arr">▾</span></button>
+    <button class="fdrop-btn" id="dd-mode-btn" onclick="toggleDD('mode')">🌤 General <span class="arr">▾</span></button>
     <div class="fdrop-menu">
-      <div class="fdrop-item sel" onclick="setMode('gen');closeDD()">🌤 General</div>
-      <div class="fdrop-item" onclick="setMode('beach');closeDD()">🏖 Beach</div>
-      <div class="fdrop-item" onclick="setMode('ski');closeDD()">⛷ Ski</div>
+      <div class="fdrop-item sel" data-val="gen" onclick="setMode('gen');closeDD()">🌤 General</div>
+      <div class="fdrop-item" data-val="beach" onclick="setMode('beach');closeDD()">🏖 Beach</div>
+      <div class="fdrop-item" data-val="ski" onclick="setMode('ski');closeDD()">⛷ Ski</div>
     </div>
   </div>
   <div class="fsep"></div>
   <div class="fdrop" id="dd-prof">
-    <button class="fdrop-btn" onclick="toggleDD('prof')">🌤 Balanced <span class="arr">▾</span></button>
+    <button class="fdrop-btn" id="dd-prof-btn" onclick="toggleDD('prof')">🌤 Balanced <span class="arr">▾</span></button>
     <div class="fdrop-menu">
-      <div class="fdrop-item sel" onclick="setProf('bal');closeDD()">🌤 Balanced</div>
-      <div class="fdrop-item" onclick="setProf('cool');closeDD()">❄️ Prefer cool</div>
-      <div class="fdrop-item" onclick="setProf('warm');closeDD()">🔥 Prefer warm</div>
-      <div class="fdrop-item" onclick="setProf('hum');closeDD()">💧 Humidity sensitive</div>
+      <div class="fdrop-item sel" data-val="bal" onclick="setProf('bal');closeDD()">🌤 Balanced</div>
+      <div class="fdrop-item" data-val="cool" onclick="setProf('cool');closeDD()">❄️ Prefer cool</div>
+      <div class="fdrop-item" data-val="warm" onclick="setProf('warm');closeDD()">🔥 Prefer warm</div>
+      <div class="fdrop-item" data-val="hum" onclick="setProf('hum');closeDD()">💧 Humidity sensitive</div>
     </div>
   </div>
   <div class="fsep"></div>
   <div class="fdrop" id="dd-rl">
-    <button class="fdrop-btn" onclick="toggleDD('rl')">🛡 Safety: All <span class="arr">▾</span></button>
+    <button class="fdrop-btn" id="dd-rl-btn" onclick="toggleDD('rl')">🛡 Safety: All <span class="arr">▾</span></button>
     <div class="fdrop-menu">
       <div class="fdrop-item sel" onclick="setRL(4);closeDD()">All destinations</div>
       <div class="fdrop-item" onclick="setRL(2);closeDD()">🟢 Safe only</div>
@@ -104,7 +106,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   </div>
   <div class="fsep"></div>
   <div class="fdrop" id="dd-bi">
-    <button class="fdrop-btn" onclick="toggleDD('bi')">💰 Budget: All <span class="arr">▾</span></button>
+    <button class="fdrop-btn" id="dd-bi-btn" onclick="toggleDD('bi')">💰 Budget: All <span class="arr">▾</span></button>
     <div class="fdrop-menu">
       <div class="fdrop-item sel" onclick="setBI(5);closeDD()">All budgets</div>
       <div class="fdrop-item" onclick="setBI(2);closeDD()">💚 Budget friendly</div>
@@ -206,17 +208,7 @@ function render(mi){
   document.getElementById('sb').textContent=best>0?best.toFixed(1):'—';
 }
 
-var tabs=document.getElementById('mtabs');
-MN.forEach(function(m,i){
-  var b=document.createElement('button');
-  b.className='mtab'+(i===cur?' on':'');
-  b.textContent=m;
-  b.onclick=function(){
-    document.querySelectorAll('.mtab').forEach(function(x){x.classList.remove('on');});
-    b.classList.add('on');cur=i;render(i);map.closePopup();
-  };
-  tabs.appendChild(b);
-});
+updateMonthLabel(cur);
 render(cur);
 </script>
 </body>
