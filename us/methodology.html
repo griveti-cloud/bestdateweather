@@ -299,7 +299,31 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  </section>
 
  <!-- 5. ANNUAL REFERENCE SCORE -->
- <section class="section" id="annual-score">
+ 
+ <!-- PERSONAL COMFORT PROFILES -->
+ <section class="section" id="comfort-profiles">
+ <div class="section-num">4b</div>
+ <h2>Personal comfort profiles</h2>
+ <p>On monthly ranking pages, four comfort profiles let you refine the ranking based on your personal temperature and humidity preferences. These profiles are independent of activity profiles (General/Beach/Ski).</p>
+
+ <h3>The four profiles</h3>
+ <div class="card-grid">
+  <div class="card-mini"><div class="label">🌤️ Balanced</div><div class="sub">Optimal comfort between 72–82°F. Balanced weighting of rain, sunshine, and humidity. Default reference.</div></div>
+  <div class="card-mini"><div class="label">❄️ Prefer cool</div><div class="sub">Ideal temperature between 59–68°F. Heat is penalized above 77°F, mild cold is tolerated. For travelers sensitive to heat.</div></div>
+  <div class="card-mini"><div class="label">🔥 Prefer warm</div><div class="sub">Ideal temperature between 81–90°F. Cold is heavily penalized, dry heat is tolerated. For travelers who dislike the cold.</div></div>
+  <div class="card-mini"><div class="label">💧 Humidity sensitive</div><div class="sub">Increased humidity penalty when dew point exceeds 57°F. Warm, humid nights are also penalized.</div></div>
+ </div>
+
+ <h3>Extreme dryness penalty</h3>
+ <p>A specific adjustment applies to very dry climates: when calculated relative humidity is below 30% and maximum temperature exceeds 77°F (typical cases: Marrakech in summer, Las Vegas in July), a penalty is applied to the score. Extremely dry air at high temperatures can be uncomfortable for most travelers despite near-zero precipitation.</p>
+
+ <div class="callout green">
+ <div class="callout-ico">✓</div>
+ <div class="callout-body">Switching profiles updates scores and ranking in real time, without page reload. The Balanced profile exactly matches the default reference score.</div>
+ </div>
+ </section>
+
+<section class="section" id="annual-score">
  <div class="section-num">5</div>
  <h2>Annual reference score by destination</h2>
  <p>For destinations in the catalogue (climate guides), each month of the year has a <strong>reference score</strong> distinct from the app score. This score reflects the month's intrinsic climate attractiveness, independent of any activity profile.</p>

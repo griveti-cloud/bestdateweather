@@ -321,7 +321,31 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  </div>
  </section>
 
- <!-- 4b. SCORE ANNUEL DE RÉFÉRENCE -->
+ 
+ <!-- 4b. PROFILS DE CONFORT PERSONNEL -->
+ <section class="section" id="profils-confort">
+ <div class="section-num">4b</div>
+ <h2>Profils de confort personnel</h2>
+ <p>Sur les pages classements par mois, quatre profils de confort permettent d'affiner le tri selon vos préférences personnelles de température et d'humidité. Ces profils sont indépendants des profils d'activité (Général/Plage/Ski).</p>
+
+ <h3>Les quatre profils</h3>
+ <div class="card-grid">
+  <div class="card-mini"><div class="label">🌤️ Standard</div><div class="sub">Confort optimal entre 22 et 28°C. Prise en compte équilibrée de la pluie, du soleil et de l'humidité. Référence par défaut.</div></div>
+  <div class="card-mini"><div class="label">❄️ Frais</div><div class="sub">Température idéale entre 15 et 20°C. La chaleur est pénalisée dès 25°C, le froid modéré est toléré. Pour les voyageurs sensibles à la chaleur.</div></div>
+  <div class="card-mini"><div class="label">🔥 Chaud</div><div class="sub">Température idéale entre 27 et 32°C. Le froid est fortement pénalisé, la chaleur sèche est tolérée. Pour les voyageurs qui fuient le froid.</div></div>
+  <div class="card-mini"><div class="label">💧 Sec</div><div class="sub">Pénalité d'humidité renforcée dès que le point de rosée dépasse 14°C. Les nuits chaudes et humides sont également pénalisées.</div></div>
+ </div>
+
+ <h3>Pénalité sécheresse extrême</h3>
+ <p>Un ajustement spécifique s'applique aux destinations à climat très sec : lorsque l'humidité relative calculée est inférieure à 30% et que la température maximale dépasse 25°C (cas typiques : Marrakech en été, Las Vegas en juillet), une pénalité est appliquée au score. L'air extrêmement sec à haute température peut être inconfortable pour la majorité des voyageurs malgré des précipitations quasi nulles.</p>
+
+ <div class="callout green">
+ <div class="callout-ico">✓</div>
+ <div class="callout-body">Le changement de profil met à jour les scores et le tri en temps réel, sans rechargement de page. Le profil Standard correspond exactement au score de référence affiché par défaut.</div>
+ </div>
+ </section>
+
+<!-- 4b. SCORE ANNUEL DE RÉFÉRENCE -->
  <section class="section" id="score-annuel">
  <div class="section-num">5</div>
  <h2>Score de référence annuel par destination</h2>

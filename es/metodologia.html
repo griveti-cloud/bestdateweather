@@ -293,7 +293,31 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  </div>
  </section>
 
- <section class="section" id="puntuacion-anual">
+ 
+ <!-- PERFILES DE CONFORT PERSONAL -->
+ <section class="section" id="perfiles-confort">
+ <div class="section-num">4b</div>
+ <h2>Perfiles de confort personal</h2>
+ <p>En las páginas de clasificación mensual, cuatro perfiles de confort permiten ajustar el ranking según tus preferencias personales de temperatura y humedad. Estos perfiles son independientes de los perfiles de actividad (General/Playa/Esquí).</p>
+
+ <h3>Los cuatro perfiles</h3>
+ <div class="card-grid">
+  <div class="card-mini"><div class="label">🌤️ Estándar</div><div class="sub">Confort óptimo entre 22 y 28°C. Ponderación equilibrada de lluvia, sol y humedad. Referencia predeterminada.</div></div>
+  <div class="card-mini"><div class="label">❄️ Fresco</div><div class="sub">Temperatura ideal entre 15 y 20°C. El calor se penaliza por encima de 25°C, el frío moderado es tolerado. Para viajeros sensibles al calor.</div></div>
+  <div class="card-mini"><div class="label">🔥 Cálido</div><div class="sub">Temperatura ideal entre 27 y 32°C. El frío se penaliza fuertemente, el calor seco es tolerado. Para viajeros que huyen del frío.</div></div>
+  <div class="card-mini"><div class="label">💧 Sensible humedad</div><div class="sub">Penalización de humedad reforzada cuando el punto de rocío supera los 14°C. Las noches cálidas y húmedas también se penalizan.</div></div>
+ </div>
+
+ <h3>Penalización por sequedad extrema</h3>
+ <p>Un ajuste específico se aplica a los climas muy secos: cuando la humedad relativa calculada es inferior al 30% y la temperatura máxima supera los 25°C (casos típicos: Marrakech en verano, Las Vegas en julio), se aplica una penalización a la puntuación. El aire extremadamente seco a altas temperaturas puede ser incómodo para la mayoría de los viajeros a pesar de las precipitaciones casi nulas.</p>
+
+ <div class="callout green">
+ <div class="callout-ico">✓</div>
+ <div class="callout-body">Cambiar de perfil actualiza las puntuaciones y la clasificación en tiempo real, sin recargar la página. El perfil Estándar corresponde exactamente a la puntuación de referencia predeterminada.</div>
+ </div>
+ </section>
+
+<section class="section" id="puntuacion-anual">
  <div class="section-num">5</div>
  <h2>Puntuación de referencia anual por destino</h2>
  <p>Para los destinos del catálogo (guías climáticas), cada mes del año tiene una <strong>puntuación de referencia</strong> distinta de la puntuación de la app. Esta puntuación refleja el atractivo climático intrínseco del mes, independientemente de cualquier perfil de actividad.</p>
