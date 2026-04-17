@@ -90,7 +90,8 @@
     "HERO_H1": "What weather <em>for your trip?</em>",
     "HERO_SUB": "Climate score /10 · 697 worldwide destinations · up to 1 year ahead · 10 years of ERA5 data",
     "USP_HORIZON": "1 year ahead",
-    "UI_GUIDES_SUB": "Climate tables · best time to visit · monthly weather"
+    "UI_GUIDES_SUB": "Climate tables · best time to visit · monthly weather",
+    "UI_WIDGET_LINK": "Widget for your site"
   },
   "months": [
     "January",
