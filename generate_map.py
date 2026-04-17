@@ -185,26 +185,26 @@ def generate_map_page(lang, map_data_js, world_json, clabels_json, clabels_by_la
 
     # Month items
     month_items = '\n'.join(
-        f'      <div class="dd-item{" on" if i==3 else ""}" onclick="pickMonth({i})">{months_full[i]}</div>'
+        f'      <div class="dd-item{" on" if i==3 else ""}" onclick="event.stopPropagation();pickMonth({i})">{months_full[i]}</div>'
         for i in range(12)
     )
-    month_items = f'      <div class="dd-item" onclick="pickMonth(12)">{m["map_annual"]}</div>\n' + month_items
+    month_items = f'      <div class="dd-item" onclick="event.stopPropagation();pickMonth(12)">{m["map_annual"]}</div>\n' + month_items
 
     # Safety items
-    secu_items = f'      <div class="dd-item on" onclick="pickRL(4)">{secu_all}</div>\n'
+    secu_items = f'      <div class="dd-item on" onclick="event.stopPropagation();pickRL(4)">{secu_all}</div>\n'
     for r in [1,2,3]:
-        secu_items += f'      <div class="dd-item" onclick="pickRL({r})">≤ {sl.get(str(r), str(r))}</div>\n'
+        secu_items += f'      <div class="dd-item" onclick="event.stopPropagation();pickRL({r})">≤ {sl.get(str(r), str(r))}</div>\n'
 
     # Budget items
-    budget_items = f'      <div class="dd-item on" onclick="pickBI(5)">{budget_all}</div>\n'
+    budget_items = f'      <div class="dd-item on" onclick="event.stopPropagation();pickBI(5)">{budget_all}</div>\n'
     for b in [1,2,3,4]:
-        budget_items += f'      <div class="dd-item" onclick="pickBI({b})">≤ {bl.get(str(b), str(b))}</div>\n'
+        budget_items += f'      <div class="dd-item" onclick="event.stopPropagation();pickBI({b})">≤ {bl.get(str(b), str(b))}</div>\n'
 
     # Min score items
     all_scores_lbl = m['map_all_scores']
-    min_items = f'      <div class="dd-item on" onclick="pickMin(0)">{all_scores_lbl}</div>\n'
+    min_items = f'      <div class="dd-item on" onclick="event.stopPropagation();pickMin(0)">{all_scores_lbl}</div>\n'
     for s in [5,6,7,8,9]:
-        min_items += f'      <div class="dd-item" onclick="pickMin({s})">≥ {s}.0</div>\n'
+        min_items += f'      <div class="dd-item" onclick="event.stopPropagation();pickMin({s})">≥ {s}.0</div>\n'
 
     # Secu/Budget label strings for JS
     secu_labels_js = json.dumps({str(r): sl.get(str(r),'') for r in [1,2,3]}, ensure_ascii=False)
@@ -316,20 +316,20 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
   <div class="dd" id="dd-mode">
     <button class="dd-btn" id="dd-mode-btn" onclick="openDD('mode')">{tab_gen} <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-mode-menu">
-      <div class="dd-item on" onclick="pickMode('gen',{json.dumps(tab_gen)})">{tab_gen}</div>
-      <div class="dd-item" onclick="pickMode('beach',{json.dumps(tab_beach)})">{tab_beach}</div>
-      <div class="dd-item" onclick="pickMode('ski',{json.dumps(tab_ski)})">{tab_ski}</div>
-      <div class="dd-item" onclick="pickMode('nomad',{json.dumps(tab_nomad)})">{tab_nomad}</div>
+      <div class="dd-item on" onclick="event.stopPropagation();pickMode('gen',{json.dumps(tab_gen)})">{tab_gen}</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMode('beach',{json.dumps(tab_beach)})">{tab_beach}</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMode('ski',{json.dumps(tab_ski)})">{tab_ski}</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickMode('nomad',{json.dumps(tab_nomad)})">{tab_nomad}</div>
     </div>
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-prof">
     <button class="dd-btn" id="dd-prof-btn" onclick="openDD('prof')">{pl['bal']} <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-prof-menu">
-      <div class="dd-item on" onclick="pickProf('bal',{json.dumps(pl['bal'])})">{pl['bal']}</div>
-      <div class="dd-item" onclick="pickProf('cool',{json.dumps(pl['cool'])})">{pl['cool']}</div>
-      <div class="dd-item" onclick="pickProf('warm',{json.dumps(pl['warm'])})">{pl['warm']}</div>
-      <div class="dd-item" onclick="pickProf('hum',{json.dumps(pl['hum'])})">{pl['hum']}</div>
+      <div class="dd-item on" onclick="event.stopPropagation();pickProf('bal',{json.dumps(pl['bal'])})">{pl['bal']}</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickProf('cool',{json.dumps(pl['cool'])})">{pl['cool']}</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickProf('warm',{json.dumps(pl['warm'])})">{pl['warm']}</div>
+      <div class="dd-item" onclick="event.stopPropagation();pickProf('hum',{json.dumps(pl['hum'])})">{pl['hum']}</div>
     </div>
   </div>
   <div class="fsep"></div>
