@@ -104,7 +104,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 </div>
 <div class="fbar">
   <div class="dd" id="dd-m">
-    <button class="dd-btn sel" id="dd-m-btn" onclick="openDD('m')">Avr <span class="dd-arr">▾</span></button>
+    <button class="dd-btn sel" id="dd-m-btn" onclick="openDD('m')">Annuel <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-m-menu">
       <div class="dd-item" onclick="pickMonth(12)">Annuel</div>
       <div class="dd-item" onclick="pickMonth(0)">Janvier</div>
@@ -195,10 +195,10 @@ var FP_SECU="S\u00c9CU.";
 var FP_BUDGET="BUDGET";
 var SECU_LABELS={"1": "🟢 Vigilance normale", "2": "🟡 Vigilance renforcée", "3": "🟠 Déconseillé"};
 var BUDGET_LABELS={"1": "💚 Économique", "2": "💛 Abordable", "3": "🟡 Modéré", "4": "🟠 Coûteux"};
-var CUR_M=new Date().getMonth();
+var CUR_M=12; // Annual par défaut
 var CUR_MODE='gen',CUR_PROF='bal',CUR_RL=4,CUR_BI=5,CUR_MIN=0;
 
-document.getElementById('dd-m-btn').innerHTML=MN[CUR_M]+' <span class="dd-arr">▾</span>';
+document.getElementById('dd-m-btn').innerHTML=MF_ANNUAL+' <span class="dd-arr">▾</span>';document.getElementById('dd-m-btn').classList.add('sel');
 document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===CUR_M+1);});
 
 function scoreColor(s){return s>=8.6?'#1a7a4a':s>=7.6?'#2d9e60':s>=6.3?'#84cc16':s>=5?'#f59e0b':s>=3.5?'#f97316':'#ef4444';}
