@@ -45,7 +45,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .lr{display:flex;align-items:center;gap:7px;margin-bottom:3px;color:rgba(255,255,255,.65)}
 .ld{width:9px;height:9px;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
 .ctr{position:fixed;bottom:16px;right:16px;z-index:900;background:rgba(26,31,46,.92);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:7px 12px;font-size:11px;color:#5a6c7d}
-.ctr b{color:white;font-size:13px}.country-label{background:transparent;border:none;box-shadow:none;color:rgba(255,255,255,.35);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,.8);pointer-events:none}
+.ctr b{color:white;font-size:13px}.dest-label{background:rgba(26,31,46,.85);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:2px 5px;font-size:10px;font-weight:600;color:rgba(255,255,255,.85);white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.4);pointer-events:none;}.dest-label::before{display:none}.country-label{background:transparent;border:none;box-shadow:none;color:rgba(255,255,255,.35);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,.8);pointer-events:none}
 @media(max-width:600px){#map{top:140px}.sep,.stat{display:none}.mtab{padding:3px 6px;font-size:11px}}
 </style>
 </head>
@@ -118,6 +118,9 @@ function render(mi){
       iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]
     });
     var mk=L.marker([d.lat,d.lon],{icon:icon,zIndexOffset:Math.round(s*10)});
+    mk.bindTooltip(d.n,{permanent:true,direction:'right',offset:[sz/2+2,0],className:'dest-label',opacity:1});
+    function _updateTip(){var z=map.getZoom();if(z>=6){mk.openTooltip();}else{mk.closeTooltip();}}
+    map.on('zoomend',_updateTip);
     mk.on('click',function(){
       var maxS=Math.max.apply(null,d.s.filter(function(x){return x!==null;}));
       var bars=d.s.map(function(ms,i){
