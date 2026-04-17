@@ -1029,10 +1029,3 @@ header.app-header{max-width:580px;margin:0 auto;padding:36px 20px 0;text-align:c
 /* Icônes emoji fixes dans les inputs — indépendantes de l'opacité placeholder */
 .inp-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none;z-index:3;opacity:.85}
 .inp-wrap-icon .inp{padding-left:42px}
-
-/* ── Profile bar — fiches destination ── */
-.fiche-profile-bar{display:flex;align-items:center;gap:8px;padding:10px 0 8px;flex-wrap:wrap}
-.fiche-profile-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1.5px solid #e8e0d0;border-radius:20px;font-size:12px;font-weight:600;color:#3a4a5c;background:white;cursor:pointer;transition:all .15s;white-space:nowrap;position:relative}
-.fiche-profile-chip:hover{border-color:#c9a84c;color:#1a1f2e}
-.fiche-profile-chip.active{background:#1a1f2e;border-color:#1a1f2e;color:white}
-.fiche-profile-chip .pchip-info{display:none;position:fixed;background:#1a1f2e;color:white;border-radius:10px;padding:10px 12px;font-size:11px;line-height:1.6;width:220px;max-width:85vw;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.25);pointer-events:none;font-weight:400;white-space:normal}
