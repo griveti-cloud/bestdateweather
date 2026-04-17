@@ -246,19 +246,35 @@ document.addEventListener('click',function(e){
 });
 
 // Dropdowns
+var _openMenuId=null;
 function openDD(id){
-  var isOpen=document.getElementById('dd-'+id).classList.contains('open');
+  if(_openMenuId===id){closeDD();return;}
   closeDD();
-  if(isOpen)return;
-  var el=document.getElementById('dd-'+id);el.classList.add('open');
+  _openMenuId=id;
   var btn=document.getElementById('dd-'+id+'-btn');
   var menu=document.getElementById('dd-'+id+'-menu');
+  if(!btn||!menu)return;
+  btn.classList.add('_dd-open');
   var r=btn.getBoundingClientRect();
-  menu.style.top=(r.bottom+4)+'px';
-  menu.style.left=Math.max(4,Math.min(r.left,window.innerWidth-160))+'px';
+  var left=Math.max(4,Math.min(r.left,window.innerWidth-164));
+  menu.style.cssText='display:block!important;position:fixed!important;top:'+(r.bottom+4)+'px;left:'+left+'px;z-index:99999;min-width:150px;max-height:280px;overflow-y:auto;background:#1e2640;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.6);padding:4px;';
 }
-function closeDD(){document.querySelectorAll('.dd').forEach(function(d){d.classList.remove('open');});}
-document.addEventListener('click',function(e){if(!e.target.closest('.dd'))closeDD();});
+function closeDD(){
+  if(_openMenuId){
+    var btn=document.getElementById('dd-'+_openMenuId+'-btn');
+    var menu=document.getElementById('dd-'+_openMenuId+'-menu');
+    if(btn)btn.classList.remove('_dd-open');
+    if(menu)menu.style.cssText='display:none';
+    _openMenuId=null;
+  }
+}
+document.addEventListener('click',function(e){
+  if(_openMenuId&&!e.target.closest('#dd-'+_openMenuId+'-menu')&&!e.target.closest('#dd-'+_openMenuId+'-btn'))closeDD();
+});
+// Déplacer tous les menus dans body pour échapper au overflow:auto du fbar
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.dd-menu').forEach(function(m){document.body.appendChild(m);});
+});
 function setBtn(id,label,active){var btn=document.getElementById('dd-'+id+'-btn');if(btn){btn.innerHTML=label+' <span class="dd-arr">▾</span>';btn.classList.toggle('sel',active);}}
 
 function pickMonth(mi){CUR_M=mi;setBtn('m',mi===12?MF_ANNUAL:MN[mi],true);document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(mi===12?0:mi+1));});closeDD();render();}
