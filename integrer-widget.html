@@ -231,9 +231,9 @@ footer span{color:rgba(255,255,255,.3);font-size:13px;margin:0 8px}
     <button class="tab" onclick="setFormat('large')">Large 400×460</button>
     <button class="tab" onclick="setFormat('wide')">Wide 600×200</button>
   </div>
-  <div style="display:flex;gap:8px;margin-bottom:24px">
-    <button class="tab active" id="theme-light" onclick="setTheme('light')" style="font-size:12px">☀️ Thème clair</button>
-    <button class="tab" id="theme-dark" onclick="setTheme('dark')" style="font-size:12px">🌙 Thème sombre</button>
+  <div id="theme-wrap" style="display:flex;gap:8px;margin-bottom:24px;opacity:0.4;pointer-events:none">
+    <button class="tab" id="theme-light" onclick="setTheme('light')" style="font-size:12px">☀️ Thème clair</button>
+    <button class="tab active" id="theme-dark" onclick="setTheme('dark')" style="font-size:12px">🌙 Thème sombre</button>
   </div>
   <div class="format-preview">
     <div id="widget-demo-wrap" style="width:100%;overflow:hidden;display:flex;justify-content:center"><iframe id="widget-demo" src="widget/agadir-compact.html" width="320" height="165" scrolling="no" class="format-iframe" title="Aperçu widget" style="transform-origin:top center;transition:transform .2s"></iframe></div>
@@ -282,7 +282,7 @@ const FORMATS = {
   wide:    { w: 600, h: 200, label: 'wide' },
 };
 let curFormat = 'compact';
-let curTheme = 'light';
+let curTheme = 'dark'; // compact par défaut = toujours dark
 const DEST = 'agadir';
 const DEST_LABEL = 'Agadir';
 
@@ -308,11 +308,17 @@ function updateDemo() {
 
 function setFormat(fmt) {
   curFormat = fmt;
-  // Compact est toujours sombre
+  // Compact est toujours sombre — désactiver le toggle thème
+  const themeWrap = document.getElementById('theme-wrap');
   if (fmt === 'compact') {
     curTheme = 'dark';
     document.getElementById('theme-light').classList.remove('active');
     document.getElementById('theme-dark').classList.add('active');
+    if (themeWrap) themeWrap.style.opacity = '0.4';
+    if (themeWrap) themeWrap.style.pointerEvents = 'none';
+  } else {
+    if (themeWrap) themeWrap.style.opacity = '';
+    if (themeWrap) themeWrap.style.pointerEvents = '';
   }
   document.querySelectorAll('.format-tabs .tab').forEach(t => t.classList.toggle('active', t.onclick.toString().includes(`'${fmt}'`)));
   updateDemo();
