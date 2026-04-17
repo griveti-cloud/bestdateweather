@@ -607,6 +607,8 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         cta_text = f"🎯 Choose a specific date for your {month_name} trip"
 
     cta_href = gen['home_url']
+    map_href = loc.get('map', {}).get('map_href', '')
+    map_cta_pilier = loc.get('map', {}).get('cta_pilier', '')
     flag_prefix = gen['asset_prefix']
     # UI strings from locale — no more is_fr/is_es/is_de branching
     tab_meteo      = pil['tab_meteo']
@@ -1036,6 +1038,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 <div style="overflow-x:auto"><table class="rt" aria-label="Classement"><thead id="rt-head"><tr>{th_html}</tr></thead><tbody id="rt-body">{table_body}</tbody></table></div>
 </div>
 <div class="cta-box"><a href="{cta_href}">{cta_text} →</a></div>
+<div style="text-align:center;margin:0 0 20px"><a href="{map_href}" style="display:inline-block;padding:12px 20px;background:var(--navy);color:#f5d060;font-weight:600;font-size:14px;border-radius:12px;text-decoration:none;border:1.5px solid rgba(255,215,100,.2)">{map_cta_pilier}</a></div>
 {related}
 </main>
 {footer}
@@ -1243,6 +1246,8 @@ def generate_annual_page(lang, dests, climate, country_info=None):
     loc   = load_locale(lang)
     gen   = loc['gen']
     pil   = loc['pilier']
+    map_href = loc.get('map', {}).get('map_href', '')
+    map_cta_pilier = loc.get('map', {}).get('cta_pilier', '')
     months_labels = loc['months']
     imperial = loc['meta'].get('imperial', False)
     def ft(c): return f"{c_to_f(c):.0f}°F" if imperial else f"{c:.0f}°C"
@@ -1577,6 +1582,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
 <tbody id="rt-body">{rows}</tbody>
 </table></div>
 </div>
+<div style="text-align:center;margin:0 0 20px"><a href="{map_href}" style="display:inline-block;padding:12px 20px;background:var(--navy);color:#f5d060;font-weight:600;font-size:14px;border-radius:12px;text-decoration:none;border:1.5px solid rgba(255,215,100,.2)">{map_cta_pilier}</a></div>
 </main>
 {footer}
 {rank_js}
