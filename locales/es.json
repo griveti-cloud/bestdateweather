@@ -1500,6 +1500,14 @@
     "map_annual": "Anual",
     "map_min_score": "★ Puntuación mín.",
     "map_all_scores": "Todas las puntuaciones",
-    "map_filename": "mapa.html"
+    "map_filename": "mapa.html",
+    "legend": {
+      "excellent": "Excelente",
+      "great": "Muy bien",
+      "good": "Bien",
+      "fair": "Regular",
+      "poor": "Malo",
+      "avoid": "Evitar"
+    }
   }
 }

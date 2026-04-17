@@ -137,6 +137,7 @@ def generate_map_page(lang, map_data_js, world_json, clabels_json):
     loc = load_locale(lang)
     pil = loc['pilier']
     m   = loc['map']
+    leg = m.get('legend', {'excellent':'Excellent','great':'Great','good':'Good','fair':'Fair','poor':'Poor','avoid':'Avoid'})
     cfg = LANG_CONFIG[lang]
     ap  = asset_prefix(lang)
     months_full = loc['months']
@@ -342,12 +343,12 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
 <div id="map"></div>
 <div class="legend">
   <div class="lt">Score</div>
-  <div class="lr"><div class="ld" style="background:#1a7a4a"></div>8.6+ Excellent</div>
-  <div class="lr"><div class="ld" style="background:#2d9e60"></div>7.6–8.5 Great</div>
-  <div class="lr"><div class="ld" style="background:#84cc16"></div>6.3–7.5 Good</div>
-  <div class="lr"><div class="ld" style="background:#f59e0b"></div>5.0–6.2 Fair</div>
-  <div class="lr"><div class="ld" style="background:#f97316"></div>3.5–4.9 Poor</div>
-  <div class="lr"><div class="ld" style="background:#ef4444"></div>0–3.4 Avoid</div>
+  <div class="lr"><div class="ld" style="background:#1a7a4a"></div>8.6+ {leg['excellent']}</div>
+  <div class="lr"><div class="ld" style="background:#2d9e60"></div>7.6–8.5 {leg['great']}</div>
+  <div class="lr"><div class="ld" style="background:#84cc16"></div>6.3–7.5 {leg['good']}</div>
+  <div class="lr"><div class="ld" style="background:#f59e0b"></div>5.0–6.2 {leg['fair']}</div>
+  <div class="lr"><div class="ld" style="background:#f97316"></div>3.5–4.9 {leg['poor']}</div>
+  <div class="lr"><div class="ld" style="background:#ef4444"></div>0–3.4 {leg['avoid']}</div>
 </div>
 <script src="{mapdata_src}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>

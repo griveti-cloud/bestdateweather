@@ -1479,6 +1479,14 @@
     "map_annual": "Annuel",
     "map_min_score": "★ Score min",
     "map_all_scores": "Tous les scores",
-    "map_filename": "carte.html"
+    "map_filename": "carte.html",
+    "legend": {
+      "excellent": "Excellent",
+      "great": "Très bien",
+      "good": "Bien",
+      "fair": "Passable",
+      "poor": "Médiocre",
+      "avoid": "À éviter"
+    }
   }
 }
