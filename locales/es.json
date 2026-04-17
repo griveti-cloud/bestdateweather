@@ -89,7 +89,8 @@
     "HERO_H1": "¿Qué tiempo <em>en tu viaje?</em>",
     "HERO_SUB": "Puntuación climática /10 · 697 destinos mundiales · hasta 1 año de antelación · 10 años de datos ERA5",
     "USP_HORIZON": "1 año de antelación",
-    "UI_GUIDES_SUB": "Tablas climáticas · mejor época · tiempo mes a mes"
+    "UI_GUIDES_SUB": "Tablas climáticas · mejor época · tiempo mes a mes",
+    "UI_WIDGET_LINK": "Widget para tu sitio"
   },
   "months": [
     "Enero",
