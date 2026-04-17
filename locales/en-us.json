@@ -1491,6 +1491,7 @@
     },
     "cta": "See the weather →",
     "nav_label": "🗺️ Map",
-    "map_href": "../us/map.html"
+    "map_href": "../us/map.html",
+    "cta_pilier": "🗺️ Explore all destinations on the climate map"
   }
 }
