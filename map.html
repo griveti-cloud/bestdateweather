@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Best Time to Visit — World Climate Map · BestDateWeather</title>
+<meta name="description" content="Interactive world map showing the best time to visit 697 destinations. Based on 10 years of ERA5 climate data."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a1f2e;
+  --gold:#c9a84c;
+  --cream:#f7f4ef;
+  --green:#1a7a4a;
+  --amber:#f59e0b;
+  --red:#ef4444;
+  --slate:#3a4a5c;
+  --slate2:#5a6c7d;
+}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--navy);color:white;overflow:hidden}
+
+/* TOPBAR */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:var(--navy);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:56px;
+}
+.topbar-brand{
+  font-family:'Playfair Display',serif;
+  font-size:18px;color:white;text-decoration:none;
+  display:flex;align-items:center;gap:4px;
+}
+.topbar-brand span{color:var(--gold)}
+.topbar-back{
+  font-size:12px;color:var(--slate2);text-decoration:none;
+  display:flex;align-items:center;gap:6px;
+  transition:color .15s;
+}
+.topbar-back:hover{color:white}
+
+/* CONTROLS */
+.controls{
+  position:fixed;top:56px;left:0;right:0;z-index:900;
+  background:rgba(26,31,46,.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  padding:12px 20px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.controls-label{
+  font-size:11px;font-weight:600;color:var(--slate2);
+  text-transform:uppercase;letter-spacing:.6px;white-space:nowrap;
+}
+.month-tabs{display:flex;gap:4px;flex-wrap:wrap}
+.month-tab{
+  padding:5px 10px;border-radius:6px;
+  font-size:12px;font-weight:500;cursor:pointer;
+  border:1px solid rgba(255,255,255,.1);
+  background:transparent;color:rgba(255,255,255,.6);
+  transition:all .15s;
+}
+.month-tab:hover{border-color:var(--gold);color:white}
+.month-tab.active{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:700}
+.controls-sep{width:1px;height:24px;background:rgba(255,255,255,.1);margin:0 4px}
+.stat-chip{
+  font-size:12px;color:rgba(255,255,255,.5);
+  display:flex;align-items:center;gap:5px;white-space:nowrap;
+}
+.stat-chip strong{color:white}
+
+/* MAP */
+#map{
+  position:fixed;
+  top:108px;left:0;right:0;bottom:0;
+}
+.leaflet-container{background:#0d1117}
+
+/* CUSTOM MARKER */
+.bdw-dot{
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.3);
+  cursor:pointer;
+  transition:transform .15s;
+}
+.bdw-dot:hover{transform:scale(1.4);z-index:999!important}
+
+/* POPUP */
+.leaflet-popup-content-wrapper{
+  background:var(--navy);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+  padding:0;overflow:hidden;
+}
+.leaflet-popup-tip{background:var(--navy)}
+.leaflet-popup-content{margin:0;width:220px!important}
+.popup-inner{padding:16px}
+.popup-flag{font-size:20px;line-height:1}
+.popup-name{
+  font-size:16px;font-weight:600;margin:6px 0 2px;
+  font-family:'Playfair Display',serif;
+}
+.popup-score{
+  font-size:28px;font-weight:700;line-height:1;
+  margin:8px 0 4px;
+}
+.popup-month{font-size:11px;color:var(--slate2);margin-bottom:12px}
+.popup-bars{display:flex;gap:2px;align-items:flex-end;height:32px;margin-bottom:12px}
+.popup-bar{
+  flex:1;border-radius:2px 2px 0 0;
+  min-height:3px;cursor:default;
+  transition:opacity .1s;
+  position:relative;
+}
+.popup-bar.current{outline:2px solid white;outline-offset:1px}
+.popup-link{
+  display:block;
+  background:var(--gold);color:var(--navy);
+  text-align:center;padding:8px;
+  font-size:12px;font-weight:700;
+  text-decoration:none;border-radius:8px;
+  transition:opacity .15s;
+}
+.popup-link:hover{opacity:.85}
+
+/* LEGEND */
+.legend{
+  position:fixed;bottom:20px;left:20px;z-index:900;
+  background:rgba(26,31,46,.9);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:10px 14px;
+  font-size:11px;
+}
+.legend-title{font-weight:600;color:var(--slate2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.legend-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.legend-dot{width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3)}
+.legend-label{color:rgba(255,255,255,.7)}
+
+/* COUNTER */
+.counter{
+  position:fixed;bottom:20px;right:20px;z-index:900;
+  background:rgba(26,31,46,.9);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:8px 14px;
+  font-size:11px;color:var(--slate2);
+}
+.counter strong{color:white;font-size:14px}
+
+@media(max-width:600px){
+  .controls{padding:8px 12px;gap:8px}
+  .month-tab{padding:4px 7px;font-size:11px}
+  #map{top:140px}
+  .controls-sep,.stat-chip{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="topbar-brand">Best<span>Date</span>Weather</a>
+  <a href="/en/app.html" class="topbar-back">← Rankings</a>
+</div>
+
+<div class="controls">
+  <span class="controls-label">Month</span>
+  <div class="month-tabs" id="month-tabs"></div>
+  <div class="controls-sep"></div>
+  <div class="stat-chip">Showing <strong id="stat-count">697</strong> destinations</div>
+  <div class="stat-chip">Best score <strong id="stat-best">—</strong></div>
+</div>
+
+<div id="map"></div>
+
+<div class="legend">
+  <div class="legend-title">Score</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#1a7a4a"></div><div class="legend-label">8.6 – 10 · Excellent</div></div>
+  <div class="legend-row"><div class="legend-dot" style="background:#2d9e60"></div><div class="legend-label">7.6 – 8.5 · Great</div></div>
+  <div class="legend-row"><div class="legend-dot" style="background:#84cc16"></div><div class="legend-label">6.3 – 7.5 · Good</div></div>
+  <div class="legend-row"><div class="legend-dot" style="background:#f59e0b"></div><div class="legend-label">5.0 – 6.2 · Fair</div></div>
+  <div class="legend-row"><div class="legend-dot" style="background:#f97316"></div><div class="legend-label">3.5 – 4.9 · Poor</div></div>
+  <div class="legend-row"><div class="legend-dot" style="background:#ef4444"></div><div class="legend-label">0 – 3.4 · Avoid</div></div>
+</div>
+
+<div class="counter">
+  <strong>697</strong> destinations · ERA5 2015–2024
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="map-data.js"></script>
+<script>
+var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var MONTHS_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function scoreColor(s) {
+  if (s >= 8.6) return '#1a7a4a';
+  if (s >= 7.6) return '#2d9e60';
+  if (s >= 6.3) return '#84cc16';
+  if (s >= 5.0) return '#f59e0b';
+  if (s >= 3.5) return '#f97316';
+  return '#ef4444';
+}
+
+// Map init
+var map = L.map('map', {
+  center: [20, 10],
+  zoom: 2,
+  minZoom: 2,
+  maxZoom: 8,
+  zoomControl: true,
+  attributionControl: false,
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  maxZoom: 19,
+}).addTo(map);
+
+L.control.attribution({position:'bottomright'}).addTo(map);
+
+// Current month
+var curMonth = new Date().getMonth(); // 0-indexed
+var markers = [];
+var markerLayer = L.layerGroup().addTo(map);
+
+function renderMarkers(mi) {
+  markerLayer.clearLayers();
+  markers = [];
+  var bestScore = 0;
+
+  MAP_DATA.forEach(function(d) {
+    var s = d.s[mi];
+    if (s === null || s === undefined) return;
+    if (s > bestScore) bestScore = s;
+
+    var size = s >= 7 ? 10 : s >= 5 ? 8 : 6;
+    var color = scoreColor(s);
+
+    var icon = L.divIcon({
+      className: '',
+      html: '<div class="bdw-dot" style="width:'+size+'px;height:'+size+'px;background:'+color+';opacity:'+(0.5 + s/20)+'" title="'+d.n+'"></div>',
+      iconSize: [size, size],
+      iconAnchor: [size/2, size/2],
+    });
+
+    var marker = L.marker([d.lat, d.lon], {icon: icon, zIndexOffset: Math.round(s * 10)});
+
+    marker.on('click', function() {
+      var monthScores = d.s;
+      var bestMi = d.b;
+      var maxS = Math.max.apply(null, monthScores.filter(function(x){return x!==null;}));
+
+      var barsHtml = monthScores.map(function(ms, i) {
+        var h = ms !== null ? Math.round((ms / 10) * 100) : 0;
+        var c = ms !== null ? scoreColor(ms) : '#333';
+        var isCur = i === mi ? ' current' : '';
+        return '<div class="popup-bar'+isCur+'" style="height:'+h+'%;background:'+c+'" title="'+MONTHS[i]+': '+(ms||'—')+'"></div>';
+      }).join('');
+
+      var slug = d.slug_en || d.slug;
+      var href = '/en/best-time-to-visit-' + slug + '.html';
+
+      var popup = L.popup({maxWidth: 220, className: ''})
+        .setLatLng([d.lat, d.lon])
+        .setContent(
+          '<div class="popup-inner">' +
+          '<div class="popup-flag">'+getFlagEmoji(d.f)+'</div>' +
+          '<div class="popup-name">'+d.n+'</div>' +
+          '<div class="popup-score" style="color:'+scoreColor(s)+'">'+s.toFixed(1)+'<span style="font-size:14px;color:#5a6c7d">/10</span></div>' +
+          '<div class="popup-month">'+MONTHS_FULL[mi]+'</div>' +
+          '<div class="popup-bars">'+barsHtml+'</div>' +
+          '<a href="'+href+'" class="popup-link">View climate →</a>' +
+          '</div>'
+        );
+      map.openPopup(popup);
+    });
+
+    marker.addTo(markerLayer);
+    markers.push(marker);
+  });
+
+  document.getElementById('stat-count').textContent = markers.length;
+  document.getElementById('stat-best').textContent = bestScore.toFixed(1);
+}
+
+function getFlagEmoji(code) {
+  if (!code) return '🌍';
+  return code.toUpperCase().split('').map(function(c){
+    return String.fromCodePoint(c.charCodeAt(0) + 127397);
+  }).join('');
+}
+
+// Month tabs
+var tabsEl = document.getElementById('month-tabs');
+MONTHS.forEach(function(m, i) {
+  var btn = document.createElement('button');
+  btn.className = 'month-tab' + (i === curMonth ? ' active' : '');
+  btn.textContent = m;
+  btn.onclick = function() {
+    document.querySelectorAll('.month-tab').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    curMonth = i;
+    renderMarkers(i);
+    map.closePopup();
+  };
+  tabsEl.appendChild(btn);
+});
+
+// Init
+renderMarkers(curMonth);
+</script>
+</body>
+</html>
