@@ -43,8 +43,10 @@ def flag_img(d, w=20, h=14):
     return f'<img src="{d["flag_url"]}" width="{w}" height="{h}" style="border-radius:2px;flex-shrink:0" alt="">' if d['flag_url'] else ''
 
 def badges(d, fs=11, pad='3px 9px'):
+    # Map abbreviated month name → score for color matching
+    month_scores = {MOIS_ABBR[int(row['mois_num'])-1]: float(row['score']) for row in d.get('scores', [])}
     return ''.join(
-        f'<span style="background:#f97316;color:white;padding:{pad};border-radius:20px;font-size:{fs}px;font-weight:700">{m}</span>'
+        f'<span style="background:{sc(month_scores.get(m, 7.0))};color:white;padding:{pad};border-radius:20px;font-size:{fs}px;font-weight:700">{m}</span>'
         for m in d['top3']
     )
 
@@ -133,7 +135,7 @@ def gen_compact(d):
           f'</div></div>'
           f'<div style="display:flex;align-items:center;gap:8px">'
           f'<span style="font-size:8px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.4px">Meilleur :</span>'
-          f'<span style="background:#f97316;color:white;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">{top1_m}</span>'
+          f'<span style="background:{best_color};color:white;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">{top1_m}</span>'
           f'<span style="font-size:14px;font-weight:800;color:{best_color};margin-left:2px">{top1_score:.1f}'
           f'<span style="font-size:10px;font-weight:500;color:#64748b">/10</span></span>'
           f'</div></div>'
