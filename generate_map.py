@@ -307,14 +307,14 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
 </div>
 <div class="fbar">
   <div class="dd" id="dd-m">
-    <button class="dd-btn sel" id="dd-m-btn" onclick="openDD('m')">{m['map_annual']} <span class="dd-arr">▾</span></button>
+    <button class="dd-btn sel" id="dd-m-btn" onclick="event.stopPropagation();openDD('m')">{m['map_annual']} <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-m-menu">
 {month_items}
     </div>
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-mode">
-    <button class="dd-btn" id="dd-mode-btn" onclick="openDD('mode')">{tab_gen} <span class="dd-arr">▾</span></button>
+    <button class="dd-btn" id="dd-mode-btn" onclick="event.stopPropagation();openDD('mode')">{tab_gen} <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-mode-menu">
       <div class="dd-item on" onclick="event.stopPropagation();pickMode('gen',{json.dumps(tab_gen)})">{tab_gen}</div>
       <div class="dd-item" onclick="event.stopPropagation();pickMode('beach',{json.dumps(tab_beach)})">{tab_beach}</div>
@@ -324,7 +324,7 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-prof">
-    <button class="dd-btn" id="dd-prof-btn" onclick="openDD('prof')">{pl['bal']} <span class="dd-arr">▾</span></button>
+    <button class="dd-btn" id="dd-prof-btn" onclick="event.stopPropagation();openDD('prof')">{pl['bal']} <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-prof-menu">
       <div class="dd-item on" onclick="event.stopPropagation();pickProf('bal',{json.dumps(pl['bal'])})">{pl['bal']}</div>
       <div class="dd-item" onclick="event.stopPropagation();pickProf('cool',{json.dumps(pl['cool'])})">{pl['cool']}</div>
@@ -334,19 +334,19 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-rl">
-    <button class="dd-btn" id="dd-rl-btn" onclick="openDD('rl')">{fp_secu} <span class="dd-arr">▾</span></button>
+    <button class="dd-btn" id="dd-rl-btn" onclick="event.stopPropagation();openDD('rl')">{fp_secu} <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-rl-menu">
 {secu_items}    </div>
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-bi">
-    <button class="dd-btn" id="dd-bi-btn" onclick="openDD('bi')">{fp_budget} <span class="dd-arr">▾</span></button>
+    <button class="dd-btn" id="dd-bi-btn" onclick="event.stopPropagation();openDD('bi')">{fp_budget} <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-bi-menu">
 {budget_items}    </div>
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-min">
-    <button class="dd-btn" id="dd-min-btn" onclick="openDD('min')">{m['map_min_score']} <span class="dd-arr">▾</span></button>
+    <button class="dd-btn" id="dd-min-btn" onclick="event.stopPropagation();openDD('min')">{m['map_min_score']} <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-min-menu">
 {min_items}    </div>
   </div>
