@@ -59,7 +59,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .pi-flag{font-size:18px}
 .pi-name{font-size:15px;font-weight:700;margin:5px 0 2px}
 .pi-score{font-size:26px;font-weight:700;line-height:1;margin:6px 0 2px}
-.pi-month{font-size:11px;color:#5a6c7d;margin-bottom:10px}
+.pi-month{font-size:11px;color:rgba(255,255,255,.55);margin-bottom:10px}
 .pi-bars{display:flex;gap:2px;align-items:flex-end;height:28px;margin-bottom:10px}
 .pi-bar{flex:1;border-radius:2px 2px 0 0;min-height:2px}
 .pi-bar.cur{outline:2px solid white;outline-offset:1px}
@@ -327,7 +327,7 @@ function render(){
     map.on('zoomend',function(){if(map.getZoom()>=5){mk.bindTooltip(d[1],{permanent:true,direction:'right',offset:[sz/2+2,0],className:'dest-label',opacity:1});}else{mk.unbindTooltip();}});
     mk.on('click',function(){
       var bars=(d[8]||[]).map(function(ms,i){var h=ms?Math.round(((ms[0]||0)/10)*100):0;var c=ms?scoreColor(ms[0]):'#333';return '<div class="pi-bar'+(i===CUR_M?' cur':'')+'" style="height:'+h+'%;background:'+c+'"></div>';}).join('');
-      L.popup({maxWidth:200}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+d[1]+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="../en/best-time-to-visit-'+(d[0]||'')+'.html" class="pi-link">→</a></div>').openOn(map);
+      L.popup({maxWidth:200}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+d[1]+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="../en/best-time-to-visit-'+(d[0]||'')+'.html" class="pi-link">Wetter sehen →</a></div>').openOn(map);
     });
     mk.addTo(layer);
   });
