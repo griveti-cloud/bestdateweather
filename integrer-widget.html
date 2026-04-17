@@ -293,15 +293,20 @@ function updateDemo() {
   iframe.src = `widget/${DEST}-${f.label}${suf}.html`;
   iframe.width = f.w;
   iframe.height = f.h;
-  // Scale down if wider than container
+  iframe.style.transform = '';
+  iframe.style.marginLeft = '';
+  iframe.style.marginRight = '';
   const wrap = document.getElementById('widget-demo-wrap');
   if (wrap) {
-    const available = wrap.offsetWidth || 300;
+    const available = wrap.offsetWidth || 320;
     const scale = Math.min(1, available / f.w);
-    iframe.style.transform = scale < 1 ? `scale(${scale})` : '';
-    iframe.style.marginLeft = scale < 1 ? `-${f.w * (1 - scale) / 2}px` : '';
-    iframe.style.marginRight = scale < 1 ? `-${f.w * (1 - scale) / 2}px` : '';
-    wrap.style.height = Math.round(f.h * scale) + 'px';
+    if (scale < 1) {
+      iframe.style.transform = `scale(${scale})`;
+      iframe.style.transformOrigin = 'top left';
+    }
+    wrap.style.height = Math.ceil(f.h * scale) + 'px';
+    wrap.style.width = '100%';
+    wrap.style.overflow = 'hidden';
   }
   updateCode();
 }
