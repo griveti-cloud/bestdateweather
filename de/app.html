@@ -37,7 +37,7 @@
 .bdw-topbar-brand{font-family:'Fraunces','Fraunces Fallback',Georgia,serif;font-size:18px;font-weight:900;color:#fff;text-decoration:none;letter-spacing:-.3px;line-height:1}
 .bdw-topbar-brand em{font-style:italic;color:#c99438;font-weight:400}
 .bdw-topbar-fav{background:none;border:none;padding:8px;cursor:pointer;color:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;border-radius:8px;transition:color .15s,background .15s}
-.bdw-topbar-fav:hover{color:#fff;background:rgba(255,255,255,.1)}
+.bdw-topbar-fav:hover{color:#fff;background:rgba(255,255,255,.1)}@media(max-width:400px){.bdw-map-nav{display:none!important}}
 .bdw-nav-link{display:none!important}
 .lang-switcher{position:relative;display:flex;align-items:center}
 .lang-btn{background:none;border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:5px 9px;cursor:pointer;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all .15s}
@@ -50,7 +50,7 @@
 .lang-drop a.active{color:#c99438;font-weight:700}
 .lang-drop a img{border-radius:2px;flex-shrink:0}
 @media(min-width:641px){.bdw-nav-link{display:inline!important}}
-.bdw-topbar-fav:hover{color:#fff;background:rgba(255,255,255,.1)}
+.bdw-topbar-fav:hover{color:#fff;background:rgba(255,255,255,.1)}@media(max-width:400px){.bdw-map-nav{display:none!important}}
 header.app-header{padding-top:64px!important}
 .app-title{display:none}
 /* ═══════════════════════════════════════
@@ -160,8 +160,8 @@ span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!i
 .flatpickr-day.prevMonthDay,.flatpickr-day.nextMonthDay{color:rgba(255,255,255,.2)!important}
 .flatpickr-day.flatpickr-disabled{color:rgba(255,255,255,.15)!important}
 .top-cards::-webkit-scrollbar{height:4px}.top-cards::-webkit-scrollbar-track{background:transparent}.top-cards::-webkit-scrollbar-thumb{background:rgba(201,148,56,.4);border-radius:2px}</style>
-<link rel="preload" href="../app.css?v=51" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
-<noscript><link rel="stylesheet" href="../app.css?v=51"/></noscript>
+<link rel="preload" href="../app.css?v=42" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+<noscript><link rel="stylesheet" href="../app.css?v=42"/></noscript>
 <link rel="stylesheet" href="../css/weather-banner.css?v=5" media="print" onload="this.media='all'"/><noscript><link rel="stylesheet" href="../css/weather-banner.css?v=3"/></noscript>
 <link rel="icon" type="image/x-icon" href="../favicon.ico"/><link rel="icon" type="image/svg+xml" href="../favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/><meta name="theme-color" content="#1a1f2e"/>
 <link rel="manifest" href="../manifest.json"/>
@@ -227,7 +227,7 @@ span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!i
 <a href="../es/app.html" onclick="document.cookie='bdw_lang=es;path=/;max-age=31536000'"><img src="../flags/es.png" width="20" height="14" alt=""> ES</a>
         </div>
       </div>
-      <a href="../karte.html" class="bdw-topbar-fav" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.7);text-decoration:none;padding:6px 10px;border:1.5px solid rgba(255,255,255,.15);border-radius:20px;white-space:nowrap" aria-label="Carte interactive">🗺️ Karte</a>
+      <a href="../karte.html" class="bdw-topbar-fav bdw-map-nav" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.7);text-decoration:none;padding:6px 10px;border:1.5px solid rgba(255,255,255,.15);border-radius:20px;white-space:nowrap" aria-label="Carte interactive">🗺️ Karte</a>
       <button id="btn-share" onclick="bdwShare()" aria-label="Partager" class="bdw-topbar-fav" title="Partager">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
       </button>
@@ -2131,7 +2131,7 @@ document.addEventListener('click',function(e){
 <script defer src="../js/fiche-scores.js?v=639443"></script>
 <script src="../js/fiche-aqi.js"></script>
 <script defer src="../js/fiche-slugs.min.js?v=edd3b9"></script>
-<script defer src="../js/core.min.js?v=64"></script>
+<script defer src="../js/core.min.js?v=55"></script>
 <script defer src="../js/favs.min.js?v=1"></script>
 
 <script src="../js/sw-register.js?v=948975" defer></script>
