@@ -120,6 +120,18 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <div class="dd-item" onclick="pickBI(4)">≤ 🟠 Expensive</div>
     </div>
   </div>
+  <div class="fsep"></div>
+  <div class="dd" id="dd-min">
+    <button class="dd-btn" id="dd-min-btn" onclick="openDD('min')">★ Min score <span class="dd-arr">▾</span></button>
+    <div class="dd-menu" id="dd-min-menu">
+      <div class="dd-item on" onclick="pickMin(0)">All scores</div>
+      <div class="dd-item" onclick="pickMin(5)">≥ 5.0</div>
+      <div class="dd-item" onclick="pickMin(6)">≥ 6.0</div>
+      <div class="dd-item" onclick="pickMin(7)">≥ 7.0</div>
+      <div class="dd-item" onclick="pickMin(8)">≥ 8.0</div>
+      <div class="dd-item" onclick="pickMin(9)">≥ 9.0</div>
+    </div>
+  </div>
 </div>
 <div id="map"></div>
 <div class="legend">
@@ -137,6 +149,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 var MN=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 var MF=["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var CUR_M=new Date().getMonth();
+var CUR_MIN=0;
 var CUR_MODE='gen',CUR_PROF='bal',CUR_RL=4,CUR_BI=5;
 
 // Init month button label
@@ -180,6 +193,7 @@ function pickMonth(mi){CUR_M=mi;setBtn('m',mi===12?'Annual':MN[mi],true);documen
 function pickMode(mode,label){CUR_MODE=mode;setBtn('mode',label,false);document.querySelectorAll('#dd-mode-menu .dd-item').forEach(function(el){el.classList.toggle('on',el.textContent.trim()===label);});closeDD();render();}
 function pickProf(prof,label){CUR_PROF=prof;setBtn('prof',label,false);document.querySelectorAll('#dd-prof-menu .dd-item').forEach(function(el){el.classList.toggle('on',el.textContent.trim()===label);});closeDD();render();}
 function pickRL(rl){CUR_RL=rl;var labels={1:'🟢 Normal',2:'🟡 High vigilance',3:'🟠 Avoid if possible'};var active=rl<4;var lbl=active?('≤ '+labels[rl]):'Safety';setBtn('rl','🛡 '+lbl,active);document.querySelectorAll('#dd-rl-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(rl===4?0:rl===1?1:rl===2?2:3));});closeDD();render();}
+function pickMin(min){CUR_MIN=min;var lbl=min>0?('≥ '+min.toFixed(1)):'★ Min score';setBtn('min',lbl,min>0);document.querySelectorAll('#dd-min-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(min===0?0:min===5?1:min===6?2:min===7?3:min===8?4:5));});closeDD();render();}
 function pickBI(bi){CUR_BI=bi;var labels={1:'💚 Budget',2:'💛 Affordable',3:'🟡 Moderate',4:'🟠 Expensive'};var active=bi<5;var lbl=active?('≤ '+labels[bi]):'Budget';setBtn('bi','💰 '+lbl,active);document.querySelectorAll('#dd-bi-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(bi===5?0:bi===1?1:bi===2?2:bi===3?3:4));});closeDD();render();}
 
 // Map init
@@ -209,7 +223,7 @@ function render(){
   var best=0,cnt=0;
   (window.MAP_DATA||[]).forEach(function(d){
     if(d[5]>CUR_RL||d[6]>CUR_BI) return;
-    var s=getScore(d,CUR_M); if(!s||s<=0) return;
+    var s=getScore(d,CUR_M); if(!s||s<=0||s<CUR_MIN) return;
     cnt++; if(s>best) best=s;
     var sz=s>=7?10:s>=5?8:6;
     var col=scoreColor(s);
