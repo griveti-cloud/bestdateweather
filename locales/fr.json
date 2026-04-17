@@ -89,7 +89,8 @@
     "HERO_H1": "Quel temps <em>pour votre voyage&nbsp;?</em>",
     "HERO_SUB": "Score climatique /10 · 697 destinations mondiales · jusqu'à 1 an à l'avance · 10 ans de données ERA5",
     "USP_HORIZON": "1 an à l'avance",
-    "UI_GUIDES_SUB": "Tableaux climatiques · meilleure période · météo mois par mois"
+    "UI_GUIDES_SUB": "Tableaux climatiques · meilleure période · météo mois par mois",
+    "UI_WIDGET_LINK": "Widget pour votre site"
   },
   "months": [
     "Janvier",
