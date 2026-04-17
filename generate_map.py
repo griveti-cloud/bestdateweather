@@ -446,7 +446,7 @@ function render(){{
     if(CUR_MODE!=='nomad'){{if(d[5]>CUR_RL||d[6]>CUR_BI)return;}}
     var s=getScore(d,CUR_M);if(!s||s<=0||s<CUR_MIN)return;
     cnt++;if(s>best)best=s;
-    var sz=s>=7?10:s>=5?8:6;var col=scoreColor(s);
+    var z=map.getZoom();var sz=Math.max(4,Math.min(10,z+1));var col=scoreColor(s);
     var icon=L.divIcon({{className:'',html:'<div class="bdw-dot" style="width:'+sz+'px;height:'+sz+'px;background:'+col+';opacity:'+(0.5+s/20)+'"></div>',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]}});
     var mk=L.marker([d[2],d[3]],{{icon:icon,zIndexOffset:Math.round(s*10)}});
     mk.bindTooltip(d[1],{{permanent:false,direction:'right',offset:[sz/2+2,0],className:'dest-label',opacity:1}});
