@@ -30,6 +30,15 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .dd-item.on{color:#c9a84c;font-weight:700}
 .fsep{width:1px;height:16px;background:rgba(255,255,255,.1);flex-shrink:0}
 #map{position:fixed;top:88px;left:0;right:0;bottom:0}
+@media(max-width:500px){
+  .topbar-stats{display:none}
+  .brand{font-size:14px}
+  .back{font-size:10px}
+  .fbar{padding:5px 8px;gap:4px}
+  .dd-btn{font-size:10px;padding:4px 7px;border-radius:12px}
+  .dd-arr{display:none}
+  #map{top:82px}
+}
 .leaflet-container{background:#0d1117}
 .bdw-dot{border-radius:50%;border:1.5px solid rgba(255,255,255,.2);cursor:pointer;transition:transform .1s}
 .bdw-dot:hover{transform:scale(1.5)}
