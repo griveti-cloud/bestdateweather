@@ -1160,6 +1160,40 @@ def get_annual_rankings(climate, dests, pool_size=80):
     return deduped[:pool_size]
 
 
+
+def _build_profile_bar(lang):
+    """Build the profile bar HTML for a given language."""
+    _profile_labels = {
+        'fr': {
+            'balanced': '🌤️ Balanced', 'cool': '❄️ Prefer cool',
+            'warm': '🔥 Prefer warm', 'humid': '💧 Humidity sensitive',
+            'tip_balanced': 'Confort optimal 22-28°C · Pluie pénalisée · Soleil valorisé',
+            'tip_cool': 'Confort optimal 15-20°C · Chaleur rapidement pénalisée · Froid toléré',
+            'tip_warm': 'Confort optimal 27-32°C · Froid fortement pénalisé · Chaleur tolérée',
+            'tip_humid': 'Pénalité humidité renforcée (dew > 14°C) · Nuits chaudes pénalisées',
+            'impact': 'Les scores s\'adaptent à votre profil en temps réel.',
+        },
+        'en': {
+            'balanced': '🌤️ Balanced', 'cool': '❄️ Prefer cool',
+            'warm': '🔥 Prefer warm', 'humid': '💧 Humidity sensitive',
+            'tip_balanced': 'Optimal comfort 22-28°C · Penalizes rain · Values sunshine',
+            'tip_cool': 'Optimal comfort 15-20°C · Heat penalized early · Cold tolerated',
+            'tip_warm': 'Optimal comfort 27-32°C · Cold strongly penalized · Heat tolerated',
+            'tip_humid': 'Strong humidity penalty (dew > 14°C) · Warm nights penalized',
+            'impact': 'Scores update in real time based on your profile.',
+        },
+    }
+    _pl = _profile_labels.get('fr' if lang == 'fr' else 'en', _profile_labels['en'])
+    return (
+        f'<div class="profile-bar">'
+        + f'<button class="profile-chip active" data-prof="balanced" onclick="setProfile(&quot;balanced&quot;)">{_pl["balanced"]}<span class="pchip-info">{_pl["tip_balanced"]}</span></button>'
+        + f'<button class="profile-chip" data-prof="cool" onclick="setProfile(&quot;cool&quot;)">{_pl["cool"]}<span class="pchip-info">{_pl["tip_cool"]}</span></button>'
+        + f'<button class="profile-chip" data-prof="warm" onclick="setProfile(&quot;warm&quot;)">{_pl["warm"]}<span class="pchip-info">{_pl["tip_warm"]}</span></button>'
+        + f'<button class="profile-chip" data-prof="humid" onclick="setProfile(&quot;humid&quot;)">{_pl["humid"]}<span class="pchip-info">{_pl["tip_humid"]}</span></button>'
+        + '</div>'
+        + f'<p class="profile-impact" id="profile-impact" style="display:none">{_pl["impact"]}</p>'
+    )
+
 def generate_annual_page(lang, dests, climate, country_info=None):
     """Generate the all-year ranking page for a given language."""
     loc   = load_locale(lang)
@@ -1347,6 +1381,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         f'<div class="fc-item" data-mode="nomad" onclick="event.stopPropagation();setMode(\'nomad\')">{tab_nomad}</div>'
     )
     _ann_month_nav = build_month_nav(0, loc, is_annual=True)
+    _annual_profile_bar = _build_profile_bar(lang)
     filter_chips_html = (
         f'<div class="fchip has-filter" id="fc-period" data-fc="period" onclick="toggleFC(this.dataset.fc,event)">'
 
@@ -1383,7 +1418,12 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'var TOP=25;var CUR_REG="all";var CUR_RL=4;var CUR_BI=5;var CUR_PROF="balanced";'+
         f'var TH_GEN="{_e(th_score_gen)}",TH_BEACH="{_e(th_score_beach)}",TH_SKI="{_e(th_score_ski)}";'+
         f'var NO_BEACH="{_e(no_beach_msg)}",NO_SKI="{_e(no_ski_msg)}",NO_METEO="{_e(no_meteo_msg)}",NO_NOMAD="—";'+
-        'function _profScore(){return 0;}'+
+        'function _dewPen(tmax,dew){if(!dew)return 0;return dew>=22&&tmax>=26?0.25:dew>=18?Math.min(0.2,(dew-18)*0.04):0;}'+
+        'function _profScore(d,prof){var t=(d.tmax||20),r=(d.rain_pct||50)/100,s=Math.min(1,(d.sun_h||4)/10);var sc;if(prof==="cool"){var tc=t<=15?1:t<=20?1-(t-15)/10:t<=28?0.7-(t-20)*0.05:0.35-(t-28)*0.04;sc=Math.max(0,tc);}else if(prof==="warm"){var tw=t>=32?1:t>=27?1-(32-t)/10:t>=20?0.7-(27-t)*0.06:0.28-(20-t)*0.04;sc=Math.max(0,tw);}else{sc=t>=16&&t<=28?1:t<16?Math.max(0,1-(16-t)/12):Math.max(0,1-(t-28)/14);}var raw=0.40*sc+0.35*(1-r)+0.25*s;raw-=_dewPen(t,d.dew);return Math.max(0,Math.min(10,raw*10));}'+
+        'function setProfile(prof){CUR_PROF=prof;document.querySelectorAll(".profile-chip").forEach(function(b){b.classList.toggle("active",b.dataset.prof===prof);});var pi=document.getElementById("profile-impact");if(pi)pi.style.display=prof==="balanced"?"none":"block";var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
+        'window.setProfile=setProfile;'+
+        'document.querySelectorAll(".profile-chip").forEach(function(chip){chip.addEventListener("click",function(e){var wasOpen=chip.classList.contains("tip-open");document.querySelectorAll(".profile-chip").forEach(function(c){c.classList.remove("tip-open");var ti=c.querySelector(".pchip-info");if(ti)ti.style.cssText="display:none";});if(!wasOpen){chip.classList.add("tip-open");var ti=chip.querySelector(".pchip-info");if(ti){var r=chip.getBoundingClientRect();var tw=220;var l=Math.max(8,Math.min(r.left+r.width/2-tw/2,window.innerWidth-tw-8));var top=r.bottom+4;if(top+110>window.innerHeight)top=r.top-116;ti.style.cssText="display:block;position:fixed;top:"+top+"px;left:"+l+"px;width:"+tw+"px;max-width:85vw;z-index:9999";}var _c=chip;setTimeout(function(){_c.classList.remove("tip-open");var ti=_c.querySelector(".pchip-info");if(ti)ti.style.cssText="display:none";},2500);}e.stopPropagation();});});'+
+        'document.addEventListener("click",function(){document.querySelectorAll(".profile-chip").forEach(function(c){c.classList.remove("tip-open");var ti=c.querySelector(".pchip-info");if(ti)ti.style.cssText="display:none";});});'+
 
         'function sc(s){return s>=8.6?"#1a7a4a":s>=7.6?"#2d9e60":s>=6.3?"#84cc16":s>=5?"#f59e0b":s>=3.5?"#f97316":"#ef4444";}'+
         'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'+
@@ -1479,7 +1519,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
 </div>
 </header>
 <main class="page">
-<div class="filter-bar-wrap"><div class="filter-bar" id="filter-bar">{filter_chips_html}</div></div>
+<div class="filter-bar-wrap"><div class="filter-bar" id="filter-bar">{filter_chips_html}</div></div>{_annual_profile_bar}
 <div class="section">
 <p id="rt-msg" style="display:none;color:var(--slate);font-size:14px;padding:16px 0"></p>
 <p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
