@@ -316,20 +316,20 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
   <div class="dd" id="dd-mode">
     <button class="dd-btn" id="dd-mode-btn" onclick="event.stopPropagation();openDD('mode')">{tab_gen} <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-mode-menu">
-      <div class="dd-item on" onclick="event.stopPropagation();pickMode('gen',{json.dumps(tab_gen)})">{tab_gen}</div>
-      <div class="dd-item" onclick="event.stopPropagation();pickMode('beach',{json.dumps(tab_beach)})">{tab_beach}</div>
-      <div class="dd-item" onclick="event.stopPropagation();pickMode('ski',{json.dumps(tab_ski)})">{tab_ski}</div>
-      <div class="dd-item" onclick="event.stopPropagation();pickMode('nomad',{json.dumps(tab_nomad)})">{tab_nomad}</div>
+      <div class="dd-item on" data-mode="gen" onclick="event.stopPropagation();pickMode(this.dataset.mode,this.dataset.label)" data-label="{tab_gen}">{tab_gen}</div>
+      <div class="dd-item" data-mode="beach" onclick="event.stopPropagation();pickMode(this.dataset.mode,this.dataset.label)" data-label="{tab_beach}">{tab_beach}</div>
+      <div class="dd-item" data-mode="ski" onclick="event.stopPropagation();pickMode(this.dataset.mode,this.dataset.label)" data-label="{tab_ski}">{tab_ski}</div>
+      <div class="dd-item" data-mode="nomad" onclick="event.stopPropagation();pickMode(this.dataset.mode,this.dataset.label)" data-label="{tab_nomad}">{tab_nomad}</div>
     </div>
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-prof">
     <button class="dd-btn" id="dd-prof-btn" onclick="event.stopPropagation();openDD('prof')">{pl['bal']} <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-prof-menu">
-      <div class="dd-item on" onclick="event.stopPropagation();pickProf('bal',{json.dumps(pl['bal'])})">{pl['bal']}</div>
-      <div class="dd-item" onclick="event.stopPropagation();pickProf('cool',{json.dumps(pl['cool'])})">{pl['cool']}</div>
-      <div class="dd-item" onclick="event.stopPropagation();pickProf('warm',{json.dumps(pl['warm'])})">{pl['warm']}</div>
-      <div class="dd-item" onclick="event.stopPropagation();pickProf('hum',{json.dumps(pl['hum'])})">{pl['hum']}</div>
+      <div class="dd-item on" data-prof="bal" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="{pl['bal']}">{pl['bal']}</div>
+      <div class="dd-item" data-prof="cool" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="{pl['cool']}">{pl['cool']}</div>
+      <div class="dd-item" data-prof="warm" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="{pl['warm']}">{pl['warm']}</div>
+      <div class="dd-item" data-prof="hum" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="{pl['hum']}">{pl['hum']}</div>
     </div>
   </div>
   <div class="fsep"></div>
