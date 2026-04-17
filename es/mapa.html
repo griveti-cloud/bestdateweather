@@ -22,7 +22,8 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .topbar-stats{font-size:11px;color:rgba(255,255,255,.4);white-space:nowrap;flex:1;text-align:center;overflow:hidden;text-overflow:ellipsis}
 .topbar-stats b{color:white}
 .topbar-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.back{font-size:11px;color:#5a6c7d;text-decoration:none;white-space:nowrap}
+.cta-btn{display:inline-flex;align-items:center;padding:6px 14px;background:linear-gradient(135deg,#c99438,#e8b84b);border-radius:20px;font-size:12px;font-weight:700;color:#1a1f2e;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:filter .15s}
+.cta-btn:hover{filter:brightness(1.08)}
 .back:hover{color:white}
 .lang-btn{background:none;border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:4px 8px;cursor:pointer;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;font-family:inherit;transition:all .15s}
 .lang-btn:hover{border-color:rgba(255,255,255,.35);color:#fff;background:rgba(255,255,255,.08)}
@@ -72,7 +73,6 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 @media(max-width:500px){
   .topbar-stats{display:none}
   .brand{font-size:14px}
-  .back{font-size:10px}
   .fbar{padding:5px 8px;gap:4px}
   .dd-btn{font-size:10px;padding:4px 7px;border-radius:12px}
   .dd-arr{display:none}
@@ -99,7 +99,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
           <a href="../de/karte.html" onclick="document.cookie='bdw_lang=de;path=/;max-age=31536000'"><img src="../flags/de.png" width="20" height="14" alt=""> DE</a>
         </div>
     </div>
-    <a href="../app.html" class="back">← Clasificaciones</a>
+    <a href="../app.html" class="cta-btn">Ver el tiempo →</a>
   </div>
 </div>
 <div class="fbar">
