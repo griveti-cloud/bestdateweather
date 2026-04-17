@@ -87,6 +87,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <div class="dd-item on" onclick="pickMode('gen','☀️ General weather')">☀️ General weather</div>
       <div class="dd-item" onclick="pickMode('beach','🏖️ Beach')">🏖️ Beach</div>
       <div class="dd-item" onclick="pickMode('ski','⛷️ Ski')">⛷️ Ski</div>
+      <div class="dd-item" onclick="pickMode('nomad','💻 Digital Nomad')">💻 Digital Nomad</div>
     </div>
   </div>
   <div class="fsep"></div>
@@ -159,9 +160,14 @@ document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){el.class
 function scoreColor(s){return s>=8.6?'#1a7a4a':s>=7.6?'#2d9e60':s>=6.3?'#84cc16':s>=5?'#f59e0b':s>=3.5?'#f97316':'#ef4444';}
 function flagEmoji(c){try{return c.toUpperCase().split('').map(function(x){return String.fromCodePoint(x.charCodeAt(0)+127397)}).join('')}catch(e){return '🌍'}}
 function getScore(d,mi){
+  // Mode Nomad : score annuel indépendant du mois
+  if(CUR_MODE==='nomad'){
+    var nd=(d[9]||[])[6];
+    return nd||null;
+  }
   var m;
   if(mi===12){
-    m=d[9]||null; // annual = moyenne 12 mois (logique pilier)
+    m=d[9]||null; // annual = moyenne 12 mois
   } else {
     m=(d[8]||[])[mi];
   }
