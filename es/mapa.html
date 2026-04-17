@@ -109,7 +109,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 </div>
 <div class="fbar">
   <div class="dd" id="dd-m">
-    <button class="dd-btn sel" id="dd-m-btn" onclick="openDD('m')">Anual <span class="dd-arr">▾</span></button>
+    <button class="dd-btn sel" id="dd-m-btn" onclick="event.stopPropagation();openDD('m')">Anual <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-m-menu">
       <div class="dd-item" onclick="event.stopPropagation();pickMonth(12)">Anual</div>
       <div class="dd-item" onclick="event.stopPropagation();pickMonth(0)">Enero</div>
@@ -128,7 +128,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-mode">
-    <button class="dd-btn" id="dd-mode-btn" onclick="openDD('mode')">☀️ Clima general <span class="dd-arr">▾</span></button>
+    <button class="dd-btn" id="dd-mode-btn" onclick="event.stopPropagation();openDD('mode')">☀️ Clima general <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-mode-menu">
       <div class="dd-item on" onclick="event.stopPropagation();pickMode('gen',"\u2600\ufe0f Clima general")">☀️ Clima general</div>
       <div class="dd-item" onclick="event.stopPropagation();pickMode('beach',"\ud83c\udfd6\ufe0f Playa")">🏖️ Playa</div>
@@ -138,7 +138,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-prof">
-    <button class="dd-btn" id="dd-prof-btn" onclick="openDD('prof')">🌤️ Equilibrado <span class="dd-arr">▾</span></button>
+    <button class="dd-btn" id="dd-prof-btn" onclick="event.stopPropagation();openDD('prof')">🌤️ Equilibrado <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-prof-menu">
       <div class="dd-item on" onclick="event.stopPropagation();pickProf('bal',"\ud83c\udf24\ufe0f Equilibrado")">🌤️ Equilibrado</div>
       <div class="dd-item" onclick="event.stopPropagation();pickProf('cool',"\u2744\ufe0f Prefiero fr\u00edo")">❄️ Prefiero frío</div>
@@ -148,7 +148,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-rl">
-    <button class="dd-btn" id="dd-rl-btn" onclick="openDD('rl')">SEGUR. <span class="dd-arr">▾</span></button>
+    <button class="dd-btn" id="dd-rl-btn" onclick="event.stopPropagation();openDD('rl')">SEGUR. <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-rl-menu">
       <div class="dd-item on" onclick="event.stopPropagation();pickRL(4)">Todos los destinos</div>
       <div class="dd-item" onclick="event.stopPropagation();pickRL(1)">≤ 🟢 Normal</div>
@@ -158,7 +158,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-bi">
-    <button class="dd-btn" id="dd-bi-btn" onclick="openDD('bi')">PRECIO <span class="dd-arr">▾</span></button>
+    <button class="dd-btn" id="dd-bi-btn" onclick="event.stopPropagation();openDD('bi')">PRECIO <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-bi-menu">
       <div class="dd-item on" onclick="event.stopPropagation();pickBI(5)">Todos los presupuestos</div>
       <div class="dd-item" onclick="event.stopPropagation();pickBI(1)">≤ 💚 Económico</div>
@@ -169,7 +169,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-min">
-    <button class="dd-btn" id="dd-min-btn" onclick="openDD('min')">★ Puntuación mín. <span class="dd-arr">▾</span></button>
+    <button class="dd-btn" id="dd-min-btn" onclick="event.stopPropagation();openDD('min')">★ Puntuación mín. <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-min-menu">
       <div class="dd-item on" onclick="event.stopPropagation();pickMin(0)">Todas las puntuaciones</div>
       <div class="dd-item" onclick="event.stopPropagation();pickMin(5)">≥ 5.0</div>
