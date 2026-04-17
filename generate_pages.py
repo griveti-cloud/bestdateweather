@@ -349,8 +349,6 @@ def nav_html(cfg, slug_fr=None):
     home_href = cfg['nav_cta_href']
     cta_label = cfg['nav_cta_label']
     share_label = cfg.get('lbl_share_label', 'Share')
-    map_href = cfg.get('map_href', '')
-    map_label = cfg.get('map_nav_label', '')
     fav_btn = (
         f'<button id="btn-fav" class="nav-share" style="display:flex" '
         f'data-slug="{slug_fr}" onclick="bdwToggleFav(this)" '
@@ -359,12 +357,7 @@ def nav_html(cfg, slug_fr=None):
         f'<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'
         f'</svg></button>'
     ) if slug_fr else ''
-    map_link = (
-        f'<a class="nav-share" href="{map_href}" '
-        f'style="font-size:11px;font-weight:600;color:rgba(255,255,255,.7);text-decoration:none;'
-        f'padding:5px 9px;border:1.5px solid rgba(255,255,255,.15);border-radius:20px;white-space:nowrap">'
-        f'{map_label}</a>'
-    ) if map_href and map_label else ''
+    map_link = ''
     return f'''<nav>
  <a class="nav-brand" href="{home_href}">Best<em>Date</em>Weather</a>
  <div class="nav-actions">
@@ -1439,6 +1432,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 {nearby_section}
 {ranking_section}
 {pillar_comparison_section}
+<div style="text-align:center;margin:24px 0 8px"><a href="{C['map_href']}" style="display:inline-block;padding:12px 22px;background:var(--navy,#1a1f2e);color:#f5d060;font-weight:600;font-size:14px;border-radius:12px;text-decoration:none;border:1.5px solid rgba(245,208,96,.2)">{C['map_cta_pilier']}</a></div>
 </main>
 {footer_html(C, dest)}
 <script src="{pfx}js/faq.js" defer></script>
@@ -2753,6 +2747,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </div>
  </section>
 <div class="eeat-footer">📊 <span>{L['src_era5_short']}</span> — <a href="{L['src_link']}" class="eeat-link">{L['src_link_text']}</a> · <a href="{annual_link}" class="eeat-link">{C['lbl_annual_view_link']}</a></div>
+<div style="text-align:center;margin:24px 0 8px"><a href="{C['map_href']}" style="display:inline-block;padding:12px 22px;background:var(--navy,#1a1f2e);color:#f5d060;font-weight:600;font-size:14px;border-radius:12px;text-decoration:none;border:1.5px solid rgba(245,208,96,.2)">{C['map_cta_pilier']}</a></div>
 </main>
 <script src="{C['asset_prefix']}js/dest-data.js?v=4"></script>
 <script src="{C['asset_prefix']}js/faq.js" defer></script>
