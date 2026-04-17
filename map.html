@@ -46,13 +46,19 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .ld{width:9px;height:9px;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
 .ctr{position:fixed;bottom:16px;right:16px;z-index:900;background:rgba(26,31,46,.92);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:7px 12px;font-size:11px;color:#5a6c7d}
 .ctr b{color:white;font-size:13px}
-.filters{position:fixed;top:100px;left:0;right:0;z-index:890;display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 16px;background:rgba(26,31,46,.95);border-bottom:1px solid rgba(255,255,255,.06)}
-.fchip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1px solid rgba(255,255,255,.12);border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;color:rgba(255,255,255,.6);background:transparent;transition:all .12s;white-space:nowrap}
-.fchip:hover{border-color:#c9a84c;color:white}
-.fchip.on{background:#c9a84c;border-color:#c9a84c;color:#1a1f2e;font-weight:700}
-.fchip.on2{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);color:white}
-.fsep{width:1px;height:20px;background:rgba(255,255,255,.1)}
-.flbl{font-size:10px;font-weight:600;color:#5a6c7d;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}.dest-label{background:rgba(26,31,46,.85);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:2px 5px;font-size:10px;font-weight:600;color:rgba(255,255,255,.85);white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.4);pointer-events:none;}.dest-label::before{display:none}.country-label{background:transparent;border:none;box-shadow:none;color:rgba(255,255,255,.35);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,.8);pointer-events:none}
+.filters{position:fixed;top:100px;left:0;right:0;z-index:890;display:flex;gap:6px;align-items:center;padding:7px 12px;background:rgba(26,31,46,.97);border-bottom:1px solid rgba(255,255,255,.06);overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+.filters::-webkit-scrollbar{display:none}
+.fdrop{position:relative;display:inline-flex;flex-shrink:0}
+.fdrop-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1px solid rgba(255,255,255,.15);border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;color:rgba(255,255,255,.7);background:transparent;transition:all .12s;white-space:nowrap}
+.fdrop-btn:hover,.fdrop-btn.active{border-color:#c9a84c;color:white}
+.fdrop-btn.active{background:rgba(201,168,76,.15)}
+.fdrop-btn .arr{font-size:8px;opacity:.5;margin-left:2px}
+.fdrop-menu{display:none;position:fixed;background:#1e2640;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.5);padding:5px;z-index:9999;min-width:140px}
+.fdrop.open .fdrop-menu{display:block}
+.fdrop-item{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:7px;font-size:12px;cursor:pointer;color:rgba(255,255,255,.7);transition:background .1s;white-space:nowrap}
+.fdrop-item:hover{background:rgba(255,255,255,.07);color:white}
+.fdrop-item.sel{color:#c9a84c;font-weight:600}
+.fsep{width:1px;height:20px;background:rgba(255,255,255,.1);flex-shrink:0;margin:0 2px}.dest-label{background:rgba(26,31,46,.85);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:2px 5px;font-size:10px;font-weight:600;color:rgba(255,255,255,.85);white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.4);pointer-events:none;}.dest-label::before{display:none}.country-label{background:transparent;border:none;box-shadow:none;color:rgba(255,255,255,.35);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,.8);pointer-events:none}
 @media(max-width:600px){#map{top:140px}.sep,.stat{display:none}.mtab{padding:3px 6px;font-size:11px}}
 </style>
 </head>
@@ -69,25 +75,43 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   <div class="stat">Top score <b id="sb">—</b>/10</div>
 </div>
 <div class="filters" id="filters">
-  <span class="flbl">Mode</span>
-  <button class="fchip on" id="fm-gen" onclick="setMode('gen')">🌤 General</button>
-  <button class="fchip" id="fm-beach" onclick="setMode('beach')">🏖 Beach</button>
-  <button class="fchip" id="fm-ski" onclick="setMode('ski')">⛷ Ski</button>
+  <div class="fdrop" id="dd-mode">
+    <button class="fdrop-btn" onclick="toggleDD('mode')">🌤 General <span class="arr">▾</span></button>
+    <div class="fdrop-menu">
+      <div class="fdrop-item sel" onclick="setMode('gen');closeDD()">🌤 General</div>
+      <div class="fdrop-item" onclick="setMode('beach');closeDD()">🏖 Beach</div>
+      <div class="fdrop-item" onclick="setMode('ski');closeDD()">⛷ Ski</div>
+    </div>
+  </div>
   <div class="fsep"></div>
-  <span class="flbl">Comfort</span>
-  <button class="fchip on" id="fp-bal" onclick="setProf('bal')">🌤 Balanced</button>
-  <button class="fchip" id="fp-cool" onclick="setProf('cool')">❄️ Cool</button>
-  <button class="fchip" id="fp-warm" onclick="setProf('warm')">🔥 Warm</button>
-  <button class="fchip" id="fp-hum" onclick="setProf('hum')">💧 Dry</button>
+  <div class="fdrop" id="dd-prof">
+    <button class="fdrop-btn" onclick="toggleDD('prof')">🌤 Balanced <span class="arr">▾</span></button>
+    <div class="fdrop-menu">
+      <div class="fdrop-item sel" onclick="setProf('bal');closeDD()">🌤 Balanced</div>
+      <div class="fdrop-item" onclick="setProf('cool');closeDD()">❄️ Prefer cool</div>
+      <div class="fdrop-item" onclick="setProf('warm');closeDD()">🔥 Prefer warm</div>
+      <div class="fdrop-item" onclick="setProf('hum');closeDD()">💧 Humidity sensitive</div>
+    </div>
+  </div>
   <div class="fsep"></div>
-  <span class="flbl">Safety</span>
-  <button class="fchip on" id="frl-all" onclick="setRL(4)">All</button>
-  <button class="fchip" id="frl-safe" onclick="setRL(2)">🟢 Safe</button>
+  <div class="fdrop" id="dd-rl">
+    <button class="fdrop-btn" onclick="toggleDD('rl')">🛡 Safety: All <span class="arr">▾</span></button>
+    <div class="fdrop-menu">
+      <div class="fdrop-item sel" onclick="setRL(4);closeDD()">All destinations</div>
+      <div class="fdrop-item" onclick="setRL(2);closeDD()">🟢 Safe only</div>
+      <div class="fdrop-item" onclick="setRL(3);closeDD()">🟡 Low risk</div>
+    </div>
+  </div>
   <div class="fsep"></div>
-  <span class="flbl">Budget</span>
-  <button class="fchip on" id="fbi-all" onclick="setBI(5)">All</button>
-  <button class="fchip" id="fbi-cheap" onclick="setBI(2)">💚 Budget</button>
-  <button class="fchip" id="fbi-mid" onclick="setBI(3)">💛 Mid</button>
+  <div class="fdrop" id="dd-bi">
+    <button class="fdrop-btn" onclick="toggleDD('bi')">💰 Budget: All <span class="arr">▾</span></button>
+    <div class="fdrop-menu">
+      <div class="fdrop-item sel" onclick="setBI(5);closeDD()">All budgets</div>
+      <div class="fdrop-item" onclick="setBI(2);closeDD()">💚 Budget friendly</div>
+      <div class="fdrop-item" onclick="setBI(3);closeDD()">💛 Mid-range</div>
+      <div class="fdrop-item" onclick="setBI(4);closeDD()">🟠 Upscale</div>
+    </div>
+  </div>
 </div>
 <div id="map"></div>
 <div class="legend">
@@ -140,10 +164,10 @@ function getScore(d,mi){
   if(CUR_PROF==='hum')return m[5];
   return m[0];
 }
-function setMode(mode){CUR_MODE=mode;['gen','beach','ski'].forEach(function(m){document.getElementById('fm-'+m).classList.toggle('on',m===mode);});render(curMonth);}
-function setProf(prof){CUR_PROF=prof;['bal','cool','warm','hum'].forEach(function(p){document.getElementById('fp-'+p).classList.toggle('on',p===prof);});render(curMonth);}
-function setRL(rl){CUR_RL=rl;document.getElementById('frl-all').classList.toggle('on',rl===4);document.getElementById('frl-safe').classList.toggle('on',rl===2);render(curMonth);}
-function setBI(bi){CUR_BI=bi;document.getElementById('fbi-all').classList.toggle('on',bi===5);document.getElementById('fbi-cheap').classList.toggle('on',bi===2);document.getElementById('fbi-mid').classList.toggle('on',bi===3);render(curMonth);}
+function setMode(mode){CUR_MODE=mode;['gen','beach','ski'].forEach(function(m){document.getElementById('fm-'+m).classList.toggle('on',m===mode);});render(cur);}
+function setProf(prof){CUR_PROF=prof;['bal','cool','warm','hum'].forEach(function(p){document.getElementById('fp-'+p).classList.toggle('on',p===prof);});render(cur);}
+function setRL(rl){CUR_RL=rl;document.getElementById('frl-all').classList.toggle('on',rl===4);document.getElementById('frl-safe').classList.toggle('on',rl===2);render(cur);}
+function setBI(bi){CUR_BI=bi;document.getElementById('fbi-all').classList.toggle('on',bi===5);document.getElementById('fbi-cheap').classList.toggle('on',bi===2);document.getElementById('fbi-mid').classList.toggle('on',bi===3);render(cur);}
 var layer=L.layerGroup().addTo(map);
 var cur=new Date().getMonth();
 
