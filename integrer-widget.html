@@ -308,6 +308,12 @@ function updateDemo() {
 
 function setFormat(fmt) {
   curFormat = fmt;
+  // Compact est toujours sombre
+  if (fmt === 'compact') {
+    curTheme = 'dark';
+    document.getElementById('theme-light').classList.remove('active');
+    document.getElementById('theme-dark').classList.add('active');
+  }
   document.querySelectorAll('.format-tabs .tab').forEach(t => t.classList.toggle('active', t.onclick.toString().includes(`'${fmt}'`)));
   updateDemo();
 }
@@ -325,6 +331,11 @@ function getCode() {
 
 function setTheme(theme) {
   curTheme = theme;
+  // Compact n'existe qu'en sombre → forcer Small si on choisit clair
+  if (theme === 'light' && curFormat === 'compact') {
+    curFormat = 'small';
+    document.querySelectorAll('.format-tabs .tab').forEach(t => t.classList.toggle('active', t.onclick.toString().includes("'small'")));
+  }
   document.getElementById('theme-light').classList.toggle('active', theme === 'light');
   document.getElementById('theme-dark').classList.toggle('active', theme === 'dark');
   updateDemo();
