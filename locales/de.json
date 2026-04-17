@@ -1500,6 +1500,7 @@
       "poor": "Schlecht",
       "avoid": "Meiden"
     },
-    "cta": "Wetter sehen →"
+    "cta": "Wetter sehen →",
+    "nav_label": "🗺️ Karte"
   }
 }

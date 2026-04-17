@@ -1509,6 +1509,7 @@
       "poor": "Malo",
       "avoid": "Evitar"
     },
-    "cta": "Ver el tiempo →"
+    "cta": "Ver el tiempo →",
+    "nav_label": "🗺️ Mapa"
   }
 }

@@ -1487,6 +1487,7 @@
       "poor": "Poor",
       "avoid": "Avoid"
     },
-    "cta": "See the weather →"
+    "cta": "See the weather →",
+    "nav_label": "🗺️ Map"
   }
 }
