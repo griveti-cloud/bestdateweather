@@ -956,7 +956,9 @@
       "5": "🔴 Very expensive"
     },
     "period_annual": "Annual",
-    "region_world": "World"
+    "region_world": "World",
+    "secu_all": "All destinations",
+    "budget_all": "All budgets"
   },
   "ranking_footer": {
     "data_by": "Weather data by Open-Meteo.com",

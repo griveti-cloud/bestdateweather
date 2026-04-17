@@ -955,7 +955,9 @@
       "5": "🔴 Muy caro"
     },
     "period_annual": "Anual",
-    "region_world": "Mundo"
+    "region_world": "Mundo",
+    "secu_all": "Todos los destinos",
+    "budget_all": "Todos los presupuestos"
   },
   "ranking_footer": {
     "data_by": "Datos meteorológicos de Open-Meteo.com",

@@ -960,7 +960,9 @@
       "5": "🔴 Sehr teuer"
     },
     "period_annual": "Jährlich",
-    "region_world": "Weltweit"
+    "region_world": "Weltweit",
+    "secu_all": "Alle Ziele",
+    "budget_all": "Alle Budgets"
   },
   "ranking_footer": {
     "data_by": "Wetterdaten von Open-Meteo.com",
