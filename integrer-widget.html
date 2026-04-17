@@ -38,7 +38,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:18px 3
 .hero{max-width:960px;margin:0 auto;padding:72px 32px 56px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 @media(max-width:700px){.hero{grid-template-columns:1fr;padding:48px 20px 40px;gap:36px}}
 .hero-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--gold);margin-bottom:14px}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(36px,4.5vw,54px);font-weight:900;line-height:1.08;margin-bottom:20px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4.5vw,54px);font-weight:900;line-height:1.08;margin-bottom:20px;overflow-wrap:break-word;hyphens:auto}
 .hero h1 span{color:var(--gold)}
 .hero-desc{font-size:16px;color:var(--muted);line-height:1.65;margin-bottom:28px}
 .hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
@@ -50,7 +50,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:18px 3
 .btn-secondary{background:transparent;color:var(--ink);padding:13px 22px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;border:1.5px solid var(--border);transition:.15s}
 .btn-secondary:hover{border-color:var(--ink)}
 .hero-widget{display:flex;justify-content:center}
-.widget-preview{border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(15,13,10,.12),0 4px 16px rgba(15,13,10,.08);border:1px solid var(--border)}
+.widget-preview{border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(15,13,10,.12),0 4px 16px rgba(15,13,10,.08);border:1px solid var(--border);max-width:100%}
 
 /* STATS BAR */
 .stats-bar{background:var(--navy);padding:28px 32px}
@@ -138,7 +138,7 @@ footer span{color:rgba(255,255,255,.3);font-size:13px;margin:0 8px}
   </div>
   <div class="hero-widget">
     <div class="widget-preview">
-      <iframe src="widget/agadir-medium.html" width="400" height="220" scrolling="no" class="format-iframe" title="Widget météo Agadir"></iframe>
+      <iframe src="widget/agadir-medium.html" width="400" height="220" scrolling="no" class="format-iframe" style="max-width:100%" title="Widget météo Agadir"></iframe>
     </div>
   </div>
 </div>
