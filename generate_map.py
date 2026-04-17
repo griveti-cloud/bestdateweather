@@ -265,7 +265,7 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .leaflet-popup-content{{margin:0;width:200px!important}}
 .pi{{padding:14px}}
 .pi-flag{{font-size:18px}}
-.pi-name{{font-size:15px;font-weight:700;margin:5px 0 2px}}
+.pi-name{{font-size:15px;font-weight:700;margin:5px 0 2px;color:white}}
 .pi-score{{font-size:26px;font-weight:700;line-height:1;margin:6px 0 2px}}
 .pi-month{{font-size:11px;color:rgba(255,255,255,.55);margin-bottom:10px}}
 .pi-bars{{display:flex;gap:2px;align-items:flex-end;height:28px;margin-bottom:10px}}
