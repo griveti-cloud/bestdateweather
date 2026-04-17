@@ -84,10 +84,10 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:18px 3
 
 /* FORMATS */
 .formats{max-width:960px;margin:0 auto;padding:64px 32px}
-.format-tabs{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+.format-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;width:100%}
 .tab{background:var(--card);border:1.5px solid var(--border);border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s;color:var(--muted)}
 .tab.active,.tab:hover{background:var(--gold);border-color:var(--gold);color:#fff}
-.format-preview{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;display:flex;flex-direction:column;align-items:center;gap:24px}
+.format-preview{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;display:flex;flex-direction:column;align-items:center;gap:24px;overflow:hidden;max-width:100%}
 .format-iframe{border:none;border-radius:12px;display:block}
 .code-block{width:100%;max-width:640px}
 .code-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
@@ -236,7 +236,7 @@ footer span{color:rgba(255,255,255,.3);font-size:13px;margin:0 8px}
     <button class="tab" id="theme-dark" onclick="setTheme('dark')" style="font-size:12px">🌙 Thème sombre</button>
   </div>
   <div class="format-preview">
-    <iframe id="widget-demo" src="widget/agadir-compact.html" width="320" height="165" scrolling="no" class="format-iframe" title="Aperçu widget"></iframe>
+    <div id="widget-demo-wrap" style="width:100%;overflow:hidden;display:flex;justify-content:center"><iframe id="widget-demo" src="widget/agadir-compact.html" width="320" height="165" scrolling="no" class="format-iframe" title="Aperçu widget" style="transform-origin:top center;transition:transform .2s"></iframe></div>
     <div class="code-block">
       <div class="code-header">
         <span class="code-label">Code à copier</span>
@@ -293,6 +293,16 @@ function updateDemo() {
   iframe.src = `widget/${DEST}-${f.label}${suf}.html`;
   iframe.width = f.w;
   iframe.height = f.h;
+  // Scale down if wider than container
+  const wrap = document.getElementById('widget-demo-wrap');
+  if (wrap) {
+    const available = wrap.offsetWidth || 300;
+    const scale = Math.min(1, available / f.w);
+    iframe.style.transform = scale < 1 ? `scale(${scale})` : '';
+    iframe.style.marginLeft = scale < 1 ? `-${f.w * (1 - scale) / 2}px` : '';
+    iframe.style.marginRight = scale < 1 ? `-${f.w * (1 - scale) / 2}px` : '';
+    wrap.style.height = Math.round(f.h * scale) + 'px';
+  }
   updateCode();
 }
 
