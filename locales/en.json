@@ -958,7 +958,8 @@
     "period_annual": "Annual",
     "region_world": "World",
     "secu_all": "All destinations",
-    "budget_all": "All budgets"
+    "budget_all": "All budgets",
+    "tab_nomad": "💻 Digital Nomad"
   },
   "ranking_footer": {
     "data_by": "Weather data by Open-Meteo.com",
@@ -1467,5 +1468,18 @@
     ],
     "section_title": "What to expect by period",
     "section_label": "CLIMATE PATTERN"
+  },
+  "map": {
+    "tab_nomad": "💻 Digital Nomad",
+    "map_title": "World Climate Map · BestDateWeather",
+    "map_desc": "Interactive world map: best time to visit 697 destinations. ERA5 10-year climate data.",
+    "map_showing": "Showing",
+    "map_destinations": "destinations",
+    "map_best": "Best",
+    "map_back": "← Rankings",
+    "map_annual": "Annual",
+    "map_min_score": "★ Min score",
+    "map_all_scores": "All scores",
+    "map_filename": "map.html"
   }
 }

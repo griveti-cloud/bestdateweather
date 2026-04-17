@@ -962,7 +962,8 @@
     "period_annual": "Jährlich",
     "region_world": "Weltweit",
     "secu_all": "Alle Ziele",
-    "budget_all": "Alle Budgets"
+    "budget_all": "Alle Budgets",
+    "tab_nomad": "💻 Digitale Nomaden"
   },
   "ranking_footer": {
     "data_by": "Wetterdaten von Open-Meteo.com",
@@ -1478,5 +1479,18 @@
     ],
     "section_title": "Was nach Jahreszeit zu erwarten ist",
     "section_label": "KLIMAMUSTER"
+  },
+  "map": {
+    "tab_nomad": "💻 Digitale Nomaden",
+    "map_title": "Weltklimatische Karte · BestDateWeather",
+    "map_desc": "Interaktive Weltkarte: beste Reisezeit für 697 Reiseziele. ERA5 10-Jahres-Klimadaten.",
+    "map_showing": "Anzeigen von",
+    "map_destinations": "Reiseziele",
+    "map_best": "Bester",
+    "map_back": "← Rankings",
+    "map_annual": "Jährlich",
+    "map_min_score": "★ Min. Score",
+    "map_all_scores": "Alle Scores",
+    "map_filename": "karte.html"
   }
 }
