@@ -1491,6 +1491,7 @@
       "avoid": "À éviter"
     },
     "cta": "Voir la météo →",
-    "nav_label": "🗺️ Carte"
+    "nav_label": "🗺️ Carte",
+    "map_href": "carte.html"
   }
 }

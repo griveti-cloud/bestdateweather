@@ -1492,6 +1492,7 @@
       "avoid": "Avoid"
     },
     "cta": "See the weather →",
-    "nav_label": "🗺️ Map"
+    "nav_label": "🗺️ Map",
+    "map_href": "../en/map.html"
   }
 }

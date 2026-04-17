@@ -349,6 +349,8 @@ def nav_html(cfg, slug_fr=None):
     home_href = cfg['nav_cta_href']
     cta_label = cfg['nav_cta_label']
     share_label = cfg.get('lbl_share_label', 'Share')
+    map_href = cfg.get('map_href', '')
+    map_label = cfg.get('map_nav_label', '')
     fav_btn = (
         f'<button id="btn-fav" class="nav-share" style="display:flex" '
         f'data-slug="{slug_fr}" onclick="bdwToggleFav(this)" '
@@ -357,10 +359,16 @@ def nav_html(cfg, slug_fr=None):
         f'<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'
         f'</svg></button>'
     ) if slug_fr else ''
+    map_link = (
+        f'<a class="nav-share" href="{map_href}" '
+        f'style="font-size:11px;font-weight:600;color:rgba(255,255,255,.7);text-decoration:none;'
+        f'padding:5px 9px;border:1.5px solid rgba(255,255,255,.15);border-radius:20px;white-space:nowrap">'
+        f'{map_label}</a>'
+    ) if map_href and map_label else ''
     return f'''<nav>
  <a class="nav-brand" href="{home_href}">Best<em>Date</em>Weather</a>
  <div class="nav-actions">
-  {fav_btn}<button class="nav-share" onclick="shareThis()" aria-label="{share_label}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
+  {fav_btn}{map_link}<button class="nav-share" onclick="shareThis()" aria-label="{share_label}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button>
   <a class="nav-cta" href="{home_href}">{cta_label}</a>
  </div>
 </nav>'''
