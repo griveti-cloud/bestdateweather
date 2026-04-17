@@ -44,13 +44,13 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:18px 3
 .hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
 .badge{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 13px;font-size:12px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:5px}
 .badge-check{color:var(--green);font-weight:800}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}@media(max-width:700px){.hero-actions{flex-direction:column}.btn-primary,.btn-secondary{width:100%;justify-content:center;text-align:center}}
 .btn-primary{background:var(--gold);color:#fff;padding:13px 26px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:.15s}
 .btn-primary:hover{background:var(--gold2)}
 .btn-secondary{background:transparent;color:var(--ink);padding:13px 22px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;border:1.5px solid var(--border);transition:.15s}
 .btn-secondary:hover{border-color:var(--ink)}
 .hero-widget{display:flex;justify-content:center}
-.widget-preview{border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(15,13,10,.12),0 4px 16px rgba(15,13,10,.08);border:1px solid var(--border);max-width:100%}
+.widget-preview{border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(15,13,10,.12),0 4px 16px rgba(15,13,10,.08);border:1px solid var(--border);max-width:100%;width:100%}
 
 /* STATS BAR */
 .stats-bar{background:var(--navy);padding:28px 32px}
@@ -138,7 +138,7 @@ footer span{color:rgba(255,255,255,.3);font-size:13px;margin:0 8px}
   </div>
   <div class="hero-widget">
     <div class="widget-preview">
-      <iframe src="widget/agadir-medium.html" width="400" height="220" scrolling="no" class="format-iframe" style="max-width:100%" title="Widget météo Agadir"></iframe>
+      <div style="width:100%;overflow:hidden;border-radius:14px"><iframe src="widget/agadir-medium.html" width="400" height="340" scrolling="no" frameborder="0" style="width:400px;max-width:100%;display:block;transform-origin:top left;border:none" title="Widget météo Agadir" id="hero-widget-frame"></iframe></div>
     </div>
   </div>
 </div>
@@ -267,6 +267,20 @@ footer span{color:rgba(255,255,255,.3);font-size:13px;margin:0 8px}
 </footer>
 
 <script>
+// Scale hero widget to fit container
+function scaleHeroWidget() {
+  const frame = document.getElementById('hero-widget-frame');
+  if (!frame) return;
+  const container = frame.parentElement;
+  const containerW = container.offsetWidth;
+  const scale = Math.min(1, containerW / 400);
+  frame.style.transform = 'scale(' + scale + ')';
+  frame.style.transformOrigin = 'top left';
+  container.style.height = Math.round(340 * scale) + 'px';
+}
+scaleHeroWidget();
+window.addEventListener('resize', scaleHeroWidget);
+
 const FORMATS = {
   compact: { w: 320, h: 165, label: 'compact' },
   small:   { w: 350, h: 240, label: 'small' },
