@@ -367,6 +367,8 @@ function copyCode() {
     setTimeout(() => { btn.textContent = 'Copier'; btn.classList.remove('copied'); }, 2000);
   });
 }
+// Scaling initial après rendu DOM
+window.addEventListener('load', function(){ setTimeout(updateDemo, 100); });
 </script>
 </body>
 </html>
