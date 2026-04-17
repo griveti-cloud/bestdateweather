@@ -159,8 +159,13 @@ document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){el.class
 function scoreColor(s){return s>=8.6?'#1a7a4a':s>=7.6?'#2d9e60':s>=6.3?'#84cc16':s>=5?'#f59e0b':s>=3.5?'#f97316':'#ef4444';}
 function flagEmoji(c){try{return c.toUpperCase().split('').map(function(x){return String.fromCodePoint(x.charCodeAt(0)+127397)}).join('')}catch(e){return '🌍'}}
 function getScore(d,mi){
-  if(mi===12){mi=d[7];} // annual = best month
-  var m=(d[8]||[])[mi]; if(!m) return null;
+  var m;
+  if(mi===12){
+    m=d[9]||null; // annual = moyenne 12 mois (logique pilier)
+  } else {
+    m=(d[8]||[])[mi];
+  }
+  if(!m) return null;
   if(CUR_MODE==='beach') return m[1];
   if(CUR_MODE==='ski')   return m[2];
   if(CUR_PROF==='cool')  return m[3];
