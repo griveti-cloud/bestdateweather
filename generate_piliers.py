@@ -1420,7 +1420,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         '<script>(function(){'+
         f'var POOL={pool_json};'+
         'var TOP=25;var CUR_REG="all";var CUR_RL=4;var CUR_BI=5;var CUR_PROF="balanced";'+
-        f'var TH_GEN="{_e(th_score_gen)}",TH_BEACH="{_e(th_score_beach)}",TH_SKI="{_e(th_score_ski)}";'+
+        f'var TH_GEN="{_e(th_score_gen)}",TH_BEACH="{_e(th_score_beach)}",TH_SKI="{_e(th_score_ski)}",TH_NOMAD="{_e(tab_nomad)}",NO_NOMAD="—";'+
         f'var NO_BEACH="{_e(no_beach_msg)}",NO_SKI="{_e(no_ski_msg)}",NO_METEO="{_e(no_meteo_msg)}",NO_NOMAD="—";'+
         'function _dewPen(tmax,dew){if(!dew)return 0;return dew>=22&&tmax>=26?0.25:dew>=18?Math.min(0.2,(dew-18)*0.04):0;}'+
         'function _profScore(d,prof){var t=(d.tmax||20),r=(d.rain_pct||50)/100,s=Math.min(1,(d.sun_h||4)/10);var sc;if(prof==="cool"){var tc=t<=15?1:t<=20?1-(t-15)/10:t<=28?0.7-(t-20)*0.05:0.35-(t-28)*0.04;sc=Math.max(0,tc);}else if(prof==="warm"){var tw=t>=32?1:t>=27?1-(32-t)/10:t>=20?0.7-(27-t)*0.06:0.28-(20-t)*0.04;sc=Math.max(0,tw);}else{sc=t>=16&&t<=28?1:t<16?Math.max(0,1-(16-t)/12):Math.max(0,1-(t-28)/14);}var raw=0.40*sc+0.35*(1-r)+0.25*s;raw-=_dewPen(t,d.dew);return Math.max(0,Math.min(10,raw*10));}'+
