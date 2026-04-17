@@ -193,6 +193,7 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--navy);co
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="map-data.js"></script>
 <script>
+window.addEventListener("load", function() {
 var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var MONTHS_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
@@ -311,6 +312,7 @@ MONTHS.forEach(function(m, i) {
 
 // Init
 renderMarkers(curMonth);
+}); // end window.onload
 </script>
 </body>
 </html>
