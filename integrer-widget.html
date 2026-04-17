@@ -236,7 +236,7 @@ footer span{color:rgba(255,255,255,.3);font-size:13px;margin:0 8px}
     <button class="tab active" id="theme-dark" onclick="setTheme('dark')" style="font-size:12px">🌙 Thème sombre</button>
   </div>
   <div class="format-preview">
-    <div id="widget-demo-wrap" style="width:100%;overflow:hidden;display:flex;justify-content:center"><iframe id="widget-demo" src="widget/agadir-compact.html" width="320" height="165" scrolling="no" class="format-iframe" title="Aperçu widget" style="transform-origin:top center;transition:transform .2s"></iframe></div>
+    <div id="widget-demo-wrap" style="overflow:hidden;margin:0 auto"><iframe id="widget-demo" src="widget/agadir-compact.html" width="320" height="165" scrolling="no" class="format-iframe" title="Aperçu widget" style="transform-origin:top center;transition:transform .2s"></iframe></div>
     <div class="code-block">
       <div class="code-header">
         <span class="code-label">Code à copier</span>
@@ -294,19 +294,22 @@ function updateDemo() {
   iframe.width = f.w;
   iframe.height = f.h;
   iframe.style.transform = '';
-  iframe.style.marginLeft = '';
-  iframe.style.marginRight = '';
+  iframe.style.transformOrigin = '';
   const wrap = document.getElementById('widget-demo-wrap');
-  if (wrap) {
-    const available = wrap.offsetWidth || 320;
-    const scale = Math.min(1, available / f.w);
-    if (scale < 1) {
-      iframe.style.transform = `scale(${scale})`;
-      iframe.style.transformOrigin = 'top left';
-    }
-    wrap.style.height = Math.ceil(f.h * scale) + 'px';
-    wrap.style.width = '100%';
-    wrap.style.overflow = 'hidden';
+  if (!wrap) { updateCode(); return; }
+  // Mesure la largeur du parent (la .format-preview)
+  const parent = wrap.parentElement;
+  const available = (parent ? parent.offsetWidth - 64 : 260); // 32px padding each side
+  const scale = Math.min(1, available / f.w);
+  // Dimensionner le wrapper à la taille VISUELLE du widget scalé
+  wrap.style.width = Math.floor(f.w * scale) + 'px';
+  wrap.style.height = Math.ceil(f.h * scale) + 'px';
+  wrap.style.overflow = 'hidden';
+  wrap.style.margin = '0 auto';
+  // Appliquer le scale depuis top-left du wrapper
+  if (scale < 1) {
+    iframe.style.transform = `scale(${scale})`;
+    iframe.style.transformOrigin = 'top left';
   }
   updateCode();
 }
