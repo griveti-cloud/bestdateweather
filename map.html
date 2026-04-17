@@ -81,7 +81,7 @@ function sc(s){return s>=8.6?'#1a7a4a':s>=7.6?'#2d9e60':s>=6.3?'#84cc16':s>=5?'#
 function flag(c){try{return c.toUpperCase().split('').map(function(x){return String.fromCodePoint(x.charCodeAt(0)+127397)}).join('');}catch(e){return '🌍';}}
 
 var map=L.map('map',{center:[20,10],zoom:2,minZoom:2,maxZoom:8,zoomControl:true,attributionControl:false});
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:19,attribution:'© CartoDB'}).addTo(map);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
 L.control.attribution({position:'bottomright'}).addTo(map);
 
 var layer=L.layerGroup().addTo(map);
