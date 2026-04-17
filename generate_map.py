@@ -44,7 +44,12 @@ def build_map_data():
             pays = row['pays']
             ci = country_info.get(pays, {})
             dests[row['slug_fr']] = {
-                'n': row['nom_en'] or row['nom_bare'],
+                'n': [
+                row.get('nom_fr') or row['nom_bare'],
+                row.get('nom_en') or row['nom_bare'],
+                row.get('nom_es') or row.get('nom_en') or row['nom_bare'],
+                row.get('nom_de') or row.get('nom_en') or row['nom_bare'],
+            ],
                 'lat': float(row['lat']), 'lon': float(row['lon']),
                 'f': row['flag'], 'slug_en': row['slug_en'],
                 'rl': ci.get('risk_level', 2), 'bi': ci.get('budget_index', 3),
@@ -365,6 +370,7 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 var MN={json.dumps(months_short)};
+var LANG_IDX={{'fr':0,'en':1,'en-us':1,'es':2,'de':3}}[{json.dumps(lang)}]||1;
 var MF={json.dumps(months_full)};
 var MF_ANNUAL={json.dumps(m['map_annual'])};
 var FP_SECU={json.dumps(fp_secu)};
@@ -377,6 +383,7 @@ var CUR_MODE='gen',CUR_PROF='bal',CUR_RL=4,CUR_BI=5,CUR_MIN=0;
 document.getElementById('dd-m-btn').innerHTML=MF_ANNUAL+' <span class="dd-arr">▾</span>';document.getElementById('dd-m-btn').classList.add('sel');
 document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){{el.classList.toggle('on',i===CUR_M+1);}});
 
+function getName(d){{return Array.isArray(d[1])?d[1][LANG_IDX]||d[1][1]:d[1];}}
 function scoreColor(s){{return s>=8.6?'#1a7a4a':s>=7.6?'#2d9e60':s>=6.3?'#84cc16':s>=5?'#f59e0b':s>=3.5?'#f97316':'#ef4444';}}
 function flagEmoji(c){{try{{return c.toUpperCase().split('').map(function(x){{return String.fromCodePoint(x.charCodeAt(0)+127397)}}).join('')}}catch(e){{return '🌍'}}}}
 
@@ -494,8 +501,8 @@ function render(){{
     var z=map.getZoom();var sz=Math.max(4,Math.min(10,z+1));var col=scoreColor(s);
     var icon=L.divIcon({{className:'',html:'<div class="bdw-dot" style="width:'+sz+'px;height:'+sz+'px;background:'+col+';opacity:'+(0.5+s/20)+'"></div>',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]}});
     var mk=L.marker([d[2],d[3]],{{icon:icon,zIndexOffset:Math.round(s*10)}});
-    mk.bindTooltip(d[1],{{permanent:false,direction:'right',offset:[sz/2+2,0],className:'dest-label',opacity:1}});
-    map.on('zoomend',function(){{if(map.getZoom()>=5){{mk.bindTooltip(d[1],{{permanent:true,direction:'right',offset:[sz/2+2,0],className:'dest-label',opacity:1}});}}else{{mk.unbindTooltip();}}}});
+    mk.bindTooltip(getName(d),{{permanent:false,direction:'right',offset:[sz/2+2,0],className:'dest-label',opacity:1}});
+    map.on('zoomend',function(){{if(map.getZoom()>=5){{mk.bindTooltip(getName(d),{{permanent:true,direction:'right',offset:[sz/2+2,0],className:'dest-label',opacity:1}});}}else{{mk.unbindTooltip();}}}});
     mk.on('click',function(){{
       var bars=(d[8]||[]).map(function(ms,i){{var h=ms?Math.round(((ms[0]||0)/10)*100):0;var c=ms?scoreColor(ms[0]):'#333';return '<div class="pi-bar'+(i===CUR_M?' cur':'')+'\" style="height:'+h+'%;background:'+c+'"></div>';}}).join('');
       L.popup({{maxWidth:200}}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+d[1]+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="{ap}en/best-time-to-visit-'+(d[0]||'')+'.html" class="pi-link">{m['cta']}</a></div>').openOn(map);
