@@ -89,7 +89,8 @@
     "HERO_H1": "Welches Wetter <em>für Ihre Reise?</em>",
     "HERO_SUB": "Klimabewertung /10 · 697 Reiseziele weltweit · bis zu 1 Jahr im Voraus · 10 Jahre ERA5-Daten",
     "USP_HORIZON": "1 Jahr im Voraus",
-    "UI_GUIDES_SUB": "Klimatabellen · beste Reisezeit · Wetter Monat für Monat"
+    "UI_GUIDES_SUB": "Klimatabellen · beste Reisezeit · Wetter Monat für Monat",
+    "UI_WIDGET_LINK": "Widget für Ihre Website"
   },
   "months": [
     "Januar",
