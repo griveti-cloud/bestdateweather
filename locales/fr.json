@@ -957,7 +957,8 @@
     "period_annual": "Annuel",
     "region_world": "Monde",
     "secu_all": "Toutes destinations",
-    "budget_all": "Tous budgets"
+    "budget_all": "Tous budgets",
+    "tab_nomad": "💻 Nomades"
   },
   "ranking_footer": {
     "data_by": "Données météo par Open-Meteo.com",
@@ -1466,5 +1467,18 @@
     ],
     "section_title": "À quoi s'attendre selon la période",
     "section_label": "RÉGIME CLIMATIQUE"
+  },
+  "map": {
+    "tab_nomad": "💻 Nomades",
+    "map_title": "Carte climatique mondiale · BestDateWeather",
+    "map_desc": "Carte interactive : meilleure période pour visiter 697 destinations. Données ERA5 10 ans.",
+    "map_showing": "Affichage de",
+    "map_destinations": "destinations",
+    "map_best": "Meilleur",
+    "map_back": "← Classements",
+    "map_annual": "Annuel",
+    "map_min_score": "★ Score min",
+    "map_all_scores": "Tous les scores",
+    "map_filename": "carte.html"
   }
 }
