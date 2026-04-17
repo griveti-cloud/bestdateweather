@@ -223,8 +223,12 @@ footer span{color:rgba(255,255,255,.3);font-size:13px;margin:0 8px}
 <!-- FORMATS -->
 <div class="formats" id="formats">
   <div class="section-label">Formats disponibles</div>
-  <div class="section-title">5 tailles, 2 thèmes</div>
-  <div class="format-tabs">
+  <div class="section-title">5 formats : du compact au large</div>
+  <div style="display:flex;gap:16px;margin-bottom:16px;font-size:12px;flex-wrap:wrap">
+  <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:14px;height:14px;background:#0f172a;border-radius:3px"></span><strong>Compact</strong> — thème sombre</span>
+  <span style="display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:14px;height:14px;background:#fff;border:1px solid #ccc;border-radius:3px"></span><strong>Small→Wide</strong> — thème clair</span>
+</div>
+<div class="format-tabs">
     <button class="tab active" onclick="setFormat('compact')">Compact 320×165</button>
     <button class="tab" onclick="setFormat('small')">Small 350×240</button>
     <button class="tab" onclick="setFormat('medium')">Medium 400×220</button>
