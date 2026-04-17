@@ -688,8 +688,8 @@ def generate_page(mi, lang, dests, climate, country_info=None):
     bl = pil.get('budget_labels', {'1':'💚 Économique','2':'💛 Abordable','3':'🟡 Modéré','4':'🟠 Coûteux','5':'🔴 Très coûteux'})
     _secu_all_lbl = pil.get('secu_all','All')
     _budget_all_lbl = pil.get('budget_all','All')
-    _secu_items = f'<div class="fc-item active threshold-active" data-rl="4" onclick="event.stopPropagation();setSecu(4)">{_secu_all_lbl}</div>' + ''.join(f'<div class="fc-item" data-rl="{r}" onclick="event.stopPropagation();setSecu({r})">≤ {sl.get(str(r),str(r))}</div>' for r in range(1,5))
-    _budget_items = f'<div class="fc-item active threshold-active" data-bi="5" onclick="event.stopPropagation();setBudget(5)">{_budget_all_lbl}</div>' + ''.join(f'<div class="fc-item" data-bi="{b}" onclick="event.stopPropagation();setBudget({b})">≤ {bl.get(str(b),str(b))}</div>' for b in range(1,6))
+    _secu_items = f'<div class="fc-item active threshold-active" data-rl="4" onclick="event.stopPropagation();setSecu(4)">{_secu_all_lbl}</div>' + ''.join(f'<div class="fc-item" data-rl="{r}" onclick="event.stopPropagation();setSecu({r})">≤ {sl.get(str(r),str(r))}</div>' for r in range(1,4))
+    _budget_items = f'<div class="fc-item active threshold-active" data-bi="5" onclick="event.stopPropagation();setBudget(5)">{_budget_all_lbl}</div>' + ''.join(f'<div class="fc-item" data-bi="{b}" onclick="event.stopPropagation();setBudget({b})">≤ {bl.get(str(b),str(b))}</div>' for b in range(1,5))
     _reg_opts = region_tabs.replace('class="reg-tab active"','class="fc-item active" onclick="event.stopPropagation();setReg(this.dataset.reg)"').replace('class="reg-tab"','class="fc-item" onclick="event.stopPropagation();setReg(this.dataset.reg)"')
     _type_opts = (
         f'<div class="fc-item active" data-mode="meteo" onclick="event.stopPropagation();setMode(\'meteo\')">{tab_meteo}</div>'
@@ -1375,8 +1375,8 @@ def generate_annual_page(lang, dests, climate, country_info=None):
     _reg_inner = build_region_tabs(lang)
     _secu_all_lbl_ann = pil.get('secu_all','All')
     _budget_all_lbl_ann = pil.get('budget_all','All')
-    _secu_items_ann = f'<div class="fc-item active threshold-active" data-rl="4" onclick="event.stopPropagation();setSecu(4)">{_secu_all_lbl_ann}</div>' + ''.join(f'<div class="fc-item" data-rl="{r}" onclick="event.stopPropagation();setSecu({r})">≤ {_sl.get(str(r),str(r))}</div>' for r in range(1,5))
-    _budget_items_ann = f'<div class="fc-item active threshold-active" data-bi="5" onclick="event.stopPropagation();setBudget(5)">{_budget_all_lbl_ann}</div>' + ''.join(f'<div class="fc-item" data-bi="{b}" onclick="event.stopPropagation();setBudget({b})">≤ {_bl.get(str(b),str(b))}</div>' for b in range(1,6))
+    _secu_items_ann = f'<div class="fc-item active threshold-active" data-rl="4" onclick="event.stopPropagation();setSecu(4)">{_secu_all_lbl_ann}</div>' + ''.join(f'<div class="fc-item" data-rl="{r}" onclick="event.stopPropagation();setSecu({r})">≤ {_sl.get(str(r),str(r))}</div>' for r in range(1,4))
+    _budget_items_ann = f'<div class="fc-item active threshold-active" data-bi="5" onclick="event.stopPropagation();setBudget(5)">{_budget_all_lbl_ann}</div>' + ''.join(f'<div class="fc-item" data-bi="{b}" onclick="event.stopPropagation();setBudget({b})">≤ {_bl.get(str(b),str(b))}</div>' for b in range(1,5))
     _reg_opts_ann = _reg_inner.replace('class="reg-tab active"','class="fc-item active" onclick="event.stopPropagation();setReg(this.dataset.reg)"').replace('class="reg-tab"','class="fc-item" onclick="event.stopPropagation();setReg(this.dataset.reg)"')
     _type_opts_ann = (
         f'<div class="fc-item active" data-mode="meteo" onclick="event.stopPropagation();setMode(\'meteo\')">{tab_meteo}</div>'
