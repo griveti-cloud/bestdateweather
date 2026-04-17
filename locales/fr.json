@@ -1488,6 +1488,7 @@
       "poor": "Médiocre",
       "avoid": "À éviter"
     },
-    "cta": "Voir la météo →"
+    "cta": "Voir la météo →",
+    "nav_label": "🗺️ Carte"
   }
 }

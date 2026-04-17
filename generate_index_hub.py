@@ -1076,6 +1076,8 @@ def generate_from_template(lang, loc):
         '{{UI_GUIDES_SUB}}':       meta.get('ui_guides_sub', ''),
         '{{UI_GUIDES_DESC}}':      meta.get('ui_guides_desc', ''),
         '{{UI_CARD_SUB}}':         meta.get('ui_card_sub', 'Best time to visit'),
+        '{{MAP_FILENAME}}':        loc.get('map', {}).get('map_filename', 'map.html'),
+        '{{MAP_NAV_LABEL}}':       loc.get('map', {}).get('nav_label', '🗺️ Map'),
         '{{UI_DETAILS_TOGGLE}}':   meta.get('UI_DETAILS_TOGGLE', 'See details — hourly, scenarios, astro'),
         '{{UI_RAIN_PROB}}':        meta.get('UI_RAIN_PROB', '💧 Rain probability'),
         '{{UI_AVG_WIND}}':         meta.get('UI_AVG_WIND', '💨 Avg wind'),
