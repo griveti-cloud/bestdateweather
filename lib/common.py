@@ -614,7 +614,7 @@ def footer_ranking_html(lang, alt_links):
 </footer>"""
 
 
-def shared_nav_html(home_href, cta_label, share_label="Share", slug_fr=None):
+def shared_nav_html(home_href, cta_label, share_label="Share", slug_fr=None, map_href=None, map_label=None):
     """Nav using same CSS classes as fiche pages (requires style.css to be loaded)."""
     svg_share = ('<svg viewBox="0 0 24 24" width="18" height="18" fill="none" '
                  'stroke="currentColor" stroke-width="2">'
@@ -634,11 +634,19 @@ def shared_nav_html(home_href, cta_label, share_label="Share", slug_fr=None):
         f'{svg_heart}</button>'
     ) if slug_fr else ''
 
+    map_link = (
+        f'<a class="nav-share" href="{map_href}" '
+        f'style="font-size:11px;font-weight:600;color:rgba(255,255,255,.7);text-decoration:none;'
+        f'padding:5px 9px;border:1.5px solid rgba(255,255,255,.15);border-radius:20px;white-space:nowrap">'
+        f'{map_label}</a>'
+    ) if map_href and map_label else ''
+
     return (
         f'<nav>'
         f'<a class="nav-brand" href="{home_href}">Best<em>Date</em>Weather</a>'
         f'<div class="nav-actions">'
         f'{fav_btn}'
+        f'{map_link}'
         f'<button class="nav-share" onclick="shareThis()" aria-label="{share_label}">'
         f'{svg_share}</button>'
         f'<a class="nav-cta" href="{home_href}">{cta_label}</a>'

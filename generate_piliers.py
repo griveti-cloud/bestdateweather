@@ -991,7 +991,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 <script type="application/ld+json">{faq_schema}</script>
 </head>
 <body>
-{shared_nav_html(gen["home_url"], gen["try_app_label"], gen["share_label"])}
+{shared_nav_html(gen["home_url"], gen["try_app_label"], gen["share_label"], map_href=pil.get("map_href",""), map_label=pil.get("map_nav_label",""))}
 <header class="pillar-hero">
 <div class="hero-eyebrow">{pil["hero_eyebrow_prefix"]}{YEAR}</div>
 <h1 class="hero-title">{h1}</h1>
@@ -1511,7 +1511,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
 <link rel="stylesheet" href="{gen['asset_prefix']}style.css"/>
 </head>
 <body>
-{shared_nav_html(gen['home_url'], gen['try_app_label'], gen['share_label'])}
+{shared_nav_html(gen['home_url'], gen['try_app_label'], gen['share_label'], map_href=pil.get('map_href',''), map_label=pil.get('map_nav_label',''))}
 <header class="pillar-hero">
 <div class="hero-eyebrow">{pil["hero_eyebrow_prefix"]}{YEAR}</div>
 <h1 class="hero-title">{h1}</h1>

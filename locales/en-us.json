@@ -957,7 +957,9 @@
     "region_world": "World",
     "secu_all": "All destinations",
     "budget_all": "All budgets",
-    "tab_nomad": "💻 Digital Nomad"
+    "tab_nomad": "💻 Digital Nomad",
+    "map_href": "../us/map.html",
+    "map_nav_label": "🗺️ Map"
   },
   "ranking_footer": {
     "data_by": "Weather data by Open-Meteo.com",
