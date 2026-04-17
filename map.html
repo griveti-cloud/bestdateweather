@@ -65,6 +65,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   <div class="dd" id="dd-m">
     <button class="dd-btn sel" id="dd-m-btn" onclick="openDD('m')">Apr <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-m-menu">
+      <div class="dd-item" onclick="pickMonth(12)">⭐ Best month (Annual)</div>
       <div class="dd-item" onclick="pickMonth(0)">January</div>
       <div class="dd-item" onclick="pickMonth(1)">February</div>
       <div class="dd-item" onclick="pickMonth(2)">March</div>
@@ -102,19 +103,21 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   <div class="dd" id="dd-rl">
     <button class="dd-btn" id="dd-rl-btn" onclick="openDD('rl')">🛡 Safety <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-rl-menu">
-      <div class="dd-item on" onclick="pickRL(4,'All')">All destinations</div>
-      <div class="dd-item" onclick="pickRL(2,'🟢 Safe')">🟢 Safe only</div>
-      <div class="dd-item" onclick="pickRL(3,'🟡 Low risk')">🟡 Low risk</div>
+      <div class="dd-item on" onclick="pickRL(4)">All destinations</div>
+      <div class="dd-item" onclick="pickRL(1)">🟢 Normal only</div>
+      <div class="dd-item" onclick="pickRL(2)">🟡 Up to high vigilance</div>
+      <div class="dd-item" onclick="pickRL(3)">🟠 Up to avoid if possible</div>
     </div>
   </div>
   <div class="fsep"></div>
   <div class="dd" id="dd-bi">
     <button class="dd-btn" id="dd-bi-btn" onclick="openDD('bi')">💰 Budget <span class="dd-arr">▾</span></button>
     <div class="dd-menu" id="dd-bi-menu">
-      <div class="dd-item on" onclick="pickBI(5,'All')">All budgets</div>
-      <div class="dd-item" onclick="pickBI(2,'💚 Budget')">💚 Budget friendly</div>
-      <div class="dd-item" onclick="pickBI(3,'💛 Mid')">💛 Mid-range</div>
-      <div class="dd-item" onclick="pickBI(4,'🟠 Upscale')">🟠 Upscale</div>
+      <div class="dd-item on" onclick="pickBI(5)">All budgets</div>
+      <div class="dd-item" onclick="pickBI(1)">💚 Budget only</div>
+      <div class="dd-item" onclick="pickBI(2)">💛 Up to affordable</div>
+      <div class="dd-item" onclick="pickBI(3)">🟡 Up to moderate</div>
+      <div class="dd-item" onclick="pickBI(4)">🟠 Up to expensive</div>
     </div>
   </div>
 </div>
@@ -143,6 +146,7 @@ document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){el.class
 function scoreColor(s){return s>=8.6?'#1a7a4a':s>=7.6?'#2d9e60':s>=6.3?'#84cc16':s>=5?'#f59e0b':s>=3.5?'#f97316':'#ef4444';}
 function flagEmoji(c){try{return c.toUpperCase().split('').map(function(x){return String.fromCodePoint(x.charCodeAt(0)+127397)}).join('')}catch(e){return '🌍'}}
 function getScore(d,mi){
+  if(mi===12){mi=d[7];} // annual = best month
   var m=(d[8]||[])[mi]; if(!m) return null;
   if(CUR_MODE==='beach') return m[1];
   if(CUR_MODE==='ski')   return m[2];
@@ -172,11 +176,11 @@ function setBtn(id,label,active){
   if(btn){btn.innerHTML=label+' <span class="dd-arr">▾</span>';btn.classList.toggle('sel',active);}
 }
 
-function pickMonth(mi){CUR_M=mi;setBtn('m',MN[mi],true);document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===mi);});closeDD();render();}
+function pickMonth(mi){CUR_M=mi;setBtn('m',mi===12?'⭐ Annual':MN[mi],true);document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(mi===12?0:mi+1));});closeDD();render();}
 function pickMode(mode,label){CUR_MODE=mode;setBtn('mode',label,false);document.querySelectorAll('#dd-mode-menu .dd-item').forEach(function(el){el.classList.toggle('on',el.textContent.trim()===label);});closeDD();render();}
 function pickProf(prof,label){CUR_PROF=prof;setBtn('prof',label,false);document.querySelectorAll('#dd-prof-menu .dd-item').forEach(function(el){el.classList.toggle('on',el.textContent.trim()===label);});closeDD();render();}
-function pickRL(rl,label){CUR_RL=rl;setBtn('rl','🛡 '+(rl<4?label:'Safety'),rl<4);document.querySelectorAll('#dd-rl-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(rl===4?0:rl===2?1:2));});closeDD();render();}
-function pickBI(bi,label){CUR_BI=bi;setBtn('bi','💰 '+(bi<5?label:'Budget'),bi<5);document.querySelectorAll('#dd-bi-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(bi===5?0:bi===2?1:bi===3?2:3));});closeDD();render();}
+function pickRL(rl){CUR_RL=rl;var labels={4:'Safety',1:'🟢 Normal',2:'🟡 High vigilance',3:'🟠 Avoid if possible'};setBtn('rl','🛡 '+(labels[rl]||rl),rl<4);document.querySelectorAll('#dd-rl-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(rl===4?0:rl===1?1:rl===2?2:3));});closeDD();render();}
+function pickBI(bi){CUR_BI=bi;var labels={5:'Budget',1:'💚 Budget',2:'💛 Affordable',3:'🟡 Moderate',4:'🟠 Expensive'};setBtn('bi','💰 '+(labels[bi]||bi),bi<5);document.querySelectorAll('#dd-bi-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(bi===5?0:bi===1?1:bi===2?2:bi===3?3:4));});closeDD();render();}
 
 // Map init
 var map=L.map('map',{center:[20,10],zoom:2,minZoom:2,maxZoom:8,zoomControl:true,attributionControl:false});
