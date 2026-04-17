@@ -161,7 +161,31 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
   <h3>Niederschlagsbehandlung</h3>
   <p>Wir messen den Prozentsatz der Tage mit messbarem Niederschlag (≥0,1 mm) — nicht die Gesamtniederschlagsmenge. Ein Tag mit kurzem tropischen Schauer wird genauso gezählt wie ein verregneter Tag in Nordeuropa. Beim Ski-Score wirken sich Niederschläge bei Temperaturen unter 0°C positiv aus (Neuschnee-Bonus).</p>
   </section>
-  <section class="section" id="ref">
+  
+ <!-- PERSÖNLICHE KOMFORTPROFILE -->
+ <section class="section" id="komfort-profile">
+ <div class="section-num">4b</div>
+ <h2>Persönliche Komfortprofile</h2>
+ <p>Auf den monatlichen Ranking-Seiten ermöglichen vier Komfortprofile die Verfeinerung der Sortierung nach persönlichen Temperatur- und Feuchtigkeitspräferenzen. Diese Profile sind unabhängig von den Aktivitätsprofilen (Allgemein/Strand/Ski).</p>
+
+ <h3>Die vier Profile</h3>
+ <div class="card-grid">
+  <div class="card-mini"><div class="label">🌤️ Standard</div><div class="sub">Optimaler Komfort zwischen 22 und 28°C. Ausgewogene Gewichtung von Regen, Sonnenschein und Feuchtigkeit. Standardreferenz.</div></div>
+  <div class="card-mini"><div class="label">❄️ Kühl</div><div class="sub">Ideale Temperatur zwischen 15 und 20°C. Hitze wird ab 25°C bestraft, mäßige Kälte wird toleriert. Für wärmeempfindliche Reisende.</div></div>
+  <div class="card-mini"><div class="label">🔥 Warm</div><div class="sub">Ideale Temperatur zwischen 27 und 32°C. Kälte wird stark bestraft, trockene Hitze wird toleriert. Für Reisende, die die Kälte meiden.</div></div>
+  <div class="card-mini"><div class="label">💧 Feuchtigkeitssensibel</div><div class="sub">Verstärkte Feuchtigkeitsstrafe wenn der Taupunkt 14°C übersteigt. Warme, feuchte Nächte werden ebenfalls bestraft.</div></div>
+ </div>
+
+ <h3>Strafe für extreme Trockenheit</h3>
+ <p>Eine spezifische Anpassung gilt für sehr trockene Klimazonen: Wenn die berechnete relative Luftfeuchtigkeit unter 30% liegt und die maximale Temperatur 25°C übersteigt (typische Fälle: Marrakesch im Sommer, Las Vegas im Juli), wird eine Strafe auf den Score angewendet. Extrem trockene Luft bei hohen Temperaturen kann für die meisten Reisenden trotz nahezu fehlender Niederschläge unangenehm sein.</p>
+
+ <div class="callout green">
+ <div class="callout-ico">✓</div>
+ <div class="callout-body">Das Wechseln des Profils aktualisiert Scores und Ranking in Echtzeit, ohne Seitenneuladen. Das Standard-Profil entspricht genau dem standardmäßig angezeigten Referenz-Score.</div>
+ </div>
+ </section>
+
+<section class="section" id="ref">
   <div class="section-num">5</div>
   <h2>Jährlicher Referenz-Score pro Ziel</h2>
   <p>Für jedes der 617 Ziele berechnen wir ein vollständiges Klimaprofil aus 10 Jahren ERA5-Daten: Monatsdurchschnitte für Temperatur, Niederschlag, Sonnenstunden, Wind und Meeresoberflächentemperatur. Dieser Referenz-Score dient als Klimaprofil für Tage, die über D+210 hinausliegen, oder wenn Echtzeit-API-Daten nicht verfügbar sind.</p>
