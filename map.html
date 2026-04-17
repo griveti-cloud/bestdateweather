@@ -179,8 +179,8 @@ function setBtn(id,label,active){
 function pickMonth(mi){CUR_M=mi;setBtn('m',mi===12?'Annual':MN[mi],true);document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(mi===12?0:mi+1));});closeDD();render();}
 function pickMode(mode,label){CUR_MODE=mode;setBtn('mode',label,false);document.querySelectorAll('#dd-mode-menu .dd-item').forEach(function(el){el.classList.toggle('on',el.textContent.trim()===label);});closeDD();render();}
 function pickProf(prof,label){CUR_PROF=prof;setBtn('prof',label,false);document.querySelectorAll('#dd-prof-menu .dd-item').forEach(function(el){el.classList.toggle('on',el.textContent.trim()===label);});closeDD();render();}
-function pickRL(rl){CUR_RL=rl;var labels={1:'🟢 Normal',2:'🟡 High vigilance',3:'🟠 Avoid if possible'};setBtn('rl','🛡 '+(rl<4?labels[rl]:'Safety'),rl<4);document.querySelectorAll('#dd-rl-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(rl===4?0:rl===1?1:rl===2?2:3));});closeDD();render();}
-function pickBI(bi){CUR_BI=bi;var labels={1:'💚 Budget',2:'💛 Affordable',3:'🟡 Moderate',4:'🟠 Expensive'};setBtn('bi','💰 '+(bi<5?labels[bi]:'Budget'),bi<5);document.querySelectorAll('#dd-bi-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(bi===5?0:bi===1?1:bi===2?2:bi===3?3:4));});closeDD();render();}
+function pickRL(rl){CUR_RL=rl;var labels={1:'🟢 Normal',2:'🟡 High vigilance',3:'🟠 Avoid if possible'};var active=rl<4;var lbl=active?('≤ '+labels[rl]):'Safety';setBtn('rl','🛡 '+lbl,active);document.querySelectorAll('#dd-rl-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(rl===4?0:rl===1?1:rl===2?2:3));});closeDD();render();}
+function pickBI(bi){CUR_BI=bi;var labels={1:'💚 Budget',2:'💛 Affordable',3:'🟡 Moderate',4:'🟠 Expensive'};var active=bi<5;var lbl=active?('≤ '+labels[bi]):'Budget';setBtn('bi','💰 '+lbl,active);document.querySelectorAll('#dd-bi-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(bi===5?0:bi===1?1:bi===2?2:bi===3?3:4));});closeDD();render();}
 
 // Map init
 var map=L.map('map',{center:[20,10],zoom:2,minZoom:2,maxZoom:8,zoomControl:true,attributionControl:false});
