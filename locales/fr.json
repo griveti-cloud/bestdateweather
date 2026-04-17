@@ -1492,6 +1492,7 @@
     },
     "cta": "Voir la météo →",
     "nav_label": "🗺️ Carte",
-    "map_href": "carte.html"
+    "map_href": "carte.html",
+    "cta_pilier": "🗺️ Voir toutes les destinations sur la carte climatique"
   }
 }

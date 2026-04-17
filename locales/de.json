@@ -1504,6 +1504,7 @@
     },
     "cta": "Wetter sehen →",
     "nav_label": "🗺️ Karte",
-    "map_href": "../de/karte.html"
+    "map_href": "../de/karte.html",
+    "cta_pilier": "🗺️ Alle Ziele auf der Klimakarte entdecken"
   }
 }

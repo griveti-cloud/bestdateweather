@@ -156,6 +156,7 @@ def build_config(lang):
     cfg['nav_cta_href'] = loc['nav']['cta_href']
     cfg['map_href'] = loc.get('map', {}).get('map_href', '')
     cfg['map_nav_label'] = loc.get('map', {}).get('nav_label', '')
+    cfg['map_cta_pilier'] = loc.get('map', {}).get('cta_pilier', '')
 
     # Badges, tiers, verdicts
     cfg['badges'] = loc['badges']

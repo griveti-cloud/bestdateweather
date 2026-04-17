@@ -634,12 +634,7 @@ def shared_nav_html(home_href, cta_label, share_label="Share", slug_fr=None, map
         f'{svg_heart}</button>'
     ) if slug_fr else ''
 
-    map_link = (
-        f'<a class="nav-share bdw-map-nav" href="{map_href}" '
-        f'style="font-size:11px;font-weight:600;color:rgba(255,255,255,.7);text-decoration:none;'
-        f'padding:5px 9px;border:1.5px solid rgba(255,255,255,.15);border-radius:20px;white-space:nowrap">'
-        f'{map_label}</a>'
-    ) if map_href and map_label else ''
+    map_link = ''
 
     return (
         f'<nav>'

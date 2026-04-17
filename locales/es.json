@@ -1513,6 +1513,7 @@
     },
     "cta": "Ver el tiempo →",
     "nav_label": "🗺️ Mapa",
-    "map_href": "../es/mapa.html"
+    "map_href": "../es/mapa.html",
+    "cta_pilier": "🗺️ Ver todos los destinos en el mapa climático"
   }
 }
