@@ -131,11 +131,16 @@ def build_lang_selector(lang):
 
 def build_hreflang(lang):
     lines = []
+    en_url = None
     for l, cfg in LANG_CONFIG.items():
         base = 'https://bestdateweather.com'
         path = f"/{cfg['subdir']}/{cfg['filename']}" if cfg['subdir'] else f"/{cfg['filename']}"
         hl = 'fr' if l=='fr' else 'en-US' if l=='en-us' else 'en-GB' if l=='en' else l
         lines.append(f'<link rel="alternate" hreflang="{hl}" href="{base}{path}"/>')
+        if l == 'en':
+            en_url = f'{base}{path}'
+    if en_url:
+        lines.append(f'<link rel="alternate" hreflang="x-default" href="{en_url}"/>')
     return '\n'.join(lines)
 
 def generate_map_page(lang, map_data_js, world_json, clabels_json, clabels_by_lang=None):
@@ -295,8 +300,17 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
   .legend{{display:none}}
 }}
 </style>
+<script type="application/ld+json">{{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "{m['map_title']}",
+  "description": "{m['map_desc']}",
+  "url": "{canonical}",
+  "inLanguage": "{lang}"
+}}</script>
 </head>
 <body>
+<h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">{m['map_title']}</h1>
 <div class="topbar">
   <a href="/" class="brand">Best<em>Date</em>Weather</a>
   <div class="topbar-stats">{m['map_showing']} <b id="sc">—</b> {m['map_destinations']} · {m['map_best']} <b id="sb">—</b>/10</div>

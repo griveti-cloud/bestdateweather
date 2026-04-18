@@ -971,7 +971,7 @@
   "ranking_footer": {
     "data_by": "Wetterdaten von Open-Meteo.com",
     "sources": "Quellen ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
-    "methodology_url": "../methodik.html",
+    "methodology_url": "methodik.html",
     "methodology_label": "Methodik",
     "app_url": "app.html",
     "app_label": "Wetter-App",
@@ -979,11 +979,11 @@
     "legal_label": "Impressum",
     "about_url": "ueber-uns.html",
     "about_label": "Über uns",
-    "faq_url": "de/faq.html",
+    "faq_url": "faq.html",
     "faq_label": "FAQ",
-    "privacy_url": "de/datenschutz.html",
+    "privacy_url": "datenschutz.html",
     "privacy_label": "Datenschutz",
-    "contact_url": "de/kontakt.html",
+    "contact_url": "kontakt.html",
     "contact_label": "Kontakt",
     "widget_label": "Reise-Widgets",
     "widget_url": "../widgets.html"

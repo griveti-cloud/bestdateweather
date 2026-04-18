@@ -29,19 +29,19 @@ def make_sitemap(urls, path):
     print(f"✓ {path}: {len(urls)} URLs")
 
 STATIC_FR = [
-    ('index.html','weekly','1.0'),('a-propos.html','monthly','0.4'),
+    ('index.html','weekly','1.0'),('carte.html','monthly','0.7'),('a-propos.html','monthly','0.4'),
     ('methodologie.html','monthly','0.4'),('faq.html','monthly','0.4'),
     ('mentions-legales.html','monthly','0.3'),('confidentialite.html','monthly','0.3'),('contact.html','monthly','0.3'),
 ]
 STATIC_EN = [
-    ('en/app.html','weekly','1.0'),('en/best-weather-destinations.html','monthly','0.9'),
+    ('en/app.html','weekly','1.0'),('en/map.html','monthly','0.7'),('en/best-weather-destinations.html','monthly','0.9'),
     ('en/about.html','monthly','0.4'),
     ('en/methodology.html','monthly','0.4'),('en/faq.html','monthly','0.4'),
     ('en/legal.html','monthly','0.3'),('en/privacy.html','monthly','0.3'),('en/contact.html','monthly','0.3'),
 ]
-STATIC_ES = [('es/app.html','weekly','1.0'),('es/sobre-nosotros.html','monthly','0.4'),('es/metodologia.html','monthly','0.4')]
-STATIC_DE = [('de/app.html','weekly','1.0'),('de/ueber-uns.html','monthly','0.4'),('de/methodik.html','monthly','0.4')]
-STATIC_US = [('us/app.html','weekly','1.0'),('us/about.html','monthly','0.4')]
+STATIC_ES = [('es/app.html','weekly','1.0'),('es/mapa.html','monthly','0.7'),('es/sobre-nosotros.html','monthly','0.4'),('es/metodologia.html','monthly','0.4')]
+STATIC_DE = [('de/app.html','weekly','1.0'),('de/karte.html','monthly','0.7'),('de/ueber-uns.html','monthly','0.4'),('de/methodik.html','monthly','0.4')]
+STATIC_US = [('us/app.html','weekly','1.0'),('us/map.html','monthly','0.7'),('us/about.html','monthly','0.4')]
 
 def collect(patterns, exclude_redirects=True, exclude_files=None):
     excl = set(exclude_files or [])
