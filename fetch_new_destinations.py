@@ -127,7 +127,7 @@ for _, dest in to_fetch.iterrows():
         score_raw = scoring.raw_score(
             mv['tmax'], mv['rain_pct'], mv['sun_h']
         )
-        score = round(min(10, max(0, score_raw)), 1)
+        score = round(min(10, max(0, score_raw * 10)), 1)
         classe = scoring.ski_class(score)
 
         new_rows.append({
