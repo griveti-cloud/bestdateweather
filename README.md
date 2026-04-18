@@ -181,8 +181,9 @@ npx terser js/core.js -o js/core.min.js --compress --mangle
 
 # 4. Régénérer les hubs (OBLIGATOIRE si app.css ou template modifié)
 python3 generate_index_hub.py
-# ⚠️  RÈGLE : à chaque bump de version app.css → relancer generate_index_hub.py
-# Sans ça, les hubs référencent l'ancienne version CSS → régression fond clair
+# ⚠️  RÈGLE ABSOLUE : relancer generate_index_hub.py AVANT tout git add -A
+# Raisons : (1) bump app.css, (2) ajout destinations, (3) tout commit de contenu
+# Sans ça → hubs avec app.css?v=42 → fond clair en production (bug récurrent 4x)
 
 # 5. Régénérer comparatifs + classements si locales ou scoring modifiés
 python3 generate_comparatifs.py
