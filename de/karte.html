@@ -280,9 +280,10 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 function setBtn(id,label,active){var btn=document.getElementById('dd-'+id+'-btn');if(btn){btn.innerHTML=label+' <span class="dd-arr">▾</span>';btn.classList.toggle('sel',active);}}
 
-function pickMonth(mi){CUR_M=mi;setBtn('m',mi===12?MF_ANNUAL:MN[mi],true);document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(mi===12?0:mi+1));});closeDD();render();}
+function pickMonth(mi){CUR_M=mi;setBtn('m',mi===12?MF_ANNUAL:MN[mi],true);document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(mi===12?0:mi+1));});if(CUR_MODE==='nomad'){CUR_MODE='gen';setBtn('mode','☀️ Allgemeines Wetter',false);}closeDD();render();}
 function pickMode(mode,label){
   CUR_MODE=mode;setBtn('mode',label,mode!=='gen');
+  if(mode==='nomad'){CUR_M=12;setBtn('m',MF_ANNUAL,true);document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===0);});}
   document.querySelectorAll('#dd-mode-menu .dd-item').forEach(function(el){el.classList.toggle('on',el.textContent.trim()===label);});
   var isNomad=mode==='nomad';
   var isSki=mode==='ski';
