@@ -1,6 +1,6 @@
 # BestDateWeather
 
-Plateforme météo et voyage — données climatiques ERA5 et scores pour **697 destinations** mondiales en **5 langues** (FR, EN, EN-US, ES, DE).
+Plateforme météo et voyage — données climatiques ERA5 et scores pour **746 destinations** mondiales en **5 langues** (FR, EN, EN-US, ES, DE).
 
 **Site** : [bestdateweather.com](https://bestdateweather.com)  
 **Pages générées** : ~45 700 HTML statiques  
@@ -14,12 +14,12 @@ Plateforme météo et voyage — données climatiques ERA5 et scores pour **697 
 | Type | FR | EN | ES | DE | US |
 |------|----|----|----|----|-----|
 | Pages mensuelles | 8 340 | 8 340 | 8 340 | 8 340 | 8 340 |
-| Pages annuelles | 697 | 697 | 697 | 697 | 697 |
+| Pages annuelles | 746 | 746 | 746 | 746 | 746 |
 | Comparatifs | 50 | 50 | 50 | 50 | 50 |
 | Piliers mensuels | 12 | 12 | 12 | 12 | — |
 
 **Éditorial** : `data/editorial.json` — 33 600+ textes différenciants par destination/mois/langue  
-**Destinations** : 697 · **Paires comparatifs** : 50
+**Destinations** : 746 · **Paires comparatifs** : 50
 
 ---
 
@@ -29,14 +29,14 @@ Plateforme météo et voyage — données climatiques ERA5 et scores pour **697 
 index.html                          # Hub FR (app météo interactive)
 en/
   app.html                          # Hub EN
-  {slug}-weather-{month}.html       # Pages mensuelles EN (697 × 12)
-  best-time-to-visit-{slug}.html    # Pages annuelles EN (697)
+  {slug}-weather-{month}.html       # Pages mensuelles EN (746 × 12)
+  best-time-to-visit-{slug}.html    # Pages annuelles EN (746)
   best-*.html                       # Classements EN
   {slug}-vs-{slug}-weather.html     # Comparatifs EN (50)
   where-to-go-in-{month}.html       # Piliers mensuels EN (12)
 es/ de/ us/                         # Idem pour ES, DE, US
-{slug}-meteo-{month}.html           # Pages mensuelles FR (697 × 12)
-meilleure-periode-{slug}.html       # Pages annuelles FR (697)
+{slug}-meteo-{month}.html           # Pages mensuelles FR (746 × 12)
+meilleure-periode-{slug}.html       # Pages annuelles FR (746)
 ou-partir-en-{month}.html           # Piliers mensuels FR (12)
 {slug}-ou-{slug}-climat.html        # Comparatifs FR (50)
 meilleures-destinations-meteo.html  # Hub annuel FR
@@ -47,7 +47,7 @@ js/
   weather-banner-2.js               # Bandeau météo live + autocomplete — SOURCE
   weather-banner-2.min.js           # Minifié (?v=18)
   fiche-slugs.js / fiche-slugs.min.js  # Autocomplete : alias → slugs 5 langues
-  fiche-scores.js                   # Scores précalculés par coord lat/lon (697 dest × 12 mois)
+  fiche-scores.js                   # Scores précalculés par coord lat/lon (746 dest × 12 mois)
   dest-search.js                    # Recherche destinations (?v=7)
   favs.min.js                       # Favoris (?v=1)
 
@@ -55,7 +55,7 @@ locales/
   fr.json / en.json / en-us.json / es.json / de.json
 
 data/
-  destinations.csv                  # 697 destinations (slugs, coords, pays, flags, tropical…)
+  destinations.csv                  # 746 destinations (slugs, coords, pays, flags, tropical…)
   climate.csv                       # Données climatiques ERA5 (score, tmin, tmax, rain, sun, sea_temp, dew_point_mean…)
   monthly.json                      # Données résumées par coord pour app annuelle
   editorial.json                    # 33 600+ textes éditoriaux — clé : {slug_fr}:{mois_num}:{lang}
@@ -77,7 +77,7 @@ wrangler.toml                       # Config Cloudflare Workers
 
 | Script | Rôle |
 |--------|------|
-| `generate_pages.py` | Pages mensuelles + annuelles (697 dest × 12 mois × 5 langues) |
+| `generate_pages.py` | Pages mensuelles + annuelles (746 dest × 12 mois × 5 langues) |
 | `generate_piliers.py` | Piliers mensuels + hubs annuels (5 langues) |
 | `generate_classements.py` | Pages classements thématiques (5 langues) |
 | `generate_comparatifs.py` | Pages comparatifs X vs Y (50 paires × 5 langues) |

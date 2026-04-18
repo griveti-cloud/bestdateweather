@@ -5,7 +5,7 @@
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister();});});}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>How BestDateWeather Works — Methodology</title>
-<meta name="description" content="How BestDateWeather scores 697 destinations monthly: ERA5 data, scoring model, time horizons and limitations."/>
+<meta name="description" content="How BestDateWeather scores 746 destinations monthly: ERA5 data, scoring model, time horizons and limitations."/>
 <meta name="robots" content="index,follow"/>
 <link rel="canonical" href="https://bestdateweather.com/en/methodology.html"/>
 <link rel="alternate" hreflang="en" href="https://bestdateweather.com/en/methodology.html"/>
@@ -341,7 +341,7 @@ footer a{color:var(--gold2);text-decoration:none;font-weight:600}
  <h3>Local climate specifics</h3>
  <p>Some climate regimes require adapted treatment. Destinations with strong monsoon seasonality (Southeast Asia, East Africa) are subject to adjustment: the wet season, although statistically unfavourable, often remains suitable for travel thanks to short, intense rainfall. This context is built into the seasonal classification for these destinations.</p>
     <h3>Humidity &amp; dew point</h3>
-    <p>From March 2026, dew point temperature (ERA5 <code>dew_point_2m</code>) is factored into the annual reference score for all 697 destinations. When daily maximum temperature exceeds 26°C and the dew point exceeds 16°C, a progressive comfort penalty is applied — capturing the oppressive feel of humid heat that raw temperature alone does not convey.</p>
+    <p>From March 2026, dew point temperature (ERA5 <code>dew_point_2m</code>) is factored into the annual reference score for all 746 destinations. When daily maximum temperature exceeds 26°C and the dew point exceeds 16°C, a progressive comfort penalty is applied — capturing the oppressive feel of humid heat that raw temperature alone does not convey.</p>
     <p>Additionally, months where <strong>tmax ≥ 30°C and dew point ≥ 16°C</strong> are automatically downgraded from the <em>recommended</em> classification to <em>intermediate</em>, regardless of temperature alone. This corrects the historic under-scoring of hot-humid destinations such as Tokyo in summer or Singapore.</p>
     <h3>Rain type: tropical showers vs. blocking rain</h3>
     <p>Weather icons and qualitative labels now distinguish between two fundamentally different rain patterns, using a <strong>burstiness index</strong> (daily precipitation ÷ rain frequency):</p>
