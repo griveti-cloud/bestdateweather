@@ -479,7 +479,7 @@ function pickBI(bi){{CUR_BI=bi;var lbl=BUDGET_LABELS[String(bi)];var active=bi<5
 function pickMin(min){{CUR_MIN=min;setBtn('min',min>0?('≥ '+min.toFixed(1)):'{m['map_min_score']}',min>0);document.querySelectorAll('#dd-min-menu .dd-item').forEach(function(el,i){{el.classList.toggle('on',i===(min===0?0:min-4));}});closeDD();render();}}
 
 // Map
-var map=L.map('map',{{center:[20,10],zoom:2,minZoom:2,maxZoom:8,zoomControl:true,attributionControl:false}});
+var map=L.map('map',{{center:[20,10],zoom:2,minZoom:2,maxZoom:12,zoomControl:true,attributionControl:false}});
 // Attribution hidden
 var WORLD={world_json};
 L.geoJSON(WORLD,{{style:{{fillColor:'#1e2640',fillOpacity:1,color:'#3a4a6a',weight:0.6}}}}).addTo(map);
