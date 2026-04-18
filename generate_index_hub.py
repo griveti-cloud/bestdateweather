@@ -204,12 +204,120 @@ MAPPING = {
     'Vanuatu': ('oceanie', 'Pacifique & Outre-mer'),
     'Papouasie-Nouvelle-Guinée': ('oceanie', 'Pacifique & Outre-mer'),
     'Palaos': ('oceanie', 'Pacifique & Outre-mer'),
-    'Vietnam': ('asie', 'Asie du Sud-Est'),
+    # ── Nouvelles destinations 2026 ──
+    # Europe
+    'Biélorussie': ('europe', 'Europe du Nord & Centrale'),
+    'Kosovo': ('europe', 'Europe du Sud & Méditerranée'),
+    'Luxembourg': ('europe', 'Europe du Nord & Centrale'),
+    'Moldavie': ('europe', 'Europe du Nord & Centrale'),
+    'Liechtenstein': ('europe', 'Europe du Nord & Centrale'),
+    'Saint-Marin': ('europe', 'Europe du Sud & Méditerranée'),
+    # Afrique du Nord
+    'Libye': ('af-nord', 'Afrique du Nord'),
+    'Soudan': ('af-nord', 'Afrique du Nord'),
+    # Afrique de l'Ouest
+    'Angola': ('af-sub', "Afrique de l'Ouest"),
+    'Centrafrique': ('af-sub', "Afrique de l'Ouest"),
+    'Congo': ('af-sub', "Afrique de l'Ouest"),
+    'RD Congo': ('af-sub', "Afrique de l'Ouest"),
+    'Guinée': ('af-sub', "Afrique de l'Ouest"),
+    'Guinée-Bissau': ('af-sub', "Afrique de l'Ouest"),
+    'Guinée équatoriale': ('af-sub', "Afrique de l'Ouest"),
+    'Liberia': ('af-sub', "Afrique de l'Ouest"),
+    'Mali': ('af-sub', "Afrique de l'Ouest"),
+    'Mauritanie': ('af-sub', "Afrique de l'Ouest"),
+    'Niger': ('af-sub', "Afrique de l'Ouest"),
+    'São Tomé-et-Príncipe': ('af-sub', "Afrique de l'Ouest"),
+    'Tchad': ('af-sub', "Afrique de l'Ouest"),
+    # Afrique de l'Est
+    'Burundi': ('af-sub', "Afrique de l'Est"),
+    'Djibouti': ('af-sub', "Afrique de l'Est"),
+    'Érythrée': ('af-sub', "Afrique de l'Est"),
+    'Somalie': ('af-sub', "Afrique de l'Est"),
+    'Soudan du Sud': ('af-sub', "Afrique de l'Est"),
+    # Afrique australe
+    'Eswatini': ('af-sub', 'Afrique australe'),
+    'Lesotho': ('af-sub', 'Afrique australe'),
+    # Moyen-Orient & Asie Centrale
+    'Irak': ('me', 'Moyen-Orient'),
+    'Syrie': ('me', 'Moyen-Orient'),
+    'Turkménistan': ('me', 'Caucase & Asie Centrale'),
+    # Asie
+    'Bangladesh': ('asie', 'Asie du Sud'),
+    'Brunéi': ('asie', 'Asie du Sud-Est'),
+    'Pakistan': ('asie', 'Asie du Sud'),
+    'Timor oriental': ('asie', 'Asie du Sud-Est'),
+    # Caraïbes
+    'Grenade': ('caraïbes', 'Caraïbes'),
+    'Haïti': ('caraïbes', 'Caraïbes'),
+    'Saint-Kitts-et-Nevis': ('caraïbes', 'Caraïbes'),
+    # Amérique centrale
+    'Salvador': ('ameriques-n', 'Mexique & Amérique Centrale'),
+    # Amérique du Sud
+    'Guyana': ('ameriques-s', 'Amérique du Sud'),
+    'Suriname': ('ameriques-s', 'Amérique du Sud'),
+    'Venezuela': ('ameriques-s', 'Amérique du Sud'),
+    # Océanie
+    'Kiribati': ('oceanie', 'Pacifique & Outre-mer'),
+    'Micronésie': ('oceanie', 'Pacifique & Outre-mer'),
+    'Îles Marshall': ('oceanie', 'Pacifique & Outre-mer'),
+    'Tuvalu': ('oceanie', 'Pacifique & Outre-mer'),
+    'Îles Salomon': ('oceanie', 'Pacifique & Outre-mer'),
+    'Comores': ('af-sub', 'Océan Indien'),
+        'Vietnam': ('asie', 'Asie du Sud-Est'),
 }
 
 # ── Country name translations {fr_name: {fr, en, es}} ──
 COUNTRY_NAMES_TRANS = {
-    'Afrique du Sud':{'fr':'Afrique du Sud','en':'South Africa','es':'Sudáfrica','de':'Südafrika'},
+    'Angola':{'fr':'Angola','en':'Angola','es':'Angola','de':'Angola'},
+    'Bangladesh':{'fr':'Bangladesh','en':'Bangladesh','es':'Bangladés','de':'Bangladesch'},
+    'Biélorussie':{'fr':'Biélorussie','en':'Belarus','es':'Bielorrusia','de':'Weißrussland'},
+    'Brunéi':{'fr':'Brunéi','en':'Brunei','es':'Brunéi','de':'Brunei'},
+    'Burundi':{'fr':'Burundi','en':'Burundi','es':'Burundi','de':'Burundi'},
+    'Centrafrique':{'fr':'Centrafrique','en':'Central African Republic','es':'República Centroafricana','de':'Zentralafrikanische Republik'},
+    'Comores':{'fr':'Comores','en':'Comoros','es':'Comoras','de':'Komoren'},
+    'Congo':{'fr':'Congo','en':'Republic of Congo','es':'República del Congo','de':'Republik Kongo'},
+    'Djibouti':{'fr':'Djibouti','en':'Djibouti','es':'Yibuti','de':'Dschibuti'},
+    'Eswatini':{'fr':'Eswatini','en':'Eswatini','es':'Esuatini','de':'Eswatini'},
+    'Grenade':{'fr':'Grenade','en':'Grenada','es':'Granada','de':'Grenada'},
+    'Guinée':{'fr':'Guinée','en':'Guinea','es':'Guinea','de':'Guinea'},
+    'Guinée-Bissau':{'fr':'Guinée-Bissau','en':'Guinea-Bissau','es':'Guinea-Bisáu','de':'Guinea-Bissau'},
+    'Guinée équatoriale':{'fr':'Guinée équatoriale','en':'Equatorial Guinea','es':'Guinea Ecuatorial','de':'Äquatorialguinea'},
+    'Guyana':{'fr':'Guyana','en':'Guyana','es':'Guyana','de':'Guyana'},
+    'Haïti':{'fr':'Haïti','en':'Haiti','es':'Haití','de':'Haiti'},
+    'Irak':{'fr':'Irak','en':'Iraq','es':'Irak','de':'Irak'},
+    'Kiribati':{'fr':'Kiribati','en':'Kiribati','es':'Kiribati','de':'Kiribati'},
+    'Kosovo':{'fr':'Kosovo','en':'Kosovo','es':'Kosovo','de':'Kosovo'},
+    'Lesotho':{'fr':'Lesotho','en':'Lesotho','es':'Lesoto','de':'Lesotho'},
+    'Liberia':{'fr':'Liberia','en':'Liberia','es':'Liberia','de':'Liberia'},
+    'Liechtenstein':{'fr':'Liechtenstein','en':'Liechtenstein','es':'Liechtenstein','de':'Liechtenstein'},
+    'Libye':{'fr':'Libye','en':'Libya','es':'Libia','de':'Libyen'},
+    'Luxembourg':{'fr':'Luxembourg','en':'Luxembourg','es':'Luxemburgo','de':'Luxemburg'},
+    'Mali':{'fr':'Mali','en':'Mali','es':'Malí','de':'Mali'},
+    'Mauritanie':{'fr':'Mauritanie','en':'Mauritania','es':'Mauritania','de':'Mauretanien'},
+    'Micronésie':{'fr':'Micronésie','en':'Micronesia','es':'Micronesia','de':'Mikronesien'},
+    'Moldavie':{'fr':'Moldavie','en':'Moldova','es':'Moldavia','de':'Moldau'},
+    'Niger':{'fr':'Niger','en':'Niger','es':'Níger','de':'Niger'},
+    'Pakistan':{'fr':'Pakistan','en':'Pakistan','es':'Pakistán','de':'Pakistan'},
+    'RD Congo':{'fr':'RD Congo','en':'DR Congo','es':'República Democrática del Congo','de':'Demokratische Republik Kongo'},
+    'Saint-Kitts-et-Nevis':{'fr':'Saint-Kitts-et-Nevis','en':'Saint Kitts and Nevis','es':'San Cristóbal y Nieves','de':'St. Kitts und Nevis'},
+    'Saint-Marin':{'fr':'Saint-Marin','en':'San Marino','es':'San Marino','de':'San Marino'},
+    'Salvador':{'fr':'Salvador','en':'El Salvador','es':'El Salvador','de':'El Salvador'},
+    'Somalie':{'fr':'Somalie','en':'Somalia','es':'Somalia','de':'Somalia'},
+    'Soudan':{'fr':'Soudan','en':'Sudan','es':'Sudán','de':'Sudan'},
+    'Soudan du Sud':{'fr':'Soudan du Sud','en':'South Sudan','es':'Sudán del Sur','de':'Südsudan'},
+    'Suriname':{'fr':'Suriname','en':'Suriname','es':'Surinam','de':'Suriname'},
+    'Syrie':{'fr':'Syrie','en':'Syria','es':'Siria','de':'Syrien'},
+    'São Tomé-et-Príncipe':{'fr':'São Tomé-et-Príncipe','en':'São Tomé and Príncipe','es':'Santo Tomé y Príncipe','de':'São Tomé und Príncipe'},
+    'Tchad':{'fr':'Tchad','en':'Chad','es':'Chad','de':'Tschad'},
+    'Timor oriental':{'fr':'Timor oriental','en':'East Timor','es':'Timor Oriental','de':'Osttimor'},
+    'Turkménistan':{'fr':'Turkménistan','en':'Turkmenistan','es':'Turkmenistán','de':'Turkmenistan'},
+    'Tuvalu':{'fr':'Tuvalu','en':'Tuvalu','es':'Tuvalu','de':'Tuvalu'},
+    'Venezuela':{'fr':'Venezuela','en':'Venezuela','es':'Venezuela','de':'Venezuela'},
+    'Érythrée':{'fr':'Érythrée','en':'Eritrea','es':'Eritrea','de':'Eritrea'},
+    'Îles Marshall':{'fr':'Îles Marshall','en':'Marshall Islands','es':'Islas Marshall','de':'Marshallinseln'},
+    'Îles Salomon':{'fr':'Îles Salomon','en':'Solomon Islands','es':'Islas Salomón','de':'Salomonen'},
+        'Afrique du Sud':{'fr':'Afrique du Sud','en':'South Africa','es':'Sudáfrica','de':'Südafrika'},
     'Albanie':{'fr':'Albanie','en':'Albania','es':'Albania','de':'Albanien'},
     'Algérie':{'fr':'Algérie','en':'Algeria','es':'Argelia','de':'Algerien'},
     'Allemagne':{'fr':'Allemagne','en':'Germany','es':'Alemania','de':'Deutschland'},
@@ -1070,7 +1178,7 @@ def generate_from_template(lang, loc):
         '{{UI_CTA}}':              meta.get('ui_cta', 'Check the weather →'),
         '{{UI_DATE_PLACEHOLDER}}': meta.get('ui_date_placeholder', '📅  Choose a date'),
         '{{UI_FOOTER_ERA5}}':      meta.get('ui_footer_era5', 'ERA5 · 10 years'),
-        '{{UI_FOOTER_GUIDES}}':    meta.get('ui_footer_guides', '697 destination guides'),
+        '{{UI_FOOTER_GUIDES}}':    meta.get('ui_footer_guides', '746 destination guides'),
         '{{UI_WIDGET_LINK}}':      meta.get('UI_WIDGET_LINK', 'Widget for your site'),
         '{{UI_GUIDES_TAG}}':       meta.get('ui_guides_tag', 'Destination guides'),
         '{{UI_GUIDES_TITLE}}':     meta.get('ui_guides_title', 'When to visit?'),
@@ -1107,7 +1215,7 @@ def generate_from_template(lang, loc):
         # Hero section i18n
         '{{HERO_KICKER}}':         meta.get('HERO_KICKER', 'Weather for your projects'),
         '{{HERO_H1}}':             meta.get('HERO_H1', 'What weather <em>for your trip?</em>'),
-        '{{HERO_SUB}}':            meta.get('HERO_SUB', 'Climate scores /10 · 697 destinations · up to 1 year ahead · 10 years of ERA5 data'),
+        '{{HERO_SUB}}':            meta.get('HERO_SUB', 'Climate scores /10 · 746 destinations · up to 1 year ahead · 10 years of ERA5 data'),
         '{{USP_HORIZON}}':         meta.get('USP_HORIZON', '1 year ahead'),
         # Dynamic sections — calculées à la génération
         '{{TOP_MONTHLY_SECTION}}': build_top_monthly(lang, loc),
@@ -1509,7 +1617,7 @@ def build_trust_bar(lang):
     return (
         f'<div class="home-divider"></div>'
         f'<div class="trust-bar">'
-        f'<div class="trust-item"><div class="trust-n">697</div><div class="trust-l">{labels[0]}</div></div>'
+        f'<div class="trust-item"><div class="trust-n">746</div><div class="trust-l">{labels[0]}</div></div>'
         f'<div class="trust-item"><div class="trust-n">10 ans</div><div class="trust-l">{labels[1]}</div></div>'
         f'<div class="trust-item"><div class="trust-n">1 an</div><div class="trust-l">{labels[2]}</div></div>'
         f'<div class="trust-item"><div class="trust-n">5</div><div class="trust-l">{labels[3]}</div></div>'
