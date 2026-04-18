@@ -1,4 +1,7 @@
 .git
+.gitignore
+.gitattributes
+.assetsignore
 __pycache__
 *.py
 *.pyc
@@ -6,6 +9,9 @@ __pycache__
 data/
 scripts/
 locales/
+templates/
+lib/
+tests/
 *.toml
 *.yml
 *.yaml
@@ -13,7 +19,14 @@ locales/
 *.md
 Makefile
 *.log
+*.bak
+*.swp
+*.tmp
+.DS_Store
 node_modules
+package.json
+package-lock.json
 .github
+.wrangler
 .eslintrc.json
 check_locale.py
