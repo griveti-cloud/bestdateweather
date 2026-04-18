@@ -142,6 +142,15 @@ def build_config(lang):
     for key, val in loc['monthly'].items():
         cfg[f'lbl_m_{key}'] = val
 
+    # Decision card labels (top-level keys, exposed directly to cfg)
+    # These are consumed by lib/common.py decision_card_html()
+    for _dc_key in ('yes_lbl', 'no_lbl', 'verdict_intro',
+                    'lbl_m_src_era5_short', 'lbl_m_src_numbeo',
+                    'hero_summary_sun', 'hero_summary_rain',
+                    'lbl_affiliate_note_expedia', 'lbl_affiliate_note_kiwi'):
+        if _dc_key in loc:
+            cfg[_dc_key] = loc[_dc_key]
+
     # Table config
     cfg['table_aria'] = loc['table']['aria']
     cfg['table_headers'] = loc['table']['headers']

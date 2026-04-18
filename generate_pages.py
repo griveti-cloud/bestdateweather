@@ -974,7 +974,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <p style="font-size:13.5px;color:var(--slate);margin:4px 0 16px;line-height:1.6">{budget_tip}</p>
  <div class="affil-box">
   <a href="https://www.expedia.com/Hotel-Search?destination={_eg_dest}&camref={_eg_camref}" target="_blank" rel="sponsored noopener" style="display:inline-block;background:#0070f3;color:white;font-weight:700;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;text-align:center;width:100%;box-sizing:border-box;margin-top:8px">{C.get('lbl_booking_btn','Voir les hôtels')}</a>
-  <p class="affil-note">lien affilié · Expedia</p>
+  <p class="affil-note">{C.get("lbl_affiliate_note_expedia", "affiliate link · Expedia")}</p>
  </div>
 </section>'''
 
@@ -1021,7 +1021,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <h2 class="section-title">{C['lbl_flights_title_tpl'].format(name=nom_bare)}</h2>
  <div class="affil-box">
   <a href="{flights_url}" target="_blank" rel="sponsored noopener" style="display:inline-block;background:#0070f3;color:white;font-weight:700;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;text-align:center;width:100%;box-sizing:border-box;margin-top:8px">{C.get('lbl_flights_btn','Rechercher un vol')}</a>
-  <p class="affil-note">lien affilié · Kiwi.com</p>
+  <p class="affil-note">{C.get("lbl_affiliate_note_kiwi", "affiliate link · Kiwi.com")}</p>
  </div>
 </section>'''
     # ── Plan bar (compact affiliate strip) ──
@@ -2318,7 +2318,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <p style="font-size:13.5px;color:var(--slate);margin:4px 0 16px;line-height:1.6">{bk_cta}</p>
  <div class="affil-box">
   <a href="https://www.expedia.com/Hotel-Search?destination={_m_eg_dest}&camref={_m_eg_camref}" target="_blank" rel="sponsored noopener" style="display:inline-block;background:#0070f3;color:white;font-weight:700;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;text-align:center;width:100%;box-sizing:border-box;margin-top:8px">{cfg.get('lbl_booking_btn','Voir les hôtels')}</a>
-  <p class="affil-note">lien affilié · Expedia</p>
+  <p class="affil-note">{C.get("lbl_affiliate_note_expedia", "affiliate link · Expedia")}</p>
  </div>
 </section>'''
 
@@ -2383,7 +2383,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <h2 class="section-title">{cfg['lbl_flights_title_tpl'].format(name=nom_bare)}</h2>
  <div class="affil-box">
   <a href="{flights_url_m}" target="_blank" rel="sponsored noopener" style="display:inline-block;background:#0070f3;color:white;font-weight:700;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;text-align:center;width:100%;box-sizing:border-box;margin-top:8px">{cfg.get('lbl_flights_btn','Rechercher un vol')}</a>
-  <p class="affil-note">lien affilié · Kiwi.com</p>
+  <p class="affil-note">{C.get("lbl_affiliate_note_kiwi", "affiliate link · Kiwi.com")}</p>
  </div>
 </section>'''
 

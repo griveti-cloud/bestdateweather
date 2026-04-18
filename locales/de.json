@@ -1507,5 +1507,14 @@
     "nav_label": "🗺️ Karte",
     "map_href": "../de/karte.html",
     "cta_pilier": "🗺️ Alle Ziele auf der Klimakarte entdecken"
-  }
+  },
+  "yes_lbl": "✅ Ja wenn",
+  "no_lbl": "⚠️ Vorsicht wenn",
+  "verdict_intro": "Fazit:",
+  "lbl_m_src_era5_short": "ERA5 · Open-Meteo · 10 Jahre",
+  "lbl_m_src_numbeo": "Numbeo 2026",
+  "hero_summary_sun": "Sonne",
+  "hero_summary_rain": "Regen",
+  "lbl_affiliate_note_expedia": "Affiliate-Link · Expedia",
+  "lbl_affiliate_note_kiwi": "Affiliate-Link · Kiwi.com"
 }

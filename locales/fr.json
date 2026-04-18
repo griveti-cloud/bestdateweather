@@ -1495,5 +1495,14 @@
     "nav_label": "🗺️ Carte",
     "map_href": "carte.html",
     "cta_pilier": "🗺️ Voir toutes les destinations sur la carte climatique"
-  }
+  },
+  "yes_lbl": "✅ Oui si",
+  "no_lbl": "⚠️ Attention si",
+  "verdict_intro": "En résumé :",
+  "lbl_m_src_era5_short": "ERA5 · Open-Meteo · 10 ans",
+  "lbl_m_src_numbeo": "Numbeo 2026",
+  "hero_summary_sun": "soleil",
+  "hero_summary_rain": "pluie",
+  "lbl_affiliate_note_expedia": "lien affilié · Expedia",
+  "lbl_affiliate_note_kiwi": "lien affilié · Kiwi.com"
 }

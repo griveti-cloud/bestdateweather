@@ -1595,8 +1595,8 @@ def decision_card_html(dest, months, mi_best, C, nom,
     reasons = ''
     verdict_para = ''
     if is_monthly and (oui_si or non_si):
-        yes_lbl = C.get('yes_lbl', '✅ Oui si')
-        no_lbl  = C.get('no_lbl',  '⚠️ Attention si')
+        yes_lbl = C.get('yes_lbl', '✅ Yes if')
+        no_lbl  = C.get('no_lbl',  '⚠️ Watch out if')
         reasons = (
             f'<div class="reasons-row">'
             f'<div class="reason-cell yes"><strong>{yes_lbl}</strong> {oui_si}</div>'
@@ -1604,7 +1604,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
             f'</div>'
         )
     if is_monthly and verdict_txt:
-        intro = C.get('verdict_intro', 'En résumé :')
+        intro = C.get('verdict_intro', 'Summary:')
         verdict_para = (
             f'<div class="verdict-editorial">'
             f'<strong>{intro}</strong> {verdict_txt}'
@@ -1620,7 +1620,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'<span class="source-dot"></span>{verify_lbl}'
         f'{f"<span class=\"source-dot\"></span>{secu_date}" if secu_date else ""}'
         f'</div>'
-        f'<div class="source-tag">ERA5 · Open-Meteo · 10 ans<span class="source-dot"></span>Numbeo 2026</div>'
+        f'<div class="source-tag">{C.get("lbl_m_src_era5_short", "ERA5 · Open-Meteo · 10 years")}<span class="source-dot"></span>{C.get("lbl_m_src_numbeo", "Numbeo 2026")}</div>'
         f'</div>'
     )
 
@@ -1713,7 +1713,9 @@ def decision_card_html(dest, months, mi_best, C, nom,
     _sun_summary = f"{sun_h}{C.get('locale', {}).get('comp', {}).get('sun_per_day_short', 'h')}"
     _rain_summary = f"{int(rain_pct)}%"
     _temp_summary = f"{fmt_temp(float(m.get('tmin',15)), C)}–{fmt_temp(tmax, C)}"
-    _hero_summary = f"{_sun_summary} soleil · {_temp_summary} · {_rain_summary} pluie" if lang=='fr' else                     f"{_sun_summary} sun · {_temp_summary} · {_rain_summary} rain"
+    _sun_word = C.get('hero_summary_sun', 'sun')
+    _rain_word = C.get('hero_summary_rain', 'rain')
+    _hero_summary = f"{_sun_summary} {_sun_word} · {_temp_summary} · {_rain_summary} {_rain_word}"
 
     # Destination string pour le hero
     _country_str  = dest.get(f'country_{lang}', dest.get('country_en', dest.get('pays', '')))
@@ -1726,11 +1728,11 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'<div style="position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;gap:12px">'
         f'<div>'
         f'<div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.9);letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px;text-shadow:0 1px 4px rgba(0,0,0,.25)">{_dest_str}</div>'
-        f'<div style="font-size:52px;font-weight:500;font-family:Georgia,serif;color:#fff;line-height:.9;text-shadow:0 2px 8px rgba(0,0,0,.2)">{month_name}</div>'
+        f'<div style="font-size:clamp(32px,9vw,52px);font-weight:500;font-family:Georgia,serif;color:#fff;line-height:.9;text-shadow:0 2px 8px rgba(0,0,0,.2);word-break:break-word">{month_name}</div>'
         f'<div style="font-size:13px;color:rgba(255,255,255,.85);margin-top:8px;text-shadow:0 1px 3px rgba(0,0,0,.25)">{_hero_summary}</div>'
         f'</div>'
         f'<div style="text-align:right;flex-shrink:0">'
-        f'<div style="font-size:52px;font-weight:500;font-family:Georgia,serif;color:#fff;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.35)">{score:.1f}</div>'
+        f'<div style="font-size:clamp(36px,10vw,52px);font-weight:500;font-family:Georgia,serif;color:#fff;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.35)">{score:.1f}</div>'
         f'<div style="font-size:14px;color:rgba(255,255,255,.8);text-shadow:0 1px 4px rgba(0,0,0,.3)">/10</div>'
         f'<div style="font-size:11px;font-weight:600;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.4);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;background:rgba(0,0,0,.2);padding:2px 8px;border-radius:10px;display:inline-block">{best_lbl}</div>'
         f'</div>'

@@ -1516,5 +1516,14 @@
     "nav_label": "🗺️ Mapa",
     "map_href": "../es/mapa.html",
     "cta_pilier": "🗺️ Ver todos los destinos en el mapa climático"
-  }
+  },
+  "yes_lbl": "✅ Sí si",
+  "no_lbl": "⚠️ Cuidado si",
+  "verdict_intro": "En resumen:",
+  "lbl_m_src_era5_short": "ERA5 · Open-Meteo · 10 años",
+  "lbl_m_src_numbeo": "Numbeo 2026",
+  "hero_summary_sun": "sol",
+  "hero_summary_rain": "lluvia",
+  "lbl_affiliate_note_expedia": "enlace de afiliado · Expedia",
+  "lbl_affiliate_note_kiwi": "enlace de afiliado · Kiwi.com"
 }
