@@ -204,6 +204,8 @@ MAPPING = {
     'Vanuatu': ('oceanie', 'Pacifique & Outre-mer'),
     'Papouasie-Nouvelle-Guinée': ('oceanie', 'Pacifique & Outre-mer'),
     'Palaos': ('oceanie', 'Pacifique & Outre-mer'),
+    # Russie
+    'Russie': ('europe', 'Europe du Nord & Centrale'),
     # ── Nouvelles destinations 2026 ──
     # Europe
     'Biélorussie': ('europe', 'Europe du Nord & Centrale'),
