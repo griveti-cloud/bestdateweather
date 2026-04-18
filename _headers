@@ -37,6 +37,9 @@
   Cache-Control: no-cache, no-store, must-revalidate
   Service-Worker-Allowed: /
 
+/js/sw-register.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
 /.well-known/assetlinks.json
   Content-Type: application/json
   Cache-Control: public, max-age=3600
