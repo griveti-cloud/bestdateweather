@@ -43,9 +43,9 @@ meilleures-destinations-meteo.html  # Hub annuel FR
 
 js/
   core.js                           # Logique app (scoring, API, rendu) — SOURCE
-  core.min.js                       # Minifié via terser (?v=47)
+  core.min.js                       # Minifié via terser (?v=64)
   weather-banner-2.js               # Bandeau météo live + autocomplete — SOURCE
-  weather-banner-2.min.js           # Minifié (?v=5)
+  weather-banner-2.min.js           # Minifié (?v=18)
   fiche-slugs.js / fiche-slugs.min.js  # Autocomplete : alias → slugs 5 langues
   fiche-scores.js                   # Scores précalculés par coord lat/lon (697 dest × 12 mois)
   dest-search.js                    # Recherche destinations (?v=7)
@@ -194,11 +194,12 @@ git push origin main
 
 | Fichier | Version |
 |---------|---------|
-| `core.min.js` | ?v=47 |
-| `weather-banner-2.min.js` | ?v=5 |
+| `core.min.js` | ?v=64 |
+| `weather-banner-2.min.js` | ?v=18 |
 | `dest-search.js` | ?v=7 |
 | `favs.min.js` | ?v=1 |
-| `app.css` | ?v=18 |
+| `app.css` | ?v=51 |
+| `style.css` | ?v=14 |
 
 ---
 
@@ -228,10 +229,8 @@ git push origin main
 - [ ] Révoquer clé Anthropic `sk-ant-api03-E6oWt...`
 - [ ] Révoquer clé PSI `AIzaSyD9xeMh...`
 - [ ] PSI manuel sur pagespeed.web.dev (autres langues)
-- [ ] 295 destinations sans photo Unsplash
-- [ ] 222 destinations sans climate trend (rate limit Open-Meteo)
+- [ ] ~251 destinations sans photo Unsplash
 - [ ] Vérifier secret `BREVO_API_KEY` dans CF Workers dashboard
 - [ ] 12 testeurs Android Play Store (fenêtre 14j)
-- [ ] Colonne Budget dans classements
 - [ ] Hotels.com via Travelpayouts (pending approbation)
-- [ ] Backlinks SEO (priorité #1 non démarrée)
+- [ ] **Backlinks SEO en cours** (avril 2026) : 15 blogs contactés (widgets), 9 médias pitchés (Digital PR angle "124 destinations pires en été"), 3 tourism boards, Wikipedia en cours
