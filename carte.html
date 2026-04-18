@@ -60,7 +60,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .pi-name{font-size:15px;font-weight:700;margin:5px 0 2px;color:white}
 .pi-score{font-size:26px;font-weight:700;line-height:1;margin:6px 0 2px}
 .pi-month{font-size:11px;color:rgba(255,255,255,.55);margin-bottom:10px}
-.pi-bars{display:flex;gap:2px;align-items:flex-end;height:28px;margin-bottom:10px}
+.pi-bars{display:flex;gap:1px;align-items:flex-end;height:36px;margin-bottom:8px}
 .pi-bar{flex:1;border-radius:2px 2px 0 0;min-height:2px}
 .pi-bar.cur{outline:2px solid white;outline-offset:1px}
 .pi-link{display:block;background:#c9a84c;color:#1a1f2e;text-align:center;padding:7px;font-size:12px;font-weight:700;text-decoration:none;border-radius:7px}
@@ -196,6 +196,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 var MN=["Jan", "F\u00e9v", "Mar", "Avr", "Mai", "Jui", "Jui", "Ao\u00fb", "Sep", "Oct", "Nov", "D\u00e9c"];
 var LANG_IDX={'fr':0,'en':1,'en-us':1,'es':2,'de':3}["fr"]||1;
 var MF=["Janvier", "F\u00e9vrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Ao\u00fbt", "Septembre", "Octobre", "Novembre", "D\u00e9cembre"];
+var MS=["Jan", "F\u00e9v", "Mar", "Avr", "Mai", "Jui", "Jui", "Ao\u00fb", "Sep", "Oct", "Nov", "D\u00e9c"];
 var MF_ANNUAL="Annuel";
 var FP_SECU="S\u00c9CU.";
 var FP_BUDGET="BUDGET";
@@ -328,7 +329,7 @@ function render(){
     mk.bindTooltip(getName(d),{permanent:false,direction:'right',offset:[sz/2+2,0],className:'dest-label',opacity:1});
     map.on('zoomend',function(){if(map.getZoom()>=5){mk.bindTooltip(getName(d),{permanent:true,direction:'right',offset:[sz/2+2,0],className:'dest-label',opacity:1});}else{mk.unbindTooltip();}});
     mk.on('click',function(){
-      var bars=(d[8]||[]).map(function(ms,i){var h=ms?Math.round(((ms[0]||0)/10)*100):0;var c=ms?scoreColor(ms[0]):'#333';return '<div class="pi-bar'+(i===CUR_M?' cur':'')+'" style="height:'+h+'%;background:'+c+'"></div>';}).join('');
+      var bars=(d[8]||[]).map(function(ms,i){var h=ms?Math.round(((ms[0]||0)/10)*100):0;var c=ms?scoreColor(ms[0]):'#333';var lbl=MS[i]?MS[i][0]:'';return '<div style="display:flex;flex-direction:column;align-items:center;flex:1;justify-content:flex-end"><div class="pi-bar'+(i===CUR_M?' cur':'')+'" style="height:'+h+'%;background:'+c+';width:100%"></div><span style="font-size:6px;color:#64748b;margin-top:1px;line-height:1">'+lbl+'</span></div>';}).join('');
       L.popup({maxWidth:200}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+getName(d)+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="en/best-time-to-visit-'+(d[0]||'')+'.html" class="pi-link">Voir la météo →</a></div>').openOn(map);
     });
     mk.addTo(layer);
