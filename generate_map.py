@@ -482,7 +482,12 @@ function pickMin(min){{CUR_MIN=min;setBtn('min',min>0?('≥ '+min.toFixed(1)):'{
 var map=L.map('map',{{center:[20,10],zoom:2,minZoom:2,maxZoom:12,zoomControl:true,attributionControl:false}});
 // Attribution hidden
 var WORLD={world_json};
-L.geoJSON(WORLD,{{style:{{fillColor:'#1e2640',fillOpacity:1,color:'#3a4a6a',weight:0.6}}}}).addTo(map);
+var worldLayer=L.geoJSON(WORLD,{{style:{{fillColor:'#1e2640',fillOpacity:1,color:'#3a4a6a',weight:0.6}}}}).addTo(map);
+map.on('zoomend',function(){{
+  var z=map.getZoom();
+  if(z>=8){{if(map.hasLayer(worldLayer))map.removeLayer(worldLayer);}}
+  else{{if(!map.hasLayer(worldLayer))worldLayer.addTo(map);}}
+}});
 var CLABELS={clabels_lang_json};
 CLABELS.forEach(function(c){{
   var sz=c.l===0?'11px':c.l===1?'9px':'8px';
