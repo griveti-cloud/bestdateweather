@@ -259,6 +259,15 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
       }
     }
 
+    // ── Force no-cache on SW cleanup script (override CF Workers Assets immutable) ──
+    if (path === '/js/sw-register.js') {
+      const r = await env.ASSETS.fetch(request);
+      const h = new Headers(r.headers);
+      h.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      h.delete('ETag');
+      return new Response(r.body, { status: r.status, headers: h });
+    }
+
     // ── Static assets ──
     return env.ASSETS.fetch(request);
   }
