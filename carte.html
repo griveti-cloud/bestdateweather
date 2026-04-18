@@ -329,7 +329,7 @@ function render(){
     map.on('zoomend',function(){if(map.getZoom()>=5){mk.bindTooltip(getName(d),{permanent:true,direction:'right',offset:[sz/2+2,0],className:'dest-label',opacity:1});}else{mk.unbindTooltip();}});
     mk.on('click',function(){
       var bars=(d[8]||[]).map(function(ms,i){var h=ms?Math.round(((ms[0]||0)/10)*100):0;var c=ms?scoreColor(ms[0]):'#333';return '<div class="pi-bar'+(i===CUR_M?' cur':'')+'" style="height:'+h+'%;background:'+c+'"></div>';}).join('');
-      L.popup({maxWidth:200}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+d[1]+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="en/best-time-to-visit-'+(d[0]||'')+'.html" class="pi-link">Voir la météo →</a></div>').openOn(map);
+      L.popup({maxWidth:200}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+getName(d)+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="en/best-time-to-visit-'+(d[0]||'')+'.html" class="pi-link">Voir la météo →</a></div>').openOn(map);
     });
     mk.addTo(layer);
   });
