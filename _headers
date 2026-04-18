@@ -4,6 +4,26 @@
   X-Frame-Options: ALLOWALL
   Content-Security-Policy: frame-ancestors *
 
+/carte.html
+  X-Frame-Options: ALLOWALL
+  Content-Security-Policy: frame-ancestors *
+
+/en/map.html
+  X-Frame-Options: ALLOWALL
+  Content-Security-Policy: frame-ancestors *
+
+/us/map.html
+  X-Frame-Options: ALLOWALL
+  Content-Security-Policy: frame-ancestors *
+
+/es/mapa.html
+  X-Frame-Options: ALLOWALL
+  Content-Security-Policy: frame-ancestors *
+
+/de/karte.html
+  X-Frame-Options: ALLOWALL
+  Content-Security-Policy: frame-ancestors *
+
 /data/*.json
   Content-Type: application/json
   Cache-Control: public, max-age=86400

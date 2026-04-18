@@ -105,6 +105,20 @@ pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;paddin
 .wp-footer{padding:10px 16px;display:flex;align-items:center;justify-content:space-between;background:#f8fafc}
 .wp-brand{font-size:10px;color:#cbd5e1;font-weight:600}
 .wp-cta{background:#f97316;color:white;font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;text-decoration:none}
+
+/* Tabs */
+.tabs{display:flex;gap:0;max-width:1100px;margin:0 auto 0;padding:0 24px}
+.tab-btn{padding:12px 24px;font-size:13px;font-weight:700;cursor:pointer;border:none;background:none;color:var(--muted);font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:.15s}
+.tab-btn.active{color:var(--orange);border-bottom-color:var(--orange)}
+.tab-btn:hover{color:var(--text)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* Map section */
+.map-panel{max-width:1100px;margin:0 auto;padding:0 24px 80px;display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:start}
+@media(max-width:800px){.map-panel{grid-template-columns:1fr}}
+.map-preview-box{background:var(--card2);border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.map-frame-wrap{padding:20px;display:flex;justify-content:center}
 </style>
 </head>
 <body>
@@ -121,6 +135,13 @@ pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;paddin
   </div>
 </div>
 
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('widget',this)">🔲 Widgets destination</button>
+  <button class="tab-btn" onclick="switchTab('map',this)">🗺️ Carte interactive</button>
+</div>
+
+<div id="tab-widget" class="tab-content active">
 <div class="builder">
   <!-- Panel gauche -->
   <div>
@@ -365,6 +386,107 @@ document.querySelectorAll('[data-theme]').forEach(function(btn) {
 // Init
 renderList('');
 updatePreview();
+</script>
+
+</div><!-- /#tab-widget -->
+
+<div id="tab-map" class="tab-content">
+<div class="map-panel">
+  <!-- Panel gauche options carte -->
+  <div>
+    <div class="panel">
+      <div class="panel-title">⚙️ Options</div>
+      <div class="options">
+        <div class="opt-label">Langue</div>
+        <div class="btn-group">
+          <button class="map-opt active" data-lang="fr" data-url="https://bestdateweather.com/carte.html">🇫🇷 Français</button>
+          <button class="map-opt" data-lang="en" data-url="https://bestdateweather.com/en/map.html">🇬🇧 English</button>
+          <button class="map-opt" data-lang="es" data-url="https://bestdateweather.com/es/mapa.html">🇪🇸 Español</button>
+          <button class="map-opt" data-lang="de" data-url="https://bestdateweather.com/de/karte.html">🇩🇪 Deutsch</button>
+        </div>
+        <div class="opt-label">Hauteur</div>
+        <div class="btn-group">
+          <button class="map-height active" data-h="500">500px</button>
+          <button class="map-height" data-h="600">600px</button>
+          <button class="map-height" data-h="700">700px</button>
+          <button class="map-height" data-h="800">800px</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:16px;padding:20px">
+      <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px">La carte affiche les scores météo ERA5 pour 697 destinations mondiales. Vos lecteurs peuvent filtrer par mois, type de voyage et score.</p>
+      <p style="font-size:13px;color:var(--muted);line-height:1.6">Responsive — s'adapte automatiquement à la largeur de votre contenu.</p>
+    </div>
+  </div>
+
+  <!-- Panel droit preview + code -->
+  <div class="preview-panel">
+    <div class="panel">
+      <div class="preview-label">👁️ Aperçu</div>
+      <div style="padding:16px">
+        <div style="background:var(--bg);border-radius:8px;overflow:hidden;border:1px solid var(--border)">
+          <iframe id="map-frame" src="https://bestdateweather.com/carte.html" width="100%" height="500" frameborder="0" style="display:block" loading="lazy" title="Carte météo mondiale — BestDateWeather"></iframe>
+        </div>
+      </div>
+      <div class="code-section">
+        <div class="code-header">
+          <span>Code à copier</span>
+          <button class="copy-btn" id="copy-map-btn" onclick="copyMapCode()">Copier le code</button>
+        </div>
+        <pre id="map-code-output"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- /#tab-map -->
+
+<script>
+var mapUrl = 'https://bestdateweather.com/carte.html';
+var mapHeight = 500;
+
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+function updateMapCode() {
+  var code = '<iframe\n  src="' + mapUrl + '"\n  width="100%"\n  height="' + mapHeight + '"\n  frameborder="0"\n  style="border-radius:12px;border:1px solid #e2e8f0;display:block"\n  loading="lazy"\n  title="Carte météo mondiale — BestDateWeather"\n></iframe>';
+  document.getElementById('map-code-output').textContent = code;
+}
+
+document.querySelectorAll('.map-opt').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.map-opt').forEach(function(b){ b.classList.remove('active'); });
+    this.classList.add('active');
+    mapUrl = this.dataset.url;
+    document.getElementById('map-frame').src = mapUrl;
+    updateMapCode();
+  });
+});
+
+document.querySelectorAll('.map-height').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.map-height').forEach(function(b){ b.classList.remove('active'); });
+    this.classList.add('active');
+    mapHeight = parseInt(this.dataset.h);
+    document.getElementById('map-frame').height = mapHeight;
+    updateMapCode();
+  });
+});
+
+function copyMapCode() {
+  var code = document.getElementById('map-code-output').textContent;
+  navigator.clipboard.writeText(code).then(function() {
+    var btn = document.getElementById('copy-map-btn');
+    btn.textContent = '✓ Copié !';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copier le code'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+updateMapCode();
 </script>
 </body>
 </html>
