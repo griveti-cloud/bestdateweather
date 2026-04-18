@@ -1619,7 +1619,7 @@ def build_trust_bar(lang):
     return (
         f'<div class="home-divider"></div>'
         f'<div class="trust-bar">'
-        f'<div class="trust-item"><div class="trust-n">746</div><div class="trust-l">{labels[0]}</div></div>'
+        f'<div class="trust-item"><div class="trust-n">754</div><div class="trust-l">{labels[0]}</div></div>'
         f'<div class="trust-item"><div class="trust-n">10 ans</div><div class="trust-l">{labels[1]}</div></div>'
         f'<div class="trust-item"><div class="trust-n">1 an</div><div class="trust-l">{labels[2]}</div></div>'
         f'<div class="trust-item"><div class="trust-n">5</div><div class="trust-l">{labels[3]}</div></div>'
