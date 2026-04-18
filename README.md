@@ -179,16 +179,27 @@ for lang in fr en en-us es de; do python3 generate_pages.py --lang $lang; done
 npx terser js/core.js -o js/core.min.js --compress --mangle
 # Bumper CORE_JS_VERSION dans generate_pages.py → relancer génération
 
-# 4. Vérification cohérence (OBLIGATOIRE)
+# 4. Régénérer les hubs (OBLIGATOIRE si app.css ou template modifié)
+python3 generate_index_hub.py
+# ⚠️  RÈGLE : à chaque bump de version app.css → relancer generate_index_hub.py
+# Sans ça, les hubs référencent l'ancienne version CSS → régression fond clair
+
+# 5. Régénérer comparatifs + classements si locales ou scoring modifiés
+python3 generate_comparatifs.py
+python3 generate_classements.py
+
+# 6. Vérification cohérence (OBLIGATOIRE)
 python3 check_deploy.py
 
-# 5. Commit + push → GitHub Actions → wrangler deploy (auto)
+# 7. Commit + push → GitHub Actions → wrangler deploy (auto)
 git add -A && git commit -m "..."
 git push origin main
 ```
 
 **CI/CD** : GitHub Actions → `wrangler deploy` automatique sur push `main`.  
 **`check_deploy.py`** vérifie : scoring CSV↔pages, cohérence 5 langues, version core.min.js, dew_point, monthly.json.
+
+> **Piège récurrent** : oublier `generate_index_hub.py` après un bump CSS provoque une régression du fond sombre sur les hubs (app.css versionné, les hubs pointent vers l'ancienne version).
 
 ### Versions JS actives
 
