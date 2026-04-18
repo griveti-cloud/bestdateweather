@@ -657,6 +657,8 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 
     h1_var_a  = _stable_hash(slug_fr + "h1", len(C['annual_h1s']))
     title    = fill_tpl(C['annual_titles'][title_var], C, **tpl_vars)
+    if len(title) > 70:
+        title = title[:67].rsplit(' ', 1)[0] + '…'
     h1_text  = fill_tpl(C['annual_h1s'][h1_var_a],    C, **tpl_vars)
     desc     = fill_tpl(C['annual_descs'][desc_var],   C, **tpl_vars)
     og_title = fill_tpl(C['lbl_og_title_tpl'],         C, **tpl_vars)
@@ -2097,6 +2099,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     tpl['sea_label_comma'] = f", {tpl['sea_label']}" if tpl['sea_label'] else ''
 
     title    = fill_tpl(C['monthly_titles'][title_var], C, **tpl)
+    if len(title) > 70:
+        title = title[:67].rsplit(' ', 1)[0] + '…'
     desc     = fill_tpl(C['monthly_descs'][desc_var],   C, **tpl)
     h1_text  = fill_tpl(C['monthly_h1s'][h1_var],       C, **tpl)
     og_title = fill_tpl(C['lbl_m_og_title_tpl'],         C, **tpl)
