@@ -649,7 +649,21 @@ footer a{color:var(--gold-2);font-weight:600}
   .mobile-month-cards{display:grid}
   .spotlight-grid{gap:14px}
 }
+
+/* Tableau mensuel : lignes cliquables */
+tbody tr[onclick]:hover{background:#fef8e7 !important;transform:translateX(2px);transition:all .15s ease}
+tbody tr[onclick]:hover .month-cell span{color:var(--gold-2) !important;transform:translateX(2px)}
+tbody tr[onclick] .month-cell span{display:inline-block;transition:transform .15s ease}
+/* Accessibilité keyboard */
+tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+
 </style>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Meilleure période pour partir à Bali", "description": "Découvrez la meilleure période à Bali. Score climatique complet sur 12 mois, température, soleil et pluie. Guide 2026.", "image": {"@type": "ImageObject", "url": "https://bestdateweather.com/og-image.png", "width": 1200, "height": 630}, "author": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com", "logo": {"@type": "ImageObject", "url": "https://bestdateweather.com/icon-192.png", "width": 192, "height": 192}}, "publisher": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com", "logo": {"@type": "ImageObject", "url": "https://bestdateweather.com/icon-192.png", "width": 192, "height": 192}}, "datePublished": "2026-03-03", "dateModified": "2026-03-03", "inLanguage": "fr", "url": "https://bestdateweather.com/meilleure-periode-bali.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://bestdateweather.com/meilleure-periode-bali.html"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Quelle est la meilleure période pour partir à Bali ?", "acceptedAnswer": {"@type": "Answer", "text": "Juillet est le meilleur mois avec 27°C le jour, 23°C la nuit, 11.0h de soleil et 59% de jours pluvieux. "}}, {"@type": "Question", "name": "Combien d'heures de soleil à Bali en juillet ?", "acceptedAnswer": {"@type": "Answer", "text": "En juillet, on compte en moyenne 11.0h de soleil par jour. C'est le mois le plus ensoleillé avec un score climatique de 8.0/10."}}, {"@type": "Question", "name": "Quel est le mois le plus pluvieux à Bali ?", "acceptedAnswer": {"@type": "Answer", "text": "Février est le mois le plus pluvieux avec 92% de jours de pluie. Pour le score global le plus bas, c'est Février."}}, {"@type": "Question", "name": "Quelle est la température la nuit à Bali en juillet ?", "acceptedAnswer": {"@type": "Answer", "text": "En juillet, la température minimale est de 23°C la nuit, pour 27°C l'après-midi."}}, {"@type": "Question", "name": "Bali est-il agréable en hiver ?", "acceptedAnswer": {"@type": "Answer", "text": "En hiver (décembre-février), Bali obtient un score moyen de 5.9/10 — Conditions acceptables pour les visites culturelles.. Le meilleur mois reste juillet avec un score de 8.0/10."}}, {"@type": "Question", "name": "Quand éviter Bali ?", "acceptedAnswer": {"@type": "Answer", "text": "Février est le mois le plus difficile pour visiter Bali (score le plus bas de l'année). Les températures ou précipitations sont alors les moins favorables."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bestdateweather.com/"}, {"@type": "ListItem", "position": 2, "name": "Bali", "item": "https://bestdateweather.com/meilleure-periode-bali.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Données climatiques de Bali — moyennes mensuelles sur 10 ans", "description": "Températures, précipitations, ensoleillement et vent mensuels à Bali. Moyennes calculées sur 10 ans de données ERA5 (Open-Meteo).", "temporalCoverage": "2015/2024", "spatialCoverage": {"@type": "Place", "name": "Bali"}, "creator": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com"}, "license": "https://creativecommons.org/licenses/by-nc/4.0/", "variableMeasured": ["Temperature", "Precipitation", "Sunshine hours", "Wind speed"]}</script>
 </head>
 <body>
 
@@ -708,6 +722,11 @@ footer a{color:var(--gold-2);font-weight:600}
               <div class="mini-card"><div class="v">Février</div><div class="l">Mois à éviter</div></div>
               <div class="mini-card"><div class="v">Tropical</div><div class="l">Humide toute l'année</div></div>
             </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px">
+              <span style="font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:999px;background:#fef3d0;color:#b8860b;border:1px solid #f2e6a8">☀️ UV Élevé</span>
+              <span style="font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:999px;background:#fdecec;color:#b91c1c;border:1px solid #f4caca">🌡️ Ressenti lourd</span>
+              <span style="font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:999px;background:#ede9fe;color:#6d28d9;border:1px solid #ddd6fe">🌦️ Météo variable</span>
+            </div>
           </div>
         </div>
       </div>
@@ -731,6 +750,22 @@ footer a{color:var(--gold-2);font-weight:600}
             <strong>Verdict :</strong> Bali est une destination d'arbitrage. Les meilleurs mois sont
             <strong>juillet et août</strong> — les seuls sous 65% de jours pluvieux, avec 11h de soleil.
             Évitez <strong>janvier-février</strong> (mousson, 90%+ de jours pluvieux).
+          </div>
+
+          <div style="padding:18px 20px;background:#fff;border:1px solid var(--line-soft);border-radius:14px;border-left:3px solid var(--ink)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-family:'Playfair Display',serif">G</div>
+              <div>
+                <div style="font-size:13px;font-weight:700;color:var(--ink)">L'avis de Gilles</div>
+                <div style="font-size:11px;color:var(--muted)">Fondateur · BestDateWeather</div>
+              </div>
+            </div>
+            <p style="margin:0;font-size:14px;line-height:1.6;color:var(--ink)">
+              Pour Bali, <strong>vraiment privilégier juillet-août</strong> même si ce sont les mois les plus fréquentés :
+              c'est la seule fenêtre où la combinaison humidité + pluie devient tolérable. Si vous cherchez à fuir la foule,
+              <strong>mai ou octobre</strong> sont des compromis acceptables — météo encore correcte, tarifs bas.
+              À éviter absolument : <strong>janvier-février</strong>, où même les voyageurs avertis renoncent souvent.
+            </p>
           </div>
 
           <div>
@@ -786,6 +821,21 @@ footer a{color:var(--gold-2);font-weight:600}
   </section>
 
   <!-- ═════════════════ COMPRENDRE (TABLEAU + SIGNAUX) ═════════════════ -->
+  <!-- ═════════════════ GRAPHIQUE TEMPÉRATURES ANNUELLES ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Tendance 10 ans</div>
+        <h2>Températures annuelles — Bali</h2>
+        <p class="lead">Courbes T° min/max observées sur les 10 dernières années (ERA5). Permet de voir la stabilité et la tendance.</p>
+      </div>
+      <div class="card pad">
+        <div class="ct-chart-wrap"><svg viewBox="0 0 560 234" width="100%" style="display:block;overflow:visible" role="img" aria-label="Températures annuelles — Bali"><line x1="40" y1="184.0" x2="544" y2="184.0" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="188.0" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">22</text><line x1="40" y1="143.0" x2="544" y2="143.0" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="147.0" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">24</text><line x1="40" y1="102.0" x2="544" y2="102.0" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="106.0" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">26</text><line x1="40" y1="61.0" x2="544" y2="61.0" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="65.0" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">29</text><line x1="40" y1="20.0" x2="544" y2="20.0" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="24.0" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">31</text><polyline points="40.0,127.2 96.0,142.8 152.0,149.7 208.0,151.5 264.0,142.8 320.0,148.0 376.0,149.7 432.0,156.7 488.0,146.3 544.0,144.5" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><polyline points="40.0,102.9 96.0,109.8 152.0,111.5 208.0,111.5 264.0,104.6 320.0,109.8 376.0,109.8 432.0,109.8 488.0,101.1 544.0,102.9" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 3"/><polyline points="40.0,75.1 96.0,69.9 152.0,68.2 208.0,66.4 264.0,61.2 320.0,66.4 376.0,63.0 432.0,59.5 488.0,47.3 544.0,50.8" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="40.0" cy="75.1" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="96.0" cy="69.9" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="152.0" cy="68.2" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="208.0" cy="66.4" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="264.0" cy="61.2" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="320.0" cy="66.4" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="376.0" cy="63.0" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="432.0" cy="59.5" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="488.0" cy="47.3" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="544.0" cy="50.8" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="40.0" cy="127.2" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="96.0" cy="142.8" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="152.0" cy="149.7" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="208.0" cy="151.5" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="264.0" cy="142.8" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="320.0" cy="148.0" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="376.0" cy="149.7" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="432.0" cy="156.7" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="488.0" cy="146.3" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="544.0" cy="144.5" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><text x="40.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2016</text><line x1="40.0" y1="186" x2="40.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="96.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2017</text><line x1="96.0" y1="186" x2="96.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="152.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2018</text><line x1="152.0" y1="186" x2="152.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="208.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2019</text><line x1="208.0" y1="186" x2="208.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="264.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2020</text><line x1="264.0" y1="186" x2="264.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="320.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2021</text><line x1="320.0" y1="186" x2="320.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="376.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2022</text><line x1="376.0" y1="186" x2="376.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="432.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2023</text><line x1="432.0" y1="186" x2="432.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="488.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2024</text><line x1="488.0" y1="186" x2="488.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="544.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2025</text><line x1="544.0" y1="186" x2="544.0" y2="190" stroke="#d1d5db" stroke-width="1"/></svg><div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px"><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:#f97316;flex-shrink:0"></span>T° max</span><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:repeating-linear-gradient(90deg,#9ca3af 0,#9ca3af 5px,transparent 5px,transparent 8px);flex-shrink:0"></span>Moyenne</span><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:#93c5fd;flex-shrink:0"></span>T° min</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ COMPRENDRE (TABLEAU + SIGNAUX) ═════════════════ -->
   <section id="tableau">
     <div class="container">
       <div class="section-head">
@@ -795,6 +845,10 @@ footer a{color:var(--gold-2);font-weight:600}
       </div>
       <div class="spotlight-grid">
         <div class="card pad">
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:var(--amber-soft);border:1px solid var(--amber-border);border-radius:999px;margin-bottom:12px;font-size:12px;font-weight:700;color:var(--amber)">
+            🌡️ <span>Chaleur humide</span>
+            <span style="font-size:11px;font-weight:500;color:var(--muted)">(10/12 mois)</span>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
@@ -810,18 +864,18 @@ footer a{color:var(--gold-2);font-weight:600}
                 </tr>
               </thead>
               <tbody>
-                <tr><td class="month-cell">🌧️ Janvier</td><td>24°C</td><td>29°C</td><td>90%</td><td>10.3mm</td><td>9.9h</td><td>5.8/10</td><td><span class="mood bad">Mousson</span></td></tr>
-                <tr><td class="month-cell">🌧️ Février</td><td>24°C</td><td>29°C</td><td>92%</td><td>11.8mm</td><td>10.3h</td><td>5.7/10</td><td><span class="mood bad">Mousson</span></td></tr>
-                <tr><td class="month-cell">🌧️ Mars</td><td>24°C</td><td>29°C</td><td>86%</td><td>7.5mm</td><td>10.9h</td><td>6.2/10</td><td><span class="mood mid">Lourd</span></td></tr>
-                <tr><td class="month-cell">⛅ Avril</td><td>24°C</td><td>29°C</td><td>74%</td><td>5.1mm</td><td>11.2h</td><td>6.8/10</td><td><span class="mood mid">Transition</span></td></tr>
-                <tr><td class="month-cell">⛅ Mai</td><td>24°C</td><td>29°C</td><td>70%</td><td>4.2mm</td><td>11.1h</td><td>6.9/10</td><td><span class="mood mid">Correct</span></td></tr>
-                <tr><td class="month-cell">⛅ Juin</td><td>24°C</td><td>28°C</td><td>65%</td><td>3.6mm</td><td>11.0h</td><td>6.9/10</td><td><span class="mood mid">Correct</span></td></tr>
-                <tr><td class="month-cell">🌤️ Juillet</td><td>23°C</td><td>27°C</td><td>59%</td><td>2.9mm</td><td>11.0h</td><td>8.0/10</td><td><span class="mood good">Meilleur</span></td></tr>
-                <tr><td class="month-cell">🌤️ Août</td><td>23°C</td><td>27°C</td><td>64%</td><td>2.0mm</td><td>11.0h</td><td>7.9/10</td><td><span class="mood good">Très bon</span></td></tr>
-                <tr><td class="month-cell">⛅ Septembre</td><td>23°C</td><td>28°C</td><td>64%</td><td>3.2mm</td><td>11.5h</td><td>6.9/10</td><td><span class="mood mid">Correct</span></td></tr>
-                <tr><td class="month-cell">⛅ Octobre</td><td>24°C</td><td>29°C</td><td>66%</td><td>3.7mm</td><td>12.0h</td><td>6.9/10</td><td><span class="mood mid">Correct</span></td></tr>
-                <tr><td class="month-cell">🌧️ Novembre</td><td>24°C</td><td>30°C</td><td>83%</td><td>7.4mm</td><td>11.5h</td><td>6.1/10</td><td><span class="mood mid">Lourd</span></td></tr>
-                <tr><td class="month-cell">🌧️ Décembre</td><td>24°C</td><td>29°C</td><td>87%</td><td>9.2mm</td><td>10.9h</td><td>6.2/10</td><td><span class="mood mid">Lourd</span></td></tr>
+                <tr onclick="location.href=\'bali-meteo-janvier.html\'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')location.href=\'bali-meteo-janvier.html\'"><td class="month-cell">🌧️ Janvier <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>24°C</td><td>29°C</td><td>90%</td><td>10.3mm</td><td>9.9h</td><td>5.8/10</td><td><span class="mood bad">Mousson</span></td></tr>
+                <tr onclick="location.href=\'bali-meteo-fevrier.html\'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')location.href=\'bali-meteo-fevrier.html\'"><td class="month-cell">🌧️ Février <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>24°C</td><td>29°C</td><td>92%</td><td>11.8mm</td><td>10.3h</td><td>5.7/10</td><td><span class="mood bad">Mousson</span></td></tr>
+                <tr onclick="location.href=\'bali-meteo-mars.html\'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')location.href=\'bali-meteo-mars.html\'"><td class="month-cell">🌧️ Mars <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>24°C</td><td>29°C</td><td>86%</td><td>7.5mm</td><td>10.9h</td><td>6.2/10</td><td><span class="mood mid">Lourd</span></td></tr>
+                <tr onclick="location.href=\'bali-meteo-avril.html\'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')location.href=\'bali-meteo-avril.html\'"><td class="month-cell">⛅ Avril <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>24°C</td><td>29°C</td><td>74%</td><td>5.1mm</td><td>11.2h</td><td>6.8/10</td><td><span class="mood mid">Transition</span></td></tr>
+                <tr onclick="location.href=\'bali-meteo-mai.html\'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')location.href=\'bali-meteo-mai.html\'"><td class="month-cell">⛅ Mai <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>24°C</td><td>29°C</td><td>70%</td><td>4.2mm</td><td>11.1h</td><td>6.9/10</td><td><span class="mood mid">Correct</span></td></tr>
+                <tr onclick="location.href=\'bali-meteo-juin.html\'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')location.href=\'bali-meteo-juin.html\'"><td class="month-cell">⛅ Juin <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>24°C</td><td>28°C</td><td>65%</td><td>3.6mm</td><td>11.0h</td><td>6.9/10</td><td><span class="mood mid">Correct</span></td></tr>
+                <tr onclick="location.href=\'bali-meteo-juillet.html\'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')location.href=\'bali-meteo-juillet.html\'"><td class="month-cell">🌤️ Juillet <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>23°C</td><td>27°C</td><td>59%</td><td>2.9mm</td><td>11.0h</td><td>8.0/10</td><td><span class="mood good">Meilleur</span></td></tr>
+                <tr onclick="location.href=\'bali-meteo-aout.html\'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')location.href=\'bali-meteo-aout.html\'"><td class="month-cell">🌤️ Août <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>23°C</td><td>27°C</td><td>64%</td><td>2.0mm</td><td>11.0h</td><td>7.9/10</td><td><span class="mood good">Très bon</span></td></tr>
+                <tr onclick="location.href=\'bali-meteo-septembre.html\'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')location.href=\'bali-meteo-septembre.html\'"><td class="month-cell">⛅ Septembre <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>23°C</td><td>28°C</td><td>64%</td><td>3.2mm</td><td>11.5h</td><td>6.9/10</td><td><span class="mood mid">Correct</span></td></tr>
+                <tr onclick="location.href=\'bali-meteo-octobre.html\'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')location.href=\'bali-meteo-octobre.html\'"><td class="month-cell">⛅ Octobre <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>24°C</td><td>29°C</td><td>66%</td><td>3.7mm</td><td>12.0h</td><td>6.9/10</td><td><span class="mood mid">Correct</span></td></tr>
+                <tr onclick="location.href=\'bali-meteo-novembre.html\'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')location.href=\'bali-meteo-novembre.html\'"><td class="month-cell">🌧️ Novembre <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>24°C</td><td>30°C</td><td>83%</td><td>7.4mm</td><td>11.5h</td><td>6.1/10</td><td><span class="mood mid">Lourd</span></td></tr>
+                <tr onclick="location.href=\'bali-meteo-decembre.html\'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')location.href=\'bali-meteo-decembre.html\'"><td class="month-cell">🌧️ Décembre <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>24°C</td><td>29°C</td><td>87%</td><td>9.2mm</td><td>10.9h</td><td>6.2/10</td><td><span class="mood mid">Lourd</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -964,31 +1018,6 @@ footer a{color:var(--gold-2);font-weight:600}
     </div>
   </section>
 
-  <!-- ═════════════════ APPROFONDIR PAR MOIS (liens fiches) ═════════════════ -->
-  <section>
-    <div class="container">
-      <div class="section-head">
-        <div class="section-kicker">Approfondir</div>
-        <h2>Bali mois par mois</h2>
-        <p class="lead">Chaque mois a sa fiche dédiée avec prévisions en direct et conseils spécifiques.</p>
-      </div>
-      <div class="month-grid">
-        <a href="bali-meteo-janvier.html" class="month-card box"><div class="top"><div class="name">Janvier</div><div class="score bad">5.8</div></div><div class="meta">🌧️ 29°C · 90% pluie · mousson</div></a>
-        <a href="bali-meteo-fevrier.html" class="month-card box"><div class="top"><div class="name">Février</div><div class="score bad">5.7</div></div><div class="meta">🌧️ 29°C · 92% pluie · mousson</div></a>
-        <a href="bali-meteo-mars.html" class="month-card box"><div class="top"><div class="name">Mars</div><div class="score mid">6.2</div></div><div class="meta">🌧️ 29°C · 86% pluie · lourd</div></a>
-        <a href="bali-meteo-avril.html" class="month-card box"><div class="top"><div class="name">Avril</div><div class="score mid">6.8</div></div><div class="meta">⛅ 29°C · 74% pluie · transition</div></a>
-        <a href="bali-meteo-mai.html" class="month-card box"><div class="top"><div class="name">Mai</div><div class="score mid">6.9</div></div><div class="meta">⛅ 29°C · 70% pluie · correct</div></a>
-        <a href="bali-meteo-juin.html" class="month-card box"><div class="top"><div class="name">Juin</div><div class="score mid">6.9</div></div><div class="meta">⛅ 28°C · 65% pluie · correct</div></a>
-        <a href="bali-meteo-juillet.html" class="month-card box best"><div class="top"><div class="name">Juillet ★</div><div class="score good">8.0</div></div><div class="meta">🌤️ 27°C · 59% pluie · <strong>meilleur mois</strong></div></a>
-        <a href="bali-meteo-aout.html" class="month-card box"><div class="top"><div class="name">Août</div><div class="score good">7.9</div></div><div class="meta">🌤️ 27°C · 64% pluie · très bon</div></a>
-        <a href="bali-meteo-septembre.html" class="month-card box"><div class="top"><div class="name">Septembre</div><div class="score mid">6.9</div></div><div class="meta">⛅ 28°C · 64% pluie · correct</div></a>
-        <a href="bali-meteo-octobre.html" class="month-card box"><div class="top"><div class="name">Octobre</div><div class="score mid">6.9</div></div><div class="meta">⛅ 29°C · 66% pluie · correct</div></a>
-        <a href="bali-meteo-novembre.html" class="month-card box"><div class="top"><div class="name">Novembre</div><div class="score mid">6.1</div></div><div class="meta">🌧️ 30°C · 83% pluie · lourd</div></a>
-        <a href="bali-meteo-decembre.html" class="month-card box"><div class="top"><div class="name">Décembre</div><div class="score mid">6.2</div></div><div class="meta">🌧️ 29°C · 87% pluie · lourd</div></a>
-      </div>
-    </div>
-  </section>
-
   <!-- ═════════════════ À QUOI S'ATTENDRE ═════════════════ -->
   <section>
     <div class="container">
@@ -1074,7 +1103,14 @@ footer a{color:var(--gold-2);font-weight:600}
           <h3>🎟️ Activités & excursions</h3>
           <p>Temples, rizières, plongée, volcans. Réservation annulable gratuitement.</p>
           <div style="margin-top:16px">
-            <a class="travel-cta" href="https://www.getyourguide.fr/s/?q=Bali%2C+Indonesia&partner_id=2MQKL00&locale=fr" target="_blank" rel="sponsored noopener">Voir sur GetYourGuide →</a>
+            <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+                 data-gyg-locale-code="fr-FR"
+                 data-gyg-widget="activities"
+                 data-gyg-number-of-items="3"
+                 data-gyg-partner-id="2MQKL00"
+                 data-gyg-q="Bali, Indonesia">
+            </div>
+            <a class="travel-cta" style="margin-top:10px" href="https://www.getyourguide.fr/s/?q=Bali%2C+Indonesia&partner_id=2MQKL00&locale=fr" target="_blank" rel="sponsored noopener">Voir toutes les activités →</a>
             <span class="affil-note">Lien affilié · GetYourGuide</span>
           </div>
         </div>
@@ -1164,6 +1200,21 @@ footer a{color:var(--gold-2);font-weight:600}
     </div>
   </section>
 
+
+  <!-- ═════════════════ LOCALISATION (2 cartes Leaflet) ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Localisation</div>
+        <h2>Où se trouve Bali ?</h2>
+        <p class="lead">Monde + contexte géographique.</p>
+      </div>
+      <div class="card pad">
+<section class="section dest-map-section"><div class="section-label">Localisation</div><div class="dest-map-row" data-dest-map="1" data-lat="-8.67" data-lon="115.21" data-macro-zoom="3" data-world-id="dmap-world-bali" data-macro-id="dmap-macro-bali"><div class="dest-map-card"><div class="dest-map-lbl">🌍 Monde</div><div id="dmap-world-bali" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Contexte géographique</div><div id="dmap-macro-bali" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="flags/id.png" width="16" height="12" alt="ID" style="vertical-align:middle;border-radius:2px;margin-right:5px">Indonésie</div><div class="dest-map-hsub">Bali est visitable toute l'année mais la mousson (nov-mars) multiplie par 6 les risques de pluie. 10 ans de données pour choisir selon votre projet.</div><div class="dest-map-coords">8.67°S · 115.21°E</div></div></div></section>
+      </div>
+    </div>
+  </section>
+
   <!-- ═════════════════ FAQ ═════════════════ -->
   <section>
     <div class="container">
@@ -1201,5 +1252,9 @@ footer a{color:var(--gold-2);font-weight:600}
   </div>
 </footer>
 
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
+<script src="js/dest-map.min.js?v=1" defer></script>
 </body>
 </html>
