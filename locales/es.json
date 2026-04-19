@@ -931,7 +931,7 @@
     "sec_title_ski": "Top {n} estaciones de esquí en {month}",
     "tab_meteo": "☀️ Clima general",
     "tab_beach": "🏖️ Playa",
-    "tab_ski": "⛷️ Esquí",
+    "tab_ski": "🏔️ Montaña",
     "th_score_gen": "Score",
     "th_score_beach": "Score playa",
     "th_score_ski": "Score esquí",
@@ -940,7 +940,7 @@
     "no_meteo_msg": "No hay destinos en esta región para este mes.",
     "tab_meteo_annual": "☀️ Clima general",
     "tab_beach_annual": "🏖️ Playa",
-    "tab_ski_annual": "⛷️ Esquí",
+    "tab_ski_annual": "🏔️ Montaña",
     "th_score_gen_annual": "Puntuación",
     "th_score_beach_annual": "Puntuación playa",
     "th_score_ski_annual": "Puntuación esquí",
@@ -968,7 +968,10 @@
     "budget_all": "Todos los presupuestos",
     "tab_nomad": "💻 Nómadas digitales",
     "map_href": "../es/mapa.html",
-    "map_nav_label": "🗺️ Mapa"
+    "map_nav_label": "🗺️ Mapa",
+    "tab_mountain_sub_max": "Max",
+    "tab_mountain_sub_ski": "⛷️ Esquí",
+    "tab_mountain_sub_rando": "🥾 Senderismo"
   },
   "ranking_footer": {
     "data_by": "Datos meteorológicos de Open-Meteo.com",

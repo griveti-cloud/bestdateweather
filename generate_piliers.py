@@ -12,7 +12,7 @@ import csv, html as html_mod, json, sys, os
 from pathlib import Path
 from lib.common import footer_ranking_html, c_to_f, shared_nav_html, profile_translations
 from datetime import date
-from scoring import compute_ski_score, profile_score
+from scoring import compute_ski_score, compute_hiking_score, profile_score
 
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.page_config import load_locale
@@ -161,6 +161,10 @@ def get_rankings(climate, dests, month_idx):
             continue
         m = climate[slug][month_idx]
         ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
+        _pp = m.get('precip_mm')
+        try: _pp = float(_pp) if _pp not in (None,'','None') else None
+        except: _pp = None
+        hike = compute_hiking_score(m['tmax'], m['rain_pct'], m['sun_h'], _pp)
         entries.append({
             'slug_fr': slug,
             'slug_en': dest.get('slug_en', slug),
@@ -180,6 +184,7 @@ def get_rankings(climate, dests, month_idx):
             'sun_h': m['sun_h'],
             'beach_score': m['beach_score'],
             'ski_score': ski,
+            'hiking_score': hike,
         })
     entries.sort(key=lambda x: (-x['score'], x['nom_bare']))
     # Remove region parents when a child island is also ranked (e.g. canaries vs tenerife)
@@ -191,7 +196,7 @@ def get_rankings(climate, dests, month_idx):
     # Multiple cities from the same country can appear if they score high enough
     return entries[:TOP_N]
 
-def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=35):
+def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=80):
     """Return broader pool for beach/ski JS filtering.
 
     - General pool: top pool_size destinations by general score (country-deduped)
@@ -211,6 +216,10 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=35):
             continue
         m = climate[slug][month_idx]
         ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
+        _pp2 = m.get('precip_mm')
+        try: _pp2 = float(_pp2) if _pp2 not in (None,'','None') else None
+        except: _pp2 = None
+        hike = compute_hiking_score(m['tmax'], m['rain_pct'], m['sun_h'], _pp2)
         all_entries.append({
             'slug_fr': slug,
             'slug_en': dest.get('slug_en', slug),
@@ -232,6 +241,7 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=35):
             'sun_h': m['sun_h'],
             'beach_score': m['beach_score'],
             'ski_score': ski,
+            'hiking_score': hike,
             'is_mountain': dest.get('mountain', 'False') == 'True',
             'is_coastal':  dest.get('coastal',  'False') == 'True',
             'nomad_score': None,  # filled after compute_nomad
@@ -258,9 +268,9 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=35):
     general_pool = deduped[:pool_size]
     general_slugs = {e['slug_fr'] for e in general_pool}
 
-    # --- Ski boost: top mountain destinations not already in general pool ---
+    # --- Mountain boost: top destinations par max(ski, hike) pour couvrir rando ---
     ski_candidates = [e for e in all_entries if e['is_mountain'] and e['slug_fr'] not in general_slugs and e['tmax'] <= 30]
-    ski_candidates.sort(key=lambda x: (-x['ski_score'], x['nom_bare']))
+    ski_candidates.sort(key=lambda x: (-max(x['ski_score'], x.get('hiking_score', 0)), x['nom_bare']))
     ski_injected = ski_candidates[:ski_boost]
     # Whitelist: summer glacier resorts always injected regardless of score
     SUMMER_GLACIER_SLUGS = {'zermatt', 'saas-fee', 'hintertux', 'les-deux-alpes', 'tignes'}
@@ -646,6 +656,8 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'b': round(p['beach_score'], 1) if p['beach_score'] is not None else None,
         'br': round(p['beach_score'], 4) if p['beach_score'] is not None else None,
         'k': round(p['ski_score'], 1),
+        'hk': round(p.get('hiking_score', 0), 1),
+        'mtn': round(max(p['ski_score'], p.get('hiking_score', 0)), 1),
         'm': 1 if p['is_mountain'] else 0,
         'ap': f'{flag_prefix}flags/{p["flag"]}.png',
         'r': round(p['rain_pct'], 0),
@@ -742,6 +754,14 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         f'<span id="fc-profile-lbl">{_profile_chip_lbl}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-profile">{_profile_items}</div></div>'
+        f'<div class="fchip" id="fc-mtn-sub" data-fc="mtn-sub" onclick="toggleFC(this.dataset.fc,event)" style="display:none">'
+        f'<span id="fc-mtn-sub-lbl">{pil.get("tab_mountain_sub_max","Max")}</span>'
+        f'<span class="fchip-arrow">▾</span>'
+        f'<div class="fc-drop" id="fcd-mtn-sub">'
+        f'<div class="fc-item active" data-mtn-sub="max" onclick="event.stopPropagation();setMtnSub(\'max\')">{pil.get("tab_mountain_sub_max","Max")}</div>'
+        f'<div class="fc-item" data-mtn-sub="ski" onclick="event.stopPropagation();setMtnSub(\'ski\')">{pil.get("tab_mountain_sub_ski","⛷️ Ski")}</div>'
+        f'<div class="fc-item" data-mtn-sub="rando" onclick="event.stopPropagation();setMtnSub(\'rando\')">{pil.get("tab_mountain_sub_rando","🥾 Rando")}</div>'
+        f'</div></div>'
     )
 
     # Barre de profils : intégrée dans filter-bar comme 6e dropdown (fc-profile).
@@ -762,10 +782,11 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'var th=document.getElementById("rt-head");'+
         'var msg=document.getElementById("rt-msg");'+
         'if(!tb)return;'+
-        'var key=mode==="beach"?"b":mode==="ski"?"k":mode==="nomad"?"nd":"s";'+
+        'var mtnKey=CUR_MTN_SUB==="ski"?"k":(CUR_MTN_SUB==="rando"?"hk":"mtn");'+
+        'var key=mode==="beach"?"b":mode==="ski"?mtnKey:mode==="nomad"?"nd":"s";'+
         'var useProf=CUR_PROF!=="balanced"&&mode==="meteo";'+
         'if(useProf){POOL.forEach(function(d){d._ps=_profScore(d,CUR_PROF);});}'+
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG);var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):mode==="nomad"?(d.nd!=null):(d.m!==1);var rlOk=mode==="nomad"?true:(d.rl||1)<=CUR_RL;var biOk=mode==="nomad"?true:(d.bi||3)<=CUR_BI;return rOk&&mOk&&rlOk&&biOk;});'+
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG);var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&(d[mtnKey]||0)>=4&&(CUR_MTN_SUB==="ski"?d.tmax<=25:true)):mode==="nomad"?(d.nd!=null):(d.m!==1);var rlOk=mode==="nomad"?true:(d.rl||1)<=CUR_RL;var biOk=mode==="nomad"?true:(d.bi||3)<=CUR_BI;return rOk&&mOk&&rlOk&&biOk;});'+
         'list.sort(function(a,b){var va=useProf?a._ps:(a[key]||0);var vb=useProf?b._ps:(b[key]||0);return vb-va;});'+
         'var _sibSeen={};list=list.filter(function(d){if(d.sib<0)return true;if(_sibSeen[d.sib])return false;_sibSeen[d.sib]=1;return true;});'+
         'list.sort(function(a,b){var va=useProf?a._ps:(a[key]||0);var vb=useProf?b._ps:(b[key]||0);var d=vb-va;return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
@@ -810,7 +831,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         '_ri.innerHTML="<strong>"+_sc10.toFixed(1)+"/10</strong> · "+Math.round(_at10)+"°"+" · "+list.length+" destinations";'+
         '}}'+
         '}'+
-        'function setMode(m){CUR_MODE=m;if(m==="nomad"&&typeof ANNUAL_URL!=="undefined"&&ANNUAL_URL){var reg=CUR_REG&&CUR_REG!=="all"?"&reg="+CUR_REG:"";location.href=ANNUAL_URL+"?mode=nomad"+reg;return;}document.querySelectorAll(".fc-item[data-mode]").forEach(function(b){b.classList.toggle("active",b.dataset.mode===m);});var lm=document.querySelector(".fc-item.active[data-mode]");if(lm)document.getElementById("fc-type-lbl").textContent=lm.textContent.trim();document.getElementById("fc-type").classList.toggle("has-filter",m!=="meteo");closeFC();var isNomad=m==="nomad";var _chips=["fc-secu","fc-budget","fc-period","fc-profile"];_chips.forEach(function(id){var el=document.getElementById(id);if(el){el.style.display=isNomad?"none":"";el.style.pointerEvents=isNomad?"none":"";}});var _nom=document.getElementById("rt-methodo-nomad");if(_nom)_nom.style.display=isNomad?"block":"none";var _fcp=document.getElementById("fc-profile");if(_fcp)_fcp.style.display=m==="meteo"?"":"none";render(m);}'+
+        'function setMode(m){CUR_MODE=m;if(m==="nomad"&&typeof ANNUAL_URL!=="undefined"&&ANNUAL_URL){var reg=CUR_REG&&CUR_REG!=="all"?"&reg="+CUR_REG:"";location.href=ANNUAL_URL+"?mode=nomad"+reg;return;}document.querySelectorAll(".fc-item[data-mode]").forEach(function(b){b.classList.toggle("active",b.dataset.mode===m);});var lm=document.querySelector(".fc-item.active[data-mode]");if(lm)document.getElementById("fc-type-lbl").textContent=lm.textContent.trim();document.getElementById("fc-type").classList.toggle("has-filter",m!=="meteo");closeFC();var isNomad=m==="nomad";var _chips=["fc-secu","fc-budget","fc-period","fc-profile"];_chips.forEach(function(id){var el=document.getElementById(id);if(el){el.style.display=isNomad?"none":"";el.style.pointerEvents=isNomad?"none":"";}});var _nom=document.getElementById("rt-methodo-nomad");if(_nom)_nom.style.display=isNomad?"block":"none";var _fcp=document.getElementById("fc-profile");if(_fcp)_fcp.style.display=m==="meteo"?"":"none";var _fcms=document.getElementById("fc-mtn-sub");if(_fcms)_fcms.style.display=m==="ski"?"":"none";render(m);}'+
         'function setReg(r){CUR_REG=r;document.querySelectorAll(".fc-item[data-reg]").forEach(function(b){b.classList.toggle("active",b.dataset.reg===r);});var lr=document.querySelector(".fc-item.active[data-reg]");if(lr)document.getElementById("fc-region-lbl").textContent=lr.textContent.trim();document.getElementById("fc-region").classList.toggle("has-filter",r!=="all");closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
         'function setSecu(rl){CUR_RL=rl;document.querySelectorAll(".fc-item[data-rl]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.rl)<=rl);b.classList.toggle("active",parseInt(b.dataset.rl)===rl);});var ls=document.querySelector(".fc-item[data-rl=\'"+rl+"\' ]");var lbl=ls?ls.textContent.trim().replace(/^≤\s*/,""):"";document.getElementById("fc-secu-lbl").textContent=rl<4?("🛡 \u2264 "+lbl):"'+ fp_secu +'";document.getElementById("fc-secu").classList.toggle("has-filter",rl<4);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
         'function setBudget(bi){CUR_BI=bi;document.querySelectorAll(".fc-item[data-bi]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.bi)<=bi);b.classList.toggle("active",parseInt(b.dataset.bi)===bi);});var lb=document.querySelector(".fc-item[data-bi=\'"+bi+"\' ]");var lbl=lb?lb.textContent.trim().replace(/^≤\s*/,""):"";document.getElementById("fc-budget-lbl").textContent=bi<5?("\u2264 "+lbl):"'+ fp_budget +'";document.getElementById("fc-budget").classList.toggle("has-filter",bi<5);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
@@ -821,7 +842,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'window.goMonth=function(el,ev){var am=document.querySelector(".fc-item.active[data-mode]");var ar=document.querySelector(".fc-item.active[data-reg]");var m=am?am.dataset.mode:"meteo";var r=ar?ar.dataset.reg:"all";var rl=CUR_RL;var bi=CUR_BI;if(m==="meteo"&&r==="all"&&rl===4&&bi===5)return true;ev.preventDefault();var url=el.href.split("?")[0];var q=[];if(m!=="meteo")q.push("mode="+m);if(r!=="all")q.push("reg="+r);if(rl<4)q.push("rl="+rl);if(bi<5)q.push("bi="+bi);location.href=url+(q.length?"?"+q.join("&"):"");return false;};'+
         
         # JS setProfile — recalcul côté client
-        'var CUR_PROF="balanced";var CUR_MODE="meteo";'+
+        'var CUR_PROF="balanced";var CUR_MODE="meteo";var CUR_MTN_SUB="max";'+
         'function _tIdeal(t,prof){'+
         'if(prof==="cool"){'+
         'if(t<=3)return 0;if(t<=10)return(t-3)/7*.3;if(t<=18)return .3+(t-10)/8*.6;'+
@@ -858,7 +879,8 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'var am=document.querySelector(".fc-item.active[data-mode]");'+
         'render(am?am.dataset.mode:"meteo");'+
         '}'+
-        'window.setProfile=setProfile;'+
+        'function setMtnSub(sub){CUR_MTN_SUB=sub;document.querySelectorAll(".fc-item[data-mtn-sub]").forEach(function(b){b.classList.toggle("active",b.dataset.mtnSub===sub);});var lm=document.querySelector(".fc-item.active[data-mtn-sub]");if(lm){var el=document.getElementById("fc-mtn-sub-lbl");if(el)el.textContent=lm.textContent.trim();}var fcms=document.getElementById("fc-mtn-sub");if(fcms)fcms.classList.toggle("has-filter",sub!=="max");closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
+        'window.setProfile=setProfile;window.setMtnSub=setMtnSub;'+
         'window.toggleFC=toggleFC;window.setMode=setMode;window.setReg=setReg;window.setSecu=setSecu;window.setBudget=setBudget;'+'})();</script>'
     )
 
@@ -1005,7 +1027,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 
 
 
-def get_annual_pool(climate, dests, pool_size=80, ski_boost=35):
+def get_annual_pool(climate, dests, pool_size=80, ski_boost=80):
     """Annual pool: avg score/beach/ski over 12 months, for JS tab switching."""
     SKI_DUPES = {'val-disere', 'sierra-nevada', 'queenstown-ski'}
     all_entries = []
@@ -1026,11 +1048,21 @@ def get_annual_pool(climate, dests, pool_size=80, ski_boost=35):
                                       float(months[m]['rain_pct']),
                                       float(months[m]['sun_h']))
                     for m in range(1,13)]
-        # Use best winter month ski score (Dec/Jan/Feb average) — more meaningful
-        ski_winter = sum(compute_ski_score(float(months[m]['tmax']),
-                                           float(months[m]['rain_pct']),
-                                           float(months[m]['sun_h']))
-                         for m in [12,1,2]) / 3
+        # Use BEST ski score (pic annuel) — plus cohérent avec fiches destination
+        # et agnostique hémisphère (Bariloche pic en juin-août vs Alpes en jan-mar)
+        ski_winter = max(ski_vals) if ski_vals else 0
+        # hiking score : même logique, pic annuel
+        hike_vals = []
+        for m in range(1,13):
+            pp = months[m].get('precip_mm')
+            try: pp = float(pp) if pp not in (None,'','None') else None
+            except: pp = None
+            hike_vals.append(compute_hiking_score(
+                float(months[m]['tmax']),
+                float(months[m]['rain_pct']),
+                float(months[m]['sun_h']),
+                pp))
+        hike_best = max(hike_vals) if hike_vals else 0
         best_m = max(range(1,13), key=lambda m: float(months[m]['score']))
         m_data = months[best_m]
         all_entries.append({
@@ -1050,6 +1082,7 @@ def get_annual_pool(climate, dests, pool_size=80, ski_boost=35):
             'score':      avg_score,
             'beach_score': avg_beach,
             'ski_score':  ski_winter,
+            'hiking_score': hike_best,
             'is_mountain': dest.get('mountain', 'False') == 'True',
             'is_coastal':  dest.get('coastal',  'False') == 'True',
             'tmin':       float(m_data['tmin']),
@@ -1072,9 +1105,9 @@ def get_annual_pool(climate, dests, pool_size=80, ski_boost=35):
     general = general[:pool_size]
     general_slugs = {e['slug_fr'] for e in general}
 
-    # Ski boost
+    # Mountain boost: tri par max(ski, hike) pour couvrir ski ET rando
     ski_candidates = [e for e in all_entries if e['is_mountain'] and e['slug_fr'] not in general_slugs and e['tmax'] <= 30]
-    ski_candidates.sort(key=lambda x: (-x['ski_score'], x['nom_bare']))
+    ski_candidates.sort(key=lambda x: (-max(x['ski_score'], x.get('hiking_score', 0)), x['nom_bare']))
     ski_injected = ski_candidates[:ski_boost]
 
     # Beach boost
@@ -1307,6 +1340,8 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'b':   round(e['beach_score'], 1) if e.get('beach_score') is not None else None,
         'br':  round(e['beach_score'], 4) if e.get('beach_score') is not None else None,
         'k':   round(e['ski_score'], 1),
+        'hk':  round(e.get('hiking_score', 0), 1),
+        'mtn': round(max(e['ski_score'], e.get('hiking_score', 0)), 1),
         'm':   1 if e['is_mountain'] else 0,
         'ap':  f'{flag_prefix}flags/{e["flag"]}.png',
         'r':   round(e['rain_pct'], 0),
@@ -1398,18 +1433,27 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         f'<span id="fc-profile-lbl">{_profile_chip_lbl_ann}</span>'
         f'<span class="fchip-arrow">▾</span>'
         f'<div class="fc-drop" id="fcd-profile">{_profile_items_ann}</div></div>'
+        f'<div class="fchip" id="fc-mtn-sub" data-fc="mtn-sub" onclick="toggleFC(this.dataset.fc,event)" style="display:none">'
+        f'<span id="fc-mtn-sub-lbl">{pil.get("tab_mountain_sub_max","Max")}</span>'
+        f'<span class="fchip-arrow">▾</span>'
+        f'<div class="fc-drop" id="fcd-mtn-sub">'
+        f'<div class="fc-item active" data-mtn-sub="max" onclick="event.stopPropagation();setMtnSub(\'max\')">{pil.get("tab_mountain_sub_max","Max")}</div>'
+        f'<div class="fc-item" data-mtn-sub="ski" onclick="event.stopPropagation();setMtnSub(\'ski\')">{pil.get("tab_mountain_sub_ski","⛷️ Ski")}</div>'
+        f'<div class="fc-item" data-mtn-sub="rando" onclick="event.stopPropagation();setMtnSub(\'rando\')">{pil.get("tab_mountain_sub_rando","🥾 Rando")}</div>'
+        f'</div></div>'
     )
     def _e(s): return s.replace('"', '&quot;')
     rank_js = (
         '<script>(function(){'+
         f'var POOL={pool_json};'+
-        'var TOP=25;var CUR_REG="all";var CUR_RL=4;var CUR_BI=5;var CUR_PROF="balanced";'+
+        'var TOP=25;var CUR_REG="all";var CUR_RL=4;var CUR_BI=5;var CUR_PROF="balanced";var CUR_MTN_SUB="max";'+
         f'var TH_GEN="{_e(th_score_gen)}",TH_BEACH="{_e(th_score_beach)}",TH_SKI="{_e(th_score_ski)}",TH_NOMAD="{_e(tab_nomad)}",NO_NOMAD="—";'+
         f'var NO_BEACH="{_e(no_beach_msg)}",NO_SKI="{_e(no_ski_msg)}",NO_METEO="{_e(no_meteo_msg)}",NO_NOMAD="—";'+
         'function _dewPen(tmax,dew){if(!dew)return 0;return dew>=22&&tmax>=26?0.25:dew>=18?Math.min(0.2,(dew-18)*0.04):0;}'+
         'function _profScore(d,prof){var t=(d.tmax||20),r=(d.rain_pct||50)/100,s=Math.min(1,(d.sun_h||4)/10);var sc;if(prof==="cool"){var tc=t<=15?1:t<=20?1-(t-15)/10:t<=28?0.7-(t-20)*0.05:0.35-(t-28)*0.04;sc=Math.max(0,tc);}else if(prof==="warm"){var tw=t>=32?1:t>=27?1-(32-t)/10:t>=20?0.7-(27-t)*0.06:0.28-(20-t)*0.04;sc=Math.max(0,tw);}else{sc=t>=16&&t<=28?1:t<16?Math.max(0,1-(16-t)/12):Math.max(0,1-(t-28)/14);}var raw=0.40*sc+0.35*(1-r)+0.25*s;raw-=_dewPen(t,d.dew);return Math.max(0,Math.min(10,raw*10));}'+
         'function setProfile(prof){CUR_PROF=prof;document.querySelectorAll(".fc-item[data-prof]").forEach(function(b){b.classList.toggle("active",b.dataset.prof===prof);});var ap=document.querySelector(".fc-item.active[data-prof]");if(ap){var lbl=ap.querySelector(".fc-item-lbl");var el=document.getElementById("fc-profile-lbl");if(el&&lbl)el.textContent=lbl.textContent.trim();}var fcp=document.getElementById("fc-profile");if(fcp)fcp.classList.toggle("has-filter",prof!=="balanced");closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
-        'window.setProfile=setProfile;'+
+        'function setMtnSub(sub){CUR_MTN_SUB=sub;document.querySelectorAll(".fc-item[data-mtn-sub]").forEach(function(b){b.classList.toggle("active",b.dataset.mtnSub===sub);});var lm=document.querySelector(".fc-item.active[data-mtn-sub]");if(lm){var el=document.getElementById("fc-mtn-sub-lbl");if(el)el.textContent=lm.textContent.trim();}var fcms=document.getElementById("fc-mtn-sub");if(fcms)fcms.classList.toggle("has-filter",sub!=="max");closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
+        'window.setProfile=setProfile;window.setMtnSub=setMtnSub;'+
 
         'function sc(s){return s>=8.6?"#1a7a4a":s>=7.6?"#2d9e60":s>=6.3?"#84cc16":s>=5?"#f59e0b":s>=3.5?"#f97316":"#ef4444";}'+
         'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'+
@@ -1418,10 +1462,11 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'var th=document.getElementById("rt-head");'+
         'var msg=document.getElementById("rt-msg");'+
         'if(!tb)return;'+
-        'var key=mode==="beach"?"b":mode==="ski"?"k":mode==="nomad"?"nd":"s";'+
+        'var mtnKey=CUR_MTN_SUB==="ski"?"k":(CUR_MTN_SUB==="rando"?"hk":"mtn");'+
+        'var key=mode==="beach"?"b":mode==="ski"?mtnKey:mode==="nomad"?"nd":"s";'+
         'var useProf=CUR_PROF!=="balanced"&&mode==="meteo";'+
         'if(useProf){POOL.forEach(function(d){d._ps=_profScore(d,CUR_PROF);});}'+
-        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG);var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&d.k>=4&&d.tmax<=25):mode==="nomad"?(d.nd!=null):(d.m!==1);var rlOk=mode==="nomad"?true:(d.rl||1)<=CUR_RL;var biOk=mode==="nomad"?true:(d.bi||3)<=CUR_BI;return rOk&&mOk&&rlOk&&biOk;});'+
+        'var list=POOL.filter(function(d){var rOk=CUR_REG==="all"||(d.reg===CUR_REG);var mOk=mode==="beach"?(d.b!=null&&d.b>=3.5):mode==="ski"?(d.m===1&&(d[mtnKey]||0)>=4&&(CUR_MTN_SUB==="ski"?d.tmax<=25:true)):mode==="nomad"?(d.nd!=null):(d.m!==1);var rlOk=mode==="nomad"?true:(d.rl||1)<=CUR_RL;var biOk=mode==="nomad"?true:(d.bi||3)<=CUR_BI;return rOk&&mOk&&rlOk&&biOk;});'+
         'list.sort(function(a,b){var va=useProf?a._ps:(a[key]||0);var vb=useProf?b._ps:(b[key]||0);return vb-va;});'+
         'var _sibSeen={};list=list.filter(function(d){if(d.sib<0)return true;if(_sibSeen[d.sib])return false;_sibSeen[d.sib]=1;return true;});'+
         'list.sort(function(a,b){var va=useProf?a._ps:(a[key]||0);var vb=useProf?b._ps:(b[key]||0);var d=vb-va;return d!==0?d:(key==="b"?(b.br||0)-(a.br||0):0);});'+
@@ -1455,7 +1500,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'var _s3=document.getElementById("stat-temp");if(_s3)_s3.textContent=Math.round(_avgT)+"°";'+
         '}'+
         '}'+
-        'function setMode(m){document.querySelectorAll(".fc-item[data-mode]").forEach(function(b){b.classList.toggle("active",b.dataset.mode===m);});var lm=document.querySelector(".fc-item.active[data-mode]");if(lm)document.getElementById("fc-type-lbl").textContent=lm.textContent.trim();document.getElementById("fc-type").classList.toggle("has-filter",m!=="meteo");closeFC();var isNomad=m==="nomad";var _chips=["fc-secu","fc-budget","fc-period","fc-profile"];_chips.forEach(function(id){var el=document.getElementById(id);if(el){el.style.display=isNomad?"none":"";el.style.pointerEvents=isNomad?"none":"";}});var _nom=document.getElementById("rt-methodo-nomad");if(_nom)_nom.style.display=isNomad?"block":"none";var _fcp=document.getElementById("fc-profile");if(_fcp)_fcp.style.display=m==="meteo"?"":"none";render(m);}'+
+        'function setMode(m){document.querySelectorAll(".fc-item[data-mode]").forEach(function(b){b.classList.toggle("active",b.dataset.mode===m);});var lm=document.querySelector(".fc-item.active[data-mode]");if(lm)document.getElementById("fc-type-lbl").textContent=lm.textContent.trim();document.getElementById("fc-type").classList.toggle("has-filter",m!=="meteo");closeFC();var isNomad=m==="nomad";var _chips=["fc-secu","fc-budget","fc-period","fc-profile"];_chips.forEach(function(id){var el=document.getElementById(id);if(el){el.style.display=isNomad?"none":"";el.style.pointerEvents=isNomad?"none":"";}});var _nom=document.getElementById("rt-methodo-nomad");if(_nom)_nom.style.display=isNomad?"block":"none";var _fcp=document.getElementById("fc-profile");if(_fcp)_fcp.style.display=m==="meteo"?"":"none";var _fcms=document.getElementById("fc-mtn-sub");if(_fcms)_fcms.style.display=m==="ski"?"":"none";render(m);}'+
         'function setReg(r){CUR_REG=r;document.querySelectorAll(".fc-item[data-reg]").forEach(function(b){b.classList.toggle("active",b.dataset.reg===r);});var lr=document.querySelector(".fc-item.active[data-reg]");if(lr)document.getElementById("fc-region-lbl").textContent=lr.textContent.trim();document.getElementById("fc-region").classList.toggle("has-filter",r!=="all");closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
         'function setSecu(rl){CUR_RL=rl;document.querySelectorAll(".fc-item[data-rl]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.rl)<=rl);b.classList.toggle("active",parseInt(b.dataset.rl)===rl);});var ls=document.querySelector(".fc-item[data-rl=\'"+rl+"\' ]");var lbl=ls?ls.textContent.trim().replace(/^≤\s*/,""):"";document.getElementById("fc-secu-lbl").textContent=rl<4?("🛡 \u2264 "+lbl):"'+ fp_secu +'";document.getElementById("fc-secu").classList.toggle("has-filter",rl<4);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+
         'function setBudget(bi){CUR_BI=bi;document.querySelectorAll(".fc-item[data-bi]").forEach(function(b){b.classList.toggle("threshold-active",parseInt(b.dataset.bi)<=bi);b.classList.toggle("active",parseInt(b.dataset.bi)===bi);});var lb=document.querySelector(".fc-item[data-bi=\'"+bi+"\' ]");var lbl=lb?lb.textContent.trim().replace(/^≤\s*/,""):"";document.getElementById("fc-budget-lbl").textContent=bi<5?("\u2264 "+lbl):"'+ fp_budget +'";document.getElementById("fc-budget").classList.toggle("has-filter",bi<5);closeFC();var am=document.querySelector(".fc-item.active[data-mode]");render(am?am.dataset.mode:"meteo");}'+

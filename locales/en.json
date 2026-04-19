@@ -932,7 +932,7 @@
     "sec_title_ski": "Top {n} ski resorts in {month}",
     "tab_meteo": "☀️ General weather",
     "tab_beach": "🏖️ Beach",
-    "tab_ski": "⛷️ Ski",
+    "tab_ski": "🏔️ Mountain",
     "th_score_gen": "Score",
     "th_score_beach": "Beach score",
     "th_score_ski": "Ski score",
@@ -941,7 +941,7 @@
     "no_meteo_msg": "No destinations in this region for this month.",
     "tab_meteo_annual": "☀️ General weather",
     "tab_beach_annual": "🏖️ Beach",
-    "tab_ski_annual": "⛷️ Ski",
+    "tab_ski_annual": "🏔️ Mountain",
     "th_score_gen_annual": "Annual score",
     "th_score_beach_annual": "Beach score",
     "th_score_ski_annual": "Ski score",
@@ -969,7 +969,10 @@
     "budget_all": "All budgets",
     "tab_nomad": "💻 Digital Nomad",
     "map_href": "../en/map.html",
-    "map_nav_label": "🗺️ Map"
+    "map_nav_label": "🗺️ Map",
+    "tab_mountain_sub_max": "Max",
+    "tab_mountain_sub_ski": "⛷️ Ski",
+    "tab_mountain_sub_rando": "🥾 Hiking"
   },
   "ranking_footer": {
     "data_by": "Weather data by Open-Meteo.com",
