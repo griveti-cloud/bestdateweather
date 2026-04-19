@@ -48,6 +48,12 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .dd-item{padding:7px 12px;border-radius:7px;font-size:12px;cursor:pointer;color:rgba(255,255,255,.7);white-space:nowrap}
 .dd-item:hover{background:rgba(255,255,255,.08);color:white}
 .dd-item.on{color:#c9a84c;font-weight:700}
+.dd-menu-profile{min-width:240px;max-width:min(280px,calc(100vw - 24px))}
+.dd-item-profile{display:flex;flex-direction:column;align-items:flex-start;gap:2px;white-space:normal;padding:8px 12px}
+.dd-item-profile .dd-lbl{font-size:13px;font-weight:600;line-height:1.3;color:rgba(255,255,255,.85)}
+.dd-item-profile .dd-sub{font-size:11px;font-weight:400;line-height:1.35;color:rgba(255,255,255,.5)}
+.dd-item-profile.on .dd-lbl{color:#c9a84c;font-weight:700}
+.dd-item-profile.on .dd-sub{color:rgba(201,168,76,.7)}
 .fsep{width:1px;height:16px;background:rgba(255,255,255,.1);flex-shrink:0}
 #map{position:fixed;top:88px;left:0;right:0;bottom:0}
 .leaflet-container{background:#0d1117}
@@ -151,11 +157,11 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   <div class="fsep"></div>
   <div class="dd" id="dd-prof">
     <button class="dd-btn" id="dd-prof-btn" onclick="event.stopPropagation();openDD('prof')">🌤️ Equilibrado <span class="dd-arr">▾</span></button>
-    <div class="dd-menu" id="dd-prof-menu">
-      <div class="dd-item on" data-prof="bal" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="🌤️ Equilibrado">🌤️ Equilibrado</div>
-      <div class="dd-item" data-prof="cool" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="❄️ Prefiero frío">❄️ Prefiero frío</div>
-      <div class="dd-item" data-prof="warm" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="🔥 Prefiero calor">🔥 Prefiero calor</div>
-      <div class="dd-item" data-prof="hum" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="💧 Sensible humedad">💧 Sensible humedad</div>
+    <div class="dd-menu dd-menu-profile" id="dd-prof-menu">
+      <div class="dd-item dd-item-profile on" data-prof="bal" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="🌤️ Equilibrado"><span class="dd-lbl">🌤️ Equilibrado</span><span class="dd-sub">Confort 22-28°C · valora el sol</span></div>
+      <div class="dd-item dd-item-profile" data-prof="cool" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="❄️ Prefiero frío"><span class="dd-lbl">❄️ Prefiero frío</span><span class="dd-sub">Confort 15-20°C · calor penalizado</span></div>
+      <div class="dd-item dd-item-profile" data-prof="warm" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="🔥 Prefiero calor"><span class="dd-lbl">🔥 Prefiero calor</span><span class="dd-sub">Confort 27-32°C · frío penalizado</span></div>
+      <div class="dd-item dd-item-profile" data-prof="hum" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="💧 Sensible humedad"><span class="dd-lbl">💧 Sensible humedad</span><span class="dd-sub">Humedad penalizada · noches cálidas</span></div>
     </div>
   </div>
   <div class="fsep"></div>
@@ -309,7 +315,7 @@ function pickMode(mode,label){
   if(profSep){profSep.style.display=(isNomad||isSki)?'none':'';}
   closeDD();render();
 }
-function pickProf(prof,label){CUR_PROF=prof;setBtn('prof',label,prof!=='bal');document.querySelectorAll('#dd-prof-menu .dd-item').forEach(function(el){el.classList.toggle('on',el.textContent.trim()===label);});closeDD();render();}
+function pickProf(prof,label){CUR_PROF=prof;setBtn('prof',label,prof!=='bal');document.querySelectorAll('#dd-prof-menu .dd-item').forEach(function(el){el.classList.toggle('on',el.dataset.prof===prof);});closeDD();render();}
 function pickRL(rl){CUR_RL=rl;var lbl=SECU_LABELS[String(rl)];var active=rl<4;setBtn('rl',active?'🛡 ≤ '+lbl:FP_SECU,active);document.querySelectorAll('#dd-rl-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(rl===4?0:rl===1?1:rl===2?2:3));});closeDD();render();}
 function pickBI(bi){CUR_BI=bi;var lbl=BUDGET_LABELS[String(bi)];var active=bi<5;setBtn('bi',active?'≤ '+lbl:FP_BUDGET,active);document.querySelectorAll('#dd-bi-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(bi===5?0:bi===1?1:bi===2?2:bi===3?3:4));});closeDD();render();}
 function pickMin(min){CUR_MIN=min;setBtn('min',min>0?('≥ '+min.toFixed(1)):'★ Puntuación mín.',min>0);document.querySelectorAll('#dd-min-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===(min===0?0:min-4));});closeDD();render();}

@@ -1782,3 +1782,65 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'</div>'
         f'</div>'
     )
+
+
+# ═══════════════════════════════════════════════════════════════════
+# Traductions profils de scoring (partagé piliers + carte)
+# ═══════════════════════════════════════════════════════════════════
+
+def profile_translations(lang='fr'):
+    """Renvoie les traductions (labels + descriptions courtes) pour les 4
+    profils de scoring. Clés: balanced/cool/warm/humid.
+
+    Utilisé par generate_piliers.py (dropdown "Profil ▾" de la filter-bar)
+    et generate_map.py (dropdown profil de la carte) pour garantir la
+    cohérence des intitulés entre les deux surfaces.
+    """
+    T = {
+        'fr': {
+            'label_chip': 'Profil',
+            'balanced': '🌤️ Équilibré', 'cool': '❄️ Préfère frais',
+            'warm': '🔥 Préfère chaud', 'humid': '💧 Sensible humidité',
+            'sub_balanced': 'Confort 22-28°C · valorise le soleil',
+            'sub_cool': 'Confort 15-20°C · chaleur pénalisée',
+            'sub_warm': 'Confort 27-32°C · froid pénalisé',
+            'sub_humid': 'Humidité pénalisée · nuits chaudes',
+        },
+        'en': {
+            'label_chip': 'Profile',
+            'balanced': '🌤️ Balanced', 'cool': '❄️ Prefer cool',
+            'warm': '🔥 Prefer warm', 'humid': '💧 Humidity sensitive',
+            'sub_balanced': 'Comfort 22-28°C · values sunshine',
+            'sub_cool': 'Comfort 15-20°C · heat penalized',
+            'sub_warm': 'Comfort 27-32°C · cold penalized',
+            'sub_humid': 'Humidity penalized · warm nights',
+        },
+        'en-us': {
+            'label_chip': 'Profile',
+            'balanced': '🌤️ Balanced', 'cool': '❄️ Prefer cool',
+            'warm': '🔥 Prefer warm', 'humid': '💧 Humidity sensitive',
+            'sub_balanced': 'Comfort 72-82°F · values sunshine',
+            'sub_cool': 'Comfort 59-68°F · heat penalized',
+            'sub_warm': 'Comfort 81-90°F · cold penalized',
+            'sub_humid': 'Humidity penalized · warm nights',
+        },
+        'es': {
+            'label_chip': 'Perfil',
+            'balanced': '🌤️ Equilibrado', 'cool': '❄️ Prefiero frío',
+            'warm': '🔥 Prefiero calor', 'humid': '💧 Sensible humedad',
+            'sub_balanced': 'Confort 22-28°C · valora el sol',
+            'sub_cool': 'Confort 15-20°C · calor penalizado',
+            'sub_warm': 'Confort 27-32°C · frío penalizado',
+            'sub_humid': 'Humedad penalizada · noches cálidas',
+        },
+        'de': {
+            'label_chip': 'Profil',
+            'balanced': '🌤️ Ausgewogen', 'cool': '❄️ Kühl bevorzugt',
+            'warm': '🔥 Warm bevorzugt', 'humid': '💧 Feuchtigkeitssensibel',
+            'sub_balanced': 'Komfort 22-28°C · Sonne bewertet',
+            'sub_cool': 'Komfort 15-20°C · Hitze bestraft',
+            'sub_warm': 'Komfort 27-32°C · Kälte bestraft',
+            'sub_humid': 'Feuchte bestraft · warme Nächte',
+        },
+    }
+    return T.get(lang, T['en'])

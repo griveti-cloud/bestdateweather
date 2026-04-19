@@ -7,6 +7,7 @@ from pathlib import Path
 from scoring import compute_ski_score, profile_score
 from generate_piliers import load_destinations, load_climate, load_country_info
 from generate_classements import compute_nomad
+from lib.common import profile_translations
 
 ROOT = Path('.')
 SUPPORTED_LANGS = ['fr', 'en', 'en-us', 'es', 'de']
@@ -170,15 +171,18 @@ def generate_map_page(lang, map_data_js, world_json, clabels_json, clabels_by_la
     fp_secu    = pil.get('fp_secu', 'SAFETY')
     fp_budget  = pil.get('fp_budget', 'BUDGET')
 
-    # Balanced / Cool / Warm / Humid labels
-    prof_labels_raw = {
-        'fr': {'bal':'🌤️ Équilibré','cool':'❄️ Frais','warm':'🔥 Chaud','hum':'💧 Humidité'},
-        'en': {'bal':'🌤️ Balanced','cool':'❄️ Prefer cool','warm':'🔥 Prefer warm','hum':'💧 Humidity sensitive'},
-        'en-us': {'bal':'🌤️ Balanced','cool':'❄️ Prefer cool','warm':'🔥 Prefer warm','hum':'💧 Humidity sensitive'},
-        'es': {'bal':'🌤️ Equilibrado','cool':'❄️ Prefiero frío','warm':'🔥 Prefiero calor','hum':'💧 Sensible humedad'},
-        'de': {'bal':'🌤️ Ausgewogen','cool':'❄️ Kühl bevorzugt','warm':'🔥 Warm bevorzugt','hum':'💧 Feuchtigkeitssensibel'},
+    # Balanced / Cool / Warm / Humid labels — source: lib.common.profile_translations
+    # La map utilise les clés courtes bal/cool/warm/hum côté JS (CUR_PROF='bal'…);
+    # on mappe vers les clés longues balanced/cool/warm/humid de la source partagée.
+    _pt = profile_translations(lang)
+    pl = {
+        'bal': _pt['balanced'], 'cool': _pt['cool'],
+        'warm': _pt['warm'], 'hum': _pt['humid'],
     }
-    pl = prof_labels_raw.get(lang, prof_labels_raw['en'])
+    pl_sub = {
+        'bal': _pt['sub_balanced'], 'cool': _pt['sub_cool'],
+        'warm': _pt['sub_warm'], 'hum': _pt['sub_humid'],
+    }
 
     # Hub URL (back link)
     hub_url = f"{ap}{cfg['hub']}"
@@ -265,6 +269,12 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .dd-item{{padding:7px 12px;border-radius:7px;font-size:12px;cursor:pointer;color:rgba(255,255,255,.7);white-space:nowrap}}
 .dd-item:hover{{background:rgba(255,255,255,.08);color:white}}
 .dd-item.on{{color:#c9a84c;font-weight:700}}
+.dd-menu-profile{{min-width:240px;max-width:min(280px,calc(100vw - 24px))}}
+.dd-item-profile{{display:flex;flex-direction:column;align-items:flex-start;gap:2px;white-space:normal;padding:8px 12px}}
+.dd-item-profile .dd-lbl{{font-size:13px;font-weight:600;line-height:1.3;color:rgba(255,255,255,.85)}}
+.dd-item-profile .dd-sub{{font-size:11px;font-weight:400;line-height:1.35;color:rgba(255,255,255,.5)}}
+.dd-item-profile.on .dd-lbl{{color:#c9a84c;font-weight:700}}
+.dd-item-profile.on .dd-sub{{color:rgba(201,168,76,.7)}}
 .fsep{{width:1px;height:16px;background:rgba(255,255,255,.1);flex-shrink:0}}
 #map{{position:fixed;top:88px;left:0;right:0;bottom:0}}
 .leaflet-container{{background:#0d1117}}
@@ -346,11 +356,11 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
   <div class="fsep"></div>
   <div class="dd" id="dd-prof">
     <button class="dd-btn" id="dd-prof-btn" onclick="event.stopPropagation();openDD('prof')">{pl['bal']} <span class="dd-arr">▾</span></button>
-    <div class="dd-menu" id="dd-prof-menu">
-      <div class="dd-item on" data-prof="bal" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="{pl['bal']}">{pl['bal']}</div>
-      <div class="dd-item" data-prof="cool" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="{pl['cool']}">{pl['cool']}</div>
-      <div class="dd-item" data-prof="warm" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="{pl['warm']}">{pl['warm']}</div>
-      <div class="dd-item" data-prof="hum" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="{pl['hum']}">{pl['hum']}</div>
+    <div class="dd-menu dd-menu-profile" id="dd-prof-menu">
+      <div class="dd-item dd-item-profile on" data-prof="bal" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="{pl['bal']}"><span class="dd-lbl">{pl['bal']}</span><span class="dd-sub">{pl_sub['bal']}</span></div>
+      <div class="dd-item dd-item-profile" data-prof="cool" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="{pl['cool']}"><span class="dd-lbl">{pl['cool']}</span><span class="dd-sub">{pl_sub['cool']}</span></div>
+      <div class="dd-item dd-item-profile" data-prof="warm" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="{pl['warm']}"><span class="dd-lbl">{pl['warm']}</span><span class="dd-sub">{pl_sub['warm']}</span></div>
+      <div class="dd-item dd-item-profile" data-prof="hum" onclick="event.stopPropagation();pickProf(this.dataset.prof,this.dataset.label)" data-label="{pl['hum']}"><span class="dd-lbl">{pl['hum']}</span><span class="dd-sub">{pl_sub['hum']}</span></div>
     </div>
   </div>
   <div class="fsep"></div>
@@ -489,7 +499,7 @@ function pickMode(mode,label){{
   if(profSep){{profSep.style.display=(isNomad||isSki)?'none':'';}}
   closeDD();render();
 }}
-function pickProf(prof,label){{CUR_PROF=prof;setBtn('prof',label,prof!=='bal');document.querySelectorAll('#dd-prof-menu .dd-item').forEach(function(el){{el.classList.toggle('on',el.textContent.trim()===label);}});closeDD();render();}}
+function pickProf(prof,label){{CUR_PROF=prof;setBtn('prof',label,prof!=='bal');document.querySelectorAll('#dd-prof-menu .dd-item').forEach(function(el){{el.classList.toggle('on',el.dataset.prof===prof);}});closeDD();render();}}
 function pickRL(rl){{CUR_RL=rl;var lbl=SECU_LABELS[String(rl)];var active=rl<4;setBtn('rl',active?'🛡 ≤ '+lbl:FP_SECU,active);document.querySelectorAll('#dd-rl-menu .dd-item').forEach(function(el,i){{el.classList.toggle('on',i===(rl===4?0:rl===1?1:rl===2?2:3));}});closeDD();render();}}
 function pickBI(bi){{CUR_BI=bi;var lbl=BUDGET_LABELS[String(bi)];var active=bi<5;setBtn('bi',active?'≤ '+lbl:FP_BUDGET,active);document.querySelectorAll('#dd-bi-menu .dd-item').forEach(function(el,i){{el.classList.toggle('on',i===(bi===5?0:bi===1?1:bi===2?2:bi===3?3:4));}});closeDD();render();}}
 function pickMin(min){{CUR_MIN=min;setBtn('min',min>0?('≥ '+min.toFixed(1)):'{m['map_min_score']}',min>0);document.querySelectorAll('#dd-min-menu .dd-item').forEach(function(el,i){{el.classList.toggle('on',i===(min===0?0:min-4));}});closeDD();render();}}
