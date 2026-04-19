@@ -62,6 +62,51 @@
 .eeat-link{color:var(--gold);text-decoration:none;font-weight:600;}
 .eeat-link:hover{text-decoration:underline;}
 .dest-map-section{margin-bottom:0}.dest-map-layout{}.dest-map-row{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}.dest-map-wrap{}.dest-map-col{}.dest-map-card{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;background:#e8f0f8}.dest-map-lbl{display:block;padding:5px 10px;font-size:10px;font-weight:700;color:#1a1f2e;letter-spacing:.4px;text-transform:uppercase;background:#f5f0e8;border-bottom:1px solid #e8e0d0}.dest-map-el--world{height:160px;width:100%;display:block}.dest-map-el--macro{height:160px;width:100%;display:block}.dest-map-credit{font-size:9px;color:#aaa;padding:2px 8px;background:#faf7f2;border-top:1px solid #f0ebe0}.dest-map-credit a{color:#aaa}.dest-map-intro{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#faf7f2;border-radius:10px;border:1.5px solid #e8e0d0}.dest-map-country{font-size:13px;font-weight:700;color:#1a1f2e;margin-bottom:4px}.dest-map-hsub{font-size:13px;color:#666;line-height:1.6;margin-bottom:6px}.dest-map-coords{font-size:11px;color:#bbb;font-family:monospace}@media(max-width:600px){.dest-map-row{grid-template-columns:1fr}.dest-map-el--world,.dest-map-el--macro{height:140px}}.leaflet-control-zoom{display:none!important}
+
+/* === Intégration Option A : pills / bars / moods / summary-card === */
+.top-pills{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 6px}
+.top-pills .pill{display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:999px;font-size:12.5px;font-weight:700;border:1px solid transparent;white-space:nowrap}
+.top-pills .pill-good{background:#e8f8f0;color:#1a7a4a;border-color:#bfe6cd}
+.top-pills .pill-mid{background:#fdf6d8;color:#8f6b12;border-color:#f2e6a8}
+.top-pills .pill-bad{background:#fdecec;color:#b91c1c;border-color:#f4caca}
+.top-pills .pill-worst{margin-left:auto;font-weight:600}
+.top-pills-label{font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8f6b23;margin:14px 0 4px}
+
+.mini-bars{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;align-items:end;height:90px;margin:10px 0 4px;padding:12px 6px 4px;background:#faf7f0;border-radius:12px;border:1px solid #f0e8d8}
+.mini-bars .mb-col{display:flex;flex-direction:column;align-items:center;gap:5px;position:relative}
+.mini-bars .mb-bar{width:100%;min-height:12px;border-radius:5px 5px 2px 2px;background:#c7dfd3}
+.mini-bars .mb-good{background:linear-gradient(180deg,#2ea86a 0%,#1a7a4a 100%)}
+.mini-bars .mb-mid{background:linear-gradient(180deg,#f0c060 0%,#d89b18 100%)}
+.mini-bars .mb-bad{background:linear-gradient(180deg,#ef7d7d 0%,#c94a4a 100%)}
+.mini-bars .mb-col[data-best="1"] .mb-bar{outline:2px solid #e8940a;outline-offset:1px;box-shadow:0 0 0 4px rgba(232,148,10,.15)}
+.mini-bars .mb-lbl{font-size:9.5px;color:#718096;font-weight:600;letter-spacing:.3px}
+
+/* Mood pills pour tableau mensuel */
+.mood{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid transparent;letter-spacing:.2px}
+.mood-good{background:#e8f8f0;color:#1a7a4a;border-color:#bfe6cd}
+.mood-mid{background:#fdf6d8;color:#8f6b12;border-color:#f2e6a8}
+.mood-bad{background:#fdecec;color:#b91c1c;border-color:#f4caca}
+
+/* Hero 2 colonnes sur desktop */
+@media(min-width:900px){
+  .hero-two-col{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:end;max-width:1180px;margin:0 auto}
+  .hero-left{padding-right:10px}
+  .hero-right{display:flex;justify-content:flex-end;align-items:flex-end;padding-bottom:4px}
+}
+.hero-summary-card{width:100%;max-width:340px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-radius:18px;padding:18px 20px;box-shadow:0 8px 28px rgba(10,18,34,.22)}
+.hsc-label{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#e8940a;margin-bottom:6px}
+.hsc-top{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:14px}
+.hsc-month{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;line-height:1;color:#1a1f2e}
+.hsc-sub{font-size:11.5px;color:#718096;margin-top:5px;line-height:1.4;max-width:160px}
+.hsc-score{font-family:'Playfair Display',serif;font-size:36px;font-weight:800;line-height:1;color:#1a1f2e}
+.hsc-score small{font-size:14px;color:#a0aec0;font-weight:600;letter-spacing:-1px}
+.hsc-summary-line{font-size:11.5px;color:#4a5568;line-height:1.5;padding-top:12px;border-top:1px solid #f0ece4}
+@media(max-width:899px){
+  .hero-summary-card{margin:16px auto 0;max-width:none;width:calc(100% - 32px)}
+}
+
+/* Bloc barchart + pills dans decision-card : ajout en-dessous du mini-calendrier existant */
+.score-viz-block{padding:16px 20px 10px;background:#fcfaf6;border-top:1px solid #f0ece4;margin-top:0}
 </style>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 <meta name="robots" content="noindex,nofollow"/>
@@ -154,6 +199,9 @@
 </div>
 </div>
 <header class="hero-band">
+<div class="hero-two-col">
+<div class="hero-left">
+
 <img src="https://images.unsplash.com/photo-1584544571421-7bdedca0b5a3?w=1400&q=85&fm=jpg&fit=crop&crop=entropy" class="hero-bg-img" alt="Bali" loading="eager" decoding="async" fetchpriority="high"/><div class="hero-overlay"></div>
  <div class="dest-tag"><img src="flags/id.png" srcset="flags/2x/id.png 2x" width="20" height="15" alt="ID" loading="lazy" class="flag-icon"> Bali, Indonésie</div>
  <h1 class="hero-title">Bali : meilleurs et pires<br/><em>mois pour visiter</em></h1>
@@ -168,6 +216,24 @@
   </a>
   <p style="font-size:11px;color:var(--slate2,#718096);margin-top:8px">Hébergement · Activités · Vols recommandés pour Bali</p>
 </div>
+
+</div>
+
+<div class="hero-right">
+  <div class="hero-summary-card">
+    <div class="hsc-label">⚡ Réponse rapide</div>
+    <div class="hsc-top">
+      <div>
+        <div class="hsc-month">Juillet</div>
+        <div class="hsc-sub">Meilleur compromis météo de l'année</div>
+      </div>
+      <div class="hsc-score">8.0<small>/10</small></div>
+    </div>
+    <div class="hsc-summary-line">🏆 <strong>Top 2</strong> : Juillet, Août · <strong>À éviter</strong> : Février</div>
+  </div>
+</div>
+
+</div>
 </header>
 <main class="page">
 <section class="section">
@@ -176,6 +242,28 @@
 <section class="section">
 <h2 class="section-title">Quand partir à Bali ?</h2>
  <div class="decision-card" style="overflow:hidden;border-radius:16px;box-shadow:0 2px 24px rgba(0,0,0,.08)"><div style="padding:28px 24px 22px;position:relative;overflow:hidden;background:linear-gradient(135deg,#14532d 0%,#15803d 35%,#4ade80 75%,#86efac 100%)"><div style="position:absolute;inset:0;background:radial-gradient(ellipse at 75% 15%,rgba(255,255,255,.12) 0%,transparent 55%)"></div><div style="position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;gap:12px"><div><div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.9);letter-spacing:.7px;text-transform:uppercase;margin-bottom:10px;text-shadow:0 1px 4px rgba(0,0,0,.25)">Bali, Indonesia</div><div style="font-size:clamp(32px,9vw,52px);font-weight:500;font-family:Georgia,serif;color:#fff;line-height:.9;text-shadow:0 2px 8px rgba(0,0,0,.2);word-break:break-word">Juillet</div><div style="font-size:13px;color:rgba(255,255,255,.85);margin-top:8px;text-shadow:0 1px 3px rgba(0,0,0,.25)">11.0h/j soleil · 23.0°C–27.0°C · 59% pluie</div></div><div style="text-align:right;flex-shrink:0"><div style="font-size:clamp(36px,10vw,52px);font-weight:500;font-family:Georgia,serif;color:#fff;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.35)">8.0</div><div style="font-size:14px;color:rgba(255,255,255,.8);text-shadow:0 1px 4px rgba(0,0,0,.3)">/10</div><div style="font-size:11px;font-weight:600;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.4);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;background:rgba(0,0,0,.2);padding:2px 8px;border-radius:10px;display:inline-block">Meilleur score</div></div></div></div><div style="padding:12px 24px 10px;background:#faf9f7;border-bottom:1px solid #eee8df"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(239,68,68,.6)"></div><span style="font-size:9px;color:#6b3d10">Éviter</span></div><div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(249,115,22,.55)"></div><span style="font-size:9px;color:#6b3d10"></span></div><div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:rgba(34,197,94,.85)"></div><span style="font-size:9px;color:#6b3d10">Idéal</span></div><div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:#16a34a;outline:2px solid #f59e0b;outline-offset:1px"></div><span style="font-size:9px;color:#92400e;font-weight:500">★ Best</span></div></div><div style="display:flex;gap:4px;align-items:flex-end"><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:64px"><div style="width:100%;height:28px;background:rgba(34,197,94,.42);border-radius:3px;"></div><div style="font-size:9px;color:rgba(0,0,0,.35);text-transform:uppercase;letter-spacing:.3px">Jan</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:64px"><div style="width:100%;height:27px;background:rgba(34,197,94,.42);border-radius:3px;"></div><div style="font-size:9px;color:rgba(0,0,0,.35);text-transform:uppercase;letter-spacing:.3px">Fév</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:64px"><div style="width:100%;height:30px;background:rgba(34,197,94,.42);border-radius:3px;"></div><div style="font-size:9px;color:rgba(0,0,0,.35);text-transform:uppercase;letter-spacing:.3px">Mar</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:64px"><div style="width:100%;height:33px;background:rgba(34,197,94,.42);border-radius:3px;"></div><div style="font-size:9px;color:rgba(0,0,0,.35);text-transform:uppercase;letter-spacing:.3px">Avr</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:64px"><div style="width:100%;height:33px;background:rgba(34,197,94,.42);border-radius:3px;"></div><div style="font-size:9px;color:rgba(0,0,0,.35);text-transform:uppercase;letter-spacing:.3px">Mai</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:64px"><div style="width:100%;height:33px;background:rgba(34,197,94,.42);border-radius:3px;"></div><div style="font-size:9px;color:rgba(0,0,0,.35);text-transform:uppercase;letter-spacing:.3px">Jui</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:64px"><div style="width:100%;height:38px;background:#16a34a;border-radius:3px;outline:2px solid #f59e0b;outline-offset:2px;"></div><div style="font-size:9px;color:#92400e;font-weight:600;text-transform:uppercase;letter-spacing:.3px">Jui</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:64px"><div style="width:100%;height:38px;background:rgba(34,197,94,.85);border-radius:3px;"></div><div style="font-size:9px;color:rgba(0,0,0,.35);text-transform:uppercase;letter-spacing:.3px">Aoû</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:64px"><div style="width:100%;height:33px;background:rgba(34,197,94,.42);border-radius:3px;"></div><div style="font-size:9px;color:rgba(0,0,0,.35);text-transform:uppercase;letter-spacing:.3px">Sep</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:64px"><div style="width:100%;height:33px;background:rgba(34,197,94,.42);border-radius:3px;"></div><div style="font-size:9px;color:rgba(0,0,0,.35);text-transform:uppercase;letter-spacing:.3px">Oct</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:64px"><div style="width:100%;height:29px;background:rgba(34,197,94,.42);border-radius:3px;"></div><div style="font-size:9px;color:rgba(0,0,0,.35);text-transform:uppercase;letter-spacing:.3px">Nov</div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:64px"><div style="width:100%;height:30px;background:rgba(34,197,94,.42);border-radius:3px;"></div><div style="font-size:9px;color:rgba(0,0,0,.35);text-transform:uppercase;letter-spacing:.3px">Déc</div></div></div></div><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:12px 24px;background:#faf9f7;border-bottom:1px solid #eee8df"><span style="font-size:10px;color:#6b3d10;font-weight:600">Idéal</span><span style="font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;background:rgba(34,197,94,.22);color:#166534;border:1px solid #16a34a;outline:2px solid #f59e0b;outline-offset:1px;">Jui+</span><span style="font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;background:rgba(34,197,94,.15);color:#166534;border:1px solid rgba(34,197,94,.3);">Aoû</span></div><div style="background:#fff;padding:4px 0 0"><div class="row-divider"><div class="row-divider-line"></div><div class="row-divider-label">☀️ Météo en meilleure période</div><div class="row-divider-line"></div></div><div class="info-row cols-5"><div class="info-cell"><div class="ic-ico">☀️</div><div class="ic-val">11.0h/j</div><div class="mb"><div class="mf bs" style="width:79%"></div></div><div class="ic-sub" style="font-size:9px;font-weight:700;color:#f59e0b;margin-top:2px;text-transform:uppercase;letter-spacing:.3px">UV Élevé</div><div class="ic-sub" style="font-size:9px;font-weight:700;color:#8b5cf6;margin-top:2px;text-transform:uppercase;letter-spacing:.3px">Météo variable</div><div class="ic-lbl">Soleil</div></div><div class="info-cell"><div class="ic-ico">🌡️</div><div class="ic-val">23.0°C–27.0°C</div><div class="mb"><div class="mf br" style="width:68%"></div></div><div class="ressenti-badge rb rb-orange">Lourd</div><div class="ic-lbl">Temp. / Ressenti</div></div><div class="info-cell"><div class="ic-ico">🌂</div><div class="ic-val">59%</div><div class="mb"><div class="mf bb" style="width:59%"></div></div><div class="ic-lbl">Pluie</div></div><div class="info-cell" data-advisory-cc="ID"><div class="ic-ico">🟢</div><div class="ic-val dec-secu-mae-1" style="font-size:11px">Vigilance normale</div><div class="ic-lbl">Sécurité</div></div><div class="info-cell"><div class="ic-ico">💚</div><div class="ic-val dec-budget-1">Économique</div><div class="ic-sub">Coût de la destination</div><div class="ic-lbl">Budget</div></div></div><div class="row-divider"><div class="row-divider-line"></div><div class="row-divider-label">🧳 Informations pratiques</div><div class="row-divider-line"></div></div><div class="info-row cols-4"><div class="info-cell"><div class="ic-ico">💰</div><div class="ic-val ic-mono">IDR</div><div class="ic-sub">Rp · Indonesian rupiah</div><div class="ic-lbl">Monnaie</div></div><div class="info-cell"><div class="ic-ico">🗣️</div><div class="ic-val">Indonésien</div><div class="ic-lbl">Langue</div></div><div class="info-cell"><div class="ic-ico">🚗↩️</div><div class="ic-val" style="font-size:11px">À gauche</div><div class="ic-lbl">Conduite</div></div><div class="info-cell"><div class="ic-ico">🌧️</div><div class="ic-val">Février</div><div class="ic-sub">92% jours de pluie</div><div class="ic-lbl">Plus pluvieux</div></div></div><div class="rd"><div class="rdl"></div><div class="rdt">🌊 Température de la mer</div><div class="rdl"></div></div><div class="info-row cols-2"><div class="info-cell"><div class="ic-ico">☀️</div><div class="ic-val sea-hot">27.8°C</div><div class="mb"><div class="mf bc" style="width:89%"></div></div><div class="ic-lbl">Saison sèche</div></div><div class="info-cell"><div class="ic-ico">☀️</div><div class="ic-val sea-hot">28.5°C</div><div class="mb"><div class="mf bc" style="width:92%"></div></div><div class="ic-lbl">Saison humide</div></div></div><div class="source-footer"><div class="source-tag">🛡️ Auswärtiges Amt (DE)<span class="source-dot"></span>à vérifier avant de voyager<span class="source-dot"></span>2026-03-30</div><div class="source-tag">ERA5 · Open-Meteo · 10 ans<span class="source-dot"></span>Numbeo 2026</div></div></div></div>
+
+
+<div class="score-viz-block">
+  <div class="top-pills-label">📊 Vue annuelle</div>
+  <div class="mini-bars">
+  <div class="mb-col"><div class="mb-bar mb-bad" style="height:58%"></div><div class="mb-lbl">Jan</div></div>
+  <div class="mb-col"><div class="mb-bar mb-bad" style="height:57%"></div><div class="mb-lbl">Fév</div></div>
+  <div class="mb-col"><div class="mb-bar mb-mid" style="height:62%"></div><div class="mb-lbl">Mar</div></div>
+  <div class="mb-col"><div class="mb-bar mb-mid" style="height:68%"></div><div class="mb-lbl">Avr</div></div>
+  <div class="mb-col"><div class="mb-bar mb-mid" style="height:69%"></div><div class="mb-lbl">Mai</div></div>
+  <div class="mb-col"><div class="mb-bar mb-mid" style="height:69%"></div><div class="mb-lbl">Jui</div></div>
+  <div class="mb-col" data-best="1"><div class="mb-bar mb-good" style="height:80%"></div><div class="mb-lbl">Jui</div></div>
+  <div class="mb-col"><div class="mb-bar mb-good" style="height:79%"></div><div class="mb-lbl">Aoû</div></div>
+  <div class="mb-col"><div class="mb-bar mb-mid" style="height:69%"></div><div class="mb-lbl">Sep</div></div>
+  <div class="mb-col"><div class="mb-bar mb-mid" style="height:69%"></div><div class="mb-lbl">Oct</div></div>
+  <div class="mb-col"><div class="mb-bar mb-mid" style="height:61%"></div><div class="mb-lbl">Nov</div></div>
+  <div class="mb-col"><div class="mb-bar mb-mid" style="height:62%"></div><div class="mb-lbl">Déc</div></div>
+</div>
+  <div class="top-pills-label">🏆 Top mois vs ⚠️ à éviter</div>
+  <div class="top-pills"><span class="pill pill-good">Juillet · 8.0/10</span><span class="pill pill-good">Août · 7.9/10</span><span class="pill pill-mid">Mai · 6.9/10</span><span class="pill pill-mid">Juin · 6.9/10</span><span class="pill pill-bad pill-worst">⚠️ Février · 5.7/10</span></div>
+</div>
+
 </section>
 <section class="section">
  <div class="section-label">Selon votre projet</div>
@@ -193,19 +281,19 @@
 <h2 class="section-title">Météo à Bali mois par mois</h2>
  <div class="table-ressenti-badge" style="margin-bottom:8px"><span style="font-size:11px;font-weight:700;color:#ef4444">Chaleur humide</span><span style="font-size:10px;color:#aaa;margin-left:6px">(10/12 mois)</span></div><div class="climate-table-wrap">
  <table class="climate-table climate-table--horizontal" aria-label="Tableau climat mensuel Bali">
- <thead><tr><th>Mois</th><th>T° min</th><th>T° max</th><th>Jours de pluie (%)</th><th>Précip. mm/j</th><th>Soleil h/j</th><th>Score</th></tr></thead>
- <tbody><tr class="mid" data-tmax="29" data-rain="90" data-sun="9.9"><td>🌦️ Janvier</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">90%</td><td data-label="Précip. mm">10.3</td><td data-label="Soleil h/j">9.9h</td><td data-label="Score">5.8/10</td></tr>
-<tr class="mid" data-tmax="29" data-rain="92" data-sun="10.3"><td>🌦️ Février</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">92%</td><td data-label="Précip. mm">11.8</td><td data-label="Soleil h/j">10.3h</td><td data-label="Score">5.7/10</td></tr>
-<tr class="mid" data-tmax="29" data-rain="86" data-sun="10.9"><td>🌦️ Mars</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">86%</td><td data-label="Précip. mm">7.5</td><td data-label="Soleil h/j">10.9h</td><td data-label="Score">6.2/10</td></tr>
-<tr class="mid" data-tmax="29" data-rain="74" data-sun="11.2"><td>⛅ Avril</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">74%</td><td data-label="Précip. mm">5.1</td><td data-label="Soleil h/j">11.2h</td><td data-label="Score">6.8/10</td></tr>
-<tr class="mid" data-tmax="29" data-rain="70" data-sun="11.1"><td>⛅ Mai</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">70%</td><td data-label="Précip. mm">4.2</td><td data-label="Soleil h/j">11.1h</td><td data-label="Score">6.9/10</td></tr>
-<tr class="mid" data-tmax="28" data-rain="65" data-sun="11.0"><td>⛅ Juin</td><td data-label="T° min">24°C</td><td data-label="T° max">28°C</td><td data-label="Pluie %">65%</td><td data-label="Précip. mm">3.6</td><td data-label="Soleil h/j">11.0h</td><td data-label="Score">6.9/10</td></tr>
-<tr class="rec" data-tmax="27" data-rain="59" data-sun="11.0"><td>⛅ Juillet</td><td data-label="T° min">23°C</td><td data-label="T° max">27°C</td><td data-label="Pluie %">59%</td><td data-label="Précip. mm">2.9</td><td data-label="Soleil h/j">11.0h</td><td data-label="Score">8.0/10</td></tr>
-<tr class="rec" data-tmax="27" data-rain="64" data-sun="11.0"><td>⛅ Août</td><td data-label="T° min">23°C</td><td data-label="T° max">27°C</td><td data-label="Pluie %">64%</td><td data-label="Précip. mm">2.0</td><td data-label="Soleil h/j">11.0h</td><td data-label="Score">7.9/10</td></tr>
-<tr class="mid" data-tmax="28" data-rain="64" data-sun="11.5"><td>⛅ Septembre</td><td data-label="T° min">23°C</td><td data-label="T° max">28°C</td><td data-label="Pluie %">64%</td><td data-label="Précip. mm">3.2</td><td data-label="Soleil h/j">11.5h</td><td data-label="Score">6.9/10</td></tr>
-<tr class="mid" data-tmax="29" data-rain="66" data-sun="12.0"><td>⛅ Octobre</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">66%</td><td data-label="Précip. mm">3.7</td><td data-label="Soleil h/j">12.0h</td><td data-label="Score">6.9/10</td></tr>
-<tr class="mid" data-tmax="30" data-rain="83" data-sun="11.5"><td>🌦️ Novembre</td><td data-label="T° min">24°C</td><td data-label="T° max">30°C</td><td data-label="Pluie %">83%</td><td data-label="Précip. mm">7.4</td><td data-label="Soleil h/j">11.5h</td><td data-label="Score">6.1/10</td></tr>
-<tr class="mid" data-tmax="29" data-rain="87" data-sun="10.9"><td>🌦️ Décembre</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">87%</td><td data-label="Précip. mm">9.2</td><td data-label="Soleil h/j">10.9h</td><td data-label="Score">6.2/10</td></tr>
+ <thead><tr><th>Mois</th><th>T° min</th><th>T° max</th><th>Jours de pluie (%)</th><th>Précip. mm/j</th><th>Soleil h/j</th><th>Score</th><th>Lecture</th></tr></thead>
+ <tbody><tr class="mid" data-tmax="29" data-rain="90" data-sun="9.9"><td>🌦️ Janvier</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">90%</td><td data-label="Précip. mm">10.3</td><td data-label="Soleil h/j">9.9h</td><td data-label="Score">5.8/10</td><td data-label="Lecture"><span class="mood mood-mid">Lourd</span></td></tr>
+<tr class="mid" data-tmax="29" data-rain="92" data-sun="10.3"><td>🌦️ Février</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">92%</td><td data-label="Précip. mm">11.8</td><td data-label="Soleil h/j">10.3h</td><td data-label="Score">5.7/10</td><td data-label="Lecture"><span class="mood mood-bad">Mousson</span></td></tr>
+<tr class="mid" data-tmax="29" data-rain="86" data-sun="10.9"><td>🌦️ Mars</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">86%</td><td data-label="Précip. mm">7.5</td><td data-label="Soleil h/j">10.9h</td><td data-label="Score">6.2/10</td><td data-label="Lecture"><span class="mood mood-mid">Lourd</span></td></tr>
+<tr class="mid" data-tmax="29" data-rain="74" data-sun="11.2"><td>⛅ Avril</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">74%</td><td data-label="Précip. mm">5.1</td><td data-label="Soleil h/j">11.2h</td><td data-label="Score">6.8/10</td><td data-label="Lecture"><span class="mood mood-mid">Correct</span></td></tr>
+<tr class="mid" data-tmax="29" data-rain="70" data-sun="11.1"><td>⛅ Mai</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">70%</td><td data-label="Précip. mm">4.2</td><td data-label="Soleil h/j">11.1h</td><td data-label="Score">6.9/10</td><td data-label="Lecture"><span class="mood mood-mid">Correct</span></td></tr>
+<tr class="mid" data-tmax="28" data-rain="65" data-sun="11.0"><td>⛅ Juin</td><td data-label="T° min">24°C</td><td data-label="T° max">28°C</td><td data-label="Pluie %">65%</td><td data-label="Précip. mm">3.6</td><td data-label="Soleil h/j">11.0h</td><td data-label="Score">6.9/10</td><td data-label="Lecture"><span class="mood mood-mid">Correct</span></td></tr>
+<tr class="rec" data-tmax="27" data-rain="59" data-sun="11.0"><td>⛅ Juillet</td><td data-label="T° min">23°C</td><td data-label="T° max">27°C</td><td data-label="Pluie %">59%</td><td data-label="Précip. mm">2.9</td><td data-label="Soleil h/j">11.0h</td><td data-label="Score">8.0/10</td><td data-label="Lecture"><span class="mood mood-good">Meilleure période</span></td></tr>
+<tr class="rec" data-tmax="27" data-rain="64" data-sun="11.0"><td>⛅ Août</td><td data-label="T° min">23°C</td><td data-label="T° max">27°C</td><td data-label="Pluie %">64%</td><td data-label="Précip. mm">2.0</td><td data-label="Soleil h/j">11.0h</td><td data-label="Score">7.9/10</td><td data-label="Lecture"><span class="mood mood-good">Meilleure période</span></td></tr>
+<tr class="mid" data-tmax="28" data-rain="64" data-sun="11.5"><td>⛅ Septembre</td><td data-label="T° min">23°C</td><td data-label="T° max">28°C</td><td data-label="Pluie %">64%</td><td data-label="Précip. mm">3.2</td><td data-label="Soleil h/j">11.5h</td><td data-label="Score">6.9/10</td><td data-label="Lecture"><span class="mood mood-mid">Correct</span></td></tr>
+<tr class="mid" data-tmax="29" data-rain="66" data-sun="12.0"><td>⛅ Octobre</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">66%</td><td data-label="Précip. mm">3.7</td><td data-label="Soleil h/j">12.0h</td><td data-label="Score">6.9/10</td><td data-label="Lecture"><span class="mood mood-mid">Correct</span></td></tr>
+<tr class="mid" data-tmax="30" data-rain="83" data-sun="11.5"><td>🌦️ Novembre</td><td data-label="T° min">24°C</td><td data-label="T° max">30°C</td><td data-label="Pluie %">83%</td><td data-label="Précip. mm">7.4</td><td data-label="Soleil h/j">11.5h</td><td data-label="Score">6.1/10</td><td data-label="Lecture"><span class="mood mood-mid">Lourd</span></td></tr>
+<tr class="mid" data-tmax="29" data-rain="87" data-sun="10.9"><td>🌦️ Décembre</td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie %">87%</td><td data-label="Précip. mm">9.2</td><td data-label="Soleil h/j">10.9h</td><td data-label="Score">6.2/10</td><td data-label="Lecture"><span class="mood mood-mid">Lourd</span></td></tr>
 </tbody>
  </table>
 </div>
