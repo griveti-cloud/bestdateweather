@@ -489,14 +489,20 @@ function pickMode(mode,label){{
   document.querySelectorAll('#dd-mode-menu .dd-item').forEach(function(el){{el.classList.toggle('on',el.textContent.trim()===label);}});
   var isNomad=mode==='nomad';
   var isSki=mode==='ski';
-  // Nomad : masquer Safety, Budget, MinScore, Profil
+  // Nomad : score annuel par construction → masquer sélecteur mois
+  var mEl=document.getElementById('dd-m');
+  if(mEl){{mEl.style.display=isNomad?'none':'';mEl.style.pointerEvents=isNomad?'none':'';}}
+  // Nomad : masquer Safety, Budget, MinScore (non pertinents pour score nomade)
   ['dd-rl','dd-bi','dd-min'].forEach(function(id){{var el=document.getElementById(id);if(el){{el.style.display=isNomad?'none':'';el.style.pointerEvents=isNomad?'none':'';}}}} );
-  document.querySelectorAll('.fsep').forEach(function(el,i){{if(i>=2)el.style.display=isNomad?'none':'';}} );
-  // Ski + Nomad : masquer Profil (incompatible)
+  // Ski + Nomad : masquer Profil (incompatible avec scores spécialisés)
   var profEl=document.getElementById('dd-prof');
-  var profSep=document.querySelector('.fsep:nth-child(4)');
   if(profEl){{profEl.style.display=(isNomad||isSki)?'none':'';profEl.style.pointerEvents=(isNomad||isSki)?'none':'';}}
-  if(profSep){{profSep.style.display=(isNomad||isSki)?'none':'';}}
+  // Séparateurs : en nomad aucun (seul dd-mode visible) ; en ski seul le 1er (entre dd-m et dd-mode) ; sinon tous
+  document.querySelectorAll('.fbar .fsep').forEach(function(el,i){{
+    if(isNomad) el.style.display='none';
+    else if(isSki) el.style.display=(i===0)?'':'none';
+    else el.style.display='';
+  }} );
   closeDD();render();
 }}
 function pickProf(prof,label){{CUR_PROF=prof;setBtn('prof',label,prof!=='bal');document.querySelectorAll('#dd-prof-menu .dd-item').forEach(function(el){{el.classList.toggle('on',el.dataset.prof===prof);}});closeDD();render();}}
