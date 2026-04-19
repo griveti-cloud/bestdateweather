@@ -150,8 +150,17 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
     <div class="dd-menu" id="dd-mode-menu">
       <div class="dd-item on" data-mode="gen" onclick="event.stopPropagation();pickMode(this.dataset.mode,this.dataset.label)" data-label="☀️ Allgemeines Wetter">☀️ Allgemeines Wetter</div>
       <div class="dd-item" data-mode="beach" onclick="event.stopPropagation();pickMode(this.dataset.mode,this.dataset.label)" data-label="🏖️ Strand">🏖️ Strand</div>
-      <div class="dd-item" data-mode="ski" onclick="event.stopPropagation();pickMode(this.dataset.mode,this.dataset.label)" data-label="⛷️ Ski">⛷️ Ski</div>
+      <div class="dd-item" data-mode="ski" onclick="event.stopPropagation();pickMode(this.dataset.mode,this.dataset.label)" data-label="🏔️ Berge">🏔️ Berge</div>
       <div class="dd-item" data-mode="nomad" onclick="event.stopPropagation();pickMode(this.dataset.mode,this.dataset.label)" data-label="💻 Digitale Nomaden">💻 Digitale Nomaden</div>
+    </div>
+  </div>
+  <div class="fsep"></div>
+  <div class="dd" id="dd-mtn-sub" style="display:none">
+    <button class="dd-btn" id="dd-mtn-sub-btn" onclick="event.stopPropagation();openDD('mtn-sub')">Max <span class="dd-arr">▾</span></button>
+    <div class="dd-menu" id="dd-mtn-sub-menu">
+      <div class="dd-item on" data-mtn-sub="max" onclick="event.stopPropagation();pickMtnSub(this.dataset.mtnSub,this.dataset.label)" data-label="Max">Max</div>
+      <div class="dd-item" data-mtn-sub="ski" onclick="event.stopPropagation();pickMtnSub(this.dataset.mtnSub,this.dataset.label)" data-label="⛷️ Ski">⛷️ Ski</div>
+      <div class="dd-item" data-mtn-sub="rando" onclick="event.stopPropagation();pickMtnSub(this.dataset.mtnSub,this.dataset.label)" data-label="🥾 Wandern">🥾 Wandern</div>
     </div>
   </div>
   <div class="fsep"></div>
@@ -221,7 +230,7 @@ var FP_BUDGET="BUDGET";
 var SECU_LABELS={"1": "🟢 Normal", "2": "🟡 Erhöht", "3": "🟠 Nicht empfohlen"};
 var BUDGET_LABELS={"1": "💚 Günstig", "2": "💛 Erschwinglich", "3": "🟡 Moderat", "4": "🟠 Teuer"};
 var CUR_M=12; // Annual par défaut
-var CUR_MODE='gen',CUR_PROF='bal',CUR_RL=4,CUR_BI=5,CUR_MIN=0;
+var CUR_MODE='gen',CUR_PROF='bal',CUR_RL=4,CUR_BI=5,CUR_MIN=0,CUR_MTN_SUB='max';
 
 document.getElementById('dd-m-btn').innerHTML=MF_ANNUAL+' <span class="dd-arr">▾</span>';document.getElementById('dd-m-btn').classList.add('sel');
 document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){el.classList.toggle('on',i===CUR_M+1);});
@@ -236,7 +245,15 @@ function getScore(d,mi){
   if(mi===12){m=d[9]||null;}else{m=(d[8]||[])[mi];}
   if(!m)return null;
   if(CUR_MODE==='beach')return m[1];
-  if(CUR_MODE==='ski')return m[2];
+  if(CUR_MODE==='ski'){
+    // Mode Montagne : sous-toggle max/ski/rando
+    var k=m[2], hk=(mi===12?(m[7]||null):(m.length>6?m[6]:null));
+    if(CUR_MTN_SUB==='ski')return k;
+    if(CUR_MTN_SUB==='rando')return hk;
+    // max
+    if(k!=null && hk!=null)return Math.max(k, hk);
+    return k!=null?k:hk;
+  }
   if(CUR_PROF==='cool')return m[3];
   if(CUR_PROF==='warm')return m[4];
   if(CUR_PROF==='hum')return m[5];
@@ -314,12 +331,20 @@ function pickMode(mode,label){
   // Ski + Nomad : masquer Profil (incompatible avec scores spécialisés)
   var profEl=document.getElementById('dd-prof');
   if(profEl){profEl.style.display=(isNomad||isSki)?'none':'';profEl.style.pointerEvents=(isNomad||isSki)?'none':'';}
+  // Ski : afficher dd-mtn-sub (sous-toggle Max/Ski/Rando)
+  var mtnSubEl=document.getElementById('dd-mtn-sub');
+  if(mtnSubEl){mtnSubEl.style.display=isSki?'':'none';mtnSubEl.style.pointerEvents=isSki?'':'none';}
   // Séparateurs : en nomad aucun (seul dd-mode visible) ; en ski seul le 1er (entre dd-m et dd-mode) ; sinon tous
   document.querySelectorAll('.fbar .fsep').forEach(function(el,i){
     if(isNomad) el.style.display='none';
-    else if(isSki) el.style.display=(i===0)?'':'none';
-    else el.style.display='';
+    else if(isSki) el.style.display=(i===0||i===1)?'':'none';
+    else el.style.display=(i===1)?'none':'';
   } );
+  closeDD();render();
+}
+function pickMtnSub(sub,label){
+  CUR_MTN_SUB=sub;setBtn('mtn-sub',label,sub!=='max');
+  document.querySelectorAll('#dd-mtn-sub-menu .dd-item').forEach(function(el){el.classList.toggle('on',el.dataset.mtnSub===sub);});
   closeDD();render();
 }
 function pickProf(prof,label){CUR_PROF=prof;setBtn('prof',label,prof!=='bal');document.querySelectorAll('#dd-prof-menu .dd-item').forEach(function(el){el.classList.toggle('on',el.dataset.prof===prof);});closeDD();render();}
