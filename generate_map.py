@@ -492,8 +492,9 @@ function pickMode(mode,label){{
   // Nomad : score annuel par construction → masquer sélecteur mois
   var mEl=document.getElementById('dd-m');
   if(mEl){{mEl.style.display=isNomad?'none':'';mEl.style.pointerEvents=isNomad?'none':'';}}
-  // Nomad : masquer Safety, Budget, MinScore (non pertinents pour score nomade)
-  ['dd-rl','dd-bi','dd-min'].forEach(function(id){{var el=document.getElementById(id);if(el){{el.style.display=isNomad?'none':'';el.style.pointerEvents=isNomad?'none':'';}}}} );
+  // Nomad : masquer Safety et Budget (non pertinents) ; GARDER MinScore
+  // (le score nomade est toujours sur 10 → filtre par score minimum pertinent)
+  ['dd-rl','dd-bi'].forEach(function(id){{var el=document.getElementById(id);if(el){{el.style.display=isNomad?'none':'';el.style.pointerEvents=isNomad?'none':'';}}}} );
   // Ski + Nomad : masquer Profil (incompatible avec scores spécialisés)
   var profEl=document.getElementById('dd-prof');
   if(profEl){{profEl.style.display=(isNomad||isSki)?'none':'';profEl.style.pointerEvents=(isNomad||isSki)?'none':'';}}
