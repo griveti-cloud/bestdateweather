@@ -766,7 +766,14 @@
         });
         var n = document.getElementById("btn-go");
         n && n.addEventListener("click", function() {
-          setTimeout(N, 3e3)
+          // Reset le flag _wbTracked pour que l'observer redéclenche E() après runAnnual
+          var mg = document.getElementById("months-grid");
+          if (mg) mg._wbTracked = false;
+          // En mode annuel, E() est déclenché par l'observer quand months-grid se remplit.
+          // N() ne doit tourner qu'en mode date, sinon on pollue les recents avec mode:"date" sans date.
+          var annWrap = document.getElementById("annual-wrap");
+          var isAnnual = annWrap && annWrap.style.display !== "none";
+          if (!isAnnual) setTimeout(N, 3e3)
         })
       }()
   }
