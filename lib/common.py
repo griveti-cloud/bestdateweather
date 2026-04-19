@@ -1538,12 +1538,18 @@ def decision_card_html(dest, months, mi_best, C, nom,
             )
 
     elif is_mountain:
+        from scoring import compute_hiking_score
         # Ski scores: find best ski month + rando month + season
         ski_scores = [(i, compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)))) for i in range(12)]
         best_ski = max(ski_scores, key=lambda x: x[1])
-        # Rando = warmest month with score > 5
-        rando_months = [(i,s) for i,s in ski_scores if float(months[i].get('tmax',0)) > 8 and s < 5.5]
-        best_rando = max(rando_months, key=lambda x: float(months[x[0]].get('score',0))) if rando_months else None
+        # Hiking scores (algo dédié randonnée : optimum 10-22°C, pondération pluie renforcée)
+        _precip = lambda m: (float(m.get('precip_mm')) if m.get('precip_mm') not in (None, '', 'None') else None)
+        hike_scores = [(i, compute_hiking_score(
+                            float(months[i].get('tmax',0)),
+                            float(months[i].get('rain_pct',0)),
+                            float(months[i].get('sun_h',0)),
+                            _precip(months[i]))) for i in range(12)]
+        best_hike = max(hike_scores, key=lambda x: x[1])
         # Ski season = consecutive months with ski > 5.5
         ski_season = [months_names[i][:3] for i,s in ski_scores if s >= 5.5]
         ski_season_str = f"{ski_season[0]}–{ski_season[-1]}" if len(ski_season) >= 2 else (ski_season[0] if ski_season else '—')
@@ -1552,26 +1558,26 @@ def decision_card_html(dest, months, mi_best, C, nom,
         ski_bar = round(best_ski[1] / 10 * 100)
 
         rando_cell = ''
-        if best_rando:
-            ri, rs = best_rando
-            rando_name = months_names[ri][:3]
-            rando_climate_score = float(months[ri].get('score', 0))
-            rando_bar = round(rando_climate_score / 10 * 100)
+        if best_hike[1] >= 4.0:
+            rando_name = months_names[best_hike[0]][:3]
+            rando_score = best_hike[1]
+            rando_bar = round(rando_score / 10 * 100)
             rando_cell = (
                 f'<div class="info-cell">'
-                f'<div class="ic-ico">🏔️</div>'
+                f'<div class="ic-ico">🥾</div>'
                 f'<div class="ic-val" style="color:#16a34a;font-size:15px;font-weight:900">'
-                f'{rando_climate_score:.1f}<span style="font-size:10px;opacity:.5">/10</span></div>'
+                f'{rando_score:.1f}<span style="font-size:10px;opacity:.5">/10</span></div>'
                 f'<div class="mb"><div class="mf bs" style="width:{rando_bar}%"></div></div>'
                 f'<div class="ic-lbl">{rando_name} · {L.get("lbl_dec_lbl_randonnee","Rando")}</div>'
                 f'</div>'
             )
 
-        row3 = (
-            f'<div class="rd"><div class="rdl"></div>'
-            f'<div class="rdt">{row_ski}</div>'
-            f'<div class="rdl"></div></div>'
-            f'<div class="info-row cols-4">'
+        # Seuils de viabilité pour afficher chaque cellule
+        ski_viable = best_ski[1] >= 4.0
+        hike_viable = best_hike[1] >= 4.0
+
+        # Construction des cellules selon viabilité
+        _ski_cell = (
             f'<div class="info-cell">'
             f'<div class="ic-ico">⛷️</div>'
             f'<div class="ic-val" style="color:#0369a1;font-size:15px;font-weight:900">'
@@ -1579,15 +1585,30 @@ def decision_card_html(dest, months, mi_best, C, nom,
             f'<div class="mb"><div class="mf bsk" style="width:{ski_bar}%"></div></div>'
             f'<div class="ic-lbl">{best_ski_name} · {L.get("lbl_dec_lbl_ski_best","Best")}</div>'
             f'</div>'
-            f'{rando_cell}'
+        ) if ski_viable else ''
+
+        _season_cell = (
             f'<div class="info-cell">'
             f'<div class="ic-ico">📅</div>'
             f'<div class="ic-val" style="font-size:11px">{ski_season_str}</div>'
             f'<div class="ic-sub">{L.get("lbl_dec_lbl_ski_saison","Saison")} ski</div>'
             f'<div class="ic-lbl">{L.get("lbl_dec_lbl_ski_saison","Saison")}</div>'
             f'</div>'
-            f'</div>'
-        )
+        ) if ski_viable else ''
+
+        _rando_cell_safe = rando_cell if hike_viable else ''
+
+        # Compter cellules actives pour choisir cols-N
+        _cells = ''.join([_ski_cell, _rando_cell_safe, _season_cell])
+        _n_cells = sum(1 for c in [_ski_cell, _rando_cell_safe, _season_cell] if c)
+        _cols_cls = f'cols-{min(_n_cells, 4)}'
+
+        row3 = (
+            f'<div class="rd"><div class="rdl"></div>'
+            f'<div class="rdt">{row_ski}</div>'
+            f'<div class="rdl"></div></div>'
+            f'<div class="info-row {_cols_cls}">{_cells}</div>'
+        ) if _n_cells > 0 else ''
 
     # ══════════════════════════════════════════
     # Oui si / Non si + verdict text (monthly only)
