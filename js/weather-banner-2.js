@@ -217,7 +217,7 @@
   }
 
   function o(e) {
-    return e >= 7 ? "var(--green)" : e >= 4 ? "#b8860b" : "#c0392b"
+    return e >= 7 ? "var(--green)" : e >= 4 ? "#7a5500" : "#c0392b"
   }
 
   function l(e) {
@@ -660,7 +660,9 @@
     var e = document.getElementById("inp-city"),
       t = document.getElementById("inp-date");
     if (e && e.value) {
-      var n = document.querySelector(".score-val"),
+      // La classe réelle dans le DOM est #score-num (div avec id), pas .score-val.
+      // Fallback sur #score-num puis .score-num puis .score-val pour robustesse.
+      var n = document.getElementById("score-num") || document.querySelector(".score-num") || document.querySelector(".score-val"),
         a = n ? parseFloat(n.textContent) : 0;
       isNaN(a) && (a = 0);
       var i = e.value.trim(),
