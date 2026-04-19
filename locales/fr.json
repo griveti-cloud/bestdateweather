@@ -350,6 +350,7 @@
     "share_label": "Partager",
     "colon_sep": " : ",
     "best_ski_months_lbl_tpl": "Meilleure{s} période{s} ski",
+    "best_rando_months_lbl_tpl": "Meilleure{s} période{s} rando",
     "plan_bar": "Planifier votre voyage",
     "plan_hotel": "🏨 Hébergement",
     "plan_activ": "🎟️ Activités",
