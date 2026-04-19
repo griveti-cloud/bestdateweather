@@ -350,6 +350,7 @@
     "share_label": "Teilen",
     "colon_sep": ": ",
     "best_ski_months_lbl_tpl": "Beste Ski-Saison",
+    "best_rando_months_lbl_tpl": "Beste Wandersaison",
     "plan_bar": "Reise planen",
     "plan_hotel": "🏨 Unterkunft",
     "plan_activ": "🎟️ Aktivitäten",
@@ -409,7 +410,13 @@
     "dec_budget_4": "Teuer",
     "dec_budget_5": "Sehr teuer",
     "dec_lbl_mer_seche": "Trockenzeit",
-    "dec_lbl_mer_humide": "Regenzeit"
+    "dec_lbl_mer_humide": "Regenzeit",
+    "dec_best_ski_badge": "⛷️ Bestes Ski",
+    "dec_best_rando_badge": "🥾 Beste Wanderung",
+    "dec_also_top_ski_tpl": "Auch top Ski: {month} {score}/10",
+    "dec_also_top_rando_tpl": "Auch top Wandern: {month} {score}/10",
+    "dec_bm_ski": "⛷️ Ski",
+    "dec_bm_rando": "🥾 Wandern"
   },
   "monthly": {
     "hero_tpl": "{name} Wetter im {month}",
@@ -877,7 +884,9 @@
     "methodo_beach": "🏖️ Strand-Score: warmes Meer, wenig Regen, viel Sonne. Nur Küstenziele.",
     "methodo_ski": "⛷️ Ski-Score: Schnee, Kälte und Sonne. Nur Bergresorts.",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropisches Klima: Ganzjährig hohe Hitze und Luftfeuchtigkeit. Unterschiede zwischen den Monaten spiegeln hauptsächlich die Regenhäufigkeit wider.</p>",
-    "tropical_note": "🌴 Tropisches Klima: Ganzjährig hohe Hitze und Luftfeuchtigkeit. Unterschiede zwischen den Monaten spiegeln hauptsächlich die Regenhäufigkeit wider."
+    "tropical_note": "🌴 Tropisches Klima: Ganzjährig hohe Hitze und Luftfeuchtigkeit. Unterschiede zwischen den Monaten spiegeln hauptsächlich die Regenhäufigkeit wider.",
+    "methodo_mountain_max": "🏔️ Berg-Score: Maximum aus Ski und Wandern im Monat. Nur Bergziele.",
+    "methodo_mountain_rando": "🥾 Wander-Score: milde Temperaturen (10–22°C), wenig Regen, Sonne. Nur Bergziele."
   },
   "comp": {
     "th_month": "Monat",
@@ -929,7 +938,7 @@
     "sec_title_ski": "Top {n} Skigebiete im {month}",
     "tab_meteo": "☀️ Allgemeines Wetter",
     "tab_beach": "🏖️ Strand",
-    "tab_ski": "⛷️ Ski",
+    "tab_ski": "🏔️ Berge",
     "th_score_gen": "Score",
     "th_score_beach": "Strand-Score",
     "th_score_ski": "Ski-Score",
@@ -938,7 +947,7 @@
     "no_meteo_msg": "Keine Ziele in dieser Region für diesen Monat.",
     "tab_meteo_annual": "☀️ Allgemeines Wetter",
     "tab_beach_annual": "🏖️ Strand",
-    "tab_ski_annual": "⛷️ Ski",
+    "tab_ski_annual": "🏔️ Berge",
     "th_score_gen_annual": "Jahreswertung",
     "th_score_beach_annual": "Strandwertung",
     "th_score_ski_annual": "Skiwertung",
@@ -966,7 +975,14 @@
     "budget_all": "Alle Budgets",
     "tab_nomad": "💻 Digitale Nomaden",
     "map_href": "../de/karte.html",
-    "map_nav_label": "🗺️ Karte"
+    "map_nav_label": "🗺️ Karte",
+    "tab_mountain_sub_max": "Max",
+    "tab_mountain_sub_ski": "⛷️ Ski",
+    "tab_mountain_sub_rando": "🥾 Wandern",
+    "th_score_mountain_max": "Berg-Score",
+    "th_score_mountain_rando": "Wander-Score",
+    "sec_title_mountain_max": "Top {n} Bergziele im {month}",
+    "sec_title_mountain_rando": "Top {n} Wanderziele im {month}"
   },
   "ranking_footer": {
     "data_by": "Wetterdaten von Open-Meteo.com",

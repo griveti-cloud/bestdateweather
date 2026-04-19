@@ -15,6 +15,25 @@ def load_data():
     for s in climate: climate[s].sort(key=lambda x: int(x['mois_num']))
     with open('data/destinations.csv', encoding='utf-8-sig') as f:
         dests = {r['slug_fr']: r for r in csv.DictReader(f)}
+    # Override score mountain = max(ski_score, hiking_score) pour cohérence
+    # avec les fiches destination (idem decision_card_html). Sinon les widgets
+    # affichent 4.8/10 pour Dolomites (score été classique) au lieu de 9.4.
+    from scoring import compute_ski_score, compute_hiking_score
+    for slug, dest in dests.items():
+        if dest.get('mountain', 'False').strip() != 'True': continue
+        if slug not in climate: continue
+        for row in climate[slug]:
+            try:
+                tmax = float(row.get('tmax') or 0)
+                rain = float(row.get('rain_pct') or 0)
+                sun  = float(row.get('sun_h') or 0)
+                pp   = row.get('precip_mm')
+                pp   = float(pp) if pp not in (None, '', 'None') else None
+                ski_s  = compute_ski_score(tmax, rain, sun)
+                hike_s = compute_hiking_score(tmax, rain, sun, pp)
+                row['score'] = f'{max(ski_s, hike_s):.1f}'
+            except (ValueError, TypeError):
+                pass
     return climate, dests
 
 def sc(s):

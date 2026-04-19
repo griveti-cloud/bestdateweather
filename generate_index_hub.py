@@ -1357,36 +1357,54 @@ def build_top_monthly(lang, loc):
     }.get(lang, 'meilleure-periode-')
 
     # Calculer top 13
+    # Helper : score effectif (mountain → max ski/hike, sinon score climat)
+    def _eff(row, d):
+        try:
+            sc = float(row.get('score') or 0)
+            if d.get('mountain','').strip() == 'True':
+                from scoring import compute_ski_score, compute_hiking_score
+                tmax = float(row.get('tmax') or 0)
+                rain = float(row.get('rain_pct') or 0)
+                sun  = float(row.get('sun_h') or 0)
+                pp   = row.get('precip_mm')
+                pp   = float(pp) if pp not in (None, '', 'None') else None
+                return max(sc, compute_ski_score(tmax, rain, sun),
+                           compute_hiking_score(tmax, rain, sun, pp))
+            return sc
+        except (ValueError, TypeError):
+            return 0.0
+
     scored = []
     for slug, row in climate_month.items():
-        if slug in dest_info and float(row.get('score') or 0) >= 7.5:
-            d = dest_info[slug]
-            try:
-                tmax  = float(row.get('tmax') or 0)
-                rain  = float(row.get('rain_pct') or 0)
-                sun   = float(row.get('sun_h') or 0)
-                score = float(row.get('score') or 0)
-                trop  = d.get('tropical', '') in ('True','true','1')
-                slug_dest = d.get(slug_key, slug)
-                nom = d.get(nom_key) or d.get('nom_fr', slug)
-                if slug_dest:
-                    raw_url = photo_db.get(slug, '')
-                    import re as _re2
-                    photo_url = (_re2.sub(r'\?.*$', '', raw_url) + '?w=300&q=70&fm=webp&fit=crop&crop=entropy') if raw_url else ''
-                    scored.append({
-                        'nom': nom,
-                        'slug_dest': slug_dest,
-                        'score': score,
-                        'tmax': round(tmax),
-                        'rain': round(rain),
-                        'sun': round(sun),
-                        'tropical': trop,
-                        'gradient': _hero_gradient_home(tmax, trop, rain, len(scored)),
-                        'photo_url': photo_url,
-                        'idx': len(scored),
-                        'url': url_prefix + slug_dest + '.html',
-                    })
-            except: pass
+        if slug not in dest_info: continue
+        d = dest_info[slug]
+        score = _eff(row, d)
+        if score < 7.5: continue
+        try:
+            tmax  = float(row.get('tmax') or 0)
+            rain  = float(row.get('rain_pct') or 0)
+            sun   = float(row.get('sun_h') or 0)
+            trop  = d.get('tropical', '') in ('True','true','1')
+            slug_dest = d.get(slug_key, slug)
+            nom = d.get(nom_key) or d.get('nom_fr', slug)
+            if slug_dest:
+                raw_url = photo_db.get(slug, '')
+                import re as _re2
+                photo_url = (_re2.sub(r'\?.*$', '', raw_url) + '?w=300&q=70&fm=webp&fit=crop&crop=entropy') if raw_url else ''
+                scored.append({
+                    'nom': nom,
+                    'slug_dest': slug_dest,
+                    'score': score,
+                    'tmax': round(tmax),
+                    'rain': round(rain),
+                    'sun': round(sun),
+                    'tropical': trop,
+                    'gradient': _hero_gradient_home(tmax, trop, rain, len(scored)),
+                    'photo_url': photo_url,
+                    'idx': len(scored),
+                    'url': url_prefix + slug_dest + '.html',
+                })
+        except: pass
 
     scored.sort(key=lambda x: -x['score'])
     top6 = scored[:13]
@@ -1469,21 +1487,41 @@ def build_rankings_section(lang, loc):
               'Slovaquie','Slovénie','Suède','Suisse','Tchéquie','Turquie','Ukraine','Royaume-Uni'}
     COASTAL = {'True','true','1'}
 
+    # Helper : score mensuel effectif (mountain → max(ski, hike), sinon score climat)
+    def _eff_score(slug, m_num):
+        row = climate_all.get(slug, {}).get(m_num, {})
+        if not row: return 0.0
+        d = dest_info.get(slug, {})
+        if d.get('mountain','').strip() == 'True':
+            try:
+                from scoring import compute_ski_score, compute_hiking_score
+                tmax = float(row.get('tmax') or 0)
+                rain = float(row.get('rain_pct') or 0)
+                sun  = float(row.get('sun_h') or 0)
+                pp   = row.get('precip_mm')
+                pp   = float(pp) if pp not in (None, '', 'None') else None
+                return max(compute_ski_score(tmax, rain, sun),
+                           compute_hiking_score(tmax, rain, sun, pp))
+            except (ValueError, TypeError):
+                pass
+        return float(row.get('score', 0) or 0)
+
     def _avg_score(slug):
         ms = climate_all.get(slug, {})
         if len(ms) < 12: return 0
-        return sum(float(ms[m].get('score',0)) for m in range(1,13)) / 12
+        return sum(_eff_score(slug, m) for m in range(1,13)) / 12
 
     def _summer_score(slug):
         ms = climate_all.get(slug, {})
         if not all(m in ms for m in [6,7,8]): return 0
-        return sum(float(ms[m].get('score',0)) for m in [6,7,8]) / 3
+        return sum(_eff_score(slug, m) for m in [6,7,8]) / 3
 
     def _beach_score(slug):
         ms = climate_all.get(slug, {})
         if len(ms) < 12: return 0
         d = dest_info.get(slug, {})
         if d.get('coastal','') not in COASTAL: return 0
+        # Beach score : toujours score climat (une plage n'a rien à voir avec ski/rando)
         return sum(float(ms[m].get('score',0)) for m in range(1,13)) / 12
 
     def _top(scorer, n=12, europe_only=False):

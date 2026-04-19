@@ -592,34 +592,55 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     best_tmax  = best_m['tmax']
     is_mountain = dest.get('mountain', 'False').strip() == 'True'
     is_coastal  = dest.get('coastal', 'False').strip().lower() in ('true', '1', 'yes')
-    # Pour les stations de ski : recalculer les scores saisons avec le score ski
+    # Variables mountain (populées si is_mountain, utilisées plus bas)
+    ski_scores = None
+    hike_scores = None
+    best_ski_idx = None
+    best_ski_score = None
+    # ═══════════════════════════════════════════════════════════════════
+    # DESTINATIONS MOUNTAIN : override score/classe/best avec max(ski, hike)
+    # Résout le paradoxe "Dolomites Juillet 4.8 BEST SCORE" du score été
+    # classique qui pénalise tort les montagnes (algo calibré 22-28°C).
+    # ═══════════════════════════════════════════════════════════════════
     if is_mountain:
-        from scoring import compute_ski_score as _csk
+        from scoring import compute_ski_score, compute_hiking_score
+        ski_scores = [compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h']) for m in months]
+        _precip = lambda m: (float(m.get('precip_mm')) if m.get('precip_mm') not in (None, '', 'None') else None)
+        hike_scores = [compute_hiking_score(m['tmax'], m['rain_pct'], m['sun_h'], _precip(m)) for m in months]
+        # Score mountain = max(ski, hike) pour chaque mois
+        for i, m in enumerate(months):
+            _mtn = max(ski_scores[i], hike_scores[i])
+            m['_score_original'] = m.get('score')  # backup (debug éventuel)
+            m['_classe_original'] = m.get('classe')
+            m['score'] = _mtn
+            if _mtn >= 7.0:   m['classe'] = 'rec'
+            elif _mtn >= 5.0: m['classe'] = 'mid'
+            else:              m['classe'] = 'avoid'
+        # Recalculer best_* sur le score mountain
+        best_score = max(m['score'] for m in months)
+        best_idx   = next(i for i, m in enumerate(months) if m['score'] == best_score)
+        best_m     = months[best_idx]
+        best_rain  = best_m['rain_pct']
+        best_tmax  = best_m['tmax']
+        all_scores = [m['score'] for m in months]
+        # Top-2 mois mountain (ordre chronologique) pour hero "Meilleures périodes"
+        mtn_top2_idx = sorted(sorted(range(12), key=lambda i: months[i]['score'], reverse=True)[:2])
+        bests     = [MONTHS[i] for i in mtn_top2_idx]
+        best_str  = ' & '.join(bests)
+        # Best ski month (pour templates titre/FAQ et hero-subs-ski)
+        best_ski_idx   = max(range(12), key=lambda i: ski_scores[i])
+        best_ski_score = ski_scores[best_ski_idx]
+        # Saisons : score ski (comportement existant conservé)
         _season_idxs = C['locale'].get('season_months', {})
         for _sname, _sidxs in _season_idxs.items():
             _ski_ms = [months[i] for i in _sidxs]
-            _ski_sc = [_csk(m['tmax'], m['rain_pct'], m['sun_h']) for m in _ski_ms]
+            _ski_sc = [compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h']) for m in _ski_ms]
             _avg_ski = round(sum(_ski_sc) / len(_ski_sc), 1)
             seas[_sname]['score'] = _avg_ski
             if _avg_ski >= 8.5:   seas[_sname]['verdict'] = C['locale'].get('verdict_excellent', 'Excellent')
             elif _avg_ski >= 7.0: seas[_sname]['verdict'] = C['locale'].get('verdict_good', 'Bonne période')
             elif _avg_ski >= 5.5: seas[_sname]['verdict'] = C['locale'].get('verdict_fair', 'Période acceptable')
             else:                 seas[_sname]['verdict'] = C['locale'].get('verdict_poor', 'Conditions marquées')
-    # Best ski month for mountain destinations
-    if is_mountain:
-        from scoring import compute_ski_score
-        ski_scores = [compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h']) for m in months]
-        best_ski_idx   = max(range(12), key=lambda i: ski_scores[i])
-        best_ski_score = ski_scores[best_ski_idx]
-        # Override hero KPIs : top-2 mois ski (ordre chronologique)
-        ski_top2_idx = sorted(
-            sorted(range(12), key=lambda i: ski_scores[i], reverse=True)[:2]
-        )
-        bests     = [MONTHS[i] for i in ski_top2_idx]
-        best_str  = ' & '.join(bests)
-        best_m    = months[best_ski_idx]
-        best_tmax = best_m['tmax']
-        best_rain = best_m['rain_pct']
     worst_idx   = min(range(12), key=lambda i: months[i]['score'])
     worst_rain  = months[worst_idx]['rain_pct']
     wettest_idx = max(range(12), key=lambda i: months[i]['rain_pct'])
@@ -1282,9 +1303,15 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     }, ensure_ascii=False)
 
     # ── Hero stats ──
-    if is_mountain and C.get('lbl_best_ski_months_lbl_tpl'):
-        _ski_lbl = C['lbl_best_ski_months_lbl_tpl']
-        best_months_lbl = _ski_lbl.replace('{s}', 's' if len(bests) > 1 else '').replace('{es}', 'es' if len(bests) > 1 else '')
+    if is_mountain:
+        # Label dynamique : ski si le pic mountain est dominé par ski, sinon rando
+        # Comparer au mois best_idx uniquement (le pic), pas la moyenne annuelle
+        _s_at_best = ski_scores[best_idx] if ski_scores else 0
+        _h_at_best = hike_scores[best_idx] if hike_scores else 0
+        _use_ski_label = _s_at_best >= _h_at_best
+        _tpl_key = 'lbl_best_ski_months_lbl_tpl' if _use_ski_label else 'lbl_best_rando_months_lbl_tpl'
+        _mtn_lbl = C.get(_tpl_key) or C.get('lbl_best_ski_months_lbl_tpl', 'Best period{s}')
+        best_months_lbl = _mtn_lbl.replace('{s}', 's' if len(bests) > 1 else '').replace('{es}', 'es' if len(bests) > 1 else '')
     elif len(bests) > 1:
         best_months_lbl = C['lbl_best_months_lbl_tpl'].replace('{s}', 's').replace('{es}', 'es')
     else:
@@ -2506,6 +2533,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 .info-row{{display:grid;border-bottom:1px solid var(--cream2);}}
 .info-row.cols-5{{grid-template-columns:repeat(5,1fr);}}
 .info-row.cols-4{{grid-template-columns:repeat(4,1fr);}}
+.info-row.cols-3{{grid-template-columns:repeat(3,1fr);}}
+.info-row.cols-2{{grid-template-columns:repeat(2,1fr);}}
+.info-row.cols-1{{grid-template-columns:1fr;}}
 .info-cell{{padding:15px 10px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;border-right:1px solid var(--cream2);transition:background .15s;}}
 .info-cell:last-child{{border-right:none;}}
 .info-cell:hover{{background:#fdfcf9;}}

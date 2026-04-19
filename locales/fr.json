@@ -350,6 +350,7 @@
     "share_label": "Partager",
     "colon_sep": " : ",
     "best_ski_months_lbl_tpl": "Meilleure{s} période{s} ski",
+    "best_rando_months_lbl_tpl": "Meilleure{s} période{s} rando",
     "plan_bar": "Planifier votre voyage",
     "plan_hotel": "🏨 Hébergement",
     "plan_activ": "🎟️ Activités",
@@ -409,7 +410,13 @@
     "dec_budget_4": "Coûteux",
     "dec_budget_5": "Très coûteux",
     "dec_lbl_mer_seche": "Saison sèche",
-    "dec_lbl_mer_humide": "Saison humide"
+    "dec_lbl_mer_humide": "Saison humide",
+    "dec_best_ski_badge": "⛷️ Meilleur ski",
+    "dec_best_rando_badge": "🥾 Meilleure rando",
+    "dec_also_top_ski_tpl": "Aussi top ski : {month} {score}/10",
+    "dec_also_top_rando_tpl": "Aussi top rando : {month} {score}/10",
+    "dec_bm_ski": "⛷️ Ski",
+    "dec_bm_rando": "🥾 Rando"
   },
   "monthly": {
     "hero_tpl": "Météo {name} en {month_lc}",
@@ -872,7 +879,9 @@
     "methodo_beach": "🏖️ Score plage : mer chaude, faible pluie et fort ensoleillement. Destinations côtières uniquement.",
     "methodo_ski": "⛷️ Score ski : enneigement, froid et ensoleillement. Stations de montagne uniquement.",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Climat tropical : chaleur et humidité élevées toute l'année. Les différences entre mois reflètent principalement la fréquence des pluies.</p>",
-    "tropical_note": "🌴 Climat tropical : chaleur et humidité élevées toute l'année. Les différences entre mois reflètent principalement la fréquence des pluies."
+    "tropical_note": "🌴 Climat tropical : chaleur et humidité élevées toute l'année. Les différences entre mois reflètent principalement la fréquence des pluies.",
+    "methodo_mountain_max": "🏔️ Score montagne : maximum entre ski et randonnée selon le mois. Seules les destinations de montagne apparaissent.",
+    "methodo_mountain_rando": "🥾 Score randonnée : température douce (10–22°C), absence de pluie, ensoleillement. Destinations de montagne uniquement."
   },
   "comp": {
     "th_month": "Mois",
@@ -924,7 +933,7 @@
     "sec_title_ski": "Top {n} stations ski en {month}",
     "tab_meteo": "☀️ Météo générale",
     "tab_beach": "🏖️ Plage",
-    "tab_ski": "⛷️ Ski",
+    "tab_ski": "🏔️ Montagne",
     "th_score_gen": "Score",
     "th_score_beach": "Score plage",
     "th_score_ski": "Score ski",
@@ -933,7 +942,7 @@
     "no_meteo_msg": "Aucune destination dans cette région pour ce mois.",
     "tab_meteo_annual": "☀️ Météo générale",
     "tab_beach_annual": "🏖️ Plage",
-    "tab_ski_annual": "⛷️ Ski",
+    "tab_ski_annual": "🏔️ Montagne",
     "th_score_gen_annual": "Score annuel",
     "th_score_beach_annual": "Score plage",
     "th_score_ski_annual": "Score ski",
@@ -961,7 +970,14 @@
     "budget_all": "Tous budgets",
     "tab_nomad": "💻 Nomades",
     "map_href": "carte.html",
-    "map_nav_label": "🗺️ Carte"
+    "map_nav_label": "🗺️ Carte",
+    "tab_mountain_sub_max": "Max",
+    "tab_mountain_sub_ski": "⛷️ Ski",
+    "tab_mountain_sub_rando": "🥾 Rando",
+    "th_score_mountain_max": "Score montagne",
+    "th_score_mountain_rando": "Score rando",
+    "sec_title_mountain_max": "Top {n} destinations montagne en {month}",
+    "sec_title_mountain_rando": "Top {n} destinations rando en {month}"
   },
   "ranking_footer": {
     "data_by": "Données météo par Open-Meteo.com",

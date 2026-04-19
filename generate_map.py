@@ -4,7 +4,7 @@
 import json
 import csv
 from pathlib import Path
-from scoring import compute_ski_score, profile_score
+from scoring import compute_ski_score, compute_hiking_score, profile_score
 from generate_piliers import load_destinations, load_climate, load_country_info
 from generate_classements import compute_nomad
 from lib.common import profile_translations
@@ -65,13 +65,17 @@ def build_map_data():
             try:
                 tmax = float(row['tmax']); rain = float(row['rain_pct']); sun = float(row['sun_h'])
                 dew  = float(row['dew_point_mean']) if row.get('dew_point_mean','').strip() else None
+                pp   = row.get('precip_mm')
+                try: pp = float(pp) if pp not in (None,'','None') else None
+                except: pp = None
                 s    = round(float(row['score']), 1)
                 b    = round(float(row['beach_score']), 1) if row.get('beach_score','').strip() else None
                 k    = round(compute_ski_score(tmax, rain, sun), 1)
+                hk   = round(compute_hiking_score(tmax, rain, sun, pp), 1)
                 sc   = round(profile_score(tmax, rain, sun, dew, 'cool') * 10, 1)
                 sw   = round(profile_score(tmax, rain, sun, dew, 'warm') * 10, 1)
                 sh   = round(profile_score(tmax, rain, sun, dew, 'humid') * 10, 1)
-                climate[slug][mi] = [s, b, k, sc, sw, sh]
+                climate[slug][mi] = [s, b, k, sc, sw, sh, hk]
             except: climate[slug][mi] = None
 
     def avg(lst): return round(sum(lst)/len(lst), 1) if lst else None
@@ -90,6 +94,7 @@ def build_map_data():
             avg([m[4] for m in months if m and m[4]]),
             avg([m[5] for m in months if m and m[5]]),
             nd,
+            avg([m[6] for m in months if m and len(m)>6 and m[6]]),
         ]
         best_mi = max(range(12), key=lambda i: (months[i] or [0])[0])
         points.append([d['slug_en'], d['n'], d['lat'], d['lon'],
@@ -164,6 +169,9 @@ def generate_map_page(lang, map_data_js, world_json, clabels_json, clabels_by_la
     tab_beach = pil.get('tab_beach_annual', '🏖️ Beach')
     tab_ski   = pil.get('tab_ski_annual',   '⛷️ Ski')
     tab_nomad = pil.get('tab_nomad',        '💻 Digital Nomad')
+    mtn_sub_max = pil.get('tab_mountain_sub_max', 'Max')
+    mtn_sub_ski = pil.get('tab_mountain_sub_ski', '⛷️ Ski')
+    mtn_sub_rando = pil.get('tab_mountain_sub_rando', '🥾 Rando')
     sl = pil.get('secu_labels', {'1':'🟢','2':'🟡','3':'🟠','4':'🔴'})
     bl = pil.get('budget_labels', {'1':'💚','2':'💛','3':'🟡','4':'🟠','5':'🔴'})
     secu_all   = pil.get('secu_all', 'All destinations')
@@ -354,6 +362,15 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
     </div>
   </div>
   <div class="fsep"></div>
+  <div class="dd" id="dd-mtn-sub" style="display:none">
+    <button class="dd-btn" id="dd-mtn-sub-btn" onclick="event.stopPropagation();openDD('mtn-sub')">{mtn_sub_max} <span class="dd-arr">▾</span></button>
+    <div class="dd-menu" id="dd-mtn-sub-menu">
+      <div class="dd-item on" data-mtn-sub="max" onclick="event.stopPropagation();pickMtnSub(this.dataset.mtnSub,this.dataset.label)" data-label="{mtn_sub_max}">{mtn_sub_max}</div>
+      <div class="dd-item" data-mtn-sub="ski" onclick="event.stopPropagation();pickMtnSub(this.dataset.mtnSub,this.dataset.label)" data-label="{mtn_sub_ski}">{mtn_sub_ski}</div>
+      <div class="dd-item" data-mtn-sub="rando" onclick="event.stopPropagation();pickMtnSub(this.dataset.mtnSub,this.dataset.label)" data-label="{mtn_sub_rando}">{mtn_sub_rando}</div>
+    </div>
+  </div>
+  <div class="fsep"></div>
   <div class="dd" id="dd-prof">
     <button class="dd-btn" id="dd-prof-btn" onclick="event.stopPropagation();openDD('prof')">{pl['bal']} <span class="dd-arr">▾</span></button>
     <div class="dd-menu dd-menu-profile" id="dd-prof-menu">
@@ -405,7 +422,7 @@ var FP_BUDGET={json.dumps(fp_budget)};
 var SECU_LABELS={secu_labels_js};
 var BUDGET_LABELS={budget_labels_js};
 var CUR_M=12; // Annual par défaut
-var CUR_MODE='gen',CUR_PROF='bal',CUR_RL=4,CUR_BI=5,CUR_MIN=0;
+var CUR_MODE='gen',CUR_PROF='bal',CUR_RL=4,CUR_BI=5,CUR_MIN=0,CUR_MTN_SUB='max';
 
 document.getElementById('dd-m-btn').innerHTML=MF_ANNUAL+' <span class="dd-arr">▾</span>';document.getElementById('dd-m-btn').classList.add('sel');
 document.querySelectorAll('#dd-m-menu .dd-item').forEach(function(el,i){{el.classList.toggle('on',i===CUR_M+1);}});
@@ -420,7 +437,15 @@ function getScore(d,mi){{
   if(mi===12){{m=d[9]||null;}}else{{m=(d[8]||[])[mi];}}
   if(!m)return null;
   if(CUR_MODE==='beach')return m[1];
-  if(CUR_MODE==='ski')return m[2];
+  if(CUR_MODE==='ski'){{
+    // Mode Montagne : sous-toggle max/ski/rando
+    var k=m[2], hk=(mi===12?(m[7]||null):(m.length>6?m[6]:null));
+    if(CUR_MTN_SUB==='ski')return k;
+    if(CUR_MTN_SUB==='rando')return hk;
+    // max
+    if(k!=null && hk!=null)return Math.max(k, hk);
+    return k!=null?k:hk;
+  }}
   if(CUR_PROF==='cool')return m[3];
   if(CUR_PROF==='warm')return m[4];
   if(CUR_PROF==='hum')return m[5];
@@ -498,12 +523,20 @@ function pickMode(mode,label){{
   // Ski + Nomad : masquer Profil (incompatible avec scores spécialisés)
   var profEl=document.getElementById('dd-prof');
   if(profEl){{profEl.style.display=(isNomad||isSki)?'none':'';profEl.style.pointerEvents=(isNomad||isSki)?'none':'';}}
+  // Ski : afficher dd-mtn-sub (sous-toggle Max/Ski/Rando)
+  var mtnSubEl=document.getElementById('dd-mtn-sub');
+  if(mtnSubEl){{mtnSubEl.style.display=isSki?'':'none';mtnSubEl.style.pointerEvents=isSki?'':'none';}}
   // Séparateurs : en nomad aucun (seul dd-mode visible) ; en ski seul le 1er (entre dd-m et dd-mode) ; sinon tous
   document.querySelectorAll('.fbar .fsep').forEach(function(el,i){{
     if(isNomad) el.style.display='none';
-    else if(isSki) el.style.display=(i===0)?'':'none';
-    else el.style.display='';
+    else if(isSki) el.style.display=(i===0||i===1)?'':'none';
+    else el.style.display=(i===1)?'none':'';
   }} );
+  closeDD();render();
+}}
+function pickMtnSub(sub,label){{
+  CUR_MTN_SUB=sub;setBtn('mtn-sub',label,sub!=='max');
+  document.querySelectorAll('#dd-mtn-sub-menu .dd-item').forEach(function(el){{el.classList.toggle('on',el.dataset.mtnSub===sub);}});
   closeDD();render();
 }}
 function pickProf(prof,label){{CUR_PROF=prof;setBtn('prof',label,prof!=='bal');document.querySelectorAll('#dd-prof-menu .dd-item').forEach(function(el){{el.classList.toggle('on',el.dataset.prof===prof);}});closeDD();render();}}
@@ -540,7 +573,25 @@ function render(){{
     mk.bindTooltip(getName(d),{{permanent:false,direction:'right',offset:[sz/2+2,0],className:'dest-label',opacity:1}});
     map.on('zoomend',function(){{if(map.getZoom()>=5){{mk.bindTooltip(getName(d),{{permanent:true,direction:'right',offset:[sz/2+2,0],className:'dest-label',opacity:1}});}}else{{mk.unbindTooltip();}}}});
     mk.on('click',function(){{
-      var bars=(d[8]||[]).map(function(ms,i){{var h=ms?Math.round(((ms[0]||0)/10)*100):0;var c=ms?scoreColor(ms[0]):'#333';var lbl=MS[i]?MS[i][0]:'';return '<div class="pi-col"><div class="pi-bar-wrap"><div class="pi-bar'+(i===CUR_M?' cur':'')+'\" style="height:'+h+'%;background:'+c+'"></div></div><span style="font-size:6px;color:#64748b;line-height:1">'+lbl+'</span></div>';}}).join('');
+      var bars=(d[8]||[]).map(function(ms,i){{
+        if(!ms){{return '<div class="pi-col"><div class="pi-bar-wrap"><div class="pi-bar" style="height:0;background:#333"></div></div><span style="font-size:6px;color:#64748b;line-height:1">'+(MS[i]?MS[i][0]:'')+'</span></div>';}}
+        var sv;
+        if(CUR_MODE==='beach')sv=ms[1];
+        else if(CUR_MODE==='ski'){{
+          var k=ms[2], hk=ms.length>6?ms[6]:null;
+          if(CUR_MTN_SUB==='ski')sv=k;
+          else if(CUR_MTN_SUB==='rando')sv=hk;
+          else sv=(k!=null&&hk!=null)?Math.max(k,hk):(k!=null?k:hk);
+        }}
+        else if(CUR_PROF==='cool')sv=ms[3];
+        else if(CUR_PROF==='warm')sv=ms[4];
+        else if(CUR_PROF==='hum')sv=ms[5];
+        else sv=ms[0];
+        var h=Math.round(((sv||0)/10)*100);
+        var c=sv!=null?scoreColor(sv):'#333';
+        var lbl=MS[i]?MS[i][0]:'';
+        return '<div class="pi-col"><div class="pi-bar-wrap"><div class="pi-bar'+(i===CUR_M?' cur':'')+'\" style="height:'+h+'%;background:'+c+'"></div></div><span style="font-size:6px;color:#64748b;line-height:1">'+lbl+'</span></div>';
+      }}).join('');
       L.popup({{maxWidth:200}}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+getName(d)+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="{ap}en/best-time-to-visit-'+(d[0]||'')+'.html" class="pi-link">{m['cta']}</a></div>').openOn(map);
     }});
     mk.addTo(layer);

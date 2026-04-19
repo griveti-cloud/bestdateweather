@@ -1363,25 +1363,136 @@ def decision_card_html(dest, months, mi_best, C, nom,
             f'<div class="month-strip">{month_cells}</div>'
         )
 
-        # Best months (rec class, sorted by score desc, top 4)
-        rec_months = sorted(
-            [(i, float(months[i].get('score',0))) for i in range(12) if months[i].get('classe')=='rec'],
-            key=lambda x: -x[1]
-        )[:4]
+        # Best months : mountain → 2 lignes (ski / rando), sinon → 1 ligne
         avoid_months = sorted(
             [(i, float(months[i].get('score',0))) for i in range(12) if months[i].get('classe')=='avoid'],
             key=lambda x: x[1]
         )[:3]
-
-        best_pills = ''.join(f'<span class="bm-pill">{short_months[i]}</span>' for i,_ in rec_months)
         avoid_pills = ''.join(f'<span class="bm-pill bm-avoid">{short_months[i]}</span>' for i,_ in avoid_months) or '<span class="bm-pill bm-avoid">—</span>'
 
-        best_avoid_strip = (
-            f'<div class="best-months">'
-            f'<span class="bm-lbl">{ideal_lbl}</span>{best_pills}'
-            f'<span class="bm-lbl" style="margin-left:8px">{eviter_lbl}</span>{avoid_pills}'
-            f'</div>'
-        )
+        if is_mountain:
+            # Classer chaque mois selon dominance ski vs rando (seuil viable 4.0)
+            from scoring import compute_hiking_score as _chk_c
+            def _pp_c(mm):
+                v = mm.get('precip_mm')
+                return float(v) if v not in (None, '', 'None') else None
+            _ski_c = [compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0))) for i in range(12)]
+            _hike_c = [_chk_c(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)), _pp_c(months[i])) for i in range(12)]
+            _ski_bucket = []
+            _hike_bucket = []
+            for i in range(12):
+                s, h = _ski_c[i], _hike_c[i]
+                if max(s, h) < 4.0: continue
+                if s >= h: _ski_bucket.append((i, s))
+                else:      _hike_bucket.append((i, h))
+            _ski_bucket.sort(key=lambda x: -x[1])
+            _hike_bucket.sort(key=lambda x: -x[1])
+            _ski_bucket = _ski_bucket[:4]
+            _hike_bucket = _hike_bucket[:4]
+
+            _ski_pills = ''.join(f'<span class="bm-pill">{short_months[i]}</span>' for i,_ in _ski_bucket)
+            _hike_pills = ''.join(f'<span class="bm-pill">{short_months[i]}</span>' for i,_ in _hike_bucket)
+
+            _ski_label = L.get('lbl_dec_bm_ski', '⛷️ Ski')
+            _hike_label = L.get('lbl_dec_bm_rando', '🥾 Rando')
+
+            _lines = []
+            # 2 lignes si les 2 buckets ont des mois, sinon 1 seule ligne sans emoji (repli)
+            if _ski_bucket and _hike_bucket:
+                _lines.append(
+                    f'<div class="best-months">'
+                    f'<span class="bm-lbl">{_ski_label}</span>{_ski_pills}'
+                    f'</div>'
+                )
+                _lines.append(
+                    f'<div class="best-months" style="margin-top:6px">'
+                    f'<span class="bm-lbl">{_hike_label}</span>{_hike_pills}'
+                    f'</div>'
+                )
+            elif _ski_bucket:
+                _lines.append(
+                    f'<div class="best-months">'
+                    f'<span class="bm-lbl">{ideal_lbl}</span>{_ski_pills}'
+                    f'</div>'
+                )
+            elif _hike_bucket:
+                _lines.append(
+                    f'<div class="best-months">'
+                    f'<span class="bm-lbl">{ideal_lbl}</span>{_hike_pills}'
+                    f'</div>'
+                )
+            # Ligne avoid ajoutée au bloc (séparée)
+            if avoid_months:
+                _lines.append(
+                    f'<div class="best-months" style="margin-top:6px">'
+                    f'<span class="bm-lbl">{eviter_lbl}</span>{avoid_pills}'
+                    f'</div>'
+                )
+            best_avoid_strip = ''.join(_lines)
+        else:
+            # Comportement standard non-mountain : 1 ligne Idéal + 1 section Éviter
+            rec_months = sorted(
+                [(i, float(months[i].get('score',0))) for i in range(12) if months[i].get('classe')=='rec'],
+                key=lambda x: -x[1]
+            )[:4]
+            best_pills = ''.join(f'<span class="bm-pill">{short_months[i]}</span>' for i,_ in rec_months)
+            best_avoid_strip = (
+                f'<div class="best-months">'
+                f'<span class="bm-lbl">{ideal_lbl}</span>{best_pills}'
+                f'<span class="bm-lbl" style="margin-left:8px">{eviter_lbl}</span>{avoid_pills}'
+                f'</div>'
+            )
+
+    # ══════════════════════════════════════════
+    # MOUNTAIN : badge contextuel (⛷️ ski / 🥾 rando) + pill secondaire
+    # ══════════════════════════════════════════
+    _mtn_badge_override = ''
+    _mtn_secondary_pill = ''
+    if is_mountain and not is_monthly:
+        # Scores au mois pic pour détecter dominance ski vs rando
+        _pp_best = float(m.get('precip_mm') or 0) or None
+        _ski_at_best = compute_ski_score(float(m.get('tmax',0)), float(m.get('rain_pct',0)), float(m.get('sun_h',0)))
+        # compute_hiking_score importé au top de la fonction decision_card_html
+        from scoring import compute_hiking_score as _chk_d
+        _hike_at_best = _chk_d(float(m.get('tmax',0)), float(m.get('rain_pct',0)), float(m.get('sun_h',0)), _pp_best)
+        _is_ski_dominant = _ski_at_best >= _hike_at_best
+
+        if _is_ski_dominant:
+            _mtn_badge_override = L.get('lbl_dec_best_ski_badge', '⛷️ Best ski')
+        else:
+            _mtn_badge_override = L.get('lbl_dec_best_rando_badge', '🥾 Best hiking')
+
+        # Pic de l'autre use case : tous les mois de l'année
+        def _pp(mm):
+            v = mm.get('precip_mm')
+            return float(v) if v not in (None, '', 'None') else None
+        _all_ski = [compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0))) for i in range(12)]
+        _all_hike = [_chk_d(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)), _pp(months[i])) for i in range(12)]
+
+        if _is_ski_dominant:
+            _sec_idx = max(range(12), key=lambda i: _all_hike[i])
+            _sec_score = _all_hike[_sec_idx]
+            _sec_emoji = '🥾'
+            _sec_tpl_key = 'lbl_dec_also_top_rando_tpl'
+        else:
+            _sec_idx = max(range(12), key=lambda i: _all_ski[i])
+            _sec_score = _all_ski[_sec_idx]
+            _sec_emoji = '⛷️'
+            _sec_tpl_key = 'lbl_dec_also_top_ski_tpl'
+
+        # Afficher pill secondaire seulement si score >= 4.0 (seuil viabilité)
+        if _sec_score >= 4.0:
+            _sec_month = months_names[_sec_idx][:3]
+            _sec_tpl = L.get(_sec_tpl_key, 'Also top: {month} {score}/10')
+            _sec_txt = _sec_tpl.format(month=_sec_month, score=f'{_sec_score:.1f}')
+            _mtn_secondary_pill = (
+                f'<div style="padding:10px 20px;background:#f0f4f8;border-top:1px solid #e6ecf2;'
+                f'border-bottom:1px solid #e6ecf2;font-size:12px;color:#475569;font-weight:500;'
+                f'display:flex;align-items:center;gap:6px">'
+                f'<span style="font-size:14px">{_sec_emoji}</span>'
+                f'<span>{_sec_txt}</span>'
+                f'</div>'
+            )
 
     # ══════════════════════════════════════════
     # ROW 1 : Météo
@@ -1538,12 +1649,18 @@ def decision_card_html(dest, months, mi_best, C, nom,
             )
 
     elif is_mountain:
+        from scoring import compute_hiking_score
         # Ski scores: find best ski month + rando month + season
         ski_scores = [(i, compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)))) for i in range(12)]
         best_ski = max(ski_scores, key=lambda x: x[1])
-        # Rando = warmest month with score > 5
-        rando_months = [(i,s) for i,s in ski_scores if float(months[i].get('tmax',0)) > 8 and s < 5.5]
-        best_rando = max(rando_months, key=lambda x: float(months[x[0]].get('score',0))) if rando_months else None
+        # Hiking scores (algo dédié randonnée : optimum 10-22°C, pondération pluie renforcée)
+        _precip = lambda m: (float(m.get('precip_mm')) if m.get('precip_mm') not in (None, '', 'None') else None)
+        hike_scores = [(i, compute_hiking_score(
+                            float(months[i].get('tmax',0)),
+                            float(months[i].get('rain_pct',0)),
+                            float(months[i].get('sun_h',0)),
+                            _precip(months[i]))) for i in range(12)]
+        best_hike = max(hike_scores, key=lambda x: x[1])
         # Ski season = consecutive months with ski > 5.5
         ski_season = [months_names[i][:3] for i,s in ski_scores if s >= 5.5]
         ski_season_str = f"{ski_season[0]}–{ski_season[-1]}" if len(ski_season) >= 2 else (ski_season[0] if ski_season else '—')
@@ -1552,26 +1669,26 @@ def decision_card_html(dest, months, mi_best, C, nom,
         ski_bar = round(best_ski[1] / 10 * 100)
 
         rando_cell = ''
-        if best_rando:
-            ri, rs = best_rando
-            rando_name = months_names[ri][:3]
-            rando_climate_score = float(months[ri].get('score', 0))
-            rando_bar = round(rando_climate_score / 10 * 100)
+        if best_hike[1] >= 4.0:
+            rando_name = months_names[best_hike[0]][:3]
+            rando_score = best_hike[1]
+            rando_bar = round(rando_score / 10 * 100)
             rando_cell = (
                 f'<div class="info-cell">'
-                f'<div class="ic-ico">🏔️</div>'
+                f'<div class="ic-ico">🥾</div>'
                 f'<div class="ic-val" style="color:#16a34a;font-size:15px;font-weight:900">'
-                f'{rando_climate_score:.1f}<span style="font-size:10px;opacity:.5">/10</span></div>'
+                f'{rando_score:.1f}<span style="font-size:10px;opacity:.5">/10</span></div>'
                 f'<div class="mb"><div class="mf bs" style="width:{rando_bar}%"></div></div>'
                 f'<div class="ic-lbl">{rando_name} · {L.get("lbl_dec_lbl_randonnee","Rando")}</div>'
                 f'</div>'
             )
 
-        row3 = (
-            f'<div class="rd"><div class="rdl"></div>'
-            f'<div class="rdt">{row_ski}</div>'
-            f'<div class="rdl"></div></div>'
-            f'<div class="info-row cols-4">'
+        # Seuils de viabilité pour afficher chaque cellule
+        ski_viable = best_ski[1] >= 4.0
+        hike_viable = best_hike[1] >= 4.0
+
+        # Construction des cellules selon viabilité
+        _ski_cell = (
             f'<div class="info-cell">'
             f'<div class="ic-ico">⛷️</div>'
             f'<div class="ic-val" style="color:#0369a1;font-size:15px;font-weight:900">'
@@ -1579,15 +1696,30 @@ def decision_card_html(dest, months, mi_best, C, nom,
             f'<div class="mb"><div class="mf bsk" style="width:{ski_bar}%"></div></div>'
             f'<div class="ic-lbl">{best_ski_name} · {L.get("lbl_dec_lbl_ski_best","Best")}</div>'
             f'</div>'
-            f'{rando_cell}'
+        ) if ski_viable else ''
+
+        _season_cell = (
             f'<div class="info-cell">'
             f'<div class="ic-ico">📅</div>'
             f'<div class="ic-val" style="font-size:11px">{ski_season_str}</div>'
             f'<div class="ic-sub">{L.get("lbl_dec_lbl_ski_saison","Saison")} ski</div>'
             f'<div class="ic-lbl">{L.get("lbl_dec_lbl_ski_saison","Saison")}</div>'
             f'</div>'
-            f'</div>'
-        )
+        ) if ski_viable else ''
+
+        _rando_cell_safe = rando_cell if hike_viable else ''
+
+        # Compter cellules actives pour choisir cols-N
+        _cells = ''.join([_ski_cell, _rando_cell_safe, _season_cell])
+        _n_cells = sum(1 for c in [_ski_cell, _rando_cell_safe, _season_cell] if c)
+        _cols_cls = f'cols-{min(_n_cells, 4)}'
+
+        row3 = (
+            f'<div class="rd"><div class="rdl"></div>'
+            f'<div class="rdt">{row_ski}</div>'
+            f'<div class="rdl"></div></div>'
+            f'<div class="info-row {_cols_cls}">{_cells}</div>'
+        ) if _n_cells > 0 else ''
 
     # ══════════════════════════════════════════
     # Oui si / Non si + verdict text (monthly only)
@@ -1679,13 +1811,35 @@ def decision_card_html(dest, months, mi_best, C, nom,
         key=lambda x: x[1]
     )[:3]
 
-    _best_pills_hero = ''.join(
-        (''
-        f'<span style="font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;'
-        + ('background:rgba(34,197,94,.22);color:#166534;border:1px solid #16a34a;outline:2px solid #f59e0b;outline-offset:1px;' if i==mi_best else 'background:rgba(34,197,94,.15);color:#166534;border:1px solid rgba(34,197,94,.3);')
-        + f'">{_short[i]}{"+" if i==mi_best else ""}</span>')
-        for i,_ in _rec_idxs
-    ) if not is_monthly else ''
+    # Style factorisé pour les pills
+    def _pill_rec(i, is_best=False):
+        bg_outline = ('background:rgba(34,197,94,.22);color:#166534;border:1px solid #16a34a;outline:2px solid #f59e0b;outline-offset:1px;'
+                      if is_best else 'background:rgba(34,197,94,.15);color:#166534;border:1px solid rgba(34,197,94,.3);')
+        suffix = '+' if is_best else ''
+        return (f'<span style="font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;'
+                f'{bg_outline}">{_short[i]}{suffix}</span>')
+
+    # Mode mountain : 2 buckets ski/rando (ou 1 si monotype)
+    _mtn_ski_bucket = []
+    _mtn_hike_bucket = []
+    if is_mountain and not is_monthly:
+        from scoring import compute_hiking_score as _chk_p
+        def _pp_p(mm):
+            v = mm.get('precip_mm')
+            return float(v) if v not in (None, '', 'None') else None
+        _ski_p = [compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0))) for i in range(12)]
+        _hike_p = [_chk_p(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)), _pp_p(months[i])) for i in range(12)]
+        for i in range(12):
+            s, h = _ski_p[i], _hike_p[i]
+            if max(s, h) < 4.0: continue
+            if s >= h: _mtn_ski_bucket.append((i, s))
+            else:      _mtn_hike_bucket.append((i, h))
+        _mtn_ski_bucket.sort(key=lambda x: -x[1])
+        _mtn_hike_bucket.sort(key=lambda x: -x[1])
+        _mtn_ski_bucket = _mtn_ski_bucket[:4]
+        _mtn_hike_bucket = _mtn_hike_bucket[:4]
+
+    _best_pills_hero = ''.join(_pill_rec(i, is_best=(i==mi_best)) for i,_ in _rec_idxs) if not is_monthly else ''
 
     _avoid_pills_hero = ''.join(
         f'<span style="font-size:11px;padding:5px 12px;border-radius:20px;background:rgba(239,68,68,.1);color:#991b1b;border:1px solid rgba(239,68,68,.25)">{_short[i]}</span>'
@@ -1693,7 +1847,63 @@ def decision_card_html(dest, months, mi_best, C, nom,
     ) if not is_monthly else ''
 
     _pills_row = ''
-    if _best_pills_hero or _avoid_pills_hero:
+    # Mode mountain : layout spécifique 2 lignes ski/rando
+    if is_mountain and not is_monthly and (_mtn_ski_bucket or _mtn_hike_bucket):
+        _ski_label = L.get('lbl_dec_bm_ski', '⛷️ Ski')
+        _hike_label = L.get('lbl_dec_bm_rando', '🥾 Rando')
+        _avoid_lbl_pill = L.get('lbl_dec_eviter_lbl', 'À éviter') if lang == 'fr' else ('Evitar' if lang=='es' else ('Meiden' if lang=='de' else 'Avoid'))
+
+        _mtn_ski_pills = ''.join(_pill_rec(i, is_best=(i==mi_best)) for i,_ in _mtn_ski_bucket)
+        _mtn_hike_pills = ''.join(_pill_rec(i, is_best=(i==mi_best)) for i,_ in _mtn_hike_bucket)
+
+        _lines_html = ''
+        _two_buckets = bool(_mtn_ski_bucket) and bool(_mtn_hike_bucket)
+
+        if _two_buckets:
+            # 2 lignes : chacune avec son label + pills
+            _lines_html += (
+                f'<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">'
+                f'<span style="font-size:10px;color:#6b3d10;font-weight:600;min-width:50px">{_ski_label}</span>'
+                f'{_mtn_ski_pills}'
+                f'</div>'
+            )
+            _lines_html += (
+                f'<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:6px">'
+                f'<span style="font-size:10px;color:#6b3d10;font-weight:600;min-width:50px">{_hike_label}</span>'
+                f'{_mtn_hike_pills}'
+                f'</div>'
+            )
+        else:
+            # Monotype : 1 ligne avec le label emoji du bucket non-vide
+            # (plus parlant que "Idéal" générique — ex: "🥾 Rando" pour Darjeeling)
+            if _mtn_ski_bucket:
+                _mono_label = _ski_label
+                _mono_pills = _mtn_ski_pills
+            else:
+                _mono_label = _hike_label
+                _mono_pills = _mtn_hike_pills
+            _lines_html += (
+                f'<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">'
+                f'<span style="font-size:10px;color:#6b3d10;font-weight:600;min-width:50px">{_mono_label}</span>'
+                f'{_mono_pills}'
+                f'</div>'
+            )
+
+        if _avoid_pills_hero:
+            _lines_html += (
+                f'<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:6px">'
+                f'<span style="font-size:10px;color:#6b3d10;font-weight:600">{_avoid_lbl_pill}</span>'
+                f'{_avoid_pills_hero}'
+                f'</div>'
+            )
+
+        _pills_row = (
+            f'<div style="padding:12px 24px;background:#faf9f7;border-bottom:1px solid #eee8df">'
+            f'{_lines_html}'
+            f'</div>'
+        )
+
+    elif _best_pills_hero or _avoid_pills_hero:
         _best_lbl_pill  = L.get('lbl_dec_ideal_lbl', 'Meilleurs mois') if lang == 'fr' else ('Mejores meses' if lang=='es' else ('Beste Monate' if lang=='de' else 'Best months'))
         _avoid_lbl_pill = L.get('lbl_dec_eviter_lbl', 'À éviter') if lang == 'fr' else ('Evitar' if lang=='es' else ('Meiden' if lang=='de' else 'Avoid'))
         _pills_row = (
@@ -1734,7 +1944,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'<div style="text-align:right;flex-shrink:0">'
         f'<div style="font-size:clamp(36px,10vw,52px);font-weight:500;font-family:Georgia,serif;color:#fff;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.35)">{score:.1f}</div>'
         f'<div style="font-size:14px;color:rgba(255,255,255,.8);text-shadow:0 1px 4px rgba(0,0,0,.3)">/10</div>'
-        f'<div style="font-size:11px;font-weight:600;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.4);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;background:rgba(0,0,0,.2);padding:2px 8px;border-radius:10px;display:inline-block">{best_lbl}</div>'
+        f'<div style="font-size:11px;font-weight:600;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.4);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;background:rgba(0,0,0,.2);padding:2px 8px;border-radius:10px;display:inline-block">{_mtn_badge_override or best_lbl}</div>'
         f'</div>'
         f'</div>'
         f'</div>'
@@ -1768,6 +1978,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
     return (
         f'<div class="decision-card" style="overflow:hidden;border-radius:16px;box-shadow:0 2px 24px rgba(0,0,0,.08)">'
         f'{_hero_block}'
+        f'{_mtn_secondary_pill}'
         f'{_heatmap_block}'
         f'{_pills_row}'
         f'<div style="background:#fff;padding:4px 0 0">'

@@ -745,3 +745,63 @@ def profile_score(tmax, rain_pct, sun_h, dew_point, profile='balanced',
 
     return max(0.0, min(1.0, raw))
 
+
+
+# ═══════════════════════════════════════════════════════════════════
+# SCORING RANDONNÉE MONTAGNE (hiking_score)
+# ═══════════════════════════════════════════════════════════════════
+#
+# Destinations concernées : mountain=True (111 dans destinations.csv).
+# Problème résolu : le score été standard pénalise tort les montagnes en
+# été (ex: Dolomites Juil = 12°C tmax → t_ideal=0.26 alors que pour la
+# randonnée 12°C journée est idéal).
+#
+# Différences vs raw_score standard :
+#   • Optimum thermique 10-22°C (au lieu de 22-28°C)
+#   • Pluie pénalisée 40% (au lieu de 35%) — plus critique en montagne
+#   • Soleil pondéré 20% (au lieu de 25%) — moins crucial qu'en balnéaire
+#   • Pas de pénalité humidité (pas de bain de sueur à 28°C/90%)
+#   • Dessous 0°C = 0 (neige/verglas)
+
+def t_ideal_hiking(tmax: float) -> float:
+    """Confort randonnée montagne [0,1] selon tmax.
+
+    < 0°C : 0.0  (neige/verglas, impraticable sans équipement alpin)
+    0-5°C : 0.0-0.25  (très froid)
+    5-10°C : 0.25-0.65  (frais, faisable avec équipement)
+    10-22°C : 0.85-1.0  (zone optimale randonnée)
+    22-25°C : 0.85-0.70  (chaud)
+    25-28°C : 0.70-0.45  (fatiguant à l'effort)
+    28-32°C : 0.45-0.15  (dangereux effort soutenu)
+    > 32°C : 0.15-0.0  (canicule, rando déconseillée)
+    """
+    if tmax < 0:   return 0.0
+    if tmax <= 5:  return tmax / 5 * 0.25
+    if tmax <= 10: return 0.25 + (tmax - 5) / 5 * 0.40    # 0.25 → 0.65
+    if tmax <= 14: return 0.65 + (tmax - 10) / 4 * 0.25   # 0.65 → 0.90
+    if tmax <= 22: return 0.90 + (tmax - 14) / 8 * 0.10   # 0.90 → 1.00 (pic à 22°C)
+    if tmax <= 25: return 1.00 - (tmax - 22) / 3 * 0.15   # 1.00 → 0.85
+    if tmax <= 28: return 0.85 - (tmax - 25) / 3 * 0.15   # 0.85 → 0.70, corrigé ci-dessous
+    if tmax <= 32: return 0.70 - (tmax - 28) / 4 * 0.55   # 0.70 → 0.15
+    if tmax <= 38: return max(0.0, 0.15 - (tmax - 32) / 6 * 0.15)
+    return 0.0
+
+
+def raw_score_hiking(tmax: float, rain_pct: float, sun_h: float,
+                     precip_mm: float = None) -> float:
+    """Score brut randonnée [0,1] avant mapping /10.
+
+    Poids : 40% température (t_ideal_hiking), 40% pluie, 20% soleil.
+    Pas de pénalité humidité (non-critique en rando vs balnéaire).
+    """
+    eff_rain = effective_rain_pct(rain_pct, precip_mm)
+    base = (0.40 * t_ideal_hiking(tmax)
+          + 0.40 * max(0.0, 1.0 - eff_rain / 100.0)
+          + 0.20 * min(1.0, sun_h / 12.0))
+    return max(0.0, min(1.0, base))
+
+
+def compute_hiking_score(tmax: float, rain_pct: float, sun_h: float,
+                         precip_mm: float = None) -> float:
+    """Score randonnée sur /10 (mapping linéaire depuis raw_score_hiking)."""
+    return round(raw_score_hiking(tmax, rain_pct, sun_h, precip_mm) * 10, 1)

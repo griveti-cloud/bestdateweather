@@ -350,6 +350,7 @@
     "share_label": "Compartir",
     "colon_sep": ": ",
     "best_ski_months_lbl_tpl": "Mejor{es} mes{es} ski",
+    "best_rando_months_lbl_tpl": "Mejor{es} mes{es} senderismo",
     "plan_bar": "Planifica tu viaje",
     "plan_hotel": "🏨 Alojamiento",
     "plan_activ": "🎟️ Actividades",
@@ -409,7 +410,13 @@
     "dec_budget_4": "Caro",
     "dec_budget_5": "Muy caro",
     "dec_lbl_mer_seche": "Temporada seca",
-    "dec_lbl_mer_humide": "Temporada húmeda"
+    "dec_lbl_mer_humide": "Temporada húmeda",
+    "dec_best_ski_badge": "⛷️ Mejor ski",
+    "dec_best_rando_badge": "🥾 Mejor senderismo",
+    "dec_also_top_ski_tpl": "También top ski: {month} {score}/10",
+    "dec_also_top_rando_tpl": "También top senderismo: {month} {score}/10",
+    "dec_bm_ski": "⛷️ Ski",
+    "dec_bm_rando": "🥾 Senderismo"
   },
   "monthly": {
     "hero_tpl": "Tiempo en {name} en {month}",
@@ -872,7 +879,9 @@
     "methodo_beach": "🏖️ Puntuación playa: mar cálido, poca lluvia y mucho sol. Solo destinos costeros.",
     "methodo_ski": "⛷️ Puntuación esquí: nieve, frío y sol. Solo estaciones de montaña.",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Clima tropical: calor y humedad elevados todo el año. Las diferencias entre meses reflejan principalmente la frecuencia de lluvias.</p>",
-    "tropical_note": "🌴 Clima tropical: calor y humedad elevados todo el año. Las diferencias entre meses reflejan principalmente la frecuencia de lluvias."
+    "tropical_note": "🌴 Clima tropical: calor y humedad elevados todo el año. Las diferencias entre meses reflejan principalmente la frecuencia de lluvias.",
+    "methodo_mountain_max": "🏔️ Puntuación montaña: máximo entre esquí y senderismo del mes. Solo destinos de montaña.",
+    "methodo_mountain_rando": "🥾 Puntuación senderismo: temperatura suave (10–22°C), poca lluvia, sol. Solo destinos de montaña."
   },
   "comp": {
     "th_month": "Mes",
@@ -924,7 +933,7 @@
     "sec_title_ski": "Top {n} estaciones de esquí en {month}",
     "tab_meteo": "☀️ Clima general",
     "tab_beach": "🏖️ Playa",
-    "tab_ski": "⛷️ Esquí",
+    "tab_ski": "🏔️ Montaña",
     "th_score_gen": "Score",
     "th_score_beach": "Score playa",
     "th_score_ski": "Score esquí",
@@ -933,7 +942,7 @@
     "no_meteo_msg": "No hay destinos en esta región para este mes.",
     "tab_meteo_annual": "☀️ Clima general",
     "tab_beach_annual": "🏖️ Playa",
-    "tab_ski_annual": "⛷️ Esquí",
+    "tab_ski_annual": "🏔️ Montaña",
     "th_score_gen_annual": "Puntuación",
     "th_score_beach_annual": "Puntuación playa",
     "th_score_ski_annual": "Puntuación esquí",
@@ -961,7 +970,14 @@
     "budget_all": "Todos los presupuestos",
     "tab_nomad": "💻 Nómadas digitales",
     "map_href": "../es/mapa.html",
-    "map_nav_label": "🗺️ Mapa"
+    "map_nav_label": "🗺️ Mapa",
+    "tab_mountain_sub_max": "Max",
+    "tab_mountain_sub_ski": "⛷️ Esquí",
+    "tab_mountain_sub_rando": "🥾 Senderismo",
+    "th_score_mountain_max": "Score montaña",
+    "th_score_mountain_rando": "Score senderismo",
+    "sec_title_mountain_max": "Top {n} destinos de montaña en {month}",
+    "sec_title_mountain_rando": "Top {n} destinos de senderismo en {month}"
   },
   "ranking_footer": {
     "data_by": "Datos meteorológicos de Open-Meteo.com",
