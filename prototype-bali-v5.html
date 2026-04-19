@@ -334,10 +334,11 @@ h2{
   font-weight:600;letter-spacing:.2px;
 }
 
-/* ═══════════════ RIGHT STACK ═══════════════ */
-.right-item{
+/* ═══════════════ ITEMS UNIFIÉS (right-item, signal-item, list-item) ═══════════════ */
+.right-item,.signal-item,.list-item{
   border:1px solid var(--line-soft);
-  border-radius:14px;padding:14px 16px;
+  border-radius:14px;
+  padding:12px 14px;
   background:var(--cream);
   min-width:0;
 }
@@ -394,6 +395,62 @@ thead th:nth-child(6),tbody td:nth-child(6){width:10%}
 thead th:nth-child(7),tbody td:nth-child(7){width:10%}
 thead th:nth-child(8),tbody td:nth-child(8){width:18%}
 
+/* ═══════════════ MOBILE MONTH CARDS (remplacent table < 640px) ═══════════════ */
+.mobile-month-cards{display:none;gap:12px}
+.mobile-month-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  box-shadow:var(--shadow-sm);
+  transition:transform .18s,box-shadow .18s,border-color .18s;
+  display:block;
+}
+.mobile-month-card:hover,.mobile-month-card:active{
+  transform:translateY(-1px);
+  box-shadow:var(--shadow);
+  border-color:var(--gold);
+}
+.mobile-month-card.best{
+  background:linear-gradient(135deg,#fff,#fdfaf3);
+  border-color:var(--gold);
+}
+.mobile-month-card .head{
+  display:flex;justify-content:space-between;
+  align-items:flex-start;gap:12px;margin-bottom:12px;
+}
+.mobile-month-card .name{
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:1.15rem;
+  color:var(--ink);letter-spacing:-.01em;
+}
+.mobile-month-card .score{
+  font-weight:800;font-size:.9rem;
+  padding:4px 11px;border-radius:999px;
+  flex-shrink:0;font-feature-settings:"tnum" 1;
+}
+.mobile-month-card .score.good{background:var(--green-soft);color:var(--green)}
+.mobile-month-card .score.mid{background:var(--amber-soft);color:var(--amber)}
+.mobile-month-card .score.bad{background:var(--red-soft);color:var(--red)}
+.mobile-month-card .rows{display:grid;gap:7px}
+.mobile-month-card .row{
+  display:flex;justify-content:space-between;gap:12px;
+  padding:8px 11px;border-radius:10px;
+  background:var(--cream);
+  border:1px solid var(--line-soft);
+}
+.mobile-month-card .row span{
+  color:var(--muted);font-size:.86rem;
+}
+.mobile-month-card .row strong{
+  text-align:right;font-size:.88rem;
+  color:var(--ink);font-weight:700;
+  font-feature-settings:"tnum" 1;
+}
+.mobile-month-card .row strong.mood-good{color:var(--green)}
+.mobile-month-card .row strong.mood-mid{color:var(--amber)}
+.mobile-month-card .row strong.mood-bad{color:var(--red)}
+
 .mood{
   display:inline-flex;padding:5px 11px;
   border-radius:999px;
@@ -405,14 +462,10 @@ thead th:nth-child(8),tbody td:nth-child(8){width:18%}
 .mood.mid{background:var(--amber-soft);color:var(--amber)}
 .mood.bad{background:var(--red-soft);color:var(--red)}
 
-/* ═══════════════ SIGNAL CARDS (side tableau) ═══════════════ */
+/* ═══════════════ SIGNAL/LIST ITEMS (hérite du style unifié) ═══════════════ */
 .signal-item{
   display:flex;justify-content:space-between;gap:12px;
   align-items:flex-start;
-  padding:11px 14px;border-radius:12px;
-  background:var(--cream);
-  border:1px solid var(--line-soft);
-  min-width:0;
 }
 .signal-item .l{
   font-size:.9rem;color:var(--ink);font-weight:500;
@@ -513,13 +566,10 @@ thead th:nth-child(8),tbody td:nth-child(8){width:18%}
   margin-top:8px;
 }
 
-/* ═══════════════ LIST (infos pratiques) ═══════════════ */
+/* ═══════════════ LIST-ITEM (hérite du style unifié) ═══════════════ */
 .list-item{
   display:flex;justify-content:space-between;gap:12px;
-  padding:11px 14px;
-  border:1px solid var(--line-soft);border-radius:12px;
-  background:var(--cream);
-  align-items:flex-start;min-width:0;
+  align-items:flex-start;
 }
 .list-item span{
   font-size:.92rem;color:var(--ink);font-weight:500;
@@ -591,6 +641,13 @@ footer a{color:var(--gold-2);font-weight:600}
   thead th:nth-child(5),tbody td:nth-child(5){display:none}
   section{padding:22px 0}
   .card.pad,.box,.faq-item{padding:20px}
+}
+
+/* Passe du tableau aux mobile-month-cards sous 640px */
+@media(max-width:640px){
+  .table-wrap{display:none}
+  .mobile-month-cards{display:grid}
+  .spotlight-grid{gap:14px}
 }
 </style>
 </head>
@@ -767,6 +824,118 @@ footer a{color:var(--gold-2);font-weight:600}
                 <tr><td class="month-cell">🌧️ Décembre</td><td>24°C</td><td>29°C</td><td>87%</td><td>9.2mm</td><td>10.9h</td><td>6.2/10</td><td><span class="mood mid">Lourd</span></td></tr>
               </tbody>
             </table>
+          </div>
+
+          <!-- Version mobile du tableau : cards individuelles cliquables (<640px) -->
+          <div class="mobile-month-cards">
+            <a href="bali-meteo-janvier.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌧️ Janvier</div><div class="score bad">5.8/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Jours pluie</span><strong>90%</strong></div>
+                <div class="row"><span>Soleil</span><strong>9.9h</strong></div>
+                <div class="row"><span>Lecture</span><strong class="mood-bad">Mousson</strong></div>
+              </div>
+            </a>
+            <a href="bali-meteo-fevrier.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌧️ Février</div><div class="score bad">5.7/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Jours pluie</span><strong>92%</strong></div>
+                <div class="row"><span>Soleil</span><strong>10.3h</strong></div>
+                <div class="row"><span>Lecture</span><strong class="mood-bad">Mousson</strong></div>
+              </div>
+            </a>
+            <a href="bali-meteo-mars.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌧️ Mars</div><div class="score mid">6.2/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Jours pluie</span><strong>86%</strong></div>
+                <div class="row"><span>Soleil</span><strong>10.9h</strong></div>
+                <div class="row"><span>Lecture</span><strong class="mood-mid">Lourd</strong></div>
+              </div>
+            </a>
+            <a href="bali-meteo-avril.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Avril</div><div class="score mid">6.8/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Jours pluie</span><strong>74%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.2h</strong></div>
+                <div class="row"><span>Lecture</span><strong class="mood-mid">Transition</strong></div>
+              </div>
+            </a>
+            <a href="bali-meteo-mai.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Mai</div><div class="score mid">6.9/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Jours pluie</span><strong>70%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.1h</strong></div>
+                <div class="row"><span>Lecture</span><strong class="mood-mid">Correct</strong></div>
+              </div>
+            </a>
+            <a href="bali-meteo-juin.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Juin</div><div class="score mid">6.9/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T° min / max</span><strong>24°C / 28°C</strong></div>
+                <div class="row"><span>Jours pluie</span><strong>65%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.0h</strong></div>
+                <div class="row"><span>Lecture</span><strong class="mood-mid">Correct</strong></div>
+              </div>
+            </a>
+            <a href="bali-meteo-juillet.html" class="mobile-month-card best">
+              <div class="head"><div class="name">🌤️ Juillet ★</div><div class="score good">8.0/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T° min / max</span><strong>23°C / 27°C</strong></div>
+                <div class="row"><span>Jours pluie</span><strong>59%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.0h</strong></div>
+                <div class="row"><span>Lecture</span><strong class="mood-good">Meilleur mois</strong></div>
+              </div>
+            </a>
+            <a href="bali-meteo-aout.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌤️ Août</div><div class="score good">7.9/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T° min / max</span><strong>23°C / 27°C</strong></div>
+                <div class="row"><span>Jours pluie</span><strong>64%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.0h</strong></div>
+                <div class="row"><span>Lecture</span><strong class="mood-good">Très bon</strong></div>
+              </div>
+            </a>
+            <a href="bali-meteo-septembre.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Septembre</div><div class="score mid">6.9/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T° min / max</span><strong>23°C / 28°C</strong></div>
+                <div class="row"><span>Jours pluie</span><strong>64%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.5h</strong></div>
+                <div class="row"><span>Lecture</span><strong class="mood-mid">Correct</strong></div>
+              </div>
+            </a>
+            <a href="bali-meteo-octobre.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Octobre</div><div class="score mid">6.9/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Jours pluie</span><strong>66%</strong></div>
+                <div class="row"><span>Soleil</span><strong>12.0h</strong></div>
+                <div class="row"><span>Lecture</span><strong class="mood-mid">Correct</strong></div>
+              </div>
+            </a>
+            <a href="bali-meteo-novembre.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌧️ Novembre</div><div class="score mid">6.1/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T° min / max</span><strong>24°C / 30°C</strong></div>
+                <div class="row"><span>Jours pluie</span><strong>83%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.5h</strong></div>
+                <div class="row"><span>Lecture</span><strong class="mood-mid">Lourd</strong></div>
+              </div>
+            </a>
+            <a href="bali-meteo-decembre.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌧️ Décembre</div><div class="score mid">6.2/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Jours pluie</span><strong>87%</strong></div>
+                <div class="row"><span>Soleil</span><strong>10.9h</strong></div>
+                <div class="row"><span>Lecture</span><strong class="mood-mid">Lourd</strong></div>
+              </div>
+            </a>
           </div>
         </div>
 
