@@ -91,43 +91,12 @@ footer{background:var(--navy);color:#b8bcc8;text-align:center;padding:28px 20px;
 footer p{font-size:12px;color:#b8bcc8}
 footer a{color:var(--gold2);text-decoration:none;font-weight:600}
 </style>
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "FAQPage",
- "mainEntity": [
- {
-  "@type": "Question",
-  "name": "How does BestDateWeather calculate its weather estimates?",
-  "acceptedAnswer": {
-   "@type": "Answer",
-   "text": "BestDateWeather combines three sources depending on the time horizon: real-time Open-Meteo data for the next 7 days, 10-year historical climatology adjusted by the ECMWF seasonal model up to 7 months, and pure historical climate profiles beyond that."
-  }
- },
- {
-  "@type": "Question",
-  "name": "How reliable are the estimates several months ahead?",
-  "acceptedAnswer": {
-   "@type": "Answer",
-   "text": "Beyond 7 days, BestDateWeather does not produce weather forecasts in the traditional sense. It calculates probabilistic trends based on 10 years of historical data, adjusted by ECMWF seasonal anomalies. The further the date, the more statistical and less predictive the estimate becomes."
-  }
- },
- {
-  "@type": "Question",
-  "name": "How is the weather score calculated?",
-  "acceptedAnswer": {
-   "@type": "Answer",
-   "text": "The score out of 10 weighs four criteria based on your activity: precipitation (25–45%), temperature (15–30%), wind (10–25%) and sunshine (10–40%). Each criterion is normalised between 0 and 100 before weighting."
-  }
- }
- ]
-}
-</script>
 <meta property="og:image" content="https://bestdateweather.com/og-image.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://bestdateweather.com/og-image.png"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://bestdateweather.com/en/methodology.html","name":"Methodology","isPartOf":{"@id":"https://bestdateweather.com/#website"},"about":{"@id":"https://bestdateweather.com/#organization"},"author":{"@id":"https://bestdateweather.com/#gilles"}}</script>
 </head>
 <body>
 <div class="page">
