@@ -2210,6 +2210,10 @@ function selectAC(i){
  if (region) label += ', ' + region;
  if (country) label += ' (' + country + ')';
  document.getElementById('inp-city').value = label;
+ // Sync vers ann-city (mode annuel) — selectAC set la valeur sans déclencher oninput
+ var _annC = document.getElementById('ann-city');
+ if (_annC) _annC.value = label;
+ annSelectedLoc = selectedLoc;
  hideAC();
 }
 function normalizeQuery(s){
@@ -2578,7 +2582,16 @@ function selectAnnAC(i) {
 
 /* ── ANNUAL DATA ── */
 function runAnnual() {
- var city = document.getElementById('ann-city').value.trim();
+ // Fallback robuste : ann-city est un champ caché, synchronisé avec inp-city
+ // seulement via oninput. Si l'utilisateur a tapé puis cliqué un item de
+ // l'autocomplete (selectAC set inp-city.value sans déclencher oninput), ou
+ // a basculé en mode annuel après avoir tapé, ann-city peut être désynchronisé.
+ var annCityEl = document.getElementById('ann-city');
+ var inpCityEl = document.getElementById('inp-city');
+ var city = (annCityEl && annCityEl.value.trim()) || (inpCityEl && inpCityEl.value.trim()) || '';
+ if (annCityEl && !annCityEl.value.trim() && city) annCityEl.value = city;
+ // Idem pour la localisation sélectionnée
+ if (!annSelectedLoc && window.selectedLoc) annSelectedLoc = window.selectedLoc;
  if (!city) {
  err.textContent = '⚠ Entrez une ville ou une destination avant de continuer.';
  err.style.display = 'block';
@@ -3115,6 +3128,12 @@ document.getElementById('btn-go').onclick=function(){
 function clearCity(){
  var el=document.getElementById('inp-city');
  el.value=''; selectedLoc=null;
+ // Sync vers ann-city
+ var annC=document.getElementById('ann-city');
+ if(annC){annC.value='';annSelectedLoc=null;
+  var annClr=document.getElementById('ann-city-clear');
+  if(annClr)annClr.classList.remove('visible');
+ }
  document.getElementById('inp-city-clear').classList.remove('visible');
  hideAC(); el.focus();
 }
