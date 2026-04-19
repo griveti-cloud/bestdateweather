@@ -773,8 +773,10 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         f'var ANNUAL_URL="{pil.get("all_year_url","")}";var POOL={pool_json};'+
         'var TOP=25;var CUR_REG="all";var CUR_RL=4;var CUR_BI=5;'+
         f'var TH_GEN="{e(th_score_gen)}",TH_BEACH="{e(th_score_beach)}",TH_SKI="{e(th_score_ski)}",TH_NOMAD="Score nomade";'+
+        f'var TH_MTN_MAX="{e(pil.get("th_score_mountain_max","Score montagne"))}",TH_MTN_RANDO="{e(pil.get("th_score_mountain_rando","Score rando"))}";'+
         f'var NO_BEACH="{e(no_beach_msg)}",NO_SKI="{e(no_ski_msg)}",NO_METEO="{e(no_meteo_msg)}",NO_NOMAD="Aucune destination nomade disponible.";'+
         f'var TITLE_METEO="{e(sec_title)}",TITLE_BEACH="{e(pil.get("sec_title_beach",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc))}",TITLE_SKI="{e(pil.get("sec_title_ski",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc))}";'+
+        f'var TITLE_MTN_MAX="{e(pil.get("sec_title_mountain_max",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc))}",TITLE_MTN_RANDO="{e(pil.get("sec_title_mountain_rando",sec_title).replace("{n}",str(TOP_N)).replace("{month}",mn_lc))}";'+
         'function sc(s){return s>=8.6?"#1a7a4a":s>=7.6?"#2d9e60":s>=6.3?"#84cc16":s>=5?"#f59e0b":s>=3.5?"#f97316":"#ef4444";}'+
         'function ri(i){return i===1?"🥇":i===2?"🥈":i===3?"🥉":String(i);}'+
         'function render(mode){'+
@@ -793,7 +795,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'list=list.slice(0,TOP);'+
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:(mode==="nomad"?NO_NOMAD:NO_METEO));msg.style.display="block";'        'var _s1e=document.getElementById("stat-score");if(_s1e)_s1e.textContent="—";'        'var _sce=document.getElementById("stat-count");if(_sce)_sce.textContent="0";'        'var _s3e=document.getElementById("stat-temp");if(_s3e)_s3e.textContent="—";'        'var _rie=document.getElementById("rt-intro");if(_rie)_rie.style.display="none";'        'return;}'+
         'msg.style.display="none";'+
-        'var label=mode==="beach"?TH_BEACH:mode==="ski"?TH_SKI:mode==="nomad"?TH_NOMAD:TH_GEN;'+
+        'var label=mode==="beach"?TH_BEACH:mode==="ski"?(CUR_MTN_SUB==="ski"?TH_SKI:CUR_MTN_SUB==="rando"?TH_MTN_RANDO:TH_MTN_MAX):mode==="nomad"?TH_NOMAD:TH_GEN;'+
         'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th><th style=\'text-align:center\'>S\u00e9cu.</th><th style=\'text-align:center\'>Budget</th></tr>";'+
         'var html="";'+
         'list.forEach(function(d,i){'+
@@ -820,10 +822,11 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         'var _s3=document.getElementById("stat-temp");if(_s3)_s3.textContent=Math.round(_avgT)+"°";'+
         '}'+
         'var _rt=document.getElementById("rt-title");'+
-        'if(_rt){_rt.textContent=mode==="beach"?TITLE_BEACH:(mode==="ski"?TITLE_SKI:TITLE_METEO);}'+
+        'if(_rt){_rt.textContent=mode==="beach"?TITLE_BEACH:(mode==="ski"?(CUR_MTN_SUB==="ski"?TITLE_SKI:CUR_MTN_SUB==="rando"?TITLE_MTN_RANDO:TITLE_MTN_MAX):TITLE_METEO);}'+
         'var _ri=document.getElementById("rt-intro");'+
-        'var _mm=document.getElementById("rt-methodo-"+mode);'+
-        '["rt-methodo-general","rt-methodo-beach","rt-methodo-ski","rt-methodo-nomad"].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display="none";});'+
+        'var _mmId=mode==="ski"?(CUR_MTN_SUB==="ski"?"rt-methodo-ski":CUR_MTN_SUB==="rando"?"rt-methodo-mountain-rando":"rt-methodo-mountain-max"):"rt-methodo-"+mode;'+
+        'var _mm=document.getElementById(_mmId);'+
+        '["rt-methodo-general","rt-methodo-beach","rt-methodo-ski","rt-methodo-mountain-max","rt-methodo-mountain-rando","rt-methodo-nomad"].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display="none";});'+
         'if(_mm)_mm.style.display="";'+
         'if(_ri){if(list.length===0){_ri.style.display="none";}else{_ri.style.display="";'+
         'var _av10=list.slice(0,10);var _sc10=_av10.reduce(function(a,d){return a+(d[key]||d.s);},0)/_av10.length;'+
@@ -1004,6 +1007,8 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 <p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
 <p class="rt-methodo" id="rt-methodo-beach" style="display:none">{loc['hub']['methodo_beach']}</p>
 <p class="rt-methodo" id="rt-methodo-ski" style="display:none">{loc['hub']['methodo_ski']}</p>
+<p class="rt-methodo" id="rt-methodo-mountain-max" style="display:none">{loc['hub'].get('methodo_mountain_max', loc['hub'].get('methodo_ski',''))}</p>
+<p class="rt-methodo" id="rt-methodo-mountain-rando" style="display:none">{loc['hub'].get('methodo_mountain_rando', loc['hub'].get('methodo_ski',''))}</p>
 <p class="rt-methodo" id="rt-methodo-nomad" style="display:none">💻 Score nomade : météo stable sur 12 mois, budget et sécurité déjà intégrés dans le calcul. Seul le filtre Région est applicable.</p>
 <div style="overflow-x:auto"><table class="rt" aria-label="Classement"><thead id="rt-head"><tr>{th_html}</tr></thead><tbody id="rt-body">{table_body}</tbody></table></div>
 </div>
@@ -1448,6 +1453,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         f'var POOL={pool_json};'+
         'var TOP=25;var CUR_REG="all";var CUR_RL=4;var CUR_BI=5;var CUR_PROF="balanced";var CUR_MTN_SUB="max";'+
         f'var TH_GEN="{_e(th_score_gen)}",TH_BEACH="{_e(th_score_beach)}",TH_SKI="{_e(th_score_ski)}",TH_NOMAD="{_e(tab_nomad)}",NO_NOMAD="—";'+
+        f'var TH_MTN_MAX="{_e(pil.get("th_score_mountain_max","Score montagne"))}",TH_MTN_RANDO="{_e(pil.get("th_score_mountain_rando","Score rando"))}";'+
         f'var NO_BEACH="{_e(no_beach_msg)}",NO_SKI="{_e(no_ski_msg)}",NO_METEO="{_e(no_meteo_msg)}",NO_NOMAD="—";'+
         'function _dewPen(tmax,dew){if(!dew)return 0;return dew>=22&&tmax>=26?0.25:dew>=18?Math.min(0.2,(dew-18)*0.04):0;}'+
         'function _profScore(d,prof){var t=(d.tmax||20),r=(d.rain_pct||50)/100,s=Math.min(1,(d.sun_h||4)/10);var sc;if(prof==="cool"){var tc=t<=15?1:t<=20?1-(t-15)/10:t<=28?0.7-(t-20)*0.05:0.35-(t-28)*0.04;sc=Math.max(0,tc);}else if(prof==="warm"){var tw=t>=32?1:t>=27?1-(32-t)/10:t>=20?0.7-(27-t)*0.06:0.28-(20-t)*0.04;sc=Math.max(0,tw);}else{sc=t>=16&&t<=28?1:t<16?Math.max(0,1-(16-t)/12):Math.max(0,1-(t-28)/14);}var raw=0.40*sc+0.35*(1-r)+0.25*s;raw-=_dewPen(t,d.dew);return Math.max(0,Math.min(10,raw*10));}'+
@@ -1473,7 +1479,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
         'list=list.slice(0,TOP);'+
         'if(list.length===0){tb.innerHTML="";msg.textContent=mode==="beach"?NO_BEACH:(mode==="ski"?NO_SKI:(mode==="nomad"?NO_NOMAD:NO_METEO));msg.style.display="block";'        'var _s1e=document.getElementById("stat-score");if(_s1e)_s1e.textContent="—";'        'var _sce=document.getElementById("stat-count");if(_sce)_sce.textContent="0";'        'var _s3e=document.getElementById("stat-temp");if(_s3e)_s3e.textContent="—";'        'var _rie=document.getElementById("rt-intro");if(_rie)_rie.style.display="none";'        'return;}'+
         'msg.style.display="none";'+
-        'var label=mode==="beach"?TH_BEACH:mode==="ski"?TH_SKI:mode==="nomad"?TH_NOMAD:TH_GEN;'+
+        'var label=mode==="beach"?TH_BEACH:mode==="ski"?(CUR_MTN_SUB==="ski"?TH_SKI:CUR_MTN_SUB==="rando"?TH_MTN_RANDO:TH_MTN_MAX):mode==="nomad"?TH_NOMAD:TH_GEN;'+
         'th.innerHTML="<tr><th>#</th><th>Destination</th><th>"+label+"</th><th>Temp.</th><th>Pluie</th><th>Soleil/j</th><th style=\'text-align:center\'>S\u00e9cu.</th><th style=\'text-align:center\'>Budget</th></tr>";'+
         'var html="";'+
         'list.forEach(function(d,i){'+
@@ -1556,6 +1562,8 @@ def generate_annual_page(lang, dests, climate, country_info=None):
 <p class="rt-methodo" id="rt-methodo-general">{loc['hub']['methodo_general']}</p>
 <p class="rt-methodo" id="rt-methodo-beach" style="display:none">{loc['hub']['methodo_beach']}</p>
 <p class="rt-methodo" id="rt-methodo-ski" style="display:none">{loc['hub']['methodo_ski']}</p>
+<p class="rt-methodo" id="rt-methodo-mountain-max" style="display:none">{loc['hub'].get('methodo_mountain_max', loc['hub'].get('methodo_ski',''))}</p>
+<p class="rt-methodo" id="rt-methodo-mountain-rando" style="display:none">{loc['hub'].get('methodo_mountain_rando', loc['hub'].get('methodo_ski',''))}</p>
 <p class="rt-methodo" id="rt-methodo-nomad" style="display:none">💻 Score nomade : météo stable sur 12 mois, budget et sécurité déjà intégrés dans le calcul. Seul le filtre Région est applicable.</p>
 <div style="overflow-x:auto"><table class="rt" aria-label="{sec_title}">
 <thead id="rt-head"><tr>{th_html}</tr></thead>

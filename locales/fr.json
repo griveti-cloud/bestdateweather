@@ -879,7 +879,9 @@
     "methodo_beach": "🏖️ Score plage : mer chaude, faible pluie et fort ensoleillement. Destinations côtières uniquement.",
     "methodo_ski": "⛷️ Score ski : enneigement, froid et ensoleillement. Stations de montagne uniquement.",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Climat tropical : chaleur et humidité élevées toute l'année. Les différences entre mois reflètent principalement la fréquence des pluies.</p>",
-    "tropical_note": "🌴 Climat tropical : chaleur et humidité élevées toute l'année. Les différences entre mois reflètent principalement la fréquence des pluies."
+    "tropical_note": "🌴 Climat tropical : chaleur et humidité élevées toute l'année. Les différences entre mois reflètent principalement la fréquence des pluies.",
+    "methodo_mountain_max": "🏔️ Score montagne : maximum entre ski et randonnée selon le mois. Seules les destinations de montagne apparaissent.",
+    "methodo_mountain_rando": "🥾 Score randonnée : température douce (10–22°C), absence de pluie, ensoleillement. Destinations de montagne uniquement."
   },
   "comp": {
     "th_month": "Mois",
@@ -971,7 +973,11 @@
     "map_nav_label": "🗺️ Carte",
     "tab_mountain_sub_max": "Max",
     "tab_mountain_sub_ski": "⛷️ Ski",
-    "tab_mountain_sub_rando": "🥾 Rando"
+    "tab_mountain_sub_rando": "🥾 Rando",
+    "th_score_mountain_max": "Score montagne",
+    "th_score_mountain_rando": "Score rando",
+    "sec_title_mountain_max": "Top {n} destinations montagne en {month}",
+    "sec_title_mountain_rando": "Top {n} destinations rando en {month}"
   },
   "ranking_footer": {
     "data_by": "Données météo par Open-Meteo.com",

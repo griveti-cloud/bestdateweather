@@ -879,7 +879,9 @@
     "methodo_beach": "🏖️ Puntuación playa: mar cálido, poca lluvia y mucho sol. Solo destinos costeros.",
     "methodo_ski": "⛷️ Puntuación esquí: nieve, frío y sol. Solo estaciones de montaña.",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Clima tropical: calor y humedad elevados todo el año. Las diferencias entre meses reflejan principalmente la frecuencia de lluvias.</p>",
-    "tropical_note": "🌴 Clima tropical: calor y humedad elevados todo el año. Las diferencias entre meses reflejan principalmente la frecuencia de lluvias."
+    "tropical_note": "🌴 Clima tropical: calor y humedad elevados todo el año. Las diferencias entre meses reflejan principalmente la frecuencia de lluvias.",
+    "methodo_mountain_max": "🏔️ Puntuación montaña: máximo entre esquí y senderismo del mes. Solo destinos de montaña.",
+    "methodo_mountain_rando": "🥾 Puntuación senderismo: temperatura suave (10–22°C), poca lluvia, sol. Solo destinos de montaña."
   },
   "comp": {
     "th_month": "Mes",
@@ -971,7 +973,11 @@
     "map_nav_label": "🗺️ Mapa",
     "tab_mountain_sub_max": "Max",
     "tab_mountain_sub_ski": "⛷️ Esquí",
-    "tab_mountain_sub_rando": "🥾 Senderismo"
+    "tab_mountain_sub_rando": "🥾 Senderismo",
+    "th_score_mountain_max": "Score montaña",
+    "th_score_mountain_rando": "Score senderismo",
+    "sec_title_mountain_max": "Top {n} destinos de montaña en {month}",
+    "sec_title_mountain_rando": "Top {n} destinos de senderismo en {month}"
   },
   "ranking_footer": {
     "data_by": "Datos meteorológicos de Open-Meteo.com",

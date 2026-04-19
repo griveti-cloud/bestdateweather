@@ -884,7 +884,9 @@
     "methodo_beach": "🏖️ Strand-Score: warmes Meer, wenig Regen, viel Sonne. Nur Küstenziele.",
     "methodo_ski": "⛷️ Ski-Score: Schnee, Kälte und Sonne. Nur Bergresorts.",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropisches Klima: Ganzjährig hohe Hitze und Luftfeuchtigkeit. Unterschiede zwischen den Monaten spiegeln hauptsächlich die Regenhäufigkeit wider.</p>",
-    "tropical_note": "🌴 Tropisches Klima: Ganzjährig hohe Hitze und Luftfeuchtigkeit. Unterschiede zwischen den Monaten spiegeln hauptsächlich die Regenhäufigkeit wider."
+    "tropical_note": "🌴 Tropisches Klima: Ganzjährig hohe Hitze und Luftfeuchtigkeit. Unterschiede zwischen den Monaten spiegeln hauptsächlich die Regenhäufigkeit wider.",
+    "methodo_mountain_max": "🏔️ Berg-Score: Maximum aus Ski und Wandern im Monat. Nur Bergziele.",
+    "methodo_mountain_rando": "🥾 Wander-Score: milde Temperaturen (10–22°C), wenig Regen, Sonne. Nur Bergziele."
   },
   "comp": {
     "th_month": "Monat",
@@ -976,7 +978,11 @@
     "map_nav_label": "🗺️ Karte",
     "tab_mountain_sub_max": "Max",
     "tab_mountain_sub_ski": "⛷️ Ski",
-    "tab_mountain_sub_rando": "🥾 Wandern"
+    "tab_mountain_sub_rando": "🥾 Wandern",
+    "th_score_mountain_max": "Berg-Score",
+    "th_score_mountain_rando": "Wander-Score",
+    "sec_title_mountain_max": "Top {n} Bergziele im {month}",
+    "sec_title_mountain_rando": "Top {n} Wanderziele im {month}"
   },
   "ranking_footer": {
     "data_by": "Wetterdaten von Open-Meteo.com",

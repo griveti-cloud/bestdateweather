@@ -880,7 +880,9 @@
     "methodo_beach": "🏖️ Beach score: warm sea, low rain and high sunshine. Coastal destinations only.",
     "methodo_ski": "⛷️ Ski score: snowfall, cold and sunshine. Mountain resorts only.",
     "tropical_note_html": "<p class=\"tropical-note\">🌴 Tropical climate: high heat and humidity year-round. Differences between months mainly reflect rainfall frequency.</p>",
-    "tropical_note": "🌴 Tropical climate: high heat and humidity year-round. Differences between months mainly reflect rainfall frequency."
+    "tropical_note": "🌴 Tropical climate: high heat and humidity year-round. Differences between months mainly reflect rainfall frequency.",
+    "methodo_mountain_max": "🏔️ Mountain score: maximum between ski and hiking for the month. Mountain destinations only.",
+    "methodo_mountain_rando": "🥾 Hiking score: mild temperatures (10–22°C), low rain, sunshine. Mountain destinations only."
   },
   "comp": {
     "th_month": "Month",
@@ -972,7 +974,11 @@
     "map_nav_label": "🗺️ Map",
     "tab_mountain_sub_max": "Max",
     "tab_mountain_sub_ski": "⛷️ Ski",
-    "tab_mountain_sub_rando": "🥾 Hiking"
+    "tab_mountain_sub_rando": "🥾 Hiking",
+    "th_score_mountain_max": "Mountain score",
+    "th_score_mountain_rando": "Hiking score",
+    "sec_title_mountain_max": "Top {n} mountain destinations in {month}",
+    "sec_title_mountain_rando": "Top {n} hiking destinations in {month}"
   },
   "ranking_footer": {
     "data_by": "Weather data by Open-Meteo.com",
