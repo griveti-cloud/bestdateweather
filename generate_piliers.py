@@ -357,9 +357,10 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:va
 .fc-item:hover{background:var(--cream)}
 .fc-item.active{font-weight:700;color:var(--gold)}
 .fc-item.threshold-active{background:var(--cream);font-weight:600}
-.fc-item-profile{flex-direction:column;align-items:flex-start;gap:2px;white-space:normal;padding:8px 12px;min-width:200px}
-.fc-item-profile .fc-item-lbl{font-size:13px;font-weight:600;line-height:1.3;color:var(--navy)}
-.fc-item-profile .fc-item-sub{font-size:11px;font-weight:400;line-height:1.35;color:var(--slate2)}
+#fc-profile .fc-drop{left:auto;right:0;min-width:240px;max-width:min(280px,calc(100vw - 24px))}
+.fc-item-profile{flex-direction:column;align-items:flex-start;gap:2px;white-space:normal;padding:8px 12px}
+.fc-item-profile .fc-item-lbl{font-size:13px;font-weight:600;line-height:1.3;color:var(--navy);white-space:normal}
+.fc-item-profile .fc-item-sub{font-size:11px;font-weight:400;line-height:1.35;color:var(--slate2);white-space:normal}
 .fc-item-profile.active .fc-item-lbl{color:var(--gold);font-weight:700}
 .fc-item-profile.active .fc-item-sub{color:var(--slate)}
 .fc-months{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:4px}
