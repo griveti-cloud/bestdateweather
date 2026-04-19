@@ -269,6 +269,16 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
     }
 
     // ── Static assets ──
-    return env.ASSETS.fetch(request);
+    // Wrap the response: on 404 HTML, inject Clear-Site-Data header to purge
+    // any orphaned Service Worker + cache on the client (fixes ghost pages
+    // like old /en/best-time-to-visit-pogo.html served from stale SW cache).
+    const resp = await env.ASSETS.fetch(request);
+    if (resp.status === 404 && path.endsWith('.html')) {
+      const h = new Headers(resp.headers);
+      h.set('Clear-Site-Data', '"cache", "storage"');
+      h.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      return new Response(resp.body, { status: 404, headers: h });
+    }
+    return resp;
   }
 };
