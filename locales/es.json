@@ -410,7 +410,11 @@
     "dec_budget_4": "Caro",
     "dec_budget_5": "Muy caro",
     "dec_lbl_mer_seche": "Temporada seca",
-    "dec_lbl_mer_humide": "Temporada húmeda"
+    "dec_lbl_mer_humide": "Temporada húmeda",
+    "dec_best_ski_badge": "⛷️ Mejor ski",
+    "dec_best_rando_badge": "🥾 Mejor senderismo",
+    "dec_also_top_ski_tpl": "También top ski: {month} {score}/10",
+    "dec_also_top_rando_tpl": "También top senderismo: {month} {score}/10"
   },
   "monthly": {
     "hero_tpl": "Tiempo en {name} en {month}",

@@ -410,7 +410,11 @@
     "dec_budget_4": "Coûteux",
     "dec_budget_5": "Très coûteux",
     "dec_lbl_mer_seche": "Saison sèche",
-    "dec_lbl_mer_humide": "Saison humide"
+    "dec_lbl_mer_humide": "Saison humide",
+    "dec_best_ski_badge": "⛷️ Meilleur ski",
+    "dec_best_rando_badge": "🥾 Meilleure rando",
+    "dec_also_top_ski_tpl": "Aussi top ski : {month} {score}/10",
+    "dec_also_top_rando_tpl": "Aussi top rando : {month} {score}/10"
   },
   "monthly": {
     "hero_tpl": "Météo {name} en {month_lc}",

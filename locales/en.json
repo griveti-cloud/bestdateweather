@@ -411,7 +411,11 @@
     "dec_budget_4": "Expensive",
     "dec_budget_5": "Very expensive",
     "dec_lbl_mer_seche": "Dry season",
-    "dec_lbl_mer_humide": "Wet season"
+    "dec_lbl_mer_humide": "Wet season",
+    "dec_best_ski_badge": "⛷️ Best ski",
+    "dec_best_rando_badge": "🥾 Best hiking",
+    "dec_also_top_ski_tpl": "Also top ski: {month} {score}/10",
+    "dec_also_top_rando_tpl": "Also top hiking: {month} {score}/10"
   },
   "monthly": {
     "hero_tpl": "{name} weather in {month}",

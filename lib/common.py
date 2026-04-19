@@ -1384,6 +1384,57 @@ def decision_card_html(dest, months, mi_best, C, nom,
         )
 
     # ══════════════════════════════════════════
+    # MOUNTAIN : badge contextuel (⛷️ ski / 🥾 rando) + pill secondaire
+    # ══════════════════════════════════════════
+    _mtn_badge_override = ''
+    _mtn_secondary_pill = ''
+    if is_mountain and not is_monthly:
+        # Scores au mois pic pour détecter dominance ski vs rando
+        _pp_best = float(m.get('precip_mm') or 0) or None
+        _ski_at_best = compute_ski_score(float(m.get('tmax',0)), float(m.get('rain_pct',0)), float(m.get('sun_h',0)))
+        # compute_hiking_score importé au top de la fonction decision_card_html
+        from scoring import compute_hiking_score as _chk_d
+        _hike_at_best = _chk_d(float(m.get('tmax',0)), float(m.get('rain_pct',0)), float(m.get('sun_h',0)), _pp_best)
+        _is_ski_dominant = _ski_at_best >= _hike_at_best
+
+        if _is_ski_dominant:
+            _mtn_badge_override = L.get('lbl_dec_best_ski_badge', '⛷️ Best ski')
+        else:
+            _mtn_badge_override = L.get('lbl_dec_best_rando_badge', '🥾 Best hiking')
+
+        # Pic de l'autre use case : tous les mois de l'année
+        def _pp(mm):
+            v = mm.get('precip_mm')
+            return float(v) if v not in (None, '', 'None') else None
+        _all_ski = [compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0))) for i in range(12)]
+        _all_hike = [_chk_d(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)), _pp(months[i])) for i in range(12)]
+
+        if _is_ski_dominant:
+            _sec_idx = max(range(12), key=lambda i: _all_hike[i])
+            _sec_score = _all_hike[_sec_idx]
+            _sec_emoji = '🥾'
+            _sec_tpl_key = 'lbl_dec_also_top_rando_tpl'
+        else:
+            _sec_idx = max(range(12), key=lambda i: _all_ski[i])
+            _sec_score = _all_ski[_sec_idx]
+            _sec_emoji = '⛷️'
+            _sec_tpl_key = 'lbl_dec_also_top_ski_tpl'
+
+        # Afficher pill secondaire seulement si score >= 4.0 (seuil viabilité)
+        if _sec_score >= 4.0:
+            _sec_month = months_names[_sec_idx][:3]
+            _sec_tpl = L.get(_sec_tpl_key, 'Also top: {month} {score}/10')
+            _sec_txt = _sec_tpl.format(month=_sec_month, score=f'{_sec_score:.1f}')
+            _mtn_secondary_pill = (
+                f'<div style="padding:10px 20px;background:#f0f4f8;border-top:1px solid #e6ecf2;'
+                f'border-bottom:1px solid #e6ecf2;font-size:12px;color:#475569;font-weight:500;'
+                f'display:flex;align-items:center;gap:6px">'
+                f'<span style="font-size:14px">{_sec_emoji}</span>'
+                f'<span>{_sec_txt}</span>'
+                f'</div>'
+            )
+
+    # ══════════════════════════════════════════
     # ROW 1 : Météo
     # ══════════════════════════════════════════
     row1 = (
@@ -1755,7 +1806,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
         f'<div style="text-align:right;flex-shrink:0">'
         f'<div style="font-size:clamp(36px,10vw,52px);font-weight:500;font-family:Georgia,serif;color:#fff;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.35)">{score:.1f}</div>'
         f'<div style="font-size:14px;color:rgba(255,255,255,.8);text-shadow:0 1px 4px rgba(0,0,0,.3)">/10</div>'
-        f'<div style="font-size:11px;font-weight:600;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.4);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;background:rgba(0,0,0,.2);padding:2px 8px;border-radius:10px;display:inline-block">{best_lbl}</div>'
+        f'<div style="font-size:11px;font-weight:600;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.4);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;background:rgba(0,0,0,.2);padding:2px 8px;border-radius:10px;display:inline-block">{_mtn_badge_override or best_lbl}</div>'
         f'</div>'
         f'</div>'
         f'</div>'
@@ -1789,6 +1840,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
     return (
         f'<div class="decision-card" style="overflow:hidden;border-radius:16px;box-shadow:0 2px 24px rgba(0,0,0,.08)">'
         f'{_hero_block}'
+        f'{_mtn_secondary_pill}'
         f'{_heatmap_block}'
         f'{_pills_row}'
         f'<div style="background:#fff;padding:4px 0 0">'

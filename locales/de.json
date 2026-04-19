@@ -410,7 +410,11 @@
     "dec_budget_4": "Teuer",
     "dec_budget_5": "Sehr teuer",
     "dec_lbl_mer_seche": "Trockenzeit",
-    "dec_lbl_mer_humide": "Regenzeit"
+    "dec_lbl_mer_humide": "Regenzeit",
+    "dec_best_ski_badge": "⛷️ Bestes Ski",
+    "dec_best_rando_badge": "🥾 Beste Wanderung",
+    "dec_also_top_ski_tpl": "Auch top Ski: {month} {score}/10",
+    "dec_also_top_rando_tpl": "Auch top Wandern: {month} {score}/10"
   },
   "monthly": {
     "hero_tpl": "{name} Wetter im {month}",
