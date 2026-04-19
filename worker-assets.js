@@ -170,8 +170,77 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
     const mUS = path.match(PATTERN_US);
     if (mUS) return Response.redirect(`${url.origin}/us/${mUS[1]}-weather-${mUS[2]}.html`, 301);
 
-    // Double subdirectory /us/us/ → /us/
+    // ── Double subdirectory language prefixes (couvre ~100+ 404 GSC) ──
+    // /us/us/X → /us/X  (déjà existait)
+    // /en/en/X → /en/X
+    // /us/en/X → /en/X  (mauvaise concaténation de préfixe)
+    // /us/es/X → /es/X
+    // /us/de/X → /de/X
     if (path.startsWith('/us/us/')) return Response.redirect(`${url.origin}${path.replace('/us/us/', '/us/')}`, 301);
+    if (path.startsWith('/en/en/')) return Response.redirect(`${url.origin}${path.replace('/en/en/', '/en/')}`, 301);
+    if (path.startsWith('/us/en/')) return Response.redirect(`${url.origin}${path.replace('/us/en/', '/en/')}`, 301);
+    if (path.startsWith('/us/es/')) return Response.redirect(`${url.origin}${path.replace('/us/es/', '/es/')}`, 301);
+    if (path.startsWith('/us/de/')) return Response.redirect(`${url.origin}${path.replace('/us/de/', '/de/')}`, 301);
+    if (path.startsWith('/us/fr/')) return Response.redirect(`${url.origin}${path.replace('/us/fr/', '/')}`, 301);
+
+    // ── Slugs renommés (couvre ~200+ 404 GSC sur destinations renamed) ──
+    // Maps par langue car certains slugs diffèrent entre FR/EN/ES/DE
+    const RENAMES_FR = {
+      'la-paz-bolivie': 'la-paz',
+      'val-disere': 'val-d-isere',
+      'cartagena': 'cartagena-col',
+      'menorque': 'minorque',
+      'göteborg': 'goteborg',
+      'koweït': 'koweit',
+      'cuzco': 'cusco-ville',
+      'cusco': 'cusco-ville',
+      'barcelone': 'barcelona',
+      'venise': 'venice',
+      'laponie': 'lapland',
+    };
+    const RENAMES_EN = {
+      'la-paz-bolivia': 'la-paz',
+      'val-disere': 'val-d-isere',
+      'cartagena': 'cartagena-colombia',
+      'majorca': 'mallorca',
+      'shahdag': 'shahdag', // inchangé mais pour éviter match futur
+    };
+    const RENAMES_ES = {
+      'la-paz-bolivia': 'la-paz',
+      'val-disere': 'val-d-isere',
+      'cartagena': 'cartagena-colombia',
+    };
+    const RENAMES_DE = {
+      'la-paz-bolivia': 'la-paz',
+      'val-disere': 'val-d-isere',
+      'cartagena': 'cartagena-colombia',
+    };
+
+    // Extraire langue + slug depuis path
+    // Patterns: /meilleure-periode-X(-en-M)?.html, /X-meteo-M.html (FR)
+    //           /en|us/best-time-to-visit-X(-in-M)?.html, /en|us/X-weather-M.html (EN)
+    //           /es/mejor-epoca-X.html, /es/X-clima-M.html (ES)
+    //           /de/beste-reisezeit-X.html, /de/X-wetter-M.html (DE)
+    const slugExtractRe = /^(\/(?:en|us|es|de)\/(?:best-time-to-visit-|beste-reisezeit-|mejor-epoca-)?|\/meilleure-periode-|\/)([a-zà-üß0-9-]+?)(-in-[a-z]+|-en-[a-zéûà]+|-weather-[a-z]+|-meteo-[a-zéûà]+|-wetter-[a-zä]+|-clima-[a-z]+|)(\.html)?$/i;
+    const m_ren = path.match(slugExtractRe);
+    if (m_ren) {
+      const pathLang = path.startsWith('/en/') || path.startsWith('/us/') ? 'en'
+                    : path.startsWith('/es/') ? 'es'
+                    : path.startsWith('/de/') ? 'de' : 'fr';
+      const renameMap = pathLang === 'en' ? RENAMES_EN
+                     : pathLang === 'es' ? RENAMES_ES
+                     : pathLang === 'de' ? RENAMES_DE
+                     : RENAMES_FR;
+      const slug = m_ren[2].toLowerCase();
+      if (renameMap[slug] && renameMap[slug] !== slug) {
+        const newSlug = renameMap[slug];
+        const newPath = (m_ren[1] || '/') + newSlug + (m_ren[3] || '') + (m_ren[4] || '.html');
+        return Response.redirect(`${url.origin}${newPath}`, 301);
+      }
+    }
+
+    // ── loreto-baja supprimé : redirect vers homepage ──
+    if (path.includes('loreto-baja')) return Response.redirect(`${url.origin}/`, 301);
 
     // Mariage/wedding pages → homepage
     if (path.includes('mariage') || path.includes('wedding')) return Response.redirect(`${url.origin}/`, 301);
@@ -185,6 +254,13 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
     if (path === '/legal.html') return Response.redirect(`${url.origin}/mentions-legales.html`, 301);
     if (path === '/destinations.html') return Response.redirect(`${url.origin}/`, 301);
     if (path === '/methodik.html') return Response.redirect(`${url.origin}/de/app.html`, 301);
+    if (path === '/ueber-uns.html') return Response.redirect(`${url.origin}/de/app.html`, 301);
+    if (path === '/impressum.html') return Response.redirect(`${url.origin}/de/app.html`, 301);
+    if (path === '/note_modele.html') return Response.redirect(`${url.origin}/`, 301);
+
+    // ── Pages FAQ/Contact/Privacy dans sous-dossier langue → page racine ──
+    // ex: /us/faq.html existe, mais /us/en/faq.html, /en/us/faq.html cassés
+    // déjà couverts par les règles de préfixes dupliqués plus haut
 
     // amalfi-coast slugs → amalfi-coast EN page (not in FR)
     if (path.startsWith('/amalfi-coast-meteo-')) {
