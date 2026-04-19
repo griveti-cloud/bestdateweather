@@ -51,18 +51,20 @@
   --line:#e7dfd3;
   --line-soft:#f0ece4;
 
-  /* Shadows navy-tinted */
-  --sh-xs:0 1px 2px rgba(26,31,46,.05);
-  --sh-sm:0 2px 8px rgba(26,31,46,.06);
-  --sh-md:0 4px 16px rgba(26,31,46,.08);
-  --sh-lg:0 10px 32px rgba(26,31,46,.10);
-  --sh-xl:0 18px 48px rgba(26,31,46,.14);
+  /* Shadows navy-tinted — PLUS PROFONDES */
+  --sh-xs:0 1px 2px rgba(26,31,46,.06);
+  --sh-sm:0 3px 10px rgba(26,31,46,.08);
+  --sh-md:0 8px 24px rgba(26,31,46,.10);
+  --sh-lg:0 16px 44px rgba(26,31,46,.12);
+  --sh-xl:0 28px 70px rgba(26,31,46,.18);
+  --sh-hero:0 32px 80px rgba(12,22,44,.22);
 
-  /* Radius */
-  --r-sm:10px;
-  --r-md:14px;
-  --r-lg:18px;
-  --r-xl:24px;
+  /* Radius — PLUS GÉNÉREUX */
+  --r-sm:12px;
+  --r-md:16px;
+  --r-lg:22px;
+  --r-xl:28px;
+  --r-2xl:36px;
 
   /* Spacing */
   --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px;
@@ -107,32 +109,44 @@ a:hover{color:var(--gold)}
 /* ============================================================
    HERO
    ============================================================ */
+.hero-wrap{padding:24px 20px 0;background:var(--cream)}
+@media(min-width:900px){.hero-wrap{padding:32px 32px 0}}
 .hero{
   position:relative;overflow:hidden;
-  min-height:540px;
+  min-height:500px;
+  border-radius:var(--r-2xl);
+  box-shadow:var(--sh-hero);
   background:var(--navy);
+  max-width:1280px;margin:0 auto;
 }
+@media(max-width:599px){.hero{border-radius:var(--r-xl);min-height:460px}}
 .hero-bg{
   position:absolute;inset:0;z-index:0;
   background-image:
-    linear-gradient(180deg,rgba(26,31,46,.25) 0%,rgba(26,31,46,.65) 60%,rgba(26,31,46,.85) 100%),
+    linear-gradient(115deg,rgba(12,22,44,.78) 0%,rgba(17,34,71,.52) 40%,rgba(26,31,46,.28) 100%),
     url('https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?w=1800&q=85&fm=jpg&fit=crop&crop=entropy&auto=format');
   background-size:cover;background-position:center 40%;
 }
+.hero-bg::after{
+  content:"";position:absolute;top:-80px;right:-80px;
+  width:360px;height:360px;
+  background:radial-gradient(circle,rgba(232,148,10,.22) 0%,transparent 60%);
+  pointer-events:none;
+}
 .hero-inner{
   position:relative;z-index:1;
-  padding:48px 0 36px;
+  padding:40px 28px 36px;
   display:grid;gap:32px;
   grid-template-columns:1fr;
 }
 @media(min-width:900px){
   .hero-inner{
-    grid-template-columns:1.15fr .85fr;
-    padding:72px 0 56px;
+    grid-template-columns:1.1fr .9fr;
+    padding:72px 56px 56px;
     align-items:end;
-    gap:48px;
+    gap:56px;
   }
-  .hero{min-height:580px}
+  .hero{min-height:560px}
 }
 
 .hero-kicker{
@@ -208,11 +222,19 @@ a:hover{color:var(--gold)}
 .hero-card{
   background:#fff;
   border-radius:var(--r-xl);
-  padding:26px 26px 24px;
-  box-shadow:var(--sh-xl);
+  padding:28px 30px 26px;
+  box-shadow:0 28px 70px rgba(12,22,44,.35), 0 4px 16px rgba(12,22,44,.15);
   position:relative;
   max-width:380px;
   width:100%;
+}
+.hero-card::before{
+  content:"";position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;
+  border-radius:calc(var(--r-xl) + 2px);
+  background:linear-gradient(135deg,rgba(255,255,255,.3),transparent);
+  z-index:-1;
+  filter:blur(10px);
+  opacity:.6;
 }
 @media(min-width:900px){.hero-card{margin-left:auto}}
 
@@ -305,11 +327,11 @@ section{padding:56px 0;position:relative}
 .decide-main{
   background:#fff;
   border-radius:var(--r-xl);
-  padding:32px;
-  box-shadow:var(--sh-md);
+  padding:36px;
+  box-shadow:var(--sh-lg);
   border:1px solid var(--line-soft);
 }
-@media(max-width:599px){.decide-main{padding:24px 20px}}
+@media(max-width:599px){.decide-main{padding:26px 22px;border-radius:var(--r-lg)}}
 
 .verdict{
   padding:20px 22px;
@@ -421,11 +443,11 @@ section{padding:56px 0;position:relative}
 .graph-wrap{
   background:#fff;
   border-radius:var(--r-xl);
-  padding:28px;
-  box-shadow:var(--sh-md);
+  padding:36px;
+  box-shadow:var(--sh-lg);
   border:1px solid var(--line-soft);
 }
-@media(max-width:599px){.graph-wrap{padding:20px 16px}}
+@media(max-width:599px){.graph-wrap{padding:22px 18px;border-radius:var(--r-lg)}}
 .graph-placeholder{
   height:280px;
   background:linear-gradient(135deg,#faf8f3,#f2ede2);
@@ -442,7 +464,7 @@ section{padding:56px 0;position:relative}
   background:#fff;
   border-radius:var(--r-xl);
   overflow:hidden;
-  box-shadow:var(--sh-md);
+  box-shadow:var(--sh-lg);
   border:1px solid var(--line-soft);
 }
 .m-table{
@@ -498,6 +520,55 @@ section{padding:56px 0;position:relative}
 .mood-good{background:var(--good-bg);color:var(--good);border-color:var(--good-border)}
 .mood-mid{background:var(--mid-bg);color:var(--mid);border-color:var(--mid-border)}
 .mood-bad{background:var(--bad-bg);color:var(--bad);border-color:var(--bad-border)}
+
+/* ============================================================
+   MONTHS GRID (liens vers fiches mensuelles)
+   ============================================================ */
+.months-grid{
+  display:grid;gap:14px;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+}
+.month-link{
+  background:#fff;
+  border-radius:var(--r-md);
+  padding:18px 20px;
+  box-shadow:var(--sh-sm);
+  border:1px solid var(--line-soft);
+  display:block;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+  position:relative;overflow:hidden;
+}
+.month-link:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--sh-md);
+  border-color:var(--gold);
+  color:var(--navy);
+}
+.month-link-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px}
+.month-link-name{
+  font-family:'Playfair Display',serif;
+  font-size:20px;font-weight:700;color:var(--navy);
+  letter-spacing:-.01em;
+}
+.month-link-score{
+  font-size:13.5px;font-weight:800;
+  font-feature-settings:"tnum" 1;
+  padding:3px 9px;border-radius:999px;
+}
+.month-link-score.good{background:var(--good-bg);color:var(--good)}
+.month-link-score.mid{background:var(--mid-bg);color:var(--mid)}
+.month-link-score.bad{background:var(--bad-bg);color:var(--bad)}
+.month-link-meta{
+  font-size:12.5px;color:var(--slate-5);
+  line-height:1.5;padding-right:20px;
+}
+.month-link-meta strong{color:var(--navy);font-weight:600}
+.month-link::after{
+  content:"→";position:absolute;bottom:14px;right:18px;
+  font-size:16px;color:var(--slate-3);
+  transition:transform .2s ease,color .2s ease;
+}
+.month-link:hover::after{transform:translateX(4px);color:var(--gold)}
 
 /* ============================================================
    SEASONS (A quoi s'attendre)
@@ -680,10 +751,10 @@ footer a{color:var(--gold-2)}
 </div>
 
 <!-- ══════════════════════════════ HERO ══════════════════════════════ -->
+<div class="hero-wrap">
 <header class="hero">
   <div class="hero-bg"></div>
-  <div class="container">
-    <div class="hero-inner">
+  <div class="hero-inner">
 
       <!-- Left: title + promise + meta -->
       <div class="hero-left">
@@ -743,9 +814,9 @@ footer a{color:var(--gold-2)}
         </div>
       </div>
 
-    </div>
   </div>
 </header>
+</div>
 
 <!-- ══════════════════════════════ DECIDE ══════════════════════════════ -->
 <section>
@@ -895,6 +966,104 @@ footer a{color:var(--gold-2)}
           <tr><td class="m-month-cell"><span class="m-month">🌧️ Décembre</span></td><td data-label="T° min">24°C</td><td data-label="T° max">29°C</td><td data-label="Pluie">87%</td><td data-label="Précip.">9.2</td><td data-label="Soleil">10.9h</td><td data-label="Score" class="m-score mid">6.2/10</td><td data-label="Lecture" class="m-mood-cell"><span class="mood mood-mid">Lourd</span></td></tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ MONTHS LINKS ══════════════════════════════ -->
+<section style="padding-top:20px">
+  <div class="container">
+    <div class="section-label">Approfondir</div>
+    <h2 class="section-title">Bali mois par mois</h2>
+    <p class="section-lead">
+      Chaque mois a sa propre fiche avec prévisions en direct, tendances saisonnières et conseils spécifiques.
+    </p>
+
+    <div class="months-grid">
+      <a href="bali-meteo-janvier.html" class="month-link">
+        <div class="month-link-head">
+          <div class="month-link-name">Janvier</div>
+          <div class="month-link-score bad">5.8</div>
+        </div>
+        <div class="month-link-meta">🌧️ <strong>29°C</strong> · 90% jours pluvieux · très humide</div>
+      </a>
+      <a href="bali-meteo-fevrier.html" class="month-link">
+        <div class="month-link-head">
+          <div class="month-link-name">Février</div>
+          <div class="month-link-score bad">5.7</div>
+        </div>
+        <div class="month-link-meta">🌧️ <strong>29°C</strong> · 92% jours pluvieux · mousson</div>
+      </a>
+      <a href="bali-meteo-mars.html" class="month-link">
+        <div class="month-link-head">
+          <div class="month-link-name">Mars</div>
+          <div class="month-link-score mid">6.2</div>
+        </div>
+        <div class="month-link-meta">🌧️ <strong>29°C</strong> · 86% jours pluvieux · lourd</div>
+      </a>
+      <a href="bali-meteo-avril.html" class="month-link">
+        <div class="month-link-head">
+          <div class="month-link-name">Avril</div>
+          <div class="month-link-score mid">6.8</div>
+        </div>
+        <div class="month-link-meta">⛅ <strong>29°C</strong> · 74% jours pluvieux · transition</div>
+      </a>
+      <a href="bali-meteo-mai.html" class="month-link">
+        <div class="month-link-head">
+          <div class="month-link-name">Mai</div>
+          <div class="month-link-score mid">6.9</div>
+        </div>
+        <div class="month-link-meta">⛅ <strong>29°C</strong> · 70% jours pluvieux · correct</div>
+      </a>
+      <a href="bali-meteo-juin.html" class="month-link">
+        <div class="month-link-head">
+          <div class="month-link-name">Juin</div>
+          <div class="month-link-score mid">6.9</div>
+        </div>
+        <div class="month-link-meta">⛅ <strong>28°C</strong> · 65% jours pluvieux · correct</div>
+      </a>
+      <a href="bali-meteo-juillet.html" class="month-link" style="border-color:var(--gold);background:linear-gradient(135deg,#fff,#fdfaf3)">
+        <div class="month-link-head">
+          <div class="month-link-name">Juillet ★</div>
+          <div class="month-link-score good">8.0</div>
+        </div>
+        <div class="month-link-meta">🌤️ <strong>27°C</strong> · 59% jours pluvieux · <strong style="color:var(--good)">meilleur mois</strong></div>
+      </a>
+      <a href="bali-meteo-aout.html" class="month-link">
+        <div class="month-link-head">
+          <div class="month-link-name">Août</div>
+          <div class="month-link-score good">7.9</div>
+        </div>
+        <div class="month-link-meta">🌤️ <strong>27°C</strong> · 64% jours pluvieux · très bon</div>
+      </a>
+      <a href="bali-meteo-septembre.html" class="month-link">
+        <div class="month-link-head">
+          <div class="month-link-name">Septembre</div>
+          <div class="month-link-score mid">6.9</div>
+        </div>
+        <div class="month-link-meta">⛅ <strong>28°C</strong> · 64% jours pluvieux · correct</div>
+      </a>
+      <a href="bali-meteo-octobre.html" class="month-link">
+        <div class="month-link-head">
+          <div class="month-link-name">Octobre</div>
+          <div class="month-link-score mid">6.9</div>
+        </div>
+        <div class="month-link-meta">⛅ <strong>29°C</strong> · 66% jours pluvieux · correct</div>
+      </a>
+      <a href="bali-meteo-novembre.html" class="month-link">
+        <div class="month-link-head">
+          <div class="month-link-name">Novembre</div>
+          <div class="month-link-score mid">6.1</div>
+        </div>
+        <div class="month-link-meta">🌧️ <strong>30°C</strong> · 83% jours pluvieux · lourd</div>
+      </a>
+      <a href="bali-meteo-decembre.html" class="month-link">
+        <div class="month-link-head">
+          <div class="month-link-name">Décembre</div>
+          <div class="month-link-score mid">6.2</div>
+        </div>
+        <div class="month-link-meta">🌧️ <strong>29°C</strong> · 87% jours pluvieux · lourd</div>
+      </a>
     </div>
   </div>
 </section>
