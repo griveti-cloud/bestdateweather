@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Prototype v5 — Bali · BestDateWeather</title>
+<link rel="canonical" href="https://bestdateweather.com/prototype-bali-v5.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;800;900&family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  /* Palette BDW */
+  --paper:#ffffff;
+  --cream:#faf8f3;
+  --cream-2:#f6f2ea;
+  --ink:#1a1f2e;
+  --muted:#6b7280;
+  --muted-2:#9ca3af;
+  --line:#e7dfd3;
+  --line-soft:#f0ece4;
+  --gold:#e8940a;
+  --gold-2:#f5b020;
+  --gold-soft:#fdf4dd;
+  --gold-ink:#8f6b12;
+
+  --green:#1a7a4a;
+  --green-soft:#e8f8f0;
+  --green-border:#bfe7cd;
+  --amber:#b8860b;
+  --amber-soft:#fdf6d8;
+  --amber-border:#f2d3bc;
+  --red:#b91c1c;
+  --red-soft:#fdecec;
+  --red-border:#f1cccc;
+
+  --shadow:0 18px 50px rgba(16,26,49,.10);
+  --shadow-sm:0 4px 14px rgba(16,26,49,.06);
+  --shadow-lg:0 28px 70px rgba(12,22,44,.18);
+  --radius:20px;
+  --radius-lg:28px;
+  --max:1160px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;width:100%;max-width:100vw}
+body{
+  margin:0;padding:0;
+  background:linear-gradient(180deg,#faf7f0 0%,#f6f2ea 100%);
+  color:var(--ink);
+  font-family:'DM Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  line-height:1.55;
+  overflow-x:hidden;
+  font-size:15.5px;
+  -webkit-font-smoothing:antialiased;
+  width:100%;
+  max-width:100vw;
+}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block;height:auto}
+
+h1,h2,h3,.serif{font-family:'Playfair Display',Georgia,serif;letter-spacing:-.015em}
+.mono{font-feature-settings:"tnum" 1,"lnum" 1}
+
+.container{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 20px;
+  width:100%;
+}
+@media(min-width:768px){.container{padding:0 28px}}
+
+/* ═══════════════ PROTOTYPE BANNER ═══════════════ */
+.proto-banner{
+  background:var(--gold);color:#fff;
+  text-align:center;padding:10px 16px;
+  font-size:12.5px;font-weight:600;
+  position:sticky;top:0;z-index:999;
+}
+.proto-banner a{color:#fff;text-decoration:underline;margin-left:8px}
+
+/* ═══════════════ TOPBAR ═══════════════ */
+.topbar{
+  position:sticky;top:40px;z-index:50;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(250,247,240,.82);
+  border-bottom:1px solid rgba(26,31,46,.06);
+}
+.topbar-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;padding:14px 0;
+}
+.brand{
+  font-family:'Playfair Display',serif;
+  font-weight:900;font-size:1.15rem;
+  letter-spacing:-.02em;
+}
+.brand em{font-style:normal;color:var(--gold)}
+.nav-actions{display:flex;gap:10px;flex-wrap:wrap}
+.chip,.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:1px solid var(--line);background:var(--paper);
+  color:var(--ink);padding:10px 14px;
+  border-radius:999px;font-size:.92rem;font-weight:600;
+  max-width:100%;white-space:nowrap;
+  transition:transform .15s,box-shadow .15s,border-color .15s;
+  font-family:'DM Sans',sans-serif;
+}
+.chip:hover,.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn.primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold-2));
+  color:#fff;border-color:var(--gold);font-weight:800;
+  box-shadow:0 4px 14px rgba(232,148,10,.35);
+}
+.btn.primary:hover{
+  color:#fff;
+  transform:translateY(-1px);
+  box-shadow:0 8px 22px rgba(232,148,10,.45);
+}
+
+/* ═══════════════ HERO ═══════════════ */
+.hero{padding:24px 0 20px}
+.hero-shell{
+  position:relative;overflow:hidden;
+  min-height:520px;
+  border-radius:30px;
+  box-shadow:var(--shadow-lg);
+  background:
+    linear-gradient(110deg,rgba(11,20,40,.82),rgba(17,39,74,.38)),
+    url('https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?w=1800&q=85&fm=jpg&fit=crop&crop=entropy&auto=format') center/cover no-repeat;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  gap:30px;
+  min-height:520px;
+  align-items:end;
+  padding:40px;
+}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:8px 14px;border-radius:999px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.20);
+  color:#fff;font-size:12.5px;font-weight:600;
+  margin-bottom:18px;letter-spacing:.1px;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  max-width:100%;
+}
+.eyebrow img{width:18px;height:13px;border-radius:2px}
+
+.hero h1{
+  margin:0 0 14px;color:#fff;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,5vw,4rem);
+  font-weight:800;line-height:.98;
+  letter-spacing:-.02em;
+  text-wrap:balance;
+}
+.hero h1 .accent{
+  font-style:italic;
+  font-weight:500;
+  color:#f8df98;
+}
+.hero-lead{
+  margin:0 0 18px;color:rgba(255,255,255,.92);
+  max-width:62ch;font-size:1.02rem;line-height:1.6;
+  font-weight:400;
+}
+.hero-meta{display:flex;gap:10px;flex-wrap:wrap;max-width:100%}
+.hero-meta span{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 13px;border-radius:999px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.14);
+  color:#fff;font-size:12.5px;font-weight:500;
+}
+
+.hero-side{display:flex;justify-content:flex-end;align-items:flex-end;min-width:0}
+
+.decision-card{
+  width:min(390px,100%);
+  background:rgba(255,255,255,.97);
+  border-radius:24px;
+  padding:20px;
+  box-shadow:0 20px 44px rgba(8,16,30,.28),0 4px 12px rgba(8,16,30,.12);
+  min-width:0;
+}
+.small-label,.section-kicker{
+  color:var(--gold);
+  font-size:11px;font-weight:800;
+  letter-spacing:1.2px;text-transform:uppercase;
+}
+.small-label{margin-bottom:12px;display:block}
+
+.decision-top{
+  display:flex;justify-content:space-between;gap:14px;
+  align-items:flex-start;margin-bottom:16px;
+}
+.decision-top .month{
+  font-family:'Playfair Display',serif;
+  font-size:2.1rem;font-weight:800;line-height:1;
+  color:var(--ink);
+}
+.decision-top .sub{
+  font-size:.92rem;color:var(--muted);
+  margin-top:6px;line-height:1.45;
+}
+.decision-top .score{
+  font-family:'Playfair Display',serif;
+  font-size:2.6rem;font-weight:800;line-height:1;
+  text-align:right;flex-shrink:0;color:var(--ink);
+  letter-spacing:-.02em;
+}
+.decision-top .score small{
+  font-size:1rem;color:var(--muted-2);font-weight:700;letter-spacing:-.02em;
+}
+
+.mini-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+.mini-card{
+  padding:11px 12px;border-radius:14px;
+  background:var(--cream);
+  border:1px solid var(--line-soft);
+  min-width:0;
+}
+.mini-card .v{
+  font-weight:800;font-size:.95rem;
+  overflow-wrap:anywhere;color:var(--ink);
+}
+.mini-card .l{
+  font-size:.72rem;color:var(--muted);
+  margin-top:3px;overflow-wrap:anywhere;
+  font-weight:500;
+}
+
+/* ═══════════════ SECTIONS ═══════════════ */
+section{padding:28px 0}
+.section-head{margin-bottom:18px}
+h2{
+  margin:0;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.55rem,2.8vw,2rem);
+  font-weight:700;line-height:1.1;color:var(--ink);
+  letter-spacing:-.015em;
+}
+.lead{
+  margin:10px 0 0;color:var(--muted);
+  max-width:70ch;font-size:15px;line-height:1.55;
+}
+
+/* ═══════════════ CARDS ═══════════════ */
+.card,.box,.faq-item{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  min-width:0;
+}
+.card.pad,.box,.faq-item{padding:22px}
+@media(min-width:768px){.card.pad,.box,.faq-item{padding:24px}}
+
+/* Grid layouts */
+.decision-strip,.spotlight-grid,.grid-2,.grid-3,.grid-4{
+  display:grid;gap:20px;
+}
+.decision-strip{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.spotlight-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+.verdict-box,.right-stack,.signal-card,.faq,.list,.signal-list{
+  display:grid;gap:14px;min-width:0;
+}
+
+.note{
+  padding:17px 19px;border-radius:16px;
+  background:linear-gradient(135deg,#fdfaf3 0%,#fef8e7 100%);
+  border:1px solid var(--gold-soft);
+  border-left:4px solid var(--gold);
+  color:var(--ink);line-height:1.6;font-size:15px;
+  overflow-wrap:anywhere;
+}
+.note strong{color:var(--ink);font-weight:700}
+
+.pills{display:flex;gap:10px;flex-wrap:wrap}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 15px;border-radius:999px;
+  font-size:.92rem;font-weight:800;
+  border:1px solid transparent;
+  max-width:100%;white-space:nowrap;
+  font-feature-settings:"tnum" 1;
+}
+.pill.good{background:var(--green-soft);color:var(--green);border-color:var(--green-border)}
+.pill.mid{background:var(--amber-soft);color:var(--amber);border-color:var(--amber-border)}
+.pill.bad{background:var(--red-soft);color:var(--red);border-color:var(--red-border)}
+
+/* ═══════════════ BARS CHART ═══════════════ */
+.bars{
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:8px;align-items:end;height:130px;
+  margin-top:10px;min-width:0;
+}
+.bar-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  gap:6px;min-width:0;overflow:hidden;
+}
+.bar{
+  width:100%;min-height:18px;
+  border-radius:8px 8px 4px 4px;
+  transition:transform .2s ease;
+}
+.bar:hover{transform:scaleY(1.03)}
+.bar.best{background:linear-gradient(180deg,#2ea86a 0%,#1a7a4a 100%);outline:2px solid var(--gold);outline-offset:1px;box-shadow:0 0 0 4px rgba(232,148,10,.15)}
+.bar.good{background:linear-gradient(180deg,#46c878 0%,#25a75d 100%)}
+.bar.mid{background:linear-gradient(180deg,#ecc568 0%,#b8860b 100%)}
+.bar.low{background:linear-gradient(180deg,#e47272 0%,#b91c1c 100%)}
+.bar-score{
+  font-size:.68rem;color:var(--ink);font-weight:800;
+  text-align:center;font-feature-settings:"tnum" 1;
+  white-space:nowrap;
+}
+.bar-label{
+  font-size:.68rem;color:var(--muted);
+  text-align:center;white-space:nowrap;
+  font-weight:600;letter-spacing:.2px;
+}
+
+/* ═══════════════ RIGHT STACK ═══════════════ */
+.right-item{
+  border:1px solid var(--line-soft);
+  border-radius:14px;padding:14px 16px;
+  background:var(--cream);
+  min-width:0;
+}
+.right-item h3{
+  margin:0 0 6px;font-size:.98rem;font-weight:700;
+  font-family:'DM Sans',sans-serif;color:var(--ink);
+}
+.right-item p{
+  margin:0;color:var(--muted);
+  font-size:.92rem;line-height:1.5;
+  overflow-wrap:anywhere;
+}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ═══════════════ TABLE ═══════════════ */
+.table-wrap{
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  max-width:100%;border-radius:16px;
+}
+table{
+  width:100%;min-width:720px;
+  table-layout:fixed;
+  border-collapse:separate;border-spacing:0;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:16px;overflow:hidden;
+}
+thead th{
+  text-align:left;background:var(--cream);color:var(--gold-ink);
+  font-family:'DM Sans',sans-serif;
+  font-size:.78rem;font-weight:800;
+  letter-spacing:.6px;text-transform:uppercase;
+  padding:13px 12px;
+  border-bottom:1px solid var(--line);
+  white-space:normal;word-break:break-word;
+}
+tbody td{
+  padding:13px 12px;
+  border-bottom:1px solid var(--line-soft);
+  font-size:.92rem;vertical-align:middle;
+  white-space:normal;word-break:break-word;color:var(--ink);
+  font-weight:500;
+}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--cream)}
+.month-cell{font-weight:700;font-size:.96rem}
+
+thead th:nth-child(1),tbody td:nth-child(1){width:17%}
+thead th:nth-child(2),tbody td:nth-child(2){width:10%}
+thead th:nth-child(3),tbody td:nth-child(3){width:10%}
+thead th:nth-child(4),tbody td:nth-child(4){width:13%}
+thead th:nth-child(5),tbody td:nth-child(5){width:12%}
+thead th:nth-child(6),tbody td:nth-child(6){width:10%}
+thead th:nth-child(7),tbody td:nth-child(7){width:10%}
+thead th:nth-child(8),tbody td:nth-child(8){width:18%}
+
+.mood{
+  display:inline-flex;padding:5px 11px;
+  border-radius:999px;
+  font-size:.78rem;font-weight:800;
+  letter-spacing:.2px;
+  max-width:100%;white-space:nowrap;
+}
+.mood.good{background:var(--green-soft);color:var(--green)}
+.mood.mid{background:var(--amber-soft);color:var(--amber)}
+.mood.bad{background:var(--red-soft);color:var(--red)}
+
+/* ═══════════════ SIGNAL CARDS (side tableau) ═══════════════ */
+.signal-item{
+  display:flex;justify-content:space-between;gap:12px;
+  align-items:flex-start;
+  padding:11px 14px;border-radius:12px;
+  background:var(--cream);
+  border:1px solid var(--line-soft);
+  min-width:0;
+}
+.signal-item .l{
+  font-size:.9rem;color:var(--ink);font-weight:500;
+  overflow-wrap:anywhere;min-width:0;
+}
+.signal-item .r{
+  font-weight:800;text-align:right;
+  color:var(--ink);font-size:.92rem;
+  overflow-wrap:anywhere;flex-shrink:0;
+  font-feature-settings:"tnum" 1;
+}
+
+/* ═══════════════ MONTH GRID (liens fiches) ═══════════════ */
+.month-grid{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:12px;
+}
+.month-card{
+  display:block;
+  transition:transform .18s,box-shadow .18s,border-color .18s;
+  position:relative;overflow:hidden;
+}
+.month-card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow);
+  border-color:var(--gold);
+}
+.month-card .top{
+  display:flex;justify-content:space-between;
+  gap:10px;align-items:baseline;margin-bottom:8px;
+}
+.month-card .name{
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:1.05rem;
+  overflow-wrap:anywhere;color:var(--ink);
+  letter-spacing:-.01em;
+}
+.month-card .score{
+  font-size:.92rem;font-weight:800;
+  padding:3px 9px;border-radius:999px;
+  flex-shrink:0;font-feature-settings:"tnum" 1;
+}
+.month-card .score.good{background:var(--green-soft);color:var(--green)}
+.month-card .score.mid{background:var(--amber-soft);color:var(--amber)}
+.month-card .score.bad{background:var(--red-soft);color:var(--red)}
+.month-card .meta{
+  font-size:.82rem;color:var(--muted);
+  overflow-wrap:anywhere;line-height:1.45;
+}
+.month-card.best{
+  background:linear-gradient(135deg,#fff,#fdfaf3);
+  border-color:var(--gold);
+}
+
+/* ═══════════════ BOX HEAD (seasons/profiles) ═══════════════ */
+.box-head{
+  display:flex;justify-content:space-between;
+  gap:10px;align-items:flex-start;margin-bottom:10px;
+}
+.box-head strong{
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;font-weight:700;color:var(--ink);
+  font-weight:700;
+}
+.box p{
+  margin:0;color:var(--muted);
+  font-size:.95rem;line-height:1.55;
+}
+.box p strong{color:var(--ink);font-weight:700}
+.badge{
+  background:var(--gold-soft);
+  border:1px solid var(--gold-soft);
+  color:var(--gold-ink);
+  border-radius:999px;padding:6px 11px;
+  font-size:.78rem;font-weight:800;white-space:nowrap;flex-shrink:0;
+  letter-spacing:.2px;
+}
+
+/* ═══════════════ TRAVEL CTAs ═══════════════ */
+.travel-cta{
+  display:block;text-align:center;
+  padding:13px 16px;border-radius:12px;
+  border:1px solid var(--line);
+  background:var(--paper);
+  font-weight:700;font-size:.92rem;
+  color:var(--ink);
+  transition:background .15s,color .15s,border-color .15s;
+  max-width:100%;
+}
+.travel-cta:hover{
+  background:var(--ink);color:var(--gold-2);
+  border-color:var(--ink);
+}
+.affil-note{
+  display:block;text-align:center;
+  font-size:.7rem;color:var(--muted-2);
+  margin-top:8px;
+}
+
+/* ═══════════════ LIST (infos pratiques) ═══════════════ */
+.list-item{
+  display:flex;justify-content:space-between;gap:12px;
+  padding:11px 14px;
+  border:1px solid var(--line-soft);border-radius:12px;
+  background:var(--cream);
+  align-items:flex-start;min-width:0;
+}
+.list-item span{
+  font-size:.92rem;color:var(--ink);font-weight:500;
+  overflow-wrap:anywhere;min-width:0;
+}
+.list-item strong{
+  font-weight:800;text-align:right;
+  color:var(--ink);font-size:.92rem;
+  overflow-wrap:anywhere;flex-shrink:0;
+}
+.list-item a{color:var(--gold);font-weight:700}
+
+.box h3{
+  margin:0 0 14px;font-size:1.1rem;
+  font-family:'Playfair Display',serif;
+  font-weight:700;color:var(--ink);
+  letter-spacing:-.01em;
+}
+
+/* ═══════════════ FAQ ═══════════════ */
+.faq{display:grid;gap:12px}
+.faq-item strong{
+  display:block;margin-bottom:8px;
+  font-family:'Playfair Display',serif;
+  font-size:1.02rem;font-weight:700;color:var(--ink);
+  letter-spacing:-.01em;
+}
+.faq-item{
+  color:var(--muted);font-size:.95rem;line-height:1.6;
+}
+
+/* ═══════════════ FOOTER ═══════════════ */
+footer{
+  padding:40px 0;background:var(--ink);
+  color:rgba(255,255,255,.7);font-size:.9rem;
+  text-align:center;margin-top:40px;
+}
+footer a{color:var(--gold-2);font-weight:600}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media(max-width:1024px){
+  .hero-grid,
+  .decision-strip,
+  .spotlight-grid,
+  .grid-2{grid-template-columns:1fr}
+  .grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid-3{grid-template-columns:1fr}
+  .month-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+@media(max-width:720px){
+  .container{padding:0 16px}
+  .topbar{top:38px}
+  .topbar-inner{flex-direction:column;align-items:flex-start;padding:12px 0}
+  .hero{padding:16px 0 14px}
+  .hero-shell{min-height:440px;border-radius:22px}
+  .hero-grid{padding:26px 22px;gap:22px;min-height:440px}
+  .hero h1{font-size:2.2rem;max-width:none}
+  .hero-meta span{font-size:11.5px;padding:7px 11px}
+  .mini-grid,.grid-4,.month-grid{grid-template-columns:1fr}
+  .bars{gap:5px;height:110px}
+  .bar-label,.bar-score{font-size:.6rem}
+  .bar-score{font-size:.62rem}
+  h2{font-size:1.45rem}
+  .decision-top .month{font-size:1.75rem}
+  .decision-top .score{font-size:2.15rem}
+  table{min-width:640px}
+  thead th,tbody td{padding:10px;font-size:.84rem}
+  thead th:nth-child(5),tbody td:nth-child(5){display:none}
+  section{padding:22px 0}
+  .card.pad,.box,.faq-item{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="proto-banner">
+  🧪 PROTOTYPE v5 — Refonte complète
+  <a href="/prototype-bali-v4.html">v4</a> ·
+  <a href="/meilleure-periode-bali.html">fiche actuelle</a>
+</div>
+
+<!-- ═════════════════ TOPBAR ═════════════════ -->
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand">Best<em>Date</em>Weather</div>
+    <div class="nav-actions">
+      <a class="chip" href="#">♡ Favoris</a>
+      <a class="chip" href="#">⇪ Partager</a>
+      <a class="btn primary" href="#planifier">✈️ Planifier mon voyage</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════════════ HERO ═════════════════ -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-shell">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">
+            <img src="flags/id.png" alt="ID"/>
+            Bali, Indonésie · Climat tropical humide
+          </div>
+          <h1>Bali : meilleurs et pires <span class="accent">mois pour visiter</span></h1>
+          <p class="hero-lead">
+            Toute l'année n'a pas la même qualité à Bali. Le vrai arbitrage n'est pas la température
+            (stable 24-30°C) mais le couple pluie + humidité + exploitabilité réelle.
+          </p>
+          <div class="hero-meta">
+            <span>📅 Avril 2026</span>
+            <span>🛰️ ERA5 · 10 ans</span>
+            <span>☀️ 11h de soleil en juillet</span>
+            <span>📍 -8.67°N · 115.21°E</span>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="decision-card">
+            <div class="small-label">⚡ Réponse rapide</div>
+            <div class="decision-top">
+              <div>
+                <div class="month">Juillet</div>
+                <div class="sub">Meilleur compromis météo général</div>
+              </div>
+              <div class="score">8.0<small>/10</small></div>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-card"><div class="v">Juil · Aoû</div><div class="l">Top mois</div></div>
+              <div class="mini-card"><div class="v">Février</div><div class="l">Mois à éviter</div></div>
+              <div class="mini-card"><div class="v">Tropical</div><div class="l">Humide toute l'année</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ═════════════════ DÉCIDER ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Décider</div>
+        <h2>Quand partir à Bali ?</h2>
+        <p class="lead">La décision ne se joue pas sur la température (stable 24-30°C) mais sur la pluie et l'humidité. Juillet-août donnent le meilleur équilibre.</p>
+      </div>
+      <div class="decision-strip">
+        <div class="card pad verdict-box">
+          <div class="note">
+            <strong>Verdict :</strong> Bali est une destination d'arbitrage. Les meilleurs mois sont
+            <strong>juillet et août</strong> — les seuls sous 65% de jours pluvieux, avec 11h de soleil.
+            Évitez <strong>janvier-février</strong> (mousson, 90%+ de jours pluvieux).
+          </div>
+
+          <div>
+            <div class="small-label">Top & à éviter</div>
+            <div class="pills">
+              <span class="pill good">🏆 Juillet · 8.0</span>
+              <span class="pill good">Août · 7.9</span>
+              <span class="pill mid">Mai · 6.9</span>
+              <span class="pill mid">Juin · 6.9</span>
+              <span class="pill bad">⚠️ Février · 5.7</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="small-label">Vue annuelle · 12 mois</div>
+            <div class="bars">
+              <div class="bar-wrap"><div class="bar low" style="height:58%"></div><div class="bar-score">5.8</div><div class="bar-label">Jan</div></div>
+              <div class="bar-wrap"><div class="bar low" style="height:57%"></div><div class="bar-score">5.7</div><div class="bar-label">Fév</div></div>
+              <div class="bar-wrap"><div class="bar mid" style="height:62%"></div><div class="bar-score">6.2</div><div class="bar-label">Mar</div></div>
+              <div class="bar-wrap"><div class="bar mid" style="height:68%"></div><div class="bar-score">6.8</div><div class="bar-label">Avr</div></div>
+              <div class="bar-wrap"><div class="bar mid" style="height:69%"></div><div class="bar-score">6.9</div><div class="bar-label">Mai</div></div>
+              <div class="bar-wrap"><div class="bar mid" style="height:69%"></div><div class="bar-score">6.9</div><div class="bar-label">Juin</div></div>
+              <div class="bar-wrap"><div class="bar best" style="height:80%"></div><div class="bar-score">8.0</div><div class="bar-label">Juil</div></div>
+              <div class="bar-wrap"><div class="bar good" style="height:79%"></div><div class="bar-score">7.9</div><div class="bar-label">Aoû</div></div>
+              <div class="bar-wrap"><div class="bar mid" style="height:69%"></div><div class="bar-score">6.9</div><div class="bar-label">Sep</div></div>
+              <div class="bar-wrap"><div class="bar mid" style="height:69%"></div><div class="bar-score">6.9</div><div class="bar-label">Oct</div></div>
+              <div class="bar-wrap"><div class="bar mid" style="height:61%"></div><div class="bar-score">6.1</div><div class="bar-label">Nov</div></div>
+              <div class="bar-wrap"><div class="bar mid" style="height:62%"></div><div class="bar-score">6.2</div><div class="bar-label">Déc</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card pad right-stack">
+          <div class="right-item">
+            <h3>Ce qu'on comprend en 5 secondes</h3>
+            <p>Le meilleur score ne signifie pas "temps sec parfait", mais "moins lourd, moins pluvieux, plus exploitable".</p>
+          </div>
+          <div class="right-item">
+            <h3>Ce qu'il faut vérifier ensuite</h3>
+            <p>Comparer mois par mois la pluie, le soleil et le ressenti tropical — pas seulement la température.</p>
+          </div>
+          <div class="right-item">
+            <h3>Action suivante</h3>
+            <p>Descendre au tableau détaillé, puis ouvrir la fiche du mois qui vous intéresse.</p>
+          </div>
+          <div class="cta-row">
+            <a class="btn primary" href="#tableau">Comparer les 12 mois</a>
+            <a class="btn" href="#par-projet">Selon votre projet</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ COMPRENDRE (TABLEAU + SIGNAUX) ═════════════════ -->
+  <section id="tableau">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Comprendre</div>
+        <h2>Comparer les 12 mois</h2>
+        <p class="lead">Le détail de chaque mois : températures, pluie, soleil, score et lecture synthétique.</p>
+      </div>
+      <div class="spotlight-grid">
+        <div class="card pad">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mois</th>
+                  <th>T° min</th>
+                  <th>T° max</th>
+                  <th>Jours pluie</th>
+                  <th>Précip.</th>
+                  <th>Soleil</th>
+                  <th>Score</th>
+                  <th>Lecture</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="month-cell">🌧️ Janvier</td><td>24°C</td><td>29°C</td><td>90%</td><td>10.3mm</td><td>9.9h</td><td>5.8/10</td><td><span class="mood bad">Mousson</span></td></tr>
+                <tr><td class="month-cell">🌧️ Février</td><td>24°C</td><td>29°C</td><td>92%</td><td>11.8mm</td><td>10.3h</td><td>5.7/10</td><td><span class="mood bad">Mousson</span></td></tr>
+                <tr><td class="month-cell">🌧️ Mars</td><td>24°C</td><td>29°C</td><td>86%</td><td>7.5mm</td><td>10.9h</td><td>6.2/10</td><td><span class="mood mid">Lourd</span></td></tr>
+                <tr><td class="month-cell">⛅ Avril</td><td>24°C</td><td>29°C</td><td>74%</td><td>5.1mm</td><td>11.2h</td><td>6.8/10</td><td><span class="mood mid">Transition</span></td></tr>
+                <tr><td class="month-cell">⛅ Mai</td><td>24°C</td><td>29°C</td><td>70%</td><td>4.2mm</td><td>11.1h</td><td>6.9/10</td><td><span class="mood mid">Correct</span></td></tr>
+                <tr><td class="month-cell">⛅ Juin</td><td>24°C</td><td>28°C</td><td>65%</td><td>3.6mm</td><td>11.0h</td><td>6.9/10</td><td><span class="mood mid">Correct</span></td></tr>
+                <tr><td class="month-cell">🌤️ Juillet</td><td>23°C</td><td>27°C</td><td>59%</td><td>2.9mm</td><td>11.0h</td><td>8.0/10</td><td><span class="mood good">Meilleur</span></td></tr>
+                <tr><td class="month-cell">🌤️ Août</td><td>23°C</td><td>27°C</td><td>64%</td><td>2.0mm</td><td>11.0h</td><td>7.9/10</td><td><span class="mood good">Très bon</span></td></tr>
+                <tr><td class="month-cell">⛅ Septembre</td><td>23°C</td><td>28°C</td><td>64%</td><td>3.2mm</td><td>11.5h</td><td>6.9/10</td><td><span class="mood mid">Correct</span></td></tr>
+                <tr><td class="month-cell">⛅ Octobre</td><td>24°C</td><td>29°C</td><td>66%</td><td>3.7mm</td><td>12.0h</td><td>6.9/10</td><td><span class="mood mid">Correct</span></td></tr>
+                <tr><td class="month-cell">🌧️ Novembre</td><td>24°C</td><td>30°C</td><td>83%</td><td>7.4mm</td><td>11.5h</td><td>6.1/10</td><td><span class="mood mid">Lourd</span></td></tr>
+                <tr><td class="month-cell">🌧️ Décembre</td><td>24°C</td><td>29°C</td><td>87%</td><td>9.2mm</td><td>10.9h</td><td>6.2/10</td><td><span class="mood mid">Lourd</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="signal-card">
+          <div class="card pad">
+            <div class="small-label">📊 Lecture rapide</div>
+            <div class="signal-list">
+              <div class="signal-item"><div class="l">Fenêtre optimale</div><div class="r">Juil → Aoû</div></div>
+              <div class="signal-item"><div class="l">Bonne transition</div><div class="r">Avr · Mai</div></div>
+              <div class="signal-item"><div class="l">Période lourde</div><div class="r">Nov → Mar</div></div>
+            </div>
+          </div>
+          <div class="card pad">
+            <div class="small-label">🌡️ Conditions détaillées (juillet)</div>
+            <div class="signal-list">
+              <div class="signal-item"><div class="l">🌡️ Ressenti</div><div class="r">Lourd</div></div>
+              <div class="signal-item"><div class="l">☀️ UV</div><div class="r">6.8 · Fort</div></div>
+              <div class="signal-item"><div class="l">💧 Dew point</div><div class="r">21.7°C</div></div>
+              <div class="signal-item"><div class="l">🌫️ AQI</div><div class="r">24 · Excellent</div></div>
+              <div class="signal-item"><div class="l">🌊 Vagues (surf)</div><div class="r">1.56m</div></div>
+              <div class="signal-item"><div class="l">🌡️ Mer</div><div class="r">27.8°C</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ APPROFONDIR PAR MOIS (liens fiches) ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Approfondir</div>
+        <h2>Bali mois par mois</h2>
+        <p class="lead">Chaque mois a sa fiche dédiée avec prévisions en direct et conseils spécifiques.</p>
+      </div>
+      <div class="month-grid">
+        <a href="bali-meteo-janvier.html" class="month-card box"><div class="top"><div class="name">Janvier</div><div class="score bad">5.8</div></div><div class="meta">🌧️ 29°C · 90% pluie · mousson</div></a>
+        <a href="bali-meteo-fevrier.html" class="month-card box"><div class="top"><div class="name">Février</div><div class="score bad">5.7</div></div><div class="meta">🌧️ 29°C · 92% pluie · mousson</div></a>
+        <a href="bali-meteo-mars.html" class="month-card box"><div class="top"><div class="name">Mars</div><div class="score mid">6.2</div></div><div class="meta">🌧️ 29°C · 86% pluie · lourd</div></a>
+        <a href="bali-meteo-avril.html" class="month-card box"><div class="top"><div class="name">Avril</div><div class="score mid">6.8</div></div><div class="meta">⛅ 29°C · 74% pluie · transition</div></a>
+        <a href="bali-meteo-mai.html" class="month-card box"><div class="top"><div class="name">Mai</div><div class="score mid">6.9</div></div><div class="meta">⛅ 29°C · 70% pluie · correct</div></a>
+        <a href="bali-meteo-juin.html" class="month-card box"><div class="top"><div class="name">Juin</div><div class="score mid">6.9</div></div><div class="meta">⛅ 28°C · 65% pluie · correct</div></a>
+        <a href="bali-meteo-juillet.html" class="month-card box best"><div class="top"><div class="name">Juillet ★</div><div class="score good">8.0</div></div><div class="meta">🌤️ 27°C · 59% pluie · <strong>meilleur mois</strong></div></a>
+        <a href="bali-meteo-aout.html" class="month-card box"><div class="top"><div class="name">Août</div><div class="score good">7.9</div></div><div class="meta">🌤️ 27°C · 64% pluie · très bon</div></a>
+        <a href="bali-meteo-septembre.html" class="month-card box"><div class="top"><div class="name">Septembre</div><div class="score mid">6.9</div></div><div class="meta">⛅ 28°C · 64% pluie · correct</div></a>
+        <a href="bali-meteo-octobre.html" class="month-card box"><div class="top"><div class="name">Octobre</div><div class="score mid">6.9</div></div><div class="meta">⛅ 29°C · 66% pluie · correct</div></a>
+        <a href="bali-meteo-novembre.html" class="month-card box"><div class="top"><div class="name">Novembre</div><div class="score mid">6.1</div></div><div class="meta">🌧️ 30°C · 83% pluie · lourd</div></a>
+        <a href="bali-meteo-decembre.html" class="month-card box"><div class="top"><div class="name">Décembre</div><div class="score mid">6.2</div></div><div class="meta">🌧️ 29°C · 87% pluie · lourd</div></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ À QUOI S'ATTENDRE ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Contexte</div>
+        <h2>À quoi s'attendre selon la période</h2>
+        <p class="lead">Bali suit un cycle tropical à deux saisons bien marquées.</p>
+      </div>
+      <div class="grid-2">
+        <div class="box">
+          <div class="box-head">
+            <div><strong>☀️ Saison sèche</strong></div>
+            <span class="badge">Mai → Septembre</span>
+          </div>
+          <p>
+            Journées longues (11-12h de soleil), humidité plus basse (60-65%), averses courtes plutôt que persistantes.
+            <strong>Période à privilégier</strong> pour la plongée, le surf côte ouest et les treks (Agung, Batur).
+            Juillet-août sont aussi les plus fréquentés — réservez tôt.
+          </p>
+        </div>
+        <div class="box">
+          <div class="box-head">
+            <div><strong>🌧️ Saison humide</strong></div>
+            <span class="badge">Novembre → Mars</span>
+          </div>
+          <p>
+            Mousson tropicale : 80-92% de jours pluvieux en pic (janvier-février), humidité oppressante (80%+),
+            orages fréquents en fin d'après-midi. <strong>Visiter reste possible</strong> mais exige d'accepter
+            la pluie quotidienne. Tarifs nettement plus bas, fréquentation réduite.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ PROFILS ═════════════════ -->
+  <section id="par-projet">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Adapter</div>
+        <h2>Meilleure période selon votre type de voyage</h2>
+        <p class="lead">Le meilleur mois dépend de ce que vous venez chercher.</p>
+      </div>
+      <div class="grid-4">
+        <div class="box">
+          <div class="box-head"><div><strong>🏄 Plage & surf</strong></div><span class="badge">Juin-Sept.</span></div>
+          <p>Houle optimale côte ouest (Uluwatu, Canggu), mer 28°C, 11h de soleil. Août particulièrement dynamique.</p>
+        </div>
+        <div class="box">
+          <div class="box-head"><div><strong>🛕 Temples & culture</strong></div><span class="badge">Mai · Octobre</span></div>
+          <p>Moins de foule qu'en juillet-août, météo encore bonne. Idéal pour Ubud, Tirta Empul, Besakih.</p>
+        </div>
+        <div class="box">
+          <div class="box-head"><div><strong>🥾 Trek volcans</strong></div><span class="badge">Juillet-Août</span></div>
+          <p>Visibilité maximale au sommet d'Agung (3 031m) et Batur. Sentiers secs, températures fraîches au lever.</p>
+        </div>
+        <div class="box">
+          <div class="box-head"><div><strong>💻 Digital nomad</strong></div><span class="badge">Avril-Oct.</span></div>
+          <p>Canggu et Ubud en hubs, wifi stable, coûts bas. Hors mousson recommandé pour le confort.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ PLANIFIER ═════════════════ -->
+  <section id="planifier" style="scroll-margin-top:120px">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Réserver</div>
+        <h2>Planifier votre séjour</h2>
+        <p class="lead">Les tarifs baissent nettement en février-mars mais la météo plombe l'expérience. Juillet-août offrent le meilleur rapport qualité / prix.</p>
+      </div>
+      <div class="grid-3">
+        <div class="box">
+          <h3>🏨 Hébergement</h3>
+          <p>500+ hôtels et villas à Seminyak, Ubud, Canggu ou Nusa Dua selon votre budget.</p>
+          <div style="margin-top:16px">
+            <a class="travel-cta" href="https://www.expedia.com/Hotel-Search?destination=Bali&camref=1100l5Ftd3" target="_blank" rel="sponsored noopener">Voir sur Expedia →</a>
+            <span class="affil-note">Lien affilié · Expedia</span>
+          </div>
+        </div>
+        <div class="box">
+          <h3>🎟️ Activités & excursions</h3>
+          <p>Temples, rizières, plongée, volcans. Réservation annulable gratuitement.</p>
+          <div style="margin-top:16px">
+            <a class="travel-cta" href="https://www.getyourguide.fr/s/?q=Bali%2C+Indonesia&partner_id=2MQKL00&locale=fr" target="_blank" rel="sponsored noopener">Voir sur GetYourGuide →</a>
+            <span class="affil-note">Lien affilié · GetYourGuide</span>
+          </div>
+        </div>
+        <div class="box">
+          <h3>✈️ Vols</h3>
+          <p>Aéroport Denpasar (DPS). 14-16h depuis Paris avec escale à Doha, Dubaï ou Singapour.</p>
+          <div style="margin-top:16px">
+            <a class="travel-cta" href="https://www.kiwi.com/deep?affilid=708106&to=Bali&lang=fr" target="_blank" rel="sponsored noopener">Rechercher un vol →</a>
+            <span class="affil-note">Lien affilié · Kiwi.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ INFOS PRATIQUES ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Infos pratiques</div>
+        <h2>Ce qu'il faut savoir avant de partir</h2>
+        <p class="lead">Budget, sécurité, monnaie, conditions de la mer — les détails qui ne doivent pas casser la décision mais restent utiles.</p>
+      </div>
+      <div class="grid-2">
+        <div class="box">
+          <h3>🌊 Mer, budget, sécurité</h3>
+          <div class="list">
+            <div class="list-item"><span>Température de la mer — saison sèche</span><strong>27.8°C</strong></div>
+            <div class="list-item"><span>Température de la mer — saison humide</span><strong>28.5°C</strong></div>
+            <div class="list-item"><span>Budget</span><strong>Économique</strong></div>
+            <div class="list-item"><span>Sécurité</span><strong>Vigilance normale</strong></div>
+          </div>
+        </div>
+        <div class="box">
+          <h3>📍 Localisation & tendance</h3>
+          <div class="list">
+            <div class="list-item"><span>Monnaie</span><strong>IDR (Roupie)</strong></div>
+            <div class="list-item"><span>Langue</span><strong>Indonésien</strong></div>
+            <div class="list-item"><span>Conduite</span><strong>À gauche</strong></div>
+            <div class="list-item"><span>Tendance climatique</span><strong>+0.34°C/décennie</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ EXPLORER ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Explorer</div>
+        <h2>Destinations & guides complémentaires</h2>
+        <p class="lead">Si Bali ne colle pas à vos dates — voici des alternatives et des guides.</p>
+      </div>
+      <div class="grid-3">
+        <div class="box">
+          <h3>Destinations au climat similaire</h3>
+          <div class="list">
+            <div class="list-item"><span>Phuket (Thaïlande)</span><strong>Similaire</strong></div>
+            <div class="list-item"><span>Koh Samui (Thaïlande)</span><strong>Saisons proches</strong></div>
+            <div class="list-item"><span>Tahiti (Polynésie)</span><strong>Tropical</strong></div>
+            <div class="list-item"><span>Polynésie française</span><strong>Tropical</strong></div>
+          </div>
+        </div>
+        <div class="box">
+          <h3>Destinations proches</h3>
+          <div class="list">
+            <div class="list-item"><span>Canggu</span><strong>9 km</strong></div>
+            <div class="list-item"><span>Ubud</span><strong>19 km</strong></div>
+            <div class="list-item"><span>Nusa Penida</span><strong>37 km</strong></div>
+            <div class="list-item"><span>Îles Gili</span><strong>98 km</strong></div>
+          </div>
+        </div>
+        <div class="box">
+          <h3>Guides & classements</h3>
+          <div class="list">
+            <div class="list-item"><span>Classement mondial 2026</span><strong><a href="classement-destinations-meteo-2026.html">Voir →</a></strong></div>
+            <div class="list-item"><span>Meilleures destinations été</span><strong><a href="classement-destinations-meteo-ete-2026.html">Voir →</a></strong></div>
+            <div class="list-item"><span>Soleil hiver</span><strong><a href="classement-destinations-meteo-hiver-2026.html">Voir →</a></strong></div>
+            <div class="list-item"><span>Où partir en juillet</span><strong><a href="ou-partir-en-juillet.html">Voir →</a></strong></div>
+          </div>
+          <div style="margin-top:16px">
+            <a class="travel-cta" href="carte.html">🗺️ Carte climatique des 754 destinations</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ FAQ ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Questions</div>
+        <h2>Questions fréquentes</h2>
+        <p class="lead">Les réponses les plus cherchées à propos de Bali.</p>
+      </div>
+      <div class="faq">
+        <div class="faq-item">
+          <strong>Quelle est la meilleure période pour partir à Bali ?</strong>
+          Juillet est le meilleur mois avec un score de 8.0/10 : 27°C en journée, 23°C la nuit, 11h de soleil et 59% de jours pluvieux (le plus bas de l'année). Août suit très près avec 7.9/10.
+        </div>
+        <div class="faq-item">
+          <strong>Quel est le mois le plus pluvieux à Bali ?</strong>
+          Février, avec 92% de jours de pluie et 11.8 mm/j de précipitations. C'est le pic de la mousson tropicale.
+        </div>
+        <div class="faq-item">
+          <strong>Bali est-il agréable en décembre ou janvier ?</strong>
+          Ces mois restent praticables (score 5.8-6.2) mais la saison humide est installée : averses quotidiennes, humidité 80%+. Tarifs bas et foule réduite en compensation.
+        </div>
+        <div class="faq-item">
+          <strong>Quand part-on pour le surf à Bali ?</strong>
+          Saison sèche (mai-septembre) côté ouest (Uluwatu, Canggu) pour la meilleure houle. Côté est (Nusa Dua, Keramas), préférez novembre-mars.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    Prototype v5 · Refonte UX fiche destination · <a href="/meilleure-periode-bali.html">Voir la fiche actuelle</a>
+  </div>
+</footer>
+
+</body>
+</html>
