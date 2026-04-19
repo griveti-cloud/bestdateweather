@@ -414,7 +414,9 @@
     "dec_best_ski_badge": "⛷️ Meilleur ski",
     "dec_best_rando_badge": "🥾 Meilleure rando",
     "dec_also_top_ski_tpl": "Aussi top ski : {month} {score}/10",
-    "dec_also_top_rando_tpl": "Aussi top rando : {month} {score}/10"
+    "dec_also_top_rando_tpl": "Aussi top rando : {month} {score}/10",
+    "dec_bm_ski": "⛷️ Ski",
+    "dec_bm_rando": "🥾 Rando"
   },
   "monthly": {
     "hero_tpl": "Météo {name} en {month_lc}",
