@@ -72,7 +72,14 @@
   --s-9:48px; --s-10:64px; --s-11:80px;
 }
 
-html,body{background:var(--cream);color:var(--navy);overflow-x:hidden;max-width:100%}
+html,body{
+  background:var(--cream);color:var(--navy);
+  overflow-x:hidden;
+  width:100%;
+  max-width:100vw;
+  margin:0;
+  padding:0;
+}
 body{
   font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   font-size:15.5px;
@@ -81,8 +88,15 @@ body{
   -moz-osx-font-smoothing:grayscale;
   overflow-x:hidden;
   position:relative;
+  min-width:0;
 }
 img{max-width:100%;height:auto;display:block}
+
+/* Protection contre débordement sur tous les wrappers majeurs */
+header,main,footer,section,.container,.hero-wrap{
+  width:100%;max-width:100%;
+  min-width:0;
+}
 
 /* Typography */
 h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--navy);letter-spacing:-.015em;line-height:1.15}
