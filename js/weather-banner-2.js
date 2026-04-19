@@ -766,15 +766,31 @@
         });
         var n = document.getElementById("btn-go");
         n && n.addEventListener("click", function() {
-          // Reset le flag _wbTracked pour que l'observer redéclenche E() après runAnnual
+          // Reset les flags pour que les observers redéclenchent après chaque recherche
           var mg = document.getElementById("months-grid");
           if (mg) mg._wbTracked = false;
-          // En mode annuel, E() est déclenché par l'observer quand months-grid se remplit.
-          // N() ne doit tourner qu'en mode date, sinon on pollue les recents avec mode:"date" sans date.
-          var annWrap = document.getElementById("annual-wrap");
-          var isAnnual = annWrap && annWrap.style.display !== "none";
-          if (!isAnnual) setTimeout(N, 3e3)
-        })
+          var hero = document.getElementById("hero");
+          if (hero) hero._wbTracked = false;
+        });
+        // Observer #hero : N() déclenché seulement quand la recherche aboutit
+        // (showResults fait showSection('hero') qui set display != 'none').
+        // Ça évite les entrées pourries capturées à mi-frappe par setTimeout.
+        var heroEl = document.getElementById("hero");
+        if (heroEl) {
+          var heroObs = new MutationObserver(function() {
+            if (heroEl.style.display && heroEl.style.display !== "none" && !heroEl._wbTracked) {
+              heroEl._wbTracked = true;
+              // En mode annuel, #hero peut aussi s'afficher (rare). On double-check.
+              var aw = document.getElementById("annual-wrap");
+              var isAnn = aw && aw.style.display !== "none";
+              if (!isAnn) N();
+            }
+          });
+          heroObs.observe(heroEl, {
+            attributes: true,
+            attributeFilter: ["style"]
+          });
+        }
       }()
   }
   window.wbToggleHourly = function() {
