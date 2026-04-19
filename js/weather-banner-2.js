@@ -637,7 +637,7 @@
   function E() {
     var e = document.getElementById("ann-city-name");
     if (e && e.textContent) {
-      for (var t = e.textContent.trim(), n = document.getElementById("ann-city"), a = n ? n.value.trim() : t, i = 0, r = 0, o = document.querySelectorAll(".mcard-score"), l = 0; l < o.length; l++) {
+      for (var t = e.textContent.trim(), n = document.getElementById("ann-city"), a = n ? n.value.trim() : t, i = 0, r = 0, o = document.querySelectorAll(".month-score"), l = 0; l < o.length; l++) {
         var s = parseFloat(o[l].textContent);
         isNaN(s) || (i += s, r++)
       }
@@ -749,21 +749,24 @@
         y = e, window._wbSuggestions = e, x(), F()
       }).catch(function() {}),
       function() {
-        var e = new MutationObserver(function(e) {
-            for (var t = 0; t < e.length; t++) {
-              var n = document.getElementById("ann-city-name");
-              if (n && n.textContent) {
-                var a = document.getElementById("months-grid");
-                a && a.children.length > 0 && !a._wbTracked && (a._wbTracked = !0, E())
-              }
+        // Observer dédié à #months-grid : se déclenche quand les 12 cards
+        // sont injectées par renderAnnual(). Plus robuste que d'observer un
+        // conteneur parent (.wrap avait été renommé lors du redesign homepage
+        // → observer jamais attaché → recherches annuelles jamais enregistrées).
+        var mgEl = document.getElementById("months-grid");
+        if (mgEl) {
+          var mgObs = new MutationObserver(function() {
+            var anm = document.getElementById("ann-city-name");
+            if (anm && anm.textContent && mgEl.children.length > 0 && !mgEl._wbTracked) {
+              mgEl._wbTracked = true;
+              E();
             }
-          }),
-          t = document.querySelector(".wrap");
-        t && e.observe(t, {
-          childList: !0,
-          subtree: !0,
-          characterData: !0
-        });
+          });
+          mgObs.observe(mgEl, {
+            childList: true,
+            subtree: false
+          });
+        }
         var n = document.getElementById("btn-go");
         n && n.addEventListener("click", function() {
           // Reset les flags pour que les observers redéclenchent après chaque recherche
