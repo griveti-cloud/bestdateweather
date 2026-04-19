@@ -570,15 +570,24 @@ thead th:nth-child(8),tbody td:nth-child(8){width:18%}
 .list-item{
   display:flex;justify-content:space-between;gap:12px;
   align-items:flex-start;
+  text-decoration:none;color:inherit;
+  transition:border-color .15s,background .15s,transform .15s;
 }
+a.list-item:hover{
+  border-color:var(--gold);
+  background:#fef8e7;
+  transform:translateX(2px);
+}
+a.list-item:hover strong{color:var(--gold)}
 .list-item span{
   font-size:.92rem;color:var(--ink);font-weight:500;
   overflow-wrap:anywhere;min-width:0;
 }
 .list-item strong{
   font-weight:800;text-align:right;
-  color:var(--ink);font-size:.92rem;
+  color:var(--ink);font-size:.88rem;
   overflow-wrap:anywhere;flex-shrink:0;
+  transition:color .15s;
 }
 .list-item a{color:var(--gold);font-weight:700}
 
@@ -656,6 +665,25 @@ tbody tr[onclick]:hover .month-cell span{color:var(--gold-2) !important;transfor
 tbody tr[onclick] .month-cell span{display:inline-block;transition:transform .15s ease}
 /* Accessibilité keyboard */
 tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+
+
+/* ═══════════════ DEST-MAP (Leaflet 2 cartes) — récupéré prod ═══════════════ */
+.dest-map-section{margin-bottom:0}
+.dest-map-row{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}
+.dest-map-card{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;background:#e8f0f8}
+.dest-map-lbl{display:block;padding:6px 12px;font-size:10.5px;font-weight:700;color:var(--ink);letter-spacing:.4px;text-transform:uppercase;background:var(--cream-2);border-bottom:1px solid #e8e0d0}
+.dest-map-el--world{height:180px;width:100%;display:block}
+.dest-map-el--macro{height:180px;width:100%;display:block}
+.dest-map-credit{font-size:9px;color:#aaa;padding:2px 8px;background:var(--cream);border-top:1px solid #f0ebe0}
+.dest-map-credit a{color:#aaa}
+.dest-map-intro{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--cream);border-radius:10px;border:1px solid var(--line-soft)}
+.dest-map-country{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.dest-map-hsub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:6px}
+.dest-map-coords{font-size:11px;color:#bbb;font-family:ui-monospace,'SF Mono',monospace}
+@media(max-width:600px){
+  .dest-map-row{grid-template-columns:1fr}
+  .dest-map-el--world,.dest-map-el--macro{height:160px}
+}
 
 </style>
 
@@ -1169,19 +1197,19 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
         <div class="box">
           <h3>Destinations au climat similaire</h3>
           <div class="list">
-            <div class="list-item"><span>Phuket (Thaïlande)</span><strong>Similaire</strong></div>
-            <div class="list-item"><span>Koh Samui (Thaïlande)</span><strong>Saisons proches</strong></div>
-            <div class="list-item"><span>Tahiti (Polynésie)</span><strong>Tropical</strong></div>
-            <div class="list-item"><span>Polynésie française</span><strong>Tropical</strong></div>
+            <a href="meilleure-periode-phuket.html" class="list-item"><span>Phuket (Thaïlande)</span><strong>Similaire →</strong></a>
+            <a href="meilleure-periode-koh-samui.html" class="list-item"><span>Koh Samui (Thaïlande)</span><strong>Saisons proches →</strong></a>
+            <a href="meilleure-periode-tahiti.html" class="list-item"><span>Tahiti (Polynésie)</span><strong>Tropical →</strong></a>
+            <a href="meilleure-periode-polynesie.html" class="list-item"><span>Polynésie française</span><strong>Tropical →</strong></a>
           </div>
         </div>
         <div class="box">
           <h3>Destinations proches</h3>
           <div class="list">
-            <div class="list-item"><span>Canggu</span><strong>9 km</strong></div>
-            <div class="list-item"><span>Ubud</span><strong>19 km</strong></div>
-            <div class="list-item"><span>Nusa Penida</span><strong>37 km</strong></div>
-            <div class="list-item"><span>Îles Gili</span><strong>98 km</strong></div>
+            <a href="meilleure-periode-canggu.html" class="list-item"><span>Canggu</span><strong>9 km →</strong></a>
+            <a href="meilleure-periode-ubud.html" class="list-item"><span>Ubud</span><strong>19 km →</strong></a>
+            <a href="meilleure-periode-nusa-penida.html" class="list-item"><span>Nusa Penida</span><strong>37 km →</strong></a>
+            <a href="meilleure-periode-gili.html" class="list-item"><span>Îles Gili</span><strong>98 km →</strong></a>
           </div>
         </div>
         <div class="box">
