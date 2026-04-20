@@ -1345,15 +1345,29 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
 
 
   <!-- ═════════════════ LOCALISATION (2 cartes Leaflet) ═════════════════ -->
-  <section>
+  <section class="dest-map-section">
     <div class="container">
       <div class="section-head">
         <div class="section-kicker">Localisation</div>
         <h2>Où se trouve Bali ?</h2>
         <p class="lead">Monde + contexte géographique.</p>
       </div>
-      <div class="card pad">
-<section class="section dest-map-section"><div class="section-label">Localisation</div><div class="dest-map-row" data-dest-map="1" data-lat="-8.67" data-lon="115.21" data-macro-zoom="3" data-world-id="dmap-world-bali" data-macro-id="dmap-macro-bali"><div class="dest-map-card"><div class="dest-map-lbl">🌍 Monde</div><div id="dmap-world-bali" class="dest-map-el dest-map-el--world"></div></div><div class="dest-map-card"><div class="dest-map-lbl">🔍 Contexte géographique</div><div id="dmap-macro-bali" class="dest-map-el dest-map-el--macro"></div></div></div><div class="dest-map-intro"><div class="dest-map-intro-body"><div class="dest-map-country"><img src="flags/id.png" width="16" height="12" alt="ID" style="vertical-align:middle;border-radius:2px;margin-right:5px">Indonésie</div><div class="dest-map-hsub">Bali est visitable toute l'année mais la mousson (nov-mars) multiplie par 6 les risques de pluie. 10 ans de données pour choisir selon votre projet.</div><div class="dest-map-coords">8.67°S · 115.21°E</div></div></div></section>
+      <div class="dest-map-row" data-dest-map="1" data-lat="-8.67" data-lon="115.21" data-macro-zoom="3" data-world-id="dmap-world-bali" data-macro-id="dmap-macro-bali">
+        <div class="dest-map-card">
+          <div class="dest-map-lbl">🌍 Monde</div>
+          <div id="dmap-world-bali" class="dest-map-el dest-map-el--world"></div>
+        </div>
+        <div class="dest-map-card">
+          <div class="dest-map-lbl">🔍 Contexte géographique</div>
+          <div id="dmap-macro-bali" class="dest-map-el dest-map-el--macro"></div>
+        </div>
+      </div>
+      <div class="dest-map-intro">
+        <div class="dest-map-intro-body">
+          <div class="dest-map-country"><img src="flags/id.png" width="16" height="12" alt="ID" style="vertical-align:middle;border-radius:2px;margin-right:5px">Indonésie</div>
+          <div class="dest-map-hsub">Bali est visitable toute l'année mais la mousson (nov-mars) multiplie par 6 les risques de pluie. 10 ans de données pour choisir selon votre projet.</div>
+          <div class="dest-map-coords">8.67°S · 115.21°E</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1398,5 +1412,34 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
 
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 <script src="js/dest-map.min.js?v=1" defer></script>
+<script>
+  // Force un invalidateSize après que toute la page (fonts, images, widgets) soit chargée
+  // pour corriger les tiles partielles quand la section est initialement hors viewport
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.querySelectorAll('.dest-map-el').forEach(function(el) {
+        if (el._map) el._map.invalidateSize();
+      });
+    }, 500);
+    // Retry après scroll vers la section (force une 2e passe)
+    var section = document.querySelector('.dest-map-section');
+    if (section) {
+      var observed = false;
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting && !observed) {
+            observed = true;
+            setTimeout(function() {
+              document.querySelectorAll('.dest-map-el').forEach(function(el) {
+                if (el._map) el._map.invalidateSize();
+              });
+            }, 200);
+          }
+        });
+      });
+      obs.observe(section);
+    }
+  });
+</script>
 </body>
 </html>
