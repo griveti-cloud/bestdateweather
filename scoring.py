@@ -588,7 +588,9 @@ def _snow_reliability(tmax_piste: float, rain_pct: float, has_glacier: bool = Fa
 
 def raw_score_winter(tmax_vallee: float, rain_pct: float, sun_h: float,
                      alt_village: float = None, alt_ski_max: float = None,
-                     has_glacier: bool = False) -> float:
+                     has_glacier: bool = False,
+                     month: int = None, season_start: int = None,
+                     season_end: int = None) -> float:
     """
     Score brut [0, 1] pour activités ski/montagne hiver.
 
@@ -599,14 +601,23 @@ def raw_score_winter(tmax_vallee: float, rain_pct: float, sun_h: float,
         alt_village : altitude du centre-ville (m) — optionnel
         alt_ski_max : altitude max du domaine skiable (m) — optionnel
         has_glacier : True si glacier permanent
+        month       : numéro du mois 1-12 — optionnel
+        season_start: mois début saison d'ouverture remontées — optionnel
+        season_end  : mois fin saison d'ouverture remontées — optionnel
 
     Si alt_village/alt_ski_max sont fournis : correction altitude appliquée.
+    Si month + season_start + season_end fournis : pénalité hors-saison appliquée.
     Sinon : fallback sur l'ancien modèle (backward-compat).
 
     Poids :
       40% enneigement proxy (sur tmax_piste corrigé si altitude connue)
       40% température confort (sur tmax_piste corrigé)
       20% soleil
+
+    Pénalité hors-saison :
+      - Remontées fermées → multiplicateur 0.35 (limite score à ~3.5)
+      - Mois de transition (±1 mois autour saison) → multiplicateur 0.70
+      - Exception : glaciers 365j → pas de pénalité
     """
     # Correction altitude si données disponibles
     if alt_village is not None and alt_ski_max is not None:
@@ -618,20 +629,53 @@ def raw_score_winter(tmax_vallee: float, rain_pct: float, sun_h: float,
     t    = t_ideal_winter(tmax_piste)
     snow = _snow_reliability(tmax_piste, rain_pct, has_glacier)
     sun  = min(1.0, sun_h / 12.0)
-    return 0.40 * t + 0.40 * snow + 0.20 * sun
+    base_score = 0.40 * t + 0.40 * snow + 0.20 * sun
+
+    # Pénalité hors-saison (si info disponible ET pas glacier 365j)
+    if month is not None and season_start is not None and season_end is not None:
+        is_glacier_365 = (season_start == 1 and season_end == 12)
+        if not is_glacier_365:
+            if _is_in_season(month, season_start, season_end):
+                pass  # Pas de pénalité
+            elif _is_adjacent_to_season(month, season_start, season_end):
+                # Mois de transition : remontées peuvent ouvrir/fermer partiellement
+                base_score *= 0.70
+            else:
+                # Hors saison complète : remontées fermées
+                base_score *= 0.35
+
+    return base_score
+
+
+def _is_in_season(month: int, season_start: int, season_end: int) -> bool:
+    """True si le mois est dans la saison (gère wrap annuel)."""
+    if season_start <= season_end:
+        return season_start <= month <= season_end
+    else:
+        return month >= season_start or month <= season_end
+
+
+def _is_adjacent_to_season(month: int, season_start: int, season_end: int) -> bool:
+    """True si le mois est juste avant ou juste après la saison."""
+    def prev_month(m): return 12 if m == 1 else m - 1
+    def next_month(m): return 1 if m == 12 else m + 1
+    return month == prev_month(season_start) or month == next_month(season_end)
 
 
 def compute_ski_score(tmax: float, rain_pct: float, sun_h: float,
                       alt_village: float = None, alt_ski_max: float = None,
-                      has_glacier: bool = False) -> float:
+                      has_glacier: bool = False,
+                      month: int = None, season_start: int = None,
+                      season_end: int = None) -> float:
     """
     Score ski direct /10 (mapping linéaire).
 
-    Signature étendue avec paramètres altitude/glacier.
+    Signature étendue avec paramètres altitude/glacier/saison.
     Les 3 premiers arguments restent compatibles avec l'ancien appel.
     """
     return round(raw_score_winter(tmax, rain_pct, sun_h,
-                                   alt_village, alt_ski_max, has_glacier) * 10, 1)
+                                   alt_village, alt_ski_max, has_glacier,
+                                   month, season_start, season_end) * 10, 1)
 
 
 def ski_class(score_10: float) -> str:
