@@ -454,6 +454,54 @@ def _render_footer(dest, lang):
 # Fonction principale
 # ══════════════════════════════════════════════════════════════════
 
+def _apply_mountain_scores(dest, monthly):
+    """
+    Pour une destination mountain : remplace monthly['score'] par max(ski, hike)
+    en utilisant compute_ski_score (altitude-aware) + compute_hiking_score.
+
+    Logique identique à V3 (generate_pages.py L605-625) pour garantir la
+    cohérence. Sans ce fix, les briques V6 utilisent le score général qui
+    favorise l'été (Août 8.4 à Chamonix) et ratent le vrai best ski (Mars 9.1).
+
+    Backup du score original dans m['_score_original'] (utile pour audit).
+
+    Returns:
+        dict {int mois_num: float ski_score} pour passage éventuel à barchart.
+    """
+    if classify_dest(dest) != "mountain":
+        return None
+
+    try:
+        from scoring import compute_ski_score, compute_hiking_score
+        from lib.common import _ski_kwargs
+    except ImportError:
+        return None  # Pas de recalcul possible → fallback score général
+
+    slug = dest.get("slug") or dest.get("slug_fr")
+    ski_scores = {}
+    for m in monthly:
+        mn = int(m["mois_num"])
+        try:
+            tmax = float(m.get("tmax", 0))
+            rain = float(m.get("rain_pct", 0))
+            sun = float(m.get("sun_h", 0))
+            precip = m.get("precip_mm")
+            precip_f = float(precip) if precip not in (None, "", "None") else None
+        except (TypeError, ValueError):
+            continue
+
+        s_ski = compute_ski_score(tmax, rain, sun, **_ski_kwargs(slug, month=mn))
+        s_hike = compute_hiking_score(tmax, rain, sun, precip_f)
+        ski_scores[mn] = s_ski
+
+        # Override score = max(ski, hike) comme V3
+        s_mountain = max(s_ski, s_hike)
+        m["_score_original"] = m.get("score")
+        m["score"] = s_mountain
+
+    return ski_scores
+
+
 def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None):
     """
     Rend une page HTML complète (DOCTYPE → </html>) pour une destination.
@@ -499,6 +547,13 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None):
         "de": f"Wann nach {nom} reisen — Wetter & beste Reisezeit",
     }
     page_title = page_titles[lang]
+
+    # Pour mountain : recalcul monthly['score'] = max(ski, hike) AVANT les briques
+    # (les briques lisent monthly['score'] donc le remplacement les affecte toutes)
+    # Retourne aussi le dict ski_scores_by_month pour passage au barchart
+    _computed_ski = _apply_mountain_scores(dest, monthly)
+    if _computed_ski and not ski_scores_by_month:
+        ski_scores_by_month = _computed_ski
 
     head = _render_head(dest, lang, page_title)
     hero = _render_hero(dest, monthly, lang)

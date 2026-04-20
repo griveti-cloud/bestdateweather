@@ -258,11 +258,31 @@ def best_month_tagline(dest, monthly, lang="fr"):
             "de": ["Trockenzeit + klarer Himmel", "Regenarmes Fenster", "Tropischer Sonnen-Höhepunkt"],
         },
         "mountain": {
-            "fr": ["Enneigement + stations ouvertes", "Neige fraîche + soleil", "Conditions ski optimales"],
-            "en": ["Snow cover + open resorts", "Fresh snow + sun", "Peak ski conditions"],
-            "en-us": ["Snow cover + open resorts", "Fresh snow + sun", "Peak ski conditions"],
-            "es": ["Nieve + estaciones abiertas", "Nieve fresca + sol", "Condiciones de esquí óptimas"],
-            "de": ["Schneedecke + offene Stationen", "Frischer Schnee + Sonne", "Optimale Ski-Bedingungen"],
+            "fr": {
+                "winter": ["Enneigement + stations ouvertes", "Neige fraîche + soleil", "Conditions ski optimales"],
+                "summer": ["Sentiers secs + refuges ouverts", "Alpinisme et randonnée", "Fenêtre d'été optimale"],
+                "shoulder": ["Transition avant/après saison", "Entre-saison calme", "Peu de monde"],
+            },
+            "en": {
+                "winter": ["Snow cover + open resorts", "Fresh snow + sun", "Peak ski conditions"],
+                "summer": ["Dry trails + open huts", "Alpinism and hiking", "Optimal summer window"],
+                "shoulder": ["Pre/post-season transition", "Quiet shoulder", "Few crowds"],
+            },
+            "en-us": {
+                "winter": ["Snow cover + open resorts", "Fresh snow + sun", "Peak ski conditions"],
+                "summer": ["Dry trails + open huts", "Alpinism and hiking", "Optimal summer window"],
+                "shoulder": ["Pre/post-season transition", "Quiet shoulder", "Few crowds"],
+            },
+            "es": {
+                "winter": ["Nieve + estaciones abiertas", "Nieve fresca + sol", "Condiciones de esquí óptimas"],
+                "summer": ["Senderos secos + refugios abiertos", "Alpinismo y senderismo", "Ventana óptima de verano"],
+                "shoulder": ["Transición pre/post-temporada", "Entre-temporada tranquila", "Poca afluencia"],
+            },
+            "de": {
+                "winter": ["Schneedecke + offene Stationen", "Frischer Schnee + Sonne", "Optimale Ski-Bedingungen"],
+                "summer": ["Trockene Wege + offene Hütten", "Alpinismus und Wandern", "Optimales Sommerfenster"],
+                "shoulder": ["Übergang vor/nach Saison", "Ruhige Zwischensaison", "Wenig Andrang"],
+            },
         },
         "generic": {
             "fr": ["Meilleur compromis climat", "Pic de soleil et confort", "Fenêtre optimale de l'année"],
@@ -276,6 +296,22 @@ def best_month_tagline(dest, monthly, lang="fr"):
     slug = dest.get("slug") or dest.get("slug_fr") or "unknown"
     import hashlib
     h = int(hashlib.md5(slug.encode("utf-8")).hexdigest()[:8], 16)
+
+    if dtype == "mountain":
+        # Pour mountain, la tagline dépend de la SAISON du best month
+        # (hiver=ski, été=alpinisme, shoulder=transition)
+        best = best_month(monthly)
+        best_num = int(best.get("mois_num", 0))
+        if best_num in (12, 1, 2, 3, 4):
+            season_key = "winter"
+        elif best_num in (6, 7, 8, 9):
+            season_key = "summer"
+        else:
+            season_key = "shoulder"
+        mountain_pool = pools["mountain"].get(lang, pools["mountain"]["fr"])
+        variants = mountain_pool.get(season_key, mountain_pool["winter"])
+        return variants[h % len(variants)]
+
     variants = pools[dtype].get(lang, pools[dtype]["fr"])
     return variants[h % len(variants)]
 
