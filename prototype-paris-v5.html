@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Prototype v5 — Paris · BestDateWeather</title>
+<link rel="canonical" href="https://bestdateweather.com/prototype-paris-v5.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Playfair+Display:wght@500;700;800;900&family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  /* Palette BDW */
+  --paper:#ffffff;
+  --cream:#faf8f3;
+  --cream-2:#f6f2ea;
+  --ink:#1a1f2e;
+  --muted:#6b7280;
+  --muted-2:#9ca3af;
+  --line:#e7dfd3;
+  --line-soft:#f0ece4;
+  --gold:#e8940a;
+  --gold-2:#f5b020;
+  --gold-soft:#fdf4dd;
+  --gold-ink:#8f6b12;
+
+  --green:#1a7a4a;
+  --green-soft:#e8f8f0;
+  --green-border:#bfe7cd;
+  --amber:#b8860b;
+  --amber-soft:#fdf6d8;
+  --amber-border:#f2d3bc;
+  --red:#b91c1c;
+  --red-soft:#fdecec;
+  --red-border:#f1cccc;
+
+  --shadow:0 18px 50px rgba(16,26,49,.10);
+  --shadow-sm:0 4px 14px rgba(16,26,49,.06);
+  --shadow-lg:0 28px 70px rgba(12,22,44,.18);
+  --radius:20px;
+  --radius-lg:28px;
+  --max:1160px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;width:100%;max-width:100vw}
+body{
+  margin:0;padding:0;
+  background:linear-gradient(180deg,#faf7f0 0%,#f6f2ea 100%);
+  color:var(--ink);
+  font-family:'DM Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  line-height:1.55;
+  overflow-x:hidden;
+  font-size:15.5px;
+  -webkit-font-smoothing:antialiased;
+  width:100%;
+  max-width:100vw;
+}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block;height:auto}
+
+h1,h2,h3,.serif{font-family:'Playfair Display',Georgia,serif;letter-spacing:-.015em}
+.mono{font-feature-settings:"tnum" 1,"lnum" 1}
+
+.container{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 20px;
+  width:100%;
+}
+@media(min-width:768px){.container{padding:0 28px}}
+
+/* ═══════════════ PROTOTYPE BANNER ═══════════════ */
+.proto-banner{
+  background:var(--gold);color:#fff;
+  text-align:center;padding:10px 16px;
+  font-size:12.5px;font-weight:600;
+  position:sticky;top:0;z-index:999;
+}
+.proto-banner a{color:#fff;text-decoration:underline;margin-left:8px}
+
+/* ═══════════════ TOPBAR ═══════════════ */
+.topbar{
+  position:sticky;top:40px;z-index:50;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(250,247,240,.82);
+  border-bottom:1px solid rgba(26,31,46,.06);
+}
+.topbar-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;padding:14px 0;
+  flex-wrap:wrap;
+}
+.brand-row{
+  display:flex;align-items:center;gap:12px;
+  flex-shrink:0;
+}
+.icon-actions{
+  display:flex;align-items:center;gap:4px;
+}
+.icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;
+  border-radius:50%;
+  background:transparent;
+  color:var(--ink);
+  transition:background .15s,color .15s,transform .15s;
+  flex-shrink:0;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  font-family:inherit;
+}
+.icon-btn:hover{
+  background:var(--cream-2);
+  color:var(--gold);
+}
+.icon-btn svg{display:block}
+.cta-plan{
+  flex-shrink:0;
+}
+.brand{
+  font-family:'Fraunces','Fraunces Fallback',Georgia,serif;
+  font-weight:900;font-size:1.15rem;
+  letter-spacing:-.02em;
+  color:var(--ink);
+  text-decoration:none;
+  line-height:1;
+}
+.brand em{font-style:italic;color:#c99438;font-weight:400}
+.nav-actions{display:flex;gap:10px;flex-wrap:wrap}
+.chip,.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:1px solid var(--line);background:var(--paper);
+  color:var(--ink);padding:10px 14px;
+  border-radius:999px;font-size:.92rem;font-weight:600;
+  max-width:100%;white-space:nowrap;
+  transition:transform .15s,box-shadow .15s,border-color .15s;
+  font-family:'DM Sans',sans-serif;
+}
+.chip:hover,.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn.primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold-2));
+  color:#fff;border-color:var(--gold);font-weight:800;
+  box-shadow:0 4px 14px rgba(232,148,10,.35);
+}
+.btn.primary:hover{
+  color:#fff;
+  transform:translateY(-1px);
+  box-shadow:0 8px 22px rgba(232,148,10,.45);
+}
+
+/* ═══════════════ HERO ═══════════════ */
+.hero{padding:24px 0 20px}
+.hero-shell{
+  position:relative;overflow:hidden;
+  min-height:520px;
+  border-radius:30px;
+  box-shadow:var(--shadow-lg);
+  background:
+    linear-gradient(110deg,rgba(11,20,40,.82),rgba(17,39,74,.38)),
+    url('https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?w=1800&q=85&fm=jpg&fit=crop&crop=entropy&auto=format') center/cover no-repeat;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  gap:30px;
+  min-height:520px;
+  align-items:end;
+  padding:40px;
+}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:8px 14px;border-radius:999px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.20);
+  color:#fff;font-size:12.5px;font-weight:600;
+  margin-bottom:18px;letter-spacing:.1px;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  max-width:100%;
+}
+.eyebrow img{width:18px;height:13px;border-radius:2px}
+
+.hero h1{
+  margin:0 0 14px;color:#fff;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,5vw,4rem);
+  font-weight:800;line-height:.98;
+  letter-spacing:-.02em;
+  text-wrap:balance;
+}
+.hero h1 .accent{
+  font-style:italic;
+  font-weight:500;
+  color:#f8df98;
+}
+.hero-lead{
+  margin:0 0 18px;color:rgba(255,255,255,.92);
+  max-width:62ch;font-size:1.02rem;line-height:1.6;
+  font-weight:400;
+}
+.hero-meta{display:flex;gap:10px;flex-wrap:wrap;max-width:100%}
+.hero-meta span{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 13px;border-radius:999px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.14);
+  color:#fff;font-size:12.5px;font-weight:500;
+}
+
+.hero-side{display:flex;justify-content:flex-end;align-items:flex-end;min-width:0}
+
+.decision-card{
+  width:min(390px,100%);
+  background:rgba(255,255,255,.97);
+  border-radius:24px;
+  padding:20px;
+  box-shadow:0 20px 44px rgba(8,16,30,.28),0 4px 12px rgba(8,16,30,.12);
+  min-width:0;
+}
+.small-label,.section-kicker{
+  color:var(--gold);
+  font-size:11px;font-weight:800;
+  letter-spacing:1.2px;text-transform:uppercase;
+}
+.small-label{margin-bottom:12px;display:block}
+
+.decision-top{
+  display:flex;justify-content:space-between;gap:14px;
+  align-items:flex-start;margin-bottom:16px;
+}
+.decision-top .month{
+  font-family:'Playfair Display',serif;
+  font-size:2.1rem;font-weight:800;line-height:1;
+  color:var(--ink);
+}
+.decision-top .sub{
+  font-size:.92rem;color:var(--muted);
+  margin-top:6px;line-height:1.45;
+}
+.decision-top .score{
+  font-family:'Playfair Display',serif;
+  font-size:2.6rem;font-weight:800;line-height:1;
+  text-align:right;flex-shrink:0;color:var(--ink);
+  letter-spacing:-.02em;
+}
+.decision-top .score small{
+  font-size:1rem;color:var(--muted-2);font-weight:700;letter-spacing:-.02em;
+}
+
+.mini-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+.mini-card{
+  padding:11px 12px;border-radius:14px;
+  background:var(--cream);
+  border:1px solid var(--line-soft);
+  min-width:0;
+}
+.mini-card .v{
+  font-weight:800;font-size:.95rem;
+  overflow-wrap:anywhere;color:var(--ink);
+}
+.mini-card .l{
+  font-size:.72rem;color:var(--muted);
+  margin-top:3px;overflow-wrap:anywhere;
+  font-weight:500;
+}
+
+/* ═══════════════ SECTIONS ═══════════════ */
+section{padding:28px 0}
+.section-head{margin-bottom:18px}
+h2{
+  margin:0;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.55rem,2.8vw,2rem);
+  font-weight:700;line-height:1.1;color:var(--ink);
+  letter-spacing:-.015em;
+}
+.lead{
+  margin:10px 0 0;color:var(--muted);
+  max-width:70ch;font-size:15px;line-height:1.55;
+}
+
+/* ═══════════════ CARDS ═══════════════ */
+.card,.box,.faq-item{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  min-width:0;
+}
+.card.pad,.box,.faq-item{padding:22px}
+@media(min-width:768px){.card.pad,.box,.faq-item{padding:24px}}
+
+/* Grid layouts */
+.decision-strip,.spotlight-grid,.grid-2,.grid-3,.grid-4{
+  display:grid;gap:20px;
+}
+.decision-strip{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.spotlight-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+.verdict-box,.right-stack,.signal-card,.faq,.list,.signal-list{
+  display:grid;gap:14px;min-width:0;
+  grid-auto-rows:min-content;
+  align-content:start;
+}
+
+.note{
+  padding:17px 19px;border-radius:16px;
+  background:linear-gradient(135deg,#fdfaf3 0%,#fef8e7 100%);
+  border:1px solid var(--gold-soft);
+  border-left:4px solid var(--gold);
+  color:var(--ink);line-height:1.6;font-size:15px;
+  overflow-wrap:anywhere;
+}
+.note strong{color:var(--ink);font-weight:700}
+
+.pills{display:flex;gap:10px;flex-wrap:wrap}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 15px;border-radius:999px;
+  font-size:.92rem;font-weight:800;
+  border:1px solid transparent;
+  max-width:100%;white-space:nowrap;
+  font-feature-settings:"tnum" 1;
+}
+.pill.good{background:var(--green-soft);color:var(--green);border-color:var(--green-border)}
+.pill.mid{background:var(--amber-soft);color:var(--amber);border-color:var(--amber-border)}
+.pill.bad{background:var(--red-soft);color:var(--red);border-color:var(--red-border)}
+
+/* ═══════════════ BARS CHART ═══════════════ */
+.bars{
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:8px;
+  margin-top:10px;min-width:0;
+  align-items:stretch;
+}
+.bar-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  gap:6px;min-width:0;
+}
+/* Conteneur qui porte la hauteur réelle (130px) — c'est lui le référentiel pour height:XX% des .bar */
+.bar-slot{
+  width:100%;
+  height:130px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+}
+.bar{
+  width:100%;min-height:18px;
+  border-radius:8px 8px 4px 4px;
+  transition:transform .2s ease;
+}
+.bar:hover{transform:scaleY(1.03)}
+.bar.best{background:linear-gradient(180deg,#2ea86a 0%,#1a7a4a 100%);outline:2px solid var(--gold);outline-offset:1px;box-shadow:0 0 0 4px rgba(232,148,10,.15)}
+.bar.good{background:linear-gradient(180deg,#46c878 0%,#25a75d 100%)}
+.bar.mid{background:linear-gradient(180deg,#ecc568 0%,#b8860b 100%)}
+.bar.low{background:linear-gradient(180deg,#e47272 0%,#b91c1c 100%)}
+.bar-score{
+  font-size:.72rem;color:var(--ink);font-weight:800;
+  text-align:center;font-feature-settings:"tnum" 1;
+  white-space:nowrap;
+}
+.bar-label{
+  font-size:.72rem;color:var(--muted);
+  text-align:center;white-space:nowrap;
+  font-weight:600;letter-spacing:.2px;
+}
+
+/* ═══════════════ ITEMS UNIFIÉS (right-item, signal-item, list-item) ═══════════════ */
+.right-item,.signal-item,.list-item{
+  border:1px solid var(--line-soft);
+  border-radius:14px;
+  padding:12px 14px;
+  background:var(--cream);
+  min-width:0;
+}
+.right-item h3{
+  margin:0 0 6px;font-size:.98rem;font-weight:700;
+  font-family:'DM Sans',sans-serif;color:var(--ink);
+}
+.right-item p{
+  margin:0;color:var(--muted);
+  font-size:.92rem;line-height:1.5;
+  overflow-wrap:anywhere;
+}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cta-row > .btn,.cta-row > .chip{align-self:center;flex:0 0 auto}
+
+/* ═══════════════ TABLE ═══════════════ */
+.table-wrap{
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  max-width:100%;border-radius:16px;
+}
+table{
+  width:100%;min-width:0;
+  table-layout:fixed;
+  border-collapse:separate;border-spacing:0;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:16px;overflow:hidden;
+}
+thead th{
+  text-align:left;background:var(--cream);color:var(--gold-ink);
+  font-family:'DM Sans',sans-serif;
+  font-size:.72rem;font-weight:800;
+  letter-spacing:.4px;text-transform:uppercase;
+  padding:10px 8px;
+  border-bottom:1px solid var(--line);
+  white-space:normal;word-break:break-word;
+}
+tbody td{
+  padding:10px 8px;
+  border-bottom:1px solid var(--line-soft);
+  font-size:.84rem;vertical-align:middle;
+  white-space:normal;word-break:break-word;color:var(--ink);
+  font-weight:500;
+}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--cream)}
+.month-cell{font-weight:700;font-size:.96rem}
+
+thead th:nth-child(1),tbody td:nth-child(1){width:19%}
+thead th:nth-child(2),tbody td:nth-child(2){width:9%}
+thead th:nth-child(3),tbody td:nth-child(3){width:9%}
+thead th:nth-child(4),tbody td:nth-child(4){width:10%}
+thead th:nth-child(5),tbody td:nth-child(5){width:10%}
+thead th:nth-child(6),tbody td:nth-child(6){width:9%}
+thead th:nth-child(7),tbody td:nth-child(7){width:11%}
+thead th:nth-child(8),tbody td:nth-child(8){width:23%}
+
+/* ═══════════════ MOBILE MONTH CARDS (remplacent table < 640px) ═══════════════ */
+.mobile-month-cards{display:none;gap:8px}
+.mobile-month-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px 12px;
+  box-shadow:var(--shadow-sm);
+  transition:transform .18s,box-shadow .18s,border-color .18s;
+  display:block;
+}
+.mobile-month-card:hover,.mobile-month-card:active{
+  transform:translateY(-1px);
+  box-shadow:var(--shadow);
+  border-color:var(--gold);
+}
+.mobile-month-card.best{
+  background:linear-gradient(135deg,#fff,#fdfaf3);
+  border-color:var(--gold);
+}
+.mobile-month-card .head{
+  display:flex;justify-content:space-between;
+  align-items:center;gap:10px;margin-bottom:8px;
+}
+.mobile-month-card .name{
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:1rem;
+  color:var(--ink);letter-spacing:-.01em;
+  display:flex;align-items:center;gap:6px;
+  flex:1;min-width:0;
+}
+.mobile-month-card .score{
+  font-weight:800;font-size:.82rem;
+  padding:3px 10px;border-radius:999px;
+  flex-shrink:0;font-feature-settings:"tnum" 1;
+  white-space:nowrap;
+}
+.mobile-month-card .score.good{background:var(--green-soft);color:var(--green)}
+.mobile-month-card .score.mid{background:var(--amber-soft);color:var(--amber)}
+.mobile-month-card .score.bad{background:var(--red-soft);color:var(--red)}
+
+/* Rows en grille 2×2 compacte (pas 1 row par ligne) */
+.mobile-month-card .rows{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+}
+.mobile-month-card .row{
+  display:flex;justify-content:space-between;gap:6px;
+  padding:5px 8px;border-radius:7px;
+  background:var(--cream);
+  border:1px solid var(--line-soft);
+  align-items:center;min-width:0;
+}
+.mobile-month-card .row span{
+  color:var(--muted);font-size:.72rem;font-weight:500;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.mobile-month-card .row strong{
+  text-align:right;font-size:.78rem;
+  color:var(--ink);font-weight:700;
+  font-feature-settings:"tnum" 1;
+  flex-shrink:0;white-space:nowrap;
+}
+.mobile-month-card .row strong.mood-good{color:var(--green)}
+.mobile-month-card .row strong.mood-mid{color:var(--amber)}
+.mobile-month-card .row strong.mood-bad{color:var(--red)}
+
+/* Row "Lecture" sans label : valeur centrée avec fond coloré */
+.mobile-month-card .row-mood{
+  justify-content:center;
+  background:transparent;
+  border:none;
+  padding:4px 8px;
+}
+.mobile-month-card .row-mood strong{
+  text-align:center;
+  font-size:.82rem;
+  font-weight:800;
+  letter-spacing:.2px;
+  padding:4px 10px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.mobile-month-card .row-mood strong.mood-good{background:var(--green-soft);color:var(--green)}
+.mobile-month-card .row-mood strong.mood-mid{background:var(--amber-soft);color:var(--amber)}
+.mobile-month-card .row-mood strong.mood-bad{background:var(--red-soft);color:var(--red)}
+
+.mood{
+  display:inline-flex;padding:5px 11px;
+  border-radius:999px;
+  font-size:.78rem;font-weight:800;
+  letter-spacing:.2px;
+  max-width:100%;white-space:nowrap;
+}
+.mood.good{background:var(--green-soft);color:var(--green)}
+.mood.mid{background:var(--amber-soft);color:var(--amber)}
+.mood.bad{background:var(--red-soft);color:var(--red)}
+
+/* ═══════════════ SIGNAL/LIST ITEMS (hérite du style unifié) ═══════════════ */
+.signal-item{
+  display:flex;justify-content:space-between;gap:12px;
+  align-items:flex-start;
+}
+.signal-item .l{
+  font-size:.9rem;color:var(--ink);font-weight:500;
+  overflow-wrap:anywhere;min-width:0;
+}
+.signal-item .r{
+  font-weight:800;text-align:right;
+  color:var(--ink);font-size:.92rem;
+  overflow-wrap:anywhere;flex-shrink:0;
+  font-feature-settings:"tnum" 1;
+}
+.signal-hint{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:14px;height:14px;
+  margin-left:4px;
+  border-radius:50%;
+  background:var(--line-soft);
+  color:var(--muted);
+  font-size:10px;font-weight:700;
+  cursor:help;font-style:normal;
+  line-height:1;
+  vertical-align:middle;
+}
+.signal-hint:hover{background:var(--gold-soft);color:var(--gold-ink)}
+
+/* ═══════════════ MONTH GRID (liens fiches) ═══════════════ */
+.month-grid{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:12px;
+}
+.month-card{
+  display:block;
+  transition:transform .18s,box-shadow .18s,border-color .18s;
+  position:relative;overflow:hidden;
+}
+.month-card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow);
+  border-color:var(--gold);
+}
+.month-card .top{
+  display:flex;justify-content:space-between;
+  gap:10px;align-items:baseline;margin-bottom:8px;
+}
+.month-card .name{
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:1.05rem;
+  overflow-wrap:anywhere;color:var(--ink);
+  letter-spacing:-.01em;
+}
+.month-card .score{
+  font-size:.92rem;font-weight:800;
+  padding:3px 9px;border-radius:999px;
+  flex-shrink:0;font-feature-settings:"tnum" 1;
+}
+.month-card .score.good{background:var(--green-soft);color:var(--green)}
+.month-card .score.mid{background:var(--amber-soft);color:var(--amber)}
+.month-card .score.bad{background:var(--red-soft);color:var(--red)}
+.month-card .meta{
+  font-size:.82rem;color:var(--muted);
+  overflow-wrap:anywhere;line-height:1.45;
+}
+.month-card.best{
+  background:linear-gradient(135deg,#fff,#fdfaf3);
+  border-color:var(--gold);
+}
+
+/* ═══════════════ BOX HEAD (seasons/profiles) ═══════════════ */
+.box-head{
+  display:flex;justify-content:space-between;
+  gap:10px;align-items:flex-start;margin-bottom:10px;
+}
+.box-head strong{
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;font-weight:700;color:var(--ink);
+  font-weight:700;
+}
+.box p{
+  margin:0;color:var(--muted);
+  font-size:.95rem;line-height:1.55;
+}
+.box p strong{color:var(--ink);font-weight:700}
+.badge{
+  background:var(--gold-soft);
+  border:1px solid var(--gold-soft);
+  color:var(--gold-ink);
+  border-radius:999px;padding:6px 11px;
+  font-size:.78rem;font-weight:800;white-space:nowrap;flex-shrink:0;
+  letter-spacing:.2px;
+}
+
+/* ═══════════════ MÉTHODOLOGIE CARD (sous le graphique) ═══════════════ */
+.method-card{
+  margin-top:18px;
+  background:linear-gradient(135deg,#fdfaf3 0%,#fef8e7 100%);
+  border:1px solid var(--gold-soft);
+  border-left:4px solid var(--gold);
+  border-radius:var(--radius);
+  padding:20px 24px;
+  box-shadow:var(--shadow-sm);
+}
+.method-head{
+  display:flex;align-items:flex-start;gap:14px;
+  margin-bottom:16px;
+}
+.method-ico{
+  font-size:1.6rem;
+  width:44px;height:44px;
+  background:var(--paper);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  border:1px solid var(--gold-soft);
+}
+.method-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:1.15rem;
+  color:var(--ink);letter-spacing:-.01em;
+  margin-bottom:3px;
+}
+.method-sub{
+  font-size:.88rem;color:var(--muted);line-height:1.4;
+}
+.method-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-bottom:16px;
+}
+.method-item{
+  background:var(--paper);
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid var(--line-soft);
+  min-width:0;
+}
+.method-k{
+  font-size:.82rem;font-weight:700;
+  color:var(--gold-ink);
+  margin-bottom:3px;
+  letter-spacing:.2px;
+}
+.method-v{
+  font-size:.85rem;color:var(--muted);line-height:1.45;
+}
+.method-footer{
+  display:flex;justify-content:space-between;
+  align-items:center;gap:14px;flex-wrap:wrap;
+  padding-top:14px;
+  border-top:1px solid var(--gold-soft);
+}
+.method-source{
+  font-size:.8rem;color:var(--muted);line-height:1.5;
+}
+.method-source strong{color:var(--ink);font-weight:700}
+.method-link{
+  font-size:.88rem;font-weight:700;color:var(--gold);
+  transition:color .15s,transform .15s;
+  white-space:nowrap;flex-shrink:0;
+}
+.method-link:hover{color:var(--gold-2);transform:translateX(2px)}
+@media(max-width:720px){
+  .method-card{padding:18px}
+  .method-grid{grid-template-columns:1fr;gap:10px}
+  .method-ico{width:40px;height:40px;font-size:1.4rem}
+  .method-title{font-size:1.05rem}
+}
+
+
+.plan-row{gap:14px}
+.plan-card{
+  display:flex;align-items:center;gap:14px;
+  padding:18px 20px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:var(--shadow-sm);
+  transition:transform .18s,box-shadow .18s,border-color .18s;
+  color:var(--ink);
+  text-decoration:none;
+  min-width:0;
+}
+.plan-card:hover{
+  border-color:var(--gold);
+  transform:translateY(-2px);
+  box-shadow:var(--shadow);
+}
+.plan-card:hover .plan-cta{color:var(--gold)}
+.plan-icon{
+  font-size:1.6rem;
+  flex-shrink:0;
+  width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--cream);
+  border-radius:12px;
+}
+.plan-body{flex:1;min-width:0}
+.plan-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:1.05rem;
+  color:var(--ink);letter-spacing:-.01em;
+  margin-bottom:2px;
+}
+.plan-sub{
+  font-size:.82rem;color:var(--muted);
+  line-height:1.4;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+}
+.plan-cta{
+  font-size:.85rem;font-weight:700;
+  color:var(--muted);
+  flex-shrink:0;
+  transition:color .15s;
+  white-space:nowrap;
+}
+@media(max-width:720px){
+  .plan-card{padding:14px 16px;gap:12px}
+  .plan-icon{width:40px;height:40px;font-size:1.4rem}
+  .plan-title{font-size:1rem}
+  .plan-sub{font-size:.78rem;-webkit-line-clamp:2}
+}
+
+/* ═══════════════ TRAVEL CTAs ═══════════════ */
+.travel-cta{
+  display:block;text-align:center;
+  padding:13px 16px;border-radius:12px;
+  border:1px solid var(--line);
+  background:var(--paper);
+  font-weight:700;font-size:.92rem;
+  color:var(--ink);
+  transition:background .15s,color .15s,border-color .15s;
+  max-width:100%;
+}
+.travel-cta:hover{
+  background:var(--ink);color:var(--gold-2);
+  border-color:var(--ink);
+}
+.affil-note{
+  display:block;text-align:center;
+  font-size:.7rem;color:var(--muted-2);
+  margin-top:8px;
+}
+
+/* ═══════════════ LIST-ITEM (hérite du style unifié) ═══════════════ */
+.list-item{
+  display:flex;justify-content:space-between;gap:12px;
+  align-items:flex-start;
+  text-decoration:none;color:inherit;
+  transition:border-color .15s,background .15s,transform .15s;
+}
+a.list-item:hover{
+  border-color:var(--gold);
+  background:#fef8e7;
+  transform:translateX(2px);
+}
+a.list-item:hover strong{color:var(--gold)}
+.list-item span{
+  font-size:.92rem;color:var(--ink);font-weight:500;
+  overflow-wrap:anywhere;min-width:0;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.list-flag{
+  border-radius:2px;flex-shrink:0;
+  box-shadow:0 0 0 1px rgba(0,0,0,.06);
+}
+.list-ico{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;
+  background:var(--paper);
+  border-radius:50%;
+  font-size:.95rem;
+  flex-shrink:0;
+  border:1px solid var(--line-soft);
+  line-height:1;
+}
+.list-country{
+  color:var(--muted);font-weight:400;font-size:.85rem;
+}
+.list-item strong{
+  font-weight:800;text-align:right;
+  color:var(--ink);font-size:.88rem;
+  overflow-wrap:anywhere;flex-shrink:0;
+  transition:color .15s;
+}
+.list-item a{color:var(--gold);font-weight:700}
+
+.box h3{
+  margin:0 0 14px;font-size:1.1rem;
+  font-family:'Playfair Display',serif;
+  font-weight:700;color:var(--ink);
+  letter-spacing:-.01em;
+}
+
+/* ═══════════════ FAQ ═══════════════ */
+.faq{display:grid;gap:12px}
+.faq-item strong{
+  display:block;margin-bottom:8px;
+  font-family:'Playfair Display',serif;
+  font-size:1.02rem;font-weight:700;color:var(--ink);
+  letter-spacing:-.01em;
+}
+.faq-item{
+  color:var(--muted);font-size:.95rem;line-height:1.6;
+}
+
+/* ═══════════════ FOOTER ═══════════════ */
+.bdw-footer{
+  padding:40px 0 48px;
+  background:var(--ink);
+  color:rgba(255,255,255,.7);
+  font-size:13px;
+  text-align:center;
+  margin-top:40px;
+  line-height:1.7;
+}
+.bdw-footer p{margin:0 0 10px}
+.bdw-footer a{
+  color:rgba(255,255,255,.85);
+  text-decoration:none;
+  transition:color .15s;
+}
+.bdw-footer a:hover{color:var(--gold-2)}
+.bdw-footer-brand{
+  font-family:'Fraunces','Fraunces Fallback',Georgia,serif;
+  font-weight:900;font-size:16px;
+  color:#fff !important;
+  margin-bottom:14px !important;
+}
+.bdw-footer-sub{
+  color:rgba(255,255,255,.45);
+  font-size:12px;
+}
+.bdw-footer-links{
+  margin-top:16px !important;
+  font-size:13px;
+}
+.bdw-footer-links a{margin:0 2px}
+.bdw-footer-langs{
+  margin-top:20px !important;
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  font-size:13px;
+}
+.bdw-footer-langs a{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 2px;
+  white-space:nowrap;
+}
+.bdw-footer-langs img{
+  border-radius:2px;
+  vertical-align:middle;
+  flex-shrink:0;
+}
+.bdw-footer-legal{
+  margin-top:18px !important;
+  font-size:11.5px;
+  color:rgba(255,255,255,.5);
+}
+.bdw-footer-legal a{color:rgba(255,255,255,.6)}
+@media(max-width:720px){
+  .bdw-footer{padding:32px 0 40px;font-size:12.5px}
+  .bdw-footer-langs{gap:10px 12px}
+  .bdw-footer-langs a{font-size:12px}
+}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media(max-width:1024px){
+  .hero-grid,
+  .decision-strip,
+  .spotlight-grid,
+  .grid-2{grid-template-columns:1fr}
+  .grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid-3{grid-template-columns:1fr}
+  .month-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+@media(max-width:720px){
+  .container{padding:0 16px}
+  .topbar{top:38px}
+  .topbar-inner{padding:10px 0;gap:8px}
+  .brand{font-size:1rem}
+  .icon-btn{width:34px;height:34px}
+  .icon-btn svg{width:18px;height:18px}
+  .cta-plan{padding:9px 14px;font-size:.88rem}
+  .cta-plan span.cta-label{display:none}
+  .hero{padding:16px 0 14px}
+  .hero-shell{min-height:440px;border-radius:22px}
+  .hero-grid{padding:26px 22px;gap:22px;min-height:440px}
+  .hero h1{font-size:2.2rem;max-width:none}
+  .hero-meta span{font-size:11.5px;padding:7px 11px}
+  .mini-grid,.grid-4,.month-grid{grid-template-columns:1fr}
+  .bars{gap:5px} .bar-slot{height:110px}
+  .bar-label,.bar-score{font-size:.6rem}
+  .bar-score{font-size:.62rem}
+  h2{font-size:1.45rem}
+  .decision-top .month{font-size:1.75rem}
+  .decision-top .score{font-size:2.15rem}
+  table{min-width:640px}
+  thead th,tbody td{padding:10px;font-size:.84rem}
+  thead th:nth-child(5),tbody td:nth-child(5){display:none}
+  section{padding:22px 0}
+  .card.pad,.box,.faq-item{padding:20px}
+}
+
+/* Passe du tableau aux mobile-month-cards sous 640px */
+@media(max-width:640px){
+  .table-wrap{display:none}
+  .mobile-month-cards{display:grid}
+  .spotlight-grid{gap:14px}
+}
+
+/* Tableau mensuel : lignes cliquables */
+tbody tr[onclick]:hover{background:#fef8e7 !important;transform:translateX(2px);transition:all .15s ease}
+tbody tr[onclick]:hover .month-cell span{color:var(--gold-2) !important;transform:translateX(2px)}
+tbody tr[onclick] .month-cell span{display:inline-block;transition:transform .15s ease}
+/* Accessibilité keyboard */
+tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+
+
+/* ═══════════════ DEST-MAP (Leaflet 2 cartes) — récupéré prod ═══════════════ */
+.dest-map-section{margin-bottom:0}
+/* Masquer le drapeau Leaflet + lien OSM en bas à droite des cartes */
+.leaflet-control-attribution{display:none !important}
+.dest-map-row{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}
+.dest-map-card{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;background:#e8f0f8}
+.dest-map-lbl{display:block;padding:6px 12px;font-size:10.5px;font-weight:700;color:var(--ink);letter-spacing:.4px;text-transform:uppercase;background:var(--cream-2);border-bottom:1px solid #e8e0d0}
+.dest-map-el--world{height:180px;width:100%;display:block}
+.dest-map-el--macro{height:180px;width:100%;display:block}
+.dest-map-credit{font-size:9px;color:#aaa;padding:2px 8px;background:var(--cream);border-top:1px solid #f0ebe0}
+.dest-map-credit a{color:#aaa}
+.dest-map-intro{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--cream);border-radius:10px;border:1px solid var(--line-soft)}
+.dest-map-country{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.dest-map-hsub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:6px}
+.dest-map-coords{font-size:11px;color:#bbb;font-family:ui-monospace,'SF Mono',monospace}
+@media(max-width:600px){
+  .dest-map-row{grid-template-columns:1fr}
+  .dest-map-el--world,.dest-map-el--macro{height:160px}
+}
+
+</style>
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Meilleure période pour partir à Paris", "description": "Découvrez la meilleure période à Paris. Score climatique complet sur 12 mois, température, soleil et pluie. Guide 2026.", "image": {"@type": "ImageObject", "url": "https://bestdateweather.com/og-image.png", "width": 1200, "height": 630}, "author": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com", "logo": {"@type": "ImageObject", "url": "https://bestdateweather.com/icon-192.png", "width": 192, "height": 192}}, "publisher": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com", "logo": {"@type": "ImageObject", "url": "https://bestdateweather.com/icon-192.png", "width": 192, "height": 192}}, "datePublished": "2026-04-20", "dateModified": "2026-04-20", "inLanguage": "fr", "url": "https://bestdateweather.com/meilleure-periode-paris.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://bestdateweather.com/meilleure-periode-paris.html"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Quelle est la meilleure période pour partir à Paris ?", "acceptedAnswer": {"@type": "Answer", "text": "Juillet est le meilleur mois avec un score de 8.7/10 : 25°C en journée, 15°C la nuit, 12.8h de soleil et 31% de jours pluvieux. Août suit avec 8.5/10."}}, {"@type": "Question", "name": "Quel est le mois le plus pluvieux à Paris ?", "acceptedAnswer": {"@type": "Answer", "text": "Novembre, avec 43% de jours de pluie. La pluie est répartie assez uniformément sur l'année à Paris (31-43%), pas de saison vraiment sèche."}}, {"@type": "Question", "name": "Quel est le pire mois pour visiter Paris ?", "acceptedAnswer": {"@type": "Answer", "text": "Janvier (1.6/10), suivi de décembre (1.9/10). Très peu de soleil (2.6-2.7h/jour), froid humide, journées très courtes."}}, {"@type": "Question", "name": "Paris est-il agréable au printemps ?", "acceptedAnswer": {"@type": "Answer", "text": "Avril (7.3/10) et surtout mai (7.7/10) sont d'excellents choix : terrasses ouvertes, jardins en floraison, 11-12h de soleil, températures 15-19°C."}}, {"@type": "Question", "name": "Vaut-il mieux visiter Paris en juillet ou septembre ?", "acceptedAnswer": {"@type": "Answer", "text": "Juillet a la meilleure météo (8.7/10) mais foule maximale et Parisiens en vacances. Septembre (8.1/10) offre un climat encore doux avec une ville pleinement vivante après la rentrée."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bestdateweather.com/"}, {"@type": "ListItem", "position": 2, "name": "Paris", "item": "https://bestdateweather.com/meilleure-periode-paris.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Données climatiques de Paris — moyennes mensuelles sur 10 ans", "description": "Températures, précipitations, ensoleillement et vent mensuels à Paris. Moyennes calculées sur 10 ans de données ERA5 (Open-Meteo).", "temporalCoverage": "2015/2024", "spatialCoverage": {"@type": "Place", "name": "Paris"}, "creator": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com"}, "license": "https://creativecommons.org/licenses/by-nc/4.0/", "variableMeasured": ["Temperature", "Precipitation", "Sunshine hours", "Wind speed"]}</script>
+</head>
+<body>
+
+<div class="proto-banner">
+  🧪 PROTOTYPE v5 — Refonte complète
+  <a href="/prototype-chamonix-v5.html">v5 Chamonix (ski)</a> ·
+  <a href="/meilleure-periode-paris.html">fiche actuelle</a>
+</div>
+
+<!-- ═════════════════ TOPBAR ═════════════════ -->
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand-row">
+      <a class="brand" href="index.html">Best<em>Date</em>Weather</a>
+      <div class="icon-actions">
+        <button id="btn-fav" class="icon-btn" data-slug="paris" aria-label="Favoris" aria-pressed="false" onclick="window.bdwToggleFav&&window.bdwToggleFav(this)" type="button">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <button class="icon-btn nav-share" aria-label="Partager" onclick="shareThis&&shareThis()" type="button">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="11.49"/></svg>
+        </button>
+      </div>
+    </div>
+    <a class="btn primary cta-plan" href="#planifier">✈️ Planifier mon voyage</a>
+  </div>
+</div>
+
+<!-- ═════════════════ HERO ═════════════════ -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-shell">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">
+            <img src="flags/fr.png" alt="FR"/>
+            Paris, France · Climat tempéré océanique
+          </div>
+          <h1>Paris : meilleurs et pires <span class="accent">mois pour visiter</span></h1>
+          <p class="hero-lead">
+            L'écart est énorme entre l'hiver (froid humide, 2-3h de soleil/jour) et l'été
+            (13h de soleil, 25°C). La décision se joue sur la lumière, la pluie et la foule.
+          </p>
+          <div class="hero-meta">
+            <span>📅 Avril 2026</span>
+            <span>🛰️ ERA5 · 10 ans</span>
+            <span>☀️ 13h de soleil en juin</span>
+            <span>📍 48.85°N · 2.35°E</span>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="decision-card">
+            <div class="small-label">⚡ Réponse rapide</div>
+            <div class="decision-top">
+              <div>
+                <div class="month">Juillet</div>
+                <div class="sub">Meilleur compromis climat + jours longs</div>
+              </div>
+              <div class="score">8.7<small>/10</small></div>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-card"><div class="v">Juin · Juil · Août</div><div class="l">Top 3 mois</div></div>
+              <div class="mini-card"><div class="v">Janvier</div><div class="l">Mois à éviter</div></div>
+              <div class="mini-card"><div class="v">Mai · Sep</div><div class="l">Shoulder idéal</div></div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px">
+              <span style="font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:999px;background:#e8f8f0;color:#1a7a4a;border:1px solid #bfe7cd">✅ 6 mois confortables</span>
+              <span style="font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:999px;background:#fdecec;color:#b91c1c;border:1px solid #f4caca">❄️ Hiver rude</span>
+              <span style="font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:999px;background:#fef3d0;color:#b8860b;border:1px solid #f2e6a8">👥 Foule estivale</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ═════════════════ DÉCIDER ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Décider</div>
+        <h2>Quand partir à Paris ?</h2>
+        <p class="lead">La décision se joue sur la lumière et la foule. Juin-août offrent l'ensoleillement et les journées longues, mai-septembre évitent le pic touristique, hiver à éviter sauf période Noël ciblée.</p>
+      </div>
+      <div class="decision-strip">
+        <div class="card pad verdict-box">
+          <div class="note">
+            <strong>Verdict :</strong> Paris est une destination d'été élargi. Les meilleurs mois sont
+            <strong>juin à septembre</strong> (scores 8.1-8.7, 11-13h de soleil, températures 22-25°C).
+            Évitez <strong>décembre à février</strong> (froid humide, 2-3h de soleil, scores sous 4.5).
+          </div>
+
+          <div style="padding:18px 20px;background:#fff;border:1px solid var(--line-soft);border-radius:14px;border-left:3px solid var(--ink)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-family:'Playfair Display',serif">G</div>
+              <div>
+                <div style="font-size:13px;font-weight:700;color:var(--ink)">L'avis de Gilles</div>
+                <div style="font-size:11px;color:var(--muted)">Fondateur · BestDateWeather</div>
+              </div>
+            </div>
+            <p style="margin:0;font-size:14px;line-height:1.6;color:var(--ink)">
+              Si vous cherchez le meilleur équilibre climat/foule, je pousse vraiment pour <strong>fin mai ou début juin</strong> : le soleil est là, les terrasses sont ouvertes, les Parisiens ne sont pas encore partis et les touristes n'ont pas encore saturé. <strong>Juillet-août</strong> restent les mois les plus ensoleillés mais tout est bondé (Louvre, Orsay, Versailles) et la ville se vide de ses habitants. <strong>Septembre</strong> est mon choix personnel : climat encore doux, rentrée parisienne, musées respirables. Par contre <strong>novembre à février</strong>, soyez lucides : 2-3h de soleil par jour, froid humide qui traverse, journées courtes. Sauf si vous visez spécifiquement marchés de Noël + boutiques chauffées, je déconseille.
+            </p>
+          </div>
+
+          <div>
+            <div class="small-label">Top & à éviter</div>
+            <div class="pills">
+              <span class="pill good">🏆 Juillet · 8.7</span>
+              <span class="pill good">Août · 8.5</span>
+              <span class="pill good">Juin · 8.3</span>
+              <span class="pill good">Septembre · 8.1</span>
+              <span class="pill bad">⚠️ Janvier · 1.6</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="small-label">Vue annuelle · 12 mois</div>
+            <div class="bars">
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar bad" style="height:16%"></div></div><div class="bar-score">1.6</div><div class="bar-label">Jan</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:45%"></div></div><div class="bar-score">4.5</div><div class="bar-label">Fév</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:49%"></div></div><div class="bar-score">4.9</div><div class="bar-label">Mar</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:73%"></div></div><div class="bar-score">7.3</div><div class="bar-label">Avr</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:77%"></div></div><div class="bar-score">7.7</div><div class="bar-label">Mai</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:83%"></div></div><div class="bar-score">8.3</div><div class="bar-label">Juin</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar best" style="height:87%"></div></div><div class="bar-score">8.7</div><div class="bar-label">Juil</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:85%"></div></div><div class="bar-score">8.5</div><div class="bar-label">Aoû</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:81%"></div></div><div class="bar-score">8.1</div><div class="bar-label">Sep</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:55%"></div></div><div class="bar-score">5.5</div><div class="bar-label">Oct</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:44%"></div></div><div class="bar-score">4.4</div><div class="bar-label">Nov</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar bad" style="height:19%"></div></div><div class="bar-score">1.9</div><div class="bar-label">Déc</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card pad right-stack">
+          <div class="right-item">
+            <h3>Ce qu'on comprend en 5 secondes</h3>
+            <p>Paris a 6 mois très agréables (avril-septembre) et 3 mois difficiles (décembre-février). L'écart est brutal : 8.7/10 en juillet contre 1.6/10 en janvier. Visiter hors saison demande un vrai arbitrage.</p>
+          </div>
+          <div class="right-item">
+            <h3>Ce qu'il faut vérifier ensuite</h3>
+            <p>Votre tolérance à la foule. Juillet-août = climat top mais saturation touristique maximale. Mai, juin, septembre offrent 90% du confort climatique avec beaucoup moins de monde.</p>
+          </div>
+          <div class="right-item">
+            <h3>Action suivante</h3>
+            <p>Descendre au tableau détaillé, puis ouvrir la fiche du mois qui vous intéresse.</p>
+          </div>
+          <div class="cta-row">
+            <a class="btn primary" href="#tableau">Comparer les 12 mois</a>
+            <a class="btn" href="#par-projet">Selon votre projet</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ COMPRENDRE (TABLEAU + SIGNAUX) ═════════════════ -->
+  <!-- ═════════════════ GRAPHIQUE TEMPÉRATURES ANNUELLES ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Tendance 10 ans</div>
+        <h2>Températures annuelles — Paris</h2>
+        <p class="lead">Courbes T° min/max observées sur les 10 dernières années (ERA5). Permet de voir la stabilité et la tendance.</p>
+      </div>
+      <div class="card pad">
+        <div class="ct-chart-wrap"><svg viewBox="0 0 560 234" width="100%" style="display:block;overflow:visible" role="img" aria-label="Températures annuelles — Paris"><line x1="40" y1="175.8" x2="544" y2="175.8" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="179.8" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">8</text><line x1="40" y1="143.0" x2="544" y2="143.0" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="147.0" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">10</text><line x1="40" y1="110.2" x2="544" y2="110.2" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="114.2" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">12</text><line x1="40" y1="77.4" x2="544" y2="77.4" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="81.4" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">14</text><line x1="40" y1="44.6" x2="544" y2="44.6" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="48.6" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">16</text><polyline points="40.0,169.2 96.0,177.4 152.0,172.5 208.0,174.2 264.0,166.0 320.0,166.0 376.0,162.7 432.0,172.5 488.0,167.6 544.0,172.5" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><polyline points="40.0,105.3 96.0,113.5 152.0,110.2 208.0,110.2 264.0,102.0 320.0,102.0 376.0,98.7 432.0,110.2 488.0,105.3 544.0,108.6" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 3"/><polyline points="40.0,43.0 96.0,49.5 152.0,46.2 208.0,46.2 264.0,39.7 320.0,39.7 376.0,36.4 432.0,46.2 488.0,41.3 544.0,46.2" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="40.0" cy="43.0" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="96.0" cy="49.5" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="152.0" cy="46.2" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="208.0" cy="46.2" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="264.0" cy="39.7" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="320.0" cy="39.7" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="376.0" cy="36.4" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="432.0" cy="46.2" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="488.0" cy="41.3" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="544.0" cy="46.2" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="40.0" cy="169.2" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="96.0" cy="177.4" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="152.0" cy="172.5" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="208.0" cy="174.2" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="264.0" cy="166.0" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="320.0" cy="166.0" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="376.0" cy="162.7" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="432.0" cy="172.5" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="488.0" cy="167.6" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="544.0" cy="172.5" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><text x="40.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2016</text><line x1="40.0" y1="186" x2="40.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="96.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2017</text><line x1="96.0" y1="186" x2="96.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="152.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2018</text><line x1="152.0" y1="186" x2="152.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="208.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2019</text><line x1="208.0" y1="186" x2="208.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="264.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2020</text><line x1="264.0" y1="186" x2="264.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="320.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2021</text><line x1="320.0" y1="186" x2="320.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="376.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2022</text><line x1="376.0" y1="186" x2="376.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="432.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2023</text><line x1="432.0" y1="186" x2="432.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="488.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2024</text><line x1="488.0" y1="186" x2="488.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="544.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2025</text><line x1="544.0" y1="186" x2="544.0" y2="190" stroke="#d1d5db" stroke-width="1"/></svg><div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px"><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:#f97316;flex-shrink:0"></span>T° max</span><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:repeating-linear-gradient(90deg,#9ca3af 0,#9ca3af 5px,transparent 5px,transparent 8px);flex-shrink:0"></span>Moyenne</span><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:#93c5fd;flex-shrink:0"></span>T° min</span></div></div>
+      </div>
+
+      <!-- Encart méthodologie : explication pédagogique du score -->
+      <div class="method-card">
+        <div class="method-head">
+          <div class="method-ico">🔬</div>
+          <div>
+            <div class="method-title">Comment sont calculés nos scores ?</div>
+            <div class="method-sub">4 critères pondérés sur 10 ans de données climatiques réelles</div>
+          </div>
+        </div>
+        <div class="method-grid">
+          <div class="method-item">
+            <div class="method-k">Précipitations</div>
+            <div class="method-v">Fréquence &amp; intensité quotidienne de pluie</div>
+          </div>
+          <div class="method-item">
+            <div class="method-k">Température</div>
+            <div class="method-v">T° max, min &amp; stabilité mensuelle</div>
+          </div>
+          <div class="method-item">
+            <div class="method-k">Ensoleillement</div>
+            <div class="method-v">Heures de soleil par jour</div>
+          </div>
+          <div class="method-item">
+            <div class="method-k">Ressenti humide</div>
+            <div class="method-v">Point de rosée (confort thermique réel)</div>
+          </div>
+        </div>
+        <div class="method-footer">
+          <div class="method-source">
+            <strong>Source :</strong> ERA5 (ECMWF) · Open-Meteo · 10 ans (2015-2024)
+          </div>
+          <a href="methodologie.html" class="method-link">Méthodologie complète →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ COMPRENDRE (TABLEAU + SIGNAUX) ═════════════════ -->
+  <section id="tableau">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Comprendre</div>
+        <h2>Comparer les 12 mois</h2>
+        <p class="lead">Le détail de chaque mois : températures, pluie, soleil, score et lecture synthétique.</p>
+      </div>
+      <div class="spotlight-grid">
+        <div class="card pad">
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:var(--green-soft);border:1px solid var(--green-border);border-radius:999px;margin-bottom:12px;font-size:12px;font-weight:700;color:var(--green)">
+            ✅ <span>6 mois confortables</span>
+            <span style="font-size:11px;font-weight:500;color:var(--muted)">(avr→sep)</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mois</th>
+                  <th>T° min</th>
+                  <th>T° max</th>
+                  <th>Pluie %</th>
+                  <th>mm/j</th>
+                  <th>Soleil</th>
+                  <th>Score</th>
+                  <th>Lecture</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr onclick="location.href='paris-meteo-janvier.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='paris-meteo-janvier.html'"><td class="month-cell">🌧️ Janvier <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>2°C</td><td>7°C</td><td>41%</td><td>2.3mm</td><td>2.6h</td><td>1.6/10</td><td><span class="mood bad">À éviter</span></td></tr>
+                <tr onclick="location.href='paris-meteo-fevrier.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='paris-meteo-fevrier.html'"><td class="month-cell">🌥️ Février <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>3°C</td><td>10°C</td><td>39%</td><td>1.9mm</td><td>5.1h</td><td>4.5/10</td><td><span class="mood bad">Difficile</span></td></tr>
+                <tr onclick="location.href='paris-meteo-mars.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='paris-meteo-mars.html'"><td class="month-cell">⛅ Mars <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>4°C</td><td>12°C</td><td>42%</td><td>2.2mm</td><td>8.0h</td><td>4.9/10</td><td><span class="mood bad">Difficile</span></td></tr>
+                <tr onclick="location.href='paris-meteo-avril.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='paris-meteo-avril.html'"><td class="month-cell">☀️ Avril <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>6°C</td><td>15°C</td><td>34%</td><td>1.7mm</td><td>11.4h</td><td>7.3/10</td><td><span class="mood mid">Correct</span></td></tr>
+                <tr onclick="location.href='paris-meteo-mai.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='paris-meteo-mai.html'"><td class="month-cell">☀️ Mai <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>10°C</td><td>19°C</td><td>41%</td><td>2.5mm</td><td>11.9h</td><td>7.7/10</td><td><span class="mood good">Très bon</span></td></tr>
+                <tr onclick="location.href='paris-meteo-juin.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='paris-meteo-juin.html'"><td class="month-cell">☀️ Juin <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>14°C</td><td>23°C</td><td>40%</td><td>2.5mm</td><td>13.0h</td><td>8.3/10</td><td><span class="mood good">Très bon</span></td></tr>
+                <tr onclick="location.href='paris-meteo-juillet.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='paris-meteo-juillet.html'"><td class="month-cell">☀️ Juillet <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>15°C</td><td>25°C</td><td>31%</td><td>1.9mm</td><td>12.8h</td><td>8.7/10</td><td><span class="mood good">Meilleur</span></td></tr>
+                <tr onclick="location.href='paris-meteo-aout.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='paris-meteo-aout.html'"><td class="month-cell">☀️ Août <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>15°C</td><td>25°C</td><td>31%</td><td>2.0mm</td><td>11.8h</td><td>8.5/10</td><td><span class="mood good">Meilleur</span></td></tr>
+                <tr onclick="location.href='paris-meteo-septembre.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='paris-meteo-septembre.html'"><td class="month-cell">⛅ Septembre <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>13°C</td><td>22°C</td><td>32%</td><td>2.0mm</td><td>10.1h</td><td>8.1/10</td><td><span class="mood good">Très bon</span></td></tr>
+                <tr onclick="location.href='paris-meteo-octobre.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='paris-meteo-octobre.html'"><td class="month-cell">⛅ Octobre <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>10°C</td><td>16°C</td><td>40%</td><td>2.3mm</td><td>7.0h</td><td>5.5/10</td><td><span class="mood mid">Moyen</span></td></tr>
+                <tr onclick="location.href='paris-meteo-novembre.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='paris-meteo-novembre.html'"><td class="month-cell">🌥️ Novembre <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>6°C</td><td>11°C</td><td>43%</td><td>2.3mm</td><td>4.7h</td><td>4.4/10</td><td><span class="mood bad">Difficile</span></td></tr>
+                <tr onclick="location.href='paris-meteo-decembre.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='paris-meteo-decembre.html'"><td class="month-cell">🌧️ Décembre <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>3°C</td><td>9°C</td><td>42%</td><td>2.4mm</td><td>2.7h</td><td>1.9/10</td><td><span class="mood bad">À éviter</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Version mobile du tableau : cards individuelles cliquables (<640px) -->
+          <div class="mobile-month-cards">
+            <a href="paris-meteo-janvier.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌧️ Janvier</div><div class="score bad">1.6/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>2°C / 7°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>41%</strong></div>
+                <div class="row"><span>Soleil</span><strong>2.6h</strong></div>
+                <div class="row row-mood"><strong class="mood-bad">À éviter</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-fevrier.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌥️ Février</div><div class="score bad">4.5/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>3°C / 10°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>39%</strong></div>
+                <div class="row"><span>Soleil</span><strong>5.1h</strong></div>
+                <div class="row row-mood"><strong class="mood-bad">Difficile</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-mars.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Mars</div><div class="score bad">4.9/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>4°C / 12°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>42%</strong></div>
+                <div class="row"><span>Soleil</span><strong>8.0h</strong></div>
+                <div class="row row-mood"><strong class="mood-bad">Difficile</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-avril.html" class="mobile-month-card">
+              <div class="head"><div class="name">☀️ Avril</div><div class="score mid">7.3/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>6°C / 15°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>34%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.4h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Correct</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-mai.html" class="mobile-month-card">
+              <div class="head"><div class="name">☀️ Mai</div><div class="score good">7.7/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>10°C / 19°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>41%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.9h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Très bon</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-juin.html" class="mobile-month-card">
+              <div class="head"><div class="name">☀️ Juin</div><div class="score good">8.3/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>14°C / 23°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>40%</strong></div>
+                <div class="row"><span>Soleil</span><strong>13.0h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Très bon</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-juillet.html" class="mobile-month-card">
+              <div class="head"><div class="name">☀️ Juillet</div><div class="score good">8.7/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>15°C / 25°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>31%</strong></div>
+                <div class="row"><span>Soleil</span><strong>12.8h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Meilleur</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-aout.html" class="mobile-month-card">
+              <div class="head"><div class="name">☀️ Août</div><div class="score good">8.5/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>15°C / 25°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>31%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.8h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Meilleur</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-septembre.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Septembre</div><div class="score good">8.1/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>13°C / 22°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>32%</strong></div>
+                <div class="row"><span>Soleil</span><strong>10.1h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Très bon</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-octobre.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Octobre</div><div class="score mid">5.5/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>10°C / 16°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>40%</strong></div>
+                <div class="row"><span>Soleil</span><strong>7.0h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Moyen</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-novembre.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌥️ Novembre</div><div class="score bad">4.4/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>6°C / 11°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>43%</strong></div>
+                <div class="row"><span>Soleil</span><strong>4.7h</strong></div>
+                <div class="row row-mood"><strong class="mood-bad">Difficile</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-decembre.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌧️ Décembre</div><div class="score bad">1.9/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>3°C / 9°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>42%</strong></div>
+                <div class="row"><span>Soleil</span><strong>2.7h</strong></div>
+                <div class="row row-mood"><strong class="mood-bad">À éviter</strong></div>
+              </div>
+            </a>
+          </div>
+            </a>
+            <a href="paris-meteo-fevrier.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌧️ Février</div><div class="score bad">5.7/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>92%</strong></div>
+                <div class="row"><span>Soleil</span><strong>10.3h</strong></div>
+                <div class="row row-mood"><strong class="mood-bad">À éviter</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-mars.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌧️ Mars</div><div class="score mid">6.2/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>86%</strong></div>
+                <div class="row"><span>Soleil</span><strong>10.9h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Lourd</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-avril.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Avril</div><div class="score mid">6.8/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>74%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.2h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Transition</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-mai.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Mai</div><div class="score mid">6.9/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>70%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.1h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Correct</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-juin.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Juin</div><div class="score mid">6.9/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>24°C / 28°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>65%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.0h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Correct</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-juillet.html" class="mobile-month-card best">
+              <div class="head"><div class="name">🌤️ Juillet ★</div><div class="score good">8.0/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>23°C / 27°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>59%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.0h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Meilleur mois</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-aout.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌤️ Août</div><div class="score good">7.9/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>23°C / 27°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>64%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.0h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Très bon</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-septembre.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Septembre</div><div class="score mid">6.9/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>23°C / 28°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>64%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.5h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Correct</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-octobre.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Octobre</div><div class="score mid">6.9/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>66%</strong></div>
+                <div class="row"><span>Soleil</span><strong>12.0h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Correct</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-novembre.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌧️ Novembre</div><div class="score mid">6.1/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>24°C / 30°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>83%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.5h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Lourd</strong></div>
+              </div>
+            </a>
+            <a href="paris-meteo-decembre.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌧️ Décembre</div><div class="score mid">6.2/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>87%</strong></div>
+                <div class="row"><span>Soleil</span><strong>10.9h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Lourd</strong></div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="signal-card">
+          <div class="card pad">
+            <div class="small-label">📊 Lecture rapide</div>
+            <div class="signal-list">
+              <div class="signal-item"><div class="l">Fenêtre optimale</div><div class="r">Juin → Sep</div></div>
+              <div class="signal-item"><div class="l">Bonne transition</div><div class="r">Avr · Mai</div></div>
+              <div class="signal-item"><div class="l">Période rude</div><div class="r">Déc → Fév</div></div>
+            </div>
+          </div>
+          <div class="card pad">
+            <div class="small-label">🌡️ Conditions détaillées (juillet)</div>
+            <div class="signal-list">
+              <div class="signal-item"><div class="l">🌡️ Ressenti <span class="signal-hint" title="Combine température max et point de rosée pour évaluer le confort thermique réel. Paris juillet : 25°C + dew point 12.6°C → Confortable (sec et tempéré)">ⓘ</span></div><div class="r">Confortable</div></div>
+              <div class="signal-item"><div class="l">☀️ UV</div><div class="r">6.0 · Modéré-Fort</div></div>
+              <div class="signal-item"><div class="l">💧 Humidité ressentie <span class="signal-hint" title="Point de rosée (dew point) : température de condensation, meilleur indicateur de l'humidité ressentie qu'un simple %">ⓘ</span></div><div class="r">12.6°C · Sec</div></div>
+              <div class="signal-item"><div class="l">🌫️ Qualité de l'air <span class="signal-hint" title="AQI (Air Quality Index) : indice standardisé OMS, 0-50 = excellent, 50-100 = bon">ⓘ</span></div><div class="r">25 · Excellent</div></div>
+              <div class="signal-item"><div class="l">☔ Pluie</div><div class="r">31% · 1.9 mm/j</div></div>
+              <div class="signal-item"><div class="l">🌅 Soleil</div><div class="r">12.8h/jour · Pic annuel</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- ═════════════════ À QUOI S'ATTENDRE ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Contexte</div>
+        <h2>À quoi s'attendre selon la période</h2>
+        <p class="lead">Paris a un climat tempéré océanique : trois périodes contrastées qui changent radicalement la qualité du séjour.</p>
+      </div>
+      <div class="grid-2">
+        <div class="box">
+          <div class="box-head">
+            <div><strong>☀️ Été lumineux</strong></div>
+            <span class="badge">Juin → Septembre</span>
+          </div>
+          <p>
+            Journées longues (11-13h de soleil), températures 22-25°C, faible pluie (31-40%).
+            <strong>Période à privilégier</strong> pour les jardins (Tuileries, Luxembourg), les terrasses, les
+            balades sur les quais. Juillet-août : forte affluence touristique (Louvre, Versailles bondés)
+            et la moitié des Parisiens sont en vacances. Septembre = sweet spot : climat doux, ville réveillée.
+          </p>
+        </div>
+        <div class="box">
+          <div class="box-head">
+            <div><strong>🌥️ Shoulder doux</strong></div>
+            <span class="badge">Avril → Mai · Octobre</span>
+          </div>
+          <p>
+            <strong>Avril-mai</strong> : 11-12h de soleil, 15-19°C, parfait pour visites prolongées sans foule estivale.
+            Le retour des terrasses et des cerisiers en fleurs.
+            <strong>Octobre</strong> : déjà plus court (7h de soleil) mais températures encore acceptables (10-16°C).
+          </p>
+        </div>
+        <div class="box">
+          <div class="box-head">
+            <div><strong>❄️ Hiver rude</strong></div>
+            <span class="badge">Novembre → Mars</span>
+          </div>
+          <p>
+            Froid humide qui traverse, journées très courtes (2-5h de soleil), pluies fréquentes (39-43%).
+            <strong>À déconseiller</strong> sauf période ciblée Noël-Nouvel An (marchés, illuminations Champs-Élysées,
+            patinoires) ou pour visites musées exclusivement en intérieur. Décembre-janvier descendent à 1.6-1.9/10.
+          </p>
+        </div>
+        <div class="box">
+          <div class="box-head">
+            <div><strong>🌸 Cas particulier</strong></div>
+            <span class="badge">Printemps tardif</span>
+          </div>
+          <p>
+            <strong>Mai-juin</strong> est le sweet spot absolu : 11-13h de soleil, 19-23°C, terrasses ouvertes,
+            jardins en pleine floraison, foule encore modérée (avant juillet-août). Parisiens encore en ville,
+            atmosphère vivante. <strong>Mon choix personnel pour visiter Paris.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ PROFILS ═════════════════ -->
+  <section id="par-projet">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Adapter</div>
+        <h2>Meilleure période selon votre type de voyage</h2>
+        <p class="lead">Le meilleur mois dépend de ce que vous venez chercher.</p>
+      </div>
+      <div class="grid-4">
+        <div class="box">
+          <div class="box-head"><div><strong>🏛️ Musées & culture</strong></div><span class="badge">Toute l'année</span></div>
+          <p>Louvre, Orsay, Beaubourg, Rodin : visitable même par mauvais temps. <strong>Préférer mardi-jeudi</strong> hors vacances scolaires pour éviter la foule. Janvier-février : tarifs hôtels au plus bas.</p>
+        </div>
+        <div class="box">
+          <div class="box-head"><div><strong>🍷 Gastronomie & vie de quartier</strong></div><span class="badge">Mai · Juin · Sep</span></div>
+          <p>Terrasses ouvertes, marchés en plein air (Aligre, Bastille), bistrots de quartier. Mai-juin = floraison + retour des vrais Parisiens. Septembre = rentrée + Fashion Week.</p>
+        </div>
+        <div class="box">
+          <div class="box-head"><div><strong>🛍️ Shopping & boutiques</strong></div><span class="badge">Janvier · Juillet</span></div>
+          <p>Soldes officielles : 2e mercredi de janvier (~1 mois) et fin juin (~1 mois). Janvier = aussi période froide ⇒ shopping intérieur (Galeries Lafayette, Bon Marché) particulièrement adapté.</p>
+        </div>
+        <div class="box">
+          <div class="box-head"><div><strong>💻 Digital nomad</strong></div><span class="badge">Avril-Octobre</span></div>
+          <p>Cafés-coworking (Anticafé, Wojo), wifi excellent partout. Coût moyen : élevé (logement). Hiver à éviter pour la lumière courte (2-5h soleil/jour) qui pèse sur la productivité.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ PLANIFIER ═════════════════ -->
+  <section id="planifier" style="scroll-margin-top:120px">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Réserver</div>
+        <h2>Planifier votre séjour</h2>
+        <p class="lead">Hôtels au plus bas en janvier-février (mais peu de soleil), tarifs au plus haut en juin-septembre. Mai et octobre offrent un bon compromis prix/climat.</p>
+      </div>
+
+      <!-- Ligne 1 : 3 cartes compactes alignées (Hébergement / Activités / Vols) -->
+      <div class="grid-3 plan-row">
+        <a href="https://www.expedia.com/Hotel-Search?destination=Paris&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-card">
+          <div class="plan-icon">🏨</div>
+          <div class="plan-body">
+            <div class="plan-title">Hébergement</div>
+            <div class="plan-sub">5000+ hôtels Paris intra-muros · Marais, Saint-Germain, Montmartre</div>
+          </div>
+          <div class="plan-cta">Expedia →</div>
+        </a>
+        <a href="#activites" class="plan-card">
+          <div class="plan-icon">🎟️</div>
+          <div class="plan-body">
+            <div class="plan-title">Activités</div>
+            <div class="plan-sub">Louvre, Tour Eiffel, Versailles, croisière Seine</div>
+          </div>
+          <div class="plan-cta">Voir ↓</div>
+        </a>
+        <a href="https://www.kiwi.com/deep?affilid=708106&to=Paris&lang=fr" target="_blank" rel="sponsored noopener" class="plan-card">
+          <div class="plan-icon">✈️</div>
+          <div class="plan-body">
+            <div class="plan-title">Vols</div>
+            <div class="plan-sub">Charles-de-Gaulle (CDG) · Orly (ORY) · principal hub européen</div>
+          </div>
+          <div class="plan-cta">Kiwi →</div>
+        </a>
+      </div>
+
+      <!-- Ligne 2 : Widget GetYourGuide en pleine largeur -->
+      <div id="activites" class="card pad" style="margin-top:20px;scroll-margin-top:120px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap">
+          <div>
+            <h3 style="margin:0 0 4px">🎟️ Activités & excursions à Paris</h3>
+            <p style="margin:0;color:var(--muted);font-size:.9rem">Sélection GetYourGuide · réservation annulable gratuitement</p>
+          </div>
+          <a class="travel-cta" style="padding:10px 18px;width:auto" href="https://www.getyourguide.fr/s/?q=Paris%2C+France&partner_id=2MQKL00&locale=fr" target="_blank" rel="sponsored noopener">Voir tout →</a>
+        </div>
+        <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+             data-gyg-locale-code="fr-FR"
+             data-gyg-widget="activities"
+             data-gyg-number-of-items="3"
+             data-gyg-partner-id="2MQKL00"
+             data-gyg-q="Paris, France">
+        </div>
+        <span class="affil-note" style="text-align:right;display:block;margin-top:10px">Lien affilié · GetYourGuide</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ INFOS PRATIQUES ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Infos pratiques</div>
+        <h2>Ce qu'il faut savoir avant de partir</h2>
+        <p class="lead">Budget, sécurité, transport, monnaie : tout ce qui ne change pas la décision mais reste bon à savoir.</p>
+      </div>
+      <div class="grid-2">
+        <div class="box">
+          <h3>🏛️ Sécurité, budget, transport</h3>
+          <div class="list">
+            <div class="list-item"><span><span class="list-ico">⛰️</span>Altitude</span><strong>35 m</strong></div>
+            <div class="list-item"><span><span class="list-ico">💰</span>Budget</span><strong>Élevé (capitale)</strong></div>
+            <div class="list-item"><span><span class="list-ico">🛡️</span>Sécurité</span><strong>Vigilance pickpockets</strong></div>
+            <div class="list-item"><span><span class="list-ico">🚇</span>Métro</span><strong>16 lignes · pass Navigo dispo</strong></div>
+          </div>
+        </div>
+        <div class="box">
+          <h3>📍 Localisation & tendance</h3>
+          <div class="list">
+            <div class="list-item"><span><span class="list-ico">💱</span>Monnaie</span><strong>EUR (Euro)</strong></div>
+            <div class="list-item"><span><span class="list-ico">🗣️</span>Langue</span><strong>Français</strong></div>
+            <div class="list-item"><span><span class="list-ico">🚗</span>Conduite</span><strong>À droite</strong></div>
+            <div class="list-item"><span><span class="list-ico">📈</span>Tendance climatique</span><strong>+0.34°C/décennie</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ EXPLORER ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Explorer</div>
+        <h2>Destinations & guides complémentaires</h2>
+        <p class="lead">Si Paris ne colle pas à vos dates, voici des alternatives et des guides.</p>
+      </div>
+      <div class="grid-3">
+        <div class="box">
+          <h3>Destinations au climat similaire</h3>
+          <div class="list">
+            <a href="meilleure-periode-londres.html" class="list-item"><span><img src="flags/gb.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Londres <span class="list-country">· Royaume-Uni</span></span><strong>→</strong></a>
+            <a href="meilleure-periode-amsterdam.html" class="list-item"><span><img src="flags/nl.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Amsterdam <span class="list-country">· Pays-Bas</span></span><strong>→</strong></a>
+            <a href="meilleure-periode-berlin.html" class="list-item"><span><img src="flags/de.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Berlin <span class="list-country">· Allemagne</span></span><strong>→</strong></a>
+            <a href="meilleure-periode-madrid.html" class="list-item"><span><img src="flags/es.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Madrid <span class="list-country">· Espagne</span></span><strong>→</strong></a>
+          </div>
+        </div>
+        <div class="box">
+          <h3>Destinations proches</h3>
+          <div class="list">
+            <a href="meilleure-periode-versailles.html" class="list-item"><span><img src="flags/fr.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Versailles <span class="list-country">· France</span></span><strong>17 km →</strong></a>
+            <a href="meilleure-periode-fontainebleau.html" class="list-item"><span><img src="flags/fr.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Fontainebleau <span class="list-country">· France</span></span><strong>56 km →</strong></a>
+            <a href="meilleure-periode-giverny.html" class="list-item"><span><img src="flags/fr.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Giverny <span class="list-country">· France</span></span><strong>75 km →</strong></a>
+            <a href="meilleure-periode-reims.html" class="list-item"><span><img src="flags/fr.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Reims <span class="list-country">· France</span></span><strong>130 km →</strong></a>
+          </div>
+        </div>
+        <div class="box">
+          <h3>Guides & classements</h3>
+          <div class="list">
+            <div class="list-item"><span>Classement mondial 2026</span><strong><a href="classement-destinations-meteo-2026.html">Voir →</a></strong></div>
+            <div class="list-item"><span>Meilleures destinations été</span><strong><a href="classement-destinations-meteo-ete-2026.html">Voir →</a></strong></div>
+            <div class="list-item"><span>Soleil hiver</span><strong><a href="classement-destinations-meteo-hiver-2026.html">Voir →</a></strong></div>
+            <div class="list-item"><span>Où partir en juillet</span><strong><a href="ou-partir-en-juillet.html">Voir →</a></strong></div>
+          </div>
+          <div style="margin-top:16px">
+            <a class="travel-cta" href="carte.html">🗺️ Carte climatique des 754 destinations</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═════════════════ LOCALISATION (2 cartes Leaflet) ═════════════════ -->
+  <section class="dest-map-section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Localisation</div>
+        <h2>Où se trouve Paris ?</h2>
+        <p class="lead">Monde + contexte géographique européen.</p>
+      </div>
+      <div class="dest-map-row" data-dest-map="1" data-lat="48.85" data-lon="2.35" data-macro-zoom="5" data-world-id="dmap-world-paris" data-macro-id="dmap-macro-paris">
+        <div class="dest-map-card">
+          <div class="dest-map-lbl">🌍 Monde</div>
+          <div id="dmap-world-paris" class="dest-map-el dest-map-el--world"></div>
+        </div>
+        <div class="dest-map-card">
+          <div class="dest-map-lbl">🔍 Contexte géographique</div>
+          <div id="dmap-macro-paris" class="dest-map-el dest-map-el--macro"></div>
+        </div>
+      </div>
+      <div class="dest-map-intro">
+        <div class="dest-map-intro-body">
+          <div class="dest-map-country"><img src="flags/fr.png" width="16" height="12" alt="FR" style="vertical-align:middle;border-radius:2px;margin-right:5px">France</div>
+          <div class="dest-map-hsub">Paris est visitable toute l'année mais l'hiver (déc-fév) plombe l'expérience : 2-3h de soleil par jour, journées courtes, froid humide. 10 ans de données pour choisir selon votre projet.</div>
+          <div class="dest-map-coords">48.85°N · 2.35°E</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════ FAQ ═════════════════ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Questions</div>
+        <h2>Questions fréquentes</h2>
+        <p class="lead">Les réponses les plus cherchées à propos de Paris.</p>
+      </div>
+      <div class="faq">
+        <div class="faq-item">
+          <strong>Quelle est la meilleure période pour partir à Paris ?</strong>
+          Juillet est le meilleur mois avec un score de 8.7/10 : 25°C en journée, 15°C la nuit, 12.8h de soleil et seulement 31% de jours pluvieux. Août suit avec 8.5/10, juin et septembre à 8.3 et 8.1.
+        </div>
+        <div class="faq-item">
+          <strong>Quel est le pire mois pour visiter Paris ?</strong>
+          Janvier (1.6/10), suivi de décembre (1.9/10). Très peu de soleil (2.6-2.7h/jour), froid humide (2-7°C de tmax), journées très courtes. À éviter sauf période ciblée Noël-Nouvel An.
+        </div>
+        <div class="faq-item">
+          <strong>Paris est-il agréable au printemps ?</strong>
+          Avril (7.3/10) et surtout mai (7.7/10) sont d'excellents choix : terrasses ouvertes, jardins en floraison, 11-12h de soleil, températures 15-19°C. Mai-juin est mon sweet spot personnel : climat top, foule encore modérée.
+        </div>
+        <div class="faq-item">
+          <strong>Vaut-il mieux visiter Paris en juillet ou septembre ?</strong>
+          Météo similaire (8.7 vs 8.1) mais expérience très différente. Juillet = pic touristique, ville à moitié vidée par les Parisiens en vacances, monuments saturés. Septembre = ville pleinement vivante (rentrée), musées respirables, climat encore doux.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bdw-footer">
+  <div class="container">
+    <p class="bdw-footer-brand">bestdateweather.com</p>
+    <p><a href="https://open-meteo.com/" rel="noopener">Données météo par Open-Meteo.com</a> · <span class="bdw-footer-sub">Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</span></p>
+    <p class="bdw-footer-links"><a href="methodologie.html">Méthodologie</a> · <a href="a-propos.html">À propos</a> · <a href="faq.html">FAQ</a> · <a href="index.html">Application météo</a> · <a href="widgets.html">Widgets voyage</a></p>
+    <p class="bdw-footer-langs">
+      <a href="en/best-time-to-visit-paris.html"><img src="flags/gb.png" width="20" height="15" alt="" loading="lazy"> English</a>
+      <a href="es/mejor-epoca-paris.html"><img src="flags/es.png" width="20" height="15" alt="" loading="lazy"> Español</a>
+      <a href="us/best-time-to-visit-paris.html"><img src="flags/us.png" width="20" height="15" alt="" loading="lazy"> English (US)</a>
+      <a href="de/beste-reisezeit-paris.html"><img src="flags/de.png" width="20" height="15" alt="" loading="lazy"> Deutsch</a>
+    </p>
+    <p class="bdw-footer-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="contact.html">Contact</a></p>
+    <p class="bdw-footer-proto" style="margin-top:18px;opacity:.6;font-size:11px">🧪 Prototype v5 · <a href="/meilleure-periode-paris.html">Voir la fiche actuelle</a></p>
+  </div>
+</footer>
+
+
+<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
+<script src="js/dest-map.min.js?v=1" defer></script>
+<script src="js/favs.min.js?v=1" defer></script>
+<script src="js/share.js" defer></script>
+<script>
+  // Force un invalidateSize après que toute la page (fonts, images, widgets) soit chargée
+  // pour corriger les tiles partielles quand la section est initialement hors viewport
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.querySelectorAll('.dest-map-el').forEach(function(el) {
+        if (el._map) el._map.invalidateSize();
+      });
+    }, 500);
+    // Retry après scroll vers la section (force une 2e passe)
+    var section = document.querySelector('.dest-map-section');
+    if (section) {
+      var observed = false;
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting && !observed) {
+            observed = true;
+            setTimeout(function() {
+              document.querySelectorAll('.dest-map-el').forEach(function(el) {
+                if (el._map) el._map.invalidateSize();
+              });
+            }, 200);
+          }
+        });
+      });
+      obs.observe(section);
+    }
+  });
+</script>
+</body>
+</html>
