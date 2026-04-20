@@ -22,7 +22,7 @@ Testé isolément. Pas de dépendance à generate_pages.py ni à common.py.
 
 import html as _html
 
-from lib.llm_detection import check_no_llm_patterns
+from lib.llm_detection import check_no_llm_patterns, pick_variant, get_templates
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -449,8 +449,154 @@ def build_decision_card_v6(dest, monthly, lang="fr", n_top=3, n_shoulder=2):
 
 
 # ══════════════════════════════════════════════════════════════════
-# TESTS unitaires
+# Verdict + Avis éditorial (utilisent pick_variant de llm_detection)
 # ══════════════════════════════════════════════════════════════════
+
+# Nom du mois pour destination mountain : "meilleur hiver" et "meilleur été"
+# (utilisé en fallback quand score ski séparé pas dispo)
+_WINTER_MONTHS = (12, 1, 2, 3, 4)  # Ski season
+_SUMMER_MONTHS = (6, 7, 8, 9)       # Hiking season
+
+
+def _best_in_range(monthly, month_nums):
+    """Retourne le dict mois avec le meilleur score parmi une plage de mois_num."""
+    candidates = [m for m in monthly if int(m.get("mois_num", 0)) in month_nums]
+    if not candidates:
+        return None
+    return max(candidates, key=_score)
+
+
+def _build_template_params(dest, monthly, lang="fr"):
+    """
+    Construit le dict de paramètres à injecter dans les templates verdict/avis_edito.
+
+    Les placeholders varient selon le type de destination :
+    - tropical / generic : nom, top1, top2, worst
+    - mountain : nom, ski_top, hike_top, worst
+
+    Args:
+        dest: dict destination
+        monthly: list 12 mois
+        lang: code langue
+
+    Returns:
+        dict — params prêts pour pick_variant(..., **params)
+    """
+    # Nom de la destination : choisir la variante langue (fallback FR)
+    nom_key = f"nom_{lang.replace('-', '_')}"
+    nom = dest.get(nom_key) or dest.get("nom_fr") or dest.get("nom_bare") or dest.get("slug", "?")
+
+    dtype = classify_dest(dest)
+    worst = format_month_full(worst_month(monthly), lang)
+
+    if dtype == "mountain":
+        # Pour mountain : ski_top = meilleur hiver, hike_top = meilleur été
+        ski_best = _best_in_range(monthly, _WINTER_MONTHS)
+        hike_best = _best_in_range(monthly, _SUMMER_MONTHS)
+        # Fallback si plage vide (ne devrait pas arriver avec 12 mois complets)
+        ski_top = format_month_full(ski_best, lang) if ski_best else format_month_full(best_month(monthly), lang)
+        hike_top = format_month_full(hike_best, lang) if hike_best else format_month_full(best_month(monthly), lang)
+        return {
+            "nom": nom,
+            "ski_top": ski_top,
+            "hike_top": hike_top,
+            "worst": worst,
+        }
+
+    # Tropical ou generic : top1 et top2 = top 2 mois par score (pas chronologique)
+    sorted_by_score = sorted(monthly, key=_score, reverse=True)
+    top1 = format_month_full(sorted_by_score[0], lang)
+    top2 = format_month_full(sorted_by_score[1], lang)
+    return {
+        "nom": nom,
+        "top1": top1,
+        "top2": top2,
+        "worst": worst,
+    }
+
+
+def build_verdict_v6(dest, monthly, lang="fr"):
+    """
+    Construit le texte du verdict (1 phrase pertinente, variable par slug).
+
+    Le template est choisi selon classify_dest() :
+    - tropical → verdict_tropical
+    - mountain → verdict_mountain
+    - generic → verdict_generic
+
+    pick_variant() utilise MD5(slug) pour choisir déterministiquement parmi
+    les 5 variantes. Même slug = même variante sur toutes les régénérations.
+
+    Args:
+        dest: dict destination (requis : slug, nom_*, tropical, mountain)
+        monthly: list 12 mois (requis : mois_num, score)
+        lang: code langue
+
+    Returns:
+        str — texte du verdict (HTML-safe, pas de balises)
+    """
+    if len(monthly) != 12:
+        raise ValueError(f"monthly doit contenir 12 entrées, reçu {len(monthly)}")
+
+    dtype = classify_dest(dest)
+    # Mapping type → template_type dans TEMPLATES_BY_LANG
+    template_type = f"verdict_{dtype}"
+
+    variants = get_templates(template_type, lang)
+    params = _build_template_params(dest, monthly, lang)
+    slug = dest.get("slug") or dest.get("slug_fr") or "unknown"
+
+    verdict = pick_variant(variants, slug=slug, **params)
+
+    # Auto-validation anti-LLM
+    check_no_llm_patterns(verdict, page_id=f"verdict/{slug}", lang=lang, strict=True)
+
+    return verdict
+
+
+def build_avis_edito_v6(dest, monthly, lang="fr"):
+    """
+    Construit l'avis éditorial (bloc plus long, ton plus personnel).
+
+    Contient des balises <strong> pour emphase. Template choisi selon le type :
+    - tropical → avis_edito_tropical (3 variantes)
+    - mountain → avis_edito_mountain (2 variantes)
+    - generic → pas d'avis édito spécialisé : on utilise avis_edito_tropical
+      avec les mêmes placeholders (top1, top2, worst) qui fonctionnent.
+
+    Args:
+        dest: dict destination
+        monthly: list 12 mois
+        lang: code langue
+
+    Returns:
+        str — texte HTML (contient des <strong>)
+    """
+    if len(monthly) != 12:
+        raise ValueError(f"monthly doit contenir 12 entrées, reçu {len(monthly)}")
+
+    dtype = classify_dest(dest)
+
+    # Dispatch sur le template_type correspondant
+    if dtype == "mountain":
+        template_type = "avis_edito_mountain"
+    else:
+        # tropical ET generic utilisent le même pool tropical (placeholders top1/top2/worst)
+        template_type = "avis_edito_tropical"
+
+    variants = get_templates(template_type, lang)
+    params = _build_template_params(dest, monthly, lang)
+    slug = dest.get("slug") or dest.get("slug_fr") or "unknown"
+
+    avis = pick_variant(variants, slug=slug, **params)
+
+    # Auto-validation anti-LLM (tolère les <strong>)
+    check_no_llm_patterns(avis, page_id=f"avis_edito/{slug}", lang=lang, strict=True)
+
+    return avis
+
+
+
 
 def _test():
     """Tests rapides (exécuter avec : python3 -m lib.common_v6)."""
@@ -538,6 +684,75 @@ def _test():
     tg2 = best_month_tagline(paris_dest, paris_monthly, "fr")
     assert tg1 == tg2, "Taglines non déterministes"
     print(f"  ✅ tagline déterministe : '{tg1}'")
+
+    # ══════ Tests verdict + avis_edito ══════
+    print("\n  — Tests verdict + avis_edito —")
+
+    # Paris (generic)
+    v = build_verdict_v6(paris_dest, paris_monthly, "fr")
+    assert "Paris" in v, f"nom manquant : {v}"
+    assert "Juillet" in v or "juillet" in v.lower(), f"top1 manquant : {v}"
+    assert "Janvier" in v or "janvier" in v.lower(), f"worst manquant : {v}"
+    print(f"  ✅ verdict Paris FR : '{v[:80]}...'")
+
+    # Même slug → même variante (déterministe)
+    v2 = build_verdict_v6(paris_dest, paris_monthly, "fr")
+    assert v == v2, "Verdict non déterministe"
+    print(f"  ✅ verdict déterministe (re-appel identique)")
+
+    # 5 langues sans violation
+    for lang in ["en", "en-us", "es", "de"]:
+        v_l = build_verdict_v6(paris_dest, paris_monthly, lang)
+        assert "Paris" in v_l
+        assert len(v_l) > 30
+    print(f"  ✅ verdict 5 langues OK")
+
+    # Avis édito Paris (generic → utilise template tropical avec placeholders top1/top2/worst)
+    a = build_avis_edito_v6(paris_dest, paris_monthly, "fr")
+    assert "<strong>" in a, "avis édito doit contenir <strong>"
+    assert "Paris" in a
+    print(f"  ✅ avis_edito Paris FR OK (contient <strong>)")
+
+    # Verdict tropical (Bali)
+    v_bali = build_verdict_v6(bali_dest, bali_monthly, "fr")
+    assert "Bali" in v_bali
+    print(f"  ✅ verdict Bali (tropical) : '{v_bali[:60]}...'")
+
+    # Verdict mountain (Chamonix) — doit utiliser ski_top et hike_top
+    v_cham = build_verdict_v6(cham_dest, cham_monthly, "fr")
+    assert "Chamonix" in v_cham
+    # Best hiver chamonix_monthly = Mars (9.1), best été = Août (8.4) dans ce dataset
+    # Le template utilise ski_top et hike_top donc les mois d'hiver et été doivent apparaître
+    print(f"  ✅ verdict Chamonix (mountain) : '{v_cham[:80]}...'")
+
+    # Avis édito mountain (Chamonix)
+    a_cham = build_avis_edito_v6(cham_dest, cham_monthly, "fr")
+    assert "<strong>" in a_cham
+    assert "Chamonix" in a_cham
+    print(f"  ✅ avis_edito Chamonix OK")
+
+    # Distribution pick_variant sur 100 slugs fictifs (generic)
+    seen = set()
+    for i in range(100):
+        d = {"slug": f"dest-{i}", "nom_fr": f"Dest{i}", "tropical": "0", "mountain": "0"}
+        v = build_verdict_v6(d, paris_monthly, "fr")
+        seen.add(v)
+    # Avec 5 variantes et 100 slugs, on devrait voir ~5 verdicts distincts
+    # (paramètres identiques hormis nom, donc distinctions limitées à la structure)
+    # NB : comme le nom change, on devrait voir 100 textes distincts dans les faits
+    # Mais si on groupe par template utilisé, on devrait être sur 5
+    templates_used = set()
+    sample_var = get_templates("verdict_generic", "fr")
+    for s_text in seen:
+        for i, tmpl in enumerate(sample_var):
+            # Match en remplaçant les placeholders par wildcards
+            import re as _re
+            pattern = _re.escape(tmpl).replace(r"\{nom\}", ".+?").replace(r"\{top1\}", ".+?").replace(r"\{top2\}", ".+?").replace(r"\{worst\}", ".+?")
+            if _re.fullmatch(pattern, s_text):
+                templates_used.add(i)
+                break
+    assert len(templates_used) >= 4, f"Seulement {len(templates_used)}/5 templates utilisés"
+    print(f"  ✅ Distribution : {len(templates_used)}/5 templates utilisés sur 100 slugs")
 
     print("\n→ Tous les tests common_v6 passent ✓")
 
