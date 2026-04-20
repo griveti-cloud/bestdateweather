@@ -311,11 +311,11 @@ def _render_hero(dest, monthly, lang):
     best = best_month(monthly)
     worst = worst_month(monthly)
     hero_leads = {
-        "fr": f"Le meilleur mois est <strong>{format_month_full(best, lang)}</strong> avec un score de {float(best['score']):.1f}/10. À éviter : {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
-        "en": f"Best month is <strong>{format_month_full(best, lang)}</strong> with a {float(best['score']):.1f}/10 score. Skip {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
-        "en-us": f"Best month is <strong>{format_month_full(best, lang)}</strong> with a {float(best['score']):.1f}/10 score. Skip {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
-        "es": f"El mejor mes es <strong>{format_month_full(best, lang)}</strong> con una puntuación de {float(best['score']):.1f}/10. Evitar: {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
-        "de": f"Der beste Monat ist <strong>{format_month_full(best, lang)}</strong> mit {float(best['score']):.1f}/10. Meiden: {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
+        "fr": f"Le meilleur mois est <strong>{format_month_full(best, lang)}</strong> avec un score de {float(best['score']):.1f}/10. Le plus rude : {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
+        "en": f"Best month is <strong>{format_month_full(best, lang)}</strong> with a {float(best['score']):.1f}/10 score. Toughest: {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
+        "en-us": f"Best month is <strong>{format_month_full(best, lang)}</strong> with a {float(best['score']):.1f}/10 score. Toughest: {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
+        "es": f"El mejor mes es <strong>{format_month_full(best, lang)}</strong> con una puntuación de {float(best['score']):.1f}/10. El más duro: {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
+        "de": f"Der beste Monat ist <strong>{format_month_full(best, lang)}</strong> mit {float(best['score']):.1f}/10. Härtester: {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
     }
 
     # Labels hero-meta par langue

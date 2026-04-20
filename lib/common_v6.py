@@ -54,7 +54,7 @@ UI_LABELS = {
     "fr": {
         "reponse_rapide": "⚡ Réponse rapide",
         "top_n_mois": "Top {n} mois",
-        "mois_a_eviter": "Mois à éviter",
+        "mois_a_eviter": "Mois le plus rude",
         "mi_saison": "Mi-saison idéale",
         "saison_seche": "Saison sèche",
         "saison_humide": "Saison humide",
@@ -65,7 +65,7 @@ UI_LABELS = {
     "en": {
         "reponse_rapide": "⚡ Quick answer",
         "top_n_mois": "Top {n} months",
-        "mois_a_eviter": "Month to avoid",
+        "mois_a_eviter": "Toughest month",
         "mi_saison": "Ideal shoulder",
         "saison_seche": "Dry season",
         "saison_humide": "Wet season",
@@ -76,7 +76,7 @@ UI_LABELS = {
     "en-us": {
         "reponse_rapide": "⚡ Quick answer",
         "top_n_mois": "Top {n} months",
-        "mois_a_eviter": "Month to avoid",
+        "mois_a_eviter": "Toughest month",
         "mi_saison": "Ideal shoulder",
         "saison_seche": "Dry season",
         "saison_humide": "Wet season",
@@ -87,7 +87,7 @@ UI_LABELS = {
     "es": {
         "reponse_rapide": "⚡ Respuesta rápida",
         "top_n_mois": "Top {n} meses",
-        "mois_a_eviter": "Mes a evitar",
+        "mois_a_eviter": "Mes más duro",
         "mi_saison": "Entre-temporada ideal",
         "saison_seche": "Temporada seca",
         "saison_humide": "Temporada húmeda",
@@ -98,7 +98,7 @@ UI_LABELS = {
     "de": {
         "reponse_rapide": "⚡ Schnelle Antwort",
         "top_n_mois": "Top {n} Monate",
-        "mois_a_eviter": "Monat zu meiden",
+        "mois_a_eviter": "Härtester Monat",
         "mi_saison": "Ideale Zwischensaison",
         "saison_seche": "Trockenzeit",
         "saison_humide": "Regenzeit",
@@ -632,36 +632,36 @@ _LEGEND_LABELS = {
         ("Très bon (≥8)", "best"),
         ("Bon (7-8)", "good"),
         ("Moyen (5.5-7)", "mid"),
-        ("Difficile (3.5-5.5)", "low"),
-        ("À éviter (<3.5)", "bad"),
+        ("Compliqué (3.5-5.5)", "low"),
+        ("Rude (<3.5)", "bad"),
     ],
     "en": [
         ("Excellent (≥8)", "best"),
         ("Good (7-8)", "good"),
         ("Fair (5.5-7)", "mid"),
-        ("Tough (3.5-5.5)", "low"),
-        ("Avoid (<3.5)", "bad"),
+        ("Rough (3.5-5.5)", "low"),
+        ("Harsh (<3.5)", "bad"),
     ],
     "en-us": [
         ("Excellent (≥8)", "best"),
         ("Good (7-8)", "good"),
         ("Fair (5.5-7)", "mid"),
-        ("Tough (3.5-5.5)", "low"),
-        ("Avoid (<3.5)", "bad"),
+        ("Rough (3.5-5.5)", "low"),
+        ("Harsh (<3.5)", "bad"),
     ],
     "es": [
         ("Muy bueno (≥8)", "best"),
         ("Bueno (7-8)", "good"),
         ("Regular (5.5-7)", "mid"),
-        ("Difícil (3.5-5.5)", "low"),
-        ("A evitar (<3.5)", "bad"),
+        ("Complicado (3.5-5.5)", "low"),
+        ("Duro (<3.5)", "bad"),
     ],
     "de": [
         ("Sehr gut (≥8)", "best"),
         ("Gut (7-8)", "good"),
         ("Mittel (5.5-7)", "mid"),
-        ("Schwierig (3.5-5.5)", "low"),
-        ("Meiden (<3.5)", "bad"),
+        ("Anspruchsvoll (3.5-5.5)", "low"),
+        ("Rau (<3.5)", "bad"),
     ],
 }
 
@@ -1066,40 +1066,40 @@ def _mood_label(score, lang="fr"):
             (7.5, "Très bon", "good"),
             (6.5, "Correct", "mid"),
             (5.0, "Moyen", "mid"),
-            (3.5, "Difficile", "bad"),
-            (0.0, "À éviter", "bad"),
+            (3.5, "Compliqué", "bad"),
+            (0.0, "Rude", "bad"),
         ],
         "en": [
             (8.5, "Best", "good"),
             (7.5, "Very good", "good"),
             (6.5, "Fair", "mid"),
             (5.0, "Average", "mid"),
-            (3.5, "Tough", "bad"),
-            (0.0, "Avoid", "bad"),
+            (3.5, "Rough", "bad"),
+            (0.0, "Harsh", "bad"),
         ],
         "en-us": [
             (8.5, "Best", "good"),
             (7.5, "Very good", "good"),
             (6.5, "Fair", "mid"),
             (5.0, "Average", "mid"),
-            (3.5, "Tough", "bad"),
-            (0.0, "Avoid", "bad"),
+            (3.5, "Rough", "bad"),
+            (0.0, "Harsh", "bad"),
         ],
         "es": [
             (8.5, "Mejor", "good"),
             (7.5, "Muy bueno", "good"),
             (6.5, "Correcto", "mid"),
             (5.0, "Regular", "mid"),
-            (3.5, "Difícil", "bad"),
-            (0.0, "A evitar", "bad"),
+            (3.5, "Complicado", "bad"),
+            (0.0, "Duro", "bad"),
         ],
         "de": [
             (8.5, "Bester", "good"),
             (7.5, "Sehr gut", "good"),
             (6.5, "Ordentlich", "mid"),
             (5.0, "Mittel", "mid"),
-            (3.5, "Schwierig", "bad"),
-            (0.0, "Meiden", "bad"),
+            (3.5, "Anspruchsvoll", "bad"),
+            (0.0, "Rau", "bad"),
         ],
     }
     thresholds = labels.get(lang, labels["fr"])
@@ -1801,7 +1801,7 @@ def _test():
     assert bc.count('class="bar best"') == 1, f"Doit avoir 1 seul 'best', got {bc.count('bar best')}"
     assert "Jan" in bc and "Juil" in bc and "Déc" in bc
     assert "1.6" in bc and "8.7" in bc
-    assert "Très bon" in bc and "À éviter" in bc
+    assert "Très bon" in bc and "Rude" in bc
     print("  ✅ Barchart Paris FR : 12 barres, 1 'best' (juillet 8.7), légende FR")
 
     # Multi-langues (labels + légende)
