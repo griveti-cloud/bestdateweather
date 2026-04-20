@@ -331,12 +331,21 @@ h2{
 .bars{
   display:grid;
   grid-template-columns:repeat(12,minmax(0,1fr));
-  gap:8px;align-items:end;height:130px;
+  gap:8px;
   margin-top:10px;min-width:0;
+  align-items:stretch;
 }
 .bar-wrap{
   display:flex;flex-direction:column;align-items:center;
-  gap:6px;min-width:0;overflow:hidden;
+  gap:6px;min-width:0;
+}
+/* Conteneur qui porte la hauteur réelle (130px) — c'est lui le référentiel pour height:XX% des .bar */
+.bar-slot{
+  width:100%;
+  height:130px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
 }
 .bar{
   width:100%;min-height:18px;
@@ -349,12 +358,12 @@ h2{
 .bar.mid{background:linear-gradient(180deg,#ecc568 0%,#b8860b 100%)}
 .bar.low{background:linear-gradient(180deg,#e47272 0%,#b91c1c 100%)}
 .bar-score{
-  font-size:.68rem;color:var(--ink);font-weight:800;
+  font-size:.72rem;color:var(--ink);font-weight:800;
   text-align:center;font-feature-settings:"tnum" 1;
   white-space:nowrap;
 }
 .bar-label{
-  font-size:.68rem;color:var(--muted);
+  font-size:.72rem;color:var(--muted);
   text-align:center;white-space:nowrap;
   font-weight:600;letter-spacing:.2px;
 }
@@ -669,7 +678,7 @@ footer a{color:var(--gold-2);font-weight:600}
   .hero h1{font-size:2.2rem;max-width:none}
   .hero-meta span{font-size:11.5px;padding:7px 11px}
   .mini-grid,.grid-4,.month-grid{grid-template-columns:1fr}
-  .bars{gap:5px;height:110px}
+  .bars{gap:5px} .bar-slot{height:110px}
   .bar-label,.bar-score{font-size:.6rem}
   .bar-score{font-size:.62rem}
   h2{font-size:1.45rem}
@@ -846,18 +855,18 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
           <div>
             <div class="small-label">Vue annuelle · 12 mois</div>
             <div class="bars">
-              <div class="bar-wrap"><div class="bar low" style="height:58%"></div><div class="bar-score">5.8</div><div class="bar-label">Jan</div></div>
-              <div class="bar-wrap"><div class="bar low" style="height:57%"></div><div class="bar-score">5.7</div><div class="bar-label">Fév</div></div>
-              <div class="bar-wrap"><div class="bar mid" style="height:62%"></div><div class="bar-score">6.2</div><div class="bar-label">Mar</div></div>
-              <div class="bar-wrap"><div class="bar mid" style="height:68%"></div><div class="bar-score">6.8</div><div class="bar-label">Avr</div></div>
-              <div class="bar-wrap"><div class="bar mid" style="height:69%"></div><div class="bar-score">6.9</div><div class="bar-label">Mai</div></div>
-              <div class="bar-wrap"><div class="bar mid" style="height:69%"></div><div class="bar-score">6.9</div><div class="bar-label">Juin</div></div>
-              <div class="bar-wrap"><div class="bar best" style="height:80%"></div><div class="bar-score">8.0</div><div class="bar-label">Juil</div></div>
-              <div class="bar-wrap"><div class="bar good" style="height:79%"></div><div class="bar-score">7.9</div><div class="bar-label">Aoû</div></div>
-              <div class="bar-wrap"><div class="bar mid" style="height:69%"></div><div class="bar-score">6.9</div><div class="bar-label">Sep</div></div>
-              <div class="bar-wrap"><div class="bar mid" style="height:69%"></div><div class="bar-score">6.9</div><div class="bar-label">Oct</div></div>
-              <div class="bar-wrap"><div class="bar mid" style="height:61%"></div><div class="bar-score">6.1</div><div class="bar-label">Nov</div></div>
-              <div class="bar-wrap"><div class="bar mid" style="height:62%"></div><div class="bar-score">6.2</div><div class="bar-label">Déc</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:58%"></div></div><div class="bar-score">5.8</div><div class="bar-label">Jan</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:57%"></div></div><div class="bar-score">5.7</div><div class="bar-label">Fév</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:62%"></div></div><div class="bar-score">6.2</div><div class="bar-label">Mar</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:68%"></div></div><div class="bar-score">6.8</div><div class="bar-label">Avr</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:69%"></div></div><div class="bar-score">6.9</div><div class="bar-label">Mai</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:69%"></div></div><div class="bar-score">6.9</div><div class="bar-label">Juin</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar best" style="height:80%"></div></div><div class="bar-score">8.0</div><div class="bar-label">Juil</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:79%"></div></div><div class="bar-score">7.9</div><div class="bar-label">Aoû</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:69%"></div></div><div class="bar-score">6.9</div><div class="bar-label">Sep</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:69%"></div></div><div class="bar-score">6.9</div><div class="bar-label">Oct</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:61%"></div></div><div class="bar-score">6.1</div><div class="bar-label">Nov</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:62%"></div></div><div class="bar-score">6.2</div><div class="bar-label">Déc</div></div>
             </div>
           </div>
         </div>
