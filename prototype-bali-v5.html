@@ -433,12 +433,12 @@ thead th:nth-child(7),tbody td:nth-child(7){width:11%}
 thead th:nth-child(8),tbody td:nth-child(8){width:23%}
 
 /* ═══════════════ MOBILE MONTH CARDS (remplacent table < 640px) ═══════════════ */
-.mobile-month-cards{display:none;gap:12px}
+.mobile-month-cards{display:none;gap:8px}
 .mobile-month-card{
   background:var(--paper);
   border:1px solid var(--line);
-  border-radius:16px;
-  padding:16px;
+  border-radius:12px;
+  padding:10px 12px;
   box-shadow:var(--shadow-sm);
   transition:transform .18s,box-shadow .18s,border-color .18s;
   display:block;
@@ -454,35 +454,47 @@ thead th:nth-child(8),tbody td:nth-child(8){width:23%}
 }
 .mobile-month-card .head{
   display:flex;justify-content:space-between;
-  align-items:flex-start;gap:12px;margin-bottom:12px;
+  align-items:center;gap:10px;margin-bottom:8px;
 }
 .mobile-month-card .name{
   font-family:'Playfair Display',serif;
-  font-weight:700;font-size:1.15rem;
+  font-weight:700;font-size:1rem;
   color:var(--ink);letter-spacing:-.01em;
+  display:flex;align-items:center;gap:6px;
+  flex:1;min-width:0;
 }
 .mobile-month-card .score{
-  font-weight:800;font-size:.9rem;
-  padding:4px 11px;border-radius:999px;
+  font-weight:800;font-size:.82rem;
+  padding:3px 10px;border-radius:999px;
   flex-shrink:0;font-feature-settings:"tnum" 1;
+  white-space:nowrap;
 }
 .mobile-month-card .score.good{background:var(--green-soft);color:var(--green)}
 .mobile-month-card .score.mid{background:var(--amber-soft);color:var(--amber)}
 .mobile-month-card .score.bad{background:var(--red-soft);color:var(--red)}
-.mobile-month-card .rows{display:grid;gap:7px}
+
+/* Rows en grille 2×2 compacte (pas 1 row par ligne) */
+.mobile-month-card .rows{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+}
 .mobile-month-card .row{
-  display:flex;justify-content:space-between;gap:12px;
-  padding:8px 11px;border-radius:10px;
+  display:flex;justify-content:space-between;gap:6px;
+  padding:5px 8px;border-radius:7px;
   background:var(--cream);
   border:1px solid var(--line-soft);
+  align-items:center;min-width:0;
 }
 .mobile-month-card .row span{
-  color:var(--muted);font-size:.86rem;
+  color:var(--muted);font-size:.72rem;font-weight:500;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 .mobile-month-card .row strong{
-  text-align:right;font-size:.88rem;
+  text-align:right;font-size:.78rem;
   color:var(--ink);font-weight:700;
   font-feature-settings:"tnum" 1;
+  flex-shrink:0;white-space:nowrap;
 }
 .mobile-month-card .row strong.mood-good{color:var(--green)}
 .mobile-month-card .row strong.mood-mid{color:var(--amber)}
@@ -1016,8 +1028,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <a href="bali-meteo-janvier.html" class="mobile-month-card">
               <div class="head"><div class="name">🌧️ Janvier</div><div class="score bad">5.8/10</div></div>
               <div class="rows">
-                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
-                <div class="row"><span>Jours pluie</span><strong>90%</strong></div>
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>90%</strong></div>
                 <div class="row"><span>Soleil</span><strong>9.9h</strong></div>
                 <div class="row"><span>Lecture</span><strong class="mood-bad">Mousson</strong></div>
               </div>
@@ -1025,8 +1037,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <a href="bali-meteo-fevrier.html" class="mobile-month-card">
               <div class="head"><div class="name">🌧️ Février</div><div class="score bad">5.7/10</div></div>
               <div class="rows">
-                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
-                <div class="row"><span>Jours pluie</span><strong>92%</strong></div>
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>92%</strong></div>
                 <div class="row"><span>Soleil</span><strong>10.3h</strong></div>
                 <div class="row"><span>Lecture</span><strong class="mood-bad">Mousson</strong></div>
               </div>
@@ -1034,8 +1046,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <a href="bali-meteo-mars.html" class="mobile-month-card">
               <div class="head"><div class="name">🌧️ Mars</div><div class="score mid">6.2/10</div></div>
               <div class="rows">
-                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
-                <div class="row"><span>Jours pluie</span><strong>86%</strong></div>
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>86%</strong></div>
                 <div class="row"><span>Soleil</span><strong>10.9h</strong></div>
                 <div class="row"><span>Lecture</span><strong class="mood-mid">Lourd</strong></div>
               </div>
@@ -1043,8 +1055,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <a href="bali-meteo-avril.html" class="mobile-month-card">
               <div class="head"><div class="name">⛅ Avril</div><div class="score mid">6.8/10</div></div>
               <div class="rows">
-                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
-                <div class="row"><span>Jours pluie</span><strong>74%</strong></div>
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>74%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.2h</strong></div>
                 <div class="row"><span>Lecture</span><strong class="mood-mid">Transition</strong></div>
               </div>
@@ -1052,8 +1064,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <a href="bali-meteo-mai.html" class="mobile-month-card">
               <div class="head"><div class="name">⛅ Mai</div><div class="score mid">6.9/10</div></div>
               <div class="rows">
-                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
-                <div class="row"><span>Jours pluie</span><strong>70%</strong></div>
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>70%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.1h</strong></div>
                 <div class="row"><span>Lecture</span><strong class="mood-mid">Correct</strong></div>
               </div>
@@ -1061,8 +1073,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <a href="bali-meteo-juin.html" class="mobile-month-card">
               <div class="head"><div class="name">⛅ Juin</div><div class="score mid">6.9/10</div></div>
               <div class="rows">
-                <div class="row"><span>T° min / max</span><strong>24°C / 28°C</strong></div>
-                <div class="row"><span>Jours pluie</span><strong>65%</strong></div>
+                <div class="row"><span>T°</span><strong>24°C / 28°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>65%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.0h</strong></div>
                 <div class="row"><span>Lecture</span><strong class="mood-mid">Correct</strong></div>
               </div>
@@ -1070,8 +1082,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <a href="bali-meteo-juillet.html" class="mobile-month-card best">
               <div class="head"><div class="name">🌤️ Juillet ★</div><div class="score good">8.0/10</div></div>
               <div class="rows">
-                <div class="row"><span>T° min / max</span><strong>23°C / 27°C</strong></div>
-                <div class="row"><span>Jours pluie</span><strong>59%</strong></div>
+                <div class="row"><span>T°</span><strong>23°C / 27°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>59%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.0h</strong></div>
                 <div class="row"><span>Lecture</span><strong class="mood-good">Meilleur mois</strong></div>
               </div>
@@ -1079,8 +1091,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <a href="bali-meteo-aout.html" class="mobile-month-card">
               <div class="head"><div class="name">🌤️ Août</div><div class="score good">7.9/10</div></div>
               <div class="rows">
-                <div class="row"><span>T° min / max</span><strong>23°C / 27°C</strong></div>
-                <div class="row"><span>Jours pluie</span><strong>64%</strong></div>
+                <div class="row"><span>T°</span><strong>23°C / 27°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>64%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.0h</strong></div>
                 <div class="row"><span>Lecture</span><strong class="mood-good">Très bon</strong></div>
               </div>
@@ -1088,8 +1100,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <a href="bali-meteo-septembre.html" class="mobile-month-card">
               <div class="head"><div class="name">⛅ Septembre</div><div class="score mid">6.9/10</div></div>
               <div class="rows">
-                <div class="row"><span>T° min / max</span><strong>23°C / 28°C</strong></div>
-                <div class="row"><span>Jours pluie</span><strong>64%</strong></div>
+                <div class="row"><span>T°</span><strong>23°C / 28°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>64%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.5h</strong></div>
                 <div class="row"><span>Lecture</span><strong class="mood-mid">Correct</strong></div>
               </div>
@@ -1097,8 +1109,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <a href="bali-meteo-octobre.html" class="mobile-month-card">
               <div class="head"><div class="name">⛅ Octobre</div><div class="score mid">6.9/10</div></div>
               <div class="rows">
-                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
-                <div class="row"><span>Jours pluie</span><strong>66%</strong></div>
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>66%</strong></div>
                 <div class="row"><span>Soleil</span><strong>12.0h</strong></div>
                 <div class="row"><span>Lecture</span><strong class="mood-mid">Correct</strong></div>
               </div>
@@ -1106,8 +1118,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <a href="bali-meteo-novembre.html" class="mobile-month-card">
               <div class="head"><div class="name">🌧️ Novembre</div><div class="score mid">6.1/10</div></div>
               <div class="rows">
-                <div class="row"><span>T° min / max</span><strong>24°C / 30°C</strong></div>
-                <div class="row"><span>Jours pluie</span><strong>83%</strong></div>
+                <div class="row"><span>T°</span><strong>24°C / 30°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>83%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.5h</strong></div>
                 <div class="row"><span>Lecture</span><strong class="mood-mid">Lourd</strong></div>
               </div>
@@ -1115,8 +1127,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <a href="bali-meteo-decembre.html" class="mobile-month-card">
               <div class="head"><div class="name">🌧️ Décembre</div><div class="score mid">6.2/10</div></div>
               <div class="rows">
-                <div class="row"><span>T° min / max</span><strong>24°C / 29°C</strong></div>
-                <div class="row"><span>Jours pluie</span><strong>87%</strong></div>
+                <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>87%</strong></div>
                 <div class="row"><span>Soleil</span><strong>10.9h</strong></div>
                 <div class="row"><span>Lecture</span><strong class="mood-mid">Lourd</strong></div>
               </div>
