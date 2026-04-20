@@ -500,6 +500,26 @@ thead th:nth-child(8),tbody td:nth-child(8){width:23%}
 .mobile-month-card .row strong.mood-mid{color:var(--amber)}
 .mobile-month-card .row strong.mood-bad{color:var(--red)}
 
+/* Row "Lecture" sans label : valeur centrée avec fond coloré */
+.mobile-month-card .row-mood{
+  justify-content:center;
+  background:transparent;
+  border:none;
+  padding:4px 8px;
+}
+.mobile-month-card .row-mood strong{
+  text-align:center;
+  font-size:.82rem;
+  font-weight:800;
+  letter-spacing:.2px;
+  padding:4px 10px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.mobile-month-card .row-mood strong.mood-good{background:var(--green-soft);color:var(--green)}
+.mobile-month-card .row-mood strong.mood-mid{background:var(--amber-soft);color:var(--amber)}
+.mobile-month-card .row-mood strong.mood-bad{background:var(--red-soft);color:var(--red)}
+
 .mood{
   display:inline-flex;padding:5px 11px;
   border-radius:999px;
@@ -1031,7 +1051,7 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
                 <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
                 <div class="row"><span>Pluie</span><strong>90%</strong></div>
                 <div class="row"><span>Soleil</span><strong>9.9h</strong></div>
-                <div class="row"><span>Lecture</span><strong class="mood-bad">Mousson</strong></div>
+                <div class="row row-mood"><strong class="mood-bad">Mousson</strong></div>
               </div>
             </a>
             <a href="bali-meteo-fevrier.html" class="mobile-month-card">
@@ -1040,7 +1060,7 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
                 <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
                 <div class="row"><span>Pluie</span><strong>92%</strong></div>
                 <div class="row"><span>Soleil</span><strong>10.3h</strong></div>
-                <div class="row"><span>Lecture</span><strong class="mood-bad">Mousson</strong></div>
+                <div class="row row-mood"><strong class="mood-bad">Mousson</strong></div>
               </div>
             </a>
             <a href="bali-meteo-mars.html" class="mobile-month-card">
@@ -1049,7 +1069,7 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
                 <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
                 <div class="row"><span>Pluie</span><strong>86%</strong></div>
                 <div class="row"><span>Soleil</span><strong>10.9h</strong></div>
-                <div class="row"><span>Lecture</span><strong class="mood-mid">Lourd</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Lourd</strong></div>
               </div>
             </a>
             <a href="bali-meteo-avril.html" class="mobile-month-card">
@@ -1058,7 +1078,7 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
                 <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
                 <div class="row"><span>Pluie</span><strong>74%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.2h</strong></div>
-                <div class="row"><span>Lecture</span><strong class="mood-mid">Transition</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Transition</strong></div>
               </div>
             </a>
             <a href="bali-meteo-mai.html" class="mobile-month-card">
@@ -1067,7 +1087,7 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
                 <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
                 <div class="row"><span>Pluie</span><strong>70%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.1h</strong></div>
-                <div class="row"><span>Lecture</span><strong class="mood-mid">Correct</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Correct</strong></div>
               </div>
             </a>
             <a href="bali-meteo-juin.html" class="mobile-month-card">
@@ -1076,7 +1096,7 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
                 <div class="row"><span>T°</span><strong>24°C / 28°C</strong></div>
                 <div class="row"><span>Pluie</span><strong>65%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.0h</strong></div>
-                <div class="row"><span>Lecture</span><strong class="mood-mid">Correct</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Correct</strong></div>
               </div>
             </a>
             <a href="bali-meteo-juillet.html" class="mobile-month-card best">
@@ -1085,7 +1105,7 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
                 <div class="row"><span>T°</span><strong>23°C / 27°C</strong></div>
                 <div class="row"><span>Pluie</span><strong>59%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.0h</strong></div>
-                <div class="row"><span>Lecture</span><strong class="mood-good">Meilleur mois</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Meilleur mois</strong></div>
               </div>
             </a>
             <a href="bali-meteo-aout.html" class="mobile-month-card">
@@ -1094,7 +1114,7 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
                 <div class="row"><span>T°</span><strong>23°C / 27°C</strong></div>
                 <div class="row"><span>Pluie</span><strong>64%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.0h</strong></div>
-                <div class="row"><span>Lecture</span><strong class="mood-good">Très bon</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Très bon</strong></div>
               </div>
             </a>
             <a href="bali-meteo-septembre.html" class="mobile-month-card">
@@ -1103,7 +1123,7 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
                 <div class="row"><span>T°</span><strong>23°C / 28°C</strong></div>
                 <div class="row"><span>Pluie</span><strong>64%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.5h</strong></div>
-                <div class="row"><span>Lecture</span><strong class="mood-mid">Correct</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Correct</strong></div>
               </div>
             </a>
             <a href="bali-meteo-octobre.html" class="mobile-month-card">
@@ -1112,7 +1132,7 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
                 <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
                 <div class="row"><span>Pluie</span><strong>66%</strong></div>
                 <div class="row"><span>Soleil</span><strong>12.0h</strong></div>
-                <div class="row"><span>Lecture</span><strong class="mood-mid">Correct</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Correct</strong></div>
               </div>
             </a>
             <a href="bali-meteo-novembre.html" class="mobile-month-card">
@@ -1121,7 +1141,7 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
                 <div class="row"><span>T°</span><strong>24°C / 30°C</strong></div>
                 <div class="row"><span>Pluie</span><strong>83%</strong></div>
                 <div class="row"><span>Soleil</span><strong>11.5h</strong></div>
-                <div class="row"><span>Lecture</span><strong class="mood-mid">Lourd</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Lourd</strong></div>
               </div>
             </a>
             <a href="bali-meteo-decembre.html" class="mobile-month-card">
@@ -1130,7 +1150,7 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
                 <div class="row"><span>T°</span><strong>24°C / 29°C</strong></div>
                 <div class="row"><span>Pluie</span><strong>87%</strong></div>
                 <div class="row"><span>Soleil</span><strong>10.9h</strong></div>
-                <div class="row"><span>Lecture</span><strong class="mood-mid">Lourd</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Lourd</strong></div>
               </div>
             </a>
           </div>
