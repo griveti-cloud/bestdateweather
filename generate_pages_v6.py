@@ -38,6 +38,7 @@ from lib.common_v6 import (
     build_barchart_v6,
     build_pills_v6,
     build_right_stack_v6,
+    build_comprendre_section_v6,
     classify_dest,
     best_month,
     worst_month,
@@ -200,6 +201,61 @@ header{background:linear-gradient(180deg,#fff 0%,#fffbf2 100%);
   border:1px solid var(--border);color:var(--ink);background:#fff}
 .btn.primary{background:var(--gold);color:#fff;border-color:var(--gold)}
 .btn:hover{transform:translateY(-1px)}
+
+/* Section Comprendre : tableau + signaux */
+section{padding:40px 0}
+.spotlight-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:24px;margin-top:24px}
+@media (max-width:900px){.spotlight-grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;
+  box-shadow:var(--shadow)}
+.card.pad{padding:22px}
+.table-wrap{overflow:visible;margin:0 -4px}
+table{width:100%;border-collapse:collapse;font-size:13px;table-layout:auto}
+thead th{text-align:left;padding:10px 8px;color:var(--muted);font-weight:700;
+  border-bottom:1px solid var(--border);font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.03em}
+tbody td{padding:10px 8px;border-bottom:1px solid #f2eadb;font-weight:600}
+tbody tr:hover{background:#fffbf2}
+.month-cell{font-weight:700}
+.mood{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11.5px;
+  font-weight:700}
+.mood.good{background:#e8f8f0;color:#1a7a4a;border:1px solid #bfe7cd}
+.mood.mid{background:#fef3d0;color:#b8860b;border:1px solid #f2e6a8}
+.mood.bad{background:#fdecec;color:#b91c1c;border:1px solid #f4caca}
+
+.mobile-month-cards{display:none}
+@media (max-width:640px){
+  .table-wrap{display:none}
+  .mobile-month-cards{display:flex;flex-direction:column;gap:8px}
+  .mobile-month-card{background:#faf8f3;border:1px solid var(--border);
+    border-radius:12px;padding:12px;text-decoration:none;color:var(--ink);
+    display:block}
+  .mobile-month-card .head{display:flex;justify-content:space-between;
+    align-items:center;margin-bottom:6px}
+  .mobile-month-card .head .name{font-weight:700;font-size:14px}
+  .mobile-month-card .head .score{padding:2px 8px;border-radius:999px;
+    font-size:12px;font-weight:700}
+  .mobile-month-card .head .score.good{background:#e8f8f0;color:#1a7a4a}
+  .mobile-month-card .head .score.mid{background:#fef3d0;color:#b8860b}
+  .mobile-month-card .head .score.bad{background:#fdecec;color:#b91c1c}
+  .mobile-month-card .rows{display:grid;grid-template-columns:1fr 1fr;
+    gap:4px 14px;font-size:12px}
+  .mobile-month-card .row span{color:var(--muted)}
+  .mobile-month-card .row-mood{grid-column:span 2;margin-top:4px}
+  .mood-good{color:#1a7a4a;font-weight:700}
+  .mood-mid{color:#b8860b;font-weight:700}
+  .mood-bad{color:#b91c1c;font-weight:700}
+}
+
+/* Signaux */
+.signal-card{display:flex;flex-direction:column;gap:14px}
+.signal-list{display:flex;flex-direction:column;gap:0}
+.signal-item{display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid #f2eadb;font-size:14px}
+.signal-item:last-child{border-bottom:none}
+.signal-item .l{color:var(--muted);font-weight:500}
+.signal-item .r{font-weight:700}
 """
 
 
@@ -426,6 +482,7 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None):
     head = _render_head(dest, lang, page_title)
     hero = _render_hero(dest, monthly, lang)
     decider = _render_decider_section(dest, monthly, lang, ski_scores_by_month)
+    comprendre = build_comprendre_section_v6(dest, monthly, lang=lang)
     footer = _render_footer(dest, lang)
 
     html = f'''{head}
@@ -433,6 +490,7 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None):
 {hero}
 <main>
   {decider}
+  {comprendre}
 </main>
 {footer}
 </body>

@@ -1039,6 +1039,590 @@ def build_right_stack_v6(dest, monthly, lang="fr",
     return html
 
 
+    return html
+
+
+# ══════════════════════════════════════════════════════════════════
+# Section 'Comprendre' : Tableau 12 mois + Signaux détaillés
+# ══════════════════════════════════════════════════════════════════
+
+def _weather_emoji(sun_h):
+    """Retourne l'emoji météo basé sur les heures de soleil quotidiennes."""
+    s = float(sun_h) if sun_h else 0
+    if s >= 11: return "☀️"
+    if s >= 7:  return "⛅"
+    if s >= 4:  return "🌥️"
+    return "🌧️"
+
+
+def _mood_label(score, lang="fr"):
+    """
+    Retourne (label, css_class) pour un score donné.
+    Labels différents du bar_class pour contextualiser la lecture.
+    """
+    labels = {
+        "fr": [
+            (8.5, "Meilleur", "good"),
+            (7.5, "Très bon", "good"),
+            (6.5, "Correct", "mid"),
+            (5.0, "Moyen", "mid"),
+            (3.5, "Difficile", "bad"),
+            (0.0, "À éviter", "bad"),
+        ],
+        "en": [
+            (8.5, "Best", "good"),
+            (7.5, "Very good", "good"),
+            (6.5, "Fair", "mid"),
+            (5.0, "Average", "mid"),
+            (3.5, "Tough", "bad"),
+            (0.0, "Avoid", "bad"),
+        ],
+        "en-us": [
+            (8.5, "Best", "good"),
+            (7.5, "Very good", "good"),
+            (6.5, "Fair", "mid"),
+            (5.0, "Average", "mid"),
+            (3.5, "Tough", "bad"),
+            (0.0, "Avoid", "bad"),
+        ],
+        "es": [
+            (8.5, "Mejor", "good"),
+            (7.5, "Muy bueno", "good"),
+            (6.5, "Correcto", "mid"),
+            (5.0, "Regular", "mid"),
+            (3.5, "Difícil", "bad"),
+            (0.0, "A evitar", "bad"),
+        ],
+        "de": [
+            (8.5, "Bester", "good"),
+            (7.5, "Sehr gut", "good"),
+            (6.5, "Ordentlich", "mid"),
+            (5.0, "Mittel", "mid"),
+            (3.5, "Schwierig", "bad"),
+            (0.0, "Meiden", "bad"),
+        ],
+    }
+    thresholds = labels.get(lang, labels["fr"])
+    for threshold, label, cls in thresholds:
+        if score >= threshold:
+            return (label, cls)
+    return ("?", "bad")
+
+
+# Labels i18n de la section Comprendre
+_COMPRENDRE_LABELS = {
+    "fr": {
+        "kicker": "Comprendre",
+        "title": "Comparer les 12 mois",
+        "lead": "Le détail de chaque mois : températures, pluie, soleil, score et lecture synthétique.",
+        "th_month": "Mois",
+        "th_tmin": "T° min",
+        "th_tmax": "T° max",
+        "th_rain": "Pluie %",
+        "th_mm": "mm/j",
+        "th_sun": "Soleil",
+        "th_score": "Score",
+        "th_mood": "Lecture",
+        "lbl_comfort_months": "{n} mois confortables",
+        "lbl_comfort_range": "({range_short})",
+        "lbl_signal_quick": "📊 Lecture rapide",
+        "lbl_signal_detailed": "🌡️ Conditions détaillées ({best_month})",
+        "sig_optimal": "Fenêtre optimale",
+        "sig_transition": "Bonne transition",
+        "sig_tough": "Période rude",
+        "sig_feel": "🌡️ Ressenti",
+        "sig_uv": "☀️ UV",
+        "sig_humidity": "💧 Humidité ressentie",
+        "sig_air": "🌫️ Qualité de l'air",
+        "sig_rain": "☔ Pluie",
+        "sig_sun": "🌅 Soleil",
+        "sun_unit_day": "h/jour",
+        "mm_unit": "mm/j",
+    },
+    "en": {
+        "kicker": "Understand",
+        "title": "Compare the 12 months",
+        "lead": "Each month in detail: temperatures, rain, sun, score, and quick read.",
+        "th_month": "Month", "th_tmin": "Min T°", "th_tmax": "Max T°",
+        "th_rain": "Rain %", "th_mm": "mm/d", "th_sun": "Sun",
+        "th_score": "Score", "th_mood": "Verdict",
+        "lbl_comfort_months": "{n} comfortable months",
+        "lbl_comfort_range": "({range_short})",
+        "lbl_signal_quick": "📊 Quick read",
+        "lbl_signal_detailed": "🌡️ Detailed conditions ({best_month})",
+        "sig_optimal": "Optimal window",
+        "sig_transition": "Good transition",
+        "sig_tough": "Tough period",
+        "sig_feel": "🌡️ Feels like",
+        "sig_uv": "☀️ UV",
+        "sig_humidity": "💧 Felt humidity",
+        "sig_air": "🌫️ Air quality",
+        "sig_rain": "☔ Rain",
+        "sig_sun": "🌅 Sun",
+        "sun_unit_day": "h/day",
+        "mm_unit": "mm/d",
+    },
+    "en-us": {
+        "kicker": "Understand",
+        "title": "Compare the 12 months",
+        "lead": "Each month in detail: temperatures, rain, sun, score, and quick read.",
+        "th_month": "Month", "th_tmin": "Min T°", "th_tmax": "Max T°",
+        "th_rain": "Rain %", "th_mm": "in/d", "th_sun": "Sun",
+        "th_score": "Score", "th_mood": "Verdict",
+        "lbl_comfort_months": "{n} comfortable months",
+        "lbl_comfort_range": "({range_short})",
+        "lbl_signal_quick": "📊 Quick read",
+        "lbl_signal_detailed": "🌡️ Detailed conditions ({best_month})",
+        "sig_optimal": "Optimal window",
+        "sig_transition": "Good transition",
+        "sig_tough": "Tough period",
+        "sig_feel": "🌡️ Feels like",
+        "sig_uv": "☀️ UV",
+        "sig_humidity": "💧 Felt humidity",
+        "sig_air": "🌫️ Air quality",
+        "sig_rain": "☔ Rain",
+        "sig_sun": "🌅 Sun",
+        "sun_unit_day": "h/day",
+        "mm_unit": "in/d",
+    },
+    "es": {
+        "kicker": "Entender",
+        "title": "Comparar los 12 meses",
+        "lead": "Cada mes en detalle: temperaturas, lluvia, sol, puntuación y lectura rápida.",
+        "th_month": "Mes", "th_tmin": "T° mín", "th_tmax": "T° máx",
+        "th_rain": "Lluvia %", "th_mm": "mm/d", "th_sun": "Sol",
+        "th_score": "Puntuación", "th_mood": "Lectura",
+        "lbl_comfort_months": "{n} meses cómodos",
+        "lbl_comfort_range": "({range_short})",
+        "lbl_signal_quick": "📊 Lectura rápida",
+        "lbl_signal_detailed": "🌡️ Condiciones detalladas ({best_month})",
+        "sig_optimal": "Ventana óptima",
+        "sig_transition": "Buena transición",
+        "sig_tough": "Período duro",
+        "sig_feel": "🌡️ Sensación",
+        "sig_uv": "☀️ UV",
+        "sig_humidity": "💧 Humedad sentida",
+        "sig_air": "🌫️ Calidad del aire",
+        "sig_rain": "☔ Lluvia",
+        "sig_sun": "🌅 Sol",
+        "sun_unit_day": "h/día",
+        "mm_unit": "mm/d",
+    },
+    "de": {
+        "kicker": "Verstehen",
+        "title": "Die 12 Monate vergleichen",
+        "lead": "Jeder Monat im Detail: Temperaturen, Regen, Sonne, Punktzahl und schnelle Lesung.",
+        "th_month": "Monat", "th_tmin": "T° min", "th_tmax": "T° max",
+        "th_rain": "Regen %", "th_mm": "mm/T", "th_sun": "Sonne",
+        "th_score": "Punkte", "th_mood": "Lesung",
+        "lbl_comfort_months": "{n} angenehme Monate",
+        "lbl_comfort_range": "({range_short})",
+        "lbl_signal_quick": "📊 Schnelle Lesung",
+        "lbl_signal_detailed": "🌡️ Detaillierte Bedingungen ({best_month})",
+        "sig_optimal": "Optimales Fenster",
+        "sig_transition": "Guter Übergang",
+        "sig_tough": "Harte Periode",
+        "sig_feel": "🌡️ Gefühlt",
+        "sig_uv": "☀️ UV",
+        "sig_humidity": "💧 Gefühlte Feuchte",
+        "sig_air": "🌫️ Luftqualität",
+        "sig_rain": "☔ Regen",
+        "sig_sun": "🌅 Sonne",
+        "sun_unit_day": "h/Tag",
+        "mm_unit": "mm/T",
+    },
+}
+
+
+def _month_range_short(months, lang="fr"):
+    """
+    Retourne une plage courte : 'avr→sep' (contigu) ou 'avr · mai · jul' (énumération).
+
+    Args:
+        months: list[dict] avec mois_num
+        lang: code langue
+
+    Returns:
+        str
+    """
+    if not months:
+        return "—"
+    shorts = MONTH_SHORT.get(lang, MONTH_SHORT["fr"])
+    sorted_m = sorted(months, key=lambda x: int(x["mois_num"]))
+    nums = [int(m["mois_num"]) for m in sorted_m]
+
+    contiguous = all(nums[i] + 1 == nums[i + 1] for i in range(len(nums) - 1))
+    if contiguous and len(nums) >= 2:
+        return f"{shorts[nums[0] - 1]}→{shorts[nums[-1] - 1]}"
+    elif len(nums) == 1:
+        return shorts[nums[0] - 1]
+    else:
+        return " · ".join(shorts[n - 1] for n in nums)
+
+
+def _month_range_arrow(months, lang="fr"):
+    """Format 'Juin → Sep' (version plus lisible pour signaux)."""
+    if not months:
+        return "—"
+    shorts = MONTH_SHORT.get(lang, MONTH_SHORT["fr"])
+    sorted_m = sorted(months, key=lambda x: int(x["mois_num"]))
+    nums = [int(m["mois_num"]) for m in sorted_m]
+    contiguous = all(nums[i] + 1 == nums[i + 1] for i in range(len(nums) - 1))
+    if contiguous and len(nums) >= 2:
+        return f"{shorts[nums[0] - 1]} → {shorts[nums[-1] - 1]}"
+    elif len(nums) == 1:
+        return shorts[nums[0] - 1]
+    else:
+        return " · ".join(shorts[n - 1] for n in nums)
+
+
+def _appreciate_aqi(aqi):
+    """Retourne (label, tier) pour l'AQI en FR basique (à localiser ensuite)."""
+    if aqi is None or aqi == "":
+        return None
+    try:
+        v = float(aqi)
+    except (TypeError, ValueError):
+        return None
+    if v <= 25: return ("Excellent", "good")
+    if v <= 50: return ("Bon", "good")
+    if v <= 100: return ("Modéré", "mid")
+    if v <= 150: return ("Mauvais", "bad")
+    return ("Très mauvais", "bad")
+
+
+def _appreciate_uv(uv):
+    """Retourne (label_niveau, ) pour l'index UV."""
+    if uv is None or uv == "":
+        return None
+    try:
+        v = float(uv)
+    except (TypeError, ValueError):
+        return None
+    if v < 3: return "Faible"
+    if v < 6: return "Modéré"
+    if v < 8: return "Modéré-Fort"
+    if v < 11: return "Très fort"
+    return "Extrême"
+
+
+def _appreciate_dew(dew):
+    """Retourne label pour le point de rosée (confort humidité)."""
+    if dew is None or dew == "":
+        return None
+    try:
+        v = float(dew)
+    except (TypeError, ValueError):
+        return None
+    if v < 10: return "Sec"
+    if v < 15: return "Agréable"
+    if v < 18: return "Un peu humide"
+    if v < 21: return "Un peu moite"
+    if v < 24: return "Moite"
+    return "Étouffant"
+
+
+def _appreciate_feel(tmax, dew, lang="fr"):
+    """Ressenti synthétique en fonction tmax + dew (approximatif)."""
+    if tmax is None or dew is None:
+        return "—"
+    try:
+        t = float(tmax)
+        d = float(dew)
+    except (TypeError, ValueError):
+        return "—"
+    # Logique simplifiée FR (à localiser plus tard)
+    if t < 10: return "Froid"
+    if t < 18: return "Frais"
+    if t < 24 and d < 15: return "Confortable"
+    if t < 27 and d < 18: return "Confortable"
+    if d >= 22: return "Étouffant"
+    if d >= 18: return "Un peu lourd"
+    if t >= 30: return "Chaud sec"
+    return "Tempéré"
+
+
+def build_months_table_v6(dest, monthly, lang="fr", monthly_url_builder=None):
+    """
+    Construit le tableau des 12 mois (desktop) + cards mobile.
+
+    Args:
+        dest: dict destination (pour slug si lien)
+        monthly: list[dict] 12 mois
+        lang: code langue
+        monthly_url_builder: fonction (slug, mois_num, lang) → URL
+                             par défaut : 'paris-meteo-janvier.html' en FR
+
+    Returns:
+        str : HTML (div.table-wrap > table + div.mobile-month-cards)
+    """
+    if len(monthly) != 12:
+        raise ValueError(f"monthly doit contenir 12 entrées, reçu {len(monthly)}")
+
+    L = _COMPRENDRE_LABELS.get(lang, _COMPRENDRE_LABELS["fr"])
+    names = MONTH_NAMES.get(lang, MONTH_NAMES["fr"])
+    slug = dest.get("slug") or dest.get("slug_fr") or "paris"
+
+    # URL builder par défaut (à améliorer en intégration prod via locales)
+    if monthly_url_builder is None:
+        _FR_SLUGS = ["janvier", "fevrier", "mars", "avril", "mai", "juin",
+                     "juillet", "aout", "septembre", "octobre", "novembre", "decembre"]
+        def monthly_url_builder(slug_x, mois_num, lang_x):
+            # Pour simplicité Tour 2 : toujours en structure FR (à étendre via locales)
+            return f"{slug_x}-meteo-{_FR_SLUGS[mois_num - 1]}.html"
+
+    sorted_m = sorted(monthly, key=lambda m: int(m["mois_num"]))
+
+    # THEAD
+    thead = (f'              <thead>\n'
+             f'                <tr>\n'
+             f'                  <th>{L["th_month"]}</th>\n'
+             f'                  <th>{L["th_tmin"]}</th>\n'
+             f'                  <th>{L["th_tmax"]}</th>\n'
+             f'                  <th>{L["th_rain"]}</th>\n'
+             f'                  <th>{L["th_mm"]}</th>\n'
+             f'                  <th>{L["th_sun"]}</th>\n'
+             f'                  <th>{L["th_score"]}</th>\n'
+             f'                  <th>{L["th_mood"]}</th>\n'
+             f'                </tr>\n'
+             f'              </thead>')
+
+    # TBODY
+    tbody_rows = []
+    mobile_cards = []
+    for m in sorted_m:
+        mn = int(m["mois_num"])
+        name = names[mn - 1]
+        score = float(m.get("score", 0))
+        tmin = m.get("tmin", "?")
+        tmax = m.get("tmax", "?")
+        rain = int(round(float(m.get("rain_pct", 0))))
+        try:
+            mm = float(m.get("precip_mm", 0) or 0)
+        except (ValueError, TypeError):
+            mm = 0.0
+        sun = float(m.get("sun_h", 0) or 0)
+        emo = _weather_emoji(sun)
+        mood_label, mood_cls = _mood_label(score, lang)
+        url = monthly_url_builder(slug, mn, lang)
+
+        row = (f'                <tr onclick="location.href=\'{url}\'" '
+               f'style="cursor:pointer" tabindex="0" role="link" '
+               f'onkeydown="if(event.key===\'Enter\')location.href=\'{url}\'">'
+               f'<td class="month-cell">{emo} {_html.escape(name)} '
+               f'<span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td>'
+               f'<td>{_html.escape(str(tmin))}°C</td>'
+               f'<td>{_html.escape(str(tmax))}°C</td>'
+               f'<td>{rain}%</td>'
+               f'<td>{mm:.1f}mm</td>'
+               f'<td>{sun:.1f}h</td>'
+               f'<td>{score:.1f}/10</td>'
+               f'<td><span class="mood {mood_cls}">{_html.escape(mood_label)}</span></td>'
+               f'</tr>')
+        tbody_rows.append(row)
+
+        # Card mobile
+        mobile_cards.append(
+            f'            <a href="{url}" class="mobile-month-card">\n'
+            f'              <div class="head"><div class="name">{emo} {_html.escape(name)}</div>'
+            f'<div class="score {mood_cls}">{score:.1f}/10</div></div>\n'
+            f'              <div class="rows">\n'
+            f'                <div class="row"><span>T°</span><strong>{_html.escape(str(tmin))}°C / {_html.escape(str(tmax))}°C</strong></div>\n'
+            f'                <div class="row"><span>{L["th_rain"].replace(" %", "")}</span><strong>{rain}%</strong></div>\n'
+            f'                <div class="row"><span>{L["th_sun"]}</span><strong>{sun:.1f}h</strong></div>\n'
+            f'                <div class="row row-mood"><strong class="mood-{mood_cls}">{_html.escape(mood_label)}</strong></div>\n'
+            f'              </div>\n'
+            f'            </a>'
+        )
+
+    tbody_block = "\n".join(tbody_rows)
+    mobile_block = "\n".join(mobile_cards)
+
+    html = (f'<div class="table-wrap">\n'
+            f'            <table>\n'
+            f'{thead}\n'
+            f'              <tbody>\n'
+            f'{tbody_block}\n'
+            f'              </tbody>\n'
+            f'            </table>\n'
+            f'          </div>\n'
+            f'\n'
+            f'          <!-- Version mobile -->\n'
+            f'          <div class="mobile-month-cards">\n'
+            f'{mobile_block}\n'
+            f'          </div>')
+
+    return html
+
+
+def build_signal_card_v6(dest, monthly, lang="fr"):
+    """
+    Construit la colonne droite de la section Comprendre : 2 cards signaux.
+
+    Card 1 : Lecture rapide (3 signal-item)
+    - Fenêtre optimale : plage des mois score ≥ 7
+    - Bonne transition : mois score 6-7 (shoulder)
+    - Période rude : plage des mois score ≤ 3.5
+
+    Card 2 : Conditions détaillées (mois best)
+    - 6 signal-items : ressenti, UV, humidité, AQI, pluie, soleil
+
+    Args:
+        dest: dict destination
+        monthly: list[dict] 12 mois (requis : tmax, rain_pct, sun_h, dew_point_mean, uv_index, aqi_mean)
+        lang: code langue
+
+    Returns:
+        str : HTML (2 cards wrappées dans signal-card)
+    """
+    if len(monthly) != 12:
+        raise ValueError(f"monthly doit contenir 12 entrées, reçu {len(monthly)}")
+
+    L = _COMPRENDRE_LABELS.get(lang, _COMPRENDRE_LABELS["fr"])
+    names = MONTH_NAMES.get(lang, MONTH_NAMES["fr"])
+
+    # Catégories par score
+    optimal = [m for m in monthly if _score(m) >= 7.0]
+    transition = [m for m in monthly if 5.5 <= _score(m) < 7.0]
+    tough = [m for m in monthly if _score(m) <= 3.5]
+
+    range_optimal = _month_range_arrow(optimal, lang)
+    range_transition = _month_range_arrow(transition, lang)
+    range_tough = _month_range_arrow(tough, lang)
+
+    # Card 1 : Lecture rapide
+    card1 = (f'<div class="card pad">\n'
+             f'            <div class="small-label">{L["lbl_signal_quick"]}</div>\n'
+             f'            <div class="signal-list">\n'
+             f'              <div class="signal-item"><div class="l">{L["sig_optimal"]}</div><div class="r">{_html.escape(range_optimal)}</div></div>\n'
+             f'              <div class="signal-item"><div class="l">{L["sig_transition"]}</div><div class="r">{_html.escape(range_transition)}</div></div>\n'
+             f'              <div class="signal-item"><div class="l">{L["sig_tough"]}</div><div class="r">{_html.escape(range_tough)}</div></div>\n'
+             f'            </div>\n'
+             f'          </div>')
+
+    # Card 2 : Conditions détaillées du mois best
+    best = best_month(monthly)
+    best_name = format_month_full(best, lang)
+    best_tmax = best.get("tmax")
+    best_rain = best.get("rain_pct")
+    best_mm = best.get("precip_mm")
+    best_sun = best.get("sun_h")
+    best_dew = best.get("dew_point_mean")
+    best_uv = best.get("uv_index")
+    best_aqi = best.get("aqi_mean")
+
+    # Ressenti (fonction simplifiée, à localiser)
+    feel = _appreciate_feel(best_tmax, best_dew, lang)
+    uv_label = _appreciate_uv(best_uv)
+    dew_label = _appreciate_dew(best_dew)
+    aqi_res = _appreciate_aqi(best_aqi)
+
+    items = []
+    items.append(f'<div class="signal-item"><div class="l">{L["sig_feel"]}</div><div class="r">{_html.escape(feel)}</div></div>')
+    if uv_label and best_uv:
+        try:
+            uv_val = float(best_uv)
+            items.append(f'<div class="signal-item"><div class="l">{L["sig_uv"]}</div><div class="r">{uv_val:.1f} · {_html.escape(uv_label)}</div></div>')
+        except (ValueError, TypeError):
+            pass
+    if dew_label and best_dew:
+        try:
+            dv = float(best_dew)
+            items.append(f'<div class="signal-item"><div class="l">{L["sig_humidity"]}</div><div class="r">{dv:.1f}°C · {_html.escape(dew_label)}</div></div>')
+        except (ValueError, TypeError):
+            pass
+    if aqi_res and best_aqi:
+        try:
+            av = float(best_aqi)
+            items.append(f'<div class="signal-item"><div class="l">{L["sig_air"]}</div><div class="r">{av:.0f} · {_html.escape(aqi_res[0])}</div></div>')
+        except (ValueError, TypeError):
+            pass
+    # Pluie
+    if best_rain is not None:
+        try:
+            rain_v = int(round(float(best_rain)))
+            mm_v = float(best_mm) if best_mm else 0
+            items.append(f'<div class="signal-item"><div class="l">{L["sig_rain"]}</div><div class="r">{rain_v}% · {mm_v:.1f} {L["mm_unit"]}</div></div>')
+        except (ValueError, TypeError):
+            pass
+    # Soleil
+    if best_sun:
+        try:
+            sv = float(best_sun)
+            items.append(f'<div class="signal-item"><div class="l">{L["sig_sun"]}</div><div class="r">{sv:.1f}{L["sun_unit_day"]}</div></div>')
+        except (ValueError, TypeError):
+            pass
+
+    items_block = "\n              ".join(items)
+
+    card2 = (f'<div class="card pad">\n'
+             f'            <div class="small-label">{L["lbl_signal_detailed"].format(best_month=_html.escape(best_name.lower()))}</div>\n'
+             f'            <div class="signal-list">\n'
+             f'              {items_block}\n'
+             f'            </div>\n'
+             f'          </div>')
+
+    html = (f'<div class="signal-card">\n'
+            f'          {card1}\n'
+            f'          {card2}\n'
+            f'        </div>')
+
+    return html
+
+
+def build_comprendre_section_v6(dest, monthly, lang="fr"):
+    """
+    Section 'Comprendre' complète : header + spotlight-grid (tableau + signaux).
+
+    Args:
+        dest: dict destination
+        monthly: list[dict] 12 mois
+        lang: code langue
+
+    Returns:
+        str : HTML complet de la section
+    """
+    if len(monthly) != 12:
+        raise ValueError(f"monthly doit contenir 12 entrées, reçu {len(monthly)}")
+
+    L = _COMPRENDRE_LABELS.get(lang, _COMPRENDRE_LABELS["fr"])
+
+    # Badge "N mois confortables (avr→sep)"
+    good_months = [m for m in monthly if _score(m) >= 7.0]
+    n_good = len(good_months)
+    range_short = _month_range_short(good_months, lang) if good_months else "—"
+
+    badge_html = (f'<div style="display:inline-flex;align-items:center;gap:8px;'
+                  f'padding:6px 12px;background:var(--green-soft);'
+                  f'border:1px solid var(--green-border);border-radius:999px;'
+                  f'margin-bottom:12px;font-size:12px;font-weight:700;color:var(--green)">\n'
+                  f'            ✅ <span>{L["lbl_comfort_months"].format(n=n_good)}</span>\n'
+                  f'            <span style="font-size:11px;font-weight:500;color:var(--muted)">{L["lbl_comfort_range"].format(range_short=range_short)}</span>\n'
+                  f'          </div>')
+
+    table_html = build_months_table_v6(dest, monthly, lang=lang)
+    signals_html = build_signal_card_v6(dest, monthly, lang=lang)
+
+    section = (f'<section id="tableau">\n'
+               f'    <div class="container">\n'
+               f'      <div class="section-head">\n'
+               f'        <div class="section-kicker">{_html.escape(L["kicker"])}</div>\n'
+               f'        <h2>{_html.escape(L["title"])}</h2>\n'
+               f'        <p class="lead">{_html.escape(L["lead"])}</p>\n'
+               f'      </div>\n'
+               f'      <div class="spotlight-grid">\n'
+               f'        <div class="card pad">\n'
+               f'          {badge_html}\n'
+               f'          {table_html}\n'
+               f'        </div>\n'
+               f'        {signals_html}\n'
+               f'      </div>\n'
+               f'    </div>\n'
+               f'  </section>')
+
+    return section
+
+
 def _test():
     """Tests rapides (exécuter avec : python3 -m lib.common_v6)."""
 
