@@ -66,6 +66,135 @@ FORBIDDEN_WORDS_FR = [
     "cette perle",
 ]
 
+FORBIDDEN_WORDS_EN = [
+    # Clichés touristiques LLM-signature (communs EN + EN-US)
+    "breathtaking",
+    "picturesque",
+    "charming",
+    "enchanting",
+    "mesmerizing",
+    "mystical",
+    "idyllic",
+    "hidden gem",
+    "must-see",
+    "must-visit",
+    "a true gem",
+    "truly unique",
+    "a paradise",
+    "paradise found",
+    "nestled in",
+    "steeped in history",
+    # Connecteurs LLM obsessifs
+    "Furthermore,",
+    "Moreover,",
+    "Additionally,",
+    "In addition,",
+    "It is worth noting",
+    "It should be noted",
+    # Verbes d'invitation LLM-typiques
+    "Immerse yourself",
+    "Dive into",
+    "Allow yourself",
+    "Don't miss",
+    "Be prepared to",
+    # Structures LLM-typiques
+    "It is important to",
+    "It is essential to",
+    "Whether you're",
+    "Whether you are",
+    "In this guide",
+    "In this article",
+    # Redondances touristiques
+    "this wonderful destination",
+    "this gem",
+    "this jewel",
+]
+
+FORBIDDEN_WORDS_ES = [
+    # Clichés touristicos LLM-signature
+    "pintoresco",
+    "auténtico",
+    "mágico",
+    "encantador",
+    "imperdible",
+    "imprescindible",
+    "único",
+    "joya oculta",
+    "un verdadero",
+    "una verdadera joya",
+    "un paraíso",
+    "rincón escondido",
+    # Connecteurs LLM
+    "Además,",
+    "Por otra parte,",
+    "Asimismo,",
+    "Cabe destacar",
+    "Es importante destacar",
+    # Verbes LLM
+    "Sumérgete",
+    "Déjate llevar",
+    "No dudes",
+    "No te pierdas",
+    "Prepárate para",
+    # Structures LLM
+    "Es importante",
+    "Es esencial",
+    "Ya sea",
+    "En esta guía",
+    "En este artículo",
+    # Redondances
+    "este maravilloso destino",
+    "esta joya",
+    "esta maravilla",
+]
+
+FORBIDDEN_WORDS_DE = [
+    # Clichés touristisch LLM-signature
+    "atemberaubend",
+    "malerisch",
+    "authentisch",
+    "bezaubernd",
+    "unvergesslich",
+    "mystisch",
+    "idyllisch",
+    "ein wahres",
+    "eine wahre Perle",
+    "verstecktes Juwel",
+    "ein Paradies",
+    # Connecteurs LLM
+    "Darüber hinaus",
+    "Außerdem,",
+    "Zudem,",
+    "Des Weiteren",
+    "Es sei angemerkt",
+    "Es ist wichtig",
+    # Verbes LLM
+    "Tauchen Sie ein",
+    "Lassen Sie sich",
+    "Zögern Sie nicht",
+    "Verpassen Sie nicht",
+    "Bereiten Sie sich",
+    # Structures LLM
+    "Es ist wichtig zu",
+    "Es ist essentiell",
+    "Ob Sie",
+    "In diesem Artikel",
+    "In diesem Guide",
+    # Redondances
+    "dieses wunderbare Reiseziel",
+    "dieses Juwel",
+    "diese Perle",
+]
+
+# Dictionnaire pour accès par code langue
+FORBIDDEN_WORDS_BY_LANG = {
+    "fr": FORBIDDEN_WORDS_FR,
+    "en": FORBIDDEN_WORDS_EN,
+    "en-us": FORBIDDEN_WORDS_EN,  # Même vocabulaire anglais
+    "es": FORBIDDEN_WORDS_ES,
+    "de": FORBIDDEN_WORDS_DE,
+}
+
 # Words qu'on peut autoriser UNE FOIS max par fiche
 LIMITED_WORDS_FR = {
     "unique": 1,      # OK une fois dans la fiche
@@ -118,6 +247,152 @@ AVIS_EDITO_MOUNTAIN_FR = [
     "À {nom}, deux fenêtres nettes : {ski_top} pour le ski dur, {hike_top} pour la rando. Mai et novembre sont mortes : remontées fermées, refuges clos. <strong>Octobre</strong> reste praticable pour les trails aux couleurs automnales.",
 ]
 
+# ── EN (Anglais international) ──────────────────────────────────────
+
+VERDICT_TROPICAL_EN = [
+    "At {nom}, the real trade-off is rain, not temperature. The best months are {top1} and {top2}. Skip {worst} (monsoon in full swing).",
+    "The sweet spot at {nom} is {top1}-{top2}, the only months that really work. {worst} concentrates the bulk of the wet season.",
+    "{nom} stays tropical year-round: 24-30°C everywhere. But {top1} and {top2} stand out for clear skies and low rainfall. Skip: {worst}.",
+    "For {nom}, go with {top1} or {top2}. {worst} is doable but 80%+ rainy days.",
+    "The call for {nom} comes down to: {top1}-{top2} for comfort, {worst} for budget (if rain doesn't bother you).",
+]
+
+VERDICT_MOUNTAIN_EN = [
+    "At {nom}, it depends on your goal. Skiing: {ski_top}. Hiking: {hike_top}. Skip {worst} (shoulder months).",
+    "{nom} has two distinct seasons. Ski in {ski_top}, hike in {hike_top}. {worst} is the dead of the year.",
+    "The question at {nom} isn't when, but why. {ski_top} = peak ski. {hike_top} = hiking and climbing. {worst} to avoid.",
+    "For {nom}, aim for {ski_top} (ski) or {hike_top} (hike). Lifts close in {worst}: dead resort town.",
+    "At {nom}, two opposite peaks: {ski_top} (ski, fresh snow) and {hike_top} (dry trails, open huts). May and November = skip.",
+]
+
+VERDICT_GENERIC_EN = [
+    "At {nom}, {top1} and {top2} clearly stand out. {worst} has the least favorable conditions.",
+    "Best time for {nom}: {top1}-{top2}. Skip: {worst}.",
+    "For {nom}, go with {top1} and {top2}. {worst} is still visitable but with tough weather.",
+    "The best window for {nom} is between {top1} and {top2}. Skip {worst} if you can.",
+    "{nom} shines in {top1} and {top2}. {worst} disappoints weather-wise.",
+]
+
+AVIS_EDITO_TROPICAL_EN = [
+    "For {nom}, <strong>really target {top1}-{top2}</strong> even with the crowds. It's the only window where rain and humidity become tolerable. May or October work for those dodging peak tourism.",
+    "<strong>{top1}-{top2} is my call</strong> for {nom}, despite the crowds. The weather comfort gap justifies the price trade-off. In {worst}, many local businesses close.",
+    "At {nom}, try <strong>{top1} or September</strong> over August: almost identical weather, 40% fewer tourists, softer prices. Avoid at all costs: {worst}.",
+]
+
+AVIS_EDITO_MOUNTAIN_EN = [
+    "At {nom}, the question isn't when but <strong>why</strong>. Winter = {ski_top} for skiing, max snowpack. Summer = {hike_top} for mountaineering, but packed. <strong>September is my pick</strong>: good temps, huts open through the 20th, a third of the crowds.",
+    "At {nom}, two clear windows: {ski_top} for serious skiing, {hike_top} for hiking. May and November are dead: lifts closed, huts shut. <strong>October</strong> still works for trails in fall colors.",
+]
+
+# ── ES (Espagnol) ───────────────────────────────────────────────────
+
+VERDICT_TROPICAL_ES = [
+    "En {nom}, el verdadero dilema es la lluvia, no la temperatura. Los mejores meses son {top1} y {top2}. Evita {worst} (monzón en plena fuerza).",
+    "La ventana óptima en {nom} es {top1}-{top2}, los pocos meses realmente viables. {worst} concentra el grueso de la temporada húmeda.",
+    "{nom} es tropical todo el año: 24-30°C en todos lados. Pero {top1} y {top2} destacan por cielos despejados y poca lluvia. Evitar: {worst}.",
+    "Para {nom}, apuesta por {top1} o {top2}. {worst} sigue siendo posible pero con 80%+ de días de lluvia.",
+    "La decisión para {nom} se reduce a: {top1}-{top2} por el confort, {worst} por el presupuesto (si la lluvia no te para).",
+]
+
+VERDICT_MOUNTAIN_ES = [
+    "En {nom} depende de tu objetivo. Para esquiar: {ski_top}. Para senderismo: {hike_top}. Evita {worst} (entre-temporadas).",
+    "{nom} tiene dos temporadas bien marcadas. Esquí en {ski_top}, senderismo en {hike_top}. {worst} es el vacío del año.",
+    "La pregunta en {nom} no es cuándo, sino por qué. {ski_top} = esquí óptimo. {hike_top} = senderismo y alpinismo. {worst} evitar.",
+    "Para {nom}, apuntar a {ski_top} si esquí, {hike_top} si senderismo. Los remontes cierran en {worst}: estación muerta.",
+    "En {nom}, dos picos opuestos: {ski_top} (esquí, nieve fresca) y {hike_top} (senderos secos, refugios abiertos). Mayo y noviembre = evitar.",
+]
+
+VERDICT_GENERIC_ES = [
+    "En {nom}, {top1} y {top2} destacan claramente. {worst} concentra las condiciones menos favorables.",
+    "El mejor momento para {nom}: {top1}-{top2}. A evitar: {worst}.",
+    "Para {nom}, apostar por {top1} y {top2}. {worst} sigue siendo visitable pero con condiciones difíciles.",
+    "La ventana óptima para {nom} se sitúa entre {top1} y {top2}. Evitar {worst} si se puede elegir.",
+    "{nom} brilla sobre todo en {top1} y {top2}. {worst} decepciona por el tiempo.",
+]
+
+AVIS_EDITO_TROPICAL_ES = [
+    "Para {nom}, <strong>apuntar realmente a {top1}-{top2}</strong> incluso con la multitud. Es la única ventana donde lluvia y humedad son tolerables. Mayo u octubre sirven para quien huye del pico turístico.",
+    "<strong>{top1}-{top2} sigue siendo mi elección</strong> para {nom}, pese a la afluencia. La diferencia de confort climático compensa el coste. En {worst}, muchos negocios locales cierran.",
+    "En {nom}, intentar <strong>{top1} o septiembre</strong> antes que agosto: tiempo casi idéntico, 40% menos de gente, precios más suaves. A evitar del todo: {worst}.",
+]
+
+AVIS_EDITO_MOUNTAIN_ES = [
+    "En {nom}, la pregunta no es cuándo, sino <strong>por qué</strong>. Invierno = {ski_top} para esquí, máxima nieve. Verano = {hike_top} para alpinismo, pero lleno. <strong>Septiembre sigue siendo mi preferido</strong>: temperaturas agradables, refugios abiertos hasta el 20, un tercio del mundo.",
+    "En {nom}, dos ventanas claras: {ski_top} para esquí exigente, {hike_top} para senderismo. Mayo y noviembre están muertos: remontes cerrados, refugios clausurados. <strong>Octubre</strong> sigue siendo practicable para rutas en colores otoñales.",
+]
+
+# ── DE (Allemand) ───────────────────────────────────────────────────
+
+VERDICT_TROPICAL_DE = [
+    "In {nom} geht es nicht um die Temperatur, sondern um den Regen. Die besten Monate sind {top1} und {top2}. Meiden Sie {worst} (Monsun voll im Gange).",
+    "Das optimale Fenster in {nom} liegt in {top1}-{top2}, den einzigen wirklich nutzbaren Monaten. {worst} trägt das Hauptgewicht der Regenzeit.",
+    "{nom} bleibt ganzjährig tropisch: überall 24-30°C. Aber {top1} und {top2} stechen bei klarem Himmel und wenig Regen heraus. Meiden: {worst}.",
+    "Für {nom}, setzen Sie auf {top1} oder {top2}. {worst} ist machbar, aber 80%+ Regentage.",
+    "Die Entscheidung für {nom} läuft auf dies hinaus: {top1}-{top2} für den Komfort, {worst} fürs Budget (wenn Regen nicht stört).",
+]
+
+VERDICT_MOUNTAIN_DE = [
+    "In {nom} hängt alles vom Ziel ab. Ski: {ski_top}. Wandern: {hike_top}. Meiden {worst} (Zwischensaison).",
+    "{nom} kennt zwei klare Jahreszeiten. Ski in {ski_top}, Wandern in {hike_top}. {worst} ist die tote Zeit.",
+    "Die Frage in {nom} ist nicht wann, sondern warum. {ski_top} = Ski-Peak. {hike_top} = Wandern und Bergsteigen. {worst} meiden.",
+    "Für {nom}, zielen Sie auf {ski_top} (Ski) oder {hike_top} (Wandern). Lifte schließen in {worst}: tote Station.",
+    "In {nom}, zwei gegensätzliche Spitzen: {ski_top} (Ski, frischer Schnee) und {hike_top} (trockene Pfade, offene Hütten). Mai und November = meiden.",
+]
+
+VERDICT_GENERIC_DE = [
+    "In {nom}, {top1} und {top2} stechen klar heraus. {worst} konzentriert die ungünstigsten Bedingungen.",
+    "Beste Zeit für {nom}: {top1}-{top2}. Meiden: {worst}.",
+    "Für {nom}, setzen Sie auf {top1} und {top2}. {worst} ist besuchbar, aber mit schwierigen Bedingungen.",
+    "Das optimale Fenster für {nom} liegt zwischen {top1} und {top2}. Meiden {worst}, wenn Sie wählen können.",
+    "{nom} glänzt vor allem in {top1} und {top2}. {worst} enttäuscht wettermäßig.",
+]
+
+AVIS_EDITO_TROPICAL_DE = [
+    "Für {nom}, <strong>wirklich auf {top1}-{top2} zielen</strong>, auch mit dem Andrang. Es ist das einzige Fenster, in dem Regen und Luftfeuchtigkeit erträglich werden. Mai oder Oktober passen für alle, die der Hauptsaison ausweichen.",
+    "<strong>{top1}-{top2} bleibt meine Wahl</strong> für {nom}, trotz der Menge. Der Komfort-Unterschied rechtfertigt den Preis. In {worst} schließen viele lokale Betriebe.",
+    "In {nom}, <strong>{top1} oder September</strong> statt August versuchen: fast identisches Wetter, 40% weniger Menschen, weichere Preise. Absolut meiden: {worst}.",
+]
+
+AVIS_EDITO_MOUNTAIN_DE = [
+    "In {nom} ist die Frage nicht wann, sondern <strong>warum</strong>. Winter = {ski_top} für Ski, maximaler Schnee. Sommer = {hike_top} für Bergsteigen, aber voll. <strong>September bleibt mein Favorit</strong>: angenehme Temperaturen, Hütten bis 20. offen, ein Drittel der Menge.",
+    "In {nom}, zwei klare Fenster: {ski_top} für harten Ski, {hike_top} für Wandern. Mai und November sind tot: Lifte geschlossen, Hütten zu. <strong>Oktober</strong> bleibt für Trails in Herbstfarben praktikabel.",
+]
+
+# ── Dictionnaire d'accès par (template_type, lang) ──────────────────
+
+TEMPLATES_BY_LANG = {
+    "verdict_tropical": {
+        "fr": VERDICT_TROPICAL_FR, "en": VERDICT_TROPICAL_EN, "en-us": VERDICT_TROPICAL_EN,
+        "es": VERDICT_TROPICAL_ES, "de": VERDICT_TROPICAL_DE,
+    },
+    "verdict_mountain": {
+        "fr": VERDICT_MOUNTAIN_FR, "en": VERDICT_MOUNTAIN_EN, "en-us": VERDICT_MOUNTAIN_EN,
+        "es": VERDICT_MOUNTAIN_ES, "de": VERDICT_MOUNTAIN_DE,
+    },
+    "verdict_generic": {
+        "fr": VERDICT_GENERIC_FR, "en": VERDICT_GENERIC_EN, "en-us": VERDICT_GENERIC_EN,
+        "es": VERDICT_GENERIC_ES, "de": VERDICT_GENERIC_DE,
+    },
+    "avis_edito_tropical": {
+        "fr": AVIS_EDITO_TROPICAL_FR, "en": AVIS_EDITO_TROPICAL_EN, "en-us": AVIS_EDITO_TROPICAL_EN,
+        "es": AVIS_EDITO_TROPICAL_ES, "de": AVIS_EDITO_TROPICAL_DE,
+    },
+    "avis_edito_mountain": {
+        "fr": AVIS_EDITO_MOUNTAIN_FR, "en": AVIS_EDITO_MOUNTAIN_EN, "en-us": AVIS_EDITO_MOUNTAIN_EN,
+        "es": AVIS_EDITO_MOUNTAIN_ES, "de": AVIS_EDITO_MOUNTAIN_DE,
+    },
+}
+
+
+def get_templates(template_type, lang="fr"):
+    """Récupère les variantes d'un template pour une langue donnée."""
+    if template_type not in TEMPLATES_BY_LANG:
+        raise ValueError(f"Unknown template_type: {template_type}. Available: {list(TEMPLATES_BY_LANG.keys())}")
+    lang_map = TEMPLATES_BY_LANG[template_type]
+    if lang not in lang_map:
+        raise ValueError(f"Unknown lang: {lang}. Available: {list(lang_map.keys())}")
+    return lang_map[lang]
+
 
 # ══════════════════════════════════════════════════════════════════
 # 3. SÉLECTION DÉTERMINISTE
@@ -150,7 +425,7 @@ def pick_variant(variants, slug, **kwargs):
 # 4. VALIDATION ANTI-PATTERN
 # ══════════════════════════════════════════════════════════════════
 
-def check_no_llm_patterns(text, page_id=None, strict=True):
+def check_no_llm_patterns(text, page_id=None, strict=True, lang="fr"):
     """
     Vérifie qu'un texte ne contient pas de vocabulaire LLM-signature.
 
@@ -158,6 +433,7 @@ def check_no_llm_patterns(text, page_id=None, strict=True):
         text: str — contenu à vérifier (peut contenir du HTML, sera décapé)
         page_id: str — identifiant pour le message d'erreur (slug ou nom fichier)
         strict: bool — True = lève ValueError, False = retourne la liste des problèmes
+        lang: str — 'fr', 'en', 'en-us', 'es', 'de'. Utilise la wordlist correspondante.
 
     Returns:
         list — vide si OK, sinon liste des patterns trouvés
@@ -165,21 +441,32 @@ def check_no_llm_patterns(text, page_id=None, strict=True):
     # Décaper HTML
     plain = re.sub(r"<[^>]+>", " ", text)
 
+    forbidden = FORBIDDEN_WORDS_BY_LANG.get(lang, FORBIDDEN_WORDS_FR)
+
     problems = []
-    for word in FORBIDDEN_WORDS_FR:
-        if re.search(r"\b" + re.escape(word) + r"\b", plain, re.IGNORECASE):
+    # Suffixes morphologiques courants : pluriels (s/n), déclinaisons DE (e/er/es/en/em),
+    # accords FR (s/e/es). Permet de détecter racine + flexion courte.
+    suffix_pattern = r"(?:e|er|es|en|em|s|n|ment)?\b"
+    for word in forbidden:
+        # Si le mot contient déjà un espace ou ponctuation, match exact ; sinon racine + suffixe optionnel
+        if " " in word or "," in word or "'" in word:
+            pat = r"\b" + re.escape(word) + r"\b"
+        else:
+            pat = r"\b" + re.escape(word) + suffix_pattern
+        if re.search(pat, plain, re.IGNORECASE):
             problems.append(word)
 
-    # Vérifier la limite sur les LIMITED_WORDS
-    for word, max_count in LIMITED_WORDS_FR.items():
-        count = len(re.findall(r"\b" + re.escape(word) + r"\b", plain, re.IGNORECASE))
-        if count > max_count:
-            problems.append(f"{word} ({count}x > {max_count})")
+    # Vérifier la limite sur les LIMITED_WORDS (FR uniquement pour l'instant)
+    if lang == "fr":
+        for word, max_count in LIMITED_WORDS_FR.items():
+            count = len(re.findall(r"\b" + re.escape(word) + r"\b", plain, re.IGNORECASE))
+            if count > max_count:
+                problems.append(f"{word} ({count}x > {max_count})")
 
     if problems and strict:
         pid = page_id or "[unknown]"
         raise ValueError(
-            f"[{pid}] Patterns LLM détectés : {', '.join(problems)}"
+            f"[{pid}] Patterns LLM ({lang}) détectés : {', '.join(problems)}"
         )
     return problems
 
