@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://bestdateweather.com/prototype-bali-v5.html"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;800;900&family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Playfair+Display:wght@500;700;800;900&family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 :root{
   /* Palette BDW */
@@ -105,8 +105,12 @@ h1,h2,h3,.serif{font-family:'Playfair Display',Georgia,serif;letter-spacing:-.01
   border-radius:50%;
   background:transparent;
   color:var(--ink);
-  transition:background .15s,color .15s;
+  transition:background .15s,color .15s,transform .15s;
   flex-shrink:0;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  font-family:inherit;
 }
 .icon-btn:hover{
   background:var(--cream-2);
@@ -117,11 +121,14 @@ h1,h2,h3,.serif{font-family:'Playfair Display',Georgia,serif;letter-spacing:-.01
   flex-shrink:0;
 }
 .brand{
-  font-family:'Playfair Display',serif;
+  font-family:'Fraunces','Fraunces Fallback',Georgia,serif;
   font-weight:900;font-size:1.15rem;
   letter-spacing:-.02em;
+  color:var(--ink);
+  text-decoration:none;
+  line-height:1;
 }
-.brand em{font-style:normal;color:var(--gold)}
+.brand em{font-style:italic;color:#c99438;font-weight:400}
 .nav-actions{display:flex;gap:10px;flex-wrap:wrap}
 .chip,.btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
@@ -834,14 +841,14 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
 <div class="topbar">
   <div class="container topbar-inner">
     <div class="brand-row">
-      <div class="brand">Best<em>Date</em>Weather</div>
+      <a class="brand" href="index.html">Best<em>Date</em>Weather</a>
       <div class="icon-actions">
-        <a class="icon-btn" href="#" aria-label="Favoris" title="Favoris">
+        <button id="btn-fav" class="icon-btn" data-slug="bali" aria-label="Favoris" aria-pressed="false" onclick="window.bdwToggleFav&&window.bdwToggleFav(this)" type="button">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </a>
-        <a class="icon-btn" href="#" aria-label="Partager" title="Partager">
+        </button>
+        <button class="icon-btn nav-share" aria-label="Partager" onclick="shareThis&&shareThis()" type="button">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="11.49"/></svg>
-        </a>
+        </button>
       </div>
     </div>
     <a class="btn primary cta-plan" href="#planifier">✈️ Planifier mon voyage</a>
@@ -1446,6 +1453,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
 
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 <script src="js/dest-map.min.js?v=1" defer></script>
+<script src="js/favs.min.js?v=1" defer></script>
+<script src="js/share.js" defer></script>
 <script>
   // Force un invalidateSize après que toute la page (fonts, images, widgets) soit chargée
   // pour corriger les tiles partielles quand la section est initialement hors viewport
