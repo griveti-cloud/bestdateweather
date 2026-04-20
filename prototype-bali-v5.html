@@ -765,6 +765,8 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
 
 /* ═══════════════ DEST-MAP (Leaflet 2 cartes) — récupéré prod ═══════════════ */
 .dest-map-section{margin-bottom:0}
+/* Masquer le drapeau Leaflet + lien OSM en bas à droite des cartes */
+.leaflet-control-attribution{display:none !important}
 .dest-map-row{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}
 .dest-map-card{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;background:#e8f0f8}
 .dest-map-lbl{display:block;padding:6px 12px;font-size:10.5px;font-weight:700;color:var(--ink);letter-spacing:.4px;text-transform:uppercase;background:var(--cream-2);border-bottom:1px solid #e8e0d0}
