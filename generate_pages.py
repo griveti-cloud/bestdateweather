@@ -96,7 +96,7 @@ def _bind_lang(cfg):
         'best_months': lambda m: _best_months(m, L=L),
         'budget_tier': lambda s, a: _budget_tier(s, a, L=L),
         'seasonal_stats': lambda m: _seasonal_stats(m, L=L),
-        'climate_table_html': lambda m, n, mtn=False: _climate_table_html(m, n, mtn, L=L),
+        'climate_table_html': lambda m, n, mtn=False, slug=None: _climate_table_html(m, n, mtn, L=L, slug=slug),
     }
 
 
@@ -685,7 +685,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     og_title = fill_tpl(C['lbl_og_title_tpl'],         C, **tpl_vars)
 
     # ── Climate table ──
-    table_html = fn['climate_table_html'](months, nom, is_mountain)
+    table_html = fn['climate_table_html'](months, nom, is_mountain, slug=slug_fr)
 
     # ── Avertissement chaleur (annuel) ──
     _hot_months_38 = [MONTHS[i] for i in range(12) if months[i]['tmax'] >= 38]

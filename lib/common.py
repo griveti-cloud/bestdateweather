@@ -487,8 +487,47 @@ def ressenti(tmax, dew, lang='fr'):
     l = lang if lang in ('fr','en','en-us','es','de') else 'en'
     return LABELS[key][l], COLORS[key]
 
-def climate_table_html(months, nom, is_mountain=False, L=None):
-    """Generate climate table HTML."""
+def _ski_kwargs(slug, month=None):
+    """
+    Retourne un dict kwargs pour compute_ski_score/raw_score_winter avec les
+    paramètres altitude + glacier + saison chargés depuis ski_altitudes.csv.
+
+    Si slug absent du CSV (dest mountain sans entrée, ou non-mountain) :
+    retourne un dict vide → scoring utilise l'ancien modèle (backward-compat).
+
+    Usage :
+        # Pour un mois précis (applique pénalité hors-saison) :
+        score = compute_ski_score(tmax, rain, sun, **_ski_kwargs(slug, month=3))
+
+        # Pour un score agrégé sans dim temporelle (pas de pénalité saison) :
+        score = compute_ski_score(tmax, rain, sun, **_ski_kwargs(slug))
+    """
+    try:
+        from lib.ski_data import get_ski_data
+    except ImportError:
+        return {}
+    data = get_ski_data(slug) if slug else None
+    if not data:
+        return {}
+    kwargs = {
+        'alt_village': data.get('alt_village'),
+        'alt_ski_max': data.get('alt_ski_max'),
+        'has_glacier': data.get('has_glacier', False),
+    }
+    if month is not None:
+        kwargs['month'] = month
+        kwargs['season_start'] = data.get('season_start')
+        kwargs['season_end'] = data.get('season_end')
+    return kwargs
+
+
+def climate_table_html(months, nom, is_mountain=False, L=None, slug=None):
+    """Generate climate table HTML.
+
+    Args:
+        slug: si fourni ET is_mountain=True, active le scoring ski
+              altitude-aware (altitude + glacier + saison). Sinon ancien modèle.
+    """
     if L is None:
         L = LANG_FR
     # Dominant ressenti: if ≥9/12 months identical → header badge, no per-row
@@ -511,7 +550,9 @@ def climate_table_html(months, nom, is_mountain=False, L=None):
         ski_col = ''
         if is_mountain:
             from scoring import compute_ski_score, best_class
-            ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
+            # Nouveau modèle altitude-aware si slug fourni, sinon fallback ancien modèle
+            ski = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'],
+                                    **_ski_kwargs(slug, month=i+1))
             cls = best_class(m['classe'], ski)
             ski_col = f'<td>{ski:.1f}/10</td>'
         rows += (f'<tr class="{cls}" data-tmax="{m["tmax"]}" '
@@ -1144,6 +1185,9 @@ def decision_card_html(dest, months, mi_best, C, nom,
     lang = C.get('lang', 'fr')
     L = C  # C already has all lbl_* keys
 
+    # Slug pour scoring ski altitude-aware (mountain only)
+    _ski_slug = dest.get('slug_fr') or dest.get('slug') or ''
+
     # ── Country info ──
     ci = _load_country_info()
     pays = dest.get('pays', '')
@@ -1376,7 +1420,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
             def _pp_c(mm):
                 v = mm.get('precip_mm')
                 return float(v) if v not in (None, '', 'None') else None
-            _ski_c = [compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0))) for i in range(12)]
+            _ski_c = [compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)), **_ski_kwargs(_ski_slug, month=i+1)) for i in range(12)]
             _hike_c = [_chk_c(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)), _pp_c(months[i])) for i in range(12)]
             _ski_bucket = []
             _hike_bucket = []
@@ -1451,7 +1495,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
     if is_mountain and not is_monthly:
         # Scores au mois pic pour détecter dominance ski vs rando
         _pp_best = float(m.get('precip_mm') or 0) or None
-        _ski_at_best = compute_ski_score(float(m.get('tmax',0)), float(m.get('rain_pct',0)), float(m.get('sun_h',0)))
+        _ski_at_best = compute_ski_score(float(m.get('tmax',0)), float(m.get('rain_pct',0)), float(m.get('sun_h',0)), **_ski_kwargs(_ski_slug, month=(mi_best+1 if mi_best is not None else None)))
         # compute_hiking_score importé au top de la fonction decision_card_html
         from scoring import compute_hiking_score as _chk_d
         _hike_at_best = _chk_d(float(m.get('tmax',0)), float(m.get('rain_pct',0)), float(m.get('sun_h',0)), _pp_best)
@@ -1466,7 +1510,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
         def _pp(mm):
             v = mm.get('precip_mm')
             return float(v) if v not in (None, '', 'None') else None
-        _all_ski = [compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0))) for i in range(12)]
+        _all_ski = [compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)), **_ski_kwargs(_ski_slug, month=i+1)) for i in range(12)]
         _all_hike = [_chk_d(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)), _pp(months[i])) for i in range(12)]
 
         if _is_ski_dominant:
@@ -1651,7 +1695,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
     elif is_mountain:
         from scoring import compute_hiking_score
         # Ski scores: find best ski month + rando month + season
-        ski_scores = [(i, compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)))) for i in range(12)]
+        ski_scores = [(i, compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)), **_ski_kwargs(_ski_slug, month=i+1))) for i in range(12)]
         best_ski = max(ski_scores, key=lambda x: x[1])
         # Hiking scores (algo dédié randonnée : optimum 10-22°C, pondération pluie renforcée)
         _precip = lambda m: (float(m.get('precip_mm')) if m.get('precip_mm') not in (None, '', 'None') else None)
@@ -1827,7 +1871,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
         def _pp_p(mm):
             v = mm.get('precip_mm')
             return float(v) if v not in (None, '', 'None') else None
-        _ski_p = [compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0))) for i in range(12)]
+        _ski_p = [compute_ski_score(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)), **_ski_kwargs(_ski_slug, month=i+1)) for i in range(12)]
         _hike_p = [_chk_p(float(months[i].get('tmax',0)), float(months[i].get('rain_pct',0)), float(months[i].get('sun_h',0)), _pp_p(months[i])) for i in range(12)]
         for i in range(12):
             s, h = _ski_p[i], _hike_p[i]
