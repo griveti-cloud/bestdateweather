@@ -90,6 +90,31 @@ h1,h2,h3,.serif{font-family:'Playfair Display',Georgia,serif;letter-spacing:-.01
 .topbar-inner{
   display:flex;align-items:center;justify-content:space-between;
   gap:14px;padding:14px 0;
+  flex-wrap:wrap;
+}
+.brand-row{
+  display:flex;align-items:center;gap:12px;
+  flex-shrink:0;
+}
+.icon-actions{
+  display:flex;align-items:center;gap:4px;
+}
+.icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;
+  border-radius:50%;
+  background:transparent;
+  color:var(--ink);
+  transition:background .15s,color .15s;
+  flex-shrink:0;
+}
+.icon-btn:hover{
+  background:var(--cream-2);
+  color:var(--gold);
+}
+.icon-btn svg{display:block}
+.cta-plan{
+  flex-shrink:0;
 }
 .brand{
   font-family:'Playfair Display',serif;
@@ -632,7 +657,12 @@ footer a{color:var(--gold-2);font-weight:600}
 @media(max-width:720px){
   .container{padding:0 16px}
   .topbar{top:38px}
-  .topbar-inner{flex-direction:column;align-items:flex-start;padding:12px 0}
+  .topbar-inner{padding:10px 0;gap:8px}
+  .brand{font-size:1rem}
+  .icon-btn{width:34px;height:34px}
+  .icon-btn svg{width:18px;height:18px}
+  .cta-plan{padding:9px 14px;font-size:.88rem}
+  .cta-plan span.cta-label{display:none}
   .hero{padding:16px 0 14px}
   .hero-shell{min-height:440px;border-radius:22px}
   .hero-grid{padding:26px 22px;gap:22px;min-height:440px}
@@ -704,12 +734,18 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
 <!-- ═════════════════ TOPBAR ═════════════════ -->
 <div class="topbar">
   <div class="container topbar-inner">
-    <div class="brand">Best<em>Date</em>Weather</div>
-    <div class="nav-actions">
-      <a class="chip" href="#">♡ Favoris</a>
-      <a class="chip" href="#">⇪ Partager</a>
-      <a class="btn primary" href="#planifier">✈️ Planifier mon voyage</a>
+    <div class="brand-row">
+      <div class="brand">Best<em>Date</em>Weather</div>
+      <div class="icon-actions">
+        <a class="icon-btn" href="#" aria-label="Favoris" title="Favoris">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </a>
+        <a class="icon-btn" href="#" aria-label="Partager" title="Partager">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="11.49"/></svg>
+        </a>
+      </div>
     </div>
+    <a class="btn primary cta-plan" href="#planifier">✈️ Planifier mon voyage</a>
   </div>
 </div>
 
