@@ -712,6 +712,14 @@ a.list-item:hover strong{color:var(--gold)}
 .list-item span{
   font-size:.92rem;color:var(--ink);font-weight:500;
   overflow-wrap:anywhere;min-width:0;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.list-flag{
+  border-radius:2px;flex-shrink:0;
+  box-shadow:0 0 0 1px rgba(0,0,0,.06);
+}
+.list-country{
+  color:var(--muted);font-weight:400;font-size:.85rem;
 }
 .list-item strong{
   font-weight:800;text-align:right;
@@ -1404,19 +1412,19 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
         <div class="box">
           <h3>Destinations au climat similaire</h3>
           <div class="list">
-            <a href="meilleure-periode-phuket.html" class="list-item"><span>Phuket (Thaïlande)</span><strong>Similaire →</strong></a>
-            <a href="meilleure-periode-koh-samui.html" class="list-item"><span>Koh Samui (Thaïlande)</span><strong>Saisons proches →</strong></a>
-            <a href="meilleure-periode-tahiti.html" class="list-item"><span>Tahiti (Polynésie)</span><strong>Tropical →</strong></a>
-            <a href="meilleure-periode-polynesie.html" class="list-item"><span>Polynésie française</span><strong>Tropical →</strong></a>
+            <a href="meilleure-periode-phuket.html" class="list-item"><span><img src="flags/th.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Phuket <span class="list-country">· Thaïlande</span></span><strong>→</strong></a>
+            <a href="meilleure-periode-koh-samui.html" class="list-item"><span><img src="flags/th.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Koh Samui <span class="list-country">· Thaïlande</span></span><strong>→</strong></a>
+            <a href="meilleure-periode-tahiti.html" class="list-item"><span><img src="flags/pf.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Tahiti <span class="list-country">· Polynésie</span></span><strong>→</strong></a>
+            <a href="meilleure-periode-polynesie.html" class="list-item"><span><img src="flags/pf.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Polynésie française <span class="list-country">· France</span></span><strong>→</strong></a>
           </div>
         </div>
         <div class="box">
           <h3>Destinations proches</h3>
           <div class="list">
-            <a href="meilleure-periode-canggu.html" class="list-item"><span>Canggu</span><strong>9 km →</strong></a>
-            <a href="meilleure-periode-ubud.html" class="list-item"><span>Ubud</span><strong>19 km →</strong></a>
-            <a href="meilleure-periode-nusa-penida.html" class="list-item"><span>Nusa Penida</span><strong>37 km →</strong></a>
-            <a href="meilleure-periode-gili.html" class="list-item"><span>Îles Gili</span><strong>98 km →</strong></a>
+            <a href="meilleure-periode-canggu.html" class="list-item"><span><img src="flags/id.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Canggu <span class="list-country">· Indonésie</span></span><strong>9 km →</strong></a>
+            <a href="meilleure-periode-ubud.html" class="list-item"><span><img src="flags/id.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Ubud <span class="list-country">· Indonésie</span></span><strong>19 km →</strong></a>
+            <a href="meilleure-periode-nusa-penida.html" class="list-item"><span><img src="flags/id.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Nusa Penida <span class="list-country">· Indonésie</span></span><strong>37 km →</strong></a>
+            <a href="meilleure-periode-gili.html" class="list-item"><span><img src="flags/id.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Îles Gili <span class="list-country">· Indonésie</span></span><strong>98 km →</strong></a>
           </div>
         </div>
         <div class="box">
