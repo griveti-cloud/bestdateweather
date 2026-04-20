@@ -499,6 +499,8 @@ def raw_beach_score(tmax: float, rain_pct: float, sun_h: float, sea_temp: float,
 def t_ideal_winter(tmax: float) -> float:
     """
     Confort ski normalisé [0, 1] en fonction de tmax (°C).
+    tmax doit être la T° **sur les pistes** (pas en vallée).
+    Utiliser apply_lapse_rate() pour convertir tmax_vallée en tmax_piste.
 
     Sweet spot :    -5 à  5°C  →  0.9 – 1.0  (neige garantie, froid supportable)
     Froid correct : -15 à -5°C →  0.3 – 0.9  (très froid mais skiable)
@@ -513,57 +515,121 @@ def t_ideal_winter(tmax: float) -> float:
     return max(0.0, 0.2 - (tmax - 15) / 10 * 0.2)
 
 
-def _snow_reliability(tmax: float, rain_pct: float) -> float:
-    """
-    Proxy enneigement [0, 1].
-    Logique vacancier : l'enneigement est le pré-requis absolu.
+# Lapse rate standard atmosphère : environ -6.5°C par 1000 m
+# Source : OACI atmosphère standard
+LAPSE_RATE_C_PER_M = 6.5 / 1000.0
 
-    Seuil froid garanti : +4°C en vallée ≈ -2°C à 2000m (lapse rate ~6.5°C/1000m).
-    Précipitations froides (tmax ≤ 0°C) = bonus poudreuse.
-    Pluie vraiment problématique uniquement au-delà de +6°C.
+# Altitude moyenne du domaine skiable = 60% entre village et sommet
+# Représente le niveau moyen où on skie (pas tout en haut, pas tout en bas)
+SKI_DOMAIN_AVG_RATIO = 0.60
+
+
+def apply_lapse_rate(tmax_vallee: float, alt_village: float, alt_ski_max: float) -> float:
     """
-    if tmax <= 0:
-        # Poudreuse garantie — plus de précip = mieux
+    Convertit la température en vallée vers la température moyenne du domaine skiable.
+
+    Utilise le lapse rate standard (-6.5°C / 1000m) et pondère à 60% entre village et sommet
+    pour représenter la zone où on skie le plus.
+
+    Exemple Chamonix : tmax_vallée=7°C (févr.), alt_village=1035m, alt_ski_max=3842m
+      → alt_ski_moy = 1035 + (3842-1035)*0.60 = 2719m
+      → delta = 2719 - 1035 = 1684m
+      → tmax_piste = 7 - 1684 * 6.5/1000 = 7 - 10.9 = -3.9°C → neige garantie
+    """
+    if alt_ski_max is None or alt_ski_max <= alt_village:
+        return tmax_vallee  # Pas de correction si pas d'info altitude ou aberrante
+    alt_ski_moy = alt_village + (alt_ski_max - alt_village) * SKI_DOMAIN_AVG_RATIO
+    delta_alt = alt_ski_moy - alt_village
+    return tmax_vallee - delta_alt * LAPSE_RATE_C_PER_M
+
+
+def _snow_reliability(tmax_piste: float, rain_pct: float, has_glacier: bool = False) -> float:
+    """
+    Proxy enneigement [0, 1] basé sur la T° SUR LES PISTES (pas vallée).
+
+    IMPORTANT : tmax_piste doit être déjà corrigé via apply_lapse_rate().
+
+    Logique :
+      - tmax_piste ≤ 0°C    : poudreuse garantie
+      - 0 à 3°C             : neige quasi certaine
+      - 3 à 7°C             : neige dégradée mais skiable
+      - 7 à 12°C            : fin de saison (zones basses)
+      - > 12°C              : pas de neige
+
+    Bonus glacier : +0.15 minimum garanti pour les stations équipées
+    (Hintertux, Zell am See/Kitzsteinhorn, Zermatt/Klein Matterhorn, etc.).
+    """
+    # Score de base selon T° pistes
+    if tmax_piste <= 0:
         base = 0.70
         powder_bonus = min(0.20, rain_pct / 100 * 0.45)
-        return base + powder_bonus
-    elif tmax <= 4:
-        # Froid en altitude, neige quasi certaine
-        cold_factor = (4 - tmax) / 4
-        base = 0.65 + cold_factor * 0.05
+        score = base + powder_bonus
+    elif tmax_piste <= 3:
+        cold_factor = (3 - tmax_piste) / 3
+        base = 0.65 + cold_factor * 0.10
         heavy_penalty = max(0, rain_pct - 60) / 100 * 0.15
-        return max(0.50, base - heavy_penalty)
-    elif tmax <= 6:
-        # Zone limite : neige possible mais incertaine
-        return max(0.30, 0.50 - (tmax - 4) / 2 * 0.20 - rain_pct / 100 * 0.15)
-    elif tmax <= 12:
-        return max(0.05, 0.30 - (tmax - 6) / 6 * 0.20 - rain_pct / 100 * 0.15)
+        score = max(0.55, base - heavy_penalty)
+    elif tmax_piste <= 7:
+        # Neige dégradée mais encore présente sur les pistes d'altitude
+        score = max(0.35, 0.55 - (tmax_piste - 3) / 4 * 0.20 - rain_pct / 100 * 0.10)
+    elif tmax_piste <= 12:
+        score = max(0.10, 0.35 - (tmax_piste - 7) / 5 * 0.25 - rain_pct / 100 * 0.15)
     else:
-        return 0.0
+        score = 0.0
+
+    # Bonus glacier : garantie toute l'année sur les pistes de haute altitude
+    if has_glacier:
+        score = max(score, 0.65)
+
+    return min(1.0, score)
 
 
-def raw_score_winter(tmax: float, rain_pct: float, sun_h: float) -> float:
+def raw_score_winter(tmax_vallee: float, rain_pct: float, sun_h: float,
+                     alt_village: float = None, alt_ski_max: float = None,
+                     has_glacier: bool = False) -> float:
     """
     Score brut [0, 1] pour activités ski/montagne hiver.
 
-    Philosophie vacancier ski :
-      1. Enneigement fiable (pré-requis absolu)
-      2. Qualité météo sur les pistes (soleil, froid confortable)
+    Args:
+        tmax_vallee : T° max en vallée (°C) — telle que dans climate.csv
+        rain_pct    : % de jours de précipitations (0-100)
+        sun_h       : heures de soleil quotidien moyen
+        alt_village : altitude du centre-ville (m) — optionnel
+        alt_ski_max : altitude max du domaine skiable (m) — optionnel
+        has_glacier : True si glacier permanent
+
+    Si alt_village/alt_ski_max sont fournis : correction altitude appliquée.
+    Sinon : fallback sur l'ancien modèle (backward-compat).
 
     Poids :
-      40%  enneigement proxy → _snow_reliability(tmax, rain_pct)
-      40%  température       → t_ideal_winter(tmax)
-      20%  soleil            → sun_h / 12
+      40% enneigement proxy (sur tmax_piste corrigé si altitude connue)
+      40% température confort (sur tmax_piste corrigé)
+      20% soleil
     """
-    t    = t_ideal_winter(tmax)
-    snow = _snow_reliability(tmax, rain_pct)
+    # Correction altitude si données disponibles
+    if alt_village is not None and alt_ski_max is not None:
+        tmax_piste = apply_lapse_rate(tmax_vallee, alt_village, alt_ski_max)
+    else:
+        # Backward-compat : utilise tmax vallée directement
+        tmax_piste = tmax_vallee
+
+    t    = t_ideal_winter(tmax_piste)
+    snow = _snow_reliability(tmax_piste, rain_pct, has_glacier)
     sun  = min(1.0, sun_h / 12.0)
     return 0.40 * t + 0.40 * snow + 0.20 * sun
 
 
-def compute_ski_score(tmax: float, rain_pct: float, sun_h: float) -> float:
-    """Score ski direct /10 (pas de classes, mapping linéaire)."""
-    return round(raw_score_winter(tmax, rain_pct, sun_h) * 10, 1)
+def compute_ski_score(tmax: float, rain_pct: float, sun_h: float,
+                      alt_village: float = None, alt_ski_max: float = None,
+                      has_glacier: bool = False) -> float:
+    """
+    Score ski direct /10 (mapping linéaire).
+
+    Signature étendue avec paramètres altitude/glacier.
+    Les 3 premiers arguments restent compatibles avec l'ancien appel.
+    """
+    return round(raw_score_winter(tmax, rain_pct, sun_h,
+                                   alt_village, alt_ski_max, has_glacier) * 10, 1)
 
 
 def ski_class(score_10: float) -> str:

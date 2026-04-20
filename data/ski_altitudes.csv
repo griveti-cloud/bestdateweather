@@ -1,0 +1,195 @@
+slug,alt_village,alt_ski_max,has_glacier,is_ski_resort,notes
+# ═══════════════════════════════════════════════════════════════════
+# Données ski complémentaires pour destinations mountain=True
+# ═══════════════════════════════════════════════════════════════════
+# alt_village : altitude moyenne centre-ville (mètres)
+# alt_ski_max : altitude max du domaine skiable (mètres) — vide si pas station ski
+# has_glacier : True si glacier permettant ski été/inter-saison
+# is_ski_resort : True si vraie station de ski, False pour villes de montagne
+#                 (si False, on ne calculera PAS de score_ski pour cette destination)
+#
+# Sources : sites officiels des stations + wiki FR/DE/EN vérifiés.
+# Valeurs marquées "???" = à vérifier manuellement avant merge.
+# ═══════════════════════════════════════════════════════════════════
+
+# ─── ANDORRE ───
+andorre,1023,2640,False,True,Grandvalira+Vallnord
+grandvalira,2100,2640,False,True,Plus grand domaine Pyrénées
+
+# ─── ARGENTINE ───
+bariloche,893,2388,False,True,Cerro Catedral
+
+# ─── AUSTRALIE ───
+perisher,1720,2054,False,True,Plus grand domaine hémisphère sud
+thredbo,1365,2037,False,True,Mont Kosciuszko 2228m
+
+# ─── AUTRICHE ───
+hintertux,1500,3250,True,True,Glacier ski 365j/an
+innsbruck,574,2340,False,False,Ville capitale Tyrol - ski accessible mais pas station
+ischgl,1377,2872,False,True,Silvretta Arena
+kitzbuhel,762,2000,False,True,Hahnenkamm célèbre
+lech,1450,2810,False,True,Arlberg ski area
+mayrhofen,630,2500,False,True,Zillertal
+saalbach,1003,2096,False,True,Skicircus
+salzburg,424,1853,False,False,Ville capitale Bade - pas station directe
+schladming,745,2015,False,True,Planai+Hochwurzen
+st-anton,1304,2811,False,True,Arlberg - Vallugaspitze
+zell-am-see,760,3029,True,True,Kitzsteinhorn glacier
+
+# ─── AZERBAÏDJAN ───
+shahdag,1500,2551,False,True,Complexe ski récent
+
+# ─── BRÉSIL ───
+chapada-diamantina,400,,False,False,Parc national - pas de ski
+
+# ─── BULGARIE ───
+bansko,925,2600,False,True,Todorka Peak
+
+# ─── CANADA ───
+banff,1383,2637,False,True,Sunshine Village+Lake Louise
+big-white,1755,2319,False,True,BC - Kelowna
+lake-louise,1661,2637,False,True,Louise-Banff area
+mont-tremblant,265,875,False,True,Laurentides Québec - max limité
+revelstoke,462,2225,False,True,Plus gros dénivelé Amérique N
+whistler,675,2182,True,True,Horstman Glacier
+
+# ─── CHILI ───
+portillo,2880,3322,False,True,Andes centrales
+valle-nevado,3000,3670,False,True,Andes - domaine des 3 vallées
+
+# ─── CORÉE DU SUD ───
+yongpyong,772,1458,False,True,JO 2018
+
+# ─── ESPAGNE ───
+baqueira-beret,1500,2610,False,True,Pyrénées catalanes
+sierra-nevada,2100,3300,False,True,Andalousie - plus haut domaine Espagne
+
+# ─── ESWATINI ───
+mbabane,1243,,False,False,Capitale - pas de ski
+
+# ─── FINLANDE ───
+levi,203,531,False,True,Laponie - ski petite altitude mais ultra-nord
+
+# ─── FRANCE ───
+alpe-dhuez,1860,3330,True,True,Pic Blanc glacier
+chamonix,1035,3842,True,True,Aiguille du Midi+Grands Montets+Argentière
+courchevel,1550,2738,False,True,3 Vallées
+flaine,1600,2561,False,True,Grand Massif
+la-clusaz,1100,2477,False,True,Aravis
+la-plagne,1250,3250,True,True,Glacier Bellecôte
+les-arcs,1600,3226,False,True,Paradiski
+les-deux-alpes,1650,3600,True,True,Glacier 3600m - 2e plus haut domaine France
+les-gets,1172,2002,False,True,Portes du Soleil
+les-menuires,1850,3200,False,True,3 Vallées
+megeve,1113,2353,False,True,Mont-Blanc Unlimited
+meribel,1450,2952,False,True,3 Vallées
+montgenevre,1860,2680,False,True,Frontière italienne Voie Lactée
+morzine,1000,2466,False,True,Portes du Soleil
+serre-chevalier,1400,2800,False,True,Hautes-Alpes
+tignes,2100,3456,True,True,Grande Motte glacier
+val-d-isere,1850,3456,True,True,Espace Killy
+val-thorens,2300,3230,True,True,Plus haute station Europe
+# Exception : Paris n'est pas mountain, test passage
+
+# ─── GÉORGIE ───
+bakuriani,1700,2700,False,True,Caucase
+gudauri,2196,3307,False,True,Caucase - Krestovy Pass
+
+# ─── INDE ───
+darjeeling,2045,,False,False,Ville touristique - pas ski
+gulmarg,2650,4267,False,True,Cachemire - domaine le plus haut Asie
+shimla,2276,,False,False,Ancienne capitale été britannique - pas ski
+
+# ─── ITALIE ───
+cervinia,2050,3883,True,True,Matterhorn Glacier Paradise
+cortina-dampezzo,1224,3244,False,True,Dolomiti Superski
+courmayeur,1224,2755,False,True,Face italienne Mont-Blanc
+livigno,1816,2800,False,True,Mottolino+Carosello
+madonna-di-campiglio,1550,2505,False,True,Dolomites Brenta
+sestriere,2035,2823,False,True,Via Lattea
+val-gardena,1236,2518,False,True,Dolomites - Sella Ronda
+dolomites,1400,3343,False,True,Marmolada - zone large
+
+# ─── JAPON ───
+furano,235,1074,False,True,Hokkaido
+hakone,40,,False,False,Ville thermale - ski pas majeur
+hakuba,700,1831,False,True,JO 1998
+nikko,634,,False,False,Ville temples
+niseko,400,1308,False,True,Hokkaido - powder mondiale
+nozawa-onsen,570,1650,False,True,Nagano
+sapporo,35,1270,False,True,Teine+Bankei - JO 1972
+
+# ─── KAZAKHSTAN ───
+almaty,848,3180,False,False,Ville - Shymbulak accessible mais ville principal
+
+# ─── LESOTHO ───
+maseru,1550,,False,False,Capitale - Afriski petit domaine 3 222m ailleurs
+
+# ─── LIECHTENSTEIN ───
+vaduz,455,2000,False,False,Capitale - Malbun station mais pas Vaduz
+
+# ─── MALAISIE ───
+kota-kinabalu,0,,False,False,Ville côte tropicale - pas ski
+
+# ─── MAROC ───
+oukaimeden,2600,3273,False,True,Atlas - plus haut d'Afrique
+
+# ─── MEXIQUE ───
+san-miguel-de-allende,1900,,False,False,Ville coloniale - pas ski
+
+# ─── NORVÈGE ───
+geilo,794,1178,False,True,Ski classique
+hemsedal,640,1497,False,True,Alpes scandinaves
+
+# ─── NOUVELLE-ZÉLANDE ───
+queenstown,310,,False,False,Ville lacustre - ski proche mais entrée séparée
+queenstown-ski,310,2320,False,True,Remarkables+Coronet Peak
+
+# ─── ROYAUME-UNI ───
+isle-of-skye,0,,False,False,Île écossaise - pas ski
+lake-district,100,978,False,False,Région nature - pas ski
+
+# ─── RUSSIE ───
+krasnaya-polyana,600,2375,False,True,Sotchi JO 2014
+
+# ─── SAINT-MARIN ───
+saint-marin,749,,False,False,Micro-état - pas ski
+
+# ─── SLOVAQUIE ───
+jasna,943,2024,False,True,Basses Tatras
+
+# ─── SUISSE ───
+crans-montana,1500,3000,False,True,Valais
+davos,1560,2844,False,True,Parsenn+Jakobshorn
+engelberg,1050,3028,True,True,Titlis glacier
+grindelwald,1034,2971,False,True,Jungfrau region
+gstaad,1050,3000,True,True,Glacier 3000
+interlaken,566,2970,False,False,Ville vallée - ski Jungfrau accessible mais ville
+laax,1100,3018,False,True,Vorab glacier partiel
+saas-fee,1800,3600,True,True,Mittelallalin glacier
+verbier,1500,3330,False,True,4 Vallées
+wengen,1274,2970,False,True,Männlichen-Lauberhorn
+zermatt,1620,3899,True,True,Klein Matterhorn - plus haut Europe
+
+# ─── SUÈDE ───
+are,380,1420,False,True,Plus grande station Scandinavie
+
+# ─── TADJIKISTAN ───
+douchanbé,706,,False,False,Capitale - pas ski
+
+# ─── ÉRYTHRÉE ───
+asmara,2325,,False,False,Capitale haute altitude - pas ski
+
+# ─── ÉTATS-UNIS ───
+aspen,2438,3813,False,True,Aspen Highlands+Snowmass
+breckenridge,2926,3963,False,True,Plus haute base station USA
+jackson-hole,1924,3185,False,True,Wyoming - Grand Teton
+killington,500,1290,False,True,Vermont - plus gros est USA
+lake-tahoe,1900,2967,False,True,Heavenly+Palisades
+mammoth-mountain,2424,3370,False,True,Californie
+park-city,2130,3048,False,True,Utah - Deer Valley+Canyons
+steamboat-springs,2103,3221,False,True,Colorado
+stowe,474,1340,False,True,Vermont - Mt Mansfield
+sun-valley,1753,2789,False,True,Idaho - Bald Mountain
+telluride,2667,3735,False,True,Colorado
+vail,2476,3527,False,True,Back Bowls
