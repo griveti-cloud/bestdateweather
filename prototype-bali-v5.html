@@ -718,6 +718,16 @@ a.list-item:hover strong{color:var(--gold)}
   border-radius:2px;flex-shrink:0;
   box-shadow:0 0 0 1px rgba(0,0,0,.06);
 }
+.list-ico{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;
+  background:var(--paper);
+  border-radius:50%;
+  font-size:.95rem;
+  flex-shrink:0;
+  border:1px solid var(--line-soft);
+  line-height:1;
+}
 .list-country{
   color:var(--muted);font-weight:400;font-size:.85rem;
 }
@@ -1381,19 +1391,19 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
         <div class="box">
           <h3>🌊 Mer, budget, sécurité</h3>
           <div class="list">
-            <div class="list-item"><span>Température de la mer — saison sèche</span><strong>27.8°C</strong></div>
-            <div class="list-item"><span>Température de la mer — saison humide</span><strong>28.5°C</strong></div>
-            <div class="list-item"><span>Budget</span><strong>Économique</strong></div>
-            <div class="list-item"><span>Sécurité</span><strong>Vigilance normale</strong></div>
+            <div class="list-item"><span><span class="list-ico">🌤️</span>Température de la mer — saison sèche</span><strong>27.8°C</strong></div>
+            <div class="list-item"><span><span class="list-ico">🌧️</span>Température de la mer — saison humide</span><strong>28.5°C</strong></div>
+            <div class="list-item"><span><span class="list-ico">💰</span>Budget</span><strong>Économique</strong></div>
+            <div class="list-item"><span><span class="list-ico">🛡️</span>Sécurité</span><strong>Vigilance normale</strong></div>
           </div>
         </div>
         <div class="box">
           <h3>📍 Localisation & tendance</h3>
           <div class="list">
-            <div class="list-item"><span>Monnaie</span><strong>IDR (Roupie)</strong></div>
-            <div class="list-item"><span>Langue</span><strong>Indonésien</strong></div>
-            <div class="list-item"><span>Conduite</span><strong>À gauche</strong></div>
-            <div class="list-item"><span>Tendance climatique</span><strong>+0.34°C/décennie</strong></div>
+            <div class="list-item"><span><span class="list-ico">💱</span>Monnaie</span><strong>IDR (Roupie)</strong></div>
+            <div class="list-item"><span><span class="list-ico">🗣️</span>Langue</span><strong>Indonésien</strong></div>
+            <div class="list-item"><span><span class="list-ico">🚗</span>Conduite</span><strong>À gauche</strong></div>
+            <div class="list-item"><span><span class="list-ico">📈</span>Tendance climatique</span><strong>+0.34°C/décennie</strong></div>
           </div>
         </div>
       </div>
