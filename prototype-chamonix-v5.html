@@ -348,6 +348,15 @@ h2{
   display:flex;flex-direction:column;align-items:center;
   gap:6px;min-width:0;
 }
+.bar-src{
+  font-size:.95rem;
+  line-height:1;
+  height:18px;
+  display:flex;align-items:center;justify-content:center;
+  opacity:.85;
+  order:-1;
+}
+.bar-src.ski{opacity:1}
 /* Conteneur qui porte la hauteur réelle (130px) — c'est lui le référentiel pour height:XX% des .bar */
 .bar-slot{
   width:100%;
@@ -375,6 +384,14 @@ h2{
   font-size:.72rem;color:var(--muted);
   text-align:center;white-space:nowrap;
   font-weight:600;letter-spacing:.2px;
+}
+.bar-src{
+  font-size:.7rem;text-align:center;
+  margin-top:2px;opacity:.7;
+  cursor:help;line-height:1;
+}
+.bar-src.ski{
+  filter:hue-rotate(200deg) saturate(1.3);
 }
 
 /* ═══════════════ ITEMS UNIFIÉS (right-item, signal-item, list-item) ═══════════════ */
@@ -1115,36 +1132,36 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
           </div>
 
           <div>
-            <div class="small-label">Vue annuelle · 12 mois</div>
+            <div class="small-label">Meilleur score possible · 12 mois <span style="font-weight:500;color:var(--muted);margin-left:4px">(max entre rando 🥾 et ski ⛷️)</span></div>
             <div class="bars">
-              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:18%"></div></div><div class="bar-score">1.8</div><div class="bar-label">Jan</div></div>
-              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:45%"></div></div><div class="bar-score">4.5</div><div class="bar-label">Fév</div></div>
-              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:46%"></div></div><div class="bar-score">4.6</div><div class="bar-label">Mar</div></div>
-              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:53%"></div></div><div class="bar-score">5.3</div><div class="bar-label">Avr</div></div>
-              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:55%"></div></div><div class="bar-score">5.5</div><div class="bar-label">Mai</div></div>
-              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:77%"></div></div><div class="bar-score">7.7</div><div class="bar-label">Juin</div></div>
-              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:82%"></div></div><div class="bar-score">8.2</div><div class="bar-label">Juil</div></div>
-              <div class="bar-wrap"><div class="bar-slot"><div class="bar best" style="height:84%"></div></div><div class="bar-score">8.4</div><div class="bar-label">Aoû</div></div>
-              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:74%"></div></div><div class="bar-score">7.4</div><div class="bar-label">Sep</div></div>
-              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:57%"></div></div><div class="bar-score">5.7</div><div class="bar-label">Oct</div></div>
-              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:44%"></div></div><div class="bar-score">4.4</div><div class="bar-label">Nov</div></div>
-              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:21%"></div></div><div class="bar-score">2.1</div><div class="bar-label">Déc</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:75%"></div></div><div class="bar-score">7.5</div><div class="bar-label">Jan</div><div class="bar-src ski" title="Score ski">⛷️</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:54%"></div></div><div class="bar-score">5.4</div><div class="bar-label">Fév</div><div class="bar-src ski" title="Score ski">⛷️</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:52%"></div></div><div class="bar-score">5.2</div><div class="bar-label">Mar</div><div class="bar-src ski" title="Score ski">⛷️</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:53%"></div></div><div class="bar-score">5.3</div><div class="bar-label">Avr</div><div class="bar-src" title="Score général">🥾</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:55%"></div></div><div class="bar-score">5.5</div><div class="bar-label">Mai</div><div class="bar-src" title="Score général">🥾</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:77%"></div></div><div class="bar-score">7.7</div><div class="bar-label">Juin</div><div class="bar-src" title="Score général">🥾</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar best" style="height:82%"></div></div><div class="bar-score">8.2</div><div class="bar-label">Juil</div><div class="bar-src" title="Score général">🥾</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar best" style="height:84%"></div></div><div class="bar-score">8.4</div><div class="bar-label">Aoû</div><div class="bar-src" title="Score général">🥾</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:74%"></div></div><div class="bar-score">7.4</div><div class="bar-label">Sep</div><div class="bar-src" title="Score général">🥾</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:57%"></div></div><div class="bar-score">5.7</div><div class="bar-label">Oct</div><div class="bar-src" title="Score général">🥾</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:47%"></div></div><div class="bar-score">4.7</div><div class="bar-label">Nov</div><div class="bar-src ski" title="Score ski">⛷️</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:58%"></div></div><div class="bar-score">5.8</div><div class="bar-label">Déc</div><div class="bar-src ski" title="Score ski">⛷️</div></div>
             </div>
           </div>
         </div>
 
         <div class="card pad right-stack">
           <div class="right-item">
-            <h3>Ce qu'on comprend en 5 secondes</h3>
-            <p>Un score élevé ne signifie pas "temps parfaitement sec". C'est un compromis : moins d'humidité lourde, moins de pluies bloquantes, des journées vraiment exploitables.</p>
+            <h3>Comment lire ce graphique</h3>
+            <p>Chaque mois affiche le <strong>meilleur score possible</strong> entre score général 🥾 (rando, visite) et score ski ⛷️. L'icône sous chaque barre indique le profil gagnant ce mois-là.</p>
+          </div>
+          <div class="right-item">
+            <h3>2 pics, 2 creux</h3>
+            <p><strong>Pic ski</strong> en janvier (7.5). <strong>Pic rando</strong> en août (8.4). <strong>Creux inter-saison</strong> : novembre (4.7) entre rando et ski, puis avril-mai entre ski et rando.</p>
           </div>
           <div class="right-item">
             <h3>Ce qu'il faut vérifier ensuite</h3>
-            <p>Comparer mois par mois la pluie, le soleil et le ressenti tropical, pas seulement la température.</p>
-          </div>
-          <div class="right-item">
-            <h3>Action suivante</h3>
-            <p>Descendre au tableau détaillé, puis ouvrir la fiche du mois qui vous intéresse.</p>
+            <p>Le score ne dit pas tout : vérifier enneigement moyen (ski), ouverture des refuges (rando) et accès routier (col des Montets en hiver).</p>
           </div>
           <div class="cta-row">
             <a class="btn primary" href="#tableau">Comparer les 12 mois</a>
