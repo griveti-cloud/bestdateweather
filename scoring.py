@@ -577,8 +577,10 @@ def _snow_reliability(tmax_piste: float, rain_pct: float, has_glacier: bool = Fa
     else:
         score = 0.0
 
-    # Bonus glacier : garantie toute l'année sur les pistes de haute altitude
-    if has_glacier:
+    # Bonus glacier : garantie neige uniquement quand il fait encore froid en altitude.
+    # Évite les scores trop optimistes en mai/octobre où le glacier existe mais les pistes
+    # sont largement fermées (sauf ski d'alpinisme spécialisé).
+    if has_glacier and tmax_piste <= 5:
         score = max(score, 0.65)
 
     return min(1.0, score)
