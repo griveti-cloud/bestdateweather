@@ -302,13 +302,14 @@ tbody tr:hover{background:#fffbf2}
 /* Section Infos pratiques + Explorer : list */
 .list{display:flex;flex-direction:column;gap:0}
 .list-item{display:flex;justify-content:space-between;align-items:center;
-  padding:11px 0;border-bottom:1px solid #f2eadb;font-size:14px;
+  gap:14px;padding:11px 0;border-bottom:1px solid #f2eadb;font-size:14px;
   text-decoration:none;color:inherit}
 .list-item:last-child{border-bottom:none}
 .list-item:hover{background:#fffbf2}
-.list-item span{display:flex;align-items:center;gap:8px;color:var(--muted);
-  font-weight:500;min-width:0;flex:1}
-.list-item strong{font-weight:700;color:var(--ink);white-space:nowrap}
+.list-item > span{display:flex;align-items:center;gap:8px;color:var(--muted);
+  font-weight:500;min-width:0;flex:1 1 auto;line-height:1.35}
+.list-item > strong{font-weight:700;color:var(--ink);text-align:right;
+  flex-shrink:0;line-height:1.35}
 .list-ico{flex-shrink:0;font-size:14px}
 .list-flag{flex-shrink:0;border-radius:2px}
 .list-country{color:var(--muted);font-weight:500;font-size:12.5px}

@@ -2470,8 +2470,8 @@ _INFOS_LABELS = {
         "lbl_climate": "Type de climat",
         "lbl_currency": "Monnaie",
         "lbl_lang": "Langue",
-        "lbl_trend": "Tendance climatique",
-        "trend_value": "+0.34°C/décennie (moyenne mondiale)",
+        "lbl_trend": "Tendance",
+        "trend_value": "+0.34°C / décennie",
     },
     "en": {
         "kicker": "Practical info",
@@ -2486,8 +2486,8 @@ _INFOS_LABELS = {
         "lbl_climate": "Climate type",
         "lbl_currency": "Currency",
         "lbl_lang": "Language",
-        "lbl_trend": "Climate trend",
-        "trend_value": "+0.34°C/decade (global average)",
+        "lbl_trend": "Trend",
+        "trend_value": "+0.34°C / decade",
     },
     "en-us": {
         "kicker": "Practical info",
@@ -2502,8 +2502,8 @@ _INFOS_LABELS = {
         "lbl_climate": "Climate type",
         "lbl_currency": "Currency",
         "lbl_lang": "Language",
-        "lbl_trend": "Climate trend",
-        "trend_value": "+0.34°C/decade (global average)",
+        "lbl_trend": "Trend",
+        "trend_value": "+0.34°C / decade",
     },
     "es": {
         "kicker": "Información práctica",
@@ -2518,8 +2518,8 @@ _INFOS_LABELS = {
         "lbl_climate": "Tipo de clima",
         "lbl_currency": "Moneda",
         "lbl_lang": "Idioma",
-        "lbl_trend": "Tendencia climática",
-        "trend_value": "+0.34°C/década (media mundial)",
+        "lbl_trend": "Tendencia",
+        "trend_value": "+0.34°C / década",
     },
     "de": {
         "kicker": "Praktische Infos",
@@ -2534,8 +2534,8 @@ _INFOS_LABELS = {
         "lbl_climate": "Klimatyp",
         "lbl_currency": "Währung",
         "lbl_lang": "Sprache",
-        "lbl_trend": "Klimatrend",
-        "trend_value": "+0.34°C/Jahrzehnt (globaler Durchschnitt)",
+        "lbl_trend": "Trend",
+        "trend_value": "+0.34°C / Jahrzehnt",
     },
 }
 
@@ -2603,7 +2603,7 @@ def build_infos_section_v6(dest, monthly, lang="fr"):
     # Box 2 items
     box2_items = [
         ("🧭", L["lbl_lat"], lat_s),
-        ("🧭", L["lbl_lon"], lon_s),
+        ("📐", L["lbl_lon"], lon_s),
         ("📈", L["lbl_trend"], _html.escape(L["trend_value"])),
     ]
 
