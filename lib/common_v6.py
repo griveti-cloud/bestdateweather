@@ -754,6 +754,291 @@ def build_barchart_v6(monthly, lang="fr", ski_scores_by_month=None, show_legend=
     return html
 
 
+# ══════════════════════════════════════════════════════════════════
+# Pills "Top & à éviter"
+# ══════════════════════════════════════════════════════════════════
+
+# Labels UI pour section pills
+_PILLS_LABELS = {
+    "fr": {"section": "Top & à éviter", "trophy": "🏆", "warn": "⚠️"},
+    "en": {"section": "Top & avoid", "trophy": "🏆", "warn": "⚠️"},
+    "en-us": {"section": "Top & avoid", "trophy": "🏆", "warn": "⚠️"},
+    "es": {"section": "Top & a evitar", "trophy": "🏆", "warn": "⚠️"},
+    "de": {"section": "Top & Meiden", "trophy": "🏆", "warn": "⚠️"},
+}
+
+
+def build_pills_v6(monthly, lang="fr", n_top=4, show_section_label=True):
+    """
+    Construit les pills 'Top & à éviter' : N meilleurs mois + 1 pire mois.
+
+    Le meilleur mois reçoit l'emoji 🏆, le pire reçoit ⚠️.
+    Les pills 'good' pour les tops, 'bad' pour le worst.
+    Ordre : top par score décroissant, puis worst.
+
+    Args:
+        monthly: list[dict] 12 mois
+        lang: code langue
+        n_top: nombre de pills top (4 par défaut, comme proto V5)
+        show_section_label: inclure le label 'Top & à éviter' au-dessus
+
+    Returns:
+        str : HTML (div wrap + pills)
+    """
+    if len(monthly) != 12:
+        raise ValueError(f"monthly doit contenir 12 entrées, reçu {len(monthly)}")
+
+    L = _PILLS_LABELS.get(lang, _PILLS_LABELS["fr"])
+
+    # Top N par score décroissant
+    sorted_desc = sorted(monthly, key=_score, reverse=True)
+    tops = sorted_desc[:n_top]
+    worst = sorted_desc[-1]  # Le plus mauvais
+
+    pills_html = []
+    for i, m in enumerate(tops):
+        name = format_month_full(m, lang)
+        sc = _score(m)
+        emoji = f"{L['trophy']} " if i == 0 else ""
+        safe_name = _html.escape(name)
+        pills_html.append(
+            f'<span class="pill good">{emoji}{safe_name} · {sc:.1f}</span>'
+        )
+    # Worst en bad
+    worst_name = format_month_full(worst, lang)
+    worst_sc = _score(worst)
+    pills_html.append(
+        f'<span class="pill bad">{L["warn"]} {_html.escape(worst_name)} · {worst_sc:.1f}</span>'
+    )
+
+    pills_block = "\n              ".join(pills_html)
+
+    if show_section_label:
+        html = (f'<div>\n            <div class="small-label">{L["section"]}</div>\n'
+                f'            <div class="pills">\n              {pills_block}\n'
+                f'            </div>\n          </div>')
+    else:
+        html = f'<div class="pills">\n              {pills_block}\n            </div>'
+
+    return html
+
+
+# ══════════════════════════════════════════════════════════════════
+# Right-stack : bloc éditorial "Ce qu'on comprend en 5s" + CTA
+# ══════════════════════════════════════════════════════════════════
+
+def _month_range_label(months, lang="fr"):
+    """
+    Formate une liste de mois en plage lisible.
+
+    Si les mois sont contigus : 'avril-septembre' (6 mois)
+    Sinon : 'avril, mai, juillet' (énumération)
+
+    Args:
+        months: list[dict] triés par mois_num
+        lang: code langue
+
+    Returns:
+        str
+    """
+    if not months:
+        return ""
+    names = MONTH_NAMES.get(lang, MONTH_NAMES["fr"])
+    sorted_m = sorted(months, key=lambda x: int(x["mois_num"]))
+    nums = [int(m["mois_num"]) for m in sorted_m]
+
+    # Test contiguïté (y compris cycle décembre→janvier)
+    contiguous = all(nums[i] + 1 == nums[i + 1] for i in range(len(nums) - 1))
+    # Séparateurs par langue
+    sep = {"fr": "-", "en": "-", "en-us": "-", "es": "-", "de": "–"}.get(lang, "-")
+    if contiguous and len(nums) >= 2:
+        return f"{names[nums[0] - 1].lower()}{sep}{names[nums[-1] - 1].lower()}"
+    elif len(nums) == 1:
+        return names[nums[0] - 1].lower()
+    else:
+        # Énumération (pas contigu)
+        return ", ".join(names[n - 1].lower() for n in nums)
+
+
+# Textes localisés pour right-stack
+# Chaque clé contient 2-3 variantes choisies déterministes par slug
+_RIGHT_STACK_TEXTS = {
+    "fr": {
+        "understand_title": "Ce qu'on comprend en 5 secondes",
+        # Template : {nom}, {n_great}, {great_range}, {n_tough}, {tough_range},
+        # {best_name}, {best_score}, {worst_name}, {worst_score}
+        "understand_variants": [
+            "{nom} a {n_great} mois très agréables ({great_range}) et {n_tough} mois difficiles ({tough_range}). L'écart est net : {best_score}/10 en {best_name} contre {worst_score}/10 en {worst_name}.",
+            "{nom} offre {n_great} mois confortables ({great_range}), avec {n_tough} mois à éviter ({tough_range}). Le delta est marqué : {best_score} en {best_name} vs {worst_score} en {worst_name}.",
+            "Sur {nom}, {n_great} mois sortent clairement du lot ({great_range}) et {n_tough} plombent l'expérience ({tough_range}). Écart {best_score}→{worst_score} selon le mois.",
+        ],
+        "verify_title": "Ce qu'il faut vérifier ensuite",
+        "verify_generic": "Votre tolérance à la foule et au budget. Les meilleurs mois concentrent la saturation touristique et les prix plus hauts. Les entre-saisons offrent un bon compromis.",
+        "verify_tropical": "Votre tolérance à la pluie et à l'humidité. Même la saison sèche connaît des averses ponctuelles. Les tarifs remontent aussi pendant la fenêtre optimale.",
+        "verify_mountain": "Votre objectif précis : ski de piste, rando, alpinisme. Chaque activité a sa fenêtre. Les prix grimpent en haute saison, et les entre-saisons ferment les remontées.",
+        "action_title": "Action suivante",
+        "action_text": "Descendre au tableau détaillé pour comparer mois à mois, puis ouvrir la fiche du mois qui vous intéresse.",
+        "cta_table": "Comparer les 12 mois",
+        "cta_project": "Selon votre projet",
+    },
+    "en": {
+        "understand_title": "The 5-second takeaway",
+        "understand_variants": [
+            "{nom} has {n_great} comfortable months ({great_range}) and {n_tough} tough months ({tough_range}). The gap is clear: {best_score}/10 in {best_name} vs {worst_score}/10 in {worst_name}.",
+            "{nom} offers {n_great} solid months ({great_range}), with {n_tough} months to skip ({tough_range}). Delta is marked: {best_score} in {best_name} vs {worst_score} in {worst_name}.",
+            "At {nom}, {n_great} months clearly stand out ({great_range}) and {n_tough} drag down the experience ({tough_range}). Gap {best_score}→{worst_score} across the year.",
+        ],
+        "verify_title": "What to check next",
+        "verify_generic": "Your tolerance for crowds and budget. Peak months concentrate tourist saturation and higher prices. Shoulder seasons offer a good compromise.",
+        "verify_tropical": "Your tolerance for rain and humidity. Even the dry season has occasional showers. Rates also climb during the optimal window.",
+        "verify_mountain": "Your specific goal: piste skiing, hiking, mountaineering. Each activity has its window. Prices peak in high season, shoulder months close the lifts.",
+        "action_title": "Next step",
+        "action_text": "Scroll to the detailed table to compare month by month, then open the page for the month you're considering.",
+        "cta_table": "Compare 12 months",
+        "cta_project": "By project type",
+    },
+    "en-us": {
+        "understand_title": "The 5-second takeaway",
+        "understand_variants": [
+            "{nom} has {n_great} comfortable months ({great_range}) and {n_tough} tough months ({tough_range}). The gap is clear: {best_score}/10 in {best_name} vs {worst_score}/10 in {worst_name}.",
+            "{nom} offers {n_great} solid months ({great_range}), with {n_tough} months to skip ({tough_range}). Delta is marked: {best_score} in {best_name} vs {worst_score} in {worst_name}.",
+            "At {nom}, {n_great} months clearly stand out ({great_range}) and {n_tough} drag down the experience ({tough_range}). Gap {best_score}→{worst_score} across the year.",
+        ],
+        "verify_title": "What to check next",
+        "verify_generic": "Your tolerance for crowds and budget. Peak months concentrate tourist saturation and higher prices. Shoulder seasons offer a good compromise.",
+        "verify_tropical": "Your tolerance for rain and humidity. Even the dry season has occasional showers. Rates also climb during the optimal window.",
+        "verify_mountain": "Your specific goal: piste skiing, hiking, mountaineering. Each activity has its window. Prices peak in high season, shoulder months close the lifts.",
+        "action_title": "Next step",
+        "action_text": "Scroll to the detailed table to compare month by month, then open the page for the month you're considering.",
+        "cta_table": "Compare 12 months",
+        "cta_project": "By project type",
+    },
+    "es": {
+        "understand_title": "Lo esencial en 5 segundos",
+        "understand_variants": [
+            "{nom} tiene {n_great} meses agradables ({great_range}) y {n_tough} meses difíciles ({tough_range}). La diferencia es clara: {best_score}/10 en {best_name} vs {worst_score}/10 en {worst_name}.",
+            "{nom} ofrece {n_great} meses cómodos ({great_range}), con {n_tough} meses a evitar ({tough_range}). Delta marcado: {best_score} en {best_name} vs {worst_score} en {worst_name}.",
+            "En {nom}, {n_great} meses destacan claramente ({great_range}) y {n_tough} empeoran la experiencia ({tough_range}). Brecha {best_score}→{worst_score} según el mes.",
+        ],
+        "verify_title": "Lo que hay que verificar",
+        "verify_generic": "Tu tolerancia a las multitudes y al presupuesto. Los mejores meses concentran la saturación turística y los precios altos. Las entre-temporadas ofrecen un buen compromiso.",
+        "verify_tropical": "Tu tolerancia a la lluvia y la humedad. Incluso la temporada seca tiene lluvias puntuales. Los precios también suben durante la ventana óptima.",
+        "verify_mountain": "Tu objetivo preciso: esquí de pista, senderismo, alpinismo. Cada actividad tiene su ventana. Los precios suben en temporada alta, entre-temporadas cierran los remontes.",
+        "action_title": "Siguiente paso",
+        "action_text": "Baja a la tabla detallada para comparar mes a mes, luego abre la ficha del mes que te interesa.",
+        "cta_table": "Comparar 12 meses",
+        "cta_project": "Según tu proyecto",
+    },
+    "de": {
+        "understand_title": "Das Wesentliche in 5 Sekunden",
+        "understand_variants": [
+            "{nom} hat {n_great} angenehme Monate ({great_range}) und {n_tough} schwierige Monate ({tough_range}). Der Unterschied ist deutlich: {best_score}/10 in {best_name} vs {worst_score}/10 in {worst_name}.",
+            "{nom} bietet {n_great} komfortable Monate ({great_range}), mit {n_tough} zu meidenden Monaten ({tough_range}). Deutliches Delta: {best_score} in {best_name} vs {worst_score} in {worst_name}.",
+            "In {nom} stechen {n_great} Monate klar heraus ({great_range}) und {n_tough} belasten das Erlebnis ({tough_range}). Spanne {best_score}→{worst_score} je nach Monat.",
+        ],
+        "verify_title": "Was als Nächstes zu prüfen ist",
+        "verify_generic": "Ihre Toleranz gegenüber Menschenmassen und Budget. Die besten Monate konzentrieren den Touristen-Andrang und höhere Preise. Zwischensaisons bieten einen guten Kompromiss.",
+        "verify_tropical": "Ihre Toleranz gegenüber Regen und Luftfeuchtigkeit. Auch die Trockenzeit hat gelegentliche Schauer. Die Preise steigen auch im optimalen Fenster.",
+        "verify_mountain": "Ihr genaues Ziel: Pistenski, Wandern, Bergsteigen. Jede Aktivität hat ihr Fenster. Die Preise steigen in der Hauptsaison, in der Zwischensaison schließen die Lifte.",
+        "action_title": "Nächster Schritt",
+        "action_text": "Scrollen Sie zur detaillierten Tabelle, um Monat für Monat zu vergleichen, und öffnen Sie dann die Seite des Monats, der Sie interessiert.",
+        "cta_table": "12 Monate vergleichen",
+        "cta_project": "Je nach Projekt",
+    },
+}
+
+
+def build_right_stack_v6(dest, monthly, lang="fr",
+                         great_threshold=7.0, tough_threshold=3.5,
+                         href_table="#tableau", href_project="#par-projet"):
+    """
+    Construit le bloc 'right-stack' de la section Décider.
+
+    Produit 3 right-item + 1 cta-row :
+    - 'Ce qu'on comprend en 5s' : résumé auto (n_great, n_tough, gap best→worst)
+    - 'Ce qu'il faut vérifier ensuite' : mise en garde selon type destination
+    - 'Action suivante' : incitation tableau + profils
+
+    Variantes du résumé choisies déterministes par slug (anti-LLM).
+
+    Args:
+        dest: dict destination
+        monthly: list 12 mois
+        lang: code langue
+        great_threshold: seuil score pour 'mois agréable' (default 7.0)
+        tough_threshold: seuil score pour 'mois difficile' (default 3.5)
+        href_table: ancre vers tableau
+        href_project: ancre vers section profils
+
+    Returns:
+        str : HTML complet du bloc
+    """
+    if len(monthly) != 12:
+        raise ValueError(f"monthly doit contenir 12 entrées, reçu {len(monthly)}")
+
+    T = _RIGHT_STACK_TEXTS.get(lang, _RIGHT_STACK_TEXTS["fr"])
+
+    # Compter les mois great / tough
+    sorted_chrono = sorted(monthly, key=lambda m: int(m["mois_num"]))
+    great_months = [m for m in sorted_chrono if _score(m) >= great_threshold]
+    tough_months = [m for m in sorted_chrono if _score(m) <= tough_threshold]
+
+    great_range = _month_range_label(great_months, lang) if great_months else "—"
+    tough_range = _month_range_label(tough_months, lang) if tough_months else "—"
+
+    best = best_month(monthly)
+    worst = worst_month(monthly)
+    nom_key = f"nom_{lang.replace('-', '_')}"
+    nom = dest.get(nom_key) or dest.get("nom_fr") or dest.get("slug", "?")
+    slug = dest.get("slug") or dest.get("slug_fr") or "unknown"
+
+    # Paramètres du template understand
+    params = {
+        "nom": nom,
+        "n_great": len(great_months),
+        "great_range": great_range,
+        "n_tough": len(tough_months),
+        "tough_range": tough_range,
+        "best_name": format_month_full(best, lang),
+        "best_score": f"{_score(best):.1f}",
+        "worst_name": format_month_full(worst, lang),
+        "worst_score": f"{_score(worst):.1f}",
+    }
+    understand_text = pick_variant(T["understand_variants"], slug=slug, **params)
+
+    # Texte "à vérifier" selon type
+    dtype = classify_dest(dest)
+    verify_text = T.get(f"verify_{dtype}", T["verify_generic"])
+
+    # Auto-validation anti-LLM sur tous les textes générés
+    for text, label in [(understand_text, "understand"), (verify_text, "verify"),
+                        (T["action_text"], "action")]:
+        check_no_llm_patterns(text, page_id=f"right_stack/{slug}/{label}",
+                              lang=lang, strict=True)
+
+    # Escape des valeurs dans le HTML (le template contient déjà les balises)
+    html = f'''<div class="card pad right-stack">
+          <div class="right-item">
+            <h3>{_html.escape(T["understand_title"])}</h3>
+            <p>{understand_text}</p>
+          </div>
+          <div class="right-item">
+            <h3>{_html.escape(T["verify_title"])}</h3>
+            <p>{_html.escape(verify_text)}</p>
+          </div>
+          <div class="right-item">
+            <h3>{_html.escape(T["action_title"])}</h3>
+            <p>{_html.escape(T["action_text"])}</p>
+          </div>
+          <div class="cta-row">
+            <a class="btn primary" href="{href_table}">{_html.escape(T["cta_table"])}</a>
+            <a class="btn" href="{href_project}">{_html.escape(T["cta_project"])}</a>
+          </div>
+        </div>'''
+
+    return html
+
+
 def _test():
     """Tests rapides (exécuter avec : python3 -m lib.common_v6)."""
 
@@ -971,6 +1256,84 @@ def _test():
     bc_low = build_barchart_v6(low_monthly, lang="fr")
     assert 'class="bar best"' not in bc_low, "Aucun mois ≥ 8.5 → 0 'best'"
     print("  ✅ Cas limite : tous scores < 8.5 → 0 bar.best")
+
+    # ══════ Tests pills ══════
+    print("\n  — Tests pills —")
+
+    # Pills Paris FR : 4 pills good + 1 bad
+    pills_fr = build_pills_v6(paris_monthly, lang="fr", n_top=4)
+    assert 'class="pill good"' in pills_fr
+    assert pills_fr.count('class="pill good"') == 4
+    assert pills_fr.count('class="pill bad"') == 1
+    assert "Juillet · 8.7" in pills_fr  # top 1 avec trophy
+    assert "🏆" in pills_fr
+    assert "Janvier · 1.6" in pills_fr  # worst avec warn
+    assert "⚠️" in pills_fr
+    assert "Top & à éviter" in pills_fr
+    print("  ✅ Pills Paris FR : 4 good (🏆 Juillet en tête) + 1 bad (⚠️ Janvier)")
+
+    # Multi-langues
+    assert "Top & avoid" in build_pills_v6(paris_monthly, lang="en")
+    assert "Top & a evitar" in build_pills_v6(paris_monthly, lang="es")
+    assert "Top & Meiden" in build_pills_v6(paris_monthly, lang="de")
+    print("  ✅ Pills section label multi-langues")
+
+    # Sans label
+    pills_nolbl = build_pills_v6(paris_monthly, lang="fr", show_section_label=False)
+    assert "Top & à éviter" not in pills_nolbl
+    assert 'class="pills"' in pills_nolbl
+    print("  ✅ show_section_label=False : pas de label")
+
+    # n_top=3
+    pills_3 = build_pills_v6(paris_monthly, lang="fr", n_top=3)
+    assert pills_3.count('class="pill good"') == 3
+    print("  ✅ n_top=3 : 3 pills good + 1 bad")
+
+    # ══════ Tests right_stack ══════
+    print("\n  — Tests right_stack —")
+
+    rs_fr = build_right_stack_v6(paris_dest, paris_monthly, lang="fr")
+    # NB : apostrophes escaped en &#x27; dans les H3 (HTML-safe)
+    assert "comprend en 5 secondes" in rs_fr
+    assert "faut vérifier ensuite" in rs_fr
+    assert "Action suivante" in rs_fr
+    assert "Comparer les 12 mois" in rs_fr
+    assert "Selon votre projet" in rs_fr
+    # Paris : 6 mois ≥7 (avr-sep) → contigu → "avril-septembre"
+    assert "avril-septembre" in rs_fr or "6 mois" in rs_fr
+    # Écart Paris : 8.7 vs 1.6
+    assert "8.7" in rs_fr and "1.6" in rs_fr
+    print("  ✅ right_stack Paris FR : 3 right-item + CTA row, textes auto OK")
+
+    # Déterministe
+    rs2 = build_right_stack_v6(paris_dest, paris_monthly, lang="fr")
+    assert rs_fr == rs2
+    print("  ✅ right_stack déterministe")
+
+    # Multi-langues
+    for lang in ["en", "en-us", "es", "de"]:
+        rs_l = build_right_stack_v6(paris_dest, paris_monthly, lang=lang)
+        assert "Paris" in rs_l
+        assert "8.7" in rs_l
+    print("  ✅ right_stack 5 langues")
+
+    # Verify text selon type
+    rs_bali = build_right_stack_v6(bali_dest, bali_monthly, lang="fr")
+    assert "pluie" in rs_bali.lower() and "humidité" in rs_bali.lower()
+    print("  ✅ right_stack tropical (Bali) : texte verify mentionne pluie+humidité")
+
+    rs_cham = build_right_stack_v6(cham_dest, cham_monthly, lang="fr")
+    assert "ski" in rs_cham.lower() and "alpinisme" in rs_cham.lower()
+    print("  ✅ right_stack mountain (Chamonix) : texte verify mentionne ski+alpinisme")
+
+    # Cas _month_range_label : 1 seul mois
+    one_month = [{"mois_num": "7", "score": "8.7"}]
+    assert _month_range_label(one_month, "fr") == "juillet"
+    # Contigus
+    assert _month_range_label([{"mois_num": "4", "score": "7"}, {"mois_num": "5", "score": "7"}], "fr") == "avril-mai"
+    # Non contigus
+    assert "," in _month_range_label([{"mois_num": "4", "score": "7"}, {"mois_num": "7", "score": "7"}], "fr")
+    print("  ✅ _month_range_label (1 mois / contigus / non-contigus)")
 
     print("\n→ Tous les tests common_v6 passent ✓")
 
