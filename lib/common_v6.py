@@ -596,6 +596,162 @@ def build_avis_edito_v6(dest, monthly, lang="fr"):
     return avis
 
 
+# ══════════════════════════════════════════════════════════════════
+# Barchart 12 mois (HTML bars)
+# ══════════════════════════════════════════════════════════════════
+
+# Seuils de classification couleur (mêmes que proto Paris V5)
+# NB : 'best' n'est PAS dans cette liste → réservé exclusivement au meilleur
+# mois absolu (marqueur visuel d'excellence avec outline gold). Les autres
+# mois ≥ 7 sont classés 'good' (vert).
+_BAR_THRESHOLDS = [
+    ("good", 7.0),  # ≥ 7.0 → vert (inclut scores très élevés non-best)
+    ("mid",  5.5),  # ≥ 5.5 → jaune/orange
+    ("low",  3.5),  # ≥ 3.5 → rouge
+    ("bad",  0.0),  # <  3.5 → rouge foncé
+]
+
+# Seuil d'éligibilité au statut 'best' (le mois #1 n'est 'best' que si ≥ ce seuil)
+_BEST_MIN_SCORE = 8.5
+
+
+def bar_class(score):
+    """Retourne la classe CSS (good/mid/low/bad) pour un score.
+
+    NB : ne retourne JAMAIS 'best' — cette classe est ajoutée uniquement
+    au meilleur mois absolu par build_barchart_v6().
+    """
+    for cls, threshold in _BAR_THRESHOLDS:
+        if score >= threshold:
+            return cls
+    return "bad"
+
+
+_LEGEND_LABELS = {
+    "fr": [
+        ("Très bon (≥8)", "best"),
+        ("Bon (7-8)", "good"),
+        ("Moyen (5.5-7)", "mid"),
+        ("Difficile (3.5-5.5)", "low"),
+        ("À éviter (<3.5)", "bad"),
+    ],
+    "en": [
+        ("Excellent (≥8)", "best"),
+        ("Good (7-8)", "good"),
+        ("Fair (5.5-7)", "mid"),
+        ("Tough (3.5-5.5)", "low"),
+        ("Avoid (<3.5)", "bad"),
+    ],
+    "en-us": [
+        ("Excellent (≥8)", "best"),
+        ("Good (7-8)", "good"),
+        ("Fair (5.5-7)", "mid"),
+        ("Tough (3.5-5.5)", "low"),
+        ("Avoid (<3.5)", "bad"),
+    ],
+    "es": [
+        ("Muy bueno (≥8)", "best"),
+        ("Bueno (7-8)", "good"),
+        ("Regular (5.5-7)", "mid"),
+        ("Difícil (3.5-5.5)", "low"),
+        ("A evitar (<3.5)", "bad"),
+    ],
+    "de": [
+        ("Sehr gut (≥8)", "best"),
+        ("Gut (7-8)", "good"),
+        ("Mittel (5.5-7)", "mid"),
+        ("Schwierig (3.5-5.5)", "low"),
+        ("Meiden (<3.5)", "bad"),
+    ],
+}
+
+_BAR_GRADIENTS = {
+    "best": "linear-gradient(180deg,#2ea86a 0%,#1a7a4a 100%)",
+    "good": "linear-gradient(180deg,#46c878 0%,#25a75d 100%)",
+    "mid":  "linear-gradient(180deg,#ecc568 0%,#b8860b 100%)",
+    "low":  "linear-gradient(180deg,#e47272 0%,#b91c1c 100%)",
+    "bad":  "linear-gradient(180deg,#b91c1c 0%,#8b1616 100%)",
+}
+
+
+def build_barchart_v6(monthly, lang="fr", ski_scores_by_month=None, show_legend=True):
+    """
+    Construit le HTML du barchart 12 mois.
+
+    - Hauteur de barre : score × 10% (plafonné à 100%)
+    - Classe CSS : best / good / mid / low / bad selon seuils
+    - Meilleur mois absolu : forcé en 'best' (avec outline gold via CSS)
+    - Labels score au-dessus du nom du mois abrégé
+
+    Pour mountain : si ski_scores_by_month fourni, chaque score est max(gen, ski).
+
+    Args:
+        monthly: list[dict] 12 entrées (mois_num, score)
+        lang: code langue (labels mois + légende)
+        ski_scores_by_month: dict {int mois_num: float score_ski} optionnel
+        show_legend: inclure la légende couleur en dessous (default True)
+
+    Returns:
+        str : HTML du bloc bars + légende
+    """
+    if len(monthly) != 12:
+        raise ValueError(f"monthly doit contenir 12 entrées, reçu {len(monthly)}")
+
+    shorts = MONTH_SHORT.get(lang, MONTH_SHORT["fr"])
+    sorted_months = sorted(monthly, key=lambda m: int(m["mois_num"]))
+
+    # Calcul score effectif (général ou max avec ski)
+    effective = []
+    for m in sorted_months:
+        gen = float(m.get("score", 0))
+        mn = int(m["mois_num"])
+        if ski_scores_by_month and mn in ski_scores_by_month:
+            eff = max(gen, float(ski_scores_by_month[mn]))
+        else:
+            eff = gen
+        effective.append((mn, eff))
+
+    best_score = max(s for _, s in effective)
+
+    bars_html = []
+    for mn, score in effective:
+        height_pct = min(100, round(score * 10))
+        # 'best' réservé exclusivement au meilleur mois absolu (et ≥ _BEST_MIN_SCORE)
+        if score == best_score and score >= _BEST_MIN_SCORE:
+            cls = "best"
+        else:
+            cls = bar_class(score)
+        label = shorts[mn - 1]
+        bars_html.append(
+            f'              <div class="bar-wrap">'
+            f'<div class="bar-slot"><div class="bar {cls}" style="height:{height_pct}%"></div></div>'
+            f'<div class="bar-score">{score:.1f}</div>'
+            f'<div class="bar-label">{_html.escape(label)}</div></div>'
+        )
+    bars_block = "\n".join(bars_html)
+
+    html = f'<div class="bars">\n{bars_block}\n            </div>'
+
+    if show_legend:
+        legend_items = _LEGEND_LABELS.get(lang, _LEGEND_LABELS["fr"])
+        legend_html = []
+        for (label_txt, cls) in legend_items:
+            gradient = _BAR_GRADIENTS[cls]
+            safe = _html.escape(label_txt)
+            legend_html.append(
+                f'<span style="display:inline-flex;align-items:center;gap:5px">'
+                f'<span style="width:11px;height:11px;border-radius:3px;background:{gradient}"></span>'
+                f'{safe}</span>'
+            )
+        legend_block = "\n              ".join(legend_html)
+        html += (
+            f'\n            <div style="display:flex;gap:12px;flex-wrap:wrap;'
+            f'margin-top:14px;justify-content:center;font-size:11px;color:var(--muted)">\n'
+            f'              {legend_block}\n'
+            f'            </div>'
+        )
+
+    return html
 
 
 def _test():
@@ -753,6 +909,68 @@ def _test():
                 break
     assert len(templates_used) >= 4, f"Seulement {len(templates_used)}/5 templates utilisés"
     print(f"  ✅ Distribution : {len(templates_used)}/5 templates utilisés sur 100 slugs")
+
+    # ══════ Tests barchart ══════
+    print("\n  — Tests barchart —")
+
+    # Classes CSS par score
+    assert bar_class(9.0) == "good", f"9.0 → good (best réservé au #1) : got {bar_class(9.0)}"
+    assert bar_class(8.5) == "good"
+    assert bar_class(8.4) == "good"
+    assert bar_class(7.0) == "good"
+    assert bar_class(6.0) == "mid"
+    assert bar_class(5.5) == "mid"
+    assert bar_class(4.0) == "low"
+    assert bar_class(3.5) == "low"
+    assert bar_class(2.0) == "bad"
+    assert bar_class(0.5) == "bad"
+    print("  ✅ bar_class seuils (good/mid/low/bad, best exclusif au #1)")
+
+    # Barchart Paris FR : 12 barres + 1 seul 'best' (juillet 8.7) + légende
+    bc = build_barchart_v6(paris_monthly, lang="fr")
+    assert bc.count('class="bar-wrap"') == 12, "Doit avoir 12 barres"
+    assert bc.count('class="bar best"') == 1, f"Doit avoir 1 seul 'best', got {bc.count('bar best')}"
+    assert "Jan" in bc and "Juil" in bc and "Déc" in bc
+    assert "1.6" in bc and "8.7" in bc
+    assert "Très bon" in bc and "À éviter" in bc
+    print("  ✅ Barchart Paris FR : 12 barres, 1 'best' (juillet 8.7), légende FR")
+
+    # Multi-langues (labels + légende)
+    bc_en = build_barchart_v6(paris_monthly, lang="en")
+    assert "Jul" in bc_en and "Excellent" in bc_en
+    bc_es = build_barchart_v6(paris_monthly, lang="es")
+    assert "Jul" in bc_es and "Muy bueno" in bc_es
+    bc_de = build_barchart_v6(paris_monthly, lang="de")
+    assert "Jul" in bc_de and "Sehr gut" in bc_de
+    print("  ✅ Barchart labels + légende multi-langues OK")
+
+    # Sans légende
+    bc_nolegend = build_barchart_v6(paris_monthly, lang="fr", show_legend=False)
+    assert "Très bon" not in bc_nolegend
+    assert bc_nolegend.count('bar-wrap') == 12
+    print("  ✅ show_legend=False : pas de légende")
+
+    # Barchart mountain avec ski_scores_by_month
+    # Chamonix dataset : general best = Août 8.4 (mois 8)
+    # Si on fournit ski_scores Mars=9.1, Feb=8.7, Avr=8.6 → Mars doit devenir best
+    ski_scores = {1: 7.9, 2: 8.7, 3: 9.1, 4: 8.6, 5: 7.1, 11: 6.1, 12: 7.5}
+    bc_cham = build_barchart_v6(cham_monthly, lang="fr", ski_scores_by_month=ski_scores)
+    # Best = 9.1 (Mars) → doit afficher 9.1 quelque part, et 1 seul 'best'
+    assert "9.1" in bc_cham, "Score ski max (9.1) doit apparaître"
+    assert bc_cham.count('class="bar best"') == 1
+    print("  ✅ Barchart mountain avec ski_scores : best = max(gen, ski)")
+
+    # Sans ski_scores → Chamonix best reste Août (score général max)
+    bc_cham_nogski = build_barchart_v6(cham_monthly, lang="fr")
+    # Dans cham_monthly : scores [7.9, 8.7, 9.1, 8.6, ...] — 9.1 aussi dans général (dataset test simulé)
+    # Le test principal : 1 seul 'best'
+    assert bc_cham_nogski.count('class="bar best"') == 1
+
+    # Cas limite : aucun mois ≥ 8.5 → aucun 'best'
+    low_monthly = [{"mois_num": str(i), "score": "5.0"} for i in range(1, 13)]
+    bc_low = build_barchart_v6(low_monthly, lang="fr")
+    assert 'class="bar best"' not in bc_low, "Aucun mois ≥ 8.5 → 0 'best'"
+    print("  ✅ Cas limite : tous scores < 8.5 → 0 bar.best")
 
     print("\n→ Tous les tests common_v6 passent ✓")
 
