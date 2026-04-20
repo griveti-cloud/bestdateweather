@@ -39,6 +39,8 @@ from lib.common_v6 import (
     build_pills_v6,
     build_right_stack_v6,
     build_comprendre_section_v6,
+    build_seasons_section_v6,
+    build_profiles_section_v6,
     classify_dest,
     best_month,
     worst_month,
@@ -256,6 +258,25 @@ tbody tr:hover{background:#fffbf2}
 .signal-item:last-child{border-bottom:none}
 .signal-item .l{color:var(--muted);font-weight:500}
 .signal-item .r{font-weight:700}
+
+/* Grids génériques pour cards saisons et profils */
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media (max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;gap:14px}
+}
+.box{background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:20px;box-shadow:var(--shadow)}
+.box-head{display:flex;justify-content:space-between;align-items:center;
+  gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.box-head strong{font-size:15px}
+.box p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
+.box p strong{color:var(--ink)}
+.badge{display:inline-block;padding:4px 10px;border-radius:999px;
+  background:#faf8f3;border:1px solid var(--border);font-size:11.5px;
+  font-weight:700;color:var(--ink);white-space:nowrap}
 """
 
 
@@ -483,6 +504,8 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None):
     hero = _render_hero(dest, monthly, lang)
     decider = _render_decider_section(dest, monthly, lang, ski_scores_by_month)
     comprendre = build_comprendre_section_v6(dest, monthly, lang=lang)
+    seasons = build_seasons_section_v6(dest, monthly, lang=lang)
+    profiles = build_profiles_section_v6(dest, monthly, lang=lang)
     footer = _render_footer(dest, lang)
 
     html = f'''{head}
@@ -491,6 +514,8 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None):
 <main>
   {decider}
   {comprendre}
+  {seasons}
+  {profiles}
 </main>
 {footer}
 </body>

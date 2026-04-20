@@ -1623,6 +1623,602 @@ def build_comprendre_section_v6(dest, monthly, lang="fr"):
     return section
 
 
+    return section
+
+
+# ══════════════════════════════════════════════════════════════════
+# Section 'À quoi s'attendre' : cards saisons contextuelles par type
+# ══════════════════════════════════════════════════════════════════
+
+_SEASONS_LABELS = {
+    "fr": {
+        "kicker": "Contexte",
+        "title_generic": "À quoi s'attendre selon la période",
+        "title_tropical": "Deux saisons tropicales bien marquées",
+        "title_mountain": "Deux saisons montagne bien distinctes",
+        "lead_generic": "Climat tempéré : plusieurs périodes qui changent la qualité du séjour.",
+        "lead_tropical": "Le vrai arbitrage porte sur la pluie, pas la température (stable 24-30°C toute l'année).",
+        "lead_mountain": "Ski l'hiver, randonnée l'été. Les mi-saisons ferment tout.",
+    },
+    "en": {
+        "kicker": "Context",
+        "title_generic": "What to expect over the year",
+        "title_tropical": "Two clear tropical seasons",
+        "title_mountain": "Two distinct mountain seasons",
+        "lead_generic": "Temperate climate: several periods that change the quality of the stay.",
+        "lead_tropical": "The real trade-off is rain, not temperature (stable 24-30°C year-round).",
+        "lead_mountain": "Skiing in winter, hiking in summer. Shoulder months shut everything down.",
+    },
+    "en-us": {
+        "kicker": "Context",
+        "title_generic": "What to expect over the year",
+        "title_tropical": "Two clear tropical seasons",
+        "title_mountain": "Two distinct mountain seasons",
+        "lead_generic": "Temperate climate: several periods that change the quality of the stay.",
+        "lead_tropical": "The real trade-off is rain, not temperature (stable 24-30°C year-round).",
+        "lead_mountain": "Skiing in winter, hiking in summer. Shoulder months shut everything down.",
+    },
+    "es": {
+        "kicker": "Contexto",
+        "title_generic": "Qué esperar según el período",
+        "title_tropical": "Dos temporadas tropicales bien marcadas",
+        "title_mountain": "Dos temporadas de montaña bien distintas",
+        "lead_generic": "Clima templado: varios períodos que cambian la calidad del viaje.",
+        "lead_tropical": "La verdadera decisión es la lluvia, no la temperatura (estable 24-30°C todo el año).",
+        "lead_mountain": "Esquí en invierno, senderismo en verano. Las entre-temporadas cierran todo.",
+    },
+    "de": {
+        "kicker": "Kontext",
+        "title_generic": "Was in welcher Periode zu erwarten ist",
+        "title_tropical": "Zwei klar getrennte tropische Jahreszeiten",
+        "title_mountain": "Zwei deutlich unterschiedliche Bergjahreszeiten",
+        "lead_generic": "Gemäßigtes Klima: mehrere Perioden, die den Aufenthalt prägen.",
+        "lead_tropical": "Die eigentliche Frage ist Regen, nicht Temperatur (stabil 24-30°C ganzjährig).",
+        "lead_mountain": "Ski im Winter, Wandern im Sommer. Zwischensaisons schließen alles.",
+    },
+}
+
+
+def _build_season_cards(dtype, monthly, lang="fr"):
+    """
+    Construit 2-4 cards saisons selon le type de destination, avec contenu
+    adapté aux vraies données mensuelles.
+
+    Returns:
+        list[(icon, title, badge, paragraph)]
+    """
+    # Plages de mois par score
+    great_months = [m for m in monthly if _score(m) >= 7.0]   # très bons
+    mid_months = [m for m in monthly if 5.5 <= _score(m) < 7.0]
+    bad_months = [m for m in monthly if _score(m) <= 3.5]
+    best = best_month(monthly)
+    best_score = _score(best)
+
+    range_great = _month_range_arrow(great_months, lang)
+    range_mid = _month_range_arrow(mid_months, lang)
+    range_bad = _month_range_arrow(bad_months, lang)
+    best_name = format_month_full(best, lang)
+
+    cards = []
+
+    if dtype == "tropical":
+        # 2 cards : saison sèche + saison humide
+        tmpl = {
+            "fr": [
+                ("☀️", "Saison sèche", range_great or "Selon les mois",
+                 f"Peu de pluie, soleil stable, humidité plus basse. Fenêtre optimale pour plongée, randonnée, explorations culturelles. "
+                 f"Pic touristique : tarifs hauts et fréquentation maximale. "
+                 f"Meilleur mois : <strong>{best_name}</strong> ({best_score:.1f}/10)."),
+                ("🌧️", "Saison humide", range_bad or range_mid or "Hors saison sèche",
+                 f"Mousson tropicale : averses quotidiennes, humidité oppressante, fréquentation réduite. "
+                 f"Tarifs nettement plus bas, nature luxuriante. Rester possible si on accepte la pluie."),
+            ],
+            "en": [
+                ("☀️", "Dry season", range_great or "Depends on month",
+                 f"Low rain, stable sunshine, lower humidity. Optimal window for diving, hiking, culture. "
+                 f"Peak tourism: high rates and max crowds. "
+                 f"Best month: <strong>{best_name}</strong> ({best_score:.1f}/10)."),
+                ("🌧️", "Wet season", range_bad or range_mid or "Outside dry season",
+                 f"Tropical monsoon: daily showers, oppressive humidity, reduced crowds. "
+                 f"Much lower rates, lush nature. Feasible if you accept the rain."),
+            ],
+            "en-us": [
+                ("☀️", "Dry season", range_great or "Depends on month",
+                 f"Low rain, stable sunshine, lower humidity. Optimal window for diving, hiking, culture. "
+                 f"Peak tourism: high rates and max crowds. "
+                 f"Best month: <strong>{best_name}</strong> ({best_score:.1f}/10)."),
+                ("🌧️", "Wet season", range_bad or range_mid or "Outside dry season",
+                 f"Tropical monsoon: daily showers, oppressive humidity, reduced crowds. "
+                 f"Much lower rates, lush nature. Feasible if you accept the rain."),
+            ],
+            "es": [
+                ("☀️", "Temporada seca", range_great or "Según los meses",
+                 f"Poca lluvia, sol estable, humedad más baja. Ventana óptima para buceo, senderismo, cultura. "
+                 f"Pico turístico: tarifas altas y máxima afluencia. "
+                 f"Mejor mes: <strong>{best_name}</strong> ({best_score:.1f}/10)."),
+                ("🌧️", "Temporada húmeda", range_bad or range_mid or "Fuera temporada seca",
+                 f"Monzón tropical: chaparrones diarios, humedad opresiva, afluencia reducida. "
+                 f"Tarifas mucho más bajas, naturaleza exuberante. Posible si aceptas la lluvia."),
+            ],
+            "de": [
+                ("☀️", "Trockenzeit", range_great or "Je nach Monat",
+                 f"Wenig Regen, stabile Sonne, geringere Luftfeuchtigkeit. Optimales Fenster für Tauchen, Wandern, Kultur. "
+                 f"Hochsaison: hohe Preise und maximale Menge. "
+                 f"Bester Monat: <strong>{best_name}</strong> ({best_score:.1f}/10)."),
+                ("🌧️", "Regenzeit", range_bad or range_mid or "Außerhalb Trockenzeit",
+                 f"Tropischer Monsun: tägliche Schauer, drückende Luftfeuchtigkeit, weniger Menge. "
+                 f"Viel niedrigere Preise, üppige Natur. Machbar, wenn Regen akzeptabel."),
+            ],
+        }
+        cards = tmpl.get(lang, tmpl["fr"])
+
+    elif dtype == "mountain":
+        # 3 cards : ski / rando / entre-saisons
+        # Identifier hiver (dec-avril) avec meilleur score
+        winter_nums = {1, 2, 3, 4, 12}
+        summer_nums = {6, 7, 8, 9}
+        shoulder_nums = {5, 10, 11}
+        winter_months = [m for m in monthly if int(m["mois_num"]) in winter_nums]
+        summer_months = [m for m in monthly if int(m["mois_num"]) in summer_nums]
+        shoulder_months_list = [m for m in monthly if int(m["mois_num"]) in shoulder_nums]
+
+        range_winter = _month_range_arrow(winter_months, lang)
+        range_summer = _month_range_arrow(summer_months, lang)
+        range_shoulder = _month_range_arrow(shoulder_months_list, lang)
+
+        tmpl = {
+            "fr": [
+                ("⛷️", "Saison ski", range_winter,
+                 "Enneigement + stations ouvertes, remontées en service, neige fraîche en altitude. "
+                 "Fenêtre dense : vacances scolaires fréquentées, janvier-mars = pic d'affluence."),
+                ("🥾", "Saison randonnée", range_summer,
+                 "Sentiers secs, refuges ouverts, journées longues. Alpinisme possible quand temps stable. "
+                 "Juillet-août : forte affluence, refuges réservés des semaines à l'avance."),
+                ("🌸", "Entre-saisons", range_shoulder,
+                 "Remontées fermées, refuges clos, transition neige/sentiers. "
+                 "Peu d'activités possibles mais calme absolu et tarifs bas."),
+            ],
+            "en": [
+                ("⛷️", "Ski season", range_winter,
+                 "Snow cover + open resorts, working lifts, fresh powder at altitude. "
+                 "Dense window: school holidays packed, January-March = peak crowds."),
+                ("🥾", "Hiking season", range_summer,
+                 "Dry trails, open huts, long daylight. Mountaineering when weather stable. "
+                 "July-August: heavy crowds, huts booked weeks ahead."),
+                ("🌸", "Shoulder months", range_shoulder,
+                 "Lifts closed, huts shut, transition snow/trails. "
+                 "Few activities but absolute calm and low rates."),
+            ],
+            "en-us": [
+                ("⛷️", "Ski season", range_winter,
+                 "Snow cover + open resorts, working lifts, fresh powder at altitude. "
+                 "Dense window: school holidays packed, January-March = peak crowds."),
+                ("🥾", "Hiking season", range_summer,
+                 "Dry trails, open huts, long daylight. Mountaineering when weather stable. "
+                 "July-August: heavy crowds, huts booked weeks ahead."),
+                ("🌸", "Shoulder months", range_shoulder,
+                 "Lifts closed, huts shut, transition snow/trails. "
+                 "Few activities but absolute calm and low rates."),
+            ],
+            "es": [
+                ("⛷️", "Temporada de esquí", range_winter,
+                 "Nieve + estaciones abiertas, remontes en servicio, nieve fresca en altura. "
+                 "Ventana densa: vacaciones escolares llenas, enero-marzo = pico de afluencia."),
+                ("🥾", "Temporada de senderismo", range_summer,
+                 "Senderos secos, refugios abiertos, días largos. Alpinismo posible con tiempo estable. "
+                 "Julio-agosto: mucha afluencia, refugios reservados semanas antes."),
+                ("🌸", "Entre-temporadas", range_shoulder,
+                 "Remontes cerrados, refugios clausurados, transición nieve/senderos. "
+                 "Pocas actividades posibles pero calma absoluta y tarifas bajas."),
+            ],
+            "de": [
+                ("⛷️", "Skisaison", range_winter,
+                 "Schneedecke + offene Stationen, fahrende Lifte, frischer Schnee in der Höhe. "
+                 "Dichtes Fenster: Schulferien voll, Januar-März = Spitze."),
+                ("🥾", "Wandersaison", range_summer,
+                 "Trockene Wege, offene Hütten, lange Tage. Bergsteigen bei stabilem Wetter. "
+                 "Juli-August: viel Andrang, Hütten Wochen im Voraus gebucht."),
+                ("🌸", "Zwischensaisons", range_shoulder,
+                 "Lifte geschlossen, Hütten zu, Übergang Schnee/Pfade. "
+                 "Wenig Aktivitäten, aber absolute Ruhe und niedrige Preise."),
+            ],
+        }
+        cards = tmpl.get(lang, tmpl["fr"])
+
+    else:
+        # Generic : 3 cards (été lumineux / mi-saison / hiver difficile)
+        summer_nums = {6, 7, 8, 9}
+        winter_nums = {11, 12, 1, 2}
+        shoulder_nums = {3, 4, 5, 10}
+        summer = [m for m in monthly if int(m["mois_num"]) in summer_nums]
+        winter = [m for m in monthly if int(m["mois_num"]) in winter_nums]
+        shoulder = [m for m in monthly if int(m["mois_num"]) in shoulder_nums]
+
+        range_summer = _month_range_arrow(summer, lang) if summer else "—"
+        range_winter = _month_range_arrow(winter, lang) if winter else "—"
+        range_shoulder = _month_range_arrow(shoulder, lang) if shoulder else "—"
+
+        # Moyennes pour enrichir (si données dispo)
+        def avg(ms, field):
+            vals = [float(m[field]) for m in ms if m.get(field) not in (None, "", "None")]
+            return sum(vals) / len(vals) if vals else None
+
+        summer_sun = avg(summer, "sun_h")
+        summer_tmax = avg(summer, "tmax")
+        winter_sun = avg(winter, "sun_h")
+        winter_tmax = avg(winter, "tmax")
+
+        sun_str = f"{summer_sun:.0f}h" if summer_sun else "—"
+        wsun_str = f"{winter_sun:.0f}h" if winter_sun else "—"
+        st_str = f"{summer_tmax:.0f}°C" if summer_tmax else "—"
+        wt_str = f"{winter_tmax:.0f}°C" if winter_tmax else "—"
+
+        tmpl = {
+            "fr": [
+                ("☀️", "Saison haute", range_summer,
+                 f"Journées longues ({sun_str} de soleil), températures {st_str}, météo stable. "
+                 f"<strong>Période à privilégier</strong> pour balades, terrasses, activités extérieures. "
+                 f"Pic touristique : affluence et prix élevés."),
+                ("🌥️", "Mi-saison", range_shoulder,
+                 f"Climat intermédiaire, fréquentation modérée. "
+                 f"Bon compromis météo / foule / tarifs. Printemps : floraisons. "
+                 f"Automne : couleurs et lumière rasante."),
+                ("❄️", "Saison basse", range_winter,
+                 f"Journées courtes ({wsun_str} de soleil), températures {wt_str}, météo instable. "
+                 f"Période difficile en extérieur mais tarifs hôtels au plus bas. "
+                 f"Musées, spas, gastronomie compensent."),
+            ],
+            "en": [
+                ("☀️", "High season", range_summer,
+                 f"Long days ({sun_str} of sun), temperatures {st_str}, stable weather. "
+                 f"<strong>Preferred period</strong> for walks, terraces, outdoor activities. "
+                 f"Peak tourism: high crowds and prices."),
+                ("🌥️", "Shoulder", range_shoulder,
+                 f"Intermediate climate, moderate attendance. "
+                 f"Good weather/crowd/price compromise. Spring: blooms. "
+                 f"Autumn: colors and low-angle light."),
+                ("❄️", "Low season", range_winter,
+                 f"Short days ({wsun_str} of sun), temperatures {wt_str}, unstable weather. "
+                 f"Outdoor-tough but hotel rates at their lowest. "
+                 f"Museums, spas, gastronomy compensate."),
+            ],
+            "en-us": [
+                ("☀️", "High season", range_summer,
+                 f"Long days ({sun_str} of sun), temperatures {st_str}, stable weather. "
+                 f"<strong>Preferred period</strong> for walks, terraces, outdoor activities. "
+                 f"Peak tourism: high crowds and prices."),
+                ("🌥️", "Shoulder", range_shoulder,
+                 f"Intermediate climate, moderate attendance. "
+                 f"Good weather/crowd/price compromise. Spring: blooms. "
+                 f"Autumn: colors and low-angle light."),
+                ("❄️", "Low season", range_winter,
+                 f"Short days ({wsun_str} of sun), temperatures {wt_str}, unstable weather. "
+                 f"Outdoor-tough but hotel rates at their lowest. "
+                 f"Museums, spas, gastronomy compensate."),
+            ],
+            "es": [
+                ("☀️", "Temporada alta", range_summer,
+                 f"Días largos ({sun_str} de sol), temperaturas {st_str}, tiempo estable. "
+                 f"<strong>Período preferente</strong> para paseos, terrazas, actividades exteriores. "
+                 f"Pico turístico: mucha afluencia y precios altos."),
+                ("🌥️", "Entre-temporada", range_shoulder,
+                 f"Clima intermedio, afluencia moderada. "
+                 f"Buen compromiso tiempo/multitud/precios. Primavera: floraciones. "
+                 f"Otoño: colores y luz rasante."),
+                ("❄️", "Temporada baja", range_winter,
+                 f"Días cortos ({wsun_str} de sol), temperaturas {wt_str}, tiempo inestable. "
+                 f"Período duro en exterior pero tarifas hoteleras al mínimo. "
+                 f"Museos, spas, gastronomía compensan."),
+            ],
+            "de": [
+                ("☀️", "Hochsaison", range_summer,
+                 f"Lange Tage ({sun_str} Sonne), Temperaturen {st_str}, stabiles Wetter. "
+                 f"<strong>Bevorzugte Periode</strong> für Spaziergänge, Terrassen, Outdoor-Aktivitäten. "
+                 f"Hochsaison: viel Andrang und hohe Preise."),
+                ("🌥️", "Zwischensaison", range_shoulder,
+                 f"Mittleres Klima, moderate Frequentierung. "
+                 f"Gutes Wetter-/Andrang-/Preis-Verhältnis. Frühling: Blüten. "
+                 f"Herbst: Farben und flaches Licht."),
+                ("❄️", "Nebensaison", range_winter,
+                 f"Kurze Tage ({wsun_str} Sonne), Temperaturen {wt_str}, instabiles Wetter. "
+                 f"Draußen schwierig, aber Hotelpreise auf Tiefststand. "
+                 f"Museen, Spas, Gastronomie gleichen aus."),
+            ],
+        }
+        cards = tmpl.get(lang, tmpl["fr"])
+
+    return cards
+
+
+def build_seasons_section_v6(dest, monthly, lang="fr"):
+    """
+    Section 'À quoi s'attendre' : cards saisons contextuelles par type dest.
+
+    Generic : 3 cards (haute / mi-saison / basse)
+    Tropical : 2 cards (sèche / humide)
+    Mountain : 3 cards (ski / rando / entre-saisons)
+    """
+    if len(monthly) != 12:
+        raise ValueError(f"monthly doit contenir 12 entrées, reçu {len(monthly)}")
+
+    L = _SEASONS_LABELS.get(lang, _SEASONS_LABELS["fr"])
+    dtype = classify_dest(dest)
+    title = L.get(f"title_{dtype}", L["title_generic"])
+    lead = L.get(f"lead_{dtype}", L["lead_generic"])
+
+    cards = _build_season_cards(dtype, monthly, lang)
+
+    grid_class = "grid-2" if len(cards) == 2 else "grid-3"
+
+    cards_html = []
+    for (icon, card_title, badge, para) in cards:
+        cards_html.append(
+            f'        <div class="box">\n'
+            f'          <div class="box-head">\n'
+            f'            <div><strong>{icon} {_html.escape(card_title)}</strong></div>\n'
+            f'            <span class="badge">{_html.escape(badge)}</span>\n'
+            f'          </div>\n'
+            f'          <p>{para}</p>\n'
+            f'        </div>'
+        )
+    cards_block = "\n".join(cards_html)
+
+    section = (f'<section>\n'
+               f'    <div class="container">\n'
+               f'      <div class="section-head">\n'
+               f'        <div class="section-kicker">{_html.escape(L["kicker"])}</div>\n'
+               f'        <h2>{_html.escape(title)}</h2>\n'
+               f'        <p class="lead">{_html.escape(lead)}</p>\n'
+               f'      </div>\n'
+               f'      <div class="{grid_class}">\n'
+               f'{cards_block}\n'
+               f'      </div>\n'
+               f'    </div>\n'
+               f'  </section>')
+
+    return section
+
+
+# ══════════════════════════════════════════════════════════════════
+# Section 'Par projet' : 4 cards profils voyageurs
+# ══════════════════════════════════════════════════════════════════
+
+_PROFILES_LABELS = {
+    "fr": {"kicker": "Adapter",
+           "title": "Meilleure période selon votre type de voyage",
+           "lead": "Le meilleur mois dépend de ce que vous venez chercher."},
+    "en": {"kicker": "Tailor",
+           "title": "Best time by traveler type",
+           "lead": "The best month depends on what you're after."},
+    "en-us": {"kicker": "Tailor",
+              "title": "Best time by traveler type",
+              "lead": "The best month depends on what you're after."},
+    "es": {"kicker": "Adaptar",
+           "title": "Mejor momento según tu tipo de viaje",
+           "lead": "El mejor mes depende de lo que buscas."},
+    "de": {"kicker": "Anpassen",
+           "title": "Beste Zeit je nach Reisetyp",
+           "lead": "Der beste Monat hängt davon ab, was Sie suchen."},
+}
+
+
+def _build_profile_cards(dtype, monthly, lang="fr"):
+    """4 cards profils selon type dest. Badges = plages de mois pertinents."""
+    great_months = [m for m in monthly if _score(m) >= 7.0]
+    mid_months = [m for m in monthly if 5.5 <= _score(m) < 7.0]
+    range_great = _month_range_arrow(great_months, lang) if great_months else "—"
+    range_mid = _month_range_arrow(mid_months, lang) if mid_months else "—"
+
+    all_year = {
+        "fr": "Toute l'année", "en": "Year-round", "en-us": "Year-round",
+        "es": "Todo el año", "de": "Ganzjährig",
+    }.get(lang, "Toute l'année")
+
+    if dtype == "tropical":
+        tmpl = {
+            "fr": [
+                ("🏄", "Plage & surf", range_great,
+                 "Mer chaude (27-29°C), soleil stable, houle régulière. Fenêtre optimale côté ouest pour la meilleure houle."),
+                ("🛕", "Culture & temples", range_mid,
+                 "Hors pic touristique : sites moins bondés, températures agréables. Bon équilibre météo / affluence."),
+                ("🥾", "Trek & nature", range_great,
+                 "Sentiers secs, visibilité claire en altitude, volcans accessibles. Température fraîche au lever."),
+                ("💻", "Digital nomad", range_great,
+                 "Hubs nomades actifs, wifi stable, coûts bas. Hors mousson recommandé pour le confort et la connexion."),
+            ],
+            "en": [
+                ("🏄", "Beach & surf", range_great,
+                 "Warm sea (27-29°C), stable sun, regular swell. Optimal window on west coast for best waves."),
+                ("🛕", "Culture & temples", range_mid,
+                 "Off-peak: less crowded sites, pleasant temperatures. Good weather/crowd balance."),
+                ("🥾", "Trekking & nature", range_great,
+                 "Dry trails, clear visibility at altitude, volcanoes accessible. Cool at sunrise."),
+                ("💻", "Digital nomad", range_great,
+                 "Active nomad hubs, stable wifi, low costs. Out of monsoon recommended for comfort and connection."),
+            ],
+            "en-us": [
+                ("🏄", "Beach & surf", range_great,
+                 "Warm sea (27-29°C), stable sun, regular swell. Optimal window on west coast for best waves."),
+                ("🛕", "Culture & temples", range_mid,
+                 "Off-peak: less crowded sites, pleasant temperatures. Good weather/crowd balance."),
+                ("🥾", "Trekking & nature", range_great,
+                 "Dry trails, clear visibility at altitude, volcanoes accessible. Cool at sunrise."),
+                ("💻", "Digital nomad", range_great,
+                 "Active nomad hubs, stable wifi, low costs. Out of monsoon recommended for comfort and connection."),
+            ],
+            "es": [
+                ("🏄", "Playa y surf", range_great,
+                 "Mar cálido (27-29°C), sol estable, oleaje regular. Ventana óptima en costa oeste para mejores olas."),
+                ("🛕", "Cultura y templos", range_mid,
+                 "Fuera de pico: sitios menos llenos, temperaturas agradables. Buen equilibrio tiempo/afluencia."),
+                ("🥾", "Trekking y naturaleza", range_great,
+                 "Senderos secos, visibilidad clara en altura, volcanes accesibles. Fresco al amanecer."),
+                ("💻", "Digital nomad", range_great,
+                 "Hubs nómadas activos, wifi estable, costes bajos. Fuera del monzón recomendado para comodidad y conexión."),
+            ],
+            "de": [
+                ("🏄", "Strand & Surf", range_great,
+                 "Warmes Meer (27-29°C), stabile Sonne, regelmäßige Wellen. Optimales Fenster an der Westküste."),
+                ("🛕", "Kultur & Tempel", range_mid,
+                 "Nebensaison: weniger voll, angenehme Temperaturen. Gutes Wetter-/Menge-Verhältnis."),
+                ("🥾", "Trekking & Natur", range_great,
+                 "Trockene Wege, klare Sicht in der Höhe, Vulkane zugänglich. Kühl beim Sonnenaufgang."),
+                ("💻", "Digital nomad", range_great,
+                 "Aktive Nomaden-Hubs, stabiles WLAN, niedrige Kosten. Außerhalb Monsun empfohlen."),
+            ],
+        }
+    elif dtype == "mountain":
+        winter_months = [m for m in monthly if int(m["mois_num"]) in {1, 2, 3, 4, 12}]
+        summer_months = [m for m in monthly if int(m["mois_num"]) in {6, 7, 8, 9}]
+        range_w = _month_range_arrow(winter_months, lang)
+        range_s = _month_range_arrow(summer_months, lang)
+        tmpl = {
+            "fr": [
+                ("⛷️", "Ski & snowboard", range_w,
+                 "Enneigement maximal en altitude, stations ouvertes, remontées en service. Pic d'affluence sur vacances scolaires."),
+                ("🥾", "Randonnée & alpinisme", range_s,
+                 "Sentiers secs, refuges ouverts, journées longues. Juillet-août : bondé, réserver refuges à l'avance."),
+                ("🧗", "Grimpe & via ferrata", range_s,
+                 "Conditions stables, rocher sec, voies accessibles. Viser juin-septembre pour la fenêtre optimale."),
+                ("🏔️", "Panorama & spa", all_year,
+                 "Paysages alpins visibles toute l'année. Hiver : bien-être et skis-raquettes. Été : altitude pour fraîcheur."),
+            ],
+            "en": [
+                ("⛷️", "Ski & snowboard", range_w,
+                 "Maximum snow at altitude, open resorts, running lifts. Peak during school holidays."),
+                ("🥾", "Hiking & mountaineering", range_s,
+                 "Dry trails, open huts, long daylight. July-August: packed, book huts ahead."),
+                ("🧗", "Climbing & via ferrata", range_s,
+                 "Stable conditions, dry rock, open routes. Aim for June-September for the optimal window."),
+                ("🏔️", "Scenery & spa", all_year,
+                 "Alpine landscapes visible year-round. Winter: wellness and snowshoes. Summer: altitude for coolness."),
+            ],
+            "en-us": [
+                ("⛷️", "Ski & snowboard", range_w,
+                 "Maximum snow at altitude, open resorts, running lifts. Peak during school holidays."),
+                ("🥾", "Hiking & mountaineering", range_s,
+                 "Dry trails, open huts, long daylight. July-August: packed, book huts ahead."),
+                ("🧗", "Climbing & via ferrata", range_s,
+                 "Stable conditions, dry rock, open routes. Aim for June-September for the optimal window."),
+                ("🏔️", "Scenery & spa", all_year,
+                 "Alpine landscapes visible year-round. Winter: wellness and snowshoes. Summer: altitude for coolness."),
+            ],
+            "es": [
+                ("⛷️", "Esquí & snowboard", range_w,
+                 "Nieve máxima en altura, estaciones abiertas, remontes en servicio. Pico en vacaciones escolares."),
+                ("🥾", "Senderismo & alpinismo", range_s,
+                 "Senderos secos, refugios abiertos, días largos. Julio-agosto: lleno, reservar refugios antes."),
+                ("🧗", "Escalada & vía ferrata", range_s,
+                 "Condiciones estables, roca seca, vías abiertas. Apuntar junio-septiembre para ventana óptima."),
+                ("🏔️", "Panorama & spa", all_year,
+                 "Paisajes alpinos visibles todo el año. Invierno: bienestar y raquetas. Verano: altura para frescor."),
+            ],
+            "de": [
+                ("⛷️", "Ski & Snowboard", range_w,
+                 "Maximale Schneedecke in der Höhe, offene Stationen, fahrende Lifte. Spitze in Schulferien."),
+                ("🥾", "Wandern & Bergsteigen", range_s,
+                 "Trockene Wege, offene Hütten, lange Tage. Juli-August: voll, Hütten im Voraus buchen."),
+                ("🧗", "Klettern & Klettersteig", range_s,
+                 "Stabile Bedingungen, trockener Fels, offene Routen. Juni-September anvisieren."),
+                ("🏔️", "Panorama & Spa", all_year,
+                 "Alpine Landschaften ganzjährig sichtbar. Winter: Wellness und Schneeschuhe. Sommer: Höhe für Kühle."),
+            ],
+        }
+    else:
+        # Generic : 4 profils passe-partout
+        tmpl = {
+            "fr": [
+                ("🏛️", "Musées & culture", all_year,
+                 "Les sites couverts restent accessibles toute l'année. Hors saison haute : moins de foule, tarifs hôtels plus bas."),
+                ("🍷", "Gastronomie & vie locale", range_great,
+                 "Terrasses ouvertes, marchés en plein air, atmosphère vivante. Pic social sur les mois confortables."),
+                ("👥", "Famille & sorties", range_great,
+                 "Climat clément, journées longues, activités extérieures possibles. Pic vacances scolaires : réserver tôt."),
+                ("💻", "Digital nomad", range_mid,
+                 "Hors saison haute : logement accessible, cafés moins bondés, connexion stable. Éviter les pics touristiques."),
+            ],
+            "en": [
+                ("🏛️", "Museums & culture", all_year,
+                 "Indoor sites stay accessible year-round. Off-peak: less crowded, lower hotel rates."),
+                ("🍷", "Food & local life", range_great,
+                 "Open terraces, outdoor markets, lively atmosphere. Social peak on comfortable months."),
+                ("👥", "Family & outings", range_great,
+                 "Mild climate, long days, outdoor activities. School-holiday peak: book early."),
+                ("💻", "Digital nomad", range_mid,
+                 "Off-peak: accessible housing, less crowded cafés, stable connection. Avoid tourist peaks."),
+            ],
+            "en-us": [
+                ("🏛️", "Museums & culture", all_year,
+                 "Indoor sites stay accessible year-round. Off-peak: less crowded, lower hotel rates."),
+                ("🍷", "Food & local life", range_great,
+                 "Open terraces, outdoor markets, lively atmosphere. Social peak on comfortable months."),
+                ("👥", "Family & outings", range_great,
+                 "Mild climate, long days, outdoor activities. School-holiday peak: book early."),
+                ("💻", "Digital nomad", range_mid,
+                 "Off-peak: accessible housing, less crowded cafés, stable connection. Avoid tourist peaks."),
+            ],
+            "es": [
+                ("🏛️", "Museos y cultura", all_year,
+                 "Los sitios cubiertos siguen accesibles todo el año. Fuera de pico: menos multitud, tarifas hoteleras más bajas."),
+                ("🍷", "Gastronomía y vida local", range_great,
+                 "Terrazas abiertas, mercados al aire libre, ambiente animado. Pico social en meses cómodos."),
+                ("👥", "Familia y salidas", range_great,
+                 "Clima suave, días largos, actividades exteriores. Pico vacaciones escolares: reservar pronto."),
+                ("💻", "Digital nomad", range_mid,
+                 "Fuera de pico: alojamiento accesible, cafés menos llenos, conexión estable. Evitar picos turísticos."),
+            ],
+            "de": [
+                ("🏛️", "Museen & Kultur", all_year,
+                 "Überdachte Stätten ganzjährig zugänglich. Nebensaison: weniger voll, niedrigere Hotelpreise."),
+                ("🍷", "Gastronomie & lokales Leben", range_great,
+                 "Offene Terrassen, Freiluftmärkte, lebendige Atmosphäre. Sozialer Höhepunkt in angenehmen Monaten."),
+                ("👥", "Familie & Ausflüge", range_great,
+                 "Mildes Klima, lange Tage, Outdoor-Aktivitäten. Schulferien-Spitze: früh buchen."),
+                ("💻", "Digital nomad", range_mid,
+                 "Nebensaison: zugänglicher Wohnraum, weniger volle Cafés, stabile Verbindung. Hochsaison meiden."),
+            ],
+        }
+
+    return tmpl.get(lang, tmpl["fr"])
+
+
+def build_profiles_section_v6(dest, monthly, lang="fr"):
+    """
+    Section 'Par projet' : 4 cards profils voyageurs par type dest.
+    """
+    if len(monthly) != 12:
+        raise ValueError(f"monthly doit contenir 12 entrées, reçu {len(monthly)}")
+
+    L = _PROFILES_LABELS.get(lang, _PROFILES_LABELS["fr"])
+    dtype = classify_dest(dest)
+    cards = _build_profile_cards(dtype, monthly, lang)
+
+    cards_html = []
+    for (icon, title, badge, para) in cards:
+        cards_html.append(
+            f'        <div class="box">\n'
+            f'          <div class="box-head"><div><strong>{icon} {_html.escape(title)}</strong></div><span class="badge">{_html.escape(badge)}</span></div>\n'
+            f'          <p>{_html.escape(para)}</p>\n'
+            f'        </div>'
+        )
+    cards_block = "\n".join(cards_html)
+
+    section = (f'<section id="par-projet">\n'
+               f'    <div class="container">\n'
+               f'      <div class="section-head">\n'
+               f'        <div class="section-kicker">{_html.escape(L["kicker"])}</div>\n'
+               f'        <h2>{_html.escape(L["title"])}</h2>\n'
+               f'        <p class="lead">{_html.escape(L["lead"])}</p>\n'
+               f'      </div>\n'
+               f'      <div class="grid-4">\n'
+               f'{cards_block}\n'
+               f'      </div>\n'
+               f'    </div>\n'
+               f'  </section>')
+
+    return section
+
+
 def _test():
     """Tests rapides (exécuter avec : python3 -m lib.common_v6)."""
 
