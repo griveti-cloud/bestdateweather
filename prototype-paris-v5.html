@@ -366,6 +366,7 @@ h2{
 .bar.good{background:linear-gradient(180deg,#46c878 0%,#25a75d 100%)}
 .bar.mid{background:linear-gradient(180deg,#ecc568 0%,#b8860b 100%)}
 .bar.low{background:linear-gradient(180deg,#e47272 0%,#b91c1c 100%)}
+.bar.bad{background:linear-gradient(180deg,#b91c1c 0%,#8b1616 100%)}
 .bar-score{
   font-size:.72rem;color:var(--ink);font-weight:800;
   text-align:center;font-feature-settings:"tnum" 1;
@@ -1120,6 +1121,13 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
               <div class="bar-wrap"><div class="bar-slot"><div class="bar mid" style="height:55%"></div></div><div class="bar-score">5.5</div><div class="bar-label">Oct</div></div>
               <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:44%"></div></div><div class="bar-score">4.4</div><div class="bar-label">Nov</div></div>
               <div class="bar-wrap"><div class="bar-slot"><div class="bar bad" style="height:19%"></div></div><div class="bar-score">1.9</div><div class="bar-label">Déc</div></div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;justify-content:center;font-size:11px;color:var(--muted)">
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:linear-gradient(180deg,#2ea86a 0%,#1a7a4a 100%)"></span>Très bon (≥8)</span>
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:linear-gradient(180deg,#46c878 0%,#25a75d 100%)"></span>Bon (7-8)</span>
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:linear-gradient(180deg,#ecc568 0%,#b8860b 100%)"></span>Moyen (5.5-7)</span>
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:linear-gradient(180deg,#e47272 0%,#b91c1c 100%)"></span>Difficile (3.5-5.5)</span>
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:linear-gradient(180deg,#b91c1c 0%,#8b1616 100%)"></span>À éviter (&lt;3.5)</span>
             </div>
           </div>
         </div>
