@@ -1913,7 +1913,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         ski_col = ''
         if is_mountain:
             from scoring import compute_ski_score, best_class
-            ski = compute_ski_score(mo['tmax'], mo['rain_pct'], mo['sun_h'])
+            from lib.common import _ski_kwargs
+            ski = compute_ski_score(mo['tmax'], mo['rain_pct'], mo['sun_h'],
+                                    **_ski_kwargs(slug_fr, month=i+1))
             cls = best_class(mo['classe'], ski)
             ski_col = f'<td>{ski:.1f}/10</td>'
         table_rows += (f'<tr class="{cls}"{highlight}>'
