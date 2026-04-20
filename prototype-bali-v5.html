@@ -553,6 +553,19 @@ thead th:nth-child(8),tbody td:nth-child(8){width:23%}
   overflow-wrap:anywhere;flex-shrink:0;
   font-feature-settings:"tnum" 1;
 }
+.signal-hint{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:14px;height:14px;
+  margin-left:4px;
+  border-radius:50%;
+  background:var(--line-soft);
+  color:var(--muted);
+  font-size:10px;font-weight:700;
+  cursor:help;font-style:normal;
+  line-height:1;
+  vertical-align:middle;
+}
+.signal-hint:hover{background:var(--gold-soft);color:var(--gold-ink)}
 
 /* ═══════════════ MONTH GRID (liens fiches) ═══════════════ */
 .month-grid{
@@ -1246,10 +1259,10 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
             <div class="signal-list">
               <div class="signal-item"><div class="l">🌡️ Ressenti</div><div class="r">Lourd</div></div>
               <div class="signal-item"><div class="l">☀️ UV</div><div class="r">6.8 · Fort</div></div>
-              <div class="signal-item"><div class="l">💧 Dew point</div><div class="r">21.7°C</div></div>
-              <div class="signal-item"><div class="l">🌫️ AQI</div><div class="r">24 · Excellent</div></div>
-              <div class="signal-item"><div class="l">🌊 Vagues (surf)</div><div class="r">1.56m</div></div>
-              <div class="signal-item"><div class="l">🌡️ Mer</div><div class="r">27.8°C</div></div>
+              <div class="signal-item"><div class="l">💧 Humidité ressentie <span class="signal-hint" title="Point de rosée (dew point) : température de condensation, meilleur indicateur de l'humidité ressentie qu'un simple %">ⓘ</span></div><div class="r">21.7°C · Un peu moite</div></div>
+              <div class="signal-item"><div class="l">🌫️ Qualité de l'air <span class="signal-hint" title="AQI (Air Quality Index) : indice standardisé OMS, 0-50 = excellent">ⓘ</span></div><div class="r">24 · Excellent</div></div>
+              <div class="signal-item"><div class="l">🌊 Vagues (surf)</div><div class="r">1.56m · Bon surf</div></div>
+              <div class="signal-item"><div class="l">🌡️ Mer</div><div class="r">27.8°C · Chaude</div></div>
             </div>
           </div>
         </div>
