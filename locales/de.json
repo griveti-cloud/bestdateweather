@@ -663,10 +663,10 @@
     "hero_sub_key": "hero_sub_de"
   },
   "annual_titles": [
-    "{nom} {year} — {best_score}/10: wann reisen?",
-    "Beste Reisezeit {nom} {year} — {best_score}/10 (12 Monate bewertet)",
+    "{nom} {year}: Wetter + beste Reisezeit, {best_score}/10",
+    "Beste Reisezeit {nom} {year} — {best_score}/10 + Wetter",
     "{nom} Wetter {year} — {best_score}/10: beste und schlechteste Monate",
-    "Wann nach {nom} reisen? {year} — Klimabewertung {best_score}/10"
+    "Wann nach {nom} reisen? Wetter {year} — {best_score}/10"
   ],
   "annual_h1s": [
     "Wann ist die beste Reisezeit<br/><em>für {nom}?</em>",

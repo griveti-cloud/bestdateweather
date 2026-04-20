@@ -664,10 +664,10 @@
     "hero_sub_key": "hero_sub_en"
   },
   "annual_titles": [
-    "{nom} {year} — {best_score}/10: when to go?",
-    "Best Time to Visit {nom} {year} — {best_score}/10 (12-month ranking)",
+    "{nom} Weather {year}: Best Time to Go — Score {best_score}/10",
+    "Best Time to Visit {nom} {year} — {best_score}/10 + Weather Guide",
     "{nom} weather {year} — {best_score}/10: best & worst months",
-    "When to Visit {nom}? {year} — {best_score}/10 climate score"
+    "When to Visit {nom}? {year} Weather & Score {best_score}/10"
   ],
   "annual_h1s": [
     "When is the best time<br/><em>to visit {nom}?</em>",

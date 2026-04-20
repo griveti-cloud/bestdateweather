@@ -663,10 +663,10 @@
     "hero_sub_key": "hero_sub_fr"
   },
   "annual_titles": [
-    "{nom_bare} {year} — {best_score}/10 : quand partir ?",
-    "Meilleure période {prep} {nom_bare} {year} — {best_score}/10 (12 mois classés)",
+    "{nom_bare} {year} : météo + meilleure période, {best_score}/10",
+    "Météo à {nom_bare} {year} — {best_score}/10 (12 mois classés)",
     "Météo {prep} {nom_bare} {year} — {best_score}/10 : meilleurs et pires mois",
-    "Quand partir {prep} {nom_bare} ? {year} — score climatique {best_score}/10"
+    "Quand partir {prep} {nom_bare} ? Météo {year} — score {best_score}/10"
   ],
   "annual_h1s": [
     "Quelle est la meilleure période<br/><em>pour partir {prep} {nom_bare} ?</em>",

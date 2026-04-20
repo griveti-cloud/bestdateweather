@@ -663,10 +663,10 @@
     "hero_sub_key": "hero_sub_es"
   },
   "annual_titles": [
-    "{nom} {year} — {best_score}/10: ¿cuándo ir?",
-    "Mejor época para {nom} {year} — {best_score}/10 (12 meses clasificados)",
+    "{nom} {year}: clima + mejor época, {best_score}/10",
+    "Mejor época para {nom} {year} — {best_score}/10 + clima",
     "Clima en {nom} {year} — {best_score}/10: mejores y peores meses",
-    "¿Cuándo visitar {nom}? {year} — puntuación climática {best_score}/10"
+    "¿Cuándo visitar {nom}? Clima {year} — {best_score}/10"
   ],
   "annual_h1s": [
     "¿Cuál es la mejor época<br/><em>para visitar {nom}?</em>",
