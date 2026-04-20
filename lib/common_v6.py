@@ -2255,8 +2255,711 @@ def build_profiles_section_v6(dest, monthly, lang="fr"):
     return section
 
 
+    return section
+
+
+# ══════════════════════════════════════════════════════════════════
+# Section 'Planifier' : 3 plan-cards (hôtel/activités/vols) + GYG widget
+# ══════════════════════════════════════════════════════════════════
+
+# IDs partner conservés depuis la prod
+_PARTNER_IDS = {
+    "expedia_camref": "1110lB57J",
+    "kiwi_affilid": "708106",
+    "gyg_partner_id": "2MQKL00",
+}
+
+_PLAN_LABELS = {
+    "fr": {
+        "kicker": "Réserver",
+        "title": "Planifier votre séjour",
+        "lead": "Hôtels au plus bas hors saison haute, tarifs au plus haut sur les mois confortables. Mi-saisons offrent un bon compromis prix/climat.",
+        "host_title": "Hébergement",
+        "host_sub": "Hôtels & locations",
+        "act_title": "Activités",
+        "act_sub": "Excursions, billets, expériences",
+        "act_view": "Voir ↓",
+        "fly_title": "Vols",
+        "fly_sub": "Comparateur multi-compagnies",
+        "gyg_h3": "🎟️ Activités & excursions",
+        "gyg_p": "Sélection GetYourGuide · réservation annulable gratuitement",
+        "gyg_view_all": "Voir tout →",
+        "affil_note": "Lien affilié · GetYourGuide",
+    },
+    "en": {
+        "kicker": "Book",
+        "title": "Plan your trip",
+        "lead": "Hotels at their lowest off-season, peak prices in comfortable months. Shoulder seasons offer a good price/climate compromise.",
+        "host_title": "Accommodation",
+        "host_sub": "Hotels & rentals",
+        "act_title": "Activities",
+        "act_sub": "Tours, tickets, experiences",
+        "act_view": "View ↓",
+        "fly_title": "Flights",
+        "fly_sub": "Multi-airline comparison",
+        "gyg_h3": "🎟️ Activities & tours",
+        "gyg_p": "GetYourGuide selection · free cancellation",
+        "gyg_view_all": "View all →",
+        "affil_note": "Affiliate link · GetYourGuide",
+    },
+    "en-us": {
+        "kicker": "Book",
+        "title": "Plan your trip",
+        "lead": "Hotels at their lowest off-season, peak prices in comfortable months. Shoulder seasons offer a good price/climate compromise.",
+        "host_title": "Lodging",
+        "host_sub": "Hotels & rentals",
+        "act_title": "Activities",
+        "act_sub": "Tours, tickets, experiences",
+        "act_view": "View ↓",
+        "fly_title": "Flights",
+        "fly_sub": "Multi-airline comparison",
+        "gyg_h3": "🎟️ Activities & tours",
+        "gyg_p": "GetYourGuide selection · free cancellation",
+        "gyg_view_all": "View all →",
+        "affil_note": "Affiliate link · GetYourGuide",
+    },
+    "es": {
+        "kicker": "Reservar",
+        "title": "Planificar tu viaje",
+        "lead": "Hoteles al mínimo fuera de temporada, precios máximos en meses cómodos. Las entre-temporadas ofrecen un buen compromiso precio/clima.",
+        "host_title": "Alojamiento",
+        "host_sub": "Hoteles y alquileres",
+        "act_title": "Actividades",
+        "act_sub": "Excursiones, entradas, experiencias",
+        "act_view": "Ver ↓",
+        "fly_title": "Vuelos",
+        "fly_sub": "Comparador multi-aerolíneas",
+        "gyg_h3": "🎟️ Actividades y excursiones",
+        "gyg_p": "Selección GetYourGuide · cancelación gratuita",
+        "gyg_view_all": "Ver todo →",
+        "affil_note": "Enlace afiliado · GetYourGuide",
+    },
+    "de": {
+        "kicker": "Buchen",
+        "title": "Reise planen",
+        "lead": "Hotels am günstigsten in der Nebensaison, höchste Preise in angenehmen Monaten. Zwischensaisons bieten ein gutes Preis-Klima-Verhältnis.",
+        "host_title": "Unterkunft",
+        "host_sub": "Hotels & Ferienwohnungen",
+        "act_title": "Aktivitäten",
+        "act_sub": "Touren, Tickets, Erlebnisse",
+        "act_view": "Anzeigen ↓",
+        "fly_title": "Flüge",
+        "fly_sub": "Multi-Airline-Vergleich",
+        "gyg_h3": "🎟️ Aktivitäten & Touren",
+        "gyg_p": "GetYourGuide-Auswahl · kostenlos stornierbar",
+        "gyg_view_all": "Alle anzeigen →",
+        "affil_note": "Affiliate-Link · GetYourGuide",
+    },
+}
+
+# Mapping lang → locale code GetYourGuide
+_GYG_LOCALES = {
+    "fr": "fr-FR", "en": "en-GB", "en-us": "en-US", "es": "es-ES", "de": "de-DE",
+}
+
+
+def build_planifier_section_v6(dest, monthly, lang="fr"):
+    """
+    Section 'Réserver · Planifier votre séjour' :
+    - 3 plan-cards : Hébergement (Expedia) / Activités (anchor) / Vols (Kiwi)
+    - 1 widget GetYourGuide en pleine largeur
+
+    Les URLs affiliées utilisent les IDs prod :
+    - Expedia camref=1110lB57J
+    - Kiwi affilid=708106
+    - GYG partner_id=2MQKL00
+
+    Args:
+        dest: dict destination (slug, nom_*, pays, country_*)
+        monthly: list 12 mois (non utilisé directement mais signature cohérente)
+        lang: code langue
+
+    Returns:
+        str : HTML de la section
+    """
+    L = _PLAN_LABELS.get(lang, _PLAN_LABELS["fr"])
+    nom_key = f"nom_{lang.replace('-', '_')}"
+    nom = dest.get(nom_key) or dest.get("nom_fr") or dest.get("slug", "?")
+    nom_safe = _html.escape(nom)
+    # Pour les URLs, utiliser le nom encodé (espaces → %20, etc.)
+    import urllib.parse as _up
+    nom_url = _up.quote(nom)
+
+    # Country pour query GYG (plus précis)
+    country = (dest.get(f"country_{lang.replace('-', '_')}")
+               or dest.get("pays") or "")
+    country_safe = _up.quote(country) if country else ""
+    gyg_query = f"{nom_url}%2C+{country_safe}" if country_safe else nom_url
+
+    expedia_url = f"https://www.expedia.com/Hotel-Search?destination={nom_url}&camref={_PARTNER_IDS['expedia_camref']}"
+    kiwi_url = f"https://www.kiwi.com/deep?affilid={_PARTNER_IDS['kiwi_affilid']}&to={nom_url}&lang={lang.split('-')[0]}"
+    gyg_search_url = f"https://www.getyourguide.com/s/?q={gyg_query}&partner_id={_PARTNER_IDS['gyg_partner_id']}&locale={_GYG_LOCALES.get(lang, 'fr-FR')}"
+
+    section = (f'<section id="planifier" style="scroll-margin-top:120px">\n'
+               f'    <div class="container">\n'
+               f'      <div class="section-head">\n'
+               f'        <div class="section-kicker">{_html.escape(L["kicker"])}</div>\n'
+               f'        <h2>{_html.escape(L["title"])}</h2>\n'
+               f'        <p class="lead">{_html.escape(L["lead"])}</p>\n'
+               f'      </div>\n'
+               f'      <div class="grid-3 plan-row">\n'
+               f'        <a href="{expedia_url}" target="_blank" rel="sponsored noopener" class="plan-card">\n'
+               f'          <div class="plan-icon">🏨</div>\n'
+               f'          <div class="plan-body">\n'
+               f'            <div class="plan-title">{_html.escape(L["host_title"])}</div>\n'
+               f'            <div class="plan-sub">{_html.escape(L["host_sub"])} · {nom_safe}</div>\n'
+               f'          </div>\n'
+               f'          <div class="plan-cta">Expedia →</div>\n'
+               f'        </a>\n'
+               f'        <a href="#activites" class="plan-card">\n'
+               f'          <div class="plan-icon">🎟️</div>\n'
+               f'          <div class="plan-body">\n'
+               f'            <div class="plan-title">{_html.escape(L["act_title"])}</div>\n'
+               f'            <div class="plan-sub">{_html.escape(L["act_sub"])}</div>\n'
+               f'          </div>\n'
+               f'          <div class="plan-cta">{_html.escape(L["act_view"])}</div>\n'
+               f'        </a>\n'
+               f'        <a href="{kiwi_url}" target="_blank" rel="sponsored noopener" class="plan-card">\n'
+               f'          <div class="plan-icon">✈️</div>\n'
+               f'          <div class="plan-body">\n'
+               f'            <div class="plan-title">{_html.escape(L["fly_title"])}</div>\n'
+               f'            <div class="plan-sub">{_html.escape(L["fly_sub"])}</div>\n'
+               f'          </div>\n'
+               f'          <div class="plan-cta">Kiwi →</div>\n'
+               f'        </a>\n'
+               f'      </div>\n'
+               f'\n'
+               f'      <div id="activites" class="card pad" style="margin-top:20px;scroll-margin-top:120px">\n'
+               f'        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap">\n'
+               f'          <div>\n'
+               f'            <h3 style="margin:0 0 4px">{L["gyg_h3"]} · {nom_safe}</h3>\n'
+               f'            <p style="margin:0;color:var(--muted);font-size:.9rem">{_html.escape(L["gyg_p"])}</p>\n'
+               f'          </div>\n'
+               f'          <a class="btn primary" style="padding:10px 18px" href="{gyg_search_url}" target="_blank" rel="sponsored noopener">{_html.escape(L["gyg_view_all"])}</a>\n'
+               f'        </div>\n'
+               f'        <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"\n'
+               f'             data-gyg-locale-code="{_GYG_LOCALES.get(lang, "fr-FR")}"\n'
+               f'             data-gyg-widget="activities"\n'
+               f'             data-gyg-number-of-items="3"\n'
+               f'             data-gyg-partner-id="{_PARTNER_IDS["gyg_partner_id"]}"\n'
+               f'             data-gyg-q="{nom_safe}{(", " + _html.escape(country)) if country else ""}">\n'
+               f'        </div>\n'
+               f'        <span class="affil-note" style="text-align:right;display:block;margin-top:10px;font-size:11px;color:var(--muted)">{_html.escape(L["affil_note"])}</span>\n'
+               f'      </div>\n'
+               f'    </div>\n'
+               f'  </section>')
+
+    return section
+
+
+# ══════════════════════════════════════════════════════════════════
+# Section 'Infos pratiques' : 2 boxes (sécurité+budget+transport / monnaie+langue+...)
+# ══════════════════════════════════════════════════════════════════
+
+_INFOS_LABELS = {
+    "fr": {
+        "kicker": "Infos pratiques",
+        "title": "Ce qu'il faut savoir avant de partir",
+        "lead": "Budget, sécurité, monnaie, climat : tout ce qui ne change pas la décision mais reste bon à savoir.",
+        "box1_title": "🌍 Géographie & pratique",
+        "box2_title": "📍 Localisation & climat",
+        "lbl_alt": "Altitude",
+        "lbl_lat": "Latitude",
+        "lbl_lon": "Longitude",
+        "lbl_country": "Pays",
+        "lbl_climate": "Type de climat",
+        "lbl_currency": "Monnaie",
+        "lbl_lang": "Langue",
+        "lbl_trend": "Tendance climatique",
+        "trend_value": "+0.34°C/décennie (moyenne mondiale)",
+    },
+    "en": {
+        "kicker": "Practical info",
+        "title": "What to know before you go",
+        "lead": "Budget, safety, currency, climate: everything that doesn't change the decision but is good to know.",
+        "box1_title": "🌍 Geography & practical",
+        "box2_title": "📍 Location & climate",
+        "lbl_alt": "Altitude",
+        "lbl_lat": "Latitude",
+        "lbl_lon": "Longitude",
+        "lbl_country": "Country",
+        "lbl_climate": "Climate type",
+        "lbl_currency": "Currency",
+        "lbl_lang": "Language",
+        "lbl_trend": "Climate trend",
+        "trend_value": "+0.34°C/decade (global average)",
+    },
+    "en-us": {
+        "kicker": "Practical info",
+        "title": "What to know before you go",
+        "lead": "Budget, safety, currency, climate: everything that doesn't change the decision but is good to know.",
+        "box1_title": "🌍 Geography & practical",
+        "box2_title": "📍 Location & climate",
+        "lbl_alt": "Elevation",
+        "lbl_lat": "Latitude",
+        "lbl_lon": "Longitude",
+        "lbl_country": "Country",
+        "lbl_climate": "Climate type",
+        "lbl_currency": "Currency",
+        "lbl_lang": "Language",
+        "lbl_trend": "Climate trend",
+        "trend_value": "+0.34°C/decade (global average)",
+    },
+    "es": {
+        "kicker": "Información práctica",
+        "title": "Lo que hay que saber antes de salir",
+        "lead": "Presupuesto, seguridad, moneda, clima: todo lo que no cambia la decisión pero es bueno saber.",
+        "box1_title": "🌍 Geografía y práctica",
+        "box2_title": "📍 Ubicación y clima",
+        "lbl_alt": "Altitud",
+        "lbl_lat": "Latitud",
+        "lbl_lon": "Longitud",
+        "lbl_country": "País",
+        "lbl_climate": "Tipo de clima",
+        "lbl_currency": "Moneda",
+        "lbl_lang": "Idioma",
+        "lbl_trend": "Tendencia climática",
+        "trend_value": "+0.34°C/década (media mundial)",
+    },
+    "de": {
+        "kicker": "Praktische Infos",
+        "title": "Was Sie vor der Reise wissen sollten",
+        "lead": "Budget, Sicherheit, Währung, Klima: alles, was die Entscheidung nicht ändert, aber gut zu wissen ist.",
+        "box1_title": "🌍 Geografie & Praktisches",
+        "box2_title": "📍 Lage & Klima",
+        "lbl_alt": "Höhe",
+        "lbl_lat": "Breitengrad",
+        "lbl_lon": "Längengrad",
+        "lbl_country": "Land",
+        "lbl_climate": "Klimatyp",
+        "lbl_currency": "Währung",
+        "lbl_lang": "Sprache",
+        "lbl_trend": "Klimatrend",
+        "trend_value": "+0.34°C/Jahrzehnt (globaler Durchschnitt)",
+    },
+}
+
+
+def _climate_type_label(dtype, lang="fr"):
+    """Retourne le type de climat lisible selon dtype."""
+    labels = {
+        "tropical": {"fr": "Tropical", "en": "Tropical", "en-us": "Tropical",
+                     "es": "Tropical", "de": "Tropisch"},
+        "mountain": {"fr": "Montagne", "en": "Mountain", "en-us": "Mountain",
+                     "es": "Montaña", "de": "Bergklima"},
+        "generic": {"fr": "Tempéré", "en": "Temperate", "en-us": "Temperate",
+                    "es": "Templado", "de": "Gemäßigt"},
+    }
+    return labels.get(dtype, labels["generic"]).get(lang, "Tempéré")
+
+
+def build_infos_section_v6(dest, monthly, lang="fr"):
+    """
+    Section 'Infos pratiques' : 2 boxes côte à côte (grid-2).
+    Box 1 : Géographie & pratique (altitude estimée, type climat, pays)
+    Box 2 : Localisation & climat (lat, lon, tendance)
+
+    Args:
+        dest: dict destination (lat, lon, pays, country_*)
+        monthly: 12 mois (non utilisé pour le rendu mais signature cohérente)
+        lang: code langue
+    """
+    L = _INFOS_LABELS.get(lang, _INFOS_LABELS["fr"])
+    dtype = classify_dest(dest)
+    climate_label = _climate_type_label(dtype, lang)
+
+    # Lat/lon
+    try:
+        lat_v = float(dest.get("lat", 0))
+        lon_v = float(dest.get("lon", 0))
+        lat_s = f"{abs(lat_v):.2f}°{'N' if lat_v >= 0 else 'S'}"
+        lon_s = f"{abs(lon_v):.2f}°{'E' if lon_v >= 0 else 'W'}"
+    except (ValueError, TypeError):
+        lat_s = "—"
+        lon_s = "—"
+
+    # Country localisé
+    country_key = f"country_{lang.replace('-', '_')}"
+    country = dest.get(country_key) or dest.get("pays") or "—"
+
+    # Altitude : pas dans destinations.csv → laisser blanc ou utiliser ski_altitudes pour mountain
+    altitude = "—"
+    if dtype == "mountain":
+        try:
+            from lib.ski_data import get_ski_data
+            ski = get_ski_data(dest.get("slug") or dest.get("slug_fr"))
+            if ski and ski.get("alt_village"):
+                altitude = f"{int(float(ski['alt_village']))} m"
+        except Exception:
+            pass
+
+    # Box 1 items
+    box1_items = []
+    if altitude != "—":
+        box1_items.append(("⛰️", L["lbl_alt"], altitude))
+    box1_items.append(("🌐", L["lbl_country"], _html.escape(country)))
+    box1_items.append(("🌡️", L["lbl_climate"], _html.escape(climate_label)))
+
+    # Box 2 items
+    box2_items = [
+        ("🧭", L["lbl_lat"], lat_s),
+        ("🧭", L["lbl_lon"], lon_s),
+        ("📈", L["lbl_trend"], _html.escape(L["trend_value"])),
+    ]
+
+    def _render_list(items):
+        rows = []
+        for icon, lbl, val in items:
+            rows.append(
+                f'            <div class="list-item"><span><span class="list-ico">{icon}</span>{_html.escape(lbl)}</span><strong>{val}</strong></div>'
+            )
+        return "\n".join(rows)
+
+    section = (f'<section>\n'
+               f'    <div class="container">\n'
+               f'      <div class="section-head">\n'
+               f'        <div class="section-kicker">{_html.escape(L["kicker"])}</div>\n'
+               f'        <h2>{_html.escape(L["title"])}</h2>\n'
+               f'        <p class="lead">{_html.escape(L["lead"])}</p>\n'
+               f'      </div>\n'
+               f'      <div class="grid-2">\n'
+               f'        <div class="box">\n'
+               f'          <h3>{L["box1_title"]}</h3>\n'
+               f'          <div class="list">\n'
+               f'{_render_list(box1_items)}\n'
+               f'          </div>\n'
+               f'        </div>\n'
+               f'        <div class="box">\n'
+               f'          <h3>{L["box2_title"]}</h3>\n'
+               f'          <div class="list">\n'
+               f'{_render_list(box2_items)}\n'
+               f'          </div>\n'
+               f'        </div>\n'
+               f'      </div>\n'
+               f'    </div>\n'
+               f'  </section>')
+
+    return section
+
+
+# ══════════════════════════════════════════════════════════════════
+# Section 'Explorer' : similaires + proches + classements
+# ══════════════════════════════════════════════════════════════════
+
+_EXPLORER_LABELS = {
+    "fr": {
+        "kicker": "Explorer",
+        "title": "Destinations & guides complémentaires",
+        "lead": "Si {nom} ne colle pas à vos dates, voici des alternatives et des guides.",
+        "h_similar": "Destinations au climat similaire",
+        "h_nearby": "Destinations proches",
+        "h_guides": "Guides & classements",
+        "g_world": "Classement mondial 2026",
+        "g_summer": "Meilleures destinations été",
+        "g_winter": "Soleil hiver",
+        "g_july": "Où partir en juillet",
+        "g_view": "Voir →",
+        "g_map": "🗺️ Carte climatique",
+    },
+    "en": {
+        "kicker": "Explore",
+        "title": "Destinations & supplementary guides",
+        "lead": "If {nom} doesn't fit your dates, here are alternatives and guides.",
+        "h_similar": "Destinations with similar climate",
+        "h_nearby": "Nearby destinations",
+        "h_guides": "Guides & rankings",
+        "g_world": "World ranking 2026",
+        "g_summer": "Best summer destinations",
+        "g_winter": "Winter sun",
+        "g_july": "Where to go in July",
+        "g_view": "View →",
+        "g_map": "🗺️ Climate map",
+    },
+    "en-us": {
+        "kicker": "Explore",
+        "title": "Destinations & supplementary guides",
+        "lead": "If {nom} doesn't fit your dates, here are alternatives and guides.",
+        "h_similar": "Destinations with similar climate",
+        "h_nearby": "Nearby destinations",
+        "h_guides": "Guides & rankings",
+        "g_world": "World ranking 2026",
+        "g_summer": "Best summer destinations",
+        "g_winter": "Winter sun",
+        "g_july": "Where to go in July",
+        "g_view": "View →",
+        "g_map": "🗺️ Climate map",
+    },
+    "es": {
+        "kicker": "Explorar",
+        "title": "Destinos y guías complementarias",
+        "lead": "Si {nom} no encaja con tus fechas, aquí hay alternativas y guías.",
+        "h_similar": "Destinos con clima similar",
+        "h_nearby": "Destinos cercanos",
+        "h_guides": "Guías y clasificaciones",
+        "g_world": "Clasificación mundial 2026",
+        "g_summer": "Mejores destinos verano",
+        "g_winter": "Sol en invierno",
+        "g_july": "A dónde ir en julio",
+        "g_view": "Ver →",
+        "g_map": "🗺️ Mapa climático",
+    },
+    "de": {
+        "kicker": "Erkunden",
+        "title": "Reiseziele & weitere Guides",
+        "lead": "Wenn {nom} nicht zu Ihren Daten passt, hier Alternativen und Guides.",
+        "h_similar": "Ziele mit ähnlichem Klima",
+        "h_nearby": "Nahe Ziele",
+        "h_guides": "Guides & Rankings",
+        "g_world": "Welt-Ranking 2026",
+        "g_summer": "Beste Sommerziele",
+        "g_winter": "Wintersonne",
+        "g_july": "Wo im Juli reisen",
+        "g_view": "Anzeigen →",
+        "g_map": "🗺️ Klimakarte",
+    },
+}
+
+
+def _haversine_km(lat1, lon1, lat2, lon2):
+    """Distance haversine en km entre 2 points (lat/lon en degrés)."""
+    import math
+    dlat = math.radians(lat2 - lat1)
+    dlon = math.radians(lon2 - lon1)
+    a = (math.sin(dlat / 2) ** 2 +
+         math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) * math.sin(dlon / 2) ** 2)
+    return 6371 * 2 * math.asin(math.sqrt(a))
+
+
+def find_nearby_destinations(dest, all_dests, n=4):
+    """
+    Retourne les N destinations les plus proches géographiquement.
+
+    Args:
+        dest: dict destination courante (lat, lon, slug_fr)
+        all_dests: list[dict] toutes les destinations (depuis CSV)
+        n: nombre à retourner
+
+    Returns:
+        list[(distance_km, dest_dict)] triés par distance croissante
+    """
+    try:
+        lat0 = float(dest.get("lat"))
+        lon0 = float(dest.get("lon"))
+    except (TypeError, ValueError):
+        return []
+    slug0 = dest.get("slug_fr") or dest.get("slug")
+    results = []
+    for d in all_dests:
+        if d.get("slug_fr") == slug0 or d.get("slug") == slug0:
+            continue
+        try:
+            lat1 = float(d.get("lat"))
+            lon1 = float(d.get("lon"))
+        except (TypeError, ValueError):
+            continue
+        dist = _haversine_km(lat0, lon0, lat1, lon1)
+        results.append((dist, d))
+    results.sort(key=lambda x: x[0])
+    return results[:n]
+
+
+def find_similar_climate(dest, all_dests, all_climate_by_slug, n=4):
+    """
+    Trouve les N destinations avec un climat similaire (par profil annuel des
+    scores). Distance euclidienne sur les 12 scores.
+
+    Args:
+        dest: destination courante
+        all_dests: list dicts dests
+        all_climate_by_slug: dict {slug: list 12 dicts mensuels} pour calcul
+        n: nombre à retourner
+
+    Returns:
+        list[(distance, dest_dict)] triés
+    """
+    slug0 = dest.get("slug_fr") or dest.get("slug")
+    own_monthly = all_climate_by_slug.get(slug0)
+    if not own_monthly:
+        return []
+    own_scores = [_score(m) for m in sorted(own_monthly, key=lambda x: int(x["mois_num"]))]
+    if len(own_scores) != 12:
+        return []
+    own_dtype = classify_dest(dest)
+
+    results = []
+    for d in all_dests:
+        s = d.get("slug_fr") or d.get("slug")
+        if s == slug0:
+            continue
+        # Préférer les mêmes types (tropical/mountain/generic) pour pertinence
+        if classify_dest(d) != own_dtype:
+            continue
+        other_monthly = all_climate_by_slug.get(s)
+        if not other_monthly or len(other_monthly) != 12:
+            continue
+        other_scores = [_score(m) for m in sorted(other_monthly, key=lambda x: int(x["mois_num"]))]
+        # Distance euclidienne L2
+        dist = sum((a - b) ** 2 for a, b in zip(own_scores, other_scores)) ** 0.5
+        results.append((dist, d))
+    results.sort(key=lambda x: x[0])
+    return results[:n]
+
+
+def build_explorer_section_v6(dest, monthly, lang="fr",
+                               all_dests=None, all_climate_by_slug=None,
+                               url_builder=None):
+    """
+    Section 'Explorer' : 3 boxes (similaires / proches / classements).
+
+    Args:
+        dest: destination
+        monthly: 12 mois (non utilisé directement)
+        lang: code langue
+        all_dests: list complète des dests pour calcul nearby/similar.
+                   Si None : sections similaires & proches affichent placeholder vide.
+        all_climate_by_slug: dict {slug: list mensuels} pour similaires.
+        url_builder: fonction(slug, lang) → URL fiche annuelle.
+                     Par défaut : '<slug>.html' (cohérent avec V3 prod).
+
+    Returns:
+        str : HTML
+    """
+    L = _EXPLORER_LABELS.get(lang, _EXPLORER_LABELS["fr"])
+    nom_key = f"nom_{lang.replace('-', '_')}"
+    nom = dest.get(nom_key) or dest.get("nom_fr") or dest.get("slug", "?")
+    nom_safe = _html.escape(nom)
+
+    if url_builder is None:
+        # URL builder par défaut : structure prod V3
+        # FR : meilleure-periode-{slug}.html
+        # EN : en/best-time-to-visit-{slug}.html
+        # etc. Pour l'instant on utilise un format simplifié.
+        def url_builder(d, lang_x):
+            s = d.get("slug_fr") or d.get("slug", "")
+            return f"meilleure-periode-{s}.html"
+
+    # --- Box similaires (par climat) ---
+    if all_dests and all_climate_by_slug:
+        similar = find_similar_climate(dest, all_dests, all_climate_by_slug, n=4)
+    else:
+        similar = []
+
+    similar_rows = []
+    for (dist, d) in similar:
+        d_nom = d.get(nom_key) or d.get("nom_fr") or d.get("slug", "?")
+        d_country = d.get(f"country_{lang.replace('-', '_')}") or d.get("pays", "")
+        d_flag = d.get("flag", "")
+        d_url = url_builder(d, lang)
+        flag_img = (f'<img src="flags/{d_flag}.png" width="18" height="13" alt="" '
+                    f'loading="lazy" class="list-flag">' if d_flag else '')
+        similar_rows.append(
+            f'            <a href="{d_url}" class="list-item">'
+            f'<span>{flag_img}{_html.escape(d_nom)} '
+            f'<span class="list-country">· {_html.escape(d_country)}</span></span>'
+            f'<strong>→</strong></a>'
+        )
+    similar_block = "\n".join(similar_rows) if similar_rows else (
+        '            <div class="list-item" style="color:var(--muted)">—</div>'
+    )
+
+    # --- Box proches (par distance) ---
+    if all_dests:
+        nearby = find_nearby_destinations(dest, all_dests, n=4)
+    else:
+        nearby = []
+
+    nearby_rows = []
+    for (dist, d) in nearby:
+        d_nom = d.get(nom_key) or d.get("nom_fr") or d.get("slug", "?")
+        d_country = d.get(f"country_{lang.replace('-', '_')}") or d.get("pays", "")
+        d_flag = d.get("flag", "")
+        d_url = url_builder(d, lang)
+        flag_img = (f'<img src="flags/{d_flag}.png" width="18" height="13" alt="" '
+                    f'loading="lazy" class="list-flag">' if d_flag else '')
+        nearby_rows.append(
+            f'            <a href="{d_url}" class="list-item">'
+            f'<span>{flag_img}{_html.escape(d_nom)} '
+            f'<span class="list-country">· {_html.escape(d_country)}</span></span>'
+            f'<strong>{int(round(dist))} km →</strong></a>'
+        )
+    nearby_block = "\n".join(nearby_rows) if nearby_rows else (
+        '            <div class="list-item" style="color:var(--muted)">—</div>'
+    )
+
+    # --- Box guides & classements ---
+    # URLs prod V3 connues
+    guides_urls = {
+        "fr": [("classement-destinations-meteo-2026.html", L["g_world"]),
+               ("classement-destinations-meteo-ete-2026.html", L["g_summer"]),
+               ("classement-destinations-meteo-hiver-2026.html", L["g_winter"]),
+               ("ou-partir-en-juillet.html", L["g_july"])],
+        "en": [("en/world-ranking-best-weather-2026.html", L["g_world"]),
+               ("en/best-summer-destinations-2026.html", L["g_summer"]),
+               ("en/best-winter-sun-destinations-2026.html", L["g_winter"]),
+               ("en/where-to-go-in-july.html", L["g_july"])],
+        "en-us": [("us/world-ranking-best-weather-2026.html", L["g_world"]),
+                  ("us/best-summer-destinations-2026.html", L["g_summer"]),
+                  ("us/best-winter-sun-destinations-2026.html", L["g_winter"]),
+                  ("us/where-to-go-in-july.html", L["g_july"])],
+        "es": [("es/clasificacion-destinos-clima-2026.html", L["g_world"]),
+               ("es/mejores-destinos-verano-2026.html", L["g_summer"]),
+               ("es/mejores-destinos-sol-invierno-2026.html", L["g_winter"]),
+               ("es/donde-ir-en-julio.html", L["g_july"])],
+        "de": [("de/welt-ranking-beste-reisezeit-2026.html", L["g_world"]),
+               ("de/beste-sommer-reiseziele-2026.html", L["g_summer"]),
+               ("de/beste-winter-sonne-reiseziele-2026.html", L["g_winter"]),
+               ("de/wohin-im-juli.html", L["g_july"])],
+    }
+    map_urls = {"fr": "carte.html", "en": "en/map.html", "en-us": "us/map.html",
+                "es": "es/mapa.html", "de": "de/karte.html"}
+
+    g_rows = []
+    for url, label in guides_urls.get(lang, guides_urls["fr"]):
+        g_rows.append(
+            f'            <div class="list-item">'
+            f'<span>{_html.escape(label)}</span>'
+            f'<strong><a href="{url}">{_html.escape(L["g_view"])}</a></strong></div>'
+        )
+    g_block = "\n".join(g_rows)
+    map_url = map_urls.get(lang, "carte.html")
+
+    section = (f'<section>\n'
+               f'    <div class="container">\n'
+               f'      <div class="section-head">\n'
+               f'        <div class="section-kicker">{_html.escape(L["kicker"])}</div>\n'
+               f'        <h2>{_html.escape(L["title"])}</h2>\n'
+               f'        <p class="lead">{_html.escape(L["lead"].format(nom=nom_safe))}</p>\n'
+               f'      </div>\n'
+               f'      <div class="grid-3">\n'
+               f'        <div class="box">\n'
+               f'          <h3>{_html.escape(L["h_similar"])}</h3>\n'
+               f'          <div class="list">\n'
+               f'{similar_block}\n'
+               f'          </div>\n'
+               f'        </div>\n'
+               f'        <div class="box">\n'
+               f'          <h3>{_html.escape(L["h_nearby"])}</h3>\n'
+               f'          <div class="list">\n'
+               f'{nearby_block}\n'
+               f'          </div>\n'
+               f'        </div>\n'
+               f'        <div class="box">\n'
+               f'          <h3>{_html.escape(L["h_guides"])}</h3>\n'
+               f'          <div class="list">\n'
+               f'{g_block}\n'
+               f'          </div>\n'
+               f'          <div style="margin-top:16px">\n'
+               f'            <a class="btn primary" href="{map_url}">{L["g_map"]}</a>\n'
+               f'          </div>\n'
+               f'        </div>\n'
+               f'      </div>\n'
+               f'    </div>\n'
+               f'  </section>')
+
+    return section
+
+
 def _test():
-    """Tests rapides (exécuter avec : python3 -m lib.common_v6)."""
 
     # Dataset minimal : Paris (generic)
     paris_monthly = [

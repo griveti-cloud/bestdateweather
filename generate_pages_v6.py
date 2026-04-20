@@ -41,6 +41,9 @@ from lib.common_v6 import (
     build_comprendre_section_v6,
     build_seasons_section_v6,
     build_profiles_section_v6,
+    build_planifier_section_v6,
+    build_infos_section_v6,
+    build_explorer_section_v6,
     classify_dest,
     best_month,
     worst_month,
@@ -277,6 +280,40 @@ tbody tr:hover{background:#fffbf2}
 .badge{display:inline-block;padding:4px 10px;border-radius:999px;
   background:#faf8f3;border:1px solid var(--border);font-size:11.5px;
   font-weight:700;color:var(--ink);white-space:nowrap}
+
+/* Section Planifier : plan-cards (Hébergement, Activités, Vols) */
+.plan-row{gap:14px}
+.plan-card{display:flex;align-items:center;gap:14px;padding:18px 20px;
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  box-shadow:var(--shadow);text-decoration:none;color:var(--ink);
+  transition:transform .15s ease, box-shadow .15s ease}
+.plan-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.plan-icon{font-size:28px;flex-shrink:0}
+.plan-body{flex:1;min-width:0}
+.plan-title{font-weight:700;font-size:15px;margin-bottom:2px}
+.plan-sub{font-size:12.5px;color:var(--muted);line-height:1.4}
+.plan-cta{font-weight:700;font-size:13px;color:var(--gold);flex-shrink:0;
+  white-space:nowrap}
+@media (max-width:640px){
+  .plan-card{padding:14px 16px;gap:12px}
+  .plan-icon{font-size:24px}
+}
+
+/* Section Infos pratiques + Explorer : list */
+.list{display:flex;flex-direction:column;gap:0}
+.list-item{display:flex;justify-content:space-between;align-items:center;
+  padding:11px 0;border-bottom:1px solid #f2eadb;font-size:14px;
+  text-decoration:none;color:inherit}
+.list-item:last-child{border-bottom:none}
+.list-item:hover{background:#fffbf2}
+.list-item span{display:flex;align-items:center;gap:8px;color:var(--muted);
+  font-weight:500;min-width:0;flex:1}
+.list-item strong{font-weight:700;color:var(--ink);white-space:nowrap}
+.list-ico{flex-shrink:0;font-size:14px}
+.list-flag{flex-shrink:0;border-radius:2px}
+.list-country{color:var(--muted);font-weight:500;font-size:12.5px}
+.box h3{font-family:'Playfair Display',Georgia,serif;font-size:17px;
+  margin:0 0 12px;font-weight:700}
 """
 
 
@@ -502,7 +539,8 @@ def _apply_mountain_scores(dest, monthly):
     return ski_scores
 
 
-def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None):
+def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None,
+                     all_dests=None, all_climate_by_slug=None):
     """
     Rend une page HTML complète (DOCTYPE → </html>) pour une destination.
 
@@ -561,6 +599,11 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None):
     comprendre = build_comprendre_section_v6(dest, monthly, lang=lang)
     seasons = build_seasons_section_v6(dest, monthly, lang=lang)
     profiles = build_profiles_section_v6(dest, monthly, lang=lang)
+    planifier = build_planifier_section_v6(dest, monthly, lang=lang)
+    infos = build_infos_section_v6(dest, monthly, lang=lang)
+    explorer = build_explorer_section_v6(dest, monthly, lang=lang,
+                                          all_dests=all_dests,
+                                          all_climate_by_slug=all_climate_by_slug)
     footer = _render_footer(dest, lang)
 
     html = f'''{head}
@@ -571,6 +614,9 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None):
   {comprendre}
   {seasons}
   {profiles}
+  {planifier}
+  {infos}
+  {explorer}
 </main>
 {footer}
 </body>
@@ -612,10 +658,24 @@ def main():
                         help="Langue de sortie")
     parser.add_argument("--output", required=True, help="Fichier HTML de sortie")
     parser.add_argument("--data-dir", default="data", help="Répertoire CSV")
+    parser.add_argument("--no-explorer-data", action="store_true",
+                        help="Skip chargement all_dests/climate (Explorer affichera placeholders)")
     args = parser.parse_args()
 
     dest, monthly = _load_dest_and_monthly(args.slug, args.data_dir)
-    html = render_annual_v6(dest, monthly, lang=args.lang)
+
+    all_dests = None
+    all_climate_by_slug = None
+    if not args.no_explorer_data:
+        # Charger toutes les dests + climate pour Explorer (similar/nearby)
+        all_dests = list(csv.DictReader(open(os.path.join(args.data_dir, "destinations.csv"))))
+        all_climate_by_slug = {}
+        for row in csv.DictReader(open(os.path.join(args.data_dir, "climate.csv"))):
+            all_climate_by_slug.setdefault(row["slug"], []).append(row)
+
+    html = render_annual_v6(dest, monthly, lang=args.lang,
+                             all_dests=all_dests,
+                             all_climate_by_slug=all_climate_by_slug)
 
     with open(args.output, "w", encoding="utf-8") as f:
         f.write(html)
