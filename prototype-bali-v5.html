@@ -302,6 +302,8 @@ h2{
 
 .verdict-box,.right-stack,.signal-card,.faq,.list,.signal-list{
   display:grid;gap:14px;min-width:0;
+  grid-auto-rows:min-content;
+  align-content:start;
 }
 
 .note{
@@ -385,7 +387,8 @@ h2{
   font-size:.92rem;line-height:1.5;
   overflow-wrap:anywhere;
 }
-.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cta-row > .btn,.cta-row > .chip{align-self:center;flex:0 0 auto}
 
 /* ═══════════════ TABLE ═══════════════ */
 .table-wrap{
