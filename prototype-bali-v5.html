@@ -634,7 +634,84 @@ thead th:nth-child(8),tbody td:nth-child(8){width:23%}
   letter-spacing:.2px;
 }
 
-/* ═══════════════ PLAN CARDS (section Planifier) ═══════════════ */
+/* ═══════════════ MÉTHODOLOGIE CARD (sous le graphique) ═══════════════ */
+.method-card{
+  margin-top:18px;
+  background:linear-gradient(135deg,#fdfaf3 0%,#fef8e7 100%);
+  border:1px solid var(--gold-soft);
+  border-left:4px solid var(--gold);
+  border-radius:var(--radius);
+  padding:20px 24px;
+  box-shadow:var(--shadow-sm);
+}
+.method-head{
+  display:flex;align-items:flex-start;gap:14px;
+  margin-bottom:16px;
+}
+.method-ico{
+  font-size:1.6rem;
+  width:44px;height:44px;
+  background:var(--paper);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  border:1px solid var(--gold-soft);
+}
+.method-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:1.15rem;
+  color:var(--ink);letter-spacing:-.01em;
+  margin-bottom:3px;
+}
+.method-sub{
+  font-size:.88rem;color:var(--muted);line-height:1.4;
+}
+.method-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-bottom:16px;
+}
+.method-item{
+  background:var(--paper);
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid var(--line-soft);
+  min-width:0;
+}
+.method-k{
+  font-size:.82rem;font-weight:700;
+  color:var(--gold-ink);
+  margin-bottom:3px;
+  letter-spacing:.2px;
+}
+.method-v{
+  font-size:.85rem;color:var(--muted);line-height:1.45;
+}
+.method-footer{
+  display:flex;justify-content:space-between;
+  align-items:center;gap:14px;flex-wrap:wrap;
+  padding-top:14px;
+  border-top:1px solid var(--gold-soft);
+}
+.method-source{
+  font-size:.8rem;color:var(--muted);line-height:1.5;
+}
+.method-source strong{color:var(--ink);font-weight:700}
+.method-link{
+  font-size:.88rem;font-weight:700;color:var(--gold);
+  transition:color .15s,transform .15s;
+  white-space:nowrap;flex-shrink:0;
+}
+.method-link:hover{color:var(--gold-2);transform:translateX(2px)}
+@media(max-width:720px){
+  .method-card{padding:18px}
+  .method-grid{grid-template-columns:1fr;gap:10px}
+  .method-ico{width:40px;height:40px;font-size:1.4rem}
+  .method-title{font-size:1.05rem}
+}
+
+
 .plan-row{gap:14px}
 .plan-card{
   display:flex;align-items:center;gap:14px;
@@ -1083,6 +1160,41 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
       </div>
       <div class="card pad">
         <div class="ct-chart-wrap"><svg viewBox="0 0 560 234" width="100%" style="display:block;overflow:visible" role="img" aria-label="Températures annuelles — Bali"><line x1="40" y1="184.0" x2="544" y2="184.0" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="188.0" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">22</text><line x1="40" y1="143.0" x2="544" y2="143.0" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="147.0" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">24</text><line x1="40" y1="102.0" x2="544" y2="102.0" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="106.0" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">26</text><line x1="40" y1="61.0" x2="544" y2="61.0" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="65.0" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">29</text><line x1="40" y1="20.0" x2="544" y2="20.0" stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/><text x="34" y="24.0" text-anchor="end" font-size="10" fill="#6b7280" font-weight="600">31</text><polyline points="40.0,127.2 96.0,142.8 152.0,149.7 208.0,151.5 264.0,142.8 320.0,148.0 376.0,149.7 432.0,156.7 488.0,146.3 544.0,144.5" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><polyline points="40.0,102.9 96.0,109.8 152.0,111.5 208.0,111.5 264.0,104.6 320.0,109.8 376.0,109.8 432.0,109.8 488.0,101.1 544.0,102.9" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 3"/><polyline points="40.0,75.1 96.0,69.9 152.0,68.2 208.0,66.4 264.0,61.2 320.0,66.4 376.0,63.0 432.0,59.5 488.0,47.3 544.0,50.8" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="40.0" cy="75.1" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="96.0" cy="69.9" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="152.0" cy="68.2" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="208.0" cy="66.4" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="264.0" cy="61.2" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="320.0" cy="66.4" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="376.0" cy="63.0" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="432.0" cy="59.5" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="488.0" cy="47.3" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="544.0" cy="50.8" r="3" fill="#ef4444" stroke="white" stroke-width="1.5"/><circle cx="40.0" cy="127.2" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="96.0" cy="142.8" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="152.0" cy="149.7" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="208.0" cy="151.5" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="264.0" cy="142.8" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="320.0" cy="148.0" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="376.0" cy="149.7" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="432.0" cy="156.7" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="488.0" cy="146.3" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><circle cx="544.0" cy="144.5" r="3" fill="#3b82f6" stroke="white" stroke-width="1.5"/><text x="40.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2016</text><line x1="40.0" y1="186" x2="40.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="96.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2017</text><line x1="96.0" y1="186" x2="96.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="152.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2018</text><line x1="152.0" y1="186" x2="152.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="208.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2019</text><line x1="208.0" y1="186" x2="208.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="264.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2020</text><line x1="264.0" y1="186" x2="264.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="320.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2021</text><line x1="320.0" y1="186" x2="320.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="376.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2022</text><line x1="376.0" y1="186" x2="376.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="432.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2023</text><line x1="432.0" y1="186" x2="432.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="488.0" y="216" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2024</text><line x1="488.0" y1="186" x2="488.0" y2="190" stroke="#d1d5db" stroke-width="1"/><text x="544.0" y="231" text-anchor="middle" font-size="9.5" fill="#6b7280" font-weight="600">2025</text><line x1="544.0" y1="186" x2="544.0" y2="190" stroke="#d1d5db" stroke-width="1"/></svg><div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px"><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:#f97316;flex-shrink:0"></span>T° max</span><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:repeating-linear-gradient(90deg,#9ca3af 0,#9ca3af 5px,transparent 5px,transparent 8px);flex-shrink:0"></span>Moyenne</span><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap"><span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:#93c5fd;flex-shrink:0"></span>T° min</span></div></div>
+      </div>
+
+      <!-- Encart méthodologie : explication pédagogique du score -->
+      <div class="method-card">
+        <div class="method-head">
+          <div class="method-ico">🔬</div>
+          <div>
+            <div class="method-title">Comment sont calculés nos scores ?</div>
+            <div class="method-sub">4 critères pondérés sur 10 ans de données climatiques réelles</div>
+          </div>
+        </div>
+        <div class="method-grid">
+          <div class="method-item">
+            <div class="method-k">Précipitations</div>
+            <div class="method-v">Fréquence &amp; intensité quotidienne de pluie</div>
+          </div>
+          <div class="method-item">
+            <div class="method-k">Température</div>
+            <div class="method-v">T° max, min &amp; stabilité mensuelle</div>
+          </div>
+          <div class="method-item">
+            <div class="method-k">Ensoleillement</div>
+            <div class="method-v">Heures de soleil par jour</div>
+          </div>
+          <div class="method-item">
+            <div class="method-k">Ressenti humide</div>
+            <div class="method-v">Point de rosée (confort thermique réel)</div>
+          </div>
+        </div>
+        <div class="method-footer">
+          <div class="method-source">
+            <strong>Source :</strong> ERA5 (ECMWF) · Open-Meteo · 10 ans (2015-2024)
+          </div>
+          <a href="methodologie.html" class="method-link">Méthodologie complète →</a>
+        </div>
       </div>
     </div>
   </section>
