@@ -1766,9 +1766,17 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     # ── Hero sub ──
     if is_mountain and C.get('monthly_hero_subs_ski'):
         from scoring import compute_ski_score
-        ski_sc_hero = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
-        best_ski_idx_hero = max(range(12), key=lambda i: compute_ski_score(months[i]['tmax'], months[i]['rain_pct'], months[i]['sun_h']))
+        from lib.common import _ski_kwargs
+        ski_sc_hero = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'],
+                                        **_ski_kwargs(slug_fr, month=mi+1))
+        best_ski_idx_hero = max(range(12), key=lambda i: compute_ski_score(
+            months[i]['tmax'], months[i]['rain_pct'], months[i]['sun_h'],
+            **_ski_kwargs(slug_fr, month=i+1)))
         tpl['best_ski_month_lc'] = month_lc(C, MONTHS[best_ski_idx_hero])
+        # Pour mountain, le score affiché dans title/meta = max(score_gen, score_ski)
+        # Sinon un mois peak ski (9.1/10) serait affiché à 5.9/10 (score général).
+        best_display_score = max(score, ski_sc_hero)
+        tpl['score'] = f"{best_display_score:.1f}"
         if ski_sc_hero >= 7.5:
             ski_tier = 'ski_excellent'
         elif ski_sc_hero >= 6.0:
@@ -2082,17 +2090,27 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     desc_var  = _stable_hash(slug_fr + str(mi) + "d", len(C['monthly_descs']))
     h1_var    = _stable_hash(slug_fr + str(mi) + "h1", len(C['monthly_h1s']))
 
-    _verdict = C['lbl_m_verdict_period_rec'] if score >= 7.5 else C['lbl_m_verdict_period_avg'] if score >= 5.5 else C['lbl_m_verdict_period_bad']
+    # Pour mountain, tension/verdict alignés sur max(score_gen, score_ski)
+    # afin d'éviter les incohérences type "9.1/10 — Decent" (score ski peak
+    # mais label basé sur score général).
+    _title_score = score
+    if is_mountain and C.get('monthly_hero_subs_ski'):
+        from scoring import compute_ski_score as _csk
+        from lib.common import _ski_kwargs as _skw
+        _ski_here = _csk(m['tmax'], m['rain_pct'], m['sun_h'], **_skw(slug_fr, month=mi+1))
+        _title_score = max(score, _ski_here)
+
+    _verdict = C['lbl_m_verdict_period_rec'] if _title_score >= 7.5 else C['lbl_m_verdict_period_avg'] if _title_score >= 5.5 else C['lbl_m_verdict_period_bad']
     tpl['verdict'] = _verdict.rstrip('.')  # sans point final pour les titres
-    tpl['verdict_emoji'] = '✅' if score >= 7.5 else '🟡' if score >= 5.5 else '🔴'
+    tpl['verdict_emoji'] = '✅' if _title_score >= 7.5 else '🟡' if _title_score >= 5.5 else '🔴'
     # Tension contextuelle selon niveau de score
-    if score >= 9.0:
+    if _title_score >= 9.0:
         tpl['tension'] = C.get('lbl_m_tension_peak', 'Peak season')
-    elif score >= 7.5:
+    elif _title_score >= 7.5:
         tpl['tension'] = C.get('lbl_m_tension_great', 'Great month')
-    elif score >= 6.0:
+    elif _title_score >= 6.0:
         tpl['tension'] = C.get('lbl_m_tension_decent', 'Decent')
-    elif score >= 4.5:
+    elif _title_score >= 4.5:
         tpl['tension'] = C.get('lbl_m_tension_off', 'Off-season')
     else:
         tpl['tension'] = C.get('lbl_m_tension_tough', 'Tough month')

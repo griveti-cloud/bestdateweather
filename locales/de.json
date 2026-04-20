@@ -819,10 +819,10 @@
     "score_fair": "Kein optimales Fenster, aber akzeptabel bei festen Terminen. Der {best_month} ({best_score}/10) ist deutlich besser, wenn möglich."
   },
   "monthly_titles": [
-    "Lohnt sich {nom} im {month}? Score {score}/10 — {tension}",
-    "{nom} im {month} {year}: {score}/10 — {verdict}",
+    "{nom} Wetter im {month}: {score}/10 — {tension}",
+    "{nom} Wetter im {month} {year}: {score}/10 — {verdict}",
     "{nom} {month} {year} — {score}/10: Reiseführer & Wetter",
-    "Reise nach {nom} im {month}: Score {score}/10 — Gut oder nicht?"
+    "{nom} im {month}: Wetter, {score}/10 — lohnt sich?"
   ],
   "monthly_descs": [
     "Lohnt sich {nom} im {month}? Score {score}/10 — {tmin}–{tmax}°C, {sun}h Sonne. Vollständige Analyse und beste Reisezeit.",

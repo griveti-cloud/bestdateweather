@@ -820,10 +820,10 @@
     "score_fair": "Not the best window, but acceptable if dates are constrained. {best_month} ({best_score}/10) is significantly better if possible."
   },
   "monthly_titles": [
-    "Is {month} Good for {nom}? Score {score}/10 — {tension}",
+    "{nom} Weather in {month}: {score}/10 — {tension}",
     "{nom} in {month} {year}: {score}/10 — Weather & Travel Guide",
     "{nom} {month} Weather {year} — {score}/10: {verdict}",
-    "Should You Go to {nom} in {month}? Score {score}/10"
+    "{nom} in {month}: weather & score {score}/10 — go or not?"
   ],
   "monthly_descs": [
     "Is {month} worth visiting {nom}? Climate score {score}/10 — temperature {tmin}–{tmax}°C, {sun}h sun. Full monthly breakdown and best time guide.",
