@@ -104,9 +104,14 @@ _SECTION_LABELS = {
 # CSS embarqué (minimal, copié depuis proto V5)
 # ══════════════════════════════════════════════════════════════════
 
-# Pour un vrai intégration prod, ces styles seraient dans un fichier .css
-# externe versionné. Pour ce MVP V6, on les embarque pour portabilité
-# (chaque page est self-contained pour tests visuels).
+# CSS V6 : externalisé dans css/v6.css depuis Tour 6 (phase 6a).
+# _CSS_BASE est conservé comme fallback inline pour les tests autonomes
+# (CLI --inline-css) qui veulent du HTML self-contained.
+# ⚠️  Toute modif CSS doit se faire dans css/v6.css PUIS recopier ici
+# (ou supprimer _CSS_BASE quand le mode inline ne sera plus utilisé).
+# Bumper V6_CSS_VERSION à chaque modif pour casser le cache navigateur.
+
+V6_CSS_VERSION = 1
 
 _CSS_BASE = """
 :root{
@@ -365,12 +370,28 @@ tbody tr:hover{background:#fffbf2}
 """
 
 
+def _css_link(lang, embed=False):
+    """
+    Renvoie le tag CSS à injecter dans <head>.
+
+    - embed=True : <style>{_CSS_BASE}</style> (HTML self-contained, démos /tmp/)
+    - embed=False (défaut prod) : <link rel="stylesheet" href="...css/v6.css?v=N"/>
+                                  avec préfixe relatif selon lang :
+                                    fr           → "css/v6.css"
+                                    en/us/es/de  → "../css/v6.css"
+    """
+    if embed:
+        return f"<style>{_CSS_BASE}</style>"
+    prefix = "" if lang == "fr" else "../"
+    return f'<link rel="stylesheet" href="{prefix}css/v6.css?v={V6_CSS_VERSION}"/>'
+
+
 # ══════════════════════════════════════════════════════════════════
 # Helpers rendu
 # ══════════════════════════════════════════════════════════════════
 
-def _render_head(dest, lang, page_title, jsonld_block=""):
-    """Rend le <head> HTML avec meta + CSS embarqué + Leaflet + JSON-LD."""
+def _render_head(dest, lang, page_title, jsonld_block="", embed_css=False):
+    """Rend le <head> HTML avec meta + CSS (link ou inline) + Leaflet + JSON-LD."""
     brand = _SECTION_LABELS.get(lang, _SECTION_LABELS["fr"])["brand_suffix"]
     full_title = f"{page_title} {brand}"
     return f'''<!DOCTYPE html>
@@ -385,7 +406,7 @@ def _render_head(dest, lang, page_title, jsonld_block=""):
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-<style>{_CSS_BASE}</style>
+{_css_link(lang, embed=embed_css)}
 {jsonld_block}
 </head>'''
 
@@ -591,7 +612,8 @@ def _apply_mountain_scores(dest, monthly):
 
 
 def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None,
-                     all_dests=None, all_climate_by_slug=None):
+                     all_dests=None, all_climate_by_slug=None,
+                     embed_css=False):
     """
     Rend une page HTML complète (DOCTYPE → </html>) pour une destination.
 
@@ -660,7 +682,7 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None,
     jsonld = build_jsonld_v6(dest, monthly, lang=lang, faq_items=faq_items)
 
     # Head (avec JSON-LD intégré)
-    head = _render_head(dest, lang, page_title, jsonld_block=jsonld)
+    head = _render_head(dest, lang, page_title, jsonld_block=jsonld, embed_css=embed_css)
 
     # Footer complet (switcher langues + legal)
     footer = build_footer_v6(dest, lang=lang)
@@ -730,6 +752,9 @@ def main():
     parser.add_argument("--data-dir", default="data", help="Répertoire CSV")
     parser.add_argument("--no-explorer-data", action="store_true",
                         help="Skip chargement all_dests/climate (Explorer affichera placeholders)")
+    parser.add_argument("--inline-css", action="store_true",
+                        help="Embed CSS dans <style> au lieu de <link rel=stylesheet>. "
+                             "Utile pour HTML self-contained (démos /tmp/, validation visuelle).")
     args = parser.parse_args()
 
     dest, monthly = _load_dest_and_monthly(args.slug, args.data_dir)
@@ -745,7 +770,8 @@ def main():
 
     html = render_annual_v6(dest, monthly, lang=args.lang,
                              all_dests=all_dests,
-                             all_climate_by_slug=all_climate_by_slug)
+                             all_climate_by_slug=all_climate_by_slug,
+                             embed_css=args.inline_css)
 
     with open(args.output, "w", encoding="utf-8") as f:
         f.write(html)
