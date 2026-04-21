@@ -69,6 +69,9 @@ _SECTION_LABELS = {
         "decider_lead": "La décision se joue sur plusieurs critères. Score climatique, foule touristique et activités possibles.",
         "brand_suffix": "· BestDateWeather",
         "hero_ctx": "climat tempéré",
+        "avis_label": "L'avis de Gilles",
+        "avis_role": "Fondateur · BestDateWeather",
+        "verdict_label": "Verdict :",
     },
     "en": {
         "decider_kicker": "Decide",
@@ -76,6 +79,9 @@ _SECTION_LABELS = {
         "decider_lead": "The decision comes down to several criteria. Weather score, crowds, and available activities.",
         "brand_suffix": "· BestDateWeather",
         "hero_ctx": "temperate climate",
+        "avis_label": "Gilles's take",
+        "avis_role": "Founder · BestDateWeather",
+        "verdict_label": "Verdict:",
     },
     "en-us": {
         "decider_kicker": "Decide",
@@ -83,6 +89,9 @@ _SECTION_LABELS = {
         "decider_lead": "The decision comes down to several criteria. Weather score, crowds, and available activities.",
         "brand_suffix": "· BestDateWeather",
         "hero_ctx": "temperate climate",
+        "avis_label": "Gilles's take",
+        "avis_role": "Founder · BestDateWeather",
+        "verdict_label": "Verdict:",
     },
     "es": {
         "decider_kicker": "Decidir",
@@ -90,6 +99,9 @@ _SECTION_LABELS = {
         "decider_lead": "La decisión depende de varios criterios. Puntuación climática, multitudes y actividades posibles.",
         "brand_suffix": "· BestDateWeather",
         "hero_ctx": "clima templado",
+        "avis_label": "La opinión de Gilles",
+        "avis_role": "Fundador · BestDateWeather",
+        "verdict_label": "Veredicto:",
     },
     "de": {
         "decider_kicker": "Entscheiden",
@@ -97,6 +109,9 @@ _SECTION_LABELS = {
         "decider_lead": "Die Entscheidung hängt von mehreren Kriterien ab. Klimapunktzahl, Menschenmassen und mögliche Aktivitäten.",
         "brand_suffix": "· BestDateWeather",
         "hero_ctx": "gemäßigtes Klima",
+        "avis_label": "Gilles' Meinung",
+        "avis_role": "Gründer · BestDateWeather",
+        "verdict_label": "Fazit:",
     },
 }
 
@@ -112,7 +127,7 @@ _SECTION_LABELS = {
 # (ou supprimer _CSS_BASE quand le mode inline ne sera plus utilisé).
 # Bumper V6_CSS_VERSION à chaque modif pour casser le cache navigateur.
 
-V6_CSS_VERSION = 3
+V6_CSS_VERSION = 4
 
 _CSS_BASE = """
 :root{
@@ -561,8 +576,17 @@ def _render_decider_section(dest, monthly, lang, ski_scores_by_month=None):
       </div>
       <div class="decider-grid">
         <div class="verdict-box">
-          <p class="verdict-txt">{verdict_txt}</p>
-          <p class="avis-edito">{avis_edito}</p>
+          <div class="verdict-note"><strong>{_html.escape(L.get("verdict_label", "Verdict :"))}</strong> {verdict_txt}</div>
+          <div class="avis-card">
+            <div class="avis-head">
+              <div class="avis-avatar">G</div>
+              <div class="avis-meta">
+                <div class="avis-label">{_html.escape(L["avis_label"])}</div>
+                <div class="avis-role">{_html.escape(L["avis_role"])}</div>
+              </div>
+            </div>
+            <p class="avis-edito">{avis_edito}</p>
+          </div>
           {pills_html}
           <div>
             {barchart_html}
