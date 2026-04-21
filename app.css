@@ -43,7 +43,7 @@
  --r:13px;--r-sm:12px;--r-xs:8px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;background:#0d1117}
 body{font-family:'DM Sans','DM Sans Fallback',sans-serif;background:#0d1117;color:var(--navy);min-height:100vh;-webkit-font-smoothing:antialiased}
 
 /* ── FLAGS ── */
