@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="robots" content="index,follow"/>
+<title>Quand partir à Lyon — météo &amp; meilleure période · BestDateWeather</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<link rel="stylesheet" href="css/v6.css?v=3"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Meilleure période pour partir à Lyon", "description": "Découvrez la meilleure période à Lyon. Score climatique complet sur 12 mois, température, soleil et pluie. Guide 2026.", "image": {"@type": "ImageObject", "url": "https://bestdateweather.com/og-image.png", "width": 1200, "height": 630}, "author": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com", "logo": {"@type": "ImageObject", "url": "https://bestdateweather.com/icon-192.png", "width": 192, "height": 192}}, "publisher": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com", "logo": {"@type": "ImageObject", "url": "https://bestdateweather.com/icon-192.png", "width": 192, "height": 192}}, "datePublished": "2026-04-20", "dateModified": "2026-04-20", "inLanguage": "fr", "url": "https://bestdateweather.com/meilleure-periode-lyon.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://bestdateweather.com/meilleure-periode-lyon.html"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Quelle est la meilleure période pour partir à Lyon ?", "acceptedAnswer": {"@type": "Answer", "text": "Juillet est le meilleur mois avec un score de 9.2/10 : 28°C en journée, 17°C la nuit, 13.7h de soleil et 27% de jours pluvieux."}}, {"@type": "Question", "name": "Quel est le mois le plus rude à Lyon ?", "acceptedAnswer": {"@type": "Answer", "text": "Janvier (2.2/10), avec environ 7°C en journée et 5.1h de soleil. À envisager seulement pour des activités ciblées."}}, {"@type": "Question", "name": "Quel est le mois le plus pluvieux à Lyon ?", "acceptedAnswer": {"@type": "Answer", "text": "Novembre avec environ 41% de jours de pluie. À comparer aux 27% du meilleur mois (Juillet)."}}, {"@type": "Question", "name": "Combien de mois confortables compte Lyon ?", "acceptedAnswer": {"@type": "Answer", "text": "Sur les 12 mois, 7 dépassent un score de 7/10. Top 2 : Août et Juillet si l'on cherche le meilleur compromis météo."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bestdateweather.com/"}, {"@type": "ListItem", "position": 2, "name": "Lyon", "item": "https://bestdateweather.com/meilleure-periode-lyon.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Données climatiques de Lyon — moyennes mensuelles sur 10 ans", "description": "Températures, précipitations, ensoleillement et vent mensuels à Lyon. Moyennes calculées sur 10 ans de données ERA5 (Open-Meteo).", "temporalCoverage": "2015/2024", "spatialCoverage": {"@type": "Place", "name": "Lyon"}, "creator": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com"}, "license": "https://creativecommons.org/licenses/by-nc/4.0/", "variableMeasured": ["Temperature", "Precipitation", "Sunshine hours", "Wind speed"]}</script>
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-main">
+        <div class="hero-eyebrow">Meilleure période</div>
+        <h1>Lyon : meilleurs et pires mois pour visiter</h1>
+        <p class="hero-lead">L'écart entre <strong>Juillet</strong> (9.2/10) et Janvier (2.2/10) est de 7.0 points. 7 mois confortables, 3 mois à éviter sur 12.</p>
+        <div class="hero-meta">
+          <span>📅 Mise à jour Avril 2026</span>
+          <span>🛰️ ERA5 · 10 ans</span>
+          <span>📍 45.75°N · 4.83°E</span>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="decision-card">
+            <div class="small-label">⚡ Réponse rapide</div>
+            <div class="decision-top">
+              <div>
+                <div class="month">Juillet</div>
+                <div class="sub">Fenêtre optimale de l&#x27;année</div>
+              </div>
+              <div class="score">9.2<small>/10</small></div>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-card"><div class="v">Juin · Juil · Aoû</div><div class="l">Top 3 mois</div></div>
+              <div class="mini-card"><div class="v">Janvier</div><div class="l">Mois le plus rude</div></div>
+              <div class="mini-card"><div class="v">Mai · Sep</div><div class="l">Mi-saison idéale</div></div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px">
+              <span style="font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:999px;background:#e8f8f0;color:#1a7a4a;border:1px solid #bfe7cd">✅ 7 mois confortables</span>
+              <span style="font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:999px;background:#fef3d0;color:#b8860b;border:1px solid #f2e6a8">👥 Foule estivale</span>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main>
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Décider</div>
+        <h2>Quand partir à Lyon ?</h2>
+        <p class="lead">La décision se joue sur plusieurs critères. Score climatique, foule touristique et activités possibles.</p>
+      </div>
+      <div class="decider-grid">
+        <div class="verdict-box">
+          <p class="verdict-txt">Pour Lyon, privilégier Juillet et Août. Janvier reste visitable mais avec des conditions difficiles.</p>
+          <p class="avis-edito">À Lyon, tenter <strong>Juillet ou septembre</strong> plutôt qu'août : météo presque identique, 40% de monde en moins, tarifs plus doux. À éviter absolument : Janvier.</p>
+          <div>
+            <div class="small-label">Top & à éviter</div>
+            <div class="pills">
+              <span class="pill good">🏆 Juillet · 9.2</span>
+              <span class="pill good">Août · 9.1</span>
+              <span class="pill good">Juin · 8.7</span>
+              <span class="pill good">Septembre · 8.4</span>
+              <span class="pill bad">⚠️ Janvier · 2.2</span>
+            </div>
+          </div>
+          <div>
+            <div class="bars">
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar bad" style="height:22%"></div></div><div class="bar-score">2.2</div><div class="bar-label">Jan</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:51%"></div></div><div class="bar-score">5.1</div><div class="bar-label">Fév</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:54%"></div></div><div class="bar-score">5.4</div><div class="bar-label">Mar</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:75%"></div></div><div class="bar-score">7.5</div><div class="bar-label">Avr</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:78%"></div></div><div class="bar-score">7.8</div><div class="bar-label">Mai</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:87%"></div></div><div class="bar-score">8.7</div><div class="bar-label">Juin</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar best" style="height:92%"></div></div><div class="bar-score">9.2</div><div class="bar-label">Juil</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:91%"></div></div><div class="bar-score">9.1</div><div class="bar-label">Aoû</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:84%"></div></div><div class="bar-score">8.4</div><div class="bar-label">Sep</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar good" style="height:74%"></div></div><div class="bar-score">7.4</div><div class="bar-label">Oct</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:46%"></div></div><div class="bar-score">4.6</div><div class="bar-label">Nov</div></div>
+              <div class="bar-wrap"><div class="bar-slot"><div class="bar low" style="height:43%"></div></div><div class="bar-score">4.3</div><div class="bar-label">Déc</div></div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;justify-content:center;font-size:11px;color:var(--muted)">
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:linear-gradient(180deg,#2ea86a 0%,#1a7a4a 100%)"></span>Très bon (≥8)</span>
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:linear-gradient(180deg,#46c878 0%,#25a75d 100%)"></span>Bon (7-8)</span>
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:linear-gradient(180deg,#ecc568 0%,#b8860b 100%)"></span>Moyen (5.5-7)</span>
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:linear-gradient(180deg,#e47272 0%,#b91c1c 100%)"></span>Compliqué (3.5-5.5)</span>
+              <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:3px;background:linear-gradient(180deg,#b91c1c 0%,#8b1616 100%)"></span>Rude (&lt;3.5)</span>
+            </div>
+          </div>
+        </div>
+        <div class="card pad right-stack">
+          <div class="right-item">
+            <h3>Ce qu&#x27;on comprend en 5 secondes</h3>
+            <p>Sur Lyon, 7 mois sortent clairement du lot (avril-octobre) et 1 plombent l'expérience (janvier). Écart 9.2→2.2 selon le mois.</p>
+          </div>
+          <div class="right-item">
+            <h3>Ce qu&#x27;il faut vérifier ensuite</h3>
+            <p>Votre tolérance à la foule et au budget. Les meilleurs mois concentrent la saturation touristique et les prix plus hauts. Les entre-saisons offrent un bon compromis.</p>
+          </div>
+          <div class="right-item">
+            <h3>Action suivante</h3>
+            <p>Descendre au tableau détaillé pour comparer mois à mois, puis ouvrir la fiche du mois qui vous intéresse.</p>
+          </div>
+          <div class="cta-row">
+            <a class="btn primary" href="#tableau">Comparer les 12 mois</a>
+            <a class="btn" href="#par-projet">Selon votre projet</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="tableau">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Comprendre</div>
+        <h2>Comparer les 12 mois</h2>
+        <p class="lead">Le détail de chaque mois : températures, pluie, soleil, score et lecture synthétique.</p>
+      </div>
+      <div class="spotlight-grid">
+        <div class="card pad">
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:var(--green-soft);border:1px solid var(--green-border);border-radius:999px;margin-bottom:12px;font-size:12px;font-weight:700;color:var(--green)">
+            ✅ <span>7 mois confortables</span>
+            <span style="font-size:11px;font-weight:500;color:var(--muted)">(Avr→Oct)</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mois</th>
+                  <th>T° min</th>
+                  <th>T° max</th>
+                  <th>Pluie %</th>
+                  <th>mm/j</th>
+                  <th>Soleil</th>
+                  <th>Score</th>
+                  <th>Lecture</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="row" onclick="location.href='lyon-meteo-janvier.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='lyon-meteo-janvier.html'"><td class="month-cell">🌥️ Janvier <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>1°C</td><td>7°C</td><td>40%</td><td>2.0mm</td><td>5.1h</td><td>2.2/10</td><td><span class="mood bad">Rude</span></td></tr>
+                <tr class="row" onclick="location.href='lyon-meteo-fevrier.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='lyon-meteo-fevrier.html'"><td class="month-cell">⛅ Février <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>2°C</td><td>11°C</td><td>30%</td><td>1.6mm</td><td>7.7h</td><td>5.1/10</td><td><span class="mood mid">Moyen</span></td></tr>
+                <tr class="row" onclick="location.href='lyon-meteo-mars.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='lyon-meteo-mars.html'"><td class="month-cell">⛅ Mars <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>4°C</td><td>13°C</td><td>38%</td><td>2.3mm</td><td>9.7h</td><td>5.4/10</td><td><span class="mood mid">Moyen</span></td></tr>
+                <tr class="row" onclick="location.href='lyon-meteo-avril.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='lyon-meteo-avril.html'"><td class="month-cell">☀️ Avril <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>7°C</td><td>17°C</td><td>31%</td><td>2.2mm</td><td>11.3h</td><td>7.5/10</td><td><span class="mood good">Très bon</span></td></tr>
+                <tr class="row" onclick="location.href='lyon-meteo-mai.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='lyon-meteo-mai.html'"><td class="month-cell">☀️ Mai <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>11°C</td><td>20°C</td><td>40%</td><td>3.1mm</td><td>12.2h</td><td>7.8/10</td><td><span class="mood good">Très bon</span></td></tr>
+                <tr class="row" onclick="location.href='lyon-meteo-juin.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='lyon-meteo-juin.html'"><td class="month-cell">☀️ Juin <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>16°C</td><td>26°C</td><td>36%</td><td>2.9mm</td><td>13.4h</td><td>8.7/10</td><td><span class="mood good">Meilleur</span></td></tr>
+                <tr class="row best" onclick="location.href='lyon-meteo-juillet.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='lyon-meteo-juillet.html'"><td class="month-cell">☀️ Juillet <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>17°C</td><td>28°C</td><td>27%</td><td>2.1mm</td><td>13.7h</td><td>9.2/10</td><td><span class="mood good">Meilleur</span></td></tr>
+                <tr class="row" onclick="location.href='lyon-meteo-aout.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='lyon-meteo-aout.html'"><td class="month-cell">☀️ Août <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>17°C</td><td>29°C</td><td>21%</td><td>1.8mm</td><td>12.6h</td><td>9.1/10</td><td><span class="mood good">Meilleur</span></td></tr>
+                <tr class="row" onclick="location.href='lyon-meteo-septembre.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='lyon-meteo-septembre.html'"><td class="month-cell">⛅ Septembre <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>13°C</td><td>23°C</td><td>24%</td><td>2.3mm</td><td>10.9h</td><td>8.4/10</td><td><span class="mood good">Très bon</span></td></tr>
+                <tr class="row" onclick="location.href='lyon-meteo-octobre.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='lyon-meteo-octobre.html'"><td class="month-cell">⛅ Octobre <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>10°C</td><td>18°C</td><td>31%</td><td>3.2mm</td><td>8.4h</td><td>7.4/10</td><td><span class="mood mid">Correct</span></td></tr>
+                <tr class="row" onclick="location.href='lyon-meteo-novembre.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='lyon-meteo-novembre.html'"><td class="month-cell">🌥️ Novembre <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>5°C</td><td>11°C</td><td>41%</td><td>2.9mm</td><td>6.3h</td><td>4.6/10</td><td><span class="mood bad">Compliqué</span></td></tr>
+                <tr class="row" onclick="location.href='lyon-meteo-decembre.html'" style="cursor:pointer" tabindex="0" role="link" onkeydown="if(event.key==='Enter')location.href='lyon-meteo-decembre.html'"><td class="month-cell">🌥️ Décembre <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td><td>2°C</td><td>8°C</td><td>38%</td><td>2.6mm</td><td>5.0h</td><td>4.3/10</td><td><span class="mood bad">Compliqué</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Version mobile -->
+          <div class="mobile-month-cards">
+            <a href="lyon-meteo-janvier.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌥️ Janvier</div><div class="score bad">2.2/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>1°C / 7°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>40%</strong></div>
+                <div class="row"><span>Soleil</span><strong>5.1h</strong></div>
+                <div class="row row-mood"><strong class="mood-bad">Rude</strong></div>
+              </div>
+            </a>
+            <a href="lyon-meteo-fevrier.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Février</div><div class="score mid">5.1/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>2°C / 11°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>30%</strong></div>
+                <div class="row"><span>Soleil</span><strong>7.7h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Moyen</strong></div>
+              </div>
+            </a>
+            <a href="lyon-meteo-mars.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Mars</div><div class="score mid">5.4/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>4°C / 13°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>38%</strong></div>
+                <div class="row"><span>Soleil</span><strong>9.7h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Moyen</strong></div>
+              </div>
+            </a>
+            <a href="lyon-meteo-avril.html" class="mobile-month-card">
+              <div class="head"><div class="name">☀️ Avril</div><div class="score good">7.5/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>7°C / 17°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>31%</strong></div>
+                <div class="row"><span>Soleil</span><strong>11.3h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Très bon</strong></div>
+              </div>
+            </a>
+            <a href="lyon-meteo-mai.html" class="mobile-month-card">
+              <div class="head"><div class="name">☀️ Mai</div><div class="score good">7.8/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>11°C / 20°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>40%</strong></div>
+                <div class="row"><span>Soleil</span><strong>12.2h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Très bon</strong></div>
+              </div>
+            </a>
+            <a href="lyon-meteo-juin.html" class="mobile-month-card">
+              <div class="head"><div class="name">☀️ Juin</div><div class="score good">8.7/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>16°C / 26°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>36%</strong></div>
+                <div class="row"><span>Soleil</span><strong>13.4h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Meilleur</strong></div>
+              </div>
+            </a>
+            <a href="lyon-meteo-juillet.html" class="mobile-month-card best">
+              <div class="head"><div class="name">☀️ Juillet</div><div class="score good">9.2/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>17°C / 28°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>27%</strong></div>
+                <div class="row"><span>Soleil</span><strong>13.7h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Meilleur</strong></div>
+              </div>
+            </a>
+            <a href="lyon-meteo-aout.html" class="mobile-month-card">
+              <div class="head"><div class="name">☀️ Août</div><div class="score good">9.1/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>17°C / 29°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>21%</strong></div>
+                <div class="row"><span>Soleil</span><strong>12.6h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Meilleur</strong></div>
+              </div>
+            </a>
+            <a href="lyon-meteo-septembre.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Septembre</div><div class="score good">8.4/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>13°C / 23°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>24%</strong></div>
+                <div class="row"><span>Soleil</span><strong>10.9h</strong></div>
+                <div class="row row-mood"><strong class="mood-good">Très bon</strong></div>
+              </div>
+            </a>
+            <a href="lyon-meteo-octobre.html" class="mobile-month-card">
+              <div class="head"><div class="name">⛅ Octobre</div><div class="score mid">7.4/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>10°C / 18°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>31%</strong></div>
+                <div class="row"><span>Soleil</span><strong>8.4h</strong></div>
+                <div class="row row-mood"><strong class="mood-mid">Correct</strong></div>
+              </div>
+            </a>
+            <a href="lyon-meteo-novembre.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌥️ Novembre</div><div class="score bad">4.6/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>5°C / 11°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>41%</strong></div>
+                <div class="row"><span>Soleil</span><strong>6.3h</strong></div>
+                <div class="row row-mood"><strong class="mood-bad">Compliqué</strong></div>
+              </div>
+            </a>
+            <a href="lyon-meteo-decembre.html" class="mobile-month-card">
+              <div class="head"><div class="name">🌥️ Décembre</div><div class="score bad">4.3/10</div></div>
+              <div class="rows">
+                <div class="row"><span>T°</span><strong>2°C / 8°C</strong></div>
+                <div class="row"><span>Pluie</span><strong>38%</strong></div>
+                <div class="row"><span>Soleil</span><strong>5.0h</strong></div>
+                <div class="row row-mood"><strong class="mood-bad">Compliqué</strong></div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="signal-card">
+          <div class="card pad">
+            <div class="small-label">📊 Lecture rapide</div>
+            <div class="signal-list">
+              <div class="signal-item"><div class="l">Fenêtre optimale</div><div class="r">Avr → Oct</div></div>
+              <div class="signal-item"><div class="l">Bonne transition</div><div class="r">—</div></div>
+              <div class="signal-item"><div class="l">Période rude</div><div class="r">Jan</div></div>
+            </div>
+          </div>
+          <div class="card pad">
+            <div class="small-label">🌡️ Conditions détaillées (juillet)</div>
+            <div class="signal-list">
+              <div class="signal-item"><div class="l">🌡️ Ressenti</div><div class="r">Tempéré</div></div>
+              <div class="signal-item"><div class="l">☀️ UV</div><div class="r">7.0 · Modéré-Fort</div></div>
+              <div class="signal-item"><div class="l">💧 Humidité ressentie</div><div class="r">13.5°C · Agréable</div></div>
+              <div class="signal-item"><div class="l">🌫️ Qualité de l'air</div><div class="r">27 · Bon</div></div>
+              <div class="signal-item"><div class="l">☔ Pluie</div><div class="r">27% · 2.1 mm/j</div></div>
+              <div class="signal-item"><div class="l">🌅 Soleil</div><div class="r">13.7h/jour</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="tendance-section"><div class="container"><div class="section-head"><div class="section-kicker">Tendance 10 ans</div><h2>Températures annuelles — Lyon</h2><p class="lead">Courbes T° min/max observées sur les 10 dernières années (ERA5). Permet de voir la stabilité et la tendance.</p></div><div class="card pad"><div class="ct-no-data">Données annuelles indisponibles pour cette destination.</div></div><div class="method-card"><div class="method-head"><div class="method-ico">🔬</div><div><div class="method-title">Comment sont calculés nos scores ?</div><div class="method-sub">4 critères pondérés sur 10 ans de données climatiques réelles</div></div></div><div class="method-grid"><div class="method-item"><div class="method-k">Précipitations</div><div class="method-v">Fréquence & intensité quotidienne de pluie</div></div><div class="method-item"><div class="method-k">Température</div><div class="method-v">T° max, min & stabilité mensuelle</div></div><div class="method-item"><div class="method-k">Ensoleillement</div><div class="method-v">Heures de soleil par jour</div></div><div class="method-item"><div class="method-k">Ressenti humide</div><div class="method-v">Point de rosée (confort thermique réel)</div></div></div><div class="method-footer"><div class="method-source"><strong>Source :</strong> ERA5 (ECMWF) · Open-Meteo · 10 ans (2016-2025)</div><a href="methodologie.html" class="method-link">Méthodologie complète →</a></div></div></div></section>
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Contexte</div>
+        <h2>À quoi s&#x27;attendre selon la période</h2>
+        <p class="lead">Climat tempéré : plusieurs périodes qui changent la qualité du séjour.</p>
+      </div>
+      <div class="grid-3">
+        <div class="box">
+          <div class="box-head">
+            <div><strong>☀️ Saison haute</strong></div>
+            <span class="badge">Juin → Sep</span>
+          </div>
+          <p>Journées longues (13h de soleil), températures 26°C, météo stable. <strong>Période à privilégier</strong> pour balades, terrasses, activités extérieures. Pic touristique : affluence et prix élevés.</p>
+        </div>
+        <div class="box">
+          <div class="box-head">
+            <div><strong>🌥️ Mi-saison</strong></div>
+            <span class="badge">Mar · Avr · Mai · Oct</span>
+          </div>
+          <p>Climat intermédiaire, fréquentation modérée. Bon compromis météo / foule / tarifs. Printemps : floraisons. Automne : couleurs et lumière rasante.</p>
+        </div>
+        <div class="box">
+          <div class="box-head">
+            <div><strong>❄️ Saison basse</strong></div>
+            <span class="badge">Jan · Fév · Nov · Déc</span>
+          </div>
+          <p>Journées courtes (6h de soleil), températures 9°C, météo instable. Période difficile en extérieur mais tarifs hôtels au plus bas. Musées, spas, gastronomie compensent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="par-projet">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Adapter</div>
+        <h2>Meilleure période selon votre type de voyage</h2>
+        <p class="lead">Le meilleur mois dépend de ce que vous venez chercher.</p>
+      </div>
+      <div class="grid-4">
+        <div class="box">
+          <div class="box-head"><div><strong>🏛️ Musées &amp; culture</strong></div><span class="badge">Toute l&#x27;année</span></div>
+          <p>Les sites couverts restent accessibles toute l&#x27;année. Hors saison haute : moins de foule, tarifs hôtels plus bas.</p>
+        </div>
+        <div class="box">
+          <div class="box-head"><div><strong>🍷 Gastronomie &amp; vie locale</strong></div><span class="badge">Avr → Oct</span></div>
+          <p>Terrasses ouvertes, marchés en plein air, atmosphère vivante. Pic social sur les mois confortables.</p>
+        </div>
+        <div class="box">
+          <div class="box-head"><div><strong>👥 Famille &amp; sorties</strong></div><span class="badge">Avr → Oct</span></div>
+          <p>Climat clément, journées longues, activités extérieures possibles. Pic vacances scolaires : réserver tôt.</p>
+        </div>
+        <div class="box">
+          <div class="box-head"><div><strong>💻 Digital nomad</strong></div><span class="badge">—</span></div>
+          <p>Hors saison haute : logement accessible, cafés moins bondés, connexion stable. Éviter les pics touristiques.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="planifier" style="scroll-margin-top:120px">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Réserver</div>
+        <h2>Planifier votre séjour</h2>
+        <p class="lead">Hôtels au plus bas hors saison haute, tarifs au plus haut sur les mois confortables. Mi-saisons offrent un bon compromis prix/climat.</p>
+      </div>
+      <div class="grid-3 plan-row">
+        <a href="https://www.expedia.com/Hotel-Search?destination=Lyon&camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-card">
+          <div class="plan-icon">🏨</div>
+          <div class="plan-body">
+            <div class="plan-title">Hébergement</div>
+            <div class="plan-sub">Hôtels &amp; locations · Lyon</div>
+          </div>
+          <div class="plan-cta">Expedia →</div>
+        </a>
+        <a href="#activites" class="plan-card">
+          <div class="plan-icon">🎟️</div>
+          <div class="plan-body">
+            <div class="plan-title">Activités</div>
+            <div class="plan-sub">Excursions, billets, expériences</div>
+          </div>
+          <div class="plan-cta">Voir ↓</div>
+        </a>
+        <a href="https://www.kiwi.com/deep?affilid=708106&to=Lyon&lang=fr" target="_blank" rel="sponsored noopener" class="plan-card">
+          <div class="plan-icon">✈️</div>
+          <div class="plan-body">
+            <div class="plan-title">Vols</div>
+            <div class="plan-sub">Comparateur multi-compagnies</div>
+          </div>
+          <div class="plan-cta">Kiwi →</div>
+        </a>
+      </div>
+
+      <div id="activites" class="card pad" style="margin-top:20px;scroll-margin-top:120px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap">
+          <div>
+            <h3 style="margin:0 0 4px">🎟️ Activités & excursions · Lyon</h3>
+            <p style="margin:0;color:var(--muted);font-size:.9rem">Sélection GetYourGuide · réservation annulable gratuitement</p>
+          </div>
+          <a class="btn primary" style="padding:10px 18px" href="https://www.getyourguide.com/s/?q=Lyon%2C+France&partner_id=2MQKL00&locale=fr-FR" target="_blank" rel="sponsored noopener">Voir tout →</a>
+        </div>
+        <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+             data-gyg-locale-code="fr-FR"
+             data-gyg-widget="activities"
+             data-gyg-number-of-items="3"
+             data-gyg-partner-id="2MQKL00"
+             data-gyg-q="Lyon, France">
+        </div>
+        <span class="affil-note" style="text-align:right;display:block;margin-top:10px;font-size:11px;color:var(--muted)">Lien affilié · GetYourGuide</span>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Infos pratiques</div>
+        <h2>Ce qu&#x27;il faut savoir avant de partir</h2>
+        <p class="lead">Budget, sécurité, monnaie, climat : tout ce qui ne change pas la décision mais reste bon à savoir.</p>
+      </div>
+      <div class="grid-2">
+        <div class="box">
+          <h3>🌍 Géographie & pratique</h3>
+          <div class="list">
+            <div class="list-item"><span><span class="list-ico">🌐</span>Pays</span><strong>France</strong></div>
+            <div class="list-item"><span><span class="list-ico">🌡️</span>Type de climat</span><strong>Tempéré</strong></div>
+          </div>
+        </div>
+        <div class="box">
+          <h3>📍 Localisation & climat</h3>
+          <div class="list">
+            <div class="list-item"><span><span class="list-ico">🧭</span>Latitude</span><strong>45.75°N</strong></div>
+            <div class="list-item"><span><span class="list-ico">📐</span>Longitude</span><strong>4.83°E</strong></div>
+            <div class="list-item"><span><span class="list-ico">📈</span>Tendance</span><strong>+0.34°C / décennie</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Explorer</div>
+        <h2>Destinations &amp; guides complémentaires</h2>
+        <p class="lead">Si Lyon ne colle pas à vos dates, voici des alternatives et des guides.</p>
+      </div>
+      <div class="grid-3">
+        <div class="box">
+          <h3>Destinations au climat similaire</h3>
+          <div class="list">
+            <a href="meilleure-periode-dordogne.html" class="list-item"><span><img src="flags/fr.png" width="18" height="13" alt="" loading="lazy" class="list-flag">la Dordogne <span class="list-country">· France</span></span><strong>→</strong></a>
+            <a href="meilleure-periode-sarajevo.html" class="list-item"><span><img src="flags/ba.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Sarajevo <span class="list-country">· Bosnie-Herzégovine</span></span><strong>→</strong></a>
+            <a href="meilleure-periode-bretagne.html" class="list-item"><span><img src="flags/fr.png" width="18" height="13" alt="" loading="lazy" class="list-flag">la Bretagne <span class="list-country">· France</span></span><strong>→</strong></a>
+            <a href="meilleure-periode-perouse.html" class="list-item"><span><img src="flags/it.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Pérouse <span class="list-country">· Italie</span></span><strong>→</strong></a>
+          </div>
+        </div>
+        <div class="box">
+          <h3>Destinations proches</h3>
+          <div class="list">
+            <a href="meilleure-periode-annecy.html" class="list-item"><span><img src="flags/fr.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Annecy <span class="list-country">· France</span></span><strong>101 km →</strong></a>
+            <a href="meilleure-periode-geneve.html" class="list-item"><span><img src="flags/ch.png" width="18" height="13" alt="" loading="lazy" class="list-flag">Genève <span class="list-country">· Suisse</span></span><strong>113 km →</strong></a>
+            <a href="meilleure-periode-alpe-dhuez.html" class="list-item"><span><img src="flags/fr.png" width="18" height="13" alt="" loading="lazy" class="list-flag">l&#x27;Alpe d&#x27;Huez <span class="list-country">· France</span></span><strong>121 km →</strong></a>
+            <a href="meilleure-periode-la-clusaz.html" class="list-item"><span><img src="flags/fr.png" width="18" height="13" alt="" loading="lazy" class="list-flag">La Clusaz <span class="list-country">· France</span></span><strong>125 km →</strong></a>
+          </div>
+        </div>
+        <div class="box">
+          <h3>Guides &amp; classements</h3>
+          <div class="list">
+            <div class="list-item"><span>Classement mondial 2026</span><strong><a href="classement-destinations-meteo-2026.html">Voir →</a></strong></div>
+            <div class="list-item"><span>Meilleures destinations été</span><strong><a href="classement-destinations-meteo-ete-2026.html">Voir →</a></strong></div>
+            <div class="list-item"><span>Soleil hiver</span><strong><a href="classement-destinations-meteo-hiver-2026.html">Voir →</a></strong></div>
+            <div class="list-item"><span>Où partir en juillet</span><strong><a href="ou-partir-en-juillet.html">Voir →</a></strong></div>
+          </div>
+          <div style="margin-top:16px">
+            <a class="btn primary" href="carte.html">🗺️ Carte climatique</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="dest-map-section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Localisation</div>
+        <h2>Où se trouve Lyon ?</h2>
+        <p class="lead">Position mondiale + contexte géographique régional.</p>
+      </div>
+      <div class="dest-map-row" data-dest-map="1" data-lat="45.75" data-lon="4.83" data-macro-zoom="5" data-world-id="dmap-world-lyon" data-macro-id="dmap-macro-lyon">
+        <div class="dest-map-card">
+          <div class="dest-map-lbl">🌍 Monde</div>
+          <div id="dmap-world-lyon" class="dest-map-el dest-map-el--world"></div>
+        </div>
+        <div class="dest-map-card">
+          <div class="dest-map-lbl">🔍 Contexte géographique</div>
+          <div id="dmap-macro-lyon" class="dest-map-el dest-map-el--macro"></div>
+        </div>
+      </div>
+      <div class="dest-map-intro">
+        <div class="dest-map-intro-body">
+          <div class="dest-map-country"><img src="flags/fr.png" width="16" height="12" alt="" style="vertical-align:middle;border-radius:2px;margin-right:5px">France</div>
+          <div class="dest-map-hsub">Climat tempéré avec un écart 9.2 → 2.2 entre meilleur et pire mois. 10 ans de données ERA5 pour choisir selon votre projet.</div>
+          <div class="dest-map-coords">45.75°N · 4.83°E</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Questions</div>
+        <h2>Questions fréquentes</h2>
+        <p class="lead">Les réponses les plus cherchées à propos de Lyon.</p>
+      </div>
+      <div class="faq">
+        <div class="faq-item">
+          <strong>Quelle est la meilleure période pour partir à Lyon ?</strong>
+          Juillet est le meilleur mois avec un score de 9.2/10 : 28°C en journée, 17°C la nuit, 13.7h de soleil et 27% de jours pluvieux.
+        </div>
+        <div class="faq-item">
+          <strong>Quel est le mois le plus rude à Lyon ?</strong>
+          Janvier (2.2/10), avec environ 7°C en journée et 5.1h de soleil. À envisager seulement pour des activités ciblées.
+        </div>
+        <div class="faq-item">
+          <strong>Quel est le mois le plus pluvieux à Lyon ?</strong>
+          Novembre avec environ 41% de jours de pluie. À comparer aux 27% du meilleur mois (Juillet).
+        </div>
+        <div class="faq-item">
+          <strong>Combien de mois confortables compte Lyon ?</strong>
+          Sur les 12 mois, 7 dépassent un score de 7/10. Top 2 : Août et Juillet si l&#x27;on cherche le meilleur compromis météo.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="bdw-footer">
+  <div class="container">
+    <p class="bdw-footer-brand">bestdateweather.com</p>
+    <p><a href="https://open-meteo.com/" rel="noopener">Données météo par Open-Meteo.com</a> · <span class="bdw-footer-sub">Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0</span></p>
+    <p class="bdw-footer-links"><a href="methodologie.html">Méthodologie</a> · <a href="a-propos.html">À propos</a> · <a href="faq.html">FAQ</a> · <a href="index.html">Application météo</a> · <a href="widgets.html">Widgets voyage</a></p>
+    <p class="bdw-footer-langs">
+      <a href="en/best-time-to-visit-lyon.html"><img src="flags/gb.png" width="20" height="15" alt="" loading="lazy"> English</a>
+      <a href="us/best-time-to-visit-lyon.html"><img src="flags/us.png" width="20" height="15" alt="" loading="lazy"> English (US)</a>
+      <a href="es/mejor-epoca-lyon.html"><img src="flags/es.png" width="20" height="15" alt="" loading="lazy"> Español</a>
+      <a href="de/beste-reisezeit-lyon.html"><img src="flags/de.png" width="20" height="15" alt="" loading="lazy"> Deutsch</a>
+    </p>
+    <p class="bdw-footer-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="contact.html">Contact</a></p>
+  </div>
+</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+<script src="js/dest-map.min.js?v=1" defer></script>
+<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
+</body>
+</html>
