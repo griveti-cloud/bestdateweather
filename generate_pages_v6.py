@@ -39,6 +39,7 @@ from lib.common_v6 import (
     build_pills_v6,
     build_right_stack_v6,
     build_comprendre_section_v6,
+    build_tendance_section_v6,
     build_seasons_section_v6,
     build_profiles_section_v6,
     build_planifier_section_v6,
@@ -111,7 +112,7 @@ _SECTION_LABELS = {
 # (ou supprimer _CSS_BASE quand le mode inline ne sera plus utilisé).
 # Bumper V6_CSS_VERSION à chaque modif pour casser le cache navigateur.
 
-V6_CSS_VERSION = 2
+V6_CSS_VERSION = 3
 
 _CSS_BASE = """
 :root{
@@ -706,6 +707,7 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None,
     hero = _render_hero(dest, monthly, lang)
     decider = _render_decider_section(dest, monthly, lang, ski_scores_by_month)
     comprendre = build_comprendre_section_v6(dest, monthly, lang=lang)
+    tendance = build_tendance_section_v6(dest, lang=lang)
     seasons = build_seasons_section_v6(dest, monthly, lang=lang)
     profiles = build_profiles_section_v6(dest, monthly, lang=lang)
     planifier = build_planifier_section_v6(dest, monthly, lang=lang)
@@ -739,6 +741,7 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None,
 <main>
   {decider}
   {comprendre}
+  {tendance}
   {seasons}
   {profiles}
   {planifier}

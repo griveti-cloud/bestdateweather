@@ -1973,6 +1973,331 @@ def _build_season_cards(dtype, monthly, lang="fr"):
     return cards
 
 
+# ══════════════════════════════════════════════════════════════════
+# SECTION TENDANCE 10 ANS (Tour 8b)
+# ══════════════════════════════════════════════════════════════════
+
+# Labels par langue pour la section Tendance
+_TENDANCE_LABELS = {
+    "fr": {
+        "kicker":     "Tendance 10 ans",
+        "h2":         "Températures annuelles — {nom}",
+        "lead":       "Courbes T° min/max observées sur les 10 dernières années (ERA5). Permet de voir la stabilité et la tendance.",
+        "lbl_max":    "T° max",
+        "lbl_moy":    "Moyenne",
+        "lbl_min":    "T° min",
+        "method_h":   "Comment sont calculés nos scores ?",
+        "method_sub": "4 critères pondérés sur 10 ans de données climatiques réelles",
+        "k_precip":   "Précipitations",
+        "v_precip":   "Fréquence & intensité quotidienne de pluie",
+        "k_temp":     "Température",
+        "v_temp":     "T° max, min & stabilité mensuelle",
+        "k_sun":      "Ensoleillement",
+        "v_sun":      "Heures de soleil par jour",
+        "k_dew":      "Ressenti humide",
+        "v_dew":      "Point de rosée (confort thermique réel)",
+        "source":     "Source :",
+        "source_v":   "ERA5 (ECMWF) · Open-Meteo · 10 ans (2016-2025)",
+        "method_link":"Méthodologie complète →",
+        "no_data":    "Données annuelles indisponibles pour cette destination.",
+    },
+    "en": {
+        "kicker":     "10-year trend",
+        "h2":         "Annual temperatures — {nom}",
+        "lead":       "Min/max temperature curves observed over the last 10 years (ERA5). Shows stability and trend.",
+        "lbl_max":    "T° max",
+        "lbl_moy":    "Average",
+        "lbl_min":    "T° min",
+        "method_h":   "How are our scores calculated?",
+        "method_sub": "4 weighted criteria on 10 years of real climate data",
+        "k_precip":   "Precipitation",
+        "v_precip":   "Daily rain frequency & intensity",
+        "k_temp":     "Temperature",
+        "v_temp":     "T° max, min & monthly stability",
+        "k_sun":      "Sunshine",
+        "v_sun":      "Daily sunshine hours",
+        "k_dew":      "Humid feel",
+        "v_dew":      "Dew point (real thermal comfort)",
+        "source":     "Source:",
+        "source_v":   "ERA5 (ECMWF) · Open-Meteo · 10 years (2016-2025)",
+        "method_link":"Full methodology →",
+        "no_data":    "Annual data unavailable for this destination.",
+    },
+    "en-us": {
+        "kicker":     "10-year trend",
+        "h2":         "Annual temperatures — {nom}",
+        "lead":       "Min/max temperature curves observed over the last 10 years (ERA5). Shows stability and trend.",
+        "lbl_max":    "T° max",
+        "lbl_moy":    "Average",
+        "lbl_min":    "T° min",
+        "method_h":   "How are our scores calculated?",
+        "method_sub": "4 weighted criteria on 10 years of real climate data",
+        "k_precip":   "Precipitation",
+        "v_precip":   "Daily rain frequency & intensity",
+        "k_temp":     "Temperature",
+        "v_temp":     "T° max, min & monthly stability",
+        "k_sun":      "Sunshine",
+        "v_sun":      "Daily sunshine hours",
+        "k_dew":      "Humid feel",
+        "v_dew":      "Dew point (real thermal comfort)",
+        "source":     "Source:",
+        "source_v":   "ERA5 (ECMWF) · Open-Meteo · 10 years (2016-2025)",
+        "method_link":"Full methodology →",
+        "no_data":    "Annual data unavailable for this destination.",
+    },
+    "es": {
+        "kicker":     "Tendencia 10 años",
+        "h2":         "Temperaturas anuales — {nom}",
+        "lead":       "Curvas de T° mín/máx observadas en los últimos 10 años (ERA5). Permite ver la estabilidad y la tendencia.",
+        "lbl_max":    "T° máx",
+        "lbl_moy":    "Promedio",
+        "lbl_min":    "T° mín",
+        "method_h":   "¿Cómo calculamos las puntuaciones?",
+        "method_sub": "4 criterios ponderados sobre 10 años de datos climáticos reales",
+        "k_precip":   "Precipitaciones",
+        "v_precip":   "Frecuencia e intensidad diaria de lluvia",
+        "k_temp":     "Temperatura",
+        "v_temp":     "T° máx, mín y estabilidad mensual",
+        "k_sun":      "Sol",
+        "v_sun":      "Horas de sol al día",
+        "k_dew":      "Sensación húmeda",
+        "v_dew":      "Punto de rocío (confort térmico real)",
+        "source":     "Fuente:",
+        "source_v":   "ERA5 (ECMWF) · Open-Meteo · 10 años (2016-2025)",
+        "method_link":"Metodología completa →",
+        "no_data":    "Datos anuales no disponibles para este destino.",
+    },
+    "de": {
+        "kicker":     "10-Jahres-Trend",
+        "h2":         "Jahrestemperaturen — {nom}",
+        "lead":       "Min/Max-Temperaturkurven der letzten 10 Jahre (ERA5). Zeigt Stabilität und Trend.",
+        "lbl_max":    "T° max",
+        "lbl_moy":    "Durchschnitt",
+        "lbl_min":    "T° min",
+        "method_h":   "Wie werden unsere Scores berechnet?",
+        "method_sub": "4 gewichtete Kriterien auf 10 Jahren echter Klimadaten",
+        "k_precip":   "Niederschlag",
+        "v_precip":   "Tägliche Regenhäufigkeit & -intensität",
+        "k_temp":     "Temperatur",
+        "v_temp":     "T° max, min & monatliche Stabilität",
+        "k_sun":      "Sonne",
+        "v_sun":      "Sonnenstunden pro Tag",
+        "k_dew":      "Schwüle",
+        "v_dew":      "Taupunkt (reales Thermalkomfort)",
+        "source":     "Quelle:",
+        "source_v":   "ERA5 (ECMWF) · Open-Meteo · 10 Jahre (2016-2025)",
+        "method_link":"Vollständige Methodik →",
+        "no_data":    "Jahresdaten für dieses Reiseziel nicht verfügbar.",
+    },
+}
+
+
+def build_temperature_chart_v6(slug, lang="fr"):
+    """
+    Génère le SVG 'Tendance 10 ans' avec courbes T° min/moyenne/max sur 2016-2025.
+
+    Reproduit fidèlement le SVG V5 (viewBox 560×234) :
+    - Grille horizontale (lignes pointillées + labels axe Y)
+    - 3 polylines : T° max (rouge), moyenne (gris pointillé), T° min (bleu)
+    - Cercles aux points de données (rouge T°max, bleu T°min)
+    - Labels années alternés (haut/bas) sur axe X
+    - Légende sous le graphique
+
+    Args:
+        slug: slug FR de la destination
+        lang: code langue
+
+    Returns:
+        str : SVG + légende, ou message 'no_data' si trend absent
+    """
+    from lib.climate_trend import get_trend
+    L = _TENDANCE_LABELS.get(lang, _TENDANCE_LABELS["fr"])
+    trend = get_trend(slug)
+    if not trend or not trend.get("years"):
+        return f'<div class="ct-no-data">{L["no_data"]}</div>'
+
+    years = trend["years"]
+    tmax = trend["tmax"]
+    tmin = trend["tmin"]
+    tmoy = trend["tmoy"]
+
+    # Bornes du graphique : viewBox 560×234, axes selon V5
+    # X: 40 → 544 (504px utiles, n_years points)
+    # Y: 11.8 (top) → 175.8 (bottom), range 164px pour gamme T°
+    n = len(years)
+    if n < 2:
+        return f'<div class="ct-no-data">{L["no_data"]}</div>'
+
+    x_left, x_right = 40.0, 544.0
+    y_top, y_bot = 11.8, 175.8
+
+    # Range T° : auto-adapté avec marge, arrondi aux entiers pairs
+    all_t = tmin + tmoy + tmax
+    t_lo_raw, t_hi_raw = min(all_t), max(all_t)
+    pad = max(1.0, (t_hi_raw - t_lo_raw) * 0.1)
+    t_lo = int((t_lo_raw - pad) // 2 * 2)  # pair inférieur
+    t_hi = int((t_hi_raw + pad + 1) // 2 * 2)  # pair supérieur
+    t_range = max(1, t_hi - t_lo)
+
+    def x_of(i):
+        return x_left + (x_right - x_left) * i / (n - 1)
+
+    def y_of(t):
+        # Inversion : t_hi en haut (y_top), t_lo en bas (y_bot)
+        return y_top + (y_bot - y_top) * (t_hi - t) / t_range
+
+    # Grille horizontale : labels tous les 2°C
+    grid_lines = []
+    for tval in range(t_lo, t_hi + 1, 2):
+        y = y_of(tval)
+        grid_lines.append(
+            f'<line x1="{x_left}" y1="{y:.1f}" x2="{x_right}" y2="{y:.1f}" '
+            f'stroke="#e8e0d0" stroke-width="1" stroke-dasharray="3 3"/>'
+            f'<text x="34" y="{y + 4:.1f}" text-anchor="end" '
+            f'font-size="10" fill="#6b7280" font-weight="600">{tval}</text>'
+        )
+
+    # Polylines (3 courbes)
+    def polyline_pts(values):
+        return " ".join(f"{x_of(i):.1f},{y_of(v):.1f}" for i, v in enumerate(values))
+
+    poly_min = (
+        f'<polyline points="{polyline_pts(tmin)}" '
+        f'fill="none" stroke="#3b82f6" stroke-width="2.5" '
+        f'stroke-linejoin="round" stroke-linecap="round"/>'
+    )
+    poly_moy = (
+        f'<polyline points="{polyline_pts(tmoy)}" '
+        f'fill="none" stroke="#9ca3af" stroke-width="1.5" '
+        f'stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 3"/>'
+    )
+    poly_max = (
+        f'<polyline points="{polyline_pts(tmax)}" '
+        f'fill="none" stroke="#ef4444" stroke-width="2.5" '
+        f'stroke-linejoin="round" stroke-linecap="round"/>'
+    )
+
+    # Cercles aux points de données (max + min, comme V5)
+    circles_max = "".join(
+        f'<circle cx="{x_of(i):.1f}" cy="{y_of(v):.1f}" r="3" '
+        f'fill="#ef4444" stroke="white" stroke-width="1.5"/>'
+        for i, v in enumerate(tmax)
+    )
+    circles_min = "".join(
+        f'<circle cx="{x_of(i):.1f}" cy="{y_of(v):.1f}" r="3" '
+        f'fill="#3b82f6" stroke="white" stroke-width="1.5"/>'
+        for i, v in enumerate(tmin)
+    )
+
+    # Labels années (alternance haut 216 / bas 231 comme V5)
+    year_labels = []
+    for i, yr in enumerate(years):
+        x = x_of(i)
+        y_lbl = 216 if (i % 2 == 0) else 231
+        year_labels.append(
+            f'<text x="{x:.1f}" y="{y_lbl}" text-anchor="middle" '
+            f'font-size="9.5" fill="#6b7280" font-weight="600">{yr}</text>'
+            f'<line x1="{x:.1f}" y1="186" x2="{x:.1f}" y2="190" '
+            f'stroke="#d1d5db" stroke-width="1"/>'
+        )
+
+    # Légende sous le graphique
+    legend = (
+        f'<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px">'
+        f'<span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap">'
+        f'<span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:#ef4444;flex-shrink:0"></span>'
+        f'{L["lbl_max"]}</span>'
+        f'<span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap">'
+        f'<span style="display:inline-block;width:18px;height:3px;border-radius:2px;'
+        f'background:repeating-linear-gradient(90deg,#9ca3af 0,#9ca3af 5px,transparent 5px,transparent 8px);flex-shrink:0"></span>'
+        f'{L["lbl_moy"]}</span>'
+        f'<span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#718096;white-space:nowrap">'
+        f'<span style="display:inline-block;width:18px;height:3px;border-radius:2px;background:#3b82f6;flex-shrink:0"></span>'
+        f'{L["lbl_min"]}</span>'
+        f'</div>'
+    )
+
+    svg = (
+        f'<svg viewBox="0 0 560 234" width="100%" '
+        f'style="display:block;overflow:visible" role="img" '
+        f'aria-label="{L["h2"].format(nom=slug.title())}">'
+        f'{"".join(grid_lines)}'
+        f'{poly_min}{poly_moy}{poly_max}'
+        f'{circles_max}{circles_min}'
+        f'{"".join(year_labels)}'
+        f'</svg>'
+    )
+
+    return f'<div class="ct-chart-wrap">{svg}{legend}</div>'
+
+
+def build_methodology_card_v6(lang="fr"):
+    """
+    Encart 'Comment sont calculés nos scores ?' avec 4 critères + source ERA5.
+
+    Identique au V5, traduit en 5 langues.
+
+    Returns:
+        str : div.method-card complet
+    """
+    L = _TENDANCE_LABELS.get(lang, _TENDANCE_LABELS["fr"])
+    return (
+        f'<div class="method-card">'
+        f'<div class="method-head">'
+        f'<div class="method-ico">🔬</div>'
+        f'<div>'
+        f'<div class="method-title">{L["method_h"]}</div>'
+        f'<div class="method-sub">{L["method_sub"]}</div>'
+        f'</div>'
+        f'</div>'
+        f'<div class="method-grid">'
+        f'<div class="method-item"><div class="method-k">{L["k_precip"]}</div><div class="method-v">{L["v_precip"]}</div></div>'
+        f'<div class="method-item"><div class="method-k">{L["k_temp"]}</div><div class="method-v">{L["v_temp"]}</div></div>'
+        f'<div class="method-item"><div class="method-k">{L["k_sun"]}</div><div class="method-v">{L["v_sun"]}</div></div>'
+        f'<div class="method-item"><div class="method-k">{L["k_dew"]}</div><div class="method-v">{L["v_dew"]}</div></div>'
+        f'</div>'
+        f'<div class="method-footer">'
+        f'<div class="method-source"><strong>{L["source"]}</strong> {L["source_v"]}</div>'
+        f'<a href="methodologie.html" class="method-link">{L["method_link"]}</a>'
+        f'</div>'
+        f'</div>'
+    )
+
+
+def build_tendance_section_v6(dest, lang="fr"):
+    """
+    Section complète 'Tendance 10 ans' = graphique SVG + encart méthodologie.
+
+    Args:
+        dest: dict destination (besoin de slug + nom_{lang})
+        lang: code langue
+
+    Returns:
+        str : <section> complet
+    """
+    L = _TENDANCE_LABELS.get(lang, _TENDANCE_LABELS["fr"])
+    slug = dest.get("slug") or dest.get("slug_fr") or "paris"
+    nom = (dest.get(f"nom_{lang}") or dest.get("nom_fr") or
+           dest.get("nom_bare") or slug.title())
+
+    chart = build_temperature_chart_v6(slug, lang)
+    method = build_methodology_card_v6(lang)
+
+    return (
+        f'<section class="tendance-section">'
+        f'<div class="container">'
+        f'<div class="section-head">'
+        f'<div class="section-kicker">{L["kicker"]}</div>'
+        f'<h2>{L["h2"].format(nom=_html.escape(nom))}</h2>'
+        f'<p class="lead">{L["lead"]}</p>'
+        f'</div>'
+        f'<div class="card pad">{chart}</div>'
+        f'{method}'
+        f'</div>'
+        f'</section>'
+    )
+
+
 def build_seasons_section_v6(dest, monthly, lang="fr"):
     """
     Section 'À quoi s'attendre' : cards saisons contextuelles par type dest.

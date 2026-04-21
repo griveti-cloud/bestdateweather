@@ -266,3 +266,53 @@ tbody tr:hover{background:#fffbf2}
   font-weight:600;color:var(--ink)}
 .bdw-footer-langs a:hover{color:var(--gold)}
 .bdw-footer-legal{font-size:11.5px;margin-top:14px;opacity:.85}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION TENDANCE 10 ANS (Tour 8b)
+   ════════════════════════════════════════════════════════════ */
+.tendance-section{padding:48px 0}
+.tendance-section .section-head{margin-bottom:24px}
+.tendance-section .card.pad{background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+.ct-chart-wrap{width:100%}
+.ct-no-data{padding:24px;text-align:center;color:var(--muted);font-style:italic;
+  background:var(--bg);border:1px dashed var(--border);border-radius:12px}
+
+/* Encart méthodologie */
+.method-card{margin-top:24px;
+  background:linear-gradient(135deg,#fdfaf3 0%,#fef8e7 100%);
+  border:1px solid var(--amber-border);border-left:4px solid var(--gold);
+  border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+.method-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px}
+.method-ico{font-size:1.6rem;width:44px;height:44px;background:var(--card);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;border:1px solid var(--amber-border)}
+.method-title{font-family:'Playfair Display',Georgia,serif;
+  font-weight:700;font-size:1.15rem;color:var(--ink);letter-spacing:-.01em;
+  margin-bottom:3px}
+.method-sub{font-size:.88rem;color:var(--muted);line-height:1.4}
+.method-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;margin-bottom:18px}
+.method-item{background:var(--card);padding:12px 14px;border-radius:10px;
+  border:1px solid var(--border);min-width:0}
+.method-k{font-size:.82rem;font-weight:700;color:var(--amber);
+  margin-bottom:3px;letter-spacing:.2px}
+.method-v{font-size:.85rem;color:var(--muted);line-height:1.45}
+.method-footer{display:flex;justify-content:space-between;align-items:center;
+  gap:14px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--amber-border)}
+.method-source{font-size:.8rem;color:var(--muted);line-height:1.5}
+.method-source strong{color:var(--ink);font-weight:700}
+.method-link{font-size:.88rem;font-weight:700;color:var(--gold);
+  text-decoration:none;transition:color .15s,transform .15s;
+  white-space:nowrap;flex-shrink:0}
+.method-link:hover{color:#b8860b;transform:translateX(2px)}
+
+@media (max-width:640px){
+  .tendance-section{padding:32px 0}
+  .tendance-section .card.pad{padding:16px}
+  .method-card{padding:18px}
+  .method-grid{grid-template-columns:1fr;gap:10px}
+  .method-ico{width:40px;height:40px;font-size:1.4rem}
+  .method-title{font-size:1.05rem}
+  .method-footer{flex-direction:column;align-items:flex-start;gap:10px}
+}
