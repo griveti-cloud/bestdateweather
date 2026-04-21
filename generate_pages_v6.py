@@ -44,6 +44,10 @@ from lib.common_v6 import (
     build_planifier_section_v6,
     build_infos_section_v6,
     build_explorer_section_v6,
+    build_localisation_section_v6,
+    build_faq_section_v6,
+    build_jsonld_v6,
+    build_footer_v6,
     classify_dest,
     best_month,
     worst_month,
@@ -315,6 +319,49 @@ tbody tr:hover{background:#fffbf2}
 .list-country{color:var(--muted);font-weight:500;font-size:12.5px}
 .box h3{font-family:'Playfair Display',Georgia,serif;font-size:17px;
   margin:0 0 12px;font-weight:700}
+
+/* Section Localisation : 2 cartes Leaflet */
+.dest-map-section{margin-bottom:0}
+.dest-map-row{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin-bottom:12px}
+@media (max-width:768px){.dest-map-row{grid-template-columns:1fr}}
+.dest-map-card{background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:14px;box-shadow:var(--shadow);overflow:hidden}
+.dest-map-lbl{font-size:12px;font-weight:700;color:var(--gold);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.dest-map-el{width:100%;height:240px;border-radius:10px;background:#f0ebe0}
+.dest-map-el--world{height:200px}
+.dest-map-el--macro{height:240px}
+.dest-map-intro{background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:18px 20px;box-shadow:var(--shadow)}
+.dest-map-intro-body{display:flex;flex-direction:column;gap:6px}
+.dest-map-country{font-weight:700;font-size:15px}
+.dest-map-hsub{color:var(--muted);font-size:14px;line-height:1.55}
+.dest-map-coords{font-size:12px;color:var(--muted);font-family:monospace}
+
+/* Section FAQ */
+.faq{display:flex;flex-direction:column;gap:14px}
+.faq-item{background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);
+  font-size:14.5px;line-height:1.6;color:var(--muted)}
+.faq-item strong{display:block;color:var(--ink);font-weight:700;
+  font-size:15.5px;margin-bottom:6px;
+  font-family:'Playfair Display',Georgia,serif}
+
+/* Footer complet bdw-footer */
+.bdw-footer{border-top:1px solid var(--border);padding:36px 0 28px;
+  text-align:center;color:var(--muted);font-size:13px;background:#fffbf2}
+.bdw-footer p{margin:0 0 8px}
+.bdw-footer-brand{font-weight:700;color:var(--ink);font-size:14px}
+.bdw-footer-sub{font-size:11.5px;opacity:.85}
+.bdw-footer-links a, .bdw-footer-langs a, .bdw-footer-legal a{
+  color:var(--muted);text-decoration:none;margin:0 2px}
+.bdw-footer-links a:hover, .bdw-footer-legal a:hover{color:var(--gold)}
+.bdw-footer-langs{margin-top:14px;display:flex;flex-wrap:wrap;
+  justify-content:center;gap:10px 16px}
+.bdw-footer-langs a{display:inline-flex;align-items:center;gap:5px;
+  font-weight:600;color:var(--ink)}
+.bdw-footer-langs a:hover{color:var(--gold)}
+.bdw-footer-legal{font-size:11.5px;margin-top:14px;opacity:.85}
 """
 
 
@@ -322,8 +369,8 @@ tbody tr:hover{background:#fffbf2}
 # Helpers rendu
 # ══════════════════════════════════════════════════════════════════
 
-def _render_head(dest, lang, page_title):
-    """Rend le <head> HTML avec meta + CSS embarqué."""
+def _render_head(dest, lang, page_title, jsonld_block=""):
+    """Rend le <head> HTML avec meta + CSS embarqué + Leaflet + JSON-LD."""
     brand = _SECTION_LABELS.get(lang, _SECTION_LABELS["fr"])["brand_suffix"]
     full_title = f"{page_title} {brand}"
     return f'''<!DOCTYPE html>
@@ -336,7 +383,10 @@ def _render_head(dest, lang, page_title):
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <style>{_CSS_BASE}</style>
+{jsonld_block}
 </head>'''
 
 
@@ -588,13 +638,11 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None,
     page_title = page_titles[lang]
 
     # Pour mountain : recalcul monthly['score'] = max(ski, hike) AVANT les briques
-    # (les briques lisent monthly['score'] donc le remplacement les affecte toutes)
-    # Retourne aussi le dict ski_scores_by_month pour passage au barchart
     _computed_ski = _apply_mountain_scores(dest, monthly)
     if _computed_ski and not ski_scores_by_month:
         ski_scores_by_month = _computed_ski
 
-    head = _render_head(dest, lang, page_title)
+    # Construction des sections
     hero = _render_hero(dest, monthly, lang)
     decider = _render_decider_section(dest, monthly, lang, ski_scores_by_month)
     comprendre = build_comprendre_section_v6(dest, monthly, lang=lang)
@@ -605,7 +653,25 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None,
     explorer = build_explorer_section_v6(dest, monthly, lang=lang,
                                           all_dests=all_dests,
                                           all_climate_by_slug=all_climate_by_slug)
-    footer = _render_footer(dest, lang)
+    localisation = build_localisation_section_v6(dest, monthly, lang=lang)
+    faq, faq_items = build_faq_section_v6(dest, monthly, lang=lang)
+
+    # JSON-LD (réutilise les FAQ items déjà générés)
+    jsonld = build_jsonld_v6(dest, monthly, lang=lang, faq_items=faq_items)
+
+    # Head (avec JSON-LD intégré)
+    head = _render_head(dest, lang, page_title, jsonld_block=jsonld)
+
+    # Footer complet (switcher langues + legal)
+    footer = build_footer_v6(dest, lang=lang)
+
+    # Scripts JS de fin (Leaflet + dest-map + GYG widget)
+    scripts = ('<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" '
+               'integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" '
+               'crossorigin="" defer></script>\n'
+               '<script src="js/dest-map.min.js?v=1" defer></script>\n'
+               '<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" '
+               'data-gyg-partner-id="2MQKL00"></script>')
 
     html = f'''{head}
 <body>
@@ -618,8 +684,11 @@ def render_annual_v6(dest, monthly, lang="fr", ski_scores_by_month=None,
   {planifier}
   {infos}
   {explorer}
+  {localisation}
+  {faq}
 </main>
 {footer}
+{scripts}
 </body>
 </html>'''
 

@@ -2959,6 +2959,594 @@ def build_explorer_section_v6(dest, monthly, lang="fr",
     return section
 
 
+    return section
+
+
+# ══════════════════════════════════════════════════════════════════
+# Section 'Localisation' : 2 cartes Leaflet (monde + macro)
+# ══════════════════════════════════════════════════════════════════
+
+_LOC_LABELS = {
+    "fr": {
+        "kicker": "Localisation",
+        "title": "Où se trouve {nom} ?",
+        "lead": "Position mondiale + contexte géographique régional.",
+        "lbl_world": "🌍 Monde",
+        "lbl_macro": "🔍 Contexte géographique",
+    },
+    "en": {
+        "kicker": "Location",
+        "title": "Where is {nom}?",
+        "lead": "World position + regional geographic context.",
+        "lbl_world": "🌍 World",
+        "lbl_macro": "🔍 Geographic context",
+    },
+    "en-us": {
+        "kicker": "Location",
+        "title": "Where is {nom}?",
+        "lead": "World position + regional geographic context.",
+        "lbl_world": "🌍 World",
+        "lbl_macro": "🔍 Geographic context",
+    },
+    "es": {
+        "kicker": "Ubicación",
+        "title": "¿Dónde está {nom}?",
+        "lead": "Posición mundial + contexto geográfico regional.",
+        "lbl_world": "🌍 Mundo",
+        "lbl_macro": "🔍 Contexto geográfico",
+    },
+    "de": {
+        "kicker": "Lage",
+        "title": "Wo liegt {nom}?",
+        "lead": "Weltposition + regionaler geografischer Kontext.",
+        "lbl_world": "🌍 Welt",
+        "lbl_macro": "🔍 Geografischer Kontext",
+    },
+}
+
+
+def build_localisation_section_v6(dest, monthly, lang="fr"):
+    """
+    Section Localisation : 2 cartes Leaflet (monde + macro régional)
+    + intro courte (drapeau + pays + 1-phrase contextuelle + coords).
+
+    Les cartes sont initialisées par js/dest-map.min.js (déjà en prod) qui
+    lit les data-attributes du div .dest-map-row.
+
+    Args:
+        dest: dict (slug, lat, lon, flag, pays, country_*)
+        monthly: 12 mois (utilisé pour générer la phrase contextuelle)
+        lang: code langue
+    """
+    L = _LOC_LABELS.get(lang, _LOC_LABELS["fr"])
+    nom_key = f"nom_{lang.replace('-', '_')}"
+    nom = dest.get(nom_key) or dest.get("nom_fr") or dest.get("slug", "?")
+    nom_safe = _html.escape(nom)
+    slug = dest.get("slug") or dest.get("slug_fr") or "x"
+    flag = dest.get("flag", "")
+    country_key = f"country_{lang.replace('-', '_')}"
+    country = dest.get(country_key) or dest.get("pays", "—")
+
+    try:
+        lat = float(dest.get("lat", 0))
+        lon = float(dest.get("lon", 0))
+        lat_s = f"{abs(lat):.2f}°{'N' if lat >= 0 else 'S'}"
+        lon_s = f"{abs(lon):.2f}°{'E' if lon >= 0 else 'W'}"
+        coords = f"{lat_s} · {lon_s}"
+    except (TypeError, ValueError):
+        lat, lon = 0, 0
+        coords = "—"
+
+    # Zoom macro : adaptatif selon latitude (zone polaire = zoom plus large)
+    abs_lat = abs(lat)
+    if abs_lat > 60:
+        macro_zoom = 4
+    elif abs_lat > 40:
+        macro_zoom = 5
+    else:
+        macro_zoom = 5
+
+    # Phrase courte contextuelle basée sur best/worst
+    best = best_month(monthly)
+    worst = worst_month(monthly)
+    best_score = _score(best)
+    worst_score = _score(worst)
+    delta = best_score - worst_score
+    intros = {
+        "fr": (f"Climat {_climate_type_label(classify_dest(dest), lang).lower()} "
+               f"avec un écart {best_score:.1f} → {worst_score:.1f} entre meilleur et pire mois. "
+               f"10 ans de données ERA5 pour choisir selon votre projet."),
+        "en": (f"{_climate_type_label(classify_dest(dest), lang)} climate, "
+               f"with a {best_score:.1f} → {worst_score:.1f} gap between best and worst month. "
+               f"10 years of ERA5 data to pick by use case."),
+        "en-us": (f"{_climate_type_label(classify_dest(dest), lang)} climate, "
+                  f"with a {best_score:.1f} → {worst_score:.1f} gap between best and worst month. "
+                  f"10 years of ERA5 data to pick by use case."),
+        "es": (f"Clima {_climate_type_label(classify_dest(dest), lang).lower()} "
+               f"con una brecha {best_score:.1f} → {worst_score:.1f} entre mejor y peor mes. "
+               f"10 años de datos ERA5 para elegir según tu proyecto."),
+        "de": (f"{_climate_type_label(classify_dest(dest), lang)}-Klima "
+               f"mit einer Spanne von {best_score:.1f} → {worst_score:.1f} zwischen bestem und schlechtestem Monat. "
+               f"10 Jahre ERA5-Daten zur Wahl je nach Projekt."),
+    }
+    intro_text = intros.get(lang, intros["fr"])
+
+    flag_img = (f'<img src="flags/{_html.escape(flag)}.png" width="16" height="12" alt="" '
+                f'style="vertical-align:middle;border-radius:2px;margin-right:5px">' if flag else '')
+
+    section = (f'<section class="dest-map-section">\n'
+               f'    <div class="container">\n'
+               f'      <div class="section-head">\n'
+               f'        <div class="section-kicker">{_html.escape(L["kicker"])}</div>\n'
+               f'        <h2>{_html.escape(L["title"].format(nom=nom))}</h2>\n'
+               f'        <p class="lead">{_html.escape(L["lead"])}</p>\n'
+               f'      </div>\n'
+               f'      <div class="dest-map-row" data-dest-map="1" data-lat="{lat}" data-lon="{lon}" '
+               f'data-macro-zoom="{macro_zoom}" data-world-id="dmap-world-{slug}" data-macro-id="dmap-macro-{slug}">\n'
+               f'        <div class="dest-map-card">\n'
+               f'          <div class="dest-map-lbl">{L["lbl_world"]}</div>\n'
+               f'          <div id="dmap-world-{slug}" class="dest-map-el dest-map-el--world"></div>\n'
+               f'        </div>\n'
+               f'        <div class="dest-map-card">\n'
+               f'          <div class="dest-map-lbl">{L["lbl_macro"]}</div>\n'
+               f'          <div id="dmap-macro-{slug}" class="dest-map-el dest-map-el--macro"></div>\n'
+               f'        </div>\n'
+               f'      </div>\n'
+               f'      <div class="dest-map-intro">\n'
+               f'        <div class="dest-map-intro-body">\n'
+               f'          <div class="dest-map-country">{flag_img}{_html.escape(country)}</div>\n'
+               f'          <div class="dest-map-hsub">{_html.escape(intro_text)}</div>\n'
+               f'          <div class="dest-map-coords">{coords}</div>\n'
+               f'        </div>\n'
+               f'      </div>\n'
+               f'    </div>\n'
+               f'  </section>')
+
+    return section
+
+
+# ══════════════════════════════════════════════════════════════════
+# Section 'FAQ' : 4-5 questions adaptées par type
+# ══════════════════════════════════════════════════════════════════
+
+_FAQ_LABELS = {
+    "fr": {"kicker": "Questions", "title": "Questions fréquentes",
+           "lead": "Les réponses les plus cherchées à propos de {nom}."},
+    "en": {"kicker": "Questions", "title": "Frequently asked questions",
+           "lead": "Most-searched answers about {nom}."},
+    "en-us": {"kicker": "Questions", "title": "Frequently asked questions",
+              "lead": "Most-searched answers about {nom}."},
+    "es": {"kicker": "Preguntas", "title": "Preguntas frecuentes",
+           "lead": "Las respuestas más buscadas sobre {nom}."},
+    "de": {"kicker": "Fragen", "title": "Häufige Fragen",
+           "lead": "Die meistgesuchten Antworten zu {nom}."},
+}
+
+
+def _build_faq_items(dest, monthly, lang):
+    """
+    Construit 4 questions/réponses dynamiques basées sur les vraies données.
+
+    Returns:
+        list[(question, answer)]
+    """
+    nom_key = f"nom_{lang.replace('-', '_')}"
+    nom = dest.get(nom_key) or dest.get("nom_fr") or dest.get("slug", "?")
+    dtype = classify_dest(dest)
+
+    best = best_month(monthly)
+    worst = worst_month(monthly)
+    best_name = format_month_full(best, lang)
+    worst_name = format_month_full(worst, lang)
+    best_score = _score(best)
+    worst_score = _score(worst)
+    best_tmax = best.get("tmax", "—")
+    best_tmin = best.get("tmin", "—")
+    best_sun = best.get("sun_h", "—")
+    best_rain = best.get("rain_pct", "—")
+    worst_tmax = worst.get("tmax", "—")
+    worst_sun = worst.get("sun_h", "—")
+
+    # Mois pluvieux : max rain_pct
+    try:
+        rainiest = max(monthly, key=lambda m: float(m.get("rain_pct", 0) or 0))
+        rainiest_name = format_month_full(rainiest, lang)
+        rainiest_pct = int(round(float(rainiest.get("rain_pct", 0))))
+    except (ValueError, TypeError):
+        rainiest_name = "—"
+        rainiest_pct = 0
+
+    # Top 2 confortables en chronologique
+    sorted_top = sorted(monthly, key=_score, reverse=True)[:2]
+    top2 = sorted([format_month_full(m, lang) for m in sorted_top])
+
+    # FAQs FR (template, sera décliné par lang)
+    if lang == "fr":
+        items = [
+            (f"Quelle est la meilleure période pour partir à {nom} ?",
+             f"{best_name} est le meilleur mois avec un score de {best_score:.1f}/10 : "
+             f"{best_tmax}°C en journée, {best_tmin}°C la nuit, {best_sun}h de soleil et "
+             f"{int(round(float(best_rain)))}% de jours pluvieux."),
+            (f"Quel est le mois le plus rude à {nom} ?",
+             f"{worst_name} ({worst_score:.1f}/10), avec environ {worst_tmax}°C en journée et "
+             f"{worst_sun}h de soleil. À envisager seulement pour des activités ciblées."),
+            (f"Quel est le mois le plus pluvieux à {nom} ?",
+             f"{rainiest_name} avec environ {rainiest_pct}% de jours de pluie. "
+             f"À comparer aux {int(round(float(best_rain)))}% du meilleur mois ({best_name})."),
+            (f"Combien de mois confortables compte {nom} ?",
+             f"Sur les 12 mois, {sum(1 for m in monthly if _score(m) >= 7.0)} dépassent un score de 7/10. "
+             f"Top 2 : {top2[0]} et {top2[1]} si l'on cherche le meilleur compromis météo."),
+        ]
+    elif lang in ("en", "en-us"):
+        items = [
+            (f"When is the best time to visit {nom}?",
+             f"{best_name} is the best month with a {best_score:.1f}/10 score: "
+             f"{best_tmax}°C daytime, {best_tmin}°C at night, {best_sun}h of sun, and "
+             f"{int(round(float(best_rain)))}% rainy days."),
+            (f"What is the toughest month at {nom}?",
+             f"{worst_name} ({worst_score:.1f}/10), with around {worst_tmax}°C daytime and "
+             f"{worst_sun}h of sun. Only consider it for targeted activities."),
+            (f"Which month is the rainiest at {nom}?",
+             f"{rainiest_name} with about {rainiest_pct}% rainy days. "
+             f"Compared with {int(round(float(best_rain)))}% in the best month ({best_name})."),
+            (f"How many comfortable months does {nom} have?",
+             f"Out of 12 months, {sum(1 for m in monthly if _score(m) >= 7.0)} score above 7/10. "
+             f"Top 2: {top2[0]} and {top2[1]} for the best weather window."),
+        ]
+    elif lang == "es":
+        items = [
+            (f"¿Cuál es la mejor época para visitar {nom}?",
+             f"{best_name} es el mejor mes con una puntuación de {best_score:.1f}/10: "
+             f"{best_tmax}°C de día, {best_tmin}°C de noche, {best_sun}h de sol y "
+             f"{int(round(float(best_rain)))}% de días de lluvia."),
+            (f"¿Cuál es el mes más duro en {nom}?",
+             f"{worst_name} ({worst_score:.1f}/10), con unos {worst_tmax}°C de día y "
+             f"{worst_sun}h de sol. Considerar solo para actividades específicas."),
+            (f"¿Cuál es el mes más lluvioso en {nom}?",
+             f"{rainiest_name} con cerca de {rainiest_pct}% de días de lluvia. "
+             f"Comparar con {int(round(float(best_rain)))}% en el mejor mes ({best_name})."),
+            (f"¿Cuántos meses cómodos tiene {nom}?",
+             f"De los 12 meses, {sum(1 for m in monthly if _score(m) >= 7.0)} superan los 7/10. "
+             f"Top 2: {top2[0]} y {top2[1]} para la mejor ventana climática."),
+        ]
+    else:  # de
+        items = [
+            (f"Wann ist die beste Reisezeit für {nom}?",
+             f"{best_name} ist der beste Monat mit {best_score:.1f}/10: "
+             f"{best_tmax}°C tagsüber, {best_tmin}°C nachts, {best_sun}h Sonne und "
+             f"{int(round(float(best_rain)))}% Regentage."),
+            (f"Welcher ist der härteste Monat in {nom}?",
+             f"{worst_name} ({worst_score:.1f}/10), mit rund {worst_tmax}°C tagsüber und "
+             f"{worst_sun}h Sonne. Nur für gezielte Aktivitäten in Betracht ziehen."),
+            (f"Welcher Monat ist am regnerischsten in {nom}?",
+             f"{rainiest_name} mit etwa {rainiest_pct}% Regentagen. "
+             f"Im Vergleich zu {int(round(float(best_rain)))}% im besten Monat ({best_name})."),
+            (f"Wie viele angenehme Monate hat {nom}?",
+             f"Von 12 Monaten liegen {sum(1 for m in monthly if _score(m) >= 7.0)} über 7/10. "
+             f"Top 2: {top2[0]} und {top2[1]} für das beste Wetterfenster."),
+        ]
+
+    return items
+
+
+def build_faq_section_v6(dest, monthly, lang="fr"):
+    """Section FAQ avec 4 questions adaptées aux données de la dest."""
+    L = _FAQ_LABELS.get(lang, _FAQ_LABELS["fr"])
+    nom_key = f"nom_{lang.replace('-', '_')}"
+    nom = dest.get(nom_key) or dest.get("nom_fr") or dest.get("slug", "?")
+
+    items = _build_faq_items(dest, monthly, lang)
+
+    items_html = []
+    for q, a in items:
+        items_html.append(
+            f'        <div class="faq-item">\n'
+            f'          <strong>{_html.escape(q)}</strong>\n'
+            f'          {_html.escape(a)}\n'
+            f'        </div>'
+        )
+    items_block = "\n".join(items_html)
+
+    section = (f'<section>\n'
+               f'    <div class="container">\n'
+               f'      <div class="section-head">\n'
+               f'        <div class="section-kicker">{_html.escape(L["kicker"])}</div>\n'
+               f'        <h2>{_html.escape(L["title"])}</h2>\n'
+               f'        <p class="lead">{_html.escape(L["lead"].format(nom=nom))}</p>\n'
+               f'      </div>\n'
+               f'      <div class="faq">\n'
+               f'{items_block}\n'
+               f'      </div>\n'
+               f'    </div>\n'
+               f'  </section>')
+
+    return section, items  # Retourne aussi items pour réutilisation dans JSON-LD
+
+
+# ══════════════════════════════════════════════════════════════════
+# JSON-LD : Article + FAQPage + BreadcrumbList + Dataset
+# ══════════════════════════════════════════════════════════════════
+
+def build_jsonld_v6(dest, monthly, lang="fr", faq_items=None,
+                    base_url="https://bestdateweather.com"):
+    """
+    Construit 4 blocs JSON-LD (4 <script> séparés) pour SEO :
+    1. Article : headline + image + author + dates
+    2. FAQPage : reprend les items FAQ
+    3. BreadcrumbList : Accueil > {nom}
+    4. Dataset : metadata sur les données ERA5 utilisées
+
+    Args:
+        dest: destination
+        monthly: 12 mois (pas utilisé directement mais conservé)
+        lang: code langue
+        faq_items: list[(q,a)] généré par build_faq_section_v6 (sinon recalcul)
+        base_url: URL canonique du site
+
+    Returns:
+        str : 4 <script type="application/ld+json"> concaténés
+    """
+    import json
+
+    nom_key = f"nom_{lang.replace('-', '_')}"
+    nom = dest.get(nom_key) or dest.get("nom_fr") or dest.get("slug", "?")
+    slug = dest.get("slug") or dest.get("slug_fr") or "x"
+
+    # URL canonique selon langue (cohérent avec V3 prod)
+    url_paths = {
+        "fr": f"meilleure-periode-{slug}.html",
+        "en": f"en/best-time-to-visit-{slug}.html",
+        "en-us": f"us/best-time-to-visit-{slug}.html",
+        "es": f"es/mejor-epoca-{slug}.html",
+        "de": f"de/beste-reisezeit-{slug}.html",
+    }
+    page_url = f"{base_url}/{url_paths.get(lang, url_paths['fr'])}"
+
+    headlines = {
+        "fr": f"Meilleure période pour partir à {nom}",
+        "en": f"Best time to visit {nom}",
+        "en-us": f"Best time to visit {nom}",
+        "es": f"Mejor época para viajar a {nom}",
+        "de": f"Beste Reisezeit für {nom}",
+    }
+    descriptions = {
+        "fr": f"Découvrez la meilleure période à {nom}. Score climatique complet sur 12 mois, température, soleil et pluie. Guide 2026.",
+        "en": f"Discover the best time to visit {nom}. Full 12-month climate score, temperature, sun and rain. 2026 guide.",
+        "en-us": f"Discover the best time to visit {nom}. Full 12-month climate score, temperature, sun and rain. 2026 guide.",
+        "es": f"Descubre la mejor época para {nom}. Puntuación climática de 12 meses, temperatura, sol y lluvia. Guía 2026.",
+        "de": f"Beste Reisezeit für {nom} entdecken. Klimapunktzahl auf 12 Monate, Temperatur, Sonne und Regen. Guide 2026.",
+    }
+    home_labels = {"fr": "Accueil", "en": "Home", "en-us": "Home",
+                   "es": "Inicio", "de": "Startseite"}
+    dataset_names = {
+        "fr": f"Données climatiques de {nom} — moyennes mensuelles sur 10 ans",
+        "en": f"Climate data for {nom} — monthly averages over 10 years",
+        "en-us": f"Climate data for {nom} — monthly averages over 10 years",
+        "es": f"Datos climáticos de {nom} — medias mensuales en 10 años",
+        "de": f"Klimadaten für {nom} — monatliche Durchschnitte über 10 Jahre",
+    }
+    dataset_descs = {
+        "fr": f"Températures, précipitations, ensoleillement et vent mensuels à {nom}. Moyennes calculées sur 10 ans de données ERA5 (Open-Meteo).",
+        "en": f"Monthly temperatures, precipitation, sunshine and wind at {nom}. Averages computed over 10 years of ERA5 data (Open-Meteo).",
+        "en-us": f"Monthly temperatures, precipitation, sunshine and wind at {nom}. Averages computed over 10 years of ERA5 data (Open-Meteo).",
+        "es": f"Temperaturas, precipitaciones, sol y viento mensuales en {nom}. Medias calculadas sobre 10 años de datos ERA5 (Open-Meteo).",
+        "de": f"Monatliche Temperaturen, Niederschlag, Sonnenschein und Wind in {nom}. Durchschnitte berechnet über 10 Jahre ERA5-Daten (Open-Meteo).",
+    }
+
+    # FAQ items : utilise ceux fournis ou en regénère
+    if faq_items is None:
+        faq_items = _build_faq_items(dest, monthly, lang)
+
+    today = "2026-04-20"  # Date statique pour reproductibilité
+
+    article = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": headlines.get(lang, headlines["fr"]),
+        "description": descriptions.get(lang, descriptions["fr"]),
+        "image": {
+            "@type": "ImageObject",
+            "url": f"{base_url}/og-image.png",
+            "width": 1200, "height": 630,
+        },
+        "author": {
+            "@type": "Organization", "name": "BestDateWeather",
+            "url": base_url,
+            "logo": {"@type": "ImageObject", "url": f"{base_url}/icon-192.png",
+                     "width": 192, "height": 192},
+        },
+        "publisher": {
+            "@type": "Organization", "name": "BestDateWeather",
+            "url": base_url,
+            "logo": {"@type": "ImageObject", "url": f"{base_url}/icon-192.png",
+                     "width": 192, "height": 192},
+        },
+        "datePublished": today,
+        "dateModified": today,
+        "inLanguage": lang.split("-")[0],
+        "url": page_url,
+        "mainEntityOfPage": {"@type": "WebPage", "@id": page_url},
+    }
+
+    faqpage = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": q,
+             "acceptedAnswer": {"@type": "Answer", "text": a}}
+            for q, a in faq_items
+        ],
+    }
+
+    breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1,
+             "name": home_labels.get(lang, "Home"),
+             "item": f"{base_url}/"},
+            {"@type": "ListItem", "position": 2, "name": nom, "item": page_url},
+        ],
+    }
+
+    dataset = {
+        "@context": "https://schema.org",
+        "@type": "Dataset",
+        "name": dataset_names.get(lang, dataset_names["fr"]),
+        "description": dataset_descs.get(lang, dataset_descs["fr"]),
+        "temporalCoverage": "2015/2024",
+        "spatialCoverage": {"@type": "Place", "name": nom},
+        "creator": {"@type": "Organization", "name": "BestDateWeather", "url": base_url},
+        "license": "https://creativecommons.org/licenses/by-nc/4.0/",
+        "variableMeasured": ["Temperature", "Precipitation", "Sunshine hours", "Wind speed"],
+    }
+
+    blocks = []
+    for obj in (article, faqpage, breadcrumb, dataset):
+        blocks.append(
+            f'<script type="application/ld+json">{json.dumps(obj, ensure_ascii=False)}</script>'
+        )
+    return "\n".join(blocks)
+
+
+# ══════════════════════════════════════════════════════════════════
+# Footer complet : brand + sources + langues + legal
+# ══════════════════════════════════════════════════════════════════
+
+_FOOTER_LABELS = {
+    "fr": {
+        "data_credit": "Données météo par Open-Meteo.com",
+        "sources": "Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
+        "lnk_method": "Méthodologie", "lnk_about": "À propos",
+        "lnk_faq": "FAQ", "lnk_app": "Application météo",
+        "lnk_widgets": "Widgets voyage",
+        "lnk_legal": "Mentions légales", "lnk_priv": "Confidentialité",
+        "lnk_contact": "Contact",
+    },
+    "en": {
+        "data_credit": "Weather data by Open-Meteo.com",
+        "sources": "Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
+        "lnk_method": "Methodology", "lnk_about": "About",
+        "lnk_faq": "FAQ", "lnk_app": "Weather app",
+        "lnk_widgets": "Travel widgets",
+        "lnk_legal": "Legal notice", "lnk_priv": "Privacy",
+        "lnk_contact": "Contact",
+    },
+    "en-us": {
+        "data_credit": "Weather data by Open-Meteo.com",
+        "sources": "Sources ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
+        "lnk_method": "Methodology", "lnk_about": "About",
+        "lnk_faq": "FAQ", "lnk_app": "Weather app",
+        "lnk_widgets": "Travel widgets",
+        "lnk_legal": "Legal notice", "lnk_priv": "Privacy",
+        "lnk_contact": "Contact",
+    },
+    "es": {
+        "data_credit": "Datos meteo por Open-Meteo.com",
+        "sources": "Fuentes ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
+        "lnk_method": "Metodología", "lnk_about": "Acerca de",
+        "lnk_faq": "FAQ", "lnk_app": "App meteo",
+        "lnk_widgets": "Widgets viaje",
+        "lnk_legal": "Aviso legal", "lnk_priv": "Privacidad",
+        "lnk_contact": "Contacto",
+    },
+    "de": {
+        "data_credit": "Wetterdaten von Open-Meteo.com",
+        "sources": "Quellen ECMWF, DWD, NOAA, Météo-France · CC BY 4.0",
+        "lnk_method": "Methodik", "lnk_about": "Über uns",
+        "lnk_faq": "FAQ", "lnk_app": "Wetter-App",
+        "lnk_widgets": "Reise-Widgets",
+        "lnk_legal": "Impressum", "lnk_priv": "Datenschutz",
+        "lnk_contact": "Kontakt",
+    },
+}
+
+# Footer langue links : URLs cohérentes avec V3 prod
+_LANG_URL_TEMPLATES = {
+    "fr": "meilleure-periode-{slug}.html",
+    "en": "en/best-time-to-visit-{slug}.html",
+    "en-us": "us/best-time-to-visit-{slug}.html",
+    "es": "es/mejor-epoca-{slug}.html",
+    "de": "de/beste-reisezeit-{slug}.html",
+}
+_LANG_LABELS_FOOTER = {
+    "fr": ("fr", "Français"),
+    "en": ("gb", "English"),
+    "en-us": ("us", "English (US)"),
+    "es": ("es", "Español"),
+    "de": ("de", "Deutsch"),
+}
+
+
+def build_footer_v6(dest, lang="fr"):
+    """Footer complet : sources, links app, switcher langues, legal."""
+    L = _FOOTER_LABELS.get(lang, _FOOTER_LABELS["fr"])
+    slug = dest.get("slug") or dest.get("slug_fr") or "x"
+
+    # Switcher langues : toutes sauf langue courante
+    lang_links = []
+    for other_lang, (flag_code, label) in _LANG_LABELS_FOOTER.items():
+        if other_lang == lang:
+            continue
+        url = _LANG_URL_TEMPLATES[other_lang].format(slug=slug)
+        lang_links.append(
+            f'<a href="{url}"><img src="flags/{flag_code}.png" width="20" height="15" '
+            f'alt="" loading="lazy"> {_html.escape(label)}</a>'
+        )
+    langs_block = "\n      ".join(lang_links)
+
+    # Pages localisées des labels (méthodologie, à propos, etc.)
+    # Pour FR : root. Pour EN/ES/DE : préfixe lang/
+    prefix = {"fr": "", "en": "en/", "en-us": "us/", "es": "es/", "de": "de/"}.get(lang, "")
+    page_links = {
+        "fr": [("methodologie.html", L["lnk_method"]), ("a-propos.html", L["lnk_about"]),
+               ("faq.html", L["lnk_faq"]), ("index.html", L["lnk_app"]),
+               ("widgets.html", L["lnk_widgets"])],
+        "en": [(f"{prefix}methodology.html", L["lnk_method"]), (f"{prefix}about.html", L["lnk_about"]),
+               (f"{prefix}faq.html", L["lnk_faq"]), (f"{prefix}index.html", L["lnk_app"]),
+               (f"{prefix}widgets.html", L["lnk_widgets"])],
+        "en-us": [(f"{prefix}methodology.html", L["lnk_method"]), (f"{prefix}about.html", L["lnk_about"]),
+                  (f"{prefix}faq.html", L["lnk_faq"]), (f"{prefix}index.html", L["lnk_app"]),
+                  (f"{prefix}widgets.html", L["lnk_widgets"])],
+        "es": [(f"{prefix}metodologia.html", L["lnk_method"]), (f"{prefix}sobre.html", L["lnk_about"]),
+               (f"{prefix}faq.html", L["lnk_faq"]), (f"{prefix}index.html", L["lnk_app"]),
+               (f"{prefix}widgets.html", L["lnk_widgets"])],
+        "de": [(f"{prefix}methodik.html", L["lnk_method"]), (f"{prefix}ueber.html", L["lnk_about"]),
+               (f"{prefix}faq.html", L["lnk_faq"]), (f"{prefix}index.html", L["lnk_app"]),
+               (f"{prefix}widgets.html", L["lnk_widgets"])],
+    }
+    legal_links = {
+        "fr": [("mentions-legales.html", L["lnk_legal"]), ("confidentialite.html", L["lnk_priv"]),
+               ("contact.html", L["lnk_contact"])],
+        "en": [(f"{prefix}legal.html", L["lnk_legal"]), (f"{prefix}privacy.html", L["lnk_priv"]),
+               (f"{prefix}contact.html", L["lnk_contact"])],
+        "en-us": [(f"{prefix}legal.html", L["lnk_legal"]), (f"{prefix}privacy.html", L["lnk_priv"]),
+                  (f"{prefix}contact.html", L["lnk_contact"])],
+        "es": [(f"{prefix}aviso-legal.html", L["lnk_legal"]), (f"{prefix}privacidad.html", L["lnk_priv"]),
+               (f"{prefix}contacto.html", L["lnk_contact"])],
+        "de": [(f"{prefix}impressum.html", L["lnk_legal"]), (f"{prefix}datenschutz.html", L["lnk_priv"]),
+               (f"{prefix}kontakt.html", L["lnk_contact"])],
+    }
+
+    page_block = " · ".join(f'<a href="{u}">{_html.escape(lbl)}</a>'
+                            for u, lbl in page_links.get(lang, page_links["fr"]))
+    legal_block = " · ".join(f'<a href="{u}">{_html.escape(lbl)}</a>'
+                              for u, lbl in legal_links.get(lang, legal_links["fr"]))
+
+    return (f'<footer class="bdw-footer">\n'
+            f'  <div class="container">\n'
+            f'    <p class="bdw-footer-brand">bestdateweather.com</p>\n'
+            f'    <p><a href="https://open-meteo.com/" rel="noopener">{_html.escape(L["data_credit"])}</a> · '
+            f'<span class="bdw-footer-sub">{_html.escape(L["sources"])}</span></p>\n'
+            f'    <p class="bdw-footer-links">{page_block}</p>\n'
+            f'    <p class="bdw-footer-langs">\n'
+            f'      {langs_block}\n'
+            f'    </p>\n'
+            f'    <p class="bdw-footer-legal">{legal_block}</p>\n'
+            f'  </div>\n'
+            f'</footer>')
+
+
 def _test():
 
     # Dataset minimal : Paris (generic)
