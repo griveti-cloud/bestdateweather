@@ -1409,6 +1409,10 @@ def build_months_table_v6(dest, monthly, lang="fr", monthly_url_builder=None):
 
     sorted_m = sorted(monthly, key=lambda m: int(m["mois_num"]))
 
+    # Identifier le mois "best" pour mise en évidence (table row + mobile card)
+    # Pattern V5 restauré : .row.best + .mobile-month-card.best
+    best_mn = int(best_month(monthly).get("mois_num", 0))
+
     # THEAD
     thead = (f'              <thead>\n'
              f'                <tr>\n'
@@ -1441,8 +1445,11 @@ def build_months_table_v6(dest, monthly, lang="fr", monthly_url_builder=None):
         emo = _weather_emoji(sun)
         mood_label, mood_cls = _mood_label(score, lang)
         url = monthly_url_builder(slug, mn, lang)
+        is_best = (mn == best_mn)
+        best_cls = " best" if is_best else ""
 
-        row = (f'                <tr onclick="location.href=\'{url}\'" '
+        row = (f'                <tr class="row{best_cls}" '
+               f'onclick="location.href=\'{url}\'" '
                f'style="cursor:pointer" tabindex="0" role="link" '
                f'onkeydown="if(event.key===\'Enter\')location.href=\'{url}\'">'
                f'<td class="month-cell">{emo} {_html.escape(name)} '
@@ -1459,7 +1466,7 @@ def build_months_table_v6(dest, monthly, lang="fr", monthly_url_builder=None):
 
         # Card mobile
         mobile_cards.append(
-            f'            <a href="{url}" class="mobile-month-card">\n'
+            f'            <a href="{url}" class="mobile-month-card{best_cls}">\n'
             f'              <div class="head"><div class="name">{emo} {_html.escape(name)}</div>'
             f'<div class="score {mood_cls}">{score:.1f}/10</div></div>\n'
             f'              <div class="rows">\n'

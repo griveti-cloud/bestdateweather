@@ -111,7 +111,7 @@ _SECTION_LABELS = {
 # (ou supprimer _CSS_BASE quand le mode inline ne sera plus utilisé).
 # Bumper V6_CSS_VERSION à chaque modif pour casser le cache navigateur.
 
-V6_CSS_VERSION = 1
+V6_CSS_VERSION = 2
 
 _CSS_BASE = """
 :root{
@@ -422,14 +422,26 @@ def _render_hero(dest, monthly, lang):
     nom = dest.get(nom_key) or dest.get("nom_fr") or dest.get("slug", "?")
     flag = dest.get("flag", "")
 
-    # Hero title par langue (simplifié — en prod on utilisera locales/*.json)
-    hero_titles = {
-        "fr": f"Quand partir à {nom} ?",
-        "en": f"When to visit {nom}?",
-        "en-us": f"When to visit {nom}?",
-        "es": f"¿Cuándo ir a {nom}?",
-        "de": f"Wann nach {nom} reisen?",
-    }
+    # Hero title type-aware (mountain vs autres) — pattern V5 restauré
+    # Mountain : "X : meilleurs mois pour skier ou randonner"
+    # Autres   : "X : meilleurs et pires mois pour visiter"
+    is_mountain = classify_dest(dest) == "mountain"
+    if is_mountain:
+        hero_titles = {
+            "fr":    f"{nom} : meilleurs mois pour skier ou randonner",
+            "en":    f"{nom}: best months for skiing or hiking",
+            "en-us": f"{nom}: best months for skiing or hiking",
+            "es":    f"{nom}: mejores meses para esquiar o senderismo",
+            "de":    f"{nom}: beste Monate zum Skifahren oder Wandern",
+        }
+    else:
+        hero_titles = {
+            "fr":    f"{nom} : meilleurs et pires mois pour visiter",
+            "en":    f"{nom}: best and worst months to visit",
+            "en-us": f"{nom}: best and worst months to visit",
+            "es":    f"{nom}: mejores y peores meses para visitar",
+            "de":    f"{nom}: beste und schlechteste Reisemonate",
+        }
     hero_eyebrows = {
         "fr": "Meilleure période",
         "en": "Best time",
@@ -437,16 +449,42 @@ def _render_hero(dest, monthly, lang):
         "es": "Mejor época",
         "de": "Beste Reisezeit",
     }
-    # Lead court : delta best vs worst
+    # Lead data-driven type-aware (mountain/tropical/generic)
+    # Pas aussi narratif que V5 (qui avait copywriting manuel par dest), mais
+    # contextualisé avec données réelles : nb mois recommandés, gap best/worst.
     best = best_month(monthly)
     worst = worst_month(monthly)
-    hero_leads = {
-        "fr": f"Le meilleur mois est <strong>{format_month_full(best, lang)}</strong> avec un score de {float(best['score']):.1f}/10. Le plus rude : {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
-        "en": f"Best month is <strong>{format_month_full(best, lang)}</strong> with a {float(best['score']):.1f}/10 score. Toughest: {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
-        "en-us": f"Best month is <strong>{format_month_full(best, lang)}</strong> with a {float(best['score']):.1f}/10 score. Toughest: {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
-        "es": f"El mejor mes es <strong>{format_month_full(best, lang)}</strong> con una puntuación de {float(best['score']):.1f}/10. El más duro: {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
-        "de": f"Der beste Monat ist <strong>{format_month_full(best, lang)}</strong> mit {float(best['score']):.1f}/10. Härtester: {format_month_full(worst, lang)} ({float(worst['score']):.1f}/10).",
-    }
+    n_recommended = sum(1 for m in monthly if float(m.get('score', 0)) >= 7.0)
+    n_avoid = sum(1 for m in monthly if float(m.get('score', 0)) < 5.0)
+    gap = float(best['score']) - float(worst['score'])
+    best_lbl = format_month_full(best, lang)
+    worst_lbl = format_month_full(worst, lang)
+
+    if is_mountain:
+        hero_leads = {
+            "fr": f"En montagne, deux univers : hiver pour le ski, été pour la randonnée. <strong>{best_lbl}</strong> sort en tête ({float(best['score']):.1f}/10), {worst_lbl} reste le plus rude ({float(worst['score']):.1f}/10). Écart de {gap:.1f} points entre les deux.",
+            "en": f"Two worlds in the mountains: winter for skiing, summer for hiking. <strong>{best_lbl}</strong> tops the rankings ({float(best['score']):.1f}/10), {worst_lbl} stays the harshest ({float(worst['score']):.1f}/10). A {gap:.1f}-point gap between the two.",
+            "en-us": f"Two worlds in the mountains: winter for skiing, summer for hiking. <strong>{best_lbl}</strong> tops the rankings ({float(best['score']):.1f}/10), {worst_lbl} stays the harshest ({float(worst['score']):.1f}/10). A {gap:.1f}-point gap between the two.",
+            "es": f"Dos mundos en la montaña: invierno para esquiar, verano para senderismo. <strong>{best_lbl}</strong> lidera ({float(best['score']):.1f}/10), {worst_lbl} sigue siendo el más duro ({float(worst['score']):.1f}/10). Brecha de {gap:.1f} puntos.",
+            "de": f"Zwei Welten in den Bergen: Winter zum Skifahren, Sommer zum Wandern. <strong>{best_lbl}</strong> führt ({float(best['score']):.1f}/10), {worst_lbl} bleibt am härtesten ({float(worst['score']):.1f}/10). {gap:.1f} Punkte Unterschied.",
+        }
+    elif classify_dest(dest) == "tropical":
+        hero_leads = {
+            "fr": f"Climat tropical : saison sèche et saison humide donnent deux expériences très différentes. <strong>{best_lbl}</strong> mène ({float(best['score']):.1f}/10), {worst_lbl} concentre les averses ({float(worst['score']):.1f}/10). {n_recommended} mois recommandés sur 12.",
+            "en": f"Tropical climate: dry and wet seasons make for two very different experiences. <strong>{best_lbl}</strong> leads ({float(best['score']):.1f}/10), {worst_lbl} brings the rain ({float(worst['score']):.1f}/10). {n_recommended} recommended months out of 12.",
+            "en-us": f"Tropical climate: dry and wet seasons make for two very different experiences. <strong>{best_lbl}</strong> leads ({float(best['score']):.1f}/10), {worst_lbl} brings the rain ({float(worst['score']):.1f}/10). {n_recommended} recommended months out of 12.",
+            "es": f"Clima tropical: estaciones seca y húmeda ofrecen dos experiencias muy distintas. <strong>{best_lbl}</strong> lidera ({float(best['score']):.1f}/10), {worst_lbl} concentra las lluvias ({float(worst['score']):.1f}/10). {n_recommended} meses recomendados de 12.",
+            "de": f"Tropisches Klima: Trocken- und Regenzeit bieten zwei sehr unterschiedliche Erfahrungen. <strong>{best_lbl}</strong> führt ({float(best['score']):.1f}/10), {worst_lbl} bringt den Regen ({float(worst['score']):.1f}/10). {n_recommended} empfohlene Monate von 12.",
+        }
+    else:
+        # Climat tempéré (generic + coastal)
+        hero_leads = {
+            "fr": f"L'écart entre <strong>{best_lbl}</strong> ({float(best['score']):.1f}/10) et {worst_lbl} ({float(worst['score']):.1f}/10) est de {gap:.1f} points. {n_recommended} mois confortables, {n_avoid} mois à éviter sur 12.",
+            "en": f"The gap between <strong>{best_lbl}</strong> ({float(best['score']):.1f}/10) and {worst_lbl} ({float(worst['score']):.1f}/10) is {gap:.1f} points. {n_recommended} comfortable months, {n_avoid} to avoid out of 12.",
+            "en-us": f"The gap between <strong>{best_lbl}</strong> ({float(best['score']):.1f}/10) and {worst_lbl} ({float(worst['score']):.1f}/10) is {gap:.1f} points. {n_recommended} comfortable months, {n_avoid} to avoid out of 12.",
+            "es": f"La diferencia entre <strong>{best_lbl}</strong> ({float(best['score']):.1f}/10) y {worst_lbl} ({float(worst['score']):.1f}/10) es de {gap:.1f} puntos. {n_recommended} meses cómodos, {n_avoid} a evitar de 12.",
+            "de": f"Der Unterschied zwischen <strong>{best_lbl}</strong> ({float(best['score']):.1f}/10) und {worst_lbl} ({float(worst['score']):.1f}/10) beträgt {gap:.1f} Punkte. {n_recommended} angenehme Monate, {n_avoid} zu meiden von 12.",
+        }
 
     # Labels hero-meta par langue
     meta_labels = {

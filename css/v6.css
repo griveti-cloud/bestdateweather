@@ -152,7 +152,14 @@ tbody tr:hover{background:#fffbf2}
   .mood-good{color:#1a7a4a;font-weight:700}
   .mood-mid{color:#b8860b;font-weight:700}
   .mood-bad{color:#b91c1c;font-weight:700}
+  .mobile-month-card.best{background:#fef3d0;border-color:var(--gold);
+    box-shadow:0 0 0 2px rgba(232,148,10,.15)}
+  .mobile-month-card.best .head .name::before{content:"⭐ "}
 }
+
+/* Mise en évidence du best month dans le tableau desktop */
+.table-wrap tr.row.best td{background:#fef9e6;font-weight:700}
+.table-wrap tr.row.best .month-cell::before{content:"⭐ ";color:var(--gold)}
 
 /* Signaux */
 .signal-card{display:flex;flex-direction:column;gap:14px}
