@@ -1397,15 +1397,46 @@ def build_months_table_v6(dest, monthly, lang="fr", monthly_url_builder=None):
 
     L = _COMPRENDRE_LABELS.get(lang, _COMPRENDRE_LABELS["fr"])
     names = MONTH_NAMES.get(lang, MONTH_NAMES["fr"])
-    slug = dest.get("slug") or dest.get("slug_fr") or "paris"
 
-    # URL builder par défaut (à améliorer en intégration prod via locales)
+    # Slug lang-aware pour URLs mensuelles (Tour 8c bis)
+    # ~150 dests ont des slugs traduits différents (ex: reykjavik FR → reikiavik ES,
+    # canaries FR → canary-islands EN). Sans ça : 7 200 URLs cassées.
+    # Pour 'en-us', on utilise slug_en (pas de slug_us en CSV).
+    slug_lang_key = "slug_en" if lang == "en-us" else f"slug_{lang}"
+    slug = (dest.get(slug_lang_key) or dest.get("slug")
+            or dest.get("slug_fr") or "paris")
+
+    # Flag monthly : ~19 dests n'ont PAS de fiches mensuelles générées en prod
+    # (ex: mbabane, asmara, tripoli). Dans ce cas, afficher cards sans liens.
+    has_monthly_pages = str(dest.get("monthly", "")).lower() in ("1", "true")
+
+    # URL builder par défaut lang-aware (Tour 8c)
+    # Patterns réels en prod par langue :
+    #   FR    : {slug}-meteo-{mois_fr}.html      (janvier, fevrier, ...)
+    #   EN    : {slug}-weather-{month_en}.html   (january, february, ...)
+    #   EN-US : {slug}-weather-{month_en}.html   (idem EN)
+    #   ES    : {slug}-clima-{mes_es}.html       (enero, febrero, ...)
+    #   DE    : {slug}-wetter-{monat_de}.html    (januar, februar, ...)
+    # Liens relatifs au sous-dossier (pas de préfixe en/, es/, etc.)
     if monthly_url_builder is None:
-        _FR_SLUGS = ["janvier", "fevrier", "mars", "avril", "mai", "juin",
-                     "juillet", "aout", "septembre", "octobre", "novembre", "decembre"]
+        _MONTH_URL_SLUGS = {
+            "fr":    ["janvier", "fevrier", "mars", "avril", "mai", "juin",
+                      "juillet", "aout", "septembre", "octobre", "novembre", "decembre"],
+            "en":    ["january", "february", "march", "april", "may", "june",
+                      "july", "august", "september", "october", "november", "december"],
+            "en-us": ["january", "february", "march", "april", "may", "june",
+                      "july", "august", "september", "october", "november", "december"],
+            "es":    ["enero", "febrero", "marzo", "abril", "mayo", "junio",
+                      "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+            "de":    ["januar", "februar", "maerz", "april", "mai", "juni",
+                      "juli", "august", "september", "oktober", "november", "dezember"],
+        }
+        _URL_SEGMENT = {"fr": "meteo", "en": "weather", "en-us": "weather",
+                        "es": "clima", "de": "wetter"}
         def monthly_url_builder(slug_x, mois_num, lang_x):
-            # Pour simplicité Tour 2 : toujours en structure FR (à étendre via locales)
-            return f"{slug_x}-meteo-{_FR_SLUGS[mois_num - 1]}.html"
+            month_slugs = _MONTH_URL_SLUGS.get(lang_x, _MONTH_URL_SLUGS["fr"])
+            segment = _URL_SEGMENT.get(lang_x, "meteo")
+            return f"{slug_x}-{segment}-{month_slugs[mois_num - 1]}.html"
 
     sorted_m = sorted(monthly, key=lambda m: int(m["mois_num"]))
 
@@ -1444,29 +1475,49 @@ def build_months_table_v6(dest, monthly, lang="fr", monthly_url_builder=None):
         sun = float(m.get("sun_h", 0) or 0)
         emo = _weather_emoji(sun)
         mood_label, mood_cls = _mood_label(score, lang)
-        url = monthly_url_builder(slug, mn, lang)
+        url = monthly_url_builder(slug, mn, lang) if has_monthly_pages else None
         is_best = (mn == best_mn)
         best_cls = " best" if is_best else ""
 
-        row = (f'                <tr class="row{best_cls}" '
-               f'onclick="location.href=\'{url}\'" '
-               f'style="cursor:pointer" tabindex="0" role="link" '
-               f'onkeydown="if(event.key===\'Enter\')location.href=\'{url}\'">'
-               f'<td class="month-cell">{emo} {_html.escape(name)} '
-               f'<span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td>'
-               f'<td>{_html.escape(str(tmin))}°C</td>'
-               f'<td>{_html.escape(str(tmax))}°C</td>'
-               f'<td>{rain}%</td>'
-               f'<td>{mm:.1f}mm</td>'
-               f'<td>{sun:.1f}h</td>'
-               f'<td>{score:.1f}/10</td>'
-               f'<td><span class="mood {mood_cls}">{_html.escape(mood_label)}</span></td>'
-               f'</tr>')
+        # Row clickable seulement si la fiche mensuelle existe en prod
+        if url:
+            row = (f'                <tr class="row{best_cls}" '
+                   f'onclick="location.href=\'{url}\'" '
+                   f'style="cursor:pointer" tabindex="0" role="link" '
+                   f'onkeydown="if(event.key===\'Enter\')location.href=\'{url}\'">'
+                   f'<td class="month-cell">{emo} {_html.escape(name)} '
+                   f'<span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td>'
+                   f'<td>{_html.escape(str(tmin))}°C</td>'
+                   f'<td>{_html.escape(str(tmax))}°C</td>'
+                   f'<td>{rain}%</td>'
+                   f'<td>{mm:.1f}mm</td>'
+                   f'<td>{sun:.1f}h</td>'
+                   f'<td>{score:.1f}/10</td>'
+                   f'<td><span class="mood {mood_cls}">{_html.escape(mood_label)}</span></td>'
+                   f'</tr>')
+        else:
+            row = (f'                <tr class="row{best_cls}">'
+                   f'<td class="month-cell">{emo} {_html.escape(name)}</td>'
+                   f'<td>{_html.escape(str(tmin))}°C</td>'
+                   f'<td>{_html.escape(str(tmax))}°C</td>'
+                   f'<td>{rain}%</td>'
+                   f'<td>{mm:.1f}mm</td>'
+                   f'<td>{sun:.1f}h</td>'
+                   f'<td>{score:.1f}/10</td>'
+                   f'<td><span class="mood {mood_cls}">{_html.escape(mood_label)}</span></td>'
+                   f'</tr>')
         tbody_rows.append(row)
 
-        # Card mobile
+        # Card mobile : <a> si fiche existe, <div> sinon
+        if url:
+            mobile_open = f'<a href="{url}" class="mobile-month-card{best_cls}">'
+            mobile_close = '</a>'
+        else:
+            mobile_open = f'<div class="mobile-month-card{best_cls}">'
+            mobile_close = '</div>'
+
         mobile_cards.append(
-            f'            <a href="{url}" class="mobile-month-card{best_cls}">\n'
+            f'            {mobile_open}\n'
             f'              <div class="head"><div class="name">{emo} {_html.escape(name)}</div>'
             f'<div class="score {mood_cls}">{score:.1f}/10</div></div>\n'
             f'              <div class="rows">\n'
@@ -1475,7 +1526,7 @@ def build_months_table_v6(dest, monthly, lang="fr", monthly_url_builder=None):
             f'                <div class="row"><span>{L["th_sun"]}</span><strong>{sun:.1f}h</strong></div>\n'
             f'                <div class="row row-mood"><strong class="mood-{mood_cls}">{_html.escape(mood_label)}</strong></div>\n'
             f'              </div>\n'
-            f'            </a>'
+            f'            {mobile_close}'
         )
 
     tbody_block = "\n".join(tbody_rows)
