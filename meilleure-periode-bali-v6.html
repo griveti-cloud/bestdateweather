@@ -21,7 +21,6 @@
 .dest-map-card{position:relative;isolation:isolate;transform:translateZ(0)}
 .dest-map-el--world,.dest-map-el--macro{position:relative}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 </head>
 <body>
 <div class="topbar">
@@ -573,58 +572,42 @@
 </footer>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-// Init Leaflet inline et synchrone - pas de race condition, pas de lazy load
+// Init Leaflet inline - attend que Leaflet soit chargé (unpkg defer)
 (function() {
   function initOne(row) {
+    if (!window.L) return;
     var lat = parseFloat(row.dataset.lat);
     var lon = parseFloat(row.dataset.lon);
     var mz = parseInt(row.dataset.macroZoom) || 5;
     var welEl = document.getElementById(row.dataset.worldId);
     var meEl = document.getElementById(row.dataset.macroId);
-    if (!welEl || !meEl || welEl._map || !window.L) return;
-    
-    var pin = L.divIcon({
-      html: "<div style="width:10px;height:10px;background:#e44;border-radius:50%;border:2px solid white;box-shadow:0 2px 8px rgba(0,0,0,.5)"></div>",
-      iconSize:[10,10], iconAnchor:[5,5], className:""
-    });
-    
-    // Carte monde
-    var mw = L.map(welEl.id, {
-      zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false,
-      dragging:false, attributionControl:false, worldCopyJump:false
-    }).setView([lat, lon], 1);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom:18}).addTo(mw);
+    if (!welEl || !meEl || welEl._map) return;
+    var pinHtml = '<div style="width:10px;height:10px;background:#e44;border-radius:50%;border:2px solid white;box-shadow:0 2px 8px rgba(0,0,0,.5)"></div>';
+    var pin = L.divIcon({html: pinHtml, iconSize:[10,10], iconAnchor:[5,5], className:''});
+    var tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var mw = L.map(welEl.id, {zoomControl:false,scrollWheelZoom:false,doubleClickZoom:false,dragging:false,attributionControl:false,worldCopyJump:false}).setView([lat, lon], 1);
+    L.tileLayer(tileUrl, {maxZoom:18}).addTo(mw);
     var d = 18;
-    L.rectangle([[lat-d, lon-d*1.8],[lat+d, lon+d*1.8]],
-      {color:"#e44",weight:1.5,fillColor:"#e44",fillOpacity:.1,interactive:false}).addTo(mw);
+    L.rectangle([[lat-d, lon-d*1.8],[lat+d, lon+d*1.8]], {color:'#e44',weight:1.5,fillColor:'#e44',fillOpacity:.1,interactive:false}).addTo(mw);
     L.marker([lat,lon], {icon:pin, interactive:false}).addTo(mw);
     welEl._map = mw;
-    
-    // Carte macro
-    var mm = L.map(meEl.id, {
-      zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false,
-      dragging:false, attributionControl:true
-    }).setView([lat, lon], mz);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:"© <a href="https://openstreetmap.org" rel="noopener" tabindex="-1">OSM</a>",
-      maxZoom:18
-    }).addTo(mm);
+    var mm = L.map(meEl.id, {zoomControl:false,scrollWheelZoom:false,doubleClickZoom:false,dragging:false,attributionControl:true}).setView([lat, lon], mz);
+    L.tileLayer(tileUrl, {attribution:'\u00a9 <a href="https://openstreetmap.org" rel="noopener" tabindex="-1">OSM</a>', maxZoom:18}).addTo(mm);
     L.marker([lat,lon], {icon:pin, interactive:false}).addTo(mm);
     meEl._map = mm;
   }
-  
   function initAll() {
-    document.querySelectorAll("[data-dest-map]").forEach(initOne);
+    if (!window.L) { setTimeout(initAll, 100); return; }
+    document.querySelectorAll('[data-dest-map]').forEach(initOne);
   }
-  
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initAll);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(initAll, 50); });
   } else {
-    initAll();
+    setTimeout(initAll, 50);
   }
 })();
 </script>
 </body>
+
 </html>
