@@ -917,3 +917,96 @@ def compute_hiking_score(tmax: float, rain_pct: float, sun_h: float,
                          precip_mm: float = None) -> float:
     """Score randonnée sur /10 (mapping linéaire depuis raw_score_hiking)."""
     return round(raw_score_hiking(tmax, rain_pct, sun_h, precip_mm) * 10, 1)
+
+
+# ══════════════════════════════════════════════════════════════════
+# SCORING SPÉCIFIQUE MOUNTAIN — max(ski, rando) par mois
+# ══════════════════════════════════════════════════════════════════
+
+def compute_mountain_scores(months: list, slug: str) -> list:
+    """
+    Calcule le score affiché et la classe pour une destination montagne,
+    basé sur max(score_ski, score_rando) mois par mois.
+
+    Cohérent avec l'intention utilisateur sur une fiche mountain :
+    "quand venir à <station>" — peu importe pour quoi (ski OU rando).
+
+    Paramètre months : liste de 12 dicts avec au minimum :
+      {
+        'tmax'       : float,
+        'rain_pct'   : float,
+        'sun_h'      : float,
+        'precip_mm'  : float | None,
+        'mois_num'   : int 1-12,
+        'mois'       : str (label optionnel pour debug),
+      }
+    Paramètre slug : slug de la destination (lookup ski_altitudes.csv)
+
+    Retourne : liste de 12 dicts :
+      [{
+        'mois'        : str,
+        'score_10'    : float,    # max(ski, rando), 1 décimale
+        'score_100'   : int,      # × 10
+        'classe'      : 'rec'|'mid'|'avoid',  # seuils 7 / 4 / 0
+        'dominant'    : 'ski' | 'rando',      # quel modèle a gagné
+        'ski_score'   : float,
+        'rando_score' : float,
+      }, ...]
+
+    Seuils classe (alignés docstring scoring.py PRINCIPE) :
+      rec    : score_10 >= 7
+      mid    : 4 <= score_10 < 7
+      avoid  : score_10 < 4
+    """
+    # Lazy import pour éviter cycle (scoring.py → lib.ski_data → scoring.py)
+    try:
+        from lib.ski_data import get_ski_data
+    except ImportError:
+        # Fallback : path relatif si appelé depuis racine projet
+        import sys as _sys, os as _os
+        _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+        from lib.ski_data import get_ski_data
+
+    ski_meta = get_ski_data(slug) or {}
+    alt_v   = ski_meta.get('alt_village')
+    alt_max = ski_meta.get('alt_ski_max')
+    glac    = ski_meta.get('has_glacier', False)
+    ss      = ski_meta.get('season_start')
+    se      = ski_meta.get('season_end')
+
+    out = []
+    for m in months:
+        tmax = float(m['tmax'])
+        rain = float(m['rain_pct'])
+        sun  = float(m['sun_h'])
+        ppm  = m.get('precip_mm')
+        ppm  = float(ppm) if ppm not in (None, '', 'None') else None
+        mn   = int(m['mois_num'])
+
+        ski_s   = compute_ski_score(tmax, rain, sun, alt_v, alt_max, glac, mn, ss, se)
+        rando_s = compute_hiking_score(tmax, rain, sun, ppm)
+
+        if ski_s >= rando_s:
+            score = ski_s
+            dominant = 'ski'
+        else:
+            score = rando_s
+            dominant = 'rando'
+
+        if score >= 7.0:
+            cls = 'rec'
+        elif score >= 4.0:
+            cls = 'mid'
+        else:
+            cls = 'avoid'
+
+        out.append({
+            'mois':        m.get('mois', ''),
+            'score_10':    score,
+            'score_100':   int(round(score * 10)),
+            'classe':      cls,
+            'dominant':    dominant,
+            'ski_score':   ski_s,
+            'rando_score': rando_s,
+        })
+    return out
