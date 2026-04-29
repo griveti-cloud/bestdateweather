@@ -610,6 +610,7 @@
       L.tileLayer(tileUrl, {attribution:'OSM', maxZoom:18}).addTo(mm);
       L.marker([lat,lon], {icon:pin, interactive:false}).addTo(mm);
       meEl._map = mm;
+      mm.attributionControl.setPrefix(false);
       // Force invalidateSize après un tick pour que les tiles soient rendues correctement
       setTimeout(function(){ mw.invalidateSize(); mm.invalidateSize(); }, 100);
     } catch(e) {
