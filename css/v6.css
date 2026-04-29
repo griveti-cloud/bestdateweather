@@ -52,6 +52,7 @@ header{background:linear-gradient(180deg,#fff 0%,#fffbf2 100%);
   box-shadow:0 8px 22px rgba(232,148,10,.45);
   color:#fff;
 }
+.cta-label-short{display:none}
 
 /* Topbar V6 — actions (cœur favoris + share + lien Météo en direct) */
 .topbar-actions{
@@ -75,10 +76,19 @@ header{background:linear-gradient(180deg,#fff 0%,#fffbf2 100%);
 .topbar-icon-btn[aria-pressed="true"] svg{fill:currentColor}
 
 @media (max-width:600px){
-  .btn.primary.cta-plan{width:100%;justify-content:center}
+  .topbar-inner{padding:10px 0;gap:8px;flex-wrap:nowrap}
+  .brand{font-size:1rem}
   .topbar-actions{gap:6px}
   .topbar-icon-btn{width:34px;height:34px}
   .topbar-icon-btn svg{width:16px;height:16px}
+  .btn.primary.cta-plan{padding:8px 14px;font-size:.82rem;flex-shrink:0}
+  .cta-label-long{display:none}
+  .cta-label-short{display:inline}
+}
+@media (max-width:380px){
+  .brand{font-size:.92rem}
+  .btn.primary.cta-plan{padding:8px 12px}
+  .cta-label-short{display:none}
 }
 
 /* ═══════════════ HERO-SHELL photo immersive (Tour 9) ═══════════════ */
