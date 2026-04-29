@@ -579,27 +579,53 @@
 <script src="js/dest-map.min.js?v=1" defer></script>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 <script>
-// Fix cartes Leaflet : invalidateSize ne re-centre pas la vue, il faut setView aussi
-function bdwRefreshMaps() {
-  document.querySelectorAll('[data-dest-map]').forEach(function(row) {
+// Fix v3 cartes Leaflet : DESTRUCTION + RECRÉATION (invalidateSize + setView ne suffisaient pas)
+// Bug : Leaflet calcule le container size avec une mauvaise valeur quand le grid mobile change
+// Solution : tuer les maps existantes et les recréer une fois le layout stable
+function bdwRebuildMaps() {
+  if (!window.L || !window.initDestMap) return;
+  document.querySelectorAll("[data-dest-map]").forEach(function(row) {
+    var welEl = document.getElementById(row.dataset.worldId);
+    var meEl = document.getElementById(row.dataset.macroId);
+    // Détruire les maps existantes
+    if (welEl && welEl._map) {
+      try { welEl._map.remove(); } catch(e) {}
+      welEl._map = null;
+      welEl.innerHTML = "";
+    }
+    if (meEl && meEl._map) {
+      try { meEl._map.remove(); } catch(e) {}
+      meEl._map = null;
+      meEl.innerHTML = "";
+    }
+    // Recréer via la fonction exposée par dest-map.min.js
     var lat = parseFloat(row.dataset.lat);
     var lon = parseFloat(row.dataset.lon);
     var mz = parseInt(row.dataset.macroZoom) || 3;
-    var w = document.getElementById(row.dataset.worldId);
-    var m = document.getElementById(row.dataset.macroId);
-    if (w && w._map) { w._map.invalidateSize(); w._map.setView([lat,lon], 1, {animate:false}); }
-    if (m && m._map) { m._map.invalidateSize(); m._map.setView([lat,lon], mz, {animate:false}); }
+    if (welEl && meEl) {
+      window.initDestMap(welEl.id, meEl.id, lat, lon, mz);
+    }
   });
 }
-window.addEventListener('load', function() {
-  setTimeout(bdwRefreshMaps, 200);
-  setTimeout(bdwRefreshMaps, 800);
-  setTimeout(bdwRefreshMaps, 2000);
-  window.addEventListener('resize', function(){ setTimeout(bdwRefreshMaps, 100); });
-  var s = document.querySelector('.dest-map-section');
-  if (s && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) setTimeout(bdwRefreshMaps, 100); }); }, {threshold:0.1}).observe(s);
+// Attendre que tout soit chargé + layout stable, puis rebuild
+window.addEventListener("load", function() {
+  // Attendre que Leaflet soit chargé (chargé async par dest-map.min.js après IntersectionObserver)
+  function waitAndRebuild(attempts) {
+    if (attempts > 30) return; // max 6 secondes
+    if (!window.L || !window.initDestMap) {
+      setTimeout(function(){ waitAndRebuild(attempts + 1); }, 200);
+      return;
+    }
+    // Scroller minuscule pour déclencher l'IntersectionObserver de dest-map.min.js
+    var s = document.querySelector(".dest-map-section");
+    if (s) s.scrollIntoView({block:"nearest", behavior:"instant"});
+    // Attendre que les maps initiales soient créées, puis les rebuild
+    setTimeout(bdwRebuildMaps, 1500);
+    setTimeout(bdwRebuildMaps, 3000);
   }
+  waitAndRebuild(0);
+  // Sur resize aussi (rotation mobile)
+  window.addEventListener("resize", function() { setTimeout(bdwRebuildMaps, 200); });
 });
 </script>
 </body>
