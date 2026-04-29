@@ -967,10 +967,10 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
 /* Masquer le drapeau Leaflet + lien OSM en bas à droite des cartes */
 .leaflet-control-attribution{display:none !important}
 .dest-map-row{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-bottom:12px}
-.dest-map-card{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;background:#e8f0f8}
+.dest-map-card{border-radius:12px;overflow:hidden;border:1.5px solid #e8e0d0;background:#e8f0f8;position:relative;isolation:isolate;transform:translateZ(0)}
 .dest-map-lbl{display:block;padding:6px 12px;font-size:10.5px;font-weight:700;color:var(--ink);letter-spacing:.4px;text-transform:uppercase;background:var(--cream-2);border-bottom:1px solid #e8e0d0}
-.dest-map-el--world{height:180px;width:100%;display:block}
-.dest-map-el--macro{height:180px;width:100%;display:block}
+.dest-map-el--world{height:180px;width:100%;display:block;position:relative}
+.dest-map-el--macro{height:180px;width:100%;display:block;position:relative}
 .dest-map-credit{font-size:9px;color:#aaa;padding:2px 8px;background:var(--cream);border-top:1px solid #f0ebe0}
 .dest-map-credit a{color:#aaa}
 .dest-map-intro{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--cream);border-radius:10px;border:1px solid var(--line-soft)}
@@ -1788,31 +1788,41 @@ tbody tr[onclick]:focus-visible{outline:2px solid var(--gold);outline-offset:-2p
 <script src="js/favs.min.js?v=1" defer></script>
 <script src="js/share.js" defer></script>
 <script>
-  // Force un invalidateSize après que toute la page (fonts, images, widgets) soit chargée
-  // pour corriger les tiles partielles quand la section est initialement hors viewport
+  // Fix robuste: invalidateSize + setView pour re-centrer la carte (Leaflet ne le fait pas auto)
+  // Les cartes Leaflet ont besoin de plusieurs retry quand le container change de taille
+  // (grid mobile 1fr 2fr -> 1fr, fonts en cours de chargement, widgets async, etc)
+  function bdwRefreshMaps() {
+    document.querySelectorAll('[data-dest-map]').forEach(function(row) {
+      var lat = parseFloat(row.dataset.lat);
+      var lon = parseFloat(row.dataset.lon);
+      var mz = parseInt(row.dataset.macroZoom) || 3;
+      var welEl = document.getElementById(row.dataset.worldId);
+      var meEl = document.getElementById(row.dataset.macroId);
+      if (welEl && welEl._map) {
+        welEl._map.invalidateSize();
+        welEl._map.setView([lat, lon], 1, {animate:false});
+      }
+      if (meEl && meEl._map) {
+        meEl._map.invalidateSize();
+        meEl._map.setView([lat, lon], mz, {animate:false});
+      }
+    });
+  }
   window.addEventListener('load', function() {
-    setTimeout(function() {
-      document.querySelectorAll('.dest-map-el').forEach(function(el) {
-        if (el._map) el._map.invalidateSize();
-      });
-    }, 500);
-    // Retry après scroll vers la section (force une 2e passe)
+    // Plusieurs retry: 200ms, 800ms, 2000ms (couvre fonts + widgets async)
+    setTimeout(bdwRefreshMaps, 200);
+    setTimeout(bdwRefreshMaps, 800);
+    setTimeout(bdwRefreshMaps, 2000);
+    // Retry à chaque resize (rotation mobile, ouverture clavier)
+    window.addEventListener('resize', function() { setTimeout(bdwRefreshMaps, 100); });
+    // Retry quand la section devient visible (scroll)
     var section = document.querySelector('.dest-map-section');
-    if (section) {
-      var observed = false;
-      var obs = new IntersectionObserver(function(entries) {
+    if (section && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function(entries) {
         entries.forEach(function(e) {
-          if (e.isIntersecting && !observed) {
-            observed = true;
-            setTimeout(function() {
-              document.querySelectorAll('.dest-map-el').forEach(function(el) {
-                if (el._map) el._map.invalidateSize();
-              });
-            }, 200);
-          }
+          if (e.isIntersecting) setTimeout(bdwRefreshMaps, 100);
         });
-      });
-      obs.observe(section);
+      }, {threshold:0.1}).observe(section);
     }
   });
 </script>
