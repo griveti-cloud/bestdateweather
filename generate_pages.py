@@ -2832,6 +2832,8 @@ def main():
     parser.add_argument('--lang', required=True, choices=['fr', 'en', 'en-us', 'es', 'de'])
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--validate-only', action='store_true')
+    parser.add_argument('--mountain-only', action='store_true',
+                        help='Régénère uniquement les destinations mountain=True (~111 dest)')
     parser.add_argument('target', nargs='*', default=None, help='One or more destination slugs (omit for all)')
     args = parser.parse_args()
 
@@ -2868,6 +2870,12 @@ def main():
     os.makedirs(OUT, exist_ok=True)
 
     slugs = target_list if target_list else list(dests.keys())
+
+    # Filtre --mountain-only : ne garde que les destinations mountain=True
+    if args.mountain_only:
+        before = len(slugs)
+        slugs = [s for s in slugs if dests.get(s, {}).get('mountain', 'False').strip() == 'True']
+        print(f"--mountain-only: {len(slugs)} destinations mountain (sur {before})")
     total_annual = total_monthly = 0
     errors_gen = []
 

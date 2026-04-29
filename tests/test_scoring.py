@@ -26,7 +26,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from scoring import t_ideal, raw_score
+from scoring import t_ideal, raw_score, compute_mountain_scores
 
 CORE_JS = ROOT / 'js' / 'core.js'
 FICHE_JS = ROOT / 'js' / 'fiche-scores.js'
@@ -248,6 +248,95 @@ def test_generator_parity():
           "No EN language support found")
 
 
+# ── Test 6: Mountain scoring — invariants sur toutes les dest mountain ────
+def test_mountain_scoring():
+    print("6. Mountain scoring — invariants sur les destinations mountain")
+
+    # Charger les destinations mountain depuis destinations.csv
+    mountain_slugs = []
+    with open(ROOT / 'data/destinations.csv', encoding='utf-8-sig') as f:
+        for r in csv.DictReader(f):
+            if r.get('mountain', '').strip().lower() in ('true', '1', 'yes'):
+                mountain_slugs.append(r['slug_fr'])
+
+    # Charger climate.csv groupé par slug
+    climate_by_slug = {}
+    with open(ROOT / 'data/climate.csv', encoding='utf-8-sig') as f:
+        for r in csv.DictReader(f):
+            climate_by_slug.setdefault(r['slug'], []).append({
+                'mois': r['mois'],
+                'mois_num': int(r['mois_num']),
+                'tmax': float(r['tmax']),
+                'rain_pct': float(r['rain_pct']),
+                'sun_h': float(r['sun_h']),
+                'precip_mm': float(r['precip_mm']) if r.get('precip_mm', '').strip() else None,
+            })
+
+    # Tester chaque mountain
+    invariant_failures = []
+    tested_count = 0
+    for slug in mountain_slugs:
+        if slug not in climate_by_slug:
+            continue  # skip si données climate manquantes
+        months = sorted(climate_by_slug[slug], key=lambda r: r['mois_num'])
+        if len(months) != 12:
+            continue
+        result = compute_mountain_scores(months, slug)
+        if len(result) != 12:
+            invariant_failures.append(f"{slug}: result n'a pas 12 entrées ({len(result)})")
+            continue
+        for r in result:
+            # Bornes score
+            if not (0 <= r['score_10'] <= 10):
+                invariant_failures.append(f"{slug}/{r['mois']}: score_10 hors [0,10] = {r['score_10']}")
+            # Classe valide
+            if r['classe'] not in ('rec', 'mid', 'avoid'):
+                invariant_failures.append(f"{slug}/{r['mois']}: classe invalide '{r['classe']}'")
+            # Dominant valide
+            if r['dominant'] not in ('ski', 'rando'):
+                invariant_failures.append(f"{slug}/{r['mois']}: dominant invalide '{r['dominant']}'")
+            # score_10 == max(ski, rando)
+            expected_max = max(r['ski_score'], r['rando_score'])
+            if abs(r['score_10'] - expected_max) > 0.01:
+                invariant_failures.append(f"{slug}/{r['mois']}: score_10={r['score_10']} != max(ski={r['ski_score']}, rando={r['rando_score']})")
+            # Classe cohérente avec score
+            expected_cls = 'rec' if r['score_10'] >= 7 else 'mid' if r['score_10'] >= 4 else 'avoid'
+            if r['classe'] != expected_cls:
+                invariant_failures.append(f"{slug}/{r['mois']}: classe={r['classe']} mais score={r['score_10']} attendait {expected_cls}")
+            # score_100 == round(score_10 * 10)
+            if r['score_100'] != round(r['score_10'] * 10):
+                invariant_failures.append(f"{slug}/{r['mois']}: score_100={r['score_100']} != round(score_10 * 10)")
+        tested_count += 1
+
+    check(f"Mountain destinations testées (>=100)", tested_count >= 100,
+          f"testées={tested_count}, mountain dans CSV={len(mountain_slugs)}")
+    check("Invariants score/classe/dominant respectés sur toutes les mountain",
+          len(invariant_failures) == 0,
+          f"échecs={len(invariant_failures)}, ex: {invariant_failures[:2]}")
+
+    # ── Régression Chamonix : 3 valeurs clés (vérifiées manuellement contre scoring.py) ──
+    cham = next((r for r in compute_mountain_scores(
+                    sorted(climate_by_slug['chamonix'], key=lambda r: r['mois_num']), 'chamonix')
+                 if r['mois'] == 'Mars'), None)
+    check("Régression Chamonix Mars: 9.1 (ski) rec",
+          cham and cham['score_10'] == 9.1 and cham['dominant'] == 'ski' and cham['classe'] == 'rec',
+          f"got {cham}" if cham else "Mars introuvable")
+
+    cham_oct = next((r for r in compute_mountain_scores(
+                        sorted(climate_by_slug['chamonix'], key=lambda r: r['mois_num']), 'chamonix')
+                     if r['mois'] == 'Octobre'), None)
+    check("Régression Chamonix Octobre: 7.8 (rando) rec — pas mid avec lapse rate",
+          cham_oct and cham_oct['score_10'] == 7.8 and cham_oct['dominant'] == 'rando' and cham_oct['classe'] == 'rec',
+          f"got {cham_oct}" if cham_oct else "Octobre introuvable")
+
+    cham_nov = next((r for r in compute_mountain_scores(
+                        sorted(climate_by_slug['chamonix'], key=lambda r: r['mois_num']), 'chamonix')
+                     if r['mois'] == 'Novembre'), None)
+    check("Régression Chamonix Novembre: 6.1 mid (transition)",
+          cham_nov and cham_nov['score_10'] == 6.1 and cham_nov['classe'] == 'mid',
+          f"got {cham_nov}" if cham_nov else "Novembre introuvable")
+
+
 # ── Run all ───────────────────────────────────────────────────────────────
 if __name__ == '__main__':
     print("=" * 60)
@@ -260,6 +349,7 @@ if __name__ == '__main__':
     test_fiche_scores()
     test_tropical_keys()
     test_generator_parity()
+    test_mountain_scoring()
 
     print()
     print(f"{'=' * 60}")
