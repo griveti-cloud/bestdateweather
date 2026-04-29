@@ -21,6 +21,7 @@
 .dest-map-card{position:relative;isolation:isolate;transform:translateZ(0)}
 .dest-map-el--world,.dest-map-el--macro{position:relative}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 </head>
 <body>
 <div class="topbar">
@@ -571,57 +572,59 @@
   </div>
 </footer>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
-<script src="js/dest-map.min.js?v=1" defer></script>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-// Fix v3 cartes Leaflet : DESTRUCTION + RECRÉATION (invalidateSize + setView ne suffisaient pas)
-// Bug : Leaflet calcule le container size avec une mauvaise valeur quand le grid mobile change
-// Solution : tuer les maps existantes et les recréer une fois le layout stable
-function bdwRebuildMaps() {
-  if (!window.L || !window.initDestMap) return;
-  document.querySelectorAll("[data-dest-map]").forEach(function(row) {
-    var welEl = document.getElementById(row.dataset.worldId);
-    var meEl = document.getElementById(row.dataset.macroId);
-    // Détruire les maps existantes
-    if (welEl && welEl._map) {
-      try { welEl._map.remove(); } catch(e) {}
-      welEl._map = null;
-      welEl.innerHTML = "";
-    }
-    if (meEl && meEl._map) {
-      try { meEl._map.remove(); } catch(e) {}
-      meEl._map = null;
-      meEl.innerHTML = "";
-    }
-    // Recréer via la fonction exposée par dest-map.min.js
+// Init Leaflet inline et synchrone - pas de race condition, pas de lazy load
+(function() {
+  function initOne(row) {
     var lat = parseFloat(row.dataset.lat);
     var lon = parseFloat(row.dataset.lon);
-    var mz = parseInt(row.dataset.macroZoom) || 3;
-    if (welEl && meEl) {
-      window.initDestMap(welEl.id, meEl.id, lat, lon, mz);
-    }
-  });
-}
-// Attendre que tout soit chargé + layout stable, puis rebuild
-window.addEventListener("load", function() {
-  // Attendre que Leaflet soit chargé (chargé async par dest-map.min.js après IntersectionObserver)
-  function waitAndRebuild(attempts) {
-    if (attempts > 30) return; // max 6 secondes
-    if (!window.L || !window.initDestMap) {
-      setTimeout(function(){ waitAndRebuild(attempts + 1); }, 200);
-      return;
-    }
-    // Scroller minuscule pour déclencher l'IntersectionObserver de dest-map.min.js
-    var s = document.querySelector(".dest-map-section");
-    if (s) s.scrollIntoView({block:"nearest", behavior:"instant"});
-    // Attendre que les maps initiales soient créées, puis les rebuild
-    setTimeout(bdwRebuildMaps, 1500);
-    setTimeout(bdwRebuildMaps, 3000);
+    var mz = parseInt(row.dataset.macroZoom) || 5;
+    var welEl = document.getElementById(row.dataset.worldId);
+    var meEl = document.getElementById(row.dataset.macroId);
+    if (!welEl || !meEl || welEl._map || !window.L) return;
+    
+    var pin = L.divIcon({
+      html: "<div style="width:10px;height:10px;background:#e44;border-radius:50%;border:2px solid white;box-shadow:0 2px 8px rgba(0,0,0,.5)"></div>",
+      iconSize:[10,10], iconAnchor:[5,5], className:""
+    });
+    
+    // Carte monde
+    var mw = L.map(welEl.id, {
+      zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false,
+      dragging:false, attributionControl:false, worldCopyJump:false
+    }).setView([lat, lon], 1);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom:18}).addTo(mw);
+    var d = 18;
+    L.rectangle([[lat-d, lon-d*1.8],[lat+d, lon+d*1.8]],
+      {color:"#e44",weight:1.5,fillColor:"#e44",fillOpacity:.1,interactive:false}).addTo(mw);
+    L.marker([lat,lon], {icon:pin, interactive:false}).addTo(mw);
+    welEl._map = mw;
+    
+    // Carte macro
+    var mm = L.map(meEl.id, {
+      zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false,
+      dragging:false, attributionControl:true
+    }).setView([lat, lon], mz);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:"© <a href="https://openstreetmap.org" rel="noopener" tabindex="-1">OSM</a>",
+      maxZoom:18
+    }).addTo(mm);
+    L.marker([lat,lon], {icon:pin, interactive:false}).addTo(mm);
+    meEl._map = mm;
   }
-  waitAndRebuild(0);
-  // Sur resize aussi (rotation mobile)
-  window.addEventListener("resize", function() { setTimeout(bdwRebuildMaps, 200); });
-});
+  
+  function initAll() {
+    document.querySelectorAll("[data-dest-map]").forEach(initOne);
+  }
+  
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAll);
+  } else {
+    initAll();
+  }
+})();
 </script>
 </body>
 </html>
