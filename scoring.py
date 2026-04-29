@@ -975,13 +975,18 @@ def compute_mountain_scores(months: list, slug: str) -> list:
     se      = ski_meta.get('season_end')
 
     out = []
-    for m in months:
+    for i, m in enumerate(months):
         tmax = float(m['tmax'])
         rain = float(m['rain_pct'])
         sun  = float(m['sun_h'])
+        # Support keys 'precip_mm' (climate.csv direct) ou 'precip' (chargement generate_pages.py)
         ppm  = m.get('precip_mm')
+        if ppm in (None, '', 'None'):
+            ppm = m.get('precip')
         ppm  = float(ppm) if ppm not in (None, '', 'None') else None
-        mn   = int(m['mois_num'])
+        # mois_num : depuis la clé si présente, sinon depuis l'index (1-indexé)
+        mn = m.get('mois_num')
+        mn = int(mn) if mn not in (None, '', 'None') else (i + 1)
 
         ski_s   = compute_ski_score(tmax, rain, sun, alt_v, alt_max, glac, mn, ss, se)
         rando_s = compute_hiking_score(tmax, rain, sun, ppm)

@@ -603,19 +603,18 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     # classique qui pénalise tort les montagnes (algo calibré 22-28°C).
     # ═══════════════════════════════════════════════════════════════════
     if is_mountain:
-        from scoring import compute_ski_score, compute_hiking_score
-        ski_scores = [compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h']) for m in months]
-        _precip = lambda m: (float(m.get('precip_mm')) if m.get('precip_mm') not in (None, '', 'None') else None)
-        hike_scores = [compute_hiking_score(m['tmax'], m['rain_pct'], m['sun_h'], _precip(m)) for m in months]
-        # Score mountain = max(ski, hike) pour chaque mois
+        from scoring import compute_ski_score, compute_hiking_score, compute_mountain_scores
+        # Calcul mountain officiel : max(ski, rando) avec correction altitude/glacier/saison.
+        # Seuils alignés docstring scoring.py PRINCIPE : rec >=7, mid 4-7, avoid <4.
+        _mtn = compute_mountain_scores(months, slug_fr)
+        ski_scores  = [r['ski_score']   for r in _mtn]
+        hike_scores = [r['rando_score'] for r in _mtn]
         for i, m in enumerate(months):
-            _mtn = max(ski_scores[i], hike_scores[i])
-            m['_score_original'] = m.get('score')  # backup (debug éventuel)
+            m['_score_original']  = m.get('score')
             m['_classe_original'] = m.get('classe')
-            m['score'] = _mtn
-            if _mtn >= 7.0:   m['classe'] = 'rec'
-            elif _mtn >= 5.0: m['classe'] = 'mid'
-            else:              m['classe'] = 'avoid'
+            m['score']            = _mtn[i]['score_10']
+            m['classe']           = _mtn[i]['classe']
+            m['_dominant']        = _mtn[i]['dominant']  # 'ski' | 'rando'
         # Recalculer best_* sur le score mountain
         best_score = max(m['score'] for m in months)
         best_idx   = next(i for i, m in enumerate(months) if m['score'] == best_score)
@@ -630,17 +629,17 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         # Best ski month (pour templates titre/FAQ et hero-subs-ski)
         best_ski_idx   = max(range(12), key=lambda i: ski_scores[i])
         best_ski_score = ski_scores[best_ski_idx]
-        # Saisons : score ski (comportement existant conservé)
+        # Saisons mountain : moyenne du score affiché = max(ski, rando) pour cohérence
+        # Avant : utilisait moyenne ski uniquement → été toujours catastrophique pour mountain.
         _season_idxs = C['locale'].get('season_months', {})
         for _sname, _sidxs in _season_idxs.items():
-            _ski_ms = [months[i] for i in _sidxs]
-            _ski_sc = [compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h']) for m in _ski_ms]
-            _avg_ski = round(sum(_ski_sc) / len(_ski_sc), 1)
-            seas[_sname]['score'] = _avg_ski
-            if _avg_ski >= 8.5:   seas[_sname]['verdict'] = C['locale'].get('verdict_excellent', 'Excellent')
-            elif _avg_ski >= 7.0: seas[_sname]['verdict'] = C['locale'].get('verdict_good', 'Bonne période')
-            elif _avg_ski >= 5.5: seas[_sname]['verdict'] = C['locale'].get('verdict_fair', 'Période acceptable')
-            else:                 seas[_sname]['verdict'] = C['locale'].get('verdict_poor', 'Conditions marquées')
+            _seas_sc = [months[i]['score'] for i in _sidxs]
+            _avg = round(sum(_seas_sc) / len(_seas_sc), 1)
+            seas[_sname]['score'] = _avg
+            if _avg >= 8.5:   seas[_sname]['verdict'] = C['locale'].get('verdict_excellent', 'Excellent')
+            elif _avg >= 7.0: seas[_sname]['verdict'] = C['locale'].get('verdict_good', 'Bonne période')
+            elif _avg >= 5.5: seas[_sname]['verdict'] = C['locale'].get('verdict_fair', 'Période acceptable')
+            else:             seas[_sname]['verdict'] = C['locale'].get('verdict_poor', 'Conditions marquées')
     worst_idx   = min(range(12), key=lambda i: months[i]['score'])
     worst_rain  = months[worst_idx]['rain_pct']
     wettest_idx = max(range(12), key=lambda i: months[i]['rain_pct'])
@@ -1126,9 +1125,10 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     winter_key = C['season_order'][-1]  # 'Hiver' (FR) or 'Winter' (EN)
     if is_mountain:
         from scoring import compute_ski_score
-        best_ski_idx = max(range(12), key=lambda i: compute_ski_score(months[i]['tmax'], months[i]['rain_pct'], months[i]['sun_h']))
-        best_ski_score = f"{compute_ski_score(months[best_ski_idx]['tmax'], months[best_ski_idx]['rain_pct'], months[best_ski_idx]['sun_h']):.1f}"
-        winter_months_ski = [compute_ski_score(months[i]['tmax'], months[i]['rain_pct'], months[i]['sun_h']) for i in (11, 0, 1)]
+        from lib.common import _ski_kwargs
+        best_ski_idx = max(range(12), key=lambda i: compute_ski_score(months[i]['tmax'], months[i]['rain_pct'], months[i]['sun_h'], **_ski_kwargs(slug_fr, month=i+1)))
+        best_ski_score = f"{compute_ski_score(months[best_ski_idx]['tmax'], months[best_ski_idx]['rain_pct'], months[best_ski_idx]['sun_h'], **_ski_kwargs(slug_fr, month=best_ski_idx+1)):.1f}"
+        winter_months_ski = [compute_ski_score(months[i]['tmax'], months[i]['rain_pct'], months[i]['sun_h'], **_ski_kwargs(slug_fr, month=i+1)) for i in (11, 0, 1)]
         winter_ski_avg = f"{sum(winter_months_ski)/3:.1f}"
         faq_vars = dict(prep=prep, nom_bare=nom_bare, nom=nom,
                         best_ski_month=MONTHS[best_ski_idx],
@@ -1676,9 +1676,13 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     eff_classe = m['classe']
     ski_sc = 0  # default; overridden for mountain below
     if is_mountain:
-        from scoring import compute_ski_score, best_class
-        ski_sc = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
-        eff_classe = best_class(m['classe'], ski_sc)
+        # Pour mountain, m['score'] et m['classe'] sont déjà calculés en max(ski, rando)
+        # via gen_annual (cf compute_mountain_scores). eff_classe = m['classe'].
+        # ski_sc reste utile pour libellés secondaires (FAQ ski, hero subs).
+        from scoring import compute_ski_score
+        from lib.common import _ski_kwargs
+        ski_sc = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'],
+                                    **_ski_kwargs(slug_fr, month=mi+1))
     bg, txt, verdict_lbl = fn['score_badge'](score, eff_classe, is_tropical)
     bud = fn['budget_tier'](score, all_scores)
 
@@ -1965,7 +1969,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     faq_q1 = ft['good_period_q'].format(**_fv)
     if is_mountain:
         from scoring import compute_ski_score
-        ski_this = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
+        from lib.common import _ski_kwargs
+        ski_this = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'], **_ski_kwargs(slug_fr, month=mi+1))
         _fv['ski'] = f"{ski_this:.1f}"
         if ski_this >= 6.5 and score < 5:
             faq_a1 = ft['ski_a_good'].format(**_fv)
@@ -1990,7 +1995,8 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     if is_mountain and is_cold:
         if not is_mountain or 'ski_this' not in dir():
             from scoring import compute_ski_score
-            ski_this = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'])
+            from lib.common import _ski_kwargs
+            ski_this = compute_ski_score(m['tmax'], m['rain_pct'], m['sun_h'], **_ski_kwargs(slug_fr, month=mi+1))
             _fv['ski'] = f"{ski_this:.1f}"
         faq_q2 = ft.get('ski_q_cold', ft['ski_q']).format(**_fv)
         if ski_this >= 6.5:
@@ -2156,14 +2162,15 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     if is_mountain:
         # Pour les stations ski : trier les autres stations par proximité de ski_score ce mois
         from scoring import compute_ski_score as _csk
-        _my_ski = _csk(m['tmax'], m['rain_pct'], m['sun_h'])
+        from lib.common import _ski_kwargs as _skw
+        _my_ski = _csk(m['tmax'], m['rain_pct'], m['sun_h'], **_skw(slug_fr, month=mi+1))
         _ski_sims = []
         for _ss, _sd in all_dests.items():
             if _ss == slug_fr: continue
             if _sd.get('mountain','False').strip() != 'True': continue
             if _ss not in all_climate or not all_climate[_ss][mi]: continue
             _sm = all_climate[_ss][mi]
-            _other_ski = _csk(_sm['tmax'], _sm['rain_pct'], _sm['sun_h'])
+            _other_ski = _csk(_sm['tmax'], _sm['rain_pct'], _sm['sun_h'], **_skw(_ss, month=mi+1))
             _ski_sims.append((abs(_other_ski - _my_ski), _ss))
         _ski_sims.sort(key=lambda x: x[0])
         sim_list_for_page = [(1 - d/10, s) for d, s in _ski_sims[:3]]
