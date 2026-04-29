@@ -73,21 +73,10 @@ header{background:linear-gradient(180deg,#fff 0%,#fffbf2 100%);
   background:rgba(225,29,72,.06)
 }
 .topbar-icon-btn[aria-pressed="true"] svg{fill:currentColor}
-.topbar-link.nav-cta{
-  color:var(--ink);text-decoration:none;
-  font-size:13px;font-weight:700;
-  padding:8px 12px;border-radius:6px;
-  transition:background .15s,color .15s;
-  white-space:nowrap;opacity:.75
-}
-.topbar-link.nav-cta:hover{
-  background:rgba(0,0,0,.04);opacity:1
-}
 
 @media (max-width:600px){
   .btn.primary.cta-plan{width:100%;justify-content:center}
   .topbar-actions{gap:6px}
-  .topbar-link.nav-cta{display:none}
   .topbar-icon-btn{width:34px;height:34px}
   .topbar-icon-btn svg{width:16px;height:16px}
 }
