@@ -52,8 +52,44 @@ header{background:linear-gradient(180deg,#fff 0%,#fffbf2 100%);
   box-shadow:0 8px 22px rgba(232,148,10,.45);
   color:#fff;
 }
+
+/* Topbar V6 — actions (cœur favoris + share + lien Météo en direct) */
+.topbar-actions{
+  display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:auto
+}
+.topbar-icon-btn{
+  background:transparent;border:1px solid var(--border);
+  color:var(--ink);
+  width:36px;height:36px;border-radius:8px;
+  display:inline-flex;align-items:center;justify-content:center;
+  cursor:pointer;padding:0;
+  transition:background .15s,border-color .15s,color .15s
+}
+.topbar-icon-btn:hover{
+  background:#fff;border-color:#d4c8a0;color:var(--gold)
+}
+.topbar-icon-btn[aria-pressed="true"]{
+  color:#e11d48;border-color:rgba(225,29,72,.4);
+  background:rgba(225,29,72,.06)
+}
+.topbar-icon-btn[aria-pressed="true"] svg{fill:currentColor}
+.topbar-link.nav-cta{
+  color:var(--ink);text-decoration:none;
+  font-size:13px;font-weight:700;
+  padding:8px 12px;border-radius:6px;
+  transition:background .15s,color .15s;
+  white-space:nowrap;opacity:.75
+}
+.topbar-link.nav-cta:hover{
+  background:rgba(0,0,0,.04);opacity:1
+}
+
 @media (max-width:600px){
   .btn.primary.cta-plan{width:100%;justify-content:center}
+  .topbar-actions{gap:6px}
+  .topbar-link.nav-cta{display:none}
+  .topbar-icon-btn{width:34px;height:34px}
+  .topbar-icon-btn svg{width:16px;height:16px}
 }
 
 /* ═══════════════ HERO-SHELL photo immersive (Tour 9) ═══════════════ */
