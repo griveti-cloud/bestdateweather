@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap"/>
 <link rel="stylesheet" href="vendor/leaflet/leaflet.min.css">
-<link rel="stylesheet" href="css/v6.css?v=8"/>
+<link rel="stylesheet" href="css/v6.css?v=9"/>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Meilleure période pour partir à Chamonix", "description": "Découvrez la meilleure période à Chamonix. Score climatique complet sur 12 mois, température, soleil et pluie. Guide 2026.", "image": {"@type": "ImageObject", "url": "https://bestdateweather.com/og-image.png", "width": 1200, "height": 630}, "author": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com", "logo": {"@type": "ImageObject", "url": "https://bestdateweather.com/icon-192.png", "width": 192, "height": 192}}, "publisher": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com", "logo": {"@type": "ImageObject", "url": "https://bestdateweather.com/icon-192.png", "width": 192, "height": 192}}, "datePublished": "2026-04-20", "dateModified": "2026-04-20", "inLanguage": "fr", "url": "https://bestdateweather.com/meilleure-periode-chamonix.html", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://bestdateweather.com/meilleure-periode-chamonix.html"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Quelle est la meilleure période pour partir à Chamonix ?", "acceptedAnswer": {"@type": "Answer", "text": "Mars est le meilleur mois avec un score de 9.1/10 : 8°C en journée, -1°C la nuit, 10.4h de soleil et 45% de jours pluvieux."}}, {"@type": "Question", "name": "Quel est le mois le plus rude à Chamonix ?", "acceptedAnswer": {"@type": "Answer", "text": "Novembre (6.1/10), avec environ 8°C en journée et 7.9h de soleil. À envisager seulement pour des activités ciblées."}}, {"@type": "Question", "name": "Quel est le mois le plus pluvieux à Chamonix ?", "acceptedAnswer": {"@type": "Answer", "text": "Mai avec environ 61% de jours de pluie. À comparer aux 45% du meilleur mois (Mars)."}}, {"@type": "Question", "name": "Combien de mois confortables compte Chamonix ?", "acceptedAnswer": {"@type": "Answer", "text": "Sur les 12 mois, 11 dépassent un score de 7/10. Top 2 : Février et Mars si l'on cherche le meilleur compromis météo."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bestdateweather.com/"}, {"@type": "ListItem", "position": 2, "name": "Chamonix", "item": "https://bestdateweather.com/meilleure-periode-chamonix.html"}]}</script>
@@ -149,15 +149,27 @@
             <a class="btn primary" href="#tableau">Comparer les 12 mois</a>
             <a class="btn" href="#par-projet">Selon votre projet</a>
           </div>
-          <div class="right-item method-mini">
-            <h3>Comment on calcule</h3>
-            <div class="method-mini-grid">
-              <div><strong>Précipitations</strong>fréquence &amp; intensité</div>
-              <div><strong>Température</strong>max, min, stabilité</div>
-              <div><strong>Ensoleillement</strong>heures par jour</div>
-              <div><strong>Ressenti humide</strong>point de rosée</div>
+          <div class="method-mini">
+            <h3>Comment on calcule le score</h3>
+            <p class="method-mini-intro">Pour une destination montagne, on calcule <strong>deux scores</strong> par mois — ski et rando — et on affiche le meilleur des deux.</p>
+            <div class="method-mini-model">
+              <div class="method-mini-model-head"><span class="method-mini-ico">⛷️</span><strong>Score ski</strong> <span class="method-mini-season">déc → mai</span></div>
+              <ul class="method-mini-list">
+                <li><strong>40%</strong> enneigement (T° piste corrigée par lapse rate -6.5°C/1000 m)</li>
+                <li><strong>40%</strong> confort thermique hiver (-5 à 5°C optimal)</li>
+                <li><strong>20%</strong> soleil</li>
+                <li>Pénalité hors-saison : ×0.70 mois adjacents · ×0.35 hors saison</li>
+              </ul>
             </div>
-            <p class="method-mini-foot"><strong>Source :</strong> ERA5 · Open-Meteo · 10 ans (2016-2025) · <a href="methodologie.html">Méthodologie →</a></p>
+            <div class="method-mini-model">
+              <div class="method-mini-model-head"><span class="method-mini-ico">🥾</span><strong>Score rando</strong> <span class="method-mini-season">juin → sept</span></div>
+              <ul class="method-mini-list">
+                <li><strong>40%</strong> température (10-22°C optimal)</li>
+                <li><strong>40%</strong> pluie (fréquence + intensité quotidienne)</li>
+                <li><strong>20%</strong> soleil</li>
+              </ul>
+            </div>
+            <p class="method-mini-foot"><strong>Source :</strong> ERA5 · Open-Meteo · 10 ans (2016-2025) · <a href="methodologie.html">Méthodologie complète →</a></p>
           </div>
         </div>
       </div>
