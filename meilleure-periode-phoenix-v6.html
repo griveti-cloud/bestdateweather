@@ -16,6 +16,11 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Quelle est la meilleure période pour partir à Phoenix ?", "acceptedAnswer": {"@type": "Answer", "text": "Avril est le meilleur mois avec un score de 9.4/10 : 31°C en journée, 15°C la nuit, 12.8h de soleil et 3% de jours pluvieux."}}, {"@type": "Question", "name": "Quel est le mois le plus rude à Phoenix ?", "acceptedAnswer": {"@type": "Answer", "text": "Juin (3.9/10), avec environ 41°C en journée et 13.3h de soleil. À envisager seulement pour des activités ciblées."}}, {"@type": "Question", "name": "Quel est le mois le plus pluvieux à Phoenix ?", "acceptedAnswer": {"@type": "Answer", "text": "Juillet avec environ 16% de jours de pluie. À comparer aux 3% du meilleur mois (Avril)."}}, {"@type": "Question", "name": "Combien de mois confortables compte Phoenix ?", "acceptedAnswer": {"@type": "Answer", "text": "Sur les 12 mois, 7 dépassent un score de 7/10. Top 2 : Avril et Novembre si l'on cherche le meilleur compromis météo."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://bestdateweather.com/"}, {"@type": "ListItem", "position": 2, "name": "Phoenix", "item": "https://bestdateweather.com/meilleure-periode-phoenix.html"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Dataset", "name": "Données climatiques de Phoenix — moyennes mensuelles sur 10 ans", "description": "Températures, précipitations, ensoleillement et vent mensuels à Phoenix. Moyennes calculées sur 10 ans de données ERA5 (Open-Meteo).", "temporalCoverage": "2015/2024", "spatialCoverage": {"@type": "Place", "name": "Phoenix"}, "creator": {"@type": "Organization", "name": "BestDateWeather", "url": "https://bestdateweather.com"}, "license": "https://creativecommons.org/licenses/by-nc/4.0/", "variableMeasured": ["Temperature", "Precipitation", "Sunshine hours", "Wind speed"]}</script>
+<style>
+/* Fix cartes Leaflet mobile : isolation + position pour overflow correct */
+.dest-map-card{position:relative;isolation:isolate;transform:translateZ(0)}
+.dest-map-el--world,.dest-map-el--macro{position:relative}
+</style>
 </head>
 <body>
 <div class="topbar">
@@ -573,5 +578,29 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 <script src="js/dest-map.min.js?v=1" defer></script>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
+<script>
+// Fix cartes Leaflet : invalidateSize ne re-centre pas la vue, il faut setView aussi
+function bdwRefreshMaps() {
+  document.querySelectorAll('[data-dest-map]').forEach(function(row) {
+    var lat = parseFloat(row.dataset.lat);
+    var lon = parseFloat(row.dataset.lon);
+    var mz = parseInt(row.dataset.macroZoom) || 3;
+    var w = document.getElementById(row.dataset.worldId);
+    var m = document.getElementById(row.dataset.macroId);
+    if (w && w._map) { w._map.invalidateSize(); w._map.setView([lat,lon], 1, {animate:false}); }
+    if (m && m._map) { m._map.invalidateSize(); m._map.setView([lat,lon], mz, {animate:false}); }
+  });
+}
+window.addEventListener('load', function() {
+  setTimeout(bdwRefreshMaps, 200);
+  setTimeout(bdwRefreshMaps, 800);
+  setTimeout(bdwRefreshMaps, 2000);
+  window.addEventListener('resize', function(){ setTimeout(bdwRefreshMaps, 100); });
+  var s = document.querySelector('.dest-map-section');
+  if (s && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) setTimeout(bdwRefreshMaps, 100); }); }, {threshold:0.1}).observe(s);
+  }
+});
+</script>
 </body>
 </html>
