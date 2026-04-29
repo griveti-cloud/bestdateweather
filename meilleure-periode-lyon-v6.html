@@ -579,41 +579,64 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 <script>
-// Init Leaflet inline - attend que Leaflet soit chargé (unpkg defer)
+// Init Leaflet inline avec debug visible
 (function() {
+  function showError(msg) {
+    document.querySelectorAll('.dest-map-el').forEach(function(el) {
+      el.style.background = '#fee';
+      el.style.color = '#900';
+      el.style.padding = '8px';
+      el.style.fontSize = '11px';
+      el.style.fontFamily = 'monospace';
+      el.style.whiteSpace = 'pre-wrap';
+      el.textContent = msg;
+    });
+  }
   function initOne(row) {
-    if (!window.L) return;
     var lat = parseFloat(row.dataset.lat);
     var lon = parseFloat(row.dataset.lon);
     var mz = parseInt(row.dataset.macroZoom) || 5;
     var welEl = document.getElementById(row.dataset.worldId);
     var meEl = document.getElementById(row.dataset.macroId);
-    if (!welEl || !meEl || welEl._map) return;
-    var pinHtml = '<div style="width:10px;height:10px;background:#e44;border-radius:50%;border:2px solid white;box-shadow:0 2px 8px rgba(0,0,0,.5)"></div>';
-    var pin = L.divIcon({html: pinHtml, iconSize:[10,10], iconAnchor:[5,5], className:''});
-    var tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    var mw = L.map(welEl.id, {zoomControl:false,scrollWheelZoom:false,doubleClickZoom:false,dragging:false,attributionControl:false,worldCopyJump:false}).setView([lat, lon], 1);
-    L.tileLayer(tileUrl, {maxZoom:18}).addTo(mw);
-    var d = 18;
-    L.rectangle([[lat-d, lon-d*1.8],[lat+d, lon+d*1.8]], {color:'#e44',weight:1.5,fillColor:'#e44',fillOpacity:.1,interactive:false}).addTo(mw);
-    L.marker([lat,lon], {icon:pin, interactive:false}).addTo(mw);
-    welEl._map = mw;
-    var mm = L.map(meEl.id, {zoomControl:false,scrollWheelZoom:false,doubleClickZoom:false,dragging:false,attributionControl:true}).setView([lat, lon], mz);
-    L.tileLayer(tileUrl, {attribution:'\u00a9 <a href="https://openstreetmap.org" rel="noopener" tabindex="-1">OSM</a>', maxZoom:18}).addTo(mm);
-    L.marker([lat,lon], {icon:pin, interactive:false}).addTo(mm);
-    meEl._map = mm;
+    if (!welEl || !meEl) { showError('No el: w=' + row.dataset.worldId + ' m=' + row.dataset.macroId); return; }
+    if (welEl._map) return;
+    try {
+      var pinHtml = '<div style="width:10px;height:10px;background:#e44;border-radius:50%;border:2px solid white"></div>';
+      var pin = L.divIcon({html: pinHtml, iconSize:[10,10], iconAnchor:[5,5], className:''});
+      var tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+      var mw = L.map(welEl.id, {zoomControl:false,scrollWheelZoom:false,doubleClickZoom:false,dragging:false,attributionControl:false}).setView([lat, lon], 1);
+      L.tileLayer(tileUrl, {maxZoom:18}).addTo(mw);
+      L.marker([lat,lon], {icon:pin, interactive:false}).addTo(mw);
+      welEl._map = mw;
+      var mm = L.map(meEl.id, {zoomControl:false,scrollWheelZoom:false,doubleClickZoom:false,dragging:false,attributionControl:true}).setView([lat, lon], mz);
+      L.tileLayer(tileUrl, {attribution:'OSM', maxZoom:18}).addTo(mm);
+      L.marker([lat,lon], {icon:pin, interactive:false}).addTo(mm);
+      meEl._map = mm;
+      // Force invalidateSize après un tick pour que les tiles soient rendues correctement
+      setTimeout(function(){ mw.invalidateSize(); mm.invalidateSize(); }, 100);
+    } catch(e) {
+      showError('ERR: ' + e.message + '\n' + e.stack);
+    }
   }
-  function initAll() {
-    if (!window.L) { setTimeout(initAll, 100); return; }
-    document.querySelectorAll('[data-dest-map]').forEach(initOne);
+  function initAll(retries) {
+    retries = retries || 0;
+    if (!window.L) {
+      if (retries > 50) { showError('Leaflet jamais chargé après 5s'); return; }
+      setTimeout(function(){ initAll(retries + 1); }, 100);
+      return;
+    }
+    var rows = document.querySelectorAll('[data-dest-map]');
+    if (rows.length === 0) { showError('Aucun element [data-dest-map] trouve'); return; }
+    rows.forEach(initOne);
   }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function(){ setTimeout(initAll, 50); });
+    document.addEventListener('DOMContentLoaded', function(){ initAll(0); });
   } else {
-    setTimeout(initAll, 50);
+    initAll(0);
   }
 })();
 </script>
 </body>
+
 
 </html>
