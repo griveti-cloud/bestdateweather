@@ -2834,6 +2834,9 @@ def main():
     parser.add_argument('--validate-only', action='store_true')
     parser.add_argument('--mountain-only', action='store_true',
                         help='Régénère uniquement les destinations mountain=True (~111 dest)')
+    parser.add_argument('--v6', action='store_true',
+                        help='Génère les fiches annuelles en V6 (lib/v6_adapter::gen_annual_v6). '
+                             'Les fiches mensuelles restent V5. Rollback: enlever ce flag.')
     parser.add_argument('target', nargs='*', default=None, help='One or more destination slugs (omit for all)')
     args = parser.parse_args()
 
@@ -2897,7 +2900,11 @@ def main():
 
         # Annual page
         try:
-            html = gen_annual(cfg, fn, dest, months, dest_cards_list, dests, similarities, comp_index)
+            if args.v6:
+                from lib.v6_adapter import gen_annual_v6
+                html = gen_annual_v6(cfg, fn, dest, months, dest_cards_list, dests, similarities, comp_index)
+            else:
+                html = gen_annual(cfg, fn, dest, months, dest_cards_list, dests, similarities, comp_index)
             out  = os.path.join(OUT, annual_url(cfg, slug))
             if not args.dry_run:
                 open(out, 'w', encoding='utf-8').write(html)
