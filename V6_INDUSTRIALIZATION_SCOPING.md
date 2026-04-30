@@ -12,7 +12,7 @@
 | **Pilote post-GSC** | Tout FR d'un coup (754 fiches), 1 semaine après prep — mais subordonné au multilangue |
 | **Stratégie GSC pendant rédaction (mai-juin)** | Option 2 — tout figer en V5, déployer V6 multilangue d'un coup (1 seule perturbation GSC) |
 | **Rédaction des 3000 éditos EN/EN-US/ES/DE** | Claude rédige avec traduction idiomatique (pas mot-à-mot), spot-check 10% par Gilles, validation par batches de 50 |
-| **Architecture refactor** | À VALIDER (Option A in-place vs B fork) |
+| **Architecture refactor** | **Option B** — fork `gen_annual_v6()` avec flag CLI `--v6`, V5 reste intacte. Rollback en 5 min en supprimant le flag. Code dupliqué pendant ~1 mois jusqu'à validation GSC, puis suppression V5. |
 
 ## 0.1 Garde-fous rédaction multilangue
 
@@ -169,7 +169,9 @@ Sections nouvelles V6 nécessitant des labels traduits :
 
 ## 6. Décisions à valider avant de coder
 
-1. ⏳ **Architecture refactor (Option A vs B)** — en attente
+1. ✅ ~~Architecture refactor~~ → **Option B** (fork `gen_annual_v6()`)
 2. ✅ ~~Périmètre rollout V6~~ → bloquer multilangue
 3. ✅ ~~Profils Box 3~~ → décision technique, "Séjour citadin" par défaut
 4. ⏳ **Crosslinks et SEO interne** → on les ajoute en V6 ou pas ? (à décider semaine 1 mai)
+
+**→ Toutes les décisions stratégiques sont prises. Démarrage du dev possible.**
