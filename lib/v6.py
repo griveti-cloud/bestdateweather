@@ -1272,22 +1272,54 @@ def render_v6_reserver(slug: str, lang: str, dest_name: str,
 def render_v6_head(lang: str, page_title: str, page_desc: str,
                    canonical_url: str = '',
                    asset_prefix: str = '',
-                   bg_image_url: str = '') -> str:
-    """Rend le <head> minimal V6.
+                   bg_image_url: str = '',
+                   hreflang_tags: str = '',
+                   og_image_url: str = '',
+                   json_ld_blocks: list[str] = None) -> str:
+    """Rend le <head> V6 avec SEO complet.
 
     Args:
         lang: 'fr', 'en', 'en-us', 'es', 'de'
         page_title: <title>
-        page_desc: meta description
+        page_desc: meta description (limitée à ~160 chars idéalement)
         canonical_url: URL canonique absolue
         asset_prefix: préfixe URL assets (vide si racine, '../' si sous-dossier)
         bg_image_url: si fourni, ajoute un preload pour LCP optimisation
+        hreflang_tags: HTML des balises <link rel="alternate" hreflang="...">
+            préfabriqué par build_hreflang_tags() — laissé externe pour
+            ne pas dépendre de page_config dans v6.py
+        og_image_url: URL image og (1200x630). Si vide, utilise bg_image_url.
+        json_ld_blocks: liste de strings JSON-LD à injecter (Article, FAQPage, ...)
     """
     html_lang = {'fr': 'fr', 'en': 'en', 'en-us': 'en-US', 'es': 'es', 'de': 'de'}.get(lang, 'fr')
     canonical_html = (f'<link rel="canonical" href="{h(canonical_url)}"/>'
                       if canonical_url else '')
     preload_bg = (f'<link rel="preload" as="image" href="{h(bg_image_url)}" fetchpriority="high">'
                   if bg_image_url else '')
+
+    # OpenGraph minimal
+    og_image = og_image_url or bg_image_url or ''
+    og_html = ''
+    if og_image or canonical_url:
+        og_parts = []
+        og_parts.append(f'<meta property="og:title" content="{h(page_title)}"/>')
+        og_parts.append(f'<meta property="og:description" content="{h(page_desc)}"/>')
+        og_parts.append(f'<meta property="og:type" content="article"/>')
+        if canonical_url:
+            og_parts.append(f'<meta property="og:url" content="{h(canonical_url)}"/>')
+        if og_image:
+            og_parts.append(f'<meta property="og:image" content="{h(og_image)}"/>')
+        og_parts.append(f'<meta name="twitter:card" content="summary_large_image"/>')
+        og_html = '\n'.join(og_parts)
+
+    # JSON-LD
+    json_ld_html = ''
+    if json_ld_blocks:
+        json_ld_html = '\n'.join(
+            f'<script type="application/ld+json">{block}</script>'
+            for block in json_ld_blocks
+        )
+
     return f'''<!doctype html>
 <html lang="{html_lang}">
 <head>
@@ -1296,9 +1328,12 @@ def render_v6_head(lang: str, page_title: str, page_desc: str,
 <title>{h(page_title)}</title>
 <meta name="description" content="{h(page_desc)}"/>
 {canonical_html}
+{hreflang_tags}
+{og_html}
 {preload_bg}
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <link rel="stylesheet" href="{asset_prefix}css/v6.css?v=15"/>
+{json_ld_html}
 </head>
 <body>'''
 
@@ -1369,6 +1404,9 @@ def render_v6_full_page(page_data: dict) -> str:
         canonical_url=d.get('canonical_url', ''),
         asset_prefix=asset_prefix,
         bg_image_url=d.get('hero_data', {}).get('photo_url', ''),
+        hreflang_tags=d.get('hreflang_tags', ''),
+        og_image_url=d.get('og_image_url', ''),
+        json_ld_blocks=d.get('json_ld_blocks', []),
     )
 
     topbar = render_v6_topbar(slug, lang)

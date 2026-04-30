@@ -429,6 +429,48 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
     # ── Construction page_data ──
     canonical_url = f'https://bestdateweather.com/{cfg.get("canonical_prefix", "")}{cfg["annual_prefix"]}{slug}{cfg["annual_suffix"]}'
 
+    # Page title : utilise les annual_titles V5 (rotation déterministe par slug
+    # pour éviter le pattern uniforme suspect de SEO)
+    annual_titles = cfg.get('annual_titles', []) or []
+    title_idx = abs(hash(dest.get('slug_fr', slug))) % len(annual_titles) if annual_titles else 0
+    title_tpl = annual_titles[title_idx] if annual_titles else '{nom_bare} : meilleurs mois'
+
+    from datetime import datetime
+    year = datetime.now().year
+
+    title_vars = {
+        'nom_bare': dest.get('nom_bare', nom),
+        'nom': nom,
+        'prep': dest.get(f'prep_{lang[:2]}', dest.get('prep_fr', 'à')),
+        'best_score': f'{best["score_10"]:.1f}',
+        'best_month': best['mois'],
+        'year': year,
+    }
+    try:
+        page_title = title_tpl.format(**title_vars)
+    except (KeyError, IndexError):
+        page_title = f'{nom} : meilleurs mois'
+
+    # Meta description : générique mais informative
+    if lang == 'fr':
+        page_desc = (f'Quand partir à {nom} ? {best["mois"]} ({best["score_10"]:.1f}/10) sort en tête, '
+                     f'{worst["mois"]} ({worst["score_10"]:.1f}/10) reste le plus rude. '
+                     f'Données ERA5 sur 10 ans, scores des 12 mois.')
+    elif lang in ('en', 'en-us'):
+        page_desc = (f'When to visit {nom}? {best["mois"]} ({best["score_10"]:.1f}/10) is the standout, '
+                     f'{worst["mois"]} ({worst["score_10"]:.1f}/10) the toughest. '
+                     f'10-year ERA5 climate data, all 12 months scored.')
+    elif lang == 'es':
+        page_desc = (f'¿Cuándo ir a {nom}? {best["mois"]} ({best["score_10"]:.1f}/10) destaca, '
+                     f'{worst["mois"]} ({worst["score_10"]:.1f}/10) es el más duro. '
+                     f'Datos ERA5 de 10 años, 12 meses puntuados.')
+    elif lang == 'de':
+        page_desc = (f'Wann nach {nom} reisen? {best["mois"]} ({best["score_10"]:.1f}/10) liegt vorne, '
+                     f'{worst["mois"]} ({worst["score_10"]:.1f}/10) ist am härtesten. '
+                     f'ERA5-Daten 10 Jahre, alle 12 Monate bewertet.')
+    else:
+        page_desc = f'{nom}: {best["mois"]} ({best["score_10"]:.1f}/10) best, {worst["mois"]} ({worst["score_10"]:.1f}/10) worst.'
+
     return {
         'lang': lang,
         'slug': slug,
@@ -437,8 +479,8 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
         'slug_es': dest.get('slug_es', ''),
         'slug_de': dest.get('slug_de', ''),
         'dest_name': nom,
-        'page_title': f'{nom} : meilleurs mois pour partir',  # à enrichir
-        'page_desc': f'Quand partir à {nom} ? {best["mois"]} ({best["score_10"]:.1f}/10) en tête. Données ERA5 sur 10 ans.',
+        'page_title': page_title,
+        'page_desc': page_desc,
         'canonical_url': canonical_url,
         'asset_prefix': cfg.get('asset_prefix', ''),
         'lat': lat, 'lon': lon,
@@ -479,11 +521,16 @@ def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
     Returns:
         HTML complet de la page V6.
     """
-    from lib.page_config import dest_slug, dest_name, dest_country
+    from lib.page_config import (dest_slug, dest_name, dest_country,
+                                  dest_name_full, build_hreflang_tags,
+                                  date_modified_for, month_lc)
+    from lib.common import fill_tpl
     from scoring import compute_scores, compute_mountain_scores
 
     slug = dest_slug(cfg, dest)
     nom = dest_name(cfg, dest)
+    nom_bare = dest.get('nom_bare', nom)
+    prep = dest.get(f'prep_{cfg["lang"][:2]}', dest.get('prep_fr', 'à'))
     country_name = dest_country(cfg, dest)
     country_iso = _flag_iso(dest.get('flag', ''))
 
@@ -516,10 +563,9 @@ def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
     edito_key_fr = f'{slug_fr_canonical}:fr'
     editorial_html = avis.get(edito_key_lang) or avis.get(edito_key_fr) or ''
     if editorial_html and not editorial_html.startswith('<'):
-        # Wrap dans <p> si plain text
         editorial_html = f'<p>{editorial_html}</p>'
 
-    # Photo Unsplash (depuis dest._photo si présent)
+    # Photo Unsplash
     photo = dest.get('_photo', {})
     photo_url = photo.get('url', '')
     photo_credit_html = ''
@@ -529,7 +575,7 @@ def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
             f'rel="noopener nofollow">{photo["credit_name"]}</a> via Unsplash'
         )
 
-    # Update month (mois courant localisé)
+    # Update month
     from datetime import datetime
     current_month_idx = datetime.now().month - 1
     update_month = cfg['months'][current_month_idx]
@@ -551,4 +597,262 @@ def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
         update_month=update_month,
     )
 
+    # ── Enrichissements Phase 3 : SEO + FAQ ──
+
+    # 1. Hreflang tags
+    page_data['hreflang_tags'] = build_hreflang_tags(dest, mi=None)
+
+    # 2. FAQ items depuis les templates V5 (annual_faq_mountain / annual_faq_standard)
+    page_data['faq_items'] = _build_faq_items(cfg, dest, months, scores,
+                                              is_mountain, slug_fr_canonical,
+                                              prep, nom, nom_bare)
+
+    # 3. JSON-LD blocks (Article + FAQPage)
+    page_data['json_ld_blocks'] = _build_json_ld_blocks(
+        cfg=cfg, dest=dest, slug=slug, nom=nom,
+        page_title=page_data['page_title'],
+        page_desc=page_data['page_desc'],
+        canonical_url=page_data['canonical_url'],
+        faq_items=page_data['faq_items'],
+    )
+
+    # 4. og:image (si pas de photo Unsplash, fallback sur og-image.png)
+    page_data['og_image_url'] = photo_url or 'https://bestdateweather.com/og-image.png'
+
+    # 5. Related destinations (cross-links interne SEO)
+    page_data['related'] = _build_related_v6(cfg, dest, similarities, all_dests)
+
     return render_v6_full_page(page_data)
+
+
+def _build_related_v6(cfg: dict, dest: dict, similarities: dict | None,
+                      all_dests: dict | None) -> list[dict]:
+    """Construit la liste related pour la section Explorer.
+
+    Reprend les top 3 destinations similaires (cosine sim sur tmax/rain/sun) si
+    disponibles. Format de retour : [{href, name, sub}, ...].
+    """
+    if not similarities or not all_dests:
+        return []
+
+    slug_fr_canonical = dest.get('slug_fr', '')
+    sims = similarities.get(slug_fr_canonical, [])
+    if not sims:
+        return []
+
+    related = []
+    lang = cfg['lang']
+
+    for score, other_slug in sims[:3]:
+        other = all_dests.get(other_slug)
+        if not other:
+            continue
+        # Slug localisé pour href
+        slug_lang = other.get(f'slug_{lang[:2]}', other.get('slug_fr', other_slug))
+        href = f'{cfg["annual_prefix"]}{slug_lang}{cfg["annual_suffix"]}'
+        # Name localisé
+        name = other.get(f'nom_{lang[:2]}', other.get('nom_fr', other_slug.title()))
+        # Sub : pays
+        sub = other.get(f'country_{lang[:2]}', other.get('pays', ''))
+        related.append({'href': href, 'name': name, 'sub': sub})
+    return related
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Helpers Phase 3 : FAQ + JSON-LD
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _build_faq_items(cfg: dict, dest: dict, months: list, scores: list,
+                     is_mountain: bool, slug_fr: str,
+                     prep: str, nom: str, nom_bare: str) -> list[dict]:
+    """Génère la liste des FAQ items {q, a} en réutilisant les templates V5.
+
+    Templates dans cfg['annual_faq_mountain'] / cfg['annual_faq_standard'].
+    Les variables (best_month, best_tmax, etc.) sont calculées ici depuis
+    months + scores.
+    """
+    from lib.common import fill_tpl
+    from lib.page_config import month_lc
+    from scoring import compute_ski_score
+    from lib.common import _ski_kwargs
+
+    MONTHS = cfg['months']
+
+    # Indexes triés par score
+    score_by_idx = {i: _safe_float(scores[i].get('score_10', scores[i].get('score', 0)))
+                    for i in range(min(12, len(scores)))}
+    best_idx = max(score_by_idx, key=score_by_idx.get)
+    worst_idx = min(score_by_idx, key=score_by_idx.get)
+
+    best_score = f'{score_by_idx[best_idx]:.1f}'
+    best_tmax = _safe_float(months[best_idx]['tmax'])
+    best_tmin = _safe_float(months[best_idx]['tmin'])
+    best_sun = round(_safe_float(months[best_idx]['sun_h']), 1)
+    best_rain = _safe_float(months[best_idx]['rain_pct'])
+    worst_rain = _safe_float(months[worst_idx]['rain_pct'])
+
+    # Wettest = max rain_pct
+    rain_by_idx = {i: _safe_float(months[i]['rain_pct']) for i in range(12)}
+    wettest_idx = max(rain_by_idx, key=rain_by_idx.get)
+    wettest_rain = rain_by_idx[wettest_idx]
+
+    # Bests = list of months with score in top quartile (used for std FAQ suffix)
+    sorted_idxs = sorted(score_by_idx, key=score_by_idx.get, reverse=True)
+    bests = [MONTHS[i] for i in sorted_idxs[:3] if score_by_idx[i] >= 7]
+
+    if is_mountain:
+        # Best ski month
+        best_ski_idx = max(range(12), key=lambda i: compute_ski_score(
+            _safe_float(months[i]['tmax']),
+            _safe_float(months[i]['rain_pct']),
+            _safe_float(months[i]['sun_h']),
+            **_ski_kwargs(slug_fr, month=i+1)
+        ))
+        best_ski_score = f'{compute_ski_score(_safe_float(months[best_ski_idx]["tmax"]), _safe_float(months[best_ski_idx]["rain_pct"]), _safe_float(months[best_ski_idx]["sun_h"]), **_ski_kwargs(slug_fr, month=best_ski_idx+1)):.1f}'
+
+        winter_idxs = [11, 0, 1]  # Déc, Jan, Fév
+        winter_ski = [compute_ski_score(_safe_float(months[i]['tmax']), _safe_float(months[i]['rain_pct']), _safe_float(months[i]['sun_h']), **_ski_kwargs(slug_fr, month=i+1)) for i in winter_idxs]
+        winter_ski_avg = f'{sum(winter_ski)/len(winter_ski):.1f}'
+
+        faq_vars = dict(
+            prep=prep, nom_bare=nom_bare, nom=nom,
+            best_ski_month=MONTHS[best_ski_idx],
+            best_ski_month_lc=month_lc(cfg, MONTHS[best_ski_idx]),
+            best_ski_score=best_ski_score,
+            best_month=MONTHS[best_idx],
+            best_month_lc=month_lc(cfg, MONTHS[best_idx]),
+            best_score=best_score,
+            best_tmax=best_tmax,
+            worst_month=MONTHS[worst_idx],
+            worst_rain=worst_rain,
+            wettest_month=MONTHS[wettest_idx],
+            wettest_rain=wettest_rain,
+            winter_ski_avg=winter_ski_avg,
+            jan_tmax=months[0]['tmax'],
+        )
+        templates = cfg.get('annual_faq_mountain', [])
+    else:
+        bests_suffix = ''
+        if len(bests) > 1 and cfg.get('annual_faq_bests_suffix'):
+            bests_suffix = cfg['annual_faq_bests_suffix'].format(bests_str=' & '.join(bests[:2]))
+
+        # Winter season key (FR='Hiver', EN='Winter', ES='Invierno', DE='Winter')
+        winter_key = cfg['season_order'][-1] if cfg.get('season_order') else 'Hiver'
+        winter_idxs = [11, 0, 1]
+        winter_score = sum(score_by_idx.get(i, 0) for i in winter_idxs) / 3
+        winter_verdict = (cfg.get('annual_faq_winter_verdicts', {}).get('ok', '')
+                          if winter_score >= 5.5
+                          else cfg.get('annual_faq_winter_verdicts', {}).get('bad', ''))
+
+        from lib.common import c_to_f
+        _best_tmax_v = c_to_f(best_tmax) if cfg.get('imperial') else best_tmax
+        _best_tmin = c_to_f(best_tmin) if cfg.get('imperial') else best_tmin
+        _temp_unit = cfg.get('temp_unit', '°C')
+
+        faq_vars = dict(
+            prep=prep, nom_bare=nom_bare, nom=nom,
+            best_month=MONTHS[best_idx],
+            best_month_lc=month_lc(cfg, MONTHS[best_idx]),
+            best_score=best_score, best_rain=best_rain,
+            best_tmax=_best_tmax_v, best_tmin=_best_tmin,
+            best_sun=best_sun, temp_unit=_temp_unit,
+            worst_month=MONTHS[worst_idx],
+            worst_rain=worst_rain,
+            wettest_month=MONTHS[wettest_idx],
+            wettest_rain=wettest_rain,
+            bests_suffix=bests_suffix,
+            winter_score=f'{winter_score:.1f}',
+            winter_verdict=winter_verdict,
+        )
+        templates = cfg.get('annual_faq_standard', [])
+
+    # Apply templates
+    faq_items = []
+    for tpl in templates:
+        try:
+            q = fill_tpl(tpl['q'], cfg, **faq_vars)
+            a = fill_tpl(tpl['a'], cfg, **faq_vars)
+            faq_items.append({'q': q, 'a': a})
+        except (KeyError, IndexError) as e:
+            # Skip items with missing variables (defensive)
+            continue
+    return faq_items
+
+
+def _build_json_ld_blocks(cfg: dict, dest: dict, slug: str, nom: str,
+                          page_title: str, page_desc: str, canonical_url: str,
+                          faq_items: list[dict]) -> list[str]:
+    """Construit les blocks JSON-LD (Article + FAQPage) en strings prêtes."""
+    import json as _json
+    from lib.page_config import date_modified_for
+
+    slug_fr = dest.get('slug_fr', slug)
+    date_mod = date_modified_for(slug_fr) or '2026-04-01'
+    in_lang = cfg.get('in_language', cfg['lang'])
+
+    article = {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        'headline': page_title,
+        'description': page_desc,
+        'image': {
+            '@type': 'ImageObject',
+            'url': 'https://bestdateweather.com/og-image.png',
+            'width': 1200, 'height': 630,
+        },
+        'author': {
+            '@type': 'Person',
+            '@id': 'https://bestdateweather.com/#gilles',
+            'name': 'Gilles',
+            'url': 'https://bestdateweather.com/a-propos.html',
+        },
+        'publisher': {
+            '@type': 'Organization',
+            '@id': 'https://bestdateweather.com/#organization',
+            'name': 'BestDateWeather',
+            'url': 'https://bestdateweather.com',
+            'logo': {
+                '@type': 'ImageObject',
+                'url': 'https://bestdateweather.com/icon-192.png',
+                'width': 192, 'height': 192,
+            },
+        },
+        'datePublished': date_mod,
+        'dateModified': date_mod,
+        'inLanguage': in_lang,
+        'url': canonical_url,
+        'mainEntityOfPage': {
+            '@type': 'WebPage',
+            '@id': canonical_url,
+        },
+    }
+
+    blocks = [_json.dumps(article, ensure_ascii=False)]
+
+    if faq_items:
+        faq_page = {
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            'mainEntity': [
+                {
+                    '@type': 'Question',
+                    'name': item['q'],
+                    'acceptedAnswer': {
+                        '@type': 'Answer',
+                        # Strip HTML tags from FAQ answers for JSON-LD
+                        'text': _strip_html(item['a']),
+                    },
+                }
+                for item in faq_items
+            ],
+        }
+        blocks.append(_json.dumps(faq_page, ensure_ascii=False))
+
+    return blocks
+
+
+def _strip_html(s: str) -> str:
+    """Supprime les balises HTML d'une string. Naïf mais suffisant pour les FAQ."""
+    import re as _re
+    s = _re.sub(r'<[^>]+>', '', s)
+    return _re.sub(r'\s+', ' ', s).strip()
