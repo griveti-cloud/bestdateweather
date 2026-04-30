@@ -618,6 +618,69 @@ def test_v6_helpers():
           "missing doctype or lang attribute")
 
 
+def test_v6_adapter_e2e():
+    """End-to-end test: gen_annual_v6 with real CSV/JSON data.
+
+    Validates the adapter pipeline on 5 destinations covering all profiles
+    (mountain, city, tropical, polar, coastal) and all 5 languages.
+
+    This is the closest test to PROD generation behaviour.
+    """
+    print("Test 8: V6 adapter E2E (gen_annual_v6 on real data)")
+    import csv as _csv
+    from lib.page_config import build_config
+    from lib.v6_adapter import gen_annual_v6
+
+    # Load real data
+    dests = {}
+    with open(ROOT / 'data' / 'destinations.csv', encoding='utf-8') as f:
+        for r in _csv.DictReader(f):
+            dests[r['slug_fr']] = r
+    climate = {}
+    with open(ROOT / 'data' / 'climate.csv', encoding='utf-8') as f:
+        for r in _csv.DictReader(f):
+            climate.setdefault(r['slug'], []).append(r)
+
+    # 5 destinations covering 5 profiles
+    test_cases = [
+        ('chamonix', 'mountain', 'Séjour montagne'),
+        ('paris',    'city',     'Séjour citadin'),
+        ('bali',     'tropical', 'Séjour tropical'),
+        ('reykjavik','polar',    'Séjour subarctique'),
+        ('biarritz', 'coastal',  'Séjour balnéaire'),
+    ]
+
+    cfg_fr = build_config('fr')
+    for slug, expected_profile, profile_marker in test_cases:
+        if slug not in dests or slug not in climate:
+            check(f"adapter/{slug}: data present", False, f"missing in CSV")
+            continue
+        try:
+            html = gen_annual_v6(cfg_fr, None, dests[slug], climate[slug])
+        except Exception as e:
+            check(f"adapter/{slug}: generates without exception", False, str(e))
+            continue
+        check(f"adapter/{slug}: profile '{expected_profile}' detected",
+              profile_marker in html,
+              f"missing '{profile_marker}' in output")
+        check(f"adapter/{slug}: 12-month table rendered",
+              html.count('<tr class="row') == 12,
+              f"got {html.count('<tr class=\"row')} rows")
+
+    # Multi-language Chamonix
+    for lang in ['fr', 'en', 'en-us', 'es', 'de']:
+        cfg = build_config(lang)
+        try:
+            html = gen_annual_v6(cfg, None, dests['chamonix'], climate['chamonix'])
+        except Exception as e:
+            check(f"adapter/chamonix/{lang}: no exception", False, str(e))
+            continue
+        expected_lang_attr = 'en-US' if lang == 'en-us' else lang
+        check(f"adapter/chamonix/{lang}: lang attribute correct",
+              f'lang="{expected_lang_attr}"' in html,
+              f"missing lang attribute")
+
+
 # ── Run all ───────────────────────────────────────────────────────────────
 if __name__ == '__main__':
     print("=" * 60)
@@ -632,6 +695,7 @@ if __name__ == '__main__':
     test_generator_parity()
     test_mountain_scoring()
     test_v6_helpers()
+    test_v6_adapter_e2e()
 
     print()
     print(f"{'=' * 60}")
