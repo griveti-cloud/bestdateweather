@@ -35,7 +35,7 @@ header{background:linear-gradient(180deg,#fff 0%,#fffbf2 100%);
 }
 .topbar-inner{
   display:flex;align-items:center;justify-content:space-between;
-  gap:14px;padding:14px 0;flex-wrap:wrap;
+  gap:14px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap;
 }
 .brand-row{display:flex;align-items:center;gap:12px;flex-shrink:0}
 .brand{
@@ -82,7 +82,7 @@ header{background:linear-gradient(180deg,#fff 0%,#fffbf2 100%);
 .topbar-icon-btn[aria-pressed="true"] svg{fill:currentColor}
 
 @media (max-width:600px){
-  .topbar-inner{padding:10px 0;gap:8px;flex-wrap:nowrap}
+  .topbar-inner{padding-top:10px;padding-bottom:10px;gap:8px;flex-wrap:nowrap}
   .brand{font-size:1rem}
   .topbar-actions{gap:6px}
   .topbar-icon-btn{width:34px;height:34px}
