@@ -2,6 +2,27 @@
 
 > Document de travail. Phase 1 du plan de rollout V6.
 > Audit fait : **30 avr 2026**.
+> Décisions stratégiques : **30 avr 2026**.
+
+## 0. Décisions stratégiques (verrouillées)
+
+| Question | Décision |
+|---|---|
+| **Périmètre rollout** | Bloquer V6 tant que les 4 langues ne sont pas prêtes (rédaction ~3000 éditos d'abord) |
+| **Pilote post-GSC** | Tout FR d'un coup (754 fiches), 1 semaine après prep — mais subordonné au multilangue |
+| **Stratégie GSC pendant rédaction (mai-juin)** | Option 2 — tout figer en V5, déployer V6 multilangue d'un coup (1 seule perturbation GSC) |
+| **Rédaction des 3000 éditos EN/EN-US/ES/DE** | Claude rédige avec traduction idiomatique (pas mot-à-mot), spot-check 10% par Gilles, validation par batches de 50 |
+| **Architecture refactor** | À VALIDER (Option A in-place vs B fork) |
+
+## 0.1 Garde-fous rédaction multilangue
+
+- EN-UK : registre voyage premium, vocabulaire britannique
+- EN-US : températures °F par défaut, dates US format, vocabulaire américain
+- ES : tutoiement (registre voyage hispanique)
+- DE : registre à valider (Sie/Du selon style site)
+- Test pattern-LLM automatique après chaque batch (`incontournable`/`inoubliable`/`découvrez` < 2%)
+- Refus de générer si donnée manquante → "non confirmé" plutôt qu'inventer
+- Cadence cible : ~150 éditos/jour à 2000 chars qualité maintenue = 5 jours par langue
 
 ## 1. État des lieux factuel
 
@@ -116,27 +137,27 @@ Sections nouvelles V6 nécessitant des labels traduits :
   - nomade : Lisbonne ou Bali (a deux profils)
   - citadin : Paris ou Lyon
 
-## 4. Plan séquentiel recommandé
+## 4. Plan séquentiel verrouillé (révisé après décisions)
 
-### Semaine 1 (mai 2026)
-1. **Coder les helpers V6** dans `lib/common.py` (3j)
-2. **Coder `gen_annual_v6()`** dans `generate_pages.py` (1j)
-3. **Étendre `tests/test_scoring.py`** avec invariants V6 (1j)
-4. **Validation locale** sur 5 protos (Chamonix/Paris/Lyon/Bali/Reykjavik) — comparer rendu vs prototypes existants
+### Mai 2026 — préparation code + EN
+- **Sem 1** : helpers V6 dans `lib/common.py` + `gen_annual_v6()` (selon arch A/B à décider)
+- **Sem 2** : tests étendus + validation locale 5 protos (Chamonix/Paris/Lyon/Bali/Reykjavik)
+- **Sem 3-4** : rédaction 754 éditos EN-UK (cadence 150/j × 5j = 1 batch)
 
-### Semaine 2 (mai 2026)
-5. Génération **111 mountain FR** uniquement, branche `feature/v6-rollout-mountain`
-6. **Cloudflare Preview** (staging worker existant)
-7. Validation visuelle 5-10 destinations échantillon
+### Juin 2026 — rédaction ES + DE + EN-US
+- **Sem 1-2** : rédaction 754 éditos ES (5j) + 754 éditos DE (5j)
+- **Sem 3** : rédaction 754 éditos EN-US (dérivable d'EN avec adaptations °F/dates/vocab US)
+- **Sem 4** : staging full Cloudflare + validation visuelle 5 langues × 5 destinations échantillon
 
-### Mi-mai → fin mai 2026 (post-fenêtre GSC)
-8. Déploiement **111 mountain FR** sur PROD
-9. Monitor GSC 7 jours
-10. Si stable : commencer EN/EN-US/ES/DE pour les 111 mountain (rédaction éditos en parallèle)
+### Juillet 2026 — déploiement
+- **Sem 1** : déploiement 754 × 5 langues = 3770 fiches V6 d'un coup sur PROD
+- **Sem 2-4** : monitoring GSC strict, mesure trafic, ajustements
 
-### Juin 2026
-11. Étendre aux 643 non-mountain FR
-12. Puis multilangue progressif
+### Critère go/no-go juillet
+- Tests automatisés `tests/test_scoring.py` 100% pass
+- Validation visuelle 5×5 = 25 fiches échantillon OK
+- Pattern-LLM < 2% sur les 4 langues nouvelles
+- Cloudflare staging stable 1 semaine sans incident
 
 ## 5. Limites & ce que je n'ai PAS vérifié
 
@@ -148,7 +169,7 @@ Sections nouvelles V6 nécessitant des labels traduits :
 
 ## 6. Décisions à valider avant de coder
 
-1. **Option A vs B** pour le refactor : in-place ou fork `_v6` ?
-2. **Périmètre rollout V6** : FR seul OK pour démarrer ? Ou bloquer tant que les 4 langues ne sont pas prêtes ?
-3. **Profils manquants** : on garde "Séjour citadin" par défaut quand aucun flag ne matche ?
-4. **Crosslinks et SEO interne** : on les ajoute en V6 ou pas ?
+1. ⏳ **Architecture refactor (Option A vs B)** — en attente
+2. ✅ ~~Périmètre rollout V6~~ → bloquer multilangue
+3. ✅ ~~Profils Box 3~~ → décision technique, "Séjour citadin" par défaut
+4. ⏳ **Crosslinks et SEO interne** → on les ajoute en V6 ou pas ? (à décider semaine 1 mai)
