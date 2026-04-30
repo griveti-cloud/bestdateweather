@@ -232,3 +232,683 @@ def render_v6_methodology_block(lang: str = 'fr', is_mountain: bool = False) -> 
   </ul>
   <p class="method-mini-foot"><strong>{h(L['source'])} :</strong> {h(L['source_text'])} · <a href="methodologie.html">{h(L['full_link'])}</a></p>
 </div>'''
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Helper 5 : INFOS PRATIQUES (Box 3 adaptative selon profil)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Mapping pays → code drapeau ISO 3166-1 alpha-2 (fichier flags/{iso2}.png)
+# La carto est dans country_info.json indirectement, mais on a aussi un mapping
+# direct dans destinations.csv (colonne 'flag').
+def _safe_int(v) -> int | None:
+    try:
+        return int(v) if v is not None and str(v).strip() else None
+    except (ValueError, TypeError):
+        return None
+
+
+def _list_item(icon: str, label: str, value: str, hint: str | None = None) -> str:
+    """Helper : un .list-item avec icône, label, value, et tooltip optionnel."""
+    hint_html = (
+        f' <span class="signal-hint" title="{h(hint)}">ⓘ</span>'
+        if hint else ''
+    )
+    return (f'<div class="list-item"><span><span class="list-ico">{icon}</span>'
+            f'{h(label)}{hint_html}</span><strong>{value}</strong></div>')
+
+
+def _detect_profile(is_mountain: bool, is_coastal: bool, is_tropical: bool,
+                    is_polar: bool = False) -> str:
+    """Détermine le profil pour Box 3.
+
+    Ordre de priorité (un seul profil retourné) :
+        polar > tropical > mountain > coastal > city
+    """
+    if is_polar:
+        return 'polar'
+    if is_tropical:
+        return 'tropical'
+    if is_mountain:
+        return 'mountain'
+    if is_coastal:
+        return 'coastal'
+    return 'city'
+
+
+def _box1_country(L_ip: dict, country_name: str, country_iso: str,
+                  lang_local: str, currency_name: str, currency_symbol: str,
+                  drive: str, gpi_level: int | None,
+                  cost_tier: int | None, gpi_value: float | None = None,
+                  cost_value: float | None = None) -> str:
+    """Box 1 : Pays · {country}. 5 list-items.
+
+    gpi_level: 1-5 (1=très sûr). cost_tier: 1-5 (1=très bon marché).
+    Si None, on omet le tier badge mais on garde le label vide (cohérence visuelle).
+    """
+    flag_html = (f'<img src="flags/{country_iso}.png" width="20" height="14" alt="" '
+                 f'style="vertical-align:middle;border-radius:2px;margin-right:6px">'
+                 if country_iso else '')
+    title_tpl = L_ip['box1_title_tpl']
+    title = f'{flag_html}{title_tpl.format(country=h(country_name))}'
+
+    drive_lbl = L_ip['drive_left'] if drive == 'left' else L_ip['drive_right']
+
+    safe_label = L_ip.get(f'tier_safe_{gpi_level}', '—') if gpi_level else '—'
+    cost_label = L_ip.get(f'tier_cost_{cost_tier}', '—') if cost_tier else '—'
+
+    safe_hint = (f'GPI (Global Peace Index) 2024 : {gpi_value:.2f}/5 — niveau {gpi_level}/5'
+                 if gpi_value and gpi_level else None)
+    cost_hint = (f'Numbeo Cost of Living 2026 : {cost_value:.1f} — niveau {cost_tier}/5'
+                 if cost_value and cost_tier else None)
+
+    items = [
+        _list_item('🗣️', L_ip['lbl_lang'], h(lang_local)),
+        _list_item('💶', L_ip['lbl_currency'], f'{h(currency_name)} ({h(currency_symbol)})'),
+        _list_item('🚗', L_ip['lbl_drive'], h(drive_lbl)),
+        _list_item('🛡️', L_ip['lbl_security'], h(safe_label), hint=safe_hint),
+        _list_item('💰', L_ip['lbl_cost'], h(cost_label), hint=cost_hint),
+    ]
+    return (f'<div class="box"><h3>{title}</h3>'
+            f'<div class="list">{"".join(items)}</div></div>')
+
+
+def _box2_climate(L_ip: dict, climate_type: str, trend_value: float | None,
+                  hottest_month: str, hottest_temp: float,
+                  coldest_month: str, coldest_temp: float,
+                  rainiest_month: str, rainiest_pct: float,
+                  slug: str = '', dest_name: str = '') -> str:
+    """Box 2 : Climat. Trend = None ⇒ 'Données indisponibles'."""
+    if trend_value is None:
+        trend_str = L_ip['trend_unavailable']
+        trend_hint = None
+    elif abs(trend_value) < 0.20:
+        # Slope non significatif sur 10 ans
+        trend_str = L_ip['trend_stable']
+        trend_hint = (f'ERA5 2016-2025 — slope {trend_value:+.2f}°C/décennie '
+                      f'non significatif sur 10 ans')
+    else:
+        trend_str = L_ip['trend_tpl'].format(val=f'{trend_value:.2f}')
+        trend_hint = (f'Régression linéaire ERA5 2016-2025 — {dest_name or slug} : '
+                      f'{trend_value:+.2f}°C par décennie')
+
+    items = [
+        _list_item('🌍', L_ip['lbl_climate'], h(climate_type)),
+        _list_item('📈', L_ip['lbl_trend'], h(trend_str), hint=trend_hint),
+        _list_item('🔥', L_ip['lbl_hottest'], f'{h(hottest_month)} · {hottest_temp:.0f}°C'),
+        _list_item('❄️', L_ip['lbl_coldest'], f'{h(coldest_month)} · {coldest_temp:.0f}°C'),
+        _list_item('🌧️', L_ip['lbl_rainiest'],
+                   f'{h(rainiest_month)} · {rainiest_pct:.0f}%',
+                   hint='Probabilité de jour pluvieux la plus haute sur l\'année — données ERA5 10 ans'),
+    ]
+    return (f'<div class="box"><h3>🌡️ {h(L_ip["box2_title"])}</h3>'
+            f'<div class="list">{"".join(items)}</div></div>')
+
+
+def _box3_mountain(L_ip: dict, alt_village: int | None, alt_ski_max: int | None,
+                   ski_season: str, hiking_season: str,
+                   high_alt_warning: bool = True) -> str:
+    """Box 3 mountain : altitudes, saisons ski/rando, haute montagne."""
+    alt_v = f'{alt_village} m' if alt_village else '—'
+    alt_dom = (f'{alt_village} → {alt_ski_max} m'
+               if alt_village and alt_ski_max else '—')
+    items = [
+        _list_item('⛰️', L_ip['mtn_alt_village'], alt_v),
+        _list_item('🎿', L_ip['mtn_ski_domain'], alt_dom),
+        _list_item('⛷️', L_ip['mtn_season_ski'], h(ski_season)),
+        _list_item('🥾', L_ip['mtn_season_hiking'], h(hiking_season)),
+    ]
+    if high_alt_warning:
+        items.append(
+            _list_item('🧗', L_ip['mtn_high_alt'], h(L_ip['mtn_high_alt_value']),
+                       hint='Au-delà de 3000 m, un guide est fortement recommandé pour la sécurité')
+        )
+    return (f'<div class="box"><h3>🏔️ {h(L_ip["box3_mountain"])}</h3>'
+            f'<div class="list">{"".join(items)}</div></div>')
+
+
+def _box3_tropical(L_ip: dict, dry_season: str, wet_season: str,
+                   sea_summer: float | None, sea_winter: float | None,
+                   has_cyclones: bool, latitude: float = 0) -> str:
+    """Box 3 tropical : saisons sèche/humide, mer, cyclones."""
+    items = [
+        _list_item('🌞', L_ip['tro_dry_season'], h(dry_season),
+                   hint='Période de moindre pluviosité'),
+        _list_item('🌧️', L_ip['tro_wet_season'], h(wet_season),
+                   hint='Mousson — averses souvent courtes en après-midi'),
+    ]
+    if sea_summer is not None:
+        items.append(_list_item('🌊', L_ip['tro_sea_summer'], f'~{sea_summer:.0f}°C'))
+    if sea_winter is not None:
+        items.append(_list_item('🌊', L_ip['tro_sea_winter'], f'~{sea_winter:.0f}°C'))
+    cyclone_val = ('Saison Nov-Avr' if has_cyclones else h(L_ip['tro_no_cyclones']))
+    cyclone_hint = (f'Latitude {latitude:.1f}° — zone de formation cyclonique'
+                    if has_cyclones
+                    else f'Zone équatoriale (~{abs(latitude):.0f}°) hors zone des cyclones tropicaux')
+    items.append(_list_item('🌀', L_ip['tro_cyclones'], cyclone_val, hint=cyclone_hint))
+    return (f'<div class="box"><h3>🏝️ {h(L_ip["box3_tropical"])}</h3>'
+            f'<div class="list">{"".join(items)}</div></div>')
+
+
+def _box3_polar(L_ip: dict, lat: float, has_geothermal: bool = False) -> str:
+    """Box 3 polar : aurores, jour polaire, géothermie, vent."""
+    aurora_period = 'Sept → Mars' if lat > 60 else 'Oct → Fév'
+    polar_day = '~21h' if lat > 60 else '~19h'
+    items = [
+        _list_item('🌌', L_ip['pol_aurora'], h(aurora_period),
+                   hint=f'Latitude {lat:.0f}°N : zone aurorale active'),
+        _list_item('☀️', L_ip['pol_polar_day'], f'Juin ({polar_day})',
+                   hint='Soleil de minuit relatif — quasi pas de coucher de soleil'),
+    ]
+    if has_geothermal:
+        items.append(_list_item('🌋', L_ip['pol_geothermal'], 'Geysir, Blue Lagoon'))
+    items.append(_list_item('🌬️', L_ip['pol_wind'], h(L_ip['pol_wind_value'])))
+    return (f'<div class="box"><h3>🌌 {h(L_ip["box3_polar"])}</h3>'
+            f'<div class="list">{"".join(items)}</div></div>')
+
+
+def _box3_coastal(L_ip: dict, sea_summer: float | None, sea_winter: float | None,
+                  high_season: str = 'Juin → Sept') -> str:
+    """Box 3 coastal : mer, saisons, houle."""
+    items = [_list_item('📅', L_ip['coa_high_season'], h(high_season))]
+    if sea_summer is not None:
+        items.append(_list_item('🌊', L_ip['coa_sea_summer'], f'~{sea_summer:.0f}°C'))
+    if sea_winter is not None:
+        items.append(_list_item('🌊', L_ip['coa_sea_winter'], f'~{sea_winter:.0f}°C'))
+    items.append(_list_item('🏖️', L_ip['coa_waves'], 'Modérée',
+                            hint='Houle hivernale — saison automne-hiver plus agitée'))
+    return (f'<div class="box"><h3>🏖️ {h(L_ip["box3_coastal"])}</h3>'
+            f'<div class="list">{"".join(items)}</div></div>')
+
+
+def _box3_city(L_ip: dict, high_season: str = 'Juin → Août',
+               unesco: str | None = None,
+               transport: str = 'Bon',
+               visa_text: str | None = None) -> str:
+    """Box 3 city : tourisme, UNESCO, transport, visa."""
+    visa_text = visa_text or L_ip['city_visa_schengen']
+    items = [
+        _list_item('📅', L_ip['city_high_season'], h(high_season)),
+        _list_item('☔', L_ip['city_indoor_visits'], h(L_ip['city_indoor_value']),
+                   hint='Musées, monuments couverts : la météo n\'est pas un bloqueur'),
+    ]
+    if unesco:
+        items.append(_list_item('🏛️', L_ip['city_unesco'], h(unesco)))
+    items.append(_list_item('🚇', L_ip['city_transport'], h(transport)))
+    items.append(_list_item('🛂', L_ip['city_visa'], h(visa_text)))
+    return (f'<div class="box"><h3>🏛️ {h(L_ip["box3_city"])}</h3>'
+            f'<div class="list">{"".join(items)}</div></div>')
+
+
+def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict) -> str:
+    """Rend la section <section> Infos pratiques avec Box 3 adaptative.
+
+    Args:
+        slug: slug FR
+        lang: langue UI
+        dest_data: dict avec les clés suivantes (toutes optionnelles sauf country_*) :
+            - dest_name: nom affichable (ex: 'Chamonix')
+            - country_name: nom pays localisé (ex: 'France')
+            - country_iso: code ISO 3166-1 alpha-2 (ex: 'fr')
+            - lang_local: langue parlée localement (ex: 'Français')
+            - currency_name, currency_symbol
+            - drive: 'left' ou 'right'
+            - gpi_level (1-5), gpi_value (raw)
+            - cost_tier (1-5), cost_value (raw)
+            - climate_type: ex 'Tempéré océanique', 'Tropical équatorial'...
+            - trend_value: float par décennie ou None
+            - hottest_month, hottest_temp, coldest_month, coldest_temp
+            - rainiest_month, rainiest_pct
+            - is_mountain, is_coastal, is_tropical, is_polar (booléens)
+            - profil-specific:
+              mountain: alt_village, alt_ski_max, ski_season, hiking_season
+              tropical: dry_season, wet_season, sea_summer, sea_winter, has_cyclones, latitude
+              polar:    latitude, has_geothermal
+              coastal:  sea_summer, sea_winter, high_season
+              city:     high_season, unesco, transport, visa_text
+    """
+    L_ip = _v6_strings(lang)['infos_pratiques']
+    d = dest_data
+
+    profile = _detect_profile(
+        is_mountain=d.get('is_mountain', False),
+        is_coastal=d.get('is_coastal', False),
+        is_tropical=d.get('is_tropical', False),
+        is_polar=d.get('is_polar', False),
+    )
+
+    lead_key = f'lead_{profile}'
+    lead = L_ip.get(lead_key, L_ip['lead_city'])
+
+    box1 = _box1_country(L_ip,
+        country_name=d.get('country_name', ''),
+        country_iso=d.get('country_iso', ''),
+        lang_local=d.get('lang_local', ''),
+        currency_name=d.get('currency_name', ''),
+        currency_symbol=d.get('currency_symbol', ''),
+        drive=d.get('drive', 'right'),
+        gpi_level=_safe_int(d.get('gpi_level')),
+        gpi_value=d.get('gpi_value'),
+        cost_tier=_safe_int(d.get('cost_tier')),
+        cost_value=d.get('cost_value'),
+    )
+
+    box2 = _box2_climate(L_ip,
+        climate_type=d.get('climate_type', '—'),
+        trend_value=d.get('trend_value'),
+        hottest_month=d.get('hottest_month', '—'),
+        hottest_temp=d.get('hottest_temp', 0),
+        coldest_month=d.get('coldest_month', '—'),
+        coldest_temp=d.get('coldest_temp', 0),
+        rainiest_month=d.get('rainiest_month', '—'),
+        rainiest_pct=d.get('rainiest_pct', 0),
+        slug=slug,
+        dest_name=d.get('dest_name', ''),
+    )
+
+    if profile == 'mountain':
+        box3 = _box3_mountain(L_ip,
+            alt_village=d.get('alt_village'),
+            alt_ski_max=d.get('alt_ski_max'),
+            ski_season=d.get('ski_season', 'Déc → Mai'),
+            hiking_season=d.get('hiking_season', 'Juin → Sept'),
+            high_alt_warning=d.get('high_alt_warning', True),
+        )
+    elif profile == 'tropical':
+        box3 = _box3_tropical(L_ip,
+            dry_season=d.get('dry_season', '—'),
+            wet_season=d.get('wet_season', '—'),
+            sea_summer=d.get('sea_summer'),
+            sea_winter=d.get('sea_winter'),
+            has_cyclones=d.get('has_cyclones', False),
+            latitude=d.get('latitude', 0),
+        )
+    elif profile == 'polar':
+        box3 = _box3_polar(L_ip,
+            lat=d.get('latitude', 64),
+            has_geothermal=d.get('has_geothermal', False),
+        )
+    elif profile == 'coastal':
+        box3 = _box3_coastal(L_ip,
+            sea_summer=d.get('sea_summer'),
+            sea_winter=d.get('sea_winter'),
+            high_season=d.get('high_season', 'Juin → Sept'),
+        )
+    else:  # city
+        box3 = _box3_city(L_ip,
+            high_season=d.get('high_season', 'Juin → Août'),
+            unesco=d.get('unesco'),
+            transport=d.get('transport', 'Bon'),
+            visa_text=d.get('visa_text'),
+        )
+
+    return (f'<section><div class="container">'
+            f'<div class="section-head">'
+            f'<div class="section-kicker">{h(L_ip["kicker"])}</div>'
+            f'<h2>{h(L_ip["title"])}</h2>'
+            f'<p class="lead">{h(lead)}</p>'
+            f'</div>'
+            f'<div class="grid-3">{box1}{box2}{box3}</div>'
+            f'</div></section>')
+
+def _trend_data(slug: str, lat: float = None, lon: float = None) -> dict | None:
+    """Récupère les données trend ERA5 pour un slug.
+
+    Le dataset climate_trend.json a un schéma double :
+    - 458 entrées sous clé slug (ex: 'paris', 'bali')
+    - 158 entrées sous clé coord 'lat,lon' (ex: '45.75,4.83' pour Lyon)
+
+    Schéma de retour normalisé :
+        {'years': [...], 'tmax': [...], 'tmoy': [...], 'tmin': [...], 'cmip6_rate': float?}
+
+    Returns None si pas trouvé.
+    """
+    path = os.path.join(_LOCALE_DIR, '..', 'data', 'climate_trend.json')
+    with open(path, encoding='utf-8') as f:
+        d = json.load(f)
+
+    # 1. Try slug key
+    if slug in d:
+        entry = d[slug]
+        if 'years' in entry:
+            # Format slug : { years:[...], tmax:[...], tmoy:[...], tmin:[...], cmip6_rate:... }
+            return {
+                'years': entry['years'],
+                'tmax': entry['tmax'],
+                'tmoy': entry['tmoy'],
+                'tmin': entry['tmin'],
+                'cmip6_rate': entry.get('cmip6_rate'),
+            }
+
+    # 2. Try coord key
+    if lat is not None and lon is not None:
+        key = f'{lat:.2f},{lon:.2f}'
+        if key in d:
+            entry = d[key]
+            if 'annual' in entry:
+                # Format coord : { annual: { '2016': {tmax, tmin, tmean}, ... } }
+                ann = entry['annual']
+                years = sorted(int(y) for y in ann.keys())
+                return {
+                    'years': years,
+                    'tmax': [ann[str(y)]['tmax'] for y in years],
+                    'tmoy': [ann[str(y)]['tmean'] for y in years],
+                    'tmin': [ann[str(y)]['tmin'] for y in years],
+                    'cmip6_rate': entry.get('cmip6_trend_per_decade'),
+                }
+
+    return None
+
+
+def _linreg_slope(years: list[int], values: list[float]) -> float:
+    """Régression linéaire simple → slope par décennie."""
+    n = len(years)
+    my = sum(years) / n
+    mt = sum(values) / n
+    num = sum((years[i] - my) * (values[i] - mt) for i in range(n))
+    den = sum((years[i] - my) ** 2 for i in range(n))
+    if den == 0:
+        return 0.0
+    return (num / den) * 10  # par décennie
+
+
+def render_v6_trend_chart(slug: str, nom: str, lang: str = 'fr',
+                          lat: float = None, lon: float = None) -> str:
+    """Rend la section <section class="tendance-section"> avec SVG 800×360.
+
+    Style éditorial V6 : palette burgundy (#8b3a3a) / steel-blue (#2c5d80) /
+    muted-grey (#9aa1ad) sur fond ivory, font Georgia serif, annotations
+    italiques pour pic décennie + slope.
+
+    Args:
+        slug: slug FR de la destination
+        nom: nom affichable (ex: 'Chamonix')
+        lang: langue UI ('fr', 'en', 'en-us', 'es', 'de')
+        lat, lon: coordonnées (utilisées en fallback si slug absent du JSON)
+
+    Returns:
+        HTML <section> complet. Si pas de données : section avec lead "Données indisponibles".
+    """
+    L = _v6_strings(lang)['trend']
+    nom_h = h(nom)
+    title = L['title_tpl'].format(nom=nom_h)
+
+    # Section header (toujours présent même sans data)
+    head_html = (f'<section class="tendance-section"><div class="container">'
+                 f'<div class="section-head">'
+                 f'<div class="section-kicker">{h(L["kicker"])}</div>'
+                 f'<h2>{title}</h2>'
+                 f'<p class="lead">{h(L["lead"])}</p>'
+                 f'</div>')
+
+    data = _trend_data(slug, lat=lat, lon=lon)
+    if not data or not data.get('years'):
+        # Fallback no-data
+        return (head_html
+                + f'<div class="card pad"><div class="ct-no-data">{h(L["no_data"])}</div></div>'
+                + '</div></section>')
+
+    years = data['years']
+    tmax = data['tmax']
+    tmoy = data['tmoy']
+    tmin = data['tmin']
+
+    # Y-axis : englobe la plage des données avec marge ronde
+    y_lo = min(tmin) - 1
+    y_hi = max(tmax) + 1
+    # Arrondir à entiers pairs pour graduation tous les 2°
+    y_lo_int = int(y_lo) - (int(y_lo) % 2)
+    y_hi_int = int(y_hi) + (2 - int(y_hi) % 2 if int(y_hi) % 2 else 0)
+
+    # Plot area : viewBox 800x360, marges fixes
+    Y_TOP, Y_BOTTOM = 50, 300
+    X_LEFT, X_RIGHT = 60, 770
+
+    def y_to_svg(t: float) -> float:
+        return Y_TOP + (y_hi_int - t) / (y_hi_int - y_lo_int) * (Y_BOTTOM - Y_TOP)
+
+    def x_to_svg(i: int) -> float:
+        return X_LEFT + i * (X_RIGHT - X_LEFT) / (len(years) - 1)
+
+    # Slope
+    slope = _linreg_slope(years, tmoy)
+    intercept = sum(tmoy) / len(tmoy) - slope / 10 * (sum(years) / len(years))
+    y_2016 = (slope / 10) * years[0] + intercept
+    y_2025 = (slope / 10) * years[-1] + intercept
+
+    # Pic décennie (max tmax)
+    pic_idx = tmax.index(max(tmax))
+    pic_x = x_to_svg(pic_idx)
+    pic_y = y_to_svg(tmax[pic_idx])
+
+    parts = [
+        f'<svg viewBox="0 0 800 360" width="100%" style="display:block;overflow:visible" role="img" '
+        f'aria-label="{h(title)} {years[0]}-{years[-1]}">'
+    ]
+
+    # Légende inline
+    parts.append(
+        f'<line x1="60" y1="22" x2="78" y2="22" stroke="#8b3a3a" stroke-width="2.5" stroke-linecap="round"/>'
+        f'<text x="84" y="26" font-size="11" fill="#6b7280" font-family="Georgia, serif">{h(L["legend_tmax"])}</text>'
+        f'<line x1="140" y1="22" x2="158" y2="22" stroke="#9aa1ad" stroke-width="2.5" stroke-linecap="round"/>'
+        f'<text x="164" y="26" font-size="11" fill="#6b7280" font-family="Georgia, serif">{h(L["legend_tmoy"])}</text>'
+        f'<line x1="235" y1="22" x2="253" y2="22" stroke="#2c5d80" stroke-width="2.5" stroke-linecap="round"/>'
+        f'<text x="259" y="26" font-size="11" fill="#6b7280" font-family="Georgia, serif">{h(L["legend_tmin"])}</text>'
+    )
+
+    # Lignes horizontales graduées (tous les 2°)
+    for tval in range(y_lo_int, y_hi_int + 1, 2):
+        yy = y_to_svg(tval)
+        parts.append(
+            f'<line x1="60" y1="{yy:.1f}" x2="770" y2="{yy:.1f}" '
+            f'stroke="#e8e0d0" stroke-width="1" stroke-dasharray="2 4"/>'
+            f'<text x="50" y="{yy + 4:.1f}" text-anchor="end" font-size="11" '
+            f'fill="#9aa1ad" font-family="Georgia, serif">{tval}°</text>'
+        )
+
+    # Trend line gold dashed
+    parts.append(
+        f'<line x1="{x_to_svg(0):.1f}" y1="{y_to_svg(y_2016):.1f}" '
+        f'x2="{x_to_svg(len(years)-1):.1f}" y2="{y_to_svg(y_2025):.1f}" '
+        f'stroke="#c9962b" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.55"/>'
+    )
+
+    # Série Tmin (steel-blue)
+    pts_min = ' '.join(f'{x_to_svg(i):.1f},{y_to_svg(tmin[i]):.1f}' for i in range(len(years)))
+    parts.append(
+        f'<polyline points="{pts_min}" fill="none" stroke="#2c5d80" stroke-width="2.0" '
+        f'stroke-linejoin="round" stroke-linecap="round"/>'
+    )
+    for i in range(len(years)):
+        parts.append(f'<circle cx="{x_to_svg(i):.1f}" cy="{y_to_svg(tmin[i]):.1f}" r="2.5" fill="#2c5d80"/>')
+
+    # Série Tmoy (grey dashed)
+    pts_moy = ' '.join(f'{x_to_svg(i):.1f},{y_to_svg(tmoy[i]):.1f}' for i in range(len(years)))
+    parts.append(
+        f'<polyline points="{pts_moy}" fill="none" stroke="#9aa1ad" stroke-width="1.5" '
+        f'stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="4 3"/>'
+    )
+    for i in range(len(years)):
+        parts.append(f'<circle cx="{x_to_svg(i):.1f}" cy="{y_to_svg(tmoy[i]):.1f}" r="2.5" fill="#9aa1ad"/>')
+
+    # Série Tmax (burgundy)
+    pts_max = ' '.join(f'{x_to_svg(i):.1f},{y_to_svg(tmax[i]):.1f}' for i in range(len(years)))
+    parts.append(
+        f'<polyline points="{pts_max}" fill="none" stroke="#8b3a3a" stroke-width="2.2" '
+        f'stroke-linejoin="round" stroke-linecap="round"/>'
+    )
+    for i in range(len(years)):
+        parts.append(f'<circle cx="{x_to_svg(i):.1f}" cy="{y_to_svg(tmax[i]):.1f}" r="2.5" fill="#8b3a3a"/>')
+
+    # Labels années
+    for i, yr in enumerate(years):
+        parts.append(
+            f'<text x="{x_to_svg(i):.1f}" y="322" text-anchor="middle" font-size="11" '
+            f'fill="#9aa1ad" font-family="Georgia, serif">{yr}</text>'
+        )
+
+    # Annotation pic décennie (cercle + texte italique)
+    parts.append(
+        f'<circle cx="{pic_x:.1f}" cy="{pic_y:.1f}" r="4.5" fill="none" stroke="#8b3a3a" stroke-width="1.5"/>'
+    )
+    pic_label = L['annot_pic_tpl'].format(val=tmax[pic_idx], year=years[pic_idx])
+    parts.append(
+        f'<text x="{pic_x - 8:.1f}" y="{pic_y - 12:.1f}" text-anchor="end" font-size="13" '
+        f'fill="#8b3a3a" font-style="italic" font-family="Georgia, serif">{h(pic_label)}</text>'
+    )
+
+    # Annotation slope (gold italique, en bas à droite)
+    slope_label = L['annot_slope_tpl'].format(val=f'{slope:.2f}')
+    parts.append(
+        f'<text x="765.0" y="{y_to_svg(y_2025) - 8:.1f}" text-anchor="end" font-size="13" '
+        f'fill="#c9962b" font-style="italic" font-family="Georgia, serif">{h(slope_label)}</text>'
+    )
+
+    parts.append('</svg>')
+    svg = ''.join(parts)
+
+    return (head_html
+            + f'<div class="card pad"><div class="ct-chart-wrap">{svg}</div></div>'
+            + '</div></section>')
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Helper 6 : DECISION CARD (hero shell)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _hero_chip(emoji: str, text: str, color: str = 'blue') -> str:
+    """Chip caractéristique climat dans le decision-card.
+
+    color : 'blue' | 'gold' | 'purple' (mapping vers couleurs CSS inline pour V6).
+    """
+    palettes = {
+        'blue':   ('#dbeafe', '#1e40af', '#bfdbfe'),
+        'gold':   ('#fef3d0', '#b8860b', '#f2e6a8'),
+        'purple': ('#ede9fe', '#6d28d9', '#ddd6fe'),
+        'green':  ('#dcfce7', '#166534', '#bbf7d0'),
+        'red':    ('#fee2e2', '#991b1b', '#fecaca'),
+    }
+    bg, fg, br = palettes.get(color, palettes['blue'])
+    return (f'<span style="font-size:10.5px;font-weight:700;padding:4px 9px;'
+            f'border-radius:999px;background:{bg};color:{fg};border:1px solid {br}">'
+            f'{emoji} {h(text)}</span>')
+
+
+def _coord_label(lat: float, lon: float) -> str:
+    """Format coordonnées en notation N/S E/W."""
+    ns = 'N' if lat >= 0 else 'S'
+    ew = 'E' if lon >= 0 else 'W'
+    return f'{abs(lat):.2f}°{ns} · {abs(lon):.2f}°{ew}'
+
+
+def render_v6_decision_card(slug: str, lang: str, hero_data: dict) -> str:
+    """Rend la section <header class="hero-wrap"> avec le decision-card.
+
+    Args:
+        slug: slug FR
+        lang: langue UI
+        hero_data: dict avec :
+            - dest_name (str)         : ex 'Chamonix'
+            - country_name (str)      : ex 'France'
+            - country_iso (str)       : ex 'fr'
+            - climate_type (str)      : ex 'Climat alpin de montagne'
+            - h1_accent_part (str)    : partie italique du h1, ex 'pour skier ou randonner'
+            - lead (str)              : phrase HTML autorisée (best/worst déjà formatés)
+            - update_month (str)      : ex 'Avril' (i18n côté caller)
+            - lat, lon (float)
+            - photo_url (str)         : URL Unsplash optionnelle
+            - photo_credit (str)      : ex '<a href="...">Photographe</a>' (HTML autorisé)
+            - is_mountain (bool)      : si True : layout dual ski/rando
+            - decision_main_month (str)  : ex 'Mars · Août'
+            - decision_main_score (str)  : ex '9.1'
+            - mini_cards: liste de 3 dicts {'value': '⛷️ Mars', 'label': 'Top ski (9.1/10)'}
+            - chips: liste de dicts {'emoji': '❄️', 'text': 'Climat alpin', 'color': 'blue'}
+    """
+    L_dec = _v6_strings(lang)['decision']
+    d = hero_data
+
+    nom_h = h(d['dest_name'])
+    country_h = h(d.get('country_name', ''))
+    climate_h = h(d.get('climate_type', ''))
+    iso = d.get('country_iso', '').lower()
+
+    # Background image (optional)
+    photo_url = d.get('photo_url', '')
+    bg_style = (f' style="background-image:url(\'{h(photo_url)}\')"'
+                if photo_url else '')
+
+    # H1 avec accent italique
+    h1_full = L_dec['h1_mtn_tpl' if d.get('is_mountain') else 'h1_std_tpl']
+    accent_part = h(d.get('h1_accent_part', ''))
+    # Insert <span class="accent">{accent}</span> by replacing in template
+    # Template format: "{nom} : meilleurs mois <em>pour partir</em>"
+    # We replace <em>...</em> with <span class="accent">...</span>
+    if '<em>' in h1_full:
+        # Build by extracting the em part — we re-inject the dynamic accent
+        h1_html = h1_full.format(nom=nom_h)
+        h1_html = h1_html.replace('<em>', '<span class="accent">').replace('</em>', '</span>')
+    else:
+        h1_html = h1_full.format(nom=nom_h)
+
+    lead_html = d.get('lead', '')  # HTML autorisé
+    update_lbl = L_dec['tag_update'].format(month=h(d.get('update_month', '—')))
+    coords_lbl = _coord_label(d.get('lat', 0), d.get('lon', 0))
+
+    eyebrow = (f'<img src="flags/{iso}.png" alt=""/>{nom_h}, {country_h} · {climate_h}'
+               if iso and country_h
+               else f'{nom_h} · {climate_h}')
+
+    # Mini-grid (3 cards)
+    mini_cards = d.get('mini_cards', [])
+    mini_html = ''.join(
+        f'<div class="mini-card"><div class="v">{h(c["value"])}</div>'
+        f'<div class="l">{h(c["label"])}</div></div>'
+        for c in mini_cards
+    )
+
+    # Chips (3 climat features)
+    chips = d.get('chips', [])
+    chips_html = ''.join(
+        _hero_chip(c.get('emoji', '·'), c.get('text', ''), c.get('color', 'blue'))
+        for c in chips
+    )
+    chips_block = (f'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px">'
+                   f'{chips_html}</div>') if chips_html else ''
+
+    photo_credit = d.get('photo_credit', '')
+    photo_credit_block = (f'<div class="hero-photo-credit">Photo par {photo_credit}</div>'
+                          if photo_credit else '')
+
+    return (f'<header class="hero-wrap">\n'
+            f'  <div class="container">\n'
+            f'    <div class="hero-shell"{bg_style}>\n'
+            f'      <div class="hero-grid">\n'
+            f'        <div class="hero-main">\n'
+            f'          <div class="eyebrow">{eyebrow}</div>\n'
+            f'          <h1>{h1_html}</h1>\n'
+            f'          <p class="hero-lead">{lead_html}</p>\n'
+            f'          <div class="hero-meta">\n'
+            f'            <span>📅 {h(update_lbl)}</span>\n'
+            f'            <span>🛰️ {h(L_dec["tag_data"])}</span>\n'
+            f'            <span>📍 {coords_lbl}</span>\n'
+            f'          </div>\n'
+            f'        </div>\n'
+            f'        <div class="hero-side">\n'
+            f'          <div class="decision-card">\n'
+            f'            <div class="small-label">⚡ {h(L_dec["quick_label"])}</div>\n'
+            f'            <div class="decision-top">\n'
+            f'              <div>\n'
+            f'                <div class="month">{h(d.get("decision_main_month", "—"))}</div>\n'
+            f'                <div class="sub">{h(L_dec["quick_sub_mtn" if d.get("is_mountain") else "quick_sub_std"])}</div>\n'
+            f'              </div>\n'
+            f'              <div class="score">{h(d.get("decision_main_score", "—"))}<small>/10</small></div>\n'
+            f'            </div>\n'
+            f'            <div class="mini-grid">{mini_html}</div>\n'
+            f'            {chips_block}\n'
+            f'          </div>\n'
+            f'        </div>\n'
+            f'      </div>\n'
+            f'      {photo_credit_block}\n'
+            f'    </div>\n'
+            f'  </div>\n'
+            f'</header>')

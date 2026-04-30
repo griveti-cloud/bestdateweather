@@ -1586,7 +1586,7 @@
       "full_link": "Metodología completa →"
     },
     "trend": {
-      "kicker": "TENDENCIA 10 AÑOS",
+      "kicker": "Tendencia 10 años",
       "title_tpl": "Temperaturas anuales — {nom}",
       "lead": "Curvas de T° mín/máx observadas en los últimos 10 años (ERA5). Permite ver la estabilidad y la tendencia.",
       "no_data": "Datos anuales no disponibles para este destino.",

@@ -1577,7 +1577,7 @@
       "full_link": "Vollständige Methodik →"
     },
     "trend": {
-      "kicker": "10-JAHRES-TREND",
+      "kicker": "10-Jahres-Trend",
       "title_tpl": "Jahrestemperaturen — {nom}",
       "lead": "Min/Max-Temperaturkurven der letzten 10 Jahre (ERA5). Zeigt Stabilität und Trend.",
       "no_data": "Jahresdaten für dieses Ziel nicht verfügbar.",

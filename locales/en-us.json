@@ -1564,7 +1564,7 @@
       "full_link": "Full methodology →"
     },
     "trend": {
-      "kicker": "10-YEAR TREND",
+      "kicker": "10-year trend",
       "title_tpl": "Annual temperatures — {nom}",
       "lead": "Min/max temperature curves observed over the past 10 years (ERA5). Shows climate stability and trend.",
       "no_data": "Annual data unavailable for this destination.",

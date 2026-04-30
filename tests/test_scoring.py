@@ -416,6 +416,113 @@ def test_v6_helpers():
               norm(proto_topbar_match.group(0)) == norm(gen_topbar),
               "diverges from manual proto")
 
+    # 6. Trend chart helper
+    from lib.v6 import render_v6_trend_chart
+    trend_cham = render_v6_trend_chart('chamonix', 'Chamonix', 'fr')
+    check("trend/chamonix: SVG present + slope annotation",
+          '<svg viewBox="0 0 800 360"' in trend_cham
+          and '/ décennie' in trend_cham
+          and 'pic décennie' in trend_cham,
+          "SVG, slope or pic missing")
+
+    trend_lyon = render_v6_trend_chart('lyon', 'Lyon', 'fr', lat=45.75, lon=4.83)
+    check("trend/lyon: coord fallback works (slug not in dataset)",
+          '<svg viewBox="0 0 800 360"' in trend_lyon
+          and 'ct-no-data' not in trend_lyon
+          and '+0.72' in trend_lyon,
+          "coord lookup or slope calc failed")
+
+    trend_missing = render_v6_trend_chart('non-existent-xyz', 'Nowhere', 'fr')
+    check("trend/missing: graceful no-data fallback",
+          'ct-no-data' in trend_missing,
+          "should show no-data fallback")
+
+    # 7. Infos pratiques helper - all 5 profiles
+    from lib.v6 import render_v6_infos_pratiques
+    chamonix_data = {
+        'dest_name': 'Chamonix', 'country_name': 'France', 'country_iso': 'fr',
+        'lang_local': 'Français', 'currency_name': 'Euro', 'currency_symbol': '€',
+        'drive': 'right', 'gpi_level': 1, 'cost_tier': 4,
+        'climate_type': 'Montagne (alpin)', 'trend_value': 0.84,
+        'hottest_month': 'Août', 'hottest_temp': 24,
+        'coldest_month': 'Janvier', 'coldest_temp': 4,
+        'rainiest_month': 'Mai', 'rainiest_pct': 61,
+        'is_mountain': True,
+        'alt_village': 1035, 'alt_ski_max': 3842,
+        'ski_season': 'Déc → Mai', 'hiking_season': 'Juin → Sept',
+    }
+    ip_chamonix = render_v6_infos_pratiques('chamonix', 'fr', chamonix_data)
+    check("infos_pratiques/chamonix: 3 boxes + Séjour montagne",
+          ip_chamonix.count('<div class="box">') == 3 and 'Séjour montagne' in ip_chamonix,
+          "missing boxes or wrong profile")
+
+    bali_data = {
+        'dest_name': 'Bali', 'country_name': 'Indonésie', 'country_iso': 'id',
+        'lang_local': 'Indonésien', 'currency_name': 'Rp', 'currency_symbol': 'Rp',
+        'drive': 'left', 'gpi_level': 1, 'cost_tier': 1,
+        'climate_type': 'Tropical', 'trend_value': 0.37,
+        'hottest_month': 'Nov', 'hottest_temp': 30,
+        'coldest_month': 'Juil', 'coldest_temp': 27,
+        'rainiest_month': 'Fév', 'rainiest_pct': 92,
+        'is_tropical': True,
+        'dry_season': 'Mai → Sept', 'wet_season': 'Déc → Mars',
+        'sea_summer': 27, 'sea_winter': 29,
+        'has_cyclones': False, 'latitude': -8.67,
+    }
+    ip_bali = render_v6_infos_pratiques('bali', 'fr', bali_data)
+    check("infos_pratiques/bali: tropical profile + Aucun équateur",
+          'Séjour tropical' in ip_bali and 'Aucun (équateur)' in ip_bali,
+          "tropical profile detection failed")
+
+    # Reykjavik polar (with stable trend < 0.20)
+    rey_data = {
+        'dest_name': 'Reykjavik', 'country_name': 'Islande', 'country_iso': 'is',
+        'lang_local': 'Islandais', 'currency_name': 'kr', 'currency_symbol': 'kr',
+        'drive': 'right', 'gpi_level': 1, 'cost_tier': 5,
+        'climate_type': 'Subarctique', 'trend_value': -0.15,
+        'hottest_month': 'Juil', 'hottest_temp': 13,
+        'coldest_month': 'Janv', 'coldest_temp': 2,
+        'rainiest_month': 'Fév', 'rainiest_pct': 63,
+        'is_polar': True, 'latitude': 64.15, 'has_geothermal': True,
+    }
+    ip_rey = render_v6_infos_pratiques('reykjavik', 'fr', rey_data)
+    check("infos_pratiques/reykjavik: polar + Stable trend",
+          'Séjour subarctique' in ip_rey and 'Stable' in ip_rey,
+          "polar or stable trend detection failed")
+
+    # Multi-language smoke test
+    for lang in ['en', 'es', 'de']:
+        ip = render_v6_infos_pratiques('bali', lang, bali_data)
+        check(f"infos_pratiques/{lang}: renders without KeyError",
+              len(ip) > 1000 and '<div class="box">' in ip,
+              f"render failed for lang={lang}")
+
+    # 8. Decision card helper
+    from lib.v6 import render_v6_decision_card
+    chamonix_hero = {
+        'dest_name': 'Chamonix', 'country_name': 'France', 'country_iso': 'fr',
+        'climate_type': 'Climat alpin', 'lat': 45.92, 'lon': 6.87,
+        'is_mountain': True, 'update_month': 'Avril',
+        'h1_accent_part': 'pour skier ou randonner',
+        'lead': '<strong>Mars</strong> sort en tête.',
+        'decision_main_month': 'Mars', 'decision_main_score': '9.1',
+        'mini_cards': [
+            {'value': '⛷️ Mars', 'label': 'Ski'},
+            {'value': '🥾 Août', 'label': 'Rando'},
+            {'value': 'Nov', 'label': 'Transition'},
+        ],
+        'chips': [{'emoji': '❄️', 'text': 'Alpin', 'color': 'blue'}],
+    }
+    hero = render_v6_decision_card('chamonix', 'fr', chamonix_hero)
+    check("decision_card/chamonix: hero-wrap + decision-card present",
+          '<header class="hero-wrap">' in hero
+          and '<div class="decision-card">' in hero
+          and hero.count('class="mini-card"') == 3,
+          "structural elements missing")
+    check("decision_card/chamonix: H1 has accent",
+          '<span class="accent">' in hero and 'pour skier ou randonner' in hero,
+          "H1 accent injection failed")
+
 
 # ── Run all ───────────────────────────────────────────────────────────────
 if __name__ == '__main__':
