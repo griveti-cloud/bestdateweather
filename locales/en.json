@@ -1577,7 +1577,7 @@
       "annot_slope_tpl": "+{val}°C / decade"
     },
     "infos_pratiques": {
-      "kicker": "PRACTICAL INFO",
+      "kicker": "Practical info",
       "title": "What you need to know before you go",
       "lead_mountain": "Three angles: the country (language, currency, safety, budget), the year-round climate, and the specifics of a mountain stay.",
       "lead_coastal": "Three angles: the country (language, currency, safety, budget), the year-round climate, and the specifics of a beach holiday.",
@@ -1659,6 +1659,55 @@
       "quick_sub_std": "Depends on your goals",
       "quick_sub_mtn": "Depends on your goals",
       "all_months_label": "All months"
+    },
+    "comprendre": {
+      "kicker": "Understand",
+      "title": "Compare all 12 months",
+      "lead": "Month-by-month details: temperature, rain, sunshine, score and verdict.",
+      "comfort_tpl": "{n} comfortable months",
+      "comfort_list_tpl": "({months})",
+      "th_month": "Month",
+      "th_tmin": "T° min",
+      "th_tmax": "T° max",
+      "th_rain": "Rain %",
+      "th_mm": "mm/day",
+      "th_sun": "Sun",
+      "th_score": "Score",
+      "th_reading": "Verdict",
+      "mood_good": "Best period",
+      "mood_mid": "Decent period",
+      "mood_bad": "Tough conditions"
+    },
+    "contexte": {
+      "kicker": "Context",
+      "title": "Our verdict"
+    },
+    "adapter": {
+      "kicker": "Tailor",
+      "title": "For your trip",
+      "lead": "A few angles depending on what kind of trip you are planning."
+    },
+    "questions": {
+      "kicker": "Questions",
+      "title": "Frequently asked questions"
+    },
+    "localisation": {
+      "kicker": "Location",
+      "title_tpl": "Where {nom} is",
+      "lead": "Geographic position and access."
+    },
+    "explorer": {
+      "kicker": "Explore",
+      "title": "See also",
+      "lead": "Similar destinations by climate or proximity."
+    },
+    "reserver": {
+      "kicker": "Book",
+      "title": "Plan your trip",
+      "lead": "Hotels, activities and flights for your stay.",
+      "cta_hotel": "Hotels",
+      "cta_activity": "Activities",
+      "cta_flight": "Flights"
     }
   }
 }

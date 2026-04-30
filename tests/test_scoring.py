@@ -523,6 +523,100 @@ def test_v6_helpers():
           '<span class="accent">' in hero and 'pour skier ou randonner' in hero,
           "H1 accent injection failed")
 
+    # 9. Section helpers : Comprendre / Contexte / Questions / Adapter
+    from lib.v6 import (render_v6_comprendre, render_v6_contexte,
+                        render_v6_questions, render_v6_adapter,
+                        render_v6_localisation, render_v6_reserver)
+
+    months_data = [
+        {'mois': 'Janvier', 'tmin': -4, 'tmax': 4, 'rain_pct': 45,
+         'precip_mm': 6.0, 'sun_h': 7.3, 'score_10': 7.9, 'classe': 'rec'},
+        {'mois': 'Mars', 'tmin': -1, 'tmax': 8, 'rain_pct': 45,
+         'precip_mm': 4.8, 'sun_h': 10.4, 'score_10': 9.1, 'classe': 'rec', 'is_best': True},
+        {'mois': 'Novembre', 'tmin': 0, 'tmax': 8, 'rain_pct': 45,
+         'precip_mm': 5.4, 'sun_h': 7.9, 'score_10': 6.1, 'classe': 'mid'},
+    ]
+    comp = render_v6_comprendre('chamonix', 'fr', months_data, 'chamonix-meteo-{mois_lower}.html')
+    check("comprendre/fr: 3 desktop rows + 3 mobile cards",
+          comp.count('<tr class="row') == 3 and comp.count('mobile-month-card') >= 3,
+          "missing rows")
+    check("comprendre/fr: best class on Mars row",
+          'class="row best"' in comp and 'mobile-month-card best' in comp,
+          "best marker missing")
+
+    ctx = render_v6_contexte('chamonix', 'fr', '<p>Edito test</p>')
+    check("contexte/fr: section + edito injected",
+          '<p>Edito test</p>' in ctx and 'Contexte' in ctx,
+          "edito not injected")
+
+    faqs = [{'q': 'Q1?', 'a': '<strong>A1</strong>'}, {'q': 'Q2?', 'a': 'A2'}]
+    qs = render_v6_questions('chamonix', 'fr', faqs)
+    check("questions/fr: 2 details with HTML in answers",
+          qs.count('<details') == 2 and '<strong>A1</strong>' in qs,
+          "FAQ not rendered correctly")
+
+    adapt = render_v6_adapter('chamonix', 'fr', profile='mountain')
+    check("adapter/mountain: 3 default chips",
+          adapt.count('border-radius:999px') == 3,
+          "default chips missing")
+
+    loc_section = render_v6_localisation('chamonix', 'fr', 'Chamonix', 45.92, 6.87)
+    check("localisation/fr: dest-map div with data-attrs",
+          'id="dest-map"' in loc_section and 'data-lat="45.9200"' in loc_section,
+          "map container missing")
+
+    reserve = render_v6_reserver('chamonix', 'fr', 'Chamonix')
+    check("reserver/fr: 3 affiliate CTAs",
+          reserve.count('class="card pad reserve-card"') == 3
+          and 'expedia.fr' in reserve and 'getyourguide.com' in reserve,
+          "affiliate links missing")
+
+    # 10. Full page orchestrator
+    from lib.v6 import render_v6_full_page
+    full_data = {
+        'lang': 'fr', 'slug': 'chamonix',
+        'dest_name': 'Chamonix',
+        'page_title': 'Chamonix : meilleurs mois', 'page_desc': 'Test',
+        'lat': 45.92, 'lon': 6.87,
+        'is_mountain': True, 'profile': 'mountain',
+        'months_data': months_data * 4,  # fake 12 months for test
+        'monthly_url_tpl': 'chamonix-{mois_lower}.html',
+        'edito_html': '<p>Test edito</p>',
+        'hero_data': {
+            'dest_name': 'Chamonix', 'country_name': 'France', 'country_iso': 'fr',
+            'climate_type': 'Alpin', 'lat': 45.92, 'lon': 6.87,
+            'is_mountain': True, 'update_month': 'Avril',
+            'h1_accent_part': 'pour skier ou randonner',
+            'lead': '<p>Lead</p>',
+            'decision_main_month': 'Mars', 'decision_main_score': '9.1',
+            'mini_cards': [{'value': 'Mars', 'label': 'Top'}] * 3,
+            'chips': [{'emoji': '❄️', 'text': 'Alpin', 'color': 'blue'}],
+        },
+        'infos_pratiques_data': {
+            'dest_name': 'Chamonix', 'country_name': 'France', 'country_iso': 'fr',
+            'lang_local': 'Français', 'currency_name': 'Euro', 'currency_symbol': '€',
+            'drive': 'right', 'gpi_level': 1, 'cost_tier': 4,
+            'climate_type': 'Alpin', 'trend_value': 0.84,
+            'hottest_month': 'Aoû', 'hottest_temp': 24,
+            'coldest_month': 'Jan', 'coldest_temp': 4,
+            'rainiest_month': 'Mai', 'rainiest_pct': 61,
+            'is_mountain': True,
+        },
+        'faq_items': faqs,
+    }
+    page = render_v6_full_page(full_data)
+    check("full_page/fr: contains all 10 sections",
+          all(s in page for s in [
+              'class="topbar"', 'class="hero-wrap"', 'id="tableau"',
+              'tendance-section', '>Contexte<', '>Adapter<',
+              '>Réserver<', '>Infos pratiques<', '>Localisation<',
+              '>Questions<', 'bdw-footer',
+          ]),
+          "section missing in full page")
+    check("full_page/fr: valid HTML doctype + lang attr",
+          page.startswith('<!doctype html>') and 'lang="fr"' in page,
+          "missing doctype or lang attribute")
+
 
 # ── Run all ───────────────────────────────────────────────────────────────
 if __name__ == '__main__':

@@ -1588,7 +1588,7 @@
       "annot_slope_tpl": "+{val}°C / Jahrzehnt"
     },
     "infos_pratiques": {
-      "kicker": "PRAKTISCHE INFOS",
+      "kicker": "Praktische Infos",
       "title": "Was Sie vor der Reise wissen sollten",
       "lead_mountain": "Drei Perspektiven: das Land (Sprache, Währung, Sicherheit, Budget), das Jahresklima und die Besonderheiten eines Bergaufenthalts.",
       "lead_coastal": "Drei Perspektiven: das Land (Sprache, Währung, Sicherheit, Budget), das Jahresklima und die Besonderheiten eines Strandurlaubs.",
@@ -1670,6 +1670,55 @@
       "quick_sub_std": "Hängt vom Vorhaben ab",
       "quick_sub_mtn": "Hängt vom Vorhaben ab",
       "all_months_label": "Alle Monate"
+    },
+    "comprendre": {
+      "kicker": "Verstehen",
+      "title": "Alle 12 Monate vergleichen",
+      "lead": "Detaillierte Monatsangaben: Temperatur, Regen, Sonne, Score und Lesart.",
+      "comfort_tpl": "{n} angenehme Monate",
+      "comfort_list_tpl": "({months})",
+      "th_month": "Monat",
+      "th_tmin": "T° min",
+      "th_tmax": "T° max",
+      "th_rain": "Regen %",
+      "th_mm": "mm/Tag",
+      "th_sun": "Sonne",
+      "th_score": "Score",
+      "th_reading": "Lesart",
+      "mood_good": "Beste Zeit",
+      "mood_mid": "Anständige Zeit",
+      "mood_bad": "Harte Bedingungen"
+    },
+    "contexte": {
+      "kicker": "Kontext",
+      "title": "Unser Fazit"
+    },
+    "adapter": {
+      "kicker": "Anpassen",
+      "title": "Für Ihre Reise",
+      "lead": "Ein paar Aspekte je nach geplantem Reisetyp."
+    },
+    "questions": {
+      "kicker": "Fragen",
+      "title": "Häufig gestellte Fragen"
+    },
+    "localisation": {
+      "kicker": "Lage",
+      "title_tpl": "Wo {nom} liegt",
+      "lead": "Geographische Lage und Zugang."
+    },
+    "explorer": {
+      "kicker": "Entdecken",
+      "title": "Siehe auch",
+      "lead": "Ähnliche Reiseziele nach Klima oder geografischer Nähe."
+    },
+    "reserver": {
+      "kicker": "Buchen",
+      "title": "Reise planen",
+      "lead": "Unterkunft, Aktivitäten und Flüge für Ihren Aufenthalt.",
+      "cta_hotel": "Hotels",
+      "cta_activity": "Aktivitäten",
+      "cta_flight": "Flüge"
     }
   }
 }

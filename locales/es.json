@@ -1597,7 +1597,7 @@
       "annot_slope_tpl": "+{val}°C / década"
     },
     "infos_pratiques": {
-      "kicker": "INFORMACIÓN PRÁCTICA",
+      "kicker": "Información práctica",
       "title": "Lo que debes saber antes de ir",
       "lead_mountain": "Tres enfoques: el país (idioma, moneda, seguridad, presupuesto), el clima del año y las particularidades de una estancia de montaña.",
       "lead_coastal": "Tres enfoques: el país (idioma, moneda, seguridad, presupuesto), el clima del año y las particularidades de unas vacaciones en playa.",
@@ -1679,6 +1679,55 @@
       "quick_sub_std": "Depende de tu plan",
       "quick_sub_mtn": "Depende de tu plan",
       "all_months_label": "Todos los meses"
+    },
+    "comprendre": {
+      "kicker": "Entender",
+      "title": "Comparar los 12 meses",
+      "lead": "Detalle mes a mes: temperaturas, lluvia, sol, puntuación y veredicto.",
+      "comfort_tpl": "{n} meses cómodos",
+      "comfort_list_tpl": "({months})",
+      "th_month": "Mes",
+      "th_tmin": "T° mín",
+      "th_tmax": "T° máx",
+      "th_rain": "Lluvia %",
+      "th_mm": "mm/día",
+      "th_sun": "Sol",
+      "th_score": "Puntuación",
+      "th_reading": "Veredicto",
+      "mood_good": "Mejor época",
+      "mood_mid": "Época correcta",
+      "mood_bad": "Condiciones marcadas"
+    },
+    "contexte": {
+      "kicker": "Contexto",
+      "title": "Nuestro veredicto"
+    },
+    "adapter": {
+      "kicker": "Adaptar",
+      "title": "Según tu viaje",
+      "lead": "Algunas pistas según el tipo de estancia que preparas."
+    },
+    "questions": {
+      "kicker": "Preguntas",
+      "title": "Preguntas frecuentes"
+    },
+    "localisation": {
+      "kicker": "Ubicación",
+      "title_tpl": "Dónde está {nom}",
+      "lead": "Posición geográfica y accesos."
+    },
+    "explorer": {
+      "kicker": "Explorar",
+      "title": "Ver también",
+      "lead": "Destinos similares por clima o proximidad geográfica."
+    },
+    "reserver": {
+      "kicker": "Reservar",
+      "title": "Planificar tu viaje",
+      "lead": "Alojamiento, actividades y vuelos para tu estancia.",
+      "cta_hotel": "Hoteles",
+      "cta_activity": "Actividades",
+      "cta_flight": "Vuelos"
     }
   }
 }

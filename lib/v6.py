@@ -912,3 +912,530 @@ def render_v6_decision_card(slug: str, lang: str, hero_data: dict) -> str:
             f'    </div>\n'
             f'  </div>\n'
             f'</header>')
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Helper 7 : COMPRENDRE (table 12 mois)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _emoji_for_score(score: float, classe: str = '') -> str:
+    """Emoji météo selon le score (proche de scoring.py logic)."""
+    if score >= 7.5:
+        return '☀️'
+    if score >= 6:
+        return '⛅'
+    if score >= 4:
+        return '🌥️'
+    return '🌧️'
+
+
+def _mood_class(classe: str) -> str:
+    """Map classe (rec/mid/avoid) → CSS class (good/mid/bad)."""
+    return {'rec': 'good', 'mid': 'mid', 'avoid': 'bad'}.get(classe, 'mid')
+
+
+def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
+                         monthly_url_tpl: str = '') -> str:
+    """Section "Comprendre" : table desktop + cards mobile pour les 12 mois.
+
+    Args:
+        slug: slug FR
+        lang: langue UI
+        months_data: liste de 12 dicts avec :
+            - mois (str)             : nom localisé du mois (ex 'Janvier' / 'January')
+            - tmin (float)           : °C
+            - tmax (float)           : °C
+            - rain_pct (float)       : %
+            - precip_mm (float)      : mm/j
+            - sun_h (float)          : h/jour
+            - score_10 (float)       : 0-10
+            - classe (str)           : 'rec' | 'mid' | 'avoid'
+            - is_best (bool)         : marquage rangée best
+        monthly_url_tpl: template URL fiche mensuelle, ex '{slug}-meteo-{mois_short}.html'
+            (les variables disponibles : {slug}, {mois_lower}, {mois_short})
+
+    Note: monthly_url_tpl est différent par langue (FR=meteo-, EN=weather-, etc.).
+        Le caller doit fournir le bon template.
+    """
+    L = _v6_strings(lang)['comprendre']
+    n_comfortable = sum(1 for m in months_data if m.get('classe') == 'rec')
+    comfortable_months = [m['mois'][:3] for m in months_data if m.get('classe') == 'rec']
+
+    comfort_label = L['comfort_tpl'].format(n=n_comfortable)
+    months_inline = ' · '.join(comfortable_months)
+
+    # Header tableau
+    th_html = ''.join(f'<th>{h(L[k])}</th>' for k in
+                      ['th_month', 'th_tmin', 'th_tmax', 'th_rain', 'th_mm', 'th_sun', 'th_score', 'th_reading'])
+
+    mood_label = {'good': h(L['mood_good']), 'mid': h(L['mood_mid']), 'bad': h(L['mood_bad'])}
+
+    # Table desktop rows
+    rows_html = []
+    for m in months_data:
+        url = monthly_url_tpl.format(slug=slug, mois_lower=m['mois'].lower(),
+                                     mois_short=m['mois'][:3].lower()) if monthly_url_tpl else '#'
+        emoji = _emoji_for_score(m['score_10'], m.get('classe', ''))
+        mood_cls = _mood_class(m.get('classe', ''))
+        best_attr = ' best' if m.get('is_best') else ''
+        rows_html.append(
+            f'<tr class="row{best_attr}" onclick="location.href=\'{h(url)}\'" '
+            f'style="cursor:pointer" tabindex="0" role="link" '
+            f'onkeydown="if(event.key===\'Enter\')location.href=\'{h(url)}\'">'
+            f'<td class="month-cell">{emoji} {h(m["mois"])} '
+            f'<span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td>'
+            f'<td>{m["tmin"]:.0f}°C</td>'
+            f'<td>{m["tmax"]:.0f}°C</td>'
+            f'<td>{m["rain_pct"]:.0f}%</td>'
+            f'<td>{m["precip_mm"]:.1f}mm</td>'
+            f'<td>{m["sun_h"]:.1f}h</td>'
+            f'<td>{m["score_10"]:.1f}/10</td>'
+            f'<td><span class="mood {mood_cls}">{mood_label[mood_cls]}</span></td>'
+            f'</tr>'
+        )
+
+    # Mobile cards
+    mobile_cards = []
+    for m in months_data:
+        url = monthly_url_tpl.format(slug=slug, mois_lower=m['mois'].lower(),
+                                     mois_short=m['mois'][:3].lower()) if monthly_url_tpl else '#'
+        emoji = _emoji_for_score(m['score_10'], m.get('classe', ''))
+        mood_cls = _mood_class(m.get('classe', ''))
+        best_cls = ' best' if m.get('is_best') else ''
+        score_cls = 'good' if m['score_10'] >= 7 else ('mid' if m['score_10'] >= 4 else 'bad')
+        mobile_cards.append(
+            f'<a href="{h(url)}" class="mobile-month-card{best_cls}">'
+            f'<div class="head"><div class="name">{emoji} {h(m["mois"])}</div>'
+            f'<div class="score {score_cls}">{m["score_10"]:.1f}/10</div></div>'
+            f'<div class="rows">'
+            f'<div class="row"><span>T°</span><strong>{m["tmin"]:.0f}°C / {m["tmax"]:.0f}°C</strong></div>'
+            f'<div class="row"><span>{h(L["th_rain"])}</span><strong>{m["rain_pct"]:.0f}%</strong></div>'
+            f'<div class="row"><span>{h(L["th_sun"])}</span><strong>{m["sun_h"]:.1f}h</strong></div>'
+            f'<div class="row row-mood"><strong class="mood-{mood_cls}">{mood_label[mood_cls]}</strong></div>'
+            f'</div></a>'
+        )
+
+    return f'''  <section id="tableau">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">{h(L['kicker'])}</div>
+        <h2>{h(L['title'])}</h2>
+        <p class="lead">{h(L['lead'])}</p>
+      </div>
+      <div class="spotlight-grid">
+        <div class="card pad">
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;background:var(--green-soft);border:1px solid var(--green-border);border-radius:999px;margin-bottom:12px;font-size:12px;font-weight:700;color:var(--green)">
+            ✅ <span>{h(comfort_label)}</span>
+            <span style="font-size:11px;font-weight:500;color:var(--muted)">{L['comfort_list_tpl'].format(months=h(months_inline))}</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr>{th_html}</tr></thead>
+              <tbody>{''.join(rows_html)}</tbody>
+            </table>
+          </div>
+          <div class="mobile-month-cards">
+            {''.join(mobile_cards)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>'''
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Helper 8 : CONTEXTE (édito)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def render_v6_contexte(slug: str, lang: str, edito_html: str) -> str:
+    """Section "Contexte" : édito de la destination (HTML autorisé).
+
+    Le contenu vient de data/avis_annuel.json (clé '{slug}:{lang}').
+    Si pas d'édito pour cette langue, fallback sur FR.
+    """
+    L = _v6_strings(lang)['contexte']
+    return f'''  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">{h(L['kicker'])}</div>
+        <h2>{h(L['title'])}</h2>
+      </div>
+      <div class="card pad editorial">
+        {edito_html}
+      </div>
+    </div>
+  </section>'''
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Helper 9 : QUESTIONS (FAQ)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def render_v6_questions(slug: str, lang: str, faq_items: list[dict]) -> str:
+    """Section "Questions" : FAQ accessible.
+
+    faq_items: liste de dicts {'q': '...', 'a': '...'} (HTML autorisé dans 'a')
+    """
+    L = _v6_strings(lang)['questions']
+    items_html = []
+    for it in faq_items:
+        items_html.append(
+            f'<details class="faq-item">'
+            f'<summary>{h(it["q"])}</summary>'
+            f'<div class="faq-a">{it["a"]}</div>'
+            f'</details>'
+        )
+    return f'''  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">{h(L['kicker'])}</div>
+        <h2>{h(L['title'])}</h2>
+      </div>
+      <div class="card pad faq-list">
+        {''.join(items_html)}
+      </div>
+    </div>
+  </section>'''
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Helper 10 : ADAPTER / EXPLORER / LOCALISATION / RÉSERVER (stubs minimalistes)
+# ─────────────────────────────────────────────────────────────────────────────
+# Ces sections sont volontairement minimales pour la V1 V6. Elles seront
+# enrichies progressivement après validation visuelle du squelette.
+
+def render_v6_adapter(slug: str, lang: str, profile: str = 'city',
+                      chips: list[dict] = None) -> str:
+    """Section "Adapter" : suggestions selon profil de séjour.
+
+    chips: optionnel, liste {'emoji': '...', 'text': '...', 'color': '...'}.
+        Si vide, on génère 3 chips par défaut selon profil.
+    """
+    L = _v6_strings(lang)['adapter']
+    if chips is None:
+        defaults_by_profile = {
+            'mountain': [
+                {'emoji': '⛷️', 'text': 'Ski : Déc → Mai', 'color': 'blue'},
+                {'emoji': '🥾', 'text': 'Rando : Juin → Sept', 'color': 'green'},
+                {'emoji': '🧗', 'text': 'Haute mont. : guide', 'color': 'gold'},
+            ],
+            'tropical': [
+                {'emoji': '🌞', 'text': 'Saison sèche', 'color': 'gold'},
+                {'emoji': '🏖️', 'text': 'Plages', 'color': 'blue'},
+                {'emoji': '🌊', 'text': 'Surf', 'color': 'green'},
+            ],
+            'polar': [
+                {'emoji': '🌌', 'text': 'Aurores : Sept → Mars', 'color': 'purple'},
+                {'emoji': '☀️', 'text': 'Jour polaire : juin', 'color': 'gold'},
+                {'emoji': '🌋', 'text': 'Géothermie', 'color': 'red'},
+            ],
+            'coastal': [
+                {'emoji': '🏖️', 'text': 'Plages : juin-sept', 'color': 'gold'},
+                {'emoji': '🌊', 'text': 'Houle : sept-mars', 'color': 'blue'},
+                {'emoji': '🚤', 'text': 'Activités nautiques', 'color': 'green'},
+            ],
+            'city': [
+                {'emoji': '🏛️', 'text': 'Patrimoine', 'color': 'gold'},
+                {'emoji': '🍴', 'text': 'Gastronomie', 'color': 'red'},
+                {'emoji': '☔', 'text': 'Visites couvertes', 'color': 'blue'},
+            ],
+        }
+        chips = defaults_by_profile.get(profile, defaults_by_profile['city'])
+
+    chips_html = ''.join(_hero_chip(c['emoji'], c['text'], c.get('color', 'blue')) for c in chips)
+    return f'''  <section id="par-projet">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">{h(L['kicker'])}</div>
+        <h2>{h(L['title'])}</h2>
+        <p class="lead">{h(L['lead'])}</p>
+      </div>
+      <div class="card pad">
+        <div style="display:flex;flex-wrap:wrap;gap:8px">{chips_html}</div>
+      </div>
+    </div>
+  </section>'''
+
+
+def render_v6_explorer(slug: str, lang: str, related: list[dict] = None) -> str:
+    """Section "Explorer" : cross-links vers destinations similaires.
+
+    related: liste {'href': str, 'name': str, 'sub': str (climate/region)}.
+        Si None ou vide, section omise.
+    """
+    if not related:
+        return ''
+    L = _v6_strings(lang)['explorer']
+    cards_html = ''.join(
+        f'<a href="{h(r["href"])}" class="card pad explorer-card">'
+        f'<div class="explorer-name">{h(r["name"])}</div>'
+        f'<div class="explorer-sub">{h(r.get("sub", ""))}</div>'
+        f'</a>'
+        for r in related
+    )
+    return f'''  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">{h(L['kicker'])}</div>
+        <h2>{h(L['title'])}</h2>
+        <p class="lead">{h(L['lead'])}</p>
+      </div>
+      <div class="grid-3">{cards_html}</div>
+    </div>
+  </section>'''
+
+
+def render_v6_localisation(slug: str, lang: str, nom: str,
+                           lat: float, lon: float) -> str:
+    """Section "Localisation" : carte Leaflet + adresse coordonnées.
+
+    Note: la carte Leaflet est initialisée par le JS chargé en fin de page
+    (script init avec data-attributes). Ici on fournit juste le container.
+    """
+    L = _v6_strings(lang)['localisation']
+    title = L['title_tpl'].format(nom=h(nom))
+    return f'''  <section class="dest-map-section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">{h(L['kicker'])}</div>
+        <h2>{title}</h2>
+        <p class="lead">{h(L['lead'])}</p>
+      </div>
+      <div class="card pad">
+        <div id="dest-map" data-lat="{lat:.4f}" data-lon="{lon:.4f}"
+             data-name="{h(nom)}" style="height:380px;border-radius:12px;overflow:hidden"></div>
+        <div class="dest-coords" style="margin-top:8px;font-size:13px;color:var(--muted)">
+          📍 {_coord_label(lat, lon)}
+        </div>
+      </div>
+    </div>
+  </section>'''
+
+
+def render_v6_reserver(slug: str, lang: str, dest_name: str,
+                       gyg_partner: str = '2MQKL00',
+                       travelpayouts_marker: str = '708106',
+                       expedia_camref: str = '1110lB57J') -> str:
+    """Section "Réserver" : 3 CTAs affiliés (Hôtels Expedia, Activités GYG, Vols Travelpayouts).
+
+    Pour la V1, ce sont juste des liens stylisés. L'intégration profonde
+    (widgets GYG embarqués, pré-remplissage destination Expedia) viendra plus tard.
+    """
+    L = _v6_strings(lang)['reserver']
+    nom_q = h(dest_name)
+
+    # URLs affiliés simples (templates à enrichir)
+    expedia_url = (f'https://www.expedia.fr/Hotel-Search?destination={nom_q}'
+                   f'&camref={expedia_camref}')
+    gyg_url = (f'https://www.getyourguide.com/s/?q={nom_q}'
+               f'&partner_id={gyg_partner}')
+    tp_url = (f'https://search.flights.travelpayouts.com/?marker={travelpayouts_marker}'
+              f'&destination_name={nom_q}')
+
+    return f'''  <section id="planifier" style="scroll-margin-top:120px">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">{h(L['kicker'])}</div>
+        <h2>{h(L['title'])}</h2>
+        <p class="lead">{h(L['lead'])}</p>
+      </div>
+      <div class="grid-3">
+        <a href="{h(expedia_url)}" target="_blank" rel="noopener nofollow sponsored" class="card pad reserve-card">
+          <div class="reserve-icon">🏨</div>
+          <div class="reserve-cta"><strong>{h(L['cta_hotel'])}</strong> →</div>
+        </a>
+        <a href="{h(gyg_url)}" target="_blank" rel="noopener nofollow sponsored" class="card pad reserve-card">
+          <div class="reserve-icon">🎫</div>
+          <div class="reserve-cta"><strong>{h(L['cta_activity'])}</strong> →</div>
+        </a>
+        <a href="{h(tp_url)}" target="_blank" rel="noopener nofollow sponsored" class="card pad reserve-card">
+          <div class="reserve-icon">✈️</div>
+          <div class="reserve-cta"><strong>{h(L['cta_flight'])}</strong> →</div>
+        </a>
+      </div>
+    </div>
+  </section>'''
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ORCHESTRATEUR : render_v6_full_page()
+# ─────────────────────────────────────────────────────────────────────────────
+# Assemble tous les helpers en une page HTML complète, prête à écrire sur disque.
+# Cet orchestrateur reste volontairement focalisé sur le contenu/structure :
+# l'extraction des données depuis CSV/JSON est faite côté generate_pages.py
+# (dans gen_annual_v6() à venir) qui prépare un dict 'page_data' complet.
+
+# Note: les SEO meta (title, description, canonical, hreflang, JSON-LD) sont
+# laissés au caller pour rester découplé. Cet orchestrateur ne touche pas au
+# <head>.
+
+def render_v6_head(lang: str, page_title: str, page_desc: str,
+                   canonical_url: str = '',
+                   asset_prefix: str = '',
+                   bg_image_url: str = '') -> str:
+    """Rend le <head> minimal V6.
+
+    Args:
+        lang: 'fr', 'en', 'en-us', 'es', 'de'
+        page_title: <title>
+        page_desc: meta description
+        canonical_url: URL canonique absolue
+        asset_prefix: préfixe URL assets (vide si racine, '../' si sous-dossier)
+        bg_image_url: si fourni, ajoute un preload pour LCP optimisation
+    """
+    html_lang = {'fr': 'fr', 'en': 'en', 'en-us': 'en-US', 'es': 'es', 'de': 'de'}.get(lang, 'fr')
+    canonical_html = (f'<link rel="canonical" href="{h(canonical_url)}"/>'
+                      if canonical_url else '')
+    preload_bg = (f'<link rel="preload" as="image" href="{h(bg_image_url)}" fetchpriority="high">'
+                  if bg_image_url else '')
+    return f'''<!doctype html>
+<html lang="{html_lang}">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>{h(page_title)}</title>
+<meta name="description" content="{h(page_desc)}"/>
+{canonical_html}
+{preload_bg}
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=15"/>
+</head>
+<body>'''
+
+
+def render_v6_scripts(asset_prefix: str = '') -> str:
+    """Scripts à charger en fin de body."""
+    return f'''<script src="{asset_prefix}js/favs.min.js?v=1"></script>
+<script src="{asset_prefix}js/share.js"></script>
+<script>
+// Init carte Leaflet si présente
+(function(){{
+  var el = document.getElementById('dest-map');
+  if (!el || typeof L === 'undefined') return;
+  var lat = parseFloat(el.dataset.lat), lon = parseFloat(el.dataset.lon);
+  var name = el.dataset.name || '';
+  var map = L.map('dest-map').setView([lat, lon], 9);
+  L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
+    maxZoom: 18, attribution: '© OpenStreetMap'
+  }}).addTo(map);
+  L.marker([lat, lon]).addTo(map).bindPopup(name);
+}})();
+</script>
+</body>
+</html>'''
+
+
+def render_v6_full_page(page_data: dict) -> str:
+    """Orchestrateur principal : assemble une page V6 complète.
+
+    Args:
+        page_data: dict structuré avec toutes les données nécessaires :
+            # SEO + head
+            - lang (str, requis)
+            - page_title (str, requis)
+            - page_desc (str, requis)
+            - canonical_url (str)
+            - asset_prefix (str, défaut '')
+
+            # Identité
+            - slug (str, requis)
+            - slug_en, slug_es, slug_de (str)  - pour les liens footer
+            - dest_name (str, requis)
+
+            # Sections (toutes les clés que les helpers attendent)
+            - hero_data (dict)            - pour render_v6_decision_card
+            - months_data (list)          - pour render_v6_comprendre
+            - monthly_url_tpl (str)       - template URL fiches mensuelles
+            - edito_html (str)            - pour render_v6_contexte
+            - faq_items (list)            - pour render_v6_questions
+            - infos_pratiques_data (dict) - pour render_v6_infos_pratiques
+            - profile (str)               - pour render_v6_adapter
+            - related (list)              - pour render_v6_explorer
+            - lat, lon (float)            - pour render_v6_localisation
+            - is_mountain (bool)          - pour méthodologie
+
+    Returns:
+        HTML complet de la page (string).
+    """
+    d = page_data
+    lang = d['lang']
+    slug = d['slug']
+    asset_prefix = d.get('asset_prefix', '')
+
+    head = render_v6_head(
+        lang=lang,
+        page_title=d['page_title'],
+        page_desc=d['page_desc'],
+        canonical_url=d.get('canonical_url', ''),
+        asset_prefix=asset_prefix,
+        bg_image_url=d.get('hero_data', {}).get('photo_url', ''),
+    )
+
+    topbar = render_v6_topbar(slug, lang)
+    hero = render_v6_decision_card(slug, lang, d['hero_data'])
+
+    method_block = render_v6_methodology_block(lang, is_mountain=d.get('is_mountain', False))
+
+    comprendre = render_v6_comprendre(
+        slug=slug, lang=lang,
+        months_data=d['months_data'],
+        monthly_url_tpl=d.get('monthly_url_tpl', ''),
+    )
+
+    trend = render_v6_trend_chart(
+        slug=slug, nom=d['dest_name'], lang=lang,
+        lat=d.get('lat'), lon=d.get('lon'),
+    )
+
+    contexte = render_v6_contexte(slug, lang, d.get('edito_html', '<p>—</p>'))
+
+    adapter = render_v6_adapter(slug, lang, profile=d.get('profile', 'city'))
+
+    reserver = render_v6_reserver(slug, lang, d['dest_name'])
+
+    infos = render_v6_infos_pratiques(slug, lang, d['infos_pratiques_data'])
+
+    explorer = render_v6_explorer(slug, lang, related=d.get('related', []))
+
+    localisation = render_v6_localisation(
+        slug=slug, lang=lang, nom=d['dest_name'],
+        lat=d.get('lat', 0), lon=d.get('lon', 0),
+    )
+
+    questions = render_v6_questions(slug, lang, d.get('faq_items', []))
+
+    footer = render_v6_footer(
+        slug_fr=d.get('slug_fr', slug) if lang != 'fr' else slug,
+        lang=lang,
+        slug_en=d.get('slug_en', ''),
+        slug_es=d.get('slug_es', ''),
+        slug_de=d.get('slug_de', ''),
+    )
+
+    scripts = render_v6_scripts(asset_prefix=asset_prefix)
+
+    # Le method_block est intégré dans la decision card (right-stack du Décider)
+    # Pour la V1, on l'injecte juste après le hero comme section dédiée
+    # (si on veut le mettre dans le right-stack du hero, il faut adapter render_v6_decision_card)
+    # Pour rester conservateur, on injecte le bloc méthodologie dans une section autonome.
+    method_section = (f'<section class="method-section">'
+                      f'<div class="container">{method_block}</div>'
+                      f'</section>')
+
+    body = f'''{topbar}
+{hero}
+<main>
+{method_section}
+{comprendre}
+{trend}
+{contexte}
+{adapter}
+{reserver}
+{infos}
+{explorer}
+{localisation}
+{questions}
+</main>
+{footer}'''
+
+    return head + '\n' + body + '\n' + scripts
