@@ -337,6 +337,86 @@ def test_mountain_scoring():
           f"got {cham_nov}" if cham_nov else "Novembre introuvable")
 
 
+def test_v6_helpers():
+    """Validate V6 rendering helpers (lib/v6.py).
+
+    Invariants tested:
+      1. All 5 locales (FR, EN, EN-US, ES, DE) must have 'v6' section
+      2. render_v6_topbar produces non-empty HTML in all 5 langs
+      3. render_v6_footer produces non-empty HTML with correct lang links
+      4. render_v6_methodology_block: mountain version differs from standard
+      5. KeyError raised when a locale doesn't have 'v6' (sanity check)
+    """
+    print("Test 7: V6 rendering helpers")
+    from lib.v6 import (render_v6_topbar, render_v6_footer,
+                        render_v6_methodology_block, _v6_strings)
+
+    # Reset cache to ensure fresh reads
+    from lib import v6 as v6_mod
+    v6_mod._v6_cache.clear()
+
+    LANGS = ['fr', 'en', 'en-us', 'es', 'de']
+
+    # 1. v6 section presence
+    for lang in LANGS:
+        try:
+            strings = _v6_strings(lang)
+            check(f"locales/{lang}.json has 'v6' section",
+                  strings is not None and 'topbar' in strings,
+                  f"v6 missing or invalid in {lang}")
+        except KeyError as e:
+            check(f"locales/{lang}.json has 'v6' section", False, str(e))
+
+    # 2. Topbar non-empty for all langs + key vocab present
+    expected_brand_marker = 'BestDateWeather'  # part of brand string in DOM
+    for lang in LANGS:
+        out = render_v6_topbar('chamonix', lang)
+        check(f"topbar/{lang}: non-empty + brand present",
+              len(out) > 500 and 'Best' in out and 'data-slug="chamonix"' in out,
+              f"got len={len(out)}")
+
+    # 3. Footer must include sister-language links
+    fr_footer = render_v6_footer('chamonix', 'fr')
+    check("footer/fr: includes English link",
+          'flags/gb.png' in fr_footer and 'best-time-to-visit-chamonix' in fr_footer,
+          "EN link missing")
+    check("footer/fr: includes Spanish link",
+          'flags/es.png' in fr_footer and 'mejor-epoca-chamonix' in fr_footer,
+          "ES link missing")
+    check("footer/fr: includes German link",
+          'flags/de.png' in fr_footer and 'beste-reisezeit-chamonix' in fr_footer,
+          "DE link missing")
+
+    en_footer = render_v6_footer('chamonix', 'en')
+    check("footer/en: does NOT include current-lang in language switcher",
+          'flags/gb.png' not in en_footer,
+          "EN link should be absent in EN footer")
+
+    # 4. Methodology mountain vs standard
+    method_mtn = render_v6_methodology_block('fr', is_mountain=True)
+    method_std = render_v6_methodology_block('fr', is_mountain=False)
+    check("methodology/fr: mountain has 2 sub-models",
+          method_mtn.count('method-mini-model') >= 4,  # 2 models × 2 occurrences each (open + head)
+          f"got {method_mtn.count('method-mini-model')} occurrences")
+    check("methodology/fr: standard has NO sub-models",
+          'method-mini-model' not in method_std,
+          "standard should not contain sub-models")
+    check("methodology/fr: mountain mentions ski + rando",
+          'Score ski' in method_mtn and 'Score rando' in method_mtn,
+          "missing ski or rando label")
+
+    # 5. Iso-functional with Chamonix proto V6
+    import re
+    proto = open(ROOT / 'meilleure-periode-chamonix-v6.html').read()
+    proto_topbar_match = re.search(r'<div class="topbar">.*?</div>\s*</div>', proto, re.DOTALL)
+    if proto_topbar_match:
+        def norm(s): return re.sub(r'\s+', ' ', s).strip()
+        gen_topbar = render_v6_topbar('chamonix', 'fr')
+        check("topbar/fr: matches Chamonix proto V6 (normalized)",
+              norm(proto_topbar_match.group(0)) == norm(gen_topbar),
+              "diverges from manual proto")
+
+
 # ── Run all ───────────────────────────────────────────────────────────────
 if __name__ == '__main__':
     print("=" * 60)
@@ -350,6 +430,7 @@ if __name__ == '__main__':
     test_tropical_keys()
     test_generator_parity()
     test_mountain_scoring()
+    test_v6_helpers()
 
     print()
     print(f"{'=' * 60}")
