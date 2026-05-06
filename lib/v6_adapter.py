@@ -388,35 +388,47 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
         decision_main_month = best['mois']
         decision_main_score = f'{best["score_10"]:.1f}'
 
-    # Chips climat (heuristique simple selon profil)
-    chips_by_profile = {
-        'mountain': [
-            {'emoji': '❄️', 'text': 'Climat alpin', 'color': 'blue'},
-            {'emoji': '☀️', 'text': 'UV altitude', 'color': 'gold'},
-            {'emoji': '🌦️', 'text': 'Météo changeante', 'color': 'purple'},
-        ],
-        'tropical': [
-            {'emoji': '🌴', 'text': 'Tropical', 'color': 'green'},
-            {'emoji': '☀️', 'text': 'UV élevé', 'color': 'gold'},
-            {'emoji': '🌧️', 'text': 'Mousson saison', 'color': 'blue'},
-        ],
-        'polar': [
-            {'emoji': '❄️', 'text': 'Subarctique', 'color': 'blue'},
-            {'emoji': '🌌', 'text': 'Aurores', 'color': 'purple'},
-            {'emoji': '🌬️', 'text': 'Vents fréquents', 'color': 'gold'},
-        ],
-        'coastal': [
-            {'emoji': '🌊', 'text': 'Bord de mer', 'color': 'blue'},
-            {'emoji': '☀️', 'text': 'Lumineux', 'color': 'gold'},
-            {'emoji': '🍴', 'text': 'Gastronomie', 'color': 'red'},
-        ],
-        'city': [
-            {'emoji': '🏛️', 'text': 'Patrimoine', 'color': 'gold'},
-            {'emoji': '🌧️', 'text': 'Pluies modérées', 'color': 'blue'},
-            {'emoji': '☔', 'text': 'Visites couvertes', 'color': 'purple'},
-        ],
+    # Chips climat (heuristique simple selon profil) — localisés selon lang
+    HERO_CHIPS_I18N = {
+        'mountain': {
+            'fr':    [('❄️', 'Climat alpin', 'blue'),     ('☀️', 'UV altitude', 'gold'),    ('🌦️', 'Météo changeante', 'purple')],
+            'en':    [('❄️', 'Alpine climate', 'blue'),    ('☀️', 'High-altitude UV', 'gold'),('🌦️', 'Changeable weather', 'purple')],
+            'en-us': [('❄️', 'Alpine climate', 'blue'),    ('☀️', 'High-altitude UV', 'gold'),('🌦️', 'Changeable weather', 'purple')],
+            'es':    [('❄️', 'Clima alpino', 'blue'),      ('☀️', 'UV altitud', 'gold'),     ('🌦️', 'Tiempo cambiante', 'purple')],
+            'de':    [('❄️', 'Alpenklima', 'blue'),        ('☀️', 'UV in Höhe', 'gold'),     ('🌦️', 'Wechselhaftes Wetter', 'purple')],
+        },
+        'tropical': {
+            'fr':    [('🌴', 'Tropical', 'green'),         ('☀️', 'UV élevé', 'gold'),       ('🌧️', 'Mousson saison', 'blue')],
+            'en':    [('🌴', 'Tropical', 'green'),         ('☀️', 'High UV', 'gold'),         ('🌧️', 'Monsoon season', 'blue')],
+            'en-us': [('🌴', 'Tropical', 'green'),         ('☀️', 'High UV', 'gold'),         ('🌧️', 'Monsoon season', 'blue')],
+            'es':    [('🌴', 'Tropical', 'green'),         ('☀️', 'UV alto', 'gold'),         ('🌧️', 'Temporada monzón', 'blue')],
+            'de':    [('🌴', 'Tropisch', 'green'),         ('☀️', 'Hoher UV', 'gold'),        ('🌧️', 'Monsunzeit', 'blue')],
+        },
+        'polar': {
+            'fr':    [('❄️', 'Subarctique', 'blue'),       ('🌌', 'Aurores', 'purple'),      ('🌬️', 'Vents fréquents', 'gold')],
+            'en':    [('❄️', 'Subarctic', 'blue'),         ('🌌', 'Auroras', 'purple'),       ('🌬️', 'Frequent winds', 'gold')],
+            'en-us': [('❄️', 'Subarctic', 'blue'),         ('🌌', 'Auroras', 'purple'),       ('🌬️', 'Frequent winds', 'gold')],
+            'es':    [('❄️', 'Subártico', 'blue'),         ('🌌', 'Auroras', 'purple'),       ('🌬️', 'Vientos frecuentes', 'gold')],
+            'de':    [('❄️', 'Subarktisch', 'blue'),       ('🌌', 'Polarlichter', 'purple'),  ('🌬️', 'Häufige Winde', 'gold')],
+        },
+        'coastal': {
+            'fr':    [('🌊', 'Bord de mer', 'blue'),       ('☀️', 'Lumineux', 'gold'),        ('🍴', 'Gastronomie', 'red')],
+            'en':    [('🌊', 'Seaside', 'blue'),           ('☀️', 'Bright', 'gold'),          ('🍴', 'Gastronomy', 'red')],
+            'en-us': [('🌊', 'Seaside', 'blue'),           ('☀️', 'Bright', 'gold'),          ('🍴', 'Gastronomy', 'red')],
+            'es':    [('🌊', 'Costa', 'blue'),             ('☀️', 'Luminoso', 'gold'),        ('🍴', 'Gastronomía', 'red')],
+            'de':    [('🌊', 'Meeresnähe', 'blue'),        ('☀️', 'Lichtreich', 'gold'),      ('🍴', 'Gastronomie', 'red')],
+        },
+        'city': {
+            'fr':    [('🏛️', 'Patrimoine', 'gold'),        ('🌧️', 'Pluies modérées', 'blue'),('☔', 'Visites couvertes', 'purple')],
+            'en':    [('🏛️', 'Heritage', 'gold'),           ('🌧️', 'Moderate rain', 'blue'),    ('☔', 'Indoor sights', 'purple')],
+            'en-us': [('🏛️', 'Heritage', 'gold'),           ('🌧️', 'Moderate rain', 'blue'),    ('☔', 'Indoor sights', 'purple')],
+            'es':    [('🏛️', 'Patrimonio', 'gold'),         ('🌧️', 'Lluvias moderadas', 'blue'),('☔', 'Visitas cubiertas', 'purple')],
+            'de':    [('🏛️', 'Kulturerbe', 'gold'),         ('🌧️', 'Moderater Regen', 'blue'),  ('☔', 'Indoor-Sehensw.', 'purple')],
+        },
     }
-    chips = chips_by_profile.get(profile, chips_by_profile['city'])
+    profile_chips = HERO_CHIPS_I18N.get(profile, HERO_CHIPS_I18N['city'])
+    triplets = profile_chips.get(lang, profile_chips['fr'])
+    chips = [{'emoji': e, 'text': t, 'color': c} for e, t, c in triplets]
 
     hero_data = {
         'dest_name': nom,

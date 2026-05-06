@@ -1174,34 +1174,48 @@ def render_v6_adapter(slug: str, lang: str, profile: str = 'city',
     """
     L = _v6_strings(lang)['adapter']
     if chips is None:
-        defaults_by_profile = {
-            'mountain': [
-                {'emoji': '⛷️', 'text': 'Ski : Déc → Mai', 'color': 'blue'},
-                {'emoji': '🥾', 'text': 'Rando : Juin → Sept', 'color': 'green'},
-                {'emoji': '🧗', 'text': 'Haute mont. : guide', 'color': 'gold'},
-            ],
-            'tropical': [
-                {'emoji': '🌞', 'text': 'Saison sèche', 'color': 'gold'},
-                {'emoji': '🏖️', 'text': 'Plages', 'color': 'blue'},
-                {'emoji': '🌊', 'text': 'Surf', 'color': 'green'},
-            ],
-            'polar': [
-                {'emoji': '🌌', 'text': 'Aurores : Sept → Mars', 'color': 'purple'},
-                {'emoji': '☀️', 'text': 'Jour polaire : juin', 'color': 'gold'},
-                {'emoji': '🌋', 'text': 'Géothermie', 'color': 'red'},
-            ],
-            'coastal': [
-                {'emoji': '🏖️', 'text': 'Plages : juin-sept', 'color': 'gold'},
-                {'emoji': '🌊', 'text': 'Houle : sept-mars', 'color': 'blue'},
-                {'emoji': '🚤', 'text': 'Activités nautiques', 'color': 'green'},
-            ],
-            'city': [
-                {'emoji': '🏛️', 'text': 'Patrimoine', 'color': 'gold'},
-                {'emoji': '🍴', 'text': 'Gastronomie', 'color': 'red'},
-                {'emoji': '☔', 'text': 'Visites couvertes', 'color': 'blue'},
-            ],
+        # Mapping i18n: 5 profiles × 5 langues × 3 chips
+        # Ordre des chips conservé pour cohérence visuelle entre langues
+        DEFAULTS_I18N = {
+            'mountain': {
+                'fr':    [('⛷️', 'Ski : Déc → Mai', 'blue'), ('🥾', 'Rando : Juin → Sept', 'green'), ('🧗', 'Haute mont. : guide', 'gold')],
+                'en':    [('⛷️', 'Ski: Dec → May', 'blue'),  ('🥾', 'Hiking: Jun → Sept', 'green'),  ('🧗', 'High mountains: guide', 'gold')],
+                'en-us': [('⛷️', 'Ski: Dec → May', 'blue'),  ('🥾', 'Hiking: Jun → Sept', 'green'),  ('🧗', 'High mountains: guide', 'gold')],
+                'es':    [('⛷️', 'Esquí: Dic → May', 'blue'),('🥾', 'Senderismo: Jun → Sept', 'green'),('🧗', 'Alta montaña: guía', 'gold')],
+                'de':    [('⛷️', 'Ski: Dez → Mai', 'blue'),  ('🥾', 'Wandern: Juni → Sept', 'green'), ('🧗', 'Hochgebirge: Guide', 'gold')],
+            },
+            'tropical': {
+                'fr':    [('🌞', 'Saison sèche', 'gold'),    ('🏖️', 'Plages', 'blue'),    ('🌊', 'Surf', 'green')],
+                'en':    [('🌞', 'Dry season', 'gold'),       ('🏖️', 'Beaches', 'blue'),   ('🌊', 'Surf', 'green')],
+                'en-us': [('🌞', 'Dry season', 'gold'),       ('🏖️', 'Beaches', 'blue'),   ('🌊', 'Surf', 'green')],
+                'es':    [('🌞', 'Temporada seca', 'gold'),  ('🏖️', 'Playas', 'blue'),    ('🌊', 'Surf', 'green')],
+                'de':    [('🌞', 'Trockenzeit', 'gold'),     ('🏖️', 'Strände', 'blue'),   ('🌊', 'Surfen', 'green')],
+            },
+            'polar': {
+                'fr':    [('🌌', 'Aurores : Sept → Mars', 'purple'),  ('☀️', 'Jour polaire : juin', 'gold'),  ('🌋', 'Géothermie', 'red')],
+                'en':    [('🌌', 'Auroras: Sept → Mar', 'purple'),    ('☀️', 'Polar day: June', 'gold'),       ('🌋', 'Geothermal', 'red')],
+                'en-us': [('🌌', 'Auroras: Sept → Mar', 'purple'),    ('☀️', 'Polar day: June', 'gold'),       ('🌋', 'Geothermal', 'red')],
+                'es':    [('🌌', 'Auroras: Sept → Mar', 'purple'),    ('☀️', 'Día polar: junio', 'gold'),      ('🌋', 'Geotermia', 'red')],
+                'de':    [('🌌', 'Polarlichter: Sept → März', 'purple'),('☀️', 'Polartag: Juni', 'gold'),       ('🌋', 'Geothermie', 'red')],
+            },
+            'coastal': {
+                'fr':    [('🏖️', 'Plages : juin-sept', 'gold'),  ('🌊', 'Houle : sept-mars', 'blue'),  ('🚤', 'Activités nautiques', 'green')],
+                'en':    [('🏖️', 'Beaches: Jun-Sept', 'gold'),    ('🌊', 'Swell: Sept-Mar', 'blue'),     ('🚤', 'Water activities', 'green')],
+                'en-us': [('🏖️', 'Beaches: Jun-Sept', 'gold'),    ('🌊', 'Swell: Sept-Mar', 'blue'),     ('🚤', 'Water activities', 'green')],
+                'es':    [('🏖️', 'Playas: Jun-Sept', 'gold'),     ('🌊', 'Marejada: Sept-Mar', 'blue'),  ('🚤', 'Actividades náuticas', 'green')],
+                'de':    [('🏖️', 'Strände: Jun-Sept', 'gold'),    ('🌊', 'Dünung: Sept-März', 'blue'),   ('🚤', 'Wasseraktivitäten', 'green')],
+            },
+            'city': {
+                'fr':    [('🏛️', 'Patrimoine', 'gold'),     ('🍴', 'Gastronomie', 'red'),  ('☔', 'Visites couvertes', 'blue')],
+                'en':    [('🏛️', 'Heritage', 'gold'),        ('🍴', 'Gastronomy', 'red'),    ('☔', 'Indoor sights', 'blue')],
+                'en-us': [('🏛️', 'Heritage', 'gold'),        ('🍴', 'Gastronomy', 'red'),    ('☔', 'Indoor sights', 'blue')],
+                'es':    [('🏛️', 'Patrimonio', 'gold'),      ('🍴', 'Gastronomía', 'red'),   ('☔', 'Visitas cubiertas', 'blue')],
+                'de':    [('🏛️', 'Kulturerbe', 'gold'),      ('🍴', 'Gastronomie', 'red'),   ('☔', 'Indoor-Sehensw.', 'blue')],
+            },
         }
-        chips = defaults_by_profile.get(profile, defaults_by_profile['city'])
+        profile_chips_i18n = DEFAULTS_I18N.get(profile, DEFAULTS_I18N['city'])
+        triplets = profile_chips_i18n.get(lang, profile_chips_i18n['fr'])
+        chips = [{'emoji': e, 'text': t, 'color': c} for e, t, c in triplets]
 
     chips_html = ''.join(_hero_chip(c['emoji'], c['text'], c.get('color', 'blue')) for c in chips)
     return f'''  <section id="par-projet">
