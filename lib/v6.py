@@ -21,6 +21,22 @@ import json
 import os
 from html import escape as h
 
+from lib.common import c_to_f
+
+
+def _fmt_t(value: float, lang: str) -> str:
+    """Format température selon langue. EN-US imperial → °F, sinon °C.
+
+    Args:
+        value: température en °C (toujours stockée en °C dans les data)
+        lang: langue UI ('fr', 'en', 'en-us', 'es', 'de')
+    Returns:
+        '72°F' si lang='en-us', sinon '22°C'
+    """
+    if lang == 'en-us':
+        return f'{c_to_f(value)}°F'
+    return f'{value:.0f}°C'
+
 _LOCALE_DIR = os.path.join(os.path.dirname(__file__), '..', 'locales')
 _v6_cache: dict[str, dict] = {}
 
@@ -317,29 +333,56 @@ def _box2_climate(L_ip: dict, climate_type: str, trend_value: float | None,
                   hottest_month: str, hottest_temp: float,
                   coldest_month: str, coldest_temp: float,
                   rainiest_month: str, rainiest_pct: float,
-                  slug: str = '', dest_name: str = '') -> str:
+                  slug: str = '', dest_name: str = '',
+                  lang: str = 'fr') -> str:
     """Box 2 : Climat. Trend = None ⇒ 'Données indisponibles'."""
+    # Pour EN-US: slope en delta °C → delta °F = ×9/5 (sans +32)
+    trend_for_display = (trend_value * 9 / 5) if (trend_value is not None and lang == 'en-us') else trend_value
+
+    # Templates tooltip i18n
+    HINT_NS = {  # non-significatif
+        'fr': 'ERA5 2016-2025 — slope {v:+.2f}{unit}/décennie non significatif sur 10 ans',
+        'en': 'ERA5 2016-2025 — slope {v:+.2f}{unit}/decade not significant over 10 years',
+        'en-us': 'ERA5 2016-2025 — slope {v:+.2f}{unit}/decade not significant over 10 years',
+        'es': 'ERA5 2016-2025 — pendiente {v:+.2f}{unit}/década no significativa en 10 años',
+        'de': 'ERA5 2016-2025 — Slope {v:+.2f}{unit}/Jahrzehnt nicht signifikant auf 10 Jahre',
+    }
+    HINT_TREND = {  # avec slope significatif
+        'fr': 'Régression linéaire ERA5 2016-2025 — {n} : {v:+.2f}{unit} par décennie',
+        'en': 'ERA5 2016-2025 linear regression — {n}: {v:+.2f}{unit} per decade',
+        'en-us': 'ERA5 2016-2025 linear regression — {n}: {v:+.2f}{unit} per decade',
+        'es': 'Regresión lineal ERA5 2016-2025 — {n}: {v:+.2f}{unit} por década',
+        'de': 'ERA5 2016-2025 lineare Regression — {n}: {v:+.2f}{unit} pro Jahrzehnt',
+    }
+    unit = '°F' if lang == 'en-us' else '°C'
+
     if trend_value is None:
         trend_str = L_ip['trend_unavailable']
         trend_hint = None
     elif abs(trend_value) < 0.20:
         # Slope non significatif sur 10 ans
         trend_str = L_ip['trend_stable']
-        trend_hint = (f'ERA5 2016-2025 — slope {trend_value:+.2f}°C/décennie '
-                      f'non significatif sur 10 ans')
+        trend_hint = HINT_NS.get(lang, HINT_NS['fr']).format(v=trend_for_display, unit=unit)
     else:
-        trend_str = L_ip['trend_tpl'].format(val=f'{trend_value:.2f}')
-        trend_hint = (f'Régression linéaire ERA5 2016-2025 — {dest_name or slug} : '
-                      f'{trend_value:+.2f}°C par décennie')
+        trend_str = L_ip['trend_tpl'].format(val=f'{trend_for_display:.2f}')
+        trend_hint = HINT_TREND.get(lang, HINT_TREND['fr']).format(
+            n=(dest_name or slug), v=trend_for_display, unit=unit)
 
+    HINT_RAINIEST = {
+        'fr': 'Probabilité de jour pluvieux la plus haute sur l\'année — données ERA5 10 ans',
+        'en': 'Highest probability of rainy day in the year — ERA5 10-year data',
+        'en-us': 'Highest probability of rainy day in the year — ERA5 10-year data',
+        'es': 'Mayor probabilidad de día lluvioso en el año — datos ERA5 10 años',
+        'de': 'Höchste Wahrscheinlichkeit eines Regentags im Jahr — ERA5-Daten 10 Jahre',
+    }
     items = [
         _list_item('🌍', L_ip['lbl_climate'], h(climate_type)),
         _list_item('📈', L_ip['lbl_trend'], h(trend_str), hint=trend_hint),
-        _list_item('🔥', L_ip['lbl_hottest'], f'{h(hottest_month)} · {hottest_temp:.0f}°C'),
-        _list_item('❄️', L_ip['lbl_coldest'], f'{h(coldest_month)} · {coldest_temp:.0f}°C'),
+        _list_item('🔥', L_ip['lbl_hottest'], f'{h(hottest_month)} · {_fmt_t(hottest_temp, lang)}'),
+        _list_item('❄️', L_ip['lbl_coldest'], f'{h(coldest_month)} · {_fmt_t(coldest_temp, lang)}'),
         _list_item('🌧️', L_ip['lbl_rainiest'],
                    f'{h(rainiest_month)} · {rainiest_pct:.0f}%',
-                   hint='Probabilité de jour pluvieux la plus haute sur l\'année — données ERA5 10 ans'),
+                   hint=HINT_RAINIEST.get(lang, HINT_RAINIEST['fr'])),
     ]
     return (f'<div class="box"><h3>🌡️ {h(L_ip["box2_title"])}</h3>'
             f'<div class="list">{"".join(items)}</div></div>')
@@ -369,7 +412,8 @@ def _box3_mountain(L_ip: dict, alt_village: int | None, alt_ski_max: int | None,
 
 def _box3_tropical(L_ip: dict, dry_season: str, wet_season: str,
                    sea_summer: float | None, sea_winter: float | None,
-                   has_cyclones: bool, latitude: float = 0) -> str:
+                   has_cyclones: bool, latitude: float = 0,
+                   lang: str = 'fr') -> str:
     """Box 3 tropical : saisons sèche/humide, mer, cyclones."""
     items = [
         _list_item('🌞', L_ip['tro_dry_season'], h(dry_season),
@@ -378,9 +422,9 @@ def _box3_tropical(L_ip: dict, dry_season: str, wet_season: str,
                    hint='Mousson — averses souvent courtes en après-midi'),
     ]
     if sea_summer is not None:
-        items.append(_list_item('🌊', L_ip['tro_sea_summer'], f'~{sea_summer:.0f}°C'))
+        items.append(_list_item('🌊', L_ip['tro_sea_summer'], f'~{_fmt_t(sea_summer, lang)}'))
     if sea_winter is not None:
-        items.append(_list_item('🌊', L_ip['tro_sea_winter'], f'~{sea_winter:.0f}°C'))
+        items.append(_list_item('🌊', L_ip['tro_sea_winter'], f'~{_fmt_t(sea_winter, lang)}'))
     cyclone_val = ('Saison Nov-Avr' if has_cyclones else h(L_ip['tro_no_cyclones']))
     cyclone_hint = (f'Latitude {latitude:.1f}° — zone de formation cyclonique'
                     if has_cyclones
@@ -408,13 +452,14 @@ def _box3_polar(L_ip: dict, lat: float, has_geothermal: bool = False) -> str:
 
 
 def _box3_coastal(L_ip: dict, sea_summer: float | None, sea_winter: float | None,
-                  high_season: str = 'Juin → Sept') -> str:
+                  high_season: str = 'Juin → Sept',
+                  lang: str = 'fr') -> str:
     """Box 3 coastal : mer, saisons, houle."""
     items = [_list_item('📅', L_ip['coa_high_season'], h(high_season))]
     if sea_summer is not None:
-        items.append(_list_item('🌊', L_ip['coa_sea_summer'], f'~{sea_summer:.0f}°C'))
+        items.append(_list_item('🌊', L_ip['coa_sea_summer'], f'~{_fmt_t(sea_summer, lang)}'))
     if sea_winter is not None:
-        items.append(_list_item('🌊', L_ip['coa_sea_winter'], f'~{sea_winter:.0f}°C'))
+        items.append(_list_item('🌊', L_ip['coa_sea_winter'], f'~{_fmt_t(sea_winter, lang)}'))
     items.append(_list_item('🏖️', L_ip['coa_waves'], 'Modérée',
                             hint='Houle hivernale — saison automne-hiver plus agitée'))
     return (f'<div class="box"><h3>🏖️ {h(L_ip["box3_coastal"])}</h3>'
@@ -504,6 +549,7 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict) -> str:
         rainiest_pct=d.get('rainiest_pct', 0),
         slug=slug,
         dest_name=d.get('dest_name', ''),
+        lang=lang,
     )
 
     if profile == 'mountain':
@@ -522,6 +568,7 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict) -> str:
             sea_winter=d.get('sea_winter'),
             has_cyclones=d.get('has_cyclones', False),
             latitude=d.get('latitude', 0),
+            lang=lang,
         )
     elif profile == 'polar':
         box3 = _box3_polar(L_ip,
@@ -533,12 +580,20 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict) -> str:
             sea_summer=d.get('sea_summer'),
             sea_winter=d.get('sea_winter'),
             high_season=d.get('high_season', 'Juin → Sept'),
+            lang=lang,
         )
     else:  # city
+        # Default 'transport' i18n: localise selon lang
+        transport_default = {'fr': 'Bon', 'en': 'Good', 'en-us': 'Good',
+                             'es': 'Bueno', 'de': 'Gut'}.get(lang, 'Bon')
+        # Default 'high_season' city i18n
+        high_season_default = {'fr': 'Juin → Août', 'en': 'June → August',
+                               'en-us': 'June → August', 'es': 'Jun. → Ago.',
+                               'de': 'Juni → August'}.get(lang, 'Juin → Août')
         box3 = _box3_city(L_ip,
-            high_season=d.get('high_season', 'Juin → Août'),
+            high_season=d.get('high_season', high_season_default),
             unesco=d.get('unesco'),
-            transport=d.get('transport', 'Bon'),
+            transport=d.get('transport', transport_default),
             visa_text=d.get('visa_text'),
         )
 
@@ -699,11 +754,13 @@ def render_v6_trend_chart(slug: str, nom: str, lang: str = 'fr',
     # Lignes horizontales graduées (tous les 2°)
     for tval in range(y_lo_int, y_hi_int + 1, 2):
         yy = y_to_svg(tval)
+        # Pour EN-US, afficher la graduation convertie en °F (delta = ×9/5 + 32 sur les valeurs absolues)
+        tval_display = c_to_f(tval) if lang == 'en-us' else tval
         parts.append(
             f'<line x1="60" y1="{yy:.1f}" x2="770" y2="{yy:.1f}" '
             f'stroke="#e8e0d0" stroke-width="1" stroke-dasharray="2 4"/>'
             f'<text x="50" y="{yy + 4:.1f}" text-anchor="end" font-size="11" '
-            f'fill="#9aa1ad" font-family="Georgia, serif">{tval}°</text>'
+            f'fill="#9aa1ad" font-family="Georgia, serif">{tval_display}°</text>'
         )
 
     # Trend line gold dashed
@@ -751,14 +808,18 @@ def render_v6_trend_chart(slug: str, nom: str, lang: str = 'fr',
     parts.append(
         f'<circle cx="{pic_x:.1f}" cy="{pic_y:.1f}" r="4.5" fill="none" stroke="#8b3a3a" stroke-width="1.5"/>'
     )
-    pic_label = L['annot_pic_tpl'].format(val=tmax[pic_idx], year=years[pic_idx])
+    pic_label = L['annot_pic_tpl'].format(
+        val=(c_to_f(tmax[pic_idx]) if lang == 'en-us' else tmax[pic_idx]),
+        year=years[pic_idx])
     parts.append(
         f'<text x="{pic_x - 8:.1f}" y="{pic_y - 12:.1f}" text-anchor="end" font-size="13" '
         f'fill="#8b3a3a" font-style="italic" font-family="Georgia, serif">{h(pic_label)}</text>'
     )
 
     # Annotation slope (gold italique, en bas à droite)
-    slope_label = L['annot_slope_tpl'].format(val=f'{slope:.2f}')
+    # NB: slope est en delta de température/décennie. Pour EN-US, conversion delta °C → °F = ×9/5 (pas de +32).
+    slope_display = (slope * 9 / 5) if lang == 'en-us' else slope
+    slope_label = L['annot_slope_tpl'].format(val=f'{slope_display:.2f}')
     parts.append(
         f'<text x="765.0" y="{y_to_svg(y_2025) - 8:.1f}" text-anchor="end" font-size="13" '
         f'fill="#c9962b" font-style="italic" font-family="Georgia, serif">{h(slope_label)}</text>'
@@ -984,8 +1045,8 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
             f'onkeydown="if(event.key===\'Enter\')location.href=\'{h(url)}\'">'
             f'<td class="month-cell">{emoji} {h(m["mois"])} '
             f'<span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td>'
-            f'<td>{m["tmin"]:.0f}°C</td>'
-            f'<td>{m["tmax"]:.0f}°C</td>'
+            f'<td>{_fmt_t(m["tmin"], lang)}</td>'
+            f'<td>{_fmt_t(m["tmax"], lang)}</td>'
             f'<td>{m["rain_pct"]:.0f}%</td>'
             f'<td>{m["precip_mm"]:.1f}mm</td>'
             f'<td>{m["sun_h"]:.1f}h</td>'
@@ -1008,7 +1069,7 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
             f'<div class="head"><div class="name">{emoji} {h(m["mois"])}</div>'
             f'<div class="score {score_cls}">{m["score_10"]:.1f}/10</div></div>'
             f'<div class="rows">'
-            f'<div class="row"><span>T°</span><strong>{m["tmin"]:.0f}°C / {m["tmax"]:.0f}°C</strong></div>'
+            f'<div class="row"><span>T°</span><strong>{_fmt_t(m["tmin"], lang)} / {_fmt_t(m["tmax"], lang)}</strong></div>'
             f'<div class="row"><span>{h(L["th_rain"])}</span><strong>{m["rain_pct"]:.0f}%</strong></div>'
             f'<div class="row"><span>{h(L["th_sun"])}</span><strong>{m["sun_h"]:.1f}h</strong></div>'
             f'<div class="row row-mood"><strong class="mood-{mood_cls}">{mood_label[mood_cls]}</strong></div>'

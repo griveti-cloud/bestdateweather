@@ -54,29 +54,42 @@ def _bool(v) -> bool:
     return str(v).strip().lower() in ('true', '1', 'yes', 'oui')
 
 
-def _extract_climate_extremes(months: list[dict]) -> dict:
+def _extract_climate_extremes(months: list[dict], months_loc: list[str] = None) -> dict:
     """À partir des 12 mois, extrait hottest/coldest/rainiest/sunniest.
 
     Args:
         months: liste de 12 dicts climate.csv (avec 'mois', 'tmax', 'tmin',
             'rain_pct', 'sun_h')
+        months_loc: liste optionnelle de 12 noms de mois localisés
+            (cfg['months']). Si fourni, les noms hottest/coldest/rainiest/
+            sunniest_month sont localisés. Sinon fallback sur mc['mois'] (FR).
 
     Returns:
         {hottest_month, hottest_temp, coldest_month, coldest_temp,
          rainiest_month, rainiest_pct, sunniest_month, sunniest_h}
     """
+    def loc(m):
+        """Renvoie le nom du mois localisé si possible."""
+        if months_loc:
+            try:
+                idx = months.index(m)
+                return months_loc[idx]
+            except (ValueError, IndexError):
+                pass
+        return m['mois']
+
     hottest = max(months, key=lambda m: _safe_float(m.get('tmax')))
     coldest = min(months, key=lambda m: _safe_float(m.get('tmax')))
     rainiest = max(months, key=lambda m: _safe_float(m.get('rain_pct')))
     sunniest = max(months, key=lambda m: _safe_float(m.get('sun_h')))
     return {
-        'hottest_month': hottest['mois'],
+        'hottest_month': loc(hottest),
         'hottest_temp': _safe_float(hottest['tmax']),
-        'coldest_month': coldest['mois'],
+        'coldest_month': loc(coldest),
         'coldest_temp': _safe_float(coldest['tmax']),
-        'rainiest_month': rainiest['mois'],
+        'rainiest_month': loc(rainiest),
         'rainiest_pct': _safe_float(rainiest['rain_pct']),
-        'sunniest_month': sunniest['mois'],
+        'sunniest_month': loc(sunniest),
         'sunniest_h': _safe_float(sunniest['sun_h']),
     }
 
@@ -125,8 +138,16 @@ def _detect_profile(dest: dict, climate_type: str = '') -> str:
 
     Lit d'abord les flags du CSV destinations.csv, fallback sur climate_type.
     Ordre de priorité : polar > tropical > mountain > coastal > city.
+
+    FIX i18n: pour 'polar', accepte les keywords FR/EN/ES/DE pour rester
+    robuste après la localisation de _build_climate_type.
     """
-    if 'polaire' in climate_type.lower() or 'subarctique' in climate_type.lower():
+    ct_lower = climate_type.lower()
+    polar_keywords = ('polaire', 'subarctique',           # FR
+                      'subarctic', 'polar',               # EN
+                      'subártico', 'polar',               # ES (polar = même mot)
+                      'subarktisch', 'polarklima')        # DE
+    if any(kw in ct_lower for kw in polar_keywords):
         return 'polar'
     if _bool(dest.get('tropical')):
         return 'tropical'
@@ -137,23 +158,60 @@ def _detect_profile(dest: dict, climate_type: str = '') -> str:
     return 'city'
 
 
-def _build_climate_type(dest: dict, lat: float) -> str:
+def _build_climate_type(dest: dict, lat: float, lang: str = 'fr') -> str:
     """Génère un libellé climat type depuis flags CSV + latitude.
 
     Approche pragmatique : on fait du Köppen-light pour avoir un texte.
     À enrichir plus tard avec une vraie classif Köppen-Geiger.
+
+    FIX i18n: localise le libellé selon lang (FR/EN/EN-US/ES/DE).
     """
+    # Détermination de la clé climat
     if _bool(dest.get('mountain')):
-        return 'Climat alpin de montagne'
-    if abs(lat) < 10:
-        return 'Tropical équatorial'
-    if _bool(dest.get('tropical')):
-        return 'Tropical'
-    if abs(lat) > 60:
-        return 'Subarctique océanique'
-    if _bool(dest.get('coastal')):
-        return 'Tempéré océanique'
-    return 'Tempéré'
+        key = 'alpine'
+    elif abs(lat) < 10:
+        key = 'tropical_equatorial'
+    elif _bool(dest.get('tropical')):
+        key = 'tropical'
+    elif abs(lat) > 60:
+        key = 'subarctic_oceanic'
+    elif _bool(dest.get('coastal')):
+        key = 'temperate_oceanic'
+    else:
+        key = 'temperate'
+
+    # Mapping i18n
+    LABELS = {
+        'alpine': {
+            'fr': 'Climat alpin de montagne', 'en': 'Alpine mountain climate',
+            'en-us': 'Alpine mountain climate', 'es': 'Clima alpino de montaña',
+            'de': 'Alpines Bergklima',
+        },
+        'tropical_equatorial': {
+            'fr': 'Tropical équatorial', 'en': 'Equatorial tropical',
+            'en-us': 'Equatorial tropical', 'es': 'Tropical ecuatorial',
+            'de': 'Äquatorial-tropisch',
+        },
+        'tropical': {
+            'fr': 'Tropical', 'en': 'Tropical', 'en-us': 'Tropical',
+            'es': 'Tropical', 'de': 'Tropisch',
+        },
+        'subarctic_oceanic': {
+            'fr': 'Subarctique océanique', 'en': 'Subarctic oceanic',
+            'en-us': 'Subarctic oceanic', 'es': 'Subártico oceánico',
+            'de': 'Subarktisch-ozeanisch',
+        },
+        'temperate_oceanic': {
+            'fr': 'Tempéré océanique', 'en': 'Temperate oceanic',
+            'en-us': 'Temperate oceanic', 'es': 'Templado oceánico',
+            'de': 'Gemäßigt ozeanisch',
+        },
+        'temperate': {
+            'fr': 'Tempéré', 'en': 'Temperate', 'en-us': 'Temperate',
+            'es': 'Templado', 'de': 'Gemäßigt',
+        },
+    }
+    return LABELS[key].get(lang, LABELS[key]['fr'])
 
 
 def _country_info(country_name_fr: str) -> dict:
@@ -208,10 +266,11 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
 
     # Merge climate + scores en un seul flux 12 mois
     months_data = []
+    MONTHS_LOC = cfg['months']  # noms localisés selon lang (FR/EN/EN-US/ES/DE)
     for i, mc in enumerate(months_climate):
         score_entry = months_with_scores[i] if i < len(months_with_scores) else {}
         months_data.append({
-            'mois': mc['mois'],
+            'mois': MONTHS_LOC[i],  # FIX i18n: utiliser noms localisés (était mc['mois'] en FR brut)
             'tmin': _safe_float(mc.get('tmin')),
             'tmax': _safe_float(mc.get('tmax')),
             'rain_pct': _safe_float(mc.get('rain_pct')),
@@ -233,7 +292,7 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
             m['is_best'] = True
 
     # Climate type + profile
-    climate_type = _build_climate_type(dest, lat)
+    climate_type = _build_climate_type(dest, lat, lang)
     profile = _detect_profile(dest, climate_type)
 
     # Country info enrichi
@@ -252,7 +311,7 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
                                        lat=lat, lon=lon)
 
     # Climate extremes
-    extremes = _extract_climate_extremes(months_climate)
+    extremes = _extract_climate_extremes(months_climate, months_loc=MONTHS_LOC)
 
     # ── Hero data ──
     is_mountain = _bool(dest.get('mountain'))

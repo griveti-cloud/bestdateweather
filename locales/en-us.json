@@ -1554,10 +1554,10 @@
       "rando_c1": "<strong>40%</strong> temperature (10–22°C optimal)",
       "rando_c2": "<strong>40%</strong> rain (frequency + daily intensity)",
       "rando_c3": "<strong>20%</strong> sunshine",
-      "std_c1": "<strong>40%</strong> temperature (sweet spot 22–28°C, extreme heat penalty)",
+      "std_c1": "<strong>40%</strong> temperature (sweet spot 72-82°F, extreme heat penalty)",
       "std_c2": "<strong>35%</strong> rain (frequency + daily intensity)",
       "std_c3": "<strong>25%</strong> sunshine (hours per day)",
-      "std_c4": "Humidity penalty (dew point ≥ 16°C + tmax ≥ 26°C)",
+      "std_c4": "Humidity penalty (dew point ≥ 61°F + tmax ≥ 79°F)",
       "criteria_title": "Scoring criteria",
       "source": "Source",
       "source_text": "ERA5 · Open-Meteo · 10 years (2016–2025)",
@@ -1571,8 +1571,8 @@
       "legend_tmax": "T° max",
       "legend_tmoy": "T° mean",
       "legend_tmin": "T° min",
-      "annot_pic_tpl": "{val}° — decade peak ({year})",
-      "annot_slope_tpl": "+{val}°C / decade"
+      "annot_pic_tpl": "{val}°F — decade peak ({year})",
+      "annot_slope_tpl": "+{val}°F / decade"
     },
     "infos_pratiques": {
       "kicker": "Practical info",
@@ -1613,7 +1613,7 @@
       "lbl_rainiest": "Rainiest month",
       "trend_unavailable": "Data unavailable",
       "trend_stable": "Stable",
-      "trend_tpl": "+{val}°C/decade",
+      "trend_tpl": "+{val}°F/decade",
       "mtn_alt_village": "Village altitude",
       "mtn_ski_domain": "Ski area",
       "mtn_season_ski": "Ski season",
