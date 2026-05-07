@@ -274,10 +274,12 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
             'tmin': _safe_float(mc.get('tmin')),
             'tmax': _safe_float(mc.get('tmax')),
             'rain_pct': _safe_float(mc.get('rain_pct')),
-            'precip_mm': _safe_float(mc.get('precip_mm')),
+            'precip_mm': _safe_float(mc.get('precip', mc.get('precip_mm', 0))),  # FIX: clé 'precip' dans climate dict
             'sun_h': _safe_float(mc.get('sun_h')),
             'score_10': _safe_float(score_entry.get('score_10', score_entry.get('score', 0))),
-            'classe': score_entry.get('classe', score_entry.get('cls', 'mid')),
+            'classe': mc.get('classe', score_entry.get('classe', score_entry.get('cls', 'mid'))),  # FIX: classe vient du CSV (compute_scores ne la retourne pas)
+            'uv_index': _safe_float(mc.get('uv_index', 0)),  # FIX: pour Conditions détaillées
+            'dew_point': _safe_float(mc.get('dew_point', 0)),  # FIX: pour Humidité ressentie
         })
 
     # Best/worst pour le hero lead

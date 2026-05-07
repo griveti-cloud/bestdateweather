@@ -1315,6 +1315,216 @@ def _mood_class(classe: str) -> str:
     return {'rec': 'good', 'mid': 'mid', 'avoid': 'bad'}.get(classe, 'mid')
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Helpers pour les 2 cards droite de la section "Comprendre"
+# (Lecture rapide + Conditions détaillées)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Labels i18n pour les 2 cards (5 langues)
+_COMPREHENSION_I18N = {
+    'fr': {
+        'lecture_label': '📊 Lecture rapide',
+        'window_optimal': 'Fenêtre optimale',
+        'good_transition': 'Bonne transition',
+        'tough_period': 'Période rude',
+        'no_optimal': 'Aucun mois > 7',
+        'no_transition': '—',
+        'no_tough': 'aucune',
+        'conditions_label': '🌡️ Conditions détaillées ({month})',
+        'feel': '🌡️ Ressenti',
+        'uv': '☀️ UV',
+        'humidity': '💧 Humidité ressentie',
+        'rain': '☔ Pluie',
+        'sun': '🌅 Soleil',
+        # Ressenti labels
+        'feel_cold': 'Frais', 'feel_cool': 'Tempéré', 'feel_comfortable': 'Confortable',
+        'feel_warm': 'Chaud', 'feel_hot': 'Très chaud', 'feel_humid_heat': 'Chaleur humide',
+        # UV labels
+        'uv_low': 'Faible', 'uv_moderate': 'Modéré', 'uv_moderate_strong': 'Modéré-Fort',
+        'uv_strong': 'Fort', 'uv_very_strong': 'Très fort', 'uv_extreme': 'Extrême',
+        # Humidité labels
+        'hum_dry': 'Sec', 'hum_pleasant': 'Agréable', 'hum_humid': 'Lourd', 'hum_oppressive': 'Étouffant',
+        # Format mois "(juillet)"
+        'month_lower': True,  # mois en minuscules entre parenthèses
+    },
+    'en': {
+        'lecture_label': '📊 Quick read',
+        'window_optimal': 'Optimal window',
+        'good_transition': 'Good transition',
+        'tough_period': 'Tough period',
+        'no_optimal': 'No month > 7',
+        'no_transition': '—',
+        'no_tough': 'none',
+        'conditions_label': '🌡️ Detailed conditions ({month})',
+        'feel': '🌡️ Feel',
+        'uv': '☀️ UV',
+        'humidity': '💧 Humidity feel',
+        'rain': '☔ Rain',
+        'sun': '🌅 Sunshine',
+        'feel_cold': 'Cold', 'feel_cool': 'Cool', 'feel_comfortable': 'Comfortable',
+        'feel_warm': 'Warm', 'feel_hot': 'Hot', 'feel_humid_heat': 'Humid heat',
+        'uv_low': 'Low', 'uv_moderate': 'Moderate', 'uv_moderate_strong': 'Moderate-Strong',
+        'uv_strong': 'Strong', 'uv_very_strong': 'Very strong', 'uv_extreme': 'Extreme',
+        'hum_dry': 'Dry', 'hum_pleasant': 'Pleasant', 'hum_humid': 'Humid', 'hum_oppressive': 'Oppressive',
+        'month_lower': False,
+    },
+    'en-us': {
+        'lecture_label': '📊 Quick read',
+        'window_optimal': 'Optimal window',
+        'good_transition': 'Good transition',
+        'tough_period': 'Tough period',
+        'no_optimal': 'No month > 7',
+        'no_transition': '—',
+        'no_tough': 'none',
+        'conditions_label': '🌡️ Detailed conditions ({month})',
+        'feel': '🌡️ Feel',
+        'uv': '☀️ UV',
+        'humidity': '💧 Humidity feel',
+        'rain': '☔ Rain',
+        'sun': '🌅 Sunshine',
+        'feel_cold': 'Cold', 'feel_cool': 'Cool', 'feel_comfortable': 'Comfortable',
+        'feel_warm': 'Warm', 'feel_hot': 'Hot', 'feel_humid_heat': 'Humid heat',
+        'uv_low': 'Low', 'uv_moderate': 'Moderate', 'uv_moderate_strong': 'Moderate-Strong',
+        'uv_strong': 'Strong', 'uv_very_strong': 'Very strong', 'uv_extreme': 'Extreme',
+        'hum_dry': 'Dry', 'hum_pleasant': 'Pleasant', 'hum_humid': 'Humid', 'hum_oppressive': 'Oppressive',
+        'month_lower': False,
+    },
+    'es': {
+        'lecture_label': '📊 Lectura rápida',
+        'window_optimal': 'Ventana óptima',
+        'good_transition': 'Buena transición',
+        'tough_period': 'Periodo duro',
+        'no_optimal': 'Ningún mes > 7',
+        'no_transition': '—',
+        'no_tough': 'ninguno',
+        'conditions_label': '🌡️ Condiciones detalladas ({month})',
+        'feel': '🌡️ Sensación',
+        'uv': '☀️ UV',
+        'humidity': '💧 Humedad sentida',
+        'rain': '☔ Lluvia',
+        'sun': '🌅 Sol',
+        'feel_cold': 'Frío', 'feel_cool': 'Templado', 'feel_comfortable': 'Confortable',
+        'feel_warm': 'Cálido', 'feel_hot': 'Caluroso', 'feel_humid_heat': 'Calor húmedo',
+        'uv_low': 'Bajo', 'uv_moderate': 'Moderado', 'uv_moderate_strong': 'Moderado-Fuerte',
+        'uv_strong': 'Fuerte', 'uv_very_strong': 'Muy fuerte', 'uv_extreme': 'Extremo',
+        'hum_dry': 'Seco', 'hum_pleasant': 'Agradable', 'hum_humid': 'Húmedo', 'hum_oppressive': 'Opresivo',
+        'month_lower': False,
+    },
+    'de': {
+        'lecture_label': '📊 Schnellüberblick',
+        'window_optimal': 'Optimales Fenster',
+        'good_transition': 'Gute Übergangszeit',
+        'tough_period': 'Harte Periode',
+        'no_optimal': 'Kein Monat > 7',
+        'no_transition': '—',
+        'no_tough': 'keine',
+        'conditions_label': '🌡️ Detaillierte Bedingungen ({month})',
+        'feel': '🌡️ Empfinden',
+        'uv': '☀️ UV',
+        'humidity': '💧 Empfundene Feuchte',
+        'rain': '☔ Regen',
+        'sun': '🌅 Sonne',
+        'feel_cold': 'Kalt', 'feel_cool': 'Kühl', 'feel_comfortable': 'Angenehm',
+        'feel_warm': 'Warm', 'feel_hot': 'Heiß', 'feel_humid_heat': 'Feuchte Hitze',
+        'uv_low': 'Niedrig', 'uv_moderate': 'Mäßig', 'uv_moderate_strong': 'Mäßig-Stark',
+        'uv_strong': 'Stark', 'uv_very_strong': 'Sehr stark', 'uv_extreme': 'Extrem',
+        'hum_dry': 'Trocken', 'hum_pleasant': 'Angenehm', 'hum_humid': 'Schwül', 'hum_oppressive': 'Drückend',
+        'month_lower': False,
+    },
+}
+
+
+def _build_lecture_rapide(months_data: list[dict], lang: str, abbr_list: list[str]) -> dict:
+    """Calcule les 3 valeurs de la card 'Lecture rapide'.
+
+    Returns: {'window': 'Avr → Sep', 'transition': 'Oct', 'tough': 'Jan · Déc'}
+    """
+    L = _COMPREHENSION_I18N.get(lang, _COMPREHENSION_I18N['fr'])
+
+    # Fenêtre optimale : range mois 'rec' consécutifs (le plus long)
+    rec_indices = [i for i, m in enumerate(months_data) if m.get('classe') == 'rec']
+    if not rec_indices:
+        window_str = L['no_optimal']
+    else:
+        # Trouve la plus longue séquence consécutive
+        ranges = []
+        start = rec_indices[0]
+        prev = start
+        for idx in rec_indices[1:]:
+            if idx == prev + 1:
+                prev = idx
+            else:
+                ranges.append((start, prev))
+                start = idx
+                prev = idx
+        ranges.append((start, prev))
+        # Plus longue range
+        longest = max(ranges, key=lambda r: r[1] - r[0])
+        if longest[0] == longest[1]:
+            window_str = abbr_list[longest[0]]
+        else:
+            window_str = f'{abbr_list[longest[0]]} → {abbr_list[longest[1]]}'
+
+    # Bonne transition : mois 'mid' adjacent à au moins un 'rec'
+    transition_months = []
+    for i, m in enumerate(months_data):
+        if m.get('classe') == 'mid':
+            prev_cls = months_data[(i - 1) % 12].get('classe', '')
+            next_cls = months_data[(i + 1) % 12].get('classe', '')
+            if 'rec' in (prev_cls, next_cls):
+                transition_months.append(abbr_list[i])
+    transition_str = ' · '.join(transition_months) if transition_months else L['no_transition']
+
+    # Période rude : mois 'avoid'
+    tough_months = [abbr_list[i] for i, m in enumerate(months_data) if m.get('classe') == 'avoid']
+    tough_str = ' · '.join(tough_months) if tough_months else L['no_tough']
+
+    return {'window': window_str, 'transition': transition_str, 'tough': tough_str}
+
+
+def _feel_label(tmax: float, dew: float, lang: str) -> str:
+    """Détermine le label de ressenti thermique selon tmax + dew_point."""
+    L = _COMPREHENSION_I18N.get(lang, _COMPREHENSION_I18N['fr'])
+    # Chaleur humide : tmax >= 26 + dew >= 22
+    if tmax >= 26 and dew >= 22:
+        return L['feel_humid_heat']
+    if tmax >= 32:
+        return L['feel_hot']
+    if tmax >= 26:
+        return L['feel_warm']
+    if tmax >= 18:
+        return L['feel_comfortable']
+    if tmax >= 10:
+        return L['feel_cool']
+    return L['feel_cold']
+
+
+def _uv_label(uv: float, lang: str) -> str:
+    """Label UV selon valeur (0-15+)."""
+    L = _COMPREHENSION_I18N.get(lang, _COMPREHENSION_I18N['fr'])
+    if uv >= 11:
+        return L['uv_extreme']
+    if uv >= 8:
+        return L['uv_very_strong']
+    if uv >= 6:
+        return L['uv_moderate_strong']
+    if uv >= 3:
+        return L['uv_moderate']
+    return L['uv_low']
+
+
+def _humidity_label(dew: float, lang: str) -> str:
+    """Label humidité ressentie selon dew point (°C)."""
+    L = _COMPREHENSION_I18N.get(lang, _COMPREHENSION_I18N['fr'])
+    if dew >= 22:
+        return L['hum_oppressive']
+    if dew >= 18:
+        return L['hum_humid']
+    if dew >= 13:
+        return L['hum_pleasant']
+    return L['hum_dry']
+
+
 def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
                          monthly_url_tpl: str = '') -> str:
     """Section "Comprendre" : table desktop + cards mobile pour les 12 mois.
@@ -1396,6 +1606,46 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
             f'</div></a>'
         )
 
+    # ── Calcul des 2 cards droite (Lecture rapide + Conditions détaillées) ──
+    L_comp = _COMPREHENSION_I18N.get(lang, _COMPREHENSION_I18N['fr'])
+    abbr_list = _MONTH_ABBR.get(lang, _MONTH_ABBR['fr'])
+
+    lecture = _build_lecture_rapide(months_data, lang, abbr_list)
+
+    # Top mois pour Conditions détaillées
+    top_month = max(months_data, key=lambda m: m['score_10'])
+    top_name = top_month['mois'].lower() if L_comp.get('month_lower') else top_month['mois']
+    conditions_label = L_comp['conditions_label'].format(month=top_name)
+
+    feel_str = _feel_label(top_month['tmax'], top_month.get('dew_point', 0), lang)
+    uv = top_month.get('uv_index', 0)
+    uv_str = f'{uv:.1f} · {_uv_label(uv, lang)}' if uv > 0 else '—'
+    dew = top_month.get('dew_point', 0)
+    hum_str = f'{_fmt_t(dew, lang)} · {_humidity_label(dew, lang)}' if dew > 0 else '—'
+    rain_str = f'{top_month["rain_pct"]:.0f}% · {top_month["precip_mm"]:.1f} mm/j'
+    sun_str = f'{top_month["sun_h"]:.1f}h/jour' if lang == 'fr' else f'{top_month["sun_h"]:.1f}h/day'
+
+    cards_right = (
+        f'<div class="card pad">\n'
+        f'  <div class="small-label">{h(L_comp["lecture_label"])}</div>\n'
+        f'  <div class="signal-list">\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["window_optimal"])}</div><div class="r">{h(lecture["window"])}</div></div>\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["good_transition"])}</div><div class="r">{h(lecture["transition"])}</div></div>\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["tough_period"])}</div><div class="r">{h(lecture["tough"])}</div></div>\n'
+        f'  </div>\n'
+        f'</div>\n'
+        f'<div class="card pad">\n'
+        f'  <div class="small-label">{h(conditions_label)}</div>\n'
+        f'  <div class="signal-list">\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["feel"])}</div><div class="r">{h(feel_str)}</div></div>\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["uv"])}</div><div class="r">{h(uv_str)}</div></div>\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["humidity"])}</div><div class="r">{h(hum_str)}</div></div>\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["rain"])}</div><div class="r">{h(rain_str)}</div></div>\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["sun"])}</div><div class="r">{h(sun_str)}</div></div>\n'
+        f'  </div>\n'
+        f'</div>'
+    )
+
     return f'''  <section id="tableau">
     <div class="container">
       <div class="section-head">
@@ -1418,6 +1668,9 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
           <div class="mobile-month-cards">
             {''.join(mobile_cards)}
           </div>
+        </div>
+        <div class="spotlight-side">
+          {cards_right}
         </div>
       </div>
     </div>
