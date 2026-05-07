@@ -251,6 +251,326 @@ def render_v6_methodology_block(lang: str = 'fr', is_mountain: bool = False) -> 
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# Helper 4 : DECIDER (section "Quand partir à X ?" - reprend le prototype)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Labels i18n inline (5 langues × ~20 strings)
+_DECIDER_I18N = {
+    'fr': {
+        'kicker': 'Décider',
+        'h2_tpl': 'Quand partir à {dest} ?',
+        'lead': 'La décision se joue sur plusieurs critères. Score climatique, foule touristique et activités possibles.',
+        'verdict_label': 'Verdict :',
+        'verdict_tpl': 'À {dest}, {top1} et {top2} sortent clairement du lot. {worst} concentre les conditions les moins favorables.',
+        'avis_label': "L'avis de Gilles",
+        'avis_role': 'Fondateur · BestDateWeather',
+        'top_avoid': 'Top & à éviter',
+        'legend_best': 'Meilleure période · ≥ 7',
+        'legend_mid': 'Période correcte · 4 – 7',
+        'legend_bad': 'Conditions marquées · < 4',
+        'right1_title': "Ce qu'on comprend en 5 secondes",
+        'summary_tpl': '{dest} offre {n_good} mois confortables, avec {n_bad} mois à éviter ({bad_months}). Le delta est marqué : {top} en {top_month} vs {worst} en {worst_month}.',
+        'summary_no_bad': '{dest} offre {n_good} mois confortables, sans mois vraiment à éviter. Le delta reste mesuré : {top} en {top_month} vs {worst} en {worst_month}.',
+        'right2_title': "Ce qu'il faut vérifier ensuite",
+        'right2_text': 'Votre tolérance à la foule et au budget. Les meilleurs mois concentrent la saturation touristique et les prix plus hauts. Les entre-saisons offrent un bon compromis.',
+        'right3_title': 'Action suivante',
+        'right3_text': 'Descendre au tableau détaillé pour comparer mois à mois, puis ouvrir la fiche du mois qui vous intéresse.',
+        'cta_compare': 'Comparer les 12 mois',
+        'cta_byproject': 'Selon votre projet',
+        'none': 'aucun',
+    },
+    'en': {
+        'kicker': 'Decide',
+        'h2_tpl': 'When to visit {dest}?',
+        'lead': 'The decision rests on several criteria. Climate score, tourist crowds and feasible activities.',
+        'verdict_label': 'Verdict:',
+        'verdict_tpl': 'In {dest}, {top1} and {top2} clearly stand out. {worst} concentrates the least favourable conditions.',
+        'avis_label': "Gilles's view",
+        'avis_role': 'Founder · BestDateWeather',
+        'top_avoid': 'Top & avoid',
+        'legend_best': 'Best period · ≥ 7',
+        'legend_mid': 'Decent period · 4 – 7',
+        'legend_bad': 'Tough conditions · < 4',
+        'right1_title': 'What you grasp in 5 seconds',
+        'summary_tpl': '{dest} offers {n_good} comfortable months, with {n_bad} months to avoid ({bad_months}). The gap is sharp: {top} in {top_month} vs {worst} in {worst_month}.',
+        'summary_no_bad': '{dest} offers {n_good} comfortable months, without any month really to avoid. The gap stays moderate: {top} in {top_month} vs {worst} in {worst_month}.',
+        'right2_title': 'What to check next',
+        'right2_text': 'Your tolerance for crowds and budget. The best months concentrate tourist saturation and higher prices. Shoulder seasons offer a good compromise.',
+        'right3_title': 'Next action',
+        'right3_text': 'Scroll down to the detailed table to compare month by month, then open the page of the month that interests you.',
+        'cta_compare': 'Compare the 12 months',
+        'cta_byproject': 'By your project',
+        'none': 'none',
+    },
+    'en-us': {
+        'kicker': 'Decide',
+        'h2_tpl': 'When to visit {dest}?',
+        'lead': 'The decision rests on several criteria. Climate score, tourist crowds and feasible activities.',
+        'verdict_label': 'Verdict:',
+        'verdict_tpl': 'In {dest}, {top1} and {top2} clearly stand out. {worst} concentrates the least favorable conditions.',
+        'avis_label': "Gilles's view",
+        'avis_role': 'Founder · BestDateWeather',
+        'top_avoid': 'Top & avoid',
+        'legend_best': 'Best period · ≥ 7',
+        'legend_mid': 'Decent period · 4 – 7',
+        'legend_bad': 'Tough conditions · < 4',
+        'right1_title': 'What you grasp in 5 seconds',
+        'summary_tpl': '{dest} offers {n_good} comfortable months, with {n_bad} months to avoid ({bad_months}). The gap is sharp: {top} in {top_month} vs {worst} in {worst_month}.',
+        'summary_no_bad': '{dest} offers {n_good} comfortable months, without any month really to avoid. The gap stays moderate: {top} in {top_month} vs {worst} in {worst_month}.',
+        'right2_title': 'What to check next',
+        'right2_text': 'Your tolerance for crowds and budget. The best months concentrate tourist saturation and higher prices. Shoulder seasons offer a good compromise.',
+        'right3_title': 'Next action',
+        'right3_text': 'Scroll down to the detailed table to compare month by month, then open the page of the month that interests you.',
+        'cta_compare': 'Compare the 12 months',
+        'cta_byproject': 'By your project',
+        'none': 'none',
+    },
+    'es': {
+        'kicker': 'Decidir',
+        'h2_tpl': '¿Cuándo viajar a {dest}?',
+        'lead': 'La decisión depende de varios criterios. Puntuación climática, multitudes turísticas y actividades posibles.',
+        'verdict_label': 'Veredicto:',
+        'verdict_tpl': 'En {dest}, {top1} y {top2} destacan claramente. {worst} concentra las condiciones menos favorables.',
+        'avis_label': 'La opinión de Gilles',
+        'avis_role': 'Fundador · BestDateWeather',
+        'top_avoid': 'Mejores y peores',
+        'legend_best': 'Mejor periodo · ≥ 7',
+        'legend_mid': 'Periodo correcto · 4 – 7',
+        'legend_bad': 'Condiciones difíciles · < 4',
+        'right1_title': 'Lo que se entiende en 5 segundos',
+        'summary_tpl': '{dest} ofrece {n_good} meses cómodos, con {n_bad} meses a evitar ({bad_months}). La diferencia es marcada: {top} en {top_month} vs {worst} en {worst_month}.',
+        'summary_no_bad': '{dest} ofrece {n_good} meses cómodos, sin meses realmente a evitar. La diferencia es moderada: {top} en {top_month} vs {worst} en {worst_month}.',
+        'right2_title': 'Lo que hay que verificar después',
+        'right2_text': 'Su tolerancia a las multitudes y al presupuesto. Los mejores meses concentran la saturación turística y los precios más altos. Las temporadas intermedias ofrecen un buen compromiso.',
+        'right3_title': 'Acción siguiente',
+        'right3_text': 'Bajar a la tabla detallada para comparar mes a mes, luego abrir la ficha del mes que le interese.',
+        'cta_compare': 'Comparar los 12 meses',
+        'cta_byproject': 'Según su proyecto',
+        'none': 'ninguno',
+    },
+    'de': {
+        'kicker': 'Entscheiden',
+        'h2_tpl': 'Wann nach {dest} reisen?',
+        'lead': 'Die Entscheidung hängt von mehreren Kriterien ab. Klimawert, Touristenandrang und mögliche Aktivitäten.',
+        'verdict_label': 'Urteil:',
+        'verdict_tpl': 'In {dest} stechen {top1} und {top2} klar hervor. {worst} konzentriert die ungünstigsten Bedingungen.',
+        'avis_label': 'Gilles\' Meinung',
+        'avis_role': 'Gründer · BestDateWeather',
+        'top_avoid': 'Beste & schlechteste',
+        'legend_best': 'Beste Zeit · ≥ 7',
+        'legend_mid': 'Akzeptable Zeit · 4 – 7',
+        'legend_bad': 'Schwierige Bedingungen · < 4',
+        'right1_title': 'Was man in 5 Sekunden versteht',
+        'summary_tpl': '{dest} bietet {n_good} angenehme Monate, mit {n_bad} zu vermeidenden Monaten ({bad_months}). Der Unterschied ist deutlich: {top} im {top_month} vs {worst} im {worst_month}.',
+        'summary_no_bad': '{dest} bietet {n_good} angenehme Monate, ohne wirklich zu vermeidenden Monat. Der Unterschied bleibt moderat: {top} im {top_month} vs {worst} im {worst_month}.',
+        'right2_title': 'Was als Nächstes zu prüfen ist',
+        'right2_text': 'Ihre Toleranz gegenüber Menschenmassen und Budget. Die besten Monate konzentrieren die touristische Sättigung und die höheren Preise. Die Zwischensaisons bieten einen guten Kompromiss.',
+        'right3_title': 'Nächste Aktion',
+        'right3_text': 'Nach unten zur Detailtabelle scrollen, um Monat für Monat zu vergleichen, dann die Seite des gewünschten Monats öffnen.',
+        'cta_compare': 'Die 12 Monate vergleichen',
+        'cta_byproject': 'Nach Ihrem Projekt',
+        'none': 'keine',
+    },
+}
+
+
+# Abréviations courtes mois (3-4 lettres) pour les barres du décider.
+# Évite les collisions ('Juin'→'Jui' et 'Juillet'→'Jui' = collision en FR).
+# Aligné avec le prototype paris-v6.html.
+_MONTH_ABBR = {
+    'fr':    ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû',  'Sep', 'Oct', 'Nov', 'Déc'],
+    'en':    ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',  'Jul',  'Aug',  'Sep', 'Oct', 'Nov', 'Dec'],
+    'en-us': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',  'Jul',  'Aug',  'Sep', 'Oct', 'Nov', 'Dec'],
+    'es':    ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',  'Jul',  'Ago',  'Sep', 'Oct', 'Nov', 'Dic'],
+    'de':    ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun',  'Jul',  'Aug',  'Sep', 'Okt', 'Nov', 'Dez'],
+}
+
+
+def _bar_class(score: float, is_top: bool) -> str:
+    """Détermine la classe CSS d'une barre de score (best/good/mid/low/bad)."""
+    if score >= 7 and is_top:
+        return 'best'
+    if score >= 7:
+        return 'good'
+    if score >= 5:
+        return 'mid'
+    if score >= 4:
+        return 'low'
+    return 'bad'
+
+
+def render_v6_decider(slug: str, lang: str, dest_name: str,
+                       months_data: list[dict], editorial_html: str,
+                       is_mountain: bool = False) -> str:
+    """Rend la section #decider du prototype V6 (Quand partir à X ?).
+
+    Reproduit la structure complète du prototype paris-v6.html :
+    - Verdict + avis Gilles (avatar G + édito) + pills (Top 4 + 1 bad)
+    - Bars chart 12 mois avec scores + légende
+    - Right-stack : 3 right-items + cta-row + method-mini compactée
+
+    Args:
+        slug: identifiant destination (FR canonical)
+        lang: 'fr', 'en', 'en-us', 'es', 'de'
+        dest_name: nom localisé de la destination (ex 'Paris', 'Cinque Terre')
+        months_data: liste de 12 dicts avec 'mois' (localisé) et 'score_10' (0-10)
+        editorial_html: HTML édito de l'avis Gilles depuis avis_annuel.json
+        is_mountain: True si destination mountain (méthodologie ski/rando)
+    """
+    L = _DECIDER_I18N.get(lang, _DECIDER_I18N['fr'])
+    method_block = render_v6_methodology_block(lang, is_mountain=is_mountain)
+
+    # ── Calculs : top 4 mois, worst, etc. ──
+    sorted_months = sorted(months_data, key=lambda m: -m['score_10'])
+    top_months = sorted_months[:4]
+    worst_month = sorted_months[-1]
+    top_score = top_months[0]['score_10']
+    worst_score = worst_month['score_10']
+
+    # ── Verdict text auto-généré ──
+    verdict_text = L['verdict_tpl'].format(
+        dest=dest_name,
+        top1=top_months[0]['mois'],
+        top2=top_months[1]['mois'],
+        worst=worst_month['mois'],
+    )
+
+    # ── Avis card ──
+    avis_card = (
+        f'<div class="avis-card">\n'
+        f'  <div class="avis-head">\n'
+        f'    <div class="avis-avatar">G</div>\n'
+        f'    <div class="avis-meta">\n'
+        f'      <div class="avis-label">{h(L["avis_label"])}</div>\n'
+        f'      <div class="avis-role">{h(L["avis_role"])}</div>\n'
+        f'    </div>\n'
+        f'  </div>\n'
+        f'  <p class="avis-edito">{editorial_html}</p>\n'
+        f'</div>'
+    )
+
+    # ── Pills : Top 4 + 1 bad ──
+    pill_items = []
+    for i, m in enumerate(top_months):
+        prefix = '🏆 ' if i == 0 else ''
+        pill_items.append(
+            f'<span class="pill good">{prefix}{h(m["mois"])} · {m["score_10"]:.1f}</span>'
+        )
+    pill_items.append(
+        f'<span class="pill bad">⚠️ {h(worst_month["mois"])} · {worst_score:.1f}</span>'
+    )
+    pills_html = '\n              '.join(pill_items)
+
+    # ── Bars chart 12 mois ──
+    top_month_name = top_months[0]['mois']
+    abbr_list = _MONTH_ABBR.get(lang, _MONTH_ABBR['fr'])
+    bar_items = []
+    for i, m in enumerate(months_data):
+        score = m['score_10']
+        height_pct = max(5, int(score * 10))  # min 5% pour visibilité barre vide
+        is_top = (m['mois'] == top_month_name)
+        bar_class = _bar_class(score, is_top)
+        # Abréviation mois (3-4 lettres) sans collision (Juin/Juil distincts en FR)
+        label = abbr_list[i] if i < 12 else m['mois'][:3]
+        bar_items.append(
+            f'<div class="bar-wrap"><div class="bar-slot">'
+            f'<div class="bar {bar_class}" style="height:{height_pct}%"></div></div>'
+            f'<div class="bar-score">{score:.1f}</div>'
+            f'<div class="bar-label">{h(label)}</div></div>'
+        )
+    bars_html = '\n              '.join(bar_items)
+
+    # ── Légende bars ──
+    legend_html = (
+        f'<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;'
+        f'justify-content:center;font-size:11px;color:var(--muted)">\n'
+        f'  <span style="display:inline-flex;align-items:center;gap:5px">'
+        f'<span style="width:11px;height:11px;border-radius:3px;'
+        f'background:linear-gradient(180deg,#2ea86a 0%,#1a7a4a 100%)"></span>'
+        f'{h(L["legend_best"])}</span>\n'
+        f'  <span style="display:inline-flex;align-items:center;gap:5px">'
+        f'<span style="width:11px;height:11px;border-radius:3px;'
+        f'background:linear-gradient(180deg,#ecc568 0%,#b8860b 100%)"></span>'
+        f'{h(L["legend_mid"])}</span>\n'
+        f'  <span style="display:inline-flex;align-items:center;gap:5px">'
+        f'<span style="width:11px;height:11px;border-radius:3px;'
+        f'background:linear-gradient(180deg,#b91c1c 0%,#8b1616 100%)"></span>'
+        f'{h(L["legend_bad"])}</span>\n'
+        f'</div>'
+    )
+
+    # ── Right-stack : 3 right-items + cta-row + method-mini ──
+    n_good = sum(1 for m in months_data if m['score_10'] >= 7)
+    bad_months_list = [m['mois'] for m in months_data if m['score_10'] < 4]
+    n_bad = len(bad_months_list)
+    bad_months_str = ', '.join(bad_months_list) if bad_months_list else L['none']
+    summary_tpl = L['summary_tpl'] if n_bad > 0 else L['summary_no_bad']
+    summary_5s = summary_tpl.format(
+        dest=dest_name, n_good=n_good, n_bad=n_bad,
+        bad_months=bad_months_str,
+        top=f'{top_score:.1f}',
+        worst=f'{worst_score:.1f}',
+        top_month=top_months[0]['mois'],
+        worst_month=worst_month['mois'],
+    )
+
+    right_stack = (
+        f'<div class="card pad right-stack">\n'
+        f'  <div class="right-item">\n'
+        f'    <h3>{h(L["right1_title"])}</h3>\n'
+        f'    <p>{h(summary_5s)}</p>\n'
+        f'  </div>\n'
+        f'  <div class="right-item">\n'
+        f'    <h3>{h(L["right2_title"])}</h3>\n'
+        f'    <p>{h(L["right2_text"])}</p>\n'
+        f'  </div>\n'
+        f'  <div class="right-item">\n'
+        f'    <h3>{h(L["right3_title"])}</h3>\n'
+        f'    <p>{h(L["right3_text"])}</p>\n'
+        f'  </div>\n'
+        f'  <div class="cta-row">\n'
+        f'    <a class="btn primary" href="#tableau">{h(L["cta_compare"])}</a>\n'
+        f'    <a class="btn" href="#par-projet">{h(L["cta_byproject"])}</a>\n'
+        f'  </div>\n'
+        f'  {method_block}\n'
+        f'</div>'
+    )
+
+    # ── Assemblage final ──
+    h2_text = L['h2_tpl'].format(dest=dest_name)
+    return (
+        f'<section id="decider">\n'
+        f'  <div class="container">\n'
+        f'    <div class="section-head">\n'
+        f'      <div class="section-kicker">{h(L["kicker"])}</div>\n'
+        f'      <h2>{h(h2_text)}</h2>\n'
+        f'      <p class="lead">{h(L["lead"])}</p>\n'
+        f'    </div>\n'
+        f'    <div class="decider-grid">\n'
+        f'      <div class="verdict-box">\n'
+        f'        <div class="verdict-note"><strong>{h(L["verdict_label"])}</strong> {h(verdict_text)}</div>\n'
+        f'        {avis_card}\n'
+        f'        <div>\n'
+        f'          <div class="small-label">{h(L["top_avoid"])}</div>\n'
+        f'          <div class="pills">\n'
+        f'              {pills_html}\n'
+        f'          </div>\n'
+        f'        </div>\n'
+        f'        <div>\n'
+        f'          <div class="bars">\n'
+        f'              {bars_html}\n'
+        f'          </div>\n'
+        f'          {legend_html}\n'
+        f'        </div>\n'
+        f'      </div>\n'
+        f'      {right_stack}\n'
+        f'    </div>\n'
+        f'  </div>\n'
+        f'</section>'
+    )
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Helper 5 : INFOS PRATIQUES (Box 3 adaptative selon profil)
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -1487,7 +1807,15 @@ def render_v6_full_page(page_data: dict) -> str:
     topbar = render_v6_topbar(slug, lang)
     hero = render_v6_decision_card(slug, lang, d['hero_data'])
 
-    method_block = render_v6_methodology_block(lang, is_mountain=d.get('is_mountain', False))
+    # FIX 2026-05-06: section #decider (verdict + avis Gilles + pills + bars)
+    # remplace l'ancienne method_section autonome (qui était un workaround V1)
+    # car la méthodologie est maintenant compactée dans le right-stack du decider.
+    decider = render_v6_decider(
+        slug=slug, lang=lang, dest_name=d['dest_name'],
+        months_data=d['months_data'],
+        editorial_html=d.get('edito_html', '<p>—</p>'),
+        is_mountain=d.get('is_mountain', False),
+    )
 
     comprendre = render_v6_comprendre(
         slug=slug, lang=lang,
@@ -1527,21 +1855,12 @@ def render_v6_full_page(page_data: dict) -> str:
 
     scripts = render_v6_scripts(asset_prefix=asset_prefix)
 
-    # Le method_block est intégré dans la decision card (right-stack du Décider)
-    # Pour la V1, on l'injecte juste après le hero comme section dédiée
-    # (si on veut le mettre dans le right-stack du hero, il faut adapter render_v6_decision_card)
-    # Pour rester conservateur, on injecte le bloc méthodologie dans une section autonome.
-    method_section = (f'<section class="method-section">'
-                      f'<div class="container">{method_block}</div>'
-                      f'</section>')
-
     body = f'''{topbar}
 {hero}
 <main>
-{method_section}
+{decider}
 {comprendre}
 {trend}
-{contexte}
 {adapter}
 {reserver}
 {infos}
