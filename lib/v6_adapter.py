@@ -698,37 +698,85 @@ def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
     return render_v6_full_page(page_data)
 
 
-def _build_related_v6(cfg: dict, dest: dict, similarities: dict | None,
-                      all_dests: dict | None) -> list[dict]:
-    """Construit la liste related pour la section Explorer.
+def _haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """Distance grand cercle en km entre 2 points GPS (formule haversine)."""
+    import math
+    R = 6371.0  # rayon terre en km
+    phi1, phi2 = math.radians(lat1), math.radians(lat2)
+    dphi = math.radians(lat2 - lat1)
+    dlam = math.radians(lon2 - lon1)
+    a = math.sin(dphi/2)**2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlam/2)**2
+    return 2 * R * math.asin(math.sqrt(a))
 
-    Reprend les top 3 destinations similaires (cosine sim sur tmax/rain/sun) si
-    disponibles. Format de retour : [{href, name, sub}, ...].
+
+def _build_related_v6(cfg: dict, dest: dict, similarities: dict | None,
+                      all_dests: dict | None) -> dict:
+    """Construit les listes related pour la section Explorer.
+
+    Retourne dict avec 2 clés:
+    - 'climate': top 4 dest similaires en climat (cosine sim tmax/rain/sun)
+    - 'proximity': top 4 dest géographiquement proches (haversine, exclut dest courante)
+
+    Format chaque item: {href, name, country, country_iso, distance_km (proximity only)}
     """
-    if not similarities or not all_dests:
-        return []
+    result = {'climate': [], 'proximity': []}
+    if not all_dests:
+        return result
 
     slug_fr_canonical = dest.get('slug_fr', '')
-    sims = similarities.get(slug_fr_canonical, [])
-    if not sims:
-        return []
-
-    related = []
     lang = cfg['lang']
 
-    for score, other_slug in sims[:3]:
-        other = all_dests.get(other_slug)
-        if not other:
-            continue
-        # Slug localisé pour href
-        slug_lang = other.get(f'slug_{lang[:2]}', other.get('slug_fr', other_slug))
+    def _build_item(other: dict, distance_km: float | None = None) -> dict:
+        slug_lang = other.get(f'slug_{lang[:2]}', other.get('slug_fr', ''))
         href = f'{cfg["annual_prefix"]}{slug_lang}{cfg["annual_suffix"]}'
-        # Name localisé
-        name = other.get(f'nom_{lang[:2]}', other.get('nom_fr', other_slug.title()))
-        # Sub : pays
-        sub = other.get(f'country_{lang[:2]}', other.get('pays', ''))
-        related.append({'href': href, 'name': name, 'sub': sub})
-    return related
+        name = other.get(f'nom_{lang[:2]}', other.get('nom_fr', slug_lang.title()))
+        country = other.get(f'country_{lang[:2]}', other.get('pays', ''))
+        country_iso = other.get('flag', '').lower().strip()
+        item = {'href': href, 'name': name, 'country': country, 'country_iso': country_iso}
+        if distance_km is not None:
+            item['distance_km'] = round(distance_km)
+        return item
+
+    # ── Climat similaire ──
+    if similarities:
+        sims = similarities.get(slug_fr_canonical, [])
+        for score, other_slug in sims[:4]:
+            other = all_dests.get(other_slug)
+            if other:
+                result['climate'].append(_build_item(other))
+
+    # ── Proximité géographique ──
+    try:
+        cur_lat = float(dest.get('lat', 0))
+        cur_lon = float(dest.get('lon', 0))
+    except (TypeError, ValueError):
+        cur_lat = cur_lon = 0
+    if cur_lat or cur_lon:
+        candidates = []
+        for other_slug, other in all_dests.items():
+            if other_slug == slug_fr_canonical:
+                continue
+            try:
+                olat = float(other.get('lat', 0))
+                olon = float(other.get('lon', 0))
+            except (TypeError, ValueError):
+                continue
+            if not (olat or olon):
+                continue
+            d = _haversine_km(cur_lat, cur_lon, olat, olon)
+            candidates.append((d, other_slug, other))
+        # Trier par distance asc, prendre top 4 (mais éviter mêmes que climat)
+        candidates.sort(key=lambda c: c[0])
+        already_in_climate = {item['name'] for item in result['climate']}
+        for distance, other_slug, other in candidates:
+            if len(result['proximity']) >= 4:
+                break
+            item = _build_item(other, distance_km=distance)
+            if item['name'] in already_in_climate:
+                continue
+            result['proximity'].append(item)
+
+    return result
 
 
 # ─────────────────────────────────────────────────────────────────────────────

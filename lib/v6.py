@@ -1805,30 +1805,162 @@ def render_v6_adapter(slug: str, lang: str, profile: str = 'city',
   </section>'''
 
 
-def render_v6_explorer(slug: str, lang: str, related: list[dict] = None) -> str:
-    """Section "Explorer" : cross-links vers destinations similaires.
+def render_v6_explorer(slug: str, lang: str, related: dict | list = None) -> str:
+    """Section "Explorer" : 3 boxes (Climat similaire + Proximité + Guides).
 
-    related: liste {'href': str, 'name': str, 'sub': str (climate/region)}.
-        Si None ou vide, section omise.
+    Aligné prototype paris-v6.html.
+
+    Args:
+        related: dict {'climate': [...], 'proximity': [...]} OU liste plate (legacy)
+                  Items: {href, name, country, country_iso, distance_km?}
     """
+    # Compatibilité legacy : si related est une liste plate, la mettre dans 'climate'
+    if isinstance(related, list):
+        related = {'climate': related, 'proximity': []}
     if not related:
+        related = {'climate': [], 'proximity': []}
+    if not related.get('climate') and not related.get('proximity'):
         return ''
-    L = _v6_strings(lang)['explorer']
-    cards_html = ''.join(
-        f'<a href="{h(r["href"])}" class="card pad explorer-card">'
-        f'<div class="explorer-name">{h(r["name"])}</div>'
-        f'<div class="explorer-sub">{h(r.get("sub", ""))}</div>'
-        f'</a>'
-        for r in related
+
+    # i18n labels
+    EXPLORER_I18N = {
+        'fr':    {'kicker': 'Explorer', 'title': 'Destinations & guides complémentaires',
+                  'lead_tpl': 'Si {dest} ne colle pas à vos dates, voici des alternatives et des guides.',
+                  'box_climate': 'Destinations au climat similaire',
+                  'box_proximity': 'Destinations proches',
+                  'box_guides': 'Guides & classements',
+                  'guide_world': 'Classement mondial 2026', 'guide_world_url': 'classement-destinations-meteo-2026.html',
+                  'guide_summer': 'Meilleures destinations été', 'guide_summer_url': 'classement-destinations-meteo-ete-2026.html',
+                  'guide_winter': 'Soleil hiver', 'guide_winter_url': 'classement-destinations-meteo-hiver-2026.html',
+                  'guide_jul': 'Où partir en juillet', 'guide_jul_url': 'ou-partir-en-juillet.html',
+                  'see': 'Voir →',
+                  'map_btn': '🗺️ Carte climatique', 'map_url': 'carte.html',
+                  },
+        'en':    {'kicker': 'Explore', 'title': 'Related destinations & guides',
+                  'lead_tpl': "If {dest} doesn't fit your dates, here are alternatives and guides.",
+                  'box_climate': 'Similar climate destinations',
+                  'box_proximity': 'Nearby destinations',
+                  'box_guides': 'Guides & rankings',
+                  'guide_world': 'World ranking 2026', 'guide_world_url': 'en/world-weather-ranking-2026.html',
+                  'guide_summer': 'Best summer destinations', 'guide_summer_url': 'en/best-summer-destinations-2026.html',
+                  'guide_winter': 'Winter sun', 'guide_winter_url': 'en/winter-sun-destinations-2026.html',
+                  'guide_jul': 'Where to go in July', 'guide_jul_url': 'en/where-to-go-in-july.html',
+                  'see': 'See →',
+                  'map_btn': '🗺️ Climate map', 'map_url': 'en/map.html',
+                  },
+        'en-us': {'kicker': 'Explore', 'title': 'Related destinations & guides',
+                  'lead_tpl': "If {dest} doesn't fit your dates, here are alternatives and guides.",
+                  'box_climate': 'Similar climate destinations',
+                  'box_proximity': 'Nearby destinations',
+                  'box_guides': 'Guides & rankings',
+                  'guide_world': 'World ranking 2026', 'guide_world_url': 'us/world-weather-ranking-2026.html',
+                  'guide_summer': 'Best summer destinations', 'guide_summer_url': 'us/best-summer-destinations-2026.html',
+                  'guide_winter': 'Winter sun', 'guide_winter_url': 'us/winter-sun-destinations-2026.html',
+                  'guide_jul': 'Where to go in July', 'guide_jul_url': 'us/where-to-go-in-july.html',
+                  'see': 'See →',
+                  'map_btn': '🗺️ Climate map', 'map_url': 'us/map.html',
+                  },
+        'es':    {'kicker': 'Explorar', 'title': 'Destinos & guías complementarias',
+                  'lead_tpl': 'Si {dest} no encaja con sus fechas, aquí hay alternativas y guías.',
+                  'box_climate': 'Destinos con clima similar',
+                  'box_proximity': 'Destinos cercanos',
+                  'box_guides': 'Guías & clasificaciones',
+                  'guide_world': 'Clasificación mundial 2026', 'guide_world_url': 'es/clasificacion-clima-mundial-2026.html',
+                  'guide_summer': 'Mejores destinos verano', 'guide_summer_url': 'es/mejores-destinos-verano-2026.html',
+                  'guide_winter': 'Sol de invierno', 'guide_winter_url': 'es/sol-invierno-destinos-2026.html',
+                  'guide_jul': 'Adónde ir en julio', 'guide_jul_url': 'es/adonde-ir-julio.html',
+                  'see': 'Ver →',
+                  'map_btn': '🗺️ Mapa climático', 'map_url': 'es/mapa.html',
+                  },
+        'de':    {'kicker': 'Erkunden', 'title': 'Verwandte Reiseziele & Guides',
+                  'lead_tpl': 'Wenn {dest} nicht zu Ihren Daten passt, hier sind Alternativen und Guides.',
+                  'box_climate': 'Reiseziele mit ähnlichem Klima',
+                  'box_proximity': 'Nahegelegene Reiseziele',
+                  'box_guides': 'Guides & Rankings',
+                  'guide_world': 'Welt-Ranking 2026', 'guide_world_url': 'de/welt-wetter-ranking-2026.html',
+                  'guide_summer': 'Beste Sommerziele', 'guide_summer_url': 'de/beste-sommerziele-2026.html',
+                  'guide_winter': 'Wintersonne', 'guide_winter_url': 'de/wintersonne-reiseziele-2026.html',
+                  'guide_jul': 'Wohin im Juli', 'guide_jul_url': 'de/wohin-im-juli.html',
+                  'see': 'Sehen →',
+                  'map_btn': '🗺️ Klimakarte', 'map_url': 'de/karte.html',
+                  },
+    }
+    L = EXPLORER_I18N.get(lang, EXPLORER_I18N['fr'])
+
+    # Récupérer le nom localisé depuis le 1er climate ou proximity (fallback slug)
+    dest_name = ''
+    if related.get('climate'):
+        # Nom de la dest courante n'est pas dans related — on doit le passer en param.
+        # Workaround simple: on n'utilise pas {dest} dans le lead, on simplifie.
+        pass
+
+    # Helper pour rendre un list-item destination
+    def _dest_item(item: dict, with_distance: bool = False) -> str:
+        flag = (f'<img src="flags/{item["country_iso"]}.png" width="18" height="13" alt="" '
+                f'loading="lazy" class="list-flag">'
+                if item.get('country_iso') else '')
+        right = f'{item["distance_km"]} km →' if with_distance and 'distance_km' in item else '→'
+        return (f'<a href="{h(item["href"])}" class="list-item">'
+                f'<span>{flag}{h(item["name"])} <span class="list-country">· {h(item["country"])}</span></span>'
+                f'<strong>{h(right)}</strong>'
+                f'</a>')
+
+    # Box 1 : Climat similaire
+    climate_items = ''.join(_dest_item(it) for it in related.get('climate', [])[:4])
+    box_climate = (f'<div class="box">\n'
+                   f'  <h3>{h(L["box_climate"])}</h3>\n'
+                   f'  <div class="list">{climate_items}</div>\n'
+                   f'</div>') if climate_items else ''
+
+    # Box 2 : Proximité
+    proximity_items = ''.join(_dest_item(it, with_distance=True) for it in related.get('proximity', [])[:4])
+    box_proximity = (f'<div class="box">\n'
+                     f'  <h3>{h(L["box_proximity"])}</h3>\n'
+                     f'  <div class="list">{proximity_items}</div>\n'
+                     f'</div>') if proximity_items else ''
+
+    # Box 3 : Guides & classements (statique)
+    box_guides = (
+        f'<div class="box">\n'
+        f'  <h3>{h(L["box_guides"])}</h3>\n'
+        f'  <div class="list">\n'
+        f'    <div class="list-item"><span>{h(L["guide_world"])}</span><strong><a href="{h(L["guide_world_url"])}">{h(L["see"])}</a></strong></div>\n'
+        f'    <div class="list-item"><span>{h(L["guide_summer"])}</span><strong><a href="{h(L["guide_summer_url"])}">{h(L["see"])}</a></strong></div>\n'
+        f'    <div class="list-item"><span>{h(L["guide_winter"])}</span><strong><a href="{h(L["guide_winter_url"])}">{h(L["see"])}</a></strong></div>\n'
+        f'    <div class="list-item"><span>{h(L["guide_jul"])}</span><strong><a href="{h(L["guide_jul_url"])}">{h(L["see"])}</a></strong></div>\n'
+        f'  </div>\n'
+        f'  <div style="margin-top:16px">\n'
+        f'    <a class="btn primary" href="{h(L["map_url"])}">{h(L["map_btn"])}</a>\n'
+        f'  </div>\n'
+        f'</div>'
     )
+
+    # Lead simplifié sans {dest} (variable difficile à propager ici)
+    lead = L['lead_tpl'].replace('{dest}', '')
+    lead = lead.replace('  ', ' ').replace(' ne ', ' ne ').strip()
+    # FR: "Si  ne colle pas..." → "Si cette destination ne colle pas..."
+    # Plus simple : variante générique sans {dest}
+    LEAD_GENERIC = {
+        'fr': 'Si cette destination ne colle pas à vos dates, voici des alternatives et des guides.',
+        'en': "If this destination doesn't fit your dates, here are alternatives and guides.",
+        'en-us': "If this destination doesn't fit your dates, here are alternatives and guides.",
+        'es': 'Si este destino no encaja con sus fechas, aquí hay alternativas y guías.',
+        'de': 'Wenn dieses Reiseziel nicht zu Ihren Daten passt, hier sind Alternativen und Guides.',
+    }
+    lead = LEAD_GENERIC.get(lang, LEAD_GENERIC['fr'])
+
     return f'''  <section>
     <div class="container">
       <div class="section-head">
         <div class="section-kicker">{h(L['kicker'])}</div>
         <h2>{h(L['title'])}</h2>
-        <p class="lead">{h(L['lead'])}</p>
+        <p class="lead">{h(lead)}</p>
       </div>
-      <div class="grid-3">{cards_html}</div>
+      <div class="grid-3">
+        {box_climate}
+        {box_proximity}
+        {box_guides}
+      </div>
     </div>
   </section>'''
 
