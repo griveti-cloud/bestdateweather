@@ -1987,21 +1987,31 @@ def render_v6_head(lang: str, page_title: str, page_desc: str,
 
 
 def render_v6_scripts(asset_prefix: str = '') -> str:
-    """Scripts à charger en fin de body."""
-    return f'''<script src="{asset_prefix}js/favs.min.js?v=1"></script>
+    """Scripts à charger en fin de body.
+
+    Inclut Leaflet (CSS + JS) pour la carte de localisation, sinon L est undefined
+    et la carte reste vide (bug visible 2026-05-09 sur staging).
+    """
+    return f'''<link rel="stylesheet" href="{asset_prefix}vendor/leaflet/leaflet.min.css">
+<script src="{asset_prefix}vendor/leaflet/leaflet.min.js"></script>
+<script src="{asset_prefix}js/favs.min.js?v=1"></script>
 <script src="{asset_prefix}js/share.js"></script>
 <script>
-// Init carte Leaflet si présente
+// Init carte Leaflet si présente (aligné prototype paris-v6.html)
 (function(){{
   var el = document.getElementById('dest-map');
   if (!el || typeof L === 'undefined') return;
   var lat = parseFloat(el.dataset.lat), lon = parseFloat(el.dataset.lon);
   var name = el.dataset.name || '';
-  var map = L.map('dest-map').setView([lat, lon], 9);
+  var map = L.map('dest-map', {{attributionControl: true}}).setView([lat, lon], 9);
   L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
     maxZoom: 18, attribution: '© OpenStreetMap'
   }}).addTo(map);
   L.marker([lat, lon]).addTo(map).bindPopup(name);
+  // Retirer le préfixe Leaflet (évite le 'drapeau ukrainien' visible dans v4.x)
+  if (map.attributionControl) map.attributionControl.setPrefix(false);
+  // Force invalidateSize après tick pour rendre les tiles correctement
+  setTimeout(function(){{ map.invalidateSize(); }}, 100);
 }})();
 </script>
 </body>

@@ -283,20 +283,26 @@
     <p class="bdw-footer-legal"><a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="contact.html">Contact</a></p>
   </div>
 </footer>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.min.css">
+<script src="vendor/leaflet/leaflet.min.js"></script>
 <script src="js/favs.min.js?v=1"></script>
 <script src="js/share.js"></script>
 <script>
-// Init carte Leaflet si présente
+// Init carte Leaflet si présente (aligné prototype paris-v6.html)
 (function(){
   var el = document.getElementById('dest-map');
   if (!el || typeof L === 'undefined') return;
   var lat = parseFloat(el.dataset.lat), lon = parseFloat(el.dataset.lon);
   var name = el.dataset.name || '';
-  var map = L.map('dest-map').setView([lat, lon], 9);
+  var map = L.map('dest-map', {attributionControl: true}).setView([lat, lon], 9);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18, attribution: '© OpenStreetMap'
   }).addTo(map);
   L.marker([lat, lon]).addTo(map).bindPopup(name);
+  // Retirer le préfixe Leaflet (évite le 'drapeau ukrainien' visible dans v4.x)
+  if (map.attributionControl) map.attributionControl.setPrefix(false);
+  // Force invalidateSize après tick pour rendre les tiles correctement
+  setTimeout(function(){ map.invalidateSize(); }, 100);
 })();
 </script>
 </body>
