@@ -267,14 +267,25 @@
     <div class="container">
       <div class="section-head">
         <div class="section-kicker">Localisation</div>
-        <h2>Où se trouve Chamonix</h2>
-        <p class="lead">Position géographique et accès.</p>
+        <h2>Où se trouve Chamonix ?</h2>
+        <p class="lead">Position mondiale + contexte géographique régional.</p>
       </div>
-      <div class="card pad">
-        <div id="dest-map" data-lat="45.9200" data-lon="6.8700"
-             data-name="Chamonix" style="height:380px;border-radius:12px;overflow:hidden"></div>
-        <div class="dest-coords" style="margin-top:8px;font-size:13px;color:var(--muted)">
-          📍 45.92°N · 6.87°E
+      <div class="dest-map-grid" data-dest-map data-lat="45.9200" data-lon="6.8700"
+           data-macro-zoom="5" data-world-id="dmap-world-chamonix" data-macro-id="dmap-macro-chamonix">
+        <div class="dest-map-card">
+          <div class="dest-map-lbl">🌍 Monde</div>
+          <div id="dmap-world-chamonix" class="dest-map-el dest-map-el--world" style="height:280px;border-radius:12px;overflow:hidden"></div>
+        </div>
+        <div class="dest-map-card">
+          <div class="dest-map-lbl">🔍 Contexte géographique</div>
+          <div id="dmap-macro-chamonix" class="dest-map-el dest-map-el--macro" style="height:280px;border-radius:12px;overflow:hidden"></div>
+        </div>
+      </div>
+      <div class="dest-map-intro">
+        <div class="dest-map-intro-body">
+          <div class="dest-map-country"></div>
+          <div class="dest-map-hsub">Climat Climat alpin de montagne avec un écart 9.1 → 6.1 entre meilleur et pire mois. 10 ans de données ERA5 pour choisir selon votre projet.</div>
+          <div class="dest-map-coords">45.92°N · 6.87°E</div>
         </div>
       </div>
     </div>
@@ -305,21 +316,50 @@
 <script src="js/favs.min.js?v=1"></script>
 <script src="js/share.js"></script>
 <script>
-// Init carte Leaflet si présente (aligné prototype paris-v6.html)
+// Init 2 cartes Leaflet (Monde + Contexte) - aligné prototype paris-v6.html
 (function(){
-  var el = document.getElementById('dest-map');
-  if (!el || typeof L === 'undefined') return;
-  var lat = parseFloat(el.dataset.lat), lon = parseFloat(el.dataset.lon);
-  var name = el.dataset.name || '';
-  var map = L.map('dest-map', {attributionControl: true}).setView([lat, lon], 9);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18, attribution: '© OpenStreetMap'
-  }).addTo(map);
-  L.marker([lat, lon]).addTo(map).bindPopup(name);
-  // Retirer le préfixe Leaflet (évite le 'drapeau ukrainien' visible dans v4.x)
-  if (map.attributionControl) map.attributionControl.setPrefix(false);
-  // Force invalidateSize après tick pour rendre les tiles correctement
-  setTimeout(function(){ map.invalidateSize(); }, 100);
+  function initOne(row) {
+    var lat = parseFloat(row.dataset.lat);
+    var lon = parseFloat(row.dataset.lon);
+    var mz = parseInt(row.dataset.macroZoom) || 5;
+    var welEl = document.getElementById(row.dataset.worldId);
+    var meEl = document.getElementById(row.dataset.macroId);
+    if (!welEl || !meEl) return;
+    if (welEl._map) return;  // déjà initialisé
+    try {
+      // Pin custom (divIcon) pour éviter le bug marker-icon.png par défaut
+      var pinHtml = '<div style="width:10px;height:10px;background:#e44;border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.4)"></div>';
+      var pin = L.divIcon({html: pinHtml, iconSize:[10,10], iconAnchor:[5,5], className:''});
+      var tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+      // Carte Monde : zoom 1, statique, sans contrôles ni attribution
+      var mw = L.map(welEl.id, {zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false, dragging:false, attributionControl:false}).setView([lat, lon], 1);
+      L.tileLayer(tileUrl, {maxZoom:18}).addTo(mw);
+      L.marker([lat, lon], {icon:pin, interactive:false}).addTo(mw);
+      welEl._map = mw;
+      // Carte Contexte : zoom variable, statique, avec attribution OSM
+      var mm = L.map(meEl.id, {zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false, dragging:false, attributionControl:true}).setView([lat, lon], mz);
+      L.tileLayer(tileUrl, {attribution:'OSM', maxZoom:18}).addTo(mm);
+      L.marker([lat, lon], {icon:pin, interactive:false}).addTo(mm);
+      meEl._map = mm;
+      mm.attributionControl.setPrefix(false);
+      // Force invalidateSize après tick pour rendu correct des tiles
+      setTimeout(function(){ mw.invalidateSize(); mm.invalidateSize(); }, 100);
+    } catch(e) {}
+  }
+  function initAll(retries) {
+    retries = retries || 0;
+    if (!window.L) {
+      if (retries > 50) return;
+      setTimeout(function(){ initAll(retries + 1); }, 100);
+      return;
+    }
+    document.querySelectorAll('[data-dest-map]').forEach(initOne);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ initAll(0); });
+  } else {
+    initAll(0);
+  }
 })();
 </script>
 </body>

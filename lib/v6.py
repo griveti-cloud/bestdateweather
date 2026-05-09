@@ -1834,26 +1834,90 @@ def render_v6_explorer(slug: str, lang: str, related: list[dict] = None) -> str:
 
 
 def render_v6_localisation(slug: str, lang: str, nom: str,
-                           lat: float, lon: float) -> str:
-    """Section "Localisation" : carte Leaflet + adresse coordonnées.
+                           lat: float, lon: float,
+                           country_iso: str = '', country_name: str = '',
+                           climate_type: str = '',
+                           best_month: str = '', best_score: float = 0,
+                           worst_month: str = '', worst_score: float = 0,
+                           macro_zoom: int = 5) -> str:
+    """Section "Localisation" : 2 cartes Leaflet (Monde + Contexte) + intro.
 
-    Note: la carte Leaflet est initialisée par le JS chargé en fin de page
-    (script init avec data-attributes). Ici on fournit juste le container.
+    Reproduit la structure du prototype paris-v6.html :
+    - Carte 'Monde' : zoom 1 (vue mondiale, point rouge sur dest)
+    - Carte 'Contexte' : zoom variable (5 par défaut, vue régionale)
+    - Intro : drapeau pays + description (climat + écart score) + coords
+
+    Args:
+        slug: slug FR canonique (utilisé pour ids uniques)
+        lang: 'fr', 'en', 'en-us', 'es', 'de'
+        nom: nom localisé (ex 'Paris', 'Cinque Terre')
+        lat, lon: coordonnées GPS
+        country_iso: code ISO 2 lettres (fr, gb, us...) pour drapeau
+        country_name: nom pays localisé
+        climate_type: ex 'Tempéré océanique', 'Alpine climate', etc.
+        best_month, best_score: mois meilleur + son score
+        worst_month, worst_score: mois pire + son score
+        macro_zoom: zoom Leaflet pour la carte 'Contexte' (5 par défaut, plus haut = plus zoom)
     """
     L = _v6_strings(lang)['localisation']
     title = L['title_tpl'].format(nom=h(nom))
+
+    # i18n labels
+    LOCAL_I18N = {
+        'fr':    {'world': '🌍 Monde', 'context': '🔍 Contexte géographique',
+                  'lead': 'Position mondiale + contexte géographique régional.',
+                  'desc_tpl': 'Climat {climate} avec un écart {best} → {worst} entre meilleur et pire mois. 10 ans de données ERA5 pour choisir selon votre projet.'},
+        'en':    {'world': '🌍 World', 'context': '🔍 Geographic context',
+                  'lead': 'Global position + regional geographic context.',
+                  'desc_tpl': '{climate} climate with a {best} → {worst} gap between best and worst month. 10 years of ERA5 data to choose by project.'},
+        'en-us': {'world': '🌍 World', 'context': '🔍 Geographic context',
+                  'lead': 'Global position + regional geographic context.',
+                  'desc_tpl': '{climate} climate with a {best} → {worst} gap between best and worst month. 10 years of ERA5 data to choose by project.'},
+        'es':    {'world': '🌍 Mundo', 'context': '🔍 Contexto geográfico',
+                  'lead': 'Posición mundial + contexto geográfico regional.',
+                  'desc_tpl': 'Clima {climate} con una diferencia {best} → {worst} entre el mejor y el peor mes. 10 años de datos ERA5 para elegir según su proyecto.'},
+        'de':    {'world': '🌍 Welt', 'context': '🔍 Geografischer Kontext',
+                  'lead': 'Globale Position + regionaler geografischer Kontext.',
+                  'desc_tpl': '{climate}es Klima mit einer {best} → {worst} Differenz zwischen besten und schlechtesten Monat. 10 Jahre ERA5-Daten zur Auswahl nach Projekt.'},
+    }
+    L2 = LOCAL_I18N.get(lang, LOCAL_I18N['fr'])
+
+    flag_html = (f'<img src="flags/{country_iso}.png" width="16" height="12" alt="" '
+                 f'style="vertical-align:middle;border-radius:2px;margin-right:5px">'
+                 if country_iso else '')
+
+    desc = L2['desc_tpl'].format(
+        climate=h(climate_type) if climate_type else '—',
+        best=f'{best_score:.1f}',
+        worst=f'{worst_score:.1f}',
+    )
+
+    world_id = f'dmap-world-{slug}'
+    macro_id = f'dmap-macro-{slug}'
+
     return f'''  <section class="dest-map-section">
     <div class="container">
       <div class="section-head">
         <div class="section-kicker">{h(L['kicker'])}</div>
-        <h2>{title}</h2>
-        <p class="lead">{h(L['lead'])}</p>
+        <h2>{title} ?</h2>
+        <p class="lead">{h(L2['lead'])}</p>
       </div>
-      <div class="card pad">
-        <div id="dest-map" data-lat="{lat:.4f}" data-lon="{lon:.4f}"
-             data-name="{h(nom)}" style="height:380px;border-radius:12px;overflow:hidden"></div>
-        <div class="dest-coords" style="margin-top:8px;font-size:13px;color:var(--muted)">
-          📍 {_coord_label(lat, lon)}
+      <div class="dest-map-grid" data-dest-map data-lat="{lat:.4f}" data-lon="{lon:.4f}"
+           data-macro-zoom="{macro_zoom}" data-world-id="{world_id}" data-macro-id="{macro_id}">
+        <div class="dest-map-card">
+          <div class="dest-map-lbl">{h(L2['world'])}</div>
+          <div id="{world_id}" class="dest-map-el dest-map-el--world" style="height:280px;border-radius:12px;overflow:hidden"></div>
+        </div>
+        <div class="dest-map-card">
+          <div class="dest-map-lbl">{h(L2['context'])}</div>
+          <div id="{macro_id}" class="dest-map-el dest-map-el--macro" style="height:280px;border-radius:12px;overflow:hidden"></div>
+        </div>
+      </div>
+      <div class="dest-map-intro">
+        <div class="dest-map-intro-body">
+          <div class="dest-map-country">{flag_html}{h(country_name)}</div>
+          <div class="dest-map-hsub">{h(desc)}</div>
+          <div class="dest-map-coords">{_coord_label(lat, lon)}</div>
         </div>
       </div>
     </div>
@@ -1997,21 +2061,50 @@ def render_v6_scripts(asset_prefix: str = '') -> str:
 <script src="{asset_prefix}js/favs.min.js?v=1"></script>
 <script src="{asset_prefix}js/share.js"></script>
 <script>
-// Init carte Leaflet si présente (aligné prototype paris-v6.html)
+// Init 2 cartes Leaflet (Monde + Contexte) - aligné prototype paris-v6.html
 (function(){{
-  var el = document.getElementById('dest-map');
-  if (!el || typeof L === 'undefined') return;
-  var lat = parseFloat(el.dataset.lat), lon = parseFloat(el.dataset.lon);
-  var name = el.dataset.name || '';
-  var map = L.map('dest-map', {{attributionControl: true}}).setView([lat, lon], 9);
-  L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
-    maxZoom: 18, attribution: '© OpenStreetMap'
-  }}).addTo(map);
-  L.marker([lat, lon]).addTo(map).bindPopup(name);
-  // Retirer le préfixe Leaflet (évite le 'drapeau ukrainien' visible dans v4.x)
-  if (map.attributionControl) map.attributionControl.setPrefix(false);
-  // Force invalidateSize après tick pour rendre les tiles correctement
-  setTimeout(function(){{ map.invalidateSize(); }}, 100);
+  function initOne(row) {{
+    var lat = parseFloat(row.dataset.lat);
+    var lon = parseFloat(row.dataset.lon);
+    var mz = parseInt(row.dataset.macroZoom) || 5;
+    var welEl = document.getElementById(row.dataset.worldId);
+    var meEl = document.getElementById(row.dataset.macroId);
+    if (!welEl || !meEl) return;
+    if (welEl._map) return;  // déjà initialisé
+    try {{
+      // Pin custom (divIcon) pour éviter le bug marker-icon.png par défaut
+      var pinHtml = '<div style="width:10px;height:10px;background:#e44;border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.4)"></div>';
+      var pin = L.divIcon({{html: pinHtml, iconSize:[10,10], iconAnchor:[5,5], className:''}});
+      var tileUrl = 'https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png';
+      // Carte Monde : zoom 1, statique, sans contrôles ni attribution
+      var mw = L.map(welEl.id, {{zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false, dragging:false, attributionControl:false}}).setView([lat, lon], 1);
+      L.tileLayer(tileUrl, {{maxZoom:18}}).addTo(mw);
+      L.marker([lat, lon], {{icon:pin, interactive:false}}).addTo(mw);
+      welEl._map = mw;
+      // Carte Contexte : zoom variable, statique, avec attribution OSM
+      var mm = L.map(meEl.id, {{zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false, dragging:false, attributionControl:true}}).setView([lat, lon], mz);
+      L.tileLayer(tileUrl, {{attribution:'OSM', maxZoom:18}}).addTo(mm);
+      L.marker([lat, lon], {{icon:pin, interactive:false}}).addTo(mm);
+      meEl._map = mm;
+      mm.attributionControl.setPrefix(false);
+      // Force invalidateSize après tick pour rendu correct des tiles
+      setTimeout(function(){{ mw.invalidateSize(); mm.invalidateSize(); }}, 100);
+    }} catch(e) {{}}
+  }}
+  function initAll(retries) {{
+    retries = retries || 0;
+    if (!window.L) {{
+      if (retries > 50) return;
+      setTimeout(function(){{ initAll(retries + 1); }}, 100);
+      return;
+    }}
+    document.querySelectorAll('[data-dest-map]').forEach(initOne);
+  }}
+  if (document.readyState === 'loading') {{
+    document.addEventListener('DOMContentLoaded', function(){{ initAll(0); }});
+  }} else {{
+    initAll(0);
+  }}
 }})();
 </script>
 </body>
@@ -2101,9 +2194,22 @@ def render_v6_full_page(page_data: dict) -> str:
 
     explorer = render_v6_explorer(slug, lang, related=d.get('related', []))
 
+    # Best/worst depuis months_data
+    sorted_m = sorted(d['months_data'], key=lambda m: -m['score_10'])
+    best_m = sorted_m[0] if sorted_m else {}
+    worst_m = sorted_m[-1] if sorted_m else {}
+
     localisation = render_v6_localisation(
         slug=slug, lang=lang, nom=d['dest_name'],
         lat=d.get('lat', 0), lon=d.get('lon', 0),
+        country_iso=d.get('country_iso', ''),
+        country_name=d.get('country_name', ''),
+        climate_type=d.get('climate_type', d.get('hero_data', {}).get('climate_type', '')),
+        best_month=best_m.get('mois', ''),
+        best_score=best_m.get('score_10', 0),
+        worst_month=worst_m.get('mois', ''),
+        worst_score=worst_m.get('score_10', 0),
+        macro_zoom=d.get('macro_zoom', 5),
     )
 
     questions = render_v6_questions(slug, lang, d.get('faq_items', []))
