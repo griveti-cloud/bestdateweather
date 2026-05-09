@@ -1928,21 +1928,86 @@ def render_v6_reserver(slug: str, lang: str, dest_name: str,
                        gyg_partner: str = '2MQKL00',
                        travelpayouts_marker: str = '708106',
                        expedia_camref: str = '1110lB57J') -> str:
-    """Section "Réserver" : 3 CTAs affiliés (Hôtels Expedia, Activités GYG, Vols Travelpayouts).
+    """Section "Réserver" / "Planifier votre séjour" : 3 plan-cards riches +
+    widget GetYourGuide embarqué (aligné prototype paris-v6.html).
 
-    Pour la V1, ce sont juste des liens stylisés. L'intégration profonde
-    (widgets GYG embarqués, pré-remplissage destination Expedia) viendra plus tard.
+    Reproduit la structure du prototype:
+    - 3 plan-cards avec icon + title + sub + cta (Hébergement / Activités / Vols)
+    - Bloc Activités GYG (id=#activites) avec widget GetYourGuide 3 items
     """
-    L = _v6_strings(lang)['reserver']
+    # i18n labels
+    RESERVER_I18N = {
+        'fr':    {'kicker': 'Réserver', 'title': 'Planifier votre séjour',
+                  'lead': 'Hôtels au plus bas hors saison haute, tarifs au plus haut sur les mois confortables. Mi-saisons offrent un bon compromis prix/climat.',
+                  'plan_hotel_title': 'Hébergement', 'plan_hotel_sub': 'Hôtels & locations · {dest}',
+                  'plan_activity_title': 'Activités', 'plan_activity_sub': 'Excursions, billets, expériences',
+                  'plan_flight_title': 'Vols', 'plan_flight_sub': 'Comparateur multi-compagnies',
+                  'plan_see': 'Voir ↓', 'expedia_cta': 'Expedia →', 'kiwi_cta': 'Kiwi →',
+                  'gyg_h3': '🎟️ Activités & excursions · {dest}',
+                  'gyg_sub': 'Sélection GetYourGuide · réservation annulable gratuitement',
+                  'gyg_see_all': 'Voir tout →',
+                  'affil_note': 'Lien affilié · GetYourGuide',
+                  'gyg_locale': 'fr-FR', 'expedia_domain': 'expedia.fr',
+                  },
+        'en':    {'kicker': 'Book', 'title': 'Plan your trip',
+                  'lead': 'Hotels at their lowest outside peak season, highest on comfortable months. Shoulder seasons offer a good price/climate compromise.',
+                  'plan_hotel_title': 'Stay', 'plan_hotel_sub': 'Hotels & rentals · {dest}',
+                  'plan_activity_title': 'Activities', 'plan_activity_sub': 'Tours, tickets, experiences',
+                  'plan_flight_title': 'Flights', 'plan_flight_sub': 'Multi-airline comparator',
+                  'plan_see': 'See ↓', 'expedia_cta': 'Expedia →', 'kiwi_cta': 'Kiwi →',
+                  'gyg_h3': '🎟️ Activities & tours · {dest}',
+                  'gyg_sub': 'GetYourGuide selection · free cancellation',
+                  'gyg_see_all': 'See all →',
+                  'affil_note': 'Affiliate link · GetYourGuide',
+                  'gyg_locale': 'en-GB', 'expedia_domain': 'expedia.co.uk',
+                  },
+        'en-us': {'kicker': 'Book', 'title': 'Plan your trip',
+                  'lead': 'Hotels at their lowest outside peak season, highest on comfortable months. Shoulder seasons offer a good price/climate compromise.',
+                  'plan_hotel_title': 'Stay', 'plan_hotel_sub': 'Hotels & rentals · {dest}',
+                  'plan_activity_title': 'Activities', 'plan_activity_sub': 'Tours, tickets, experiences',
+                  'plan_flight_title': 'Flights', 'plan_flight_sub': 'Multi-airline comparator',
+                  'plan_see': 'See ↓', 'expedia_cta': 'Expedia →', 'kiwi_cta': 'Kiwi →',
+                  'gyg_h3': '🎟️ Activities & tours · {dest}',
+                  'gyg_sub': 'GetYourGuide selection · free cancellation',
+                  'gyg_see_all': 'See all →',
+                  'affil_note': 'Affiliate link · GetYourGuide',
+                  'gyg_locale': 'en-US', 'expedia_domain': 'expedia.com',
+                  },
+        'es':    {'kicker': 'Reservar', 'title': 'Planificar su viaje',
+                  'lead': 'Hoteles más baratos fuera de temporada alta, más caros en los meses cómodos. Las medias temporadas ofrecen un buen compromiso precio/clima.',
+                  'plan_hotel_title': 'Alojamiento', 'plan_hotel_sub': 'Hoteles y apartamentos · {dest}',
+                  'plan_activity_title': 'Actividades', 'plan_activity_sub': 'Excursiones, entradas, experiencias',
+                  'plan_flight_title': 'Vuelos', 'plan_flight_sub': 'Comparador multi-aerolíneas',
+                  'plan_see': 'Ver ↓', 'expedia_cta': 'Expedia →', 'kiwi_cta': 'Kiwi →',
+                  'gyg_h3': '🎟️ Actividades y excursiones · {dest}',
+                  'gyg_sub': 'Selección GetYourGuide · cancelación gratuita',
+                  'gyg_see_all': 'Ver todo →',
+                  'affil_note': 'Enlace afiliado · GetYourGuide',
+                  'gyg_locale': 'es-ES', 'expedia_domain': 'expedia.es',
+                  },
+        'de':    {'kicker': 'Buchen', 'title': 'Reise planen',
+                  'lead': 'Hotels am günstigsten außerhalb der Hochsaison, am teuersten in den angenehmen Monaten. Zwischensaisons bieten einen guten Preis/Klima-Kompromiss.',
+                  'plan_hotel_title': 'Unterkunft', 'plan_hotel_sub': 'Hotels & Vermietungen · {dest}',
+                  'plan_activity_title': 'Aktivitäten', 'plan_activity_sub': 'Touren, Tickets, Erlebnisse',
+                  'plan_flight_title': 'Flüge', 'plan_flight_sub': 'Multi-Airline-Vergleich',
+                  'plan_see': 'Sehen ↓', 'expedia_cta': 'Expedia →', 'kiwi_cta': 'Kiwi →',
+                  'gyg_h3': '🎟️ Aktivitäten & Touren · {dest}',
+                  'gyg_sub': 'GetYourGuide-Auswahl · kostenlose Stornierung',
+                  'gyg_see_all': 'Alle ansehen →',
+                  'affil_note': 'Affiliate-Link · GetYourGuide',
+                  'gyg_locale': 'de-DE', 'expedia_domain': 'expedia.de',
+                  },
+    }
+    L = RESERVER_I18N.get(lang, RESERVER_I18N['fr'])
     nom_q = h(dest_name)
 
-    # URLs affiliés simples (templates à enrichir)
-    expedia_url = (f'https://www.expedia.fr/Hotel-Search?destination={nom_q}'
+    # URLs affiliés
+    expedia_url = (f'https://www.{L["expedia_domain"]}/Hotel-Search?destination={nom_q}'
                    f'&camref={expedia_camref}')
-    gyg_url = (f'https://www.getyourguide.com/s/?q={nom_q}'
-               f'&partner_id={gyg_partner}')
-    tp_url = (f'https://search.flights.travelpayouts.com/?marker={travelpayouts_marker}'
-              f'&destination_name={nom_q}')
+    kiwi_url = f'https://www.kiwi.com/deep?affilid={travelpayouts_marker}&to={nom_q}&lang={lang[:2]}'
+    gyg_search_url = (f'https://www.getyourguide.com/s/?q={nom_q}'
+                      f'&partner_id={gyg_partner}&locale={L["gyg_locale"]}')
+    gyg_widget_q = f'{nom_q}'  # GYG widget query
 
     return f'''  <section id="planifier" style="scroll-margin-top:120px">
     <div class="container">
@@ -1951,19 +2016,49 @@ def render_v6_reserver(slug: str, lang: str, dest_name: str,
         <h2>{h(L['title'])}</h2>
         <p class="lead">{h(L['lead'])}</p>
       </div>
-      <div class="grid-3">
-        <a href="{h(expedia_url)}" target="_blank" rel="noopener nofollow sponsored" class="card pad reserve-card">
-          <div class="reserve-icon">🏨</div>
-          <div class="reserve-cta"><strong>{h(L['cta_hotel'])}</strong> →</div>
+      <div class="grid-3 plan-row">
+        <a href="{h(expedia_url)}" target="_blank" rel="sponsored noopener" class="plan-card">
+          <div class="plan-icon">🏨</div>
+          <div class="plan-body">
+            <div class="plan-title">{h(L['plan_hotel_title'])}</div>
+            <div class="plan-sub">{h(L['plan_hotel_sub'].format(dest=nom_q))}</div>
+          </div>
+          <div class="plan-cta">{h(L['expedia_cta'])}</div>
         </a>
-        <a href="{h(gyg_url)}" target="_blank" rel="noopener nofollow sponsored" class="card pad reserve-card">
-          <div class="reserve-icon">🎫</div>
-          <div class="reserve-cta"><strong>{h(L['cta_activity'])}</strong> →</div>
+        <a href="#activites" class="plan-card">
+          <div class="plan-icon">🎟️</div>
+          <div class="plan-body">
+            <div class="plan-title">{h(L['plan_activity_title'])}</div>
+            <div class="plan-sub">{h(L['plan_activity_sub'])}</div>
+          </div>
+          <div class="plan-cta">{h(L['plan_see'])}</div>
         </a>
-        <a href="{h(tp_url)}" target="_blank" rel="noopener nofollow sponsored" class="card pad reserve-card">
-          <div class="reserve-icon">✈️</div>
-          <div class="reserve-cta"><strong>{h(L['cta_flight'])}</strong> →</div>
+        <a href="{h(kiwi_url)}" target="_blank" rel="sponsored noopener" class="plan-card">
+          <div class="plan-icon">✈️</div>
+          <div class="plan-body">
+            <div class="plan-title">{h(L['plan_flight_title'])}</div>
+            <div class="plan-sub">{h(L['plan_flight_sub'])}</div>
+          </div>
+          <div class="plan-cta">{h(L['kiwi_cta'])}</div>
         </a>
+      </div>
+
+      <div id="activites" class="card pad" style="margin-top:20px;scroll-margin-top:120px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap">
+          <div>
+            <h3 style="margin:0 0 4px">{h(L['gyg_h3'].format(dest=nom_q))}</h3>
+            <p style="margin:0;color:var(--muted);font-size:.9rem">{h(L['gyg_sub'])}</p>
+          </div>
+          <a class="btn primary" style="padding:10px 18px" href="{h(gyg_search_url)}" target="_blank" rel="sponsored noopener">{h(L['gyg_see_all'])}</a>
+        </div>
+        <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+             data-gyg-locale-code="{h(L['gyg_locale'])}"
+             data-gyg-widget="activities"
+             data-gyg-number-of-items="3"
+             data-gyg-partner-id="{h(gyg_partner)}"
+             data-gyg-q="{h(gyg_widget_q)}">
+        </div>
+        <span class="affil-note" style="text-align:right;display:block;margin-top:10px;font-size:11px;color:var(--muted)">{h(L['affil_note'])}</span>
       </div>
     </div>
   </section>'''
@@ -2058,6 +2153,7 @@ def render_v6_scripts(asset_prefix: str = '') -> str:
     """
     return f'''<link rel="stylesheet" href="{asset_prefix}vendor/leaflet/leaflet.min.css">
 <script src="{asset_prefix}vendor/leaflet/leaflet.min.js"></script>
+<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 <script src="{asset_prefix}js/favs.min.js?v=1"></script>
 <script src="{asset_prefix}js/share.js"></script>
 <script>

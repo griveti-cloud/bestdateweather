@@ -216,22 +216,52 @@
     <div class="container">
       <div class="section-head">
         <div class="section-kicker">Reservar</div>
-        <h2>Planificar tu viaje</h2>
-        <p class="lead">Alojamiento, actividades y vuelos para tu estancia.</p>
+        <h2>Planificar su viaje</h2>
+        <p class="lead">Hoteles más baratos fuera de temporada alta, más caros en los meses cómodos. Las medias temporadas ofrecen un buen compromiso precio/clima.</p>
       </div>
-      <div class="grid-3">
-        <a href="https://www.expedia.fr/Hotel-Search?destination=Cinque Terre&amp;camref=1110lB57J" target="_blank" rel="noopener nofollow sponsored" class="card pad reserve-card">
-          <div class="reserve-icon">🏨</div>
-          <div class="reserve-cta"><strong>Hoteles</strong> →</div>
+      <div class="grid-3 plan-row">
+        <a href="https://www.expedia.es/Hotel-Search?destination=Cinque Terre&amp;camref=1110lB57J" target="_blank" rel="sponsored noopener" class="plan-card">
+          <div class="plan-icon">🏨</div>
+          <div class="plan-body">
+            <div class="plan-title">Alojamiento</div>
+            <div class="plan-sub">Hoteles y apartamentos · Cinque Terre</div>
+          </div>
+          <div class="plan-cta">Expedia →</div>
         </a>
-        <a href="https://www.getyourguide.com/s/?q=Cinque Terre&amp;partner_id=2MQKL00" target="_blank" rel="noopener nofollow sponsored" class="card pad reserve-card">
-          <div class="reserve-icon">🎫</div>
-          <div class="reserve-cta"><strong>Actividades</strong> →</div>
+        <a href="#activites" class="plan-card">
+          <div class="plan-icon">🎟️</div>
+          <div class="plan-body">
+            <div class="plan-title">Actividades</div>
+            <div class="plan-sub">Excursiones, entradas, experiencias</div>
+          </div>
+          <div class="plan-cta">Ver ↓</div>
         </a>
-        <a href="https://search.flights.travelpayouts.com/?marker=708106&amp;destination_name=Cinque Terre" target="_blank" rel="noopener nofollow sponsored" class="card pad reserve-card">
-          <div class="reserve-icon">✈️</div>
-          <div class="reserve-cta"><strong>Vuelos</strong> →</div>
+        <a href="https://www.kiwi.com/deep?affilid=708106&amp;to=Cinque Terre&amp;lang=es" target="_blank" rel="sponsored noopener" class="plan-card">
+          <div class="plan-icon">✈️</div>
+          <div class="plan-body">
+            <div class="plan-title">Vuelos</div>
+            <div class="plan-sub">Comparador multi-aerolíneas</div>
+          </div>
+          <div class="plan-cta">Kiwi →</div>
         </a>
+      </div>
+
+      <div id="activites" class="card pad" style="margin-top:20px;scroll-margin-top:120px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap">
+          <div>
+            <h3 style="margin:0 0 4px">🎟️ Actividades y excursiones · Cinque Terre</h3>
+            <p style="margin:0;color:var(--muted);font-size:.9rem">Selección GetYourGuide · cancelación gratuita</p>
+          </div>
+          <a class="btn primary" style="padding:10px 18px" href="https://www.getyourguide.com/s/?q=Cinque Terre&amp;partner_id=2MQKL00&amp;locale=es-ES" target="_blank" rel="sponsored noopener">Ver todo →</a>
+        </div>
+        <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+             data-gyg-locale-code="es-ES"
+             data-gyg-widget="activities"
+             data-gyg-number-of-items="3"
+             data-gyg-partner-id="2MQKL00"
+             data-gyg-q="Cinque Terre">
+        </div>
+        <span class="affil-note" style="text-align:right;display:block;margin-top:10px;font-size:11px;color:var(--muted)">Enlace afiliado · GetYourGuide</span>
       </div>
     </div>
   </section>
@@ -296,6 +326,7 @@
 </footer>
 <link rel="stylesheet" href="../vendor/leaflet/leaflet.min.css">
 <script src="../vendor/leaflet/leaflet.min.js"></script>
+<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 <script src="../js/favs.min.js?v=1"></script>
 <script src="../js/share.js"></script>
 <script>
