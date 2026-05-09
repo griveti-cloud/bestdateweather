@@ -276,7 +276,7 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
             'rain_pct': _safe_float(mc.get('rain_pct')),
             'precip_mm': _safe_float(mc.get('precip', mc.get('precip_mm', 0))),  # FIX: clé 'precip' dans climate dict
             'sun_h': _safe_float(mc.get('sun_h')),
-            'score_10': _safe_float(score_entry.get('score_10', score_entry.get('score', 0))),
+            'score_10': _safe_float(mc.get('score', score_entry.get('score_10', score_entry.get('score', 0)))),  # FIX Option C: score depuis CSV (recalculé via /tmp/regen_scores.py), fallback sur recalc live
             'classe': mc.get('classe', score_entry.get('classe', score_entry.get('cls', 'mid'))),  # FIX: classe vient du CSV (compute_scores ne la retourne pas)
             'uv_index': _safe_float(mc.get('uv_index', 0)),  # FIX: pour Conditions détaillées
             'dew_point': _safe_float(mc.get('dew_point', 0)),  # FIX: pour Humidité ressentie
