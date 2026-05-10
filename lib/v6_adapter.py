@@ -487,11 +487,28 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
                         break
         except FileNotFoundError:
             pass
-        infos_pratiques_data['ski_season'] = 'Déc → Mai'
-        infos_pratiques_data['hiking_season'] = 'Juin → Sept'
+        # i18n des saisons (FR/EN/EN-US/ES/DE)
+        SEASON_MTN = {
+            'fr': ('Déc → Mai', 'Juin → Sept'),
+            'en': ('Dec → May', 'Jun → Sep'),
+            'en-us': ('Dec → May', 'Jun → Sep'),
+            'es': ('Dic → May', 'Jun → Sep'),
+            'de': ('Dez → Mai', 'Jun → Sep'),
+        }
+        ski_s, hike_s = SEASON_MTN.get(lang, SEASON_MTN['fr'])
+        infos_pratiques_data['ski_season'] = ski_s
+        infos_pratiques_data['hiking_season'] = hike_s
     elif is_tropical:
-        infos_pratiques_data['dry_season'] = 'Mai → Sept'
-        infos_pratiques_data['wet_season'] = 'Déc → Mars'
+        SEASON_TROP = {
+            'fr': ('Mai → Sept', 'Déc → Mars'),
+            'en': ('May → Sep', 'Dec → Mar'),
+            'en-us': ('May → Sep', 'Dec → Mar'),
+            'es': ('May → Sep', 'Dic → Mar'),
+            'de': ('Mai → Sep', 'Dez → Mär'),
+        }
+        dry_s, wet_s = SEASON_TROP.get(lang, SEASON_TROP['fr'])
+        infos_pratiques_data['dry_season'] = dry_s
+        infos_pratiques_data['wet_season'] = wet_s
         infos_pratiques_data['has_cyclones'] = abs(lat) > 10
         infos_pratiques_data['latitude'] = lat
         # Sea temps (à enrichir plus tard depuis climate.csv si colonne sea_temp)

@@ -134,7 +134,8 @@ def _other_lang_links(slug_fr: str, slug_en: str, slug_es: str, slug_de: str,
 
 
 def render_v6_footer(slug_fr: str, lang: str = 'fr',
-                     slug_en: str = '', slug_es: str = '', slug_de: str = '') -> str:
+                     slug_en: str = '', slug_es: str = '', slug_de: str = '',
+                     asset_prefix: str = '') -> str:
     """Rend le footer V6 dark navy avec drapeaux des autres langues sur 1 ligne.
 
     Args:
@@ -156,7 +157,7 @@ def render_v6_footer(slug_fr: str, lang: str = 'fr',
     lang_html_parts = []
     for href, flag, label in links:
         lang_html_parts.append(
-            f'<a href="{h(href)}"><img src="flags/{flag}" width="20" height="15" alt="" loading="lazy"> {h(label)}</a>'
+            f'<a href="{h(href)}"><img src="{asset_prefix}flags/{flag}" width="20" height="15" alt="" loading="lazy"> {h(label)}</a>'
         )
     lang_html = '<span class="sep">·</span>'.join(lang_html_parts)
 
@@ -616,13 +617,14 @@ def _box1_country(L_ip: dict, country_name: str, country_iso: str,
                   lang_local: str, currency_name: str, currency_symbol: str,
                   drive: str, gpi_level: int | None,
                   cost_tier: int | None, gpi_value: float | None = None,
-                  cost_value: float | None = None) -> str:
+                  cost_value: float | None = None,
+                  asset_prefix: str = '') -> str:
     """Box 1 : Pays · {country}. 5 list-items.
 
     gpi_level: 1-5 (1=très sûr). cost_tier: 1-5 (1=très bon marché).
     Si None, on omet le tier badge mais on garde le label vide (cohérence visuelle).
     """
-    flag_html = (f'<img src="flags/{country_iso}.png" width="20" height="14" alt="" '
+    flag_html = (f'<img src="{asset_prefix}flags/{country_iso}.png" width="20" height="14" alt="" '
                  f'style="vertical-align:middle;border-radius:2px;margin-right:6px">'
                  if country_iso else '')
     title_tpl = L_ip['box1_title_tpl']
@@ -710,11 +712,17 @@ def _box2_climate(L_ip: dict, climate_type: str, trend_value: float | None,
 
 def _box3_mountain(L_ip: dict, alt_village: int | None, alt_ski_max: int | None,
                    ski_season: str, hiking_season: str,
-                   high_alt_warning: bool = True) -> str:
+                   high_alt_warning: bool = True, lang: str = 'fr') -> str:
     """Box 3 mountain : altitudes, saisons ski/rando, haute montagne."""
-    alt_v = f'{alt_village} m' if alt_village else '—'
-    alt_dom = (f'{alt_village} → {alt_ski_max} m'
-               if alt_village and alt_ski_max else '—')
+    # FIX: convertir m → ft pour EN-US (1 m = 3.28084 ft)
+    is_us = (lang == 'en-us')
+    unit = 'ft' if is_us else 'm'
+    def _alt(v):
+        if v is None: return None
+        return round(v * 3.28084) if is_us else v
+    av, am = _alt(alt_village), _alt(alt_ski_max)
+    alt_v = f'{av} {unit}' if av else '—'
+    alt_dom = (f'{av} → {am} {unit}' if av and am else '—')
     items = [
         _list_item('⛰️', L_ip['mtn_alt_village'], alt_v),
         _list_item('🎿', L_ip['mtn_ski_domain'], alt_dom),
@@ -805,7 +813,7 @@ def _box3_city(L_ip: dict, high_season: str = 'Juin → Août',
             f'<div class="list">{"".join(items)}</div></div>')
 
 
-def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict) -> str:
+def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict, asset_prefix: str = '') -> str:
     """Rend la section <section> Infos pratiques avec Box 3 adaptative.
 
     Args:
@@ -856,6 +864,7 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict) -> str:
         gpi_value=d.get('gpi_value'),
         cost_tier=_safe_int(d.get('cost_tier')),
         cost_value=d.get('cost_value'),
+        asset_prefix=asset_prefix,
     )
 
     box2 = _box2_climate(L_ip,
@@ -879,6 +888,7 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict) -> str:
             ski_season=d.get('ski_season', 'Déc → Mai'),
             hiking_season=d.get('hiking_season', 'Juin → Sept'),
             high_alt_warning=d.get('high_alt_warning', True),
+            lang=lang,
         )
     elif profile == 'tropical':
         box3 = _box3_tropical(L_ip,
@@ -1182,7 +1192,7 @@ def _coord_label(lat: float, lon: float) -> str:
     return f'{abs(lat):.2f}°{ns} · {abs(lon):.2f}°{ew}'
 
 
-def render_v6_decision_card(slug: str, lang: str, hero_data: dict) -> str:
+def render_v6_decision_card(slug: str, lang: str, hero_data: dict, asset_prefix: str = '') -> str:
     """Rend la section <header class="hero-wrap"> avec le decision-card.
 
     Args:
@@ -1235,7 +1245,7 @@ def render_v6_decision_card(slug: str, lang: str, hero_data: dict) -> str:
     update_lbl = L_dec['tag_update'].format(month=h(d.get('update_month', '—')))
     coords_lbl = _coord_label(d.get('lat', 0), d.get('lon', 0))
 
-    eyebrow = (f'<img src="flags/{iso}.png" alt=""/>{nom_h}, {country_h} · {climate_h}'
+    eyebrow = (f'<img src="{asset_prefix}flags/{iso}.png" alt=""/>{nom_h}, {country_h} · {climate_h}'
                if iso and country_h
                else f'{nom_h} · {climate_h}')
 
@@ -1621,9 +1631,11 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
     uv = top_month.get('uv_index', 0)
     uv_str = f'{uv:.1f} · {_uv_label(uv, lang)}' if uv > 0 else '—'
     dew = top_month.get('dew_point', 0)
-    hum_str = f'{_fmt_t(dew, lang)} · {_humidity_label(dew, lang)}' if dew > 0 else '—'
-    rain_str = f'{top_month["rain_pct"]:.0f}% · {top_month["precip_mm"]:.1f} mm/j'
-    sun_str = f'{top_month["sun_h"]:.1f}h/jour' if lang == 'fr' else f'{top_month["sun_h"]:.1f}h/day'
+    hum_str = f'{_fmt_t(dew, lang)} · {_humidity_label(dew, lang)}' if dew is not None else '—'
+    rain_unit = {'fr': 'mm/j', 'en': 'mm/day', 'en-us': 'mm/day', 'es': 'mm/d', 'de': 'mm/Tag'}.get(lang, 'mm/j')
+    rain_str = f'{top_month["rain_pct"]:.0f}% · {top_month["precip_mm"]:.1f} {rain_unit}'
+    sun_unit = {'fr': 'h/jour', 'en': 'h/day', 'en-us': 'h/day', 'es': 'h/día', 'de': 'h/Tag'}.get(lang, 'h/day')
+    sun_str = f'{top_month["sun_h"]:.1f}{sun_unit}'
 
     cards_right = (
         f'<div class="card pad">\n'
@@ -1805,7 +1817,8 @@ def render_v6_adapter(slug: str, lang: str, profile: str = 'city',
   </section>'''
 
 
-def render_v6_explorer(slug: str, lang: str, related: dict | list = None) -> str:
+def render_v6_explorer(slug: str, lang: str, related: dict | list = None,
+                       asset_prefix: str = '') -> str:
     """Section "Explorer" : 3 boxes (Climat similaire + Proximité + Guides).
 
     Aligné prototype paris-v6.html.
@@ -1896,7 +1909,7 @@ def render_v6_explorer(slug: str, lang: str, related: dict | list = None) -> str
 
     # Helper pour rendre un list-item destination
     def _dest_item(item: dict, with_distance: bool = False) -> str:
-        flag = (f'<img src="flags/{item["country_iso"]}.png" width="18" height="13" alt="" '
+        flag = (f'<img src="{asset_prefix}flags/{item["country_iso"]}.png" width="18" height="13" alt="" '
                 f'loading="lazy" class="list-flag">'
                 if item.get('country_iso') else '')
         # FIX EN-US: convertir km → miles (1 km = 0.621371 miles)
@@ -1979,7 +1992,8 @@ def render_v6_localisation(slug: str, lang: str, nom: str,
                            climate_type: str = '',
                            best_month: str = '', best_score: float = 0,
                            worst_month: str = '', worst_score: float = 0,
-                           macro_zoom: int = 5) -> str:
+                           macro_zoom: int = 5,
+                           asset_prefix: str = '') -> str:
     """Section "Localisation" : 2 cartes Leaflet (Monde + Contexte) + intro.
 
     Reproduit la structure du prototype paris-v6.html :
@@ -2022,7 +2036,7 @@ def render_v6_localisation(slug: str, lang: str, nom: str,
     }
     L2 = LOCAL_I18N.get(lang, LOCAL_I18N['fr'])
 
-    flag_html = (f'<img src="flags/{country_iso}.png" width="16" height="12" alt="" '
+    flag_html = (f'<img src="{asset_prefix}flags/{country_iso}.png" width="16" height="12" alt="" '
                  f'style="vertical-align:middle;border-radius:2px;margin-right:5px">'
                  if country_iso else '')
 
@@ -2279,7 +2293,7 @@ def render_v6_head(lang: str, page_title: str, page_desc: str,
 {og_html}
 {preload_bg}
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=16"/>
+<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=17"/>
 {json_ld_html}
 </head>
 <body>'''
@@ -2397,7 +2411,7 @@ def render_v6_full_page(page_data: dict) -> str:
     )
 
     topbar = render_v6_topbar(slug, lang)
-    hero = render_v6_decision_card(slug, lang, d['hero_data'])
+    hero = render_v6_decision_card(slug, lang, d['hero_data'], asset_prefix=asset_prefix)
 
     # FIX 2026-05-06: section #decider (verdict + avis Gilles + pills + bars)
     # remplace l'ancienne method_section autonome (qui était un workaround V1)
@@ -2426,9 +2440,10 @@ def render_v6_full_page(page_data: dict) -> str:
 
     reserver = render_v6_reserver(slug, lang, d['dest_name'])
 
-    infos = render_v6_infos_pratiques(slug, lang, d['infos_pratiques_data'])
+    infos = render_v6_infos_pratiques(slug, lang, d['infos_pratiques_data'], asset_prefix=asset_prefix)
 
-    explorer = render_v6_explorer(slug, lang, related=d.get('related', []))
+    explorer = render_v6_explorer(slug, lang, related=d.get('related', []),
+                                   asset_prefix=asset_prefix)
 
     # Best/worst depuis months_data
     sorted_m = sorted(d['months_data'], key=lambda m: -m['score_10'])
@@ -2446,6 +2461,7 @@ def render_v6_full_page(page_data: dict) -> str:
         worst_month=worst_m.get('mois', ''),
         worst_score=worst_m.get('score_10', 0),
         macro_zoom=d.get('macro_zoom', 5),
+        asset_prefix=asset_prefix,
     )
 
     questions = render_v6_questions(slug, lang, d.get('faq_items', []))
@@ -2456,6 +2472,7 @@ def render_v6_full_page(page_data: dict) -> str:
         slug_en=d.get('slug_en', ''),
         slug_es=d.get('slug_es', ''),
         slug_de=d.get('slug_de', ''),
+        asset_prefix=asset_prefix,
     )
 
     scripts = render_v6_scripts(asset_prefix=asset_prefix)
