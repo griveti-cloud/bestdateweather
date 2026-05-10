@@ -1899,7 +1899,15 @@ def render_v6_explorer(slug: str, lang: str, related: dict | list = None) -> str
         flag = (f'<img src="flags/{item["country_iso"]}.png" width="18" height="13" alt="" '
                 f'loading="lazy" class="list-flag">'
                 if item.get('country_iso') else '')
-        right = f'{item["distance_km"]} km →' if with_distance and 'distance_km' in item else '→'
+        # FIX EN-US: convertir km → miles (1 km = 0.621371 miles)
+        if with_distance and 'distance_km' in item:
+            if lang == 'en-us':
+                miles = round(item['distance_km'] * 0.621371)
+                right = f'{miles} mi →'
+            else:
+                right = f'{item["distance_km"]} km →'
+        else:
+            right = '→'
         return (f'<a href="{h(item["href"])}" class="list-item">'
                 f'<span>{flag}{h(item["name"])} <span class="list-country">· {h(item["country"])}</span></span>'
                 f'<strong>{h(right)}</strong>'
