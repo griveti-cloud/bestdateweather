@@ -2293,7 +2293,7 @@ def render_v6_head(lang: str, page_title: str, page_desc: str,
 {og_html}
 {preload_bg}
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=17"/>
+<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=18"/>
 {json_ld_html}
 </head>
 <body>'''

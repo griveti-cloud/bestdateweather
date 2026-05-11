@@ -294,9 +294,9 @@ header.hero-wrap{
 .right-stack{background:var(--card);border:1px solid var(--border);
   border-radius:20px;padding:26px;box-shadow:var(--shadow);
   display:flex;flex-direction:column;gap:20px}
-.right-item h3{font-family:'Playfair Display',Georgia,serif;font-size:18px;
+.right-item h3{font-family:'Playfair Display',Georgia,serif;font-size:16px;
   margin:0 0 6px;font-weight:700}
-.right-item p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55}
+.right-item p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5}
 
 /* Méthodo mini : vrai bloc distinct dans le right-stack */
 .method-mini{background:var(--amber-soft);border:1px solid var(--amber-border);
