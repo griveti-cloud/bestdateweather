@@ -300,7 +300,88 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
     # Country info enrichi
     cinfo = _country_info(dest.get('pays', ''))
     lang_local = (cinfo.get('languages') or [''])[0]
+
+    # i18n du nom de la langue parlée + nom de la monnaie (sources country_info.json en FR)
+    LANG_NAME_I18N = {
+        'Français': {'en': 'French', 'en-us': 'French', 'es': 'Francés', 'de': 'Französisch'},
+        'Anglais': {'en': 'English', 'en-us': 'English', 'es': 'Inglés', 'de': 'Englisch'},
+        'Espagnol': {'en': 'Spanish', 'en-us': 'Spanish', 'es': 'Español', 'de': 'Spanisch'},
+        'Allemand': {'en': 'German', 'en-us': 'German', 'es': 'Alemán', 'de': 'Deutsch'},
+        'Italien': {'en': 'Italian', 'en-us': 'Italian', 'es': 'Italiano', 'de': 'Italienisch'},
+        'Portugais': {'en': 'Portuguese', 'en-us': 'Portuguese', 'es': 'Portugués', 'de': 'Portugiesisch'},
+        'Néerlandais': {'en': 'Dutch', 'en-us': 'Dutch', 'es': 'Neerlandés', 'de': 'Niederländisch'},
+        'Japonais': {'en': 'Japanese', 'en-us': 'Japanese', 'es': 'Japonés', 'de': 'Japanisch'},
+        'Mandarin': {'en': 'Mandarin', 'en-us': 'Mandarin', 'es': 'Mandarín', 'de': 'Mandarin'},
+        'Coréen': {'en': 'Korean', 'en-us': 'Korean', 'es': 'Coreano', 'de': 'Koreanisch'},
+        'Arabe': {'en': 'Arabic', 'en-us': 'Arabic', 'es': 'Árabe', 'de': 'Arabisch'},
+        'Russe': {'en': 'Russian', 'en-us': 'Russian', 'es': 'Ruso', 'de': 'Russisch'},
+        'Hindi': {'en': 'Hindi', 'en-us': 'Hindi', 'es': 'Hindi', 'de': 'Hindi'},
+        'Thaï': {'en': 'Thai', 'en-us': 'Thai', 'es': 'Tailandés', 'de': 'Thailändisch'},
+        'Vietnamien': {'en': 'Vietnamese', 'en-us': 'Vietnamese', 'es': 'Vietnamita', 'de': 'Vietnamesisch'},
+        'Indonésien': {'en': 'Indonesian', 'en-us': 'Indonesian', 'es': 'Indonesio', 'de': 'Indonesisch'},
+        'Malais': {'en': 'Malay', 'en-us': 'Malay', 'es': 'Malayo', 'de': 'Malaiisch'},
+        'Tamoul': {'en': 'Tamil', 'en-us': 'Tamil', 'es': 'Tamil', 'de': 'Tamilisch'},
+        'Hébreu': {'en': 'Hebrew', 'en-us': 'Hebrew', 'es': 'Hebreo', 'de': 'Hebräisch'},
+        'Turc': {'en': 'Turkish', 'en-us': 'Turkish', 'es': 'Turco', 'de': 'Türkisch'},
+        'Grec': {'en': 'Greek', 'en-us': 'Greek', 'es': 'Griego', 'de': 'Griechisch'},
+        'Polonais': {'en': 'Polish', 'en-us': 'Polish', 'es': 'Polaco', 'de': 'Polnisch'},
+        'Tchèque': {'en': 'Czech', 'en-us': 'Czech', 'es': 'Checo', 'de': 'Tschechisch'},
+        'Hongrois': {'en': 'Hungarian', 'en-us': 'Hungarian', 'es': 'Húngaro', 'de': 'Ungarisch'},
+        'Suédois': {'en': 'Swedish', 'en-us': 'Swedish', 'es': 'Sueco', 'de': 'Schwedisch'},
+        'Danois': {'en': 'Danish', 'en-us': 'Danish', 'es': 'Danés', 'de': 'Dänisch'},
+        'Norvégien': {'en': 'Norwegian', 'en-us': 'Norwegian', 'es': 'Noruego', 'de': 'Norwegisch'},
+        'Finnois': {'en': 'Finnish', 'en-us': 'Finnish', 'es': 'Finlandés', 'de': 'Finnisch'},
+        'Islandais': {'en': 'Icelandic', 'en-us': 'Icelandic', 'es': 'Islandés', 'de': 'Isländisch'},
+        'Croate': {'en': 'Croatian', 'en-us': 'Croatian', 'es': 'Croata', 'de': 'Kroatisch'},
+        'Roumain': {'en': 'Romanian', 'en-us': 'Romanian', 'es': 'Rumano', 'de': 'Rumänisch'},
+    }
+    if lang in ('en', 'en-us', 'es', 'de') and lang_local in LANG_NAME_I18N:
+        lang_local = LANG_NAME_I18N[lang_local].get(lang, lang_local)
     currency_name = cinfo.get('currency_name', '')
+    # i18n nom monnaie (source country_info.json en FR)
+    CUR_NAME_I18N = {
+        'Euro': {'en': 'Euro', 'en-us': 'Euro', 'es': 'Euro', 'de': 'Euro'},
+        'Dollar américain': {'en': 'US Dollar', 'en-us': 'US Dollar', 'es': 'Dólar estadounidense', 'de': 'US-Dollar'},
+        'Livre sterling': {'en': 'Pound Sterling', 'en-us': 'Pound Sterling', 'es': 'Libra esterlina', 'de': 'Pfund Sterling'},
+        'Yen': {'en': 'Yen', 'en-us': 'Yen', 'es': 'Yen', 'de': 'Yen'},
+        'Yuan': {'en': 'Yuan', 'en-us': 'Yuan', 'es': 'Yuan', 'de': 'Yuan'},
+        'Franc suisse': {'en': 'Swiss Franc', 'en-us': 'Swiss Franc', 'es': 'Franco suizo', 'de': 'Schweizer Franken'},
+        'Dollar canadien': {'en': 'Canadian Dollar', 'en-us': 'Canadian Dollar', 'es': 'Dólar canadiense', 'de': 'Kanadischer Dollar'},
+        'Dollar australien': {'en': 'Australian Dollar', 'en-us': 'Australian Dollar', 'es': 'Dólar australiano', 'de': 'Australischer Dollar'},
+        'Dollar néo-zélandais': {'en': 'New Zealand Dollar', 'en-us': 'New Zealand Dollar', 'es': 'Dólar neozelandés', 'de': 'Neuseeland-Dollar'},
+        'Dollar de Singapour': {'en': 'Singapore Dollar', 'en-us': 'Singapore Dollar', 'es': 'Dólar de Singapur', 'de': 'Singapur-Dollar'},
+        'Dollar de Hong Kong': {'en': 'Hong Kong Dollar', 'en-us': 'Hong Kong Dollar', 'es': 'Dólar de Hong Kong', 'de': 'Hongkong-Dollar'},
+        'Couronne suédoise': {'en': 'Swedish Krona', 'en-us': 'Swedish Krona', 'es': 'Corona sueca', 'de': 'Schwedische Krone'},
+        'Couronne danoise': {'en': 'Danish Krone', 'en-us': 'Danish Krone', 'es': 'Corona danesa', 'de': 'Dänische Krone'},
+        'Couronne norvégienne': {'en': 'Norwegian Krone', 'en-us': 'Norwegian Krone', 'es': 'Corona noruega', 'de': 'Norwegische Krone'},
+        'Couronne islandaise': {'en': 'Icelandic Krona', 'en-us': 'Icelandic Krona', 'es': 'Corona islandesa', 'de': 'Isländische Krone'},
+        'Couronne tchèque': {'en': 'Czech Koruna', 'en-us': 'Czech Koruna', 'es': 'Corona checa', 'de': 'Tschechische Krone'},
+        'Forint hongrois': {'en': 'Hungarian Forint', 'en-us': 'Hungarian Forint', 'es': 'Forinto húngaro', 'de': 'Ungarischer Forint'},
+        'Zloty polonais': {'en': 'Polish Zloty', 'en-us': 'Polish Zloty', 'es': 'Zloty polaco', 'de': 'Polnischer Zloty'},
+        'Rouble': {'en': 'Ruble', 'en-us': 'Ruble', 'es': 'Rublo', 'de': 'Rubel'},
+        'Roupie indienne': {'en': 'Indian Rupee', 'en-us': 'Indian Rupee', 'es': 'Rupia india', 'de': 'Indische Rupie'},
+        'Rupiah indonésienne': {'en': 'Indonesian Rupiah', 'en-us': 'Indonesian Rupiah', 'es': 'Rupia indonesia', 'de': 'Indonesische Rupiah'},
+        'Baht thaïlandais': {'en': 'Thai Baht', 'en-us': 'Thai Baht', 'es': 'Baht tailandés', 'de': 'Thailändischer Baht'},
+        'Dong vietnamien': {'en': 'Vietnamese Dong', 'en-us': 'Vietnamese Dong', 'es': 'Dong vietnamita', 'de': 'Vietnamesischer Dong'},
+        'Ringgit malaisien': {'en': 'Malaysian Ringgit', 'en-us': 'Malaysian Ringgit', 'es': 'Ringgit malayo', 'de': 'Malaysischer Ringgit'},
+        'Won sud-coréen': {'en': 'South Korean Won', 'en-us': 'South Korean Won', 'es': 'Won surcoreano', 'de': 'Südkoreanischer Won'},
+        'Peso mexicain': {'en': 'Mexican Peso', 'en-us': 'Mexican Peso', 'es': 'Peso mexicano', 'de': 'Mexikanischer Peso'},
+        'Real brésilien': {'en': 'Brazilian Real', 'en-us': 'Brazilian Real', 'es': 'Real brasileño', 'de': 'Brasilianischer Real'},
+        'Peso argentin': {'en': 'Argentine Peso', 'en-us': 'Argentine Peso', 'es': 'Peso argentino', 'de': 'Argentinischer Peso'},
+        'Peso chilien': {'en': 'Chilean Peso', 'en-us': 'Chilean Peso', 'es': 'Peso chileno', 'de': 'Chilenischer Peso'},
+        'Sol péruvien': {'en': 'Peruvian Sol', 'en-us': 'Peruvian Sol', 'es': 'Sol peruano', 'de': 'Peruanischer Sol'},
+        'Rand sud-africain': {'en': 'South African Rand', 'en-us': 'South African Rand', 'es': 'Rand sudafricano', 'de': 'Südafrikanischer Rand'},
+        'Dirham marocain': {'en': 'Moroccan Dirham', 'en-us': 'Moroccan Dirham', 'es': 'Dirham marroquí', 'de': 'Marokkanischer Dirham'},
+        'Dinar tunisien': {'en': 'Tunisian Dinar', 'en-us': 'Tunisian Dinar', 'es': 'Dinar tunecino', 'de': 'Tunesischer Dinar'},
+        'Livre égyptienne': {'en': 'Egyptian Pound', 'en-us': 'Egyptian Pound', 'es': 'Libra egipcia', 'de': 'Ägyptisches Pfund'},
+        'Lira turque': {'en': 'Turkish Lira', 'en-us': 'Turkish Lira', 'es': 'Lira turca', 'de': 'Türkische Lira'},
+        'Shekel': {'en': 'Shekel', 'en-us': 'Shekel', 'es': 'Shekel', 'de': 'Schekel'},
+        'Dirham émirati': {'en': 'UAE Dirham', 'en-us': 'UAE Dirham', 'es': 'Dirham emiratí', 'de': 'VAE-Dirham'},
+        'Kuna croate': {'en': 'Croatian Kuna', 'en-us': 'Croatian Kuna', 'es': 'Kuna croata', 'de': 'Kroatische Kuna'},
+        'Leu roumain': {'en': 'Romanian Leu', 'en-us': 'Romanian Leu', 'es': 'Leu rumano', 'de': 'Rumänischer Leu'},
+    }
+    if lang in ('en', 'en-us', 'es', 'de') and currency_name in CUR_NAME_I18N:
+        currency_name = CUR_NAME_I18N[currency_name].get(lang, currency_name)
     currency_symbol = cinfo.get('currency_symbol', '')
     drive = cinfo.get('drive', 'right')
     gpi_level = _safe_int(cinfo.get('risk_level'))

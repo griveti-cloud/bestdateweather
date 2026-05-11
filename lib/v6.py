@@ -635,9 +635,25 @@ def _box1_country(L_ip: dict, country_name: str, country_iso: str,
     safe_label = L_ip.get(f'tier_safe_{gpi_level}', '—') if gpi_level else '—'
     cost_label = L_ip.get(f'tier_cost_{cost_tier}', '—') if cost_tier else '—'
 
-    safe_hint = (f'GPI (Global Peace Index) 2024 : {gpi_value:.2f}/5 — niveau {gpi_level}/5'
+    # i18n des hints GPI / cost
+    HINT_GPI = {
+        'fr': 'GPI (Global Peace Index) 2024 : {v:.2f}/5 — niveau {l}/5',
+        'en': 'GPI (Global Peace Index) 2024: {v:.2f}/5 — level {l}/5',
+        'en-us': 'GPI (Global Peace Index) 2024: {v:.2f}/5 — level {l}/5',
+        'es': 'GPI (Global Peace Index) 2024: {v:.2f}/5 — nivel {l}/5',
+        'de': 'GPI (Global Peace Index) 2024: {v:.2f}/5 — Stufe {l}/5',
+    }
+    HINT_COST = {
+        'fr': 'Numbeo Cost of Living 2026 : {v:.1f} — niveau {l}/5',
+        'en': 'Numbeo Cost of Living 2026: {v:.1f} — level {l}/5',
+        'en-us': 'Numbeo Cost of Living 2026: {v:.1f} — level {l}/5',
+        'es': 'Numbeo Cost of Living 2026: {v:.1f} — nivel {l}/5',
+        'de': 'Numbeo Cost of Living 2026: {v:.1f} — Stufe {l}/5',
+    }
+    lang_h = L_ip.get('_lang', 'fr')
+    safe_hint = (HINT_GPI.get(lang_h, HINT_GPI['fr']).format(v=gpi_value, l=gpi_level)
                  if gpi_value and gpi_level else None)
-    cost_hint = (f'Numbeo Cost of Living 2026 : {cost_value:.1f} — niveau {cost_tier}/5'
+    cost_hint = (HINT_COST.get(lang_h, HINT_COST['fr']).format(v=cost_value, l=cost_tier)
                  if cost_value and cost_tier else None)
 
     items = [
@@ -743,20 +759,53 @@ def _box3_tropical(L_ip: dict, dry_season: str, wet_season: str,
                    has_cyclones: bool, latitude: float = 0,
                    lang: str = 'fr') -> str:
     """Box 3 tropical : saisons sèche/humide, mer, cyclones."""
+    lang_h = L_ip.get('_lang', 'fr')
+    # i18n hints
+    HINT_DRY = {
+        'fr': 'Période de moindre pluviosité',
+        'en': 'Period of lowest rainfall',
+        'en-us': 'Period of lowest rainfall',
+        'es': 'Periodo de menor pluviosidad',
+        'de': 'Zeit mit geringstem Niederschlag',
+    }
+    HINT_WET = {
+        'fr': 'Mousson — averses souvent courtes en après-midi',
+        'en': 'Monsoon — showers often short, in the afternoon',
+        'en-us': 'Monsoon — showers often short, in the afternoon',
+        'es': 'Monzón — chubascos breves a menudo por la tarde',
+        'de': 'Monsun — oft kurze Regenschauer am Nachmittag',
+    }
+    HINT_CYC_YES = {
+        'fr': 'Latitude {lat:.1f}° — zone de formation cyclonique',
+        'en': 'Latitude {lat:.1f}° — tropical cyclone formation zone',
+        'en-us': 'Latitude {lat:.1f}° — tropical cyclone formation zone',
+        'es': 'Latitud {lat:.1f}° — zona de formación de ciclones',
+        'de': 'Breitengrad {lat:.1f}° — Entstehungszone tropischer Wirbelstürme',
+    }
+    HINT_CYC_NO = {
+        'fr': 'Zone équatoriale (~{lat:.0f}°) hors zone des cyclones tropicaux',
+        'en': 'Equatorial zone (~{lat:.0f}°), outside tropical cyclone belt',
+        'en-us': 'Equatorial zone (~{lat:.0f}°), outside tropical cyclone belt',
+        'es': 'Zona ecuatorial (~{lat:.0f}°), fuera del cinturón de ciclones',
+        'de': 'Äquatoriale Zone (~{lat:.0f}°), außerhalb der Wirbelsturmzone',
+    }
+    CYC_SEASON = {'fr': 'Saison Nov-Avr', 'en': 'Season Nov-Apr', 'en-us': 'Season Nov-Apr',
+                  'es': 'Temporada Nov-Abr', 'de': 'Saison Nov-Apr'}
+
     items = [
         _list_item('🌞', L_ip['tro_dry_season'], h(dry_season),
-                   hint='Période de moindre pluviosité'),
+                   hint=HINT_DRY.get(lang_h, HINT_DRY['fr'])),
         _list_item('🌧️', L_ip['tro_wet_season'], h(wet_season),
-                   hint='Mousson — averses souvent courtes en après-midi'),
+                   hint=HINT_WET.get(lang_h, HINT_WET['fr'])),
     ]
     if sea_summer is not None:
-        items.append(_list_item('🌊', L_ip['tro_sea_summer'], f'~{_fmt_t(sea_summer, lang)}'))
+        items.append(_list_item('🌊', L_ip['tro_sea_summer'], f'~{_fmt_t(sea_summer, lang_h)}'))
     if sea_winter is not None:
-        items.append(_list_item('🌊', L_ip['tro_sea_winter'], f'~{_fmt_t(sea_winter, lang)}'))
-    cyclone_val = ('Saison Nov-Avr' if has_cyclones else h(L_ip['tro_no_cyclones']))
-    cyclone_hint = (f'Latitude {latitude:.1f}° — zone de formation cyclonique'
+        items.append(_list_item('🌊', L_ip['tro_sea_winter'], f'~{_fmt_t(sea_winter, lang_h)}'))
+    cyclone_val = (CYC_SEASON.get(lang_h, CYC_SEASON['fr']) if has_cyclones else h(L_ip['tro_no_cyclones']))
+    cyclone_hint = (HINT_CYC_YES.get(lang_h, HINT_CYC_YES['fr']).format(lat=latitude)
                     if has_cyclones
-                    else f'Zone équatoriale (~{abs(latitude):.0f}°) hors zone des cyclones tropicaux')
+                    else HINT_CYC_NO.get(lang_h, HINT_CYC_NO['fr']).format(lat=abs(latitude)))
     items.append(_list_item('🌀', L_ip['tro_cyclones'], cyclone_val, hint=cyclone_hint))
     return (f'<div class="box"><h3>🏝️ {h(L_ip["box3_tropical"])}</h3>'
             f'<div class="list">{"".join(items)}</div></div>')
@@ -841,6 +890,7 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict, asset_prefi
               city:     high_season, unesco, transport, visa_text
     """
     L_ip = _v6_strings(lang)['infos_pratiques']
+    L_ip['_lang'] = lang  # pour i18n hints (GPI, cost, tropical)
     d = dest_data
 
     profile = _detect_profile(
