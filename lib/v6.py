@@ -1847,7 +1847,7 @@ def render_v6_explorer(slug: str, lang: str, related: dict | list = None,
                   'guide_winter': 'Soleil hiver', 'guide_winter_url': 'classement-destinations-meteo-hiver-2026.html',
                   'guide_jul': 'Où partir en juillet', 'guide_jul_url': 'ou-partir-en-juillet.html',
                   'see': 'Voir →',
-                  'map_btn': '🗺️ Carte climatique', 'map_url': 'carte.html',
+                  'map_btn': '🗺️ Carte climatique des 754 destinations', 'map_url': 'carte.html',
                   },
         'en':    {'kicker': 'Explore', 'title': 'Related destinations & guides',
                   'lead_tpl': "If {dest} doesn't fit your dates, here are alternatives and guides.",
@@ -1859,7 +1859,7 @@ def render_v6_explorer(slug: str, lang: str, related: dict | list = None,
                   'guide_winter': 'Winter sun', 'guide_winter_url': 'en/winter-sun-destinations-2026.html',
                   'guide_jul': 'Where to go in July', 'guide_jul_url': 'en/where-to-go-in-july.html',
                   'see': 'See →',
-                  'map_btn': '🗺️ Climate map', 'map_url': 'en/map.html',
+                  'map_btn': '🗺️ Climate map of 754 destinations', 'map_url': 'en/map.html',
                   },
         'en-us': {'kicker': 'Explore', 'title': 'Related destinations & guides',
                   'lead_tpl': "If {dest} doesn't fit your dates, here are alternatives and guides.",
@@ -1871,7 +1871,7 @@ def render_v6_explorer(slug: str, lang: str, related: dict | list = None,
                   'guide_winter': 'Winter sun', 'guide_winter_url': 'us/winter-sun-destinations-2026.html',
                   'guide_jul': 'Where to go in July', 'guide_jul_url': 'us/where-to-go-in-july.html',
                   'see': 'See →',
-                  'map_btn': '🗺️ Climate map', 'map_url': 'us/map.html',
+                  'map_btn': '🗺️ Climate map of 754 destinations', 'map_url': 'us/map.html',
                   },
         'es':    {'kicker': 'Explorar', 'title': 'Destinos & guías complementarias',
                   'lead_tpl': 'Si {dest} no encaja con sus fechas, aquí hay alternativas y guías.',
@@ -1883,7 +1883,7 @@ def render_v6_explorer(slug: str, lang: str, related: dict | list = None,
                   'guide_winter': 'Sol de invierno', 'guide_winter_url': 'es/sol-invierno-destinos-2026.html',
                   'guide_jul': 'Adónde ir en julio', 'guide_jul_url': 'es/adonde-ir-julio.html',
                   'see': 'Ver →',
-                  'map_btn': '🗺️ Mapa climático', 'map_url': 'es/mapa.html',
+                  'map_btn': '🗺️ Mapa climático de 754 destinos', 'map_url': 'es/mapa.html',
                   },
         'de':    {'kicker': 'Erkunden', 'title': 'Verwandte Reiseziele & Guides',
                   'lead_tpl': 'Wenn {dest} nicht zu Ihren Daten passt, hier sind Alternativen und Guides.',
@@ -1895,7 +1895,7 @@ def render_v6_explorer(slug: str, lang: str, related: dict | list = None,
                   'guide_winter': 'Wintersonne', 'guide_winter_url': 'de/wintersonne-reiseziele-2026.html',
                   'guide_jul': 'Wohin im Juli', 'guide_jul_url': 'de/wohin-im-juli.html',
                   'see': 'Sehen →',
-                  'map_btn': '🗺️ Klimakarte', 'map_url': 'de/karte.html',
+                  'map_btn': '🗺️ Klimakarte mit 754 Reisezielen', 'map_url': 'de/karte.html',
                   },
     }
     L = EXPLORER_I18N.get(lang, EXPLORER_I18N['fr'])
@@ -1942,7 +1942,7 @@ def render_v6_explorer(slug: str, lang: str, related: dict | list = None,
 
     # Box 3 : Guides & classements (statique)
     box_guides = (
-        f'<div class="box">\n'
+        f'<div class="box box-guides">\n'
         f'  <h3>{h(L["box_guides"])}</h3>\n'
         f'  <div class="list">\n'
         f'    <div class="list-item"><span>{h(L["guide_world"])}</span><strong><a href="{h(L["guide_world_url"])}">{h(L["see"])}</a></strong></div>\n'
@@ -1951,7 +1951,7 @@ def render_v6_explorer(slug: str, lang: str, related: dict | list = None,
         f'    <div class="list-item"><span>{h(L["guide_jul"])}</span><strong><a href="{h(L["guide_jul_url"])}">{h(L["see"])}</a></strong></div>\n'
         f'  </div>\n'
         f'  <div style="margin-top:16px">\n'
-        f'    <a class="btn primary" href="{h(L["map_url"])}">{h(L["map_btn"])}</a>\n'
+        f'    <a class="btn outlined" href="{h(L["map_url"])}">{h(L["map_btn"])}</a>\n'
         f'  </div>\n'
         f'</div>'
     )
@@ -2293,7 +2293,7 @@ def render_v6_head(lang: str, page_title: str, page_desc: str,
 {og_html}
 {preload_bg}
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=18"/>
+<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=19"/>
 {json_ld_html}
 </head>
 <body>'''
