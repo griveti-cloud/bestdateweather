@@ -134,7 +134,8 @@ def _other_lang_links(slug_fr: str, slug_en: str, slug_es: str, slug_de: str,
 
 
 def render_v6_footer(slug_fr: str, lang: str = 'fr',
-                     slug_en: str = '', slug_es: str = '', slug_de: str = '') -> str:
+                     slug_en: str = '', slug_es: str = '', slug_de: str = '',
+                     asset_prefix: str = '') -> str:
     """Rend le footer V6 dark navy avec drapeaux des autres langues sur 1 ligne.
 
     Args:
@@ -156,7 +157,7 @@ def render_v6_footer(slug_fr: str, lang: str = 'fr',
     lang_html_parts = []
     for href, flag, label in links:
         lang_html_parts.append(
-            f'<a href="{h(href)}"><img src="flags/{flag}" width="20" height="15" alt="" loading="lazy"> {h(label)}</a>'
+            f'<a href="{h(href)}"><img src="{asset_prefix}flags/{flag}" width="20" height="15" alt="" loading="lazy"> {h(label)}</a>'
         )
     lang_html = '<span class="sep">·</span>'.join(lang_html_parts)
 
@@ -251,6 +252,326 @@ def render_v6_methodology_block(lang: str = 'fr', is_mountain: bool = False) -> 
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# Helper 4 : DECIDER (section "Quand partir à X ?" - reprend le prototype)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Labels i18n inline (5 langues × ~20 strings)
+_DECIDER_I18N = {
+    'fr': {
+        'kicker': 'Décider',
+        'h2_tpl': 'Quand partir à {dest} ?',
+        'lead': 'La décision se joue sur plusieurs critères. Score climatique, foule touristique et activités possibles.',
+        'verdict_label': 'Verdict :',
+        'verdict_tpl': 'À {dest}, {top1} et {top2} sortent clairement du lot. {worst} concentre les conditions les moins favorables.',
+        'avis_label': "L'avis de Gilles",
+        'avis_role': 'Fondateur · BestDateWeather',
+        'top_avoid': 'Top & à éviter',
+        'legend_best': 'Meilleure période · ≥ 7',
+        'legend_mid': 'Période correcte · 4 – 7',
+        'legend_bad': 'Conditions marquées · < 4',
+        'right1_title': "Ce qu'on comprend en 5 secondes",
+        'summary_tpl': '{dest} offre {n_good} mois confortables, avec {n_bad} mois à éviter ({bad_months}). Le delta est marqué : {top} en {top_month} vs {worst} en {worst_month}.',
+        'summary_no_bad': '{dest} offre {n_good} mois confortables, sans mois vraiment à éviter. Le delta reste mesuré : {top} en {top_month} vs {worst} en {worst_month}.',
+        'right2_title': "Ce qu'il faut vérifier ensuite",
+        'right2_text': 'Votre tolérance à la foule et au budget. Les meilleurs mois concentrent la saturation touristique et les prix plus hauts. Les entre-saisons offrent un bon compromis.',
+        'right3_title': 'Action suivante',
+        'right3_text': 'Descendre au tableau détaillé pour comparer mois à mois, puis ouvrir la fiche du mois qui vous intéresse.',
+        'cta_compare': 'Comparer les 12 mois',
+        'cta_byproject': 'Selon votre projet',
+        'none': 'aucun',
+    },
+    'en': {
+        'kicker': 'Decide',
+        'h2_tpl': 'When to visit {dest}?',
+        'lead': 'The decision rests on several criteria. Climate score, tourist crowds and feasible activities.',
+        'verdict_label': 'Verdict:',
+        'verdict_tpl': 'In {dest}, {top1} and {top2} clearly stand out. {worst} concentrates the least favourable conditions.',
+        'avis_label': "Gilles's view",
+        'avis_role': 'Founder · BestDateWeather',
+        'top_avoid': 'Top & avoid',
+        'legend_best': 'Best period · ≥ 7',
+        'legend_mid': 'Decent period · 4 – 7',
+        'legend_bad': 'Tough conditions · < 4',
+        'right1_title': 'What you grasp in 5 seconds',
+        'summary_tpl': '{dest} offers {n_good} comfortable months, with {n_bad} months to avoid ({bad_months}). The gap is sharp: {top} in {top_month} vs {worst} in {worst_month}.',
+        'summary_no_bad': '{dest} offers {n_good} comfortable months, without any month really to avoid. The gap stays moderate: {top} in {top_month} vs {worst} in {worst_month}.',
+        'right2_title': 'What to check next',
+        'right2_text': 'Your tolerance for crowds and budget. The best months concentrate tourist saturation and higher prices. Shoulder seasons offer a good compromise.',
+        'right3_title': 'Next action',
+        'right3_text': 'Scroll down to the detailed table to compare month by month, then open the page of the month that interests you.',
+        'cta_compare': 'Compare the 12 months',
+        'cta_byproject': 'By your project',
+        'none': 'none',
+    },
+    'en-us': {
+        'kicker': 'Decide',
+        'h2_tpl': 'When to visit {dest}?',
+        'lead': 'The decision rests on several criteria. Climate score, tourist crowds and feasible activities.',
+        'verdict_label': 'Verdict:',
+        'verdict_tpl': 'In {dest}, {top1} and {top2} clearly stand out. {worst} concentrates the least favorable conditions.',
+        'avis_label': "Gilles's view",
+        'avis_role': 'Founder · BestDateWeather',
+        'top_avoid': 'Top & avoid',
+        'legend_best': 'Best period · ≥ 7',
+        'legend_mid': 'Decent period · 4 – 7',
+        'legend_bad': 'Tough conditions · < 4',
+        'right1_title': 'What you grasp in 5 seconds',
+        'summary_tpl': '{dest} offers {n_good} comfortable months, with {n_bad} months to avoid ({bad_months}). The gap is sharp: {top} in {top_month} vs {worst} in {worst_month}.',
+        'summary_no_bad': '{dest} offers {n_good} comfortable months, without any month really to avoid. The gap stays moderate: {top} in {top_month} vs {worst} in {worst_month}.',
+        'right2_title': 'What to check next',
+        'right2_text': 'Your tolerance for crowds and budget. The best months concentrate tourist saturation and higher prices. Shoulder seasons offer a good compromise.',
+        'right3_title': 'Next action',
+        'right3_text': 'Scroll down to the detailed table to compare month by month, then open the page of the month that interests you.',
+        'cta_compare': 'Compare the 12 months',
+        'cta_byproject': 'By your project',
+        'none': 'none',
+    },
+    'es': {
+        'kicker': 'Decidir',
+        'h2_tpl': '¿Cuándo viajar a {dest}?',
+        'lead': 'La decisión depende de varios criterios. Puntuación climática, multitudes turísticas y actividades posibles.',
+        'verdict_label': 'Veredicto:',
+        'verdict_tpl': 'En {dest}, {top1} y {top2} destacan claramente. {worst} concentra las condiciones menos favorables.',
+        'avis_label': 'La opinión de Gilles',
+        'avis_role': 'Fundador · BestDateWeather',
+        'top_avoid': 'Mejores y peores',
+        'legend_best': 'Mejor periodo · ≥ 7',
+        'legend_mid': 'Periodo correcto · 4 – 7',
+        'legend_bad': 'Condiciones difíciles · < 4',
+        'right1_title': 'Lo que se entiende en 5 segundos',
+        'summary_tpl': '{dest} ofrece {n_good} meses cómodos, con {n_bad} meses a evitar ({bad_months}). La diferencia es marcada: {top} en {top_month} vs {worst} en {worst_month}.',
+        'summary_no_bad': '{dest} ofrece {n_good} meses cómodos, sin meses realmente a evitar. La diferencia es moderada: {top} en {top_month} vs {worst} en {worst_month}.',
+        'right2_title': 'Lo que hay que verificar después',
+        'right2_text': 'Su tolerancia a las multitudes y al presupuesto. Los mejores meses concentran la saturación turística y los precios más altos. Las temporadas intermedias ofrecen un buen compromiso.',
+        'right3_title': 'Acción siguiente',
+        'right3_text': 'Bajar a la tabla detallada para comparar mes a mes, luego abrir la ficha del mes que le interese.',
+        'cta_compare': 'Comparar los 12 meses',
+        'cta_byproject': 'Según su proyecto',
+        'none': 'ninguno',
+    },
+    'de': {
+        'kicker': 'Entscheiden',
+        'h2_tpl': 'Wann nach {dest} reisen?',
+        'lead': 'Die Entscheidung hängt von mehreren Kriterien ab. Klimawert, Touristenandrang und mögliche Aktivitäten.',
+        'verdict_label': 'Urteil:',
+        'verdict_tpl': 'In {dest} stechen {top1} und {top2} klar hervor. {worst} konzentriert die ungünstigsten Bedingungen.',
+        'avis_label': 'Gilles\' Meinung',
+        'avis_role': 'Gründer · BestDateWeather',
+        'top_avoid': 'Beste & schlechteste',
+        'legend_best': 'Beste Zeit · ≥ 7',
+        'legend_mid': 'Akzeptable Zeit · 4 – 7',
+        'legend_bad': 'Schwierige Bedingungen · < 4',
+        'right1_title': 'Was man in 5 Sekunden versteht',
+        'summary_tpl': '{dest} bietet {n_good} angenehme Monate, mit {n_bad} zu vermeidenden Monaten ({bad_months}). Der Unterschied ist deutlich: {top} im {top_month} vs {worst} im {worst_month}.',
+        'summary_no_bad': '{dest} bietet {n_good} angenehme Monate, ohne wirklich zu vermeidenden Monat. Der Unterschied bleibt moderat: {top} im {top_month} vs {worst} im {worst_month}.',
+        'right2_title': 'Was als Nächstes zu prüfen ist',
+        'right2_text': 'Ihre Toleranz gegenüber Menschenmassen und Budget. Die besten Monate konzentrieren die touristische Sättigung und die höheren Preise. Die Zwischensaisons bieten einen guten Kompromiss.',
+        'right3_title': 'Nächste Aktion',
+        'right3_text': 'Nach unten zur Detailtabelle scrollen, um Monat für Monat zu vergleichen, dann die Seite des gewünschten Monats öffnen.',
+        'cta_compare': 'Die 12 Monate vergleichen',
+        'cta_byproject': 'Nach Ihrem Projekt',
+        'none': 'keine',
+    },
+}
+
+
+# Abréviations courtes mois (3-4 lettres) pour les barres du décider.
+# Évite les collisions ('Juin'→'Jui' et 'Juillet'→'Jui' = collision en FR).
+# Aligné avec le prototype paris-v6.html.
+_MONTH_ABBR = {
+    'fr':    ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû',  'Sep', 'Oct', 'Nov', 'Déc'],
+    'en':    ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',  'Jul',  'Aug',  'Sep', 'Oct', 'Nov', 'Dec'],
+    'en-us': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',  'Jul',  'Aug',  'Sep', 'Oct', 'Nov', 'Dec'],
+    'es':    ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',  'Jul',  'Ago',  'Sep', 'Oct', 'Nov', 'Dic'],
+    'de':    ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun',  'Jul',  'Aug',  'Sep', 'Okt', 'Nov', 'Dez'],
+}
+
+
+def _bar_class(score: float, is_top: bool) -> str:
+    """Détermine la classe CSS d'une barre de score (best/good/mid/low/bad)."""
+    if score >= 7 and is_top:
+        return 'best'
+    if score >= 7:
+        return 'good'
+    if score >= 5:
+        return 'mid'
+    if score >= 4:
+        return 'low'
+    return 'bad'
+
+
+def render_v6_decider(slug: str, lang: str, dest_name: str,
+                       months_data: list[dict], editorial_html: str,
+                       is_mountain: bool = False) -> str:
+    """Rend la section #decider du prototype V6 (Quand partir à X ?).
+
+    Reproduit la structure complète du prototype paris-v6.html :
+    - Verdict + avis Gilles (avatar G + édito) + pills (Top 4 + 1 bad)
+    - Bars chart 12 mois avec scores + légende
+    - Right-stack : 3 right-items + cta-row + method-mini compactée
+
+    Args:
+        slug: identifiant destination (FR canonical)
+        lang: 'fr', 'en', 'en-us', 'es', 'de'
+        dest_name: nom localisé de la destination (ex 'Paris', 'Cinque Terre')
+        months_data: liste de 12 dicts avec 'mois' (localisé) et 'score_10' (0-10)
+        editorial_html: HTML édito de l'avis Gilles depuis avis_annuel.json
+        is_mountain: True si destination mountain (méthodologie ski/rando)
+    """
+    L = _DECIDER_I18N.get(lang, _DECIDER_I18N['fr'])
+    method_block = render_v6_methodology_block(lang, is_mountain=is_mountain)
+
+    # ── Calculs : top 4 mois, worst, etc. ──
+    sorted_months = sorted(months_data, key=lambda m: -m['score_10'])
+    top_months = sorted_months[:4]
+    worst_month = sorted_months[-1]
+    top_score = top_months[0]['score_10']
+    worst_score = worst_month['score_10']
+
+    # ── Verdict text auto-généré ──
+    verdict_text = L['verdict_tpl'].format(
+        dest=dest_name,
+        top1=top_months[0]['mois'],
+        top2=top_months[1]['mois'],
+        worst=worst_month['mois'],
+    )
+
+    # ── Avis card ──
+    avis_card = (
+        f'<div class="avis-card">\n'
+        f'  <div class="avis-head">\n'
+        f'    <div class="avis-avatar">G</div>\n'
+        f'    <div class="avis-meta">\n'
+        f'      <div class="avis-label">{h(L["avis_label"])}</div>\n'
+        f'      <div class="avis-role">{h(L["avis_role"])}</div>\n'
+        f'    </div>\n'
+        f'  </div>\n'
+        f'  <p class="avis-edito">{editorial_html}</p>\n'
+        f'</div>'
+    )
+
+    # ── Pills : Top 4 + 1 bad ──
+    pill_items = []
+    for i, m in enumerate(top_months):
+        prefix = '🏆 ' if i == 0 else ''
+        pill_items.append(
+            f'<span class="pill good">{prefix}{h(m["mois"])} · {m["score_10"]:.1f}</span>'
+        )
+    pill_items.append(
+        f'<span class="pill bad">⚠️ {h(worst_month["mois"])} · {worst_score:.1f}</span>'
+    )
+    pills_html = '\n              '.join(pill_items)
+
+    # ── Bars chart 12 mois ──
+    top_month_name = top_months[0]['mois']
+    abbr_list = _MONTH_ABBR.get(lang, _MONTH_ABBR['fr'])
+    bar_items = []
+    for i, m in enumerate(months_data):
+        score = m['score_10']
+        height_pct = max(5, int(score * 10))  # min 5% pour visibilité barre vide
+        is_top = (m['mois'] == top_month_name)
+        bar_class = _bar_class(score, is_top)
+        # Abréviation mois (3-4 lettres) sans collision (Juin/Juil distincts en FR)
+        label = abbr_list[i] if i < 12 else m['mois'][:3]
+        bar_items.append(
+            f'<div class="bar-wrap"><div class="bar-slot">'
+            f'<div class="bar {bar_class}" style="height:{height_pct}%"></div></div>'
+            f'<div class="bar-score">{score:.1f}</div>'
+            f'<div class="bar-label">{h(label)}</div></div>'
+        )
+    bars_html = '\n              '.join(bar_items)
+
+    # ── Légende bars ──
+    legend_html = (
+        f'<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;'
+        f'justify-content:center;font-size:11px;color:var(--muted)">\n'
+        f'  <span style="display:inline-flex;align-items:center;gap:5px">'
+        f'<span style="width:11px;height:11px;border-radius:3px;'
+        f'background:linear-gradient(180deg,#2ea86a 0%,#1a7a4a 100%)"></span>'
+        f'{h(L["legend_best"])}</span>\n'
+        f'  <span style="display:inline-flex;align-items:center;gap:5px">'
+        f'<span style="width:11px;height:11px;border-radius:3px;'
+        f'background:linear-gradient(180deg,#ecc568 0%,#b8860b 100%)"></span>'
+        f'{h(L["legend_mid"])}</span>\n'
+        f'  <span style="display:inline-flex;align-items:center;gap:5px">'
+        f'<span style="width:11px;height:11px;border-radius:3px;'
+        f'background:linear-gradient(180deg,#b91c1c 0%,#8b1616 100%)"></span>'
+        f'{h(L["legend_bad"])}</span>\n'
+        f'</div>'
+    )
+
+    # ── Right-stack : 3 right-items + cta-row + method-mini ──
+    n_good = sum(1 for m in months_data if m['score_10'] >= 7)
+    bad_months_list = [m['mois'] for m in months_data if m['score_10'] < 4]
+    n_bad = len(bad_months_list)
+    bad_months_str = ', '.join(bad_months_list) if bad_months_list else L['none']
+    summary_tpl = L['summary_tpl'] if n_bad > 0 else L['summary_no_bad']
+    summary_5s = summary_tpl.format(
+        dest=dest_name, n_good=n_good, n_bad=n_bad,
+        bad_months=bad_months_str,
+        top=f'{top_score:.1f}',
+        worst=f'{worst_score:.1f}',
+        top_month=top_months[0]['mois'],
+        worst_month=worst_month['mois'],
+    )
+
+    right_stack = (
+        f'<div class="card pad right-stack">\n'
+        f'  <div class="right-item">\n'
+        f'    <h3>{h(L["right1_title"])}</h3>\n'
+        f'    <p>{h(summary_5s)}</p>\n'
+        f'  </div>\n'
+        f'  <div class="right-item">\n'
+        f'    <h3>{h(L["right2_title"])}</h3>\n'
+        f'    <p>{h(L["right2_text"])}</p>\n'
+        f'  </div>\n'
+        f'  <div class="right-item">\n'
+        f'    <h3>{h(L["right3_title"])}</h3>\n'
+        f'    <p>{h(L["right3_text"])}</p>\n'
+        f'  </div>\n'
+        f'  <div class="cta-row">\n'
+        f'    <a class="btn primary" href="#tableau">{h(L["cta_compare"])}</a>\n'
+        f'    <a class="btn" href="#par-projet">{h(L["cta_byproject"])}</a>\n'
+        f'  </div>\n'
+        f'  {method_block}\n'
+        f'</div>'
+    )
+
+    # ── Assemblage final ──
+    h2_text = L['h2_tpl'].format(dest=dest_name)
+    return (
+        f'<section id="decider">\n'
+        f'  <div class="container">\n'
+        f'    <div class="section-head">\n'
+        f'      <div class="section-kicker">{h(L["kicker"])}</div>\n'
+        f'      <h2>{h(h2_text)}</h2>\n'
+        f'      <p class="lead">{h(L["lead"])}</p>\n'
+        f'    </div>\n'
+        f'    <div class="decider-grid">\n'
+        f'      <div class="verdict-box">\n'
+        f'        <div class="verdict-note"><strong>{h(L["verdict_label"])}</strong> {h(verdict_text)}</div>\n'
+        f'        {avis_card}\n'
+        f'        <div>\n'
+        f'          <div class="small-label">{h(L["top_avoid"])}</div>\n'
+        f'          <div class="pills">\n'
+        f'              {pills_html}\n'
+        f'          </div>\n'
+        f'        </div>\n'
+        f'        <div>\n'
+        f'          <div class="bars">\n'
+        f'              {bars_html}\n'
+        f'          </div>\n'
+        f'          {legend_html}\n'
+        f'        </div>\n'
+        f'      </div>\n'
+        f'      {right_stack}\n'
+        f'    </div>\n'
+        f'  </div>\n'
+        f'</section>'
+    )
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Helper 5 : INFOS PRATIQUES (Box 3 adaptative selon profil)
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -296,13 +617,14 @@ def _box1_country(L_ip: dict, country_name: str, country_iso: str,
                   lang_local: str, currency_name: str, currency_symbol: str,
                   drive: str, gpi_level: int | None,
                   cost_tier: int | None, gpi_value: float | None = None,
-                  cost_value: float | None = None) -> str:
+                  cost_value: float | None = None,
+                  asset_prefix: str = '') -> str:
     """Box 1 : Pays · {country}. 5 list-items.
 
     gpi_level: 1-5 (1=très sûr). cost_tier: 1-5 (1=très bon marché).
     Si None, on omet le tier badge mais on garde le label vide (cohérence visuelle).
     """
-    flag_html = (f'<img src="flags/{country_iso}.png" width="20" height="14" alt="" '
+    flag_html = (f'<img src="{asset_prefix}flags/{country_iso}.png" width="20" height="14" alt="" '
                  f'style="vertical-align:middle;border-radius:2px;margin-right:6px">'
                  if country_iso else '')
     title_tpl = L_ip['box1_title_tpl']
@@ -313,9 +635,25 @@ def _box1_country(L_ip: dict, country_name: str, country_iso: str,
     safe_label = L_ip.get(f'tier_safe_{gpi_level}', '—') if gpi_level else '—'
     cost_label = L_ip.get(f'tier_cost_{cost_tier}', '—') if cost_tier else '—'
 
-    safe_hint = (f'GPI (Global Peace Index) 2024 : {gpi_value:.2f}/5 — niveau {gpi_level}/5'
+    # i18n des hints GPI / cost
+    HINT_GPI = {
+        'fr': 'GPI (Global Peace Index) 2024 : {v:.2f}/5 — niveau {l}/5',
+        'en': 'GPI (Global Peace Index) 2024: {v:.2f}/5 — level {l}/5',
+        'en-us': 'GPI (Global Peace Index) 2024: {v:.2f}/5 — level {l}/5',
+        'es': 'GPI (Global Peace Index) 2024: {v:.2f}/5 — nivel {l}/5',
+        'de': 'GPI (Global Peace Index) 2024: {v:.2f}/5 — Stufe {l}/5',
+    }
+    HINT_COST = {
+        'fr': 'Numbeo Cost of Living 2026 : {v:.1f} — niveau {l}/5',
+        'en': 'Numbeo Cost of Living 2026: {v:.1f} — level {l}/5',
+        'en-us': 'Numbeo Cost of Living 2026: {v:.1f} — level {l}/5',
+        'es': 'Numbeo Cost of Living 2026: {v:.1f} — nivel {l}/5',
+        'de': 'Numbeo Cost of Living 2026: {v:.1f} — Stufe {l}/5',
+    }
+    lang_h = L_ip.get('_lang', 'fr')
+    safe_hint = (HINT_GPI.get(lang_h, HINT_GPI['fr']).format(v=gpi_value, l=gpi_level)
                  if gpi_value and gpi_level else None)
-    cost_hint = (f'Numbeo Cost of Living 2026 : {cost_value:.1f} — niveau {cost_tier}/5'
+    cost_hint = (HINT_COST.get(lang_h, HINT_COST['fr']).format(v=cost_value, l=cost_tier)
                  if cost_value and cost_tier else None)
 
     items = [
@@ -390,11 +728,17 @@ def _box2_climate(L_ip: dict, climate_type: str, trend_value: float | None,
 
 def _box3_mountain(L_ip: dict, alt_village: int | None, alt_ski_max: int | None,
                    ski_season: str, hiking_season: str,
-                   high_alt_warning: bool = True) -> str:
+                   high_alt_warning: bool = True, lang: str = 'fr') -> str:
     """Box 3 mountain : altitudes, saisons ski/rando, haute montagne."""
-    alt_v = f'{alt_village} m' if alt_village else '—'
-    alt_dom = (f'{alt_village} → {alt_ski_max} m'
-               if alt_village and alt_ski_max else '—')
+    # FIX: convertir m → ft pour EN-US (1 m = 3.28084 ft)
+    is_us = (lang == 'en-us')
+    unit = 'ft' if is_us else 'm'
+    def _alt(v):
+        if v is None: return None
+        return round(v * 3.28084) if is_us else v
+    av, am = _alt(alt_village), _alt(alt_ski_max)
+    alt_v = f'{av} {unit}' if av else '—'
+    alt_dom = (f'{av} → {am} {unit}' if av and am else '—')
     items = [
         _list_item('⛰️', L_ip['mtn_alt_village'], alt_v),
         _list_item('🎿', L_ip['mtn_ski_domain'], alt_dom),
@@ -415,20 +759,53 @@ def _box3_tropical(L_ip: dict, dry_season: str, wet_season: str,
                    has_cyclones: bool, latitude: float = 0,
                    lang: str = 'fr') -> str:
     """Box 3 tropical : saisons sèche/humide, mer, cyclones."""
+    lang_h = L_ip.get('_lang', 'fr')
+    # i18n hints
+    HINT_DRY = {
+        'fr': 'Période de moindre pluviosité',
+        'en': 'Period of lowest rainfall',
+        'en-us': 'Period of lowest rainfall',
+        'es': 'Periodo de menor pluviosidad',
+        'de': 'Zeit mit geringstem Niederschlag',
+    }
+    HINT_WET = {
+        'fr': 'Mousson — averses souvent courtes en après-midi',
+        'en': 'Monsoon — showers often short, in the afternoon',
+        'en-us': 'Monsoon — showers often short, in the afternoon',
+        'es': 'Monzón — chubascos breves a menudo por la tarde',
+        'de': 'Monsun — oft kurze Regenschauer am Nachmittag',
+    }
+    HINT_CYC_YES = {
+        'fr': 'Latitude {lat:.1f}° — zone de formation cyclonique',
+        'en': 'Latitude {lat:.1f}° — tropical cyclone formation zone',
+        'en-us': 'Latitude {lat:.1f}° — tropical cyclone formation zone',
+        'es': 'Latitud {lat:.1f}° — zona de formación de ciclones',
+        'de': 'Breitengrad {lat:.1f}° — Entstehungszone tropischer Wirbelstürme',
+    }
+    HINT_CYC_NO = {
+        'fr': 'Zone équatoriale (~{lat:.0f}°) hors zone des cyclones tropicaux',
+        'en': 'Equatorial zone (~{lat:.0f}°), outside tropical cyclone belt',
+        'en-us': 'Equatorial zone (~{lat:.0f}°), outside tropical cyclone belt',
+        'es': 'Zona ecuatorial (~{lat:.0f}°), fuera del cinturón de ciclones',
+        'de': 'Äquatoriale Zone (~{lat:.0f}°), außerhalb der Wirbelsturmzone',
+    }
+    CYC_SEASON = {'fr': 'Saison Nov-Avr', 'en': 'Season Nov-Apr', 'en-us': 'Season Nov-Apr',
+                  'es': 'Temporada Nov-Abr', 'de': 'Saison Nov-Apr'}
+
     items = [
         _list_item('🌞', L_ip['tro_dry_season'], h(dry_season),
-                   hint='Période de moindre pluviosité'),
+                   hint=HINT_DRY.get(lang_h, HINT_DRY['fr'])),
         _list_item('🌧️', L_ip['tro_wet_season'], h(wet_season),
-                   hint='Mousson — averses souvent courtes en après-midi'),
+                   hint=HINT_WET.get(lang_h, HINT_WET['fr'])),
     ]
     if sea_summer is not None:
-        items.append(_list_item('🌊', L_ip['tro_sea_summer'], f'~{_fmt_t(sea_summer, lang)}'))
+        items.append(_list_item('🌊', L_ip['tro_sea_summer'], f'~{_fmt_t(sea_summer, lang_h)}'))
     if sea_winter is not None:
-        items.append(_list_item('🌊', L_ip['tro_sea_winter'], f'~{_fmt_t(sea_winter, lang)}'))
-    cyclone_val = ('Saison Nov-Avr' if has_cyclones else h(L_ip['tro_no_cyclones']))
-    cyclone_hint = (f'Latitude {latitude:.1f}° — zone de formation cyclonique'
+        items.append(_list_item('🌊', L_ip['tro_sea_winter'], f'~{_fmt_t(sea_winter, lang_h)}'))
+    cyclone_val = (CYC_SEASON.get(lang_h, CYC_SEASON['fr']) if has_cyclones else h(L_ip['tro_no_cyclones']))
+    cyclone_hint = (HINT_CYC_YES.get(lang_h, HINT_CYC_YES['fr']).format(lat=latitude)
                     if has_cyclones
-                    else f'Zone équatoriale (~{abs(latitude):.0f}°) hors zone des cyclones tropicaux')
+                    else HINT_CYC_NO.get(lang_h, HINT_CYC_NO['fr']).format(lat=abs(latitude)))
     items.append(_list_item('🌀', L_ip['tro_cyclones'], cyclone_val, hint=cyclone_hint))
     return (f'<div class="box"><h3>🏝️ {h(L_ip["box3_tropical"])}</h3>'
             f'<div class="list">{"".join(items)}</div></div>')
@@ -485,7 +862,7 @@ def _box3_city(L_ip: dict, high_season: str = 'Juin → Août',
             f'<div class="list">{"".join(items)}</div></div>')
 
 
-def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict) -> str:
+def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict, asset_prefix: str = '') -> str:
     """Rend la section <section> Infos pratiques avec Box 3 adaptative.
 
     Args:
@@ -513,6 +890,7 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict) -> str:
               city:     high_season, unesco, transport, visa_text
     """
     L_ip = _v6_strings(lang)['infos_pratiques']
+    L_ip['_lang'] = lang  # pour i18n hints (GPI, cost, tropical)
     d = dest_data
 
     profile = _detect_profile(
@@ -536,6 +914,7 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict) -> str:
         gpi_value=d.get('gpi_value'),
         cost_tier=_safe_int(d.get('cost_tier')),
         cost_value=d.get('cost_value'),
+        asset_prefix=asset_prefix,
     )
 
     box2 = _box2_climate(L_ip,
@@ -559,6 +938,7 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict) -> str:
             ski_season=d.get('ski_season', 'Déc → Mai'),
             hiking_season=d.get('hiking_season', 'Juin → Sept'),
             high_alt_warning=d.get('high_alt_warning', True),
+            lang=lang,
         )
     elif profile == 'tropical':
         box3 = _box3_tropical(L_ip,
@@ -862,7 +1242,7 @@ def _coord_label(lat: float, lon: float) -> str:
     return f'{abs(lat):.2f}°{ns} · {abs(lon):.2f}°{ew}'
 
 
-def render_v6_decision_card(slug: str, lang: str, hero_data: dict) -> str:
+def render_v6_decision_card(slug: str, lang: str, hero_data: dict, asset_prefix: str = '') -> str:
     """Rend la section <header class="hero-wrap"> avec le decision-card.
 
     Args:
@@ -915,7 +1295,7 @@ def render_v6_decision_card(slug: str, lang: str, hero_data: dict) -> str:
     update_lbl = L_dec['tag_update'].format(month=h(d.get('update_month', '—')))
     coords_lbl = _coord_label(d.get('lat', 0), d.get('lon', 0))
 
-    eyebrow = (f'<img src="flags/{iso}.png" alt=""/>{nom_h}, {country_h} · {climate_h}'
+    eyebrow = (f'<img src="{asset_prefix}flags/{iso}.png" alt=""/>{nom_h}, {country_h} · {climate_h}'
                if iso and country_h
                else f'{nom_h} · {climate_h}')
 
@@ -993,6 +1373,216 @@ def _emoji_for_score(score: float, classe: str = '') -> str:
 def _mood_class(classe: str) -> str:
     """Map classe (rec/mid/avoid) → CSS class (good/mid/bad)."""
     return {'rec': 'good', 'mid': 'mid', 'avoid': 'bad'}.get(classe, 'mid')
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Helpers pour les 2 cards droite de la section "Comprendre"
+# (Lecture rapide + Conditions détaillées)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Labels i18n pour les 2 cards (5 langues)
+_COMPREHENSION_I18N = {
+    'fr': {
+        'lecture_label': '📊 Lecture rapide',
+        'window_optimal': 'Fenêtre optimale',
+        'good_transition': 'Bonne transition',
+        'tough_period': 'Période rude',
+        'no_optimal': 'Aucun mois > 7',
+        'no_transition': '—',
+        'no_tough': 'aucune',
+        'conditions_label': '🌡️ Conditions détaillées ({month})',
+        'feel': '🌡️ Ressenti',
+        'uv': '☀️ UV',
+        'humidity': '💧 Humidité ressentie',
+        'rain': '☔ Pluie',
+        'sun': '🌅 Soleil',
+        # Ressenti labels
+        'feel_cold': 'Frais', 'feel_cool': 'Tempéré', 'feel_comfortable': 'Confortable',
+        'feel_warm': 'Chaud', 'feel_hot': 'Très chaud', 'feel_humid_heat': 'Chaleur humide',
+        # UV labels
+        'uv_low': 'Faible', 'uv_moderate': 'Modéré', 'uv_moderate_strong': 'Modéré-Fort',
+        'uv_strong': 'Fort', 'uv_very_strong': 'Très fort', 'uv_extreme': 'Extrême',
+        # Humidité labels
+        'hum_dry': 'Sec', 'hum_pleasant': 'Agréable', 'hum_humid': 'Lourd', 'hum_oppressive': 'Étouffant',
+        # Format mois "(juillet)"
+        'month_lower': True,  # mois en minuscules entre parenthèses
+    },
+    'en': {
+        'lecture_label': '📊 Quick read',
+        'window_optimal': 'Optimal window',
+        'good_transition': 'Good transition',
+        'tough_period': 'Tough period',
+        'no_optimal': 'No month > 7',
+        'no_transition': '—',
+        'no_tough': 'none',
+        'conditions_label': '🌡️ Detailed conditions ({month})',
+        'feel': '🌡️ Feel',
+        'uv': '☀️ UV',
+        'humidity': '💧 Humidity feel',
+        'rain': '☔ Rain',
+        'sun': '🌅 Sunshine',
+        'feel_cold': 'Cold', 'feel_cool': 'Cool', 'feel_comfortable': 'Comfortable',
+        'feel_warm': 'Warm', 'feel_hot': 'Hot', 'feel_humid_heat': 'Humid heat',
+        'uv_low': 'Low', 'uv_moderate': 'Moderate', 'uv_moderate_strong': 'Moderate-Strong',
+        'uv_strong': 'Strong', 'uv_very_strong': 'Very strong', 'uv_extreme': 'Extreme',
+        'hum_dry': 'Dry', 'hum_pleasant': 'Pleasant', 'hum_humid': 'Humid', 'hum_oppressive': 'Oppressive',
+        'month_lower': False,
+    },
+    'en-us': {
+        'lecture_label': '📊 Quick read',
+        'window_optimal': 'Optimal window',
+        'good_transition': 'Good transition',
+        'tough_period': 'Tough period',
+        'no_optimal': 'No month > 7',
+        'no_transition': '—',
+        'no_tough': 'none',
+        'conditions_label': '🌡️ Detailed conditions ({month})',
+        'feel': '🌡️ Feel',
+        'uv': '☀️ UV',
+        'humidity': '💧 Humidity feel',
+        'rain': '☔ Rain',
+        'sun': '🌅 Sunshine',
+        'feel_cold': 'Cold', 'feel_cool': 'Cool', 'feel_comfortable': 'Comfortable',
+        'feel_warm': 'Warm', 'feel_hot': 'Hot', 'feel_humid_heat': 'Humid heat',
+        'uv_low': 'Low', 'uv_moderate': 'Moderate', 'uv_moderate_strong': 'Moderate-Strong',
+        'uv_strong': 'Strong', 'uv_very_strong': 'Very strong', 'uv_extreme': 'Extreme',
+        'hum_dry': 'Dry', 'hum_pleasant': 'Pleasant', 'hum_humid': 'Humid', 'hum_oppressive': 'Oppressive',
+        'month_lower': False,
+    },
+    'es': {
+        'lecture_label': '📊 Lectura rápida',
+        'window_optimal': 'Ventana óptima',
+        'good_transition': 'Buena transición',
+        'tough_period': 'Periodo duro',
+        'no_optimal': 'Ningún mes > 7',
+        'no_transition': '—',
+        'no_tough': 'ninguno',
+        'conditions_label': '🌡️ Condiciones detalladas ({month})',
+        'feel': '🌡️ Sensación',
+        'uv': '☀️ UV',
+        'humidity': '💧 Humedad sentida',
+        'rain': '☔ Lluvia',
+        'sun': '🌅 Sol',
+        'feel_cold': 'Frío', 'feel_cool': 'Templado', 'feel_comfortable': 'Confortable',
+        'feel_warm': 'Cálido', 'feel_hot': 'Caluroso', 'feel_humid_heat': 'Calor húmedo',
+        'uv_low': 'Bajo', 'uv_moderate': 'Moderado', 'uv_moderate_strong': 'Moderado-Fuerte',
+        'uv_strong': 'Fuerte', 'uv_very_strong': 'Muy fuerte', 'uv_extreme': 'Extremo',
+        'hum_dry': 'Seco', 'hum_pleasant': 'Agradable', 'hum_humid': 'Húmedo', 'hum_oppressive': 'Opresivo',
+        'month_lower': False,
+    },
+    'de': {
+        'lecture_label': '📊 Schnellüberblick',
+        'window_optimal': 'Optimales Fenster',
+        'good_transition': 'Gute Übergangszeit',
+        'tough_period': 'Harte Periode',
+        'no_optimal': 'Kein Monat > 7',
+        'no_transition': '—',
+        'no_tough': 'keine',
+        'conditions_label': '🌡️ Detaillierte Bedingungen ({month})',
+        'feel': '🌡️ Empfinden',
+        'uv': '☀️ UV',
+        'humidity': '💧 Empfundene Feuchte',
+        'rain': '☔ Regen',
+        'sun': '🌅 Sonne',
+        'feel_cold': 'Kalt', 'feel_cool': 'Kühl', 'feel_comfortable': 'Angenehm',
+        'feel_warm': 'Warm', 'feel_hot': 'Heiß', 'feel_humid_heat': 'Feuchte Hitze',
+        'uv_low': 'Niedrig', 'uv_moderate': 'Mäßig', 'uv_moderate_strong': 'Mäßig-Stark',
+        'uv_strong': 'Stark', 'uv_very_strong': 'Sehr stark', 'uv_extreme': 'Extrem',
+        'hum_dry': 'Trocken', 'hum_pleasant': 'Angenehm', 'hum_humid': 'Schwül', 'hum_oppressive': 'Drückend',
+        'month_lower': False,
+    },
+}
+
+
+def _build_lecture_rapide(months_data: list[dict], lang: str, abbr_list: list[str]) -> dict:
+    """Calcule les 3 valeurs de la card 'Lecture rapide'.
+
+    Returns: {'window': 'Avr → Sep', 'transition': 'Oct', 'tough': 'Jan · Déc'}
+    """
+    L = _COMPREHENSION_I18N.get(lang, _COMPREHENSION_I18N['fr'])
+
+    # Fenêtre optimale : range mois 'rec' consécutifs (le plus long)
+    rec_indices = [i for i, m in enumerate(months_data) if m.get('classe') == 'rec']
+    if not rec_indices:
+        window_str = L['no_optimal']
+    else:
+        # Trouve la plus longue séquence consécutive
+        ranges = []
+        start = rec_indices[0]
+        prev = start
+        for idx in rec_indices[1:]:
+            if idx == prev + 1:
+                prev = idx
+            else:
+                ranges.append((start, prev))
+                start = idx
+                prev = idx
+        ranges.append((start, prev))
+        # Plus longue range
+        longest = max(ranges, key=lambda r: r[1] - r[0])
+        if longest[0] == longest[1]:
+            window_str = abbr_list[longest[0]]
+        else:
+            window_str = f'{abbr_list[longest[0]]} → {abbr_list[longest[1]]}'
+
+    # Bonne transition : mois 'mid' adjacent à au moins un 'rec'
+    transition_months = []
+    for i, m in enumerate(months_data):
+        if m.get('classe') == 'mid':
+            prev_cls = months_data[(i - 1) % 12].get('classe', '')
+            next_cls = months_data[(i + 1) % 12].get('classe', '')
+            if 'rec' in (prev_cls, next_cls):
+                transition_months.append(abbr_list[i])
+    transition_str = ' · '.join(transition_months) if transition_months else L['no_transition']
+
+    # Période rude : mois 'avoid'
+    tough_months = [abbr_list[i] for i, m in enumerate(months_data) if m.get('classe') == 'avoid']
+    tough_str = ' · '.join(tough_months) if tough_months else L['no_tough']
+
+    return {'window': window_str, 'transition': transition_str, 'tough': tough_str}
+
+
+def _feel_label(tmax: float, dew: float, lang: str) -> str:
+    """Détermine le label de ressenti thermique selon tmax + dew_point."""
+    L = _COMPREHENSION_I18N.get(lang, _COMPREHENSION_I18N['fr'])
+    # Chaleur humide : tmax >= 26 + dew >= 22
+    if tmax >= 26 and dew >= 22:
+        return L['feel_humid_heat']
+    if tmax >= 32:
+        return L['feel_hot']
+    if tmax >= 26:
+        return L['feel_warm']
+    if tmax >= 18:
+        return L['feel_comfortable']
+    if tmax >= 10:
+        return L['feel_cool']
+    return L['feel_cold']
+
+
+def _uv_label(uv: float, lang: str) -> str:
+    """Label UV selon valeur (0-15+)."""
+    L = _COMPREHENSION_I18N.get(lang, _COMPREHENSION_I18N['fr'])
+    if uv >= 11:
+        return L['uv_extreme']
+    if uv >= 8:
+        return L['uv_very_strong']
+    if uv >= 6:
+        return L['uv_moderate_strong']
+    if uv >= 3:
+        return L['uv_moderate']
+    return L['uv_low']
+
+
+def _humidity_label(dew: float, lang: str) -> str:
+    """Label humidité ressentie selon dew point (°C)."""
+    L = _COMPREHENSION_I18N.get(lang, _COMPREHENSION_I18N['fr'])
+    if dew >= 22:
+        return L['hum_oppressive']
+    if dew >= 18:
+        return L['hum_humid']
+    if dew >= 13:
+        return L['hum_pleasant']
+    return L['hum_dry']
 
 
 def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
@@ -1076,6 +1666,48 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
             f'</div></a>'
         )
 
+    # ── Calcul des 2 cards droite (Lecture rapide + Conditions détaillées) ──
+    L_comp = _COMPREHENSION_I18N.get(lang, _COMPREHENSION_I18N['fr'])
+    abbr_list = _MONTH_ABBR.get(lang, _MONTH_ABBR['fr'])
+
+    lecture = _build_lecture_rapide(months_data, lang, abbr_list)
+
+    # Top mois pour Conditions détaillées
+    top_month = max(months_data, key=lambda m: m['score_10'])
+    top_name = top_month['mois'].lower() if L_comp.get('month_lower') else top_month['mois']
+    conditions_label = L_comp['conditions_label'].format(month=top_name)
+
+    feel_str = _feel_label(top_month['tmax'], top_month.get('dew_point', 0), lang)
+    uv = top_month.get('uv_index', 0)
+    uv_str = f'{uv:.1f} · {_uv_label(uv, lang)}' if uv > 0 else '—'
+    dew = top_month.get('dew_point', 0)
+    hum_str = f'{_fmt_t(dew, lang)} · {_humidity_label(dew, lang)}' if dew is not None else '—'
+    rain_unit = {'fr': 'mm/j', 'en': 'mm/day', 'en-us': 'mm/day', 'es': 'mm/d', 'de': 'mm/Tag'}.get(lang, 'mm/j')
+    rain_str = f'{top_month["rain_pct"]:.0f}% · {top_month["precip_mm"]:.1f} {rain_unit}'
+    sun_unit = {'fr': 'h/jour', 'en': 'h/day', 'en-us': 'h/day', 'es': 'h/día', 'de': 'h/Tag'}.get(lang, 'h/day')
+    sun_str = f'{top_month["sun_h"]:.1f}{sun_unit}'
+
+    cards_right = (
+        f'<div class="card pad">\n'
+        f'  <div class="small-label">{h(L_comp["lecture_label"])}</div>\n'
+        f'  <div class="signal-list">\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["window_optimal"])}</div><div class="r">{h(lecture["window"])}</div></div>\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["good_transition"])}</div><div class="r">{h(lecture["transition"])}</div></div>\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["tough_period"])}</div><div class="r">{h(lecture["tough"])}</div></div>\n'
+        f'  </div>\n'
+        f'</div>\n'
+        f'<div class="card pad">\n'
+        f'  <div class="small-label">{h(conditions_label)}</div>\n'
+        f'  <div class="signal-list">\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["feel"])}</div><div class="r">{h(feel_str)}</div></div>\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["uv"])}</div><div class="r">{h(uv_str)}</div></div>\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["humidity"])}</div><div class="r">{h(hum_str)}</div></div>\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["rain"])}</div><div class="r">{h(rain_str)}</div></div>\n'
+        f'    <div class="signal-item"><div class="l">{h(L_comp["sun"])}</div><div class="r">{h(sun_str)}</div></div>\n'
+        f'  </div>\n'
+        f'</div>'
+    )
+
     return f'''  <section id="tableau">
     <div class="container">
       <div class="section-head">
@@ -1098,6 +1730,9 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
           <div class="mobile-month-cards">
             {''.join(mobile_cards)}
           </div>
+        </div>
+        <div class="spotlight-side">
+          {cards_right}
         </div>
       </div>
     </div>
@@ -1232,55 +1867,261 @@ def render_v6_adapter(slug: str, lang: str, profile: str = 'city',
   </section>'''
 
 
-def render_v6_explorer(slug: str, lang: str, related: list[dict] = None) -> str:
-    """Section "Explorer" : cross-links vers destinations similaires.
+def render_v6_explorer(slug: str, lang: str, related: dict | list = None,
+                       asset_prefix: str = '') -> str:
+    """Section "Explorer" : 3 boxes (Climat similaire + Proximité + Guides).
 
-    related: liste {'href': str, 'name': str, 'sub': str (climate/region)}.
-        Si None ou vide, section omise.
+    Aligné prototype paris-v6.html.
+
+    Args:
+        related: dict {'climate': [...], 'proximity': [...]} OU liste plate (legacy)
+                  Items: {href, name, country, country_iso, distance_km?}
     """
+    # Compatibilité legacy : si related est une liste plate, la mettre dans 'climate'
+    if isinstance(related, list):
+        related = {'climate': related, 'proximity': []}
     if not related:
+        related = {'climate': [], 'proximity': []}
+    if not related.get('climate') and not related.get('proximity'):
         return ''
-    L = _v6_strings(lang)['explorer']
-    cards_html = ''.join(
-        f'<a href="{h(r["href"])}" class="card pad explorer-card">'
-        f'<div class="explorer-name">{h(r["name"])}</div>'
-        f'<div class="explorer-sub">{h(r.get("sub", ""))}</div>'
-        f'</a>'
-        for r in related
+
+    # i18n labels
+    EXPLORER_I18N = {
+        'fr':    {'kicker': 'Explorer', 'title': 'Destinations & guides complémentaires',
+                  'lead_tpl': 'Si {dest} ne colle pas à vos dates, voici des alternatives et des guides.',
+                  'box_climate': 'Destinations au climat similaire',
+                  'box_proximity': 'Destinations proches',
+                  'box_guides': 'Guides & classements',
+                  'guide_world': 'Classement mondial 2026', 'guide_world_url': 'classement-destinations-meteo-2026.html',
+                  'guide_summer': 'Meilleures destinations été', 'guide_summer_url': 'classement-destinations-meteo-ete-2026.html',
+                  'guide_winter': 'Soleil hiver', 'guide_winter_url': 'classement-destinations-meteo-hiver-2026.html',
+                  'guide_jul': 'Où partir en juillet', 'guide_jul_url': 'ou-partir-en-juillet.html',
+                  'see': 'Voir →',
+                  'map_btn': '🗺️ Carte climatique des 754 destinations', 'map_url': 'carte.html',
+                  },
+        'en':    {'kicker': 'Explore', 'title': 'Related destinations & guides',
+                  'lead_tpl': "If {dest} doesn't fit your dates, here are alternatives and guides.",
+                  'box_climate': 'Similar climate destinations',
+                  'box_proximity': 'Nearby destinations',
+                  'box_guides': 'Guides & rankings',
+                  'guide_world': 'World ranking 2026', 'guide_world_url': 'en/world-weather-ranking-2026.html',
+                  'guide_summer': 'Best summer destinations', 'guide_summer_url': 'en/best-summer-destinations-2026.html',
+                  'guide_winter': 'Winter sun', 'guide_winter_url': 'en/winter-sun-destinations-2026.html',
+                  'guide_jul': 'Where to go in July', 'guide_jul_url': 'en/where-to-go-in-july.html',
+                  'see': 'See →',
+                  'map_btn': '🗺️ Climate map of 754 destinations', 'map_url': 'en/map.html',
+                  },
+        'en-us': {'kicker': 'Explore', 'title': 'Related destinations & guides',
+                  'lead_tpl': "If {dest} doesn't fit your dates, here are alternatives and guides.",
+                  'box_climate': 'Similar climate destinations',
+                  'box_proximity': 'Nearby destinations',
+                  'box_guides': 'Guides & rankings',
+                  'guide_world': 'World ranking 2026', 'guide_world_url': 'us/world-weather-ranking-2026.html',
+                  'guide_summer': 'Best summer destinations', 'guide_summer_url': 'us/best-summer-destinations-2026.html',
+                  'guide_winter': 'Winter sun', 'guide_winter_url': 'us/winter-sun-destinations-2026.html',
+                  'guide_jul': 'Where to go in July', 'guide_jul_url': 'us/where-to-go-in-july.html',
+                  'see': 'See →',
+                  'map_btn': '🗺️ Climate map of 754 destinations', 'map_url': 'us/map.html',
+                  },
+        'es':    {'kicker': 'Explorar', 'title': 'Destinos & guías complementarias',
+                  'lead_tpl': 'Si {dest} no encaja con sus fechas, aquí hay alternativas y guías.',
+                  'box_climate': 'Destinos con clima similar',
+                  'box_proximity': 'Destinos cercanos',
+                  'box_guides': 'Guías & clasificaciones',
+                  'guide_world': 'Clasificación mundial 2026', 'guide_world_url': 'es/clasificacion-clima-mundial-2026.html',
+                  'guide_summer': 'Mejores destinos verano', 'guide_summer_url': 'es/mejores-destinos-verano-2026.html',
+                  'guide_winter': 'Sol de invierno', 'guide_winter_url': 'es/sol-invierno-destinos-2026.html',
+                  'guide_jul': 'Adónde ir en julio', 'guide_jul_url': 'es/adonde-ir-julio.html',
+                  'see': 'Ver →',
+                  'map_btn': '🗺️ Mapa climático de 754 destinos', 'map_url': 'es/mapa.html',
+                  },
+        'de':    {'kicker': 'Erkunden', 'title': 'Verwandte Reiseziele & Guides',
+                  'lead_tpl': 'Wenn {dest} nicht zu Ihren Daten passt, hier sind Alternativen und Guides.',
+                  'box_climate': 'Reiseziele mit ähnlichem Klima',
+                  'box_proximity': 'Nahegelegene Reiseziele',
+                  'box_guides': 'Guides & Rankings',
+                  'guide_world': 'Welt-Ranking 2026', 'guide_world_url': 'de/welt-wetter-ranking-2026.html',
+                  'guide_summer': 'Beste Sommerziele', 'guide_summer_url': 'de/beste-sommerziele-2026.html',
+                  'guide_winter': 'Wintersonne', 'guide_winter_url': 'de/wintersonne-reiseziele-2026.html',
+                  'guide_jul': 'Wohin im Juli', 'guide_jul_url': 'de/wohin-im-juli.html',
+                  'see': 'Sehen →',
+                  'map_btn': '🗺️ Klimakarte mit 754 Reisezielen', 'map_url': 'de/karte.html',
+                  },
+    }
+    L = EXPLORER_I18N.get(lang, EXPLORER_I18N['fr'])
+
+    # Récupérer le nom localisé depuis le 1er climate ou proximity (fallback slug)
+    dest_name = ''
+    if related.get('climate'):
+        # Nom de la dest courante n'est pas dans related — on doit le passer en param.
+        # Workaround simple: on n'utilise pas {dest} dans le lead, on simplifie.
+        pass
+
+    # Helper pour rendre un list-item destination
+    def _dest_item(item: dict, with_distance: bool = False) -> str:
+        flag = (f'<img src="{asset_prefix}flags/{item["country_iso"]}.png" width="18" height="13" alt="" '
+                f'loading="lazy" class="list-flag">'
+                if item.get('country_iso') else '')
+        # FIX EN-US: convertir km → miles (1 km = 0.621371 miles)
+        if with_distance and 'distance_km' in item:
+            if lang == 'en-us':
+                miles = round(item['distance_km'] * 0.621371)
+                right = f'{miles} mi →'
+            else:
+                right = f'{item["distance_km"]} km →'
+        else:
+            right = '→'
+        return (f'<a href="{h(item["href"])}" class="list-item">'
+                f'<span>{flag}{h(item["name"])} <span class="list-country">· {h(item["country"])}</span></span>'
+                f'<strong>{h(right)}</strong>'
+                f'</a>')
+
+    # Box 1 : Climat similaire
+    climate_items = ''.join(_dest_item(it) for it in related.get('climate', [])[:4])
+    box_climate = (f'<div class="box">\n'
+                   f'  <h3>{h(L["box_climate"])}</h3>\n'
+                   f'  <div class="list">{climate_items}</div>\n'
+                   f'</div>') if climate_items else ''
+
+    # Box 2 : Proximité
+    proximity_items = ''.join(_dest_item(it, with_distance=True) for it in related.get('proximity', [])[:4])
+    box_proximity = (f'<div class="box">\n'
+                     f'  <h3>{h(L["box_proximity"])}</h3>\n'
+                     f'  <div class="list">{proximity_items}</div>\n'
+                     f'</div>') if proximity_items else ''
+
+    # Box 3 : Guides & classements (statique)
+    box_guides = (
+        f'<div class="box box-guides">\n'
+        f'  <h3>{h(L["box_guides"])}</h3>\n'
+        f'  <div class="list">\n'
+        f'    <div class="list-item"><span>{h(L["guide_world"])}</span><strong><a href="{h(L["guide_world_url"])}">{h(L["see"])}</a></strong></div>\n'
+        f'    <div class="list-item"><span>{h(L["guide_summer"])}</span><strong><a href="{h(L["guide_summer_url"])}">{h(L["see"])}</a></strong></div>\n'
+        f'    <div class="list-item"><span>{h(L["guide_winter"])}</span><strong><a href="{h(L["guide_winter_url"])}">{h(L["see"])}</a></strong></div>\n'
+        f'    <div class="list-item"><span>{h(L["guide_jul"])}</span><strong><a href="{h(L["guide_jul_url"])}">{h(L["see"])}</a></strong></div>\n'
+        f'  </div>\n'
+        f'  <div style="margin-top:16px">\n'
+        f'    <a class="btn outlined" href="{h(L["map_url"])}">{h(L["map_btn"])}</a>\n'
+        f'  </div>\n'
+        f'</div>'
     )
+
+    # Lead simplifié sans {dest} (variable difficile à propager ici)
+    lead = L['lead_tpl'].replace('{dest}', '')
+    lead = lead.replace('  ', ' ').replace(' ne ', ' ne ').strip()
+    # FR: "Si  ne colle pas..." → "Si cette destination ne colle pas..."
+    # Plus simple : variante générique sans {dest}
+    LEAD_GENERIC = {
+        'fr': 'Si cette destination ne colle pas à vos dates, voici des alternatives et des guides.',
+        'en': "If this destination doesn't fit your dates, here are alternatives and guides.",
+        'en-us': "If this destination doesn't fit your dates, here are alternatives and guides.",
+        'es': 'Si este destino no encaja con sus fechas, aquí hay alternativas y guías.',
+        'de': 'Wenn dieses Reiseziel nicht zu Ihren Daten passt, hier sind Alternativen und Guides.',
+    }
+    lead = LEAD_GENERIC.get(lang, LEAD_GENERIC['fr'])
+
     return f'''  <section>
     <div class="container">
       <div class="section-head">
         <div class="section-kicker">{h(L['kicker'])}</div>
         <h2>{h(L['title'])}</h2>
-        <p class="lead">{h(L['lead'])}</p>
+        <p class="lead">{h(lead)}</p>
       </div>
-      <div class="grid-3">{cards_html}</div>
+      <div class="grid-3">
+        {box_climate}
+        {box_proximity}
+        {box_guides}
+      </div>
     </div>
   </section>'''
 
 
 def render_v6_localisation(slug: str, lang: str, nom: str,
-                           lat: float, lon: float) -> str:
-    """Section "Localisation" : carte Leaflet + adresse coordonnées.
+                           lat: float, lon: float,
+                           country_iso: str = '', country_name: str = '',
+                           climate_type: str = '',
+                           best_month: str = '', best_score: float = 0,
+                           worst_month: str = '', worst_score: float = 0,
+                           macro_zoom: int = 5,
+                           asset_prefix: str = '') -> str:
+    """Section "Localisation" : 2 cartes Leaflet (Monde + Contexte) + intro.
 
-    Note: la carte Leaflet est initialisée par le JS chargé en fin de page
-    (script init avec data-attributes). Ici on fournit juste le container.
+    Reproduit la structure du prototype paris-v6.html :
+    - Carte 'Monde' : zoom 1 (vue mondiale, point rouge sur dest)
+    - Carte 'Contexte' : zoom variable (5 par défaut, vue régionale)
+    - Intro : drapeau pays + description (climat + écart score) + coords
+
+    Args:
+        slug: slug FR canonique (utilisé pour ids uniques)
+        lang: 'fr', 'en', 'en-us', 'es', 'de'
+        nom: nom localisé (ex 'Paris', 'Cinque Terre')
+        lat, lon: coordonnées GPS
+        country_iso: code ISO 2 lettres (fr, gb, us...) pour drapeau
+        country_name: nom pays localisé
+        climate_type: ex 'Tempéré océanique', 'Alpine climate', etc.
+        best_month, best_score: mois meilleur + son score
+        worst_month, worst_score: mois pire + son score
+        macro_zoom: zoom Leaflet pour la carte 'Contexte' (5 par défaut, plus haut = plus zoom)
     """
     L = _v6_strings(lang)['localisation']
     title = L['title_tpl'].format(nom=h(nom))
+
+    # i18n labels
+    LOCAL_I18N = {
+        'fr':    {'world': '🌍 Monde', 'context': '🔍 Contexte géographique',
+                  'lead': 'Position mondiale + contexte géographique régional.',
+                  'desc_tpl': 'Climat {climate} avec un écart {best} → {worst} entre meilleur et pire mois. 10 ans de données ERA5 pour choisir selon votre projet.'},
+        'en':    {'world': '🌍 World', 'context': '🔍 Geographic context',
+                  'lead': 'Global position + regional geographic context.',
+                  'desc_tpl': '{climate} climate with a {best} → {worst} gap between best and worst month. 10 years of ERA5 data to choose by project.'},
+        'en-us': {'world': '🌍 World', 'context': '🔍 Geographic context',
+                  'lead': 'Global position + regional geographic context.',
+                  'desc_tpl': '{climate} climate with a {best} → {worst} gap between best and worst month. 10 years of ERA5 data to choose by project.'},
+        'es':    {'world': '🌍 Mundo', 'context': '🔍 Contexto geográfico',
+                  'lead': 'Posición mundial + contexto geográfico regional.',
+                  'desc_tpl': 'Clima {climate} con una diferencia {best} → {worst} entre el mejor y el peor mes. 10 años de datos ERA5 para elegir según su proyecto.'},
+        'de':    {'world': '🌍 Welt', 'context': '🔍 Geografischer Kontext',
+                  'lead': 'Globale Position + regionaler geografischer Kontext.',
+                  'desc_tpl': '{climate}es Klima mit einer {best} → {worst} Differenz zwischen besten und schlechtesten Monat. 10 Jahre ERA5-Daten zur Auswahl nach Projekt.'},
+    }
+    L2 = LOCAL_I18N.get(lang, LOCAL_I18N['fr'])
+
+    flag_html = (f'<img src="{asset_prefix}flags/{country_iso}.png" width="16" height="12" alt="" '
+                 f'style="vertical-align:middle;border-radius:2px;margin-right:5px">'
+                 if country_iso else '')
+
+    desc = L2['desc_tpl'].format(
+        climate=h(climate_type) if climate_type else '—',
+        best=f'{best_score:.1f}',
+        worst=f'{worst_score:.1f}',
+    )
+
+    world_id = f'dmap-world-{slug}'
+    macro_id = f'dmap-macro-{slug}'
+
     return f'''  <section class="dest-map-section">
     <div class="container">
       <div class="section-head">
         <div class="section-kicker">{h(L['kicker'])}</div>
-        <h2>{title}</h2>
-        <p class="lead">{h(L['lead'])}</p>
+        <h2>{title} ?</h2>
+        <p class="lead">{h(L2['lead'])}</p>
       </div>
-      <div class="card pad">
-        <div id="dest-map" data-lat="{lat:.4f}" data-lon="{lon:.4f}"
-             data-name="{h(nom)}" style="height:380px;border-radius:12px;overflow:hidden"></div>
-        <div class="dest-coords" style="margin-top:8px;font-size:13px;color:var(--muted)">
-          📍 {_coord_label(lat, lon)}
+      <div class="dest-map-row" data-dest-map="1" data-lat="{lat:.4f}" data-lon="{lon:.4f}"
+           data-macro-zoom="{macro_zoom}" data-world-id="{world_id}" data-macro-id="{macro_id}">
+        <div class="dest-map-card">
+          <div class="dest-map-lbl">{h(L2['world'])}</div>
+          <div id="{world_id}" class="dest-map-el dest-map-el--world"></div>
+        </div>
+        <div class="dest-map-card">
+          <div class="dest-map-lbl">{h(L2['context'])}</div>
+          <div id="{macro_id}" class="dest-map-el dest-map-el--macro"></div>
+        </div>
+      </div>
+      <div class="dest-map-intro">
+        <div class="dest-map-intro-body">
+          <div class="dest-map-country">{flag_html}{h(country_name)}</div>
+          <div class="dest-map-hsub">{h(desc)}</div>
+          <div class="dest-map-coords">{_coord_label(lat, lon)}</div>
         </div>
       </div>
     </div>
@@ -1291,21 +2132,86 @@ def render_v6_reserver(slug: str, lang: str, dest_name: str,
                        gyg_partner: str = '2MQKL00',
                        travelpayouts_marker: str = '708106',
                        expedia_camref: str = '1110lB57J') -> str:
-    """Section "Réserver" : 3 CTAs affiliés (Hôtels Expedia, Activités GYG, Vols Travelpayouts).
+    """Section "Réserver" / "Planifier votre séjour" : 3 plan-cards riches +
+    widget GetYourGuide embarqué (aligné prototype paris-v6.html).
 
-    Pour la V1, ce sont juste des liens stylisés. L'intégration profonde
-    (widgets GYG embarqués, pré-remplissage destination Expedia) viendra plus tard.
+    Reproduit la structure du prototype:
+    - 3 plan-cards avec icon + title + sub + cta (Hébergement / Activités / Vols)
+    - Bloc Activités GYG (id=#activites) avec widget GetYourGuide 3 items
     """
-    L = _v6_strings(lang)['reserver']
+    # i18n labels
+    RESERVER_I18N = {
+        'fr':    {'kicker': 'Réserver', 'title': 'Planifier votre séjour',
+                  'lead': 'Hôtels au plus bas hors saison haute, tarifs au plus haut sur les mois confortables. Mi-saisons offrent un bon compromis prix/climat.',
+                  'plan_hotel_title': 'Hébergement', 'plan_hotel_sub': 'Hôtels & locations · {dest}',
+                  'plan_activity_title': 'Activités', 'plan_activity_sub': 'Excursions, billets, expériences',
+                  'plan_flight_title': 'Vols', 'plan_flight_sub': 'Comparateur multi-compagnies',
+                  'plan_see': 'Voir ↓', 'expedia_cta': 'Expedia →', 'kiwi_cta': 'Kiwi →',
+                  'gyg_h3': '🎟️ Activités & excursions · {dest}',
+                  'gyg_sub': 'Sélection GetYourGuide · réservation annulable gratuitement',
+                  'gyg_see_all': 'Voir tout →',
+                  'affil_note': 'Lien affilié · GetYourGuide',
+                  'gyg_locale': 'fr-FR', 'expedia_domain': 'expedia.fr',
+                  },
+        'en':    {'kicker': 'Book', 'title': 'Plan your trip',
+                  'lead': 'Hotels at their lowest outside peak season, highest on comfortable months. Shoulder seasons offer a good price/climate compromise.',
+                  'plan_hotel_title': 'Stay', 'plan_hotel_sub': 'Hotels & rentals · {dest}',
+                  'plan_activity_title': 'Activities', 'plan_activity_sub': 'Tours, tickets, experiences',
+                  'plan_flight_title': 'Flights', 'plan_flight_sub': 'Multi-airline comparator',
+                  'plan_see': 'See ↓', 'expedia_cta': 'Expedia →', 'kiwi_cta': 'Kiwi →',
+                  'gyg_h3': '🎟️ Activities & tours · {dest}',
+                  'gyg_sub': 'GetYourGuide selection · free cancellation',
+                  'gyg_see_all': 'See all →',
+                  'affil_note': 'Affiliate link · GetYourGuide',
+                  'gyg_locale': 'en-GB', 'expedia_domain': 'expedia.co.uk',
+                  },
+        'en-us': {'kicker': 'Book', 'title': 'Plan your trip',
+                  'lead': 'Hotels at their lowest outside peak season, highest on comfortable months. Shoulder seasons offer a good price/climate compromise.',
+                  'plan_hotel_title': 'Stay', 'plan_hotel_sub': 'Hotels & rentals · {dest}',
+                  'plan_activity_title': 'Activities', 'plan_activity_sub': 'Tours, tickets, experiences',
+                  'plan_flight_title': 'Flights', 'plan_flight_sub': 'Multi-airline comparator',
+                  'plan_see': 'See ↓', 'expedia_cta': 'Expedia →', 'kiwi_cta': 'Kiwi →',
+                  'gyg_h3': '🎟️ Activities & tours · {dest}',
+                  'gyg_sub': 'GetYourGuide selection · free cancellation',
+                  'gyg_see_all': 'See all →',
+                  'affil_note': 'Affiliate link · GetYourGuide',
+                  'gyg_locale': 'en-US', 'expedia_domain': 'expedia.com',
+                  },
+        'es':    {'kicker': 'Reservar', 'title': 'Planificar su viaje',
+                  'lead': 'Hoteles más baratos fuera de temporada alta, más caros en los meses cómodos. Las medias temporadas ofrecen un buen compromiso precio/clima.',
+                  'plan_hotel_title': 'Alojamiento', 'plan_hotel_sub': 'Hoteles y apartamentos · {dest}',
+                  'plan_activity_title': 'Actividades', 'plan_activity_sub': 'Excursiones, entradas, experiencias',
+                  'plan_flight_title': 'Vuelos', 'plan_flight_sub': 'Comparador multi-aerolíneas',
+                  'plan_see': 'Ver ↓', 'expedia_cta': 'Expedia →', 'kiwi_cta': 'Kiwi →',
+                  'gyg_h3': '🎟️ Actividades y excursiones · {dest}',
+                  'gyg_sub': 'Selección GetYourGuide · cancelación gratuita',
+                  'gyg_see_all': 'Ver todo →',
+                  'affil_note': 'Enlace afiliado · GetYourGuide',
+                  'gyg_locale': 'es-ES', 'expedia_domain': 'expedia.es',
+                  },
+        'de':    {'kicker': 'Buchen', 'title': 'Reise planen',
+                  'lead': 'Hotels am günstigsten außerhalb der Hochsaison, am teuersten in den angenehmen Monaten. Zwischensaisons bieten einen guten Preis/Klima-Kompromiss.',
+                  'plan_hotel_title': 'Unterkunft', 'plan_hotel_sub': 'Hotels & Vermietungen · {dest}',
+                  'plan_activity_title': 'Aktivitäten', 'plan_activity_sub': 'Touren, Tickets, Erlebnisse',
+                  'plan_flight_title': 'Flüge', 'plan_flight_sub': 'Multi-Airline-Vergleich',
+                  'plan_see': 'Sehen ↓', 'expedia_cta': 'Expedia →', 'kiwi_cta': 'Kiwi →',
+                  'gyg_h3': '🎟️ Aktivitäten & Touren · {dest}',
+                  'gyg_sub': 'GetYourGuide-Auswahl · kostenlose Stornierung',
+                  'gyg_see_all': 'Alle ansehen →',
+                  'affil_note': 'Affiliate-Link · GetYourGuide',
+                  'gyg_locale': 'de-DE', 'expedia_domain': 'expedia.de',
+                  },
+    }
+    L = RESERVER_I18N.get(lang, RESERVER_I18N['fr'])
     nom_q = h(dest_name)
 
-    # URLs affiliés simples (templates à enrichir)
-    expedia_url = (f'https://www.expedia.fr/Hotel-Search?destination={nom_q}'
+    # URLs affiliés
+    expedia_url = (f'https://www.{L["expedia_domain"]}/Hotel-Search?destination={nom_q}'
                    f'&camref={expedia_camref}')
-    gyg_url = (f'https://www.getyourguide.com/s/?q={nom_q}'
-               f'&partner_id={gyg_partner}')
-    tp_url = (f'https://search.flights.travelpayouts.com/?marker={travelpayouts_marker}'
-              f'&destination_name={nom_q}')
+    kiwi_url = f'https://www.kiwi.com/deep?affilid={travelpayouts_marker}&to={nom_q}&lang={lang[:2]}'
+    gyg_search_url = (f'https://www.getyourguide.com/s/?q={nom_q}'
+                      f'&partner_id={gyg_partner}&locale={L["gyg_locale"]}')
+    gyg_widget_q = f'{nom_q}'  # GYG widget query
 
     return f'''  <section id="planifier" style="scroll-margin-top:120px">
     <div class="container">
@@ -1314,19 +2220,49 @@ def render_v6_reserver(slug: str, lang: str, dest_name: str,
         <h2>{h(L['title'])}</h2>
         <p class="lead">{h(L['lead'])}</p>
       </div>
-      <div class="grid-3">
-        <a href="{h(expedia_url)}" target="_blank" rel="noopener nofollow sponsored" class="card pad reserve-card">
-          <div class="reserve-icon">🏨</div>
-          <div class="reserve-cta"><strong>{h(L['cta_hotel'])}</strong> →</div>
+      <div class="grid-3 plan-row">
+        <a href="{h(expedia_url)}" target="_blank" rel="sponsored noopener" class="plan-card">
+          <div class="plan-icon">🏨</div>
+          <div class="plan-body">
+            <div class="plan-title">{h(L['plan_hotel_title'])}</div>
+            <div class="plan-sub">{h(L['plan_hotel_sub'].format(dest=nom_q))}</div>
+          </div>
+          <div class="plan-cta">{h(L['expedia_cta'])}</div>
         </a>
-        <a href="{h(gyg_url)}" target="_blank" rel="noopener nofollow sponsored" class="card pad reserve-card">
-          <div class="reserve-icon">🎫</div>
-          <div class="reserve-cta"><strong>{h(L['cta_activity'])}</strong> →</div>
+        <a href="#activites" class="plan-card">
+          <div class="plan-icon">🎟️</div>
+          <div class="plan-body">
+            <div class="plan-title">{h(L['plan_activity_title'])}</div>
+            <div class="plan-sub">{h(L['plan_activity_sub'])}</div>
+          </div>
+          <div class="plan-cta">{h(L['plan_see'])}</div>
         </a>
-        <a href="{h(tp_url)}" target="_blank" rel="noopener nofollow sponsored" class="card pad reserve-card">
-          <div class="reserve-icon">✈️</div>
-          <div class="reserve-cta"><strong>{h(L['cta_flight'])}</strong> →</div>
+        <a href="{h(kiwi_url)}" target="_blank" rel="sponsored noopener" class="plan-card">
+          <div class="plan-icon">✈️</div>
+          <div class="plan-body">
+            <div class="plan-title">{h(L['plan_flight_title'])}</div>
+            <div class="plan-sub">{h(L['plan_flight_sub'])}</div>
+          </div>
+          <div class="plan-cta">{h(L['kiwi_cta'])}</div>
         </a>
+      </div>
+
+      <div id="activites" class="card pad" style="margin-top:20px;scroll-margin-top:120px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap">
+          <div>
+            <h3 style="margin:0 0 4px">{h(L['gyg_h3'].format(dest=nom_q))}</h3>
+            <p style="margin:0;color:var(--muted);font-size:.9rem">{h(L['gyg_sub'])}</p>
+          </div>
+          <a class="btn primary" style="padding:10px 18px" href="{h(gyg_search_url)}" target="_blank" rel="sponsored noopener">{h(L['gyg_see_all'])}</a>
+        </div>
+        <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+             data-gyg-locale-code="{h(L['gyg_locale'])}"
+             data-gyg-widget="activities"
+             data-gyg-number-of-items="3"
+             data-gyg-partner-id="{h(gyg_partner)}"
+             data-gyg-q="{h(gyg_widget_q)}">
+        </div>
+        <span class="affil-note" style="text-align:right;display:block;margin-top:10px;font-size:11px;color:var(--muted)">{h(L['affil_note'])}</span>
       </div>
     </div>
   </section>'''
@@ -1407,28 +2343,68 @@ def render_v6_head(lang: str, page_title: str, page_desc: str,
 {og_html}
 {preload_bg}
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=15"/>
+<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=20"/>
 {json_ld_html}
 </head>
 <body>'''
 
 
 def render_v6_scripts(asset_prefix: str = '') -> str:
-    """Scripts à charger en fin de body."""
-    return f'''<script src="{asset_prefix}js/favs.min.js?v=1"></script>
+    """Scripts à charger en fin de body.
+
+    Inclut Leaflet (CSS + JS) pour la carte de localisation, sinon L est undefined
+    et la carte reste vide (bug visible 2026-05-09 sur staging).
+    """
+    return f'''<link rel="stylesheet" href="{asset_prefix}vendor/leaflet/leaflet.min.css">
+<script src="{asset_prefix}vendor/leaflet/leaflet.min.js"></script>
+<script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
+<script src="{asset_prefix}js/favs.min.js?v=1"></script>
 <script src="{asset_prefix}js/share.js"></script>
 <script>
-// Init carte Leaflet si présente
+// Init 2 cartes Leaflet (Monde + Contexte) - aligné prototype paris-v6.html
 (function(){{
-  var el = document.getElementById('dest-map');
-  if (!el || typeof L === 'undefined') return;
-  var lat = parseFloat(el.dataset.lat), lon = parseFloat(el.dataset.lon);
-  var name = el.dataset.name || '';
-  var map = L.map('dest-map').setView([lat, lon], 9);
-  L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
-    maxZoom: 18, attribution: '© OpenStreetMap'
-  }}).addTo(map);
-  L.marker([lat, lon]).addTo(map).bindPopup(name);
+  function initOne(row) {{
+    var lat = parseFloat(row.dataset.lat);
+    var lon = parseFloat(row.dataset.lon);
+    var mz = parseInt(row.dataset.macroZoom) || 5;
+    var welEl = document.getElementById(row.dataset.worldId);
+    var meEl = document.getElementById(row.dataset.macroId);
+    if (!welEl || !meEl) return;
+    if (welEl._map) return;  // déjà initialisé
+    try {{
+      // Pin custom (divIcon) pour éviter le bug marker-icon.png par défaut
+      var pinHtml = '<div style="width:10px;height:10px;background:#e44;border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.4)"></div>';
+      var pin = L.divIcon({{html: pinHtml, iconSize:[10,10], iconAnchor:[5,5], className:''}});
+      var tileUrl = 'https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png';
+      // Carte Monde : zoom 1, statique, sans contrôles ni attribution
+      var mw = L.map(welEl.id, {{zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false, dragging:false, attributionControl:false}}).setView([lat, lon], 1);
+      L.tileLayer(tileUrl, {{maxZoom:18}}).addTo(mw);
+      L.marker([lat, lon], {{icon:pin, interactive:false}}).addTo(mw);
+      welEl._map = mw;
+      // Carte Contexte : zoom variable, statique, avec attribution OSM
+      var mm = L.map(meEl.id, {{zoomControl:false, scrollWheelZoom:false, doubleClickZoom:false, dragging:false, attributionControl:true}}).setView([lat, lon], mz);
+      L.tileLayer(tileUrl, {{attribution:'OSM', maxZoom:18}}).addTo(mm);
+      L.marker([lat, lon], {{icon:pin, interactive:false}}).addTo(mm);
+      meEl._map = mm;
+      mm.attributionControl.setPrefix(false);
+      // Force invalidateSize après tick pour rendu correct des tiles
+      setTimeout(function(){{ mw.invalidateSize(); mm.invalidateSize(); }}, 100);
+    }} catch(e) {{}}
+  }}
+  function initAll(retries) {{
+    retries = retries || 0;
+    if (!window.L) {{
+      if (retries > 50) return;
+      setTimeout(function(){{ initAll(retries + 1); }}, 100);
+      return;
+    }}
+    document.querySelectorAll('[data-dest-map]').forEach(initOne);
+  }}
+  if (document.readyState === 'loading') {{
+    document.addEventListener('DOMContentLoaded', function(){{ initAll(0); }});
+  }} else {{
+    initAll(0);
+  }}
 }})();
 </script>
 </body>
@@ -1485,9 +2461,17 @@ def render_v6_full_page(page_data: dict) -> str:
     )
 
     topbar = render_v6_topbar(slug, lang)
-    hero = render_v6_decision_card(slug, lang, d['hero_data'])
+    hero = render_v6_decision_card(slug, lang, d['hero_data'], asset_prefix=asset_prefix)
 
-    method_block = render_v6_methodology_block(lang, is_mountain=d.get('is_mountain', False))
+    # FIX 2026-05-06: section #decider (verdict + avis Gilles + pills + bars)
+    # remplace l'ancienne method_section autonome (qui était un workaround V1)
+    # car la méthodologie est maintenant compactée dans le right-stack du decider.
+    decider = render_v6_decider(
+        slug=slug, lang=lang, dest_name=d['dest_name'],
+        months_data=d['months_data'],
+        editorial_html=d.get('edito_html', '<p>—</p>'),
+        is_mountain=d.get('is_mountain', False),
+    )
 
     comprendre = render_v6_comprendre(
         slug=slug, lang=lang,
@@ -1506,13 +2490,28 @@ def render_v6_full_page(page_data: dict) -> str:
 
     reserver = render_v6_reserver(slug, lang, d['dest_name'])
 
-    infos = render_v6_infos_pratiques(slug, lang, d['infos_pratiques_data'])
+    infos = render_v6_infos_pratiques(slug, lang, d['infos_pratiques_data'], asset_prefix=asset_prefix)
 
-    explorer = render_v6_explorer(slug, lang, related=d.get('related', []))
+    explorer = render_v6_explorer(slug, lang, related=d.get('related', []),
+                                   asset_prefix=asset_prefix)
+
+    # Best/worst depuis months_data
+    sorted_m = sorted(d['months_data'], key=lambda m: -m['score_10'])
+    best_m = sorted_m[0] if sorted_m else {}
+    worst_m = sorted_m[-1] if sorted_m else {}
 
     localisation = render_v6_localisation(
         slug=slug, lang=lang, nom=d['dest_name'],
         lat=d.get('lat', 0), lon=d.get('lon', 0),
+        country_iso=d.get('country_iso', ''),
+        country_name=d.get('country_name', ''),
+        climate_type=d.get('climate_type', d.get('hero_data', {}).get('climate_type', '')),
+        best_month=best_m.get('mois', ''),
+        best_score=best_m.get('score_10', 0),
+        worst_month=worst_m.get('mois', ''),
+        worst_score=worst_m.get('score_10', 0),
+        macro_zoom=d.get('macro_zoom', 5),
+        asset_prefix=asset_prefix,
     )
 
     questions = render_v6_questions(slug, lang, d.get('faq_items', []))
@@ -1523,25 +2522,17 @@ def render_v6_full_page(page_data: dict) -> str:
         slug_en=d.get('slug_en', ''),
         slug_es=d.get('slug_es', ''),
         slug_de=d.get('slug_de', ''),
+        asset_prefix=asset_prefix,
     )
 
     scripts = render_v6_scripts(asset_prefix=asset_prefix)
 
-    # Le method_block est intégré dans la decision card (right-stack du Décider)
-    # Pour la V1, on l'injecte juste après le hero comme section dédiée
-    # (si on veut le mettre dans le right-stack du hero, il faut adapter render_v6_decision_card)
-    # Pour rester conservateur, on injecte le bloc méthodologie dans une section autonome.
-    method_section = (f'<section class="method-section">'
-                      f'<div class="container">{method_block}</div>'
-                      f'</section>')
-
     body = f'''{topbar}
 {hero}
 <main>
-{method_section}
+{decider}
 {comprendre}
 {trend}
-{contexte}
 {adapter}
 {reserver}
 {infos}

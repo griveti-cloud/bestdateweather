@@ -274,10 +274,12 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
             'tmin': _safe_float(mc.get('tmin')),
             'tmax': _safe_float(mc.get('tmax')),
             'rain_pct': _safe_float(mc.get('rain_pct')),
-            'precip_mm': _safe_float(mc.get('precip_mm')),
+            'precip_mm': _safe_float(mc.get('precip', mc.get('precip_mm', 0))),  # FIX: clé 'precip' dans climate dict
             'sun_h': _safe_float(mc.get('sun_h')),
-            'score_10': _safe_float(score_entry.get('score_10', score_entry.get('score', 0))),
-            'classe': score_entry.get('classe', score_entry.get('cls', 'mid')),
+            'score_10': _safe_float(mc.get('score', score_entry.get('score_10', score_entry.get('score', 0)))),  # FIX Option C: score depuis CSV (recalculé via /tmp/regen_scores.py), fallback sur recalc live
+            'classe': mc.get('classe', score_entry.get('classe', score_entry.get('cls', 'mid'))),  # FIX: classe vient du CSV (compute_scores ne la retourne pas)
+            'uv_index': _safe_float(mc.get('uv_index', 0)),  # FIX: pour Conditions détaillées
+            'dew_point': _safe_float(mc.get('dew_point', 0)),  # FIX: pour Humidité ressentie
         })
 
     # Best/worst pour le hero lead
@@ -298,7 +300,88 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
     # Country info enrichi
     cinfo = _country_info(dest.get('pays', ''))
     lang_local = (cinfo.get('languages') or [''])[0]
+
+    # i18n du nom de la langue parlée + nom de la monnaie (sources country_info.json en FR)
+    LANG_NAME_I18N = {
+        'Français': {'en': 'French', 'en-us': 'French', 'es': 'Francés', 'de': 'Französisch'},
+        'Anglais': {'en': 'English', 'en-us': 'English', 'es': 'Inglés', 'de': 'Englisch'},
+        'Espagnol': {'en': 'Spanish', 'en-us': 'Spanish', 'es': 'Español', 'de': 'Spanisch'},
+        'Allemand': {'en': 'German', 'en-us': 'German', 'es': 'Alemán', 'de': 'Deutsch'},
+        'Italien': {'en': 'Italian', 'en-us': 'Italian', 'es': 'Italiano', 'de': 'Italienisch'},
+        'Portugais': {'en': 'Portuguese', 'en-us': 'Portuguese', 'es': 'Portugués', 'de': 'Portugiesisch'},
+        'Néerlandais': {'en': 'Dutch', 'en-us': 'Dutch', 'es': 'Neerlandés', 'de': 'Niederländisch'},
+        'Japonais': {'en': 'Japanese', 'en-us': 'Japanese', 'es': 'Japonés', 'de': 'Japanisch'},
+        'Mandarin': {'en': 'Mandarin', 'en-us': 'Mandarin', 'es': 'Mandarín', 'de': 'Mandarin'},
+        'Coréen': {'en': 'Korean', 'en-us': 'Korean', 'es': 'Coreano', 'de': 'Koreanisch'},
+        'Arabe': {'en': 'Arabic', 'en-us': 'Arabic', 'es': 'Árabe', 'de': 'Arabisch'},
+        'Russe': {'en': 'Russian', 'en-us': 'Russian', 'es': 'Ruso', 'de': 'Russisch'},
+        'Hindi': {'en': 'Hindi', 'en-us': 'Hindi', 'es': 'Hindi', 'de': 'Hindi'},
+        'Thaï': {'en': 'Thai', 'en-us': 'Thai', 'es': 'Tailandés', 'de': 'Thailändisch'},
+        'Vietnamien': {'en': 'Vietnamese', 'en-us': 'Vietnamese', 'es': 'Vietnamita', 'de': 'Vietnamesisch'},
+        'Indonésien': {'en': 'Indonesian', 'en-us': 'Indonesian', 'es': 'Indonesio', 'de': 'Indonesisch'},
+        'Malais': {'en': 'Malay', 'en-us': 'Malay', 'es': 'Malayo', 'de': 'Malaiisch'},
+        'Tamoul': {'en': 'Tamil', 'en-us': 'Tamil', 'es': 'Tamil', 'de': 'Tamilisch'},
+        'Hébreu': {'en': 'Hebrew', 'en-us': 'Hebrew', 'es': 'Hebreo', 'de': 'Hebräisch'},
+        'Turc': {'en': 'Turkish', 'en-us': 'Turkish', 'es': 'Turco', 'de': 'Türkisch'},
+        'Grec': {'en': 'Greek', 'en-us': 'Greek', 'es': 'Griego', 'de': 'Griechisch'},
+        'Polonais': {'en': 'Polish', 'en-us': 'Polish', 'es': 'Polaco', 'de': 'Polnisch'},
+        'Tchèque': {'en': 'Czech', 'en-us': 'Czech', 'es': 'Checo', 'de': 'Tschechisch'},
+        'Hongrois': {'en': 'Hungarian', 'en-us': 'Hungarian', 'es': 'Húngaro', 'de': 'Ungarisch'},
+        'Suédois': {'en': 'Swedish', 'en-us': 'Swedish', 'es': 'Sueco', 'de': 'Schwedisch'},
+        'Danois': {'en': 'Danish', 'en-us': 'Danish', 'es': 'Danés', 'de': 'Dänisch'},
+        'Norvégien': {'en': 'Norwegian', 'en-us': 'Norwegian', 'es': 'Noruego', 'de': 'Norwegisch'},
+        'Finnois': {'en': 'Finnish', 'en-us': 'Finnish', 'es': 'Finlandés', 'de': 'Finnisch'},
+        'Islandais': {'en': 'Icelandic', 'en-us': 'Icelandic', 'es': 'Islandés', 'de': 'Isländisch'},
+        'Croate': {'en': 'Croatian', 'en-us': 'Croatian', 'es': 'Croata', 'de': 'Kroatisch'},
+        'Roumain': {'en': 'Romanian', 'en-us': 'Romanian', 'es': 'Rumano', 'de': 'Rumänisch'},
+    }
+    if lang in ('en', 'en-us', 'es', 'de') and lang_local in LANG_NAME_I18N:
+        lang_local = LANG_NAME_I18N[lang_local].get(lang, lang_local)
     currency_name = cinfo.get('currency_name', '')
+    # i18n nom monnaie (source country_info.json en FR)
+    CUR_NAME_I18N = {
+        'Euro': {'en': 'Euro', 'en-us': 'Euro', 'es': 'Euro', 'de': 'Euro'},
+        'Dollar américain': {'en': 'US Dollar', 'en-us': 'US Dollar', 'es': 'Dólar estadounidense', 'de': 'US-Dollar'},
+        'Livre sterling': {'en': 'Pound Sterling', 'en-us': 'Pound Sterling', 'es': 'Libra esterlina', 'de': 'Pfund Sterling'},
+        'Yen': {'en': 'Yen', 'en-us': 'Yen', 'es': 'Yen', 'de': 'Yen'},
+        'Yuan': {'en': 'Yuan', 'en-us': 'Yuan', 'es': 'Yuan', 'de': 'Yuan'},
+        'Franc suisse': {'en': 'Swiss Franc', 'en-us': 'Swiss Franc', 'es': 'Franco suizo', 'de': 'Schweizer Franken'},
+        'Dollar canadien': {'en': 'Canadian Dollar', 'en-us': 'Canadian Dollar', 'es': 'Dólar canadiense', 'de': 'Kanadischer Dollar'},
+        'Dollar australien': {'en': 'Australian Dollar', 'en-us': 'Australian Dollar', 'es': 'Dólar australiano', 'de': 'Australischer Dollar'},
+        'Dollar néo-zélandais': {'en': 'New Zealand Dollar', 'en-us': 'New Zealand Dollar', 'es': 'Dólar neozelandés', 'de': 'Neuseeland-Dollar'},
+        'Dollar de Singapour': {'en': 'Singapore Dollar', 'en-us': 'Singapore Dollar', 'es': 'Dólar de Singapur', 'de': 'Singapur-Dollar'},
+        'Dollar de Hong Kong': {'en': 'Hong Kong Dollar', 'en-us': 'Hong Kong Dollar', 'es': 'Dólar de Hong Kong', 'de': 'Hongkong-Dollar'},
+        'Couronne suédoise': {'en': 'Swedish Krona', 'en-us': 'Swedish Krona', 'es': 'Corona sueca', 'de': 'Schwedische Krone'},
+        'Couronne danoise': {'en': 'Danish Krone', 'en-us': 'Danish Krone', 'es': 'Corona danesa', 'de': 'Dänische Krone'},
+        'Couronne norvégienne': {'en': 'Norwegian Krone', 'en-us': 'Norwegian Krone', 'es': 'Corona noruega', 'de': 'Norwegische Krone'},
+        'Couronne islandaise': {'en': 'Icelandic Krona', 'en-us': 'Icelandic Krona', 'es': 'Corona islandesa', 'de': 'Isländische Krone'},
+        'Couronne tchèque': {'en': 'Czech Koruna', 'en-us': 'Czech Koruna', 'es': 'Corona checa', 'de': 'Tschechische Krone'},
+        'Forint hongrois': {'en': 'Hungarian Forint', 'en-us': 'Hungarian Forint', 'es': 'Forinto húngaro', 'de': 'Ungarischer Forint'},
+        'Zloty polonais': {'en': 'Polish Zloty', 'en-us': 'Polish Zloty', 'es': 'Zloty polaco', 'de': 'Polnischer Zloty'},
+        'Rouble': {'en': 'Ruble', 'en-us': 'Ruble', 'es': 'Rublo', 'de': 'Rubel'},
+        'Roupie indienne': {'en': 'Indian Rupee', 'en-us': 'Indian Rupee', 'es': 'Rupia india', 'de': 'Indische Rupie'},
+        'Rupiah indonésienne': {'en': 'Indonesian Rupiah', 'en-us': 'Indonesian Rupiah', 'es': 'Rupia indonesia', 'de': 'Indonesische Rupiah'},
+        'Baht thaïlandais': {'en': 'Thai Baht', 'en-us': 'Thai Baht', 'es': 'Baht tailandés', 'de': 'Thailändischer Baht'},
+        'Dong vietnamien': {'en': 'Vietnamese Dong', 'en-us': 'Vietnamese Dong', 'es': 'Dong vietnamita', 'de': 'Vietnamesischer Dong'},
+        'Ringgit malaisien': {'en': 'Malaysian Ringgit', 'en-us': 'Malaysian Ringgit', 'es': 'Ringgit malayo', 'de': 'Malaysischer Ringgit'},
+        'Won sud-coréen': {'en': 'South Korean Won', 'en-us': 'South Korean Won', 'es': 'Won surcoreano', 'de': 'Südkoreanischer Won'},
+        'Peso mexicain': {'en': 'Mexican Peso', 'en-us': 'Mexican Peso', 'es': 'Peso mexicano', 'de': 'Mexikanischer Peso'},
+        'Real brésilien': {'en': 'Brazilian Real', 'en-us': 'Brazilian Real', 'es': 'Real brasileño', 'de': 'Brasilianischer Real'},
+        'Peso argentin': {'en': 'Argentine Peso', 'en-us': 'Argentine Peso', 'es': 'Peso argentino', 'de': 'Argentinischer Peso'},
+        'Peso chilien': {'en': 'Chilean Peso', 'en-us': 'Chilean Peso', 'es': 'Peso chileno', 'de': 'Chilenischer Peso'},
+        'Sol péruvien': {'en': 'Peruvian Sol', 'en-us': 'Peruvian Sol', 'es': 'Sol peruano', 'de': 'Peruanischer Sol'},
+        'Rand sud-africain': {'en': 'South African Rand', 'en-us': 'South African Rand', 'es': 'Rand sudafricano', 'de': 'Südafrikanischer Rand'},
+        'Dirham marocain': {'en': 'Moroccan Dirham', 'en-us': 'Moroccan Dirham', 'es': 'Dirham marroquí', 'de': 'Marokkanischer Dirham'},
+        'Dinar tunisien': {'en': 'Tunisian Dinar', 'en-us': 'Tunisian Dinar', 'es': 'Dinar tunecino', 'de': 'Tunesischer Dinar'},
+        'Livre égyptienne': {'en': 'Egyptian Pound', 'en-us': 'Egyptian Pound', 'es': 'Libra egipcia', 'de': 'Ägyptisches Pfund'},
+        'Lira turque': {'en': 'Turkish Lira', 'en-us': 'Turkish Lira', 'es': 'Lira turca', 'de': 'Türkische Lira'},
+        'Shekel': {'en': 'Shekel', 'en-us': 'Shekel', 'es': 'Shekel', 'de': 'Schekel'},
+        'Dirham émirati': {'en': 'UAE Dirham', 'en-us': 'UAE Dirham', 'es': 'Dirham emiratí', 'de': 'VAE-Dirham'},
+        'Kuna croate': {'en': 'Croatian Kuna', 'en-us': 'Croatian Kuna', 'es': 'Kuna croata', 'de': 'Kroatische Kuna'},
+        'Leu roumain': {'en': 'Romanian Leu', 'en-us': 'Romanian Leu', 'es': 'Leu rumano', 'de': 'Rumänischer Leu'},
+    }
+    if lang in ('en', 'en-us', 'es', 'de') and currency_name in CUR_NAME_I18N:
+        currency_name = CUR_NAME_I18N[currency_name].get(lang, currency_name)
     currency_symbol = cinfo.get('currency_symbol', '')
     drive = cinfo.get('drive', 'right')
     gpi_level = _safe_int(cinfo.get('risk_level'))
@@ -485,11 +568,28 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
                         break
         except FileNotFoundError:
             pass
-        infos_pratiques_data['ski_season'] = 'Déc → Mai'
-        infos_pratiques_data['hiking_season'] = 'Juin → Sept'
+        # i18n des saisons (FR/EN/EN-US/ES/DE)
+        SEASON_MTN = {
+            'fr': ('Déc → Mai', 'Juin → Sept'),
+            'en': ('Dec → May', 'Jun → Sep'),
+            'en-us': ('Dec → May', 'Jun → Sep'),
+            'es': ('Dic → May', 'Jun → Sep'),
+            'de': ('Dez → Mai', 'Jun → Sep'),
+        }
+        ski_s, hike_s = SEASON_MTN.get(lang, SEASON_MTN['fr'])
+        infos_pratiques_data['ski_season'] = ski_s
+        infos_pratiques_data['hiking_season'] = hike_s
     elif is_tropical:
-        infos_pratiques_data['dry_season'] = 'Mai → Sept'
-        infos_pratiques_data['wet_season'] = 'Déc → Mars'
+        SEASON_TROP = {
+            'fr': ('Mai → Sept', 'Déc → Mars'),
+            'en': ('May → Sep', 'Dec → Mar'),
+            'en-us': ('May → Sep', 'Dec → Mar'),
+            'es': ('May → Sep', 'Dic → Mar'),
+            'de': ('Mai → Sep', 'Dez → Mär'),
+        }
+        dry_s, wet_s = SEASON_TROP.get(lang, SEASON_TROP['fr'])
+        infos_pratiques_data['dry_season'] = dry_s
+        infos_pratiques_data['wet_season'] = wet_s
         infos_pratiques_data['has_cyclones'] = abs(lat) > 10
         infos_pratiques_data['latitude'] = lat
         # Sea temps (à enrichir plus tard depuis climate.csv si colonne sea_temp)
@@ -696,37 +796,85 @@ def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
     return render_v6_full_page(page_data)
 
 
-def _build_related_v6(cfg: dict, dest: dict, similarities: dict | None,
-                      all_dests: dict | None) -> list[dict]:
-    """Construit la liste related pour la section Explorer.
+def _haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """Distance grand cercle en km entre 2 points GPS (formule haversine)."""
+    import math
+    R = 6371.0  # rayon terre en km
+    phi1, phi2 = math.radians(lat1), math.radians(lat2)
+    dphi = math.radians(lat2 - lat1)
+    dlam = math.radians(lon2 - lon1)
+    a = math.sin(dphi/2)**2 + math.cos(phi1) * math.cos(phi2) * math.sin(dlam/2)**2
+    return 2 * R * math.asin(math.sqrt(a))
 
-    Reprend les top 3 destinations similaires (cosine sim sur tmax/rain/sun) si
-    disponibles. Format de retour : [{href, name, sub}, ...].
+
+def _build_related_v6(cfg: dict, dest: dict, similarities: dict | None,
+                      all_dests: dict | None) -> dict:
+    """Construit les listes related pour la section Explorer.
+
+    Retourne dict avec 2 clés:
+    - 'climate': top 4 dest similaires en climat (cosine sim tmax/rain/sun)
+    - 'proximity': top 4 dest géographiquement proches (haversine, exclut dest courante)
+
+    Format chaque item: {href, name, country, country_iso, distance_km (proximity only)}
     """
-    if not similarities or not all_dests:
-        return []
+    result = {'climate': [], 'proximity': []}
+    if not all_dests:
+        return result
 
     slug_fr_canonical = dest.get('slug_fr', '')
-    sims = similarities.get(slug_fr_canonical, [])
-    if not sims:
-        return []
-
-    related = []
     lang = cfg['lang']
 
-    for score, other_slug in sims[:3]:
-        other = all_dests.get(other_slug)
-        if not other:
-            continue
-        # Slug localisé pour href
-        slug_lang = other.get(f'slug_{lang[:2]}', other.get('slug_fr', other_slug))
+    def _build_item(other: dict, distance_km: float | None = None) -> dict:
+        slug_lang = other.get(f'slug_{lang[:2]}', other.get('slug_fr', ''))
         href = f'{cfg["annual_prefix"]}{slug_lang}{cfg["annual_suffix"]}'
-        # Name localisé
-        name = other.get(f'nom_{lang[:2]}', other.get('nom_fr', other_slug.title()))
-        # Sub : pays
-        sub = other.get(f'country_{lang[:2]}', other.get('pays', ''))
-        related.append({'href': href, 'name': name, 'sub': sub})
-    return related
+        name = other.get(f'nom_{lang[:2]}', other.get('nom_fr', slug_lang.title()))
+        country = other.get(f'country_{lang[:2]}', other.get('pays', ''))
+        country_iso = other.get('flag', '').lower().strip()
+        item = {'href': href, 'name': name, 'country': country, 'country_iso': country_iso}
+        if distance_km is not None:
+            item['distance_km'] = round(distance_km)
+        return item
+
+    # ── Climat similaire ──
+    if similarities:
+        sims = similarities.get(slug_fr_canonical, [])
+        for score, other_slug in sims[:4]:
+            other = all_dests.get(other_slug)
+            if other:
+                result['climate'].append(_build_item(other))
+
+    # ── Proximité géographique ──
+    try:
+        cur_lat = float(dest.get('lat', 0))
+        cur_lon = float(dest.get('lon', 0))
+    except (TypeError, ValueError):
+        cur_lat = cur_lon = 0
+    if cur_lat or cur_lon:
+        candidates = []
+        for other_slug, other in all_dests.items():
+            if other_slug == slug_fr_canonical:
+                continue
+            try:
+                olat = float(other.get('lat', 0))
+                olon = float(other.get('lon', 0))
+            except (TypeError, ValueError):
+                continue
+            if not (olat or olon):
+                continue
+            d = _haversine_km(cur_lat, cur_lon, olat, olon)
+            candidates.append((d, other_slug, other))
+        # Trier par distance asc, prendre top 4 (mais éviter mêmes que climat)
+        candidates.sort(key=lambda c: c[0])
+        already_in_climate = {item['name'] for item in result['climate']}
+        for distance, other_slug, other in candidates:
+            if len(result['proximity']) >= 4:
+                break
+            item = _build_item(other, distance_km=distance)
+            if item['name'] in already_in_climate:
+                continue
+            result['proximity'].append(item)
+
+    return result
 
 
 # ─────────────────────────────────────────────────────────────────────────────

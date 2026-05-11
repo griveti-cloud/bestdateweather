@@ -182,7 +182,7 @@ header.hero-wrap{
 .hero-shell .mini-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 @media (max-width:640px){
   .hero-shell .decision-card{width:100%}
-  .hero-shell .mini-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .hero-shell .mini-grid{grid-template-columns:1fr;gap:10px}
 }
 
 .hero-photo-credit{
@@ -294,9 +294,9 @@ header.hero-wrap{
 .right-stack{background:var(--card);border:1px solid var(--border);
   border-radius:20px;padding:26px;box-shadow:var(--shadow);
   display:flex;flex-direction:column;gap:20px}
-.right-item h3{font-family:'Playfair Display',Georgia,serif;font-size:18px;
+.right-item h3{font-family:'Playfair Display',Georgia,serif;font-size:16px;
   margin:0 0 6px;font-weight:700}
-.right-item p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55}
+.right-item p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5}
 
 /* Méthodo mini : vrai bloc distinct dans le right-stack */
 .method-mini{background:var(--amber-soft);border:1px solid var(--amber-border);
@@ -447,6 +447,28 @@ tbody tr:hover{background:#fffbf2}
 .list-ico{flex-shrink:0;font-size:14px}
 .list-flag{flex-shrink:0;border-radius:2px}
 .list-country{color:var(--muted);font-weight:500;font-size:12.5px}
+
+/* Box guides : list-items en cadres individuels + bouton outlined */
+.box-guides .list{gap:8px}
+.box-guides .list-item{
+  border:1px solid var(--border);border-radius:12px;
+  padding:12px 14px;background:var(--card);
+  transition:background .15s,border-color .15s
+}
+.box-guides .list-item:last-child{border-bottom:1px solid var(--border)}
+.box-guides .list-item:hover{background:#fffbf2;border-color:var(--gold)}
+.box-guides .list-item strong a{
+  color:var(--gold);text-decoration:none;font-weight:700
+}
+.box-guides .list-item strong a:hover{color:var(--gold-dark,#b8860b)}
+.btn.outlined{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--card);border:1px solid var(--border);color:var(--ink);
+  width:100%;padding:14px 18px;font-weight:700;border-radius:12px;
+  text-decoration:none;font-size:14.5px;line-height:1.3;
+  transition:background .15s,border-color .15s
+}
+.btn.outlined:hover{background:#fffbf2;border-color:var(--gold)}
 .box h3{font-family:'Playfair Display',Georgia,serif;font-size:17px;
   margin:0 0 12px;font-weight:700}
 
