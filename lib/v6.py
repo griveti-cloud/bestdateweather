@@ -2056,15 +2056,15 @@ def render_v6_localisation(slug: str, lang: str, nom: str,
         <h2>{title} ?</h2>
         <p class="lead">{h(L2['lead'])}</p>
       </div>
-      <div class="dest-map-grid" data-dest-map data-lat="{lat:.4f}" data-lon="{lon:.4f}"
+      <div class="dest-map-row" data-dest-map="1" data-lat="{lat:.4f}" data-lon="{lon:.4f}"
            data-macro-zoom="{macro_zoom}" data-world-id="{world_id}" data-macro-id="{macro_id}">
         <div class="dest-map-card">
           <div class="dest-map-lbl">{h(L2['world'])}</div>
-          <div id="{world_id}" class="dest-map-el dest-map-el--world" style="height:280px;border-radius:12px;overflow:hidden"></div>
+          <div id="{world_id}" class="dest-map-el dest-map-el--world"></div>
         </div>
         <div class="dest-map-card">
           <div class="dest-map-lbl">{h(L2['context'])}</div>
-          <div id="{macro_id}" class="dest-map-el dest-map-el--macro" style="height:280px;border-radius:12px;overflow:hidden"></div>
+          <div id="{macro_id}" class="dest-map-el dest-map-el--macro"></div>
         </div>
       </div>
       <div class="dest-map-intro">
@@ -2293,7 +2293,7 @@ def render_v6_head(lang: str, page_title: str, page_desc: str,
 {og_html}
 {preload_bg}
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=19"/>
+<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=20"/>
 {json_ld_html}
 </head>
 <body>'''

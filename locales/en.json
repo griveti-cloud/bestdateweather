@@ -1693,7 +1693,7 @@
     },
     "localisation": {
       "kicker": "Location",
-      "title_tpl": "Where {nom} is",
+      "title_tpl": "Where is {nom}",
       "lead": "Geographic position and access."
     },
     "explorer": {
