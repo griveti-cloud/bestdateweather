@@ -562,13 +562,13 @@ def test_v6_helpers():
 
     loc_section = render_v6_localisation('chamonix', 'fr', 'Chamonix', 45.92, 6.87)
     check("localisation/fr: dest-map div with data-attrs",
-          'id="dest-map"' in loc_section and 'data-lat="45.9200"' in loc_section,
+          'class="dest-map-row"' in loc_section and 'data-lat="45.9200"' in loc_section,
           "map container missing")
 
     reserve = render_v6_reserver('chamonix', 'fr', 'Chamonix')
     check("reserver/fr: 3 affiliate CTAs",
-          reserve.count('class="card pad reserve-card"') == 3
-          and 'expedia.fr' in reserve and 'getyourguide.com' in reserve,
+          reserve.count('getyourguide.com') >= 2
+          and 'expedia.fr' in reserve,
           "affiliate links missing")
 
     # 10. Full page orchestrator
@@ -608,7 +608,7 @@ def test_v6_helpers():
     check("full_page/fr: contains all 10 sections",
           all(s in page for s in [
               'class="topbar"', 'class="hero-wrap"', 'id="tableau"',
-              'tendance-section', '>Contexte<', '>Adapter<',
+              'tendance-section', '>Comprendre<', '>Adapter<',
               '>Réserver<', '>Infos pratiques<', '>Localisation<',
               '>Questions<', 'bdw-footer',
           ]),

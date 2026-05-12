@@ -1527,12 +1527,14 @@ def _build_lecture_rapide(months_data: list[dict], lang: str, abbr_list: list[st
 
     # Bonne transition : mois 'mid' adjacent à au moins un 'rec'
     transition_months = []
-    for i, m in enumerate(months_data):
-        if m.get('classe') == 'mid':
-            prev_cls = months_data[(i - 1) % 12].get('classe', '')
-            next_cls = months_data[(i + 1) % 12].get('classe', '')
-            if 'rec' in (prev_cls, next_cls):
-                transition_months.append(abbr_list[i])
+    n_months = len(months_data)
+    if n_months > 0:
+        for i, m in enumerate(months_data):
+            if m.get('classe') == 'mid':
+                prev_cls = months_data[(i - 1) % n_months].get('classe', '')
+                next_cls = months_data[(i + 1) % n_months].get('classe', '')
+                if 'rec' in (prev_cls, next_cls):
+                    transition_months.append(abbr_list[i])
     transition_str = ' · '.join(transition_months) if transition_months else L['no_transition']
 
     # Période rude : mois 'avoid'

@@ -1107,6 +1107,7 @@ var TROPICAL_KEYS = {
  "-1.29,36.82": true, // Kenya
  "-1.46,-48.5": true, // Belém
  "-1.94,30.06": true, // Kigali
+ "-11.7,43.25": true, // Moroni
  "-12.45,-41.42": true, // Chapada Diamantina
  "-12.46,130.84": true, // Darwin
  "-12.78,45.23": true, // Mayotte
@@ -1134,8 +1135,11 @@ var TROPICAL_KEYS = {
  "-25.97,32.57": true, // Maputo
  "-3.12,-60.02": true, // Manaus
  "-3.35,37.34": true, // Moshi
+ "-3.38,29.36": true, // Bujumbura
  "-4.04,39.67": true, // Mombasa
+ "-4.27,15.27": true, // Brazzaville
  "-4.28,39.58": true, // Diani Beach
+ "-4.32,15.32": true, // Kinshasa
  "-4.68,55.49": true, // Seychelles
  "-5.79,-35.21": true, // Natal
  "-6.16,39.19": true, // Stone Town
@@ -1147,14 +1151,20 @@ var TROPICAL_KEYS = {
  "-8.35,116.04": true, // Îles Gili
  "-8.49,119.88": true, // Labuan Bajo
  "-8.51,115.26": true, // Ubud
+ "-8.52,179.2": true, // Funafuti
  "-8.55,119.49": true, // Komodo
+ "-8.56,125.58": true, // Dili
  "-8.65,116.32": true, // Lombok
  "-8.66,115.13": true, // Canggu
  "-8.67,115.21": true, // Bali
  "-8.73,115.54": true, // Nusa Penida
+ "-8.84,13.23": true, // Luanda
+ "-9.43,160.03": true, // Honiara
  "0.06,32.46": true, // Entebbe
+ "0.34,6.73": true, // São Tomé
  "0.35,32.58": true, // Kampala
  "0.42,33.21": true, // Jinja
+ "1.33,172.98": true, // Tarawa
  "1.35,103.82": true, // Singapour
  "10.1,99.84": true, // Koh Tao
  "10.21,118.99": true, // Palawan
@@ -1168,12 +1178,16 @@ var TROPICAL_KEYS = {
  "10.94,108.29": true, // Mui Ne
  "11.19,119.39": true, // El Nido
  "11.56,104.92": true, // Phnom Penh
+ "11.59,43.15": true, // Djibouti
+ "11.86,-15.6": true, // Bissau
  "11.93,-85.96": true, // Granada (Nicaragua)
  "11.93,79.83": true, // Pondichéry
  "11.94,108.44": true, // Đà Lạt
  "11.97,121.92": true, // Boracay
  "12.0,120.2": true, // Coron
+ "12.05,-61.75": true, // Saint-Georges
  "12.07,102.33": true, // Koh Chang
+ "12.1,15.04": true, // N'Djamena
  "12.11,-86.27": true, // Nicaragua
  "12.14,-68.26": true, // Bonaire
  "12.17,-68.98": true, // Curaçao
@@ -1183,6 +1197,7 @@ var TROPICAL_KEYS = {
  "12.51,-69.97": true, // Aruba
  "12.57,104.99": true, // Cambodge
  "12.57,99.96": true, // Hua Hin
+ "12.65,-8.0": true, // Bamako
  "12.93,100.88": true, // Pattaya
  "13.01,-61.23": true, // Grenadines
  "13.1,103.2": true, // Battambang
@@ -1191,38 +1206,7 @@ var TROPICAL_KEYS = {
  "13.35,-81.37": true, // Providencia
  "13.36,103.86": true, // Siem Reap
  "13.45,-16.57": true, // Banjul
-  "-11.7,43.25":  true,  // Moroni
-  "-3.38,29.36":  true,  // Bujumbura
-  "-4.27,15.27":  true,  // Brazzaville
-  "-4.32,15.32":  true,  // Kinshasa
-  "-8.52,179.2":  true,  // Funafuti
-  "-8.56,125.58": true,  // Dili
-  "-8.84,13.23":  true,  // Luanda
-  "-9.43,160.03": true,  // Honiara
-  "0.34,6.73":    true,  // São Tomé
-  "1.33,172.98":  true,  // Tarawa
-  "2.05,45.34":   true,  // Mogadiscio
-  "3.75,8.78":    true,  // Malabo
-  "4.36,18.56":   true,  // Bangui
-  "4.85,31.6":    true,  // Djouba
-  "4.94,114.95":  true,  // Bandar Seri Begawan
-  "5.85,-55.2":   true,  // Paramaribo
-  "6.3,-10.8":    true,  // Monrovia
-  "6.8,-58.16":   true,  // Georgetown (Guyana)
-  "6.92,158.16":  true,  // Palikir
-  "9.54,-13.68":  true,  // Conakry
-  "11.59,43.15":  true,  // Djibouti
-  "11.86,-15.6":  true,  // Bissau
-  "12.05,-61.75": true,  // Saint-Georges (Grenade)
-  "12.1,15.04":   true,  // N'Djamena
-  "12.65,-8.0":   true,  // Bamako
-  "17.3,-62.72":  true,  // Basseterre
-  "18.54,-72.34": true,  // Port-au-Prince
-  "23.72,90.41":  true,  // Dacca
-  "24.86,67.01":  true,  // Karachi
- "13.51,2.12":   true, // Niamey
- "18.08,-15.97": true, // Nouakchott
- "7.09,171.38":  true, // Majuro
+ "13.51,2.12": true, // Niamey
  "13.75,100.52": true, // Bangkok
  "13.77,109.23": true, // Quy Nhon
  "13.91,-60.98": true, // Sainte-Lucie
@@ -1247,13 +1231,16 @@ var TROPICAL_KEYS = {
  "17.1,121.55": true, // Luzon Nord
  "17.12,-61.85": true, // Antigua
  "17.25,-88.77": true, // Belize
+ "17.3,-62.72": true, // Basseterre
  "17.9,-62.83": true, // Saint-Barthélemy
  "17.97,102.6": true, // Vientiane
  "18.07,-63.05": true, // Saint-Martin
+ "18.08,-15.97": true, // Nouakchott
  "18.1,-77.3": true, // Jamaïque
  "18.34,-64.93": true, // Saint Thomas
  "18.47,-66.11": true, // San Juan
  "18.47,-69.9": true, // République Dominicaine
+ "18.54,-72.34": true, // Port-au-Prince
  "18.58,-68.4": true, // Punta Cana
  "18.79,98.98": true, // Chiang Mai
  "19.08,72.88": true, // Mumbai
@@ -1261,6 +1248,7 @@ var TROPICAL_KEYS = {
  "19.86,102.14": true, // Laos
  "19.89,102.13": true, // Luang Prabang
  "19.91,99.83": true, // Chiang Rai
+ "2.05,45.34": true, // Mogadiscio
  "2.19,102.25": true, // Malacca
  "20.25,105.97": true, // Ninh Binh
  "20.62,-87.08": true, // Riviera Maya
@@ -1278,6 +1266,8 @@ var TROPICAL_KEYS = {
  "22.32,114.17": true, // Hong Kong
  "22.63,120.3": true, // Kaohsiung
  "23.14,-82.36": true, // La Havane
+ "23.72,90.41": true, // Dacca
+ "24.86,67.01": true, // Karachi
  "25.03,121.57": true, // Taipei
  "25.05,-77.34": true, // Nassau
  "25.05,-77.35": true, // Bahamas
@@ -1286,24 +1276,33 @@ var TROPICAL_KEYS = {
  "28.61,77.21": true, // Delhi
  "3.14,101.69": true, // Kuala Lumpur
  "3.2,73.22": true, // Maldives
+ "3.75,8.78": true, // Malabo
  "4.05,9.77": true, // Douala
+ "4.36,18.56": true, // Bangui
  "4.6,-74.08": true, // Colombie
  "4.6,101.07": true, // Ipoh
  "4.71,-74.07": true, // Bogota
+ "4.85,31.6": true, // Djouba
  "4.94,-52.33": true, // Guyane
+ "4.94,114.95": true, // Bandar Seri Begawan
  "4.97,115.06": true, // Bornéo
  "5.36,-4.01": true, // Abidjan
  "5.42,100.33": true, // Penang
  "5.56,-0.19": true, // Accra
+ "5.85,-55.2": true, // Paramaribo
  "5.98,116.07": true, // Kota Kinabalu
  "6.13,1.22": true, // Lomé
  "6.25,-75.56": true, // Medellín
+ "6.3,-10.8": true, // Monrovia
  "6.35,99.73": true, // Langkawi
  "6.37,2.39": true, // Cotonou
  "6.52,3.38": true, // Lagos
  "6.69,-1.62": true, // Kumasi
+ "6.8,-58.16": true, // Georgetown
  "6.87,81.05": true, // Ella
+ "6.92,158.16": true, // Palikir
  "6.93,79.84": true, // Colombo
+ "7.09,171.38": true, // Majuro
  "7.51,134.58": true, // Palaos
  "7.53,99.04": true, // Koh Lanta
  "7.74,98.78": true, // Koh Phi Phi
@@ -1314,6 +1313,7 @@ var TROPICAL_KEYS = {
  "8.98,-79.52": true, // Panama
  "9.07,7.4": true, // Abuja
  "9.51,100.06": true, // Koh Samui
+ "9.54,-13.68": true, // Conakry
  "9.85,126.05": true, // Siargao
  "9.93,-84.08": true, // Costa Rica
  "9.93,76.26": true, // Kochi
