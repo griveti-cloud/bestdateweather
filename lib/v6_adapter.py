@@ -598,7 +598,7 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
         infos_pratiques_data['has_geothermal'] = country_name.lower() in ('islande', 'iceland', 'islandia', 'island')
 
     # ── Construction page_data ──
-    canonical_url = f'https://bestdateweather.com/{cfg.get("canonical_prefix", "")}{cfg["annual_prefix"]}{slug}{cfg["annual_suffix"]}'
+    canonical_url = f'{cfg.get("canonical_prefix", "")}{cfg["annual_prefix"]}{slug}{cfg["annual_suffix"]}'
 
     # Page title : utilise les annual_titles V5 (rotation déterministe par slug
     # pour éviter le pattern uniforme suspect de SEO)
