@@ -549,7 +549,7 @@
  if (tbl && d.weather) {
   var w = d.weather;
   var unit = R() ? '°F' : '°';
-  var _w=d.weather;var _mm=(null!=_w.tMin&&null!=_w.tMax)?' ('+z(_w.tMin)+'°/'+z(_w.tMax)+'°)':'';var _isDesk=window.innerWidth>=641;var _wbLang=(function(){var _n=document.documentElement.lang;return "en"===_n||"en-US"===_n?"en":"es"===_n?"es":"de"===_n?"de":"fr";})();var _lblFeels=(i[_wbLang]&&i[_wbLang].feels)||'Ressenti';var _lblWind=(i[_wbLang]&&i[_wbLang].wind)||'Vent';var _feels=null!=_w.feels?' · '+_lblFeels+' '+z(_w.feels)+(R()?'°F':'°'):'';var _wind=null!=_w.wind?' · '+_lblWind+' '+(R()?Math.round(.621371*_w.wind):Math.round(_w.wind))+(R()?' mph':' km/h'):'';tbl.innerHTML=_w.icon+' <button onclick="wbOpenCityModal()" style="background:none;border:none;color:#fff;font-weight:700;cursor:pointer;font-size:inherit;padding:0;font-family:inherit;">'+G(_w.city)+'</button> · '+z(_w.temp)+(R()?'°F':'°')+_mm+' · '+G(_w.desc)+' · UV '+_w.uv+(_isDesk?_feels:'')+(_isDesk?_wind:'');
+  var _w=d.weather;var _mm=(null!=_w.tMin&&null!=_w.tMax)?' ('+z(_w.tMin)+'°/'+z(_w.tMax)+'°)':'';var _isDesk=window.innerWidth>=641;var _lblFeels=(i&&i.feels)||'Ressenti';var _lblWind=(i&&i.wind)||'Vent';var _feels=null!=_w.feels?' · '+_lblFeels+' '+z(_w.feels)+(R()?'°F':'°'):'';var _wind=null!=_w.wind?' · '+_lblWind+' '+(R()?Math.round(.621371*_w.wind):Math.round(_w.wind))+(R()?' mph':' km/h'):'';tbl.innerHTML=_w.icon+' <button onclick="wbOpenCityModal()" style="background:none;border:none;color:#fff;font-weight:700;cursor:pointer;font-size:inherit;padding:0;font-family:inherit;">'+G(_w.city)+'</button> · '+z(_w.temp)+(R()?'°F':'°')+_mm+' · '+G(_w.desc)+' · UV '+_w.uv+(_isDesk?_feels:'')+(_isDesk?_wind:'');
  }
     }
   }
