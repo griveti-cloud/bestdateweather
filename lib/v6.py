@@ -300,6 +300,8 @@ _DECIDER_I18N = {
         'right3_text': 'Descendre au tableau détaillé pour comparer mois à mois, puis ouvrir la fiche du mois qui vous intéresse.',
         'cta_compare': 'Comparer les 12 mois',
         'cta_byproject': 'Selon votre projet',
+        'about_link': "À propos de Gilles →",
+        'about_url': 'a-propos.html',
         'none': 'aucun',
     },
     'en': {
@@ -323,6 +325,8 @@ _DECIDER_I18N = {
         'right3_text': 'Scroll down to the detailed table to compare month by month, then open the page of the month that interests you.',
         'cta_compare': 'Compare the 12 months',
         'cta_byproject': 'By your project',
+        'about_link': "About the founder →",
+        'about_url': '../en/about.html',
         'none': 'none',
     },
     'en-us': {
@@ -346,6 +350,8 @@ _DECIDER_I18N = {
         'right3_text': 'Scroll down to the detailed table to compare month by month, then open the page of the month that interests you.',
         'cta_compare': 'Compare the 12 months',
         'cta_byproject': 'By your project',
+        'about_link': "About the founder →",
+        'about_url': '../us/about.html',
         'none': 'none',
     },
     'es': {
@@ -369,6 +375,8 @@ _DECIDER_I18N = {
         'right3_text': 'Bajar a la tabla detallada para comparar mes a mes, luego abrir la ficha del mes que le interese.',
         'cta_compare': 'Comparar los 12 meses',
         'cta_byproject': 'Según su proyecto',
+        'about_link': "Sobre el fundador →",
+        'about_url': '../es/sobre-nosotros.html',
         'none': 'ninguno',
     },
     'de': {
@@ -392,6 +400,8 @@ _DECIDER_I18N = {
         'right3_text': 'Nach unten zur Detailtabelle scrollen, um Monat für Monat zu vergleichen, dann die Seite des gewünschten Monats öffnen.',
         'cta_compare': 'Die 12 Monate vergleichen',
         'cta_byproject': 'Nach Ihrem Projekt',
+        'about_link': "Über den Gründer →",
+        'about_url': '../de/ueber-uns.html',
         'none': 'keine',
     },
 }
@@ -469,6 +479,10 @@ def render_v6_decider(slug: str, lang: str, dest_name: str,
         f'    </div>\n'
         f'  </div>\n'
         f'  <p class="avis-edito">{editorial_html}</p>\n'
+        f'  <a href="{L["about_url"]}" class="avis-author-link" rel="author" '
+        f'style="display:inline-block;margin-top:6px;font-size:12px;font-weight:600;'
+        f'color:#b8860b;text-decoration:none;border-bottom:1px solid #f5d060;padding-bottom:1px">'
+        f'{h(L["about_link"])}</a>\n'
         f'</div>'
     )
 
