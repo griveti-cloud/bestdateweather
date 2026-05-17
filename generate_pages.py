@@ -2683,12 +2683,6 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  <p class="ctx-body">{ctx_para}</p>
  </section>
 
- <section class="section">
- <div class="section-label">{L['sec_seasonal_label']}</div>
- <h2 class="section-title">{L['sec_seasonal_title_tpl'].format(month=month)}</h2>
- <p class="ctx-body">{monthly_insight_html}</p>
- </section>
-
  <section class="section dest-search-section">
  <div class="section-label">{L['search_dest_label']}</div>
  <div class="dest-search-wrap">
