@@ -553,7 +553,10 @@
     "search_dest_label": "Compare with another destination",
     "search_dest_placeholder": "🌍  Paris, Bali, Tokyo…",
     "search_dest_btn": "Compare →",
-    "src_era5_short": "ERA5 data · Open-Meteo · 10 years · Numbeo 2026"
+    "src_era5_short": "ERA5 data · Open-Meteo · 10 years · Numbeo 2026",
+    "sec_see_annual_tpl": "To compare all 12 months, see the <a href=\"{url}\">annual guide for {name}</a>.",
+    "sec_seasonal_label": "Seasonality",
+    "sec_seasonal_title_tpl": "Seasonal specificities in {month}"
   },
   "narratives": {
     "tropical_rainy": "In {month}, {name} is in the middle of the rainy season ({rain}% rainy days). Tropical showers are usually short but intense — pack a light raincoat.",

@@ -554,7 +554,10 @@
     "search_dest_label": "Comparar con otro destino",
     "search_dest_placeholder": "🌍  París, Bali, Tokio…",
     "search_dest_btn": "Comparar →",
-    "src_era5_short": "Datos ERA5 · Open-Meteo · 10 años · Numbeo 2026"
+    "src_era5_short": "Datos ERA5 · Open-Meteo · 10 años · Numbeo 2026",
+    "sec_see_annual_tpl": "Para comparar los 12 meses, consulta la <a href=\"{url}\">guía anual de {name}</a>.",
+    "sec_seasonal_label": "Estacionalidad",
+    "sec_seasonal_title_tpl": "Especificidades estacionales en {month}"
   },
   "narratives": {
     "tropical_rainy": "En {month}, {name} está en plena temporada de lluvias ({rain}% de días con lluvia). Los aguaceros tropicales son normalmente breves pero intensos — lleva un impermeable ligero.",

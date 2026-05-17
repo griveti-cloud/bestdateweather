@@ -38,6 +38,7 @@ from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
                               pillar_url, month_lc, MONTH_URL, MONTH_URL_FR,
                               SEASON_ICONS, TODAY, YEAR, DATA_UPDATED,
                               date_modified_for, build_hreflang_tags)
+from lib.monthly_insights import classify_climate, get_monthly_insight
 
 # ── PATHS ───────────────────────────────────────────────────────────────────
 DIR  = os.path.dirname(os.path.abspath(__file__))
@@ -1667,6 +1668,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     is_fr    = C['is_fr']
     is_mountain = dest.get('mountain', 'False').strip() == 'True'
     is_tropical = dest.get('tropical', '').strip().lower() in ('true', '1')
+    # Climat pour insight saisonnier (5 catégories : alpine/tropical/mediterranean/oceanic/continental)
+    dest_climate = classify_climate(dest)
+    monthly_insight_html = get_monthly_insight(dest_climate, mi + 1, lang)
 
     all_scores = [mo['score'] for mo in months]
     best_idx   = max(range(12), key=lambda i: months[i]['score'])
@@ -2292,6 +2296,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         'sec_nav_title':  C['lbl_m_sec_nav_title_tpl'].format(**tpl),
         'sec_table':      C['lbl_m_sec_table'],
         'sec_table_title': C['lbl_m_sec_table_title'],
+        'sec_see_annual_tpl': C['lbl_m_sec_see_annual_tpl'],
+        'sec_seasonal_label': C['lbl_m_sec_seasonal_label'],
+        'sec_seasonal_title_tpl': C['lbl_m_sec_seasonal_title_tpl'],
         'th_month':       C['lbl_m_th_month'],
         'th_tmin':        C['lbl_m_th_tmin'],
         'th_tmax':        C['lbl_m_th_tmax'],
@@ -2665,17 +2672,6 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  {_decision_card_m}
  </section>
 
- <section class="section">
- <div class="section-label">{L['sec_activity']}</div>
- <h2 class="section-title">{L['sec_activity_title']}</h2>
- <div class="act-grid">
-   <div class="act-chip"><span class="act-chip-lbl">{L['act_city']}</span><span class="act-chip-val">{act_city}</span></div>
-   <div class="act-chip"><span class="act-chip-lbl">{L['act_ext']}</span><span class="act-chip-val">{act_ext}</span></div>
-   <div class="act-chip"><span class="act-chip-lbl">{L['act_beach']}</span><span class="act-chip-val">{act_beach}</span></div>
-   <div class="act-chip act-chip-budget"><span class="act-chip-lbl">{L['act_budget']}</span><span class="act-chip-val">{bud}</span></div>
- </div>
- </section>
-
  <section class="section ctx-section">
  <div class="section-label">{L['sec_context']}</div>
  <h2 class="section-title">{L['sec_context_title']}</h2>
@@ -2683,9 +2679,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </section>
 
  <section class="section">
- <div class="section-label">{L['sec_nav']}</div>
- <h2 class="section-title">{L['sec_nav_title']}</h2>
- <div class="grid-months">{month_nav}</div>
+ <div class="section-label">{L['sec_seasonal_label']}</div>
+ <h2 class="section-title">{L['sec_seasonal_title_tpl'].format(month=month)}</h2>
+ <p class="ctx-body">{monthly_insight_html}</p>
  </section>
 
  <section class="section dest-search-section">
@@ -2702,19 +2698,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
  <section class="section">
  <div class="section-label">{L['sec_table']}</div>
- <h2 class="section-title">{L['sec_table_title']}</h2>
-{_table_header_badge} <div class="{'climate-table-wrap mountain' if is_mountain else 'climate-table-wrap'}">
- <table class="climate-table climate-table--horizontal" aria-label="{L['sec_table_title']} {nom}">
- <thead><tr><th>{L['th_month']}</th><th>{L['th_tmin']}</th><th>{L['th_tmax']}</th><th>{L['th_rain']}</th><th>{L['th_precip']}</th><th>{L['th_sun']}</th><th>{L['th_score']}</th>{'<th>' + L['th_ski'] + '</th>' if is_mountain else ''}</tr></thead>
- <tbody>{table_rows}</tbody>
- </table>
- </div>
- <div class="table-legend">
- <span><span class="legend-dot legend-rec"></span>{L.get('legend_ideal_mtn', L['legend_ideal']) if is_mountain else L['legend_ideal']}</span>
- <span><span class="legend-dot legend-mid"></span>{L['legend_ok']}</span>
- <span><span class="legend-dot legend-avoid"></span>{L.get('legend_off_mtn', L['legend_bad']) if is_mountain else L['legend_bad']}</span>
- <span class="ml-auto">{L['legend_note']}</span>
- </div>
+ <p class="cmp-intro" style="text-align:center;margin:0.5rem 0 1rem;">{L['sec_see_annual_tpl'].format(name=nom_bare, url=annual_link)}</p>
  </section>
 
 
@@ -2784,18 +2768,6 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
  {nearby_section_monthly}
  {crosslink_section_html}
-
- <section class="section">
- <div class="section-label">{L['sec_rankings']}</div>
- <h2 class="section-title">{L['sec_rankings_title']}</h2>
- <div class="flex-wrap-14">{rank_links_html}</div>
- </section>
-
- <section class="section">
- <div class="section-label">{L['sec_guides']}</div>
- <h2 class="section-title">{L['sec_guides_title']}</h2>
- <div class="flex-wrap-14">{pillar_link}</div>
- </section>
 
  <section class="widget-section">
  <div class="cta-box" class="text-center">

@@ -554,7 +554,10 @@
     "search_dest_label": "Comparer avec une autre destination",
     "search_dest_placeholder": "🌍  Paris, Bali, Tokyo…",
     "search_dest_btn": "Comparer →",
-    "src_era5_short": "Données ERA5 · Open-Meteo · 10 ans · Numbeo 2026"
+    "src_era5_short": "Données ERA5 · Open-Meteo · 10 ans · Numbeo 2026",
+    "sec_see_annual_tpl": "Pour comparer les 12 mois, voir la <a href=\"{url}\">fiche annuelle de {name}</a>.",
+    "sec_seasonal_label": "Saisonnalité",
+    "sec_seasonal_title_tpl": "Spécificités saisonnières en {month}"
   },
   "narratives": {
     "tropical_rainy": "En {month_lc}, {name} est en pleine saison des pluies ({rain}% de jours pluvieux). Les averses tropicales sont généralement courtes mais intenses — prévoyez un imperméable léger.",
