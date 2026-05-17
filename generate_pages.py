@@ -39,6 +39,7 @@ from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
                               SEASON_ICONS, TODAY, YEAR, DATA_UPDATED,
                               date_modified_for, build_hreflang_tags)
 from lib.monthly_insights import classify_climate, get_monthly_insight
+from lib.eeat import eeat_avis_section_html
 
 # ── PATHS ───────────────────────────────────────────────────────────────────
 DIR  = os.path.dirname(os.path.abspath(__file__))
@@ -787,6 +788,9 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         is_monthly=False, is_tropical=is_tropical
     )
 
+    # ── E-E-A-T : Avis du fondateur (signal authority pour Core Update March 2026) ──
+    _eeat_avis_section = eeat_avis_section_html(slug_fr, C['lang'], asset_prefix=pfx)
+
     # ── Cards section ──
     _gyg_domain_c  = C['gyg_domain']
     _gyg_lang_c    = C['lang']
@@ -1434,6 +1438,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
  <h2 class="section-title">{C['lbl_quick_title_tpl'].format(name=nom_f)}</h2>
  {_decision_card_a}
 </section>
+{_eeat_avis_section}
 {cards_section}
 
  <section class="section dest-search-section">
