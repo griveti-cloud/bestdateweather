@@ -119,15 +119,20 @@ def _other_lang_links(slug_fr: str, slug_en: str, slug_es: str, slug_de: str,
                       current_lang: str) -> list[tuple[str, str, str]]:
     """Retourne la liste (href, flag_filename, label) pour les langues autres
     que current_lang. Utilise les slugs spécifiques par langue.
+
+    Note: si current_lang est dans un sous-dossier (en/us/es/de), prefixe ../
+    pour remonter d'un cran avant d'accéder au préfixe de la langue cible.
     """
     slugs = {'fr': slug_fr, 'en': slug_en, 'en-us': slug_en, 'es': slug_es, 'de': slug_de}
+    # Préfixe ../ si on est dans un sous-dossier
+    parent = '../' if current_lang != 'fr' else ''
     out = []
     for lang in ('en', 'en-us', 'es', 'de', 'fr'):
         if lang == current_lang:
             continue
         s = slugs.get(lang) or slug_fr
         cfg = _LANG_URL_PREFIX[lang]
-        href = cfg['prefix'] + cfg['tpl'].format(slug=s)
+        href = parent + cfg['prefix'] + cfg['tpl'].format(slug=s)
         flag, label = _LANG_FLAGS[lang]
         out.append((href, flag, label))
     return out
@@ -168,17 +173,21 @@ def render_v6_footer(slug_fr: str, lang: str = 'fr',
         m_url, a_url, faq_url, app_url, w_url = 'methodologie.html', 'a-propos.html', 'faq.html', 'index.html', 'widgets.html'
         ml_url, p_url, c_url = 'mentions-legales.html', 'confidentialite.html', 'contact.html'
     elif lang == 'en':
-        m_url, a_url, faq_url, app_url, w_url = 'en/methodology.html', 'en/about.html', 'en/faq.html', 'en/index.html', 'en/widgets.html'
-        ml_url, p_url, c_url = 'en/legal.html', 'en/privacy.html', 'en/contact.html'
+        m_url, a_url, faq_url, app_url = '../en/methodology.html', '../en/about.html', '../en/faq.html', '../en/app.html'
+        w_url = '../widgets.html'  # widgets uniquement en FR pour l'instant
+        ml_url, p_url, c_url = '../en/legal.html', '../en/privacy.html', '../en/contact.html'
     elif lang == 'en-us':
-        m_url, a_url, faq_url, app_url, w_url = 'us/methodology.html', 'us/about.html', 'us/faq.html', 'us/index.html', 'us/widgets.html'
-        ml_url, p_url, c_url = 'us/legal.html', 'us/privacy.html', 'us/contact.html'
+        m_url, a_url, faq_url, app_url = '../us/methodology.html', '../us/about.html', '../us/faq.html', '../us/app.html'
+        w_url = '../widgets.html'  # widgets uniquement en FR pour l'instant
+        ml_url, p_url, c_url = '../us/legal.html', '../us/privacy.html', '../us/contact.html'
     elif lang == 'es':
-        m_url, a_url, faq_url, app_url, w_url = 'es/metodologia.html', 'es/acerca.html', 'es/faq.html', 'es/index.html', 'es/widgets.html'
-        ml_url, p_url, c_url = 'es/aviso-legal.html', 'es/privacidad.html', 'es/contacto.html'
+        m_url, a_url, faq_url, app_url = '../es/metodologia.html', '../es/sobre-nosotros.html', '../es/faq.html', '../es/app.html'
+        w_url = '../widgets.html'  # widgets uniquement en FR pour l'instant
+        ml_url, p_url, c_url = '../es/aviso-legal.html', '../es/privacidad.html', '../es/contacto.html'
     elif lang == 'de':
-        m_url, a_url, faq_url, app_url, w_url = 'de/methodologie.html', 'de/ueber.html', 'de/faq.html', 'de/index.html', 'de/widgets.html'
-        ml_url, p_url, c_url = 'de/impressum.html', 'de/datenschutz.html', 'de/kontakt.html'
+        m_url, a_url, faq_url, app_url = '../de/methodik.html', '../de/ueber-uns.html', '../de/faq.html', '../de/app.html'
+        w_url = '../widgets.html'  # widgets uniquement en FR pour l'instant
+        ml_url, p_url, c_url = '../de/impressum.html', '../de/datenschutz.html', '../de/kontakt.html'
     else:
         raise ValueError(f"Unknown lang: {lang}")
 
@@ -198,6 +207,19 @@ def render_v6_footer(slug_fr: str, lang: str = 'fr',
 # ─────────────────────────────────────────────────────────────────────────────
 
 def render_v6_methodology_block(lang: str = 'fr', is_mountain: bool = False) -> str:
+    """Rend le bloc méthodologie compacté pour le right-stack du decider."""
+    # URL méthodologie localisée
+    method_urls = {
+        'fr': 'methodologie.html',
+        'en': 'en/methodology.html',
+        'en-us': 'us/methodology.html',
+        'es': 'es/metodologia.html',
+        'de': 'de/methodik.html',
+    }
+    method_url = method_urls.get(lang, 'methodologie.html')
+    # Sur les pages dans /en/ /us/ /es/ /de/, on doit remonter d'un cran
+    if lang != 'fr':
+        method_url = '../' + method_url
     """Rend le bloc 'Comment on calcule le score' pour le right-stack du Décider.
 
     - Mountain : 2 sub-cards (Score ski + Score rando) avec leurs critères et
@@ -235,7 +257,7 @@ def render_v6_methodology_block(lang: str = 'fr', is_mountain: bool = False) -> 
       <li>{L['rando_c3']}</li>
     </ul>
   </div>
-  <p class="method-mini-foot"><strong>{h(L['source'])} :</strong> {h(L['source_text'])} · <a href="methodologie.html">{h(L['full_link'])}</a></p>
+  <p class="method-mini-foot"><strong>{h(L['source'])} :</strong> {h(L['source_text'])} · <a href="{method_url}">{h(L['full_link'])}</a></p>
 </div>'''
     else:
         return f'''<div class="method-mini">
@@ -247,7 +269,7 @@ def render_v6_methodology_block(lang: str = 'fr', is_mountain: bool = False) -> 
     <li>{L['std_c3']}</li>
     <li>{L['std_c4']}</li>
   </ul>
-  <p class="method-mini-foot"><strong>{h(L['source'])} :</strong> {h(L['source_text'])} · <a href="methodologie.html">{h(L['full_link'])}</a></p>
+  <p class="method-mini-foot"><strong>{h(L['source'])} :</strong> {h(L['source_text'])} · <a href="{method_url}">{h(L['full_link'])}</a></p>
 </div>'''
 
 
@@ -1626,8 +1648,12 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
     # Table desktop rows
     rows_html = []
     for m in months_data:
-        url = monthly_url_tpl.format(slug=slug, mois_lower=m['mois'].lower(),
-                                     mois_short=m['mois'][:3].lower()) if monthly_url_tpl else '#'
+        # mois_slug : version sans accents pour URL ('Février' → 'fevrier')
+        import unicodedata
+        mois_slug = ''.join(c for c in unicodedata.normalize('NFD', m['mois'].lower())
+                            if unicodedata.category(c) != 'Mn')
+        url = monthly_url_tpl.format(slug=slug, mois_lower=mois_slug,
+                                     mois_short=mois_slug[:3]) if monthly_url_tpl else '#'
         emoji = _emoji_for_score(m['score_10'], m.get('classe', ''))
         mood_cls = _mood_class(m.get('classe', ''))
         best_attr = ' best' if m.get('is_best') else ''
@@ -1650,8 +1676,12 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
     # Mobile cards
     mobile_cards = []
     for m in months_data:
-        url = monthly_url_tpl.format(slug=slug, mois_lower=m['mois'].lower(),
-                                     mois_short=m['mois'][:3].lower()) if monthly_url_tpl else '#'
+        # mois_slug : version sans accents pour URL ('Février' → 'fevrier')
+        import unicodedata
+        mois_slug = ''.join(c for c in unicodedata.normalize('NFD', m['mois'].lower())
+                            if unicodedata.category(c) != 'Mn')
+        url = monthly_url_tpl.format(slug=slug, mois_lower=mois_slug,
+                                     mois_short=mois_slug[:3]) if monthly_url_tpl else '#'
         emoji = _emoji_for_score(m['score_10'], m.get('classe', ''))
         mood_cls = _mood_class(m.get('classe', ''))
         best_cls = ' best' if m.get('is_best') else ''
