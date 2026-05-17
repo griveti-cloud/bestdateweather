@@ -1378,6 +1378,11 @@ def build_top_monthly(lang, loc):
     for slug, row in climate_month.items():
         if slug not in dest_info: continue
         d = dest_info[slug]
+        # Exclure mountains : leurs scores élevés viennent souvent du ski printanier
+        # ou de conditions niche (tmax faible) qui ne correspondent pas au "tout public"
+        # de cette section. Ex: Tignes mai score 9.6 mais tmax 5°C.
+        # Les mountains restent visibles via TOP MONDIAL + leurs pages pilier dédiées.
+        if d.get('mountain','').strip() == 'True': continue
         score = _eff(row, d)
         if score < 7.5: continue
         try:
