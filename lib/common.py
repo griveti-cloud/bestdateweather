@@ -1378,7 +1378,7 @@ def decision_card_html(dest, months, mi_best, C, nom,
     eviter_lbl  = L.get('lbl_dec_eviter_lbl', 'À éviter')
 
     # ── Source strip ──
-    secu_source = info.get('risk_source', 'Auswärtiges Amt (DE)')
+    secu_source = info.get('risk_source', 'MAE France')
     secu_date   = info.get('risk_updated', '')[:10] if info.get('risk_updated','') else ''
     verify_lbl  = {'fr':'à vérifier avant de voyager','en':'verify before travel',
                    'en-us':'verify before travel','es':'verificar antes de viajar',

@@ -299,6 +299,7 @@ def main():
         else:
             entry["risk_level"] = risk
             entry["risk_updated"] = today
+            entry["risk_source"] = "MAE France"
             updated += 1
             label = {1: "✅ Normal", 2: "🟡 Renforcé", 3: "🟠 Déconseillé", 4: "🔴 Formellement déconseillé"}
             print(f"  [{i}/{total}] {country}: {label[risk]}")
