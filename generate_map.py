@@ -285,7 +285,7 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .dd-item-profile.on .dd-sub{{color:rgba(201,168,76,.7)}}
 .fsep{{width:1px;height:16px;background:rgba(255,255,255,.1);flex-shrink:0}}
 #map{{position:fixed;top:88px;left:0;right:0;bottom:0}}
-.leaflet-container{{background:#0d1117}}
+.leaflet-container{{background:#070b16}}
 .bdw-dot{{border-radius:50%;border:1.5px solid rgba(255,255,255,.2);cursor:pointer;transition:transform .1s}}
 .bdw-dot:hover{{transform:scale(1.5)}}
 .leaflet-popup-content-wrapper{{background:#1a1f2e;border:1px solid rgba(255,255,255,.12);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.6);padding:0;overflow:hidden}}
@@ -304,7 +304,7 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
 .pi-link{{display:block;background:#c9a84c;color:#1a1f2e;text-align:center;padding:7px;font-size:12px;font-weight:700;text-decoration:none;border-radius:7px}}
 .dest-label{{background:rgba(20,25,40,.85);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:2px 5px;font-size:10px;font-weight:600;color:rgba(255,255,255,.85);white-space:nowrap;pointer-events:none}}
 .dest-label::before{{display:none}}
-.clbl{{background:transparent!important;border:none!important;box-shadow:none!important;color:rgba(255,255,255,.4);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;pointer-events:none}}
+.clbl{{background:transparent!important;border:none!important;box-shadow:none!important;color:rgba(255,255,255,.72);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,.7),0 0 6px rgba(0,0,0,.5)}}
 .legend{{position:fixed;bottom:16px;left:16px;z-index:900;background:rgba(20,25,40,.92);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:9px 12px;font-size:11px}}
 .lt{{font-weight:600;color:#5a6c7d;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}}
 .lr{{display:flex;align-items:center;gap:7px;margin-bottom:3px;color:rgba(255,255,255,.6)}}
@@ -549,7 +549,7 @@ var map=L.map('map',{{center:[20,10],zoom:2,minZoom:2,maxZoom:12,zoomControl:tru
 // Attribution hidden
 L.tileLayer('https://{{s}}.basemaps.cartocdn.com/dark_nolabels/{{z}}/{{x}}/{{y}}{{r}}.png',{{maxZoom:19,subdomains:'abcd'}}).addTo(map);
 var WORLD={world_json};
-L.geoJSON(WORLD,{{style:{{fillColor:'#1e2640',fillOpacity:0.7,color:'#3a4a6a',weight:0.5}}}}).addTo(map);
+L.geoJSON(WORLD,{{style:{{fillColor:'#2a3450',fillOpacity:0.92,color:'#6a7d9e',weight:0.8}}}}).addTo(map);
 var CLABELS={clabels_lang_json};
 CLABELS.forEach(function(c){{
   var sz=c.l===0?'11px':c.l===1?'9px':'8px';
