@@ -13,12 +13,35 @@ def is_redirect(filepath):
     except:
         return False
 
+def is_noindex(filepath):
+    """Vérifie si le fichier contient une balise noindex."""
+    try:
+        with open(filepath, encoding='utf-8') as f:
+            head = f.read(4000)
+        return 'noindex' in head
+    except:
+        return False
+
+def to_canonical(url):
+    """Strip .html → URL effectivement servie par le worker Cloudflare.
+
+    Évite la catégorie GSC 'Page avec redirection' (les URLs .html
+    redirigent 307 vers la version sans extension).
+    """
+    if url == 'index.html':
+        return ''  # racine
+    if url.endswith('.html'):
+        return url[:-5]
+    return url
+
 def make_sitemap(urls, path):
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for url, freq, pri in urls:
+        canonical = to_canonical(url)
+        loc = f"{BASE}/{canonical}" if canonical else BASE + '/'
         lines += [f'  <url>',
-                  f'    <loc>{BASE}/{url}</loc>',
+                  f'    <loc>{loc}</loc>',
                   f'    <lastmod>{TODAY}</lastmod>',
                   f'    <changefreq>{freq}</changefreq>',
                   f'    <priority>{pri}</priority>',
@@ -50,6 +73,7 @@ def collect(patterns, exclude_redirects=True, exclude_files=None):
         for f in sorted(glob.glob(pat)):
             if f in excl: continue
             if exclude_redirects and is_redirect(f): continue
+            if is_noindex(f): continue  # exclure pages avec balise noindex (prototypes, -v6 test...)
             result.append((f, freq, pri))
     return result
 

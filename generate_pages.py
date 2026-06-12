@@ -37,7 +37,7 @@ from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
                               annual_url_cross, monthly_url_cross, hero_sub as _hero_sub,
                               pillar_url, month_lc, MONTH_URL, MONTH_URL_FR,
                               SEASON_ICONS, TODAY, YEAR, DATA_UPDATED,
-                              date_modified_for, build_hreflang_tags)
+                              date_modified_for, build_hreflang_tags, to_canonical_url)
 from lib.monthly_insights import classify_climate, get_monthly_insight
 from lib.eeat import eeat_avis_section_html
 
@@ -1265,7 +1265,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 </section>'''
 
     # ── Schema.org ──
-    canonical = f"{C['canonical_prefix']}{annual_url(C, slug)}"
+    canonical = f"{C['canonical_prefix']}{to_canonical_url(annual_url(C, slug))}"
     hreflang_tags = build_hreflang_tags(dest, mi=None)
 
     headline = C['lbl_headline_tpl'].format(prep=prep, nom_bare=nom_bare, nom=nom)
@@ -2071,7 +2071,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
         "mainEntity": faq_entities
     }, ensure_ascii=False)
 
-    canonical = C['canonical_prefix'] + monthly_url(C, slug, mi)
+    canonical = C['canonical_prefix'] + to_canonical_url(monthly_url(C, slug, mi))
     hreflang_tags = build_hreflang_tags(dest, mi=mi)
     article_headline = C['monthly_article_headline_tpl'].format(**tpl)
     article_desc = C['monthly_article_desc_tpl'].format(**tpl)
@@ -2092,7 +2092,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
 
     bc_items = [
         {"@type": "ListItem", "position": 1, "name": C['lbl_breadcrumb_home'], "item": C['base_url']},
-        {"@type": "ListItem", "position": 2, "name": nom, "item": C['canonical_prefix'] + annual_url(C, slug)},
+        {"@type": "ListItem", "position": 2, "name": nom, "item": C['canonical_prefix'] + to_canonical_url(annual_url(C, slug))},
         {"@type": "ListItem", "position": 3, "name": month, "item": canonical}
     ]
     breadcrumb_schema = json.dumps({

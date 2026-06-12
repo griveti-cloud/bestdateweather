@@ -1152,6 +1152,25 @@ def generate_from_template(lang, loc):
         path_fr = os.path.join(blocks_dir, f'{name}-fr.html')
         return open(path_fr, encoding='utf-8').read() if os.path.exists(path_fr) else ''
 
+    # Canonical URL et hreflang propres par langue (sans .html, vers URL canonique servie)
+    BASE = 'https://bestdateweather.com'
+    canonical_per_lang = {
+        'fr':    f'{BASE}/',
+        'en':    f'{BASE}/en/',
+        'en-us': f'{BASE}/us/',
+        'es':    f'{BASE}/es/',
+        'de':    f'{BASE}/de/',
+    }
+    canonical_url = canonical_per_lang.get(lang, f'{BASE}/')
+    hreflang_tags = '\n'.join([
+        f'<link rel="alternate" hreflang="fr" href="{BASE}/"/>',
+        f'<link rel="alternate" hreflang="en" href="{BASE}/en/"/>',
+        f'<link rel="alternate" hreflang="en-US" href="{BASE}/us/"/>',
+        f'<link rel="alternate" hreflang="es" href="{BASE}/es/"/>',
+        f'<link rel="alternate" hreflang="de" href="{BASE}/de/"/>',
+        f'<link rel="alternate" hreflang="x-default" href="{BASE}/en/"/>',
+    ])
+
     # Passe 1 : substituer les blocs (qui peuvent contenir d'autres placeholders)
     blocks = {
         '{{TRUST_BLOCK}}':  load_block('trust'),
@@ -1166,6 +1185,8 @@ def generate_from_template(lang, loc):
     replacements = {
         '{{LANG}}':                html_lang,
         '{{ASSET_PREFIX}}':        asset_prefix,
+        '{{CANONICAL_URL}}':       canonical_url,
+        '{{HREFLANG_TAGS}}':       hreflang_tags,
         '{{I18N_SCRIPT}}':         i18n_script,
         '{{FLATPICKR_LOCALE}}':    flatpickr_locale,
         '{{META_DESC}}':           meta.get('meta_desc', ''),

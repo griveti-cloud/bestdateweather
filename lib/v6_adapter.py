@@ -598,7 +598,11 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
         infos_pratiques_data['has_geothermal'] = country_name.lower() in ('islande', 'iceland', 'islandia', 'island')
 
     # ── Construction page_data ──
-    canonical_url = f'{cfg.get("canonical_prefix", "")}{cfg["annual_prefix"]}{slug}{cfg["annual_suffix"]}'
+    canonical_path = f'{cfg["annual_prefix"]}{slug}{cfg["annual_suffix"]}'
+    # Strip .html (worker serves URLs without extension, avoids GSC "page with redirect")
+    if canonical_path.endswith('.html'):
+        canonical_path = canonical_path[:-5]
+    canonical_url = f'{cfg.get("canonical_prefix", "")}{canonical_path}'
 
     # Page title : utilise les annual_titles V5 (rotation déterministe par slug
     # pour éviter le pattern uniforme suspect de SEO)
@@ -1023,7 +1027,7 @@ def _build_json_ld_blocks(cfg: dict, dest: dict, slug: str, nom: str,
             '@type': 'Person',
             '@id': 'https://bestdateweather.com/#gilles',
             'name': 'Gilles',
-            'url': 'https://bestdateweather.com/a-propos.html',
+            'url': 'https://bestdateweather.com/a-propos',
         },
         'publisher': {
             '@type': 'Organization',

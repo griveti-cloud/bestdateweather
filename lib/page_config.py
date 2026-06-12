@@ -316,6 +316,9 @@ def build_hreflang_tags(dest: dict, mi: int | None = None) -> str:
             month_key = lc['month_url'][mi]
             path = f"{slug}{lc['monthly_sep']}{month_key}.html"
 
+        # Canonical URL: strip .html (worker serves URLs without extension)
+        path = to_canonical_url(path)
+
         # base_url déjà absolu (ex: "https://bestdateweather.com/en/")
         # On reconstruit proprement pour ne pas doubler le domaine
         url_base = lc['base_url']
@@ -340,6 +343,7 @@ def build_hreflang_tags(dest: dict, mi: int | None = None) -> str:
             else:
                 month_key = en_lc['month_url'][mi]
                 path = f"{slug}{en_lc['monthly_sep']}{month_key}.html"
+            path = to_canonical_url(path)
             x_default_url = en_lc['base_url'] + path
 
     if x_default_url:
@@ -349,13 +353,37 @@ def build_hreflang_tags(dest: dict, mi: int | None = None) -> str:
 
 
 def annual_url(cfg, slug):
-    """Return annual page filename."""
+    """Return annual page filename (with .html, used for disk write)."""
     return f"{cfg['annual_prefix']}{slug}{cfg['annual_suffix']}"
 
 
 def monthly_url(cfg, slug, mi):
-    """Return monthly page filename."""
+    """Return monthly page filename (with .html, used for disk write)."""
     return f"{slug}{cfg['monthly_sep']}{cfg['month_url'][mi]}.html"
+
+
+def to_canonical_url(filename):
+    """Convert a .html filename to its canonical URL (without .html, served by worker).
+
+    The Cloudflare worker serves URLs without .html extension. Sitemaps,
+    canonical tags and hreflang must point to the URL actually served (without
+    .html) to avoid Google's "Page with redirect" category.
+
+    Examples:
+        'paris-meteo-juillet.html' → 'paris-meteo-juillet'
+        'en/best-time-to-visit-paris.html' → 'en/best-time-to-visit-paris'
+        'index.html' → ''  (root)
+        'en/app.html' → 'en/app'
+    """
+    if not filename:
+        return filename
+    # Handle root index pages (FR root)
+    if filename == 'index.html':
+        return ''
+    # Strip trailing .html
+    if filename.endswith('.html'):
+        return filename[:-5]
+    return filename
 
 
 def annual_url_cross(cfg, dest):
