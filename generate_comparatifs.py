@@ -15,6 +15,7 @@ from datetime import date
 sys.path.insert(0, str(Path(__file__).parent))
 from lib.page_config import load_locale
 from lib.common import footer_ranking_html
+from lib.page_config import strip_html_from_internal_links as _strip_links
 
 ROOT = Path(__file__).parent
 TODAY = date.today().isoformat()
@@ -644,7 +645,7 @@ def generate_comparison(slug_a, slug_b, dests, climate, generated_files):
 
         filepath.parent.mkdir(parents=True, exist_ok=True)
         with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(page_html)
+            f.write(_strip_links(page_html))
 
         generated_files.append({
             'canonical': canonical, 'hreflang_fr': hreflang_fr, 'hreflang_en': hreflang_en,

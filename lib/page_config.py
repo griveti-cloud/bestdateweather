@@ -362,6 +362,21 @@ def monthly_url(cfg, slug, mi):
     return f"{slug}{cfg['monthly_sep']}{cfg['month_url'][mi]}.html"
 
 
+def annual_href(cfg, slug):
+    """Return annual page HREF (without .html, for internal links).
+
+    The Cloudflare worker serves URLs without .html and redirects .html → no-ext
+    with a 307. Internal links MUST use the no-ext version to avoid Google's
+    'Page with redirect' classification and wasted crawl budget.
+    """
+    return to_canonical_url(annual_url(cfg, slug))
+
+
+def monthly_href(cfg, slug, mi):
+    """Return monthly page HREF (without .html, for internal links)."""
+    return to_canonical_url(monthly_url(cfg, slug, mi))
+
+
 def to_canonical_url(filename):
     """Convert a .html filename to its canonical URL (without .html, served by worker).
 
@@ -408,6 +423,41 @@ def hero_sub(cfg, dest):
 
 
 def pillar_url(cfg, mi):
-    """Return pillar page URL for a month."""
+    """Return pillar page filename (with .html, for disk write)."""
     month_key = cfg['pillar_month_url'][mi] if cfg.get('pillar_month_url') else cfg['month_url'][mi]
     return f"{cfg['pillar_prefix']}{month_key}.html"
+
+
+def pillar_href(cfg, mi):
+    """Return pillar page HREF (without .html, for internal links)."""
+    return to_canonical_url(pillar_url(cfg, mi))
+
+
+# Regex compilé une seule fois pour le post-traitement des liens internes
+import re as _re
+_INTERNAL_HTML_LINK = _re.compile(r'(href=")([^"]+?)\.html("|#|\?)')
+
+def strip_html_from_internal_links(html):
+    """Post-traitement : retire .html des href internes du HTML généré.
+
+    Le worker Cloudflare sert les URLs sans extension et redirige .html en 307.
+    Les liens internes doivent pointer vers la version sans extension pour
+    éviter la catégorie GSC 'Page avec redirection' et économiser le crawl budget.
+
+    Ne touche PAS :
+    - Les liens externes (http://, https://) — détectés par la présence de '://'
+    - Les attributs autres que href
+
+    Args:
+        html: HTML complet de la page
+
+    Returns:
+        HTML avec les href internes sans .html
+    """
+    def _replace(m):
+        prefix, url, suffix = m.group(1), m.group(2), m.group(3)
+        # Ne pas toucher les URLs externes
+        if '://' in url:
+            return m.group(0)
+        return f'{prefix}{url}{suffix}'
+    return _INTERNAL_HTML_LINK.sub(_replace, html)

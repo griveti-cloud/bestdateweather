@@ -728,8 +728,8 @@ def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
     else:
         scores = compute_scores(months_input, slug=slug_fr_canonical)
 
-    # URL templates
-    monthly_url_tpl = f'{slug}{cfg["monthly_sep"]}{{mois_lower}}.html'
+    # URL templates — sans .html pour les liens internes (worker sert sans extension)
+    monthly_url_tpl = f'{slug}{cfg["monthly_sep"]}{{mois_lower}}'
 
     # Edito annuel
     avis_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'avis_annuel.json')
@@ -797,7 +797,10 @@ def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
     # 5. Related destinations (cross-links interne SEO)
     page_data['related'] = _build_related_v6(cfg, dest, similarities, all_dests)
 
-    return render_v6_full_page(page_data)
+    html = render_v6_full_page(page_data)
+    # Post-traitement : retirer .html des liens internes (footer, cross-lang, related...)
+    from lib.page_config import strip_html_from_internal_links
+    return strip_html_from_internal_links(html)
 
 
 def _haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -1051,6 +1054,32 @@ def _build_json_ld_blocks(cfg: dict, dest: dict, slug: str, nom: str,
     }
 
     blocks = [_json.dumps(article, ensure_ascii=False)]
+
+    # BreadcrumbList : Accueil > Destination (signal hiérarchie pour Google)
+    home_url = cfg.get('canonical_prefix', 'https://bestdateweather.com/')
+    if not home_url.startswith('http'):
+        home_url = 'https://bestdateweather.com/'
+    # Racine de langue (FR = /, EN = /en/app, etc. servies en 200)
+    lang = cfg['lang']
+    home_map = {
+        'fr': 'https://bestdateweather.com/',
+        'en': 'https://bestdateweather.com/en/app',
+        'en-us': 'https://bestdateweather.com/us/app',
+        'es': 'https://bestdateweather.com/es/app',
+        'de': 'https://bestdateweather.com/de/app',
+    }
+    home_lbl = {'fr': 'Accueil', 'en': 'Home', 'en-us': 'Home', 'es': 'Inicio', 'de': 'Startseite'}
+    breadcrumb = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+            {'@type': 'ListItem', 'position': 1,
+             'name': home_lbl.get(lang, 'Home'),
+             'item': home_map.get(lang, 'https://bestdateweather.com/')},
+            {'@type': 'ListItem', 'position': 2, 'name': nom, 'item': canonical_url},
+        ],
+    }
+    blocks.append(_json.dumps(breadcrumb, ensure_ascii=False))
 
     if faq_items:
         faq_page = {

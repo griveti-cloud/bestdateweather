@@ -135,6 +135,7 @@ GEO_SIBLINGS = [
 ]
 
 # ── Geographic region mapping (pays → region code) ────────────────────────────
+from lib.page_config import strip_html_from_internal_links as _strip_links
 from lib.regions import (
     REGION_MAP, MACARONESIA_SLUGS, SLUG_REGION_OVERRIDE,
     CARIBBEAN_COUNTRIES, NORTH_AM_COUNTRIES, NORTH_AFRICA_COUNTRIES,
@@ -514,9 +515,10 @@ def generate_page(mi, lang, dests, climate, country_info=None):
         filepath = ROOT / filename
     else:
         filepath = ROOT / src_sub / filename
-    canonical = (f'https://bestdateweather.com/{filename}'
+    _canon_file = filename[:-5] if filename.endswith('.html') else filename
+    canonical = (f'https://bestdateweather.com/{_canon_file}'
                  if src_sub == '' else
-                 f'https://bestdateweather.com/{src_sub}/{filename}')
+                 f'https://bestdateweather.com/{src_sub}/{_canon_file}')
 
     # Build cross-lang link list for all other langs
     # PILIER_LANGS is module-level, derived from locales/ at import time
@@ -1023,7 +1025,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 
     filepath.parent.mkdir(parents=True, exist_ok=True)
     with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(page_html)
+        f.write(_strip_links(page_html))
 
     return filename, canonical, hreflang_fr, hreflang_en, _all_hreflang
 
@@ -1234,9 +1236,10 @@ def generate_annual_page(lang, dests, climate, country_info=None):
     src_sub  = loc['meta']['subdir']
     filename = pil.get('all_year_url', 'meilleures-destinations-meteo.html')
     filepath = ROOT / filename if src_sub == '' else ROOT / src_sub / filename
-    canonical = (f'https://bestdateweather.com/{filename}'
+    _canon_file = filename[:-5] if filename.endswith('.html') else filename
+    canonical = (f'https://bestdateweather.com/{_canon_file}'
                  if src_sub == '' else
-                 f'https://bestdateweather.com/{src_sub}/{filename}')
+                 f'https://bestdateweather.com/{src_sub}/{_canon_file}')
 
     # Slug/name/pays via module-level helpers
     annual_href_tpl = gen['annual_href_tpl']
@@ -1579,7 +1582,7 @@ def generate_annual_page(lang, dests, climate, country_info=None):
 
     filepath.parent.mkdir(parents=True, exist_ok=True)
     with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(page_html)
+        f.write(_strip_links(page_html))
 
     return filename, canonical
 

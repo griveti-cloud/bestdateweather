@@ -1052,7 +1052,7 @@ def inject(filepath, destinations, loc):
     new_content = content[:start_idx] + new_silo + content[end_idx:]
 
     with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(new_content)
+        f.write(_strip_links(new_content))
     return True
 
 
@@ -1154,21 +1154,23 @@ def generate_from_template(lang, loc):
 
     # Canonical URL et hreflang propres par langue (sans .html, vers URL canonique servie)
     BASE = 'https://bestdateweather.com'
+    # Canonical = URL réellement servie en 200 par le worker.
+    # /en/ etc. redirigent en 307 vers /en/app → canonical doit pointer vers /<lang>/app
     canonical_per_lang = {
         'fr':    f'{BASE}/',
-        'en':    f'{BASE}/en/',
-        'en-us': f'{BASE}/us/',
-        'es':    f'{BASE}/es/',
-        'de':    f'{BASE}/de/',
+        'en':    f'{BASE}/en/app',
+        'en-us': f'{BASE}/us/app',
+        'es':    f'{BASE}/es/app',
+        'de':    f'{BASE}/de/app',
     }
     canonical_url = canonical_per_lang.get(lang, f'{BASE}/')
     hreflang_tags = '\n'.join([
         f'<link rel="alternate" hreflang="fr" href="{BASE}/"/>',
-        f'<link rel="alternate" hreflang="en" href="{BASE}/en/"/>',
-        f'<link rel="alternate" hreflang="en-US" href="{BASE}/us/"/>',
-        f'<link rel="alternate" hreflang="es" href="{BASE}/es/"/>',
-        f'<link rel="alternate" hreflang="de" href="{BASE}/de/"/>',
-        f'<link rel="alternate" hreflang="x-default" href="{BASE}/en/"/>',
+        f'<link rel="alternate" hreflang="en" href="{BASE}/en/app"/>',
+        f'<link rel="alternate" hreflang="en-US" href="{BASE}/us/app"/>',
+        f'<link rel="alternate" hreflang="es" href="{BASE}/es/app"/>',
+        f'<link rel="alternate" hreflang="de" href="{BASE}/de/app"/>',
+        f'<link rel="alternate" hreflang="x-default" href="{BASE}/en/app"/>',
     ])
 
     # Passe 1 : substituer les blocs (qui peuvent contenir d'autres placeholders)
@@ -1262,7 +1264,7 @@ def generate_from_template(lang, loc):
 
     output = cfg['output']
     os.makedirs(os.path.dirname(output) if os.path.dirname(output) else '.', exist_ok=True)
-    open(output, 'w', encoding='utf-8').write(content)
+    open(output, 'w', encoding='utf-8').write(_strip_links(content))
     return True
 
 
@@ -1273,6 +1275,7 @@ def generate_from_template(lang, loc):
 
 import csv as _csv
 import datetime as _dt
+from lib.page_config import strip_html_from_internal_links as _strip_links
 
 def _hero_gradient_home(tmax, tropical, rain_pct, idx=0):
     """Gradient contextuel selon profil climatique + variante visuelle."""
@@ -1747,7 +1750,7 @@ def inject_hub_footer(filepath, current_lang, current_loc):
     legacy = '<!-- HUB-FOOTER -->'
     if legacy in content:
         content = content.replace(legacy, START + footer_html + END)
-        open(filepath, 'w', encoding='utf-8').write(content)
+        open(filepath, 'w', encoding='utf-8').write(_strip_links(content))
         return True
 
     if START not in content or END not in content:
@@ -1760,7 +1763,7 @@ def inject_hub_footer(filepath, current_lang, current_loc):
         content,
         flags=re.DOTALL
     )
-    open(filepath, 'w', encoding='utf-8').write(new_content)
+    open(filepath, 'w', encoding='utf-8').write(_strip_links(new_content))
     return True
 
 

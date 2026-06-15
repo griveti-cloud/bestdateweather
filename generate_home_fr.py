@@ -4,6 +4,7 @@ Branche: feature/homepage-redesign
 Génère: index.html (FR uniquement)
 """
 import json, csv, re, os
+from lib.page_config import strip_html_from_internal_links as _strip_links
 from datetime import datetime
 
 # ── Données ──────────────────────────────────────────────────────────────────
@@ -738,5 +739,5 @@ if __name__ == '__main__':
         print(f'     {d["score"]:.1f} {d["nom_fr"]}')
 
     html = build_page(top6, month_name, pfx='')
-    open('index.html', 'w', encoding='utf-8').write(html)
+    open('index.html', 'w', encoding='utf-8').write(_strip_links(html))
     print(f'✅ index.html généré ({len(html)//1024} Ko)')

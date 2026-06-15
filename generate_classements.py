@@ -8,6 +8,9 @@ import csv, html, json, re, statistics
 from pathlib import Path
 from lib.common import footer_ranking_html, shared_nav_html
 from lib.regions import reg as _reg, NON_EUROPE_SLUGS, REGION_LABELS, MACARONESIA_SLUGS
+from lib.page_config import strip_html_from_internal_links as _strip_links
+def _ch(u):
+    return u[:-5] if u.endswith('.html') else u
 
 # ── Locale loading ───────────────────────────────────────────────────────────
 _locale_cache = {}
@@ -366,7 +369,7 @@ def compute_nomad(climate, dests, country_info=None):
 
         # Bonus/malus qualité de l'air (AQI moyen annuel)
         aqi_vals = [monthly[m].get('aqi_mean', '') for m in range(1, 13)]
-        aqi_vals_f = [float(v) for v in aqi_vals if str(v).strip()]
+        aqi_vals_f = [float(v) for v in aqi_vals if v is not None and str(v).strip() and str(v) != 'None']
         if aqi_vals_f:
             aqi_avg = sum(aqi_vals_f) / len(aqi_vals_f)
             if aqi_avg < 20:    aqi_adj = 0.3
@@ -1014,7 +1017,7 @@ def _cl_layout(pc, lang):
                       if v.get('en_file') == en_file), None)
     de_file = load_locale('de')['classement_pages'][_page_key]['de_file'] if _page_key else pc.get('de_file', en_file)
     if lang == 'fr':
-        canonical = f'{BASE}/{fr_file}'
+        canonical = f'{BASE}/{_ch(fr_file)}'
         footer = footer_ranking_html('fr', [
             {'url': f'en/{en_file}',  'flag': 'flags/gb.png',    'label': 'English'},
             {'url': f'us/{en_file}',  'flag': 'flags/us.png',    'label': 'English (US)'},
@@ -1023,7 +1026,7 @@ def _cl_layout(pc, lang):
         ])
         outfile = ROOT / fr_file
     elif lang == 'en-us':
-        canonical = f'{BASE}/us/{en_file}'
+        canonical = f'{BASE}/us/{_ch(en_file)}'
         footer = footer_ranking_html('en', [
             {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
@@ -1032,7 +1035,7 @@ def _cl_layout(pc, lang):
         ])
         outfile = ROOT / 'us' / en_file
     elif lang == 'en':
-        canonical = f'{BASE}/en/{en_file}'
+        canonical = f'{BASE}/en/{_ch(en_file)}'
         footer = footer_ranking_html('en', [
             {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../us/{en_file}', 'flag': '../flags/us.png', 'label': 'English (US)'},
@@ -1041,7 +1044,7 @@ def _cl_layout(pc, lang):
         ])
         outfile = ROOT / 'en' / en_file
     elif lang == 'de':
-        canonical = f'{BASE}/de/{de_file}'
+        canonical = f'{BASE}/de/{_ch(de_file)}'
         footer = footer_ranking_html('de', [
             {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
@@ -1050,7 +1053,7 @@ def _cl_layout(pc, lang):
         ])
         outfile = ROOT / 'de' / de_file
     else:  # es
-        canonical = f'{BASE}/es/{es_file}'
+        canonical = f'{BASE}/es/{_ch(es_file)}'
         footer = footer_ranking_html('es', [
             {'url': f'../{fr_file}',    'flag': '../flags/fr.png', 'label': 'Français'},
             {'url': f'../en/{en_file}', 'flag': '../flags/gb.png', 'label': 'English'},
@@ -1093,7 +1096,7 @@ def _cl_render(pc, lang, ctx, tables, jsonld_data, jsonld_n, print_suffix='', ph
         hreflang_us=f'https://bestdateweather.com/us/{en_file}',
         asset_prefix=pfx,
     )
-    outfile.write_text(page, encoding='utf-8')
+    outfile.write_text(_strip_links(page), encoding='utf-8')
     print(f'  ✓ {outfile.name}{print_suffix}')
 
 # ══════════════════════════════════════════════════════════════════════════════

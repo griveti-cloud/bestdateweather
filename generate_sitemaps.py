@@ -166,6 +166,11 @@ def split_sitemap(src_path, dst_prio, dst_sec, top_slugs, monthly_pat):
         lines.append('</urlset>')
         open(dst, 'w').write('\n'.join(lines) + '\n')
         print(f"  {dst}: {len(urls)} URLs")
+    # Supprimer le sitemap intermédiaire (non référencé par l'index, créait des
+    # doublons fantômes encore indexés par Google)
+    import os as _os
+    if _os.path.exists(src_path):
+        _os.remove(src_path)
 
 top = load_top_slugs()
 split_sitemap('sitemap-fr.xml','sitemap-fr-priority.xml','sitemap-fr-secondary.xml',top['fr'],'-meteo-')

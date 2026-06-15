@@ -2405,7 +2405,7 @@ def render_v6_scripts(asset_prefix: str = '') -> str:
 <script src="{asset_prefix}vendor/leaflet/leaflet.min.js"></script>
 <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="2MQKL00"></script>
 <script src="{asset_prefix}js/favs.min.js?v=1"></script>
-<script src="{asset_prefix}js/share.js"></script>
+<script src="{asset_prefix}js/share.js?v=1"></script>
 <script>
 // Init 2 cartes Leaflet (Monde + Contexte) - aligné prototype paris-v6.html
 (function(){{

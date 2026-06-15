@@ -34,10 +34,12 @@ from lib.common import (
                         climate_trend_section as _climate_trend_section)
 from lib.page_config import (build_config, dest_name, dest_name_full, dest_slug,
                               dest_country, annual_url, monthly_url,
+                              annual_href, monthly_href, pillar_href,
                               annual_url_cross, monthly_url_cross, hero_sub as _hero_sub,
                               pillar_url, month_lc, MONTH_URL, MONTH_URL_FR,
                               SEASON_ICONS, TODAY, YEAR, DATA_UPDATED,
-                              date_modified_for, build_hreflang_tags, to_canonical_url)
+                              date_modified_for, build_hreflang_tags, to_canonical_url,
+                              strip_html_from_internal_links as to_canonical_links)
 from lib.monthly_insights import classify_climate, get_monthly_insight
 from lib.eeat import eeat_avis_section_html
 
@@ -1064,7 +1066,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
 
     MONTH_BTN_CLS = {'rec': 'month-btn-rec', 'mid': 'month-btn-mid', 'avoid': 'month-btn-avoid'}
     monthly_links = ''.join(
-        f'<a href="{monthly_url(C, slug, i)}" class="month-btn '
+        f'<a href="{monthly_href(C, slug, i)}" class="month-btn '
         f'{MONTH_BTN_CLS.get(months[i]["classe"], "month-btn-mid")}">'
         f'<div class="mbtn-emoji">{weather_emoji(months[i]["tmax"], months[i]["rain_pct"], months[i]["sun_h"], months[i].get("precip"))}</div>'
         f'<div class="mbtn-name">{MONTHS[i]}</div>'
@@ -1091,7 +1093,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         snippet = _EDITORIAL.get(ed_key, '')
         if not snippet:
             continue
-        m_url = monthly_url(C, slug, idx)
+        m_url = monthly_href(C, slug, idx)
         m_score = months[idx]['score']
         m_tmax = fmt_temp(months[idx]['tmax'], C)
         m_classe = months[idx]['classe']
@@ -1198,7 +1200,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
         for _dist, _nd in _nearby:
             _nd_slug = dest_slug(C, _nd)
             _nd_name = dest_name(C, _nd)
-            _nd_url = annual_url(C, _nd_slug)
+            _nd_url = annual_href(C, _nd_slug)
             _dist_lbl = f"{round(_dist * 0.621371)} mi" if C.get("imperial") else f"{round(_dist)} km"
             _nearby_cards += (
                 f'<a href="{_nd_url}" class="nearby-card">'
@@ -1233,7 +1235,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
             sf = sd.get('flag', '')
             s_slug = dest_slug(C, sd) if sd else sim_slug
             sim_cards += (
-                f'<a href="{annual_url(C, s_slug)}" class="sim-card-sm">'
+                f'<a href="{annual_href(C, s_slug)}" class="sim-card-sm">'
                 f'<span class="nearby-name"><img src="{pfx}flags/{sf}.png" loading="lazy" width="16" height="12" '
                 f'alt="" class="flag-icon">{sn}</span>'
                 f'<span class="nearby-meta">{sim_label}</span>'
@@ -1256,7 +1258,7 @@ def gen_annual(cfg, fn, dest, months, dest_cards, all_dests, similarities, compa
     pillar_comp_cards = []
     best_month_name = MONTHS[best_idx]
     pillar_comp_cards.append(
-        f'<a href="{pillar_url(C, best_idx)}" class="link-card">'
+        f'<a href="{pillar_href(C, best_idx)}" class="link-card">'
         f'{C["lbl_pillar_tpl"].format(month=month_lc(C, best_month_name))}</a>')
     pillar_comparison_section = f'''<section class="section">
  <div class="section-label">{C['lbl_guides_section']}</div>
@@ -1767,7 +1769,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
                diff=round(best_score - score, 1),
                lat=f"{lat:.2f}", lon=f"{abs(lon):.2f}",
                dir="E" if lon >= 0 else "W",
-               annual_link=annual_url(C, slug))
+               annual_link=annual_href(C, slug))
 
     # Convert temperatures in tpl for imperial locales (en-us)
     if C.get('imperial'):
@@ -2252,7 +2254,7 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
  </section>'''
 
     # Pillar + comparison links
-    pillar_link = (f'<a href="{pillar_url(C, mi)}" class="link-card">'
+    pillar_link = (f'<a href="{pillar_href(C, mi)}" class="link-card">'
                    f'{C["lbl_pillar_tpl"].format(**tpl)}</a>')
 
     # ── Context paragraph ──
@@ -2350,9 +2352,9 @@ def gen_monthly(cfg, fn, dest, months, mi, all_dests, similarities, all_climate,
     }
 
     # ── Prev/Next URLs ──
-    prev_url = monthly_url(C, slug, prev_mi)
-    next_url = monthly_url(C, slug, next_mi)
-    annual_link = annual_url(C, slug)
+    prev_url = monthly_href(C, slug, prev_mi)
+    next_url = monthly_href(C, slug, next_mi)
+    annual_link = annual_href(C, slug)
 
     rank_links_html = ''.join(
         f'<a href="{url}" class="link-card">{label}</a>'
@@ -2878,7 +2880,7 @@ def main():
                 html = gen_annual(cfg, fn, dest, months, dest_cards_list, dests, similarities, comp_index)
             out  = os.path.join(OUT, annual_url(cfg, slug))
             if not args.dry_run:
-                open(out, 'w', encoding='utf-8').write(html)
+                open(out, 'w', encoding='utf-8').write(to_canonical_links(html))
             total_annual += 1
         except Exception as e:
             errors_gen.append(f"{slug_key}/annual: {e}")
@@ -2891,7 +2893,7 @@ def main():
                     html = gen_monthly(cfg, fn, dest, months, mi, dests, similarities, climate, events, comp_index, monthly_crosslinks)
                     out  = os.path.join(OUT, monthly_url(cfg, slug, mi))
                     if not args.dry_run:
-                        open(out, 'w', encoding='utf-8').write(html)
+                        open(out, 'w', encoding='utf-8').write(to_canonical_links(html))
                     total_monthly += 1
                 except Exception as e:
                     errors_gen.append(f"{slug_key}/{cfg['months'][mi]}: {e}")
