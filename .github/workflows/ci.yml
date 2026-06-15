@@ -227,30 +227,42 @@ jobs:
           python3 -c "
           import re, glob, sys
 
-          fr_xml = open('sitemap-fr.xml').read()
-          en_xml = open('sitemap-en.xml').read()
-          fr_urls = set(re.findall(r'<loc>https://bestdateweather\.com/([^<]+)</loc>', fr_xml))
-          en_urls = set(re.findall(r'<loc>https://bestdateweather\.com/([^<]+)</loc>', en_xml))
+          # Sitemaps actifs (priority + secondary), URLs SANS .html (worker sert sans extension)
+          def load_sitemap_urls(pattern):
+              urls = set()
+              for sm in glob.glob(pattern):
+                  content = open(sm).read()
+                  urls |= set(re.findall(r'<loc>https://bestdateweather\.com/([^<]*)</loc>', content))
+              return urls
+
+          fr_urls = load_sitemap_urls('sitemap-fr-*.xml')
+          en_urls = load_sitemap_urls('sitemap-en-*.xml')
+
+          # Les fichiers sont .html sur disque mais les URLs sitemap sont sans extension
+          def to_url(filename):
+              return filename[:-5] if filename.endswith('.html') else filename
 
           errors = []
           for f in sorted(glob.glob('meilleure-periode-*.html'))[:50]:
               with open(f, 'r') as fh:
-                  if 'meta http-equiv=\"refresh\"' in fh.read(500):
+                  head = fh.read(500)
+                  if 'meta http-equiv=\"refresh\"' in head or 'noindex' in head:
                       continue
-              if f not in fr_urls:
-                  errors.append(f'Missing from sitemap-fr.xml: {f}')
+              if to_url(f) not in fr_urls:
+                  errors.append(f'Missing from sitemap-fr: {to_url(f)}')
 
           for f in sorted(glob.glob('en/best-time-to-visit-*.html'))[:50]:
               with open(f, 'r') as fh:
-                  if 'meta http-equiv=\"refresh\"' in fh.read(500):
+                  head = fh.read(500)
+                  if 'meta http-equiv=\"refresh\"' in head or 'noindex' in head:
                       continue
-              if f not in en_urls:
-                  errors.append(f'Missing from sitemap-en.xml: {f}')
+              if to_url(f) not in en_urls:
+                  errors.append(f'Missing from sitemap-en: {to_url(f)}')
 
           if errors:
-              for e in errors:
-                  print(f'❌ {e}')
+              for e in errors[:20]:
+                  print(f'FAIL {e}')
               sys.exit(1)
           else:
-              print(f'✅ Sitemap coverage OK (FR: {len(fr_urls)} URLs, EN: {len(en_urls)} URLs)')
+              print(f'Sitemap coverage OK (FR: {len(fr_urls)} URLs, EN: {len(en_urls)} URLs)')
           "
