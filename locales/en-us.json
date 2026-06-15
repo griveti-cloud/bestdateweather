@@ -1709,6 +1709,29 @@
       "cta_hotel": "Hotels",
       "cta_activity": "Activities",
       "cta_flight": "Flights"
+    },
+    "monthly": {
+      "kicker": "This month",
+      "h1_tpl": "{nom} in {mois}: <em>go or not?</em>",
+      "lead_verdict_excellent": "Excellent time. {nom} in {mois} scores {score}/10.",
+      "lead_verdict_good": "Good time. {nom} in {mois} gets {score}/10.",
+      "lead_verdict_mixed": "Mixed period. {nom} in {mois}: {score}/10.",
+      "lead_verdict_poor": "Tough period. {nom} in {mois} only reaches {score}/10.",
+      "quick_label": "This month's verdict",
+      "quick_verdict_go": "Go for it",
+      "quick_verdict_maybe": "Why not",
+      "quick_verdict_avoid": "Avoid",
+      "mini_temp": "Temperature",
+      "mini_rain": "Rain",
+      "mini_sun": "Sun",
+      "tag_update": "Updated {month} 2026",
+      "tag_data": "ERA5 · 10 years",
+      "vs_kicker": "Compare",
+      "vs_title_tpl": "Is {mois} the right month?",
+      "vs_same_best": "{mois} is actually the best month of the year in {nom}. Good timing.",
+      "vs_better_exists": "The best month in {nom} is <strong>{best_month}</strong> ({best_score}/10), {delta} higher than {mois}.",
+      "vs_see_best": "See {best_month}",
+      "vs_see_annual": "See all 12 months"
     }
   }
 }

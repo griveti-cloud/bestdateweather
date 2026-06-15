@@ -2890,7 +2890,11 @@ def main():
         if gen_monthly_pages:
             for mi in range(12):
                 try:
-                    html = gen_monthly(cfg, fn, dest, months, mi, dests, similarities, climate, events, comp_index, monthly_crosslinks)
+                    if args.v6:
+                        from lib.v6_adapter import gen_monthly_v6
+                        html = gen_monthly_v6(cfg, fn, dest, months, mi, dests, similarities, comp_index)
+                    else:
+                        html = gen_monthly(cfg, fn, dest, months, mi, dests, similarities, climate, events, comp_index, monthly_crosslinks)
                     out  = os.path.join(OUT, monthly_url(cfg, slug, mi))
                     if not args.dry_run:
                         open(out, 'w', encoding='utf-8').write(to_canonical_links(html))

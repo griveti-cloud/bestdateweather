@@ -1710,6 +1710,29 @@
       "cta_hotel": "Hôtels",
       "cta_activity": "Activités",
       "cta_flight": "Vols"
+    },
+    "monthly": {
+      "kicker": "Ce mois-ci",
+      "h1_tpl": "{nom} en {mois} : <em>partir ou pas ?</em>",
+      "lead_verdict_excellent": "Excellente période. {nom} en {mois} affiche {score}/10.",
+      "lead_verdict_good": "Bonne période. {nom} en {mois} obtient {score}/10.",
+      "lead_verdict_mixed": "Période mitigée. {nom} en {mois} : {score}/10.",
+      "lead_verdict_poor": "Période difficile. {nom} en {mois} ne décroche que {score}/10.",
+      "quick_label": "Le verdict du mois",
+      "quick_verdict_go": "Foncez",
+      "quick_verdict_maybe": "Pourquoi pas",
+      "quick_verdict_avoid": "À éviter",
+      "mini_temp": "Température",
+      "mini_rain": "Pluie",
+      "mini_sun": "Soleil",
+      "tag_update": "Mise à jour {month} 2026",
+      "tag_data": "ERA5 · 10 ans",
+      "vs_kicker": "Comparer",
+      "vs_title_tpl": "{mois} est-il le bon mois ?",
+      "vs_same_best": "{mois} est justement le meilleur mois de l'année à {nom}. Vous tombez bien.",
+      "vs_better_exists": "Le meilleur mois à {nom} est <strong>{best_month}</strong> ({best_score}/10), soit {delta} de plus que {mois}.",
+      "vs_see_best": "Voir {best_month}",
+      "vs_see_annual": "Voir les 12 mois"
     }
   }
 }

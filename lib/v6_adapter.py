@@ -1108,3 +1108,206 @@ def _strip_html(s: str) -> str:
     import re as _re
     s = _re.sub(r'<[^>]+>', '', s)
     return _re.sub(r'\s+', ' ', s).strip()
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Entry point : gen_monthly_v6 — pages MENSUELLES en design V6
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
+                   similarities=None, comparison_index=None) -> str:
+    """Version V6 d'une page mensuelle. Retourne le HTML complet.
+
+    Réutilise build_page_data_v6() pour toutes les données partagées, puis
+    assemble une page avec le hero MENSUEL (score du mois mi) + section
+    "mois vs meilleur mois", et réutilise les blocs V6 partagés (contexte,
+    réserver, explorer, localisation, infos pratiques, FAQ, topbar, footer).
+
+    Args:
+        cfg, fn: config + bound translation (comme gen_monthly V5)
+        dest: ligne destinations.csv
+        months: 12 dicts climate.csv
+        mi: index du mois (0-11)
+        all_dests, similarities, comparison_index: pour related
+    """
+    from lib.page_config import (dest_slug, dest_name, dest_country,
+                                  build_hreflang_tags, to_canonical_url,
+                                  monthly_href, annual_href)
+    from lib.v6 import (render_v6_topbar, render_v6_head, render_v6_scripts,
+                        render_v6_footer, render_v6_contexte, render_v6_questions,
+                        render_v6_reserver, render_v6_explorer,
+                        render_v6_localisation, render_v6_infos_pratiques)
+    from lib.v6_monthly import (render_v6_monthly_hero, render_v6_monthly_vs_best,
+                                render_v6_monthly_expect, VS_CTA_CSS)
+    from scoring import compute_scores, compute_mountain_scores
+    from datetime import datetime
+
+    lang = cfg['lang']
+    slug = dest_slug(cfg, dest)
+    slug_fr = dest.get('slug_fr', slug)
+    nom = dest_name(cfg, dest)
+    country_name = dest_country(cfg, dest)
+    country_iso = _flag_iso(dest.get('flag', ''))
+    is_mountain = _bool(dest.get('mountain'))
+    MONTHS_LOC = cfg['months']
+    mois_loc = MONTHS_LOC[mi]
+    asset_prefix = cfg['asset_prefix']
+
+    # Réutiliser build_page_data_v6 pour récupérer TOUTES les données partagées
+    months_input = [{
+        'cls': m.get('classe', m.get('class', 'mid')),
+        'tmax': _safe_float(m.get('tmax')),
+        'rain_pct': _safe_float(m.get('rain_pct')),
+        'sun_h': _safe_float(m.get('sun_h')),
+        'month': m.get('mois', ''),
+    } for m in months]
+    scores = (compute_mountain_scores(months_input, slug=slug_fr) if is_mountain
+              else compute_scores(months_input, slug=slug_fr))
+
+    monthly_url_tpl = f'{slug}{cfg["monthly_sep"]}{{mois_lower}}'
+
+    avis_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'avis_annuel.json')
+    avis = _load_json_cached(avis_path)
+    editorial_html = (avis.get(f'{slug_fr}:{lang}') or avis.get(f'{slug_fr}:fr') or '')
+    if editorial_html and not editorial_html.startswith('<'):
+        editorial_html = f'<p>{editorial_html}</p>'
+
+    photo = dest.get('_photo', {})
+    photo_url = photo.get('url', '')
+    photo_credit_html = ''
+    if photo.get('credit_name') and photo.get('credit_url'):
+        photo_credit_html = (f'<a href="{photo["credit_url"]}" target="_blank" '
+                             f'rel="noopener nofollow">{photo["credit_name"]}</a> via Unsplash')
+
+    current_month_idx = datetime.now().month - 1
+    update_month = MONTHS_LOC[current_month_idx]
+
+    page_data = build_page_data_v6(
+        cfg=cfg, dest=dest, months_climate=months, months_with_scores=scores,
+        slug=slug, nom=nom, country_name=country_name, country_iso=country_iso,
+        monthly_url_tpl=monthly_url_tpl, editorial_html=editorial_html,
+        photo_url=photo_url, photo_credit=photo_credit_html, update_month=update_month,
+    )
+
+    # ── Données du mois mi ──
+    m = months[mi]
+    this_score = _safe_float(m.get('score'), 0)
+    md = page_data['months_data']
+    best = max(md, key=lambda x: x['score_10'])
+    best_idx = md.index(best)
+    is_best = (best_idx == mi)
+
+    climate_type = page_data.get('climate_type',
+                                 page_data.get('hero_data', {}).get('climate_type', ''))
+
+    # ── Hero monthly ──
+    hero = render_v6_monthly_hero(slug, lang, {
+        'dest_name': nom, 'mois': mois_loc,
+        'country_name': country_name, 'country_iso': country_iso,
+        'climate_type': climate_type, 'score': this_score,
+        'tmin': _safe_float(m.get('tmin')), 'tmax': _safe_float(m.get('tmax')),
+        'rain_pct': _safe_float(m.get('rain_pct')), 'sun_h': _safe_float(m.get('sun_h')),
+        'lat': _safe_float(dest['lat']), 'lon': _safe_float(dest['lon']),
+        'photo_url': photo_url, 'photo_credit': photo_credit_html,
+        'update_month': update_month,
+        'chips': page_data.get('hero_data', {}).get('chips', []),
+    }, asset_prefix=asset_prefix)
+
+    # ── Section "mois vs meilleur mois" ──
+    best_mois_url = cfg['month_url'][best_idx]
+    vs = render_v6_monthly_vs_best(slug, lang, {
+        'mois': mois_loc, 'dest_name': nom, 'is_best': is_best,
+        'best_month': MONTHS_LOC[best_idx], 'best_score': best['score_10'],
+        'this_score': this_score,
+        'best_href': monthly_href(cfg, slug, best_idx),
+        'annual_href': annual_href(cfg, slug),
+    })
+
+    # ── Section "À quoi s'attendre ce mois" (contenu riche du V5) ──
+    expect_html = ''
+    try:
+        from generate_pages import context_paragraph
+        nom_f = dest.get(f'nom_{lang[:2]}', nom)
+        is_tropical = _bool(dest.get('tropical'))
+        m_for_ctx = {
+            'tmax': _safe_float(m.get('tmax')),
+            'rain_pct': _safe_float(m.get('rain_pct')),
+            'sun_h': _safe_float(m.get('sun_h')),
+            'classe': m.get('classe', 'mid'),
+        }
+        ctx_para = context_paragraph(
+            cfg, nom, nom_f, m_for_ctx, mi, this_score,
+            MONTHS_LOC[best_idx], best['score_10'], is_tropical,
+            event_text=None, is_mountain=is_mountain, ski_sc=0,
+        )
+        if ctx_para:
+            expect_html = render_v6_monthly_expect(slug, lang, {
+                'mois': mois_loc, 'paragraph_html': ctx_para,
+            })
+    except Exception:
+        expect_html = ''  # si context_paragraph échoue, on omet la section (non bloquant)
+
+    # ── Blocs V6 partagés ──
+    topbar = render_v6_topbar(slug, lang)
+    contexte = render_v6_contexte(slug, lang, editorial_html or '<p>—</p>')
+    reserver = render_v6_reserver(slug, lang, nom)
+    infos = render_v6_infos_pratiques(slug, lang, page_data['infos_pratiques_data'],
+                                      asset_prefix=asset_prefix)
+    explorer = render_v6_explorer(slug, lang, related=page_data.get('related', []),
+                                  asset_prefix=asset_prefix)
+    worst = min(md, key=lambda x: x['score_10'])
+    localisation = render_v6_localisation(
+        slug=slug, lang=lang, nom=nom,
+        lat=_safe_float(dest['lat']), lon=_safe_float(dest['lon']),
+        country_iso=country_iso, country_name=country_name,
+        climate_type=climate_type,
+        best_month=best['mois'], best_score=best['score_10'],
+        worst_month=worst['mois'], worst_score=worst['score_10'],
+        macro_zoom=page_data.get('macro_zoom', 5), asset_prefix=asset_prefix,
+    )
+
+    # FAQ mensuelle : réutilise les items annuels (couvre la destination)
+    faq_items = page_data.get('faq_items', [])
+    questions = render_v6_questions(slug, lang, faq_items)
+
+    footer = render_v6_footer(
+        slug_fr=slug_fr if lang != 'fr' else slug, lang=lang,
+        slug_en=dest.get('slug_en', ''), slug_es=dest.get('slug_es', ''),
+        slug_de=dest.get('slug_de', ''), asset_prefix=asset_prefix,
+    )
+
+    # ── HEAD (titre/desc monthly, canonical sans .html) ──
+    canonical = cfg['canonical_prefix'] + to_canonical_url(
+        f'{slug}{cfg["monthly_sep"]}{cfg["month_url"][mi]}.html')
+
+    # Titre/desc : réutilise les templates monthly du locale si présents, sinon fallback
+    page_title = f'{nom} {("en" if lang in ("fr",) else "in")} {mois_loc} : {this_score:.1f}/10'
+    if lang in ('en', 'en-us'):
+        page_title = f'{nom} Weather in {mois_loc}: {this_score:.1f}/10'
+    elif lang == 'es':
+        page_title = f'{nom} en {mois_loc}: {this_score:.1f}/10'
+    elif lang == 'de':
+        page_title = f'{nom} im {mois_loc}: {this_score:.1f}/10'
+    page_desc = page_data.get('page_desc', '')[:160]
+
+    hreflang_tags = build_hreflang_tags(dest, mi=mi)
+
+    head = render_v6_head(
+        lang=lang, page_title=page_title, page_desc=page_desc,
+        canonical_url=canonical, asset_prefix=asset_prefix,
+        bg_image_url=photo_url, hreflang_tags=hreflang_tags,
+        og_image_url=page_data.get('og_image_url', ''),
+        json_ld_blocks=page_data.get('json_ld_blocks', []),
+    )
+    # Injecter le CSS .vs-cta dans le head
+    head = head.replace('</head>', f'<style>{VS_CTA_CSS}</style>\n</head>')
+
+    scripts = render_v6_scripts(asset_prefix=asset_prefix)
+
+    body = (f'{topbar}\n{hero}\n<main>\n'
+            f'{expect_html}\n{vs}\n{contexte}\n{reserver}\n{infos}\n{explorer}\n'
+            f'{localisation}\n{questions}\n</main>\n{footer}')
+
+    html = head + '\n' + body + '\n' + scripts
+    from lib.page_config import strip_html_from_internal_links
+    return strip_html_from_internal_links(html)

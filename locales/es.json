@@ -1731,6 +1731,29 @@
       "cta_hotel": "Hoteles",
       "cta_activity": "Actividades",
       "cta_flight": "Vuelos"
+    },
+    "monthly": {
+      "kicker": "Este mes",
+      "h1_tpl": "{nom} en {mois}: <em>¿ir o no?</em>",
+      "lead_verdict_excellent": "Excelente época. {nom} en {mois} obtiene {score}/10.",
+      "lead_verdict_good": "Buena época. {nom} en {mois} logra {score}/10.",
+      "lead_verdict_mixed": "Época mixta. {nom} en {mois}: {score}/10.",
+      "lead_verdict_poor": "Época difícil. {nom} en {mois} solo alcanza {score}/10.",
+      "quick_label": "El veredicto del mes",
+      "quick_verdict_go": "Adelante",
+      "quick_verdict_maybe": "Por qué no",
+      "quick_verdict_avoid": "Evitar",
+      "mini_temp": "Temperatura",
+      "mini_rain": "Lluvia",
+      "mini_sun": "Sol",
+      "tag_update": "Actualizado {month} 2026",
+      "tag_data": "ERA5 · 10 años",
+      "vs_kicker": "Comparar",
+      "vs_title_tpl": "¿Es {mois} el mes adecuado?",
+      "vs_same_best": "{mois} es justamente el mejor mes del año en {nom}. Buen momento.",
+      "vs_better_exists": "El mejor mes en {nom} es <strong>{best_month}</strong> ({best_score}/10), {delta} más que {mois}.",
+      "vs_see_best": "Ver {best_month}",
+      "vs_see_annual": "Ver los 12 meses"
     }
   }
 }
