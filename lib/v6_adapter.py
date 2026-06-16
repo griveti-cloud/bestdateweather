@@ -1115,7 +1115,8 @@ def _strip_html(s: str) -> str:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
-                   similarities=None, comparison_index=None) -> str:
+                   similarities=None, comparison_index=None,
+                   all_climate=None, monthly_crosslinks=None) -> str:
     """Version V6 d'une page mensuelle. Retourne le HTML complet.
 
     Réutilise build_page_data_v6() pour toutes les données partagées, puis
@@ -1135,10 +1136,11 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
                                   monthly_href, annual_href)
     from lib.v6 import (render_v6_topbar, render_v6_head, render_v6_scripts,
                         render_v6_footer, render_v6_contexte, render_v6_questions,
-                        render_v6_reserver, render_v6_explorer,
+                        render_v6_reserver,
                         render_v6_localisation, render_v6_infos_pratiques)
     from lib.v6_monthly import (render_v6_monthly_hero, render_v6_monthly_vs_best,
-                                render_v6_monthly_expect, VS_CTA_CSS)
+                                render_v6_monthly_expect, render_v6_monthly_explore,
+                                VS_CTA_CSS)
     from scoring import compute_scores, compute_mountain_scores
     from datetime import datetime
 
@@ -1223,6 +1225,81 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
         'annual_href': annual_href(cfg, slug),
     })
 
+    # ── Section "Explorer ce mois" : cross-links MENSUELS ──
+    # Reproduit les 3 blocs du V5 (similaires / proches / autres tops) mais
+    # avec liens vers les pages DU MÊME MOIS, pas annuelles.
+    from lib.page_config import dest_name as _dn, dest_country as _dc
+    # related n'est pas construit par build_page_data_v6 (seulement par gen_annual_v6),
+    # on l'appelle nous-mêmes pour récupérer proximity.
+    related = _build_related_v6(cfg, dest, similarities, all_dests)
+
+    def _to_monthly(item_slug_fr):
+        """Construit un item explore (lien mensuel) depuis un slug_fr."""
+        od = all_dests.get(item_slug_fr) if all_dests else None
+        if not od:
+            return None
+        oslug = dest_slug(cfg, od)
+        return {
+            'name': _dn(cfg, od),
+            'href': monthly_href(cfg, oslug, mi),
+            'country': _dc(cfg, od),
+            'iso': _flag_iso(od.get('flag', '')),
+        }
+
+    # Box "Climat similaire" — via similarities (climat)
+    # similarities[slug] = liste de tuples (cos_sim_score, other_slug)
+    similar_items = []
+    if similarities:
+        for entry in similarities.get(slug_fr, [])[:5]:
+            s = entry[1] if isinstance(entry, (tuple, list)) else entry
+            it = _to_monthly(s)
+            if it:
+                similar_items.append(it)
+
+    # Box "À proximité" — réutilise related['proximity'] mais href → mensuel
+    nearby_items = []
+    name_to_slug = {}
+    if all_dests:
+        for sfr, od in all_dests.items():
+            name_to_slug[_dn(cfg, od)] = sfr
+    for prox in related.get('proximity', [])[:5]:
+        match_slug = name_to_slug.get(prox.get('name', ''))
+        if match_slug:
+            oslug = dest_slug(cfg, all_dests[match_slug])
+            nearby_items.append({
+                'name': prox.get('name', ''),
+                'href': monthly_href(cfg, oslug, mi),
+                'country': prox.get('country', ''),
+                'iso': prox.get('country_iso', ''),
+                'distance_km': prox.get('distance_km'),
+            })
+
+    # Box "Autres tops du mois" — via monthly_crosslinks
+    other_top_items = []
+    if monthly_crosslinks:
+        for s in (monthly_crosslinks.get(slug_fr) or {}).get(mi, [])[:5]:
+            it = _to_monthly(s)
+            if it:
+                if all_climate and s in all_climate:
+                    try:
+                        it['score'] = all_climate[s][mi]['score']
+                    except (KeyError, IndexError, TypeError):
+                        pass
+                other_top_items.append(it)
+
+    # Navigation mois adjacents
+    prev_mi = (mi - 1) % 12
+    next_mi = (mi + 1) % 12
+    explore_html = render_v6_monthly_explore(slug, lang, {
+        'mois': mois_loc,
+        'prev_month': {'name': MONTHS_LOC[prev_mi], 'href': monthly_href(cfg, slug, prev_mi)},
+        'next_month': {'name': MONTHS_LOC[next_mi], 'href': monthly_href(cfg, slug, next_mi)},
+        'similar': similar_items,
+        'nearby': nearby_items,
+        'other_top': other_top_items,
+        'map_href': cfg.get('map_href', cfg.get('carte_href', '')),
+    }, asset_prefix=asset_prefix)
+
     # ── Section "À quoi s'attendre ce mois" (contenu riche du V5) ──
     expect_html = ''
     try:
@@ -1253,8 +1330,6 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
     reserver = render_v6_reserver(slug, lang, nom)
     infos = render_v6_infos_pratiques(slug, lang, page_data['infos_pratiques_data'],
                                       asset_prefix=asset_prefix)
-    explorer = render_v6_explorer(slug, lang, related=page_data.get('related', []),
-                                  asset_prefix=asset_prefix)
     worst = min(md, key=lambda x: x['score_10'])
     localisation = render_v6_localisation(
         slug=slug, lang=lang, nom=nom,
@@ -1305,7 +1380,7 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
     scripts = render_v6_scripts(asset_prefix=asset_prefix)
 
     body = (f'{topbar}\n{hero}\n<main>\n'
-            f'{expect_html}\n{vs}\n{contexte}\n{reserver}\n{infos}\n{explorer}\n'
+            f'{expect_html}\n{vs}\n{contexte}\n{reserver}\n{infos}\n{explore_html}\n'
             f'{localisation}\n{questions}\n</main>\n{footer}')
 
     html = head + '\n' + body + '\n' + scripts

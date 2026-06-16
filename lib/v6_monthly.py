@@ -227,6 +227,158 @@ def render_v6_monthly_vs_best(slug, lang, vs_data):
     )
 
 
+def render_v6_monthly_explore(slug, lang, explore_data, asset_prefix=''):
+    """Section "Explorer ce mois" : cross-links MENSUELS (design V6).
+
+    Reproduit les 3 blocs de cross-link du V5 mais avec les liens vers les
+    pages DU MÊME MOIS (pas annuelles), dans le langage visuel V6 (3 boxes).
+
+    explore_data :
+        - mois (str)           : mois localisé
+        - prev_month (dict)    : {'name','href'} mois précédent
+        - next_month (dict)    : {'name','href'} mois suivant
+        - similar (list)       : [{'name','href','country','iso'}] climat similaire ce mois
+        - nearby (list)        : [{'name','href','country','iso','distance_km'}] proches ce mois
+        - other_top (list)     : [{'name','href','country','iso','score'}] autres top ce mois
+        - map_href (str)       : lien carte
+    """
+    L = _v6_strings(lang)['monthly']
+    d = explore_data
+    mois = d['mois']
+
+    # i18n
+    I = {
+        'fr': {'kicker': 'Explorer', 'title_tpl': 'Autres destinations en {mois}',
+               'lead_tpl': 'Si {mois} ne vous convainc pas pour cette destination, comparez avec d\'autres.',
+               'box_similar': 'Climat similaire', 'box_nearby': 'À proximité',
+               'box_other': 'Autres tops du mois', 'box_nav': 'Mois adjacents',
+               'prev_lbl': 'Mois précédent', 'next_lbl': 'Mois suivant',
+               'map_lbl': '🗺️ Voir les 754 destinations sur la carte', 'see': '→'},
+        'en': {'kicker': 'Explore', 'title_tpl': 'Other destinations in {mois}',
+               'lead_tpl': 'If {mois} doesn\'t convince you for this destination, compare with others.',
+               'box_similar': 'Similar climate', 'box_nearby': 'Nearby',
+               'box_other': 'Other top picks', 'box_nav': 'Adjacent months',
+               'prev_lbl': 'Previous month', 'next_lbl': 'Next month',
+               'map_lbl': '🗺️ See all 754 destinations on the map', 'see': '→'},
+        'en-us': {'kicker': 'Explore', 'title_tpl': 'Other destinations in {mois}',
+               'lead_tpl': 'If {mois} doesn\'t convince you for this destination, compare with others.',
+               'box_similar': 'Similar climate', 'box_nearby': 'Nearby',
+               'box_other': 'Other top picks', 'box_nav': 'Adjacent months',
+               'prev_lbl': 'Previous month', 'next_lbl': 'Next month',
+               'map_lbl': '🗺️ See all 754 destinations on the map', 'see': '→'},
+        'es': {'kicker': 'Explorar', 'title_tpl': 'Otros destinos en {mois}',
+               'lead_tpl': 'Si {mois} no te convence para este destino, compara con otros.',
+               'box_similar': 'Clima similar', 'box_nearby': 'Cerca',
+               'box_other': 'Otros destacados', 'box_nav': 'Meses adyacentes',
+               'prev_lbl': 'Mes anterior', 'next_lbl': 'Mes siguiente',
+               'map_lbl': '🗺️ Ver los 754 destinos en el mapa', 'see': '→'},
+        'de': {'kicker': 'Entdecken', 'title_tpl': 'Andere Reiseziele im {mois}',
+               'lead_tpl': 'Wenn {mois} Sie für dieses Ziel nicht überzeugt, vergleichen Sie mit anderen.',
+               'box_similar': 'Ähnliches Klima', 'box_nearby': 'In der Nähe',
+               'box_other': 'Weitere Top-Ziele', 'box_nav': 'Angrenzende Monate',
+               'prev_lbl': 'Vorheriger Monat', 'next_lbl': 'Nächster Monat',
+               'map_lbl': '🗺️ Alle 754 Reiseziele auf der Karte', 'see': '→'},
+    }
+    t = I.get(lang, I['en'])
+
+    # Casse mois (FR/ES minuscule)
+    mois_inline = (mois[0].lower() + mois[1:]) if (lang in ('fr', 'es') and mois) else mois
+
+    def _link_item(item, extra=''):
+        iso = item.get('iso', '').lower()
+        flag = f'<img src="{asset_prefix}flags/{iso}.png" alt="" style="width:18px;height:13px;border-radius:2px;flex-shrink:0"/>' if iso else ''
+        country = h(item.get('country', ''))
+        extra_html = f'<span style="color:#9ca3af;font-size:12px;margin-left:auto">{h(extra)}</span>' if extra else ''
+        return (
+            f'<a href="{h(item["href"])}" style="display:flex;align-items:center;gap:8px;'
+            f'padding:9px 0;text-decoration:none;color:#1a2230;border-bottom:1px solid #f0f1f3;font-size:14px">'
+            f'{flag}<span>{h(item["name"])}</span>'
+            f'<span style="color:#9ca3af;font-size:12px">{country}</span>{extra_html}</a>'
+        )
+
+    boxes = []
+
+    # Box 1 : Climat similaire
+    if d.get('similar'):
+        items = ''.join(_link_item(it) for it in d['similar'][:5])
+        boxes.append(
+            f'<div class="explore-box" style="background:#fff;border:1px solid #e6e8eb;'
+            f'border-radius:14px;padding:16px 18px">'
+            f'<div style="font-weight:700;font-size:13px;color:#1a2230;margin-bottom:8px;'
+            f'text-transform:uppercase;letter-spacing:.5px">{h(t["box_similar"])}</div>{items}</div>'
+        )
+
+    # Box 2 : À proximité
+    if d.get('nearby'):
+        items = ''.join(
+            _link_item(it, extra=f'{it["distance_km"]} km' if it.get('distance_km') else '')
+            for it in d['nearby'][:5])
+        boxes.append(
+            f'<div class="explore-box" style="background:#fff;border:1px solid #e6e8eb;'
+            f'border-radius:14px;padding:16px 18px">'
+            f'<div style="font-weight:700;font-size:13px;color:#1a2230;margin-bottom:8px;'
+            f'text-transform:uppercase;letter-spacing:.5px">{h(t["box_nearby"])}</div>{items}</div>'
+        )
+
+    # Box 3 : Autres tops du mois
+    if d.get('other_top'):
+        items = ''.join(
+            _link_item(it, extra=f'{it["score"]:.1f}' if it.get('score') else '')
+            for it in d['other_top'][:5])
+        boxes.append(
+            f'<div class="explore-box" style="background:#fff;border:1px solid #e6e8eb;'
+            f'border-radius:14px;padding:16px 18px">'
+            f'<div style="font-weight:700;font-size:13px;color:#1a2230;margin-bottom:8px;'
+            f'text-transform:uppercase;letter-spacing:.5px">{h(t["box_other"])}</div>{items}</div>'
+        )
+
+    if not boxes:
+        return ''
+
+    boxes_html = ''.join(boxes)
+
+    # Navigation mois adjacents (prev/next) + carte
+    nav_items = []
+    if d.get('prev_month'):
+        nav_items.append(
+            f'<a href="{h(d["prev_month"]["href"])}" class="month-nav-btn" '
+            f'style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;'
+            f'background:#fff;border:1px solid #d0d4da;border-radius:10px;text-decoration:none;'
+            f'color:#1a2230;font-weight:600;font-size:14px">← {h(d["prev_month"]["name"])}</a>')
+    if d.get('next_month'):
+        nav_items.append(
+            f'<a href="{h(d["next_month"]["href"])}" class="month-nav-btn" '
+            f'style="display:inline-flex;align-items:center;gap:6px;padding:10px 16px;'
+            f'background:#fff;border:1px solid #d0d4da;border-radius:10px;text-decoration:none;'
+            f'color:#1a2230;font-weight:600;font-size:14px">{h(d["next_month"]["name"])} →</a>')
+    nav_html = (f'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">{"".join(nav_items)}</div>'
+                if nav_items else '')
+
+    map_html = ''
+    if d.get('map_href'):
+        map_html = (
+            f'<a href="{h(d["map_href"])}" style="display:inline-block;margin-top:14px;'
+            f'padding:11px 18px;background:#1a2230;color:#fff;text-decoration:none;'
+            f'border-radius:10px;font-weight:600;font-size:14px">{h(t["map_lbl"])}</a>')
+
+    return (
+        f'<section class="section">\n'
+        f'  <div class="container">\n'
+        f'    <div class="section-head">\n'
+        f'      <div class="section-kicker">{h(t["kicker"])}</div>\n'
+        f'      <h2>{h(t["title_tpl"].format(mois=mois_inline))}</h2>\n'
+        f'      <p style="color:#6b7280;font-size:15px;margin:6px 0 0">{h(t["lead_tpl"].format(mois=mois_inline))}</p>\n'
+        f'    </div>\n'
+        f'    <div class="explore-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px">\n'
+        f'      {boxes_html}\n'
+        f'    </div>\n'
+        f'    {nav_html}\n'
+        f'    {map_html}\n'
+        f'  </div>\n'
+        f'</section>'
+    )
+
+
 # CSS additionnel pour .vs-cta (injecté dans le head V6 via gen_monthly_v6)
 VS_CTA_CSS = (
     '.vs-cta{display:inline-block;padding:10px 18px;background:#1a2230;color:#fff;'

@@ -2892,7 +2892,7 @@ def main():
                 try:
                     if args.v6:
                         from lib.v6_adapter import gen_monthly_v6
-                        html = gen_monthly_v6(cfg, fn, dest, months, mi, dests, similarities, comp_index)
+                        html = gen_monthly_v6(cfg, fn, dest, months, mi, dests, similarities, comp_index, climate, monthly_crosslinks)
                     else:
                         html = gen_monthly(cfg, fn, dest, months, mi, dests, similarities, climate, events, comp_index, monthly_crosslinks)
                     out  = os.path.join(OUT, monthly_url(cfg, slug, mi))
