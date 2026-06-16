@@ -1341,8 +1341,13 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
         macro_zoom=page_data.get('macro_zoom', 5), asset_prefix=asset_prefix,
     )
 
-    # FAQ mensuelle : réutilise les items annuels (couvre la destination)
-    faq_items = page_data.get('faq_items', [])
+    # FAQ mensuelle : réutilise les items annuels (couvre la destination).
+    # build_page_data_v6 retourne faq_items=[] (placeholder enrichi seulement
+    # dans gen_annual_v6), donc on les construit nous-mêmes ici.
+    nom_bare = dest.get('nom_bare', nom)
+    prep = dest.get(f'prep_{lang[:2]}', dest.get('prep_fr', 'à'))
+    faq_items = _build_faq_items(cfg, dest, months, scores,
+                                 is_mountain, slug_fr, prep, nom, nom_bare)
     questions = render_v6_questions(slug, lang, faq_items)
 
     footer = render_v6_footer(
@@ -1367,12 +1372,43 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
 
     hreflang_tags = build_hreflang_tags(dest, mi=mi)
 
+    # JSON-LD: Article + FAQPage (construits ici car build_page_data_v6 renvoie []).
+    # On utilise le titre/canonical du MOIS et les faq_items mensuels.
+    monthly_json_ld = _build_json_ld_blocks(
+        cfg=cfg, dest=dest, slug=slug, nom=nom,
+        page_title=page_title, page_desc=page_desc,
+        canonical_url=canonical, faq_items=faq_items,
+    )
+    # _build_json_ld_blocks ajoute un BreadcrumbList 2-niveaux (Accueil > Destination)
+    # qui pointerait la page mensuelle comme "Destination". On le retire pour le
+    # remplacer par un breadcrumb 3-niveaux (Accueil > Destination annuelle > Mois).
+    monthly_json_ld = [b for b in monthly_json_ld if '"BreadcrumbList"' not in b]
+    # BreadcrumbList: Accueil > Destination (annuel) > Mois
+    import json as _json_bc
+    home_map = {
+        'fr': 'https://bestdateweather.com/', 'en': 'https://bestdateweather.com/en/app',
+        'en-us': 'https://bestdateweather.com/us/app', 'es': 'https://bestdateweather.com/es/app',
+        'de': 'https://bestdateweather.com/de/app',
+    }
+    home_lbl = {'fr': 'Accueil', 'en': 'Home', 'en-us': 'Home', 'es': 'Inicio', 'de': 'Startseite'}
+    annual_canonical = cfg['canonical_prefix'] + annual_href(cfg, slug)
+    breadcrumb = {
+        '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+        'itemListElement': [
+            {'@type': 'ListItem', 'position': 1, 'name': home_lbl.get(lang, 'Home'),
+             'item': home_map.get(lang, 'https://bestdateweather.com/')},
+            {'@type': 'ListItem', 'position': 2, 'name': nom, 'item': annual_canonical},
+            {'@type': 'ListItem', 'position': 3, 'name': f'{nom} · {mois_loc}', 'item': canonical},
+        ],
+    }
+    monthly_json_ld.append(_json_bc.dumps(breadcrumb, ensure_ascii=False))
+
     head = render_v6_head(
         lang=lang, page_title=page_title, page_desc=page_desc,
         canonical_url=canonical, asset_prefix=asset_prefix,
         bg_image_url=photo_url, hreflang_tags=hreflang_tags,
         og_image_url=page_data.get('og_image_url', ''),
-        json_ld_blocks=page_data.get('json_ld_blocks', []),
+        json_ld_blocks=monthly_json_ld,
     )
     # Injecter le CSS .vs-cta dans le head
     head = head.replace('</head>', f'<style>{VS_CTA_CSS}</style>\n</head>')
