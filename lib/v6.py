@@ -420,15 +420,18 @@ _MONTH_ABBR = {
 
 
 def _bar_class(score: float, is_top: bool) -> str:
-    """Détermine la classe CSS d'une barre de score (best/good/mid/low/bad)."""
+    """Classe CSS d'une barre de score.
+
+    Aligné sur les 3 niveaux du tableau/légende (fix incohérence : un score
+    4.6 était rouge dans le graphe mais jaune 'Période correcte' en table) :
+      >= 7 : best (top) / good → vert   | 4-7 : mid → jaune | < 4 : bad → rouge
+    """
     if score >= 7 and is_top:
         return 'best'
     if score >= 7:
         return 'good'
-    if score >= 5:
-        return 'mid'
     if score >= 4:
-        return 'low'
+        return 'mid'
     return 'bad'
 
 
@@ -1406,6 +1409,21 @@ def _emoji_for_score(score: float, classe: str = '') -> str:
     return '🌧️'
 
 
+def _score_cls(score: float) -> str:
+    """Classe visuelle dérivée du SCORE (source de vérité unique, seuils
+    identiques à la légende et au graphique) : >=7 rec, 4-7 mid, <4 avoid.
+
+    Remplace l'usage de la classe CSV dans le rendu : la classe CSV (rec/mid/
+    avoid) est un outil interne de scoring (bounds, correction tropicale) qui
+    peut diverger du score final — ex. mois tropical classe 'avoid' remonté
+    en 4-7 par la correction tropicale → badge rouge + score jaune (bug)."""
+    if score >= 7:
+        return 'rec'
+    if score >= 4:
+        return 'mid'
+    return 'avoid'
+
+
 def _mood_class(classe: str) -> str:
     """Map classe (rec/mid/avoid) → CSS class (good/mid/bad)."""
     return {'rec': 'good', 'mid': 'mid', 'avoid': 'bad'}.get(classe, 'mid')
@@ -1538,7 +1556,7 @@ def _build_lecture_rapide(months_data: list[dict], lang: str, abbr_list: list[st
     L = _COMPREHENSION_I18N.get(lang, _COMPREHENSION_I18N['fr'])
 
     # Fenêtre optimale : range mois 'rec' consécutifs (le plus long)
-    rec_indices = [i for i, m in enumerate(months_data) if m.get('classe') == 'rec']
+    rec_indices = [i for i, m in enumerate(months_data) if _score_cls(m.get('score_10', 0)) == 'rec']
     if not rec_indices:
         window_str = L['no_optimal']
     else:
@@ -1566,15 +1584,15 @@ def _build_lecture_rapide(months_data: list[dict], lang: str, abbr_list: list[st
     n_months = len(months_data)
     if n_months > 0:
         for i, m in enumerate(months_data):
-            if m.get('classe') == 'mid':
-                prev_cls = months_data[(i - 1) % n_months].get('classe', '')
-                next_cls = months_data[(i + 1) % n_months].get('classe', '')
+            if _score_cls(m.get('score_10', 0)) == 'mid':
+                prev_cls = _score_cls(months_data[(i - 1) % n_months].get('score_10', 0))
+                next_cls = _score_cls(months_data[(i + 1) % n_months].get('score_10', 0))
                 if 'rec' in (prev_cls, next_cls):
                     transition_months.append(abbr_list[i])
     transition_str = ' · '.join(transition_months) if transition_months else L['no_transition']
 
     # Période rude : mois 'avoid'
-    tough_months = [abbr_list[i] for i, m in enumerate(months_data) if m.get('classe') == 'avoid']
+    tough_months = [abbr_list[i] for i, m in enumerate(months_data) if _score_cls(m.get('score_10', 0)) == 'avoid']
     tough_str = ' · '.join(tough_months) if tough_months else L['no_tough']
 
     return {'window': window_str, 'transition': transition_str, 'tough': tough_str}
@@ -1647,8 +1665,8 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
         Le caller doit fournir le bon template.
     """
     L = _v6_strings(lang)['comprendre']
-    n_comfortable = sum(1 for m in months_data if m.get('classe') == 'rec')
-    comfortable_months = [m['mois'][:3] for m in months_data if m.get('classe') == 'rec']
+    n_comfortable = sum(1 for m in months_data if _score_cls(m.get('score_10', 0)) == 'rec')
+    comfortable_months = [m['mois'][:3] for m in months_data if _score_cls(m.get('score_10', 0)) == 'rec']
 
     comfort_label = L['comfort_tpl'].format(n=n_comfortable)
     months_inline = ' · '.join(comfortable_months)
@@ -1668,8 +1686,8 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
                             if unicodedata.category(c) != 'Mn')
         url = monthly_url_tpl.format(slug=slug, mois_lower=mois_slug,
                                      mois_short=mois_slug[:3]) if monthly_url_tpl else '#'
-        emoji = _emoji_for_score(m['score_10'], m.get('classe', ''))
-        mood_cls = _mood_class(m.get('classe', ''))
+        emoji = _emoji_for_score(m['score_10'])
+        mood_cls = _mood_class(_score_cls(m['score_10']))
         best_attr = ' best' if m.get('is_best') else ''
         rows_html.append(
             f'<tr class="row{best_attr}" onclick="location.href=\'{h(url)}\'" '
@@ -1696,8 +1714,8 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
                             if unicodedata.category(c) != 'Mn')
         url = monthly_url_tpl.format(slug=slug, mois_lower=mois_slug,
                                      mois_short=mois_slug[:3]) if monthly_url_tpl else '#'
-        emoji = _emoji_for_score(m['score_10'], m.get('classe', ''))
-        mood_cls = _mood_class(m.get('classe', ''))
+        emoji = _emoji_for_score(m['score_10'])
+        mood_cls = _mood_class(_score_cls(m['score_10']))
         best_cls = ' best' if m.get('is_best') else ''
         score_cls = 'good' if m['score_10'] >= 7 else ('mid' if m['score_10'] >= 4 else 'bad')
         mobile_cards.append(

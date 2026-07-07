@@ -137,6 +137,33 @@ def effective_rain_pct(rain_pct: float, precip_mm: float = None) -> float:
     return min(100.0, rain_pct * factor)
 
 
+def heavy_precip_penalty(precip_mm: float = None) -> float:
+    """
+    Pénalité pour précipitations ABSOLUES extrêmes (mm/jour moyen).
+
+    effective_rain_pct sature à 100% bien avant les volumes de mousson
+    (un mois à 99% de jours pluvieux donne le même rain_pct effectif qu'il
+    tombe 8mm ou 80mm par jour). Cette pénalité capture l'intensité absolue
+    que rain_pct ne peut plus distinguer une fois saturé.
+
+    Seuils (mm/jour moyen sur le mois) :
+      < 15mm/j  : 0 (pluie normale à forte mais gérable)
+      15-25mm/j : 0 -> 0.10 (saison des pluies marquée)
+      25-40mm/j : 0.10 -> 0.25 (mousson, déluge récurrent)
+      > 40mm/j  : 0.25 -> 0.35 cap (mousson extrême type Conakry)
+
+    Pénalité en points bruts [0, 1], soustraite après pondération.
+    None → 0 (rétro-compatible).
+    """
+    if precip_mm is None or precip_mm < 15:
+        return 0.0
+    if precip_mm < 25:
+        return (precip_mm - 15) / 10 * 0.10
+    if precip_mm < 40:
+        return 0.10 + (precip_mm - 25) / 15 * 0.15
+    return min(0.35, 0.25 + (precip_mm - 40) / 40 * 0.10)
+
+
 def dew_point_penalty(tmax: float, dew_point: float) -> float:
     """
     Pénalité humidité [0, 0.20] basée sur le point de rosée moyen.
@@ -250,6 +277,7 @@ def raw_score(tmax: float, rain_pct: float, sun_h: float,
           + 0.25 * min(1.0, sun_h / 15.0))
     penalty = dew_point_penalty(tmax, dew_point)
     penalty += dry_climate_penalty(tmax, dew_point)
+    penalty += heavy_precip_penalty(precip_mm)
     return max(0.0, base - penalty)
 
 
@@ -271,6 +299,42 @@ def _norm(values: list) -> list:
 # Avantage : les classements mensuels ("où partir en mai") ont des scores
 # différenciés. Paris juin ≠ Lisbonne juillet.
 #
+CLS_REC_THRESHOLD = 0.55
+CLS_AVOID_THRESHOLD = 0.35
+
+
+def classify_effective(tmax: float, rain_pct: float, sun_h: float,
+                       precip_mm: float = None, dew_point: float = None) -> str:
+    """
+    Classe éditoriale EFFECTIVE d'un mois (rec/mid/avoid), incluant les
+    déclassements chaleur/humidité que compute_scores applique en interne.
+
+    Fix incohérence classe/score (juillet 2026) : le CSV stockait la classe
+    issue du seul raw_score (Marrakech juillet 39°C → raw 0.61 → 'rec'),
+    tandis que compute_scores déclassait en interne (39 >= 38 → avoid) et
+    produisait un score bas. Résultat : badge vert + score 2.9. La classe
+    CSV doit refléter la classe effective pour que classe, score et bounds
+    globaux soient cohérents.
+    """
+    rs = raw_score(tmax, rain_pct, sun_h, precip_mm, dew_point)
+    if rs >= CLS_REC_THRESHOLD:
+        cls = 'rec'
+    elif rs >= CLS_AVOID_THRESHOLD:
+        cls = 'mid'
+    else:
+        cls = 'avoid'
+    # Déclassements identiques à compute_scores (mêmes seuils)
+    if tmax >= 38 and cls != 'avoid':
+        cls = 'avoid'
+    elif tmax >= 34 and cls == 'rec':
+        cls = 'mid'
+    elif tmax >= 30 and dew_point is not None and dew_point >= 16 and cls == 'rec':
+        cls = 'mid'
+    elif tmax >= 26 and dew_point is not None and dew_point >= 22 and cls == 'rec':
+        cls = 'mid'
+    return cls
+
+
 # Power curve (SCORE_POWER) : étire les différences dans le haut de l'échelle.
 # p=1 → linéaire, p=2 → quadratique (meilleure discrimination top destinations).
 #
