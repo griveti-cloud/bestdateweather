@@ -489,15 +489,25 @@ def render_v6_decider(slug: str, lang: str, dest_name: str,
         f'</div>'
     )
 
-    # ── Pills : Top 4 + 1 bad ──
+    # ── Pills : Top 4 + le pire mois ──
+    # La couleur dérive du SCORE (mêmes seuils que le graphique et la légende :
+    # >=7 vert, 4-7 jaune, <4 rouge). Auparavant les classes étaient codées en
+    # dur (top='good', pire='bad'), ce qui produisait des incohérences quand le
+    # pire mois restait bon : Gran Canaria janvier 7.8 = barre verte dans le
+    # graphe mais pastille rouge "⚠️". Le ⚠️ n'apparaît que sous 7.
+    _PILL_CSS = {'rec': 'good', 'mid': 'mid', 'avoid': 'bad'}
     pill_items = []
     for i, m in enumerate(top_months):
         prefix = '🏆 ' if i == 0 else ''
+        cls = _PILL_CSS[_score_cls(m['score_10'])]
         pill_items.append(
-            f'<span class="pill good">{prefix}{h(m["mois"])} · {m["score_10"]:.1f}</span>'
+            f'<span class="pill {cls}">{prefix}{h(m["mois"])} · {m["score_10"]:.1f}</span>'
         )
+    worst_cls = _score_cls(worst_score)
+    worst_prefix = '⚠️ ' if worst_cls != 'rec' else ''
     pill_items.append(
-        f'<span class="pill bad">⚠️ {h(worst_month["mois"])} · {worst_score:.1f}</span>'
+        f'<span class="pill {_PILL_CSS[worst_cls]}">{worst_prefix}'
+        f'{h(worst_month["mois"])} · {worst_score:.1f}</span>'
     )
     pills_html = '\n              '.join(pill_items)
 
@@ -2407,7 +2417,7 @@ def render_v6_head(lang: str, page_title: str, page_desc: str,
 {og_html}
 {preload_bg}
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=20"/>
+<link rel="stylesheet" href="{asset_prefix}css/v6.css?v=21"/>
 {json_ld_html}
 </head>
 <body>'''

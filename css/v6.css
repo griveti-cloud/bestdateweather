@@ -264,6 +264,7 @@ header.hero-wrap{
   border-radius:999px;font-size:13px;font-weight:700;
   border:1px solid transparent}
 .pill.good{background:#e8f8f0;color:#1a7a4a;border-color:#bfe7cd}
+.pill.mid{background:#fdf6e3;color:#b8860b;border-color:#f0e0b0}
 .pill.bad{background:#fdecec;color:#b91c1c;border-color:#f4caca}
 
 /* Barchart */
