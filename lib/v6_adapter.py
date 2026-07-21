@@ -1140,6 +1140,8 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
                         render_v6_localisation, render_v6_infos_pratiques)
     from lib.v6_monthly import (render_v6_monthly_hero, render_v6_monthly_vs_best,
                                 render_v6_monthly_expect, render_v6_monthly_explore,
+                                render_v6_monthly_details, monthly_dynamics_paragraph,
+                                monthly_faq_items,
                                 VS_CTA_CSS)
     from scoring import compute_scores, compute_mountain_scores
     from datetime import datetime
@@ -1324,6 +1326,40 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
     except Exception:
         expect_html = ''  # si context_paragraph échoue, on omet la section (non bloquant)
 
+    # ── Dynamique mensuelle : rang du mois + deltas vs mois précédent ──
+    # (contenu distinctif par mois — fix similarité inter-mois 85%)
+    try:
+        rank = 1 + sum(1 for x in md if x['score_10'] > md[mi]['score_10'])
+        prev_mi_dyn = (mi - 1) % 12
+        m_prev = months[prev_mi_dyn]
+        dyn_html = monthly_dynamics_paragraph(
+            lang, nom, mois_loc, rank, MONTHS_LOC[prev_mi_dyn],
+            d_tmax=_safe_float(m.get('tmax')) - _safe_float(m_prev.get('tmax')),
+            d_rain=_safe_float(m.get('rain_pct')) - _safe_float(m_prev.get('rain_pct')),
+            d_sun=_safe_float(m.get('sun_h')) - _safe_float(m_prev.get('sun_h')),
+            is_us=(lang == 'en-us'),
+        )
+        if expect_html and dyn_html:
+            expect_html = expect_html.replace('</div>\n  </div>\n</section>',
+                                              f'{dyn_html}</div>\n  </div>\n</section>', 1)
+    except Exception:
+        pass
+
+    # ── Section "Conditions du mois" (UV, ressenti, mer, jour, air) ──
+    try:
+        details_html = render_v6_monthly_details(slug, lang, {
+            'mois': mois_loc,
+            'uv': _safe_float(m.get('uv_index')) or None,
+            'dew': _safe_float(m.get('dew_point', m.get('dew_point_mean'))) or None,
+            'sea': _safe_float(m.get('sea_temp')) or None,
+            'aqi': _safe_float(m.get('aqi_mean')) or None,
+            'lat': _safe_float(dest.get('lat')),
+            'month_idx': mi,
+            'tmax': _safe_float(m.get('tmax')),
+        })
+    except Exception:
+        details_html = ''
+
     # ── Blocs V6 partagés ──
     topbar = render_v6_topbar(slug, lang)
     contexte = render_v6_contexte(slug, lang, editorial_html or '<p>—</p>')
@@ -1348,6 +1384,17 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
     prep = dest.get(f'prep_{lang[:2]}', dest.get('prep_fr', 'à'))
     faq_items = _build_faq_items(cfg, dest, months, scores,
                                  is_mountain, slug_fr, prep, nom, nom_bare)
+    # + 1-2 questions spécifiques AU MOIS (baignade/UV, réponses chiffrées) —
+    # contenu distinctif inter-mois + JSON-LD FAQPage enrichi
+    try:
+        faq_items = faq_items + monthly_faq_items(
+            lang, nom, mois_loc,
+            sea=_safe_float(m.get('sea_temp')) or None,
+            uv=_safe_float(m.get('uv_index')) or None,
+            lat=_safe_float(dest.get('lat')), month_idx=mi,
+            is_us=(lang == 'en-us'))
+    except Exception:
+        pass
     questions = render_v6_questions(slug, lang, faq_items)
 
     footer = render_v6_footer(
@@ -1416,7 +1463,7 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
     scripts = render_v6_scripts(asset_prefix=asset_prefix)
 
     body = (f'{topbar}\n{hero}\n<main>\n'
-            f'{expect_html}\n{vs}\n{contexte}\n{reserver}\n{infos}\n{explore_html}\n'
+            f'{expect_html}\n{details_html}\n{vs}\n{contexte}\n{reserver}\n{infos}\n{explore_html}\n'
             f'{localisation}\n{questions}\n</main>\n{footer}')
 
     html = head + '\n' + body + '\n' + scripts

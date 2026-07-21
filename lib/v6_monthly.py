@@ -433,3 +433,322 @@ def render_v6_monthly_expect(slug, lang, expect_data):
         f'  </div>\n'
         f'</section>'
     )
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# Enrichissement contenu distinctif par mois (juillet 2026)
+# Contexte SEO : les 12 pages mensuelles d'une destination partageaient 85% de
+# vocabulaire (36 mots distinctifs seulement) → signal "contenu dupliqué" pour
+# Google (67k pages 'Explorée, actuellement non indexée'). Ces sections
+# exploitent les données du CSV variables par mois (UV, ressenti, mer, heures
+# de jour, rang, deltas) : contenu réel, différent chaque mois par construction.
+# ═════════════════════════════════════════════════════════════════════════════
+
+import math
+
+
+def _daylight_hours(lat: float, month_idx: int) -> float:
+    """Durée du jour (h) au 15 du mois, formule de déclinaison solaire standard."""
+    day_of_year = [15, 46, 74, 105, 135, 166, 196, 227, 258, 288, 319, 349][month_idx]
+    decl = math.radians(23.45) * math.sin(math.radians(360 / 365 * (284 + day_of_year)))
+    lat_r = math.radians(max(-66.5, min(66.5, lat)))  # clamp cercles polaires
+    x = -math.tan(lat_r) * math.tan(decl)
+    x = max(-1.0, min(1.0, x))
+    return round(24 / math.pi * math.acos(x), 1)
+
+
+_DETAILS_I18N = {
+    'fr': {
+        'kicker': 'Conditions du mois', 'title_tpl': 'En pratique en {mois}',
+        'uv': 'Indice UV', 'feel': 'Ressenti', 'sea': 'Mer', 'day': 'Durée du jour',
+        'air': 'Qualité de l\'air',
+        'uv_lbl': ['faible', 'modéré', 'élevé', 'très élevé', 'extrême'],
+        'uv_tip': ['protection inutile', 'protection aux heures centrales',
+                   'crème et chapeau recommandés', 'protection indispensable', 'éviter le soleil de midi'],
+        'feel_lbl': ['air sec', 'confortable', 'lourd par moments', 'très humide', 'chaleur oppressante'],
+        'sea_lbl': ['froide, baignade sportive', 'fraîche, vivifiante', 'agréable pour la baignade', 'chaude, idéale'],
+        'day_tpl': '{h}h de jour',
+        'air_lbl': ['excellent', 'bon', 'moyen', 'dégradé'],
+    },
+    'en': {
+        'kicker': 'This month\'s conditions', 'title_tpl': 'What it\'s like in {mois}',
+        'uv': 'UV index', 'feel': 'Feels like', 'sea': 'Sea', 'day': 'Daylight',
+        'air': 'Air quality',
+        'uv_lbl': ['low', 'moderate', 'high', 'very high', 'extreme'],
+        'uv_tip': ['no protection needed', 'protect during midday hours',
+                   'sunscreen and hat advised', 'protection essential', 'avoid midday sun'],
+        'feel_lbl': ['dry air', 'comfortable', 'muggy at times', 'very humid', 'oppressive heat'],
+        'sea_lbl': ['cold, for the brave', 'cool, invigorating', 'pleasant for swimming', 'warm, ideal'],
+        'day_tpl': '{h}h of daylight',
+        'air_lbl': ['excellent', 'good', 'fair', 'poor'],
+    },
+    'en-us': {
+        'kicker': 'This month\'s conditions', 'title_tpl': 'What it\'s like in {mois}',
+        'uv': 'UV index', 'feel': 'Feels like', 'sea': 'Sea', 'day': 'Daylight',
+        'air': 'Air quality',
+        'uv_lbl': ['low', 'moderate', 'high', 'very high', 'extreme'],
+        'uv_tip': ['no protection needed', 'protect during midday hours',
+                   'sunscreen and hat advised', 'protection essential', 'avoid midday sun'],
+        'feel_lbl': ['dry air', 'comfortable', 'muggy at times', 'very humid', 'oppressive heat'],
+        'sea_lbl': ['cold, for the brave', 'cool, invigorating', 'pleasant for swimming', 'warm, ideal'],
+        'day_tpl': '{h}h of daylight',
+        'air_lbl': ['excellent', 'good', 'fair', 'poor'],
+    },
+    'es': {
+        'kicker': 'Condiciones del mes', 'title_tpl': 'Cómo es {mois} en la práctica',
+        'uv': 'Índice UV', 'feel': 'Sensación', 'sea': 'Mar', 'day': 'Horas de luz',
+        'air': 'Calidad del aire',
+        'uv_lbl': ['bajo', 'moderado', 'alto', 'muy alto', 'extremo'],
+        'uv_tip': ['sin protección necesaria', 'protección en horas centrales',
+                   'crema y sombrero recomendados', 'protección indispensable', 'evitar el sol del mediodía'],
+        'feel_lbl': ['aire seco', 'confortable', 'pesado a ratos', 'muy húmedo', 'calor agobiante'],
+        'sea_lbl': ['fría, para valientes', 'fresca, vigorizante', 'agradable para el baño', 'cálida, ideal'],
+        'day_tpl': '{h}h de luz',
+        'air_lbl': ['excelente', 'buena', 'media', 'degradada'],
+    },
+    'de': {
+        'kicker': 'Bedingungen des Monats', 'title_tpl': 'So ist der {mois} konkret',
+        'uv': 'UV-Index', 'feel': 'Gefühlt', 'sea': 'Meer', 'day': 'Tageslicht',
+        'air': 'Luftqualität',
+        'uv_lbl': ['niedrig', 'mäßig', 'hoch', 'sehr hoch', 'extrem'],
+        'uv_tip': ['kein Schutz nötig', 'Schutz zur Mittagszeit',
+                   'Sonnencreme und Hut empfohlen', 'Schutz unverzichtbar', 'Mittagssonne meiden'],
+        'feel_lbl': ['trockene Luft', 'angenehm', 'zeitweise schwül', 'sehr feucht', 'drückende Hitze'],
+        'sea_lbl': ['kalt, nur für Mutige', 'kühl, belebend', 'angenehm zum Baden', 'warm, ideal'],
+        'day_tpl': '{h}h Tageslicht',
+        'air_lbl': ['ausgezeichnet', 'gut', 'mittel', 'belastet'],
+    },
+}
+
+
+def render_v6_monthly_details(slug, lang, details_data):
+    """Section "Conditions du mois" : UV, ressenti, mer, durée du jour, air.
+
+    Toutes les valeurs varient par mois (données CSV + calcul astronomique) →
+    contenu distinctif réel entre les 12 pages mensuelles d'une destination.
+    """
+    L = _DETAILS_I18N.get(lang, _DETAILS_I18N['en'])
+    d = details_data
+    mois = d['mois']
+    mois_inline = (mois[0].lower() + mois[1:]) if (lang in ('fr', 'es') and mois) else mois
+
+    items = []  # (label, valeur, note)
+
+    uv = d.get('uv')
+    if uv is not None and uv > 0:
+        i = 0 if uv < 3 else (1 if uv < 6 else (2 if uv < 8 else (3 if uv < 11 else 4)))
+        items.append((L['uv'], f'{uv:.0f} · {L["uv_lbl"][i]}', L['uv_tip'][i]))
+
+    dew = d.get('dew')
+    tmax = d.get('tmax', 20)
+    if dew is not None and dew != 0:
+        i = 0 if dew < 10 else (1 if dew < 16 else (2 if dew < 21 else (3 if dew < 24 else 4)))
+        if i >= 3 and tmax < 27:
+            i = 2
+        items.append((L['feel'], L['feel_lbl'][i], f'{dew:.0f}°'))
+
+    sea = d.get('sea')
+    if sea is not None and sea > 0:
+        i = 0 if sea < 18 else (1 if sea < 22 else (2 if sea < 26 else 3))
+        items.append((L['sea'], f'{sea:.0f}°C', L['sea_lbl'][i]))
+
+    lat = d.get('lat')
+    if lat is not None:
+        h_day = _daylight_hours(lat, d.get('month_idx', 0))
+        items.append((L['day'], L['day_tpl'].format(h=h_day), ''))
+
+    aqi = d.get('aqi')
+    if aqi is not None and aqi > 0:
+        i = 0 if aqi < 20 else (1 if aqi < 40 else (2 if aqi < 60 else 3))
+        items.append((L['air'], L['air_lbl'][i], f'AQI {aqi:.0f}'))
+
+    if len(items) < 2:
+        return ''
+
+    cells = ''.join(
+        f'<div style="background:#fff;border:1px solid #e6e8eb;border-radius:12px;'
+        f'padding:14px 16px"><div style="font-size:11px;font-weight:700;'
+        f'text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-bottom:4px">'
+        f'{h(lbl)}</div><div style="font-size:15px;font-weight:700;color:#1a2230">{h(val)}</div>'
+        + (f'<div style="font-size:12.5px;color:#6b7280;margin-top:2px">{h(note)}</div>' if note else '')
+        + '</div>'
+        for lbl, val, note in items
+    )
+
+    return (
+        f'<section class="section">\n'
+        f'  <div class="container">\n'
+        f'    <div class="section-head">\n'
+        f'      <div class="section-kicker">{h(L["kicker"])}</div>\n'
+        f'      <h2>{h(L["title_tpl"].format(mois=mois_inline))}</h2>\n'
+        f'    </div>\n'
+        f'    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">\n'
+        f'      {cells}\n'
+        f'    </div>\n'
+        f'  </div>\n'
+        f'</section>'
+    )
+
+
+_DYN_I18N = {
+    'fr': {
+        'rank_1': '{mois} est le meilleur mois de l\'année à {nom}.',
+        'rank_n': '{mois} est le {rank}e meilleur mois de l\'année à {nom} (sur 12).',
+        'vs_prev': 'Par rapport à {prev} : {parts}.',
+        'temp_up': '+{v}°C en journée', 'temp_down': '−{v}°C en journée',
+        'rain_up': '{v} pts de jours pluvieux en plus', 'rain_down': '{v} pts de jours pluvieux en moins',
+        'sun_up': '+{v}h de soleil par jour', 'sun_down': '−{v}h de soleil par jour',
+    },
+    'en': {
+        'rank_1': '{mois} is the best month of the year in {nom}.',
+        'rank_n': '{mois} ranks {rank} out of 12 months in {nom}.',
+        'vs_prev': 'Compared to {prev}: {parts}.',
+        'temp_up': '+{v}°C daytime', 'temp_down': '−{v}°C daytime',
+        'rain_up': '{v} pts more rainy days', 'rain_down': '{v} pts fewer rainy days',
+        'sun_up': '+{v}h of sun per day', 'sun_down': '−{v}h of sun per day',
+    },
+    'en-us': {
+        'rank_1': '{mois} is the best month of the year in {nom}.',
+        'rank_n': '{mois} ranks {rank} out of 12 months in {nom}.',
+        'vs_prev': 'Compared to {prev}: {parts}.',
+        'temp_up': '+{v}°F daytime', 'temp_down': '−{v}°F daytime',
+        'rain_up': '{v} pts more rainy days', 'rain_down': '{v} pts fewer rainy days',
+        'sun_up': '+{v}h of sun per day', 'sun_down': '−{v}h of sun per day',
+    },
+    'es': {
+        'rank_1': '{mois} es el mejor mes del año en {nom}.',
+        'rank_n': '{mois} es el {rank}º mejor mes del año en {nom} (de 12).',
+        'vs_prev': 'Respecto a {prev}: {parts}.',
+        'temp_up': '+{v}°C de día', 'temp_down': '−{v}°C de día',
+        'rain_up': '{v} pts más de días lluviosos', 'rain_down': '{v} pts menos de días lluviosos',
+        'sun_up': '+{v}h de sol al día', 'sun_down': '−{v}h de sol al día',
+    },
+    'de': {
+        'rank_1': 'Der {mois} ist der beste Monat des Jahres in {nom}.',
+        'rank_n': 'Der {mois} ist der {rank}.-beste Monat des Jahres in {nom} (von 12).',
+        'vs_prev': 'Im Vergleich zum {prev}: {parts}.',
+        'temp_up': '+{v}°C tagsüber', 'temp_down': '−{v}°C tagsüber',
+        'rain_up': '{v} Pkt. mehr Regentage', 'rain_down': '{v} Pkt. weniger Regentage',
+        'sun_up': '+{v}h Sonne pro Tag', 'sun_down': '−{v}h Sonne pro Tag',
+    },
+}
+
+
+def monthly_dynamics_paragraph(lang, nom, mois, rank, prev_month,
+                               d_tmax, d_rain, d_sun, is_us=False):
+    """Paragraphe de dynamique mensuelle : rang du mois + deltas vs mois précédent.
+
+    Chiffres différents chaque mois par construction → contenu distinctif.
+    """
+    L = _DYN_I18N.get(lang, _DYN_I18N['en'])
+    prev_i = (prev_month[0].lower() + prev_month[1:]) if (lang in ('fr', 'es') and prev_month) else prev_month
+
+    if rank == 1:
+        rank_txt = L['rank_1'].format(mois=h(mois), nom=h(nom))
+    else:
+        rank_txt = L['rank_n'].format(mois=h(mois), rank=rank, nom=h(nom))
+
+    deltas = []
+    dt = round(d_tmax * (1.8 if is_us else 1))
+    if abs(dt) >= 2:
+        deltas.append((L['temp_up'] if dt > 0 else L['temp_down']).format(v=abs(dt)))
+    dr = round(d_rain)
+    if abs(dr) >= 5:
+        deltas.append((L['rain_up'] if dr > 0 else L['rain_down']).format(v=abs(dr)))
+    ds = round(d_sun, 1)
+    if abs(ds) >= 0.5:
+        deltas.append((L['sun_up'] if ds > 0 else L['sun_down']).format(v=abs(ds)))
+
+    txt = rank_txt
+    if deltas:
+        txt += ' ' + L['vs_prev'].format(prev=h(prev_i), parts=', '.join(deltas))
+    return f'<p style="margin:14px 0 0;font-size:15px;line-height:1.65;color:#3a4150">{txt}</p>'
+
+
+_MFAQ_I18N = {
+    'fr': {
+        'q_swim': 'Peut-on se baigner à {nom} en {mois} ?',
+        'a_swim': 'En {mois}, la mer est à {sea}°C en moyenne à {nom} : {lbl}. {extra}',
+        'swim_yes': 'La baignade est agréable sans combinaison.',
+        'swim_warm': 'Conditions idéales pour la baignade et le snorkeling.',
+        'swim_cool': 'Baignade possible mais vivifiante ; les plus frileux préféreront une combinaison.',
+        'swim_no': 'Réservée aux nageurs aguerris ou équipés d\'une combinaison.',
+        'q_uv': 'Faut-il une protection solaire à {nom} en {mois} ?',
+        'a_uv': 'L\'indice UV moyen atteint {uv} en {mois} à {nom} ({lbl}), avec environ {day}h de jour. {tip}',
+    },
+    'en': {
+        'q_swim': 'Can you swim in {nom} in {mois}?',
+        'a_swim': 'In {mois}, the sea averages {sea}°C in {nom}: {lbl}. {extra}',
+        'swim_yes': 'Swimming is pleasant without a wetsuit.',
+        'swim_warm': 'Ideal conditions for swimming and snorkeling.',
+        'swim_cool': 'Swimming is possible but brisk; sensitive swimmers may prefer a wetsuit.',
+        'swim_no': 'Best left to hardened swimmers or those with a wetsuit.',
+        'q_uv': 'Do you need sun protection in {nom} in {mois}?',
+        'a_uv': 'The average UV index reaches {uv} in {mois} in {nom} ({lbl}), with about {day}h of daylight. {tip}',
+    },
+    'en-us': {
+        'q_swim': 'Can you swim in {nom} in {mois}?',
+        'a_swim': 'In {mois}, the sea averages {sea}°F in {nom}: {lbl}. {extra}',
+        'swim_yes': 'Swimming is pleasant without a wetsuit.',
+        'swim_warm': 'Ideal conditions for swimming and snorkeling.',
+        'swim_cool': 'Swimming is possible but brisk; sensitive swimmers may prefer a wetsuit.',
+        'swim_no': 'Best left to hardened swimmers or those with a wetsuit.',
+        'q_uv': 'Do you need sun protection in {nom} in {mois}?',
+        'a_uv': 'The average UV index reaches {uv} in {mois} in {nom} ({lbl}), with about {day}h of daylight. {tip}',
+    },
+    'es': {
+        'q_swim': '¿Se puede nadar en {nom} en {mois}?',
+        'a_swim': 'En {mois}, el mar está a {sea}°C de media en {nom}: {lbl}. {extra}',
+        'swim_yes': 'El baño es agradable sin neopreno.',
+        'swim_warm': 'Condiciones ideales para el baño y el esnórquel.',
+        'swim_cool': 'El baño es posible pero vigorizante; los frioleros preferirán neopreno.',
+        'swim_no': 'Reservado a nadadores curtidos o con neopreno.',
+        'q_uv': '¿Hace falta protección solar en {nom} en {mois}?',
+        'a_uv': 'El índice UV medio alcanza {uv} en {mois} en {nom} ({lbl}), con unas {day}h de luz. {tip}',
+    },
+    'de': {
+        'q_swim': 'Kann man in {nom} im {mois} baden?',
+        'a_swim': 'Im {mois} hat das Meer in {nom} durchschnittlich {sea}°C: {lbl}. {extra}',
+        'swim_yes': 'Baden ist ohne Neopren angenehm.',
+        'swim_warm': 'Ideale Bedingungen zum Baden und Schnorcheln.',
+        'swim_cool': 'Baden ist möglich, aber erfrischend; Kälteempfindliche bevorzugen Neopren.',
+        'swim_no': 'Nur für abgehärtete Schwimmer oder mit Neoprenanzug.',
+        'q_uv': 'Braucht man in {nom} im {mois} Sonnenschutz?',
+        'a_uv': 'Der mittlere UV-Index erreicht {uv} im {mois} in {nom} ({lbl}), bei rund {day}h Tageslicht. {tip}',
+    },
+}
+
+
+def monthly_faq_items(lang, nom, mois, sea=None, uv=None, lat=None,
+                      month_idx=0, is_us=False):
+    """1-2 items FAQ spécifiques AU MOIS (réponses chiffrées depuis le CSV).
+
+    Contenu distinctif réel : sea_temp/uv/durée du jour varient chaque mois.
+    Retourne une liste de dicts {'q','a'} (0 à 2 items, dégradation propre).
+    """
+    L = _MFAQ_I18N.get(lang, _MFAQ_I18N['en'])
+    D = _DETAILS_I18N.get(lang, _DETAILS_I18N['en'])
+    mois_i = (mois[0].lower() + mois[1:]) if (lang in ('fr', 'es') and mois) else mois
+    items = []
+
+    if sea is not None and sea > 0:
+        i = 0 if sea < 18 else (1 if sea < 22 else (2 if sea < 26 else 3))
+        extra = [L['swim_no'], L['swim_cool'], L['swim_yes'], L['swim_warm']][i]
+        sea_v = round(sea * 1.8 + 32) if is_us else round(sea)
+        items.append({
+            'q': L['q_swim'].format(nom=nom, mois=mois_i),
+            'a': L['a_swim'].format(mois=mois_i, sea=sea_v, nom=nom,
+                                    lbl=D['sea_lbl'][i], extra=extra),
+        })
+
+    if uv is not None and uv > 0:
+        i = 0 if uv < 3 else (1 if uv < 6 else (2 if uv < 8 else (3 if uv < 11 else 4)))
+        day = _daylight_hours(lat, month_idx) if lat is not None else None
+        items.append({
+            'q': L['q_uv'].format(nom=nom, mois=mois_i),
+            'a': L['a_uv'].format(uv=round(uv), mois=mois_i, nom=nom,
+                                  lbl=D['uv_lbl'][i],
+                                  day=day if day is not None else '—',
+                                  tip=D['uv_tip'][i].capitalize() + '.'),
+        })
+    return items
