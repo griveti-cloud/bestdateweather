@@ -225,6 +225,8 @@ var LANG_IDX={'fr':0,'en':1,'en-us':1,'es':2,'de':3}["es"]||1;
 var MF=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 var MS=["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
 var MF_ANNUAL="Anual";
+var SLUG_IDX=2;
+var ANNUAL_PREFIX="es/mejor-epoca-";
 var FP_SECU="SEGUR.";
 var FP_BUDGET="PRECIO";
 var SECU_LABELS={"1": "🟢 Normal", "2": "🟡 Reforzada", "3": "🟠 Desaconsejado"};
@@ -400,7 +402,7 @@ function render(){
         var lbl=MS[i]?MS[i][0]:'';
         return '<div class="pi-col"><div class="pi-bar-wrap"><div class="pi-bar'+(i===CUR_M?' cur':'')+'" style="height:'+h+'%;background:'+c+'"></div></div><span style="font-size:6px;color:#64748b;line-height:1">'+lbl+'</span></div>';
       }).join('');
-      L.popup({maxWidth:200}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+getName(d)+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="../en/best-time-to-visit-'+(d[0]||'')+'.html" class="pi-link">Ver el tiempo →</a></div>').openOn(map);
+      L.popup({maxWidth:200}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+getName(d)+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="../'+ANNUAL_PREFIX+(d[0][SLUG_IDX]||d[0][1]||'')+'" class="pi-link">Ver el tiempo →</a></div>').openOn(map);
     });
     mk.addTo(layer);
   });

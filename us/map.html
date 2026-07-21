@@ -225,6 +225,8 @@ var LANG_IDX={'fr':0,'en':1,'en-us':1,'es':2,'de':3}["en-us"]||1;
 var MF=["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var MS=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 var MF_ANNUAL="Annual";
+var SLUG_IDX=1;
+var ANNUAL_PREFIX="us/best-time-to-visit-";
 var FP_SECU="SAFETY";
 var FP_BUDGET="BUDGET";
 var SECU_LABELS={"1": "🟢 Normal", "2": "🟡 High vigilance", "3": "🟠 Avoid if possible"};
@@ -400,7 +402,7 @@ function render(){
         var lbl=MS[i]?MS[i][0]:'';
         return '<div class="pi-col"><div class="pi-bar-wrap"><div class="pi-bar'+(i===CUR_M?' cur':'')+'" style="height:'+h+'%;background:'+c+'"></div></div><span style="font-size:6px;color:#64748b;line-height:1">'+lbl+'</span></div>';
       }).join('');
-      L.popup({maxWidth:200}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+getName(d)+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="../en/best-time-to-visit-'+(d[0]||'')+'.html" class="pi-link">See the weather →</a></div>').openOn(map);
+      L.popup({maxWidth:200}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+getName(d)+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="../'+ANNUAL_PREFIX+(d[0][SLUG_IDX]||d[0][1]||'')+'" class="pi-link">See the weather →</a></div>').openOn(map);
     });
     mk.addTo(layer);
   });

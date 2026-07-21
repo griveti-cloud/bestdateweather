@@ -52,7 +52,10 @@ def build_map_data():
                 row.get('nom_de') or row.get('nom_en') or row['nom_bare'],
             ],
                 'lat': float(row['lat']), 'lon': float(row['lon']),
-                'f': row['flag'], 'slug_en': row['slug_en'],
+                'f': row['flag'],
+                'slugs': [row['slug_fr'], row['slug_en'],
+                          row.get('slug_es') or row['slug_en'],
+                          row.get('slug_de') or row['slug_en']],
                 'rl': ci.get('risk_level', 2), 'bi': ci.get('budget_index', 3),
             }
 
@@ -97,7 +100,7 @@ def build_map_data():
             avg([m[6] for m in months if m and len(m)>6 and m[6]]),
         ]
         best_mi = max(range(12), key=lambda i: (months[i] or [0])[0])
-        points.append([d['slug_en'], d['n'], d['lat'], d['lon'],
+        points.append([d['slugs'], d['n'], d['lat'], d['lon'],
                         d['f'], d['rl'], d['bi'], best_mi, months, annual])
 
     return f"var MAP_DATA={json.dumps(points, separators=(',',':'))};"
@@ -161,6 +164,17 @@ def generate_map_page(lang, map_data_js, world_json, clabels_json, clabels_by_la
     leg = m.get('legend', {'excellent':'Excellent','great':'Great','good':'Good','fair':'Fair','poor':'Poor','avoid':'Avoid'})
     cfg = LANG_CONFIG[lang]
     ap  = asset_prefix(lang)
+    # Lien popup vers la fiche annuelle DANS LA LANGUE de la carte (fix: le
+    # lien était codé en dur 'en/best-time-to-visit-...html' → un utilisateur
+    # FR arrivait sur une fiche EN, avec un .html en prime).
+    slug_idx = {'fr': 0, 'en': 1, 'en-us': 1, 'es': 2, 'de': 3}[lang]
+    annual_prefix = {
+        'fr': 'meilleure-periode-',
+        'en': 'en/best-time-to-visit-',
+        'en-us': 'us/best-time-to-visit-',
+        'es': 'es/mejor-epoca-',
+        'de': 'de/beste-reisezeit-',
+    }[lang]
     months_full = loc['months']
     months_short = [mn[:3] for mn in months_full]
 
@@ -417,6 +431,8 @@ var LANG_IDX={{'fr':0,'en':1,'en-us':1,'es':2,'de':3}}[{json.dumps(lang)}]||1;
 var MF={json.dumps(months_full)};
 var MS={json.dumps(months_short)};
 var MF_ANNUAL={json.dumps(m['map_annual'])};
+var SLUG_IDX={slug_idx};
+var ANNUAL_PREFIX={json.dumps(annual_prefix)};
 var FP_SECU={json.dumps(fp_secu)};
 var FP_BUDGET={json.dumps(fp_budget)};
 var SECU_LABELS={secu_labels_js};
@@ -592,7 +608,7 @@ function render(){{
         var lbl=MS[i]?MS[i][0]:'';
         return '<div class="pi-col"><div class="pi-bar-wrap"><div class="pi-bar'+(i===CUR_M?' cur':'')+'\" style="height:'+h+'%;background:'+c+'"></div></div><span style="font-size:6px;color:#64748b;line-height:1">'+lbl+'</span></div>';
       }}).join('');
-      L.popup({{maxWidth:200}}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+getName(d)+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="{ap}en/best-time-to-visit-'+(d[0]||'')+'.html" class="pi-link">{m['cta']}</a></div>').openOn(map);
+      L.popup({{maxWidth:200}}).setLatLng([d[2],d[3]]).setContent('<div class="pi"><div class="pi-flag">'+flagEmoji(d[4])+'</div><div class="pi-name">'+getName(d)+'</div><div class="pi-score" style="color:'+col+'">'+s.toFixed(1)+'<span style="font-size:13px;color:#5a6c7d">/10</span></div><div class="pi-month">'+(CUR_M===12?MF_ANNUAL:MF[CUR_M])+'</div><div class="pi-bars">'+bars+'</div><a href="{ap}'+ANNUAL_PREFIX+(d[0][SLUG_IDX]||d[0][1]||'')+'" class="pi-link">{m['cta']}</a></div>').openOn(map);
     }});
     mk.addTo(layer);
   }});
@@ -617,7 +633,9 @@ def main():
     print(f"  map-data.js: {len(map_data_js)//1024}KB")
 
     # Extraire WORLD et CLABELS depuis map.html existant
-    with open('map.html') as f:
+    # Source WORLD/CLABELS : fichier legacy déplacé hors racine servie
+    # (c'était une vieille carte EN avec liens .html, indexable par erreur).
+    with open('data/map-source.html') as f:
         existing = f.read()
     world_json = existing.split('var WORLD=')[1].split(';\nL.geoJSON')[0]
     clabels_json = existing.split('var CLABELS=')[1].split(';\nCLABELS.forEach')[0]
