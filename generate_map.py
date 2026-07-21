@@ -122,14 +122,15 @@ def build_lang_selector(lang):
             html += f'\n          <a href="#" class="active" onclick="return false" style="cursor:default"><img src="{ap}flags/{other_cfg["flag"]}.png" width="20" height="14" alt=""> {other_cfg["label"]}</a>'
         else:
             # Relative path to the other map file
+            ofn = public_name(other_cfg['filename'])
             if cfg['subdir'] == '' and other_cfg['subdir'] == '':
-                href = other_cfg['filename']
+                href = ofn
             elif cfg['subdir'] == '':
-                href = f"{other_cfg['subdir']}/{other_cfg['filename']}"
+                href = f"{other_cfg['subdir']}/{ofn}"
             elif other_cfg['subdir'] == '':
-                href = f"../{other_cfg['filename']}"
+                href = f"../{ofn}"
             else:
-                href = f"../{other_cfg['subdir']}/{other_cfg['filename']}"
+                href = f"../{other_cfg['subdir']}/{ofn}"
             ocookie = other_cfg['cookie']
             oflag = other_cfg['flag']
             olabel = other_cfg['label']
@@ -138,12 +139,20 @@ def build_lang_selector(lang):
     html += '\n        </div>'
     return html
 
+def public_name(filename):
+    """URL publique d'un fichier de carte : sans extension .html (le worker
+    sert les URLs sans extension ; garder .html dans canonical/hreflang/liens
+    recrée le motif GSC 'canonical vers une redirection' corrigé en juin)."""
+    return filename[:-5] if filename.endswith('.html') else filename
+
+
 def build_hreflang(lang):
     lines = []
     en_url = None
     for l, cfg in LANG_CONFIG.items():
         base = 'https://bestdateweather.com'
-        path = f"/{cfg['subdir']}/{cfg['filename']}" if cfg['subdir'] else f"/{cfg['filename']}"
+        fn = public_name(cfg['filename'])
+        path = f"/{cfg['subdir']}/{fn}" if cfg['subdir'] else f"/{fn}"
         hl = 'fr' if l=='fr' else 'en-US' if l=='en-us' else 'en-GB' if l=='en' else l
         lines.append(f'<link rel="alternate" hreflang="{hl}" href="{base}{path}"/>')
         if l == 'en':
@@ -207,10 +216,12 @@ def generate_map_page(lang, map_data_js, world_json, clabels_json, clabels_by_la
     }
 
     # Hub URL (back link)
-    hub_url = f"{ap}{cfg['hub']}"
+    hub_fn = public_name(cfg['hub'])
+    hub_url = (ap or './') if hub_fn == 'index' else f"{ap}{hub_fn}"
     # Canonical
     canon_base = 'https://bestdateweather.com'
-    canon_path = f"/{cfg['subdir']}/{cfg['filename']}" if cfg['subdir'] else f"/{cfg['filename']}"
+    canon_fn = public_name(cfg['filename'])
+    canon_path = f"/{cfg['subdir']}/{canon_fn}" if cfg['subdir'] else f"/{canon_fn}"
     canonical = canon_base + canon_path
     # map-data.js path
     mapdata_src = f"{ap}map-data.js"
@@ -255,7 +266,7 @@ def generate_map_page(lang, map_data_js, world_json, clabels_json, clabels_by_la
 <meta name="description" content="{m['map_desc']}"/>
 <link rel="canonical" href="{canonical}"/>
 {hreflang}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<link rel="stylesheet" href="{ap}vendor/leaflet/leaflet.min.css"/>
 <link rel="icon" type="image/x-icon" href="{ap}favicon.ico"/>
 <style>
 *{{box-sizing:border-box;margin:0;padding:0}}
@@ -424,7 +435,7 @@ html,body{{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',s
   <div class="lr"><div class="ld" style="background:#ef4444"></div>0–3.4 {leg['avoid']}</div>
 </div>
 <script src="{mapdata_src}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="{ap}vendor/leaflet/leaflet.min.js"></script>
 <script>
 var MN={json.dumps(months_short)};
 var LANG_IDX={{'fr':0,'en':1,'en-us':1,'es':2,'de':3}}[{json.dumps(lang)}]||1;
