@@ -752,3 +752,49 @@ def monthly_faq_items(lang, nom, mois, sea=None, uv=None, lat=None,
                                   tip=D['uv_tip'][i].capitalize() + '.'),
         })
     return items
+
+
+_TEASER_I18N = {
+    'fr': "Lire l'avis complet de Gilles",
+    'en': "Read Gilles' full review",
+    'en-us': "Read Gilles' full review",
+    'es': "Leer la opinión completa de Gilles",
+    'de': "Gilles' vollständige Einschätzung lesen",
+}
+
+
+def edito_teaser(edito_html, annual_url, lang):
+    """Teaser de l'avis annuel pour les pages MENSUELLES : 2 premières phrases
+    + lien vers l'avis complet (page annuelle).
+
+    Contexte (option C validée) : l'avis annuel intégral (~120 mots) était
+    copié à l'identique sur les 12 pages mensuelles — plus gros gisement de
+    duplication inter-mois restant (81% -> 77% une fois retiré) et hors-sujet
+    éditorial (le texte parle de l'année). Le teaser conserve le signal
+    auteur E-E-A-T (~30 mots) et renforce le maillage mensuel -> annuel
+    (hiérarchie canonique).
+    """
+    import re as _re
+    if not edito_html:
+        return ''
+    txt = _re.sub(r'<[^>]+>', ' ', edito_html)
+    txt = _re.sub(r'\s+', ' ', txt).strip()
+    if not txt or txt == '—':
+        return ''
+    # Split en phrases : ponctuation forte + espace + majuscule (évite 9.6/10)
+    parts = _re.split(r'(?<=[.!?])\s+(?=[A-ZÀ-ÜÄÖÜŒ¿¡])', txt)
+    teaser = ' '.join(parts[:2]).strip()
+    # Cap : certains avis ont des phrases très denses (parenthèses, chiffres) —
+    # si 2 phrases dépassent 55 mots, on n'en garde qu'une (jamais de coupe
+    # en pleine phrase).
+    if len(teaser.split()) > 55 and parts:
+        teaser = parts[0].strip()
+    if not teaser:
+        return ''
+    label = _TEASER_I18N.get(lang, _TEASER_I18N['en'])
+    return (
+        f'<p>{h(teaser)}</p>\n'
+        f'<p style="margin-top:10px"><a href="{h(annual_url)}" '
+        f'style="font-weight:700;color:#b8860b;text-decoration:none">'
+        f'{h(label)} →</a></p>'
+    )

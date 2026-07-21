@@ -1141,7 +1141,7 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
     from lib.v6_monthly import (render_v6_monthly_hero, render_v6_monthly_vs_best,
                                 render_v6_monthly_expect, render_v6_monthly_explore,
                                 render_v6_monthly_details, monthly_dynamics_paragraph,
-                                monthly_faq_items,
+                                monthly_faq_items, edito_teaser,
                                 VS_CTA_CSS)
     from scoring import compute_scores, compute_mountain_scores
     from datetime import datetime
@@ -1362,7 +1362,11 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
 
     # ── Blocs V6 partagés ──
     topbar = render_v6_topbar(slug, lang)
-    contexte = render_v6_contexte(slug, lang, editorial_html or '<p>—</p>')
+    # Option C (juil. 2026) : l'avis annuel intégral était dupliqué sur les 12
+    # pages mensuelles (120 mots de boilerplate). Teaser 2 phrases + lien vers
+    # l'avis complet sur la page annuelle. Section omise si pas d'avis.
+    _teaser = edito_teaser(editorial_html, annual_href(cfg, slug), lang)
+    contexte = render_v6_contexte(slug, lang, _teaser) if _teaser else ''
     reserver = render_v6_reserver(slug, lang, nom)
     infos = render_v6_infos_pratiques(slug, lang, page_data['infos_pratiques_data'],
                                       asset_prefix=asset_prefix)
