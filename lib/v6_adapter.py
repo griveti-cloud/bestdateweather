@@ -729,7 +729,11 @@ def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
         scores = compute_scores(months_input, slug=slug_fr_canonical)
 
     # URL templates — sans .html pour les liens internes (worker sert sans extension)
-    monthly_url_tpl = f'{slug}{cfg["monthly_sep"]}{{mois_lower}}'
+    # 19 destinations ont monthly=False (exclusion volontaire, destinations.csv):
+    # leurs fiches mensuelles n'existent pas -> pas de template = le tableau des
+    # 12 mois n'est pas rendu cliquable (sinon 12 liens 404 par langue).
+    _has_monthly = str(dest.get('monthly', 'True')).strip().lower() in ('true', '1', 'yes', '')
+    monthly_url_tpl = f'{slug}{cfg["monthly_sep"]}{{mois_lower}}' if _has_monthly else None
 
     # Edito annuel
     avis_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'avis_annuel.json')

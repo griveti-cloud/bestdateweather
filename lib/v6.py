@@ -1699,12 +1699,19 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
         emoji = _emoji_for_score(m['score_10'])
         mood_cls = _mood_class(_score_cls(m['score_10']))
         best_attr = ' best' if m.get('is_best') else ''
+        # Destinations sans fiches mensuelles (monthly=False): ligne inerte —
+        # ni onclick, ni curseur, ni flèche (sinon 12 liens morts par page).
+        if monthly_url_tpl:
+            tr_open = (f'<tr class="row{best_attr}" onclick="location.href=\'{h(url)}\'" '
+                       f'style="cursor:pointer" tabindex="0" role="link" '
+                       f'onkeydown="if(event.key===\'Enter\')location.href=\'{h(url)}\'">')
+            arrow = ' <span style="color:var(--gold);font-weight:700;margin-left:4px">→</span>'
+        else:
+            tr_open = f'<tr class="row{best_attr}">'
+            arrow = ''
         rows_html.append(
-            f'<tr class="row{best_attr}" onclick="location.href=\'{h(url)}\'" '
-            f'style="cursor:pointer" tabindex="0" role="link" '
-            f'onkeydown="if(event.key===\'Enter\')location.href=\'{h(url)}\'">'
-            f'<td class="month-cell">{emoji} {h(m["mois"])} '
-            f'<span style="color:var(--gold);font-weight:700;margin-left:4px">→</span></td>'
+            tr_open +
+            f'<td class="month-cell">{emoji} {h(m["mois"])}{arrow}</td>'
             f'<td>{_fmt_t(m["tmin"], lang)}</td>'
             f'<td>{_fmt_t(m["tmax"], lang)}</td>'
             f'<td>{m["rain_pct"]:.0f}%</td>'
@@ -1728,8 +1735,10 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
         mood_cls = _mood_class(_score_cls(m['score_10']))
         best_cls = ' best' if m.get('is_best') else ''
         score_cls = 'good' if m['score_10'] >= 7 else ('mid' if m['score_10'] >= 4 else 'bad')
+        _mc_tag = 'a' if monthly_url_tpl else 'div'
+        _mc_href = f' href="{h(url)}"' if monthly_url_tpl else ''
         mobile_cards.append(
-            f'<a href="{h(url)}" class="mobile-month-card{best_cls}">'
+            f'<{_mc_tag}{_mc_href} class="mobile-month-card{best_cls}">'
             f'<div class="head"><div class="name">{emoji} {h(m["mois"])}</div>'
             f'<div class="score {score_cls}">{m["score_10"]:.1f}/10</div></div>'
             f'<div class="rows">'
@@ -1737,7 +1746,7 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
             f'<div class="row"><span>{h(L["th_rain"])}</span><strong>{m["rain_pct"]:.0f}%</strong></div>'
             f'<div class="row"><span>{h(L["th_sun"])}</span><strong>{m["sun_h"]:.1f}h</strong></div>'
             f'<div class="row row-mood"><strong class="mood-{mood_cls}">{mood_label[mood_cls]}</strong></div>'
-            f'</div></a>'
+            f'</div></{_mc_tag}>'
         )
 
     # ── Calcul des 2 cards droite (Lecture rapide + Conditions détaillées) ──
