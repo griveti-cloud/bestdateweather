@@ -4795,7 +4795,10 @@
   "drive": "right",
   "languages": [
    "Arabe"
-  ]
+  ],
+  "risk_level": 4,
+  "risk_updated": "2026-07-22",
+  "risk_source": "MAE France"
  },
  "Liechtenstein": {
   "currency": "CHF",
@@ -4828,7 +4831,10 @@
   "languages": [
    "Français",
    "Bambara"
-  ]
+  ],
+  "risk_level": 4,
+  "risk_updated": "2026-07-22",
+  "risk_source": "MAE France"
  },
  "Mauritanie": {
   "currency": "MRU",
@@ -4868,7 +4874,10 @@
   "drive": "right",
   "languages": [
    "Français"
-  ]
+  ],
+  "risk_level": 4,
+  "risk_updated": "2026-07-22",
+  "risk_source": "MAE France"
  },
  "Pakistan": {
   "currency": "PKR",
@@ -4971,7 +4980,10 @@
   "drive": "right",
   "languages": [
    "Arabe"
-  ]
+  ],
+  "risk_level": 4,
+  "risk_updated": "2026-07-22",
+  "risk_source": "MAE France"
  },
  "São Tomé-et-Príncipe": {
   "currency": "STN",
