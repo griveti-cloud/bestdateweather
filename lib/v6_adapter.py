@@ -551,6 +551,12 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
         'is_coastal': _bool(dest.get('coastal')),
         'is_tropical': is_tropical,
         'is_polar': profile == 'polar',
+        # Visa : uniquement pour les pays de l'espace Schengen (source: Commission
+        # UE, 29 pays au 01/01/2025). Ailleurs, le visa dépend de la nationalité
+        # du lecteur — is_schengen=False -> la ligne est masquée plutôt que
+        # d'afficher un 'Schengen · 90j' faux (ex-fallback appliqué à ~516
+        # destinations hors zone, dont Turkménistan, Irak, Chine...).
+        'is_schengen': dest.get('pays', '') in _SCHENGEN_COUNTRIES,
         **extremes,  # hottest_month, hottest_temp, coldest_month, coldest_temp, rainiest_month, rainiest_pct
     }
 
@@ -674,6 +680,19 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
 # ─────────────────────────────────────────────────────────────────────────────
 # Entry point principal : gen_annual_v6
 # ─────────────────────────────────────────────────────────────────────────────
+
+# Espace Schengen — 29 pays (Commission européenne, dernière extension
+# Bulgarie + Roumanie le 01/01/2025). 25 UE + 4 non-UE (Islande, Norvège,
+# Suisse, Liechtenstein). Chypre et Irlande sont UE mais HORS Schengen.
+# Sert à n'afficher la ligne "Visa" que là où "Schengen · 90j" est vrai.
+_SCHENGEN_COUNTRIES = frozenset({
+    'Allemagne', 'Autriche', 'Belgique', 'Bulgarie', 'Croatie', 'Danemark',
+    'Espagne', 'Estonie', 'Finlande', 'France', 'Grèce', 'Hongrie', 'Islande',
+    'Italie', 'Lettonie', 'Liechtenstein', 'Lituanie', 'Luxembourg', 'Malte',
+    'Norvège', 'Pays-Bas', 'Pologne', 'Portugal', 'Roumanie', 'Slovaquie',
+    'Slovénie', 'Suède', 'Suisse', 'Tchéquie',
+})
+
 
 def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
                   dest_cards=None, all_dests=None,

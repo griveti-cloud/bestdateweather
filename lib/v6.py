@@ -777,7 +777,8 @@ def _box2_climate(L_ip: dict, climate_type: str, trend_value: float | None,
 
 def _box3_mountain(L_ip: dict, alt_village: int | None, alt_ski_max: int | None,
                    ski_season: str, hiking_season: str,
-                   high_alt_warning: bool = True, lang: str = 'fr') -> str:
+                   high_alt_warning: bool = True, lang: str = 'fr',
+                   is_schengen: bool = False) -> str:
     """Box 3 mountain : altitudes, saisons ski/rando, haute montagne."""
     # FIX: convertir m → ft pour EN-US (1 m = 3.28084 ft)
     is_us = (lang == 'en-us')
@@ -799,6 +800,9 @@ def _box3_mountain(L_ip: dict, alt_village: int | None, alt_ski_max: int | None,
             _list_item('🧗', L_ip['mtn_high_alt'], h(L_ip['mtn_high_alt_value']),
                        hint='Au-delà de 3000 m, un guide est fortement recommandé pour la sécurité')
         )
+    if is_schengen:
+        items.append(_list_item('🛂', L_ip['city_visa'],
+                                h(L_ip['city_visa_schengen'])))
     return (f'<div class="box"><h3>🏔️ {h(L_ip["box3_mountain"])}</h3>'
             f'<div class="list">{"".join(items)}</div></div>')
 
@@ -806,7 +810,7 @@ def _box3_mountain(L_ip: dict, alt_village: int | None, alt_ski_max: int | None,
 def _box3_tropical(L_ip: dict, dry_season: str, wet_season: str,
                    sea_summer: float | None, sea_winter: float | None,
                    has_cyclones: bool, latitude: float = 0,
-                   lang: str = 'fr') -> str:
+                   lang: str = 'fr', is_schengen: bool = False) -> str:
     """Box 3 tropical : saisons sèche/humide, mer, cyclones."""
     lang_h = L_ip.get('_lang', 'fr')
     # i18n hints
@@ -856,11 +860,14 @@ def _box3_tropical(L_ip: dict, dry_season: str, wet_season: str,
                     if has_cyclones
                     else HINT_CYC_NO.get(lang_h, HINT_CYC_NO['fr']).format(lat=abs(latitude)))
     items.append(_list_item('🌀', L_ip['tro_cyclones'], cyclone_val, hint=cyclone_hint))
+    if is_schengen:
+        items.append(_list_item('🛂', L_ip['city_visa'],
+                                h(L_ip['city_visa_schengen'])))
     return (f'<div class="box"><h3>🏝️ {h(L_ip["box3_tropical"])}</h3>'
             f'<div class="list">{"".join(items)}</div></div>')
 
 
-def _box3_polar(L_ip: dict, lat: float, has_geothermal: bool = False) -> str:
+def _box3_polar(L_ip: dict, lat: float, has_geothermal: bool = False, is_schengen: bool = False) -> str:
     """Box 3 polar : aurores, jour polaire, géothermie, vent."""
     aurora_period = 'Sept → Mars' if lat > 60 else 'Oct → Fév'
     polar_day = '~21h' if lat > 60 else '~19h'
@@ -873,13 +880,16 @@ def _box3_polar(L_ip: dict, lat: float, has_geothermal: bool = False) -> str:
     if has_geothermal:
         items.append(_list_item('🌋', L_ip['pol_geothermal'], 'Geysir, Blue Lagoon'))
     items.append(_list_item('🌬️', L_ip['pol_wind'], h(L_ip['pol_wind_value'])))
+    if is_schengen:
+        items.append(_list_item('🛂', L_ip['city_visa'],
+                                h(L_ip['city_visa_schengen'])))
     return (f'<div class="box"><h3>🌌 {h(L_ip["box3_polar"])}</h3>'
             f'<div class="list">{"".join(items)}</div></div>')
 
 
 def _box3_coastal(L_ip: dict, sea_summer: float | None, sea_winter: float | None,
                   high_season: str = 'Juin → Sept',
-                  lang: str = 'fr') -> str:
+                  lang: str = 'fr', is_schengen: bool = False) -> str:
     """Box 3 coastal : mer, saisons, houle."""
     items = [_list_item('📅', L_ip['coa_high_season'], h(high_season))]
     if sea_summer is not None:
@@ -888,6 +898,9 @@ def _box3_coastal(L_ip: dict, sea_summer: float | None, sea_winter: float | None
         items.append(_list_item('🌊', L_ip['coa_sea_winter'], f'~{_fmt_t(sea_winter, lang)}'))
     items.append(_list_item('🏖️', L_ip['coa_waves'], 'Modérée',
                             hint='Houle hivernale — saison automne-hiver plus agitée'))
+    if is_schengen:
+        items.append(_list_item('🛂', L_ip['city_visa'],
+                                h(L_ip['city_visa_schengen'])))
     return (f'<div class="box"><h3>🏖️ {h(L_ip["box3_coastal"])}</h3>'
             f'<div class="list">{"".join(items)}</div></div>')
 
@@ -895,9 +908,14 @@ def _box3_coastal(L_ip: dict, sea_summer: float | None, sea_winter: float | None
 def _box3_city(L_ip: dict, high_season: str = 'Juin → Août',
                unesco: str | None = None,
                transport: str = 'Bon',
-               visa_text: str | None = None) -> str:
-    """Box 3 city : tourisme, UNESCO, transport, visa."""
-    visa_text = visa_text or L_ip['city_visa_schengen']
+               visa_text: str | None = None,
+               is_schengen: bool = False) -> str:
+    """Box 3 city : tourisme, UNESCO, transport, visa.
+
+    La ligne visa n'apparait que pour les pays Schengen (ou 'Schengen 90j'
+    est exact). Hors Schengen, le visa depend de la nationalite du lecteur :
+    on masque la ligne plutot que d'afficher une info fausse.
+    """
     items = [
         _list_item('📅', L_ip['city_high_season'], h(high_season)),
         _list_item('☔', L_ip['city_indoor_visits'], h(L_ip['city_indoor_value']),
@@ -906,7 +924,9 @@ def _box3_city(L_ip: dict, high_season: str = 'Juin → Août',
     if unesco:
         items.append(_list_item('🏛️', L_ip['city_unesco'], h(unesco)))
     items.append(_list_item('🚇', L_ip['city_transport'], h(transport)))
-    items.append(_list_item('🛂', L_ip['city_visa'], h(visa_text)))
+    if is_schengen:
+        items.append(_list_item('🛂', L_ip['city_visa'],
+                                h(visa_text or L_ip['city_visa_schengen'])))
     return (f'<div class="box"><h3>🏛️ {h(L_ip["box3_city"])}</h3>'
             f'<div class="list">{"".join(items)}</div></div>')
 
@@ -988,6 +1008,7 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict, asset_prefi
             hiking_season=d.get('hiking_season', 'Juin → Sept'),
             high_alt_warning=d.get('high_alt_warning', True),
             lang=lang,
+            is_schengen=d.get('is_schengen', False),
         )
     elif profile == 'tropical':
         box3 = _box3_tropical(L_ip,
@@ -998,11 +1019,13 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict, asset_prefi
             has_cyclones=d.get('has_cyclones', False),
             latitude=d.get('latitude', 0),
             lang=lang,
+            is_schengen=d.get('is_schengen', False),
         )
     elif profile == 'polar':
         box3 = _box3_polar(L_ip,
             lat=d.get('latitude', 64),
             has_geothermal=d.get('has_geothermal', False),
+            is_schengen=d.get('is_schengen', False),
         )
     elif profile == 'coastal':
         box3 = _box3_coastal(L_ip,
@@ -1010,6 +1033,7 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict, asset_prefi
             sea_winter=d.get('sea_winter'),
             high_season=d.get('high_season', 'Juin → Sept'),
             lang=lang,
+            is_schengen=d.get('is_schengen', False),
         )
     else:  # city
         # Default 'transport' i18n: localise selon lang
@@ -1024,6 +1048,7 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict, asset_prefi
             unesco=d.get('unesco'),
             transport=d.get('transport', transport_default),
             visa_text=d.get('visa_text'),
+            is_schengen=d.get('is_schengen', False),
         )
 
     return (f'<section><div class="container">'
