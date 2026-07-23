@@ -4581,7 +4581,10 @@
   "drive": "left",
   "languages": [
    "Bengali"
-  ]
+  ],
+  "risk_level": 3,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Biélorussie": {
   "currency": "BYN",
@@ -4592,7 +4595,10 @@
   "languages": [
    "Biélorusse",
    "Russe"
-  ]
+  ],
+  "risk_level": 4,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Brunéi": {
   "currency": "BND",
@@ -4602,7 +4608,10 @@
   "drive": "left",
   "languages": [
    "Malais"
-  ]
+  ],
+  "risk_level": 1,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Burundi": {
   "currency": "BIF",
@@ -4624,7 +4633,10 @@
   "languages": [
    "Français",
    "Sango"
-  ]
+  ],
+  "risk_level": 4,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Comores": {
   "currency": "KMF",
@@ -4668,7 +4680,10 @@
   "languages": [
    "Swati",
    "Anglais"
-  ]
+  ],
+  "risk_level": 2,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Grenade": {
   "currency": "XCD",
@@ -4678,7 +4693,10 @@
   "drive": "left",
   "languages": [
    "Anglais"
-  ]
+  ],
+  "risk_level": 2,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Guinée": {
   "currency": "GNF",
@@ -4731,7 +4749,10 @@
   "languages": [
    "Français",
    "Créole haïtien"
-  ]
+  ],
+  "risk_level": 4,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Irak": {
   "currency": "IQD",
@@ -4775,7 +4796,10 @@
   "languages": [
    "Sesotho",
    "Anglais"
-  ]
+  ],
+  "risk_level": 2,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Liberia": {
   "currency": "LRD",
@@ -4820,7 +4844,10 @@
    "Luxembourgeois",
    "Français",
    "Allemand"
-  ]
+  ],
+  "risk_level": 1,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Mali": {
   "currency": "XOF",
@@ -4833,7 +4860,7 @@
    "Bambara"
   ],
   "risk_level": 4,
-  "risk_updated": "2026-07-22",
+  "risk_updated": "2026-07-23",
   "risk_source": "MAE France"
  },
  "Mauritanie": {
@@ -4876,7 +4903,7 @@
    "Français"
   ],
   "risk_level": 4,
-  "risk_updated": "2026-07-22",
+  "risk_updated": "2026-07-23",
   "risk_source": "MAE France"
  },
  "Pakistan": {
@@ -4928,7 +4955,10 @@
   "drive": "right",
   "languages": [
    "Espagnol"
-  ]
+  ],
+  "risk_level": 2,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Somalie": {
   "currency": "SOS",
@@ -4950,7 +4980,10 @@
   "languages": [
    "Arabe",
    "Anglais"
-  ]
+  ],
+  "risk_level": 4,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Soudan du Sud": {
   "currency": "SSP",
@@ -4960,7 +4993,10 @@
   "drive": "right",
   "languages": [
    "Anglais"
-  ]
+  ],
+  "risk_level": 4,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Suriname": {
   "currency": "SRD",
@@ -4970,7 +5006,10 @@
   "drive": "left",
   "languages": [
    "Néerlandais"
-  ]
+  ],
+  "risk_level": 2,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Syrie": {
   "currency": "SYP",
@@ -4982,7 +5021,7 @@
    "Arabe"
   ],
   "risk_level": 4,
-  "risk_updated": "2026-07-22",
+  "risk_updated": "2026-07-23",
   "risk_source": "MAE France"
  },
  "São Tomé-et-Príncipe": {
@@ -5004,7 +5043,10 @@
   "languages": [
    "Français",
    "Arabe"
-  ]
+  ],
+  "risk_level": 4,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Timor oriental": {
   "currency": "USD",
@@ -5015,7 +5057,10 @@
   "languages": [
    "Portugais",
    "Tétoum"
-  ]
+  ],
+  "risk_level": 2,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Turkménistan": {
   "currency": "TMT",
@@ -5025,7 +5070,10 @@
   "drive": "right",
   "languages": [
    "Turkmène"
-  ]
+  ],
+  "risk_level": 2,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  },
  "Tuvalu": {
   "currency": "AUD",
@@ -5079,6 +5127,9 @@
   "drive": "left",
   "languages": [
    "Anglais"
-  ]
+  ],
+  "risk_level": 2,
+  "risk_updated": "2026-07-23",
+  "risk_source": "MAE France"
  }
 }
