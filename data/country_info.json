@@ -4571,6 +4571,17 @@
   "drive": "right",
   "languages": [
    "Portugais"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 42.3,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Bangladesh": {
@@ -4584,7 +4595,18 @@
   ],
   "risk_level": 3,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 1,
+  "budget_numbeo_col": 22.82,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Biélorussie": {
   "currency": "BYN",
@@ -4598,7 +4620,18 @@
   ],
   "risk_level": 4,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 2,
+  "budget_numbeo_col": 30.55,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Brunéi": {
   "currency": "BND",
@@ -4611,7 +4644,18 @@
   ],
   "risk_level": 1,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 3,
+  "budget_numbeo_col": 48.16,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Burundi": {
   "currency": "BIF",
@@ -4696,7 +4740,18 @@
   ],
   "risk_level": 2,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 4,
+  "budget_numbeo_col": 76.44,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Guinée": {
   "currency": "GNF",
@@ -4738,6 +4793,17 @@
   "drive": "left",
   "languages": [
    "Anglais"
+  ],
+  "budget_index": 3,
+  "budget_numbeo_col": 50.42,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Haïti": {
@@ -4763,6 +4829,17 @@
   "languages": [
    "Arabe",
    "Kurde"
+  ],
+  "budget_index": 1,
+  "budget_numbeo_col": 28.39,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Kiribati": {
@@ -4822,7 +4899,18 @@
   ],
   "risk_level": 4,
   "risk_updated": "2026-07-22",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 1,
+  "budget_numbeo_col": 18.35,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Liechtenstein": {
   "currency": "CHF",
@@ -4847,7 +4935,18 @@
   ],
   "risk_level": 1,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 4,
+  "budget_numbeo_col": 78.02,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Mali": {
   "currency": "XOF",
@@ -4891,6 +4990,17 @@
   "drive": "right",
   "languages": [
    "Roumain"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 35.78,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Niger": {
@@ -4915,6 +5025,17 @@
   "languages": [
    "Ourdou",
    "Anglais"
+  ],
+  "budget_index": 1,
+  "budget_numbeo_col": 19.58,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "RD Congo": {
@@ -4958,7 +5079,18 @@
   ],
   "risk_level": 2,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 2,
+  "budget_numbeo_col": 39.65,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Somalie": {
   "currency": "SOS",
@@ -5009,7 +5141,18 @@
   ],
   "risk_level": 2,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 2,
+  "budget_numbeo_col": 42.27,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Syrie": {
   "currency": "SYP",
@@ -5022,7 +5165,18 @@
   ],
   "risk_level": 4,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 1,
+  "budget_numbeo_col": 25.05,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "São Tomé-et-Príncipe": {
   "currency": "STN",
@@ -5094,6 +5248,17 @@
   "drive": "right",
   "languages": [
    "Espagnol"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 37.69,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Érythrée": {
@@ -5130,6 +5295,17 @@
   ],
   "risk_level": 2,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 5,
+  "budget_numbeo_col": 102.34,
+  "budget_method": "numbeo",
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  }
 }
