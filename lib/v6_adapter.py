@@ -133,6 +133,53 @@ def _compute_trend_value(slug: str, lat: float = None, lon: float = None) -> flo
     return (num / den) * 10  # par décennie
 
 
+def _trend_is_significant(slug: str, lat: float = None, lon: float = None) -> bool:
+    """Test de significativité de la pente (régression linéaire, p<0.05).
+
+    Une pente sur 10 ans peut être forte mais dominée par la variabilité
+    naturelle. On teste t = |slope| / SE(slope) contre la valeur critique de
+    Student (dof = n-2 = 8 → 2.306 à 5% bilatéral). Sert à n'afficher une
+    tendance CHIFFRÉE que si elle est statistiquement solide; sinon 'stable'.
+    """
+    import math
+    path = os.path.join(os.path.dirname(__file__), '..', 'data', 'climate_trend.json')
+    try:
+        d = _load_json_cached(path)
+    except FileNotFoundError:
+        return False
+    if slug in d and 'years' in d[slug]:
+        years = d[slug]['years']; tmoy = d[slug]['tmoy']
+    elif lat is not None and lon is not None:
+        key = f'{lat:.2f},{lon:.2f}'
+        ann = d.get(key, {}).get('annual')
+        if not ann:
+            return False
+        years = sorted(int(y) for y in ann.keys())
+        tmoy = [ann[str(y)]['tmean'] for y in years]
+    else:
+        return False
+    n = len(years)
+    if n < 4:
+        return False
+    my = sum(years) / n; mt = sum(tmoy) / n
+    den = sum((y - my) ** 2 for y in years)
+    if den == 0:
+        return False
+    b = sum((years[i] - my) * (tmoy[i] - mt) for i in range(n)) / den
+    a = mt - b * my
+    resid = [tmoy[i] - (a + b * years[i]) for i in range(n)]
+    sse = sum(r * r for r in resid)
+    if sse <= 0:
+        return True  # ajustement parfait
+    se = math.sqrt(sse / (n - 2) / den)
+    if se == 0:
+        return True
+    # t critique Student dof=8, p<0.05 bilatéral
+    T_CRIT = {4: 4.303, 5: 3.182, 6: 2.776, 7: 2.571, 8: 2.447,
+              9: 2.365, 10: 2.306}.get(n - 2, 2.306)
+    return abs(b / se) >= T_CRIT
+
+
 def _detect_profile(dest: dict, climate_type: str = '') -> str:
     """Détecte le profil pour Box 3 et Adapter.
 
@@ -445,6 +492,8 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
     # Trend value
     trend_value = _compute_trend_value(slug=dest.get('slug_fr', slug),
                                        lat=lat, lon=lon)
+    trend_significant = _trend_is_significant(slug=dest.get('slug_fr', slug),
+                                              lat=lat, lon=lon)
 
     # Climate extremes
     extremes = _extract_climate_extremes(months_climate, months_loc=MONTHS_LOC)
@@ -600,6 +649,7 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
         'cost_value': cost_value,
         'climate_type': climate_type,
         'trend_value': trend_value,
+        'trend_significant': trend_significant,
         'is_mountain': is_mountain,
         'is_coastal': _bool(dest.get('coastal')),
         'is_tropical': is_tropical,

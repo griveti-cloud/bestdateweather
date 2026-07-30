@@ -721,7 +721,7 @@ def _box2_climate(L_ip: dict, climate_type: str, trend_value: float | None,
                   coldest_month: str, coldest_temp: float,
                   rainiest_month: str, rainiest_pct: float,
                   slug: str = '', dest_name: str = '',
-                  lang: str = 'fr') -> str:
+                  lang: str = 'fr', trend_significant: bool = False) -> str:
     """Box 2 : Climat. Trend = None ⇒ 'Données indisponibles'."""
     # Pour EN-US: slope en delta °C → delta °F = ×9/5 (sans +32)
     trend_for_display = (trend_value * 9 / 5) if (trend_value is not None and lang == 'en-us') else trend_value
@@ -746,8 +746,10 @@ def _box2_climate(L_ip: dict, climate_type: str, trend_value: float | None,
     if trend_value is None:
         trend_str = L_ip['trend_unavailable']
         trend_hint = None
-    elif abs(trend_value) < 0.20:
-        # Slope non significatif sur 10 ans
+    elif not trend_significant:
+        # Pente non significative statistiquement (p>=0.05 sur 10 ans) :
+        # variabilité naturelle dominante -> on n'affiche PAS de chiffre, qui
+        # serait présenté à tort comme un signal climatique. 'Stable' + tooltip.
         trend_str = L_ip['trend_stable']
         trend_hint = HINT_NS.get(lang, HINT_NS['fr']).format(v=trend_for_display, unit=unit)
     else:
@@ -989,6 +991,7 @@ def render_v6_infos_pratiques(slug: str, lang: str, dest_data: dict, asset_prefi
     box2 = _box2_climate(L_ip,
         climate_type=d.get('climate_type', '—'),
         trend_value=d.get('trend_value'),
+        trend_significant=d.get('trend_significant', False),
         hottest_month=d.get('hottest_month', '—'),
         hottest_temp=d.get('hottest_temp', 0),
         coldest_month=d.get('coldest_month', '—'),
