@@ -4666,6 +4666,20 @@
   "languages": [
    "Kirundi",
    "Français"
+  ],
+  "budget_index": 1,
+  "budget_numbeo_col": 26.5,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Rwanda 25.0 + Tanzanie 26.7",
+  "budget_proxy_reason": "Proxy Afrique de l'Est des Grands Lacs (Rwanda/Tanzanie)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Centrafrique": {
@@ -4680,7 +4694,21 @@
   ],
   "risk_level": 4,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 2,
+  "budget_numbeo_col": 40.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Cameroun 40.7",
+  "budget_proxy_reason": "Proxy Cameroun (voisin CEMAC, franc CFA BEAC)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Comores": {
   "currency": "KMF",
@@ -4692,6 +4720,20 @@
    "Comorien",
    "Français",
    "Arabe"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 35.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Mozambique 36.9",
+  "budget_proxy_reason": "Proxy océan Indien occidental (Mozambique)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Congo": {
@@ -4702,6 +4744,20 @@
   "drive": "right",
   "languages": [
    "Français"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 41.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Cameroun 40.7",
+  "budget_proxy_reason": "Proxy Cameroun (voisin CEMAC, économie pétrolière comparable)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Djibouti": {
@@ -4713,6 +4769,20 @@
   "languages": [
    "Français",
    "Arabe"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 42.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Éthiopie 41.8",
+  "budget_proxy_reason": "Proxy Éthiopie (Corne de l'Afrique)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Eswatini": {
@@ -4727,7 +4797,21 @@
   ],
   "risk_level": 2,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 2,
+  "budget_numbeo_col": 37.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Afrique du Sud 37.1",
+  "budget_proxy_reason": "Proxy Afrique du Sud (zone monétaire commune ZAR)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Grenade": {
   "currency": "XCD",
@@ -4761,6 +4845,20 @@
   "drive": "right",
   "languages": [
    "Français"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 34.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Ghana 33.9 + Côte d'Ivoire 44.8",
+  "budget_proxy_reason": "Proxy Afrique de l'Ouest côtière (Ghana)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Guinée équatoriale": {
@@ -4773,6 +4871,20 @@
    "Espagnol",
    "Français",
    "Portugais"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 41.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Cameroun 40.7",
+  "budget_proxy_reason": "Proxy Cameroun (voisin CEMAC, franc CFA BEAC)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Guinée-Bissau": {
@@ -4783,6 +4895,20 @@
   "drive": "right",
   "languages": [
    "Portugais"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 44.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Sénégal 48.5",
+  "budget_proxy_reason": "Proxy Sénégal (voisin UEMOA, franc CFA BCEAO)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Guyana": {
@@ -4818,7 +4944,21 @@
   ],
   "risk_level": 4,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 2,
+  "budget_numbeo_col": 38.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Rép. dominicaine 38.2",
+  "budget_proxy_reason": "Proxy Hispaniola (voisin partageant l'île)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Irak": {
   "currency": "IQD",
@@ -4851,6 +4991,20 @@
   "languages": [
    "Anglais",
    "Gilbertin"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 47.5,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Papouasie-N.-G. 47.5 + Fidji 34.3",
+  "budget_proxy_reason": "Proxy Pacifique insulaire (Fidji/PNG, import élevé)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Kosovo": {
@@ -4862,6 +5016,20 @@
   "languages": [
    "Albanais",
    "Serbe"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 43.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Albanie 45.9 + Macédoine N. 35.5 + Serbie 42.6",
+  "budget_proxy_reason": "Proxy Balkans occidentaux (moyenne régionale)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Lesotho": {
@@ -4876,7 +5044,21 @@
   ],
   "risk_level": 2,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 2,
+  "budget_numbeo_col": 37.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Afrique du Sud 37.1",
+  "budget_proxy_reason": "Proxy Afrique du Sud (enclave, zone monétaire commune ZAR)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Liberia": {
   "currency": "LRD",
@@ -4886,6 +5068,20 @@
   "drive": "right",
   "languages": [
    "Anglais"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 33.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Ghana 33.9",
+  "budget_proxy_reason": "Proxy Ghana (Afrique de l'Ouest anglophone/côtière)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Libye": {
@@ -4920,6 +5116,20 @@
   "drive": "right",
   "languages": [
    "Allemand"
+  ],
+  "budget_index": 5,
+  "budget_numbeo_col": 110.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Suisse 110.7",
+  "budget_proxy_reason": "Proxy Suisse (enclave, franc suisse, niveau de prix identique)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Luxembourg": {
@@ -4960,7 +5170,21 @@
   ],
   "risk_level": 4,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 2,
+  "budget_numbeo_col": 44.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Sénégal 48.5",
+  "budget_proxy_reason": "Proxy Sénégal (voisin UEMOA, franc CFA BCEAO)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Mauritanie": {
   "currency": "MRU",
@@ -4970,6 +5194,20 @@
   "drive": "right",
   "languages": [
    "Arabe"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 31.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Maroc 31.4",
+  "budget_proxy_reason": "Proxy Maroc (Maghreb/Sahel atlantique)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Micronésie": {
@@ -4980,6 +5218,20 @@
   "drive": "right",
   "languages": [
    "Anglais"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 47.5,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Papouasie-N.-G. 47.5",
+  "budget_proxy_reason": "Proxy Pacifique insulaire (économie dollarisée)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Moldavie": {
@@ -5014,7 +5266,21 @@
   ],
   "risk_level": 4,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 2,
+  "budget_numbeo_col": 44.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Sénégal 48.5",
+  "budget_proxy_reason": "Proxy Sénégal (voisin UEMOA, franc CFA BCEAO)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Pakistan": {
   "currency": "PKR",
@@ -5046,6 +5312,20 @@
   "drive": "right",
   "languages": [
    "Français"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 37.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Cameroun 40.7 + Tanzanie 26.7",
+  "budget_proxy_reason": "Proxy Afrique centrale (Kinshasa, économie franc congolais)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Saint-Kitts-et-Nevis": {
@@ -5056,6 +5336,20 @@
   "drive": "left",
   "languages": [
    "Anglais"
+  ],
+  "budget_index": 3,
+  "budget_numbeo_col": 54.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Jamaïque 54.5 + Trinité 52.0",
+  "budget_proxy_reason": "Proxy Caraïbes anglophones (dollar EC, import élevé)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Saint-Marin": {
@@ -5066,6 +5360,20 @@
   "drive": "right",
   "languages": [
    "Italien"
+  ],
+  "budget_index": 3,
+  "budget_numbeo_col": 61.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Italie 61.4",
+  "budget_proxy_reason": "Proxy Italie (enclave, euro, niveau de prix identique)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Salvador": {
@@ -5101,6 +5409,20 @@
   "languages": [
    "Somali",
    "Arabe"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 42.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Éthiopie 41.8",
+  "budget_proxy_reason": "Proxy Éthiopie (Corne de l'Afrique)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Soudan": {
@@ -5115,7 +5437,21 @@
   ],
   "risk_level": 4,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 1,
+  "budget_numbeo_col": 28.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Égypte 21.6 + Éthiopie 41.8",
+  "budget_proxy_reason": "Proxy vallée du Nil / Corne (Égypte-Éthiopie)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Soudan du Sud": {
   "currency": "SSP",
@@ -5128,7 +5464,21 @@
   ],
   "risk_level": 4,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 2,
+  "budget_numbeo_col": 42.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Éthiopie 41.8",
+  "budget_proxy_reason": "Proxy Éthiopie (Afrique de l'Est enclavée)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Suriname": {
   "currency": "SRD",
@@ -5186,6 +5536,20 @@
   "drive": "right",
   "languages": [
    "Portugais"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 41.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Cameroun 40.7",
+  "budget_proxy_reason": "Proxy golfe de Guinée (Cameroun)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Tchad": {
@@ -5200,7 +5564,21 @@
   ],
   "risk_level": 4,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 2,
+  "budget_numbeo_col": 40.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Cameroun 40.7",
+  "budget_proxy_reason": "Proxy Cameroun (voisin CEMAC, franc CFA BEAC)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Timor oriental": {
   "currency": "USD",
@@ -5214,7 +5592,21 @@
   ],
   "risk_level": 2,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 2,
+  "budget_numbeo_col": 32.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Indonésie 26.1 + PNG 47.5",
+  "budget_proxy_reason": "Proxy Asie du Sud-Est insulaire (Indonésie voisine, surcoût insulaire)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Turkménistan": {
   "currency": "TMT",
@@ -5227,7 +5619,21 @@
   ],
   "risk_level": 2,
   "risk_updated": "2026-07-23",
-  "risk_source": "MAE France"
+  "risk_source": "MAE France",
+  "budget_index": 1,
+  "budget_numbeo_col": 28.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Ouzbékistan 27.3 + Kazakhstan 29.8",
+  "budget_proxy_reason": "Proxy Asie centrale post-soviétique",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
+  ]
  },
  "Tuvalu": {
   "currency": "AUD",
@@ -5238,6 +5644,20 @@
   "languages": [
    "Tuvaluan",
    "Anglais"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 47.5,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Papouasie-N.-G. 47.5",
+  "budget_proxy_reason": "Proxy Pacifique insulaire isolé (import élevé)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Venezuela": {
@@ -5271,6 +5691,20 @@
    "Tigrigna",
    "Arabe",
    "Anglais"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 42.0,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Éthiopie 41.8",
+  "budget_proxy_reason": "Proxy Éthiopie (Corne de l'Afrique)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Îles Marshall": {
@@ -5282,6 +5716,20 @@
   "languages": [
    "Anglais",
    "Marshallais"
+  ],
+  "budget_index": 2,
+  "budget_numbeo_col": 47.5,
+  "budget_method": "proxy",
+  "budget_is_proxy": true,
+  "budget_source": "Numbeo Cost of Living Index 2026",
+  "budget_proxy_basis": "Regional proxy: Papouasie-N.-G. 47.5",
+  "budget_proxy_reason": "Proxy Pacifique insulaire (économie dollarisée)",
+  "budget_year": 2026,
+  "budget_thresholds": [
+   30,
+   48,
+   65,
+   82
   ]
  },
  "Îles Salomon": {
