@@ -103,16 +103,46 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
+    // ══════════════════════════════════════════════════════════════════
+    // .html → URL sans extension, en 301 PERMANENT
+    // ══════════════════════════════════════════════════════════════════
+    // Par défaut, Cloudflare Assets (html_handling="auto-trailing-slash")
+    // fait déjà cette redirection, mais en 307 TEMPORAIRE. Pour Google, un
+    // 307 signifie « garde l'ancienne URL indexée, ne transfère pas les
+    // signaux » : lors de la migration .html → sans extension, l'historique
+    // des anciennes URLs n'a donc jamais été consolidé vers les nouvelles
+    // (3 793 pages bloquées en « Page avec redirection » dans la GSC).
+    //
+    // run_worker_first = ["/*.html"] (wrangler.toml) fait passer le worker
+    // AVANT la couche Assets pour ces chemins, ce qui permet d'émettre un
+    // 301 permanent à la place.
+    //
+    // Ne JAMAIS réintroduire une règle inverse (sans extension → .html) :
+    // combinée à celle-ci, elle créerait une boucle de redirection infinie.
+    // .html ayant une cible SPÉCIFIQUE plus bas dans ce worker (renommages,
+    // équivalents localisés) : on les laisse à leurs règles dédiées.
+    const HTML_SPECIAL = new Set([
+      '/destinations.html', '/en/index.html', '/impressum.html', '/index.html',
+      '/legal.html', '/methodik.html', '/methodology.html', '/note_modele.html',
+      '/privacy.html', '/ueber-uns.html',
+    ]);
+    if (path.endsWith('.html') && !HTML_SPECIAL.has(path)) {
+      let clean = path.slice(0, -5);                 // retire « .html »
+      if (clean.endsWith('/index')) clean = clean.slice(0, -6) || '/';
+      if (clean === '') clean = '/';
+      return Response.redirect(`${url.origin}${clean}${url.search}`, 301);
+    }
+
     // ── Servir notre robots.txt (override CF managed) ──
     if (path === '/robots.txt') {
       const body = `User-agent: *
 Allow: /
-Disallow: /en/app.html?
-Disallow: /es/app.html?
-Disallow: /us/app.html?
-Disallow: /de/app.html?
-Disallow: /app.html?
-Disallow: /index.html?
+Disallow: /en/app?
+Disallow: /es/app?
+Disallow: /us/app?
+Disallow: /de/app?
+Disallow: /app?
+Disallow: /*?profile=
 Disallow: /data/
 Disallow: /widget/
 
@@ -145,30 +175,24 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
     // ── Subscribe endpoint ──
     if (path === '/subscribe') return handleSubscribe(request, env);
 
-    // ── URLs sans extension → ajouter .html (301) ──
-    // Couvre ~600 URLs GSC sans .html : /us/X-weather-MONTH, /de/X-wetter-MONTH, /meilleure-periode-X, etc.
-    if (!path.includes('.') && path !== '/' && !path.startsWith('/api/') && path !== '/subscribe') {
-      return Response.redirect(`${url.origin}${path}.html`, 301);
-    }
-
     // ── Regex redirects ──
     const mFR = path.match(PATTERN_FR);
-    if (mFR) return Response.redirect(`${url.origin}/${mFR[1]}-meteo-${mFR[2]}.html`, 301);
+    if (mFR) return Response.redirect(`${url.origin}/${mFR[1]}-meteo-${mFR[2]}`, 301);
 
     const mEN = path.match(PATTERN_EN);
-    if (mEN) return Response.redirect(`${url.origin}/en/${mEN[1]}-weather-${mEN[2]}.html`, 301);
+    if (mEN) return Response.redirect(`${url.origin}/en/${mEN[1]}-weather-${mEN[2]}`, 301);
 
     // Old annual root pages → /en/
     const mAnnRoot = path.match(PATTERN_ANNUAL_ROOT);
-    if (mAnnRoot) return Response.redirect(`${url.origin}/en/best-time-to-visit-${mAnnRoot[1]}.html`, 301);
+    if (mAnnRoot) return Response.redirect(`${url.origin}/en/best-time-to-visit-${mAnnRoot[1]}`, 301);
 
     // FR slug with English month → correct FR month
     const mFREnMonth = path.match(PATTERN_FR_EN_MONTH);
-    if (mFREnMonth) return Response.redirect(`${url.origin}/${mFREnMonth[1]}-meteo-${EN_TO_FR_MONTH[mFREnMonth[2]]}.html`, 301);
+    if (mFREnMonth) return Response.redirect(`${url.origin}/${mFREnMonth[1]}-meteo-${EN_TO_FR_MONTH[mFREnMonth[2]]}`, 301);
 
     // /us/best-time-to-visit-X-in-MONTH → /us/X-weather-MONTH
     const mUS = path.match(PATTERN_US);
-    if (mUS) return Response.redirect(`${url.origin}/us/${mUS[1]}-weather-${mUS[2]}.html`, 301);
+    if (mUS) return Response.redirect(`${url.origin}/us/${mUS[1]}-weather-${mUS[2]}`, 301);
 
     // ── Double subdirectory language prefixes (couvre ~100+ 404 GSC) ──
     // /us/us/X → /us/X  (déjà existait)
@@ -234,7 +258,7 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
       const slug = m_ren[2].toLowerCase();
       if (renameMap[slug] && renameMap[slug] !== slug) {
         const newSlug = renameMap[slug];
-        const newPath = (m_ren[1] || '/') + newSlug + (m_ren[3] || '') + (m_ren[4] || '.html');
+        const newPath = (m_ren[1] || '/') + newSlug + (m_ren[3] || '') + (m_ren[4] || '');
         return Response.redirect(`${url.origin}${newPath}`, 301);
       }
     }
@@ -246,16 +270,16 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
     if (path.includes('mariage') || path.includes('wedding')) return Response.redirect(`${url.origin}/`, 301);
 
     // /en/index.html → /en/app.html
-    if (path === '/en/index.html') return Response.redirect(`${url.origin}/en/app.html`, 301);
+    if (path === '/en/index.html') return Response.redirect(`${url.origin}/en/app`, 301);
 
     // Old pages renamed
-    if (path === '/methodology.html') return Response.redirect(`${url.origin}/methodologie.html`, 301);
-    if (path === '/privacy.html') return Response.redirect(`${url.origin}/confidentialite.html`, 301);
-    if (path === '/legal.html') return Response.redirect(`${url.origin}/mentions-legales.html`, 301);
+    if (path === '/methodology.html') return Response.redirect(`${url.origin}/methodologie`, 301);
+    if (path === '/privacy.html') return Response.redirect(`${url.origin}/confidentialite`, 301);
+    if (path === '/legal.html') return Response.redirect(`${url.origin}/mentions-legales`, 301);
     if (path === '/destinations.html') return Response.redirect(`${url.origin}/`, 301);
-    if (path === '/methodik.html') return Response.redirect(`${url.origin}/de/app.html`, 301);
-    if (path === '/ueber-uns.html') return Response.redirect(`${url.origin}/de/app.html`, 301);
-    if (path === '/impressum.html') return Response.redirect(`${url.origin}/de/app.html`, 301);
+    if (path === '/methodik.html') return Response.redirect(`${url.origin}/de/app`, 301);
+    if (path === '/ueber-uns.html') return Response.redirect(`${url.origin}/de/app`, 301);
+    if (path === '/impressum.html') return Response.redirect(`${url.origin}/de/app`, 301);
     if (path === '/note_modele.html') return Response.redirect(`${url.origin}/`, 301);
 
     // ── Pages FAQ/Contact/Privacy dans sous-dossier langue → page racine ──
@@ -265,7 +289,7 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
     // amalfi-coast slugs → amalfi-coast EN page (not in FR)
     if (path.startsWith('/amalfi-coast-meteo-')) {
       const m = path.match(/^\/amalfi-coast-meteo-([a-z]+)\.html$/);
-      if (m) { const fr = EN_TO_FR_MONTH[m[1]] || m[1]; return Response.redirect(`${url.origin}/amalfi-meteo-${fr}.html`, 301); }
+      if (m) { const fr = EN_TO_FR_MONTH[m[1]] || m[1]; return Response.redirect(`${url.origin}/amalfi-meteo-${fr}`, 301); }
     }
 
     // ── Proxy /data/monthly.json depuis GitHub (hors limite 20k assets CF) ──
@@ -297,10 +321,10 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
       const langCookie = cookie.match(/bdw_lang=([a-z-]+)/);
       if (langCookie) {
         const chosen = langCookie[1];
-        if (chosen === 'en')    return Response.redirect(url.origin + '/en/app.html', 302);
-        if (chosen === 'en-us') return Response.redirect(url.origin + '/us/app.html', 302);
-        if (chosen === 'es')    return Response.redirect(url.origin + '/es/app.html', 302);
-        if (chosen === 'de')    return Response.redirect(url.origin + '/de/app.html', 302);
+        if (chosen === 'en')    return Response.redirect(url.origin + '/en/app', 302);
+        if (chosen === 'en-us') return Response.redirect(url.origin + '/us/app', 302);
+        if (chosen === 'es')    return Response.redirect(url.origin + '/es/app', 302);
+        if (chosen === 'de')    return Response.redirect(url.origin + '/de/app', 302);
         // chosen === 'fr' → laisser passer (index.html)
       } else {
         // Détection par IP (Cloudflare header) en priorité
@@ -310,16 +334,16 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
 
         // Pays US → version US (°F)
         if (country === 'US') {
-          return Response.redirect(url.origin + '/us/app.html', 302);
+          return Response.redirect(url.origin + '/us/app', 302);
         }
         // Pays hispanophones
         const ES_COUNTRIES = ['ES','MX','AR','CO','CL','PE','VE','EC','BO','PY','UY','CR','PA','HN','SV','GT','NI','DO','CU','PR'];
         if (ES_COUNTRIES.includes(country)) {
-          return Response.redirect(url.origin + '/es/app.html', 302);
+          return Response.redirect(url.origin + '/es/app', 302);
         }
         // Pays germanophones
         if (['DE','AT','CH','LI','LU'].includes(country)) {
-          return Response.redirect(url.origin + '/de/app.html', 302);
+          return Response.redirect(url.origin + '/de/app', 302);
         }
         // Pays francophones → index.html (par défaut, pas de redirect)
         const FR_COUNTRIES = ['FR','BE','CA','CH','LU','MC','SN','CI','CM','MG','ML','BF','NE','TD','GN','BJ','TG','RW','BI','CD','CG','GA','CF','KM','DJ','MR','MU','SC','VU','WF','PF','NC','PM','GP','MQ','RE','YT','GF','BL','MF'];
@@ -329,7 +353,7 @@ Sitemap: https://bestdateweather.com/sitemap-index.xml`;
           // Tout le reste du monde → EN (fallback universel)
           // Sauf si Accept-Language suggère FR
           if (!acceptLang.startsWith('fr')) {
-            return Response.redirect(url.origin + '/en/app.html', 302);
+            return Response.redirect(url.origin + '/en/app', 302);
           }
         }
       }
