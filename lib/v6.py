@@ -634,13 +634,18 @@ def _safe_int(v) -> int | None:
         return None
 
 
-def _list_item(icon: str, label: str, value: str, hint: str | None = None) -> str:
-    """Helper : un .list-item avec icône, label, value, et tooltip optionnel."""
+def _list_item(icon: str, label: str, value: str, hint: str | None = None,
+               attrs: str = '') -> str:
+    """Helper : un .list-item avec icône, label, value, et tooltip optionnel.
+
+    attrs : attributs HTML supplémentaires sur le conteneur (ex.
+    data-advisory-cc pour l'actualisation live du niveau de sécurité).
+    """
     hint_html = (
         f' <span class="signal-hint" title="{h(hint)}">ⓘ</span>'
         if hint else ''
     )
-    return (f'<div class="list-item"><span><span class="list-ico">{icon}</span>'
+    return (f'<div class="list-item"{attrs}><span><span class="list-ico">{icon}</span>'
             f'{h(label)}{hint_html}</span><strong>{value}</strong></div>')
 
 
@@ -709,7 +714,10 @@ def _box1_country(L_ip: dict, country_name: str, country_iso: str,
         _list_item('🗣️', L_ip['lbl_lang'], h(lang_local)),
         _list_item('💶', L_ip['lbl_currency'], f'{h(currency_name)} ({h(currency_symbol)})'),
         _list_item('🚗', L_ip['lbl_drive'], h(drive_lbl)),
-        _list_item('🛡️', L_ip['lbl_security'], h(safe_label), hint=safe_hint),
+        # data-advisory-cc : cible de js/advisory.js, qui rafraîchit ce niveau
+        # depuis /api/advisories (Auswärtiges Amt, cache 6h) à chaque affichage.
+        _list_item('🛡️', L_ip['lbl_security'], h(safe_label), hint=safe_hint,
+                   attrs=(f' data-advisory-cc="{h(country_iso.upper())}"' if country_iso else '')),
         _list_item('💰', L_ip['lbl_cost'], h(cost_label), hint=cost_hint),
     ]
     return (f'<div class="box"><h3>{title}</h3>'
@@ -2518,6 +2526,7 @@ def render_v6_scripts(asset_prefix: str = '') -> str:
   }}
 }})();
 </script>
+<script src="{asset_prefix}js/advisory.min.js?v=3" defer></script>
 </body>
 </html>'''
 

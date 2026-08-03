@@ -389,11 +389,18 @@ if os.path.exists(mai_pilier):
     # country_info.json doit avoir risk_source = 'MAE France' (pas DE héritée)
     try:
         ci = json.load(open('data/country_info.json'))
-        de_sources = sum(1 for p, v in ci.items()
-                         if isinstance(v, dict) and v.get('risk_source') == 'Auswärtiges Amt (DE)')
-        if de_sources > 0:
-            warn(f"country_info.json: {de_sources} pays avec risk_source DE "
-                 f"(devrait être 'MAE France')")
+        # Depuis le branchement de l'actualisation live, risk_level = max(MAE,
+        # Auswärtiges Amt) : l'AA seul serait moins prudent sur certains pays
+        # (Tchad, Bangladesh, Turkménistan). On alerte donc si des pays sont
+        # sourcés AA SEUL alors qu'une valeur MAE existait.
+        de_only = sum(1 for p, v in ci.items()
+                      if isinstance(v, dict) and v.get('risk_source') == 'Auswärtiges Amt (DE)')
+        combined = sum(1 for p, v in ci.items()
+                       if isinstance(v, dict)
+                       and 'max' in str(v.get('risk_source', '')))
+        if combined:
+            ok(f"Sécurité: {combined} pays en max(MAE, AA), {de_only} en AA seul "
+               f"(pays sans donnée MAE)")
     except Exception:
         pass
 if secu_issues == 0:
