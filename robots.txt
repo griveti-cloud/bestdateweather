@@ -1,11 +1,11 @@
 User-agent: *
 Allow: /
-Disallow: /en/app.html?
-Disallow: /es/app.html?
-Disallow: /us/app.html?
-Disallow: /de/app.html?
-Disallow: /app.html?
-Disallow: /index.html?
+Disallow: /en/app?
+Disallow: /es/app?
+Disallow: /us/app?
+Disallow: /de/app?
+Disallow: /app?
+Disallow: /*?profile=
 Disallow: /data/
 Disallow: /widget/
 
