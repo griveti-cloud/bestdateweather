@@ -260,15 +260,15 @@ def render_v6_methodology_block(lang: str = 'fr', is_mountain: bool = False) -> 
   <p class="method-mini-foot"><strong>{h(L['source'])} :</strong> {h(L['source_text'])} · <a href="{method_url}">{h(L['full_link'])}</a></p>
 </div>'''
     else:
+        # Le détail des 4 critères et de leurs pondérations était STRICTEMENT
+        # identique sur les 754 pages : ~70 mots de contenu dupliqué qui
+        # alourdissaient la similarité inter-destinations (mesurée à 65% entre
+        # Lyon et Bordeaux). On garde l'intro et la source — qui portent la
+        # transparence — et on renvoie au détail complet sur la page dédiée,
+        # ce qui renforce au passage le maillage vers cette page.
         return f'''<div class="method-mini">
   <h3>{h(L['title'])}</h3>
   <p class="method-mini-intro">{L['intro_std']}</p>
-  <ul class="method-mini-list">
-    <li>{L['std_c1']}</li>
-    <li>{L['std_c2']}</li>
-    <li>{L['std_c3']}</li>
-    <li>{L['std_c4']}</li>
-  </ul>
   <p class="method-mini-foot"><strong>{h(L['source'])} :</strong> {h(L['source_text'])} · <a href="{method_url}">{h(L['full_link'])}</a></p>
 </div>'''
 
