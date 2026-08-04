@@ -735,25 +735,56 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
     except (KeyError, IndexError):
         page_title = f'{nom} : meilleurs mois'
 
-    # Meta description : générique mais informative
+    # ── Meta description ────────────────────────────────────────────────
+    # Objectif CTR : les 754 descriptions partageaient un gabarit identique
+    # ("X (N/10) is the standout... 10-year ERA5 climate data"), centré sur un
+    # score abstrait et du jargon. Résultat : 0,17% de CTR global, 779 des
+    # 1000 premières requêtes à zéro clic. On donne désormais les chiffres que
+    # l'internaute cherche (température, pluie, ensoleillement) et une
+    # recommandation en clair, ce qui différencie aussi chaque destination.
+    def _fmt_t(v, us=False):
+        return f'{round(v * 9 / 5 + 32)}°F' if us else f'{round(v)}°C'
+
+    _us = (lang == 'en-us')
+    _bt = _fmt_t(best.get('tmax') or 0, _us)
+    _br = round(best.get('rain_pct') or 0)
+    # Raison du mois à éviter : on cite le facteur réellement discriminant
+    # (pluie si mois très pluvieux, sinon chaleur ou froid), sinon la mention
+    # n'explique rien (ex. « éviter août, 31°C » quand le meilleur est à 29°C).
+    _wtmax = worst.get('tmax') or 0
+    _wrain = round(worst.get('rain_pct') or 0)
+    _rain_driven = _wrain >= 40 and _wrain > (round(best.get('rain_pct') or 0) + 15)
+    _WHY = {
+        'fr': (f'{_wrain}% de jours de pluie' if _rain_driven else _fmt_t(_wtmax, _us)),
+        'en': (f'{_wrain}% rainy days' if _rain_driven else _fmt_t(_wtmax, _us)),
+        'es': (f'{_wrain}% de días de lluvia' if _rain_driven else _fmt_t(_wtmax, _us)),
+        'de': (f'{_wrain}% Regentage' if _rain_driven else _fmt_t(_wtmax, _us)),
+    }
+    _wt = _WHY.get('en' if lang in ('en', 'en-us') else lang, _WHY['en'])
+    _bsun = best.get('sun_h') or 0
+
     if lang == 'fr':
-        page_desc = (f'Quand partir à {nom} ? {best["mois"]} ({best["score_10"]:.1f}/10) sort en tête, '
-                     f'{worst["mois"]} ({worst["score_10"]:.1f}/10) reste le plus rude. '
-                     f'Données ERA5 sur 10 ans, scores des 12 mois.')
+        page_desc = (f'{best["mois"]} est le meilleur mois à {nom} : {_bt} en journée, '
+                     f'{_br}% de jours de pluie'
+                     + (f', {_bsun:.0f}h de soleil par jour. ' if _bsun else '. ')
+                     + f'{worst["mois"]} est à éviter ({_wt}). Les 12 mois comparés.')
     elif lang in ('en', 'en-us'):
-        page_desc = (f'When to visit {nom}? {best["mois"]} ({best["score_10"]:.1f}/10) is the standout, '
-                     f'{worst["mois"]} ({worst["score_10"]:.1f}/10) the toughest. '
-                     f'10-year ERA5 climate data, all 12 months scored.')
+        page_desc = (f'{best["mois"]} is the best month in {nom}: {_bt} by day, '
+                     f'{_br}% rainy days'
+                     + (f', {_bsun:.0f}h of sun daily. ' if _bsun else '. ')
+                     + f'{worst["mois"]} is the one to avoid ({_wt}). All 12 months compared.')
     elif lang == 'es':
-        page_desc = (f'¿Cuándo ir a {nom}? {best["mois"]} ({best["score_10"]:.1f}/10) destaca, '
-                     f'{worst["mois"]} ({worst["score_10"]:.1f}/10) es el más duro. '
-                     f'Datos ERA5 de 10 años, 12 meses puntuados.')
+        page_desc = (f'{best["mois"]} es el mejor mes en {nom}: {_bt} de día, '
+                     f'{_br}% de días de lluvia'
+                     + (f', {_bsun:.0f}h de sol al día. ' if _bsun else '. ')
+                     + f'{worst["mois"]} es el mes a evitar ({_wt}). Los 12 meses comparados.')
     elif lang == 'de':
-        page_desc = (f'Wann nach {nom} reisen? {best["mois"]} ({best["score_10"]:.1f}/10) liegt vorne, '
-                     f'{worst["mois"]} ({worst["score_10"]:.1f}/10) ist am härtesten. '
-                     f'ERA5-Daten 10 Jahre, alle 12 Monate bewertet.')
+        page_desc = (f'{best["mois"]} ist der beste Monat in {nom}: {_bt} tagsüber, '
+                     f'{_br}% Regentage'
+                     + (f', {_bsun:.0f}h Sonne pro Tag. ' if _bsun else '. ')
+                     + f'{worst["mois"]} sollte man meiden ({_wt}). Alle 12 Monate im Vergleich.')
     else:
-        page_desc = f'{nom}: {best["mois"]} ({best["score_10"]:.1f}/10) best, {worst["mois"]} ({worst["score_10"]:.1f}/10) worst.'
+        page_desc = f'{nom}: {best["mois"]} best ({_bt}), {worst["mois"]} worst.'
 
     return {
         'lang': lang,
