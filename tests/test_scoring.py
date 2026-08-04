@@ -315,25 +315,28 @@ def test_mountain_scoring():
           f"échecs={len(invariant_failures)}, ex: {invariant_failures[:2]}")
 
     # ── Régression Chamonix : 3 valeurs clés (vérifiées manuellement contre scoring.py) ──
+    # Valeurs mises à jour après la correction des heures d'ensoleillement
+    # (normales publiées / modèle calibré au lieu du brut ERA5 surestimé).
+    # Les invariants qui comptent — classe et activité dominante — sont inchangés.
     cham = next((r for r in compute_mountain_scores(
                     sorted(climate_by_slug['chamonix'], key=lambda r: r['mois_num']), 'chamonix')
                  if r['mois'] == 'Mars'), None)
-    check("Régression Chamonix Mars: 9.1 (ski) rec",
-          cham and cham['score_10'] == 9.1 and cham['dominant'] == 'ski' and cham['classe'] == 'rec',
+    check("Régression Chamonix Mars: 8.3 (ski) rec",
+          cham and cham['score_10'] == 8.3 and cham['dominant'] == 'ski' and cham['classe'] == 'rec',
           f"got {cham}" if cham else "Mars introuvable")
 
     cham_oct = next((r for r in compute_mountain_scores(
                         sorted(climate_by_slug['chamonix'], key=lambda r: r['mois_num']), 'chamonix')
                      if r['mois'] == 'Octobre'), None)
-    check("Régression Chamonix Octobre: 7.8 (rando) rec — pas mid avec lapse rate",
-          cham_oct and cham_oct['score_10'] == 7.8 and cham_oct['dominant'] == 'rando' and cham_oct['classe'] == 'rec',
+    check("Régression Chamonix Octobre: 7.2 (rando) rec — pas mid avec lapse rate",
+          cham_oct and cham_oct['score_10'] == 7.2 and cham_oct['dominant'] == 'rando' and cham_oct['classe'] == 'rec',
           f"got {cham_oct}" if cham_oct else "Octobre introuvable")
 
     cham_nov = next((r for r in compute_mountain_scores(
                         sorted(climate_by_slug['chamonix'], key=lambda r: r['mois_num']), 'chamonix')
                      if r['mois'] == 'Novembre'), None)
-    check("Régression Chamonix Novembre: 6.1 mid (transition)",
-          cham_nov and cham_nov['score_10'] == 6.1 and cham_nov['classe'] == 'mid',
+    check("Régression Chamonix Novembre: 5.7 mid (transition)",
+          cham_nov and cham_nov['score_10'] == 5.7 and cham_nov['classe'] == 'mid',
           f"got {cham_nov}" if cham_nov else "Novembre introuvable")
 
 

@@ -765,24 +765,20 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
 
     if lang == 'fr':
         page_desc = (f'{best["mois"]} est le meilleur mois à {nom} : {_bt} en journée, '
-                     f'{_br}% de jours de pluie'
-                     + (f', {_bsun:.0f}h de soleil par jour. ' if _bsun else '. ')
-                     + f'{worst["mois"]} est à éviter ({_wt}). Les 12 mois comparés.')
+                     f'{_br}% de jours de pluie. '
+                     f'{worst["mois"]} est à éviter ({_wt}). Les 12 mois comparés.')
     elif lang in ('en', 'en-us'):
         page_desc = (f'{best["mois"]} is the best month in {nom}: {_bt} by day, '
-                     f'{_br}% rainy days'
-                     + (f', {_bsun:.0f}h of sun daily. ' if _bsun else '. ')
-                     + f'{worst["mois"]} is the one to avoid ({_wt}). All 12 months compared.')
+                     f'{_br}% rainy days. '
+                     f'{worst["mois"]} is the one to avoid ({_wt}). All 12 months compared.')
     elif lang == 'es':
         page_desc = (f'{best["mois"]} es el mejor mes en {nom}: {_bt} de día, '
-                     f'{_br}% de días de lluvia'
-                     + (f', {_bsun:.0f}h de sol al día. ' if _bsun else '. ')
-                     + f'{worst["mois"]} es el mes a evitar ({_wt}). Los 12 meses comparados.')
+                     f'{_br}% de días de lluvia. '
+                     f'{worst["mois"]} es el mes a evitar ({_wt}). Los 12 meses comparados.')
     elif lang == 'de':
         page_desc = (f'{best["mois"]} ist der beste Monat in {nom}: {_bt} tagsüber, '
-                     f'{_br}% Regentage'
-                     + (f', {_bsun:.0f}h Sonne pro Tag. ' if _bsun else '. ')
-                     + f'{worst["mois"]} sollte man meiden ({_wt}). Alle 12 Monate im Vergleich.')
+                     f'{_br}% Regentage. '
+                     f'{worst["mois"]} sollte man meiden ({_wt}). Alle 12 Monate im Vergleich.')
     else:
         page_desc = f'{nom}: {best["mois"]} best ({_bt}), {worst["mois"]} worst.'
 
