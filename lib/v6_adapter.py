@@ -1586,6 +1586,10 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
         bg_image_url=photo_url, hreflang_tags=hreflang_tags,
         og_image_url=page_data.get('og_image_url', ''),
         json_ld_blocks=monthly_json_ld,
+        # Pages mensuelles hors index (voir render_v6_head) : ~44k URLs
+        # retirées de l'index pour concentrer l'évaluation qualité sur les
+        # pages annuelles et piliers. Elles restent accessibles et suivies.
+        noindex=True,
     )
     # Injecter le CSS .vs-cta dans le head
     head = head.replace('</head>', f'<style>{VS_CTA_CSS}</style>\n</head>')

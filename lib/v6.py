@@ -2405,7 +2405,8 @@ def render_v6_head(lang: str, page_title: str, page_desc: str,
                    bg_image_url: str = '',
                    hreflang_tags: str = '',
                    og_image_url: str = '',
-                   json_ld_blocks: list[str] = None) -> str:
+                   json_ld_blocks: list[str] = None,
+                   noindex: bool = False) -> str:
     """Rend le <head> V6 avec SEO complet.
 
     Args:
@@ -2424,6 +2425,13 @@ def render_v6_head(lang: str, page_title: str, page_desc: str,
     html_lang = {'fr': 'fr', 'en': 'en', 'en-us': 'en-US', 'es': 'es', 'de': 'de'}.get(lang, 'fr')
     canonical_html = (f'<link rel="canonical" href="{h(canonical_url)}"/>'
                       if canonical_url else '')
+    # noindex,follow : la page reste explorée et transmet son maillage vers les
+    # pages annuelles, mais sort de l'index. Utilisé pour les 12 pages
+    # mensuelles par destination (~44k URLs) : elles captaient des impressions
+    # sans clics (CTR global 0,17%) et pesaient sur l'évaluation qualité du
+    # site, à l'origine de la rétrogradation algorithmique du 11 avril 2026.
+    robots_html = ('<meta name="robots" content="noindex,follow"/>'
+                   if noindex else '')
     preload_bg = (f'<link rel="preload" as="image" href="{h(bg_image_url)}" fetchpriority="high">'
                   if bg_image_url else '')
 
@@ -2457,7 +2465,7 @@ def render_v6_head(lang: str, page_title: str, page_desc: str,
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>{h(page_title)}</title>
 <meta name="description" content="{h(page_desc)}"/>
-{canonical_html}
+{canonical_html}{robots_html}
 {hreflang_tags}
 {og_html}
 {preload_bg}

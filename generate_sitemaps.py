@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Regenerate all 5 sitemaps from HTML files present on disk."""
+import os
 import glob
 from datetime import date
 
@@ -81,14 +82,14 @@ make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_FR if glob.glob(f)] +
     collect([('meilleures-destinations-meteo.html','monthly','0.9'),
              ('ou-partir-en-*.html','monthly','0.8'),('classement-*.html','monthly','0.7'),
-             ('meilleure-periode-*.html','monthly','0.8'),('*-meteo-*.html','monthly','0.6'),
+             ('meilleure-periode-*.html','monthly','0.8'),
              ('comparer-*.html','monthly','0.5')]),
     'sitemap-fr.xml')
 
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_EN if glob.glob(f)] +
     collect([('en/where-to-go-in-*.html','monthly','0.8'),('en/ranking-*.html','monthly','0.7'),
-             ('en/best-time-to-visit-*.html','monthly','0.8'),('en/*-weather-*.html','monthly','0.6'),
+             ('en/best-time-to-visit-*.html','monthly','0.8'),
              ('en/compare-*.html','monthly','0.5')],
             exclude_files=[f for f,_,_ in STATIC_EN]),
     'sitemap-en.xml')
@@ -97,21 +98,21 @@ make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_ES if glob.glob(f)] +
     collect([('es/mejores-destinos-climaticos.html','monthly','0.9'),
              ('es/donde-ir-en-*.html','monthly','0.8'),('es/mejor-epoca-*.html','monthly','0.8'),
-             ('es/*-clima-*.html','monthly','0.6')]),
+             ]),
     'sitemap-es.xml')
 
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_DE if glob.glob(f)] +
     collect([('de/beste-reiseziele-klima.html','monthly','0.9'),
              ('de/wohin-im-*.html','monthly','0.8'),('de/beste-reisezeit-*.html','monthly','0.8'),
-             ('de/*-wetter-*.html','monthly','0.6')]),
+             ]),
     'sitemap-de.xml')
 
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_US if glob.glob(f)] +
     collect([('us/best-weather-destinations.html','monthly','0.9'),
              ('us/where-to-go-in-*.html','monthly','0.8'),('us/best-time-to-visit-*.html','monthly','0.8'),
-             ('us/*-weather-*.html','monthly','0.6')]),
+             ]),
     'sitemap-us.xml')
 # ── Sitemaps segmentés (priorité crawl) ───────────────────────────────────────
 import csv as csv_mod, re as re_mod
@@ -179,19 +180,29 @@ split_sitemap('sitemap-es.xml','sitemap-es-priority.xml','sitemap-es-secondary.x
 split_sitemap('sitemap-de.xml','sitemap-de-priority.xml','sitemap-de-secondary.xml',top['de'],'-wetter-')
 split_sitemap('sitemap-us.xml','sitemap-us-priority.xml','sitemap-us-secondary.xml',top['en'],'-weather-')
 
-idx = f'''<?xml version="1.0" encoding="UTF-8"?>
+# Index : n'inclure que les sitemaps NON VIDES (les 'secondary' sont vides
+# depuis le passage des pages mensuelles en noindex ; référencer un sitemap
+# vide génère un avertissement GSC).
+_candidates = ['sitemap-fr-priority.xml','sitemap-en-priority.xml','sitemap-es-priority.xml',
+               'sitemap-de-priority.xml','sitemap-us-priority.xml',
+               'sitemap-fr-secondary.xml','sitemap-en-secondary.xml','sitemap-es-secondary.xml',
+               'sitemap-de-secondary.xml','sitemap-us-secondary.xml']
+_kept = []
+for _s in _candidates:
+    try:
+        if open(_s, encoding='utf-8').read().count('<loc>') > 0:
+            _kept.append(_s)
+        else:
+            os.remove(_s)
+    except FileNotFoundError:
+        pass
+_entries = '\n'.join(
+    f'  <sitemap><loc>https://bestdateweather.com/{_s}</loc><lastmod>{TODAY}</lastmod></sitemap>'
+    for _s in _kept)
+idx = f"""<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap><loc>https://bestdateweather.com/sitemap-fr-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
-  <sitemap><loc>https://bestdateweather.com/sitemap-en-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
-  <sitemap><loc>https://bestdateweather.com/sitemap-es-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
-  <sitemap><loc>https://bestdateweather.com/sitemap-de-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
-  <sitemap><loc>https://bestdateweather.com/sitemap-us-priority.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
-  <sitemap><loc>https://bestdateweather.com/sitemap-us-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
-  <sitemap><loc>https://bestdateweather.com/sitemap-fr-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
-  <sitemap><loc>https://bestdateweather.com/sitemap-en-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
-  <sitemap><loc>https://bestdateweather.com/sitemap-es-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
-  <sitemap><loc>https://bestdateweather.com/sitemap-de-secondary.xml</loc><lastmod>{TODAY}</lastmod></sitemap>
-</sitemapindex>'''
+{_entries}
+</sitemapindex>"""
 open('sitemap-index.xml','w').write(idx)
-print(f"  sitemap-index.xml: 10 sitemaps")
+print(f"  sitemap-index.xml: {len(_kept)} sitemaps")
 
