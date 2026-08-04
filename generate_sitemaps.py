@@ -78,12 +78,40 @@ def collect(patterns, exclude_redirects=True, exclude_files=None):
             result.append((f, freq, pri))
     return result
 
+
+def _monthly_indexable_files(tpl, slug_key):
+    """Pages mensuelles des destinations indexables (sélection GSC).
+
+    data/monthly_indexable.json = 149 destinations concentrant 88% des
+    impressions réelles ; elles seules ont leurs pages mensuelles dans
+    l'index, les autres sont en noindex et donc hors sitemap.
+    """
+    import json as _j, csv as _c
+    try:
+        idx = set(_j.load(open('data/monthly_indexable.json', encoding='utf-8')))
+    except Exception:
+        return []
+    dest = {r['slug_fr']: r for r in _c.DictReader(open('data/destinations.csv', encoding='utf-8-sig'))}
+    out = []
+    for slug in sorted(idx):
+        d = dest.get(slug)
+        if not d:
+            continue
+        if str(d.get('monthly', 'True')).strip().lower() not in ('true', '1', 'yes', ''):
+            continue
+        s = d.get(slug_key) or d['slug_en']
+        for f in sorted(glob.glob(tpl.replace('{S}', s))):
+            out.append((f, 'monthly', '0.6'))
+    return out
+
+
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_FR if glob.glob(f)] +
     collect([('meilleures-destinations-meteo.html','monthly','0.9'),
              ('ou-partir-en-*.html','monthly','0.8'),('classement-*.html','monthly','0.7'),
              ('meilleure-periode-*.html','monthly','0.8'),
-             ('comparer-*.html','monthly','0.5')]),
+             ('comparer-*.html','monthly','0.5')]) +
+    _monthly_indexable_files('{S}-meteo-*.html','slug_fr'),
     'sitemap-fr.xml')
 
 make_sitemap(
@@ -91,28 +119,32 @@ make_sitemap(
     collect([('en/where-to-go-in-*.html','monthly','0.8'),('en/ranking-*.html','monthly','0.7'),
              ('en/best-time-to-visit-*.html','monthly','0.8'),
              ('en/compare-*.html','monthly','0.5')],
-            exclude_files=[f for f,_,_ in STATIC_EN]),
+            exclude_files=[f for f,_,_ in STATIC_EN]) +
+    _monthly_indexable_files('en/{S}-weather-*.html','slug_en'),
     'sitemap-en.xml')
 
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_ES if glob.glob(f)] +
     collect([('es/mejores-destinos-climaticos.html','monthly','0.9'),
              ('es/donde-ir-en-*.html','monthly','0.8'),('es/mejor-epoca-*.html','monthly','0.8'),
-             ]),
+             ]) +
+    _monthly_indexable_files('es/{S}-clima-*.html','slug_es'),
     'sitemap-es.xml')
 
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_DE if glob.glob(f)] +
     collect([('de/beste-reiseziele-klima.html','monthly','0.9'),
              ('de/wohin-im-*.html','monthly','0.8'),('de/beste-reisezeit-*.html','monthly','0.8'),
-             ]),
+             ]) +
+    _monthly_indexable_files('de/{S}-wetter-*.html','slug_de'),
     'sitemap-de.xml')
 
 make_sitemap(
     [(f,freq,pri) for f,freq,pri in STATIC_US if glob.glob(f)] +
     collect([('us/best-weather-destinations.html','monthly','0.9'),
              ('us/where-to-go-in-*.html','monthly','0.8'),('us/best-time-to-visit-*.html','monthly','0.8'),
-             ]),
+             ]) +
+    _monthly_indexable_files('us/{S}-weather-*.html','slug_en'),
     'sitemap-us.xml')
 # ── Sitemaps segmentés (priorité crawl) ───────────────────────────────────────
 import csv as csv_mod, re as re_mod

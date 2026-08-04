@@ -1267,6 +1267,28 @@ def _strip_html(s: str) -> str:
 # Entry point : gen_monthly_v6 — pages MENSUELLES en design V6
 # ═══════════════════════════════════════════════════════════════════════════════
 
+import datetime as _dt
+_MONTH_YEAR = _dt.date.today().year
+_MONTHLY_INDEXABLE = None
+
+
+def _monthly_indexable(slug: str) -> bool:
+    """True si les pages mensuelles de cette destination doivent être indexées.
+
+    Liste construite empiriquement depuis la Search Console (destinations
+    concentrant l'essentiel des impressions), pas choisie a priori.
+    """
+    global _MONTHLY_INDEXABLE
+    if _MONTHLY_INDEXABLE is None:
+        import json as _j
+        p = os.path.join(os.path.dirname(__file__), '..', 'data', 'monthly_indexable.json')
+        try:
+            _MONTHLY_INDEXABLE = set(_j.load(open(p, encoding='utf-8')))
+        except Exception:
+            _MONTHLY_INDEXABLE = set()
+    return slug in _MONTHLY_INDEXABLE
+
+
 def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
                    similarities=None, comparison_index=None,
                    all_climate=None, monthly_crosslinks=None) -> str:
@@ -1564,15 +1586,35 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
     canonical = cfg['canonical_prefix'] + to_canonical_url(
         f'{slug}{cfg["monthly_sep"]}{cfg["month_url"][mi]}.html')
 
-    # Titre/desc : réutilise les templates monthly du locale si présents, sinon fallback
-    page_title = f'{nom} {("en" if lang in ("fr",) else "in")} {mois_loc} : {this_score:.1f}/10'
+    # Titre/desc mensuels.
+    # L'ANNÉE est explicitée : les données GSC montrent que les requêtes datées
+    # ("kos weather may 2026") ont un CTR de 0,93% contre 0,07% sans année, et
+    # concentrent 69% des clics — l'encart météo de Google ne couvre que ~10
+    # jours et laisse donc la place sur les intentions de planification.
+    _yr = _MONTH_YEAR
+    page_title = f'{nom} en {mois_loc} {_yr} : météo et score {this_score:.1f}/10'
     if lang in ('en', 'en-us'):
-        page_title = f'{nom} Weather in {mois_loc}: {this_score:.1f}/10'
+        page_title = f'{nom} Weather in {mois_loc} {_yr}: what to expect ({this_score:.1f}/10)'
     elif lang == 'es':
-        page_title = f'{nom} en {mois_loc}: {this_score:.1f}/10'
+        page_title = f'{nom} en {mois_loc} {_yr}: clima y puntuación {this_score:.1f}/10'
     elif lang == 'de':
-        page_title = f'{nom} im {mois_loc}: {this_score:.1f}/10'
-    page_desc = page_data.get('page_desc', '')[:160]
+        page_title = f'{nom} im {mois_loc} {_yr}: Wetter und Bewertung {this_score:.1f}/10'
+    _m=m
+    _t=_safe_float(_m.get('tmax')); _r=round(_safe_float(_m.get('rain_pct')))
+    _tt=f'{round(_t*9/5+32)}°F' if lang=='en-us' else f'{round(_t)}°C'
+    if lang == 'fr':
+        page_desc = (f'Météo à {nom} en {mois_loc} {_yr} : {_tt} en journée, {_r}% de jours '
+                     f'de pluie, score {this_score:.1f}/10. Faut-il y aller ce mois-ci ?')
+    elif lang in ('en', 'en-us'):
+        page_desc = (f'{nom} weather in {mois_loc} {_yr}: {_tt} by day, {_r}% rainy days, '
+                     f'rated {this_score:.1f}/10. Is it a good month to go?')
+    elif lang == 'es':
+        page_desc = (f'Clima en {nom} en {mois_loc} {_yr}: {_tt} de día, {_r}% de días de '
+                     f'lluvia, puntuación {this_score:.1f}/10. ¿Buen mes para ir?')
+    else:
+        page_desc = (f'Wetter in {nom} im {mois_loc} {_yr}: {_tt} tagsüber, {_r}% Regentage, '
+                     f'Bewertung {this_score:.1f}/10. Lohnt sich dieser Monat?')
+    page_desc = page_desc[:165]
 
     hreflang_tags = build_hreflang_tags(dest, mi=mi)
 
@@ -1613,10 +1655,16 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
         bg_image_url=photo_url, hreflang_tags=hreflang_tags,
         og_image_url=page_data.get('og_image_url', ''),
         json_ld_blocks=monthly_json_ld,
-        # Pages mensuelles hors index (voir render_v6_head) : ~44k URLs
-        # retirées de l'index pour concentrer l'évaluation qualité sur les
-        # pages annuelles et piliers. Elles restent accessibles et suivies.
-        noindex=True,
+        # Indexation SÉLECTIVE des pages mensuelles.
+        # Les données GSC montrent que les requêtes datées ("X weather may
+        # 2026") captent 69% des clics pour 14% des impressions (CTR 0,93%
+        # contre 0,07% sans année) : l'encart météo de Google ne couvre que
+        # ~10 jours et ne répond donc pas à une intention de planification.
+        # Ces requêtes pointent vers les pages mensuelles. On en réindexe donc
+        # les 149 destinations qui concentrent 88% des impressions réelles
+        # (data/monthly_indexable.json, sélection empirique via GSC), soit
+        # ~1 800 pages au lieu des 44 000 qui avaient valu la rétrogradation.
+        noindex=not _monthly_indexable(dest.get('slug_fr', slug)),
     )
     # Injecter le CSS .vs-cta dans le head
     head = head.replace('</head>', f'<style>{VS_CTA_CSS}</style>\n</head>')
