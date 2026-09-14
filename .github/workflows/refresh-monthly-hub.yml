@@ -1,0 +1,59 @@
+name: Refresh monthly hub
+
+# Le bandeau « Meilleurs scores · <mois> » des pages d'accueil est calculé au
+# BUILD (generate_index_hub.py lit date.today().month). La logique est donc
+# correcte, mais sans régénération le HTML statique reste figé sur le mois du
+# dernier déploiement : le 11 septembre, l'accueil affichait encore « Août ».
+#
+# Ce workflow régénère les hubs le 1er de chaque mois. Il ne touche QUE les
+# 5 fichiers de hub, pas les 45 000 pages destinations.
+
+on:
+  schedule:
+    - cron: '10 4 1 * *'    # le 1er de chaque mois à 04h10 UTC
+  workflow_dispatch:         # déclenchement manuel possible
+
+jobs:
+  refresh-hub:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Régénérer les hubs (5 langues)
+        run: python3 generate_index_hub.py
+
+      - name: Vérifier que le mois affiché est bien le mois courant
+        run: |
+          python3 - << 'PYEOF'
+          import datetime, re, sys, json
+          mi = datetime.date.today().month
+          loc = json.load(open('locales/fr.json', encoding='utf-8'))
+          expected = loc['months'][mi - 1]
+          html = open('index.html', encoding='utf-8').read()
+          m = re.search(r'home-section-title">Meilleurs scores · ([^<]+)<', html)
+          if not m:
+              print('::error::bandeau "Meilleurs scores" introuvable dans index.html')
+              sys.exit(1)
+          if m.group(1).strip().lower() != expected.strip().lower():
+              print(f'::error::mois affiché "{m.group(1)}" != mois courant "{expected}"')
+              sys.exit(1)
+          print(f'OK — bandeau sur "{m.group(1)}"')
+          PYEOF
+
+      - name: Commit si changement
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- index.html en/app.html us/app.html es/app.html de/app.html; then
+            echo "Aucun changement — mois déjà à jour."
+            exit 0
+          fi
+          git add index.html en/app.html us/app.html es/app.html de/app.html
+          git commit -m "Auto: bandeau classement du mois régénéré ($(date -u +'%B %Y'))"
+          git push
