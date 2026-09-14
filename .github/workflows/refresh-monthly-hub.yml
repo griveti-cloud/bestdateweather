@@ -13,12 +13,20 @@ on:
     - cron: '10 4 1 * *'    # le 1er de chaque mois à 04h10 UTC
   workflow_dispatch:         # déclenchement manuel possible
 
+# Le job commite la régénération : il lui faut le droit d'écriture sur le
+# dépôt. Par défaut GITHUB_TOKEN est en lecture seule et le push échoue en
+# 403 (« Permission to github-actions[bot] denied »).
+permissions:
+  contents: write
+
 jobs:
   refresh-hub:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Set up Python
         uses: actions/setup-python@v5
