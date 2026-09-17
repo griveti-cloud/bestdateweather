@@ -1456,6 +1456,17 @@ def build_top_monthly(lang, loc):
     for i, d in enumerate(top6):
         sun_str = f"{d['sun']}h"
         rain_str = f"{d['rain']}%"
+        # Temperature : premier critere de choix d'un voyageur, elle etait
+        # absente des cartes. Son ajout differencie aussi le hub en-US (°F) du
+        # hub en (°C), qui etaient jusqu'ici identiques a 100% : Google y voyait
+        # un doublon et ignorait la balise canonique de /en/app.
+        _tm = d.get('tmax')
+        if _tm is None:
+            temp_str = ''
+        elif lang == 'en-us':
+            temp_str = f"{round(float(_tm) * 9 / 5 + 32)}°F"
+        else:
+            temp_str = f"{round(float(_tm))}°C"
         score_str = f"{d['score']:.1f}"
         gradient = _hero_gradient_home(d['tmax'], d['tropical'], d['rain'], i)
         _pu = d.get('photo_url', '')
@@ -1468,7 +1479,8 @@ def build_top_monthly(lang, loc):
             f'<div class="top-card-month">{month_name}</div></div>'
             f'</div>'
             f'<div class="top-card-foot">'
-            f'<span class="top-card-stat">☀️ {sun_str}</span>'
+            + (f'<span class="top-card-stat">🌡️ {temp_str}</span>' if temp_str else '')
+            + f'<span class="top-card-stat">☀️ {sun_str}</span>'
             f'<span class="top-card-stat">💧 {rain_str}</span>'
             f'</div>'
             f'</a>'
