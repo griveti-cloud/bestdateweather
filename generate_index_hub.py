@@ -1003,6 +1003,17 @@ def inject(filepath, destinations, loc):
                      f'View destination guides ({total} destinations)', content)
     content = re.sub(r'Tableaux climatiques mensuels · \d+ destinations',
                      f'Tableaux climatiques mensuels · {total} destinations', content)
+
+    # Compteurs de GUIDES editoriaux : le nombre etait fige en dur dans les 5
+    # fichiers de locale, il serait devenu faux au premier ajout de destination
+    # (meme classe de probleme que le bandeau du mois fige sur aout).
+    # On le resynchronise ici sur le total reel, dans les 5 langues.
+    for _pat in (r'(\d+) guides détaillés', r'(\d+) guides destinations',
+                 r'(\d+) in-depth guides', r'(\d+) destination guides',
+                 r'(\d+) guías detalladas', r'(\d+) guías de destinos',
+                 r'(\d+) ausführliche Guides', r'(\d+) Reiseziel-Guides',
+                 r'des (\d+) destinations', r'(\d+) destinations mondiales'):
+        content = re.sub(_pat, lambda m, p=_pat: m.group(0).replace(m.group(1), str(total)), content)
     content = re.sub(r'Monthly climate tables · \d+ destinations',
                      f'Monthly climate tables · {total} destinations', content)
     # Update guides shortcut counts
