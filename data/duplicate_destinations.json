@@ -1,0 +1,112 @@
+{
+ "san-jose": {
+  "canonical": "costa-rica",
+  "impressions_perdant": 9,
+  "impressions_gagnant": 5182
+ },
+ "florence": {
+  "canonical": "toscane",
+  "impressions_perdant": 4,
+  "impressions_gagnant": 292
+ },
+ "nepal": {
+  "canonical": "katmandou",
+  "impressions_perdant": 891,
+  "impressions_gagnant": 2484
+ },
+ "palma-de-majorque": {
+  "canonical": "majorque",
+  "impressions_perdant": 0,
+  "impressions_gagnant": 0
+ },
+ "valletta": {
+  "canonical": "malte",
+  "impressions_perdant": 8,
+  "impressions_gagnant": 836
+ },
+ "petra": {
+  "canonical": "jordanie",
+  "impressions_perdant": 0,
+  "impressions_gagnant": 45
+ },
+ "nairobi": {
+  "canonical": "kenya",
+  "impressions_perdant": 97,
+  "impressions_gagnant": 168
+ },
+ "manille": {
+  "canonical": "philippines",
+  "impressions_perdant": 88,
+  "impressions_gagnant": 197
+ },
+ "rajasthan": {
+  "canonical": "jaipur",
+  "impressions_perdant": 79,
+  "impressions_gagnant": 768
+ },
+ "perou": {
+  "canonical": "lima",
+  "impressions_perdant": 26,
+  "impressions_gagnant": 164
+ },
+ "wellington": {
+  "canonical": "nouvelle-zelande",
+  "impressions_perdant": 9,
+  "impressions_gagnant": 284
+ },
+ "polynesie": {
+  "canonical": "tahiti",
+  "impressions_perdant": 0,
+  "impressions_gagnant": 2683
+ },
+ "tirana": {
+  "canonical": "albanie",
+  "impressions_perdant": 207,
+  "impressions_gagnant": 493
+ },
+ "windhoek": {
+  "canonical": "namibie",
+  "impressions_perdant": 2,
+  "impressions_gagnant": 152
+ },
+ "yogyakarta": {
+  "canonical": "java",
+  "impressions_perdant": 0,
+  "impressions_gagnant": 10
+ },
+ "noumea": {
+  "canonical": "nouvelle-caledonie",
+  "impressions_perdant": 0,
+  "impressions_gagnant": 0
+ },
+ "yangon": {
+  "canonical": "myanmar",
+  "impressions_perdant": 0,
+  "impressions_gagnant": 0
+ },
+ "san-juan": {
+  "canonical": "porto-rico",
+  "impressions_perdant": 78,
+  "impressions_gagnant": 35
+ },
+ "quito": {
+  "canonical": "equateur",
+  "impressions_perdant": 0,
+  "impressions_gagnant": 144
+ },
+ "la-paz": {
+  "canonical": "bolivie",
+  "impressions_perdant": 0,
+  "impressions_gagnant": 0
+ },
+ "queenstown-ski": {
+  "canonical": "queenstown",
+  "impressions_perdant": 0,
+  "impressions_gagnant": 986
+ },
+ "rarotonga": {
+  "canonical": "iles-cook",
+  "impressions_perdant": 5,
+  "impressions_gagnant": 0
+ }
+}

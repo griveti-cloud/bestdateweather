@@ -1269,6 +1269,30 @@ def _strip_html(s: str) -> str:
 
 import datetime as _dt
 _MONTH_YEAR = _dt.date.today().year
+_DUPLICATE_DESTS = None
+
+
+def _is_duplicate_dest(slug: str) -> bool:
+    """True si cette destination a des coordonnees identiques a une jumelle.
+
+    22 paires du type pays/capitale (kenya et nairobi, perou et lima...)
+    partagent exactement les memes coordonnees, donc exactement les memes
+    donnees climatiques : leurs pages sont de vrais doublons. On conserve la
+    plus recherchee de chaque paire (choix fonde sur les impressions reelles
+    de la Search Console, voir data/duplicate_destinations.json) et on retire
+    l'autre de l'index.
+    """
+    global _DUPLICATE_DESTS
+    if _DUPLICATE_DESTS is None:
+        import json as _j
+        p = os.path.join(os.path.dirname(__file__), '..', 'data', 'duplicate_destinations.json')
+        try:
+            _DUPLICATE_DESTS = set(_j.load(open(p, encoding='utf-8')).keys())
+        except Exception:
+            _DUPLICATE_DESTS = set()
+    return slug in _DUPLICATE_DESTS
+
+
 _MONTHLY_INDEXABLE = None
 
 
@@ -1664,7 +1688,8 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
         # les 149 destinations qui concentrent 88% des impressions réelles
         # (data/monthly_indexable.json, sélection empirique via GSC), soit
         # ~1 800 pages au lieu des 44 000 qui avaient valu la rétrogradation.
-        noindex=not _monthly_indexable(dest.get('slug_fr', slug)),
+        noindex=(_is_duplicate_dest(dest.get('slug_fr', slug))
+                 or not _monthly_indexable(dest.get('slug_fr', slug))),
     )
     # Injecter le CSS .vs-cta dans le head
     head = head.replace('</head>', f'<style>{VS_CTA_CSS}</style>\n</head>')

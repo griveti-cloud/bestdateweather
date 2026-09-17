@@ -79,6 +79,41 @@ def collect(patterns, exclude_redirects=True, exclude_files=None):
     return result
 
 
+
+def _drop_duplicate_dests(entries):
+    """Retire du sitemap les destinations en doublon de coordonnees.
+
+    Elles sont passees en noindex : les declarer au sitemap enverrait un
+    signal contradictoire a Google (cf. data/duplicate_destinations.json).
+    """
+    import json as _j, csv as _c
+    try:
+        dup = set(_j.load(open('data/duplicate_destinations.json', encoding='utf-8')).keys())
+    except Exception:
+        return entries
+    dest = {r['slug_fr']: r for r in _c.DictReader(open('data/destinations.csv', encoding='utf-8-sig'))}
+    slugs = set()
+    for s in dup:
+        d = dest.get(s)
+        if not d:
+            continue
+        for k in ('slug_fr', 'slug_en', 'slug_es', 'slug_de'):
+            v = (d.get(k) or '').strip()
+            if v:
+                slugs.add(v)
+    out = []
+    for f, freq, pri in entries:
+        base = f.split('/')[-1].replace('.html', '')
+        hit = False
+        for s in slugs:
+            if base.endswith('-' + s) or ('-' + s + '-') in ('-' + base + '-'):
+                hit = True
+                break
+        if not hit:
+            out.append((f, freq, pri))
+    return out
+
+
 def _monthly_indexable_files(tpl, slug_key):
     """Pages mensuelles des destinations indexables (sélection GSC).
 
@@ -105,46 +140,46 @@ def _monthly_indexable_files(tpl, slug_key):
     return out
 
 
-make_sitemap(
+make_sitemap(_drop_duplicate_dests(
     [(f,freq,pri) for f,freq,pri in STATIC_FR if glob.glob(f)] +
     collect([('meilleures-destinations-meteo.html','monthly','0.9'),
              ('ou-partir-en-*.html','monthly','0.8'),('classement-*.html','monthly','0.7'),
              ('meilleure-periode-*.html','monthly','0.8'),
              ('comparer-*.html','monthly','0.5')]) +
-    _monthly_indexable_files('{S}-meteo-*.html','slug_fr'),
+    _monthly_indexable_files('{S}-meteo-*.html','slug_fr'),),
     'sitemap-fr.xml')
 
-make_sitemap(
+make_sitemap(_drop_duplicate_dests(
     [(f,freq,pri) for f,freq,pri in STATIC_EN if glob.glob(f)] +
     collect([('en/where-to-go-in-*.html','monthly','0.8'),('en/ranking-*.html','monthly','0.7'),
              ('en/best-time-to-visit-*.html','monthly','0.8'),
              ('en/compare-*.html','monthly','0.5')],
             exclude_files=[f for f,_,_ in STATIC_EN]) +
-    _monthly_indexable_files('en/{S}-weather-*.html','slug_en'),
+    _monthly_indexable_files('en/{S}-weather-*.html','slug_en'),),
     'sitemap-en.xml')
 
-make_sitemap(
+make_sitemap(_drop_duplicate_dests(
     [(f,freq,pri) for f,freq,pri in STATIC_ES if glob.glob(f)] +
     collect([('es/mejores-destinos-climaticos.html','monthly','0.9'),
              ('es/donde-ir-en-*.html','monthly','0.8'),('es/mejor-epoca-*.html','monthly','0.8'),
              ]) +
-    _monthly_indexable_files('es/{S}-clima-*.html','slug_es'),
+    _monthly_indexable_files('es/{S}-clima-*.html','slug_es'),),
     'sitemap-es.xml')
 
-make_sitemap(
+make_sitemap(_drop_duplicate_dests(
     [(f,freq,pri) for f,freq,pri in STATIC_DE if glob.glob(f)] +
     collect([('de/beste-reiseziele-klima.html','monthly','0.9'),
              ('de/wohin-im-*.html','monthly','0.8'),('de/beste-reisezeit-*.html','monthly','0.8'),
              ]) +
-    _monthly_indexable_files('de/{S}-wetter-*.html','slug_de'),
+    _monthly_indexable_files('de/{S}-wetter-*.html','slug_de'),),
     'sitemap-de.xml')
 
-make_sitemap(
+make_sitemap(_drop_duplicate_dests(
     [(f,freq,pri) for f,freq,pri in STATIC_US if glob.glob(f)] +
     collect([('us/best-weather-destinations.html','monthly','0.9'),
              ('us/where-to-go-in-*.html','monthly','0.8'),('us/best-time-to-visit-*.html','monthly','0.8'),
              ]) +
-    _monthly_indexable_files('us/{S}-weather-*.html','slug_en'),
+    _monthly_indexable_files('us/{S}-weather-*.html','slug_en'),),
     'sitemap-us.xml')
 # ── Sitemaps segmentés (priorité crawl) ───────────────────────────────────────
 import csv as csv_mod, re as re_mod

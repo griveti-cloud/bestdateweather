@@ -2399,6 +2399,24 @@ def render_v6_reserver(slug: str, lang: str, dest_name: str,
 # laissés au caller pour rester découplé. Cet orchestrateur ne touche pas au
 # <head>.
 
+_DUP_DESTS = None
+
+
+def _dup_dest(slug: str) -> bool:
+    """True si la destination est le doublon a desindexer d'une paire de
+    coordonnees identiques (voir data/duplicate_destinations.json)."""
+    global _DUP_DESTS
+    if _DUP_DESTS is None:
+        import json as _j, os as _os
+        p = _os.path.join(_os.path.dirname(__file__), '..', 'data',
+                          'duplicate_destinations.json')
+        try:
+            _DUP_DESTS = set(_j.load(open(p, encoding='utf-8')).keys())
+        except Exception:
+            _DUP_DESTS = set()
+    return slug in _DUP_DESTS
+
+
 def render_v6_head(lang: str, page_title: str, page_desc: str,
                    canonical_url: str = '',
                    asset_prefix: str = '',
@@ -2586,6 +2604,11 @@ def render_v6_full_page(page_data: dict) -> str:
         hreflang_tags=d.get('hreflang_tags', ''),
         og_image_url=d.get('og_image_url', ''),
         json_ld_blocks=d.get('json_ld_blocks', []),
+        # Doublon de coordonnees : cette destination partage exactement les
+        # memes coordonnees, donc les memes donnees climatiques, qu'une
+        # jumelle conservee (voir data/duplicate_destinations.json). La page
+        # reste accessible et suivie, mais sort de l'index.
+        noindex=_dup_dest(d.get('slug_fr') or slug),
     )
 
     topbar = render_v6_topbar(slug, lang)
