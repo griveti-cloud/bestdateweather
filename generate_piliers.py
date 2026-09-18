@@ -186,6 +186,7 @@ def get_rankings(climate, dests, month_idx):
             'beach_score': m['beach_score'],
             'ski_score': ski,
             'hiking_score': hike,
+            'is_mountain': str(dest.get('mountain','')).strip().lower() in ('true','1','yes'),
         })
     entries.sort(key=lambda x: (-x['score'], x['nom_bare']))
     # Remove region parents when a child island is also ranked (e.g. canaries vs tenerife)
@@ -243,6 +244,7 @@ def get_pool_entries(climate, dests, month_idx, pool_size=80, ski_boost=80):
             'beach_score': m['beach_score'],
             'ski_score': ski,
             'hiking_score': hike,
+            'is_mountain': str(dest.get('mountain','')).strip().lower() in ('true','1','yes'),
             'is_mountain': dest.get('mountain', 'False') == 'True',
             'is_coastal':  dest.get('coastal',  'False') == 'True',
             'nomad_score': None,  # filled after compute_nomad
@@ -431,6 +433,103 @@ def _best_href(gen, slug_fr, slug, month_slug):
     if slug_fr not in _DUP_D and slug_fr in _IDX_M:
         return gen['monthly_href_tpl'].format(slug=slug, month_slug=month_slug)
     return gen['annual_href_tpl'].format(slug=slug)
+
+
+
+
+_SEC_I18N = {
+  'fr': {'profil':'Selon votre projet','plage':'Plage et baignade','mont':'Montagne et ski',
+         'rando':'Randonnée','eviter':'À éviter en {mois}','eviter_lead':'Les destinations les moins favorables ce mois-ci, sur les {n} analysées.',
+         'ecart':'Ce que disent les chiffres','score':'score','sur10':'/10'},
+  'en': {'profil':'Depending on your plans','plage':'Beach and swimming','mont':'Mountain and skiing',
+         'rando':'Hiking','eviter':'Best avoided in {mois}','eviter_lead':'The least favourable destinations this month, out of the {n} analysed.',
+         'ecart':'What the numbers say','score':'score','sur10':'/10'},
+  'en-us': {'profil':'Depending on your plans','plage':'Beach and swimming','mont':'Mountain and skiing',
+         'rando':'Hiking','eviter':'Best avoided in {mois}','eviter_lead':'The least favorable destinations this month, out of the {n} analyzed.',
+         'ecart':'What the numbers say','score':'score','sur10':'/10'},
+  'es': {'profil':'Según tu proyecto','plage':'Playa y baño','mont':'Montaña y esquí',
+         'rando':'Senderismo','eviter':'A evitar en {mois}','eviter_lead':'Los destinos menos favorables este mes, de los {n} analizados.',
+         'ecart':'Lo que dicen las cifras','score':'puntuación','sur10':'/10'},
+  'de': {'profil':'Je nach Vorhaben','plage':'Strand und Baden','mont':'Berge und Skifahren',
+         'rando':'Wandern','eviter':'Im {mois} eher meiden','eviter_lead':'Die ungünstigsten Ziele in diesem Monat, von {n} untersuchten.',
+         'ecart':'Was die Zahlen sagen','score':'Bewertung','sur10':'/10'},
+}
+
+
+def build_extra_sections(entries, pool, loc, mi, month_name):
+    """Sections derivees des donnees deja calculees.
+
+    Les pages 'ou partir' ne faisaient que 618 mots autour d'un tableau, sans
+    sous-structure : trop peu pour se positionner sur les variantes de
+    requetes (par profil, par region, destinations a eviter). Tout le contenu
+    ajoute ici provient des scores deja calcules (beach_score, ski_score,
+    hiking_score, score global) : aucune donnee inventee.
+    """
+    lang = loc['meta']['html_lang']
+    L = _SEC_I18N.get(lang, _SEC_I18N['en'])
+    gen = loc['gen']
+    imperial = loc['meta'].get('imperial', False)
+
+    def _t(c):
+        return f"{c_to_f(c):.0f}°F" if imperial else f"{c:.0f}°C"
+
+    def _nom(x):
+        return get_nom(x, lang)
+
+    def _href(x):
+        return gen['annual_href_tpl'].format(slug=get_slug(x, lang))
+
+    def _cards(items, key):
+        out = ''
+        for x in items:
+            v = x.get(key)
+            if v is None:
+                continue
+            out += (f'<li><a href="{_href(x)}">{e(_nom(x))}</a> '
+                    f'<span class="sec-meta">{_t(x["tmax"])} · {x["rain_pct"]:.0f}% · '
+                    f'{L["score"]} {v:.1f}{L["sur10"]}</span></li>')
+        return out
+
+    html = ''
+
+    # 1) Par profil de sejour
+    blocs = []
+    for key, titre in (('beach_score', L['plage']), ('ski_score', L['mont']),
+                       ('hiking_score', L['rando'])):
+        top = sorted([p for p in pool if p.get(key) is not None],
+                     key=lambda x: -x[key])[:5]
+        if len(top) >= 3:
+            blocs.append(f'<div class="sec-col"><h3>{titre}</h3><ul class="sec-list">{_cards(top, key)}</ul></div>')
+    if blocs:
+        html += (f'<section class="sec-extra"><h2>{L["profil"]}</h2>'
+                 f'<div class="sec-grid">{"".join(blocs)}</div></section>')
+
+    # 2) A eviter ce mois-ci
+    # Une destination n'est pas "a eviter" si elle excelle pour un usage
+    # precis : le score general penalise le froid, ce qui faisait remonter des
+    # stations de ski en mars alors qu'elles sont alors a leur meilleur. On
+    # ecarte donc tout ce qui depasse 7/10 sur l'un des usages.
+    def _ok_pour_un_usage(x):
+        # Une station de montagne n'est jamais "a eviter" : le score general
+        # penalise le froid, alors que c'est precisement sa saison.
+        if x.get('is_mountain'):
+            return True
+        return any((x.get(k) or 0) >= 7 for k in ('beach_score', 'ski_score', 'hiking_score'))
+
+    worst = sorted([p for p in pool
+                    if p.get('score') is not None and not _ok_pour_un_usage(p)],
+                   key=lambda x: x['score'])[:6]
+    if len(worst) >= 4:
+        lis = ''
+        for x in worst:
+            lis += (f'<li><a href="{_href(x)}">{e(_nom(x))}</a> '
+                    f'<span class="sec-meta">{_t(x["tmax"])} · {x["rain_pct"]:.0f}% · '
+                    f'{L["score"]} {x["score"]:.1f}{L["sur10"]}</span></li>')
+        html += (f'<section class="sec-extra"><h2>{L["eviter"].format(mois=month_name)}</h2>'
+                 f'<p class="sec-lead">{L["eviter_lead"].format(n=len(pool))}</p>'
+                 f'<ul class="sec-list sec-list-wide">{lis}</ul></section>')
+
+    return html
 
 
 def build_table(entries, loc, mi):
@@ -709,6 +808,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 
     region_tabs = build_region_tabs(lang)
     table_body = build_table(entries, loc, mi)
+    extra_sections = build_extra_sections(entries, pool, loc, mi, month_name)
     month_nav = build_month_nav(mi, loc)
     related = build_related(mi, loc)
 
@@ -1044,6 +1144,7 @@ def generate_page(mi, lang, dests, climate, country_info=None):
 <p class="rt-methodo" id="rt-methodo-nomad" style="display:none">💻 Score nomade : météo stable sur 12 mois, budget et sécurité déjà intégrés dans le calcul. Seul le filtre Région est applicable.</p>
 <div style="overflow-x:auto"><table class="rt" aria-label="Classement"><thead id="rt-head"><tr>{th_html}</tr></thead><tbody id="rt-body">{table_body}</tbody></table></div>
 </div>
+{extra_sections}
 <div class="cta-box"><a href="{cta_href}">{cta_text} →</a></div>
 <div style="text-align:center;margin:0 0 20px"><a href="{map_href}" style="display:inline-block;padding:12px 20px;background:var(--navy);color:#f5d060;font-weight:600;font-size:14px;border-radius:12px;text-decoration:none;border:1.5px solid rgba(255,215,100,.2)">{map_cta_pilier}</a></div>
 {related}
