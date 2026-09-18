@@ -105,17 +105,7 @@ def get_pays(entry, lang):
     if lang == 'de':    return entry.get('country_de') or entry.get('pays_de') or entry.get('pays', '')
     return entry.get('country_en') or entry.get('pays_en') or entry.get('pays', '')
 
-REGION_CHILDREN = {
-    'canaries':  {'lanzarote', 'fuerteventura', 'gran-canaria', 'tenerife',
-                  'la-palma', 'la-gomera', 'el-hierro'},
-    'algarve':   {'faro'},
-    'madere':    {'funchal'},
-    'majorque':  {'palma-de-majorque', 'alcudia'},
-    'cote-azur': {'nice', 'cannes'},
-    'provence':  {'marseille'},
-    'toscane':   {'florence', 'sienne'},
-    'sicile':    {'palerme', 'catane', 'taormina'},
-}
+from lib.region_children import REGION_CHILDREN, strip_region_parents  # source unique
 
 # Geographic sibling groups — within a country, only the highest-scoring slug shown
 # when multiple represent essentially the same area

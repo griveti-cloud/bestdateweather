@@ -219,27 +219,7 @@ COUNTRY_SLUGS = {
 
 # Region/archipelago slugs mapped to their child slugs.
 # Remove the parent when any child is also ranked.
-REGION_CHILDREN = {
-    # Archipels
-    'canaries':  {'lanzarote', 'fuerteventura', 'gran-canaria', 'tenerife',
-                  'la-palma', 'la-gomera', 'el-hierro'},
-    'porto-rico': {'san-juan'},
-    # Régions → villes incluses dans la même zone géographique
-    'algarve':   {'faro'},
-    'madere':    {'funchal'},
-    'majorque':  {'palma-de-majorque', 'alcudia'},
-    'minorque':  set(),  # pas de ville enfant actuellement
-    'cote-azur': {'nice', 'cannes'},
-    'provence':  {'marseille'},
-    'toscane':   {'florence', 'sienne'},
-    'sicile':    {'palerme', 'catane', 'taormina'},
-    'sardaigne': set(),
-    'corse':     set(),
-    'crete':     set(),
-    'ibiza':     set(),
-    'formentera': set(),
-    'bretagne':  set(),
-}
+from lib.region_children import REGION_CHILDREN, strip_region_parents  # source unique
 
 def dedup_country(results, dests):
     """Remove country-level and region-level entries when a more specific sibling is also ranked."""

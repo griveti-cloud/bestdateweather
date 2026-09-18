@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Regenerate SEO destination hub: search + 6 accordions + sub-accordions."""
+from lib.region_children import strip_region_parents  # source unique, cf. lib/region_children.py
 import csv, re, os
 import html as html_mod
 from lib.regions import reg as _reg_pilier, NON_EUROPE_SLUGS, MACARONESIA_SLUGS
@@ -923,7 +924,8 @@ def _top_now_cards(destinations, loc, lang, n=13):
             'credit': p.get('photo_credit_name', ''),
         })
 
-    results.sort(key=lambda x: -x['score'])
+    results = strip_region_parents(results, key='slug')
+    results.sort(key=lambda x: (-x['score'], x.get('nom') or x.get('slug') or ''))
     top = results[:n]
     if not top:
         return ''
@@ -1433,6 +1435,7 @@ def build_top_monthly(lang, loc):
                 photo_url = (_re2.sub(r'\?.*$', '', raw_url) + '?w=300&q=70&fm=webp&fit=crop&crop=entropy') if raw_url else ''
                 scored.append({
                     'nom': nom,
+                    'slug': slug,            # slug canonique (slug_fr), pour le filtre regional
                     'slug_dest': slug_dest,
                     'score': score,
                     'tmax': round(tmax),
@@ -1446,7 +1449,13 @@ def build_top_monthly(lang, loc):
                 })
         except: pass
 
-    scored.sort(key=lambda x: -x['score'])
+    # Meme regle que les pages de classement : on retire l'entite regionale
+    # quand un de ses enfants est deja classe, et on departage les ex aequo par
+    # le nom. Sans cela l'accueil affichait 'les Canaries' en 2e position alors
+    # que la page de classement ne la contient pas, et l'ordre des ex aequo
+    # differait (Samarcande ici, Amman la-bas, tous deux a 9,4).
+    scored = strip_region_parents(scored, key='slug')
+    scored.sort(key=lambda x: (-x['score'], x.get('nom') or x.get('slug') or ''))
     top6 = scored[:13]
     if not top6:
         return ''
@@ -1587,9 +1596,11 @@ def build_rankings_section(lang, loc):
             nm = d.get(nom_key) or d.get('nom_fr', slug)
             pu = photo_db.get(slug, '')
             if pu: pu = _re3.sub(r'\?.*$', '', pu) + '?w=300&q=70&fm=webp&fit=crop&crop=entropy'
-            if sk: results.append({'nom':nm,'slug_dest':sk,'score':sc,'photo_url':pu,
+            if sk: results.append({'nom':nm,'slug':slug,'slug_dest':sk,'score':sc,'photo_url':pu,
                                    'url':url_pfx+sk+'.html'})
-        results.sort(key=lambda x: -x['score'])
+        # Meme regle que les pages de classement (cf. lib/region_children.py)
+        results = strip_region_parents(results, key='slug')
+        results.sort(key=lambda x: (-x['score'], x.get('nom') or ''))
         return results[:n]
 
     def _cards_html(items):
@@ -1655,6 +1666,8 @@ def build_rankings_section(lang, loc):
                     'url': url_pfx + d.get(slug_key, slug) + '.html',
                     'nom': d.get(nom_key, d.get('nom_fr', slug)),
                 })
+            # Meme regle que les autres classements (cf. lib/region_children.py)
+            out = strip_region_parents(out, key='slug_fr')
             return out
         except Exception as e:
             print(f'  ⚠️  _top_nomad: {e}')
