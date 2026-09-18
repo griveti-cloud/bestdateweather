@@ -440,19 +440,24 @@ def _best_href(gen, slug_fr, slug, month_slug):
 _SEC_I18N = {
   'fr': {'profil':'Selon votre projet','plage':'Plage et baignade','mont':'Montagne et ski',
          'rando':'Randonnée','eviter':'À éviter en {mois}','eviter_lead':'Les destinations les moins favorables ce mois-ci, sur les {n} analysées.',
-         'ecart':'Ce que disent les chiffres','score':'score','sur10':'/10'},
+         'ecart':'Ce que disent les chiffres','score':'score','sur10':'/10',
+         'region':'Où partir en {mois} par région','region_lead':'Les meilleures destinations de chaque région ce mois-ci.'},
   'en': {'profil':'Depending on your plans','plage':'Beach and swimming','mont':'Mountain and skiing',
          'rando':'Hiking','eviter':'Best avoided in {mois}','eviter_lead':'The least favourable destinations this month, out of the {n} analysed.',
-         'ecart':'What the numbers say','score':'score','sur10':'/10'},
+         'ecart':'What the numbers say','score':'score','sur10':'/10',
+         'region':'Where to go in {mois} by region','region_lead':'The best destinations in each region this month.'},
   'en-us': {'profil':'Depending on your plans','plage':'Beach and swimming','mont':'Mountain and skiing',
          'rando':'Hiking','eviter':'Best avoided in {mois}','eviter_lead':'The least favorable destinations this month, out of the {n} analyzed.',
-         'ecart':'What the numbers say','score':'score','sur10':'/10'},
+         'ecart':'What the numbers say','score':'score','sur10':'/10',
+         'region':'Where to go in {mois} by region','region_lead':'The best destinations in each region this month.'},
   'es': {'profil':'Según tu proyecto','plage':'Playa y baño','mont':'Montaña y esquí',
          'rando':'Senderismo','eviter':'A evitar en {mois}','eviter_lead':'Los destinos menos favorables este mes, de los {n} analizados.',
-         'ecart':'Lo que dicen las cifras','score':'puntuación','sur10':'/10'},
+         'ecart':'Lo que dicen las cifras','score':'puntuación','sur10':'/10',
+         'region':'Adónde ir en {mois} por región','region_lead':'Los mejores destinos de cada región este mes.'},
   'de': {'profil':'Je nach Vorhaben','plage':'Strand und Baden','mont':'Berge und Skifahren',
          'rando':'Wandern','eviter':'Im {mois} eher meiden','eviter_lead':'Die ungünstigsten Ziele in diesem Monat, von {n} untersuchten.',
-         'ecart':'Was die Zahlen sagen','score':'Bewertung','sur10':'/10'},
+         'ecart':'Was die Zahlen sagen','score':'Bewertung','sur10':'/10',
+         'region':'Wohin im {mois} nach Region','region_lead':'Die besten Ziele jeder Region in diesem Monat.'},
 }
 
 
@@ -504,7 +509,35 @@ def build_extra_sections(entries, pool, loc, mi, month_name):
         html += (f'<section class="sec-extra"><h2>{L["profil"]}</h2>'
                  f'<div class="sec-grid">{"".join(blocs)}</div></section>')
 
-    # 2) A eviter ce mois-ci
+    # 2) Par region : le filtre par region n'existait qu'en JavaScript, via un
+    # parametre d'URL, donc aucun contenu regional n'etait indexable. Cette
+    # section le rend statique et ouvre les requetes du type
+    # "ou partir en mars en Europe".
+    from lib.regions import reg as _reg_of, REGION_LABELS as _RL
+    labels = _RL.get(lang, _RL['en'])
+    groupes = {}
+    for p in pool:
+        k = _reg_of(p.get('pays', ''), p.get('slug_fr', ''))
+        if k and k != 'all':
+            groupes.setdefault(k, []).append(p)
+    blocs_reg = []
+    for k, lab in labels.items():
+        if k == 'all' or k not in groupes:
+            continue
+        top = sorted(groupes[k], key=lambda x: -(x.get('score') or 0))[:4]
+        if len(top) >= 3:
+            lis = ''
+            for x in top:
+                lis += (f'<li><a href="{_href(x)}">{e(_nom(x))}</a> '
+                        f'<span class="sec-meta">{_t(x["tmax"])} · {x["rain_pct"]:.0f}% · '
+                        f'{L["score"]} {x["score"]:.1f}{L["sur10"]}</span></li>')
+            blocs_reg.append(f'<div class="sec-col"><h3>{e(lab)}</h3><ul class="sec-list">{lis}</ul></div>')
+    if len(blocs_reg) >= 3:
+        html += (f'<section class="sec-extra"><h2>{L["region"].format(mois=month_name)}</h2>'
+                 f'<p class="sec-lead">{L["region_lead"]}</p>'
+                 f'<div class="sec-grid">{"".join(blocs_reg)}</div></section>')
+
+    # 3) A eviter ce mois-ci
     # Une destination n'est pas "a eviter" si elle excelle pour un usage
     # precis : le score general penalise le froid, ce qui faisait remonter des
     # stations de ski en mars alors qu'elles sont alors a leur meilleur. On
