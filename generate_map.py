@@ -571,10 +571,56 @@ function pickRL(rl){{CUR_RL=rl;var lbl=SECU_LABELS[String(rl)];var active=rl<4;s
 function pickBI(bi){{CUR_BI=bi;var lbl=BUDGET_LABELS[String(bi)];var active=bi<5;setBtn('bi',active?'≤ '+lbl:FP_BUDGET,active);document.querySelectorAll('#dd-bi-menu .dd-item').forEach(function(el,i){{el.classList.toggle('on',i===(bi===5?0:bi===1?1:bi===2?2:bi===3?3:4));}});closeDD();render();}}
 function pickMin(min){{CUR_MIN=min;setBtn('min',min>0?('≥ '+min.toFixed(1)):'{m['map_min_score']}',min>0);document.querySelectorAll('#dd-min-menu .dd-item').forEach(function(el,i){{el.classList.toggle('on',i===(min===0?0:min-4));}});closeDD();render();}}
 
+// ── Projection Equal Earth (Savric, Patterson, Jenny, 2018) ──
+// Mercator gonflait les hautes latitudes jusqu'a 14 fois et ecrasait la zone
+// intertropicale, ou se concentrent pourtant la plupart des destinations.
+// Equal Earth est EQUIVALENTE : deux zones de meme surface reelle occupent la
+// meme surface a l'ecran, ce qui est coherent pour une carte qui compare des
+// lieux. Le changement est possible parce que la couche de tuiles raster
+// (CartoDB) etait de toute facon bloquee par la politique de securite du site
+// (img-src n'autorise pas basemaps.cartocdn.com) : la carte est vectorielle.
+var EE_A1=1.340264, EE_A2=-0.081106, EE_A3=0.000893, EE_A4=0.003796;
+var EE_M=Math.sqrt(3)/2;
+var EqualEarthProjection={{
+  project:function(latlng){{
+    var lam=latlng.lng*Math.PI/180, phi=latlng.lat*Math.PI/180;
+    var th=Math.asin(Math.max(-1,Math.min(1,EE_M*Math.sin(phi))));
+    var t2=th*th, t6=t2*t2*t2, t8=t6*t2;
+    var den=3*(9*EE_A4*t8+7*EE_A3*t6+3*EE_A2*t2+EE_A1);
+    var x=2*Math.sqrt(3)*lam*Math.cos(th)/den;
+    var y=EE_A4*th*t8+EE_A3*th*t6+EE_A2*th*t2+EE_A1*th;
+    return new L.Point(x,y);
+  }},
+  unproject:function(point){{
+    // Inversion par Newton-Raphson sur theta (convergence en ~5 iterations).
+    var th=point.y, phi, i, t2, t6, t8, f, fp;
+    for(i=0;i<12;i++){{
+      t2=th*th; t6=t2*t2*t2; t8=t6*t2;
+      f=EE_A4*th*t8+EE_A3*th*t6+EE_A2*th*t2+EE_A1*th-point.y;
+      fp=9*EE_A4*t8+7*EE_A3*t6+3*EE_A2*t2+EE_A1;
+      if(Math.abs(fp)<1e-12) break;
+      th-=f/fp;
+    }}
+    t2=th*th; t6=t2*t2*t2; t8=t6*t2;
+    var den=3*(9*EE_A4*t8+7*EE_A3*t6+3*EE_A2*t2+EE_A1);
+    var lam=point.x*den/(2*Math.sqrt(3)*Math.cos(th));
+    phi=Math.asin(Math.max(-1,Math.min(1,Math.sin(th)/EE_M)));
+    return new L.LatLng(phi*180/Math.PI, lam*180/Math.PI);
+  }},
+  bounds:L.bounds([-2.7066,-1.3174],[2.7066,1.3174])
+}};
+var EqualEarthCRS=L.extend({{}},L.CRS,{{
+  code:'EqualEarth',
+  projection:EqualEarthProjection,
+  transformation:new L.Transformation(60,162.3,-60,79.3),
+  scale:function(z){{return Math.pow(2,z);}},
+  zoom:function(s){{return Math.log(s)/Math.LN2;}},
+  infinite:true,
+  wrapLng:null, wrapLat:null
+}});
+
 // Map
-var map=L.map('map',{{center:[20,10],zoom:2,minZoom:2,maxZoom:12,zoomControl:true,attributionControl:false}});
-// Attribution hidden
-L.tileLayer('https://{{s}}.basemaps.cartocdn.com/dark_nolabels/{{z}}/{{x}}/{{y}}{{r}}.png',{{maxZoom:19,subdomains:'abcd'}}).addTo(map);
+var map=L.map('map',{{crs:EqualEarthCRS,center:[20,10],zoom:2,minZoom:1,maxZoom:7,zoomControl:true,attributionControl:false,worldCopyJump:false}});
 var WORLD={world_json};
 L.geoJSON(WORLD,{{style:{{fillColor:'#2a3450',fillOpacity:0.92,color:'#6a7d9e',weight:0.8}}}}).addTo(map);
 var CLABELS={clabels_lang_json};
