@@ -403,6 +403,36 @@ FONTS = (
 
 # ── Page Builders ─────────────────────────────────────────────────────────────
 
+
+_IDX_M = None
+_DUP_D = None
+
+
+def _best_href(gen, slug_fr, slug, month_slug):
+    """Lien vers la fiche du mois si elle est indexable, sinon vers l'annuelle.
+
+    Depuis la desindexation selective des pages mensuelles, 79 pour cent des
+    liens de ces tableaux pointaient vers des pages en noindex : le maillage
+    se perdait dans des impasses au lieu d'irriguer des pages indexables.
+    Les fiches annuelles convertissent en outre 5,6 fois mieux (3,76 pour cent
+    contre 0,67 pour cent).
+    """
+    global _IDX_M, _DUP_D
+    if _IDX_M is None:
+        import json as _j
+        try:
+            _IDX_M = set(_j.load(open('data/monthly_indexable.json', encoding='utf-8')))
+        except Exception:
+            _IDX_M = set()
+        try:
+            _DUP_D = set(_j.load(open('data/duplicate_destinations.json', encoding='utf-8')).keys())
+        except Exception:
+            _DUP_D = set()
+    if slug_fr not in _DUP_D and slug_fr in _IDX_M:
+        return gen['monthly_href_tpl'].format(slug=slug, month_slug=month_slug)
+    return gen['annual_href_tpl'].format(slug=slug)
+
+
 def build_table(entries, loc, mi):
     """Build tbody rows only (thead injected by JS for mode switching)."""
     lang = loc['meta']['html_lang']
@@ -417,7 +447,7 @@ def build_table(entries, loc, mi):
         slug = get_slug(entry, lang)
         nom  = get_nom(entry, lang)
         pays = get_pays(entry, lang)
-        href = gen['monthly_href_tpl'].format(slug=slug, month_slug=month_url[mi])
+        href = _best_href(gen, entry.get('slug') or entry.get('slug_fr') or slug, slug, month_url[mi])
         flag_img = f'<img src="{gen["asset_prefix"]}flags/{entry["flag"]}.png" width="16" height="12" alt="" style="vertical-align:middle;margin-right:6px;border-radius:1px">'
         sc = entry['score']
         sc_color = score_class(sc)
