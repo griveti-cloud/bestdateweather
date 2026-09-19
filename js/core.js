@@ -259,8 +259,88 @@ function histWeatherEmoji(code){
  return'❓';
 }
 
+
+/* ══════════════════════════════════════════════
+   VERDICT HISTORIQUE — une phrase affirmee
+   Les donnees journalieres ERA5 sont deja recuperees par
+   fetchHistoricalTemps() pour N'IMPORTE QUELLES coordonnees (geocodage
+   mondial), sur 10 ans et une fenetre de +/-3 jours. Elles n'alimentaient
+   qu'un graphique, qui laisse l'utilisateur faire lui-meme la synthese.
+   Ce bloc repond a la question posee, en constatant le passe plutot qu'en
+   predisant l'avenir : une phrase toujours vraie, jamais prise en defaut
+   le jour venu, et bien plus partageable qu'une courbe.
+   ══════════════════════════════════════════════ */
+var HIST_VERDICT_I18N = {
+  fr: {sunny:'ensoleillé', dry:'sans pluie', years:'années sur', avg:'en moyenne',
+       range:'jamais moins de', never:'ni plus de', on:'Le', at:'à',
+       lead:'Sur les 10 dernières années'},
+  en: {sunny:'sunny', dry:'dry', years:'years out of', avg:'on average',
+       range:'never below', never:'nor above', on:'On', at:'in',
+       lead:'Over the last 10 years'},
+  es: {sunny:'soleado', dry:'sin lluvia', years:'años de', avg:'de media',
+       range:'nunca menos de', never:'ni más de', on:'El', at:'en',
+       lead:'En los últimos 10 años'},
+  de: {sunny:'sonnig', dry:'trocken', years:'von', avg:'im Schnitt',
+       range:'nie unter', never:'nie über', on:'Am', at:'in',
+       lead:'In den letzten 10 Jahren'}
+};
+
+function histVerdictLang(){
+  var l=(document.documentElement.lang||'fr').toLowerCase();
+  if(l==='en-us')l='en';
+  return HIST_VERDICT_I18N[l]?l:'en';
+}
+
+function renderHistVerdict(data, placeName){
+  var el=document.getElementById('hist-verdict');
+  if(!el)return;
+  if(!data||data.length<5){el.style.display='none';return;}
+  var L=HIST_VERDICT_I18N[histVerdictLang()];
+  var isUS=window._units==='us';
+  function toD(c){return c==null?null:(isUS?Math.round(c*9/5+32):Math.round(c));}
+  var unit=isUS?'°F':'°C';
+
+  var n=0, dry=0, sunny=0, sum=0, lo=null, hi=null;
+  for(var i=0;i<data.length;i++){
+    var d=data[i];
+    if(d.tmax==null)continue;
+    n++; sum+=d.tmax;
+    if(lo===null||d.tmax<lo)lo=d.tmax;
+    if(hi===null||d.tmax>hi)hi=d.tmax;
+    // Codes WMO : <51 = pas de precipitation (0-3 ciel, 45/48 brouillard)
+    if(d.wc!=null&&d.wc<51)dry++;
+    if(d.wc!=null&&d.wc<=2)sunny++;
+  }
+  if(!n){el.style.display='none';return;}
+  var avg=toD(sum/n);
+
+  // On ne met en avant le plein soleil que si le constat est FORT (>=70%).
+  // Sinon on retient l'absence de pluie, plus actionnable pour un voyage et
+  // plus robuste : a Dubai en decembre, 5/10 "ensoleille" sous-vendait une
+  // destination quasi toujours seche.
+  var useSunny = sunny >= Math.ceil(n*0.7);
+  var cnt = useSunny ? sunny : dry;
+  var word = useSunny ? L.sunny : L.dry;
+  var pct = Math.round(cnt/n*100);
+  var tone = pct>=70 ? '#1a7a4a' : (pct>=40 ? '#b8860b' : '#b91c1c');
+  var bg   = pct>=70 ? 'rgba(26,122,74,.10)' : (pct>=40 ? 'rgba(184,134,11,.10)' : 'rgba(185,28,28,.10)');
+
+  el.style.display='block';
+  el.innerHTML =
+    '<div style="background:'+bg+';border:1px solid '+tone+'33;border-radius:14px;'
+    + 'padding:16px 18px;margin:2px 0 14px">'
+    + '<div style="font-size:11px;font-weight:700;text-transform:uppercase;'
+    + 'letter-spacing:.6px;color:#6b7280;margin-bottom:6px">'+L.lead+'</div>'
+    + '<div style="font-size:19px;font-weight:800;line-height:1.35;color:'+tone+'">'
+    + cnt+' '+L.years+' '+n+' '+word+'</div>'
+    + '<div style="font-size:14px;color:#3a4150;margin-top:6px;line-height:1.5">'
+    + avg+unit+' '+L.avg+' · '+L.range+' '+toD(lo)+unit+' '+L.never+' '+toD(hi)+unit
+    + '</div></div>';
+}
+
 function renderHistoricalChart(data){
  var el=document.getElementById('sec-history');
+  try{renderHistVerdict(data);}catch(e){}
  if(!el)return;
  var ct=document.getElementById('hist-chart-container');
  if(!ct)return;
