@@ -2388,8 +2388,11 @@ function run() {
  var _hSec=document.getElementById('sec-history');
  if(_hSec){_hSec.style.display='';var _hCt=document.getElementById('hist-chart-container');if(_hCt)_hCt.innerHTML='<div class="hist-loader" style="text-align:center;padding:20px;color:#aaa;font-size:13px">⏳</div>';}
  // Si le panel détails est déjà ouvert, relancer le fetch historique immédiatement
- var _detailsPanel=document.getElementById('details-panel');
- if(_detailsPanel && _detailsPanel.classList.contains('open') && selectedLoc && window._lastMo!=null && window._lastDa!=null){
+   // Le verdict historique est desormais dans le RESULTAT PRINCIPAL, plus dans
+  // l'accordeon : on lance donc le calcul des la recherche, sans attendre que
+  // l'utilisateur deplie les details (il ne le fait pour ainsi dire jamais).
+  var _detailsPanel=document.getElementById('details-panel');
+  if(selectedLoc && window._lastMo!=null && window._lastDa!=null){
   _histLoading=true;
   fetchHistoricalTemps(selectedLoc.lat,selectedLoc.lon,mo,da)
    .then(function(data){_histLoaded=true;_histLoading=false;renderHistoricalChart(data);})
