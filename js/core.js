@@ -172,8 +172,12 @@ function quickFill(type) {
 }
 
 function toggleDetails() {
- var btn = document.getElementById('details-toggle');
- var panel = document.getElementById('details-panel');
+  // L'accordeon a ete supprime (personne ne le depliait) : le panneau est
+  // desormais toujours visible. On garde la fonction defensive au cas ou un
+  // ancien appel subsisterait quelque part.
+  var btn = document.getElementById('details-toggle');
+  var panel = document.getElementById('details-panel');
+  if (!btn || !panel) return;
  var open = panel.classList.toggle('open');
  btn.classList.toggle('open', open);
  btn.setAttribute('aria-expanded', open);
@@ -2391,7 +2395,6 @@ function run() {
    // Le verdict historique est desormais dans le RESULTAT PRINCIPAL, plus dans
   // l'accordeon : on lance donc le calcul des la recherche, sans attendre que
   // l'utilisateur deplie les details (il ne le fait pour ainsi dire jamais).
-  var _detailsPanel=document.getElementById('details-panel');
   if(selectedLoc && window._lastMo!=null && window._lastDa!=null){
   _histLoading=true;
   fetchHistoricalTemps(selectedLoc.lat,selectedLoc.lon,mo,da)
