@@ -169,7 +169,22 @@ span.flatpickr-weekday{color:rgba(255,255,255,.4)!important;background:#1a1f2e!i
 .flatpickr-day.selected,.flatpickr-day.selected:hover{background:linear-gradient(135deg,#c99438,#e8b84b)!important;border-color:#c99438!important;color:#fff!important}
 .flatpickr-day.prevMonthDay,.flatpickr-day.nextMonthDay{color:rgba(255,255,255,.2)!important}
 .flatpickr-day.flatpickr-disabled{color:rgba(255,255,255,.15)!important}
-.top-cards::-webkit-scrollbar{height:4px}.top-cards::-webkit-scrollbar-track{background:transparent}.top-cards::-webkit-scrollbar-thumb{background:rgba(201,148,56,.4);border-radius:2px}</style>
+.top-cards::-webkit-scrollbar{height:4px}.top-cards::-webkit-scrollbar-track{background:transparent}.top-cards::-webkit-scrollbar-thumb{background:rgba(201,148,56,.4);border-radius:2px}
+/* Selecteur de mode, variante legere : les deux controles ont la meme forme
+   et un etat actif visible. Avant, le champ date n'avait AUCUN etat actif et
+   le bouton annuel etait dore en permanence, on ne savait pas quel mode etait
+   selectionne. L'actif est un contour dore, pas le degrade plein, reserve au
+   bouton principal "Voir la meteo". */
+.fused-mode-row .fused-date-wrap,
+.fused-mode-row .mode-btn-annual{min-height:52px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);color:rgba(255,255,255,.62);box-shadow:none}
+.fused-mode-row .fused-date-wrap.active,
+.fused-mode-row .mode-btn-annual.active{background:rgba(201,148,56,.14);border-color:#c99438;color:#e8b84b;box-shadow:none}
+.fused-mode-row .fused-date-wrap.active .fused-date-inp{color:#e8b84b!important}
+.fused-mode-row .fused-date-wrap.active .fused-date-inp::placeholder{color:#e8b84b!important}
+.fused-mode-row .mode-btn-annual svg{stroke:currentColor}
+.fused-mode-row .fused-date-wrap:focus-visible,
+.fused-mode-row .mode-btn-annual:focus-visible{outline:2px solid #e8b84b;outline-offset:2px}
+</style>
 <link rel="preload" href="app.css?v=53" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
 <noscript><link rel="stylesheet" href="app.css?v=53"/></noscript>
 <link rel="stylesheet" href="css/weather-banner.css?v=5" media="print" onload="this.media='all'"/><noscript><link rel="stylesheet" href="css/weather-banner.css?v=3"/></noscript>
@@ -278,10 +293,10 @@ document.addEventListener('click',function(e){
  </div>
 </div>
 <div class="fused-mode-row">
- <div class="fused-date-wrap" onclick="switchMode('date');document.getElementById('inp-date').click()">
+ <div class="fused-date-wrap active" role="button" tabindex="0" aria-pressed="true" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" onclick="switchMode('date');document.getElementById('inp-date').click()">
   <input class="inp fused-date-inp" type="text" id="inp-date-display" placeholder="📅  Date du projet" readonly style="cursor:pointer;pointer-events:none"/>
  </div>
- <button class="mode-btn mode-btn-annual" id="mode-annual" onclick="switchMode('annual')">
+ <button class="mode-btn mode-btn-annual" id="mode-annual" aria-pressed="false" onclick="switchMode('annual')">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
   <span class="mode-btn-title">Vue 12 mois</span>
  </button>
@@ -2219,7 +2234,7 @@ document.addEventListener('click',function(e){
 <script defer src="js/fiche-scores.js?v=639443"></script>
 <script src="js/fiche-aqi.js"></script>
 <script defer src="js/fiche-slugs.min.js?v=edd3b9"></script>
-<script defer src="js/core.min.js?v=72"></script>
+<script defer src="js/core.min.js?v=73"></script>
 <script defer src="js/favs.min.js?v=1"></script>
 
 <script src="js/sw-register.js?v=948975" defer></script>

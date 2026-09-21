@@ -2588,7 +2588,12 @@ function switchMode(mode) {
  var ma = document.getElementById('mode-annual');
  var aw = document.getElementById('annual-wrap');
  if (md) md.className = 'mode-btn' + (isDate ? ' active' : '');
- if (ma) ma.className = 'mode-btn' + (!isDate ? ' active' : '');
+ if (ma) { ma.classList.toggle('active', !isDate); ma.setAttribute('aria-pressed', String(!isDate)); }
+  // Le champ date VISIBLE (.fused-date-wrap) recoit enfin son etat actif.
+  // Auparavant seul un bouton cache #mode-date le recevait, et className
+  // ecrasait la classe mode-btn-annual du bouton annuel des la 1re bascule.
+  var _fw = document.querySelector('.fused-date-wrap');
+  if (_fw) { _fw.classList.toggle('active', isDate); _fw.setAttribute('aria-pressed', String(isDate)); }
  if (aw) { aw.style.display = isDate ? 'none' : 'block'; aw.style.height = isDate ? '0' : ''; }
  // Sync destination — via setTimeout to avoid browser reset after display change
  var _inpCity = document.getElementById('inp-city');
