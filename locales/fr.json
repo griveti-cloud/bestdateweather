@@ -90,7 +90,9 @@
     "HERO_SUB": "Score climatique /10 · Toutes les villes du monde · jusqu'à 1 an à l'avance · 10 ans de données ERA5",
     "USP_HORIZON": "1 an à l'avance",
     "UI_GUIDES_SUB": "Tableaux climatiques · meilleure période · météo mois par mois",
-    "UI_WIDGET_LINK": "Widget pour votre site"
+    "UI_WIDGET_LINK": "Widget pour votre site",
+    "UI_PREV_DAY": "Jour précédent",
+    "UI_NEXT_DAY": "Jour suivant"
   },
   "months": [
     "Janvier",

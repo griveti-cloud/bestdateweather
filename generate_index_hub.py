@@ -1227,6 +1227,8 @@ def generate_from_template(lang, loc):
         '{{MAP_NAV_LABEL}}':       loc.get('map', {}).get('nav_label', '🗺️ Map'),
         '{{UI_DETAILS_TOGGLE}}':   meta.get('UI_DETAILS_TOGGLE', 'See details — hourly, scenarios, astro'),
         '{{UI_RAIN_PROB}}':        meta.get('UI_RAIN_PROB', '💧 Rain probability'),
+        '{{UI_PREV_DAY}}':         meta.get('UI_PREV_DAY', 'Previous day'),
+        '{{UI_NEXT_DAY}}':         meta.get('UI_NEXT_DAY', 'Next day'),
         '{{UI_AVG_WIND}}':         meta.get('UI_AVG_WIND', '💨 Avg wind'),
         '{{UI_SKY}}':              meta.get('UI_SKY', '☁️ Sky'),
         '{{UI_MOON_PHASE}}':       meta.get('UI_MOON_PHASE', 'Moon phase'),

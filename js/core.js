@@ -3397,10 +3397,28 @@ var tom=new Date(), maxD=new Date();tom.setHours(0,0,0,0);maxD.setFullYear(maxD.
     if (!prevBtn) prevBtn = document.getElementById('date-nav-prev');
     if (!nextBtn) nextBtn = document.getElementById('date-nav-next');
     if (!prevBtn || !nextBtn) return;
-    var cur = _dateFromState();
-    if (!cur) return;
-    prevBtn.disabled = cur <= _today();
-    nextBtn.disabled = cur >= _maxDate();
+      var cur = _dateFromState();
+  if (!cur) return;
+  prevBtn.disabled = cur <= _today();
+  nextBtn.disabled = cur >= _maxDate();
+  // Afficher la date VISEE par chaque bouton : l'ancienne version ne montrait
+  // que deux fleches nues (et une etiquette centrale jamais remplie), on ne
+  // comprenait pas a quoi elles servaient.
+  var _lg = (document.documentElement.lang || 'fr').toLowerCase();
+  if (_lg === 'en-us') _lg = 'en-US';
+  function _shortDay(d) {
+    try {
+      return d.toLocaleDateString(_lg, { weekday: 'short', day: 'numeric', month: 'short' });
+    } catch (e) {
+      return d.getDate() + '/' + (d.getMonth() + 1);
+    }
+  }
+  var _p = new Date(cur.getTime()); _p.setDate(_p.getDate() - 1);
+  var _n = new Date(cur.getTime()); _n.setDate(_n.getDate() + 1);
+  var _pe = document.getElementById('date-nav-prev-lbl');
+  var _ne = document.getElementById('date-nav-next-lbl');
+  if (_pe) _pe.textContent = _shortDay(_p);
+  if (_ne) _ne.textContent = _shortDay(_n);
   }
 
   function _navTo(delta) {
