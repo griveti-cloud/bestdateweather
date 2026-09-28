@@ -33,6 +33,24 @@ QUERY_OVERRIDES = {
     'tofo':            'Tofo beach Mozambique ocean',
     'etosha':          'Etosha National Park Namibia wildlife',
     'windhoek':        'Windhoek Christuskirche Namibia landmark',  # repere identifiable, pas un paysage generique
+    # ── Audit des photos generiques (sept. 2026) ─────────────────────────
+    # Ces destinations avaient une requete sans aucun repere ('X pays
+    # landscape travel', 'beach turquoise water', 'sea coast'), qui ne
+    # pouvait donner qu'une image interchangeable. On vise desormais un
+    # monument ou un site identifiable.
+    'baku': 'Baku Flame Towers Icherisheher old city Azerbaijan',
+    'cotswolds': 'Cotswolds Bibury Arlington Row honey stone village',
+    'fukuoka': 'Fukuoka Ohori Park castle ruins yatai Japan',
+    'hakone': 'Hakone torii Lake Ashi Mount Fuji Japan',
+    'jodhpur': 'Jodhpur blue city Mehrangarh fort India',
+    'pondicherry': 'Pondicherry French quarter colonial street India',
+    'puerto-escondido': 'Puerto Escondido Zicatela surf Mexico',
+    'qingdao': 'Qingdao Zhanqiao pier German architecture China',
+    'rishikesh': 'Rishikesh Lakshman Jhula bridge Ganges India',
+    'sorrente': 'Sorrento cliff town Bay of Naples Italy',
+    'tahiti': 'Tahiti Papeete mountains lagoon French Polynesia',
+    'yerevan': 'Yerevan Cascade Mount Ararat Armenia',
+
     'wadi-rum':        'Wadi Rum desert Jordan red rock',
     'al-ula':          'AlUla Hegra Saudi Arabia desert rock',
     'aqaba':           'Aqaba Red Sea Jordan coral reef',
