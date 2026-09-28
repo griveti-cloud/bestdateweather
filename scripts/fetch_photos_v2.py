@@ -32,7 +32,7 @@ QUERY_OVERRIDES = {
     'maun':            'Okavango Delta Botswana',
     'tofo':            'Tofo beach Mozambique ocean',
     'etosha':          'Etosha National Park Namibia wildlife',
-    'windhoek':        'Windhoek Namibia hills sunset savanna',   # catalogue Unsplash pauvre et pollue par d'autres pays
+    'windhoek':        'Windhoek Christuskirche Namibia landmark',  # repere identifiable, pas un paysage generique
     'wadi-rum':        'Wadi Rum desert Jordan red rock',
     'al-ula':          'AlUla Hegra Saudi Arabia desert rock',
     'aqaba':           'Aqaba Red Sea Jordan coral reef',
