@@ -102,7 +102,11 @@ jobs:
         continue-on-error: true
         run: |
           sleep 45
-          python3 scripts/indexnow_submit.py --changed
+          if git log -1 --format=%B | grep -q '\[indexnow-all\]'; then
+            python3 scripts/indexnow_submit.py --all
+          else
+            python3 scripts/indexnow_submit.py --changed
+          fi
 
   # ════════════════════════════════════════════════════════════════════════════
   # JOB 3 — SMOKE TEST PROD (vérifie que le site déployé est sain)

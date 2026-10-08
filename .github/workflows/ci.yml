@@ -223,46 +223,23 @@ jobs:
           python-version: '3.12'
 
       - name: Verify sitemap coverage
+        # Plan B (octobre 2026) : les sitemaps doivent contenir EXACTEMENT
+        # l'ensemble indexable défini par lib/indexation.py, et chaque page
+        # doit porter les balises robots/hreflang correspondantes.
         run: |
-          python3 -c "
+          python3 - <<'PYEOF'
           import re, glob, sys
-
-          # Sitemaps actifs (priority + secondary), URLs SANS .html (worker sert sans extension)
-          def load_sitemap_urls(pattern):
-              urls = set()
-              for sm in glob.glob(pattern):
-                  content = open(sm).read()
-                  urls |= set(re.findall(r'<loc>https://bestdateweather\.com/([^<]*)</loc>', content))
-              return urls
-
-          fr_urls = load_sitemap_urls('sitemap-fr-*.xml')
-          en_urls = load_sitemap_urls('sitemap-en-*.xml')
-
-          # Les fichiers sont .html sur disque mais les URLs sitemap sont sans extension
-          def to_url(filename):
-              return filename[:-5] if filename.endswith('.html') else filename
-
-          errors = []
-          for f in sorted(glob.glob('meilleure-periode-*.html'))[:50]:
-              with open(f, 'r') as fh:
-                  head = fh.read(500)
-                  if 'meta http-equiv=\"refresh\"' in head or 'noindex' in head:
-                      continue
-              if to_url(f) not in fr_urls:
-                  errors.append(f'Missing from sitemap-fr: {to_url(f)}')
-
-          for f in sorted(glob.glob('en/best-time-to-visit-*.html'))[:50]:
-              with open(f, 'r') as fh:
-                  head = fh.read(500)
-                  if 'meta http-equiv=\"refresh\"' in head or 'noindex' in head:
-                      continue
-              if to_url(f) not in en_urls:
-                  errors.append(f'Missing from sitemap-en: {to_url(f)}')
-
-          if errors:
-              for e in errors[:20]:
-                  print(f'FAIL {e}')
+          from lib.indexation import indexable_paths
+          idx = indexable_paths()
+          locs = set()
+          for sm in glob.glob('sitemap-pages-*.xml'):
+              for u in re.findall(r'<loc>([^<]+)</loc>', open(sm, encoding='utf-8').read()):
+                  locs.add(re.sub(r'^https://bestdateweather\.com/?', '', u).rstrip('/'))
+          missing, extra = idx - locs, locs - idx
+          print(f'Indexables : {len(idx)} | dans les sitemaps : {len(locs)}')
+          if missing or extra:
+              print(f'::error::sitemaps ≠ politique : {len(missing)} manquantes {sorted(missing)[:5]}, {len(extra)} en trop {sorted(extra)[:5]}')
               sys.exit(1)
-          else:
-              print(f'Sitemap coverage OK (FR: {len(fr_urls)} URLs, EN: {len(en_urls)} URLs)')
-          "
+          print('OK')
+          PYEOF
+          python3 apply_indexation.py --check

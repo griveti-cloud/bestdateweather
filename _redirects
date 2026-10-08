@@ -908,10 +908,6 @@
 /es/yerevan-clima-diciembre.html /es/erevan-clima-diciembre.html 301
 /meilleure-periode-moorea-en-octobre.html /moorea-meteo-octobre.html 301
 /meilleure-periode-hammamet-en-novembre.html /hammamet-meteo-novembre.html 301
-/en/ /en/app.html 200
-/es/ /es/app.html 200
-/de/ /de/app.html 200
-/us/ /us/app.html 200
 # Dynamic redirects
 /g%C3%B6teborg-meteo-:month.html /goteborg-meteo-:month.html 301
 /kowe%C3%AFt-meteo-:month.html /koweit-meteo-:month.html 301

@@ -417,6 +417,24 @@ try:
 except Exception as _e:
     warn(f"Contrôle dateModified impossible : {_e}")
 
+# 12f. _redirects : une seule règle par chemin source (sinon wrangler refuse
+#      le déploiement : « Duplicate rule for path », incident du 8 oct. 2026)
+try:
+    _src = {}
+    for _n, _l in enumerate(open('_redirects', encoding='utf-8').read().split('\n'), 1):
+        _l = _l.strip()
+        if not _l or _l.startswith('#'):
+            continue
+        _p = _l.split()[0]
+        _src.setdefault(_p, []).append(_n)
+    _dups = {k: v for k, v in _src.items() if len(v) > 1}
+    if _dups:
+        err(f"_redirects : règles en double {list(_dups.items())[:5]}")
+    else:
+        ok(f"_redirects : {len(_src)} règles, aucune en double")
+except FileNotFoundError:
+    pass
+
 # ── 13. SÉCURITÉ : cohérence classement vs fiche (anti-contradiction) ─────────
 print("\n13. Cohérence sécurité (classement utilise Math.max FR/DE)")
 secu_issues = 0
