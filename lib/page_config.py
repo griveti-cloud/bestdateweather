@@ -12,9 +12,29 @@ from datetime import date
 
 YEAR = date.today().year
 TODAY = date.today().strftime('%Y-%m-%d')
-# Date de référence pour dateModified des pages. Mis à jour à chaque build (date du jour).
-# Permet à Google de voir que les pages sont fraîches après chaque régénération.
-DATA_UPDATED = TODAY
+
+# Dates RÉELLES (plan B, octobre 2026) : lues dans data/data_version.json, mises
+# à jour à la main quand les données ou le contenu changent vraiment.
+# Auparavant DATA_UPDATED = date du build : chaque régénération affichait une
+# fausse fraîcheur (« Mise à jour <mois courant> »), ce que Google cite
+# explicitement comme signal négatif dans son guide du contenu utile.
+def _load_data_version():
+    _p = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'data_version.json')
+    try:
+        with open(_p, encoding='utf-8') as _f:
+            return json.load(_f)
+    except Exception:
+        return {}
+
+DATA_VERSION = _load_data_version()
+DATA_UPDATED = DATA_VERSION.get('contenu_modifie', TODAY)       # dateModified, lastmod
+CLIMATE_DATA_UPDATED = DATA_VERSION.get('donnees_mises_a_jour', DATA_UPDATED)
+
+
+def data_update_label(months_loc):
+    """'Août 2026' : mois localisé + année de la dernière mise à jour des données."""
+    d = date.fromisoformat(CLIMATE_DATA_UPDATED)
+    return f'{months_loc[d.month - 1]} {d.year}'
 
 _LOCALE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'locales')
 _locale_cache = {}
@@ -48,19 +68,13 @@ MONTH_URL_FR = ['janvier','fevrier','mars','avril','mai','juin',
 
 
 def date_modified_for(slug, suffix=''):
-    """Per-page dateModified staggered over 30 days before DATA_UPDATED.
+    """dateModified réel : date de la dernière modification du contenu.
 
-    Uses hashlib.md5 (not hash()) for cross-process determinism —
-    Python hash() is randomised by default (PYTHONHASHSEED) and would
-    produce a different dateModified on every build, causing artificial
-    page diffs and unnecessary recrawling.
+    Plan B (octobre 2026) : l'ancien étalement artificiel sur 30 jours avant
+    la date du build est supprimé. Une seule date vraie pour toutes les pages
+    générées ensemble (data/data_version.json).
     """
-    import hashlib
-    from datetime import timedelta
-    base = date.fromisoformat(DATA_UPDATED)
-    digest = hashlib.md5((slug + suffix).encode(), usedforsecurity=False).hexdigest()
-    offset = int(digest[:8], 16) % 30
-    return (base - timedelta(days=offset)).isoformat()
+    return DATA_UPDATED
 
 
 def build_config(lang):

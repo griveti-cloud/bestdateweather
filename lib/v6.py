@@ -19,9 +19,11 @@ Conventions HTML :
 from __future__ import annotations
 import json
 import os
+import re
 from html import escape as h
 
 from lib.common import c_to_f
+from lib.indexation import is_indexable_url as _is_indexable_url
 
 
 def _fmt_t(value: float, lang: str) -> str:
@@ -472,7 +474,14 @@ def render_v6_decider(slug: str, lang: str, dest_name: str,
     )
 
     # ── Avis card ──
-    avis_card = (
+    # Plan B (oct. 2026) : le bloc n'apparaît que pour un avis réellement écrit
+    # par Gilles sur une destination visitée (data/avis_reels.json). Les 3 774
+    # textes générés en série (avis_annuel.json) ne sont plus affichés.
+    _edito_txt = re.sub(r'<[^>]+>', '', editorial_html or '').strip()
+    if not _edito_txt or _edito_txt in ('—', '-'):
+        avis_card = ''
+    else:
+        avis_card = (
         f'<div class="avis-card">\n'
         f'  <div class="avis-head">\n'
         f'    <div class="avis-avatar">G</div>\n'
@@ -2608,7 +2617,9 @@ def render_v6_full_page(page_data: dict) -> str:
         # memes coordonnees, donc les memes donnees climatiques, qu'une
         # jumelle conservee (voir data/duplicate_destinations.json). La page
         # reste accessible et suivie, mais sort de l'index.
-        noindex=_dup_dest(d.get('slug_fr') or slug),
+        # Plan B : politique centralisée (lib/indexation.py), qui exclut aussi
+        # les doublons de coordonnées.
+        noindex=not _is_indexable_url(d.get('canonical_url', '')),
     )
 
     topbar = render_v6_topbar(slug, lang)
@@ -2629,6 +2640,11 @@ def render_v6_full_page(page_data: dict) -> str:
         months_data=d['months_data'],
         monthly_url_tpl=d.get('monthly_url_tpl', ''),
     )
+
+    # Plan B, phase 3 : semaines quasi sèches sur 10 ans (si données présentes)
+    from lib.v6_weekly import render_v6_weekly
+    weekly = render_v6_weekly(d.get('slug_fr') or slug, lang, d['dest_name'],
+                              asset_prefix=asset_prefix)
 
     trend = render_v6_trend_chart(
         slug=slug, nom=d['dest_name'], lang=lang,
@@ -2683,6 +2699,7 @@ def render_v6_full_page(page_data: dict) -> str:
 <main>
 {decider}
 {comprendre}
+{weekly}
 {trend}
 {adapter}
 {reserver}

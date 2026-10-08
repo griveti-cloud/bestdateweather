@@ -668,12 +668,7 @@
     "country_key": "country_en",
     "hero_sub_key": "hero_sub_en"
   },
-  "annual_titles": [
-    "{nom} {year} — {best_score}/10: when to go?",
-    "Best Time to Visit {nom} {year} — {best_score}/10 (12-month ranking)",
-    "{nom} weather {year} — {best_score}/10: best & worst months",
-    "When to Visit {nom}? {year} — {best_score}/10 climate score"
-  ],
+  "annual_titles": ["Best Time to Visit {nom}: Weather Month by Month"],
   "annual_h1s": [
     "When is the best time<br/><em>to visit {nom}?</em>",
     "Best time to visit<br/><em>{nom} — {best_score}/10</em>",
@@ -1657,7 +1652,7 @@
       "h1_mtn_tpl": "{nom}: best months <em>for skiing or hiking</em>",
       "lead_std_tpl": "<strong>{best}</strong> comes out on top ({best_score}/10), <strong>{worst}</strong> is the toughest ({worst_score}/10). A {gap}-point gap between the two.",
       "lead_mtn_tpl": "Mountain destinations have two seasons: winter for skiing, summer for hiking. <strong>{best}</strong> comes out on top ({best_score}/10), <strong>{worst}</strong> is the toughest ({worst_score}/10). A {gap}-point gap between the two.",
-      "tag_update": "Updated {month} 2026",
+      "tag_update": "Data updated: {month}",
       "tag_data": "ERA5 · 10 years",
       "tag_coords_tpl": "{lat}°{ns} · {lon}°{ew}",
       "quick_label": "Quick answer",
@@ -1728,7 +1723,7 @@
       "mini_temp": "Temperature",
       "mini_rain": "Rain",
       "mini_sun": "Sun",
-      "tag_update": "Updated {month} 2026",
+      "tag_update": "Data updated: {month}",
       "tag_data": "ERA5 · 10 years",
       "vs_kicker": "Compare",
       "vs_title_tpl": "Is {mois} the right month?",

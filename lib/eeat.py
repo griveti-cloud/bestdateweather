@@ -5,7 +5,9 @@ Insère un bloc "Avis du fondateur" sur les pages annuelles avec :
 - Avatar "G" stylisé (gradient gold)
 - Label "L'avis de Gilles" / "Gilles' view" / etc. par langue
 - Sub-label "Fondateur · BestDateWeather"
-- Paragraphe édito rédigé manuellement (3,770 textes uniques dans avis_annuel.json)
+- Paragraphe écrit par Gilles pour une destination réellement visitée
+  (data/avis_reels.json). Les textes générés en série (avis_annuel.json)
+  ne sont plus affichés depuis le plan B (octobre 2026).
 - Lien vers la page "À propos" (renforce signal authorship)
 
 Objectif SEO : signal d'authority / authorship contre la classification
@@ -22,10 +24,10 @@ _AVIS_CACHE: Optional[dict] = None
 
 
 def _load_avis() -> dict:
-    """Charge data/avis_annuel.json en cache."""
+    """Charge data/avis_reels.json en cache (avis réellement écrits)."""
     global _AVIS_CACHE
     if _AVIS_CACHE is None:
-        path = os.path.join(os.path.dirname(__file__), '..', 'data', 'avis_annuel.json')
+        path = os.path.join(os.path.dirname(__file__), '..', 'data', 'avis_reels.json')
         with open(path, encoding='utf-8') as f:
             _AVIS_CACHE = json.load(f)
     return _AVIS_CACHE
@@ -79,10 +81,9 @@ def eeat_avis_section_html(slug_fr: str, lang: str = 'fr', asset_prefix: str = '
     """
     avis_data = _load_avis()
     key = f'{slug_fr}:{lang}'
-    edito = avis_data.get(key, '').strip()
-    if not edito or len(edito) < 50:
-        edito = avis_data.get(f'{slug_fr}:fr', '').strip()
-    if not edito or len(edito) < 50:
+    from lib.v6_adapter import avis_reel_html
+    edito = avis_reel_html(slug_fr, lang)
+    if not edito:
         return ''
 
     labels = _LABELS.get(lang, _LABELS['fr'])
@@ -108,5 +109,5 @@ def eeat_avis_section_html(slug_fr: str, lang: str = 'fr', asset_prefix: str = '
 
 def has_avis(slug_fr: str, lang: str = 'fr') -> bool:
     """Vérifie si un avis existe pour cette dest/langue."""
-    avis_data = _load_avis()
-    return bool(avis_data.get(f'{slug_fr}:{lang}', '').strip())
+    from lib.v6_adapter import avis_reel_html
+    return bool(avis_reel_html(slug_fr, lang))

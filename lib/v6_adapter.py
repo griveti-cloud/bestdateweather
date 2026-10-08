@@ -31,6 +31,37 @@ def _load_json_cached(path: str) -> dict:
 # Helpers d'extraction
 # ─────────────────────────────────────────────────────────────────────────────
 
+def avis_reel_html(slug_fr: str, lang: str) -> str:
+    """Avis réellement écrit par Gilles pour cette destination et cette langue.
+
+    Source : data/avis_reels.json, clé '{slug_fr}:{lang}'. Valeur : texte/HTML,
+    ou objet {"html": "...", "visite": "mai 2024"}. Pas de repli vers une autre
+    langue : un avis non écrit dans la langue de la page n'est pas affiché.
+    Les textes générés en série (data/avis_annuel.json) ne sont plus utilisés
+    (plan B, octobre 2026 : expérience personnelle non vécue = risque E-E-A-T).
+    """
+    path = os.path.join(os.path.dirname(__file__), '..', 'data', 'avis_reels.json')
+    try:
+        data = _load_json_cached(path)
+    except Exception:
+        return ''
+    v = data.get(f'{slug_fr}:{lang}')
+    if not v:
+        return ''
+    if isinstance(v, dict):
+        html_txt = (v.get('html') or '').strip()
+        visite = (v.get('visite') or '').strip()
+        if html_txt and visite:
+            lbl = {'fr': 'Visité en', 'en': 'Visited in', 'en-us': 'Visited in',
+                   'es': 'Visitado en', 'de': 'Besucht im'}.get(lang, 'Visité en')
+            html_txt += f' <em>({lbl} {visite})</em>'
+    else:
+        html_txt = str(v).strip()
+    if html_txt and not html_txt.startswith('<'):
+        html_txt = f'<p>{html_txt}</p>'
+    return html_txt
+
+
 def _safe_float(v, default=0.0) -> float:
     try:
         return float(v) if v not in (None, '') else default
@@ -612,7 +643,38 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
         },
     }
     profile_chips = HERO_CHIPS_I18N.get(profile, HERO_CHIPS_I18N['city'])
-    triplets = profile_chips.get(lang, profile_chips['fr'])
+    triplets = list(profile_chips.get(lang, profile_chips['fr']))
+
+    # Pastilles dérivées des DONNÉES, plus seulement du profil (plan B) :
+    # auparavant chaque ville affichait « Pluies modérées · Visites couvertes »,
+    # y compris Windhoek avec 0 % de jours de pluie.
+    _rains = [m['rain_pct'] for m in months_data]
+    _mean_rain = sum(_rains) / len(_rains) if _rains else 0
+    _max_rain = max(_rains) if _rains else 0
+    _suns = [m['sun_h'] for m in months_data]
+    _mean_sun = sum(_suns) / len(_suns) if _suns else 0
+    _CHIP_TXT = {
+        'dry':      {'fr': 'Climat sec', 'en': 'Dry climate', 'en-us': 'Dry climate', 'es': 'Clima seco', 'de': 'Trockenes Klima'},
+        'mod':      {'fr': 'Pluies modérées', 'en': 'Moderate rain', 'en-us': 'Moderate rain', 'es': 'Lluvias moderadas', 'de': 'Moderater Regen'},
+        'wet':      {'fr': 'Pluies fréquentes', 'en': 'Frequent rain', 'en-us': 'Frequent rain', 'es': 'Lluvias frecuentes', 'de': 'Häufiger Regen'},
+        'dryyear':  {'fr': 'Sec toute l\'année', 'en': 'Dry all year', 'en-us': 'Dry all year', 'es': 'Seco todo el año', 'de': 'Ganzjährig trocken'},
+        'cloudy':   {'fr': 'Ciel souvent couvert', 'en': 'Often cloudy', 'en-us': 'Often cloudy', 'es': 'Cielo a menudo nublado', 'de': 'Oft bewölkt'},
+    }
+    def _t(k):
+        return _CHIP_TXT[k].get(lang, _CHIP_TXT[k]['fr'])
+    if profile == 'city':
+        if _mean_rain < 12:
+            triplets = [triplets[0], ('☀️', _t('dry'), 'gold')]
+        elif _mean_rain <= 35:
+            triplets = [triplets[0], ('🌦️', _t('mod'), 'blue')]
+        else:
+            triplets = [triplets[0], ('🌧️', _t('wet'), 'blue'), triplets[2]]
+    elif profile == 'tropical' and _max_rain < 40:
+        # Pas de saison des pluies marquée (ex. Aruba, Curaçao)
+        triplets = [triplets[0], triplets[1], ('☀️', _t('dryyear'), 'gold')]
+    elif profile == 'coastal' and _mean_sun < 5:
+        # « Lumineux » faux pour un littoral peu ensoleillé (ex. Bretagne)
+        triplets = [triplets[0], ('☁️', _t('cloudy'), 'blue'), triplets[2]]
     chips = [{'emoji': e, 'text': t, 'color': c} for e, t, c in triplets]
 
     hero_data = {
@@ -713,10 +775,16 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
         canonical_path = canonical_path[:-5]
     canonical_url = f'{cfg.get("canonical_prefix", "")}{canonical_path}'
 
-    # Page title : utilise les annual_titles V5 (rotation déterministe par slug
-    # pour éviter le pattern uniforme suspect de SEO)
+    # Page title. Plan B (octobre 2026) : un seul titre par langue, calé sur la
+    # requête principale (« quand partir à X », « best time to visit X »).
+    # L'ancienne « rotation déterministe » utilisait hash(), aléatoire d'un
+    # processus à l'autre (PYTHONHASHSEED) : le titre de chaque page annuelle
+    # changeait à CHAQUE régénération (Paris : 7 titres en 11 jours).
+    # md5 garantit la stabilité si plusieurs modèles sont un jour remis.
+    import hashlib as _hl
     annual_titles = cfg.get('annual_titles', []) or []
-    title_idx = abs(hash(dest.get('slug_fr', slug))) % len(annual_titles) if annual_titles else 0
+    title_idx = (int(_hl.md5(dest.get('slug_fr', slug).encode()).hexdigest()[:8], 16)
+                 % len(annual_titles)) if annual_titles else 0
     title_tpl = annual_titles[title_idx] if annual_titles else '{nom_bare} : meilleurs mois'
 
     from datetime import datetime
@@ -885,13 +953,7 @@ def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
     monthly_url_tpl = f'{slug}{cfg["monthly_sep"]}{{mois_lower}}' if _has_monthly else None
 
     # Edito annuel
-    avis_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'avis_annuel.json')
-    avis = _load_json_cached(avis_path)
-    edito_key_lang = f'{slug_fr_canonical}:{cfg["lang"]}'
-    edito_key_fr = f'{slug_fr_canonical}:fr'
-    editorial_html = avis.get(edito_key_lang) or avis.get(edito_key_fr) or ''
-    if editorial_html and not editorial_html.startswith('<'):
-        editorial_html = f'<p>{editorial_html}</p>'
+    editorial_html = avis_reel_html(slug_fr_canonical, cfg['lang'])
 
     # Photo Unsplash
     photo = dest.get('_photo', {})
@@ -905,8 +967,8 @@ def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
 
     # Update month
     from datetime import datetime
-    current_month_idx = datetime.now().month - 1
-    update_month = cfg['months'][current_month_idx]
+    from lib.page_config import data_update_label
+    update_month = data_update_label(cfg['months'])
 
     # Build page_data
     page_data = build_page_data_v6(
@@ -1179,12 +1241,20 @@ def _build_json_ld_blocks(cfg: dict, dest: dict, slug: str, nom: str,
             'url': 'https://bestdateweather.com/og-image.png',
             'width': 1200, 'height': 630,
         },
-        'author': {
+        # Auteur : Gilles seulement s'il a réellement écrit un avis pour cette
+        # page (avis_reels.json) ; sinon la page est un contenu de données
+        # publié par l'organisation, et on le dit tel quel.
+        'author': ({
             '@type': 'Person',
             '@id': 'https://bestdateweather.com/#gilles',
             'name': 'Gilles',
             'url': 'https://bestdateweather.com/a-propos',
-        },
+        } if avis_reel_html(slug_fr, cfg['lang']) else {
+            '@type': 'Organization',
+            '@id': 'https://bestdateweather.com/#organization',
+            'name': 'BestDateWeather',
+            'url': 'https://bestdateweather.com',
+        }),
         'publisher': {
             '@type': 'Organization',
             '@id': 'https://bestdateweather.com/#organization',
@@ -1293,6 +1363,8 @@ def _is_duplicate_dest(slug: str) -> bool:
     return slug in _DUPLICATE_DESTS
 
 
+from lib.indexation import is_indexable_url as _is_indexable_url
+
 _MONTHLY_INDEXABLE = None
 
 
@@ -1369,11 +1441,7 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
 
     monthly_url_tpl = f'{slug}{cfg["monthly_sep"]}{{mois_lower}}'
 
-    avis_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'avis_annuel.json')
-    avis = _load_json_cached(avis_path)
-    editorial_html = (avis.get(f'{slug_fr}:{lang}') or avis.get(f'{slug_fr}:fr') or '')
-    if editorial_html and not editorial_html.startswith('<'):
-        editorial_html = f'<p>{editorial_html}</p>'
+    editorial_html = avis_reel_html(slug_fr, lang)
 
     photo = dest.get('_photo', {})
     photo_url = photo.get('url', '')
@@ -1382,8 +1450,8 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
         photo_credit_html = (f'<a href="{photo["credit_url"]}" target="_blank" '
                              f'rel="noopener nofollow">{photo["credit_name"]}</a> via Unsplash')
 
-    current_month_idx = datetime.now().month - 1
-    update_month = MONTHS_LOC[current_month_idx]
+    from lib.page_config import data_update_label
+    update_month = data_update_label(MONTHS_LOC)
 
     page_data = build_page_data_v6(
         cfg=cfg, dest=dest, months_climate=months, months_with_scores=scores,
@@ -1505,18 +1573,30 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
     expect_html = ''
     try:
         from generate_pages import context_paragraph
-        nom_f = dest.get(f'nom_{lang[:2]}', nom)
+        from lib.page_config import dest_name_full
+        # nom_f : forme avec préposition attendue par les gabarits FR
+        # (« la saison sèche à Bali », « l'été aux Açores ») ; avant correction
+        # on passait le nom nu : « L'été Paris offre… ».
+        nom_f = dest_name_full(cfg, dest)
         is_tropical = _bool(dest.get('tropical'))
+        _tmax_c = _safe_float(m.get('tmax'))
         m_for_ctx = {
-            'tmax': _safe_float(m.get('tmax')),
-            'rain_pct': _safe_float(m.get('rain_pct')),
-            'sun_h': _safe_float(m.get('sun_h')),
+            'tmax': round(_tmax_c),   # °C : les seuils (30, 22, 10…) sont en °C
+            'rain_pct': round(_safe_float(m.get('rain_pct'))),
+            'sun_h': round(_safe_float(m.get('sun_h')), 1),
             'classe': m.get('classe', 'mid'),
         }
+        try:
+            _lat = float(dest.get('lat'))
+        except (TypeError, ValueError):
+            _lat = None
         ctx_para = context_paragraph(
             cfg, nom, nom_f, m_for_ctx, mi, this_score,
             MONTHS_LOC[best_idx], best['score_10'], is_tropical,
-            event_text=None, is_mountain=is_mountain, ski_sc=0,
+            event_text=None, is_mountain=is_mountain, ski_sc=0, lat=_lat,
+            # en-us : les gabarits affichent °F, la valeur était passée en °C
+            # (« 25.0°F » pour Paris en juillet) ; conversion pour l'affichage seul.
+            tmax_display=(round(_tmax_c * 9 / 5 + 32) if lang == 'en-us' else None),
         )
         if ctx_para:
             expect_html = render_v6_monthly_expect(slug, lang, {
@@ -1688,8 +1768,9 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
         # les 149 destinations qui concentrent 88% des impressions réelles
         # (data/monthly_indexable.json, sélection empirique via GSC), soit
         # ~1 800 pages au lieu des 44 000 qui avaient valu la rétrogradation.
-        noindex=(_is_duplicate_dest(dest.get('slug_fr', slug))
-                 or not _monthly_indexable(dest.get('slug_fr', slug))),
+        # Plan B (octobre 2026) : décision centralisée dans lib/indexation.py
+        # (FR/EN, sélection de destinations, pages ayant reçu des impressions).
+        noindex=not _is_indexable_url(canonical),
     )
     # Injecter le CSS .vs-cta dans le head
     head = head.replace('</head>', f'<style>{VS_CTA_CSS}</style>\n</head>')

@@ -354,7 +354,7 @@ else:
 
 # 12b. Aucune URL .html dans les sitemaps actifs
 sitemap_html = 0
-sitemap_files = glob.glob('sitemap-*-priority.xml') + glob.glob('sitemap-*-secondary.xml')
+sitemap_files = glob.glob('sitemap-pages-*.xml')
 for sm in sitemap_files:
     content = open(sm, encoding='utf-8').read()
     n = content.count('.html</loc>')
@@ -374,6 +374,48 @@ for sm in sitemap_files:
         err(f"{sm}: {n} URLs prototype/v6 (noindex, hors sitemap)")
 if sitemap_noindex == 0 and sitemap_files:
     ok("0 URL noindex (prototype/v6) dans les sitemaps")
+
+# 12d. Plan B : sitemaps = exactement l'ensemble indexable, et chaque page
+#      HTML conforme à la politique d'indexation (lib/indexation.py)
+try:
+    from lib.indexation import indexable_paths
+    _idx = indexable_paths()
+    _locs = set()
+    for sm in sitemap_files:
+        for u in re.findall(r'<loc>([^<]+)</loc>', open(sm, encoding='utf-8').read()):
+            _locs.add(re.sub(r'^https://bestdateweather\.com/?', '', u).rstrip('/'))
+    _missing = _idx - _locs
+    _extra = _locs - _idx
+    if _missing or _extra:
+        err(f"Sitemaps ≠ politique d'indexation : {len(_missing)} manquante(s) "
+            f"(ex. {sorted(_missing)[:3]}), {len(_extra)} en trop (ex. {sorted(_extra)[:3]}) "
+            f"→ python3 generate_sitemaps.py")
+    else:
+        ok(f"Sitemaps = politique d'indexation ({len(_idx)} URL)")
+    import subprocess
+    _r = subprocess.run([sys.executable, 'apply_indexation.py', '--check'],
+                        capture_output=True, text=True)
+    if _r.returncode != 0:
+        err("Balises robots/hreflang non conformes à la politique : "
+            + _r.stdout.strip().splitlines()[-2] if _r.stdout.strip() else 'voir apply_indexation.py --check')
+    else:
+        ok("Balises robots/hreflang conformes à la politique d'indexation")
+except Exception as _e:
+    err(f"Contrôle de la politique d'indexation impossible : {_e}")
+
+# 12e. Plan B : aucune date de fraîcheur artificielle
+try:
+    from lib.page_config import DATA_UPDATED as _DU
+    _sample = ['meilleure-periode-paris.html', 'en/best-time-to-visit-paris.html']
+    for _pg in _sample:
+        if os.path.exists(_pg):
+            _c = open(_pg, encoding='utf-8').read()
+            _dm = re.findall(r'"dateModified":\s*"([0-9-]+)"', _c)
+            if _dm and any(d != _DU for d in _dm):
+                err(f"{_pg}: dateModified {_dm} ≠ data_version.json ({_DU})")
+    ok("dateModified alignée sur data/data_version.json")
+except Exception as _e:
+    warn(f"Contrôle dateModified impossible : {_e}")
 
 # ── 13. SÉCURITÉ : cohérence classement vs fiche (anti-contradiction) ─────────
 print("\n13. Cohérence sécurité (classement utilise Math.max FR/DE)")

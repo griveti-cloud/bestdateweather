@@ -18,6 +18,7 @@ on:
 # 403 (« Permission to github-actions[bot] denied »).
 permissions:
   contents: write
+  actions: write   # pour déclencher deploy.yml après le commit
 
 jobs:
   refresh-hub:
@@ -34,7 +35,11 @@ jobs:
           python-version: '3.11'
 
       - name: Régénérer les hubs (5 langues)
-        run: python3 generate_index_hub.py
+        run: |
+          python3 generate_index_hub.py
+          # Plan B : balises robots/hreflang alignées sur lib/indexation.py
+          # (sinon check_deploy.py bloque le déploiement)
+          python3 apply_indexation.py
 
       - name: Vérifier que le mois affiché est bien le mois courant
         run: |
@@ -65,3 +70,14 @@ jobs:
           git add index.html en/app.html us/app.html es/app.html de/app.html
           git commit -m "Auto: bandeau classement du mois régénéré ($(date -u +'%B %Y'))"
           git push
+          echo "changed=1" >> "$GITHUB_OUTPUT"
+        id: commit
+
+      # Un push fait avec GITHUB_TOKEN ne déclenche PAS deploy.yml : le 8 octobre,
+      # la production affichait encore « Septembre » alors que le dépôt était à
+      # « Octobre ». workflow_dispatch fait exception à cette règle.
+      - name: Déployer
+        if: steps.commit.outputs.changed == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main

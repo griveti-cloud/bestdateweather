@@ -27,11 +27,11 @@ all: pages pillar comparisons rankings sitemap
 # ── Destination pages (toutes langues) ───────────────
 pages:
 	@echo "🌍 Generating destination pages (×5 langues)..."
-	python3 generate_pages.py --lang fr
-	python3 generate_pages.py --lang en
-	python3 generate_pages.py --lang en-us
-	python3 generate_pages.py --lang es
-	python3 generate_pages.py --lang de
+	python3 generate_pages.py --lang fr --v6
+	python3 generate_pages.py --lang en --v6
+	python3 generate_pages.py --lang en-us --v6
+	python3 generate_pages.py --lang es --v6
+	python3 generate_pages.py --lang de --v6
 
 # ── Content pages ─────────────────────────────────────
 pillar:
@@ -48,6 +48,8 @@ rankings:
 
 # ── Sitemaps ──────────────────────────────────────────
 sitemap:
+	@echo "🔒 Applying indexation policy (lib/indexation.py)..."
+	python3 apply_indexation.py
 	@echo "🗺️  Generating sitemaps..."
 	python3 generate_sitemaps.py
 

@@ -667,12 +667,7 @@
     "country_key": "pays",
     "hero_sub_key": "hero_sub_fr"
   },
-  "annual_titles": [
-    "{nom_bare} {year} — {best_score}/10 : quand partir ?",
-    "Meilleure période {prep} {nom_bare} {year} — {best_score}/10 (12 mois classés)",
-    "Météo {prep} {nom_bare} {year} — {best_score}/10 : meilleurs et pires mois",
-    "Quand partir {prep} {nom_bare} ? {year} — score climatique {best_score}/10"
-  ],
+  "annual_titles": ["Quand partir {prep} {nom_bare} ? Meilleure période et météo par mois"],
   "annual_h1s": [
     "Quelle est la meilleure période<br/><em>pour partir {prep} {nom_bare} ?</em>",
     "Meilleure période {prep}<br/><em>{nom_bare} — {best_score}/10</em>",
@@ -1656,7 +1651,7 @@
       "h1_mtn_tpl": "{nom} : meilleurs mois <em>pour skier ou randonner</em>",
       "lead_std_tpl": "<strong>{best}</strong> sort en tête ({best_score}/10), <strong>{worst}</strong> reste le plus rude ({worst_score}/10). Écart de {gap} points entre les deux.",
       "lead_mtn_tpl": "En montagne, deux univers : hiver pour le ski, été pour la randonnée. <strong>{best}</strong> sort en tête ({best_score}/10), <strong>{worst}</strong> reste le plus rude ({worst_score}/10). Écart de {gap} points entre les deux.",
-      "tag_update": "Mise à jour {month} 2026",
+      "tag_update": "Données mises à jour : {month}",
       "tag_data": "ERA5 · 10 ans",
       "tag_coords_tpl": "{lat}°{ns} · {lon}°{ew}",
       "quick_label": "Réponse rapide",
@@ -1727,7 +1722,7 @@
       "mini_temp": "Température",
       "mini_rain": "Pluie",
       "mini_sun": "Soleil",
-      "tag_update": "Mise à jour {month} 2026",
+      "tag_update": "Données mises à jour : {month}",
       "tag_data": "ERA5 · 10 ans",
       "vs_kicker": "Comparer",
       "vs_title_tpl": "{mois} est-il le bon mois ?",

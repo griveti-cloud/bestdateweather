@@ -82,7 +82,12 @@ wrangler.toml                       # Config Cloudflare Workers
 | `generate_classements.py` | Pages classements thématiques (5 langues) |
 | `generate_comparatifs.py` | Pages comparatifs X vs Y (50 paires × 5 langues) |
 | `generate_index_hub.py` | Injection hubs destinations dans app.html / index.html |
-| `generate_sitemaps.py` | Sitemaps segmentés (10 fichiers) |
+| `generate_sitemaps.py` | Sitemaps = ensemble indexable (lib/indexation.py), 3 fichiers + index |
+| `apply_indexation.py` | Applique la politique d'indexation (noindex, hreflang) à toutes les pages |
+| `lib/indexation.py` + `data/indexation_policy.json` | Politique d'indexation du plan B : FR/EN, destinations retenues, exceptions GSC |
+| `data/data_version.json` | Dates réelles affichées (données, contenu) : à modifier à la main |
+| `data/avis_reels.json` | Avis réellement écrits par Gilles (voir docs/avis_reels.md) |
+| `scripts/fetch_weekly_history.py` | Historique quotidien ERA5 → data/weekly/ (workflow quotidien) |
 
 ---
 
@@ -173,7 +178,10 @@ raw_score = 0.40 × t_ideal(tmax)
 # 1. Modifier scoring.py / lib/ / locales/ / core.js
 
 # 2. Régénérer les pages (5 langues)
-for lang in fr en en-us es de; do python3 generate_pages.py --lang $lang; done
+# ⚠️ PLAN B (octobre 2026) : période de GEL. Pas de régénération massive sans
+# raison forte ; deploy.yml bloque un commit modifiant plus de 1 500 pages HTML
+# sauf mention [regeneration-autorisee] dans le message de commit.
+for lang in fr en en-us es de; do python3 generate_pages.py --lang $lang --v6; done
 
 # 3. Si JS modifié : minifier + bumper version
 npx terser js/core.js -o js/core.min.js --compress --mangle
@@ -189,10 +197,14 @@ python3 generate_index_hub.py
 python3 generate_comparatifs.py
 python3 generate_classements.py
 
-# 6. Vérification cohérence (OBLIGATOIRE)
+# 6. Politique d'indexation + sitemaps (OBLIGATOIRE, plan B)
+python3 apply_indexation.py     # noindex/hreflang selon lib/indexation.py
+python3 generate_sitemaps.py    # sitemaps = exactement l'ensemble indexable
+
+# 7. Vérification cohérence (OBLIGATOIRE ; échoue si 5 ou 6 oubliés)
 python3 check_deploy.py
 
-# 7. Commit + push → GitHub Actions → wrangler deploy (auto)
+# 8. Commit + push → GitHub Actions → wrangler deploy (auto) + IndexNow
 git add -A && git commit -m "..."
 git push origin main
 ```

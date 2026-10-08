@@ -1487,13 +1487,20 @@ if(window.initDestSearch) window.initDestSearch({{suffix:'{C['annual_suffix']}',
 
 # ── CONTEXT PARAGRAPH ──────────────────────────────────────────────────────
 
-def context_paragraph(cfg, nom, nom_f, m, mi, score, best_month, best_score, is_tropical, event_text=None, is_mountain=False, ski_sc=0):
-    """Generate a context paragraph per destination × month."""
+def context_paragraph(cfg, nom, nom_f, m, mi, score, best_month, best_score, is_tropical, event_text=None, is_mountain=False, ski_sc=0, lat=None, tmax_display=None):
+    """Generate a context paragraph per destination × month.
+
+    lat (optionnel) : corrige les saisons. Hémisphère sud = saisons décalées de
+    6 mois (juillet = hiver à Windhoek) ; zone équatoriale (|lat| < 15°) = pas
+    de vocabulaire saisonnier tempéré (pas d'« été » à Nairobi).
+    """
     C = cfg
     MONTHS = C['months']
     month = MONTHS[mi]
     season_map = C['seasons_map']
-    season = season_map[mi]
+    _mi_season = (mi + 6) % 12 if (lat is not None and lat < 0) else mi
+    season = season_map[_mi_season]
+    _equatorial = lat is not None and abs(lat) < 15
     tmax, rain, sun = m['tmax'], m['rain_pct'], m['sun_h']
     cp = C['context_paragraphs']
 
@@ -1502,7 +1509,8 @@ def context_paragraph(cfg, nom, nom_f, m, mi, score, best_month, best_score, is_
     season_spring, season_summer, season_autumn, season_winter = season_order
 
     fvars = dict(month=month, month_lc=month_lc(C, month), nom=nom, nom_f=nom_f,
-                 tmax=tmax, rain=rain, sun=sun, score=score,
+                 tmax=(tmax_display if tmax_display is not None else tmax),
+                 rain=rain, sun=sun, score=score,
                  best_month=best_month, best_month_lc=month_lc(C, best_month),
                  best_score=f"{best_score:.1f}")
 
@@ -1536,6 +1544,8 @@ def context_paragraph(cfg, nom, nom_f, m, mi, score, best_month, best_score, is_
         parts.append(cp['tropical_wet'].format(**fvars))
     elif is_tropical and rain <= 20:
         parts.append(cp['tropical_dry'].format(**fvars))
+    elif _equatorial:
+        parts.append(cp['default'].format(**fvars))
     elif season == season_summer and tmax >= 30:
         parts.append(cp['summer_hot'].format(**fvars))
     elif season == season_summer and tmax >= 22:
@@ -1564,7 +1574,12 @@ def context_paragraph(cfg, nom, nom_f, m, mi, score, best_month, best_score, is_
         parts.append(cp['rain_high'].format(**fvars))
 
     # Best month comparison
-    if score >= 9:
+    # Le mois courant EST le meilleur : ne pas le comparer à lui-même
+    # (« même si juillet reste théoriquement meilleur » sur la page de juillet,
+    # 348 pages FR concernées avant correction).
+    if month == best_month:
+        pass
+    elif score >= 9:
         parts.append(cp['score_top'].format(**fvars))
     elif score >= 7.5:
         parts.append(cp['score_good'].format(**fvars))

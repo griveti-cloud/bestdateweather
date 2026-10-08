@@ -21,6 +21,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      # ── Garde-fou « gel » du plan B (octobre 2026) ──────────────────────────
+      # Google a déclassé le site après des régénérations massives répétées.
+      # Pendant la période de gel, un commit qui modifie plus de 1 500 pages
+      # HTML est bloqué, sauf mention explicite [regeneration-autorisee] dans
+      # son message.
+      - name: Garde-fou gel (pas de régénération massive)
+        if: github.event_name == 'push'
+        run: |
+          if ! git rev-parse -q --verify HEAD~1 >/dev/null; then echo "Pas de parent, contrôle ignoré"; exit 0; fi
+          N=$(git diff --name-only HEAD~1 HEAD -- '*.html' | wc -l)
+          echo "Pages HTML modifiées par le dernier commit : $N"
+          if [ "$N" -gt 1500 ]; then
+            if git log -1 --format=%B | grep -q '\[regeneration-autorisee\]'; then
+              echo "Régénération massive autorisée explicitement."
+            else
+              echo "::error::$N pages HTML modifiées : gel du plan B. Ajouter [regeneration-autorisee] au message de commit si c'est voulu."
+              exit 1
+            fi
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -47,6 +69,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Install wrangler
         run: npm install -g wrangler@4.77.0
@@ -71,6 +95,14 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: b41738c7ecde63202108d350cd786f4b
+
+      # Plan B : signaler les URL indexables modifiées à Bing & co (IndexNow).
+      # Non bloquant ; attend que la clé soit servie par le site déployé.
+      - name: IndexNow (Bing)
+        continue-on-error: true
+        run: |
+          sleep 45
+          python3 scripts/indexnow_submit.py --changed
 
   # ════════════════════════════════════════════════════════════════════════════
   # JOB 3 — SMOKE TEST PROD (vérifie que le site déployé est sain)

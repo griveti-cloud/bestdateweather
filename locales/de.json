@@ -667,12 +667,7 @@
     "country_key": "country_de",
     "hero_sub_key": "hero_sub_de"
   },
-  "annual_titles": [
-    "{nom} {year} — {best_score}/10: wann reisen?",
-    "Beste Reisezeit {nom} {year} — {best_score}/10 (12 Monate bewertet)",
-    "{nom} Wetter {year} — {best_score}/10: beste und schlechteste Monate",
-    "Wann nach {nom} reisen? {year} — Klimabewertung {best_score}/10"
-  ],
+  "annual_titles": ["Beste Reisezeit {nom}: Wetter und Klima Monat für Monat"],
   "annual_h1s": [
     "Wann ist die beste Reisezeit<br/><em>für {nom}?</em>",
     "Beste Reisezeit für<br/><em>{nom} — {best_score}/10</em>",
@@ -1668,7 +1663,7 @@
       "h1_mtn_tpl": "{nom}: beste Monate <em>zum Skifahren oder Wandern</em>",
       "lead_std_tpl": "<strong>{best}</strong> liegt vorne ({best_score}/10), <strong>{worst}</strong> ist am härtesten ({worst_score}/10). {gap} Punkte Abstand zwischen den beiden.",
       "lead_mtn_tpl": "Im Gebirge zwei Welten: Winter zum Skifahren, Sommer zum Wandern. <strong>{best}</strong> liegt vorne ({best_score}/10), <strong>{worst}</strong> ist am härtesten ({worst_score}/10). {gap} Punkte Abstand zwischen den beiden.",
-      "tag_update": "Aktualisiert {month} 2026",
+      "tag_update": "Daten aktualisiert: {month}",
       "tag_data": "ERA5 · 10 Jahre",
       "tag_coords_tpl": "{lat}°{ns} · {lon}°{ew}",
       "quick_label": "Schnellantwort",
@@ -1739,7 +1734,7 @@
       "mini_temp": "Temperatur",
       "mini_rain": "Regen",
       "mini_sun": "Sonne",
-      "tag_update": "Aktualisiert {month} 2026",
+      "tag_update": "Daten aktualisiert: {month}",
       "tag_data": "ERA5 · 10 Jahre",
       "vs_kicker": "Vergleichen",
       "vs_title_tpl": "Ist {mois} der richtige Monat?",

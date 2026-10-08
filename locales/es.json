@@ -667,12 +667,7 @@
     "country_key": "country_es",
     "hero_sub_key": "hero_sub_es"
   },
-  "annual_titles": [
-    "{nom} {year} — {best_score}/10: ¿cuándo ir?",
-    "Mejor época para {nom} {year} — {best_score}/10 (12 meses clasificados)",
-    "Clima en {nom} {year} — {best_score}/10: mejores y peores meses",
-    "¿Cuándo visitar {nom}? {year} — puntuación climática {best_score}/10"
-  ],
+  "annual_titles": ["Mejor época para viajar a {nom}: el clima mes a mes"],
   "annual_h1s": [
     "¿Cuál es la mejor época<br/><em>para visitar {nom}?</em>",
     "Mejor época para<br/><em>{nom} — {best_score}/10</em>",
@@ -1677,7 +1672,7 @@
       "h1_mtn_tpl": "{nom}: mejores meses <em>para esquiar o hacer senderismo</em>",
       "lead_std_tpl": "<strong>{best}</strong> destaca como el mejor ({best_score}/10), <strong>{worst}</strong> es el más duro ({worst_score}/10). Diferencia de {gap} puntos entre ambos.",
       "lead_mtn_tpl": "En montaña hay dos universos: invierno para el esquí, verano para el senderismo. <strong>{best}</strong> destaca como el mejor ({best_score}/10), <strong>{worst}</strong> es el más duro ({worst_score}/10). Diferencia de {gap} puntos entre ambos.",
-      "tag_update": "Actualizado {month} 2026",
+      "tag_update": "Datos actualizados: {month}",
       "tag_data": "ERA5 · 10 años",
       "tag_coords_tpl": "{lat}°{ns} · {lon}°{ew}",
       "quick_label": "Respuesta rápida",
@@ -1748,7 +1743,7 @@
       "mini_temp": "Temperatura",
       "mini_rain": "Lluvia",
       "mini_sun": "Sol",
-      "tag_update": "Actualizado {month} 2026",
+      "tag_update": "Datos actualizados: {month}",
       "tag_data": "ERA5 · 10 años",
       "vs_kicker": "Comparar",
       "vs_title_tpl": "¿Es {mois} el mes adecuado?",

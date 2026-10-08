@@ -1,0 +1,57 @@
+name: Fetch weekly history (ERA5)
+
+# Plan B, phase 3 : historique quotidien 2016-2025 des destinations indexées,
+# agrégé par semaine (data/weekly/*.json). Quota Open-Meteo gratuit : ~34
+# destinations par jour ; le script reprend là où il s'est arrêté. Le
+# workflow tourne chaque jour et devient sans effet une fois tout couvert.
+# Les données seules sont commitées : les pages sont régénérées ensuite, en
+# une fois, quand la couverture est complète (pas de régénération quotidienne).
+
+on:
+  schedule:
+    - cron: '20 2 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/fetch_weekly_history.py'
+      - 'data/indexation_policy.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch-weekly-history
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Auto-test du calcul
+        run: python3 scripts/fetch_weekly_history.py --selftest
+
+      - name: Récupérer l'historique (budget quotidien)
+        run: python3 scripts/fetch_weekly_history.py --budget 9000
+
+      - name: Commit des données
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/weekly/
+          if git diff --cached --quiet; then
+            echo "Aucune nouvelle donnée."
+            exit 0
+          fi
+          n=$(ls data/weekly/*.json | wc -l)
+          git commit -m "Auto: historique hebdomadaire ERA5 ($n destinations couvertes)"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 15; done
