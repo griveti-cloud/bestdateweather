@@ -41,11 +41,11 @@ Description (le champ accepte la mise en forme simple) :
 
 > Pour chaque destination et chaque mois : température maximale et minimale moyennes (°C), part des jours avec au moins 1 mm de pluie (%), précipitations moyennes (mm par jour), ensoleillement (heures par jour), température de la mer (°C, destinations côtières) et score de voyage sur 10.
 >
-> **Sources** : réanalyse ERA5 (Copernicus / ECMWF) via Open-Meteo, données quotidiennes 2016-2025. Ensoleillement : normales de stations quand elles existent (colonne source_soleil = observed), sinon valeur ERA5 recalibrée (calibrated).
+> **Sources** : réanalyse ERA5 (Copernicus / ECMWF) via Open-Meteo, données quotidiennes 2016-2025. Ensoleillement et jours de pluie : normales de stations quand elles existent (colonnes source_soleil et source_pluie = observed), sinon valeur ERA5 recalibrée sur ces stations (calibrated).
 >
 > **Méthode du score** : https://bestdateweather.com/methodologie
 >
-> **Limites** : une destination « région » est représentée par un seul point (colonne precision_point) ; en zone tropicale, la réanalyse peut surestimer la fréquence des petites pluies par rapport aux stations. La Réunion et la Corse sont exclues de cette version (point de référence en altitude, en cours de correction).
+> **Limites** : une destination « région » est représentée par un seul point (colonne precision_point) ; les températures ERA5 ne sont pas recalibrées et peuvent être inférieures de 1 à 2 °C aux stations côtières sur les petites îles. La Réunion et la Corse sont exclues de cette version (point de référence en altitude, en cours de correction).
 >
 > **Citation demandée** : « Source : BestDateWeather (bestdateweather.com), d'après ERA5 / Copernicus et Open-Meteo ».
 >

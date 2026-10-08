@@ -1,0 +1,29 @@
+{
+ "model": "M3 + tropical + latitude",
+ "columns": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "coefficients": [
+  -1.8410084538272182,
+  0.5503778885709889,
+  0.30631582207658464,
+  0.08895027088960225,
+  1.716394653952334
+ ],
+ "features": [
+  "const",
+  "logit(era5)",
+  "log(mm+0.1)",
+  "tropical",
+  "abs_lat/90",
+  "logit(era5)*tropical"
+ ],
+ "cv_mae_pts": 5.68917933971627,
+ "era5_mae_pts": 12.829741565729924,
+ "n_destinations_reference": 318,
+ "n_mois_reference": 3816
+}

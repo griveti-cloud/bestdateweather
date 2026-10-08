@@ -87,7 +87,10 @@ wrangler.toml                       # Config Cloudflare Workers
 | `lib/indexation.py` + `data/indexation_policy.json` | Politique d'indexation du plan B : FR/EN, destinations retenues, exceptions GSC |
 | `data/data_version.json` | Dates réelles affichées (données, contenu) : à modifier à la main |
 | `data/avis_reels.json` | Avis réellement écrits par Gilles (voir docs/avis_reels.md) |
-| `scripts/fetch_weekly_history.py` | Historique quotidien ERA5 → data/weekly/ (workflow quotidien) |
+| `scripts/fetch_weekly_history.py` | Historique quotidien ERA5 → data/weekly/ (workflow quotidien), seuil de pluie calé sur la calibration |
+| `scripts/fetch_station_normals.py` | Normales de stations (Wikipédia, ≤ 120 km, jours de pluie ≥ 1 mm) → data/station_normals.json |
+| `scripts/calibrate_rain_days.py` | Calibration des jours de pluie (stations + modèle) → climate.csv, data/rain_calibration.json |
+| `scripts/recompute_scores.py` | Recalcul des scores ; `--delta-from ANCIEN.csv` n'applique que l'effet des données modifiées |
 
 ---
 

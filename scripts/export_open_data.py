@@ -33,7 +33,7 @@ def main(out_dir):
     with open(out, 'w', encoding='utf-8', newline='') as f:
         w = csv.writer(f)
         w.writerow(['destination', 'pays', 'latitude', 'longitude', 'precision_point', 'mois_num', 'mois',
-                    'temp_max_c', 'temp_min_c', 'jours_pluie_pct', 'precip_mm_jour', 'soleil_h_jour',
+                    'temp_max_c', 'temp_min_c', 'jours_pluie_pct', 'source_pluie', 'precip_mm_jour', 'soleil_h_jour',
                     'source_soleil', 'temp_mer_c', 'score_sur_10', 'url'])
         for r in rows:
             s = r['slug']
@@ -42,7 +42,7 @@ def main(out_dir):
                 continue
             n_dest.add(s)
             w.writerow([d['nom_fr'], d['pays'], d['lat'], d['lon'], d.get('precision', ''), r['mois_num'], r['mois'],
-                        r['tmax'], r['tmin'], r['rain_pct'], r['precip_mm'], r['sun_h'],
+                        r['tmax'], r['tmin'], r['rain_pct'], r.get('rain_source', ''), r['precip_mm'], r['sun_h'],
                         r.get('sun_source', ''), r.get('sea_temp', ''), r['score'],
                         f'https://bestdateweather.com/meilleure-periode-{s}'])
     readme = f"""# Climat de voyage : 12 mois pour {len(n_dest)} destinations (BestDateWeather)
@@ -57,8 +57,10 @@ température de la mer (°C, destinations côtières), score de voyage sur 10.
 
 ## Sources et méthode
 - Réanalyse ERA5 (Copernicus / ECMWF) via Open-Meteo, données quotidiennes {dv.get('periode_donnees', '2016-2025')}.
-- Ensoleillement : normales de stations publiées quand elles existent
-  (`source_soleil = observed`), sinon valeur ERA5 recalibrée (`calibrated`).
+- Ensoleillement et jours de pluie : normales de stations publiées quand
+  elles existent (`observed`), sinon valeur ERA5 recalibrée sur ces stations
+  (`calibrated`). Jours de pluie : modèle ajusté sur 318 stations, erreur
+  moyenne 5,7 points contre 12,8 pour ERA5 brut (validation croisée par ville).
 - Score : combinaison pondérée température, pluie, ensoleillement ; méthode
   décrite sur https://bestdateweather.com/methodologie
 - Dernière mise à jour des données : {dv.get('donnees_mises_a_jour')}.
@@ -66,8 +68,8 @@ température de la mer (°C, destinations côtières), score de voyage sur 10.
 ## Limites connues
 - Les réanalyses lissent les reliefs : une destination « région » est
   représentée par un seul point (colonne `precision_point`).
-- En zone tropicale, la réanalyse peut surestimer la fréquence des petites
-  pluies par rapport aux stations ; à recouper avant toute conclusion forte.
+- Températures : réanalyse ERA5 non recalibrée ; sur les petites îles, elle
+  peut être inférieure de 1 à 2 °C aux stations côtières.
 - Exclues de cette version : {', '.join(f'{k} ({v})' for k, v in EXCLUS.items())}.
 
 ## Licence

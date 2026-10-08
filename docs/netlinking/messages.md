@@ -26,20 +26,21 @@ contact@bestdateweather.com
 
 ## 2. Journaliste voyage : communiqué « Noël au soleil »
 
-**Objet** : Noël au soleil : à moins de 4 000 km, au-delà de 24 °C c'est l'Égypte ou presque rien (10 ans de données)
+**Objet** : Noël au soleil : à moins de 4 000 km, au-dessus de 23 °C c'est l'Égypte (normales des stations)
 
 Bonjour {prénom},
 
 J'ai lu votre article « {titre} » de l'an dernier. Pour votre prochain sujet
-sur le soleil à Noël, voici des chiffres qui n'ont pas encore été publiés :
-dix ans de données climatiques (2016-2025) comparées sur 730 destinations.
+sur le soleil à Noël, voici une comparaison des normales officielles des
+stations météo (1991-2020) pour les destinations à moins de 4 000 km de Paris :
 
-- À moins de 4 000 km de Paris, seules quatre destinations atteignent 24 °C
-  ou plus en décembre : Louxor, Assouan, Marsa Alam (Égypte) et Nouakchott.
-- Les Canaries, Agadir et Marrakech plafonnent à 20-21 °C.
-- Madère est la plus arrosée du lot : plus d'un jour sur trois avec de la pluie.
+- Au-dessus de 23 °C en décembre : uniquement la mer Rouge et la vallée du Nil
+  (Hurghada 23,8 °C, Louxor 24,2 °C, Marsa Alam 25,5 °C).
+- Les Canaries et Agadir plafonnent à 22 °C, Madère à 21 °C, Marrakech à 20 °C.
+- Madère compte deux fois plus de jours de pluie que les Canaries en décembre
+  (8,6 contre 4 à 5).
 
-Le tableau complet, la méthode et les données réutilisables sont joints.
+Le tableau complet et la méthode sont joints ; les données sont réutilisables.
 Je peux aussi calculer un classement sur mesure (budget, durée de vol,
 famille…) pour votre article.
 

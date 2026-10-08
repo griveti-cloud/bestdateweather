@@ -65,20 +65,54 @@ def mmdd(doy: int) -> str:
     return f'{d.month:02d}-{d.day:02d}'
 
 
-def compute(times, tmax, codes, precip):
+def month_thresholds(times, precip, targets):
+    """Seuil de pluie par mois, calé sur la fréquence calibrée (climate.csv).
+
+    ERA5 compte trop de jours >= 1 mm dans les climats à averses brèves
+    (Bali juillet : 59 % contre 11 % à la station de Denpasar). Pour chaque
+    mois, on relève le seuil jusqu'à ce que la fréquence ERA5 des jours de
+    pluie égale la fréquence calibrée sur les stations (ajustement par
+    quantiles). Le seuil ne descend jamais sous 1 mm.
+    """
+    by_m = {m: [] for m in range(1, 13)}
+    for t, pr in zip(times, precip):
+        if pr is not None:
+            by_m[int(t[5:7])].append(pr)
+    th = {}
+    for m, arr in by_m.items():
+        f = (targets or {}).get(m)
+        n = len(arr)
+        if f is None or n == 0:
+            th[m] = RAIN_MM
+            continue
+        f1 = sum(1 for v in arr if v >= RAIN_MM) / n
+        if f >= f1:
+            th[m] = RAIN_MM
+            continue
+        srt = sorted(arr, reverse=True)
+        k = int(round(f * n))
+        if k <= 0:
+            th[m] = float('inf')
+        else:
+            th[m] = max(RAIN_MM, (srt[k - 1] + srt[k]) / 2 if k < n else srt[k - 1])
+    return th
+
+
+def compute(times, tmax, codes, precip, targets=None):
     """Agrège les séries quotidiennes en statistiques hebdomadaires et journalières.
 
-    Hebdomadaire : jour de pluie = précipitations >= 1 mm (définition OMM, la
-    même que le « % de jours de pluie » des pages). Par jour : mode du code
-    météo sur ±3 jours, comme le verdict de l'application.
+    Hebdomadaire : jour de pluie = précipitations >= seuil du mois (1 mm au
+    minimum, relevé par month_thresholds pour corriger le biais ERA5). Par
+    jour : mode du code météo sur ±3 jours, comme le verdict de l'application.
     """
-    by = {}  # (year, doy) -> (tmax, code, precip)
+    th = month_thresholds(times, precip, targets)
+    by = {}  # (year, doy) -> (tmax, code, rain_day)
     for t, x, c, pr in zip(times, tmax, codes, precip):
         d = date.fromisoformat(t)
         k = doy_nonleap(d)
         if k is None:
             continue
-        by[(d.year, k)] = (x, c, pr)
+        by[(d.year, k)] = (x, c, (pr is not None and pr >= th[d.month]))
 
     weeks = []
     for a, b in week_blocks():
@@ -89,7 +123,7 @@ def compute(times, tmax, codes, precip):
             if len(vals) < (b - a + 1) - 1:   # au plus 1 jour manquant toléré
                 continue
             ny += 1
-            r = sum(1 for _, _c, pr in vals if pr is not None and pr >= RAIN_MM)
+            r = sum(1 for _, _c, rd in vals if rd)
             rain_days.append(r * 7.0 / len(vals))
             if r <= DRY_WEEK_MAX:
                 dry_weeks += 1
@@ -129,7 +163,8 @@ def compute(times, tmax, codes, precip):
             sunny += mode <= 2
         dry_by_day.append(round(dry * 10 / n) if n else None)
         sunny_by_day.append(round(sunny * 10 / n) if n else None)
-    return {'weeks': weeks, 'dry_years_by_day': dry_by_day, 'sunny_years_by_day': sunny_by_day}
+    return {'weeks': weeks, 'dry_years_by_day': dry_by_day, 'sunny_years_by_day': sunny_by_day,
+            'rain_threshold_mm': {str(m): (None if v == float('inf') else round(v, 2)) for m, v in th.items()}}
 
 
 class QuotaReached(Exception):
@@ -203,6 +238,9 @@ def main():
         return
     os.makedirs(OUT_DIR, exist_ok=True)
     rows = {r['slug_fr']: r for r in csv.DictReader(open(os.path.join(ROOT, 'data', 'destinations.csv'), encoding='utf-8-sig'))}
+    rain_targets = {}
+    for cr in csv.DictReader(open(os.path.join(ROOT, 'data', 'climate.csv'), encoding='utf-8')):
+        rain_targets.setdefault(cr['slug'], {})[int(cr['mois_num'])] = float(cr['rain_pct']) / 100
     todo = [s for s in targets() if not os.path.exists(os.path.join(OUT_DIR, f'{s}.json'))]
     print(f'{len(todo)} destination(s) à traiter ; poids {WEIGHT:.0f} appels chacune ; budget {a.budget:.0f}')
     spent, done, hour_start, hour_spent = 0.0, 0, time.time(), 0.0
@@ -235,7 +273,8 @@ def main():
         hour_spent += WEIGHT
         dly = data.get('daily') or {}
         res = compute(dly.get('time', []), dly.get('temperature_2m_max', []),
-                      dly.get('weather_code', []), dly.get('precipitation_sum', []))
+                      dly.get('weather_code', []), dly.get('precipitation_sum', []),
+                      targets=rain_targets.get(s))
         if not res:
             print(f'⚠️ {s} : données incomplètes, ignorée')
             continue
@@ -243,9 +282,15 @@ def main():
             'slug': s, 'lat': float(r['lat']), 'lon': float(r['lon']),
             'source': 'ERA5 (ECMWF) via Open-Meteo archive API, daily temperature_2m_max + precipitation_sum + weather_code',
             'years': [START.year, END.year],
-            'rain_rule': 'semaines : jour de pluie = precipitation_sum >= 1 mm, semaine plutôt sèche = au plus 2 jours de pluie ; jours : mode du weather_code sur ±3 j, sec si < 51',
+            'rain_rule': ('semaines : jour de pluie = precipitation_sum >= seuil du mois (1 mm minimum, '
+                          'relevé pour égaler la fréquence calibrée sur les stations), semaine plutôt sèche = '
+                          'au plus 2 jours de pluie ; jours : mode du weather_code sur ±3 j, sec si < 51'),
             'generated': date.today().isoformat(),
             **res,
+            # Précipitations quotidiennes conservées (0,1 mm) : permet de recalculer
+            # sans nouvel appel à l'API si la calibration évolue.
+            'precip_daily': {'start': START.isoformat(),
+                             'values': [None if v is None else round(v, 1) for v in dly.get('precipitation_sum', [])]},
         }
         with open(os.path.join(OUT_DIR, f'{s}.json'), 'w', encoding='utf-8') as f:
             json.dump(out, f, ensure_ascii=False, separators=(',', ':'))

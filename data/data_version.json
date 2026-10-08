@@ -1,11 +1,11 @@
 {
  "_doc": [
   "Dates réelles affichées sur les pages (plan B, octobre 2026).",
-  "donnees_mises_a_jour : dernière modification des données climatiques ou des scores (recalibrage de l'ensoleillement le 4 août 2026). C'est la date affichée « Données mises à jour : … ».",
+  "donnees_mises_a_jour : dernière modification des données climatiques ou des scores (8 octobre 2026 : jours de pluie recalibrés sur 318 stations ; 4 août 2026 : ensoleillement). C'est la date affichée « Données mises à jour : … ».",
   "contenu_modifie : dernière modification substantielle du contenu des pages (dateModified en JSON-LD, lastmod du sitemap).",
   "À changer À LA MAIN, uniquement quand les données ou le contenu changent réellement. Ne jamais mettre la date du jour par défaut : Google pénalise les dates rafraîchies artificiellement."
  ],
- "donnees_mises_a_jour": "2026-08-04",
+ "donnees_mises_a_jour": "2026-10-08",
  "contenu_modifie": "2026-10-08",
  "periode_donnees": "2016-2025"
 }

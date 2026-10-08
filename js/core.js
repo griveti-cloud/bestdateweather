@@ -2856,6 +2856,22 @@ function p50(arr) {
   return s.length % 2 ? s[mid] : (s[mid-1] + s[mid]) / 2;
 }
 
+// Calibration des jours de pluie (octobre 2026) : ERA5 surestime la fréquence
+// des jours >= 1 mm dans les climats à averses brèves (Bali juillet : 59 %
+// contre 11 % mesurés). Modèle ajusté sur 318 stations (normales 1991-2020),
+// identique à scripts/calibrate_rain_days.py (data/rain_calibration.json) :
+// logit(p) = -1.8410 + 0.5504 logit(ERA5) + 0.3063 ln(mm/j + 0.1)
+//            + 0.0890 tropical + 1.7164 |lat|/90
+function calibrateRainPct(rawPct, meanMm, lat) {
+ if (rawPct == null || isNaN(rawPct)) return rawPct;
+ var x = Math.min(Math.max(rawPct / 100, 0.005), 0.995);
+ var lx = Math.log(x / (1 - x));
+ var trop = (lat != null && Math.abs(lat) < 23.44) ? 1 : 0;
+ var alat = lat != null ? Math.abs(lat) / 90 : 0.35;
+ var z = -1.8410 + 0.5504 * lx + 0.3063 * Math.log((meanMm || 0) + 0.1) + 0.0890 * trop + 1.7164 * alat;
+ return Math.round(100 / (1 + Math.exp(-z)));
+}
+
 function aggregateByMonth(data) {
  // buckets[0..11] for Jan..Dec
  var buckets = [];
@@ -2882,7 +2898,9 @@ function aggregateByMonth(data) {
    var avgTmin = p50(b.tmin);
    var avgTemp = (avgTmax != null && avgTmin != null) ? (avgTmax + avgTmin) / 2 : null;
    var rainDays = b.precip.filter(function(v){return v>1;}).length;
-   var rainPct = b.precip.length ? Math.round(rainDays / b.precip.length * 100) : 0;
+   var rainPctEra5 = b.precip.length ? Math.round(rainDays / b.precip.length * 100) : 0;
+   var meanMm = b.precip.length ? b.precip.reduce(function(a,v){return a+v;},0) / b.precip.length : 0;
+   var rainPct = b.precip.length ? calibrateRainPct(rainPctEra5, meanMm, data.latitude) : 0;
    var medRad = p50(b.rad) || 0;
    var sunHrs = b.sun.length ? Math.min(14, p50(b.sun) / 3600) : Math.min(14, medRad / 3.6);
    var avgPrecipMm = b.precip.length ? Math.round((p50(b.precip) || 0) * 10) / 10 : 0;
