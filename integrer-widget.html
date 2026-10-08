@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="robots" content="noindex,follow"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Widget météo voyage gratuit — Intégrez BestDateWeather sur votre site</title>
 <meta name="description" content="Ajoutez gratuitement un widget météo scientifique sur votre blog voyage ou office de tourisme. Données ERA5 10 ans, 746 destinations, aucune inscription."/>
@@ -248,7 +247,9 @@ footer span{color:rgba(255,255,255,.3);font-size:13px;margin:0 8px}
   scrolling="no" frameborder="0"
   style="border-radius:12px;border:none"
   title="Météo Agadir — BestDateWeather"&gt;
-&lt;/iframe&gt;</pre>
+&lt;/iframe&gt;
+&lt;p style="font-size:11px;margin:4px 0 0"&gt;Données climat : &lt;a href="https://bestdateweather.com/meilleure-periode-agadir"&gt;BestDateWeather&lt;/a&gt;&lt;/p&gt;</pre>
+      <p style="font-size:11px;color:var(--muted);margin:6px 0 0">La ligne de crédit est facultative : vous pouvez la retirer, le widget fonctionne sans.</p>
     </div>
     <p style="font-size:12px;color:var(--muted);text-align:center">Exemple avec Agadir — <a href="widgets.html" style="color:var(--gold);font-weight:600">choisissez votre destination →</a></p>
   </div>
@@ -341,7 +342,8 @@ function getSuffix() {
 function getCode() {
   const f = FORMATS[curFormat];
   const suf = getSuffix();
-  return `<iframe src="https://bestdateweather.com/widget/${DEST}-${f.label}${suf}.html"\n  width="${f.w}" height="${f.h}"\n  scrolling="no" frameborder="0"\n  style="border-radius:12px;border:none"\n  title="Météo ${DEST_LABEL} — BestDateWeather">\n</iframe>`;
+  // Crédit visible, au nom de la marque, FACULTATIF (règles Google sur les liens de widgets)
+  return `<iframe src="https://bestdateweather.com/widget/${DEST}-${f.label}${suf}.html"\n  width="${f.w}" height="${f.h}"\n  scrolling="no" frameborder="0"\n  style="border-radius:12px;border:none"\n  title="Météo ${DEST_LABEL} — BestDateWeather">\n</iframe>\n<p style="font-size:11px;margin:4px 0 0">Données climat : <a href="https://bestdateweather.com/meilleure-periode-${DEST}">BestDateWeather</a></p>`;
 }
 
 function setTheme(theme) {

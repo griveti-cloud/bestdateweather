@@ -187,6 +187,7 @@ pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;paddin
           <button class="copy-btn" id="copy-btn" onclick="copyCode()">Copier le code</button>
         </div>
         <pre id="code-output">&lt;!-- Sélectionnez une destination --&gt;</pre>
+        <p style="font-size:11px;color:#6b7280;margin:6px 0 0">La ligne de crédit est facultative : vous pouvez la retirer, le widget fonctionne sans.</p>
       </div>
     </div>
   </div>
@@ -313,7 +314,9 @@ function updateCode() {
   var sz = FORMAT_SIZES[currentSize] || [400,340];
   var url = 'https://bestdateweather.com/widget/' + currentSlug + '-' + currentSize + '.html';
   var nom = BDW_WIDGET_DATA[currentSlug] ? BDW_WIDGET_DATA[currentSlug].nom : currentSlug;
-  var code = '<iframe\n  src="' + url + '"\n  width="' + sz[0] + '"\n  height="' + sz[1] + '"\n  frameborder="0"\n  style="border-radius:12px;border:1px solid #e2e8f0;"\n  loading="lazy"\n  title="Météo ' + nom + '"\n></iframe>';
+  var code = '<iframe\n  src="' + url + '"\n  width="' + sz[0] + '"\n  height="' + sz[1] + '"\n  frameborder="0"\n  style="border-radius:12px;border:1px solid #e2e8f0;"\n  loading="lazy"\n  title="Météo ' + nom + '"\n></iframe>'
+    // Crédit visible, au nom de la marque, FACULTATIF (règles Google sur les liens de widgets)
+    + '\n<p style="font-size:11px;margin:4px 0 0">Données climat : <a href="https://bestdateweather.com/meilleure-periode-' + currentSlug + '">BestDateWeather</a></p>';
   document.getElementById('code-output').textContent = code;
 }
 
@@ -435,6 +438,7 @@ updatePreview();
           <button class="copy-btn" id="copy-map-btn" onclick="copyMapCode()">Copier le code</button>
         </div>
         <pre id="map-code-output"></pre>
+        <p style="font-size:11px;color:#6b7280;margin:6px 0 0">La ligne de crédit est facultative : vous pouvez la retirer, le widget fonctionne sans.</p>
       </div>
     </div>
   </div>
@@ -453,7 +457,8 @@ function switchTab(tab, btn) {
 }
 
 function updateMapCode() {
-  var code = '<iframe\n  src="' + mapUrl + '"\n  width="100%"\n  height="' + mapHeight + '"\n  frameborder="0"\n  style="border-radius:12px;border:1px solid #e2e8f0;display:block"\n  loading="lazy"\n  title="Carte météo mondiale — BestDateWeather"\n></iframe>';
+  var code = '<iframe\n  src="' + mapUrl + '"\n  width="100%"\n  height="' + mapHeight + '"\n  frameborder="0"\n  style="border-radius:12px;border:1px solid #e2e8f0;display:block"\n  loading="lazy"\n  title="Carte météo mondiale — BestDateWeather"\n></iframe>'
+    + '\n<p style="font-size:11px;margin:4px 0 0">Carte : <a href="https://bestdateweather.com/">BestDateWeather</a></p>';
   document.getElementById('map-code-output').textContent = code;
 }
 

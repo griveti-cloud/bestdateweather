@@ -28,7 +28,10 @@ _DEST_PATH = os.path.join(_ROOT, 'data', 'destinations.csv')
 
 # Pages pratiques indexables (chemins servis, sans .html ; '' = racine FR)
 _STATIC_FR = ['', 'carte', 'a-propos', 'methodologie', 'faq', 'contact',
-              'mentions-legales', 'confidentialite', 'meilleures-destinations-meteo']
+              'mentions-legales', 'confidentialite', 'meilleures-destinations-meteo',
+              # Page d'intégration du widget : cible « widget météo gratuit »,
+              # source naturelle de liens (crédit facultatif sous le widget)
+              'integrer-widget']
 _STATIC_EN = ['en/app', 'en/map', 'en/about', 'en/methodology', 'en/faq',
               'en/contact', 'en/legal', 'en/privacy']
 
