@@ -2,7 +2,10 @@
 """
 Historique quotidien 2016-2025 (ERA5 via Open-Meteo) → statistiques par semaine.
 
-Une semaine « plutôt sèche » compte au plus 2 jours avec au moins 1 mm de pluie.
+Une semaine « plutôt sèche » compte au plus 2 jours de pluie. Le seuil d'un
+jour de pluie est d'au moins 1 mm, relevé mois par mois (month_thresholds)
+pour que la fréquence ERA5 égale la fréquence calibrée sur les stations
+(data/climate.csv, colonne rain_source).
 
 Plan B, phase 3. Produit data/weekly/{slug_fr}.json pour les destinations
 indexées (lib/indexation.py), lu par lib/v6_weekly.py.
