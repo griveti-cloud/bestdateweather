@@ -43,6 +43,7 @@ WEIGHT = ((END - START).days + 1) / 14.0          # appels pondérés par destin
 HOURLY_CAP = 4500                                  # marge sous 5 000/heure
 RAIN_CODE = 51                                     # code WMO >= 51 = précipitation (règle de l'application, par jour)
 RAIN_MM = 1.0                                      # jour de pluie = >= 1 mm (même règle que climate.csv)
+MIN_RAIN_MM = 0.1                                  # seuil plancher quand la station est plus pluvieuse qu'ERA5
 DRY_WEEK_MAX = 2                                   # semaine « plutôt sèche » = au plus 2 jours de pluie
 
 
@@ -75,7 +76,8 @@ def month_thresholds(times, precip, targets):
     (Bali juillet : 59 % contre 11 % à la station de Denpasar). Pour chaque
     mois, on relève le seuil jusqu'à ce que la fréquence ERA5 des jours de
     pluie égale la fréquence calibrée sur les stations (ajustement par
-    quantiles). Le seuil ne descend jamais sous 1 mm.
+    quantiles). Dans le cas inverse, plus rare (station plus pluvieuse
+    qu'ERA5, ex. Boukhara), le seuil descend sous 1 mm, jusqu'à 0,1 mm.
     """
     by_m = {m: [] for m in range(1, 13)}
     for t, pr in zip(times, precip):
@@ -88,16 +90,14 @@ def month_thresholds(times, precip, targets):
         if f is None or n == 0:
             th[m] = RAIN_MM
             continue
-        f1 = sum(1 for v in arr if v >= RAIN_MM) / n
-        if f >= f1:
-            th[m] = RAIN_MM
-            continue
         srt = sorted(arr, reverse=True)
         k = int(round(f * n))
         if k <= 0:
             th[m] = float('inf')
-        else:
-            th[m] = max(RAIN_MM, (srt[k - 1] + srt[k]) / 2 if k < n else srt[k - 1])
+            continue
+        q = (srt[k - 1] + srt[k]) / 2 if k < n else srt[k - 1]
+        # Seuil borné à [0,1 mm ; +inf[ : sous 0,1 mm ce n'est plus de la pluie
+        th[m] = max(MIN_RAIN_MM, q)
     return th
 
 
@@ -230,11 +230,44 @@ def selftest():
     print('selftest OK')
 
 
+def reprocess(rain_targets):
+    """Recalcule la pluie hebdomadaire depuis precip_daily, sans appel à l'API.
+
+    Les températures hebdomadaires et les statistiques journalières (codes
+    météo) sont conservées telles quelles.
+    """
+    n = 0
+    for fn in sorted(os.listdir(OUT_DIR)):
+        if not fn.endswith('.json'):
+            continue
+        p = os.path.join(OUT_DIR, fn)
+        d = json.load(open(p, encoding='utf-8'))
+        pdl = d.get('precip_daily')
+        if not pdl:
+            continue
+        start = date.fromisoformat(pdl['start'])
+        vals = pdl['values']
+        times = [(start + timedelta(days=i)).isoformat() for i in range(len(vals))]
+        tmax_by_week = {w['from']: w['tmax'] for w in d['weeks']}
+        res = compute(times, [0.0] * len(vals), [None] * len(vals), vals, targets=rain_targets.get(d['slug']))
+        if not res:
+            continue
+        for w in res['weeks']:
+            w['tmax'] = tmax_by_week.get(w['from'], w['tmax'])
+        d['weeks'] = res['weeks']
+        d['rain_threshold_mm'] = res['rain_threshold_mm']
+        with open(p, 'w', encoding='utf-8') as f:
+            json.dump(d, f, ensure_ascii=False, separators=(',', ':'))
+        n += 1
+    print(f'{n} fichier(s) recalculé(s) depuis precip_daily')
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--budget', type=float, default=9000, help='appels pondérés max pour ce lancement')
     ap.add_argument('--max-dest', type=int, default=0)
     ap.add_argument('--selftest', action='store_true')
+    ap.add_argument('--reprocess', action='store_true', help='recalcule la pluie depuis precip_daily, sans API')
     a = ap.parse_args()
     if a.selftest:
         selftest()
@@ -244,6 +277,9 @@ def main():
     rain_targets = {}
     for cr in csv.DictReader(open(os.path.join(ROOT, 'data', 'climate.csv'), encoding='utf-8')):
         rain_targets.setdefault(cr['slug'], {})[int(cr['mois_num'])] = float(cr['rain_pct']) / 100
+    if a.reprocess:
+        reprocess(rain_targets)
+        return
     todo = [s for s in targets() if not os.path.exists(os.path.join(OUT_DIR, f'{s}.json'))]
     print(f'{len(todo)} destination(s) à traiter ; poids {WEIGHT:.0f} appels chacune ; budget {a.budget:.0f}')
     spent, done, hour_start, hour_spent = 0.0, 0, time.time(), 0.0
