@@ -53,10 +53,23 @@ Description (le champ accepte la mise en forme simple) :
 
 ## Étape 4 : fichiers (« Ajoutez vos ressources »)
 
-| Fichier | Mode | Titre de la ressource | Type |
-|---|---|---|---|
-| bestdateweather-climat-voyage.csv | Téléverser depuis l'ordinateur | Climat de voyage, 730 destinations, 12 mois (CSV) | Fichier principal |
-| LISEZMOI.md | Téléverser depuis l'ordinateur | Documentation : colonnes, sources, limites, licence | Documentation |
+data.gouv refuse l'extension .md (liste des extensions acceptées :
+https://www.data.gouv.fr/api/1/datasets/extensions/) : la documentation est
+déposée en PDF (LISEZMOI.pdf, généré depuis LISEZMOI.md). Une description d'au
+moins 200 caractères est recommandée pour chaque fichier.
+
+| Fichier | Titre de la ressource | Type |
+|---|---|---|
+| bestdateweather-climat-voyage.csv | Climat de voyage, 730 destinations, 12 mois (CSV) | Fichier principal |
+| LISEZMOI.pdf | Documentation : colonnes, sources, limites, licence | Documentation |
+
+Description du CSV :
+
+> 8 760 lignes : 730 destinations × 12 mois. Encodage UTF-8, séparateur virgule, décimales avec un point, champ vide si la valeur n'existe pas. Températures, jours de pluie, précipitations, ensoleillement, température de la mer et score de voyage sur 10. Colonnes détaillées dans la documentation.
+
+Description de la documentation :
+
+> Documentation du fichier CSV : description des 17 colonnes et de leurs unités, sources (réanalyse ERA5 2016-2025 et normales de stations météo), méthode de recalibration des jours de pluie et de l'ensoleillement, limites connues, licence CC BY 4.0 et citation demandée.
 
 Puis désactiver le **mode brouillon** et publier.
 
