@@ -84,7 +84,8 @@ parler au {téléphone}. Gilles
 maximale et minimale moyennes, part des jours avec au moins 1 mm de pluie,
 précipitations, ensoleillement, température de la mer et score de voyage sur
 10. Calculé à partir de la réanalyse ERA5 (Copernicus / ECMWF) via
-Open-Meteo, données quotidiennes 2016-2025. Méthode :
+Open-Meteo, données quotidiennes 2016-2025 ; ensoleillement et jours de pluie
+recalés sur les normales de stations quand elles existent. Méthode :
 https://bestdateweather.com/methodologie
 
 **Licence** : CC BY 4.0. Citation demandée : « Source : BestDateWeather
