@@ -227,11 +227,37 @@ PILIER_CHECKS = [
 ]
 DEAD_ELEMENTS = ['mode-tabs', 'reg-tabs', 'secu-tabs', 'budget-tabs']
 
+# Script et données du moteur par dates
+if os.path.exists('js/date-engine.js'):
+    _r = subprocess.run(['node', '--check', 'js/date-engine.js'], capture_output=True, text=True)
+    if _r.returncode != 0:
+        err(f"js/date-engine.js : syntaxe invalide — {_r.stderr.strip()[:120]}")
+    else:
+        ok("js/date-engine.js : syntaxe OK")
+    if not os.path.exists('engine/data-v1.json'):
+        err("engine/data-v1.json absent (lancer generate_moteur_mois.py)")
+
 for page in PILIER_CHECKS:
     if not os.path.exists(page):
         warn(f"JS check: {page} introuvable")
         continue
     content = open(page).read()
+    if 'window.BDW_ENGINE=' in content:
+        # Page « Où partir en [mois] » du moteur par dates (generate_moteur_mois.py)
+        try:
+            _cfg = json.loads(content.split('window.BDW_ENGINE=', 1)[1].split(';</script>', 1)[0])
+            assert _cfg.get('state') and _cfg.get('i18n') and _cfg.get('data')
+        except Exception as _e:
+            err(f"Moteur {page}: configuration illisible ({_e})")
+            continue
+        if '/js/date-engine.js' not in content:
+            err(f"Moteur {page}: script js/date-engine.js absent")
+        _n_rows = content.count('class="me-item"')
+        if _n_rows < 10:
+            err(f"Moteur {page}: classement par défaut absent du HTML ({_n_rows} lignes)")
+        else:
+            ok(f"Moteur {page}: {_n_rows} lignes écrites dans le HTML, configuration valide")
+        continue
     start = content.find('<script>(function()')
     end = content.find('})();', start)
     if start < 0 or end < 0:
@@ -441,6 +467,9 @@ secu_issues = 0
 mai_pilier = 'ou-partir-en-mai.html'
 if os.path.exists(mai_pilier):
     content = open(mai_pilier, encoding='utf-8').read()
+    if 'window.BDW_ENGINE=' in content:
+        # Moteur par dates : la règle « le plus prudent l'emporte » est dans js/date-engine.js
+        content = open('js/date-engine.js', encoding='utf-8').read().replace('Math.max(v, ADV[d.cc])', 'Math.max(POOL')
     # Le classement doit combiner les 2 sources avec Math.max (jamais écraser FR par DE)
     if 'Math.max(POOL' not in content:
         secu_issues += 1

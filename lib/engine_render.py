@@ -107,6 +107,7 @@ color:var(--ink);font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe U
 .me-hol-n{font-family:'Playfair Display',Georgia,serif;color:var(--muted);grid-row:1/3}
 .me-hol-d a{font-weight:700;text-decoration:none}.me-hol-d a:hover{color:var(--gold)}
 .me-hol-x{color:var(--muted)}.me-hol-x b{color:var(--ink)}
+.me-box .me-hol{grid-template-columns:1fr}
 .me-others{display:flex;gap:8px;flex-wrap:wrap}
 .me-others a{font-size:.9rem;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px;text-decoration:none}
 .me-method{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;border-top:1px solid var(--line);padding-top:22px}

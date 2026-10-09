@@ -63,6 +63,11 @@ TEXTS = {
         'holiday_title': '{chip} : où partir au soleil ?',
         'holiday_lead': 'Du {a} au {b}. Les meilleurs scores à 20 °C et plus, avec au plus 15 % de jours de pluie sur ces dates (sécurité : jusqu’à vigilance renforcée).',
         'holiday_cta': 'Voir le classement complet à ces dates',
+        'zone_h3': 'Zone {z} · {r}', 'see_all_short': 'Classement', 'zone_list': 'Académies : {list}.',
+        'zone_lead': 'Les dates dépendent de votre zone. Les meilleurs scores à 20 °C et plus, avec au plus 15 % de jours de pluie sur ces dates (sécurité : jusqu’à vigilance renforcée).',
+        'title_z': 'Où partir en {m} {y} ? Top 25 météo et vacances zones A, B, C',
+        'desc_z': ' et pendant les vacances scolaires (zones A, B et C)',
+        'faq_a2_zone': 'Zone {z} (du {a} au {b}) : {l}.',
         'title_m': 'Où partir en {m} {y} ? Top 25 destinations météo, jour par jour',
         'title_h': 'Où partir en {m} {y} et {em} ? Top 25 destinations météo',
         'desc': 'Classement de {n} destinations pour {m} {y}{h} : n°1 {top} ({s}/10, {t} °C). Calcul jour par jour sur 2016-2025, filtres dates, vol, budget et sécurité.',
@@ -99,6 +104,8 @@ TEXTS = {
         'holiday_title': '{chip}: where to go for sunshine?',
         'holiday_lead': '{a} to {b}. The best scores at 20 °C and above, with at most 15% rainy days on these dates (safety: up to high vigilance).',
         'holiday_cta': 'See the full ranking for these dates',
+        'zone_h3': 'Zone {z} · {r}', 'see_all_short': 'Ranking', 'zone_list': '{list}.', 'zone_lead': '',
+        'title_z': 'Where to Go in {m} {y}: Top 25 Destinations by Weather', 'desc_z': '', 'faq_a2_zone': 'Zone {z} ({a} to {b}): {l}.',
         'title_m': 'Where to Go in {m} {y}: Top 25 Destinations by Weather',
         'title_h': 'Where to Go in {m} {y} and {em}: Top 25 by Weather',
         'desc': 'Ranking of {n} destinations for {m} {y}{h}: #1 {top} ({s}/10, {t} °C). Day-by-day calculation over 2016-2025, with date, flight, budget and safety filters.',
@@ -128,20 +135,51 @@ def hreflang_tags(mi):
     return '\n'.join(lines), out
 
 
+def _hol_view(ds, lang, mi, hid, a, b):
+    st = E.default_state(mi, lang)
+    st.update({'preset': hid, 'from': a, 'to': b, 'heat': 20, 'sort': 'score'})
+    v = E.compute_view(ds, st, lang)
+    return [x for x in v['rows'] if x['share'] <= 0.15], v['w']
+
+
+def _hol_li(r, x, w, i):
+    d = r.dry_txt(x, w)
+    return ('<li><span class="me-hol-n">' + str(i + 1) + '</span><span class="me-hol-d"><a href="' + r.href(x) + '">' + r.nm(x)
+            + '</a> <span class="me-help">' + esc(x['d']['p'][r.ni]) + '</span></span><span class="me-hol-x">'
+            + esc(d[:1].upper() + d[1:]) + ' · ' + r.f1(x['tmax']) + ' °C · <b>' + r.f1(x['score']) + '/10</b></span></li>')
+
+
+def _short(L, a, b):
+    import datetime as dt
+    A, B = dt.date.fromisoformat(a), dt.date.fromisoformat(b)
+    if A.month == B.month:
+        return f"{A.day} → {B.day} {L['ms'][B.month - 1]}"
+    return f"{A.day} {L['ms'][A.month - 1]} → {B.day} {L['ms'][B.month - 1]}"
+
+
 def holiday_block(ds, lang, mi, r, X):
     """Bloc statique par vacances du mois (contenu lisible par Google, dates fixes)."""
     L = E.I18N[lang]
     out, faq = '', None
     for h in L['holidays'].get(str(mi), []):
         if h.get('zones'):
-            continue  # zones : traitées dans les pages février et avril (étape suivante)
-        st = E.default_state(mi, lang)
-        st.update({'preset': h['id'], 'from': h['a'], 'to': h['b'], 'heat': 20, 'sort': 'score'})
-        v = E.compute_view(ds, st, lang)
-        top = [x for x in v['rows'] if x['share'] <= 0.15][:8]
-        w = v['w']
-        lis = ''.join('<li><span class="me-hol-n">' + str(i + 1) + '</span><span class="me-hol-d"><a href="' + r.href(x) + '">' + r.nm(x) + '</a> <span class="me-help">' + esc(x['d']['p'][r.ni]) + '</span></span><span class="me-hol-x">'
-                      + esc(r.dry_txt(x, w)[:1].upper() + r.dry_txt(x, w)[1:]) + ' · ' + r.f1(x['tmax']) + ' °C · <b>' + r.f1(x['score']) + '/10</b></span></li>' for i, x in enumerate(top))
+            cols, per_zone = '', []
+            for z in ('A', 'B', 'C'):
+                a, b = h['zones'][z]
+                top, w = _hol_view(ds, lang, mi, h['id'], a, b)
+                top = top[:5]
+                lis = ''.join(_hol_li(r, x, w, i) for i, x in enumerate(top))
+                cols += (f'<div class="me-box"><div class="me-box-head"><h3>{esc(fmt(X["zone_h3"], z=z, r=_short(L, a, b)))}</h3>'
+                         f'<a class="me-link" href="#{h["id"]}-{z.lower()}">{esc(X["see_all_short"])}</a></div><ol class="me-hol">{lis}</ol>'
+                         f'<p class="me-help">{esc(fmt(X["zone_list"], list=L["zones"][z]))}</p></div>')
+                per_zone.append((z, r.long_date(a), r.long_date(b), [x['d']['n'][r.ni] for x in top[:3]]))
+            out += (f'<section class="me-sec" id="me-h-{h["id"]}"><div><h2>{esc(fmt(X["holiday_title"], chip=h["chip"]))}</h2>'
+                    f'<p class="me-lead">{esc(X["zone_lead"])}</p></div><div class="me-cols">{cols}</div></section>')
+            faq = (h, None, None, per_zone)
+            continue
+        top, w = _hol_view(ds, lang, mi, h['id'], h['a'], h['b'])
+        top = top[:8]
+        lis = ''.join(_hol_li(r, x, w, i) for i, x in enumerate(top))
         a, b = r.long_date(h['a']), r.long_date(h['b'])
         lead = fmt(X['holiday_lead'], a=a, b=b)
         out += (f'<section class="me-sec" id="me-h-{h["id"]}"><div><h2>{esc(fmt(X["holiday_title"], chip=h["chip"]))}</h2>'
@@ -175,11 +213,17 @@ def generate(mi, lang, ds):
 
     m_name, y = L['months'][mi], int(st['from'][:4])
     m_title = m_name if lang == 'fr' else m_name
-    hs = [h for h in L['holidays'].get(str(mi), []) if not h.get('zones')]
+    hs = L['holidays'].get(str(mi), [])
     top = view['rows'][0]
-    title = fmt(X['title_h'], m=m_title, y=y, em=hs[0]['em']) if hs else fmt(X['title_m'], m=m_title, y=y)
-    desc = fmt(X['desc'], n=view['n_uc'], m=m_name, y=y, h=fmt(X['desc_h'], em=hs[0]['em']) if hs else '',
-               top=top['d']['n'][r.ni], s=r.f1(top['score']), t=r.r0(top['tmax']))
+    if hs and hs[0].get('zones'):
+        title = fmt(X['title_z'], m=m_title, y=y)
+        dh = X['desc_z']
+    elif hs:
+        title = fmt(X['title_h'], m=m_title, y=y, em=hs[0]['em'])
+        dh = fmt(X['desc_h'], em=hs[0]['em'])
+    else:
+        title, dh = fmt(X['title_m'], m=m_title, y=y), ''
+    desc = fmt(X['desc'], n=view['n_uc'], m=m_name, y=y, h=dh, top=top['d']['n'][r.ni], s=r.f1(top['score']), t=r.r0(top['tmax']))
     canon_prefix = 'https://bestdateweather.com'
     itemlist = {'@context': 'https://schema.org', '@type': 'ItemList', 'name': title, 'numberOfItems': min(25, len(view['rows'])),
                 'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': x['d']['n'][r.ni], 'url': canon_prefix + r.href(x)}
@@ -189,11 +233,15 @@ def generate(mi, lang, ds):
         {'@type': 'ListItem', 'position': 2, 'name': fmt(X['crumb'], m=m_name), 'item': canonical}]}
     faq_items = [{'@type': 'Question', 'name': fmt(X['faq_q1'], m=m_name),
                   'acceptedAnswer': {'@type': 'Answer', 'text': fmt(X['faq_a1'], m=m_name, top=top['d']['n'][r.ni], s=r.f1(top['score']), t=r.r0(top['tmax']))}}]
+    def _lst(names):
+        return ', '.join(names[:-1]) + (' et ' if lang == 'fr' else ' and ') + names[-1] if len(names) > 1 else (names[0] if names else '')
     if faq_h:
         h, a, b, names = faq_h
-        lst = ', '.join(names[:-1]) + (' et ' if lang == 'fr' else ' and ') + names[-1] if len(names) > 1 else (names[0] if names else '')
-        faq_items.append({'@type': 'Question', 'name': fmt(X['faq_q2'], em=h['em']),
-                          'acceptedAnswer': {'@type': 'Answer', 'text': fmt(X['faq_a2'], a=a, b=b, l=lst)}})
+        if h.get('zones'):
+            txt = ' '.join(fmt(X['faq_a2_zone'], z=z, a=za, b=zb, l=_lst(nn)) for z, za, zb, nn in names)
+        else:
+            txt = fmt(X['faq_a2'], a=a, b=b, l=_lst(names))
+        faq_items.append({'@type': 'Question', 'name': fmt(X['faq_q2'], em=h['em']), 'acceptedAnswer': {'@type': 'Answer', 'text': txt}})
     faq = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': faq_items}
     ld = lambda o: json.dumps(o, ensure_ascii=False).replace('</', '<\\/')
     cross = []
