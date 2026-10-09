@@ -1,0 +1,5 @@
+{
+  "_doc": "Pages « Où partir en [mois] » produites par generate_moteur_mois.py (moteur par dates) au lieu de generate_piliers.py. Mois de 1 à 12.",
+  "mois": [12],
+  "langues": ["fr", "en"]
+}

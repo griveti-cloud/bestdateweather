@@ -1791,12 +1791,16 @@ if __name__ == '__main__':
     print(f"📦 {len(dests)} destinations, {len(climate)} climate entries\n")
 
     pages_by_lang = {lang: [] for lang in PILIER_LANGS}
+    _eng = json.load(open(ROOT / 'data' / 'moteur_config.json', encoding='utf-8'))
+    _ENGINE_MONTHS, _ENGINE_LANGS = {m - 1 for m in _eng['mois']}, set(_eng['langues'])
 
     for lang in PILIER_LANGS:
         lang_loc = load_locale(lang)
         subdir = lang_loc['meta']['subdir']
         prefix = f"{subdir}/" if subdir else ""
         for mi in range(12):
+            if lang in _ENGINE_LANGS and mi in _ENGINE_MONTHS:
+                continue  # page produite par generate_moteur_mois.py (moteur par dates)
             result = generate_page(mi, lang, dests, climate, country_info)
             if result:
                 filename, canonical, hreflang_fr, hreflang_en, all_hreflang = result
