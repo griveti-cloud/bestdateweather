@@ -22,6 +22,7 @@ from lib.page_config import load_locale, strip_html_from_internal_links as strip
 from lib.common import footer_ranking_html, shared_nav_html  # noqa: E402
 from lib import date_engine as E  # noqa: E402
 from lib.engine_render import render_main, client_config, CSS, R, fmt, esc  # noqa: E402
+from lib import annual_engine as AE  # noqa: E402
 
 CONFIG = ROOT / 'data' / 'moteur_config.json'
 JS_VERSION = 2
@@ -31,6 +32,10 @@ DATA_URL = f'/engine/data-{E.DATA_VERSION}.json'
 def load_config():
     c = json.load(open(CONFIG, encoding='utf-8'))
     return [m - 1 for m in c['mois']], c['langues']
+
+
+def annual_enabled():
+    return bool(json.load(open(CONFIG, encoding='utf-8')).get('annee'))
 
 
 TEXTS = {
@@ -284,6 +289,150 @@ def generate(mi, lang, ds):
     return path, len(view['rows'])
 
 
+ANNUAL_TEXTS = {
+    'fr': {
+        'eyebrow': 'Étude climatique · 10 ans de données · 12 mois', 'h1': 'Où partir au soleil <em>toute l’année</em> ?',
+        'sub': 'Classement sur la moyenne des 12 mois et sur le nombre de bons mois (score de 7,6 sur 10 et plus). La frise montre chaque mois d’un coup d’œil.',
+        'months_label': 'Mois', 'all_year': 'Toute l’année', 'dates_q': 'Vous avez des dates ?',
+        'dates_a': 'Choisissez le mois de votre départ ci-dessus : chaque page mensuelle calcule votre séjour au jour près, vacances scolaires comprises.',
+        'good_months': 'Bons mois dans l’année',
+        'by_month_title': 'Mois par mois', 'by_month_lead': 'Les 3 meilleures destinations de chaque mois (budget et sécurité pris en compte). Chaque mois a sa page détaillée.',
+        'regions_title': 'Par région', 'regions_lead': 'Les meilleurs scores annuels de chaque région (budget et sécurité pris en compte, sans limite de vol).',
+        'projects_lead': 'Les meilleures destinations sur l’année par type de voyage. Ski et randonnée : score du meilleur mois.',
+        'method': [
+            'Score annuel : moyenne des scores BestDateWeather des 12 mois (ski et randonnée : score du meilleur mois).',
+            'Bon mois : score de 7,6 sur 10 et plus, le niveau « Très bien » de la carte.',
+            'Températures : plus basse et plus haute des maximales mensuelles ; pluie : part moyenne des jours de pluie sur l’année.',
+            'Données : réanalyse ERA5 2016-2025, jours de pluie et ensoleillement recalés sur les stations météo.',
+        ],
+        'title': 'Où partir au soleil toute l’année ? Top 25 destinations météo sur 12 mois',
+        'desc': 'Classement de {n} destinations sur les 12 mois : score annuel, nombre de bons mois et frise mois par mois. N°1 {top} ({s}/10, {g} bons mois sur 12). Filtres vol, budget, sécurité.',
+        'crumb': 'Toute l’année',
+        'know': [
+            'Un score annuel lisse les saisons : regardez la frise des 12 mois avant de choisir vos dates.',
+            'Temps de vol estimé à partir de la distance (45 min + distance à 850 km/h), pour un vol direct. Avec une escale, comptez davantage.',
+            'Températures issues de la réanalyse ERA5 : sur les petites îles, parfois 1 à 2 °C sous les relevés des stations côtières.',
+        ],
+        'faq_q1': 'Quelle destination a le meilleur climat toute l’année ?', 'faq_a1': '{top} : score annuel de {s}/10 et {g} bons mois sur 12.',
+        'faq_q2': 'Où partir au soleil toute l’année en Europe ?', 'faq_a2': '{top} : {g} bons mois sur 12, avec des maximales de {t1} à {t2} °C selon le mois.',
+        'nomads': '💻 Classement nomades', 'world': '🌍 Classement mondial 2026', 'map': '🗺️ Carte climatique',
+    },
+    'en': {
+        'eyebrow': 'Climate study · 10 years of data · 12 months', 'h1': 'Where to go for sunshine <em>all year round</em>',
+        'sub': 'Ranked on the average of the 12 months and on the number of good months (score of 7.6 out of 10 or more). The strip shows each month at a glance.',
+        'months_label': 'Months', 'all_year': 'All year', 'dates_q': 'Got dates?',
+        'dates_a': 'Pick your departure month above: each monthly page calculates your trip to the day.',
+        'good_months': 'Good months in the year',
+        'by_month_title': 'Month by month', 'by_month_lead': 'The 3 best destinations of each month (budget and safety taken into account). Each month has its own detailed page.',
+        'regions_title': 'By region', 'regions_lead': 'The best annual scores in each region (budget and safety taken into account, no flight limit).',
+        'projects_lead': 'The best destinations over the year by type of trip. Skiing and hiking: score of the best month.',
+        'method': [
+            'Annual score: average of the 12 monthly BestDateWeather scores (skiing and hiking: score of the best month).',
+            'Good month: score of 7.6 out of 10 or more, the "Very good" level on the map.',
+            'Temperatures: lowest and highest monthly highs; rain: average share of rainy days over the year.',
+            'Data: ERA5 reanalysis 2016-2025, rainy days and sunshine adjusted to weather stations.',
+        ],
+        'title': 'Where to Go for Sunshine All Year Round: Top 25 Destinations',
+        'desc': 'Ranking of {n} destinations over 12 months: annual score, number of good months and a month-by-month strip. #1 {top} ({s}/10, {g} good months out of 12). Flight, budget and safety filters.',
+        'crumb': 'All year',
+        'know': [
+            'An annual score smooths out the seasons: check the 12-month strip before choosing your dates.',
+            'Flight time estimated from distance (45 min + distance at 850 km/h) for a direct flight. With a stopover, allow longer.',
+            'Temperatures come from the ERA5 reanalysis: on small islands they can be 1 to 2 °C below coastal station readings.',
+        ],
+        'faq_q1': 'Which destination has the best weather all year round?', 'faq_a1': '{top}: annual score of {s}/10 and {g} good months out of 12.',
+        'faq_q2': 'Where to go for sunshine all year round in Europe?', 'faq_a2': '{top}: {g} good months out of 12, with highs of {t1} to {t2} °C depending on the month.',
+        'nomads': '💻 Digital nomads ranking', 'world': '🌍 World ranking 2026', 'map': '🗺️ Climate map',
+    },
+}
+
+
+def annual_urls(loc):
+    sub = loc['meta']['subdir']
+    base = loc['pilier']['all_year_url'].replace('.html', '')
+    rel = f'/{base}' if not sub else f'/{sub}/{base}'
+    return rel, f'https://bestdateweather.com{rel}', (ROOT / f'{base}.html' if not sub else ROOT / sub / f'{base}.html')
+
+
+def generate_annual(lang, ds):
+    loc = load_locale(lang)
+    gen, pil = loc['gen'], loc['pilier']
+    L = E.I18N[lang]
+    X = dict(TEXTS[lang])
+    X.update(ANNUAL_TEXTS[lang])
+    annual_tpl = '/meilleure-periode-{s}' if lang == 'fr' else '/en/best-time-to-visit-{e}'
+    r = AE.RA(lang, annual_tpl)
+    st = AE.default_state()
+    view = AE.compute_view(ds, st, lang)
+    rel, canonical, path = annual_urls(loc)
+    month_links = [urls(lang, loc, i)[0] for i in range(12)]
+    pre = '' if lang == 'fr' else '/en'
+    nomads = '/classement-destinations-meteo-nomades-2026' if lang == 'fr' else '/en/best-destinations-digital-nomads-weather-2026'
+    world = pre + '/' + pil['world_ranking_url'].replace('.html', '')
+    others = [(X['nomads'], nomads), (X['world'], world), (X['map'], '/carte' if lang == 'fr' else '/en/map')]
+    main = AE.render_main(view, st, lang, annual_tpl, month_links, others, X, rel)
+    hl = {}
+    for l2 in PILIER_LANGS:
+        hl[l2] = annual_urls(load_locale(l2))[1]
+    hl_tags = '\n'.join([f'<link rel="alternate" hreflang="{k}" href="{v}"/>' for k, v in sorted(hl.items())]
+                         + ([f'<link rel="alternate" hreflang="x-default" href="{hl["en"]}"/>'] if 'en' in hl else []))
+    top = view['rows'][0]
+    title = X['title']
+    desc = fmt(X['desc'], n=view['n_uc'], top=top['d']['n'][r.ni], s=r.f1(top['score']), g=top['good'])
+    pre_url = 'https://bestdateweather.com'
+    itemlist = {'@context': 'https://schema.org', '@type': 'ItemList', 'name': title, 'numberOfItems': min(25, len(view['rows'])),
+                'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': x['d']['n'][r.ni], 'url': pre_url + r.href(x)} for i, x in enumerate(view['rows'][:25])]}
+    crumb = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
+        {'@type': 'ListItem', 'position': 1, 'name': loc['labels']['breadcrumb_home'], 'item': loc['meta']['schema_home_url']},
+        {'@type': 'ListItem', 'position': 2, 'name': X['crumb'], 'item': canonical}]}
+    faq_items = [{'@type': 'Question', 'name': X['faq_q1'], 'acceptedAnswer': {'@type': 'Answer', 'text': fmt(X['faq_a1'], top=top['d']['n'][r.ni], s=r.f1(top['score']), g=top['good'])}}]
+    eu = [f for f in view['facts'] if f['k'] == 'f_europe']
+    if eu:
+        x = eu[0]['x']
+        faq_items.append({'@type': 'Question', 'name': X['faq_q2'], 'acceptedAnswer': {'@type': 'Answer', 'text': fmt(X['faq_a2'], top=x['d']['n'][r.ni], g=x['good'], t1=r.r0(x['t1']), t2=r.r0(x['t2']))}})
+    faq = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': faq_items}
+    ld = lambda o: json.dumps(o, ensure_ascii=False).replace('</', '<\\/')
+    cross = []
+    for l2 in PILIER_LANGS:
+        if l2 == lang:
+            continue
+        loc2 = load_locale(l2)
+        cross.append({'url': annual_urls(loc2)[0], 'flag': f'/{loc2["meta"]["flag"]}', 'label': loc2['meta']['lang_label']})
+    nav = shared_nav_html(gen['home_url'], gen['try_app_label'], gen['share_label'], map_href=pil.get('map_href', ''), map_label=pil.get('map_nav_label', ''))
+    keep = {k: L[k] for k in ('months', 'ms', 'uc', 'uc_t', 'regions', 'secu', 'budget', 'deps')}
+    cfg = json.dumps({'lang': lang, 'state': st, 'data': DATA_URL, 'annual': annual_tpl, 'page': E.PAGE, 'i18n': keep,
+                      't': AE.A18N[lang]['t'], 'a': {'mi': AE.A18N[lang]['mi']}}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
+    html = f"""<!DOCTYPE html>
+<html lang="{lang}">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>{esc(title)}</title>
+<meta name="description" content="{esc(desc)}"/>
+<link rel="canonical" href="{canonical}"/>
+{hl_tags}
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="{esc(title)}"/>
+<meta property="og:description" content="{esc(desc)}"/>
+<meta property="og:url" content="{canonical}"/>
+{FONTS}
+<link rel="stylesheet" href="{gen['asset_prefix']}style.css"/>
+<style>{CSS}{AE.ANNUAL_CSS}</style>
+<script type="application/ld+json">{ld(crumb)}</script>
+<script type="application/ld+json">{ld(itemlist)}</script>
+<script type="application/ld+json">{ld(faq)}</script>
+</head>
+<body>
+{nav}
+{main}
+{footer_ranking_html(lang, cross)}
+<script>window.BDW_ANNUAL={cfg};</script>
+<script src="/js/annual-engine.js?v={JS_VERSION}" defer></script>
+<script src="{gen['asset_prefix']}js/share.js" defer></script>
+</body></html>"""
+    path.write_text(strip_links(html), encoding='utf-8')
+    return path, len(view['rows'])
+
+
 def main():
     months, langs = load_config()
     dests, climate, ci = load_destinations(), load_climate(), load_country_info()
@@ -294,6 +443,9 @@ def main():
         for mi in months:
             path, n = generate(mi, lang, ds)
             print(f'  ✅ {path.relative_to(ROOT)} ({n} destinations classées par défaut)')
+        if annual_enabled():
+            path, n = generate_annual(lang, ds)
+            print(f'  ✅ {path.relative_to(ROOT)} (toute l’année, {n} destinations)')
 
 
 if __name__ == '__main__':

@@ -1817,6 +1817,8 @@ if __name__ == '__main__':
     # Generate annual pages
     print("\n📅 Generating all-year pages...")
     for lang in PILIER_LANGS:
+        if _eng.get('annee') and lang in _ENGINE_LANGS:
+            continue  # page « toute l'année » produite par generate_moteur_mois.py
         result = generate_annual_page(lang, dests, climate, country_info)
         if result:
             filename, canonical = result
