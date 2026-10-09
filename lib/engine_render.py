@@ -9,6 +9,7 @@ import math
 from lib.date_engine import I18N, LEN, PAGE
 
 CSS = r"""
+body>nav{position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,31,46,.06)}
 .me{--bg:#fffdfa;--card:#fff;--ink:#0d1117;--muted:#5f6772;--line:#e8e0d0;--gold:#9c5f00;--gold-strong:#e8940a;--gold-soft:#fef3d0;
 --dry:#1a7a4a;--dry-soft:#e3f5ea;--mid:#8a6206;--mid-soft:#fbf0d2;--wet:#b93a0a;--wet-soft:#fbe5da;--chip:#f6f1e7;--focus:#1a5fd0;
 color:var(--ink);font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.55;max-width:1080px;margin:0 auto;padding:0 16px 48px}
@@ -297,7 +298,7 @@ def render_main(view, st, lang, annual_tpl, month_links, other_links, texts):
 <p class="me-when" id="me-when">{when}</p>
 <p class="me-sub" id="me-sub">{esc(T['sub_month'])}</p>
 </section>
-<nav class="me-months" aria-label="{esc(X['months_label'])}">{months_nav}</nav>
+<div class="me-months" role="navigation" aria-label="{esc(X['months_label'])}">{months_nav}</div>
 <form class="me-tool" id="me-tool" aria-label="{esc(X['criteria'])}">
 <div class="me-row">
 <div class="me-lbl">{esc(X['your_dates'])}</div>

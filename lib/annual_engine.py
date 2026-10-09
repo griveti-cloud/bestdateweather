@@ -264,7 +264,7 @@ def render_main(view, st, lang, annual_tpl, month_links, other_links, X, self_ur
 <h1>{X['h1']}</h1>
 <p class="me-sub">{esc(X['sub'])}</p>
 </section>
-<nav class="me-months" aria-label="{esc(X['months_label'])}">{months_nav}</nav>
+<div class="me-months" role="navigation" aria-label="{esc(X['months_label'])}">{months_nav}</div>
 <p class="ma-dates"><b>{esc(X['dates_q'])}</b> {esc(X['dates_a'])}</p>
 <form class="me-tool" id="me-tool" aria-label="{esc(X['criteria'])}">
 <div class="me-criteria" style="border-top:0;padding-top:0">

@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;700&display=swap"/></noscript>
 <link rel="stylesheet" href="style.css"/>
 <style>
+body>nav{position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,31,46,.06)}
 .me{--bg:#fffdfa;--card:#fff;--ink:#0d1117;--muted:#5f6772;--line:#e8e0d0;--gold:#9c5f00;--gold-strong:#e8940a;--gold-soft:#fef3d0;
 --dry:#1a7a4a;--dry-soft:#e3f5ea;--mid:#8a6206;--mid-soft:#fbf0d2;--wet:#b93a0a;--wet-soft:#fbe5da;--chip:#f6f1e7;--focus:#1a5fd0;
 color:var(--ink);font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.55;max-width:1080px;margin:0 auto;padding:0 16px 48px}
@@ -141,7 +142,7 @@ color:var(--ink);font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe U
 <h1>Où partir au soleil <em>toute l’année</em> ?</h1>
 <p class="me-sub">Classement sur la moyenne des 12 mois et sur le nombre de bons mois (score de 7,6 sur 10 et plus). La frise montre chaque mois d’un coup d’œil.</p>
 </section>
-<nav class="me-months" aria-label="Mois"><a href="/meilleures-destinations-meteo" aria-current="page">Toute l’année</a><a href="/ou-partir-en-janvier">janv.</a><a href="/ou-partir-en-fevrier">févr.</a><a href="/ou-partir-en-mars">mars</a><a href="/ou-partir-en-avril">avr.</a><a href="/ou-partir-en-mai">mai</a><a href="/ou-partir-en-juin">juin</a><a href="/ou-partir-en-juillet">juil.</a><a href="/ou-partir-en-aout">août</a><a href="/ou-partir-en-septembre">sept.</a><a href="/ou-partir-en-octobre">oct.</a><a href="/ou-partir-en-novembre">nov.</a><a href="/ou-partir-en-decembre">déc.</a></nav>
+<div class="me-months" role="navigation" aria-label="Mois"><a href="/meilleures-destinations-meteo" aria-current="page">Toute l’année</a><a href="/ou-partir-en-janvier">janv.</a><a href="/ou-partir-en-fevrier">févr.</a><a href="/ou-partir-en-mars">mars</a><a href="/ou-partir-en-avril">avr.</a><a href="/ou-partir-en-mai">mai</a><a href="/ou-partir-en-juin">juin</a><a href="/ou-partir-en-juillet">juil.</a><a href="/ou-partir-en-aout">août</a><a href="/ou-partir-en-septembre">sept.</a><a href="/ou-partir-en-octobre">oct.</a><a href="/ou-partir-en-novembre">nov.</a><a href="/ou-partir-en-decembre">déc.</a></div>
 <p class="ma-dates"><b>Vous avez des dates ?</b> Choisissez le mois de votre départ ci-dessus : chaque page mensuelle calcule votre séjour au jour près, vacances scolaires comprises.</p>
 <form class="me-tool" id="me-tool" aria-label="Critères">
 <div class="me-criteria" style="border-top:0;padding-top:0">
