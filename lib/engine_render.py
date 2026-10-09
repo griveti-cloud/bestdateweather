@@ -136,39 +136,54 @@ class R:
 
     def __init__(self, lang, annual_tpl):
         self.lang, self.L, self.T = lang, I18N[lang], I18N[lang]['t']
-        self.ni = 0 if lang == 'fr' else 1
+        self.nf = self.L['nf']
+        self.ni = self.nf['ni']
+        self.imp = bool(self.nf['imp'])          # en-us : °F et miles
+        self.U = ' °F' if self.imp else ' °C'
         self.annual = annual_tpl
 
     def f1(self, x):
         s = '%.1f' % (js_round(x * 10 + 1e-9) / 10)
-        return s.replace('.', ',') if self.lang == 'fr' else s
+        return s.replace('.', ',') if self.nf['dec'] == ',' else s
 
     def r0(self, x):
         return str(js_round(x))
 
+    def tc(self, x):
+        """Température (données en °C) dans l'unité de la langue."""
+        return x * 9 / 5 + 32 if self.imp else x
+
+    def t1(self, x):
+        """Température précise : 1 décimale en °C, entier en °F."""
+        return self.r0(self.tc(x)) if self.imp else self.f1(x)
+
+    def t0(self, x):
+        """Température arrondie à l'entier."""
+        return self.r0(self.tc(x))
+
     def fmt_h(self, h):
         t = js_round(h * 12) * 5
-        hh, mm = t // 60, t % 60
-        return f'{hh} h {mm:02d}' if self.lang == 'fr' else f'{hh}h{mm:02d}'
+        return fmt(self.nf['h'], h=t // 60, mm=f'{t % 60:02d}')
 
     def fmt_km(self, km):
-        n, sep, out = str(js_round(km)), (' ' if self.lang == 'fr' else ','), ''
+        v = km / 1.609344 if self.imp else km
+        n, sep, out = str(js_round(v)), self.nf['th'], ''
         while len(n) > 3:
             out = sep + n[-3:] + out
             n = n[:-3]
-        return n + out + ' km'
+        return n + out + (' mi' if self.imp else ' km')
 
     def day_num(self, d):
-        return '1er' if (self.lang == 'fr' and d == 1) else str(d)
+        return self.nf['first'] if (d == 1 and self.nf['first']) else str(d)
 
     def long_date(self, iso):
         import datetime as dt
         d = dt.date.fromisoformat(iso)
-        wd = self.L['wd'][(d.weekday() + 1) % 7]
-        return f"{wd} {self.day_num(d.day)} {self.L['months'][d.month - 1]} {d.year}"
+        return fmt(self.nf['date'], wd=self.L['wd'][(d.weekday() + 1) % 7], d=self.day_num(d.day),
+                   m=self.L['months'][d.month - 1], y=d.year)
 
     def href(self, x):
-        return fmt(self.annual, s=x['d']['s'], e=x['d']['e'])
+        return fmt(self.annual, s=x['d']['s'], e=x['d']['e'], se=x['d'].get('se', ''), sd=x['d'].get('sd', ''))
 
     def nm(self, x):
         return esc(x['d']['n'][self.ni])
@@ -178,7 +193,7 @@ class R:
         if st['preset'] == 'month':
             return self.L['months'][st['month']]
         if h:
-            return h['chip'][0].lower() + h['chip'][1:]
+            return h.get('wh') or (h['chip'][0].lower() + h['chip'][1:])
         return self.T['your_dates_where']
 
     def dry_txt(self, x, w):
@@ -189,10 +204,10 @@ class R:
 
     def fact_text(self, f, w, st):
         x, L = f['x'], self.L
-        s = fmt(self.T[f['fn']], t=self.f1(x['tmax']), h=self.fmt_h(x['h']), dep=L['deps'][st['dep']][0],
+        s = fmt(self.T[f['fn']], t=self.t1(x['tmax']), h=self.fmt_h(x['h']), dep=L['deps'][st['dep']][0],
                 b=L['budget'][str(x['d']['bi'])].lower(), dry=self.dry_txt(x, w), bm=L['months'][x['best']],
                 bs=self.f1(x['bestSc']), x=self.f1(x['mean']), n=w['n'], s=self.f1(x['score']),
-                tn=self.r0(x['tmin']), tx=self.r0(x['tmax']))
+                tn=self.t0(x['tmin']), tx=self.t0(x['tmax']))
         return s[0].upper() + s[1:] if f['fn'] == 'fd_safe' else s
 
 
@@ -210,7 +225,7 @@ def score_cls(s):
 def dry_html(r, x, w):
     T = r.T
     if x['uc'] == 'ski':
-        return '<div class="me-approx">' + esc(fmt(T['ski_line'], s=r.f1(x['sun']), tn=r.r0(x['tmin']))) + '</div>'
+        return '<div class="me-approx">' + esc(fmt(T['ski_line'], s=r.f1(x['sun']), tn=r.t0(x['tmin']))) + '</div>'
     if x['daily']:
         sq = ''
         for s in x['seasons']:
@@ -227,8 +242,8 @@ def item_html(r, x, i, w):
     L, T = r.L, r.T
     badges = ('<span class="me-badge v' + str(x['rl']) + '">' + esc(L['secu'][str(x['rl'])]) + '</span>'
               '<span class="me-badge">' + esc(L['budget'][str(max(1, min(5, x['d']['bi'])))]) + '</span>')
-    temp = (r.r0(x['tmin']) + ' / ' + r.r0(x['tmax']) + ' °C') if x['uc'] == 'ski' else (r.f1(x['tmax']) + ' °C')
-    sub = (fmt(T['sea'], t=r.f1(x['sea'])) + ' · ' if (x['sea'] is not None and x['uc'] != 'ski') else '') + fmt(T['flight'], h=r.fmt_h(x['h']))
+    temp = (r.t0(x['tmin']) + ' / ' + r.t0(x['tmax']) + r.U) if x['uc'] == 'ski' else (r.t1(x['tmax']) + r.U)
+    sub = (fmt(T['sea'], t=r.t1(x['sea'])) + ' · ' if (x['sea'] is not None and x['uc'] != 'ski') else '') + fmt(T['flight'], h=r.fmt_h(x['h']))
     return ('<article class="me-item"><div class="me-rank">' + str(i + 1) + '</div>'
             '<div class="me-name"><a href="' + r.href(x) + '">' + r.nm(x) + '</a><span>' + esc(x['d']['p'][r.ni]) + ' · ' + r.fmt_km(x['km']) + '</span><div class="me-badges">' + badges + '</div></div>'
             '<div class="me-metrics"><span class="me-t">' + temp + '</span><span>' + esc(sub) + '</span></div>'
@@ -237,7 +252,7 @@ def item_html(r, x, i, w):
 
 
 def mini_li(r, x, show_p):
-    rain = (r.r0(x['tmin']) + '/' + r.r0(x['tmax']) + ' °C') if x['uc'] == 'ski' else fmt(r.T['mini_rain'], t=r.r0(x['tmax']), r=r.r0(x['share'] * 100))
+    rain = (r.t0(x['tmin']) + '/' + r.t0(x['tmax']) + r.U) if x['uc'] == 'ski' else fmt(r.T['mini_rain'], t=r.t0(x['tmax']), r=r.r0(x['share'] * 100))
     p = (' <span class="me-help">(' + esc(x['d']['p'][r.ni]) + ')</span>') if show_p else ''
     return '<li><a href="' + r.href(x) + '">' + r.nm(x) + '</a>' + p + '<span>' + esc(rain) + ' · <b>' + r.f1(x['score']) + '</b></span></li>'
 
@@ -302,7 +317,7 @@ def render_main(view, st, lang, annual_tpl, month_links, other_links, texts):
 <form class="me-tool" id="me-tool" aria-label="{esc(X['criteria'])}">
 <div class="me-row">
 <div class="me-lbl">{esc(X['your_dates'])}</div>
-<div class="me-dates"><label for="me-from">{esc(X['dep_date'])}<input type="date" id="me-from" value="{st['from']}" lang="{lang}"></label><span class="me-arrow" aria-hidden="true">→</span><label for="me-to">{esc(X['ret_date'])}<input type="date" id="me-to" value="{st['to']}" lang="{lang}"></label><span class="me-span" id="me-span">{esc(fmt(T['n_days'], n=w['n']))}</span></div>
+<div class="me-dates"><label for="me-from">{esc(X['dep_date'])}<input type="date" id="me-from" value="{st['from']}" lang="{L['nf']['hl']}"></label><span class="me-arrow" aria-hidden="true">→</span><label for="me-to">{esc(X['ret_date'])}<input type="date" id="me-to" value="{st['to']}" lang="{L['nf']['hl']}"></label><span class="me-span" id="me-span">{esc(fmt(T['n_days'], n=w['n']))}</span></div>
 <div class="me-quick"><span class="me-quick-lbl" id="me-lbl-quick">{esc(X['shortcuts'])}</span><div class="me-chips" id="me-presets" role="group" aria-labelledby="me-lbl-quick">{presets}</div></div>
 <div class="me-chips" id="me-zone" role="group" aria-label="{esc(X['zone_label'])}" hidden></div>
 </div>
@@ -336,6 +351,6 @@ def render_main(view, st, lang, annual_tpl, month_links, other_links, texts):
 
 def client_config(lang, st, data_url, annual_tpl):
     L = I18N[lang]
-    keep = {k: L[k] for k in ('months', 'ms', 'wd', 'uc', 'uc_t', 'regions', 'secu', 'budget', 'sorts', 'deps', 'holidays', 'zones', 't')}
+    keep = {k: L[k] for k in ('months', 'ms', 'wd', 'uc', 'uc_t', 'regions', 'secu', 'budget', 'sorts', 'deps', 'holidays', 'zones', 't', 'nf')}
     return json.dumps({'lang': lang, 'state': st, 'data': data_url, 'annual': annual_tpl, 'page': PAGE, 'i18n': keep},
                       ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')

@@ -224,6 +224,10 @@ PILIER_CHECKS = [
     'ou-partir-en-avril.html',
     'ou-partir-en-janvier.html',
     'meilleures-destinations-meteo.html',
+    'us/where-to-go-in-november.html',      # moteur en °F et miles
+    'es/donde-ir-en-diciembre.html',
+    'de/wohin-im-mai.html',
+    'us/best-weather-destinations.html',
 ]
 DEAD_ELEMENTS = ['mode-tabs', 'reg-tabs', 'secu-tabs', 'budget-tabs']
 

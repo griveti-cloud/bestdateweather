@@ -64,3 +64,44 @@ def test_ski_seulement_montagne():
     st = dict(E.default_state(11, 'fr'), uc='ski')
     v = E.compute_view(ds, st, 'fr')
     assert [x['d']['s'] for x in v['rows']] == ['m']
+
+
+def test_plus_sure_parmi_les_bonnes_destinations():
+    # la moins pluvieuse (rain=0) a un score de 4 : elle ne doit pas être « la plus sûre »
+    ds = [_rec('sec-mais-froid', 4.0, rain=0.0), _rec('bonne', 8.5, rain=5.0)]
+    v = E.compute_view(ds, E.default_state(11, 'fr'), 'fr')
+    assert [f['x']['d']['s'] for f in v['facts'] if f['k'] == 'f_safe'] == ['bonne']
+
+
+def test_formats_par_langue():
+    from lib.engine_render import R
+    us, es, de, fr = R('en-us', ''), R('es', ''), R('de', ''), R('fr', '')
+    assert us.t1(25.0) == '77' and us.t0(-10.0) == '14' and us.U == ' °F'
+    assert us.fmt_km(1609.344) == '1,000 mi' and fr.fmt_km(1500) == '1 500 km' and de.fmt_km(1500) == '1.500 km'
+    assert es.f1(7.25) == '7,3' and us.f1(7.25) == '7.3' and fr.t1(21.04) == '21,0'
+    assert de.fmt_h(4.5) == '4:30 Std.' and es.fmt_h(4.5) == '4 h 30' and us.fmt_h(4.5) == '4h30'
+    assert us.long_date('2026-11-26') == 'Thursday, November 26, 2026'
+    assert es.long_date('2027-03-28') == 'domingo 28 de marzo de 2027'
+    assert de.long_date('2027-05-17') == 'Montag, 17. Mai 2027'
+    assert fr.long_date('2026-12-01') == 'mardi 1er décembre 2026'
+
+
+def test_raccourcis_de_dates_valides():
+    import datetime as dt
+    for lang in E.LANGS:
+        for mi, hs in E.I18N[lang]['holidays'].items():
+            for h in hs:
+                assert h['id'].isalpha() and h['id'].islower()          # liens #id du script client
+                ranges = h['zones'].values() if h.get('zones') else [(h['a'], h['b'])]
+                for a, b in ranges:
+                    assert 'error' not in E.window(a, b), (lang, h['id'])
+                    assert dt.date.fromisoformat(a).month == int(mi) + 1, (lang, h['id'])   # rangé sous son mois de départ
+
+
+def test_textes_complets_dans_chaque_langue():
+    ref = E.I18N['fr']
+    for lang in E.LANGS:
+        L = E.I18N[lang]
+        assert set(L['t']) == set(ref['t']), (lang, set(ref['t']) ^ set(L['t']))
+        assert len(L['months']) == len(L['ms']) == 12 and len(L['wd']) == 7
+        assert set(L['regions']) == set(ref['regions']) and set(L['uc']) == set(ref['uc'])

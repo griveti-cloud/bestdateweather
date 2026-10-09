@@ -53,7 +53,7 @@ A18N = {
             'f_europe': 'Best in Europe (islands included)', 'f_best': 'Best score', 'f_near_m': 'Closest', 'f_cheap_m': 'Cheapest',
             'fd_regular': '{g} good months out of 12, annual score {s}/10, ≈ {h} flight.',
             'fd_near': '≈ {h} flight from {dep}, {g} good months out of 12.',
-            'fd_cheap': '{b} budget, {g} good months out of 12.',
+            'fd_cheap': 'Cost of living: {b}, {g} good months out of 12.',
             'fd_europe': '{g} good months out of 12, highs of {t1} to {t2} °C.',
             'fd_best': 'Best month: {bm} ({s}/10), ≈ {h} flight.',
             'good_line': '<b>{g} good months out of 12</b> · best: {bm}',
@@ -68,6 +68,12 @@ A18N = {
         },
     },
 }
+
+# Espagnol, allemand, anglais américain : lib/engine_langs.py
+from lib import engine_langs as _EL  # noqa: E402
+A18N['es'] = _EL.A18N_ES
+A18N['de'] = _EL.A18N_DE
+A18N['en-us'] = _EL.us_a18n(A18N['en'])
 
 
 def default_state():
@@ -181,7 +187,7 @@ class RA(R):
     def fact_text(self, f, st):
         x, L = f['x'], self.L
         return fmt(self.TA[f['fn']], g=x['good'], s=self.f1(x['score']), h=self.fmt_h(x['h']), dep=L['deps'][st['dep']][0],
-                   b=L['budget'][str(x['d']['bi'])].lower(), t1=self.r0(x['t1']), t2=self.r0(x['t2']),
+                   b=L['budget'][str(x['d']['bi'])].lower(), t1=self.t0(x['t1']), t2=self.t0(x['t2']),
                    bm=L['months'][x['best']])
 
 
@@ -199,7 +205,7 @@ def item_html(r, x, i):
     sc = fmt(TA['score_best'] if x['uc'] in UC_MTN else TA['score_year'], s=r.f1(x['score']))
     return ('<article class="me-item ma-item"><div class="me-rank">' + str(i + 1) + '</div>'
             '<div class="me-name"><a href="' + r.href(x) + '">' + r.nm(x) + '</a><span>' + esc(x['d']['p'][r.ni]) + ' · ' + r.fmt_km(x['km']) + '</span><div class="me-badges">' + badges + '</div></div>'
-            '<div class="me-metrics"><span class="me-t">' + esc(fmt(TA['temps'], t1=r.r0(x['t1']), t2=r.r0(x['t2']))) + '</span><span>'
+            '<div class="me-metrics"><span class="me-t">' + esc(fmt(TA['temps'], t1=r.t0(x['t1']), t2=r.t0(x['t2']))) + '</span><span>'
             + esc(fmt(TA['rain'], r=r.r0(x['rain']))) + ' · ' + esc(fmt(TA['flight'], h=r.fmt_h(x['h']))) + '</span></div>'
             '<div class="me-dry">' + strip_html(r, x) + '<div>' + fmt(TA['good_line'], g=x['good'], bm=esc(r.best_months(x))) + '</div></div>'
             '<div class="me-side"><span class="me-score' + (' ' + 'mid' if x['score'] < 7.6 and x['score'] >= 5 else (' low' if x['score'] < 5 else '')) + '">' + esc(sc) + '</span><a href="' + r.href(x) + '">' + esc(TA['card']) + '</a></div></article>')
