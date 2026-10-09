@@ -521,6 +521,44 @@ if os.path.exists(mai_pilier):
 if secu_issues == 0:
     ok("Sécurité: classement combine les sources avec Math.max")
 
+# ── 14. MONÉTISATION : formats de liens suivis (audit du 9 oct. 2026) ─────────
+print("\n14. Liens de monétisation (Expedia, Kiwi, GetYourGuide)")
+# Formats NON suivis repérés le 9 oct. 2026 : ils ne rapportent rien.
+_AFF_BAD = {
+    'Kiwi direct (affilid = marqueur Travelpayouts, ville en clair → accueil Kiwi)': 'kiwi.com/deep?affilid=',
+    'Expedia direct (camref en paramètre, sans /affiliate → aucun suivi)': 'Hotel-Search?destination=',
+    'Widget GetYourGuide par nom (mauvais lieu : Santiago → Cap-Vert)': 'data-gyg-q=',
+    'Nom échappé deux fois (affiché « d&#x27; »)': '&amp;#x27;',
+}
+_aff_pages = ['meilleure-periode-paris.html', 'meilleure-periode-cortina-dampezzo.html', 'paris-meteo-juillet.html',
+              'en/best-time-to-visit-santiago.html', 'us/la-paz-weather-july.html', 'es/mejor-epoca-dolomites.html',
+              'de/beste-reisezeit-paris.html']
+_aff_bad = 0
+for _pg in _aff_pages:
+    if not os.path.exists(_pg):
+        warn(f"Monétisation : {_pg} introuvable")
+        continue
+    _c = open(_pg, encoding='utf-8').read()
+    _sec = _c[_c.find('<section id="planifier"'):]
+    _sec = _sec[:_sec.find('</section>')]
+    for _lbl, _pat in _AFF_BAD.items():
+        if _pat in _sec:
+            _aff_bad += 1
+            err(f"{_pg} : {_lbl}")
+    if 'expedia.com/affiliate?siteid=' not in _sec or 'camref=' not in _sec:
+        _aff_bad += 1
+        err(f"{_pg} : lien Expedia absent ou hors format /affiliate")
+    if 'c111.travelpayouts.com/click?shmarker=' not in _sec or 'promo_id=3791' not in _sec:
+        _aff_bad += 1
+        err(f"{_pg} : lien Kiwi absent ou hors lien de clic Travelpayouts")
+for _js in ('js/core.js', 'js/core.min.js'):
+    _c = open(_js, encoding='utf-8').read()
+    if 'expedia.com/affiliate?siteid=' not in _c or 'c111.travelpayouts.com/click' not in _c or 'partner_id=2MQKL00' not in _c:
+        _aff_bad += 1
+        err(f"{_js} : formats de liens de l'application non conformes")
+if _aff_bad == 0:
+    ok(f"Monétisation : formats suivis sur {len(_aff_pages)} pages témoins et dans l'application")
+
 # ── Résumé ────────────────────────────────────────────────────────────────────
 print(f"\n{'='*55}")
 if not ERRORS and not WARNINGS:

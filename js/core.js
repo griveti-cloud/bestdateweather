@@ -4,7 +4,22 @@
 var T = window.BDW_T;
 var CFG = window.BDW_CFG;
 
-/* ── AFFILIATE CHIPS ── */
+/* ── AFFILIATE CHIPS ──
+ * Mêmes formats que lib/affiliates.py (audit du 9 oct. 2026) :
+ * Expedia via expedia.com/affiliate (Link builder), Kiwi via le lien de clic
+ * Travelpayouts, GetYourGuide avec partner_id. Langue = <html lang> (BDW_CFG
+ * ne la fournit pas : avant ce correctif, tout partait en français). */
+var AFF_SITE = {
+  fr:      { exp: 'expedia.fr',    gyg: 'getyourguide.fr',    kiwi: 'fr', sub: 'fr' },
+  en:      { exp: 'expedia.co.uk', gyg: 'getyourguide.co.uk', kiwi: 'en', sub: 'en' },
+  'en-us': { exp: 'expedia.com',   gyg: 'getyourguide.com',   kiwi: 'en', sub: 'enus' },
+  es:      { exp: 'expedia.es',    gyg: 'getyourguide.es',    kiwi: 'es', sub: 'es' },
+  de:      { exp: 'expedia.de',    gyg: 'getyourguide.de',    kiwi: 'de', sub: 'de' }
+};
+function affSite() {
+  var l = (document.documentElement.getAttribute('lang') || 'fr').toLowerCase();
+  return AFF_SITE[l] || AFF_SITE[l.slice(0, 2)] || AFF_SITE.en;
+}
 function updateAffilChips(loc) {
   var wrap = document.getElementById('affil-chips');
   if (!wrap) return;
@@ -12,29 +27,27 @@ function updateAffilChips(loc) {
   var country = loc.country || '';
   var dest = name + (country ? ', ' + country : '');
   var destEnc = encodeURIComponent(dest);
-  var lang = (CFG && CFG.lang) ? CFG.lang : 'fr';
-  var gygDomain = (CFG && CFG.gyg_domain) ? CFG.gyg_domain : 'getyourguide.fr';
+  var S = affSite();
 
-  // Hébergements — Expedia Travel Creator (Partnerize camref=1110lB57J)
-  var expediaLandingPage = encodeURIComponent('https://www.expedia.com/Hotel-Search?destination=' + dest);
-  var hotelsUrl = 'https://expedia.com/affiliate?siteid=1&landingPage=' + expediaLandingPage + '&camref=1110lB57J&creativeref=1100l68075&adref=PZqrOrxQe3';
+  // Hébergements — Expedia (programme Travel Creator, Link builder)
+  var expediaLandingPage = encodeURIComponent('https://www.' + S.exp + '/Hotel-Search?destination=' + destEnc);
+  var hotelsUrl = 'https://www.expedia.com/affiliate?siteid=1&landingPage=' + expediaLandingPage + '&camref=1110lB57J&creativeref=1100l68075&adref=PZqrOrxQe3';
   var elH = document.getElementById('affil-hotel');
   if (elH) { elH.href = hotelsUrl; if(T.chip_hotel) elH.innerHTML = '🏨 ' + T.chip_hotel; }
 
-  // Activités — GYG
-  var gygLocale = (CFG && CFG.gyg_lang) ? CFG.gyg_lang : 'fr';
-  var gygUrl = 'https://www.' + gygDomain + '/s/?q=' + destEnc + '&partner_id=2MQKL00&locale=' + gygLocale;
+  // Activités — GetYourGuide
+  var gygUrl = 'https://www.' + S.gyg + '/s/?q=' + destEnc + '&partner_id=2MQKL00&cmp=app' + S.sub;
   var elA = document.getElementById('affil-activ');
   if (elA) { elA.href = gygUrl; if(T.chip_activ) elA.innerHTML = '🎟️ ' + T.chip_activ; }
 
-  // Vols — Kiwi via Travelpayouts
+  // Vols — Kiwi via le lien de clic Travelpayouts (départ = position du visiteur)
   var kiwiSlug = (name + (country ? '-' + country : ''))
     .toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
-  var kiwiDeep = 'https://www.kiwi.com/' + lang + '/search/results/anywhere/' + kiwiSlug + '/anytime/anytime';
-  var flightsUrl = 'https://c111.travelpayouts.com/click?shmarker=708106&promo_id=3791&source_type=customlink&type=click&custom_url=' + encodeURIComponent(kiwiDeep);
+  var kiwiDeep = 'https://www.kiwi.com/' + S.kiwi + '/search/results/anywhere/' + kiwiSlug + '/anytime/anytime';
+  var flightsUrl = 'https://c111.travelpayouts.com/click?shmarker=708106.app' + S.sub + '&promo_id=3791&source_type=customlink&type=click&custom_url=' + encodeURIComponent(kiwiDeep);
   var elF = document.getElementById('affil-flight');
   if (elF) { elF.href = flightsUrl; if(T.chip_flight) elF.innerHTML = '✈️ ' + T.chip_flight; }
 

@@ -1646,7 +1646,7 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
     # l'avis complet sur la page annuelle. Section omise si pas d'avis.
     _teaser = edito_teaser(editorial_html, annual_href(cfg, slug), lang)
     contexte = render_v6_contexte(slug, lang, _teaser) if _teaser else ''
-    reserver = render_v6_reserver(slug, lang, nom)
+    reserver = render_v6_reserver(slug, lang, nom, slug_fr=dest.get('slug_fr') or slug, kind='monthly')
     infos = render_v6_infos_pratiques(slug, lang, page_data['infos_pratiques_data'],
                                       asset_prefix=asset_prefix)
     worst = min(md, key=lambda x: x['score_10'])

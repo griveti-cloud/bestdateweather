@@ -17,3 +17,4 @@ data/*_backup*.csv
 .env
 *.env
 email_preview_*.html
+data/gyg_locations_log.json
