@@ -100,6 +100,7 @@ I18N = {
             'reg_title': 'Par région · {where}', 'avoid_title': 'À éviter · {where}',
             'avoid_lead': 'Les destinations les moins favorables pour ces dates, sur les {n} analysées (stations de montagne exclues : voir le classement ski).',
             'fly_any': 'peu importe', 'world': 'Monde entier', 'err_load': 'Impossible de charger les données. Rechargez la page.',
+            'other_city': 'Autre ville…', 'city_ph': 'Tapez une ville (ex. Rennes, Bâle, Montréal)', 'city_none': 'Aucune ville trouvée.', 'city_err': 'Recherche indisponible, réessayez.',
         },
     },
     'en': {
@@ -156,6 +157,7 @@ I18N = {
             'reg_title': 'By region · {where}', 'avoid_title': 'Best avoided · {where}',
             'avoid_lead': 'The least favourable destinations for these dates, out of {n} analysed (mountain resorts excluded: see the skiing ranking).',
             'fly_any': 'any', 'world': 'Whole world', 'err_load': 'Could not load the data. Please reload the page.',
+            'other_city': 'Other city…', 'city_ph': 'Type a city (e.g. Bristol, Zurich, Boston)', 'city_none': 'No city found.', 'city_err': 'Search unavailable, please try again.',
         },
     },
 }

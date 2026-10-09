@@ -11,6 +11,7 @@
   var UC_KEY = { gen: 's', plage: 'b', ski: 'k', rando: 'hk' };
   var st = JSON.parse(JSON.stringify(C.state));
   var DATA = null, pending = null, ADV = null;
+  function depOf() { return st.dep >= 0 ? L.deps[st.dep] : [st.depName, st.depLat, st.depLon]; }
 
   function $(id) { return document.getElementById(id); }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
@@ -95,7 +96,7 @@
   function computeView() {
     var w = windowOf();
     if (w.error) return { error: w.error };
-    var dep = L.deps[st.dep], ev = {}, mtn = st.uc === 'ski' || st.uc === 'rando';
+    var dep = depOf(), ev = {}, mtn = st.uc === 'ski' || st.uc === 'rando';
     Object.keys(UC_KEY).forEach(function (k) { ev[k] = DATA.dests.map(function (d) { return evaluate(d, w, k, dep); }).filter(Boolean); });
     function okBase(x) { return x.rl <= st.rl && x.d.bi <= st.budget; }
     function okFly(x) { return st.fly >= 16 || x.h <= st.fly; }
@@ -135,7 +136,7 @@
   function dryTxt(x, w) { return x.daily ? fmt(T.dry_years, { k: x.dry, n: x.ns }) : (x.mean < 0.5 ? fmt(T.lt1, { n: w.n }) : fmt(T.approx_days, { x: f1(x.mean), n: w.n })); }
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
   function factText(f, w) {
-    var x = f.x, o = { t: f1(x.tmax), h: fmtH(x.h), dep: L.deps[st.dep][0], b: L.budget[String(x.d.bi)].toLowerCase(), dry: dryTxt(x, w), bm: L.months[x.best], bs: f1(x.bestSc), x: f1(x.mean), n: w.n, s: f1(x.score), tn: r0(x.tmin), tx: r0(x.tmax) };
+    var x = f.x, o = { t: f1(x.tmax), h: fmtH(x.h), dep: depOf()[0], b: L.budget[String(x.d.bi)].toLowerCase(), dry: dryTxt(x, w), bm: L.months[x.best], bs: f1(x.bestSc), x: f1(x.mean), n: w.n, s: f1(x.score), tn: r0(x.tmin), tx: r0(x.tmax) };
     var s = fmt(T[f.fn], o);
     return f.fn === 'fd_safe' ? cap(s) : s;
   }
@@ -170,7 +171,10 @@
     var allowed = (st.uc === 'ski' || st.uc === 'rando') ? ['score', 'near', 'cheap'] : ['score', 'dry', 'hot', 'near', 'cheap'];
     if (allowed.indexOf(st.sort) < 0) st.sort = 'score';
     $('me-sort').innerHTML = allowed.map(function (k) { return '<option value="' + k + '"' + (k === st.sort ? ' selected' : '') + '>' + esc(L.sorts[k]) + '</option>'; }).join('');
-    $('me-reg').value = st.reg; $('me-dep').value = String(st.dep); $('me-fly').value = String(st.fly);
+    $('me-reg').value = st.reg; $('me-fly').value = String(st.fly);
+    var sel = $('me-dep'), cust = sel.querySelector('option[value="custom"]');
+    if (st.dep < 0) { if (!cust) { cust = document.createElement('option'); cust.value = 'custom'; sel.insertBefore(cust, sel.querySelector('option[value="other"]')); } cust.textContent = st.depName; sel.value = 'custom'; }
+    else { if (cust) cust.remove(); sel.value = String(st.dep); }
   }
   function seasonLbl(y, cross) { return cross ? y + '-' + String(y + 1).slice(2) : String(y); }
   function dryHtml(x, w) {
@@ -257,7 +261,36 @@
   }));
   $('me-zone').addEventListener('click', act(function (e) { var b = e.target.closest('.me-chip'); if (!b) return false; st.zone = b.dataset.z; var h = holiday(); if (h) { var r = rangeOf(h); st.from = r[0]; st.to = r[1]; } st.shown = C.page; }));
   $('me-reg').addEventListener('change', act(function (e) { st.reg = e.target.value; st.shown = C.page; }));
-  $('me-dep').addEventListener('change', act(function (e) { st.dep = Number(e.target.value); }));
+  // ville de départ : liste courte + recherche libre (géocodage Open-Meteo, déjà utilisé par l'application)
+  function saveDep() { try { localStorage.setItem('bdw_dep_' + LANG, JSON.stringify(st.dep >= 0 ? { i: st.dep } : { n: st.depName, la: st.depLat, lo: st.depLon })); } catch (e) {} }
+  $('me-dep').addEventListener('change', function (e) {
+    var v = e.target.value;
+    if (v === 'other') { $('me-city').hidden = false; $('me-city-q').value = ''; $('me-city-sug').innerHTML = ''; $('me-city-q').focus(); return; }
+    $('me-city').hidden = true;
+    if (v === 'custom') return;
+    C.touched = true; st.dep = Number(v); saveDep(); render(); ensureData().then(render, fail);
+  });
+  var cityTimer = null, cityReq = 0;
+  $('me-city-q').addEventListener('input', function (e) {
+    var q = e.target.value.trim(), box = $('me-city-sug');
+    clearTimeout(cityTimer);
+    if (q.length < 2) { box.innerHTML = ''; return; }
+    cityTimer = setTimeout(function () {
+      var id = ++cityReq;
+      fetch('https://geocoding-api.open-meteo.com/v1/search?count=6&language=' + LANG + '&name=' + encodeURIComponent(q)).then(function (r) { return r.json(); }).then(function (d) {
+        if (id !== cityReq) return;
+        var res = (d && d.results) || [];
+        box.innerHTML = res.length ? res.map(function (x, i) { var lab = x.name + ' (' + [x.admin1, x.country].filter(Boolean).join(', ') + ')'; return '<button type="button" role="option" data-i="' + i + '">' + esc(lab) + '</button>'; }).join('') : '<p>' + esc(T.city_none) + '</p>';
+        box.__res = res;
+      }).catch(function () { if (id === cityReq) box.innerHTML = '<p>' + esc(T.city_err) + '</p>'; });
+    }, 300);
+  });
+  $('me-city-sug').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var x = this.__res[Number(b.dataset.i)];
+    st.dep = -1; st.depName = x.name; st.depLat = x.latitude; st.depLon = x.longitude; saveDep();
+    $('me-city').hidden = true; C.touched = true; render(); ensureData().then(render, fail);
+  });
   $('me-fly').addEventListener('input', act(function (e) { st.fly = Number(e.target.value); st.shown = C.page; }));
   $('me-sort').addEventListener('change', act(function (e) { st.sort = e.target.value; }));
   var onDate = act(function () { st.from = $('me-from').value; st.to = $('me-to').value; if (st.from && st.to) { if (st.to < st.from) st.to = st.from; matchDates(); } st.shown = C.page; });
@@ -274,7 +307,9 @@
     return false;
   }
   window.addEventListener('hashchange', function () { if (fromHash()) { C.touched = true; render(); ensureData().then(function () { render(); goList(); }, fail); } });
-  if (fromHash()) { C.touched = true; render(); ensureData().then(render, fail); }
+  var fromStore = false;
+  try { var sd = JSON.parse(localStorage.getItem('bdw_dep_' + LANG) || 'null'); if (sd) { if (sd.i != null && sd.i !== st.dep && L.deps[sd.i]) { st.dep = sd.i; fromStore = true; } else if (sd.n && typeof sd.la === 'number') { st.dep = -1; st.depName = sd.n; st.depLat = sd.la; st.depLon = sd.lo; fromStore = true; } } } catch (e) {}
+  if (fromHash() || fromStore) { C.touched = true; render(); ensureData().then(render, fail); }
   // préchargement discret pour que la première action soit instantanée
   var idle = window.requestIdleCallback || function (f) { return setTimeout(f, 1500); };
   idle(function () { ensureData().catch(function () {}); });

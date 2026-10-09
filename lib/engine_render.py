@@ -40,6 +40,12 @@ color:var(--ink);font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe U
 .me-dates input{font-size:1.05rem!important;font-weight:500;padding:10px 12px!important;border-color:var(--ink)!important}
 .me-arrow{font-size:1.2rem;color:var(--muted);padding-bottom:10px}
 .me-span{font-weight:700;padding-bottom:11px}
+.me-city{display:grid;gap:6px}
+.me-city input{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--ink);border-radius:8px;padding:8px 10px;width:100%}
+.me-city-sug{display:grid;gap:2px}
+.me-city-sug button{font:inherit;font-size:.92rem;text-align:left;border:0;background:var(--chip);color:var(--ink);border-radius:6px;padding:7px 10px;cursor:pointer}
+.me-city-sug button:hover,.me-city-sug button:focus-visible{background:var(--gold-soft)}
+.me-city-sug p{margin:0;font-size:.88rem;color:var(--muted)}
 .me-quick{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap}
 .me-quick-lbl{font-size:.88rem;color:var(--muted)}
 .me-criteria{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px;border-top:1px solid var(--line);padding-top:16px}
@@ -258,7 +264,7 @@ def render_main(view, st, lang, annual_tpl, month_links, other_links, texts):
                + ''.join(f'<button type="button" class="me-chip" data-p="{x["id"]}" aria-pressed="false">{esc(x["chip"])}{" ▾" if x.get("zones") else ""}</button>' for x in hs))
     uc_chips = ''.join(f'<button type="button" class="me-chip" data-v="{k}" aria-pressed="{"true" if k == st["uc"] else "false"}">{esc(v)}</button>' for k, v in L['uc'].items())
     reg_opts = f'<option value="all">{esc(T["world"])}</option>' + ''.join(f'<option value="{k}">{esc(v)}</option>' for k, v in L['regions'].items())
-    dep_opts = ''.join(f'<option value="{i}"' + (' selected' if i == st['dep'] else '') + f'>{esc(d[0])}</option>' for i, d in enumerate(L['deps']))
+    dep_opts = ''.join(f'<option value="{i}"' + (' selected' if i == st['dep'] else '') + f'>{esc(d[0])}</option>' for i, d in enumerate(L['deps'])) + f'<option value="other">{esc(T["other_city"])}</option>'
     allowed = ['score', 'dry', 'hot', 'near', 'cheap']
     sort_opts = ''.join(f'<option value="{k}"' + (' selected' if k == st['sort'] else '') + f'>{esc(L["sorts"][k])}</option>' for k in allowed)
     # à retenir
@@ -301,7 +307,7 @@ def render_main(view, st, lang, annual_tpl, month_links, other_links, texts):
 <div class="me-criteria">
 <div class="me-row me-wide"><div class="me-lbl" id="me-lbl-uc">{esc(X['trip_type'])}</div><div class="me-chips" id="me-uc" role="group" aria-labelledby="me-lbl-uc">{uc_chips}</div></div>
 <div class="me-row"><label class="me-lbl" for="me-reg">{esc(X['region'])}</label><select id="me-reg">{reg_opts}</select></div>
-<div class="me-row"><label class="me-lbl" for="me-dep">{esc(X['from_city'])}</label><select id="me-dep">{dep_opts}</select></div>
+<div class="me-row"><label class="me-lbl" for="me-dep">{esc(X['from_city'])}</label><select id="me-dep">{dep_opts}</select><div class="me-city" id="me-city" hidden><input type="search" id="me-city-q" autocomplete="off" placeholder="{esc(T['city_ph'])}" aria-label="{esc(T['city_ph'])}"><div class="me-city-sug" id="me-city-sug" role="listbox"></div></div></div>
 <div class="me-row"><label class="me-lbl" for="me-fly">{esc(X['max_flight'])} <span id="me-fly-val">{esc(T['fly_any'])}</span></label><input type="range" id="me-fly" min="1" max="16" step="0.5" value="{st['fly']}"></div>
 <div class="me-row" id="me-heat-row"><div class="me-lbl" id="me-lbl-heat">{esc(X['heat'])}</div><div class="me-chips" id="me-heat" role="group" aria-labelledby="me-lbl-heat">{chips(L['heat_opts'], st['heat'])}</div></div>
 <div class="me-row"><div class="me-lbl" id="me-lbl-budget">{esc(X['budget'])}</div><div class="me-chips" id="me-budget" role="group" aria-labelledby="me-lbl-budget">{chips(L['budget_opts'], st['budget'])}</div><p class="me-help">{esc(X['budget_help'])}</p></div>

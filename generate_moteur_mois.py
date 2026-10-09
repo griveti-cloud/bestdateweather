@@ -24,7 +24,7 @@ from lib import date_engine as E  # noqa: E402
 from lib.engine_render import render_main, client_config, CSS, R, fmt, esc  # noqa: E402
 
 CONFIG = ROOT / 'data' / 'moteur_config.json'
-JS_VERSION = 1
+JS_VERSION = 2
 DATA_URL = f'/engine/data-{E.DATA_VERSION}.json'
 
 
