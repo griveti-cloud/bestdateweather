@@ -5,7 +5,7 @@
   'use strict';
   var C = window.BDW_ANNUAL;
   if (!C) return;
-  var L = C.i18n, T = C.t, A = C.a, LANG = C.lang, NI = LANG === 'fr' ? 0 : 1, GOOD = 7.6;
+  var L = C.i18n, T = C.t, A = C.a, LANG = C.lang, NF = L.nf, NI = NF.ni, IMP = !!NF.imp, GOOD = 7.6;
   var UC_KEY = { gen: 's', plage: 'b', ski: 'k', rando: 'hk' };
   var st = JSON.parse(JSON.stringify(C.state));
   var DATA = null, pending = null, ADV = null;
@@ -14,10 +14,13 @@
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function fmt(s, o) { return s.replace(/\{(\w+)\}/g, function (m, k) { return Object.prototype.hasOwnProperty.call(o, k) ? o[k] : m; }); }
   function pad(n) { return (n < 10 ? '0' : '') + n; }
-  function f1(x) { var s = (Math.round(x * 10 + 1e-9) / 10).toFixed(1); return LANG === 'fr' ? s.replace('.', ',') : s; }
+  function f1(x) { var s = (Math.round(x * 10 + 1e-9) / 10).toFixed(1); return NF.dec === ',' ? s.replace('.', ',') : s; }
   function r0(x) { return String(Math.round(x)); }
-  function fmtH(h) { var t = Math.round(h * 12) * 5, hh = Math.floor(t / 60), mm = t % 60; return LANG === 'fr' ? hh + ' h ' + pad(mm) : hh + 'h' + pad(mm); }
-  function fmtKm(km) { var n = String(Math.round(km)), sep = LANG === 'fr' ? ' ' : ',', out = ''; while (n.length > 3) { out = sep + n.slice(-3) + out; n = n.slice(0, -3); } return n + out + ' km'; }
+  function tc(x) { return IMP ? x * 9 / 5 + 32 : x; }          // données en °C → unité de la langue
+  function t1(x) { return IMP ? r0(tc(x)) : f1(x); }
+  function t0(x) { return r0(tc(x)); }
+  function fmtH(h) { var t = Math.round(h * 12) * 5; return fmt(NF.h, { h: Math.floor(t / 60), mm: pad(t % 60) }); }
+  function fmtKm(km) { var n = String(Math.round(IMP ? km / 1.609344 : km)), sep = NF.th, out = ''; while (n.length > 3) { out = sep + n.slice(-3) + out; n = n.slice(0, -3); } return n + out + (IMP ? ' mi' : ' km'); }
   function hav(a, b, c, d) { var r = Math.PI / 180, p1 = a * r, p2 = c * r, dp = p2 - p1, dl = (d - b) * r; return 2 * 6371 * Math.asin(Math.sqrt(Math.pow(Math.sin(dp / 2), 2) + Math.cos(p1) * Math.cos(p2) * Math.pow(Math.sin(dl / 2), 2))); }
   function depOf() { return st.dep >= 0 ? L.deps[st.dep] : [st.depName, st.depLat, st.depLon]; }
   function cellCls(v) { return v == null ? 'n' : v >= 8.6 ? 'e' : v >= 7.6 ? 't' : v >= 6.3 ? 'b' : v >= 5 ? 'p' : v >= 3.5 ? 'm' : 'x'; }
@@ -79,9 +82,9 @@
 
   // ── rendu (miroir de lib/annual_engine.py) ──
   function nm(x) { return esc(x.d.n[NI]); }
-  function href(x) { return fmt(C.annual, { s: x.d.s, e: x.d.e }); }
+  function href(x) { return fmt(C.annual, { s: x.d.s, e: x.d.e, se: x.d.se || '', sd: x.d.sd || '' }); }
   function bestMonths(x) { return x.best3.map(function (i) { return L.ms[i]; }).join(', '); }
-  function factText(f) { var x = f.x; return fmt(T[f.fn], { g: x.good, s: f1(x.score), h: fmtH(x.h), dep: depOf()[0], b: L.budget[String(x.d.bi)].toLowerCase(), t1: r0(x.t1), t2: r0(x.t2), bm: L.months[x.best] }); }
+  function factText(f) { var x = f.x; return fmt(T[f.fn], { g: x.good, s: f1(x.score), h: fmtH(x.h), dep: depOf()[0], b: L.budget[String(x.d.bi)].toLowerCase(), t1: t0(x.t1), t2: t0(x.t2), bm: L.months[x.best] }); }
   function stripHtml(x) {
     var cells = x.vals.map(function (v, i) { return '<span class="ma-c ' + cellCls(v) + '" title="' + esc(fmt(T.cell, { m: L.months[i], s: f1(v) })) + '"></span>'; }).join('');
     return '<div class="ma-strip">' + cells + '</div><div class="ma-letters" aria-hidden="true">' + A.mi.map(function (l) { return '<span>' + l + '</span>'; }).join('') + '</div>';
@@ -93,7 +96,7 @@
     var cls = x.score < 5 ? ' low' : (x.score < 7.6 ? ' mid' : '');
     return '<article class="me-item ma-item"><div class="me-rank">' + (i + 1) + '</div>' +
       '<div class="me-name"><a href="' + href(x) + '">' + nm(x) + '</a><span>' + esc(x.d.p[NI]) + ' · ' + fmtKm(x.km) + '</span><div class="me-badges">' + badges + '</div></div>' +
-      '<div class="me-metrics"><span class="me-t">' + esc(fmt(T.temps, { t1: r0(x.t1), t2: r0(x.t2) })) + '</span><span>' + esc(fmt(T.rain, { r: r0(x.rain) })) + ' · ' + esc(fmt(T.flight, { h: fmtH(x.h) })) + '</span></div>' +
+      '<div class="me-metrics"><span class="me-t">' + esc(fmt(T.temps, { t1: t0(x.t1), t2: t0(x.t2) })) + '</span><span>' + esc(fmt(T.rain, { r: r0(x.rain) })) + ' · ' + esc(fmt(T.flight, { h: fmtH(x.h) })) + '</span></div>' +
       '<div class="me-dry">' + stripHtml(x) + '<div>' + fmt(T.good_line, { g: x.good, bm: esc(bestMonths(x)) }) + '</div></div>' +
       '<div class="me-side"><span class="me-score' + cls + '">' + esc(sc) + '</span><a href="' + href(x) + '">' + esc(T.card) + '</a></div></article>';
   }
@@ -103,7 +106,7 @@
     [['me-uc', 'uc', false], ['me-good', 'good', true], ['me-budget', 'budget', true], ['me-secu', 'rl', true]].forEach(function (g) {
       Array.prototype.forEach.call($(g[0]).querySelectorAll('.me-chip'), function (b) { var v = g[2] ? Number(b.dataset.v) : b.dataset.v; b.setAttribute('aria-pressed', String(v === st[g[1]])); });
     });
-    $('me-fly-val').textContent = st.fly >= 16 ? T.fly_any : fmtH(st.fly).replace(LANG === 'fr' ? ' h 00' : 'h00', LANG === 'fr' ? ' h' : 'h');
+    $('me-fly-val').textContent = st.fly >= 16 ? T.fly_any : (st.fly % 1 === 0 ? fmt(NF.h0, { h: st.fly }) : fmtH(st.fly));
     $('me-reg').value = st.reg; $('me-fly').value = String(st.fly); $('me-sort').value = st.sort;
     var sel = $('me-dep'), cust = sel.querySelector('option[value="custom"]');
     if (st.dep < 0) { if (!cust) { cust = document.createElement('option'); cust.value = 'custom'; sel.insertBefore(cust, sel.querySelector('option[value="other"]')); } cust.textContent = st.depName; sel.value = 'custom'; }
@@ -163,7 +166,7 @@
     if (q.length < 2) { box.innerHTML = ''; return; }
     cityTimer = setTimeout(function () {
       var id = ++cityReq;
-      fetch('https://geocoding-api.open-meteo.com/v1/search?count=6&language=' + LANG + '&name=' + encodeURIComponent(q)).then(function (r) { return r.json(); }).then(function (d) {
+      fetch('https://geocoding-api.open-meteo.com/v1/search?count=6&language=' + LANG.slice(0, 2) + '&name=' + encodeURIComponent(q)).then(function (r) { return r.json(); }).then(function (d) {
         if (id !== cityReq) return;
         var res = (d && d.results) || [];
         box.innerHTML = res.length ? res.map(function (x, i) { return '<button type="button" role="option" data-i="' + i + '">' + esc(x.name + ' (' + [x.admin1, x.country].filter(Boolean).join(', ') + ')') + '</button>'; }).join('') : '<p>' + esc(T.city_none) + '</p>';

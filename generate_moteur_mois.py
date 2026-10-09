@@ -23,10 +23,36 @@ from lib.common import footer_ranking_html, shared_nav_html  # noqa: E402
 from lib import date_engine as E  # noqa: E402
 from lib.engine_render import render_main, client_config, CSS, R, fmt, esc  # noqa: E402
 from lib import annual_engine as AE  # noqa: E402
+from lib import engine_langs as _EL  # noqa: E402
 
 CONFIG = ROOT / 'data' / 'moteur_config.json'
-JS_VERSION = 2
+JS_VERSION = 3
 DATA_URL = f'/engine/data-{E.DATA_VERSION}.json'
+
+
+# Fiche « meilleure période » de chaque destination, par langue
+# (s = slug fr, e = en, se = es, sd = de : voir date_engine.build_dataset)
+ANNUAL_TPL = {
+    'fr': '/meilleure-periode-{s}',
+    'en': '/en/best-time-to-visit-{e}',
+    'en-us': '/us/best-time-to-visit-{e}',
+    'es': '/es/mejor-epoca-{se}',
+    'de': '/de/beste-reisezeit-{sd}',
+}
+NOMADS = {
+    'fr': 'classement-destinations-meteo-nomades-2026',
+    'en': 'best-destinations-digital-nomads-weather-2026',
+    'en-us': 'best-destinations-digital-nomads-weather-2026',
+    'es': 'mejores-destinos-nomadas-digitales-2026',
+    'de': 'beste-reiseziele-digital-nomaden-wetter-2026',
+}
+
+
+def site_url(loc, filename):
+    """Fichier de la langue (ex. 'mapa.html') → URL absolue sans .html (ex. '/es/mapa')."""
+    sub = loc['meta']['subdir']
+    base = filename.rsplit('/', 1)[-1].replace('.html', '')
+    return f'/{base}' if not sub else f'/{sub}/{base}'
 
 
 def load_config():
@@ -120,6 +146,11 @@ TEXTS = {
         'prev': '← Where to go in {m}', 'next': 'Where to go in {m} →', 'world': '🌍 World ranking 2026', 'map': '🗺️ Climate map', 'year': '📅 All year',
     },
 }
+TEXTS['fr']['and'] = ' et '
+TEXTS['en']['and'] = ' and '
+TEXTS['es'] = _EL.TEXTS_ES
+TEXTS['de'] = _EL.TEXTS_DE
+TEXTS['en-us'] = _EL.us_texts(TEXTS['en'])
 
 
 def urls(lang, loc, mi):
@@ -151,7 +182,7 @@ def _hol_li(r, x, w, i):
     d = r.dry_txt(x, w)
     return ('<li><span class="me-hol-n">' + str(i + 1) + '</span><span class="me-hol-d"><a href="' + r.href(x) + '">' + r.nm(x)
             + '</a> <span class="me-help">' + esc(x['d']['p'][r.ni]) + '</span></span><span class="me-hol-x">'
-            + esc(d[:1].upper() + d[1:]) + ' · ' + r.f1(x['tmax']) + ' °C · <b>' + r.f1(x['score']) + '/10</b></span></li>')
+            + esc(d[:1].upper() + d[1:]) + ' · ' + r.t1(x['tmax']) + r.U + ' · <b>' + r.f1(x['score']) + '/10</b></span></li>')
 
 
 def _short(L, a, b):
@@ -180,7 +211,7 @@ def holiday_block(ds, lang, mi, r, X):
                 per_zone.append((z, r.long_date(a), r.long_date(b), [x['d']['n'][r.ni] for x in top[:3]]))
             out += (f'<section class="me-sec" id="me-h-{h["id"]}"><div><h2>{esc(fmt(X["holiday_title"], chip=h["chip"]))}</h2>'
                     f'<p class="me-lead">{esc(X["zone_lead"])}</p></div><div class="me-cols">{cols}</div></section>')
-            faq = (h, None, None, per_zone)
+            faq = faq or (h, None, None, per_zone)
             continue
         top, w = _hol_view(ds, lang, mi, h['id'], h['a'], h['b'])
         top = top[:8]
@@ -190,7 +221,7 @@ def holiday_block(ds, lang, mi, r, X):
         out += (f'<section class="me-sec" id="me-h-{h["id"]}"><div><h2>{esc(fmt(X["holiday_title"], chip=h["chip"]))}</h2>'
                 f'<p class="me-lead">{esc(lead[0].upper() + lead[1:])}</p></div><ol class="me-hol">{lis}</ol>'
                 f'<p><a class="me-link" href="#{h["id"]}">{esc(X["holiday_cta"])} →</a></p></section>')
-        faq = (h, a, b, [x['d']['n'][r.ni] for x in top[:3]])
+        faq = faq or (h, a, b, [x['d']['n'][r.ni] for x in top[:3]])
     return out, faq
 
 
@@ -198,7 +229,7 @@ def generate(mi, lang, ds):
     loc = load_locale(lang)
     gen, pil = loc['gen'], loc['pilier']
     L, X = E.I18N[lang], TEXTS[lang]
-    annual_tpl = '/meilleure-periode-{s}' if lang == 'fr' else '/en/best-time-to-visit-{e}'
+    annual_tpl = ANNUAL_TPL[lang]
     r = R(lang, annual_tpl)
     st = E.default_state(mi, lang)
     view = E.compute_view(ds, st, lang)
@@ -206,9 +237,9 @@ def generate(mi, lang, ds):
     hl_tags, _ = hreflang_tags(mi)
     month_links = [urls(lang, loc, i)[0] for i in range(12)]
     prev, nxt = (mi + 11) % 12, (mi + 1) % 12
-    world = '/' + pil['world_ranking_url'].replace('.html', '') if lang == 'fr' else '/en/' + pil['world_ranking_url'].replace('.html', '')
-    year_url = '/' + pil['all_year_url'].replace('.html', '') if lang == 'fr' else '/en/' + pil['all_year_url'].replace('.html', '')
-    map_url = '/carte' if lang == 'fr' else '/en/map'
+    world = site_url(loc, pil['world_ranking_url'])
+    year_url = site_url(loc, pil['all_year_url'])
+    map_url = site_url(loc, pil['map_href'])
     others = [(fmt(X['prev'], m=L['months'][prev]), month_links[prev]), (fmt(X['next'], m=L['months'][nxt]), month_links[nxt]),
               (X['year'], year_url), (X['world'], world), (X['map'], map_url)]
     main = render_main(view, st, lang, annual_tpl, month_links, others, X)
@@ -228,7 +259,7 @@ def generate(mi, lang, ds):
         dh = fmt(X['desc_h'], em=hs[0]['em'])
     else:
         title, dh = fmt(X['title_m'], m=m_title, y=y), ''
-    desc = fmt(X['desc'], n=view['n_uc'], m=m_name, y=y, h=dh, top=top['d']['n'][r.ni], s=r.f1(top['score']), t=r.r0(top['tmax']))
+    desc = fmt(X['desc'], n=view['n_uc'], m=m_name, y=y, h=dh, top=top['d']['n'][r.ni], s=r.f1(top['score']), t=r.t0(top['tmax']))
     canon_prefix = 'https://bestdateweather.com'
     itemlist = {'@context': 'https://schema.org', '@type': 'ItemList', 'name': title, 'numberOfItems': min(25, len(view['rows'])),
                 'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': x['d']['n'][r.ni], 'url': canon_prefix + r.href(x)}
@@ -237,9 +268,9 @@ def generate(mi, lang, ds):
         {'@type': 'ListItem', 'position': 1, 'name': loc['labels']['breadcrumb_home'], 'item': loc['meta']['schema_home_url']},
         {'@type': 'ListItem', 'position': 2, 'name': fmt(X['crumb'], m=m_name), 'item': canonical}]}
     faq_items = [{'@type': 'Question', 'name': fmt(X['faq_q1'], m=m_name),
-                  'acceptedAnswer': {'@type': 'Answer', 'text': fmt(X['faq_a1'], m=m_name, top=top['d']['n'][r.ni], s=r.f1(top['score']), t=r.r0(top['tmax']))}}]
+                  'acceptedAnswer': {'@type': 'Answer', 'text': fmt(X['faq_a1'], m=m_name, top=top['d']['n'][r.ni], s=r.f1(top['score']), t=r.t0(top['tmax']))}}]
     def _lst(names):
-        return ', '.join(names[:-1]) + (' et ' if lang == 'fr' else ' and ') + names[-1] if len(names) > 1 else (names[0] if names else '')
+        return ', '.join(names[:-1]) + X['and'] + names[-1] if len(names) > 1 else (names[0] if names else '')
     if faq_h:
         h, a, b, names = faq_h
         if h.get('zones'):
@@ -258,7 +289,7 @@ def generate(mi, lang, ds):
     nav = shared_nav_html(gen['home_url'], gen['try_app_label'], gen['share_label'], map_href=pil.get('map_href', ''), map_label=pil.get('map_nav_label', ''))
     cfg = client_config(lang, st, DATA_URL, annual_tpl)
     html = f"""<!DOCTYPE html>
-<html lang="{lang}">
+<html lang="{loc['meta'].get('html_lang') or lang}">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>{esc(title)}</title>
@@ -328,7 +359,7 @@ ANNUAL_TEXTS = {
         'projects_lead': 'The best destinations over the year by type of trip. Skiing and hiking: score of the best month.',
         'method': [
             'Annual score: average of the 12 monthly BestDateWeather scores (skiing and hiking: score of the best month).',
-            'Good month: score of 7.6 out of 10 or more, the "Very good" level on the map.',
+            'Good month: score of 7.6 out of 10 or more, the "Great" level on the map.',
             'Temperatures: lowest and highest monthly highs; rain: average share of rainy days over the year.',
             'Data: ERA5 reanalysis 2016-2025, rainy days and sunshine adjusted to weather stations.',
         ],
@@ -345,6 +376,9 @@ ANNUAL_TEXTS = {
         'nomads': '💻 Digital nomads ranking', 'world': '🌍 World ranking 2026', 'map': '🗺️ Climate map',
     },
 }
+ANNUAL_TEXTS['es'] = _EL.ANNUAL_TEXTS_ES
+ANNUAL_TEXTS['de'] = _EL.ANNUAL_TEXTS_DE
+ANNUAL_TEXTS['en-us'] = _EL.us_annual_texts(ANNUAL_TEXTS['en'])
 
 
 def annual_urls(loc):
@@ -360,16 +394,15 @@ def generate_annual(lang, ds):
     L = E.I18N[lang]
     X = dict(TEXTS[lang])
     X.update(ANNUAL_TEXTS[lang])
-    annual_tpl = '/meilleure-periode-{s}' if lang == 'fr' else '/en/best-time-to-visit-{e}'
+    annual_tpl = ANNUAL_TPL[lang]
     r = AE.RA(lang, annual_tpl)
     st = AE.default_state()
     view = AE.compute_view(ds, st, lang)
     rel, canonical, path = annual_urls(loc)
     month_links = [urls(lang, loc, i)[0] for i in range(12)]
-    pre = '' if lang == 'fr' else '/en'
-    nomads = '/classement-destinations-meteo-nomades-2026' if lang == 'fr' else '/en/best-destinations-digital-nomads-weather-2026'
-    world = pre + '/' + pil['world_ranking_url'].replace('.html', '')
-    others = [(X['nomads'], nomads), (X['world'], world), (X['map'], '/carte' if lang == 'fr' else '/en/map')]
+    nomads = site_url(loc, NOMADS[lang] + '.html')
+    world = site_url(loc, pil['world_ranking_url'])
+    others = [(X['nomads'], nomads), (X['world'], world), (X['map'], site_url(loc, pil['map_href']))]
     main = AE.render_main(view, st, lang, annual_tpl, month_links, others, X, rel)
     hl = {}
     for l2 in PILIER_LANGS:
@@ -389,7 +422,7 @@ def generate_annual(lang, ds):
     eu = [f for f in view['facts'] if f['k'] == 'f_europe']
     if eu:
         x = eu[0]['x']
-        faq_items.append({'@type': 'Question', 'name': X['faq_q2'], 'acceptedAnswer': {'@type': 'Answer', 'text': fmt(X['faq_a2'], top=x['d']['n'][r.ni], g=x['good'], t1=r.r0(x['t1']), t2=r.r0(x['t2']))}})
+        faq_items.append({'@type': 'Question', 'name': X['faq_q2'], 'acceptedAnswer': {'@type': 'Answer', 'text': fmt(X['faq_a2'], top=x['d']['n'][r.ni], g=x['good'], t1=r.t0(x['t1']), t2=r.t0(x['t2']))}})
     faq = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': faq_items}
     ld = lambda o: json.dumps(o, ensure_ascii=False).replace('</', '<\\/')
     cross = []
@@ -399,11 +432,11 @@ def generate_annual(lang, ds):
         loc2 = load_locale(l2)
         cross.append({'url': annual_urls(loc2)[0], 'flag': f'/{loc2["meta"]["flag"]}', 'label': loc2['meta']['lang_label']})
     nav = shared_nav_html(gen['home_url'], gen['try_app_label'], gen['share_label'], map_href=pil.get('map_href', ''), map_label=pil.get('map_nav_label', ''))
-    keep = {k: L[k] for k in ('months', 'ms', 'uc', 'uc_t', 'regions', 'secu', 'budget', 'deps')}
+    keep = {k: L[k] for k in ('months', 'ms', 'uc', 'uc_t', 'regions', 'secu', 'budget', 'deps', 'nf')}
     cfg = json.dumps({'lang': lang, 'state': st, 'data': DATA_URL, 'annual': annual_tpl, 'page': E.PAGE, 'i18n': keep,
                       't': AE.A18N[lang]['t'], 'a': {'mi': AE.A18N[lang]['mi']}}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     html = f"""<!DOCTYPE html>
-<html lang="{lang}">
+<html lang="{loc['meta'].get('html_lang') or lang}">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>{esc(title)}</title>

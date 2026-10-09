@@ -144,8 +144,8 @@ I18N = {
             'f_best_ski': 'Best skiing score', 'f_best_rando': 'Best hiking score', 'f_near_m': 'Closest', 'f_cheap_m': 'Cheapest',
             'dry_years': 'nearly dry {k} years out of {n}', 'lt1': 'less than one rainy day out of {n}', 'approx_days': '≈ {x} rainy days out of {n}',
             'fd_safe': '{dry}, {t} °C, ≈ {h} flight.', 'fd_near': '≈ {h} flight from {dep}, {t} °C, {dry}.',
-            'fd_cheap': '{b} budget, {t} °C, {dry}.', 'fd_trap': 'Excellent in {bm} ({bs}/10), but {x} rainy days out of {n} on these dates.',
-            'fd_best_m': '{s}/10, {tn} to {tx} °C, ≈ {h} flight.', 'fd_near_m': '≈ {h} flight from {dep}, score {s}/10.', 'fd_cheap_m': '{b} budget, score {s}/10.',
+            'fd_cheap': 'Cost of living: {b}, {t} °C, {dry}.', 'fd_trap': 'Excellent in {bm} ({bs}/10), but {x} rainy days out of {n} on these dates.',
+            'fd_best_m': '{s}/10, {tn} to {tx} °C, ≈ {h} flight.', 'fd_near_m': '≈ {h} flight from {dep}, score {s}/10.', 'fd_cheap_m': 'Cost of living: {b}, score {s}/10.',
             'flight': '≈ {h} flight', 'sea': 'Sea {t} °C', 'card': 'Guide',
             'dry_line': 'Nearly dry <b>{k} years out of {n}</b> · {x} rainy days out of {d}', 'approx_line': '{x} (monthly average)',
             'approx_lt1': 'Less than one rainy day out of {n}', 'approx_n': '≈ {x} rainy days out of {n}',
@@ -161,6 +161,16 @@ I18N = {
         },
     },
 }
+I18N['en']['holidays']['11'][0]['wh'] = 'Christmas and New Year'
+
+# Espagnol, allemand, anglais américain (°F, miles) : lib/engine_langs.py
+from lib import engine_langs as _EL  # noqa: E402
+I18N['es'] = _EL.I18N_ES
+I18N['de'] = _EL.I18N_DE
+I18N['en-us'] = _EL.us_i18n(I18N['en'])
+for _l, _d in I18N.items():
+    _d['nf'] = _EL.NF[_l]
+LANGS = list(I18N)
 
 
 # ── Données ───────────────────────────────────────────────────────────────────
@@ -231,10 +241,16 @@ def build_dataset(dests, climate, country_info):
             M['sun'][i] = round(c['sun_h'], 1)
         M['sea'] = sea.get(slug, [None] * 12)
         ci = (country_info or {}).get(d.get('pays', ''), {})
+        nom_fr = d.get('nom_bare') or slug
+        nom_en = d.get('nom_en') or nom_fr
         rec = {
+            # slugs : s = fr, e = en et en-us, se = es, sd = de (mêmes règles que generate_piliers.get_slug)
             's': slug, 'e': d.get('slug_en') or slug,
-            'n': [d.get('nom_bare') or slug, d.get('nom_en') or d.get('nom_bare') or slug],
-            'p': [d.get('pays', ''), d.get('country_en') or d.get('pays', '')],
+            'se': d.get('slug_es') or d.get('slug_en') or slug, 'sd': d.get('slug_de') or d.get('slug_en') or slug,
+            # noms et pays : [fr, en, es, de] (mêmes règles que generate_piliers.get_nom / get_pays)
+            'n': [nom_fr, nom_en, d.get('nom_es') or nom_fr, d.get('nom_de') or nom_en],
+            'p': [d.get('pays', ''), d.get('country_en') or d.get('pays', ''),
+                  d.get('country_es') or d.get('pays', ''), d.get('country_de') or d.get('pays', '')],
             'reg': reg(d.get('pays', ''), slug), 'rl': int(ci.get('risk_level', 2)), 'bi': int(ci.get('budget_index', 3)),
             'm': 1 if mtn else 0, 'cc': (d.get('flag') or '').upper(),
             'la': round(float(d['lat']), 3), 'lo': round(float(d['lon']), 3), 'M': M,
@@ -416,7 +432,9 @@ def compute_view(dataset, st, lang):
                 return
 
     if not mtn:
-        pick(sorted(rows, key=SORTERS['dry']), 'f_safe', 'fd_safe')
+        # « La plus sûre » : la moins pluvieuse parmi les bonnes destinations (score ≥ 7), comme les deux suivantes
+        good = [x for x in rows if x['score'] >= 7]
+        pick(sorted(good or rows, key=SORTERS['dry']), 'f_safe', 'fd_safe')
         cand = [x for x in rows if x['share'] <= 0.10 and x['score'] >= 7]
         pick(sorted(cand, key=SORTERS['near']), 'f_near', 'fd_near')
         pick(sorted(cand, key=SORTERS['cheap']), 'f_cheap', 'fd_cheap')
