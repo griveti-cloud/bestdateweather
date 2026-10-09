@@ -173,7 +173,16 @@ else:
 print("\n7. Cohérence sécurité (classement)")
 status, _, body = fetch(f'{BASE}/ou-partir-en-mai')
 if status == 200:
-    if 'Math.max(POOL' in body:
+    if 'window.BDW_ENGINE=' in body:
+        # Page du moteur par dates : la règle est dans js/date-engine.js
+        m = re.search(r'src="(/js/date-engine\.js[^"]*)"', body)
+        js_status, _, js = fetch(f'{BASE}{m.group(1)}') if m else (0, None, '')
+        n_rows = body.count('class="me-item"')
+        if js_status == 200 and 'Math.max(v, ADV[d.cc])' in js and n_rows >= 10:
+            ok(f"classement (moteur par dates): Math.max sur advisories, {n_rows} lignes dans le HTML")
+        else:
+            err(f"classement (moteur par dates): script {js_status}, règle Math.max {'présente' if 'Math.max(v, ADV[d.cc])' in js else 'absente'}, {n_rows} lignes")
+    elif 'Math.max(POOL' in body:
         ok("classement: Math.max sur advisories (FR/DE combinés)")
     else:
         err("classement: pas de Math.max → risque badge sécu erroné")
