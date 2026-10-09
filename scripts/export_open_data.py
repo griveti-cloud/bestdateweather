@@ -18,8 +18,8 @@ import os
 import sys
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-EXCLUS = {'reunion': 'point de référence à 1 615 m (centre de l\'île)',
-          'corse': 'point de référence à 1 240 m (centre de l\'île)'}
+EXCLUS = {'reunion': 'La Réunion (point de référence à 1 615 m, au centre de l\'île)',
+          'corse': 'la Corse (point de référence à 1 240 m, au centre de l\'île)'}
 
 
 def main(out_dir):
@@ -54,6 +54,25 @@ Un fichier CSV (UTF-8), une ligne par destination et par mois :
 température maximale et minimale moyennes (°C), part des jours avec au moins
 1 mm de pluie (%), précipitations moyennes (mm/jour), ensoleillement (h/jour),
 température de la mer (°C, destinations côtières), score de voyage sur 10.
+Séparateur : virgule. Décimales : point. Valeur absente : champ vide.
+
+## Colonnes
+| Colonne | Contenu |
+|---|---|
+| destination | Nom de la destination (français) |
+| pays | Pays |
+| latitude, longitude | Coordonnées du point de référence (degrés décimaux) |
+| precision_point | `city` (ville), `region` (région représentée par un point), `country` (pays représenté par un point) |
+| mois_num, mois | Numéro (1 à 12) et nom du mois |
+| temp_max_c, temp_min_c | Température maximale et minimale moyennes (°C) |
+| jours_pluie_pct | Part des jours du mois avec au moins 1 mm de pluie (%) |
+| source_pluie | `observed` (normale de station) ou `calibrated` (ERA5 recalibré sur les stations) |
+| precip_mm_jour | Précipitations moyennes (mm par jour) |
+| soleil_h_jour | Ensoleillement moyen (heures par jour) |
+| source_soleil | `observed` ou `calibrated`, comme pour la pluie |
+| temp_mer_c | Température moyenne de la mer (°C) ; vide pour les destinations non côtières |
+| score_sur_10 | Score de voyage BestDateWeather (0 à 10) |
+| url | Fiche détaillée de la destination |
 
 ## Sources et méthode
 - Réanalyse ERA5 (Copernicus / ECMWF) via Open-Meteo, données quotidiennes {dv.get('periode_donnees', '2016-2025')}.
@@ -70,7 +89,8 @@ température de la mer (°C, destinations côtières), score de voyage sur 10.
   représentée par un seul point (colonne `precision_point`).
 - Températures : réanalyse ERA5 non recalibrée ; sur les petites îles, elle
   peut être inférieure de 1 à 2 °C aux stations côtières.
-- Exclues de cette version : {', '.join(f'{k} ({v})' for k, v in EXCLUS.items())}.
+- Exclues de cette version : {' et '.join(EXCLUS.values())}, en attendant
+  la correction de leurs coordonnées.
 
 ## Licence
 CC BY 4.0. Réutilisation libre, y compris commerciale, à condition de citer :
