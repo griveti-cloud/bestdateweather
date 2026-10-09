@@ -234,6 +234,12 @@ if os.path.exists('js/date-engine.js'):
         err(f"js/date-engine.js : syntaxe invalide — {_r.stderr.strip()[:120]}")
     else:
         ok("js/date-engine.js : syntaxe OK")
+    if os.path.exists('js/annual-engine.js'):
+        _r = subprocess.run(['node', '--check', 'js/annual-engine.js'], capture_output=True, text=True)
+        if _r.returncode != 0:
+            err(f"js/annual-engine.js : syntaxe invalide — {_r.stderr.strip()[:120]}")
+        else:
+            ok("js/annual-engine.js : syntaxe OK")
     if not os.path.exists('engine/data-v1.json'):
         err("engine/data-v1.json absent (lancer generate_moteur_mois.py)")
 
@@ -242,6 +248,22 @@ for page in PILIER_CHECKS:
         warn(f"JS check: {page} introuvable")
         continue
     content = open(page).read()
+    if 'window.BDW_ANNUAL=' in content:
+        # Page « toute l'année » du moteur (generate_moteur_mois.py)
+        try:
+            _cfg = json.loads(content.split('window.BDW_ANNUAL=', 1)[1].split(';</script>', 1)[0])
+            assert _cfg.get('state') and _cfg.get('i18n') and _cfg.get('data')
+        except Exception as _e:
+            err(f"Page annuelle {page}: configuration illisible ({_e})")
+            continue
+        if '/js/annual-engine.js' not in content:
+            err(f"Page annuelle {page}: script js/annual-engine.js absent")
+        _n_rows = content.count('class="me-item ma-item"')
+        if _n_rows < 10:
+            err(f"Page annuelle {page}: classement absent du HTML ({_n_rows} lignes)")
+        else:
+            ok(f"Page annuelle {page}: {_n_rows} lignes écrites dans le HTML, configuration valide")
+        continue
     if 'window.BDW_ENGINE=' in content:
         # Page « Où partir en [mois] » du moteur par dates (generate_moteur_mois.py)
         try:

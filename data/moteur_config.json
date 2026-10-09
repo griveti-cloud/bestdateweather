@@ -1,5 +1,5 @@
 {
-  "_doc": "Pages « Où partir en [mois] » produites par generate_moteur_mois.py (moteur par dates) au lieu de generate_piliers.py. Mois de 1 à 12.",
+  "_doc": "Pages « Où partir en [mois] » (mois 1 à 12) et page « toute l'année » (annee) produites par generate_moteur_mois.py au lieu de generate_piliers.py.",
   "mois": [
     1,
     2,
@@ -17,5 +17,6 @@
   "langues": [
     "fr",
     "en"
-  ]
+  ],
+  "annee": true
 }
