@@ -58,6 +58,6 @@ ERA5, recalibrée sur les normales de 318 stations pour les jours de pluie),
 et calcule pour n'importe quelle date le nombre d'années sur dix où il n'a
 pas plu.
 
-Données complètes réutilisables (licence CC BY 4.0) : [lien data.gouv.fr à ajouter].
+Données complètes réutilisables (licence CC BY 4.0) : https://www.data.gouv.fr/datasets/climat-de-voyage-normales-mensuelles-et-score-pour-730-destinations-dans-le-monde.
 
 Contact presse : contact@bestdateweather.com

@@ -97,6 +97,8 @@ CC BY 4.0. Réutilisation libre, y compris commerciale, à condition de citer :
 « Source : BestDateWeather (bestdateweather.com), d'après ERA5 / Copernicus et Open-Meteo »
 avec un lien vers https://bestdateweather.com
 
+Page du jeu de données : https://www.data.gouv.fr/datasets/climat-de-voyage-normales-mensuelles-et-score-pour-730-destinations-dans-le-monde
+
 Contact : contact@bestdateweather.com
 """
     open(os.path.join(out_dir, 'LISEZMOI.md'), 'w', encoding='utf-8').write(readme)

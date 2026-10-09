@@ -1,6 +1,6 @@
 # Messages prêts à envoyer
 
-Remplacer les éléments entre accolades. Un message = un destinataire, toujours
+Remplacer les éléments entre accolades. {lien_datagouv} = https://www.data.gouv.fr/datasets/climat-de-voyage-normales-mensuelles-et-score-pour-730-destinations-dans-le-monde Un message = un destinataire, toujours
 personnalisé (citer un de ses articles). Jamais d'envoi groupé.
 
 ## 1. Presse locale (Chatou magazine, édition Yvelines d'actu.fr, Le Parisien 78)
@@ -40,7 +40,8 @@ stations météo (1991-2020) pour les destinations à moins de 4 000 km de Paris
 - Madère compte deux fois plus de jours de pluie que les Canaries en décembre
   (8,6 contre 4 à 5).
 
-Le tableau complet et la méthode sont joints ; les données sont réutilisables.
+Le tableau complet et la méthode sont joints ; les données sont réutilisables
+(licence ouverte, publiées sur data.gouv.fr : {lien_datagouv}).
 Je peux aussi calculer un classement sur mesure (budget, durée de vol,
 famille…) pour votre article.
 

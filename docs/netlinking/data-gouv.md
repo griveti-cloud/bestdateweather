@@ -1,5 +1,9 @@
 # Dépôt sur data.gouv.fr : fiche à copier-coller
 
+**Publié le 9 octobre 2026** : https://www.data.gouv.fr/datasets/climat-de-voyage-normales-mensuelles-et-score-pour-730-destinations-dans-le-monde
+(identifiant 6ac897f8ad8f0ae1f822a81d, qualité des métadonnées 100 %, fréquence annuelle :
+prochaine version avec l'année 2026 complète, à publier en janvier ou février 2027).
+
 ## Étape 1 : compte
 
 En haut à droite : **S'enregistrer**. Confirmer l'adresse e-mail reçue.
