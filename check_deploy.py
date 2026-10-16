@@ -457,15 +457,18 @@ except Exception as _e:
 
 # 12e. Plan B : aucune date de fraîcheur artificielle
 try:
-    from lib.page_config import DATA_UPDATED as _DU
-    _sample = ['meilleure-periode-paris.html', 'en/best-time-to-visit-paris.html']
-    for _pg in _sample:
+    from lib.page_config import date_modified_for as _dmf
+    # (page, slug_fr, suffixe) : annuelle avec « Semaine par semaine », mensuelle, annuelle sans données hebdo
+    _sample = [('meilleure-periode-paris.html', 'paris', ''), ('en/best-time-to-visit-paris.html', 'paris', ''),
+               ('paris-meteo-juillet.html', 'paris', '6'), ('meilleure-periode-ndjamena.html', 'ndjamena', '')]
+    for _pg, _sl, _sx in _sample:
         if os.path.exists(_pg):
             _c = open(_pg, encoding='utf-8').read()
             _dm = re.findall(r'"dateModified":\s*"([0-9-]+)"', _c)
-            if _dm and any(d != _DU for d in _dm):
-                err(f"{_pg}: dateModified {_dm} ≠ data_version.json ({_DU})")
-    ok("dateModified alignée sur data/data_version.json")
+            _want = _dmf(_sl, _sx)
+            if _dm and any(d != _want for d in _dm):
+                err(f"{_pg}: dateModified {_dm} ≠ date réelle attendue ({_want}, data/data_version.json)")
+    ok("dateModified alignée sur data/data_version.json (par type de page)")
 except Exception as _e:
     warn(f"Contrôle dateModified impossible : {_e}")
 

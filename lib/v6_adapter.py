@@ -1222,13 +1222,15 @@ def _build_faq_items(cfg: dict, dest: dict, months: list, scores: list,
 
 def _build_json_ld_blocks(cfg: dict, dest: dict, slug: str, nom: str,
                           page_title: str, page_desc: str, canonical_url: str,
-                          faq_items: list[dict]) -> list[str]:
-    """Construit les blocks JSON-LD (Article + FAQPage) en strings prêtes."""
+                          faq_items: list[dict], date_suffix: str = '') -> list[str]:
+    """Construit les blocks JSON-LD (Article + FAQPage) en strings prêtes.
+    date_suffix : '' pour la page annuelle, numéro du mois pour une page mensuelle
+    (dateModified propre à chaque type de page, cf. page_config.date_modified_for)."""
     import json as _json
     from lib.page_config import date_modified_for
 
     slug_fr = dest.get('slug_fr', slug)
-    date_mod = date_modified_for(slug_fr) or '2026-04-01'
+    date_mod = date_modified_for(slug_fr, date_suffix) or '2026-04-01'
     in_lang = cfg.get('in_language', cfg['lang'])
 
     article = {
@@ -1727,7 +1729,7 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
     monthly_json_ld = _build_json_ld_blocks(
         cfg=cfg, dest=dest, slug=slug, nom=nom,
         page_title=page_title, page_desc=page_desc,
-        canonical_url=canonical, faq_items=faq_items,
+        canonical_url=canonical, faq_items=faq_items, date_suffix=str(mi),
     )
     # _build_json_ld_blocks ajoute un BreadcrumbList 2-niveaux (Accueil > Destination)
     # qui pointerait la page mensuelle comme "Destination". On le retire pour le

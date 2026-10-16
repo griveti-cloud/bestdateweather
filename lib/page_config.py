@@ -67,13 +67,26 @@ MONTH_URL_FR = ['janvier','fevrier','mars','avril','mai','juin',
                 'juillet','aout','septembre','octobre','novembre','decembre']
 
 
+# Section « Semaine par semaine » publiée sur les pages annuelles des
+# destinations qui ont data/weekly/{slug}.json : seules ces pages changent.
+WEEKLY_PUBLISHED = DATA_VERSION.get('contenu_modifie_semaines')
+
+
+def has_weekly(slug):
+    return os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'weekly', f'{slug}.json'))
+
+
 def date_modified_for(slug, suffix=''):
     """dateModified réel : date de la dernière modification du contenu.
 
     Plan B (octobre 2026) : l'ancien étalement artificiel sur 30 jours avant
-    la date du build est supprimé. Une seule date vraie pour toutes les pages
-    générées ensemble (data/data_version.json).
+    la date du build est supprimé. Une date vraie par type de page
+    (data/data_version.json) : contenu_modifie pour toutes, sauf les pages
+    annuelles (suffix vide) qui ont reçu la section « Semaine par semaine »
+    (contenu_modifie_semaines). Les pages mensuelles ne changent pas.
     """
+    if WEEKLY_PUBLISHED and not suffix and has_weekly(slug):
+        return max(DATA_UPDATED, WEEKLY_PUBLISHED)
     return DATA_UPDATED
 
 
