@@ -569,11 +569,15 @@ def test_v6_helpers():
           'class="dest-map-row"' in loc_section and 'data-lat="45.9200"' in loc_section,
           "map container missing")
 
-    reserve = render_v6_reserver('chamonix', 'fr', 'Chamonix')
+    reserve = render_v6_reserver('chamonix', 'fr', 'Chamonix', slug_fr='chamonix')
+    # Formats suivis (audit monétisation du 9 oct. 2026, lib/affiliates.py)
     check("reserver/fr: 3 affiliate CTAs",
-          reserve.count('getyourguide.com') >= 2
-          and 'expedia.fr' in reserve,
-          "affiliate links missing")
+          reserve.count('class="plan-card"') == 3
+          and 'expedia.com/affiliate?siteid=' in reserve and 'expedia.fr' in reserve
+          and 'c111.travelpayouts.com/click?shmarker=708106' in reserve
+          and 'data-gyg-location-id=' in reserve and 'partner_id=2MQKL00' in reserve
+          and 'kiwi.com/deep?affilid=' not in reserve and 'data-gyg-q=' not in reserve,
+          "affiliate links missing or in an untracked format")
 
     # 10. Full page orchestrator
     from lib.v6 import render_v6_full_page
