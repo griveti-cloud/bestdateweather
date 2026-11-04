@@ -2257,16 +2257,15 @@ def render_v6_localisation(slug: str, lang: str, nom: str,
 
 
 def render_v6_reserver(slug: str, lang: str, dest_name: str,
-                       gyg_partner: str = '2MQKL00',
-                       travelpayouts_marker: str = '708106',
-                       expedia_camref: str = '1110lB57J') -> str:
-    """Section "Réserver" / "Planifier votre séjour" : 3 plan-cards riches +
-    widget GetYourGuide embarqué (aligné prototype paris-v6.html).
+                       slug_fr: str = '', kind: str = 'annual') -> str:
+    """Section "Réserver" / "Planifier votre séjour" : plan-cards (Hébergement /
+    Activités / Vols) + widget GetYourGuide ancré sur un lieu précis.
 
-    Reproduit la structure du prototype:
-    - 3 plan-cards avec icon + title + sub + cta (Hébergement / Activités / Vols)
-    - Bloc Activités GYG (id=#activites) avec widget GetYourGuide 3 items
+    Liens construits par lib/affiliates.py (formats vérifiés le 9 oct. 2026).
+    kind = 'annual' | 'monthly' : sous-identifiant de suivi chez les partenaires.
+    Pas de lieu GetYourGuide pertinent → ni carte Activités ni widget.
     """
+    from lib import affiliates as AFF
     # i18n labels
     RESERVER_I18N = {
         'fr':    {'kicker': 'Réserver', 'title': 'Planifier votre séjour',
@@ -2331,15 +2330,60 @@ def render_v6_reserver(slug: str, lang: str, dest_name: str,
                   },
     }
     L = RESERVER_I18N.get(lang, RESERVER_I18N['fr'])
-    nom_q = h(dest_name)
 
-    # URLs affiliés
-    expedia_url = (f'https://www.{L["expedia_domain"]}/Hotel-Search?destination={nom_q}'
-                   f'&camref={expedia_camref}')
-    kiwi_url = f'https://www.kiwi.com/deep?affilid={travelpayouts_marker}&to={nom_q}&lang={lang[:2]}'
-    gyg_search_url = (f'https://www.getyourguide.com/s/?q={nom_q}'
-                      f'&partner_id={gyg_partner}&locale={L["gyg_locale"]}')
-    gyg_widget_q = f'{nom_q}'  # GYG widget query
+    # URLs affiliés (source unique : lib/affiliates.py)
+    d = AFF.dest(slug_fr) or AFF.dest(slug)
+    expedia_url = AFF.expedia_url(lang, d) if d else None
+    kiwi_url = AFF.kiwi_url(lang, d, kind) if d else None
+    gyg = AFF.gyg(lang, d, kind) if d else None
+    name = dest_name  # texte brut : échappé une seule fois par h()
+
+    def card(href, icon, title, sub, cta, ext=True):
+        attrs = ' target="_blank" rel="sponsored noopener"' if ext else ''
+        return (f'''        <a href="{h(href)}"{attrs} class="plan-card">
+          <div class="plan-icon">{icon}</div>
+          <div class="plan-body">
+            <div class="plan-title">{h(title)}</div>
+            <div class="plan-sub">{h(sub)}</div>
+          </div>
+          <div class="plan-cta">{h(cta)}</div>
+        </a>
+''')
+
+    cards = ''
+    if expedia_url:
+        cards += card(expedia_url, '🏨', L['plan_hotel_title'], L['plan_hotel_sub'].format(dest=name), L['expedia_cta'])
+    if gyg and gyg['mode'] == 'location':
+        cards += card('#activites', '🎟️', L['plan_activity_title'], L['plan_activity_sub'], L['plan_see'], ext=False)
+    elif gyg:
+        cards += card(gyg['url'], '🎟️', L['plan_activity_title'], L['plan_activity_sub'], 'GetYourGuide →')
+    if kiwi_url:
+        cards += card(kiwi_url, '✈️', L['plan_flight_title'], L['plan_flight_sub'], L['kiwi_cta'])
+    n_cards = cards.count('class="plan-card"')
+    if not n_cards:
+        return ''
+    grid = 'grid-3' if n_cards >= 3 else ('grid-2' if n_cards == 2 else '')
+
+    widget = ''
+    if gyg and gyg['mode'] == 'location':
+        widget = f'''
+      <div id="activites" class="card pad" style="margin-top:20px;scroll-margin-top:120px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap">
+          <div>
+            <h3 style="margin:0 0 4px">{h(L['gyg_h3'].format(dest=name))}</h3>
+            <p style="margin:0;color:var(--muted);font-size:.9rem">{h(L['gyg_sub'])}</p>
+          </div>
+          <a class="btn primary" style="padding:10px 18px" href="{h(gyg['url'])}" target="_blank" rel="sponsored noopener">{h(L['gyg_see_all'])}</a>
+        </div>
+        <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+             data-gyg-locale-code="{h(AFF.GYG_LOCALE.get(lang, 'en-US'))}"
+             data-gyg-widget="activities"
+             data-gyg-number-of-items="3"
+             data-gyg-partner-id="{h(AFF.GYG_PARTNER_ID)}"
+             data-gyg-location-id="{gyg['location_id']}">
+        </div>
+        <span class="affil-note" style="text-align:right;display:block;margin-top:10px;font-size:11px;color:var(--muted)">{h(L['affil_note'])}</span>
+      </div>'''
 
     return f'''  <section id="planifier" style="scroll-margin-top:120px">
     <div class="container">
@@ -2348,50 +2392,8 @@ def render_v6_reserver(slug: str, lang: str, dest_name: str,
         <h2>{h(L['title'])}</h2>
         <p class="lead">{h(L['lead'])}</p>
       </div>
-      <div class="grid-3 plan-row">
-        <a href="{h(expedia_url)}" target="_blank" rel="sponsored noopener" class="plan-card">
-          <div class="plan-icon">🏨</div>
-          <div class="plan-body">
-            <div class="plan-title">{h(L['plan_hotel_title'])}</div>
-            <div class="plan-sub">{h(L['plan_hotel_sub'].format(dest=nom_q))}</div>
-          </div>
-          <div class="plan-cta">{h(L['expedia_cta'])}</div>
-        </a>
-        <a href="#activites" class="plan-card">
-          <div class="plan-icon">🎟️</div>
-          <div class="plan-body">
-            <div class="plan-title">{h(L['plan_activity_title'])}</div>
-            <div class="plan-sub">{h(L['plan_activity_sub'])}</div>
-          </div>
-          <div class="plan-cta">{h(L['plan_see'])}</div>
-        </a>
-        <a href="{h(kiwi_url)}" target="_blank" rel="sponsored noopener" class="plan-card">
-          <div class="plan-icon">✈️</div>
-          <div class="plan-body">
-            <div class="plan-title">{h(L['plan_flight_title'])}</div>
-            <div class="plan-sub">{h(L['plan_flight_sub'])}</div>
-          </div>
-          <div class="plan-cta">{h(L['kiwi_cta'])}</div>
-        </a>
-      </div>
-
-      <div id="activites" class="card pad" style="margin-top:20px;scroll-margin-top:120px">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap">
-          <div>
-            <h3 style="margin:0 0 4px">{h(L['gyg_h3'].format(dest=nom_q))}</h3>
-            <p style="margin:0;color:var(--muted);font-size:.9rem">{h(L['gyg_sub'])}</p>
-          </div>
-          <a class="btn primary" style="padding:10px 18px" href="{h(gyg_search_url)}" target="_blank" rel="sponsored noopener">{h(L['gyg_see_all'])}</a>
-        </div>
-        <div data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
-             data-gyg-locale-code="{h(L['gyg_locale'])}"
-             data-gyg-widget="activities"
-             data-gyg-number-of-items="3"
-             data-gyg-partner-id="{h(gyg_partner)}"
-             data-gyg-q="{h(gyg_widget_q)}">
-        </div>
-        <span class="affil-note" style="text-align:right;display:block;margin-top:10px;font-size:11px;color:var(--muted)">{h(L['affil_note'])}</span>
-      </div>
+      <div class="{grid} plan-row">
+{cards}      </div>{widget}
     </div>
   </section>'''
 
@@ -2655,7 +2657,7 @@ def render_v6_full_page(page_data: dict) -> str:
 
     adapter = render_v6_adapter(slug, lang, profile=d.get('profile', 'city'))
 
-    reserver = render_v6_reserver(slug, lang, d['dest_name'])
+    reserver = render_v6_reserver(slug, lang, d['dest_name'], slug_fr=d.get('slug_fr') or slug, kind='annual')
 
     infos = render_v6_infos_pratiques(slug, lang, d['infos_pratiques_data'], asset_prefix=asset_prefix)
 
