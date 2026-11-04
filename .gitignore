@@ -18,3 +18,4 @@ data/*_backup*.csv
 *.env
 email_preview_*.html
 data/gyg_locations_log.json
+out/

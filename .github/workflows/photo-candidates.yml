@@ -1,0 +1,88 @@
+name: Photos, candidats Unsplash
+
+# Lancement manuel uniquement. Recherche des photos candidates pour un lot de
+# destinations (data/photo_queries.json) avec la clé Unsplash rangée en secret
+# (UNSPLASH_KEY), sans jamais l'exposer. Les résultats sont poussés sur la
+# branche donnees/photo-candidats : un push fait avec GITHUB_TOKEN ne déclenche
+# aucun autre flux (ni déploiement, ni CI).
+on:
+  workflow_dispatch:
+    inputs:
+      lot:
+        description: 'Numéro de lot (data/photo_queries.json)'
+        required: false
+        default: ''
+      only:
+        description: 'Ou liste de slugs séparés par des virgules'
+        required: false
+        default: ''
+      track:
+        description: 'Identifiants Unsplash des photos retenues, à signaler (règle API)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: photo-candidates
+  cancel-in-progress: false
+
+jobs:
+  candidates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 200
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Récupérer les candidats déjà trouvés
+        run: |
+          if git ls-remote --exit-code origin donnees/photo-candidats >/dev/null 2>&1; then
+            git fetch --depth 1 origin donnees/photo-candidats
+            mkdir -p out/photo_candidates
+            git archive FETCH_HEAD photo_candidates | tar -x -C out
+          fi
+
+      - name: Recherche ou signalement
+        env:
+          UNSPLASH_KEY: ${{ secrets.UNSPLASH_KEY }}
+          LOT: ${{ inputs.lot }}
+          ONLY: ${{ inputs.only }}
+          TRACK: ${{ inputs.track }}
+        run: |
+          if [ -n "$TRACK" ]; then
+            python3 scripts/photo_candidates.py --track "$TRACK"
+          elif [ -n "$LOT" ]; then
+            python3 scripts/photo_candidates.py --lot "$LOT"
+          elif [ -n "$ONLY" ]; then
+            python3 scripts/photo_candidates.py --only "$ONLY"
+          else
+            echo "Préciser lot, only ou track"; exit 1
+          fi
+
+      - name: Pousser les résultats sur donnees/photo-candidats
+        if: ${{ inputs.track == '' }}
+        run: |
+          set -e
+          rm -rf /tmp/pc && mkdir -p /tmp/pc/photo_candidates
+          cp out/photo_candidates/*.json /tmp/pc/photo_candidates/
+          cd /tmp/pc
+          git init -q -b donnees/photo-candidats
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add photo_candidates
+          git commit -q -m "Candidats photo ${LOT}${ONLY}"
+          git push -q --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" donnees/photo-candidats
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOT: ${{ inputs.lot }}
+          ONLY: ${{ inputs.only }}
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ inputs.track == '' }}
+        with:
+          name: photo-candidats
+          path: out/photo_candidates
+          retention-days: 30
