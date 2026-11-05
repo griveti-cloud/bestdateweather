@@ -40,6 +40,20 @@ def path_of(url):
     return urllib.parse.urlparse(url).path.lstrip('/')
 
 
+UTM = 'utm_source=bestdateweather&utm_medium=referral'   # règle d'attribution de l'API Unsplash
+
+
+def utm(url):
+    return url if not url or 'utm_source=' in url else url + ('&' if '?' in url else '?') + UTM
+
+
+def new_photo_url(c):
+    """Même forme que les lignes existantes : identifiant de suivi (ixid) fourni par l'API conservé."""
+    q = dict(urllib.parse.parse_qsl(urllib.parse.urlparse(c.get('thumb', '')).query))
+    pre = f"ixid={q['ixid']}&ixlib={q.get('ixlib', 'rb-4.1.0')}&" if q.get('ixid') else ''
+    return f'https://images.unsplash.com/{c["path"]}?{pre}w=1400&q=85&fm=jpg&fit=crop&crop=entropy'
+
+
 def credit_html(name, url):
     return f'<a href="{url}" target="_blank" rel="noopener nofollow">{name}</a> via Unsplash'
 
@@ -94,7 +108,10 @@ def main():
         old_name = (old or {}).get('photo_credit_name', '').replace(' via Unsplash', '').replace(' via unsplash', '')
         old_credit = credit_html(old_name, (old or {}).get('photo_credit_url', '')) if old else ''
         new_name = H.escape(c['user_name'], quote=False)
-        new_credit = credit_html(new_name, c['user_url'])
+        new_credit = credit_html(new_name, utm(c['user_url']))
+        new_url = new_photo_url(c)
+        old_esc = H.escape(old['photo_url'], quote=False) if old else ''
+        new_esc = H.escape(new_url, quote=False)
         owned, hub_files, n_hero, n_cards = set(), set(), 0, 0
         hits = files_with(old_path) if old_path else []
         for l, loc in locs.items():
@@ -108,8 +125,11 @@ def main():
                     continue
                 owned.add(f)
                 t = get(f)
-                t2 = t.replace(f'images.unsplash.com/{old_path}?w=1400', f'images.unsplash.com/{c["path"]}?w=1400') if old_path else t
-                n_hero += t.count(f'images.unsplash.com/{old_path}?w=1400') if old_path else 0
+                k = t.count(old_esc) if old_esc else 0
+                t2 = t.replace(old_esc, new_esc) if k else t
+                n_hero += k
+                if old_path and old_path in t2:
+                    print(f'  ⚠️ {f.relative_to(ROOT)} : ancienne photo encore présente sous une autre forme')
                 if old_credit and old_credit in t2:
                     t2 = t2.replace(old_credit, new_credit)
                 if t2 != t:
@@ -132,10 +152,10 @@ def main():
         report.append((slug, len([f for f in owned if f in edits]), n_hero, len(hub_files), n_cards))
         row = by_slug.setdefault(slug, {k: '' for k in fields} | {'slug_fr': slug})
         row.update({
-            'photo_url': f'https://images.unsplash.com/{c["path"]}?w=1400&q=85&fm=jpg&fit=crop&crop=entropy',
+            'photo_url': new_url,
             'photo_credit_name': f'{c["user_name"]} via Unsplash',
-            'photo_credit_url': c['user_url'],
-            'photo_page_url': c['page_url'],
+            'photo_credit_url': utm(c['user_url']),
+            'photo_page_url': utm(c['page_url']),
             'photo_verifie_le': today,
         })
 

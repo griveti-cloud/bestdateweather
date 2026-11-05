@@ -1,0 +1,183 @@
+{
+ "_doc": "Photos retenues après choix visuel sur planche (scripts/photo_sheets.py). Appliquées par scripts/apply_photo_choice.py.",
+ "los-angeles": {
+  "id": "u5ul0b-59-k",
+  "path": "photo-1620135791944-e05e9f8f2f2a",
+  "user_name": "Linda Pomerantz Zhang",
+  "user_url": "https://unsplash.com/@lindapz",
+  "page_url": "https://unsplash.com/photos/city-skyline-under-blue-sky-during-daytime-u5ul0b-59-k",
+  "query": "los angeles skyline",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "la-palma": {
+  "id": "IHyLPT-RxYI",
+  "path": "photo-1622315513561-3700c51ac236",
+  "user_name": "Miguel Ángel Sanz",
+  "user_url": "https://unsplash.com/@maswdl95",
+  "page_url": "https://unsplash.com/photos/brown-and-gray-mountain-under-blue-sky-during-daytime-IHyLPT-RxYI",
+  "query": "la palma canary islands",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "tokyo": {
+  "id": "DGsqL2j028E",
+  "path": "photo-1547448526-5e9d57fa28f7",
+  "user_name": "Timo Volz",
+  "user_url": "https://unsplash.com/@magict1911",
+  "page_url": "https://unsplash.com/photos/shibuya-scramble-intersection-in-tokyo-DGsqL2j028E",
+  "query": "tokyo shibuya crossing",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "munich": {
+  "id": "695xMQ3ju_E",
+  "path": "photo-1692726781437-bd6e202894b9",
+  "user_name": "Daniel Schmidt",
+  "user_url": "https://unsplash.com/@donaucopter",
+  "page_url": "https://unsplash.com/photos/a-view-of-a-city-from-a-high-point-of-view-695xMQ3ju_E",
+  "query": "munich marienplatz",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "milan": {
+  "id": "GgZYrcbv5Jc",
+  "path": "photo-1667020938802-2a2394842adf",
+  "user_name": "Michael Heise",
+  "user_url": "https://unsplash.com/@momheise",
+  "page_url": "https://unsplash.com/photos/a-large-building-with-a-courtyard-and-trees-in-front-of-it-GgZYrcbv5Jc",
+  "query": "milan duomo",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "verone": {
+  "id": "QFRI0atDhKw",
+  "path": "photo-1684428488172-bfbd6b630a6e",
+  "user_name": "Laércio Milani",
+  "user_url": "https://unsplash.com/@laerciomilani",
+  "page_url": "https://unsplash.com/photos/a-crowd-of-people-walking-around-a-stone-building-QFRI0atDhKw",
+  "query": "verona arena",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "vancouver": {
+  "id": "rEDvog99iro",
+  "path": "photo-1730661906876-18bfc6e95f2f",
+  "user_name": "Luke Lawreszuk",
+  "user_url": "https://unsplash.com/@lukel",
+  "page_url": "https://unsplash.com/photos/a-view-of-a-city-with-mountains-in-the-background-rEDvog99iro",
+  "query": "vancouver skyline",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "dublin": {
+  "id": "blDB0HbjB1k",
+  "path": "photo-1663509851482-56ffbd1cf076",
+  "user_name": "Sophie Popplewell",
+  "user_url": "https://unsplash.com/@sophiepopp",
+  "page_url": "https://unsplash.com/photos/a-bridge-over-a-river-blDB0HbjB1k",
+  "query": "dublin ha'penny bridge",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "copenhague": {
+  "id": "rgoK-w86-RI",
+  "path": "photo-1761408631616-28be60406669",
+  "user_name": "Bob Jenkin",
+  "user_url": "https://unsplash.com/@bobj245",
+  "page_url": "https://unsplash.com/photos/colorful-buildings-line-a-harbor-with-boats-rgoK-w86-RI",
+  "query": "copenhagen nyhavn",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "bruxelles": {
+  "id": "7xMJYm-NxyA",
+  "path": "photo-1588023269387-596642593881",
+  "user_name": "Tomas Tuma",
+  "user_url": "https://unsplash.com/@tomastuma",
+  "page_url": "https://unsplash.com/photos/people-walking-on-street-near-white-concrete-building-during-daytime-7xMJYm-NxyA",
+  "query": "brussels grand place",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "buenos-aires": {
+  "id": "x-gFOWn7xAk",
+  "path": "photo-1737141742481-08294fba93f8",
+  "user_name": "Juan Pablo Mascanfroni",
+  "user_url": "https://unsplash.com/@juanmascan1978",
+  "page_url": "https://unsplash.com/photos/an-aerial-view-of-a-city-with-tall-buildings-x-gFOWn7xAk",
+  "query": "buenos aires obelisco",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "bologne": {
+  "id": "SXk8BWKvoXE",
+  "path": "photo-1635469019177-7264fc1e013c",
+  "user_name": "Petr Slováček",
+  "user_url": "https://unsplash.com/@grwood",
+  "page_url": "https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-SXk8BWKvoXE",
+  "query": "bologna towers",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "bucarest": {
+  "id": "lwqOS1Lkyhc",
+  "path": "photo-1586808538936-5b921bbe92d9",
+  "user_name": "Aidan Joyce",
+  "user_url": "https://unsplash.com/@aidanjoyce",
+  "page_url": "https://unsplash.com/photos/a-large-white-building-with-a-dome-on-top-of-it-lwqOS1Lkyhc",
+  "query": "romanian athenaeum bucharest",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "abu-dhabi": {
+  "id": "sfMW7-4NI-o",
+  "path": "photo-1612207644086-243779ab1013",
+  "user_name": "Nick Fewings",
+  "user_url": "https://unsplash.com/@jannerboy62",
+  "page_url": "https://unsplash.com/photos/white-and-brown-dome-building-under-blue-sky-during-daytime-sfMW7-4NI-o",
+  "query": "sheikh zayed grand mosque",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "sofia": {
+  "id": "1Q5tFFkxz2o",
+  "path": "photo-1676238753477-993e31d1067a",
+  "user_name": "Nia Mi",
+  "user_url": "https://unsplash.com/@niami",
+  "page_url": "https://unsplash.com/photos/a-large-white-building-with-a-green-roof-1Q5tFFkxz2o",
+  "query": "sofia bulgaria",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "zagreb": {
+  "id": "ViD03Xbj6lQ",
+  "path": "photo-1571273604100-c12def587674",
+  "user_name": "Mat Scott",
+  "user_url": "https://unsplash.com/@mcsscotty",
+  "page_url": "https://unsplash.com/photos/buildings-during-day-ViD03Xbj6lQ",
+  "query": "zagreb cathedral",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "mexico": {
+  "id": "0GI6MJNeKwg",
+  "path": "photo-1567191008248-38a590e10115",
+  "user_name": "Daniel Garcia",
+  "user_url": "https://unsplash.com/@dangrcia",
+  "page_url": "https://unsplash.com/photos/aerial-photo-of-people-walking-near-white-concrete-dome-building-during-daytime-0GI6MJNeKwg",
+  "query": "mexico city palacio de bellas artes",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ },
+ "portland": {
+  "id": "w1X8gY5dcH4",
+  "path": "photo-1603312504738-3dd0fdaff23b",
+  "user_name": "Trang Nguyen",
+  "user_url": "https://unsplash.com/@trangpdx",
+  "page_url": "https://unsplash.com/photos/aerial-view-of-city-buildings-during-daytime-w1X8gY5dcH4",
+  "query": "portland oregon skyline",
+  "lot": 1,
+  "choisi_le": "2026-11-05"
+ }
+}
