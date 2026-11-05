@@ -87,12 +87,17 @@
    "les-gets",
    "lucerne",
    "darwin"
+  ],
+  "6": [
+   "abidjan",
+   "saint-pierre-et-miquelon"
   ]
  },
  "queries": {
   "abidjan": [
-   "abidjan plateau skyline",
-   "abidjan cote d ivoire"
+   "abidjan plateau",
+   "abidjan lagune ebrie",
+   "abidjan skyline"
   ],
   "abu-dhabi": [
    "sheikh zayed grand mosque",
@@ -336,8 +341,9 @@
    "saint lucia pitons"
   ],
   "saint-pierre-et-miquelon": [
-   "saint-pierre et miquelon",
-   "saint pierre miquelon harbour"
+   "saint-pierre miquelon",
+   "ile aux marins",
+   "miquelon langlade"
   ],
   "shimla": [
    "shimla mall road",
