@@ -699,7 +699,8 @@
   "lot": 4,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1624805539790-5baa0b8c66a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bW91bnQlMjBtZXJ1JTIwYXJ1c2hhfGVufDF8MHx8fDE3OTM4Nzg2MTV8MA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/_21baKUW_cw/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bW91bnQlMjBtZXJ1JTIwYXJ1c2hhfGVufDF8MHx8fDE3OTM4Nzg2MTV8MA"
+  "download_location": "https://api.unsplash.com/photos/_21baKUW_cw/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bW91bnQlMjBtZXJ1JTIwYXJ1c2hhfGVufDF8MHx8fDE3OTM4Nzg2MTV8MA",
+  "signale_le": "2026-11-05"
  },
  "asuncion": {
   "id": "oDyNiheZ41U",
@@ -711,7 +712,8 @@
   "lot": 4,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1708007736300-89c16fa57b40?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8YXN1bmNpb24lMjBwYXJhZ3VheXxlbnwxfDB8fHwxNzkzODgyMjc3fDA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/oDyNiheZ41U/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8YXN1bmNpb24lMjBwYXJhZ3VheXxlbnwxfDB8fHwxNzkzODgyMjc3fDA"
+  "download_location": "https://api.unsplash.com/photos/oDyNiheZ41U/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8YXN1bmNpb24lMjBwYXJhZ3VheXxlbnwxfDB8fHwxNzkzODgyMjc3fDA",
+  "signale_le": "2026-11-05"
  },
  "dar-es-salaam": {
   "id": "y1bnAADWAqk",
@@ -723,7 +725,8 @@
   "lot": 4,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1654941348480-217757d5f933?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MjB8fGRhciUyMGVzJTIwc2FsYWFtJTIwc2t5bGluZXxlbnwxfDB8fHwxNzkzODgyMjc3fDA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/y1bnAADWAqk/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MjB8fGRhciUyMGVzJTIwc2FsYWFtJTIwc2t5bGluZXxlbnwxfDB8fHwxNzkzODgyMjc3fDA"
+  "download_location": "https://api.unsplash.com/photos/y1bnAADWAqk/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MjB8fGRhciUyMGVzJTIwc2FsYWFtJTIwc2t5bGluZXxlbnwxfDB8fHwxNzkzODgyMjc3fDA",
+  "signale_le": "2026-11-05"
  },
  "kampala": {
   "id": "KWHsl_llyvc",
@@ -735,7 +738,8 @@
   "lot": 4,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1777887544354-74a7248c8a74?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8M3x8a2FtcGFsYSUyMHVnYW5kYSUyMHNreWxpbmV8ZW58MXwwfHx8MTc5Mzg4MjI3OHww&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/KWHsl_llyvc/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8M3x8a2FtcGFsYSUyMHVnYW5kYSUyMHNreWxpbmV8ZW58MXwwfHx8MTc5Mzg4MjI3OHww"
+  "download_location": "https://api.unsplash.com/photos/KWHsl_llyvc/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8M3x8a2FtcGFsYSUyMHVnYW5kYSUyMHNreWxpbmV8ZW58MXwwfHx8MTc5Mzg4MjI3OHww",
+  "signale_le": "2026-11-05"
  },
  "lagos": {
   "id": "EMjpo0YjHPw",
@@ -747,7 +751,8 @@
   "lot": 4,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1765475467677-579353b25ce0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8Mnx8bGFnb3MlMjBuaWdlcmlhJTIwbGVra2klMjBicmlkZ2V8ZW58MXwwfHx8MTc5Mzg4MjI3OXww&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/EMjpo0YjHPw/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8Mnx8bGFnb3MlMjBuaWdlcmlhJTIwbGVra2klMjBicmlkZ2V8ZW58MXwwfHx8MTc5Mzg4MjI3OXww"
+  "download_location": "https://api.unsplash.com/photos/EMjpo0YjHPw/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8Mnx8bGFnb3MlMjBuaWdlcmlhJTIwbGVra2klMjBicmlkZ2V8ZW58MXwwfHx8MTc5Mzg4MjI3OXww",
+  "signale_le": "2026-11-05"
  },
  "algarve": {
   "id": "8_27YFMZL_I",
@@ -759,7 +764,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1764077300185-266de56de8fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MTJ8fHByYWlhJTIwZGElMjBtYXJpbmhhJTIwYWxnYXJ2ZXxlbnwxfDB8fHwxNzkzODgyMzMwfDA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/8_27YFMZL_I/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MTJ8fHByYWlhJTIwZGElMjBtYXJpbmhhJTIwYWxnYXJ2ZXxlbnwxfDB8fHwxNzkzODgyMzMwfDA"
+  "download_location": "https://api.unsplash.com/photos/8_27YFMZL_I/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MTJ8fHByYWlhJTIwZGElMjBtYXJpbmhhJTIwYWxnYXJ2ZXxlbnwxfDB8fHwxNzkzODgyMzMwfDA",
+  "signale_le": "2026-11-05"
  },
  "hvar": {
   "id": "qDypb22_h9Y",
@@ -771,7 +777,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1761382799659-725f824955ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MTJ8fGh2YXIlMjB0b3duJTIwaGFyYm91cnxlbnwxfDB8fHwxNzkzODgyMzMwfDA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/qDypb22_h9Y/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MTJ8fGh2YXIlMjB0b3duJTIwaGFyYm91cnxlbnwxfDB8fHwxNzkzODgyMzMwfDA"
+  "download_location": "https://api.unsplash.com/photos/qDypb22_h9Y/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MTJ8fGh2YXIlMjB0b3duJTIwaGFyYm91cnxlbnwxfDB8fHwxNzkzODgyMzMwfDA",
+  "signale_le": "2026-11-05"
  },
  "republique-dominicaine": {
   "id": "3cYfl1kXucE",
@@ -783,7 +790,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1716718279681-3917f8d942fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8Mnx8c2FudG8lMjBkb21pbmdvJTIwem9uYSUyMGNvbG9uaWFsfGVufDF8MHx8fDE3OTM4ODIzMzF8MA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/3cYfl1kXucE/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8Mnx8c2FudG8lMjBkb21pbmdvJTIwem9uYSUyMGNvbG9uaWFsfGVufDF8MHx8fDE3OTM4ODIzMzF8MA"
+  "download_location": "https://api.unsplash.com/photos/3cYfl1kXucE/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8Mnx8c2FudG8lMjBkb21pbmdvJTIwem9uYSUyMGNvbG9uaWFsfGVufDF8MHx8fDE3OTM4ODIzMzF8MA",
+  "signale_le": "2026-11-05"
  },
  "polynesie": {
   "id": "rfppBUhQz2Q",
@@ -795,7 +803,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1676405328043-85738f8473ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8ZnJlbmNoJTIwcG9seW5lc2lhJTIwbGFnb29uJTIwYWVyaWFsfGVufDF8MHx8fDE3OTM4ODIzMzF8MA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/rfppBUhQz2Q/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8ZnJlbmNoJTIwcG9seW5lc2lhJTIwbGFnb29uJTIwYWVyaWFsfGVufDF8MHx8fDE3OTM4ODIzMzF8MA"
+  "download_location": "https://api.unsplash.com/photos/rfppBUhQz2Q/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8ZnJlbmNoJTIwcG9seW5lc2lhJTIwbGFnb29uJTIwYWVyaWFsfGVufDF8MHx8fDE3OTM4ODIzMzF8MA",
+  "signale_le": "2026-11-05"
  },
  "formentera": {
   "id": "auJjVoR9AAs",
@@ -807,7 +816,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1661522213382-cc5cc1a0f4ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8OHx8Zm9ybWVudGVyYSUyMGJlYWNofGVufDF8MHx8fDE3OTM4ODIzMzJ8MA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/auJjVoR9AAs/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8OHx8Zm9ybWVudGVyYSUyMGJlYWNofGVufDF8MHx8fDE3OTM4ODIzMzJ8MA"
+  "download_location": "https://api.unsplash.com/photos/auJjVoR9AAs/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8OHx8Zm9ybWVudGVyYSUyMGJlYWNofGVufDF8MHx8fDE3OTM4ODIzMzJ8MA",
+  "signale_le": "2026-11-05"
  },
  "costa-brava": {
   "id": "cHOkA_U_CPM",
@@ -819,7 +829,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1600818767171-fde3f6e1d275?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MTh8fGNhbGVsbGElMjBkZSUyMHBhbGFmcnVnZWxsfGVufDF8MHx8fDE3OTM4ODIzMzJ8MA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/cHOkA_U_CPM/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MTh8fGNhbGVsbGElMjBkZSUyMHBhbGFmcnVnZWxsfGVufDF8MHx8fDE3OTM4ODIzMzJ8MA"
+  "download_location": "https://api.unsplash.com/photos/cHOkA_U_CPM/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MTh8fGNhbGVsbGElMjBkZSUyMHBhbGFmcnVnZWxsfGVufDF8MHx8fDE3OTM4ODIzMzJ8MA",
+  "signale_le": "2026-11-05"
  },
  "tahiti": {
   "id": "9ygbgGVvATU",
@@ -831,7 +842,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1664183237243-99bcc040d875?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8M3x8dGFoaXRpJTIwaXNsYW5kJTIwbW91bnRhaW5zfGVufDF8MHx8fDE3OTM4ODU5OTN8MA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/9ygbgGVvATU/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8M3x8dGFoaXRpJTIwaXNsYW5kJTIwbW91bnRhaW5zfGVufDF8MHx8fDE3OTM4ODU5OTN8MA"
+  "download_location": "https://api.unsplash.com/photos/9ygbgGVvATU/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8M3x8dGFoaXRpJTIwaXNsYW5kJTIwbW91bnRhaW5zfGVufDF8MHx8fDE3OTM4ODU5OTN8MA",
+  "signale_le": "2026-11-05"
  },
  "les-arcs": {
   "id": "ewZe5ZRZVVg",
@@ -843,7 +855,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1595687730598-6246a33f0910?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bGVzJTIwYXJjcyUyMHNraSUyMHJlc29ydHxlbnwxfDB8fHwxNzkzODg1OTk0fDA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/ewZe5ZRZVVg/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bGVzJTIwYXJjcyUyMHNraSUyMHJlc29ydHxlbnwxfDB8fHwxNzkzODg1OTk0fDA"
+  "download_location": "https://api.unsplash.com/photos/ewZe5ZRZVVg/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bGVzJTIwYXJjcyUyMHNraSUyMHJlc29ydHxlbnwxfDB8fHwxNzkzODg1OTk0fDA",
+  "signale_le": "2026-11-05"
  },
  "la-plagne": {
   "id": "8vNQ3Dptdgo",
@@ -855,7 +868,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1670113125827-a66e8a08f505?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MTZ8fGxhJTIwcGxhZ25lJTIwc2tpfGVufDF8MHx8fDE3OTM4ODU5OTV8MA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/8vNQ3Dptdgo/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MTZ8fGxhJTIwcGxhZ25lJTIwc2tpfGVufDF8MHx8fDE3OTM4ODU5OTV8MA"
+  "download_location": "https://api.unsplash.com/photos/8vNQ3Dptdgo/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MTZ8fGxhJTIwcGxhZ25lJTIwc2tpfGVufDF8MHx8fDE3OTM4ODU5OTV8MA",
+  "signale_le": "2026-11-05"
  },
  "les-deux-alpes": {
   "id": "9LEMR_tsZJM",
@@ -867,7 +881,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1477310405250-8113258ed5cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bGVzJTIwZGV1eCUyMGFscGVzfGVufDF8MHx8fDE3OTM4ODU5OTV8MA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/9LEMR_tsZJM/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bGVzJTIwZGV1eCUyMGFscGVzfGVufDF8MHx8fDE3OTM4ODU5OTV8MA"
+  "download_location": "https://api.unsplash.com/photos/9LEMR_tsZJM/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bGVzJTIwZGV1eCUyMGFscGVzfGVufDF8MHx8fDE3OTM4ODU5OTV8MA",
+  "signale_le": "2026-11-05"
  },
  "val-thorens": {
   "id": "ZrSSkXc9lGY",
@@ -879,7 +894,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1596888530825-411b761cb3b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8M3x8dmFsJTIwdGhvcmVuc3xlbnwxfDB8fHwxNzkzODg1OTk2fDA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/ZrSSkXc9lGY/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8M3x8dmFsJTIwdGhvcmVuc3xlbnwxfDB8fHwxNzkzODg1OTk2fDA"
+  "download_location": "https://api.unsplash.com/photos/ZrSSkXc9lGY/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8M3x8dmFsJTIwdGhvcmVuc3xlbnwxfDB8fHwxNzkzODg1OTk2fDA",
+  "signale_le": "2026-11-05"
  },
  "les-menuires": {
   "id": "F50ywNV63OE",
@@ -891,7 +907,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1530293246420-27ee2084d3d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8NXx8bGVzJTIwbWVudWlyZXN8ZW58MXwwfHx8MTc5Mzg4NTk5Nnww&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/F50ywNV63OE/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8NXx8bGVzJTIwbWVudWlyZXN8ZW58MXwwfHx8MTc5Mzg4NTk5Nnww"
+  "download_location": "https://api.unsplash.com/photos/F50ywNV63OE/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8NXx8bGVzJTIwbWVudWlyZXN8ZW58MXwwfHx8MTc5Mzg4NTk5Nnww",
+  "signale_le": "2026-11-05"
  },
  "la-clusaz": {
   "id": "Fsw3IORqz8w",
@@ -903,7 +920,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1579525006336-c8919e3dc770?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bGElMjBjbHVzYXp8ZW58MXwwfHx8MTc5Mzg4NTk5N3ww&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/Fsw3IORqz8w/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bGElMjBjbHVzYXp8ZW58MXwwfHx8MTc5Mzg4NTk5N3ww"
+  "download_location": "https://api.unsplash.com/photos/Fsw3IORqz8w/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bGElMjBjbHVzYXp8ZW58MXwwfHx8MTc5Mzg4NTk5N3ww",
+  "signale_le": "2026-11-05"
  },
  "les-gets": {
   "id": "cqj640zk9GI",
@@ -915,7 +933,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1740016103814-1c11f1cdbe28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8M3x8bGVzJTIwZ2V0c3xlbnwxfDB8fHwxNzkzODg1OTk3fDA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/cqj640zk9GI/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8M3x8bGVzJTIwZ2V0c3xlbnwxfDB8fHwxNzkzODg1OTk3fDA"
+  "download_location": "https://api.unsplash.com/photos/cqj640zk9GI/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8M3x8bGVzJTIwZ2V0c3xlbnwxfDB8fHwxNzkzODg1OTk3fDA",
+  "signale_le": "2026-11-05"
  },
  "lucerne": {
   "id": "3nBSl4q7e70",
@@ -927,7 +946,8 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1658093271921-199c7a03edc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bHVjZXJuZSUyMGNoYXBlbCUyMGJyaWRnZXxlbnwxfDB8fHwxNzkzODg1OTk3fDA&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/3nBSl4q7e70/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bHVjZXJuZSUyMGNoYXBlbCUyMGJyaWRnZXxlbnwxfDB8fHwxNzkzODg1OTk3fDA"
+  "download_location": "https://api.unsplash.com/photos/3nBSl4q7e70/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8bHVjZXJuZSUyMGNoYXBlbCUyMGJyaWRnZXxlbnwxfDB8fHwxNzkzODg1OTk3fDA",
+  "signale_le": "2026-11-05"
  },
  "abidjan": {
   "id": "ir5PK5Itae0",
@@ -939,6 +959,7 @@
   "lot": 5,
   "choisi_le": "2026-11-05",
   "thumb": "https://images.unsplash.com/photo-1785095617583-e408f4b451ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8YWJpZGphbiUyMHNreWxpbmV8ZW58MXwwfHx8MTc5Mzg4NjAxNnww&ixlib=rb-4.1.0&q=80&w=400",
-  "download_location": "https://api.unsplash.com/photos/ir5PK5Itae0/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8YWJpZGphbiUyMHNreWxpbmV8ZW58MXwwfHx8MTc5Mzg4NjAxNnww"
+  "download_location": "https://api.unsplash.com/photos/ir5PK5Itae0/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8YWJpZGphbiUyMHNreWxpbmV8ZW58MXwwfHx8MTc5Mzg4NjAxNnww",
+  "signale_le": "2026-11-05"
  }
 }
