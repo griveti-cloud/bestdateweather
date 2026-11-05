@@ -19,6 +19,7 @@ quelle et comptée.
 Usage :
     python3 scripts/apply_hero_fixes.py --dry-run [--kind annual|monthly] [--langs fr,en] [--only slug1,slug2]
     python3 scripts/apply_hero_fixes.py --kind annual --langs fr [--autorise]
+    python3 scripts/apply_hero_fixes.py --kind monthly --langs fr --months 1,2   # mois 1 et 2 (janvier, février)
 """
 import csv
 import difflib
@@ -86,6 +87,7 @@ def main():
     kind = args[args.index('--kind') + 1] if '--kind' in args else 'annual'
     langs = args[args.index('--langs') + 1].split(',') if '--langs' in args else LANGS
     only = set(args[args.index('--only') + 1].split(',')) if '--only' in args else None
+    months_sel = [int(x) - 1 for x in args[args.index('--months') + 1].split(',')] if '--months' in args else list(range(12))
     edits, stats = {}, Counter()
     refused_pages = []
     for lang in langs:
@@ -119,7 +121,7 @@ def main():
                     continue
                 jobs = [(out_dir / G.monthly_url(cfg, slug, mi),
                          (lambda mi=mi: gen_monthly_v6(cfg, fn, dest, months, mi, dests, sims, comp, climate, xlinks)))
-                        for mi in range(12)]
+                        for mi in months_sel]
             for f, make in jobs:
                 if not f.exists():
                     continue
