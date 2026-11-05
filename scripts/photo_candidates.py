@@ -107,19 +107,32 @@ def search(slug, queries, used):
 
 
 def track(ids):
-    """Règle de l'API Unsplash : signaler chaque photo réellement utilisée."""
+    """Règle de l'API Unsplash : signaler chaque photo réellement utilisée.
+    Idempotent : la date de signalement est notée dans data/photo_choices.json
+    (signale_le) et une photo déjà signalée est ignorée."""
+    import datetime
+    choices_path = ROOT / 'data' / 'photo_choices.json'
+    choices = json.load(open(choices_path, encoding='utf-8')) if choices_path.exists() else {}
+    by_id = {v['id']: v for k, v in choices.items() if not k.startswith('_') and isinstance(v, dict)}
     index = {}
     for f in OUT.glob('*.json'):
         for c in json.load(open(f, encoding='utf-8')):
             index[c['id']] = c
     for i in ids:
-        c = index.get(i)
+        if by_id.get(i, {}).get('signale_le'):
+            continue
+        c = by_id.get(i) if by_id.get(i, {}).get('download_location') else index.get(i)
         if not c or not c.get('download_location'):
             print(f'  ⚠️ {i} : candidat inconnu, non signalé')
             continue
         dl = urllib.parse.urlparse(c['download_location'])
-        call(dl.path, dict(urllib.parse.parse_qsl(dl.query)))
-        print(f'  signalé : {i}')
+        if call(dl.path, dict(urllib.parse.parse_qsl(dl.query))) is None:
+            print(f'  ⚠️ {i} : échec, à refaire')
+            continue
+        if i in by_id:
+            by_id[i]['signale_le'] = datetime.date.today().isoformat()
+            json.dump(choices, open(choices_path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        print(f'  signalé : {i}', flush=True)
 
 
 def main():
