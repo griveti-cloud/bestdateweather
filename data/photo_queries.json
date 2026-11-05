@@ -1,5 +1,5 @@
 {
- "_doc": "Requêtes Unsplash ciblées (repère identifiable) par destination et lots de remplacement. Audit visuel du 4 novembre 2026 (projet : claude/audit-photos-novembre-2026.md). La 2e requête ne sert que si la 1re donne moins de 10 photos.",
+ "_doc": "Requêtes Unsplash ciblées (repère identifiable) par destination et lots de remplacement. Audit visuel du 4 novembre 2026 (projet : claude/audit-photos-novembre-2026.md). La 2e requête ne sert que si la 1re donne moins de 10 photos. Lot 5 : photos partagées entre plusieurs destinations (Punta Cana, Bora Bora, Moorea et Mayrhofen gardent la leur), lien mort de Lucerne, Darwin repris avec d'autres requêtes.",
  "lots": {
   "1": [
    "los-angeles",
@@ -69,6 +69,24 @@
    "kampala",
    "lagos",
    "saint-pierre-et-miquelon"
+  ],
+  "5": [
+   "algarve",
+   "hvar",
+   "republique-dominicaine",
+   "polynesie",
+   "formentera",
+   "costa-brava",
+   "tahiti",
+   "les-arcs",
+   "la-plagne",
+   "les-deux-alpes",
+   "val-thorens",
+   "les-menuires",
+   "la-clusaz",
+   "les-gets",
+   "lucerne",
+   "darwin"
   ]
  },
  "queries": {
@@ -79,6 +97,10 @@
   "abu-dhabi": [
    "sheikh zayed grand mosque",
    "abu dhabi skyline"
+  ],
+  "algarve": [
+   "praia da marinha algarve",
+   "benagil cave algarve"
   ],
   "arusha": [
    "mount meru arusha",
@@ -125,6 +147,10 @@
   "copenhague": [
    "copenhagen nyhavn"
   ],
+  "costa-brava": [
+   "calella de palafrugell",
+   "tossa de mar"
+  ],
   "da-lat": [
    "da lat vietnam",
    "dalat lake"
@@ -138,8 +164,9 @@
    "dar es salaam beach"
   ],
   "darwin": [
-   "darwin australia waterfront",
-   "mindil beach darwin"
+   "darwin city australia",
+   "darwin harbour northern territory",
+   "litchfield national park"
   ],
   "dublin": [
    "dublin ha'penny bridge",
@@ -148,6 +175,10 @@
   "florianopolis": [
    "florianopolis beach",
    "florianopolis bridge"
+  ],
+  "formentera": [
+   "formentera ses illetes",
+   "formentera beach"
   ],
   "fujairah": [
    "fujairah mountains",
@@ -160,6 +191,10 @@
   "hammamet": [
    "hammamet medina",
    "hammamet beach tunisia"
+  ],
+  "hvar": [
+   "hvar town harbour",
+   "hvar croatia fortress"
   ],
   "izmir": [
    "izmir clock tower",
@@ -185,9 +220,17 @@
    "kotor bay old town",
    "kotor montenegro"
   ],
+  "la-clusaz": [
+   "la clusaz",
+   "la clusaz village"
+  ],
   "la-palma": [
    "la palma canary islands",
    "roque de los muchachos"
+  ],
+  "la-plagne": [
+   "la plagne ski",
+   "la plagne"
   ],
   "la-rochelle": [
    "la rochelle vieux port",
@@ -200,12 +243,32 @@
   "lake-louise": [
    "lake louise banff"
   ],
+  "les-arcs": [
+   "les arcs ski resort",
+   "arc 1950"
+  ],
+  "les-deux-alpes": [
+   "les deux alpes",
+   "les 2 alpes ski"
+  ],
+  "les-gets": [
+   "les gets",
+   "les gets ski village"
+  ],
+  "les-menuires": [
+   "les menuires",
+   "les menuires ski"
+  ],
   "lombok": [
    "lombok beach",
    "mount rinjani lombok"
   ],
   "los-angeles": [
    "los angeles skyline"
+  ],
+  "lucerne": [
+   "lucerne chapel bridge",
+   "lucerne switzerland lake"
   ],
   "merzouga": [
    "merzouga erg chebbi dunes"
@@ -245,6 +308,10 @@
   "palau": [
    "palau rock islands"
   ],
+  "polynesie": [
+   "french polynesia lagoon aerial",
+   "rangiroa"
+  ],
   "portland": [
    "portland oregon skyline",
    "portland oregon mount hood"
@@ -257,16 +324,20 @@
    "rarotonga lagoon",
    "rarotonga cook islands"
   ],
+  "republique-dominicaine": [
+   "santo domingo zona colonial",
+   "samana dominican republic"
+  ],
   "rotorua": [
    "rotorua geothermal",
    "wai-o-tapu champagne pool"
   ],
+  "saint-lucie": [
+   "saint lucia pitons"
+  ],
   "saint-pierre-et-miquelon": [
    "saint-pierre et miquelon",
    "saint pierre miquelon harbour"
-  ],
-  "saint-lucie": [
-   "saint lucia pitons"
   ],
   "shimla": [
    "shimla mall road",
@@ -279,6 +350,10 @@
    "sofia alexander nevsky cathedral",
    "sofia bulgaria"
   ],
+  "tahiti": [
+   "tahiti island mountains",
+   "papeete tahiti"
+  ],
   "taipei": [
    "taipei 101",
    "taipei skyline"
@@ -290,6 +365,10 @@
   "tunis": [
    "sidi bou said",
    "tunis medina"
+  ],
+  "val-thorens": [
+   "val thorens",
+   "val thorens ski resort"
   ],
   "vancouver": [
    "vancouver skyline",
