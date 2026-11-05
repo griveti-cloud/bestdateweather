@@ -128,7 +128,8 @@ def render_v6_monthly_hero(slug, lang, hero_data, asset_prefix=''):
     photo_url = d.get('photo_url', '')
     bg_style = (f' style="background-image:url(\'{h(photo_url)}\')"' if photo_url else '')
     photo_credit = d.get('photo_credit', '')
-    photo_credit_block = (f'<div class="hero-photo-credit">Photo : {photo_credit}</div>'
+    _credit_prefix = {'en': 'Photo:', 'en-us': 'Photo:', 'es': 'Foto:', 'de': 'Foto:'}.get(lang, 'Photo :')
+    photo_credit_block = (f'<div class="hero-photo-credit">{_credit_prefix} {photo_credit}</div>'
                           if photo_credit else '')
 
     return (

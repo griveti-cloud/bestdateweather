@@ -372,8 +372,12 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
             m['is_best'] = True
 
     # Climate type + profile
-    climate_type = _build_climate_type(dest, lat, lang)
-    profile = _detect_profile(dest, climate_type)
+    # Le profil (polaire, tropical, montagne...) reste calculé sur l'ancien libellé pour ne
+    # rien changer aux blocs qui en dépendent ; seul le libellé affiché passe à Köppen.
+    legacy_climate = _build_climate_type(dest, lat, lang)
+    profile = _detect_profile(dest, legacy_climate)
+    from lib.koppen import climate_label
+    climate_type = climate_label(months_climate, lat, lang, _bool(dest.get('mountain'))) or legacy_climate
 
     # Country info enrichi
     cinfo = _country_info(dest.get('pays', ''))
@@ -564,7 +568,19 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
         lead_html = (f'<strong>{best["mois"]}</strong> ({best["score_10"]:.1f}/10) · '
                      f'{worst["mois"]} ({worst["score_10"]:.1f}/10).')
 
-    # Mini-cards selon profil
+    # Mini-cards selon profil (libellés traduits ; abréviations de mois sans collision
+    # « Jui » = juin et juillet, cf. _MONTH_ABBR)
+    from lib.v6 import _MONTH_ABBR
+    _abbr = _MONTH_ABBR.get(lang, _MONTH_ABBR['fr'])
+    def ab(m):
+        return _abbr[months_data.index(m)]
+    MINI_L = {
+        'fr':    ('Meilleur mois', 'Alternative', 'Plus rude', 'Meilleur ski', 'Meilleure rando', 'Transition'),
+        'en':    ('Best month', 'Runner-up', 'Toughest', 'Best for skiing', 'Best for hiking', 'Shoulder season'),
+        'en-us': ('Best month', 'Runner-up', 'Toughest', 'Best for skiing', 'Best for hiking', 'Shoulder season'),
+        'es':    ('Mejor mes', 'Alternativa', 'Más duro', 'Mejor para esquiar', 'Mejor para senderismo', 'Transición'),
+        'de':    ('Bester Monat', 'Alternative', 'Schwierigster', 'Bester Skimonat', 'Bester Wandermonat', 'Übergangszeit'),
+    }.get(lang) or ('Meilleur mois', 'Alternative', 'Plus rude', 'Meilleur ski', 'Meilleure rando', 'Transition')
     if is_mountain:
         # Recherche meilleur ski (déc-mai) et meilleure rando (juin-sept)
         ski_months_idx = [11, 0, 1, 2, 3, 4]   # Déc, Jan, Fev, Mar, Avr, Mai
@@ -577,18 +593,18 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
         transition = next((m for m in months_data if m['classe'] == 'mid'), None)
         mini_cards = []
         if ski_best:
-            mini_cards.append({'value': f'⛷️ {ski_best["mois"][:3]}',
-                               'label': f'Top ski ({ski_best["score_10"]:.1f}/10)'})
+            mini_cards.append({'value': f'⛷️ {ab(ski_best)}',
+                               'label': f'{MINI_L[3]} ({ski_best["score_10"]:.1f}/10)'})
         if rando_best:
-            mini_cards.append({'value': f'🥾 {rando_best["mois"][:3]}',
-                               'label': f'Top rando ({rando_best["score_10"]:.1f}/10)'})
+            mini_cards.append({'value': f'🥾 {ab(rando_best)}',
+                               'label': f'{MINI_L[4]} ({rando_best["score_10"]:.1f}/10)'})
         if transition:
-            mini_cards.append({'value': transition['mois'], 'label': 'Transition'})
+            mini_cards.append({'value': transition['mois'], 'label': MINI_L[5]})
         # Garantir 3 cartes max
         mini_cards = mini_cards[:3]
         # Header décision : "Mois ski · Mois rando" et score = max
         if ski_best and rando_best:
-            decision_main_month = f'{ski_best["mois"][:3]} · {rando_best["mois"][:3]}'
+            decision_main_month = f'{ab(ski_best)} · {ab(rando_best)}'
             decision_main_score = f'{max(ski_best["score_10"], rando_best["score_10"]):.1f}'
         else:
             decision_main_month = best['mois']
@@ -597,9 +613,9 @@ def build_page_data_v6(cfg: dict, dest: dict, months_climate: list[dict],
         # Standard : top 1 + top 2 + worst
         top2 = sorted_by_score[1] if len(sorted_by_score) > 1 else best
         mini_cards = [
-            {'value': f'☀️ {best["mois"][:3]}', 'label': f'Top score ({best["score_10"]:.1f}/10)'},
-            {'value': f'🌤️ {top2["mois"][:3]}', 'label': f'Alt. ({top2["score_10"]:.1f}/10)'},
-            {'value': worst['mois'][:3], 'label': f'Plus rude ({worst["score_10"]:.1f}/10)'},
+            {'value': f'☀️ {ab(best)}', 'label': f'{MINI_L[0]} ({best["score_10"]:.1f}/10)'},
+            {'value': f'🌤️ {ab(top2)}', 'label': f'{MINI_L[1]} ({top2["score_10"]:.1f}/10)'},
+            {'value': ab(worst), 'label': f'{MINI_L[2]} ({worst["score_10"]:.1f}/10)'},
         ]
         decision_main_month = best['mois']
         decision_main_score = f'{best["score_10"]:.1f}'

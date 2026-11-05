@@ -1411,7 +1411,8 @@ def render_v6_decision_card(slug: str, lang: str, hero_data: dict, asset_prefix:
                    f'{chips_html}</div>') if chips_html else ''
 
     photo_credit = d.get('photo_credit', '')
-    photo_credit_block = (f'<div class="hero-photo-credit">Photo par {photo_credit}</div>'
+    _credit_prefix = {'en': 'Photo by', 'en-us': 'Photo by', 'es': 'Foto de', 'de': 'Foto von'}.get(lang, 'Photo par')
+    photo_credit_block = (f'<div class="hero-photo-credit">{_credit_prefix} {photo_credit}</div>'
                           if photo_credit else '')
 
     return (f'<header class="hero-wrap">\n'
@@ -1721,7 +1722,8 @@ def render_v6_comprendre(slug: str, lang: str, months_data: list[dict],
     """
     L = _v6_strings(lang)['comprendre']
     n_comfortable = sum(1 for m in months_data if _score_cls(m.get('score_10', 0)) == 'rec')
-    comfortable_months = [m['mois'][:3] for m in months_data if _score_cls(m.get('score_10', 0)) == 'rec']
+    _abbr = _MONTH_ABBR.get(lang, _MONTH_ABBR['fr'])
+    comfortable_months = [_abbr[i] for i, m in enumerate(months_data) if _score_cls(m.get('score_10', 0)) == 'rec']
 
     comfort_label = L['comfort_tpl'].format(n=n_comfortable)
     months_inline = ' · '.join(comfortable_months)
