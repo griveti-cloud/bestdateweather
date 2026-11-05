@@ -215,9 +215,12 @@ def load_data(cfg):
     photos_path = f'{DATA}/destination_photos.csv'
     if os.path.exists(photos_path):
         for row in csv.DictReader(open(photos_path, encoding='utf-8-sig')):
+            _cn = row['photo_credit_name']
+            _src = 'Wikimedia Commons' if _cn.endswith(' via Wikimedia Commons') else 'Unsplash'
             photos[row['slug_fr']] = {
                 'url': row['photo_url'],
-                'credit_name': row['photo_credit_name'].replace(' via Unsplash','').replace(' via unsplash',''),
+                'source': _src,
+                'credit_name': _cn.replace(' via Unsplash','').replace(' via unsplash','').replace(' via Wikimedia Commons',''),
                 'credit_url': row['photo_credit_url'],
                 'page_url':   row.get('photo_page_url', row['photo_credit_url']),
             }

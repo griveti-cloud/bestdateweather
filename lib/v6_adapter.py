@@ -978,7 +978,7 @@ def gen_annual_v6(cfg: dict, fn, dest: dict, months: list,
     if photo.get('credit_name') and photo.get('credit_url'):
         photo_credit_html = (
             f'<a href="{photo["credit_url"]}" target="_blank" '
-            f'rel="noopener nofollow">{photo["credit_name"]}</a> via Unsplash'
+            f'rel="noopener nofollow">{photo["credit_name"]}</a> via {photo.get("source", "Unsplash")}'
         )
 
     # Update month
@@ -1466,7 +1466,7 @@ def gen_monthly_v6(cfg, fn, dest, months, mi, all_dests=None,
     photo_credit_html = ''
     if photo.get('credit_name') and photo.get('credit_url'):
         photo_credit_html = (f'<a href="{photo["credit_url"]}" target="_blank" '
-                             f'rel="noopener nofollow">{photo["credit_name"]}</a> via Unsplash')
+                             f'rel="noopener nofollow">{photo["credit_name"]}</a> via {photo.get("source", "Unsplash")}')
 
     from lib.page_config import data_update_label
     update_month = data_update_label(MONTHS_LOC)

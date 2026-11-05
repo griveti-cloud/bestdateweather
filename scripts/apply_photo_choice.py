@@ -108,8 +108,10 @@ def main():
         old_name = (old or {}).get('photo_credit_name', '').replace(' via Unsplash', '').replace(' via unsplash', '')
         old_credit = credit_html(old_name, (old or {}).get('photo_credit_url', '')) if old else ''
         new_name = H.escape(c['user_name'], quote=False)
-        new_credit = credit_html(new_name, utm(c['user_url']))
-        new_url = new_photo_url(c)
+        commons = c.get('source') == 'commons'
+        new_credit = (f'<a href="{c["page_url"]}" target="_blank" rel="noopener nofollow">{new_name}</a> via Wikimedia Commons'
+                      if commons else credit_html(new_name, utm(c['user_url'])))
+        new_url = c['url'] if commons else new_photo_url(c)
         old_esc = H.escape(old['photo_url'], quote=False) if old else ''
         new_esc = H.escape(new_url, quote=False)
         owned, hub_files, n_hero, n_cards = set(), set(), 0, 0
@@ -143,6 +145,8 @@ def main():
                         continue
                     t = get(f)
                     def sw(m):
+                        if commons:   # photo hébergée sur le site : adresse complète, sans paramètres Unsplash
+                            return re.sub(r'https://images\.unsplash\.com/' + re.escape(old_path) + r'[^"\')\s]*', new_url, m.group(0))
                         return m.group(0).replace(f'images.unsplash.com/{old_path}', f'images.unsplash.com/{c["path"]}')
                     t2, k = rx.subn(lambda m: sw(m) if old_path in m.group(0) else m.group(0), t)
                     if t2 != t:
@@ -153,9 +157,9 @@ def main():
         row = by_slug.setdefault(slug, {k: '' for k in fields} | {'slug_fr': slug})
         row.update({
             'photo_url': new_url,
-            'photo_credit_name': f'{c["user_name"]} via Unsplash',
-            'photo_credit_url': utm(c['user_url']),
-            'photo_page_url': utm(c['page_url']),
+            'photo_credit_name': f'{c["user_name"]} via ' + ('Wikimedia Commons' if commons else 'Unsplash'),
+            'photo_credit_url': c['page_url'] if commons else utm(c['user_url']),
+            'photo_page_url': c['page_url'] if commons else utm(c['page_url']),
             'photo_verifie_le': today,
         })
 

@@ -961,5 +961,35 @@
   "thumb": "https://images.unsplash.com/photo-1785095617583-e408f4b451ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8YWJpZGphbiUyMHNreWxpbmV8ZW58MXwwfHx8MTc5Mzg4NjAxNnww&ixlib=rb-4.1.0&q=80&w=400",
   "download_location": "https://api.unsplash.com/photos/ir5PK5Itae0/download?ixid=M3wxMTIzNjA2fDB8MXxzZWFyY2h8MXx8YWJpZGphbiUyMHNreWxpbmV8ZW58MXwwfHx8MTc5Mzg4NjAxNnww",
   "signale_le": "2026-11-05"
+ },
+ "darwin": {
+  "source": "commons",
+  "path": "photos/darwin.jpg",
+  "url": "https://bestdateweather.com/photos/darwin.jpg",
+  "user_name": "kenhodge13 (CC BY 2.0)",
+  "page_url": "https://commons.wikimedia.org/wiki/File:Darwin%27s_Waterfront_Development_Artificial_Harbour_Beach_and_Picnic_Area_February_2010.jpg",
+  "user_url": "",
+  "id": "commons:darwin",
+  "lot": 6,
+  "choisi_le": "2026-11-05",
+  "signale_le": "sans objet (Wikimedia Commons)",
+  "licence": "CC BY 2.0",
+  "titre": "Darwin's Waterfront Development Artificial Harbour Beach and Picnic Area February 2010",
+  "modification": "redimensionnée à 1 400 px de large"
+ },
+ "saint-pierre-et-miquelon": {
+  "source": "commons",
+  "path": "photos/saint-pierre-et-miquelon.jpg",
+  "url": "https://bestdateweather.com/photos/saint-pierre-et-miquelon.jpg",
+  "user_name": "Quintin Soloviev (CC BY 4.0)",
+  "page_url": "https://commons.wikimedia.org/wiki/File:Saint-Pierre,_Saint_Pierre_and_Miquelon,_France.jpg",
+  "user_url": "",
+  "id": "commons:saint-pierre-et-miquelon",
+  "lot": 6,
+  "choisi_le": "2026-11-05",
+  "signale_le": "sans objet (Wikimedia Commons)",
+  "licence": "CC BY 4.0",
+  "titre": "Saint-Pierre, Saint Pierre and Miquelon, France",
+  "modification": "redimensionnée à 1 400 px de large"
  }
 }

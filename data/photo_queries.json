@@ -1,5 +1,5 @@
 {
- "_doc": "Requêtes Unsplash ciblées (repère identifiable) par destination et lots de remplacement. Audit visuel du 4 novembre 2026 (projet : claude/audit-photos-novembre-2026.md). La 2e requête ne sert que si la 1re donne moins de 10 photos. Lot 5 : photos partagées entre plusieurs destinations (Punta Cana, Bora Bora, Moorea et Mayrhofen gardent la leur), lien mort de Lucerne, Darwin repris avec d'autres requêtes.",
+ "_doc": "Requêtes Unsplash ciblées (repère identifiable) par destination et lots de remplacement. Audit visuel du 4 novembre 2026 (projet : claude/audit-photos-novembre-2026.md). La 2e requête ne sert que si la 1re donne moins de 10 photos. Lot 5 : photos partagées entre plusieurs destinations (Punta Cana, Bora Bora, Moorea et Mayrhofen gardent la leur), lien mort de Lucerne, Darwin repris avec d'autres requêtes. Lots 7 et 8 : photos faibles des destinations indexables (forte demande, historique Search Console). Lots 9 et suivants : autres photos faibles.",
  "lots": {
   "1": [
    "los-angeles",
@@ -91,6 +91,158 @@
   "6": [
    "abidjan",
    "saint-pierre-et-miquelon"
+  ],
+  "7": [
+   "acores",
+   "agadir",
+   "amman",
+   "aruba",
+   "athenes",
+   "baku",
+   "bari",
+   "berlin",
+   "bretagne",
+   "chili",
+   "colombie",
+   "cotswolds",
+   "crete",
+   "dubai",
+   "dubrovnik",
+   "guadeloupe",
+   "hurghada",
+   "ile-maurice",
+   "istanbul",
+   "hoi-an",
+   "jordanie",
+   "kenya",
+   "koh-samui",
+   "kos",
+   "lima"
+  ],
+  "8": [
+   "madere",
+   "malaga",
+   "miami",
+   "naples",
+   "oslo",
+   "phu-quoc",
+   "pondicherry",
+   "porto",
+   "provence",
+   "puerto-escondido",
+   "punta-del-este",
+   "qingdao",
+   "reykjavik",
+   "rhodes",
+   "san-francisco",
+   "sicile",
+   "singapour",
+   "split",
+   "sydney",
+   "valence",
+   "varanasi",
+   "vienne",
+   "yerevan",
+   "lofoten"
+  ],
+  "9": [
+   "abuja",
+   "addis-abeba",
+   "adelaide",
+   "alacati",
+   "alcudia",
+   "amalfi",
+   "are",
+   "beyrouth",
+   "cannes",
+   "constantine",
+   "denver",
+   "djeddah",
+   "dresde",
+   "el-hierro",
+   "el-nido",
+   "entebbe",
+   "equateur",
+   "faro"
+  ],
+  "10": [
+   "freetown",
+   "funchal",
+   "galapagos",
+   "geilo",
+   "gili",
+   "gold-coast",
+   "goteborg",
+   "grandvalira",
+   "gudauri",
+   "guyane",
+   "harare",
+   "harbin",
+   "hobart",
+   "iguazu",
+   "hua-hin",
+   "gdansk",
+   "jaisalmer",
+   "jeju"
+  ],
+  "11": [
+   "jinja",
+   "kaohsiung",
+   "key-west",
+   "kigali",
+   "koh-chang",
+   "la-gomera",
+   "laax",
+   "labuan-bajo",
+   "lake-district",
+   "lalibela",
+   "larnaca",
+   "lech",
+   "lilongwe",
+   "lome",
+   "luang-prabang",
+   "macao",
+   "marbella",
+   "meribel"
+  ],
+  "12": [
+   "montevideo",
+   "moshi",
+   "mysore",
+   "nagoya",
+   "napa-valley",
+   "niseko",
+   "noumea",
+   "oran",
+   "palerme",
+   "papouasie",
+   "patagonie",
+   "pattaya",
+   "pays-basque",
+   "phnom-penh",
+   "phoenix",
+   "piran",
+   "ras-al-khaimah",
+   "riviera-maya"
+  ],
+  "13": [
+   "ronda",
+   "rosario",
+   "saint-augustine",
+   "saint-vincent",
+   "samoa",
+   "serre-chevalier",
+   "sestriere",
+   "siem-reap",
+   "st-anton",
+   "suzhou",
+   "tofo",
+   "trogir",
+   "val-gardena",
+   "playa-del-carmen",
+   "khiva",
+   "nozawa-onsen",
+   "myanmar"
   ]
  },
  "queries": {
@@ -103,9 +255,50 @@
    "sheikh zayed grand mosque",
    "abu dhabi skyline"
   ],
+  "abuja": [
+   "abuja nigeria",
+   "aso rock abuja"
+  ],
+  "acores": [
+   "sete cidades azores"
+  ],
+  "addis-abeba": [
+   "addis ababa ethiopia city",
+   "addis ababa"
+  ],
+  "adelaide": [
+   "adelaide city skyline",
+   "adelaide australia"
+  ],
+  "agadir": [
+   "agadir kasbah",
+   "agadir beach morocco"
+  ],
+  "alacati": [
+   "alacati windmills",
+   "alacati street"
+  ],
+  "alcudia": [
+   "alcudia mallorca beach",
+   "alcudia old town"
+  ],
   "algarve": [
    "praia da marinha algarve",
    "benagil cave algarve"
+  ],
+  "amalfi": [
+   "positano amalfi coast"
+  ],
+  "amman": [
+   "amman citadel",
+   "amman jordan city"
+  ],
+  "are": [
+   "are sweden ski",
+   "are sweden"
+  ],
+  "aruba": [
+   "eagle beach aruba"
   ],
   "arusha": [
    "mount meru arusha",
@@ -115,8 +308,19 @@
    "asuncion paraguay",
    "palacio de los lopez asuncion"
   ],
+  "athenes": [
+   "acropolis athens",
+   "parthenon athens"
+  ],
   "baie-halong": [
    "ha long bay"
+  ],
+  "baku": [
+   "baku flame towers"
+  ],
+  "bari": [
+   "bari vecchia",
+   "bari old town italy"
   ],
   "bath": [
    "bath pulteney bridge",
@@ -125,6 +329,13 @@
   "bergen": [
    "bergen bryggen"
   ],
+  "berlin": [
+   "brandenburg gate berlin"
+  ],
+  "beyrouth": [
+   "beirut pigeon rocks",
+   "beirut lebanon city"
+  ],
   "bodrum": [
    "bodrum castle",
    "bodrum marina"
@@ -132,6 +343,10 @@
   "bologne": [
    "bologna piazza maggiore",
    "bologna towers"
+  ],
+  "bretagne": [
+   "cote de granit rose",
+   "brittany coast lighthouse"
   ],
   "bruxelles": [
    "brussels grand place",
@@ -149,12 +364,34 @@
    "cabo san lucas arch",
    "los cabos el arco"
   ],
+  "cannes": [
+   "cannes croisette",
+   "cannes old port"
+  ],
+  "chili": [
+   "torres del paine"
+  ],
+  "colombie": [
+   "cartagena colombia old town",
+   "cocora valley"
+  ],
+  "constantine": [
+   "constantine algeria bridge",
+   "constantine algeria"
+  ],
   "copenhague": [
    "copenhagen nyhavn"
   ],
   "costa-brava": [
    "calella de palafrugell",
    "tossa de mar"
+  ],
+  "cotswolds": [
+   "bibury cotswolds"
+  ],
+  "crete": [
+   "balos lagoon crete",
+   "chania harbour"
   ],
   "da-lat": [
    "da lat vietnam",
@@ -173,9 +410,45 @@
    "darwin harbour northern territory",
    "litchfield national park"
   ],
+  "denver": [
+   "denver skyline mountains",
+   "denver colorado"
+  ],
+  "djeddah": [
+   "jeddah corniche",
+   "jeddah al balad"
+  ],
+  "dresde": [
+   "dresden frauenkirche",
+   "dresden elbe skyline"
+  ],
+  "dubai": [
+   "burj khalifa dubai skyline"
+  ],
   "dublin": [
    "dublin ha'penny bridge",
    "dublin temple bar"
+  ],
+  "dubrovnik": [
+   "dubrovnik old town walls"
+  ],
+  "el-hierro": [
+   "el hierro canary islands"
+  ],
+  "el-nido": [
+   "el nido palawan lagoon"
+  ],
+  "entebbe": [
+   "entebbe lake victoria",
+   "entebbe uganda"
+  ],
+  "equateur": [
+   "cotopaxi ecuador",
+   "quito ecuador"
+  ],
+  "faro": [
+   "faro portugal old town",
+   "ria formosa faro"
   ],
   "florianopolis": [
    "florianopolis beach",
@@ -185,41 +458,169 @@
    "formentera ses illetes",
    "formentera beach"
   ],
+  "freetown": [
+   "freetown sierra leone",
+   "sierra leone beach"
+  ],
   "fujairah": [
    "fujairah mountains",
    "fujairah beach"
+  ],
+  "funchal": [
+   "funchal madeira city"
+  ],
+  "galapagos": [
+   "galapagos islands",
+   "galapagos sea lion"
+  ],
+  "gdansk": [
+   "gdansk old town motlawa",
+   "gdansk crane"
+  ],
+  "geilo": [
+   "geilo norway",
+   "hallingskarvet"
+  ],
+  "gili": [
+   "gili trawangan",
+   "gili islands"
+  ],
+  "gold-coast": [
+   "surfers paradise gold coast"
   ],
   "gondar": [
    "gondar castle",
    "fasil ghebbi gondar"
   ],
+  "goteborg": [
+   "gothenburg sweden canal",
+   "gothenburg"
+  ],
+  "grandvalira": [
+   "grandvalira andorra ski",
+   "andorra mountains"
+  ],
+  "guadeloupe": [
+   "guadeloupe beach",
+   "deshaies guadeloupe"
+  ],
+  "gudauri": [
+   "gudauri georgia",
+   "kazbegi gergeti"
+  ],
+  "guyane": [
+   "french guiana",
+   "kourou french guiana"
+  ],
   "hammamet": [
    "hammamet medina",
    "hammamet beach tunisia"
+  ],
+  "harare": [
+   "harare zimbabwe",
+   "harare city"
+  ],
+  "harbin": [
+   "harbin ice festival",
+   "harbin st sophia cathedral"
+  ],
+  "hobart": [
+   "hobart tasmania harbour",
+   "hobart mount wellington"
+  ],
+  "hoi-an": [
+   "hoi an ancient town lanterns",
+   "hoi an japanese bridge"
+  ],
+  "hua-hin": [
+   "hua hin beach",
+   "hua hin thailand"
+  ],
+  "hurghada": [
+   "hurghada red sea",
+   "hurghada marina"
   ],
   "hvar": [
    "hvar town harbour",
    "hvar croatia fortress"
   ],
+  "iguazu": [
+   "iguazu falls"
+  ],
+  "ile-maurice": [
+   "le morne mauritius"
+  ],
+  "istanbul": [
+   "hagia sophia istanbul",
+   "istanbul bosphorus mosque"
+  ],
   "izmir": [
    "izmir clock tower",
    "izmir kordon"
+  ],
+  "jaisalmer": [
+   "jaisalmer fort",
+   "jaisalmer desert"
   ],
   "java": [
    "mount bromo",
    "borobudur temple"
   ],
+  "jeju": [
+   "jeju island seongsan",
+   "jeju island"
+  ],
+  "jinja": [
+   "jinja source of the nile",
+   "jinja uganda"
+  ],
+  "jordanie": [
+   "petra treasury jordan",
+   "wadi rum"
+  ],
   "kampala": [
    "kampala uganda skyline",
    "kampala uganda"
+  ],
+  "kaohsiung": [
+   "kaohsiung lotus pond",
+   "kaohsiung skyline"
   ],
   "katmandou": [
    "kathmandu durbar square",
    "boudhanath stupa"
   ],
+  "kenya": [
+   "maasai mara savanna",
+   "amboseli kilimanjaro elephants"
+  ],
   "kerala": [
    "kerala backwaters houseboat",
    "munnar tea plantation"
+  ],
+  "key-west": [
+   "key west florida",
+   "key west sunset"
+  ],
+  "khiva": [
+   "khiva itchan kala",
+   "khiva uzbekistan"
+  ],
+  "kigali": [
+   "kigali rwanda city",
+   "kigali"
+  ],
+  "koh-chang": [
+   "koh chang thailand beach",
+   "koh chang"
+  ],
+  "koh-samui": [
+   "koh samui beach",
+   "koh samui big buddha"
+  ],
+  "kos": [
+   "kos island beach",
+   "kos town harbour"
   ],
   "kotor": [
    "kotor bay old town",
@@ -228,6 +629,10 @@
   "la-clusaz": [
    "la clusaz",
    "la clusaz village"
+  ],
+  "la-gomera": [
+   "la gomera canary islands",
+   "garajonay la gomera"
   ],
   "la-palma": [
    "la palma canary islands",
@@ -241,12 +646,35 @@
    "la rochelle vieux port",
    "la rochelle towers"
   ],
+  "laax": [
+   "laax switzerland",
+   "flims caumasee"
+  ],
+  "labuan-bajo": [
+   "labuan bajo padar island",
+   "komodo padar"
+  ],
   "lagos": [
    "lagos nigeria lekki bridge",
    "lagos nigeria skyline"
   ],
+  "lake-district": [
+   "lake district cumbria",
+   "derwentwater"
+  ],
   "lake-louise": [
    "lake louise banff"
+  ],
+  "lalibela": [
+   "lalibela church saint george"
+  ],
+  "larnaca": [
+   "larnaca cyprus",
+   "larnaca finikoudes"
+  ],
+  "lech": [
+   "lech am arlberg",
+   "lech arlberg winter"
   ],
   "les-arcs": [
    "les arcs ski resort",
@@ -264,16 +692,56 @@
    "les menuires",
    "les menuires ski"
   ],
+  "lilongwe": [
+   "lilongwe malawi",
+   "malawi lake"
+  ],
+  "lima": [
+   "lima miraflores coast",
+   "lima plaza mayor"
+  ],
+  "lofoten": [
+   "reine lofoten",
+   "lofoten islands norway"
+  ],
   "lombok": [
    "lombok beach",
    "mount rinjani lombok"
   ],
+  "lome": [
+   "lome togo",
+   "togo beach"
+  ],
   "los-angeles": [
    "los angeles skyline"
+  ],
+  "luang-prabang": [
+   "luang prabang temple",
+   "kuang si falls"
   ],
   "lucerne": [
    "lucerne chapel bridge",
    "lucerne switzerland lake"
+  ],
+  "macao": [
+   "macau ruins of st paul",
+   "macau"
+  ],
+  "madere": [
+   "madeira cliffs",
+   "madeira levada"
+  ],
+  "malaga": [
+   "malaga alcazaba",
+   "malaga cathedral"
+  ],
+  "marbella": [
+   "marbella old town",
+   "marbella beach"
+  ],
+  "meribel": [
+   "meribel ski resort",
+   "meribel"
   ],
   "merzouga": [
    "merzouga erg chebbi dunes"
@@ -281,6 +749,10 @@
   "mexico": [
    "mexico city palacio de bellas artes",
    "mexico city zocalo"
+  ],
+  "miami": [
+   "miami beach art deco",
+   "miami skyline"
   ],
   "milan": [
    "milan duomo",
@@ -290,13 +762,50 @@
    "monteverde cloud forest",
    "costa rica cloud forest bridge"
   ],
+  "montevideo": [
+   "montevideo rambla",
+   "montevideo uruguay"
+  ],
+  "moshi": [
+   "moshi kilimanjaro",
+   "kilimanjaro tanzania"
+  ],
   "munich": [
    "munich marienplatz",
    "munich frauenkirche"
   ],
+  "myanmar": [
+   "bagan temples myanmar",
+   "shwedagon pagoda"
+  ],
+  "mysore": [
+   "mysore palace"
+  ],
+  "nagoya": [
+   "nagoya castle",
+   "nagoya japan"
+  ],
+  "napa-valley": [
+   "napa valley vineyard"
+  ],
+  "naples": [
+   "naples vesuvius bay",
+   "naples italy"
+  ],
   "nepal": [
    "nepal himalaya annapurna",
    "everest nepal"
+  ],
+  "niseko": [
+   "niseko mount yotei",
+   "niseko japan"
+  ],
+  "noumea": [
+   "noumea new caledonia",
+   "new caledonia lagoon"
+  ],
+  "nozawa-onsen": [
+   "nozawa onsen"
   ],
   "ohrid": [
    "lake ohrid church kaneo",
@@ -306,20 +815,91 @@
    "nizwa fort oman",
    "wadi shab oman"
   ],
+  "oran": [
+   "oran algeria",
+   "santa cruz oran"
+  ],
   "orlando": [
    "orlando lake eola",
    "orlando florida skyline"
   ],
+  "oslo": [
+   "oslo opera house",
+   "oslo harbour"
+  ],
   "palau": [
    "palau rock islands"
+  ],
+  "palerme": [
+   "palermo cathedral",
+   "palermo sicily"
+  ],
+  "papouasie": [
+   "papua new guinea",
+   "papua new guinea village"
+  ],
+  "patagonie": [
+   "fitz roy patagonia",
+   "perito moreno glacier"
+  ],
+  "pattaya": [
+   "pattaya beach",
+   "pattaya thailand"
+  ],
+  "pays-basque": [
+   "saint-jean-de-luz",
+   "espelette"
+  ],
+  "phnom-penh": [
+   "phnom penh royal palace",
+   "phnom penh"
+  ],
+  "phoenix": [
+   "phoenix arizona desert",
+   "camelback mountain"
+  ],
+  "phu-quoc": [
+   "phu quoc beach",
+   "phu quoc island"
+  ],
+  "piran": [
+   "piran slovenia"
+  ],
+  "playa-del-carmen": [
+   "playa del carmen beach",
+   "playa del carmen"
   ],
   "polynesie": [
    "french polynesia lagoon aerial",
    "rangiroa"
   ],
+  "pondicherry": [
+   "pondicherry french quarter",
+   "pondicherry"
+  ],
   "portland": [
    "portland oregon skyline",
    "portland oregon mount hood"
+  ],
+  "porto": [
+   "porto ribeira douro",
+   "porto dom luis bridge"
+  ],
+  "provence": [
+   "lavender field provence",
+   "gordes provence"
+  ],
+  "puerto-escondido": [
+   "puerto escondido beach",
+   "puerto escondido mexico"
+  ],
+  "punta-del-este": [
+   "punta del este",
+   "punta del este uruguay beach"
+  ],
+  "qingdao": [
+   "qingdao skyline",
+   "qingdao zhanqiao pier"
   ],
   "rajasthan": [
    "rajasthan fort desert",
@@ -329,13 +909,40 @@
    "rarotonga lagoon",
    "rarotonga cook islands"
   ],
+  "ras-al-khaimah": [
+   "ras al khaimah jebel jais",
+   "ras al khaimah"
+  ],
   "republique-dominicaine": [
    "santo domingo zona colonial",
    "samana dominican republic"
   ],
+  "reykjavik": [
+   "hallgrimskirkja reykjavik",
+   "reykjavik iceland city"
+  ],
+  "rhodes": [
+   "lindos rhodes",
+   "rhodes old town"
+  ],
+  "riviera-maya": [
+   "tulum ruins beach",
+   "riviera maya cenote"
+  ],
+  "ronda": [
+   "ronda puente nuevo"
+  ],
+  "rosario": [
+   "rosario argentina flag monument",
+   "rosario argentina"
+  ],
   "rotorua": [
    "rotorua geothermal",
    "wai-o-tapu champagne pool"
+  ],
+  "saint-augustine": [
+   "st augustine florida",
+   "castillo de san marcos"
   ],
   "saint-lucie": [
    "saint lucia pitons"
@@ -345,9 +952,38 @@
    "ile aux marins",
    "miquelon langlade"
   ],
+  "saint-vincent": [
+   "saint vincent grenadines",
+   "bequia"
+  ],
+  "samoa": [
+   "samoa beach",
+   "to sua ocean trench"
+  ],
+  "san-francisco": [
+   "golden gate bridge san francisco"
+  ],
+  "serre-chevalier": [
+   "serre chevalier",
+   "briancon"
+  ],
+  "sestriere": [
+   "sestriere",
+   "sestriere ski"
+  ],
   "shimla": [
    "shimla mall road",
    "shimla himachal"
+  ],
+  "sicile": [
+   "taormina sicily",
+   "cefalu sicily"
+  ],
+  "siem-reap": [
+   "angkor wat"
+  ],
+  "singapour": [
+   "marina bay sands singapore"
   ],
   "sintra": [
    "sintra pena palace"
@@ -355,6 +991,20 @@
   "sofia": [
    "sofia alexander nevsky cathedral",
    "sofia bulgaria"
+  ],
+  "split": [
+   "split croatia riva",
+   "diocletian palace split"
+  ],
+  "st-anton": [
+   "st anton am arlberg"
+  ],
+  "suzhou": [
+   "suzhou canal",
+   "suzhou garden"
+  ],
+  "sydney": [
+   "sydney opera house harbour bridge"
   ],
   "tahiti": [
    "tahiti island mountains",
@@ -364,25 +1014,50 @@
    "taipei 101",
    "taipei skyline"
   ],
+  "tofo": [
+   "tofo mozambique",
+   "mozambique beach"
+  ],
   "tokyo": [
    "tokyo shibuya crossing",
    "tokyo tower skyline"
+  ],
+  "trogir": [
+   "trogir croatia"
   ],
   "tunis": [
    "sidi bou said",
    "tunis medina"
   ],
+  "val-gardena": [
+   "val gardena seceda",
+   "ortisei val gardena"
+  ],
   "val-thorens": [
    "val thorens",
    "val thorens ski resort"
+  ],
+  "valence": [
+   "city of arts and sciences valencia"
   ],
   "vancouver": [
    "vancouver skyline",
    "vancouver stanley park"
   ],
+  "varanasi": [
+   "varanasi ghats ganges"
+  ],
   "verone": [
    "verona arena",
    "verona adige river"
+  ],
+  "vienne": [
+   "schonbrunn palace vienna",
+   "vienna st stephen cathedral"
+  ],
+  "yerevan": [
+   "yerevan ararat",
+   "yerevan cascade"
   ],
   "zadar": [
    "zadar old town",
