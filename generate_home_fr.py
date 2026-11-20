@@ -361,7 +361,7 @@ def build_page(top6, month_name, pfx=''):
 <script defer src="{pfx}js/core.min.js?v=55"></script>
 <script defer src="{pfx}js/weather-banner-2.min.js?v=9"></script>
 <script defer src="{pfx}js/favs.min.js?v=1"></script>
-<script defer src="{pfx}js/fiche-slugs.min.js?v=edd3b9"></script>
+<script defer src="{pfx}js/fiche-slugs.min.js?v=5165da"></script>
 <script defer src="{pfx}js/dest-search.js?v=7"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NTCJTDPSJL"></script>
 <script defer src="{pfx}js/ga.js?v=11c00f"></script>

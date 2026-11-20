@@ -673,6 +673,8 @@ function setConfBadge(diffDays) { /* badge supprimé */ }
 function geocode(city) {
  // Strip formatting artifacts like 'Porto, Porto (Portugal)' → 'Porto'
  var clean = city.replace(/\s*\([^)]*\)/g, '').split(/,|\s+[—–-]\s+/)[0].trim();
+ var _dl = bdwDestLoc(clean); if (_dl) return Promise.resolve(_dl);
+ var _aq = bdwAliasQuery(clean); if (_aq) clean = _aq;
  var _gl=(document.documentElement.lang||'fr').toLowerCase(); if(_gl==='en-us')_gl='en'; if(_gl!=='en'&&_gl!=='es'&&_gl!=='de')_gl='fr'; return fetch('https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(clean) + '&count=5&language='+_gl)
  .then(function(r) { return r.json(); })
  .then(function(d) {
@@ -682,6 +684,142 @@ function geocode(city) {
  return { lat: r.latitude, lon: r.longitude, name: r.name, region: gRegion, country: r.country || COUNTRY_NAMES[r.country_code] || r.country_code || '', country_code: r.country_code || '' };
  });
 }
+
+/* FICHE-LINK START : lien du résultat vers la fiche destination (20 nov. 2026)
+   Le géocodeur renvoie un nom (« Maspalomas », « Grande Canarie »), pas une fiche.
+   1. nom ou alias connu (table js/fiche-slugs.js, même normalisation que generate_fiche_slugs.py),
+      accepté seulement si le lieu trouvé est dans le pays de la destination ou à moins de 300 km
+      (« Las Palmas » du Panama ne mène pas à Gran Canaria) ;
+   2. premier mot, seulement dans le même pays (« Polynésie française » → Polynésie) ;
+   3. sinon destination la plus proche à moins de 30 km, présentée comme telle
+      (« Fiche la plus proche : Gran Canaria (26 km) »). */
+function bdwFicheNorm(s) {
+ var sp = {'đ':'d','ø':'o','ł':'l','æ':'ae','œ':'oe','ß':'ss','ı':'i'};
+ return String(s || '').toLowerCase().replace(/[đøłæœßı]/g, function(c){ return sp[c]; })
+  .normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+var BDW_FR_TERR = {gp:1,mq:1,re:1,gf:1,yt:1,pm:1,nc:1,pf:1,wf:1,bl:1,mf:1};
+function bdwKm(a, b, c, d) {
+ var r = Math.PI / 180, x = Math.sin((c - a) * r / 2), y = Math.sin((d - b) * r / 2);
+ return 12742 * Math.asin(Math.sqrt(x * x + Math.cos(a * r) * Math.cos(c * r) * y * y));
+}
+/* Table : BDW_FICHE_SLUGS {clé: slug_fr} ; BDW_FICHE_DEST {slug_fr: [lat, lon, pays, nom_fr, nom_en, nom_es,
+   nom_de, slug_en, slug_es, slug_de]} (vide = identique au nom français / au slug français ou anglais). */
+function bdwEntry(slug) {
+ var d = window.BDW_FICHE_DEST && window.BDW_FICHE_DEST[slug];
+ if (!d) return null;
+ var en = d[7] || slug;
+ return { fr: slug, en: en, es: d[8] || en, de: d[9] || en };
+}
+function bdwFicheFor(loc) {
+ var M = window.BDW_FICHE_SLUGS, D = window.BDW_FICHE_DEST;
+ if (!M || !loc || !loc.name) return null;
+ var lat = parseFloat(loc.lat), lon = parseFloat(loc.lon);
+ var hasPos = isFinite(lat) && isFinite(lon);
+ var cc = String(loc.country_code || '').toLowerCase();
+ function sameCountry(f) { return !!cc && (f === cc || (f === 'fr' && !!BDW_FR_TERR[cc]) || (cc === 'fr' && !!BDW_FR_TERR[f])); }
+ function plausible(slug) {
+  var d = D && D[slug];
+  if (!d || (!cc && !hasPos)) return true;
+  return sameCountry(d[2]) || (hasPos && bdwKm(lat, lon, d[0], d[1]) <= 300);
+ }
+ if (loc._slug && bdwEntry(loc._slug)) return { entry: bdwEntry(loc._slug), near: false };
+ var name = String(loc.name);
+ var bare = name.replace(/^(la|le|les|el|los|las|the|il|lo|die|der|das)\s+/i, '').replace(/^l['’]\s*/i, '');
+ var keys = [bdwFicheNorm(name), bdwFicheNorm(bare)];
+ for (var i = 0; i < keys.length; i++) {
+  var e = keys[i] && bdwEntry(M[keys[i]]);
+  if (e && plausible(e.fr)) return { entry: e, near: false };
+ }
+ var first = bdwFicheNorm(bare.split(/[\s,\-]/)[0]);
+ var e1 = first.length >= 4 && bdwEntry(M[first]);
+ if (e1 && D && D[e1.fr] && sameCountry(D[e1.fr][2])) return { entry: e1, near: false };
+ if (D && hasPos) {
+  var best = null, bd = 30.5;
+  for (var s in D) { var k = bdwKm(lat, lon, D[s][0], D[s][1]); if (k < bd) { bd = k; best = s; } }
+  if (best) return { entry: bdwEntry(best), near: bd > 2, km: bd };
+ }
+ return null;
+}
+function bdwFicheLink(loc) {
+ var f = bdwFicheFor(loc);
+ if (!f) return null;
+ var lang = (document.documentElement.lang || 'fr').toLowerCase();
+ var e = f.entry, url, label;
+ var D = window.BDW_FICHE_DEST, d = D && D[e.fr];
+ var li = lang === 'es' ? 2 : lang === 'de' ? 3 : (lang === 'en' || lang === 'en-us') ? 1 : 0;
+ var dname = d ? (d[3 + li] || d[3]) : loc.name;
+ if (lang === 'es') url = '../es/mejor-epoca-' + (e.es || e.en);
+ else if (lang === 'de') url = '../de/beste-reisezeit-' + (e.de || e.en);
+ else if (lang === 'en' || lang === 'en-us') url = 'best-time-to-visit-' + e.en;
+ else url = 'meilleure-periode-' + e.fr;
+ if (f.near) {
+  var dist = lang === 'en-us' ? Math.max(1, Math.round(f.km * 0.621)) + ' mi' : Math.max(1, Math.round(f.km)) + ' km';
+  label = lang === 'es' ? 'Guía más cercana: ' + dname + ' (' + dist + ')'
+   : lang === 'de' ? 'Nächster Reiseführer: ' + dname + ' (' + dist + ')'
+   : (lang === 'en' || lang === 'en-us') ? 'Nearest guide: ' + dname + ' (' + dist + ')'
+   : 'Fiche la plus proche : ' + dname + ' (' + dist + ')';
+ } else {
+  // Nom de la destination de la fiche, pas celui de la localité tapée :
+  // « Maspalomas » mène à la fiche Grande Canarie, le libellé doit le dire.
+  label = lang === 'es' ? 'Guía completa de ' + dname
+   : lang === 'de' ? ((typeof T !== 'undefined' && T.guide_label) || 'Reiseführer') + ' ' + dname
+   : (lang === 'en' || lang === 'en-us') ? 'Complete guide for ' + dname
+   : 'Analyse complète de ' + dname;
+ }
+ return { url: url, label: label };
+}
+function bdwShowFicheLink(wrapId, loc) {
+ var w = document.getElementById(wrapId);
+ if (!w) return;
+ w.style.display = 'none'; w.innerHTML = '';
+ var l = bdwFicheLink(loc);
+ if (!l) return;
+ var a = document.createElement('a');
+ a.className = 'fiche-link-btn'; a.href = l.url; a.textContent = '↗ ' + l.label;
+ w.appendChild(a); w.style.display = 'block';
+}
+/* Nom exact d'une destination du site (« Bali », « Venise », « Île Maurice ») : on prend les
+   coordonnées de la fiche au lieu du 1er résultat du géocodeur, qui est souvent un homonyme
+   (Bāli en Inde, Venise village du Doubs, Île Maurice au Canada). Les alias (Albufeira → Algarve)
+   restent géocodés : ce sont d'autres lieux que le point de la fiche. */
+function bdwDestLocFromSlug(slug) {
+ var D = window.BDW_FICHE_DEST, d = D && D[slug];
+ if (!d) return null;
+ var lang = (document.documentElement.lang || 'fr').toLowerCase();
+ var li = lang === 'es' ? 2 : lang === 'de' ? 3 : (lang === 'en' || lang === 'en-us') ? 1 : 0;
+ var cc = String(d[2] || '').toUpperCase(), country = cc;
+ try { country = new Intl.DisplayNames([lang === 'en-us' ? 'en' : lang], { type: 'region' }).of(cc) || cc; } catch (x) {}
+ return { lat: d[0], lon: d[1], name: d[3 + li] || d[3], region: '', country: country, country_code: cc, elevation: null, _slug: slug };
+}
+function bdwDestLoc(q) {
+ var M = window.BDW_FICHE_SLUGS, D = window.BDW_FICHE_DEST;
+ if (!M || !D) return null;
+ var n = bdwFicheNorm(q), slug = n && M[n], d = slug && D[slug];
+ if (!d) return null;
+ var e = bdwEntry(slug), own = [slug, e.en, e.es, e.de, d[3], d[4], d[5], d[6]];
+ for (var i = 0; i < own.length; i++) if (own[i] && bdwFicheNorm(own[i]) === n) return bdwDestLocFromSlug(slug);
+ return null;
+}
+/* Saisie collée ou mal découpée (« Mas Palomas ») : si, sans espaces ni tirets, elle correspond
+   exactement à un nom connu (« maspalomas »), on interroge le géocodeur avec ce nom. Sinon il
+   renvoie un homonyme (Mas Palomas, quartier de Monterrey, Mexique). */
+function bdwAliasQuery(q) {
+ var M = window.BDW_FICHE_SLUGS;
+ if (!M) return null;
+ var n = bdwFicheNorm(q);
+ if (!n || M[n]) return null;
+ var c = n.replace(/-/g, '');
+ if (c.length < 5) return null;
+ if (!window._bdwCompact) {
+  var idx = {};
+  for (var k in M) { var ck = k.replace(/-/g, ''); if (!(ck in idx)) idx[ck] = k; }
+  window._bdwCompact = idx;
+ }
+ var hit = window._bdwCompact[c];
+ return hit && hit !== n ? hit.replace(/-/g, ' ') : null;
+}
+/* FICHE-LINK END */
 
 /* ── SEA SURFACE TEMPERATURE ── */
 var SEA_NAME_MAP = CFG.seaNameMap;
@@ -2289,7 +2427,8 @@ function selectAC(i){
  var item=acData[i];if(!item)return;
  // Local index match: use name directly, trigger geocode via selectedLoc=null
  if (item._local) {
-   selectedLoc = null;
+   selectedLoc = (item._slug && bdwDestLocFromSlug(item._slug)) || null;
+   annSelectedLoc = selectedLoc;
    document.getElementById('inp-city').value = item.name;
    var clearBtn = document.getElementById('inp-city-clear');
    if (clearBtn) clearBtn.classList.add('visible');
@@ -2342,9 +2481,11 @@ function fetchAC(q){
  var p2 = q.indexOf(' ')>=0
  ? fetch(base+encodeURIComponent(qNorm)).then(function(r){return r.json();}).then(function(d){return d.results||[];})
  : Promise.resolve([]);
- Promise.all([p1,p2]).then(function(both){
+  var _aq2 = bdwAliasQuery(q);
+ var p3 = _aq2 ? fetch(base+encodeURIComponent(_aq2)).then(function(r){return r.json();}).then(function(d){return d.results||[];}) : Promise.resolve([]);
+ Promise.all([p1,p2,p3]).then(function(both){
  var coordSeen={}, merged=[];
- both[0].concat(both[1]).forEach(function(item){
+ both[0].concat(both[1], both[2]).forEach(function(item){
  // Filter airports
  if(item.feature_code==='AIRP'||item.feature_code==='RSTN')return;
  var key=item.name+'|'+item.latitude+'|'+item.longitude;
@@ -2449,29 +2590,7 @@ function run() {
  document.getElementById('r-loc').textContent=loc.name+' — '+(loc.country||'');
  document.getElementById('r-date').textContent=new Date(yr,mo,da,12,0,0).toLocaleDateString(CFG.dateLocale,{weekday:'long',day:'numeric',month:'long',year:'numeric'});
  // Fiche destination link
- (function(){
-  var fw=document.getElementById('fiche-link-wrap');
-  if(!fw)return;
-  fw.style.display='none'; fw.innerHTML='';
-  var slugMap=window.BDW_FICHE_SLUGS;
-  if(!slugMap)return;
-  var _normStr=function(s){return s.toLowerCase().replace(/[àâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[îï]/g,'i').replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/ç/g,'c').replace(/[^a-z0-9 ]/g,'').trim();};
-  // Try 1: full name
-  var entry=slugMap[_normStr(loc.name)];
-  // Try 2: first word only (handles "Guyane française" → "guyane")
-  if(!entry) entry=slugMap[_normStr(loc.name.split(/[\s,\-]/)[0])];
-  // Try 3: without leading articles (la, le, les, l')
-  if(!entry){var bare=loc.name.replace(/^(la |le |les |l'|l')/i,'');entry=slugMap[_normStr(bare)];}
-  if(!entry)return;
-  var isFr=(CFG.dateLocale==='fr-FR'||CFG.dateLocale==='fr');
-  var isEs=(CFG.dateLocale==='es-ES'||CFG.dateLocale==='es');
-  var isDe=(CFG.dateLocale==='de-DE'||CFG.dateLocale==='de');
-  var ficheSlug=isFr?entry.fr:(isEs?(entry.es||entry.en):entry.en);
-  var ficheUrl=isFr?'meilleure-periode-'+ficheSlug+'.html':(isEs?'../es/mejor-epoca-'+ficheSlug+'.html':(isDe?'../de/beste-reisezeit-'+ficheSlug+'.html':'best-time-to-visit-'+ficheSlug+'.html'));
-  var label=isFr?'Analyse complète de '+(loc.name):(isEs?'Guía completa de '+loc.name:(isDe?(T.guide_label||'Reiseführer')+' '+loc.name:'Complete guide for '+loc.name));
-  fw.innerHTML='<a class="fiche-link-btn" href="'+ficheUrl+'">↗ '+label+'</a>';
-  fw.style.display='block';
- })();
+ bdwShowFicheLink('fiche-link-wrap', loc);
  renderAstro(loc.lat,loc.lon,yr,mo,da);
  // Lancer SST en parallèle (silencieux — n'affecte pas le score principal)
  window._lastSSTResult = null;
@@ -2676,7 +2795,7 @@ function selectAnnAC(i) {
  var item = annAcData[i]; if (!item) return;
  var region2 = (item.country_code === 'FR') ? '' : (item.admin1 || '');
  var country2 = getCountryName(item);
- annSelectedLoc = { lat: item.latitude, lon: item.longitude, name: item.name, region: region2, country: country2, elevation: item.elevation||null };
+ annSelectedLoc = { lat: item.latitude, lon: item.longitude, name: item.name, region: region2, country: country2, country_code: item.country_code || '', elevation: item.elevation||null };
  var label2 = item.name;
  if (region2) label2 += ', ' + region2;
  if (country2) label2 += ' (' + country2 + ')';
@@ -3052,26 +3171,7 @@ function renderAnnual(loc, monthly) {
  _lastMonthly = monthly; _lastAnnLoc = loc;
  document.getElementById('ann-city-name').textContent = loc.name + (loc.country ? ' — ' + loc.country : '');
  // Fiche destination link (annual mode)
- (function(){
-  var afw = document.getElementById('ann-fiche-link-wrap');
-  if (!afw) return;
-  afw.style.display = 'none'; afw.innerHTML = '';
-  var slugMap = window.BDW_FICHE_SLUGS;
-  if (!slugMap) return;
-  var _normStr = function(s){return s.toLowerCase().replace(/[àâä]/g,'a').replace(/[éèêë]/g,'e').replace(/[îï]/g,'i').replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/ç/g,'c').replace(/[^a-z0-9 ]/g,'').trim();};
-  var entry = slugMap[_normStr(loc.name)];
-  if (!entry) entry = slugMap[_normStr(loc.name.split(/[\s,\-]/)[0])];
-  if (!entry) { var bare = loc.name.replace(/^(la |le |les |l'|l’)/i,''); entry = slugMap[_normStr(bare)]; }
-  if (!entry) return;
-  var isFr = (CFG.dateLocale==='fr-FR'||CFG.dateLocale==='fr');
-  var isEs = (CFG.dateLocale==='es-ES'||CFG.dateLocale==='es');
-  var isDe = (CFG.dateLocale==='de-DE'||CFG.dateLocale==='de');
-  var ficheSlug = isFr ? entry.fr : (isEs ? (entry.es||entry.en) : entry.en);
-  var ficheUrl = isFr ? 'meilleure-periode-'+ficheSlug+'.html' : (isEs ? '../es/mejor-epoca-'+ficheSlug+'.html' : (isDe ? '../de/beste-reisezeit-'+ficheSlug+'.html' : 'best-time-to-visit-'+ficheSlug+'.html'));
-  var label = isFr ? ('Analyse complète de ' + loc.name) : (isEs ? ('Guía completa de ' + loc.name) : (isDe ? ((T.guide_label||'Reiseführer') + ' ' + loc.name) : ('Complete guide for ' + loc.name)));
-  afw.innerHTML = '<a class="fiche-link-btn" href="' + ficheUrl + '">↗ ' + label + '</a>';
-  afw.style.display = 'block';
- })();
+ bdwShowFicheLink('ann-fiche-link-wrap', loc);
  var grid = document.getElementById('months-grid'); grid.innerHTML = '';
 
  var uc = currentUseCase !== 'general' ? currentUseCase : null;
